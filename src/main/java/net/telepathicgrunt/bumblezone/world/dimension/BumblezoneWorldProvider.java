@@ -94,13 +94,12 @@ public class BumblezoneWorldProvider extends Dimension
         return true; //SPINNY MAPS!
     }
 
-	
+
 	@Override
 	public double getMovementFactor()
     {
         return 12.0; //A SPEEDY DIMENSION
     }
-
 
 	@Override
 	public boolean isNether()
