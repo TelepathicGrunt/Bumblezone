@@ -28,7 +28,7 @@ import net.telepathicgrunt.bumblezone.world.feature.placement.PlacingUtils;
 
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class Teleportation
+public class TeleportationBehavior
 {
 
 	@CapabilityInject(IPlayerPosAndDim.class)
