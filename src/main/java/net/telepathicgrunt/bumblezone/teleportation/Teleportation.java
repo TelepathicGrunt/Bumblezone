@@ -141,9 +141,9 @@ public class Teleportation
 				}
 				//teleported by going out of bounds inside bumblezone dimension
 				else if(playerEntity.dimension == BumblezoneDimension.bumblezone() && 
-					     (playerEntity.getY() < 0 || playerEntity.getY() > 255)) 
+					     (playerEntity.getY() < 1 || playerEntity.getY() > 255)) 
 				{
-					teleportByOutOfBounds(playerEntity, cap, playerEntity.getY() < 0 ? true : false);
+					teleportByOutOfBounds(playerEntity, cap, playerEntity.getY() < 1 ? true : false);
 				}
 			}
 		}
@@ -159,6 +159,7 @@ public class Teleportation
 		//gets the world in the destination dimension
 		MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
 		ServerWorld destinationWorld;
+		ServerWorld bumblezoneWorld = minecraftServer.getWorld(BumblezoneDimension.bumblezone());
 		
 		//Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone. 
 		//Go to Overworld instead as default
@@ -172,11 +173,11 @@ public class Teleportation
 		}
 		
 		
-		//scales the position to get the corresponding position in non-bumblezone dimension
+		//converts the position to get the corresponding position in non-bumblezone dimension
 		BlockPos blockpos = new BlockPos(
-				playerEntity.getPosition().getX() / destinationWorld.getDimension().getMovementFactor(), 
+				playerEntity.getPosition().getX() / destinationWorld.getDimension().getMovementFactor() * bumblezoneWorld.getDimension().getMovementFactor(), 
 				playerEntity.getPosition().getY(), 
-				playerEntity.getPosition().getZ() / destinationWorld.getDimension().getMovementFactor());
+				playerEntity.getPosition().getZ() / destinationWorld.getDimension().getMovementFactor() * bumblezoneWorld.getDimension().getMovementFactor());
 		
 		
 		//Gets valid space in other world
@@ -211,26 +212,31 @@ public class Teleportation
 	{
 		//gets the world in the destination dimension
 		MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
+		ServerWorld originalWorld = minecraftServer.getWorld(cap.prevDimension);
 		ServerWorld destinationWorld = minecraftServer.getWorld(cap.nextDimension); // gets the new destination dimension 
 
 		
-		//scales the position to get the corresponding position in bumblezone dimension
+		//converts the position to get the corresponding position in bumblezone dimension
 		BlockPos blockpos = new BlockPos(
-				playerEntity.getPosition().getX() * destinationWorld.getDimension().getMovementFactor(), 
+				playerEntity.getPosition().getX() / destinationWorld.getDimension().getMovementFactor() * originalWorld.getDimension().getMovementFactor(), 
 				playerEntity.getPosition().getY(), 
-				playerEntity.getPosition().getZ() * destinationWorld.getDimension().getMovementFactor());
+				playerEntity.getPosition().getZ() / destinationWorld.getDimension().getMovementFactor() * originalWorld.getDimension().getMovementFactor());
 		
 		
 		//gets valid space in other world
-		BlockPos validBlockPos = validPlayerSpawnLocation(destinationWorld, blockpos, 16);
+		BlockPos validBlockPos = validPlayerSpawnLocation(destinationWorld, blockpos, 32);
+		
+		//now move down to the first solid land
+		validBlockPos = validBlockPos.up(PlacingUtils.topOfSurfaceBelowHeight(destinationWorld, blockpos.getY(), 0, destinationWorld.rand, blockpos) - blockpos.getY());
 		
 		
 		if (validBlockPos == null)
 		{
 			//No valid space found around portal. 
-			//We are going to spawn player at exact spot of scaled coordinates by placing air at the spot
+			//We are going to spawn player at exact spot of scaled coordinates by placing air at the spot with honeycomb bottom
 			destinationWorld.setBlockState(blockpos, Blocks.AIR.getDefaultState());
 			destinationWorld.setBlockState(blockpos.up(), Blocks.AIR.getDefaultState());
+			destinationWorld.setBlockState(blockpos.down(), Blocks.field_226908_md_.getDefaultState());
 			validBlockPos = blockpos;
 		}
 
@@ -265,7 +271,6 @@ public class Teleportation
 	
 	private static BlockPos validPlayerSpawnLocationByBeehive(World world, BlockPos position, int maximumRange, boolean checkingUpward)
 	{
-		int radius = 16 * 16 - 1;
 		
 		//snaps the coordinates to chunk origin and then sets height to minimum or maximum based on search direction
 		BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(
@@ -274,10 +279,11 @@ public class Teleportation
 														position.getZ()); 
 		
 		
-		for (; mutableBlockPos.getY() < 0 || mutableBlockPos.getY() > world.getDimension().getActualHeight();)
+		for (; mutableBlockPos.getY() >= 0 && mutableBlockPos.getY() <= world.getDimension().getActualHeight();)
 		{
 			for (int range = 1; range < maximumRange; range++)
 			{
+				int radius = range * range - 1;
 				for (int x = -range; x <= range; x++)
 				{
 					for (int z = -range; z <= range; z++)
@@ -319,6 +325,7 @@ public class Teleportation
 		
 		if(mutableBlockPos.getY() > 0)
 		{
+			world.setBlockState(mutableBlockPos, Blocks.field_226905_ma_.getDefaultState());
 			world.setBlockState(mutableBlockPos.up(), Blocks.AIR.getDefaultState());
 			return mutableBlockPos;
 		}
@@ -331,6 +338,7 @@ public class Teleportation
 							world.getDimension().getActualHeight()/2, 
 							position.getZ());
 
+			world.setBlockState(mutableBlockPos, Blocks.field_226905_ma_.getDefaultState());
 			world.setBlockState(mutableBlockPos.up(), Blocks.AIR.getDefaultState());
 			return mutableBlockPos;
 		}
@@ -342,22 +350,30 @@ public class Teleportation
 		//Try to find 2 non-solid spaces around it that the player can spawn at
 		int radius = 0;
 
-		for (int range = 0; range < maximumRange; range++)
-		{
+		//checks for 2 non-solid blocks with solid block below feet
+		//checks outward from center position in both x, y, and z.
+		//The x2, y2, and z2 is so it checks at center of the range box instead of the corner.
+		for (int range = 0; range < maximumRange; range++){
 			radius = range * range * range - 1;
 
-			for (int x = -range; x <= range; x++)
-			{
-				for (int z = -range; z <= range; z++)
-				{
-					for (int y = -range; y <= range; y++)
-					{
-						if (x * x + z * z + y * y >= radius)
+			for (int y = 0; y <= range * 2; y++){
+				int y2 = y > range ? y - range * 2 : y;
+				
+				
+				for (int x = 0; x <= range * 2; x++){
+					int x2 = x > range ? x - range * 2 : x;
+					
+					
+					for (int z = 0; z <= range * 2; z++){
+						int z2 = z > range ? z - range * 2 : z;
+				
+					
+						if (x2 * x2 + z2 * z2 + y2 * y2 >= radius)
 						{
-							if (!world.getBlockState(position.add(x, y, z)).isSolid() && !world.getBlockState(position.add(x, y + 1, z)).isSolid())
+							if (world.getBlockState(position.add(x2, y2-1, z2)).isSolid() && !world.getBlockState(position.add(x2, y2, z2)).isSolid() && !world.getBlockState(position.add(x2, y2 + 1, z2)).isSolid())
 							{
 								//valid space for player is found
-								return position.add(x, y, z);
+								return position.add(x2, y2, z2);
 							}
 						}
 					}
@@ -365,6 +381,38 @@ public class Teleportation
 			}
 		}
 
+
+		//Check for any 2 non-solid blocks this time
+		//checks outward from center position in both x, y, and z.
+		//The x2, y2, and z2 is so it checks at center of the range box instead of the corner.
+		for (int range = 0; range < maximumRange; range++){
+			radius = range * range * range - 1;
+
+			for (int y = 0; y <= range * 2; y++){
+				int y2 = y > range ? y - range * 2 : y;
+				
+				
+				for (int x = 0; x <= range * 2; x++){
+					int x2 = x > range ? x - range * 2 : x;
+					
+					
+					for (int z = 0; z <= range * 2; z++){
+						int z2 = z > range ? z - range * 2 : z;
+				
+					
+						if (x2 * x2 + z2 * z2 + y2 * y2 >= radius)
+						{
+							if (!world.getBlockState(position.add(x2, y2, z2)).isSolid() && !world.getBlockState(position.add(x2, y2 + 1, z2)).isSolid())
+							{
+								//valid space for player is found
+								return position.add(x2, y2, z2);
+							}
+						}
+					}
+				}
+			}
+		}
+		
 		return null;
 	}
 }

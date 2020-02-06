@@ -66,20 +66,17 @@ public class BumblezoneWorldProvider extends Dimension
         return SleepResult.DENY; //NO EXPLODING BEDS! But no sleeping too.
     }
 	
-    
 	@Override
 	public boolean canRespawnHere()
 	{
 		return false; //The bees disallow sleeping! 
 	}
 
-
 	@Override
 	public BlockPos findSpawn(ChunkPos chunkPosIn, boolean checkValid)
 	{
 		return null;
 	}
-
 
 	@Override
 	public BlockPos findSpawn(int posX, int posZ, boolean checkValid)
@@ -94,19 +91,18 @@ public class BumblezoneWorldProvider extends Dimension
         return true; //SPINNY MAPS!
     }
 
-
 	@Override
 	public double getMovementFactor()
     {
         return 12.0; //A SPEEDY DIMENSION
     }
 
+	
 	@Override
 	public boolean isNether()
 	{
 		return false;
 	}
-
 
 	@Override
 	public boolean isSurfaceWorld()
