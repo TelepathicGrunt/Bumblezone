@@ -200,7 +200,7 @@ public class Teleportation
 		((ServerPlayerEntity)playerEntity).teleport(
 			destinationWorld, 
 			validBlockPos.getX() + 0.5D, 
-			validBlockPos.getY(), 
+			validBlockPos.getY() + 1, 
 			validBlockPos.getZ() + 0.5D, 
 			playerEntity.rotationYaw, 
 			playerEntity.rotationPitch);
@@ -259,7 +259,7 @@ public class Teleportation
 		((ServerPlayerEntity)playerEntity).teleport(
 			destinationWorld, 
 			validBlockPos.getX() + 0.5D, 
-			validBlockPos.getY(), 
+			validBlockPos.getY() + 1, 
 			validBlockPos.getZ() + 0.5D, 
 			playerEntity.rotationYaw, 
 			playerEntity.rotationPitch);
