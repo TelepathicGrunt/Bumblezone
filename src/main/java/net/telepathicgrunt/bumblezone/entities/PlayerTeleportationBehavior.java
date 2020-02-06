@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.teleportation;
+package net.telepathicgrunt.bumblezone.entities;
 
 import javax.annotation.Nullable;
 
@@ -28,7 +28,7 @@ import net.telepathicgrunt.bumblezone.world.feature.placement.PlacingUtils;
 
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class TeleportationBehavior
+public class PlayerTeleportationBehavior
 {
 
 	@CapabilityInject(IPlayerPosAndDim.class)
@@ -225,7 +225,7 @@ public class TeleportationBehavior
 		
 		
 		//gets valid space in other world
-		BlockPos validBlockPos = validPlayerSpawnLocation(destinationWorld, blockpos, 32);
+		BlockPos validBlockPos = validPlayerSpawnLocation(destinationWorld, blockpos, 64);
 		
 		
 		if (validBlockPos == null)
@@ -375,38 +375,6 @@ public class TeleportationBehavior
 						if (x2 * x2 + z2 * z2 + y2 * y2 >= radius)
 						{
 							if (world.getBlockState(position.add(x2, y2-1, z2)).isSolid() && !world.getBlockState(position.add(x2, y2, z2)).isSolid() && !world.getBlockState(position.add(x2, y2 + 1, z2)).isSolid())
-							{
-								//valid space for player is found
-								return position.add(x2, y2, z2);
-							}
-						}
-					}
-				}
-			}
-		}
-
-
-		//Check for any 2 non-solid blocks this time
-		//checks outward from center position in both x, y, and z.
-		//The x2, y2, and z2 is so it checks at center of the range box instead of the corner.
-		for (int range = 0; range < maximumRange; range++){
-			radius = range * range * range - 1;
-
-			for (int y = 0; y <= range * 2; y++){
-				int y2 = y > range ? y - range * 2 : y;
-				
-				
-				for (int x = 0; x <= range * 2; x++){
-					int x2 = x > range ? x - range * 2 : x;
-					
-					
-					for (int z = 0; z <= range * 2; z++){
-						int z2 = z > range ? z - range * 2 : z;
-				
-					
-						if (x2 * x2 + z2 * z2 + y2 * y2 >= radius)
-						{
-							if (!world.getBlockState(position.add(x2, y2, z2)).isSolid() && !world.getBlockState(position.add(x2, y2 + 1, z2)).isSolid())
 							{
 								//valid space for player is found
 								return position.add(x2, y2, z2);

@@ -50,7 +50,7 @@ public class BumblezoneChunkGenerator extends BumblezoneNoiseChunkGenerator<Over
 	}
 
 	private static final Biome.SpawnListEntry INITIAL_SLIME_ENTRY = new Biome.SpawnListEntry(EntityType.SLIME, 1, 1, 1);
-	private static final Biome.SpawnListEntry INITIAL_BEE_ENTRY = new Biome.SpawnListEntry(EntityType.field_226289_e_, 1, 2, 2);
+	private static final Biome.SpawnListEntry INITIAL_BEE_ENTRY = new Biome.SpawnListEntry(EntityType.field_226289_e_, 1, 4, 4);
 
 
 	/*
