@@ -130,10 +130,11 @@ public class Teleportation
 		{
 			//grabs the capability attached to player for dimension hopping
 			PlayerEntity playerEntity = event.player;
-			PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
 			
 			if(!playerEntity.world.isRemote && playerEntity.world instanceof ServerWorld)
 			{
+				PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
+			
 				//teleported by pearl outside bumblezone dimension
 				if (cap.isTeleporting)
 				{
@@ -141,9 +142,9 @@ public class Teleportation
 				}
 				//teleported by going out of bounds inside bumblezone dimension
 				else if(playerEntity.dimension == BumblezoneDimension.bumblezone() && 
-					     (playerEntity.getY() < 1 || playerEntity.getY() > 255)) 
+					     (playerEntity.getY() < -1 || playerEntity.getY() > 255)) 
 				{
-					teleportByOutOfBounds(playerEntity, cap, playerEntity.getY() < 1 ? true : false);
+					teleportByOutOfBounds(playerEntity, cap, playerEntity.getY() < -1 ? true : false);
 				}
 			}
 		}
@@ -199,7 +200,7 @@ public class Teleportation
 		((ServerPlayerEntity)playerEntity).teleport(
 			destinationWorld, 
 			validBlockPos.getX() + 0.5D, 
-			validBlockPos.getY() + 1, 
+			validBlockPos.getY(), 
 			validBlockPos.getZ() + 0.5D, 
 			playerEntity.rotationYaw, 
 			playerEntity.rotationPitch);
@@ -226,9 +227,6 @@ public class Teleportation
 		//gets valid space in other world
 		BlockPos validBlockPos = validPlayerSpawnLocation(destinationWorld, blockpos, 32);
 		
-		//now move down to the first solid land
-		validBlockPos = validBlockPos.up(PlacingUtils.topOfSurfaceBelowHeight(destinationWorld, blockpos.getY(), 0, destinationWorld.rand, blockpos) - blockpos.getY());
-		
 		
 		if (validBlockPos == null)
 		{
@@ -239,7 +237,13 @@ public class Teleportation
 			destinationWorld.setBlockState(blockpos.down(), Blocks.field_226908_md_.getDefaultState());
 			validBlockPos = blockpos;
 		}
-
+		else
+		{
+			//Is indeed a valid spot
+			
+			//now move down to the first solid land
+			validBlockPos = validBlockPos.up(PlacingUtils.topOfSurfaceBelowHeight(destinationWorld, blockpos.getY(), 0, destinationWorld.rand, blockpos) - blockpos.getY());
+		}
 
 		//if player throws pearl at hive and then goes to sleep, they wake up
 		if (playerEntity.isSleeping())
@@ -255,7 +259,7 @@ public class Teleportation
 		((ServerPlayerEntity)playerEntity).teleport(
 			destinationWorld, 
 			validBlockPos.getX() + 0.5D, 
-			validBlockPos.getY() + 1, 
+			validBlockPos.getY(), 
 			validBlockPos.getZ() + 0.5D, 
 			playerEntity.rotationYaw, 
 			playerEntity.rotationPitch);
