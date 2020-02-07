@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -28,24 +29,30 @@ public class PorousHoneycombBlock extends Block
 	{
 		super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).hardnessAndResistance(0.5F).sound(SoundType.CORAL));
 		this.setDefaultState(this.stateContainer.getBaseState().with(FILLED, Boolean.valueOf(false))); //starts out always empty
+
+		setRegistryName("porous_honeycomb_block");
 	}
 
 
+	/**
+	 * Allow player to harvest honey and put honey into this block using bottles
+	 */
 	@SuppressWarnings("deprecation")
 	public ActionResultType onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult)
 	{
 		ItemStack itemstack = playerEntity.getHeldItem(playerHand);
-		
+
 		/*
 		 * Player is harvesting the honey from this block if it is filled with honey
 		 */
-		if (itemstack.getItem() == Items.GLASS_BOTTLE && thisBlockState.get(FILLED))
+		boolean filled = thisBlockState.get(FILLED);
+		if (itemstack.getItem() == Items.GLASS_BOTTLE && filled)
 		{
 			if (!world.isRemote)
 			{
 				itemstack.shrink(1); // remove current empty bottle
 				thisBlockState.with(FILLED, Boolean.valueOf(false)); // remove honey from this block
-				
+
 				world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 				if (itemstack.isEmpty())
 				{
@@ -68,7 +75,7 @@ public class PorousHoneycombBlock extends Block
 			{
 				itemstack.shrink(1); // remove current honey bottle
 				thisBlockState.with(FILLED, Boolean.valueOf(true)); // add honey to this block
-				
+
 				world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 				if (itemstack.isEmpty())
 				{
@@ -86,5 +93,11 @@ public class PorousHoneycombBlock extends Block
 		{
 			return super.onUse(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
 		}
+	}
+
+
+	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> blockBuilder)
+	{
+		blockBuilder.add(FILLED);
 	}
 }
