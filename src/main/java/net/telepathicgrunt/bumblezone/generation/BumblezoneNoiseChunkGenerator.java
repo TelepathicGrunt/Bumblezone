@@ -25,7 +25,7 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 
 	private static final BlockState STONE = Blocks.STONE.getDefaultState();
     private static final BlockState WATER = Blocks.WATER.getDefaultState();
-    private static final BlockState AIR = Blocks.AIR.getDefaultState();
+    private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
 	
     
 	private final int verticalNoiseGranularity;
@@ -56,7 +56,24 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 		this.mainNoise = new OctavesNoiseGenerator(this.randomSeed, 7, 0);
 		this.surfaceDepthNoise = (INoiseGenerator) (new PerlinNoiseGenerator(this.randomSeed, 3, 0));
 	}
+	
+	/*
+	 * Implement these on the chunk generator that extends this class.
+	 * This allows each chunk generator to be more unique in their own way.
+	 */
+	protected abstract double[] getBiomeNoiseColumn(int noiseX, int noiseZ);
+	protected abstract double func_222545_a(double p_222545_1_, double p_222545_3_, int p_222545_5_);
+	protected abstract void fillNoiseColumn(double[] p_222548_1_, int p_222548_2_, int p_222548_3_);
 
+
+	/**
+	 * This sets up all the perlin stuff using the passed in values to know how much to step in x, y, and z plus 
+	 * some more options. 
+	 * 
+	 * Mainly vanilla code but I did move the mainX and stuff out of func_215456_a parameters so it is
+	 * much cleaner and also gave it separate parameters to use so I can manipulate them separately from
+	 * the limitX and stuff to see what terrain I can create.
+	 */
 	private double internalSetupPerlinNoiseGenerators(int x, int y, int z, double getXCoordinateScale, double getZCoordinateScale, double getHeightScale, double getMainCoordinateScale, double getMainHeightScale, double p_222552_10_) {
 		double d0 = 0.0D;
 		double d1 = 0.0D;
@@ -85,20 +102,26 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 		return MathHelper.clampedLerp(d0 / 512.0D, d1 / 512.0D, (d2 / 10.0D + 1.0D) / 2.0D);
 	}
 
+	/**
+	 * vanilla voodoo. Don't question it
+	 */
 	protected double[] func_222547_b(int p_222547_1_, int p_222547_2_) {
 		double[] adouble = new double[this.noiseSizeY + 1];
 		this.fillNoiseColumn(adouble, p_222547_1_, p_222547_2_);
 		return adouble;
 	}
 
+	/**
+	 * vanilla voodoo. Don't question it
+	 */
 	protected void setupPerlinNoiseGenerators(double[] areaArrayIn, int x, int z, double getXCoordinateScale, double getZCoordinateScale, double getHeightScale, double getMainCoordinateScale, double getMainHeightScale, double p_222546_10_, int p_222546_12_, int p_222546_13_) {
 		double[] localAreaArray = this.getBiomeNoiseColumn(x, z);
 		double d0 = localAreaArray[0];
 		double d1 = localAreaArray[1];
-		double d2 = this.func_222551_g();
-		double d3 = this.func_222553_h();
+		double d2 = this.noiseSizeY - 3;
+		double d3 = 0;
 
-		for (int y = 0; y < this.noiseSizeY(); ++y) {
+		for (int y = 0; y < this.noiseSizeY + 1; ++y) {
 			double d4 = this.internalSetupPerlinNoiseGenerators(x, y, z, getXCoordinateScale, getZCoordinateScale, getHeightScale, getMainCoordinateScale, getMainHeightScale, p_222546_10_);
 			d4 = d4 - this.func_222545_a(d0, d1, y);
 			if ((double) y > d2) {
@@ -112,18 +135,10 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 
 	}
 
-	protected abstract double[] getBiomeNoiseColumn(int noiseX, int noiseZ);
 
-	protected abstract double func_222545_a(double p_222545_1_, double p_222545_3_, int p_222545_5_);
-
-	protected double func_222551_g() {
-		return (double) (this.noiseSizeY() - 4);
-	}
-
-	protected double func_222553_h() {
-		return 0.0D;
-	}
-
+	/**
+	 * Cursed. I don't this I touched this. Leave it as is.
+	 */
 	public int func_222529_a(int chunkX, int chunkZ, Heightmap.Type heightmapType) {
 		int minX = Math.floorDiv(chunkX, this.horizontalNoiseGranularity);
 		int minZ = Math.floorDiv(chunkZ, this.horizontalNoiseGranularity);
@@ -165,12 +180,10 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 		return 0;
 	}
 
-	protected abstract void fillNoiseColumn(double[] p_222548_1_, int p_222548_2_, int p_222548_3_);
-
-	public int noiseSizeY() {
-		return this.noiseSizeY + 1;
-	}
-
+	/**
+	 * Self-explanatory. After terrain is made, this comes in to place the surface blocks
+	 * by calling the biome's surface builder for each position in the chunk
+	 */
 	public void buildSurface(WorldGenRegion region, IChunk chunk) {
 		ChunkPos chunkpos = chunk.getPos();
 		int i = chunkpos.x;
@@ -195,6 +208,12 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 		this.makeBedrock(chunk, sharedseedrandom);
 	}
 
+	/**
+	 * Creates the floor and ceiling that separates the dimension from the void below y = 0 and 
+	 * the emptiness above y = 256. 
+	 * 
+	 * We use honeycomb blocks instead of Bedrock.
+	 */
 	protected void makeBedrock(IChunk chunk, Random random) {
 		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable();
 		int xStart = chunk.getPos().getXStart();
@@ -222,15 +241,22 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 
 	}
 
+	/**
+	 * Creates the actual terrain itself. 
+	 * It seems to go by cubic chunk-like when generating terrain?
+	 */
 	public void makeBase(IWorld world, IChunk chunk) {
 		ChunkPos chunkpos = chunk.getPos();
 		int chunkX = chunkpos.x;
 		int chunkZ = chunkpos.z;
 		int coordinateX = chunkX << 4;
 		int coordinateZ = chunkZ << 4;
+		
+		//my additions to make top half of dimension mirror bottom half
 		int yNoiseMod;
 		int yChunk;
-		int yChunkInfluence;
+		
+		//vanilla stuff. Messy and dunno what to call them
 		double d16;
 		double d17;
 		double d18;
@@ -263,8 +289,18 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 				chunksection.lock();
 
 				for (int yNoise = this.noiseSizeY - 1; yNoise >= 0; --yNoise) {
+					
+					/*
+					 * When the noise is greater than 16 (chunks), 
+					 * begin the mirroring effect
+					 */
 					if(yNoise > 16) 
 					{
+						/*
+						 * Move down one because we ended on that y chunk before and by
+						 * mirroring that chunk, the transition between the lower half 
+						 * and upper half is smoother.
+						 */
 						yChunk = yNoise - 1;
 						yNoiseMod = 31 - yChunk;
 
@@ -279,6 +315,9 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 					}
 					else 
 					{
+						/*
+						 * Generate the y chunk as normal for y chunks 16 and below
+						 */
 						yChunk = yNoise;
 						yNoiseMod = yChunk;
 
@@ -295,11 +334,11 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 
 					for (int yInfluence = this.verticalNoiseGranularity - 1; yInfluence >= 0; --yInfluence) {
 						
-						//yInfluence and yNoise is what makes terrain more solid towards ground and now, towards ceiling too
+						//This is where the actual y position of the block that is going to be added to land.
+						//Very important stuff. Handle with delicate care OR ELSE.
+						int currentY = yChunk * this.verticalNoiseGranularity + yInfluence;
 						
-							yChunkInfluence = yInfluence;
 						
-						int currentY = yChunk * this.verticalNoiseGranularity + yChunkInfluence;
 						int y = currentY & 15;
 						int yChunkFinal = currentY >> 4;
 						if (chunksection.getYLocation() >> 4 != yChunkFinal) {
@@ -308,7 +347,7 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 							chunksection.lock();
 						}
 
-						double d5 = (double) yChunkInfluence / (double) this.verticalNoiseGranularity;
+						double d5 = (double) yInfluence / (double) this.verticalNoiseGranularity;
 						double d6 = MathHelper.lerp(d5, d16, d1);
 						double d7 = MathHelper.lerp(d5, d18, d3);
 						double d8 = MathHelper.lerp(d5, d17, d2);
@@ -337,12 +376,15 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
                                 }
                             	else if (currentY < getSeaLevel())
                                 {
+                            		//The sea
                             		blockstate = this.defaultFluid;
-                                } else {
-									blockstate = AIR;
+                                } else 
+                                {
+                                	//The air
+									blockstate = CAVE_AIR;
 								}
 
-								if (blockstate != AIR) {
+								if (blockstate != CAVE_AIR) {
 									if (blockstate.getLightValue() != 0) {
 										blockpos$Mutable.setPos(xCoordinate, currentY, zCoordinate);
 										chunkprimer.addLightPosition(blockpos$Mutable);
