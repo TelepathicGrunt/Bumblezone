@@ -3,6 +3,8 @@ package net.telepathicgrunt.bumblezone;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
@@ -13,6 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.telepathicgrunt.bumblezone.blocks.BlocksInit;
 import net.telepathicgrunt.bumblezone.capabilities.CapabilityPlayerPosAndDim;
 import net.telepathicgrunt.bumblezone.world.biome.BiomeInit;
 
@@ -46,6 +49,28 @@ public class Bumblezone
 		{
 			//registers all my modified biomes
 			BiomeInit.registerBiomes(event);
+		}
+		
+		
+		/**
+		 * This method will be called by Forge when it is time for the mod to register its Blocks. This method will always be
+		 * called before the Item registry method.
+		 */
+		@SubscribeEvent
+		public static void onRegisterBlocks(final RegistryEvent.Register<Block> event)
+		{
+			BlocksInit.registerBlocks(event);
+		}
+
+
+		/**
+		 * This method will be called by Forge when it is time for the mod to register its Items. This method will always be
+		 * called after the Block registry method.
+		 */
+		@SubscribeEvent
+		public static void onRegisterItems(final RegistryEvent.Register<Item> event)
+		{
+			BlocksInit.registerItems(event);
 		}
     }
 	

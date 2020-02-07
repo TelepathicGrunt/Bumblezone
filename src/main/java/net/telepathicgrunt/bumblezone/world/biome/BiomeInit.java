@@ -30,7 +30,7 @@ public class BiomeInit {
 
    	    IForgeRegistry<Biome> registry = event.getRegistry();
 		
-		initBiome(registry, SUGAR_WATER, "Sugar Water Canal", BiomeType.WARM, Type.PLAINS);
+		initBiome(registry, SUGAR_WATER, "Sugar Water Floor", BiomeType.WARM, Type.PLAINS);
 		initBiome(registry, HIVE_WALL, "Hive Wall", BiomeType.WARM, Type.PLAINS);
 	}
 
