@@ -125,7 +125,8 @@ public class BumblezoneChunkGenerator extends BumblezoneNoiseChunkGenerator<Over
 
 	protected void fillNoiseColumn(double[] areaArrayIn, int x, int z)
 	{
-		this.setupPerlinNoiseGenerators(areaArrayIn, x, z, (double) 684.412F, (double) 684.412F, (double) 684.412F, (double) 684.412F, 8.555149841308594D, 4.277574920654297D, 3, -10);
+		//this.setupPerlinNoiseGenerators(areaArrayIn, x, z, (double) 684.412F, (double) 684.412F, (double) 684.412F, (double) 684.412F, 8.555149841308594D, 4.277574920654297D, 3, -10);
+		this.setupPerlinNoiseGenerators(areaArrayIn, x, z, 2600D, 256D, 684D, 8D, 4D, 3D, -10, -10);
 	}
 
 
@@ -134,7 +135,7 @@ public class BumblezoneChunkGenerator extends BumblezoneNoiseChunkGenerator<Over
 		double d1 = ((double) p_222545_5_ - (8.5D + p_222545_1_ * 8.5D / 8.0D * 4.0D)) * 12.0D * 128.0D / 256.0D / p_222545_3_;
 		if (d1 < 0.0D)
 		{
-			d1 *= 4.0D;
+			d1 *= 2.0D;
 		}
 
 		return d1;
@@ -155,13 +156,13 @@ public class BumblezoneChunkGenerator extends BumblezoneNoiseChunkGenerator<Over
 			for (int k = -2; k <= 2; ++k)
 			{
 				Biome biome = this.biomeProvider.getBiomeForNoiseGen(noiseX + j, y, noiseZ + k);
-				float depthWeight = 0; //biome.getDepth();
-				float scaleWeight = 0; //biome.getScale();
+				float depthWeight = biome.getDepth();
+				float scaleWeight = biome.getScale();
 
-				depthWeight = 1.0F + (0.0F + 0.4F) * 0.5F;
-				scaleWeight = 1.0F + (0.0F + 0.3F) * 14F;
+				depthWeight = 1.0F + depthWeight * 1.10F;
+				scaleWeight = 1.0F + scaleWeight * 10.00F;
 
-				float f6 = field_222576_h[j + 2 + (k + 2) * 5] / (depthWeight + 2.0F);
+				float f6 = field_222576_h[j + 2 + (k + 2) * 5] / (depthWeight + 5.0F);
 				if (biome.getDepth() > f3)
 				{
 					f6 /= 2.0F;

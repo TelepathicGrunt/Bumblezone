@@ -12,22 +12,22 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.telepathicgrunt.bumblezone.world.biome.BzBaseBiome;
 
-public final class HoneyBiome extends BzBaseBiome
+public final class SugarWaterBiome extends BzBaseBiome
 {
-	public HoneyBiome()
+	public SugarWaterBiome()
 	{
-		super((new Builder()).surfaceBuilder(new ConfiguredSurfaceBuilder<>(HONEY_SURFACE_BUILDER, HONEY_CONFIG)).precipitation(Biome.RainType.NONE).category(Biome.Category.JUNGLE).depth(0.05F).scale(0.1F).temperature(1.85F).downfall(0.5F).waterColor(16167168).waterFogColor(13528064).parent((String) null));
+		super((new Builder()).surfaceBuilder(new ConfiguredSurfaceBuilder<>(HONEY_SURFACE_BUILDER, HONEY_CONFIG)).precipitation(Biome.RainType.NONE).category(Biome.Category.JUNGLE).depth(-2F).scale(0.001F).temperature(1.85F).downfall(0.5F).waterColor(16167168).waterFogColor(13528064).parent((String) null));
 
 		
 	    this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(WATER_SPRING_CONFIG).createDecoratedFeature(Placement.COUNT_BIASED_RANGE.configure(new CountRangeConfig(4, 128, 0, 256))));
 	    this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(WATER_SPRING_CONFIG).createDecoratedFeature(Placement.COUNT_BIASED_RANGE.configure(new CountRangeConfig(10, 16, 0, 128))));
 		
-	    this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.field_226289_e_, 1, 1, 1));
-		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.SNOWBALL, 2500, 1, 1)); //Used to make monsters even less common
+	    this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.field_226289_e_, 1, 1, 3));
+		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.SNOWBALL, 2000, 1, 1)); //Used to make monsters even less common
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.SPIDER, 25, 1, 1));
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.ENDERMAN, 6, 1, 1));
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.PHANTOM, 2, 1, 1));
-		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.SLIME, 200, 4, 8));
+		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.SLIME, 350, 4, 8));
 	}
 
 	/**
@@ -35,7 +35,7 @@ public final class HoneyBiome extends BzBaseBiome
 	 */
 	public float getSpawningChance()
 	{
-		return 0.55F;
+		return 0.4F;
 	}
 
 	

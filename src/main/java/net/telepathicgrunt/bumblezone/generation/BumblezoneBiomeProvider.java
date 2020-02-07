@@ -8,7 +8,6 @@ import java.util.function.LongFunction;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
 import net.minecraft.block.BlockState;
@@ -24,8 +23,9 @@ import net.minecraft.world.gen.area.IAreaFactory;
 import net.minecraft.world.gen.area.LazyArea;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.layer.Layer;
+import net.minecraft.world.gen.layer.ZoomLayer;
 import net.minecraft.world.gen.layer.traits.IAreaTransformer1;
-import net.telepathicgrunt.bumblezone.generation.layer.BiomeDebugLayer;
+import net.telepathicgrunt.bumblezone.generation.layer.BiomeLayer;
 import net.telepathicgrunt.bumblezone.world.biome.BiomeInit;
 
 
@@ -33,13 +33,11 @@ public class BumblezoneBiomeProvider extends BiomeProvider
 {
 
 	private final Layer genBiomes;
-	private final Set<Biome> biomes;
 
 
 	public BumblezoneBiomeProvider(long seed, WorldType worldType)
 	{
-		super(ImmutableSet.of(BiomeInit.HONEY));
-		biomes = ImmutableSet.of(BiomeInit.HONEY);
+		super(BiomeInit.biomes);
 
 		//generates the world and biome layouts
 		Layer[] agenlayer = buildOverworldProcedure(seed, worldType);
@@ -50,6 +48,7 @@ public class BumblezoneBiomeProvider extends BiomeProvider
 	public BumblezoneBiomeProvider(World world)
 	{
 		this(world.getSeed(), world.getWorldInfo().getGenerator());
+		BiomeLayer.setSeed(world.getSeed());
 	}
 
 
@@ -81,7 +80,10 @@ public class BumblezoneBiomeProvider extends BiomeProvider
 
 	public static <T extends IArea, C extends IExtendedNoiseRandom<T>> ImmutableList<IAreaFactory<T>> buildOverworldProcedure(WorldType worldTypeIn, LongFunction<C> contextFactory)
 	{
-	    IAreaFactory<T> layer = BiomeDebugLayer.INSTANCE.apply(contextFactory.apply(200L));
+	    IAreaFactory<T> layer = BiomeLayer.INSTANCE.apply(contextFactory.apply(200L));
+		layer = ZoomLayer.FUZZY.apply(contextFactory.apply(2000L), layer);
+		layer = ZoomLayer.NORMAL.apply((IExtendedNoiseRandom<T>) contextFactory.apply(1001L), layer);
+		layer = ZoomLayer.NORMAL.apply((IExtendedNoiseRandom<T>) contextFactory.apply(1001L), layer);
 		return ImmutableList.of(layer, layer, layer);
 	}
 

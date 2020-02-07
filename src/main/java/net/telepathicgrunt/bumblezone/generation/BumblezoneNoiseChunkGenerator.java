@@ -57,22 +57,22 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 		this.surfaceDepthNoise = (INoiseGenerator) (new PerlinNoiseGenerator(this.randomSeed, 3, 0));
 	}
 
-	private double internalSetupPerlinNoiseGenerators(int x, int y, int z, double getCoordinateScale, double getHeightScale, double getMainCoordinateScale, double getMainHeightScale, double p_222552_10_) {
+	private double internalSetupPerlinNoiseGenerators(int x, int y, int z, double getXCoordinateScale, double getZCoordinateScale, double getHeightScale, double getMainCoordinateScale, double getMainHeightScale, double p_222552_10_) {
 		double d0 = 0.0D;
 		double d1 = 0.0D;
 		double d2 = 0.0D;
 		double d3 = 1.0D;
 
 		for (int i = 0; i < 16; ++i) {
-			double limitX = OctavesNoiseGenerator.maintainPrecision((double) x * getCoordinateScale * d3);
+			double limitX = OctavesNoiseGenerator.maintainPrecision((double) x * getXCoordinateScale * d3);
 			double limitY = OctavesNoiseGenerator.maintainPrecision((double) y * getHeightScale * d3);
-			double limitZ = OctavesNoiseGenerator.maintainPrecision((double) z * getCoordinateScale * d3);
+			double limitZ = OctavesNoiseGenerator.maintainPrecision((double) z * getZCoordinateScale * d3);
 
 			double mainX = OctavesNoiseGenerator.maintainPrecision((double) x * getMainCoordinateScale * d3);
 			double mainY = OctavesNoiseGenerator.maintainPrecision((double) y * getMainHeightScale * d3);
 			double mainZ = OctavesNoiseGenerator.maintainPrecision((double) z * getMainCoordinateScale * d3);
 			
-			double d7 = 684.412F * d3;
+			double d7 = getHeightScale * d3;
 			d0 += this.minNoise.getOctave(i).func_215456_a(limitX, limitY, limitZ, d7, (double) y * d7) / d3;
 			d1 += this.maxNoise.getOctave(i).func_215456_a(limitX, limitY, limitZ, d7, (double) y * d7) / d3;
 			if (i < 8) {
@@ -91,7 +91,7 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 		return adouble;
 	}
 
-	protected void setupPerlinNoiseGenerators(double[] areaArrayIn, int x, int z, double getCoordinateScale, double getHeightScale, double getMainCoordinateScale, double getMainHeightScale, double p_222546_8_, double p_222546_10_, int p_222546_12_, int p_222546_13_) {
+	protected void setupPerlinNoiseGenerators(double[] areaArrayIn, int x, int z, double getXCoordinateScale, double getZCoordinateScale, double getHeightScale, double getMainCoordinateScale, double getMainHeightScale, double p_222546_10_, int p_222546_12_, int p_222546_13_) {
 		double[] localAreaArray = this.getBiomeNoiseColumn(x, z);
 		double d0 = localAreaArray[0];
 		double d1 = localAreaArray[1];
@@ -99,7 +99,7 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 		double d3 = this.func_222553_h();
 
 		for (int y = 0; y < this.noiseSizeY(); ++y) {
-			double d4 = this.internalSetupPerlinNoiseGenerators(x, y, z, getCoordinateScale, getHeightScale, getMainCoordinateScale, getMainHeightScale, p_222546_10_);
+			double d4 = this.internalSetupPerlinNoiseGenerators(x, y, z, getXCoordinateScale, getZCoordinateScale, getHeightScale, getMainCoordinateScale, getMainHeightScale, p_222546_10_);
 			d4 = d4 - this.func_222545_a(d0, d1, y);
 			if ((double) y > d2) {
 				d4 = MathHelper.clampedLerp(d4, (double) p_222546_13_, ((double) y - d2) / (double) p_222546_12_);
@@ -229,7 +229,8 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 		int coordinateX = chunkX << 4;
 		int coordinateZ = chunkZ << 4;
 		int yNoiseMod;
-		int yInfluenceMod;
+		int yChunk;
+		int yChunkInfluence;
 		double d16;
 		double d17;
 		double d18;
@@ -264,7 +265,8 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 				for (int yNoise = this.noiseSizeY - 1; yNoise >= 0; --yNoise) {
 					if(yNoise > 16) 
 					{
-						yNoiseMod = 31 - yNoise;
+						yChunk = yNoise - 1;
+						yNoiseMod = 31 - yChunk;
 
 						d16 = terrainNoise2DArray[0][zNoise][yNoiseMod + 1];
 						d17 = terrainNoise2DArray[0][zNoise + 1][yNoiseMod +1];
@@ -277,7 +279,8 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 					}
 					else 
 					{
-						yNoiseMod = yNoise;
+						yChunk = yNoise;
+						yNoiseMod = yChunk;
 
 						d16 = terrainNoise2DArray[0][zNoise][yNoiseMod];
 						d17 = terrainNoise2DArray[0][zNoise + 1][yNoiseMod];
@@ -294,18 +297,18 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 						
 						//yInfluence and yNoise is what makes terrain more solid towards ground and now, towards ceiling too
 						
-							yInfluenceMod = yInfluence;
+							yChunkInfluence = yInfluence;
 						
-						int currentY = yNoise * this.verticalNoiseGranularity + yInfluenceMod;
+						int currentY = yChunk * this.verticalNoiseGranularity + yChunkInfluence;
 						int y = currentY & 15;
-						int yChunk = currentY >> 4;
-						if (chunksection.getYLocation() >> 4 != yChunk) {
+						int yChunkFinal = currentY >> 4;
+						if (chunksection.getYLocation() >> 4 != yChunkFinal) {
 							chunksection.unlock();
-							chunksection = chunkprimer.func_217332_a(yChunk);
+							chunksection = chunkprimer.func_217332_a(yChunkFinal);
 							chunksection.lock();
 						}
 
-						double d5 = (double) yInfluenceMod / (double) this.verticalNoiseGranularity;
+						double d5 = (double) yChunkInfluence / (double) this.verticalNoiseGranularity;
 						double d6 = MathHelper.lerp(d5, d16, d1);
 						double d7 = MathHelper.lerp(d5, d18, d3);
 						double d8 = MathHelper.lerp(d5, d17, d2);
