@@ -38,7 +38,7 @@ public class PorousHoneycombBlock extends Block
 	{
 		blockBuilder.add(FILLED);
 	}
-	
+
 
 	/**
 	 * Allow player to harvest honey and put honey into this block using bottles
@@ -57,7 +57,7 @@ public class PorousHoneycombBlock extends Block
 			if (!world.isRemote)
 			{
 				itemstack.shrink(1); // remove current empty bottle
-				this.setDefaultState(thisBlockState.with(FILLED, Boolean.valueOf(false))); // removed honey from this block
+				world.setBlockState(position, thisBlockState.with(FILLED, Boolean.valueOf(false)), 3); // removed honey from this block
 
 				world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 				if (itemstack.isEmpty())
@@ -80,7 +80,7 @@ public class PorousHoneycombBlock extends Block
 			if (!world.isRemote)
 			{
 				itemstack.shrink(1); // remove current honey bottle
-				this.setDefaultState(thisBlockState.with(FILLED, Boolean.valueOf(true))); // added honey to this block
+				world.setBlockState(position, thisBlockState.with(FILLED, Boolean.valueOf(true)), 3); // added honey to this block
 
 				world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 				if (itemstack.isEmpty())
