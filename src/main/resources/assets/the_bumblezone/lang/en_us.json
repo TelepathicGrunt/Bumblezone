@@ -1,6 +1,7 @@
 {
   "itemGroup.the_bumblezone": "The Bumblezone",
   "block.the_bumblezone.porous_honeycomb_block": "Porous Honeycomb Block",
+  "block.the_bumblezone.filled_porous_honeycomb_block": "Filled Porous Honeycomb Block",
   "biome.the_bumblezone.sugar_water_floor": "Sugar Water Floor",
   "biome.the_bumblezone.hive_wall": "Hive Wall"
 }

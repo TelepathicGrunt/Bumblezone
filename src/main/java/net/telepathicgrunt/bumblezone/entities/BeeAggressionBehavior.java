@@ -44,14 +44,7 @@ public class BeeAggressionBehavior
 				//if player picks up a honey block, bees gets very mad...
 				if(event.getStack().getItem() == Items.HONEY_BLOCK)
 				{
-					List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, LINE_OF_SIGHT, playerEntity, playerEntity.getBoundingBox().grow(AGGRESSION_DISTANCE));
-					for(BeeEntity bee : beeList)
-					{
-						bee.setBeeAttacker(playerEntity);
-						bee.addPotionEffect(new EffectInstance(Effects.SPEED, 200, 1, false, false));
-						bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 200, 1, false, false));
-						bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 200, 2, false, false));
-					}
+					unBEElievablyHighAggression(world, playerEntity);
 				}
 			}
 		}
@@ -72,14 +65,40 @@ public class BeeAggressionBehavior
 				//Also checks to make sure we are in dimension and that player isn't in creative or spectator
 				if (!world.isRemote && bearEntity.dimension == BumblezoneDimension.bumblezone())
 				{
-					List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, LINE_OF_SIGHT, (LivingEntity)bearEntity, bearEntity.getBoundingBox().grow(AGGRESSION_DISTANCE));
-					for(BeeEntity bee : beeList)
-					{
-						bee.setBeeAttacker((LivingEntity)bearEntity);
-					}
+					mediumAggression(world, (LivingEntity)bearEntity);
 				}
 			}
 		}
-		
+	}
+	
+	
+	/**
+	 * Bees are angry but not crazy angry
+	 */
+	public static void mediumAggression(World world, LivingEntity livingEntity) {
+		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, LINE_OF_SIGHT, livingEntity, livingEntity.getBoundingBox().grow(AGGRESSION_DISTANCE));
+		for(BeeEntity bee : beeList)
+		{
+			bee.setBeeAttacker(livingEntity);
+			bee.addPotionEffect(new EffectInstance(Effects.SPEED, 200, 1, false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 200, 1, false, false));
+		}
+	}
+	
+	
+	/**
+	 * Bees are REALLY angry!!! HIGH TAIL IT OUTTA THERE BRUH!!!
+	 */
+	public static void unBEElievablyHighAggression(World world, LivingEntity livingEntity) {
+		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, LINE_OF_SIGHT, livingEntity, livingEntity.getBoundingBox().grow(AGGRESSION_DISTANCE));
+		for(BeeEntity bee : beeList)
+		{
+			bee.setBeeAttacker(livingEntity);
+			bee.addPotionEffect(new EffectInstance(Effects.SPEED, 200, 1, false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 200, 2, false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 200, 5, false, false));
+			
+			//apply a bad omen effect on player
+		}
 	}
 }

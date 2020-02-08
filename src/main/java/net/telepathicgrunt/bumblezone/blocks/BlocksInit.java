@@ -21,6 +21,10 @@ public class BlocksInit
     public static final RegistryObject<Block> POROUS_HONEYCOMB = BLOCKS.register("porous_honeycomb_block",
             () -> new PorousHoneycombBlock()
     );
+
+    public static final RegistryObject<Block> FILLED_POROUS_HONEYCOMB = BLOCKS.register("filled_porous_honeycomb_block",
+            () -> new FilledPorousHoneycombBlock()
+    );
     
     
 	/**
@@ -31,7 +35,7 @@ public class BlocksInit
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack createIcon()
 		{
-			return new ItemStack(POROUS_HONEYCOMB.get());
+			return new ItemStack(FILLED_POROUS_HONEYCOMB.get());
 		}
 	};
 
@@ -44,7 +48,8 @@ public class BlocksInit
 	public static void registerBlocks(RegistryEvent.Register<Block> event)
 	{
 		event.getRegistry().registerAll(
-				new PorousHoneycombBlock());
+				new PorousHoneycombBlock(),
+				new FilledPorousHoneycombBlock());
 	}
 
 
@@ -56,8 +61,8 @@ public class BlocksInit
 	public static void registerItems(RegistryEvent.Register<Item> event)
 	{
 		event.getRegistry().registerAll(
-				new BlockItem(BlocksInit.POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)).setRegistryName(BlocksInit.POROUS_HONEYCOMB.get().getRegistryName().getPath())
-			//make it honey filled	//, new BlockItem(BlocksInit.POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)).setRegistryName(BlocksInit.POROUS_HONEYCOMB.get().getRegistryName().getPath())
+				new BlockItem(BlocksInit.POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)).setRegistryName(BlocksInit.POROUS_HONEYCOMB.get().getRegistryName().getPath()),
+			    new BlockItem(BlocksInit.FILLED_POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)).setRegistryName(BlocksInit.FILLED_POROUS_HONEYCOMB.get().getRegistryName().getPath())
 				);
 	}
 
