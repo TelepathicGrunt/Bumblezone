@@ -33,6 +33,12 @@ public class PorousHoneycombBlock extends Block
 		setRegistryName("porous_honeycomb_block");
 	}
 
+	@Override
+	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> blockBuilder)
+	{
+		blockBuilder.add(FILLED);
+	}
+	
 
 	/**
 	 * Allow player to harvest honey and put honey into this block using bottles
@@ -51,7 +57,7 @@ public class PorousHoneycombBlock extends Block
 			if (!world.isRemote)
 			{
 				itemstack.shrink(1); // remove current empty bottle
-				this.setDefaultState(thisBlockState.with(FILLED, Boolean.valueOf(false))); // remove honey from this block
+				this.setDefaultState(thisBlockState.with(FILLED, Boolean.valueOf(false))); // removed honey from this block
 
 				world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 				if (itemstack.isEmpty())
@@ -74,7 +80,7 @@ public class PorousHoneycombBlock extends Block
 			if (!world.isRemote)
 			{
 				itemstack.shrink(1); // remove current honey bottle
-				this.setDefaultState(thisBlockState.with(FILLED, Boolean.valueOf(true))); // add honey to this block
+				this.setDefaultState(thisBlockState.with(FILLED, Boolean.valueOf(true))); // added honey to this block
 
 				world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 				if (itemstack.isEmpty())
@@ -95,9 +101,4 @@ public class PorousHoneycombBlock extends Block
 		}
 	}
 
-
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> blockBuilder)
-	{
-		blockBuilder.add(FILLED);
-	}
 }
