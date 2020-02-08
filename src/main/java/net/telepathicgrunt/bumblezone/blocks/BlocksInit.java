@@ -56,7 +56,9 @@ public class BlocksInit
 	public static void registerItems(RegistryEvent.Register<Item> event)
 	{
 		event.getRegistry().registerAll(
-				new BlockItem(BlocksInit.POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)).setRegistryName(BlocksInit.POROUS_HONEYCOMB.get().getRegistryName().getPath()));
+				new BlockItem(BlocksInit.POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)).setRegistryName(BlocksInit.POROUS_HONEYCOMB.get().getRegistryName().getPath())
+			//make it honey filled	//, new BlockItem(BlocksInit.POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)).setRegistryName(BlocksInit.POROUS_HONEYCOMB.get().getRegistryName().getPath())
+				);
 	}
 
 }
