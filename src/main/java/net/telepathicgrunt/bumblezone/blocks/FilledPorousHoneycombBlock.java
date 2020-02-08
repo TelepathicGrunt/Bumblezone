@@ -25,6 +25,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.telepathicgrunt.bumblezone.entities.BeeAggressionBehavior;
+import net.telepathicgrunt.bumblezone.world.dimension.BumblezoneDimension;
 
 
 public class FilledPorousHoneycombBlock extends Block
@@ -66,8 +67,10 @@ public class FilledPorousHoneycombBlock extends Block
 				}
 				
 				
-				//Now all bees nearby will get VERY angry!!!
-				BeeAggressionBehavior.unBEElievablyHighAggression(world, playerEntity);
+				if(playerEntity.dimension == BumblezoneDimension.bumblezone()) {
+					//Now all bees nearby in Bumblezone will get VERY angry!!!
+					BeeAggressionBehavior.unBEElievablyHighAggression(world, playerEntity);
+				}
 			}
 
 			return ActionResultType.SUCCESS;
