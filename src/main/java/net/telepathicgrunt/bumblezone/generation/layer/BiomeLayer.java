@@ -20,17 +20,17 @@ public enum BiomeLayer implements IAreaTransformer0
 	private static final int HIVE_WALL = Registry.BIOME.getId(BiomeInit.HIVE_WALL);
 
 	private static PerlinNoiseGenerator perlinGen;
-	private double max = 0;
-	private double min = 1;
+//	private double max = 0;
+//	private double min = 1;
 	
 
 	public int apply(INoiseRandom noise, int x, int z)
 	{
 		double perlinNoise = perlinGen.noiseAt((double) x * 0.1D, (double)z * 0.00001D, false) * 0.5D + 0.5D;
 		
-		max = Math.max(max, perlinNoise);
-		min = Math.min(min, perlinNoise);
-		Bumblezone.LOGGER.log(Level.DEBUG, "Max: " + max +", Min: "+min + ", perlin: "+perlinNoise);
+//		max = Math.max(max, perlinNoise);
+//		min = Math.min(min, perlinNoise);
+//		Bumblezone.LOGGER.log(Level.DEBUG, "Max: " + max +", Min: "+min + ", perlin: "+perlinNoise);
 
 		if(Math.abs(perlinNoise) < 0.7)
 		{

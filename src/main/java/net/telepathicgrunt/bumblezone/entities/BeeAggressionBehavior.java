@@ -25,6 +25,7 @@ public class BeeAggressionBehavior
 {
 	private static final double AGGRESSION_DISTANCE = 64.0D;
 	private static final EntityPredicate LINE_OF_SIGHT = (new EntityPredicate()).setDistance(AGGRESSION_DISTANCE).setLineOfSiteRequired();
+	private static final EntityPredicate SEE_THROUGH_WALLS = (new EntityPredicate()).setDistance(AGGRESSION_DISTANCE);
 	
 	@Mod.EventBusSubscriber(modid = Bumblezone.MODID)
 	private static class ForgeEvents
@@ -80,8 +81,9 @@ public class BeeAggressionBehavior
 		for(BeeEntity bee : beeList)
 		{
 			bee.setBeeAttacker(livingEntity);
-			bee.addPotionEffect(new EffectInstance(Effects.SPEED, 200, 1, false, false));
-			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 200, 1, false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.SPEED, 350, 1, false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 350, 1, false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 350, 1, false, true));
 		}
 	}
 	
@@ -90,13 +92,13 @@ public class BeeAggressionBehavior
 	 * Bees are REALLY angry!!! HIGH TAIL IT OUTTA THERE BRUH!!!
 	 */
 	public static void unBEElievablyHighAggression(World world, LivingEntity livingEntity) {
-		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, LINE_OF_SIGHT, livingEntity, livingEntity.getBoundingBox().grow(AGGRESSION_DISTANCE));
+		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().grow(AGGRESSION_DISTANCE));
 		for(BeeEntity bee : beeList)
 		{
 			bee.setBeeAttacker(livingEntity);
-			bee.addPotionEffect(new EffectInstance(Effects.SPEED, 200, 1, false, false));
-			bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 200, 2, false, false));
-			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 200, 5, false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.SPEED, 350, 1, false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 350, 2, false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 350, 5, false, true));
 			
 			//apply a bad omen effect on player
 		}

@@ -105,7 +105,7 @@ public class FilledPorousHoneycombBlock extends Block
 	@OnlyIn(Dist.CLIENT)
 	private void spawnHoneyParticles(World world, BlockPos position, BlockState blockState)
 	{
-		if (blockState.getFluidState().isEmpty() && !(world.rand.nextFloat() < 0.2F))
+		if (blockState.getFluidState().isEmpty() && world.rand.nextFloat() < 0.08F)
 		{
 			VoxelShape currentBlockShape = blockState.getCollisionShape(world, position);
 			double yEndHeight = currentBlockShape.getEnd(Direction.Axis.Y);

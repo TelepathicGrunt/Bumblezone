@@ -201,7 +201,7 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 				int zPos = chunkZ + z;
 				int ySurface = chunk.getTopBlockY(Heightmap.Type.WORLD_SURFACE_WG, x, z) + 1;
 				double noise = this.surfaceDepthNoise.noiseAt((double) xPos * 0.0625D, (double) zPos * 0.0625D, 0.0625D, (double) x * 0.0625D) * 10.0D;
-				region.getBiome(blockpos$mutable.setPos(chunkX + x, ySurface, chunkZ + z)).buildSurface(sharedseedrandom, chunk, xPos, zPos, ySurface, noise, this.defaultBlock, this.defaultFluid, 5, this.world.getSeed());
+				region.getBiome(blockpos$mutable.setPos(chunkX + x, ySurface, chunkZ + z)).buildSurface(sharedseedrandom, chunk, xPos, zPos, ySurface, noise, this.defaultBlock, this.defaultFluid, region.getSeaLevel(), this.world.getSeed());
 			}
 		}
 

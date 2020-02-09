@@ -30,6 +30,6 @@ BEEEEEEEEEEEEEEEEESSSSSSSSSSS
 
 	Mobs: 
 ·Bees generate at a high rate in the dimension and will become aggressive towards Polar Bears and Pandas if the player somehow gets them into the dimension. The bees will get a temporary Strength 1 and Speed 1 effect.
-·If you pick up a Honey Block in the dimension or take honey from a Filled Porous Honeycomb block, all bees that can see you within 64 range will become EXTREMELY aggressive towards you. Beware, the bees will be REALLY angry and will get a temporary Strength 5, Absorption 2, and Speed 1 effect!
+·If you pick up a Honey Block in the dimension or take honey from a Filled Porous Honeycomb block, all bees within 64 range of you will become EXTREMELY aggressive towards you. Beware, the bees will be REALLY angry and will get a temporary Strength 5, Absorption 2, and Speed 1 effect!
 ·Spiders, Endermen, and Phantoms will spawn at a low rate with Phantoms being extremely rare.
 ·Slime will spawn at any height when a new chunk is created for the first time. However, they will only respawn in an already generate chunk if that chunk is marked as a "slime chunk" and at Y = 40 or below just like the Overworld. 
