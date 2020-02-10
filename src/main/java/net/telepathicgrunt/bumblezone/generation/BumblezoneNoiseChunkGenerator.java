@@ -218,23 +218,15 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable();
 		int xStart = chunk.getPos().getXStart();
 		int zStart = chunk.getPos().getZStart();
-		int floorHeight = 0;
 		int roofHeight = 255;
 
-		for (BlockPos blockpos : BlockPos.getAllInBoxMutable(xStart, 0, zStart, xStart + 15, 0, zStart + 15)) {
-			if (roofHeight > 0) {
-				for (int floorY = roofHeight; floorY >= roofHeight - 4; --floorY) {
-					if (floorY >= roofHeight - random.nextInt(5)) {
-						chunk.setBlockState(blockpos$Mutable.setPos(blockpos.getX(), floorY, blockpos.getZ()), Blocks.field_226908_md_.getDefaultState(), false);
-					}
-				}
-			}
-
-			if (floorHeight < 256) {
-				for (int ceilingY = floorHeight + 4; ceilingY >= floorHeight; --ceilingY) {
-					if (ceilingY <= floorHeight + random.nextInt(5)) {
-						chunk.setBlockState(blockpos$Mutable.setPos(blockpos.getX(), ceilingY, blockpos.getZ()), Blocks.field_226908_md_.getDefaultState(), false);
-					}
+		for (BlockPos blockpos : BlockPos.getAllInBoxMutable(xStart, 0, zStart, xStart + 15, 0, zStart + 15)) 
+		{
+			if (roofHeight > 0) 
+			{
+				for (int ceilingY = roofHeight; ceilingY >= roofHeight - 7; --ceilingY) 
+				{
+					chunk.setBlockState(blockpos$Mutable.setPos(blockpos.getX(), ceilingY, blockpos.getZ()), Blocks.field_226908_md_.getDefaultState(), false);
 				}
 			}
 		}

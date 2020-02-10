@@ -231,13 +231,6 @@ public class PlayerTeleportationBehavior
 			destinationWorld.setBlockState(blockpos.down(), Blocks.field_226908_md_.getDefaultState());
 			validBlockPos = blockpos;
 		}
-		else
-		{
-			//Is indeed a valid spot
-			
-			//now move down to the first solid land
-			validBlockPos = new BlockPos(validBlockPos.getX(), PlacingUtils.topOfSurfaceBelowHeight(destinationWorld, blockpos.getY(), 0, destinationWorld.rand, blockpos), validBlockPos.getZ());
-		}
 
 		//if player throws pearl at hive and then goes to sleep, they wake up
 		if (playerEntity.isSleeping())
