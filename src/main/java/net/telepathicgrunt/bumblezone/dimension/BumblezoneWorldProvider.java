@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.world.dimension;
+package net.telepathicgrunt.bumblezone.dimension;
 
 import javax.annotation.Nullable;
 
@@ -94,7 +94,7 @@ public class BumblezoneWorldProvider extends Dimension
 	@Override
 	public double getMovementFactor()
     {
-        return 12.0; //A SPEEDY DIMENSION
+        return 10.0; //A SPEEDY DIMENSION
     }
 
 	

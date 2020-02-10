@@ -17,10 +17,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.telepathicgrunt.bumblezone.biome.BiomeInit;
 import net.telepathicgrunt.bumblezone.blocks.BlocksInit;
 import net.telepathicgrunt.bumblezone.capabilities.CapabilityPlayerPosAndDim;
 import net.telepathicgrunt.bumblezone.features.FeatureInit;
-import net.telepathicgrunt.bumblezone.world.biome.BiomeInit;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Bumblezone.MODID)

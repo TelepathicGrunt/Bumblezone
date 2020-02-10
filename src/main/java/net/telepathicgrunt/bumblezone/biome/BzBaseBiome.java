@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.world.biome;
+package net.telepathicgrunt.bumblezone.biome;
 
 import com.google.common.collect.ImmutableSet;
 
@@ -11,9 +11,9 @@ import net.minecraft.world.gen.placement.NoPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
+import net.telepathicgrunt.bumblezone.biome.surfacebuilders.HoneySurfaceBuilder;
 import net.telepathicgrunt.bumblezone.blocks.BlocksInit;
 import net.telepathicgrunt.bumblezone.features.placement.HoneycombHolePlacer;
-import net.telepathicgrunt.bumblezone.world.biomes.surfacebuilders.HoneySurfaceBuilder;
 
 public class BzBaseBiome extends Biome {
 

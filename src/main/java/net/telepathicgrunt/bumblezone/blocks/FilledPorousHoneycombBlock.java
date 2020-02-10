@@ -24,8 +24,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.telepathicgrunt.bumblezone.dimension.BumblezoneDimension;
 import net.telepathicgrunt.bumblezone.entities.BeeAggressionBehavior;
-import net.telepathicgrunt.bumblezone.world.dimension.BumblezoneDimension;
 
 
 public class FilledPorousHoneycombBlock extends Block

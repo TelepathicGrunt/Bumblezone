@@ -25,8 +25,8 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.layer.Layer;
 import net.minecraft.world.gen.layer.ZoomLayer;
 import net.minecraft.world.gen.layer.traits.IAreaTransformer1;
+import net.telepathicgrunt.bumblezone.biome.BiomeInit;
 import net.telepathicgrunt.bumblezone.generation.layer.BiomeLayer;
-import net.telepathicgrunt.bumblezone.world.biome.BiomeInit;
 
 
 public class BumblezoneBiomeProvider extends BiomeProvider

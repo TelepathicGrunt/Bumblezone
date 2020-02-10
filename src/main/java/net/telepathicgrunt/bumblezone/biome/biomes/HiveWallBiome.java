@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.world.biomes;
+package net.telepathicgrunt.bumblezone.biome.biomes;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -12,14 +12,14 @@ import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.telepathicgrunt.bumblezone.biome.BzBaseBiome;
 import net.telepathicgrunt.bumblezone.features.FeatureInit;
-import net.telepathicgrunt.bumblezone.world.biome.BzBaseBiome;
 
-public final class HivePillarBiome extends BzBaseBiome
+public final class HiveWallBiome extends BzBaseBiome
 {
-	public HivePillarBiome()
+	public HiveWallBiome()
 	{
-		super((new Builder()).surfaceBuilder(new ConfiguredSurfaceBuilder<>(HONEY_SURFACE_BUILDER, HONEY_CONFIG)).precipitation(Biome.RainType.NONE).category(Biome.Category.JUNGLE).depth(5F).scale(0.0F).temperature(1.85F).downfall(0.5F).waterColor(16167168).waterFogColor(13528064).parent((String) null));
+		super((new Builder()).surfaceBuilder(new ConfiguredSurfaceBuilder<>(HONEY_SURFACE_BUILDER, HONEY_CONFIG)).precipitation(Biome.RainType.NONE).category(Biome.Category.JUNGLE).depth(0.1F).scale(0.2F).temperature(1.85F).downfall(0.5F).waterColor(16167168).waterFogColor(13528064).parent((String) null));
 
 		this.addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, FeatureInit.HONEYCOMB_HOLE.configure(IFeatureConfig.NO_FEATURE_CONFIG).createDecoratedFeature(HONEYCOMB_HOLE_PLACER.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG)));
 		

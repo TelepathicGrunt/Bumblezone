@@ -22,7 +22,7 @@ import net.minecraft.world.gen.OverworldGenSettings;
 import net.minecraft.world.gen.WorldGenRegion;
 import net.minecraft.world.server.ServerWorld;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.world.feature.placement.PlacingUtils;
+import net.telepathicgrunt.bumblezone.features.placement.PlacingUtils;
 
 
 public class BumblezoneChunkGenerator extends BumblezoneNoiseChunkGenerator<OverworldGenSettings>

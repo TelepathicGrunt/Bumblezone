@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.world.dimension;
+package net.telepathicgrunt.bumblezone.dimension;
 
 import java.util.Locale;
 import java.util.function.BiFunction;

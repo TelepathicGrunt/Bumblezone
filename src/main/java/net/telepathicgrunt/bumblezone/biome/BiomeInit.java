@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.world.biome;
+package net.telepathicgrunt.bumblezone.biome;
 
 
 import java.util.HashSet;
@@ -11,9 +11,9 @@ import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.world.biomes.HivePillarBiome;
-import net.telepathicgrunt.bumblezone.world.biomes.HiveWallBiome;
-import net.telepathicgrunt.bumblezone.world.biomes.SugarWaterBiome;
+import net.telepathicgrunt.bumblezone.biome.biomes.HivePillarBiome;
+import net.telepathicgrunt.bumblezone.biome.biomes.HiveWallBiome;
+import net.telepathicgrunt.bumblezone.biome.biomes.SugarWaterBiome;
 
 public class BiomeInit {
 

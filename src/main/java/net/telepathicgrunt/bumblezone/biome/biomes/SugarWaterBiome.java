@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.world.biomes;
+package net.telepathicgrunt.bumblezone.biome.biomes;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -12,8 +12,8 @@ import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.telepathicgrunt.bumblezone.biome.BzBaseBiome;
 import net.telepathicgrunt.bumblezone.features.FeatureInit;
-import net.telepathicgrunt.bumblezone.world.biome.BzBaseBiome;
 
 public final class SugarWaterBiome extends BzBaseBiome
 {

@@ -24,8 +24,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.capabilities.IPlayerPosAndDim;
 import net.telepathicgrunt.bumblezone.capabilities.PlayerPositionAndDimension;
-import net.telepathicgrunt.bumblezone.world.dimension.BumblezoneDimension;
-import net.telepathicgrunt.bumblezone.world.feature.placement.PlacingUtils;
+import net.telepathicgrunt.bumblezone.dimension.BumblezoneDimension;
+import net.telepathicgrunt.bumblezone.features.placement.PlacingUtils;
 
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -42,11 +42,11 @@ public class PlayerTeleportationBehavior
 		@SubscribeEvent
 		public static void ProjectileImpactEvent(net.minecraftforge.event.entity.ProjectileImpactEvent.Throwable event)
 		{
-			EnderPearlEntity pearlEntity; // the thrown pearl
+			EnderPearlEntity pearlEntity; 
 
 			if (event.getEntity() instanceof EnderPearlEntity)
 			{
-				pearlEntity = (EnderPearlEntity) event.getEntity();
+				pearlEntity = (EnderPearlEntity) event.getEntity(); // the thrown pearl
 			}
 			else
 			{
@@ -119,8 +119,11 @@ public class PlayerTeleportationBehavior
 					cap.setDestDim(destination);
 					cap.setTeleporting(true);
 					
-					//canceled the original ender pearl's teleportation.
+					//canceled the original ender pearl's event so other mods don't do stuff.
 					event.setCanceled(true);
+					
+					// remove enderpearl so it cannot teleport us
+					pearlEntity.remove(); 
 				}
 			}
 		}
@@ -184,7 +187,7 @@ public class PlayerTeleportationBehavior
 		
 		//Gets valid space in other world
 		//Won't ever be null
-		BlockPos validBlockPos = validPlayerSpawnLocationByBeehive(destinationWorld, blockpos, 24, checkingUpward);
+		BlockPos validBlockPos = validPlayerSpawnLocationByBeehive(destinationWorld, blockpos, 48, checkingUpward);
 		
 
 		//let game know we are gonna teleport player
@@ -219,17 +222,39 @@ public class PlayerTeleportationBehavior
 		
 		
 		//gets valid space in other world
-		BlockPos validBlockPos = validPlayerSpawnLocation(destinationWorld, blockpos, 32);
+		BlockPos validBlockPos = validPlayerSpawnLocation(destinationWorld, blockpos, 10);
+
 		
-		
+		//No valid space found around destination. Begin secondary valid spot algorithms
 		if (validBlockPos == null)
 		{
-			//No valid space found around portal. 
-			//We are going to spawn player at exact spot of scaled coordinates by placing air at the spot with honeycomb bottom
-			destinationWorld.setBlockState(blockpos, Blocks.AIR.getDefaultState());
-			destinationWorld.setBlockState(blockpos.up(), Blocks.AIR.getDefaultState());
-			destinationWorld.setBlockState(blockpos.down(), Blocks.field_226908_md_.getDefaultState());
-			validBlockPos = blockpos;
+			//Check if destination position is in air and if so, go down to first solid land.
+			if(destinationWorld.getBlockState(blockpos).getMaterial() == Material.AIR && 
+			   destinationWorld.getBlockState(blockpos.up()).getMaterial() == Material.AIR) 
+			{
+				validBlockPos = new BlockPos(
+						blockpos.getX(), 
+						PlacingUtils.topOfSurfaceBelowHeight(destinationWorld, blockpos.getY(), 0, destinationWorld.rand, blockpos),
+						blockpos.getZ());
+				
+				//No solid land was found. Who digs out an entire chunk?!
+				if(validBlockPos.getY() == 0)
+				{
+					validBlockPos = null;
+				}
+			}
+			
+			//still no valid position, time to force a valid location ourselves
+			if(validBlockPos == null) 
+			{
+				//We are going to spawn player at exact spot of scaled coordinates by placing air at the spot with honeycomb bottom
+				//This is the last resort
+				destinationWorld.setBlockState(blockpos, Blocks.AIR.getDefaultState());
+				destinationWorld.setBlockState(blockpos.up(), Blocks.AIR.getDefaultState());
+				destinationWorld.setBlockState(blockpos.down(), Blocks.field_226908_md_.getDefaultState());
+				validBlockPos = blockpos;
+			}
+			
 		}
 
 		//if player throws pearl at hive and then goes to sleep, they wake up
@@ -277,13 +302,15 @@ public class PlayerTeleportationBehavior
 			for (int range = 1; range < maximumRange; range++)
 			{
 				int radius = range * range;
-				for (int x = -range; x <= range; x++)
-				{
-					for (int z = -range; z <= range; z++)
-					{
-						if (x * x + z * z >= radius)
+				for (int x = 0; x <= range * 2; x++){
+					int x2 = x > range ? -(x - range) : x;
+					
+					for (int z = 0; z <= range * 2; z++){
+						int z2 = z > range ? -(z - range) : x;
+						
+						if (x2 * x2 + z2 * z2 >= radius)
 						{
-							mutableBlockPos.setPos(position.getX() + x, mutableBlockPos.getY(), position.getZ() + z);
+							mutableBlockPos.setPos(position.getX() + x2, mutableBlockPos.getY(), position.getZ() + z2);
 							
 							if (world.getBlockState(mutableBlockPos).getBlock() == Blocks.field_226905_ma_)
 							{
@@ -342,30 +369,32 @@ public class PlayerTeleportationBehavior
 	{
 		//Try to find 2 non-solid spaces around it that the player can spawn at
 		int radius = 0;
+		int outterRadius = 0;
 		int distanceSq = 0;
-		BlockPos currentPos = position;
+		BlockPos.Mutable currentPos = new BlockPos.Mutable(position);
 
 		//checks for 2 non-solid blocks with solid block below feet
 		//checks outward from center position in both x, y, and z.
 		//The x2, y2, and z2 is so it checks at center of the range box instead of the corner.
 		for (int range = 0; range < maximumRange; range++){
 			radius = range * range;
+			outterRadius = (range + 1) * (range + 1);
 
 			for (int y = 0; y <= range * 2; y++){
-				int y2 = y > range ? y - range * 2 - 1 : y;
+				int y2 = y > range ? -(y - range) : y;
 				
 				
 				for (int x = 0; x <= range * 2; x++){
-					int x2 = x > range ? x - range * 2 - 1 : x;
+					int x2 = x > range ? -(x - range) : x;
 					
 					
 					for (int z = 0; z <= range * 2; z++){
-						int z2 = z > range ? z - range * 2 - 1 : z;
+						int z2 = z > range ? -(z - range) : z;
 				
 						distanceSq = x2 * x2 + z2 * z2 + y2 * y2;
-						if (distanceSq >= radius && distanceSq < (range + 1) * (range + 1))
+						if (distanceSq >= radius && distanceSq < outterRadius)
 						{
-							currentPos = position.add(x2, y2, z2);
+							currentPos.setPos(position.add(x2, y2, z2));
 							if (world.getBlockState(currentPos.down()).isSolid() && 
 								world.getBlockState(currentPos).getMaterial() == Material.AIR && 
 								world.getBlockState(currentPos.up()).getMaterial() == Material.AIR)

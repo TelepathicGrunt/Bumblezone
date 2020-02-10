@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.world.biomes.surfacebuilders;
+package net.telepathicgrunt.bumblezone.biome.surfacebuilders;
 
 import java.util.Random;
 import java.util.function.Function;

@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.world.feature.placement;
+package net.telepathicgrunt.bumblezone.features.placement;
 
 import java.util.Random;
 
