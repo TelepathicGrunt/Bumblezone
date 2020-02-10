@@ -11,6 +11,7 @@ import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.world.biomes.HivePillarBiome;
 import net.telepathicgrunt.bumblezone.world.biomes.HiveWallBiome;
 import net.telepathicgrunt.bumblezone.world.biomes.SugarWaterBiome;
 
@@ -23,6 +24,7 @@ public class BiomeInit {
 	//biome instances
 	public static Biome SUGAR_WATER = new SugarWaterBiome();
 	public static Biome HIVE_WALL = new HiveWallBiome();
+	public static Biome HIVE_PILLAR = new HivePillarBiome();
 	
 	
 	//registers the biomes so they now exist in the registry along with their types
@@ -32,6 +34,7 @@ public class BiomeInit {
 		
 		initBiome(registry, SUGAR_WATER, "Sugar Water Floor", BiomeType.WARM, Type.PLAINS);
 		initBiome(registry, HIVE_WALL, "Hive Wall", BiomeType.WARM, Type.PLAINS);
+		initBiome(registry, HIVE_PILLAR, "Hive Pillar", BiomeType.WARM, Type.PLAINS);
 	}
 
 

@@ -27,6 +27,7 @@ BEEEEEEEEEEEEEEEEESSSSSSSSSSS
 	Biomes: 
 ·Hive Wall biomes will be the giant flat vertical slabs filled with holes that the bees dug out. In each hole is some Honey Blocks! 
 ·Between the Hive Wall biomes is the Sugar Water Floor biome which creates a water filled space between each honeycomb wall. Bring a boat!
+·Also Hive Pillar biomes will spawn quite a bit to make massive pillars that connects the ceiling and floor!
 
 	Mobs: 
 ·Bees generate at a high rate in the dimension and will become aggressive towards Polar Bears and Pandas if the player somehow gets them into the dimension. The bees will get a temporary Strength 1 and Speed 1 effect.

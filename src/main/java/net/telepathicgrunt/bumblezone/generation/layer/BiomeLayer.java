@@ -1,13 +1,10 @@
 package net.telepathicgrunt.bumblezone.generation.layer;
 
-import org.apache.logging.log4j.Level;
-
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.INoiseRandom;
 import net.minecraft.world.gen.PerlinNoiseGenerator;
 import net.minecraft.world.gen.layer.traits.IAreaTransformer0;
-import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.world.biome.BiomeInit;
 
 
@@ -18,6 +15,7 @@ public enum BiomeLayer implements IAreaTransformer0
 
 	private static final int SUGAR_WATER = Registry.BIOME.getId(BiomeInit.SUGAR_WATER);
 	private static final int HIVE_WALL = Registry.BIOME.getId(BiomeInit.HIVE_WALL);
+	private static final int HIVE_PILLAR = Registry.BIOME.getId(BiomeInit.HIVE_PILLAR);
 
 	private static PerlinNoiseGenerator perlinGen;
 //	private double max = 0;
@@ -32,7 +30,11 @@ public enum BiomeLayer implements IAreaTransformer0
 //		min = Math.min(min, perlinNoise);
 //		Bumblezone.LOGGER.log(Level.DEBUG, "Max: " + max +", Min: "+min + ", perlin: "+perlinNoise);
 
-		if(Math.abs(perlinNoise) < 0.7)
+		if(noise.random(5) == 0) 
+		{
+			return HIVE_PILLAR;
+		}
+		else if(Math.abs(perlinNoise) < 0.7)
 		{
 			return SUGAR_WATER;
 		}
