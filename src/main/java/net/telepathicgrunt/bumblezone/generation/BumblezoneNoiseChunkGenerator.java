@@ -209,7 +209,7 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 	}
 
 	/**
-	 * Creates the floor and ceiling that separates the dimension from the void below y = 0 and 
+	 * Creates the ceiling that separates the dimension from
 	 * the emptiness above y = 256. 
 	 * 
 	 * We use honeycomb blocks instead of Bedrock.

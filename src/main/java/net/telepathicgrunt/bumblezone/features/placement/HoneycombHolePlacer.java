@@ -26,15 +26,15 @@ public class HoneycombHolePlacer extends Placement<NoPlacementConfig>
 	public Stream<BlockPos> getPositions(IWorld world, ChunkGenerator<? extends GenerationSettings> chunkGenerator, Random random, NoPlacementConfig placementConfig, BlockPos pos)
 	{
 		//Start at top
-		BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(pos.getX()-4, 200, pos.getZ()+4);
+		BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(pos.getX()-4, 236, pos.getZ()+4);
 		List<BlockPos> blockPosList = new ArrayList<BlockPos>();
 		boolean alternate = false;
 		
 		//Repeats twice with an offset on second pass
 		for(int repeat = 0; repeat < 2; repeat++)
 		{
-			//Makes 19 holes from y = 200 to y = 48
-			for(int count = 0; count < 19; count++) 
+			//Makes 23 holes from y = 236 to y = 52
+			for(int count = 0; count < 23; count++) 
 			{
 				//Moves back and forth in z coordinate so the holes alternate to make this layer of holes
 				if(alternate) 
