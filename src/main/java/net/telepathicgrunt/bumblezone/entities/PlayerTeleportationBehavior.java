@@ -3,6 +3,7 @@ package net.telepathicgrunt.bumblezone.entities;
 import javax.annotation.Nullable;
 
 import net.minecraft.block.Blocks;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EnderPearlEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -183,15 +184,8 @@ public class PlayerTeleportationBehavior
 		
 		//Gets valid space in other world
 		//Won't ever be null
-		BlockPos validBlockPos = validPlayerSpawnLocationByBeehive(destinationWorld, blockpos, 16, checkingUpward);
+		BlockPos validBlockPos = validPlayerSpawnLocationByBeehive(destinationWorld, blockpos, 24, checkingUpward);
 		
-
-		//if player throws pearl at hive and then goes to sleep, they wake up
-		if (playerEntity.isSleeping())
-		{
-			playerEntity.wakeUp();
-		}
-
 
 		//let game know we are gonna teleport player
 		ChunkPos chunkpos = new ChunkPos(validBlockPos);
@@ -225,7 +219,7 @@ public class PlayerTeleportationBehavior
 		
 		
 		//gets valid space in other world
-		BlockPos validBlockPos = validPlayerSpawnLocation(destinationWorld, blockpos, 64);
+		BlockPos validBlockPos = validPlayerSpawnLocation(destinationWorld, blockpos, 32);
 		
 		
 		if (validBlockPos == null)
@@ -242,7 +236,7 @@ public class PlayerTeleportationBehavior
 			//Is indeed a valid spot
 			
 			//now move down to the first solid land
-			validBlockPos = validBlockPos.up(PlacingUtils.topOfSurfaceBelowHeight(destinationWorld, blockpos.getY(), 0, destinationWorld.rand, blockpos) - blockpos.getY());
+			validBlockPos = new BlockPos(validBlockPos.getX(), PlacingUtils.topOfSurfaceBelowHeight(destinationWorld, blockpos.getY(), 0, destinationWorld.rand, blockpos), validBlockPos.getZ());
 		}
 
 		//if player throws pearl at hive and then goes to sleep, they wake up
@@ -283,11 +277,13 @@ public class PlayerTeleportationBehavior
 														position.getZ()); 
 		
 		
+		//scans range from y = 0 to dimension max height for a bee_nest
+		//Does it by checking each y layer at a time
 		for (; mutableBlockPos.getY() >= 0 && mutableBlockPos.getY() <= world.getDimension().getActualHeight();)
 		{
 			for (int range = 1; range < maximumRange; range++)
 			{
-				int radius = range * range - 1;
+				int radius = range * range;
 				for (int x = -range; x <= range; x++)
 				{
 					for (int z = -range; z <= range; z++)
@@ -299,7 +295,7 @@ public class PlayerTeleportationBehavior
 							if (world.getBlockState(mutableBlockPos).getBlock() == Blocks.field_226905_ma_)
 							{
 								//A Hive was found, try to find a valid spot next to it
-								BlockPos validSpot = validPlayerSpawnLocation(world, mutableBlockPos, 3);
+								BlockPos validSpot = validPlayerSpawnLocation(world, mutableBlockPos, 4);
 								if(validSpot != null) {
 									return validSpot;
 								}
@@ -309,7 +305,7 @@ public class PlayerTeleportationBehavior
 				}
 			}
 			
-			//move the block pos
+			//move the block pos in the direction it needs to go
 			if(checkingUpward)
 			{
 				mutableBlockPos.move(Direction.UP);
@@ -353,31 +349,36 @@ public class PlayerTeleportationBehavior
 	{
 		//Try to find 2 non-solid spaces around it that the player can spawn at
 		int radius = 0;
+		int distanceSq = 0;
+		BlockPos currentPos = position;
 
 		//checks for 2 non-solid blocks with solid block below feet
 		//checks outward from center position in both x, y, and z.
 		//The x2, y2, and z2 is so it checks at center of the range box instead of the corner.
 		for (int range = 0; range < maximumRange; range++){
-			radius = range * range * range - 1;
+			radius = range * range;
 
 			for (int y = 0; y <= range * 2; y++){
-				int y2 = y > range ? y - range * 2 : y;
+				int y2 = y > range ? y - range * 2 - 1 : y;
 				
 				
 				for (int x = 0; x <= range * 2; x++){
-					int x2 = x > range ? x - range * 2 : x;
+					int x2 = x > range ? x - range * 2 - 1 : x;
 					
 					
 					for (int z = 0; z <= range * 2; z++){
-						int z2 = z > range ? z - range * 2 : z;
+						int z2 = z > range ? z - range * 2 - 1 : z;
 				
-					
-						if (x2 * x2 + z2 * z2 + y2 * y2 >= radius)
+						distanceSq = x2 * x2 + z2 * z2 + y2 * y2;
+						if (distanceSq >= radius && distanceSq < (range + 1) * (range + 1))
 						{
-							if (world.getBlockState(position.add(x2, y2-1, z2)).isSolid() && !world.getBlockState(position.add(x2, y2, z2)).isSolid() && !world.getBlockState(position.add(x2, y2 + 1, z2)).isSolid())
+							currentPos = position.add(x2, y2, z2);
+							if (world.getBlockState(currentPos.down()).isSolid() && 
+								world.getBlockState(currentPos).getMaterial() == Material.AIR && 
+								world.getBlockState(currentPos.up()).getMaterial() == Material.AIR)
 							{
 								//valid space for player is found
-								return position.add(x2, y2, z2);
+								return currentPos;
 							}
 						}
 					}
