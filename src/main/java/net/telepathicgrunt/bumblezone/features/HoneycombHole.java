@@ -5,12 +5,16 @@ import java.util.function.Function;
 
 import com.mojang.datafixers.Dynamic;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.telepathicgrunt.bumblezone.blocks.BlocksInit;
 
 
 public class HoneycombHole extends Feature<NoFeatureConfig>
@@ -21,12 +25,118 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 	}
 
 
+	private int[][] bodyLayout = 
+		{
+		 {0, 0, 0, 1, 1, 1, 0, 0, 0},
+		 {0, 0, 1, 3, 3, 3, 1, 0, 0},
+		 {0, 1, 3, 3, 3, 3, 3, 1, 0},
+		 {1, 3, 3, 3, 3, 3, 3, 3, 1},
+		 {0, 1, 3, 3, 3, 3, 3, 1, 0},
+		 {0, 0, 1, 3, 3, 3, 1, 0, 0},
+		 {0, 0, 0, 1, 1, 1, 0, 0, 0}
+		};
+	
+	private int[][] largeHoneyLayout = 
+		{
+		 {0, 0, 0, 1, 1, 1, 0, 0, 0},
+		 {0, 0, 1, 2, 2, 2, 1, 0, 0},
+		 {0, 1, 2, 2, 3, 2, 2, 1, 0},
+		 {1, 2, 2, 3, 3, 3, 2, 2, 1},
+		 {0, 1, 2, 2, 3, 2, 2, 1, 0},
+		 {0, 0, 1, 2, 2, 2, 1, 0, 0},
+		 {0, 0, 0, 1, 1, 1, 0, 0, 0}
+		};
+	
+	private int[][] smallHoneyLayout = 
+		{
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 1, 1, 1, 0, 0, 0},
+		 {0, 0, 1, 1, 2, 1, 1, 0, 0},
+		 {0, 1, 1, 2, 2, 2, 1, 1, 0},
+		 {0, 0, 1, 1, 2, 1, 1, 0, 0},
+		 {0, 0, 0, 1, 1, 1, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0}
+		};
+	
+	private int[][] endCapLayout = 
+		{
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 1, 0, 0, 0, 0},
+		 {0, 0, 0, 1, 1, 1, 0, 0, 0},
+		 {0, 0, 0, 0, 1, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0}
+		};
+
+	private static final BlockState FILLED_POROUS_HONEYCOMB = BlocksInit.FILLED_POROUS_HONEYCOMB.get().getDefaultState();
+	private static final BlockState AIR = Blocks.AIR.getDefaultState();
+	private static final BlockState HONEY_BLOCK = Blocks.field_226907_mc_.getDefaultState();
+	
+
 	public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> changedBlock, Random rand, BlockPos position, NoFeatureConfig config)
 	{
 		
+		BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(position.west(6));
 		
+		generateSlice(world, mutableBlockPos, endCapLayout);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), smallHoneyLayout);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), largeHoneyLayout);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), largeHoneyLayout);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), smallHoneyLayout);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), endCapLayout);
 		
 			
 		return true;
+	}
+	
+	private void generateSlice(IWorld world, BlockPos.Mutable centerPos, int[][] slice)
+	{
+		//move to the position where the corner of the slice will begin at
+		BlockPos.Mutable currentPosition = new BlockPos.Mutable(centerPos.add(0, -slice.length/2, -slice[0].length/2));
+		
+		//go through each row and column while replacing each solid block
+		for(int y = 0; y < slice.length; y++) 
+		{
+			for(int z = 0; z < slice[0].length; z++) 
+			{
+				//finds solid block
+				if(world.getBlockState(currentPosition).isSolid()) 
+				{
+					//replace solid block with the slice's blocks
+					int sliceBlock = slice[y][z];
+					if(sliceBlock == 0)
+					{
+						//do nothing. 
+					}
+					else if(sliceBlock == 1)
+					{
+						world.setBlockState(currentPosition, FILLED_POROUS_HONEYCOMB, 2);
+					}
+					else if(sliceBlock == 2)
+					{
+						world.setBlockState(currentPosition, HONEY_BLOCK, 2);
+					}
+					else if(sliceBlock == 3)
+					{
+						world.setBlockState(currentPosition, AIR, 2);
+					}
+				}
+				
+				
+				//move down the row
+				currentPosition.move(Direction.SOUTH);
+			}
+			
+			//move back to start of row and down 1 column
+			currentPosition.move(0, -1, -slice[0].length);
+		}
 	}
 }

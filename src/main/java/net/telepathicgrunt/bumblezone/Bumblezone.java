@@ -1,5 +1,6 @@
 package net.telepathicgrunt.bumblezone;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -7,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,6 +19,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.telepathicgrunt.bumblezone.blocks.BlocksInit;
 import net.telepathicgrunt.bumblezone.capabilities.CapabilityPlayerPosAndDim;
+import net.telepathicgrunt.bumblezone.features.FeatureInit;
 import net.telepathicgrunt.bumblezone.world.biome.BiomeInit;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -71,6 +74,17 @@ public class Bumblezone
 		public static void onRegisterItems(final RegistryEvent.Register<Item> event)
 		{
 			BlocksInit.registerItems(event);
+		}
+
+
+		/**
+		 * This method will be called by Forge when it is time for the mod to register features.
+		 */
+		@SubscribeEvent
+		public static void onRegisterFeatures(final RegistryEvent.Register<Feature<?>> event)
+		{
+			FeatureInit.registerFeatures(event);
+			LOGGER.log(Level.INFO, "features registered.");
 		}
     }
 	
