@@ -170,7 +170,7 @@ public class PlayerTeleportationBehavior
 		{
 			//readds potion effect so the particle and icon remains
 			PlayerEntity playerEntity = event.getPlayer();
-			playerEntity.addPotionEffect(playerEntity.getActivePotionEffect(BzEffects.WRATH_OF_THE_HIVE));
+			//playerEntity.addPotionEffect(playerEntity.getActivePotionEffect(BzEffects.WRATH_OF_THE_HIVE));
 			
 //			if(event.getFrom() == BumblezoneDimension.bumblezone())
 //			{
