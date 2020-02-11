@@ -10,6 +10,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
 import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
+import net.telepathicgrunt.bumblezone.config.BzConfig;
 
 
 public class WrathOfTheHiveEffect extends Effect
@@ -47,15 +48,23 @@ public class WrathOfTheHiveEffect extends Effect
 	 */
 	public void performEffect(LivingEntity entity, int amplifier)
 	{
-		//Maximum aggression
-		if(amplifier >= 2) 
+		if(BzConfig.aggressiveBees)
 		{
-			unBEElievablyHighAggression(entity.world, entity);
+			//Maximum aggression
+			if(amplifier >= 2) 
+			{
+				unBEElievablyHighAggression(entity.world, entity);
+			}
+			//Anything lower than 2 is medium aggression
+			else 
+			{
+				mediumAggression(entity.world, entity);
+			}
 		}
-		//Anything lower than 2 is medium aggression
 		else 
 		{
-			mediumAggression(entity.world, entity);
+			//Aggressive bees is turned off. Remove this effect.
+			entity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
 		}
 	}
 	
@@ -85,7 +94,7 @@ public class WrathOfTheHiveEffect extends Effect
 			bee.setBeeAttacker(livingEntity);
 			bee.addPotionEffect(new EffectInstance(Effects.SPEED, 350, 1, false, false));
 			bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 350, 2, false, false));
-			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 350, 3, false, true));
+			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 350, 4, false, true));
 		}
 	}
 }

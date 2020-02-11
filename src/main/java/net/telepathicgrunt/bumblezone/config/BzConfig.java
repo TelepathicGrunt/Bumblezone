@@ -20,24 +20,24 @@ public class BzConfig
 	        SERVER = specPair.getLeft();
 	    }
 
-	    public static boolean importModdedFeatures = false;
+	    public static boolean aggressiveBees = true;
 
 	    
 	    public static class ServerConfig
 	    {
-	    					
-		    public final ForgeConfigSpec.BooleanValue importModdedFeatures;
+		    public final ForgeConfigSpec.BooleanValue aggressiveBees;
 
 	        ServerConfig(ForgeConfigSpec.Builder builder) 
 	        {
 
-	            builder.push("Mod Compatibility Options");
+	            builder.push("Bees Options");
 	            
-	            		importModdedFeatures = builder
-	                    .comment("\r\n Attempt to add modded features from vanilla biomes into Ultra Amplified version of that biome.\r\n "
-	                    		+"Only works if other mod added the feature by addFeature(...) to vanilla biome and registered the feature correctly without the 'minecraft' namespace.")
-	                    .translation("ultraamplified.config.compatibility.importmoddedfeatures")
-	                    .define("importModdedFeatures", false);
+	            aggressiveBees = builder
+	                    .comment("\r\n Determines whether bees become angry if you take honey from\r\n "
+	                    		+" Filled Porous Honeycomb Blocks or pick up Honey blocks inside the Bumblezone dimension.\r\n"
+	                    		+" Note: Peaceful mode will always override the bee aggressive setting.")
+	                    .translation("the_bumblezone.config.bees.aggressivebees")
+	                    .define("aggressiveBees", false);
 	            		
 	            builder.pop();
 	        }
@@ -46,6 +46,6 @@ public class BzConfig
 	    
 	    public static void refreshServer()
 	    {
-	    	importModdedFeatures = SERVER.importModdedFeatures.get();
+	    	aggressiveBees = SERVER.aggressiveBees.get();
 	    }
 }
