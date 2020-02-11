@@ -22,7 +22,6 @@ import net.minecraft.world.server.TicketType;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
@@ -172,52 +171,6 @@ public class PlayerTeleportationBehavior
 			{
 				playerEntity.setPosition(playerEntity.getX(), -3, playerEntity.getZ());
 			}
-		}
-		
-
-		/**
-		 * for spawning particles when player changes dimensions to and from The Bumblezone
-		 */
-		@SubscribeEvent
-		public static void PlayerChangedDimensionEvent(PlayerChangedDimensionEvent event)
-		{
-			
-//			if(event.getFrom() == BumblezoneDimension.bumblezone())
-//			{
-//				PlayerEntity playerEntity = event.getPlayer();
-//				World world = playerEntity.world;
-//				
-//				//add honey particles for exiting the dimension
-//			    for(int i = 0; i < 32; ++i) 
-//			    {
-//					world.addParticle(
-//			    			ParticleTypes.field_229427_ag_, 
-//			    			playerEntity.getX() + 0.5D, 
-//			    			playerEntity.getY() + 1 + world.rand.nextDouble() * 2.0D, 
-//			    			playerEntity.getZ() + 0.5D, 
-//			    			world.rand.nextGaussian(), 
-//			    			0.0D, 
-//			    			world.rand.nextGaussian());
-//			    }
-//			}
-//			else if(event.getTo() == BumblezoneDimension.bumblezone())
-//			{
-//				PlayerEntity playerEntity = event.getPlayer();
-//				World world = playerEntity.world;
-//				
-//				//add ender pearl particles for entering the dimension
-//			    for(int i = 0; i < 32; ++i) 
-//			    {
-//			    	world.addParticle(
-//			    			ParticleTypes.PORTAL, 
-//			    			playerEntity.getX() + 0.5D, 
-//			    			playerEntity.getY() + 1 + world.rand.nextDouble() * 2.0D, 
-//			    			playerEntity.getZ() + 0.5D, 
-//			    			world.rand.nextGaussian(), 
-//			    			0.0D, 
-//			    			world.rand.nextGaussian());
-//			    }
-//			}
 		}
 	}
 	

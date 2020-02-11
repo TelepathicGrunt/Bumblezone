@@ -8,6 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.ItemPickupEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -43,6 +44,32 @@ public class BeeAggressionBehavior
 				if(event.getStack().getItem() == Items.HONEY_BLOCK && BzConfig.aggressiveBees)
 				{
 					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
+				}
+			}
+		}
+
+		
+		//bees attack player that drinks honey.
+		@SubscribeEvent
+		public static void HoneyPickupEvent(LivingEntityUseItemEvent.Finish event)
+		{
+			if(event.getEntity() instanceof PlayerEntity)
+			{
+				PlayerEntity playerEntity = (PlayerEntity)event.getEntity();
+				World world = playerEntity.world;
+				
+				//Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
+				//Also checks to make sure we are in dimension and that player isn't in creative or spectator
+				if (!world.isRemote && 
+					(playerEntity.dimension == BzDimension.bumblezone() || BzConfig.allowWrathOfTheHiveOutsideBumblezone) && 
+					!playerEntity.isCreative() && 
+					!playerEntity.isSpectator())
+				{
+					//if player drinks honey, bees gets very mad...
+					if(event.getItem().getItem() == Items.field_226638_pX_ && BzConfig.aggressiveBees)
+					{
+						playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
+					}
 				}
 			}
 		}

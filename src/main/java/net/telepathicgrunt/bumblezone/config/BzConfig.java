@@ -136,7 +136,8 @@ public class BzConfig
 			            howLongWrathOfTheHiveLasts = builder
 			                    .comment("-----------------------------------------------------\r\n"
 			                    		+" How long bees will keep their effects for (speed, absorption, strength).\r\n"
-			                    		+" Note: This is not in seconds at all.")
+			                    		+" Note: This is not in seconds at all. And bee's anger will remain."
+			                    		+" Only the boosts given to the bees will be gone.")
 			                    .translation("the_bumblezone.config.bees.howlongwrathofthehivelasts")
 			                    .defineInRange("howLongWrathOfTheHiveLasts", 350, 1, Integer.MAX_VALUE);
 

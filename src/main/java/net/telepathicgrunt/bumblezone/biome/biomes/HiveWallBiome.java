@@ -25,8 +25,8 @@ public final class HiveWallBiome extends BzBaseBiome
 		
 	    this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(WATER_SPRING_CONFIG).createDecoratedFeature(Placement.COUNT_BIASED_RANGE.configure(new CountRangeConfig(4, 128, 0, 128))));
 	    this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(WATER_SPRING_CONFIG).createDecoratedFeature(Placement.COUNT_BIASED_RANGE.configure(new CountRangeConfig(7, 16, 0, 72))));
-	    
-	    this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.field_226289_e_, 10, 4, 8));
+
+	    this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.field_226289_e_, 10, 8, 12));
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.SNOWBALL, 3000, 1, 1)); //Used to make monsters even less common
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.SPIDER, 30, 1, 1));
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.ENDERMAN, 10, 1, 1));
