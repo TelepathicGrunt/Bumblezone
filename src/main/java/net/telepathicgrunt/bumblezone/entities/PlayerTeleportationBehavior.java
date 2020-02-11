@@ -7,7 +7,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EnderPearlEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Direction;
@@ -165,7 +164,7 @@ public class PlayerTeleportationBehavior
 				}
 				
 				//removes the wrath of the hive if it is disallowed outside dimension
-				if((BzConfig.allowWrathOfTheHiveOutsideBumblezone || playerEntity.dimension == BzDimension.bumblezone()) &&
+				if(!(BzConfig.allowWrathOfTheHiveOutsideBumblezone || playerEntity.dimension == BzDimension.bumblezone()) &&
 					playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE))
 				{
 					playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
