@@ -96,8 +96,8 @@ public class BzConfig
 			            allowWrathOfTheHiveOutsideBumblezone = builder
 			                    .comment("-----------------------------------------------------\r\n"
 			                    		+" Determines if Wrath of the Hive can be applied to players outside\r\n"
-			                    		+" the Bumblezone dimension when they pick up Honey blocks or take honey\r\n"
-			                    		+" from Filled Porous Honey blocks.")
+			                    		+" the Bumblezone dimension when they pick up Honey blocks, take honey\r\n"
+			                    		+" from Filled Porous Honey blocks, or drink Honey Bottles.")
 			                    .translation("the_bumblezone.config.bees.allowwrathofthehiveoutsidebumblezone")
 			                    .define("allowWrathOfTheHiveOutsideBumblezone", false);
 			            
@@ -113,9 +113,11 @@ public class BzConfig
 			            aggressiveBees = builder
 			                    .comment("-----------------------------------------------------\r\n"
 			                    		+" Determines whether bees become angry if you take honey from\r\n "
-			                    		+" Filled Porous Honeycomb Blocks or pick up Honey blocks inside \r\n"
-			                    		+" the Bumblezone dimension. The bees can see you through walls and\r\n"
-			                    		+" will have speed, absorption, and strength effects applied to them.\r\n"
+			                    		+" Filled Porous Honeycomb Blocks, pick up Honey blocks, or drink \r\n"
+			                    		+" a Honey Bottle inside the Bumblezone dimension. \r\n"
+			                    		+" \r\n"
+			                    		+" In addition, the bees can see you through walls and will have \r\n"
+			                    		+" speed, absorption, and strength effects applied to them.\r\n"
 			                    		+" \r\n"
 			                    		+" Will also affect the bee's aggression toward bears in the dimension.\r\n"
 			                    		+" Note: Peaceful mode will always override the bee aggressive setting.")
