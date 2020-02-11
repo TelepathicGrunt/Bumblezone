@@ -13,7 +13,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
-import net.telepathicgrunt.bumblezone.blocks.BlocksInit;
+import net.telepathicgrunt.bumblezone.blocks.BzBlocksInit;
 
 
 public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig>
@@ -24,8 +24,8 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig>
 	}
 
 	private static final BlockState STONE = Blocks.STONE.getDefaultState();
-	private static final BlockState FILLED_POROUS_HONEYCOMB = BlocksInit.FILLED_POROUS_HONEYCOMB.get().getDefaultState();
-	private static final BlockState POROUS_HONEYCOMB = BlocksInit.POROUS_HONEYCOMB.get().getDefaultState();
+	private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocksInit.FILLED_POROUS_HONEYCOMB.get().getDefaultState();
+	private static final BlockState POROUS_HONEYCOMB = BzBlocksInit.POROUS_HONEYCOMB.get().getDefaultState();
 	private static final BlockState HONEYCOMB_BLOCK = Blocks.field_226908_md_.getDefaultState();
 
 

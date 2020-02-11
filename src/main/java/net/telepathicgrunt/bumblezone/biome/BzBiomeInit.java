@@ -15,7 +15,7 @@ import net.telepathicgrunt.bumblezone.biome.biomes.HivePillarBiome;
 import net.telepathicgrunt.bumblezone.biome.biomes.HiveWallBiome;
 import net.telepathicgrunt.bumblezone.biome.biomes.SugarWaterBiome;
 
-public class BiomeInit {
+public class BzBiomeInit {
 
 
 	//list of all biomes we registered

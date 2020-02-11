@@ -1,26 +1,30 @@
 package net.telepathicgrunt.bumblezone;
 
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.potion.Effect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import net.telepathicgrunt.bumblezone.biome.BiomeInit;
-import net.telepathicgrunt.bumblezone.blocks.BlocksInit;
+import net.telepathicgrunt.bumblezone.biome.BzBiomeInit;
+import net.telepathicgrunt.bumblezone.blocks.BzBlocksInit;
 import net.telepathicgrunt.bumblezone.capabilities.CapabilityPlayerPosAndDim;
-import net.telepathicgrunt.bumblezone.features.FeatureInit;
+import net.telepathicgrunt.bumblezone.config.BzConfig;
+import net.telepathicgrunt.bumblezone.effects.BzEffects;
+import net.telepathicgrunt.bumblezone.features.BzFeatureInit;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Bumblezone.MODID)
@@ -35,6 +39,11 @@ public class Bumblezone
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        
+        
+		//generates config
+		ModLoadingContext modLoadingContext = ModLoadingContext.get();
+		modLoadingContext.registerConfig(ModConfig.Type.SERVER, BzConfig.SERVER_SPEC);
     }
 
     private void setup(final FMLCommonSetupEvent event)
@@ -51,7 +60,7 @@ public class Bumblezone
 		public static void registerBiomes(final RegistryEvent.Register<Biome> event)
 		{
 			//registers all my modified biomes
-			BiomeInit.registerBiomes(event);
+			BzBiomeInit.registerBiomes(event);
 		}
 		
 		
@@ -62,7 +71,7 @@ public class Bumblezone
 		@SubscribeEvent
 		public static void onRegisterBlocks(final RegistryEvent.Register<Block> event)
 		{
-			BlocksInit.registerBlocks(event);
+			BzBlocksInit.registerBlocks(event);
 		}
 
 
@@ -73,7 +82,7 @@ public class Bumblezone
 		@SubscribeEvent
 		public static void onRegisterItems(final RegistryEvent.Register<Item> event)
 		{
-			BlocksInit.registerItems(event);
+			BzBlocksInit.registerItems(event);
 		}
 
 
@@ -83,8 +92,17 @@ public class Bumblezone
 		@SubscribeEvent
 		public static void onRegisterFeatures(final RegistryEvent.Register<Feature<?>> event)
 		{
-			FeatureInit.registerFeatures(event);
-			LOGGER.log(Level.INFO, "features registered.");
+			BzFeatureInit.registerFeatures(event);
+		}
+
+		
+		/**
+		 * This method will be called by Forge when it is time for the mod to register effects.
+		 */
+		@SubscribeEvent
+		public static void onRegisterEffects(final RegistryEvent.Register<Effect> event)
+		{
+			BzEffects.registerEffects(event);
 		}
     }
 	

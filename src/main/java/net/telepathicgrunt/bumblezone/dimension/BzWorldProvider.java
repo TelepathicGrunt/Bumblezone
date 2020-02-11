@@ -17,15 +17,15 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.generation.BumblezoneBiomeProvider;
-import net.telepathicgrunt.bumblezone.generation.BumblezoneChunkGenerator;
+import net.telepathicgrunt.bumblezone.generation.BzBiomeProvider;
+import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class BumblezoneWorldProvider extends Dimension
+public class BzWorldProvider extends Dimension
 {
 
-	public BumblezoneWorldProvider(World world, DimensionType typeIn)
+	public BzWorldProvider(World world, DimensionType typeIn)
 	{
 		super(world, typeIn, 1.0f); //set 1.0f. I think it has to do with maximum brightness?
 
@@ -46,7 +46,7 @@ public class BumblezoneWorldProvider extends Dimension
 	@Override
 	public ChunkGenerator<?> createChunkGenerator()
 	{
-		return new BumblezoneChunkGenerator(world, new BumblezoneBiomeProvider(world), ChunkGeneratorType.SURFACE.createSettings());
+		return new BzChunkGenerator(world, new BzBiomeProvider(world), ChunkGeneratorType.SURFACE.createSettings());
 	}
 	
     /**

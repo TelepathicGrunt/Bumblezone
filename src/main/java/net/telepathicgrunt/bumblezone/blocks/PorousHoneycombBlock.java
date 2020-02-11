@@ -43,7 +43,7 @@ public class PorousHoneycombBlock extends Block
 			if (!world.isRemote)
 			{
 				itemstack.shrink(1); // remove current honey bottle
-				world.setBlockState(position, BlocksInit.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 3); // added honey to this block
+				world.setBlockState(position, BzBlocksInit.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 3); // added honey to this block
 
 				world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 				if (itemstack.isEmpty())

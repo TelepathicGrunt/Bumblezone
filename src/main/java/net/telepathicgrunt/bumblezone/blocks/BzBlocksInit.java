@@ -14,7 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 
 
-public class BlocksInit
+public class BzBlocksInit
 {
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Bumblezone.MODID);
 
@@ -61,8 +61,8 @@ public class BlocksInit
 	public static void registerItems(RegistryEvent.Register<Item> event)
 	{
 		event.getRegistry().registerAll(
-				new BlockItem(BlocksInit.POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)).setRegistryName(BlocksInit.POROUS_HONEYCOMB.get().getRegistryName().getPath()),
-			    new BlockItem(BlocksInit.FILLED_POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)).setRegistryName(BlocksInit.FILLED_POROUS_HONEYCOMB.get().getRegistryName().getPath())
+				new BlockItem(BzBlocksInit.POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)).setRegistryName(BzBlocksInit.POROUS_HONEYCOMB.get().getRegistryName().getPath()),
+			    new BlockItem(BzBlocksInit.FILLED_POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)).setRegistryName(BzBlocksInit.FILLED_POROUS_HONEYCOMB.get().getRegistryName().getPath())
 				);
 	}
 

@@ -16,12 +16,12 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class BumblezoneDimension {
+public class BzDimension {
 
 	public static final ModDimension BUMBLEZONE = new ModDimension() {
         @Override
         public BiFunction<World, DimensionType, ? extends Dimension> getFactory() {
-            return BumblezoneWorldProvider::new;
+            return BzWorldProvider::new;
         }
     };
 

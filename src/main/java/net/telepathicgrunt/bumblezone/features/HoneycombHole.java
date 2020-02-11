@@ -14,7 +14,7 @@ import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.telepathicgrunt.bumblezone.blocks.BlocksInit;
+import net.telepathicgrunt.bumblezone.blocks.BzBlocksInit;
 
 
 public class HoneycombHole extends Feature<NoFeatureConfig>
@@ -81,7 +81,7 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 		};
 
-	private static final BlockState FILLED_POROUS_HONEYCOMB = BlocksInit.FILLED_POROUS_HONEYCOMB.get().getDefaultState();
+	private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocksInit.FILLED_POROUS_HONEYCOMB.get().getDefaultState();
 	private static final BlockState AIR = Blocks.AIR.getDefaultState();
 	private static final BlockState HONEY_BLOCK = Blocks.field_226907_mc_.getDefaultState();
 	private static final BlockState HONEYCOMB_BLOCK = Blocks.field_226908_md_.getDefaultState();

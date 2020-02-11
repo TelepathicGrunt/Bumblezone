@@ -24,8 +24,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.capabilities.IPlayerPosAndDim;
 import net.telepathicgrunt.bumblezone.capabilities.PlayerPositionAndDimension;
-import net.telepathicgrunt.bumblezone.dimension.BumblezoneDimension;
-import net.telepathicgrunt.bumblezone.features.placement.PlacingUtils;
+import net.telepathicgrunt.bumblezone.dimension.BzDimension;
+import net.telepathicgrunt.bumblezone.features.placement.BzPlacingUtils;
 
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -75,7 +75,7 @@ public class PlayerTeleportationBehavior
 				}
 
 				//if the pearl hit a beehive and is not in our bee dimension, begin the teleportation.
-				if (hitHive && playerEntity.dimension != BumblezoneDimension.bumblezone())
+				if (hitHive && playerEntity.dimension != BzDimension.bumblezone())
 				{
 					//Store current dimension and position of hit 
 
@@ -87,15 +87,15 @@ public class PlayerTeleportationBehavior
 					//as default dim for cap is always null when player hasn't teleported yet
 					if (cap.getDim() == null)
 					{
-						destination = BumblezoneDimension.bumblezone();
+						destination = BzDimension.bumblezone();
 					}
 					// if our stored dimension somehow ends up being our current dimension and isn't the bumblezone dimension, 
 					else if (cap.getDim() == playerEntity.dimension)
 					{
 						// then just take us to bumblezone dimension instead
-						if (cap.getDim() != BumblezoneDimension.bumblezone())
+						if (cap.getDim() != BzDimension.bumblezone())
 						{
-							destination = BumblezoneDimension.bumblezone();
+							destination = BzDimension.bumblezone();
 						}
 						//if the store dimension and player dimension is ultra amplified world, take us to overworld
 						else
@@ -135,23 +135,74 @@ public class PlayerTeleportationBehavior
 			//grabs the capability attached to player for dimension hopping
 			PlayerEntity playerEntity = event.player;
 			
-			if(!playerEntity.world.isRemote && playerEntity.world instanceof ServerWorld)
+			if(playerEntity.world instanceof ServerWorld)
 			{
 				PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
 			
-				//teleported by pearl outside bumblezone dimension
+				//teleported by pearl to enter into bumblezone dimension
 				if (cap.isTeleporting)
 				{
 					teleportByPearl(playerEntity, cap);
 				}
-				//teleported by going out of bounds inside bumblezone dimension
-				else if(playerEntity.dimension == BumblezoneDimension.bumblezone() && 
+				//teleported by going out of bounds to leave bumblezone dimension
+				else if(playerEntity.dimension == BzDimension.bumblezone() && 
 					     (playerEntity.getY() < -1 || playerEntity.getY() > 255)) 
 				{
 					teleportByOutOfBounds(playerEntity, cap, playerEntity.getY() < -1 ? true : false);
 				}
 			}
+			
+			//Makes it so player does not get killed for falling into the void
+			if(playerEntity.getY() < -3)
+			{
+				playerEntity.setPosition(playerEntity.getX(), -3, playerEntity.getZ());
+			}
 		}
+		
+
+//		/**
+//		 * for spawning particles when player changes dimensions to and from The Bumblezone
+//		 */
+//		@SubscribeEvent
+//		public static void PlayerChangedDimensionEvent(PlayerChangedDimensionEvent event)
+//		{
+//			if(event.getFrom() == BumblezoneDimension.bumblezone())
+//			{
+//				PlayerEntity playerEntity = event.getPlayer();
+//				World world = playerEntity.world;
+//				
+//				//add honey particles for exiting the dimension
+//			    for(int i = 0; i < 32; ++i) 
+//			    {
+//					world.addParticle(
+//			    			ParticleTypes.field_229427_ag_, 
+//			    			playerEntity.getX() + 0.5D, 
+//			    			playerEntity.getY() + 1 + world.rand.nextDouble() * 2.0D, 
+//			    			playerEntity.getZ() + 0.5D, 
+//			    			world.rand.nextGaussian(), 
+//			    			0.0D, 
+//			    			world.rand.nextGaussian());
+//			    }
+//			}
+//			else if(event.getTo() == BumblezoneDimension.bumblezone())
+//			{
+//				PlayerEntity playerEntity = event.getPlayer();
+//				World world = playerEntity.world;
+//				
+//				//add ender pearl particles for entering the dimension
+//			    for(int i = 0; i < 32; ++i) 
+//			    {
+//			    	world.addParticle(
+//			    			ParticleTypes.PORTAL, 
+//			    			playerEntity.getX() + 0.5D, 
+//			    			playerEntity.getY() + 1 + world.rand.nextDouble() * 2.0D, 
+//			    			playerEntity.getZ() + 0.5D, 
+//			    			world.rand.nextGaussian(), 
+//			    			0.0D, 
+//			    			world.rand.nextGaussian());
+//			    }
+//			}
+//		}
 	}
 	
 	
@@ -164,11 +215,11 @@ public class PlayerTeleportationBehavior
 		//gets the world in the destination dimension
 		MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
 		ServerWorld destinationWorld;
-		ServerWorld bumblezoneWorld = minecraftServer.getWorld(BumblezoneDimension.bumblezone());
+		ServerWorld bumblezoneWorld = minecraftServer.getWorld(BzDimension.bumblezone());
 		
 		//Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone. 
 		//Go to Overworld instead as default
-		if(cap.prevDimension == BumblezoneDimension.bumblezone())
+		if(cap.prevDimension == BzDimension.bumblezone())
 		{
 			destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD); // go to overworld by default
 		}
@@ -201,6 +252,7 @@ public class PlayerTeleportationBehavior
 			validBlockPos.getZ() + 0.5D, 
 			playerEntity.rotationYaw, 
 			playerEntity.rotationPitch);
+
 		
 		//teleportation complete. 
 		cap.setTeleporting(false);
@@ -234,7 +286,7 @@ public class PlayerTeleportationBehavior
 			{
 				validBlockPos = new BlockPos(
 						blockpos.getX(), 
-						PlacingUtils.topOfSurfaceBelowHeight(destinationWorld, blockpos.getY(), 0, destinationWorld.rand, blockpos),
+						BzPlacingUtils.topOfSurfaceBelowHeight(destinationWorld, blockpos.getY(), 0, destinationWorld.rand, blockpos),
 						blockpos.getZ());
 				
 				//No solid land was found. Who digs out an entire chunk?!
@@ -340,7 +392,7 @@ public class PlayerTeleportationBehavior
 		//no valid spot was found, generate a hive and spawn us on the highest land
 		mutableBlockPos.setPos(
 						position.getX(), 
-						PlacingUtils.topOfSurfaceBelowHeight(world, world.getDimension().getActualHeight(), 0, world.rand, position), 
+						BzPlacingUtils.topOfSurfaceBelowHeight(world, world.getDimension().getActualHeight(), 0, world.rand, position), 
 						position.getZ());
 		
 		if(mutableBlockPos.getY() > 0)

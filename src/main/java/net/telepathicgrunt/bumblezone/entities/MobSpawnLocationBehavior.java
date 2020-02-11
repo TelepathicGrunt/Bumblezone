@@ -7,7 +7,7 @@ import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.dimension.BumblezoneDimension;
+import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MobSpawnLocationBehavior
@@ -25,7 +25,7 @@ public class MobSpawnLocationBehavior
 			if (!world.isRemote)
 			{
 				//NO SPAWNING ON MY DIMENSION'S ROOF!!!
-				if(entity.dimension == BumblezoneDimension.bumblezone() && entity.getPosition().getY() >= 256) 
+				if(entity.dimension == BzDimension.bumblezone() && entity.getPosition().getY() >= 256) 
 				{
 					//STOP SPAWNING!!!!!!!!
 					event.setResult(Result.DENY);

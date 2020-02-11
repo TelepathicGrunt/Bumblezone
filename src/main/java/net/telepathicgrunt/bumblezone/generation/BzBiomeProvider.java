@@ -25,19 +25,19 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.layer.Layer;
 import net.minecraft.world.gen.layer.ZoomLayer;
 import net.minecraft.world.gen.layer.traits.IAreaTransformer1;
-import net.telepathicgrunt.bumblezone.biome.BiomeInit;
-import net.telepathicgrunt.bumblezone.generation.layer.BiomeLayer;
+import net.telepathicgrunt.bumblezone.biome.BzBiomeInit;
+import net.telepathicgrunt.bumblezone.generation.layer.BzBiomeLayer;
 
 
-public class BumblezoneBiomeProvider extends BiomeProvider
+public class BzBiomeProvider extends BiomeProvider
 {
 
 	private final Layer genBiomes;
 
 
-	public BumblezoneBiomeProvider(long seed, WorldType worldType)
+	public BzBiomeProvider(long seed, WorldType worldType)
 	{
-		super(BiomeInit.biomes);
+		super(BzBiomeInit.biomes);
 
 		//generates the world and biome layouts
 		Layer[] agenlayer = buildOverworldProcedure(seed, worldType);
@@ -45,10 +45,10 @@ public class BumblezoneBiomeProvider extends BiomeProvider
 	}
 
 
-	public BumblezoneBiomeProvider(World world)
+	public BzBiomeProvider(World world)
 	{
 		this(world.getSeed(), world.getWorldInfo().getGenerator());
-		BiomeLayer.setSeed(world.getSeed());
+		BzBiomeLayer.setSeed(world.getSeed());
 	}
 
 
@@ -80,7 +80,7 @@ public class BumblezoneBiomeProvider extends BiomeProvider
 
 	public static <T extends IArea, C extends IExtendedNoiseRandom<T>> ImmutableList<IAreaFactory<T>> buildOverworldProcedure(WorldType worldTypeIn, LongFunction<C> contextFactory)
 	{
-	    IAreaFactory<T> layer = BiomeLayer.INSTANCE.apply(contextFactory.apply(200L));
+	    IAreaFactory<T> layer = BzBiomeLayer.INSTANCE.apply(contextFactory.apply(200L));
 		layer = ZoomLayer.FUZZY.apply(contextFactory.apply(2000L), layer);
 		layer = ZoomLayer.NORMAL.apply((IExtendedNoiseRandom<T>) contextFactory.apply(1001L), layer);
 		layer = ZoomLayer.NORMAL.apply((IExtendedNoiseRandom<T>) contextFactory.apply(1001L), layer);

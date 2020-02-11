@@ -5,17 +5,17 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.INoiseRandom;
 import net.minecraft.world.gen.PerlinNoiseGenerator;
 import net.minecraft.world.gen.layer.traits.IAreaTransformer0;
-import net.telepathicgrunt.bumblezone.biome.BiomeInit;
+import net.telepathicgrunt.bumblezone.biome.BzBiomeInit;
 
 
 @SuppressWarnings("deprecation")
-public enum BiomeLayer implements IAreaTransformer0
+public enum BzBiomeLayer implements IAreaTransformer0
 {
 	INSTANCE;
 
-	private static final int SUGAR_WATER = Registry.BIOME.getId(BiomeInit.SUGAR_WATER);
-	private static final int HIVE_WALL = Registry.BIOME.getId(BiomeInit.HIVE_WALL);
-	private static final int HIVE_PILLAR = Registry.BIOME.getId(BiomeInit.HIVE_PILLAR);
+	private static final int SUGAR_WATER = Registry.BIOME.getId(BzBiomeInit.SUGAR_WATER);
+	private static final int HIVE_WALL = Registry.BIOME.getId(BzBiomeInit.HIVE_WALL);
+	private static final int HIVE_PILLAR = Registry.BIOME.getId(BzBiomeInit.HIVE_PILLAR);
 
 	private static PerlinNoiseGenerator perlinGen;
 //	private double max = 0;

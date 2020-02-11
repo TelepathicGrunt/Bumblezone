@@ -21,7 +21,7 @@ import net.minecraft.world.gen.OctavesNoiseGenerator;
 import net.minecraft.world.gen.PerlinNoiseGenerator;
 import net.minecraft.world.gen.WorldGenRegion;
 
-public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings> extends ChunkGenerator<T> {
+public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extends ChunkGenerator<T> {
 
 	private static final BlockState STONE = Blocks.STONE.getDefaultState();
     private static final BlockState WATER = Blocks.WATER.getDefaultState();
@@ -41,7 +41,7 @@ public abstract class BumblezoneNoiseChunkGenerator<T extends GenerationSettings
 	protected final BlockState defaultBlock;
 	protected final BlockState defaultFluid;
 
-	public BumblezoneNoiseChunkGenerator(IWorld world, BiomeProvider biomeProvider, int horizontalNoiseGranularityIn, int verticalNoiseGranularityIn, int maxHeight, T settings) {
+	public BzNoiseChunkGenerator(IWorld world, BiomeProvider biomeProvider, int horizontalNoiseGranularityIn, int verticalNoiseGranularityIn, int maxHeight, T settings) {
 		super(world, biomeProvider, settings);
 		this.verticalNoiseGranularity = verticalNoiseGranularityIn;
 		this.horizontalNoiseGranularity = horizontalNoiseGranularityIn;

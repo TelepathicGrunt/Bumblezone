@@ -22,10 +22,10 @@ import net.minecraft.world.gen.OverworldGenSettings;
 import net.minecraft.world.gen.WorldGenRegion;
 import net.minecraft.world.server.ServerWorld;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.features.placement.PlacingUtils;
+import net.telepathicgrunt.bumblezone.features.placement.BzPlacingUtils;
 
 
-public class BumblezoneChunkGenerator extends BumblezoneNoiseChunkGenerator<OverworldGenSettings>
+public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings>
 {
 	/*
 	 * Used in getBiomeNoiseColumn to get the height of land by sampling the height of all biomes around it
@@ -45,7 +45,7 @@ public class BumblezoneChunkGenerator extends BumblezoneNoiseChunkGenerator<Over
 	private final OctavesNoiseGenerator depthNoise;
 
 
-	public BumblezoneChunkGenerator(IWorld world, BiomeProvider provider, OverworldGenSettings settingsIn)
+	public BzChunkGenerator(IWorld world, BiomeProvider provider, OverworldGenSettings settingsIn)
 	{
 		super(world, provider, 4, 8, 256, settingsIn);
 		this.randomSeed.skip(2620); 
@@ -91,7 +91,7 @@ public class BumblezoneChunkGenerator extends BumblezoneNoiseChunkGenerator<Over
 			int currentZ = startingZ;
 
 			BlockPos.Mutable blockpos = new BlockPos.Mutable(currentX, 0, currentZ);
-			int height = PlacingUtils.topOfSurfaceBelowHeight(region, sharedseedrandom.nextInt(255), 0, sharedseedrandom, blockpos) + 1;
+			int height = BzPlacingUtils.topOfSurfaceBelowHeight(region, sharedseedrandom.nextInt(255), 0, sharedseedrandom, blockpos) + 1;
 
 			if (biome$spawnlistentry.entityType.isSummonable() && height > 0 && height < 255)
 			{

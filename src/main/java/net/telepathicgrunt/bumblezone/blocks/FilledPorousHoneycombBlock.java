@@ -11,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -24,8 +25,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.telepathicgrunt.bumblezone.dimension.BumblezoneDimension;
-import net.telepathicgrunt.bumblezone.entities.BeeAggressionBehavior;
+import net.telepathicgrunt.bumblezone.dimension.BzDimension;
+import net.telepathicgrunt.bumblezone.effects.BzEffects;
 
 
 public class FilledPorousHoneycombBlock extends Block
@@ -54,7 +55,7 @@ public class FilledPorousHoneycombBlock extends Block
 			if (!world.isRemote)
 			{
 				itemstack.shrink(1); // remove current empty bottle
-				world.setBlockState(position, BlocksInit.POROUS_HONEYCOMB.get().getDefaultState(), 3); // removed honey from this block
+				world.setBlockState(position, BzBlocksInit.POROUS_HONEYCOMB.get().getDefaultState(), 3); // removed honey from this block
 
 				world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 				if (itemstack.isEmpty())
@@ -67,9 +68,10 @@ public class FilledPorousHoneycombBlock extends Block
 				}
 				
 				
-				if(playerEntity.dimension == BumblezoneDimension.bumblezone()) {
+				if(playerEntity.dimension == BzDimension.bumblezone()) 
+				{
 					//Now all bees nearby in Bumblezone will get VERY angry!!!
-					BeeAggressionBehavior.unBEElievablyHighAggression(world, playerEntity);
+					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, 450, 2, true, true));
 				}
 			}
 
