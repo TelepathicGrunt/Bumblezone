@@ -28,7 +28,7 @@ public class BzConfig
 	    public static boolean showWrathOfTheHiveParticles = true;
 	    public static boolean aggressiveBees = true;
 	    public static int aggressionTriggerRadius = 64;
-	    public static int howLongBeesKeepEffects = 350;
+	    public static int howLongWrathOfTheHiveLasts = 350;
 	    public static int speedBoostLevel = 1;
 	    public static int absorptionBoostLevel = 2;
 	    public static int strengthBoostLevel = 3;
@@ -180,9 +180,8 @@ public class BzConfig
 	    	allowWrathOfTheHiveOutsideBumblezone = SERVER.allowWrathOfTheHiveOutsideBumblezone.get();
 	    	showWrathOfTheHiveParticles = SERVER.showWrathOfTheHiveParticles.get();
 	    	aggressiveBees = SERVER.aggressiveBees.get();
-	    	aggressiveBees = SERVER.aggressiveBees.get();
 	    	aggressionTriggerRadius = SERVER.aggressionTriggerRadius.get();
-	    	howLongBeesKeepEffects = SERVER.howLongWrathOfTheHiveLasts.get();
+	    	howLongWrathOfTheHiveLasts = SERVER.howLongWrathOfTheHiveLasts.get();
 	    	speedBoostLevel = SERVER.speedBoostLevel.get();
 	    	absorptionBoostLevel = SERVER.absorptionBoostLevel.get();
 	    	strengthBoostLevel = SERVER.strengthBoostLevel.get();

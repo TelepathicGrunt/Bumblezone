@@ -7,6 +7,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EnderPearlEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -25,6 +27,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.capabilities.IPlayerPosAndDim;
 import net.telepathicgrunt.bumblezone.capabilities.PlayerPositionAndDimension;
+import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.features.placement.BzPlacingUtils;
@@ -145,12 +148,27 @@ public class PlayerTeleportationBehavior
 				if (cap.isTeleporting)
 				{
 					teleportByPearl(playerEntity, cap);
+					
+					//re-adds potion effect so the particle and icon remains
+					EffectInstance wrath = playerEntity.getActivePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
+					if(wrath != null) playerEntity.addPotionEffect(wrath);
 				}
 				//teleported by going out of bounds to leave bumblezone dimension
 				else if(playerEntity.dimension == BzDimension.bumblezone() && 
 					    (playerEntity.getY() < -1 || playerEntity.getY() > 255)) 
 				{
 					teleportByOutOfBounds(playerEntity, cap, playerEntity.getY() < -1 ? true : false);
+					
+					//re-adds potion effect so the particle and icon remains
+					EffectInstance wrath = playerEntity.getActivePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
+					if(wrath != null) playerEntity.addPotionEffect(wrath);
+				}
+				
+				//removes the wrath of the hive if it is disallowed outside dimension
+				if((BzConfig.allowWrathOfTheHiveOutsideBumblezone || playerEntity.dimension == BzDimension.bumblezone()) &&
+					playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE))
+				{
+					playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
 				}
 			}
 			
@@ -168,9 +186,6 @@ public class PlayerTeleportationBehavior
 		@SubscribeEvent
 		public static void PlayerChangedDimensionEvent(PlayerChangedDimensionEvent event)
 		{
-			//readds potion effect so the particle and icon remains
-			PlayerEntity playerEntity = event.getPlayer();
-			//playerEntity.addPotionEffect(playerEntity.getActivePotionEffect(BzEffects.WRATH_OF_THE_HIVE));
 			
 //			if(event.getFrom() == BumblezoneDimension.bumblezone())
 //			{
