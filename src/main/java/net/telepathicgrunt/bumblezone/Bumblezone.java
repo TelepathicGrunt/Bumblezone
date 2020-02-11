@@ -35,6 +35,7 @@ public class Bumblezone
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     public Bumblezone() {
+		ModLoadingContext modLoadingContext = ModLoadingContext.get();
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -42,7 +43,6 @@ public class Bumblezone
         
 		//generates/handles config
 		modEventBus.addListener(this::modConfig);
-		ModLoadingContext modLoadingContext = ModLoadingContext.get();
 		modLoadingContext.registerConfig(ModConfig.Type.SERVER, BzConfig.SERVER_SPEC);
     }
 

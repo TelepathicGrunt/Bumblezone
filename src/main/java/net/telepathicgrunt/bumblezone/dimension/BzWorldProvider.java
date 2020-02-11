@@ -125,7 +125,14 @@ public class BzWorldProvider extends Dimension
 	@Override
 	public float calculateCelestialAngle(long worldTime, float partialTicks)
 	{
-		return 0;
+		if(BzConfig.dayNightCycle || BzConfig.fogBrightnessPercentage > 50)
+		{
+			return 0f;
+		}
+		else
+		{
+			return 0.5f;
+		}
 	}
 
 
@@ -227,12 +234,28 @@ public class BzWorldProvider extends Dimension
 
 			// Limits angle between 0 to 1 and sharply changes color between 0.333... and 0.666...‬
 			colorFactor = Math.min(Math.max(scaledAngle * 3 - 1f, 0), 1);
+			
+			// Scales the returned factor by user chosen brightness.
+			colorFactor *= (BzConfig.fogBrightnessPercentage/100);
+		}
+		else
+		{
+			/* The sky will be turned to midnight when brightness is below 50 and
+			 * the day/night cycle is off. This lets us get the full range of brightness
+			 * by utilizing the default brightness that the current celestial time gives.
+			 */
+			if(BzConfig.fogBrightnessPercentage <= 50)
+			{
+				colorFactor *= (BzConfig.fogBrightnessPercentage/50);
+			}
+			else
+			{
+				colorFactor *= (BzConfig.fogBrightnessPercentage/100);
+			}
 		}
 
-		// Scales the returned factor by user chosen brightness.
-		colorFactor *= (BzConfig.fogBrightnessPercentage/100);
 		
-		return new Vec3d(0.9f * colorFactor, 0.63f * colorFactor, 0.001f * colorFactor);
+		return new Vec3d(Math.min(0.9f * colorFactor, 1.5f), Math.min(0.63f * colorFactor, 1.5f), Math.min(0.0015f * colorFactor, 1.5f));
 	}
 
 
