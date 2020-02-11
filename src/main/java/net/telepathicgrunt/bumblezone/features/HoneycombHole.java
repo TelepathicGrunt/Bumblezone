@@ -82,9 +82,10 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 		};
 
 	private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocksInit.FILLED_POROUS_HONEYCOMB.get().getDefaultState();
-	private static final BlockState AIR = Blocks.AIR.getDefaultState();
 	private static final BlockState HONEY_BLOCK = Blocks.field_226907_mc_.getDefaultState();
 	private static final BlockState HONEYCOMB_BLOCK = Blocks.field_226908_md_.getDefaultState();
+	private static final BlockState AIR = Blocks.AIR.getDefaultState();
+	private static final BlockState WATER = Blocks.WATER.getDefaultState();
 	
 
 	public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> changedBlock, Random rand, BlockPos position, NoFeatureConfig config)
@@ -157,7 +158,14 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 					}
 					else if(sliceBlock == 3)
 					{
-						world.setBlockState(currentPosition, AIR, 2);
+						if(currentPosition.getY() > world.getSeaLevel())
+						{
+							world.setBlockState(currentPosition, AIR, 2);
+						}
+						else
+						{
+							world.setBlockState(currentPosition, WATER, 2);
+						}
 					}
 				}
 				

@@ -146,7 +146,7 @@ public class PlayerTeleportationBehavior
 				}
 				//teleported by going out of bounds to leave bumblezone dimension
 				else if(playerEntity.dimension == BzDimension.bumblezone() && 
-					     (playerEntity.getY() < -1 || playerEntity.getY() > 255)) 
+					    (playerEntity.getY() < -1 || playerEntity.getY() > 255)) 
 				{
 					teleportByOutOfBounds(playerEntity, cap, playerEntity.getY() < -1 ? true : false);
 				}

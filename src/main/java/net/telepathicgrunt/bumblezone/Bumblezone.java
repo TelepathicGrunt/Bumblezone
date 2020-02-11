@@ -11,6 +11,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -34,14 +35,13 @@ public class Bumblezone
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     public Bumblezone() {
-        // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-
-        // Register ourselves for server and other game events we are interested in
+		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
+
+		modEventBus.addListener(this::setup);
         
-        
-		//generates config
+		//generates/handles config
+		modEventBus.addListener(this::modConfig);
 		ModLoadingContext modLoadingContext = ModLoadingContext.get();
 		modLoadingContext.registerConfig(ModConfig.Type.SERVER, BzConfig.SERVER_SPEC);
     }
@@ -51,6 +51,13 @@ public class Bumblezone
 		CapabilityPlayerPosAndDim.register();
     }
 
+	public void modConfig(final ModConfig.ModConfigEvent event)
+	{
+		ModConfig config = event.getConfig();
+		if (config.getSpec() == BzConfig.SERVER_SPEC)
+			BzConfig.refreshServer();
+	}
+	
     // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
     // Event bus for receiving Registry Events)
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)

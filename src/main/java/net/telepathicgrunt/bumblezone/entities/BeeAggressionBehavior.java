@@ -13,6 +13,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent.ItemPickupEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 
@@ -31,14 +32,17 @@ public class BeeAggressionBehavior
 			PlayerEntity playerEntity = event.getPlayer();
 			World world = playerEntity.world;
 			
-			//Make sure we are on client I think. Vanilla does this check too
+			//Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
 			//Also checks to make sure we are in dimension and that player isn't in creative or spectator
-			if (!world.isRemote && playerEntity.dimension == BzDimension.bumblezone() && !playerEntity.isCreative() && !playerEntity.isSpectator())
+			if (!world.isRemote && 
+				(playerEntity.dimension == BzDimension.bumblezone() || BzConfig.allowWrathOfTheHiveOutsideBumblezone) && 
+				!playerEntity.isCreative() && 
+				!playerEntity.isSpectator())
 			{
 				//if player picks up a honey block, bees gets very mad...
 				if(event.getStack().getItem() == Items.HONEY_BLOCK)
 				{
-					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, 450, 2, true, true));
+					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongBeesKeepEffects, 2, BzConfig.showWrathOfTheHiveParticles, true));
 				}
 			}
 		}
@@ -54,12 +58,12 @@ public class BeeAggressionBehavior
 			if(bearEntity instanceof PolarBearEntity || bearEntity instanceof PandaEntity)
 			{
 				World world = bearEntity.world;
-	
-				//Make sure we are on client I think. Vanilla does this check too
+
+				//Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
 				//Also checks to make sure we are in dimension and that player isn't in creative or spectator
 				if (!world.isRemote && bearEntity.dimension == BzDimension.bumblezone())
 				{
-					((MobEntity)bearEntity).addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, 450, 1, false, true));
+					((MobEntity)bearEntity).addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongBeesKeepEffects, 1, false, true));
 				}
 			}
 		}
