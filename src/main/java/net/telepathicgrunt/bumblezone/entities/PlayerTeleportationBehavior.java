@@ -1,5 +1,7 @@
 package net.telepathicgrunt.bumblezone.entities;
 
+import java.util.ArrayList;
+
 import javax.annotation.Nullable;
 
 import net.minecraft.block.Blocks;
@@ -147,20 +149,14 @@ public class PlayerTeleportationBehavior
 				if (cap.isTeleporting)
 				{
 					teleportByPearl(playerEntity, cap);
-					
-					//re-adds potion effect so the particle and icon remains
-					EffectInstance wrath = playerEntity.getActivePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
-					if(wrath != null) playerEntity.addPotionEffect(wrath);
+					readdPotionEffect(playerEntity);
 				}
 				//teleported by going out of bounds to leave bumblezone dimension
 				else if(playerEntity.dimension == BzDimension.bumblezone() && 
 					    (playerEntity.getY() < -1 || playerEntity.getY() > 255)) 
 				{
 					teleportByOutOfBounds(playerEntity, cap, playerEntity.getY() < -1 ? true : false);
-					
-					//re-adds potion effect so the particle and icon remains
-					EffectInstance wrath = playerEntity.getActivePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
-					if(wrath != null) playerEntity.addPotionEffect(wrath);
+					readdPotionEffect(playerEntity);
 				}
 				
 				//removes the wrath of the hive if it is disallowed outside dimension
@@ -222,6 +218,35 @@ public class PlayerTeleportationBehavior
 //			    			world.rand.nextGaussian());
 //			    }
 //			}
+		}
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//Effects
+	
+	/**
+	 * Temporary fix until Mojang patches the bug that makes potion effect icons disappear when changing dimension.
+	 * To fix it ourselves, we remove the effect and re-add it to the player.
+	 */
+	private static void readdPotionEffect(PlayerEntity playerEntity) 
+	{
+		//re-adds potion effects so the icon remains instead of disappearing when changing dimensions due to a bug
+		ArrayList<EffectInstance> effectInstanceList = new ArrayList<EffectInstance>(playerEntity.getActivePotionEffects());
+		for(int i = effectInstanceList.size() - 1; i >= 0; i--)
+		{
+			EffectInstance effectInstance = effectInstanceList.get(i);
+			if(effectInstance != null) 
+			{
+				playerEntity.removeActivePotionEffect(effectInstance.getPotion());
+				playerEntity.addPotionEffect(
+						new EffectInstance(
+								effectInstance.getPotion(), 
+								effectInstance.getDuration(), 
+								effectInstance.getAmplifier(), 
+								effectInstance.isAmbient(), 
+								effectInstance.doesShowParticles(), 
+								effectInstance.isShowIcon()));
+			}
 		}
 	}
 	

@@ -73,7 +73,7 @@ public class FilledPorousHoneycombBlock extends Block
 					BzConfig.aggressiveBees) 
 				{
 					//Now all bees nearby in Bumblezone will get VERY angry!!!
-					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, true, BzConfig.showWrathOfTheHiveParticles, true));
+					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
 				}
 			}
 

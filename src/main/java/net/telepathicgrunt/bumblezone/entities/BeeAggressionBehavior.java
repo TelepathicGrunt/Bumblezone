@@ -42,7 +42,7 @@ public class BeeAggressionBehavior
 				//if player picks up a honey block, bees gets very mad...
 				if(event.getStack().getItem() == Items.HONEY_BLOCK && BzConfig.aggressiveBees)
 				{
-					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, true, BzConfig.showWrathOfTheHiveParticles, true));
+					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
 				}
 			}
 		}

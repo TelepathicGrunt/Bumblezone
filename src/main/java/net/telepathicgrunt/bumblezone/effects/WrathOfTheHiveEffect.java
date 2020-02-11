@@ -70,9 +70,9 @@ public class WrathOfTheHiveEffect extends Effect
 			bee.setBeeAttacker(livingEntity);
 			
 			// weaker potion effects for when attacking bears
-			bee.addPotionEffect(new EffectInstance(Effects.SPEED, BzConfig.howLongWrathOfTheHiveLasts, Math.max(BzConfig.speedBoostLevel, 1), false, false));
-			bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, BzConfig.howLongWrathOfTheHiveLasts, Math.max(BzConfig.absorptionBoostLevel/2, 1), false, false));
-			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, BzConfig.howLongWrathOfTheHiveLasts, Math.max(BzConfig.strengthBoostLevel/3, 1), false, true));
+			bee.addPotionEffect(new EffectInstance(Effects.SPEED, 20, Math.max(BzConfig.speedBoostLevel, 1), false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20, Math.max(BzConfig.absorptionBoostLevel/2, 1), false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, Math.max(BzConfig.strengthBoostLevel/3, 1), false, true));
 		}
 	}
 	
@@ -87,9 +87,9 @@ public class WrathOfTheHiveEffect extends Effect
 		for(BeeEntity bee : beeList)
 		{
 			bee.setBeeAttacker(livingEntity);
-			bee.addPotionEffect(new EffectInstance(Effects.SPEED, BzConfig.howLongWrathOfTheHiveLasts, BzConfig.speedBoostLevel, false, false));
-			bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, BzConfig.howLongWrathOfTheHiveLasts, BzConfig.absorptionBoostLevel, false, false));
-			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, BzConfig.howLongWrathOfTheHiveLasts, BzConfig.strengthBoostLevel, false, true));
+			bee.addPotionEffect(new EffectInstance(Effects.SPEED, 20, BzConfig.speedBoostLevel, false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20, BzConfig.absorptionBoostLevel, false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, BzConfig.strengthBoostLevel, false, true));
 		}
 	}
 }

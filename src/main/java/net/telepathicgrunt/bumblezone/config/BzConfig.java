@@ -148,7 +148,11 @@ public class BzConfig
 			            
 			            speedBoostLevel = builder
 			                    .comment("-----------------------------------------------------\r\n"
-			                    		+" How fast bees move along the ground (Not while flying).")
+			                    		+" How fast bees move along the ground (Not while flying)."
+			                    		+" You will see this a lot when bees are about to attack "
+			                    		+" you, they tend to touch the floor and the speed boost"
+			                    		+" makes them dash forward at you. Set this to higher for"
+			                    		+" faster dash attacks from bees.")
 			                    .translation("the_bumblezone.config.bees.speedboostlevel")
 			                    .defineInRange("speedBoostLevel", 1, 1, Integer.MAX_VALUE);
 			            
