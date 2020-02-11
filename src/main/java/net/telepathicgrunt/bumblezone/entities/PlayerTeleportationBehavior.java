@@ -19,12 +19,14 @@ import net.minecraft.world.server.TicketType;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.capabilities.IPlayerPosAndDim;
 import net.telepathicgrunt.bumblezone.capabilities.PlayerPositionAndDimension;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
+import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.features.placement.BzPlacingUtils;
 
 
@@ -160,12 +162,16 @@ public class PlayerTeleportationBehavior
 		}
 		
 
-//		/**
-//		 * for spawning particles when player changes dimensions to and from The Bumblezone
-//		 */
-//		@SubscribeEvent
-//		public static void PlayerChangedDimensionEvent(PlayerChangedDimensionEvent event)
-//		{
+		/**
+		 * for spawning particles when player changes dimensions to and from The Bumblezone
+		 */
+		@SubscribeEvent
+		public static void PlayerChangedDimensionEvent(PlayerChangedDimensionEvent event)
+		{
+			//readds potion effect so the particle and icon remains
+			PlayerEntity playerEntity = event.getPlayer();
+			playerEntity.addPotionEffect(playerEntity.getActivePotionEffect(BzEffects.WRATH_OF_THE_HIVE));
+			
 //			if(event.getFrom() == BumblezoneDimension.bumblezone())
 //			{
 //				PlayerEntity playerEntity = event.getPlayer();
@@ -202,7 +208,7 @@ public class PlayerTeleportationBehavior
 //			    			world.rand.nextGaussian());
 //			    }
 //			}
-//		}
+		}
 	}
 	
 	

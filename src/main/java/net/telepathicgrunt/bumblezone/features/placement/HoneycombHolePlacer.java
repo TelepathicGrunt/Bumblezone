@@ -56,7 +56,7 @@ public class HoneycombHolePlacer extends Placement<NoPlacementConfig>
 			} 
 			
 			//set it back to the top but with an offset for the second layer of holes 
-			mutableBlockPos.setPos(pos.getX()+4, 200, pos.getZ()+12);
+			mutableBlockPos.setPos(pos.getX()+4, 236, pos.getZ()+12);
 		}
 		
 		return blockPosList.stream();

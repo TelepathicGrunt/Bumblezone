@@ -158,7 +158,7 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 					}
 					else if(sliceBlock == 3)
 					{
-						if(currentPosition.getY() > world.getSeaLevel())
+						if(currentPosition.getY() >= world.getSeaLevel())
 						{
 							world.setBlockState(currentPosition, AIR, 2);
 						}
