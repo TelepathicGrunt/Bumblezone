@@ -40,9 +40,9 @@ public class BeeAggressionBehavior
 				!playerEntity.isSpectator())
 			{
 				//if player picks up a honey block, bees gets very mad...
-				if(event.getStack().getItem() == Items.HONEY_BLOCK)
+				if(event.getStack().getItem() == Items.HONEY_BLOCK && BzConfig.aggressiveBees)
 				{
-					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongBeesKeepEffects, 2, BzConfig.showWrathOfTheHiveParticles, true));
+					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongBeesKeepEffects, 2, true, BzConfig.showWrathOfTheHiveParticles, true));
 				}
 			}
 		}
@@ -61,7 +61,7 @@ public class BeeAggressionBehavior
 
 				//Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
 				//Also checks to make sure we are in dimension and that player isn't in creative or spectator
-				if (!world.isRemote && bearEntity.dimension == BzDimension.bumblezone())
+				if (!world.isRemote && bearEntity.dimension == BzDimension.bumblezone() && BzConfig.aggressiveBees)
 				{
 					((MobEntity)bearEntity).addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongBeesKeepEffects, 1, false, true));
 				}

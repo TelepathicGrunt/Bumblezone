@@ -44,7 +44,7 @@ public class BzConfig
 		    public final BooleanValue showWrathOfTheHiveParticles;
 		    public final BooleanValue aggressiveBees;
 		    public final IntValue aggressionTriggerRadius;
-		    public final IntValue howLongBeesKeepEffects;
+		    public final IntValue howLongWrathOfTheHiveLasts;
 		    public final IntValue speedBoostLevel;
 		    public final IntValue absorptionBoostLevel;
 		    public final IntValue strengthBoostLevel;
@@ -131,17 +131,19 @@ public class BzConfig
 			                    		+" Will also affect the bee's aggression range toward bears in the dimension.")
 			                    .translation("the_bumblezone.config.bees.aggressiontriggerradius")
 			                    .defineInRange("aggressionTriggerRadius", 64, 1, 200);
+		           
+			            
+			            howLongWrathOfTheHiveLasts = builder
+			                    .comment("-----------------------------------------------------\r\n"
+			                    		+" How long bees will keep their effects for (speed, absorption, strength).\r\n"
+			                    		+" Note: This is not in seconds at all.")
+			                    .translation("the_bumblezone.config.bees.howlongwrathofthehivelasts")
+			                    .defineInRange("howLongWrathOfTheHiveLasts", 350, 1, Integer.MAX_VALUE);
 
 			            
 		            builder.pop();
 		            
 		            builder.push("Bees Effects Options");
-		           
-			            howLongBeesKeepEffects = builder
-			                    .comment("-----------------------------------------------------\r\n"
-			                    		+" How long bees will keep their effects for (speed, absorption, strength).")
-			                    .translation("the_bumblezone.config.bees.howlongbeeskeepeffects")
-			                    .defineInRange("howLongBeesKeepEffects", 350, 1, Integer.MAX_VALUE);
 			            
 			            
 			            speedBoostLevel = builder
@@ -180,7 +182,7 @@ public class BzConfig
 	    	aggressiveBees = SERVER.aggressiveBees.get();
 	    	aggressiveBees = SERVER.aggressiveBees.get();
 	    	aggressionTriggerRadius = SERVER.aggressionTriggerRadius.get();
-	    	howLongBeesKeepEffects = SERVER.howLongBeesKeepEffects.get();
+	    	howLongBeesKeepEffects = SERVER.howLongWrathOfTheHiveLasts.get();
 	    	speedBoostLevel = SERVER.speedBoostLevel.get();
 	    	absorptionBoostLevel = SERVER.absorptionBoostLevel.get();
 	    	strengthBoostLevel = SERVER.strengthBoostLevel.get();

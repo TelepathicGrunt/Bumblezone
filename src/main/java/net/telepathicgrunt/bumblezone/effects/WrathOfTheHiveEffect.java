@@ -44,23 +44,15 @@ public class WrathOfTheHiveEffect extends Effect
 	 */
 	public void performEffect(LivingEntity entity, int amplifier)
 	{
-		if(BzConfig.aggressiveBees)
+		//Maximum aggression
+		if(amplifier >= 2) 
 		{
-			//Maximum aggression
-			if(amplifier >= 2) 
-			{
-				unBEElievablyHighAggression(entity.world, entity);
-			}
-			//Anything lower than 2 is medium aggression
-			else 
-			{
-				mediumAggression(entity.world, entity);
-			}
+			unBEElievablyHighAggression(entity.world, entity);
 		}
+		//Anything lower than 2 is medium aggression
 		else 
 		{
-			//Aggressive bees is turned off. Remove this effect.
-			entity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
+			mediumAggression(entity.world, entity);
 		}
 	}
 	
