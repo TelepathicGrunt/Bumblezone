@@ -12,10 +12,10 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
     (V.1.0.1 Changes) (1.15.2 Minecraft)
   
   	Teleportation: 
-·Fixed teleportation not working when trying to enter The Bumblezone in a non-Overworld dimension.
+·Fixed teleportation not working when trying to enter The Bumblezone from a non-Overworld dimension.
 
 	Config: 
-·Added config option to force exiting The Bumblezone to place you into the Overworld.
+·Added config option to make exiting The Bumblezone always place you into the Overworld.
 
        
     (V.1.0.0 Changes) (1.15.2 Minecraft)

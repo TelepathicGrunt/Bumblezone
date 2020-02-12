@@ -95,6 +95,7 @@ public class PlayerTeleportationBehavior
 					//as default dim for cap is always null when player hasn't teleported yet
 					if (cap.getPrevDim() == null)
 					{
+						cap.setPrevDim(DimensionType.OVERWORLD); //set previous to overworld
 						destination = BzDimension.bumblezone();
 					}
 					// if our stored dimension somehow ends up not the bumblezone dimension, 
@@ -382,7 +383,7 @@ public class PlayerTeleportationBehavior
 				maxHeight = Math.max(maxHeight, world.getHeight(Heightmap.Type.MOTION_BLOCKING, mutableBlockPos.getX(), mutableBlockPos.getZ()));
 			}
 		}
-		
+		maxHeight = Math.min(maxHeight, world.getActualHeight()-1); //cannot place user at roof of other dimension
 		
 		//snaps the coordinates to chunk origin and then sets height to minimum or maximum based on search direction
 		mutableBlockPos.setPos(position.getX(), checkingUpward ? 0 : maxHeight, position.getZ()); 
@@ -433,9 +434,14 @@ public class PlayerTeleportationBehavior
 		
 		
 		//no valid spot was found, generate a hive and spawn us on the highest land
+		//This if statement is so we dont get placed on roof of other roofed dimension
+		if(maxHeight + 1 < world.getActualHeight())
+		{
+			maxHeight += 1;
+		}
 		mutableBlockPos.setPos(
 						position.getX(), 
-						BzPlacingUtils.topOfSurfaceBelowHeight(world, maxHeight+1, 0, position), 
+						BzPlacingUtils.topOfSurfaceBelowHeight(world, maxHeight, 0, position), 
 						position.getZ());
 		
 		if(mutableBlockPos.getY() > 0)

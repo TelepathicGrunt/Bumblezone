@@ -117,7 +117,7 @@ public class BzConfig
 			                    		+" with another dimension so you are stuck teleporting between the \r\n"
 			                    		+" two and cannot get back to the Overworld\r\n")
 			                    .translation("the_bumblezone.config.dimension.forceexittooverworld")
-			                    .define("forceExitToOverworld", true);
+			                    .define("forceExitToOverworld", false);
 	
 	            
 	            builder.pop();
