@@ -97,7 +97,7 @@ public class BzWorldProvider extends Dimension
 	@Override
 	public double getMovementFactor()
     {
-        return BzConfig.coordinateRatio; 
+        return BzConfig.movementFactor; 
     }
 
 	

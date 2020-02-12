@@ -34,7 +34,7 @@ public class BzConfig
 	    public static int strengthBoostLevel = 3;
 
 	    //dimension
-	    public static int coordinateRatio = 10;
+	    public static int movementFactor = 10;
 	    public static boolean dayNightCycle = true;
 	    public static double fogBrightnessPercentage = 100;
 	    
@@ -51,7 +51,7 @@ public class BzConfig
 		    public final IntValue strengthBoostLevel;
 		    
 		    //dimension
-		    public final IntValue coordinateRatio;
+		    public final IntValue movementFactor;
 		    public final BooleanValue dayNightCycle;
 		    public final DoubleValue fogBrightnessPercentage;
 
@@ -62,7 +62,7 @@ public class BzConfig
 	            builder.push("The Bumblezone Dimension Options");
 
 	            
-	            coordinateRatio = builder
+	            movementFactor = builder
 	                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 	                    		+" Determines how the coordinates gets translated when entering \r\n"
 	                    		+" and leaving the Bumblezone. The default ratio is 10 which means\r\n"
@@ -71,12 +71,12 @@ public class BzConfig
 	                    		+" has a 8 to 1 ratio with the Overworld. \r\n"
 	                    		+" \r\n"
 	                    		+" The scaling of coordinates will take into account other dimension's\r\n"
-	                    		+" coordinate ratios. You might see this called \"Movement Factor\" instead.\r\n"
+	                    		+" coordinate ratios so it'll work for any dimension correctly.\r\n"
 	                    		+" \r\n"
 	                    		+" Note: Changing this in an already made world will change where Bee Nests will\r\n"
 	                    		+" take you in the dimension and exiting will place you in a different spot too.\r\n")
-	                    .translation("the_bumblezone.config.dimension.coordinateratio")
-	                    .defineInRange("coordinateRatio", 10, 1, 1000);
+	                    .translation("the_bumblezone.config.dimension.movementfactor")
+	                    .defineInRange("movementFactor", 10, 1, 1000);
 	            
 
 		            dayNightCycle = builder
@@ -216,7 +216,7 @@ public class BzConfig
 	    	strengthBoostLevel = SERVER.strengthBoostLevel.get();
 	    	
 	    	//dimension
-	    	coordinateRatio = SERVER.coordinateRatio.get();
+	    	movementFactor = SERVER.movementFactor.get();
 	    	dayNightCycle = SERVER.dayNightCycle.get();
 	    	fogBrightnessPercentage = SERVER.fogBrightnessPercentage.get();
 	    }
