@@ -1,7 +1,8 @@
     Made for Minecraft v.1.15.2
     Created by TelepathicGrunt
 
-BEEEEEEEEEEEEEEEEESSSSSSSSSSS
+An awesome dimension full of bees that becomes REALLY angry if you take their honey! 
+Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going above Y = 256 to below Y = 0.
 
 
 ------------------------------------------------
