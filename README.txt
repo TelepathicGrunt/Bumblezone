@@ -8,7 +8,7 @@ BEEEEEEEEEEEEEEEEESSSSSSSSSSS
        | The Bumblezone changelog |
        
        
-    (V.0.0.1 Changes) (1.15.2 Minecraft)
+    (V.1.0.0 Changes) (1.15.2 Minecraft)
     
 	Major: 
 ·FIRST RELEASE OF THIS MOD
@@ -34,3 +34,6 @@ BEEEEEEEEEEEEEEEEESSSSSSSSSSS
 ·Bees generate at a high rate in the dimension and will become aggressive towards Polar Bears and Pandas if the player somehow gets them into the dimension. The bees will get a temporary Strength 1 and Speed 1 effect.
 ·Spiders, Endermen, and Phantoms will spawn at a low rate with Phantoms being extremely rare.
 ·Slime will spawn at any height when a new chunk is created for the first time. However, they will only respawn in an already generate chunk if that chunk is marked as a "slime chunk" and at Y = 40 or below just like the Overworld. 
+
+	Config: 
+·Added 11 configs with 8 affecting the Wrath of the Hive effect and 3 affecting the Bumblezone dimension itself. Here is what the config looks like: https://gist.github.com/TelepathicGrunt/0ad76feeb0bee1fc7eeba25d5f0821b4
