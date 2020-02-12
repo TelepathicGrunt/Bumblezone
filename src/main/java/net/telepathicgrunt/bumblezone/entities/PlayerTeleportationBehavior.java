@@ -96,19 +96,11 @@ public class PlayerTeleportationBehavior
 					{
 						destination = BzDimension.bumblezone();
 					}
-					// if our stored dimension somehow ends up being our current dimension and isn't the bumblezone dimension, 
-					else if (cap.getDim() == playerEntity.dimension)
+					// if our stored dimension somehow ends up not the bumblezone dimension, 
+					else if (cap.getDim() != BzDimension.bumblezone())
 					{
 						// then just take us to bumblezone dimension instead
-						if (cap.getDim() != BzDimension.bumblezone())
-						{
-							destination = BzDimension.bumblezone();
-						}
-						//if the store dimension and player dimension is ultra amplified world, take us to overworld
-						else
-						{
-							destination = DimensionType.OVERWORLD;
-						}
+						destination = BzDimension.bumblezone();
 					}
 					//gets and stores destination dimension
 					else
@@ -235,7 +227,14 @@ public class PlayerTeleportationBehavior
 		}
 		else 
 		{
-			destinationWorld = minecraftServer.getWorld(cap.prevDimension); // gets the previous dimension user came from
+			if(BzConfig.forceExitToOverworld)
+			{
+				destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD); // go to Overworld directly.
+			}
+			else
+			{
+				destinationWorld = minecraftServer.getWorld(cap.prevDimension); // gets the previous dimension user came from
+			}
 		}
 		
 		

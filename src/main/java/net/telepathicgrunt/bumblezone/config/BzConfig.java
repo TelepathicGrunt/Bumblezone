@@ -37,6 +37,7 @@ public class BzConfig
 	    public static int movementFactor = 10;
 	    public static boolean dayNightCycle = true;
 	    public static double fogBrightnessPercentage = 100;
+	    public static boolean forceExitToOverworld = false;
 	    
 	    public static class ServerConfig
 	    {
@@ -54,6 +55,7 @@ public class BzConfig
 		    public final IntValue movementFactor;
 		    public final BooleanValue dayNightCycle;
 		    public final DoubleValue fogBrightnessPercentage;
+		    public final BooleanValue forceExitToOverworld;
 
 	        ServerConfig(ForgeConfigSpec.Builder builder) 
 	        {
@@ -105,6 +107,18 @@ public class BzConfig
 		                    		+" but will not be completely black during daytime.\r\n")
 		                    .translation("the_bumblezone.config.dimension.fogbrightnesspercentage")
 		                    .defineInRange("fogBrightnessPercentage", 100D, 0D, 100000D);
+
+		            
+		            forceExitToOverworld = builder
+			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+			                    		+" Makes leaving The Bumblezone dimension always places you back\r\n "
+			                    		+" at the Overworld regardless of which dimension you originally \r\n"
+			                    		+" came from. Use this option if this dimension becomes locked in  \r\n"
+			                    		+" with another dimension so you are stuck teleporting between the \r\n"
+			                    		+" two and cannot get back to the Overworld\r\n")
+			                    .translation("the_bumblezone.config.dimension.forceexittooverworld")
+			                    .define("forceExitToOverworld", true);
+	
 	            
 	            builder.pop();
 	            
@@ -219,5 +233,6 @@ public class BzConfig
 	    	movementFactor = SERVER.movementFactor.get();
 	    	dayNightCycle = SERVER.dayNightCycle.get();
 	    	fogBrightnessPercentage = SERVER.fogBrightnessPercentage.get();
+	    	forceExitToOverworld = SERVER.forceExitToOverworld.get();
 	    }
 }
