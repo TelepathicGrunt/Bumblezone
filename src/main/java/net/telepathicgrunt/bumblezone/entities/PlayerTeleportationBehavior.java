@@ -23,6 +23,7 @@ import net.minecraft.world.server.TicketType;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
@@ -92,12 +93,12 @@ public class PlayerTeleportationBehavior
 
 					//first trip will always take player to bumblezone dimension
 					//as default dim for cap is always null when player hasn't teleported yet
-					if (cap.getDim() == null)
+					if (cap.getPrevDim() == null)
 					{
 						destination = BzDimension.bumblezone();
 					}
 					// if our stored dimension somehow ends up not the bumblezone dimension, 
-					else if (cap.getDim() != BzDimension.bumblezone())
+					else if (cap.getPrevDim() != BzDimension.bumblezone())
 					{
 						// then just take us to bumblezone dimension instead
 						destination = BzDimension.bumblezone();
@@ -105,7 +106,7 @@ public class PlayerTeleportationBehavior
 					//gets and stores destination dimension
 					else
 					{
-						destination = cap.getDim();
+						destination = cap.getPrevDim();
 					}
 
 
@@ -114,7 +115,6 @@ public class PlayerTeleportationBehavior
 					//We have to do the actual teleporting during the player tick event as if we try and teleport
 					//in this event, the game will crash as it would be removing an entity during entity ticking.
 					cap.setPos(playerEntity.getPosition());
-					cap.setDim(playerEntity.dimension);
 					cap.setDestDim(destination);
 					cap.setTeleporting(true);
 					
@@ -176,6 +176,17 @@ public class PlayerTeleportationBehavior
 				BzWorldProvider.ACTIVE_WRATH = false;
 			}
 		}
+		
+		
+
+		@SubscribeEvent
+		public static void playerChangedDimensionEvent(PlayerChangedDimensionEvent event)
+		{
+			// Updates the past dimension that the player left
+			PlayerEntity playerEntity = event.getPlayer();
+			PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
+			cap.setPrevDim(event.getFrom());
+		}
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -221,7 +232,7 @@ public class PlayerTeleportationBehavior
 		
 		//Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone. 
 		//Go to Overworld instead as default
-		if(cap.prevDimension == BzDimension.bumblezone())
+		if(cap.getPrevDim() == BzDimension.bumblezone())
 		{
 			destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD); // go to overworld by default
 		}
@@ -233,7 +244,7 @@ public class PlayerTeleportationBehavior
 			}
 			else
 			{
-				destinationWorld = minecraftServer.getWorld(cap.prevDimension); // gets the previous dimension user came from
+				destinationWorld = minecraftServer.getWorld(cap.getPrevDim()); // gets the previous dimension user came from
 			}
 		}
 		
@@ -271,8 +282,8 @@ public class PlayerTeleportationBehavior
 	{
 		//gets the world in the destination dimension
 		MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
-		ServerWorld originalWorld = minecraftServer.getWorld(cap.prevDimension);
-		ServerWorld destinationWorld = minecraftServer.getWorld(cap.nextDimension); // gets the new destination dimension 
+		ServerWorld originalWorld = minecraftServer.getWorld(cap.getPrevDim());
+		ServerWorld destinationWorld = minecraftServer.getWorld(cap.getDestDim()); // gets the new destination dimension 
 
 		
 		//converts the position to get the corresponding position in bumblezone dimension

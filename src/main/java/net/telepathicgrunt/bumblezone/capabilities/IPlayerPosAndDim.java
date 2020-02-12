@@ -8,12 +8,12 @@ public interface IPlayerPosAndDim {
 
 	//what methods the capability will have and what the capability is
 	
-	void setDim(DimensionType incomingDim);
+	void setPrevDim(DimensionType incomingDim);
 	void setDestDim(DimensionType incomingDim);
 	void setPos(BlockPos incomingPos);
 	void setTeleporting(boolean teleporting);
 
-	DimensionType getDim();
+	DimensionType getPrevDim();
 	DimensionType getDestDim();
 	BlockPos getPos();
 	boolean getTeleporting();

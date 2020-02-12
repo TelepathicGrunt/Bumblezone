@@ -16,13 +16,13 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 
 
 	@Override
-	public void setDim(DimensionType incomingDim)
+	public void setPrevDim(DimensionType incomingDim)
 	{
 		prevDimension = incomingDim;
 	}
 
 	@Override
-	public DimensionType getDim()
+	public DimensionType getPrevDim()
 	{
 		return prevDimension;
 	}
@@ -76,10 +76,10 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 		nbt.putInt("PrevY", this.getPos().getY());
 		nbt.putInt("PrevZ", this.getPos().getZ());
 
-		if (this.getDim() != null)
+		if (this.getPrevDim() != null)
 		{
-			nbt.putString("PreviousDimensionNamespace", this.getDim().getRegistryName().getNamespace());
-			nbt.putString("PreviousDimensionPath", this.getDim().getRegistryName().getPath());
+			nbt.putString("PreviousDimensionNamespace", this.getPrevDim().getRegistryName().getNamespace());
+			nbt.putString("PreviousDimensionPath", this.getPrevDim().getRegistryName().getPath());
 		}
 		
 		if (this.getDestDim() != null)
@@ -106,7 +106,7 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 
 		boolean isteleporting = cnbt.getBoolean("isTeleporting");
 
-		this.setDim(storedDimension);
+		this.setPrevDim(storedDimension);
 		this.setDestDim(storedDestDimension);
 		this.setPos(storedBlockPos);
 		this.setTeleporting(isteleporting);
