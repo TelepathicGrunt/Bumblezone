@@ -21,6 +21,7 @@ build
 eclipse
 run
 .gitattributes
+textures
 
 # Files from Forge MDK
 forge*changelog.txt
