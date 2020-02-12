@@ -23,7 +23,7 @@ import net.minecraft.world.server.TicketType;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent;
+import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
@@ -177,15 +177,19 @@ public class PlayerTeleportationBehavior
 			}
 		}
 		
-		
 
+
+		// Fires just before the teleportation to new dimension begins
 		@SubscribeEvent
-		public static void playerChangedDimensionEvent(PlayerChangedDimensionEvent event)
+		public static void entityTravelToDimensionEvent(EntityTravelToDimensionEvent event)
 		{
-			// Updates the past dimension that the player left
-			PlayerEntity playerEntity = event.getPlayer();
-			PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-			cap.setPrevDim(event.getFrom());
+			if(event.getEntity() instanceof PlayerEntity)
+			{
+				// Updates the past dimension that the player is leaving
+				PlayerEntity playerEntity = (PlayerEntity) event.getEntity();
+				PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
+				cap.setPrevDim(playerEntity.dimension);
+			}
 		}
 	}
 	
