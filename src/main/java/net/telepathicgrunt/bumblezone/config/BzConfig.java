@@ -34,6 +34,7 @@ public class BzConfig
 	    public static int strengthBoostLevel = 3;
 
 	    //dimension
+	    public static int coordinateRatio = 10;
 	    public static boolean dayNightCycle = true;
 	    public static double fogBrightnessPercentage = 100;
 	    
@@ -50,6 +51,7 @@ public class BzConfig
 		    public final IntValue strengthBoostLevel;
 		    
 		    //dimension
+		    public final IntValue coordinateRatio;
 		    public final BooleanValue dayNightCycle;
 		    public final DoubleValue fogBrightnessPercentage;
 
@@ -58,6 +60,23 @@ public class BzConfig
 
 	            
 	            builder.push("The Bumblezone Dimension Options");
+
+	            
+	            coordinateRatio = builder
+	                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	                    		+" Determines how the coordinates gets translated when entering \r\n"
+	                    		+" and leaving the Bumblezone. The default ratio is 10 which means\r\n"
+	                    		+" for every block you traverse in the dimension, it is equal to\r\n"
+	                    		+" traveling 10 blocks in the Overworld. For comparison, the Nether\r\n"
+	                    		+" has a 8 to 1 ratio with the Overworld. \r\n"
+	                    		+" \r\n"
+	                    		+" The scaling of coordinates will take into account other dimension's\r\n"
+	                    		+" coordinate ratios. You might see this called \"Movement Factor\" instead.\r\n"
+	                    		+" \r\n"
+	                    		+" Note: Changing this in an already made world will change where Bee Nests will\r\n"
+	                    		+" take you in the dimension and exiting will place you in a different spot too.\r\n")
+	                    .translation("the_bumblezone.config.dimension.coordinateratio")
+	                    .defineInRange("coordinateRatio", 10, 1, 1000);
 	            
 
 		            dayNightCycle = builder
@@ -69,7 +88,7 @@ public class BzConfig
 			                    		+" \r\n"
 			                    		+" If this setting is set to false, the cycle \r\n"
 			                    		+" will be stuck at \"noon\" for the dimension.\r\n")
-			                    .translation("the_bumblezone.config.bees.daynightcycle")
+			                    .translation("the_bumblezone.config.dimension.daynightcycle")
 			                    .define("dayNightCycle", true);
 	
 		            
@@ -84,7 +103,7 @@ public class BzConfig
 		                    		+" bright, 100 will be normal orange brightness, and \r\n"
 		                    		+" 100000 will be white. When the cycle is on, 0 will be \r\n"
 		                    		+" but will not be completely black during daytime.\r\n")
-		                    .translation("the_bumblezone.config.bees.fogbrightnesspercentage")
+		                    .translation("the_bumblezone.config.dimension.fogbrightnesspercentage")
 		                    .defineInRange("fogBrightnessPercentage", 100D, 0D, 100000D);
 	            
 	            builder.pop();
@@ -197,6 +216,7 @@ public class BzConfig
 	    	strengthBoostLevel = SERVER.strengthBoostLevel.get();
 	    	
 	    	//dimension
+	    	coordinateRatio = SERVER.coordinateRatio.get();
 	    	dayNightCycle = SERVER.dayNightCycle.get();
 	    	fogBrightnessPercentage = SERVER.fogBrightnessPercentage.get();
 	    }

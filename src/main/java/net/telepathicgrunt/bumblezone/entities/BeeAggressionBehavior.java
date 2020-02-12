@@ -51,7 +51,7 @@ public class BeeAggressionBehavior
 		
 		//bees attack player that drinks honey.
 		@SubscribeEvent
-		public static void HoneyPickupEvent(LivingEntityUseItemEvent.Finish event)
+		public static void HoneyDrinkEvent(LivingEntityUseItemEvent.Finish event)
 		{
 			if(event.getEntity() instanceof PlayerEntity)
 			{

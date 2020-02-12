@@ -91,7 +91,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 			int currentZ = startingZ;
 
 			BlockPos.Mutable blockpos = new BlockPos.Mutable(currentX, 0, currentZ);
-			int height = BzPlacingUtils.topOfSurfaceBelowHeight(region, sharedseedrandom.nextInt(255), 0, sharedseedrandom, blockpos) + 1;
+			int height = BzPlacingUtils.topOfSurfaceBelowHeight(region, sharedseedrandom.nextInt(255), 0, blockpos) + 1;
 
 			if (biome$spawnlistentry.entityType.isSummonable() && height > 0 && height < 255)
 			{

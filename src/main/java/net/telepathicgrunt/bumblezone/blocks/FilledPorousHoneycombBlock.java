@@ -70,6 +70,8 @@ public class FilledPorousHoneycombBlock extends Block
 				
 				
 				if((playerEntity.dimension == BzDimension.bumblezone() || BzConfig.allowWrathOfTheHiveOutsideBumblezone) && 
+					!playerEntity.isCreative() && 
+					!playerEntity.isSpectator() && 
 					BzConfig.aggressiveBees) 
 				{
 					//Now all bees nearby in Bumblezone will get VERY angry!!!

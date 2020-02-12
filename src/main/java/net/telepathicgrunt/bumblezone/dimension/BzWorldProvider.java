@@ -25,6 +25,8 @@ import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BzWorldProvider extends Dimension
 {
+	public static boolean ACTIVE_WRATH = false;
+	public static float reddishFogTint = 0;
 
 	public BzWorldProvider(World world, DimensionType typeIn)
 	{
@@ -95,7 +97,7 @@ public class BzWorldProvider extends Dimension
 	@Override
 	public double getMovementFactor()
     {
-        return 10.0; //A SPEEDY DIMENSION
+        return BzConfig.coordinateRatio; 
     }
 
 	
@@ -253,9 +255,18 @@ public class BzWorldProvider extends Dimension
 				colorFactor *= (BzConfig.fogBrightnessPercentage/100);
 			}
 		}
+		
+		if(ACTIVE_WRATH && reddishFogTint < 0.25f)
+		{
+			reddishFogTint += 0.005f;
+		}
+		else if(reddishFogTint > 0)
+		{
+			reddishFogTint -= 0.005f;
+		}
 
 		
-		return new Vec3d(Math.min(0.9f * colorFactor, 1.5f), Math.min(0.63f * colorFactor, 1.5f), Math.min(0.0015f * colorFactor, 1.5f));
+		return new Vec3d(Math.min(0.9f * colorFactor, 1.5f) + reddishFogTint, Math.min(0.63f * colorFactor, 1.5f) - reddishFogTint, Math.min(0.0015f * colorFactor, 1.5f) - reddishFogTint);
 	}
 
 

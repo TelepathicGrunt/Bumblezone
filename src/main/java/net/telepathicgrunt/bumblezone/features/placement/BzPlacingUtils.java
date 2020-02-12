@@ -1,7 +1,5 @@
 package net.telepathicgrunt.bumblezone.features.placement;
 
-import java.util.Random;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -13,11 +11,10 @@ public class BzPlacingUtils
 	 * Finds the first non-air land below to given height
 	 * @param world - world to check blocks in
 	 * @param startHeight - starting height to go down from
-	 * @param random - rng
 	 * @param position - x/z position to use
 	 * @return - height of the first non-air block
 	 */
-	public static int topOfSurfaceBelowHeight(IWorld world, int startHeight, int minHeight, Random random, BlockPos position)
+	public static int topOfSurfaceBelowHeight(IWorld world, int startHeight, int minHeight, BlockPos position)
 	{
 		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position.getX(), startHeight, position.getZ());
 
@@ -54,7 +51,7 @@ public class BzPlacingUtils
 	 * @param position - x/z position to use
 	 * @return - height of the first solid block
 	 */
-	public static int topOfCeilingAboveHeight(IWorld world, int startHeight, Random random, BlockPos position)
+	public static int topOfCeilingAboveHeight(IWorld world, int startHeight, BlockPos position)
 	{
 		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position.getX(), startHeight, position.getZ());
 
@@ -93,7 +90,7 @@ public class BzPlacingUtils
 	 * @param position - x/z position to use
 	 * @return - height of the first solid block
 	 */
-	public static int topOfUnderwaterSurfaceBelowHeight(IWorld world, int startHeight, Random random, BlockPos position)
+	public static int topOfUnderwaterSurfaceBelowHeight(IWorld world, int startHeight, BlockPos position)
 	{
 		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position.getX(), startHeight, position.getZ());
 

@@ -17,6 +17,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.server.TicketType;
 import net.minecraftforge.common.capabilities.Capability;
@@ -29,6 +30,7 @@ import net.telepathicgrunt.bumblezone.capabilities.IPlayerPosAndDim;
 import net.telepathicgrunt.bumblezone.capabilities.PlayerPositionAndDimension;
 import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
+import net.telepathicgrunt.bumblezone.dimension.BzWorldProvider;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.features.placement.BzPlacingUtils;
 
@@ -148,14 +150,14 @@ public class PlayerTeleportationBehavior
 				if (cap.isTeleporting)
 				{
 					teleportByPearl(playerEntity, cap);
-					readdPotionEffect(playerEntity);
+					reAddPotionEffect(playerEntity);
 				}
 				//teleported by going out of bounds to leave bumblezone dimension
 				else if(playerEntity.dimension == BzDimension.bumblezone() && 
 					    (playerEntity.getY() < -1 || playerEntity.getY() > 255)) 
 				{
 					teleportByOutOfBounds(playerEntity, cap, playerEntity.getY() < -1 ? true : false);
-					readdPotionEffect(playerEntity);
+					reAddPotionEffect(playerEntity);
 				}
 				
 				//removes the wrath of the hive if it is disallowed outside dimension
@@ -167,9 +169,19 @@ public class PlayerTeleportationBehavior
 			}
 			
 			//Makes it so player does not get killed for falling into the void
-			if(playerEntity.getY() < -3)
+			if(playerEntity.dimension == BzDimension.bumblezone() && playerEntity.getY() < -3)
 			{
 				playerEntity.setPosition(playerEntity.getX(), -3, playerEntity.getZ());
+			}
+
+			//Makes the fog redder when this effect is active
+			if(playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE))
+			{
+				BzWorldProvider.ACTIVE_WRATH = true;
+			}
+			else
+			{
+				BzWorldProvider.ACTIVE_WRATH = false;
 			}
 		}
 	}
@@ -181,7 +193,7 @@ public class PlayerTeleportationBehavior
 	 * Temporary fix until Mojang patches the bug that makes potion effect icons disappear when changing dimension.
 	 * To fix it ourselves, we remove the effect and re-add it to the player.
 	 */
-	private static void readdPotionEffect(PlayerEntity playerEntity) 
+	private static void reAddPotionEffect(PlayerEntity playerEntity) 
 	{
 		//re-adds potion effects so the icon remains instead of disappearing when changing dimensions due to a bug
 		ArrayList<EffectInstance> effectInstanceList = new ArrayList<EffectInstance>(playerEntity.getActivePotionEffects());
@@ -284,7 +296,7 @@ public class PlayerTeleportationBehavior
 			{
 				validBlockPos = new BlockPos(
 						blockpos.getX(), 
-						BzPlacingUtils.topOfSurfaceBelowHeight(destinationWorld, blockpos.getY(), 0, destinationWorld.rand, blockpos),
+						BzPlacingUtils.topOfSurfaceBelowHeight(destinationWorld, blockpos.getY(), 0, blockpos),
 						blockpos.getZ());
 				
 				//No solid land was found. Who digs out an entire chunk?!
@@ -338,27 +350,46 @@ public class PlayerTeleportationBehavior
 	private static BlockPos validPlayerSpawnLocationByBeehive(World world, BlockPos position, int maximumRange, boolean checkingUpward)
 	{
 		
+		// Gets the height of highest block over the area so we aren't checking an 
+		// excessive amount of area above that doesn't need checking.
+		int maxHeight = 0;
+		int halfRange = maximumRange/2;
+		BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(); 
+		for(int x = -halfRange; x < halfRange; x++)
+		{
+			for(int z = -halfRange; z < halfRange; z++)
+			{	
+				mutableBlockPos.setPos(position.getX() + x, 0, position.getZ() + z);
+				if(!world.chunkExists(mutableBlockPos.getX() >> 4, mutableBlockPos.getZ() + z >> 4))
+				{
+					//make game generate chunk so we can get max height of blocks in it
+					world.getChunk(mutableBlockPos);
+				}
+				maxHeight = Math.max(maxHeight, world.getHeight(Heightmap.Type.MOTION_BLOCKING, mutableBlockPos.getX(), mutableBlockPos.getZ()));
+			}
+		}
+		
+		
 		//snaps the coordinates to chunk origin and then sets height to minimum or maximum based on search direction
-		BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(
-														position.getX(), 
-														checkingUpward ? 0 : world.getDimension().getActualHeight(), 
-														position.getZ()); 
+		mutableBlockPos.setPos(position.getX(), checkingUpward ? 0 : maxHeight, position.getZ()); 
 		
 		
 		//scans range from y = 0 to dimension max height for a bee_nest
 		//Does it by checking each y layer at a time
-		for (; mutableBlockPos.getY() >= 0 && mutableBlockPos.getY() <= world.getDimension().getActualHeight();)
+		for (; mutableBlockPos.getY() >= 0 && mutableBlockPos.getY() <= maxHeight;)
 		{
-			for (int range = 1; range < maximumRange; range++)
+			for (int range = 0; range < maximumRange; range++)
 			{
 				int radius = range * range;
+				int nextRadius = range+1 * range+1;
 				for (int x = 0; x <= range * 2; x++){
 					int x2 = x > range ? -(x - range) : x;
 					
 					for (int z = 0; z <= range * 2; z++){
 						int z2 = z > range ? -(z - range) : x;
 						
-						if (x2 * x2 + z2 * z2 >= radius)
+						//checks within the circular ring and not check the same positions multiple times
+						if (x2 * x2 + z2 * z2 >= radius && x2 * x2 + z2 * z2 < nextRadius)
 						{
 							mutableBlockPos.setPos(position.getX() + x2, mutableBlockPos.getY(), position.getZ() + z2);
 							
@@ -390,7 +421,7 @@ public class PlayerTeleportationBehavior
 		//no valid spot was found, generate a hive and spawn us on the highest land
 		mutableBlockPos.setPos(
 						position.getX(), 
-						BzPlacingUtils.topOfSurfaceBelowHeight(world, world.getDimension().getActualHeight(), 0, world.rand, position), 
+						BzPlacingUtils.topOfSurfaceBelowHeight(world, maxHeight+1, 0, position), 
 						position.getZ());
 		
 		if(mutableBlockPos.getY() > 0)
