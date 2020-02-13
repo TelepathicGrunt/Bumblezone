@@ -111,11 +111,10 @@ public class PlayerTeleportationBehavior
 					}
 
 
-					//Store current blockpos, current dim, next dim, and tells player they are in teleporting phase now.
+					//Store current dim, next dim, and tells player they are in teleporting phase now.
 					//
 					//We have to do the actual teleporting during the player tick event as if we try and teleport
 					//in this event, the game will crash as it would be removing an entity during entity ticking.
-					cap.setPos(playerEntity.getPosition());
 					cap.setDestDim(destination);
 					cap.setTeleporting(true);
 					

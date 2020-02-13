@@ -1,7 +1,6 @@
 package net.telepathicgrunt.bumblezone.capabilities;
 
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.dimension.DimensionType;
 
 public interface IPlayerPosAndDim {
@@ -10,12 +9,10 @@ public interface IPlayerPosAndDim {
 	
 	void setPrevDim(DimensionType incomingDim);
 	void setDestDim(DimensionType incomingDim);
-	void setPos(BlockPos incomingPos);
 	void setTeleporting(boolean teleporting);
 
 	DimensionType getPrevDim();
 	DimensionType getDestDim();
-	BlockPos getPos();
 	boolean getTeleporting();
 
 	CompoundNBT saveNBTData();
