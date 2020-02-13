@@ -31,8 +31,6 @@ import net.telepathicgrunt.bumblezone.capabilities.IPlayerPosAndDim;
 import net.telepathicgrunt.bumblezone.capabilities.PlayerPositionAndDimension;
 import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
-import net.telepathicgrunt.bumblezone.dimension.BzWorldProvider;
-import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.features.placement.BzPlacingUtils;
 
 
@@ -89,26 +87,7 @@ public class PlayerTeleportationBehavior
 
 					//grabs the capability attached to player for dimension hopping
 					PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-					DimensionType destination;
-
-					//first trip will always take player to bumblezone dimension
-					//as default dim for cap is always null when player hasn't teleported yet
-					if (cap.getPrevDim() == null)
-					{
-						cap.setPrevDim(DimensionType.OVERWORLD); //set previous to overworld
-						destination = BzDimension.bumblezone();
-					}
-					// if our stored dimension somehow ends up not the bumblezone dimension, 
-					else if (cap.getPrevDim() != BzDimension.bumblezone())
-					{
-						// then just take us to bumblezone dimension instead
-						destination = BzDimension.bumblezone();
-					}
-					//gets and stores destination dimension
-					else
-					{
-						destination = cap.getPrevDim();
-					}
+					DimensionType destination = BzDimension.bumblezone();
 
 
 					//Store current dim, next dim, and tells player they are in teleporting phase now.
@@ -151,29 +130,6 @@ public class PlayerTeleportationBehavior
 					teleportByOutOfBounds(playerEntity, cap, playerEntity.getY() < -1 ? true : false);
 					reAddPotionEffect(playerEntity);
 				}
-				
-				//removes the wrath of the hive if it is disallowed outside dimension
-				if(!(BzConfig.allowWrathOfTheHiveOutsideBumblezone || playerEntity.dimension == BzDimension.bumblezone()) &&
-					playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE))
-				{
-					playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
-				}
-			}
-			
-			//Makes it so player does not get killed for falling into the void
-			if(playerEntity.dimension == BzDimension.bumblezone() && playerEntity.getY() < -3)
-			{
-				playerEntity.setPosition(playerEntity.getX(), -3, playerEntity.getZ());
-			}
-
-			//Makes the fog redder when this effect is active
-			if(playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE))
-			{
-				BzWorldProvider.ACTIVE_WRATH = true;
-			}
-			else
-			{
-				BzWorldProvider.ACTIVE_WRATH = false;
 			}
 		}
 		
@@ -185,10 +141,13 @@ public class PlayerTeleportationBehavior
 		{
 			if(event.getEntity() instanceof PlayerEntity)
 			{
-				// Updates the past dimension that the player is leaving
+				// Updates the non-BZ dimension that the player is leaving if going to BZ
 				PlayerEntity playerEntity = (PlayerEntity) event.getEntity();
 				PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-				cap.setPrevDim(playerEntity.dimension);
+				if(playerEntity.dimension != BzDimension.bumblezone())
+				{
+					cap.setNonBZDim(playerEntity.dimension);
+				}
 			}
 		}
 	}
@@ -236,7 +195,7 @@ public class PlayerTeleportationBehavior
 		
 		//Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone. 
 		//Go to Overworld instead as default
-		if(cap.getPrevDim() == BzDimension.bumblezone())
+		if(cap.getNonBZDim() == BzDimension.bumblezone())
 		{
 			destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD); // go to overworld by default
 		}
@@ -248,7 +207,7 @@ public class PlayerTeleportationBehavior
 			}
 			else
 			{
-				destinationWorld = minecraftServer.getWorld(cap.getPrevDim()); // gets the previous dimension user came from
+				destinationWorld = minecraftServer.getWorld(cap.getNonBZDim()); // gets the previous dimension user came from
 			}
 		}
 		
@@ -286,31 +245,31 @@ public class PlayerTeleportationBehavior
 	{
 		//gets the world in the destination dimension
 		MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
-		ServerWorld originalWorld = minecraftServer.getWorld(cap.getPrevDim());
-		ServerWorld destinationWorld = minecraftServer.getWorld(cap.getDestDim()); // gets the new destination dimension 
+		ServerWorld originalWorld = minecraftServer.getWorld(playerEntity.dimension);
+		ServerWorld bumblezoneWorld = minecraftServer.getWorld(BzDimension.bumblezone());
 
 		
 		//converts the position to get the corresponding position in bumblezone dimension
 		BlockPos blockpos = new BlockPos(
-				playerEntity.getPosition().getX() / destinationWorld.getDimension().getMovementFactor() * originalWorld.getDimension().getMovementFactor(), 
+				playerEntity.getPosition().getX() / bumblezoneWorld.getDimension().getMovementFactor() * originalWorld.getDimension().getMovementFactor(), 
 				playerEntity.getPosition().getY(), 
-				playerEntity.getPosition().getZ() / destinationWorld.getDimension().getMovementFactor() * originalWorld.getDimension().getMovementFactor());
+				playerEntity.getPosition().getZ() / bumblezoneWorld.getDimension().getMovementFactor() * originalWorld.getDimension().getMovementFactor());
 		
 		
 		//gets valid space in other world
-		BlockPos validBlockPos = validPlayerSpawnLocation(destinationWorld, blockpos, 10);
+		BlockPos validBlockPos = validPlayerSpawnLocation(bumblezoneWorld, blockpos, 10);
 
 		
 		//No valid space found around destination. Begin secondary valid spot algorithms
 		if (validBlockPos == null)
 		{
 			//Check if destination position is in air and if so, go down to first solid land.
-			if(destinationWorld.getBlockState(blockpos).getMaterial() == Material.AIR && 
-			   destinationWorld.getBlockState(blockpos.up()).getMaterial() == Material.AIR) 
+			if(bumblezoneWorld.getBlockState(blockpos).getMaterial() == Material.AIR && 
+			   bumblezoneWorld.getBlockState(blockpos.up()).getMaterial() == Material.AIR) 
 			{
 				validBlockPos = new BlockPos(
 						blockpos.getX(), 
-						BzPlacingUtils.topOfSurfaceBelowHeight(destinationWorld, blockpos.getY(), 0, blockpos),
+						BzPlacingUtils.topOfSurfaceBelowHeight(bumblezoneWorld, blockpos.getY(), 0, blockpos),
 						blockpos.getZ());
 				
 				//No solid land was found. Who digs out an entire chunk?!
@@ -325,9 +284,9 @@ public class PlayerTeleportationBehavior
 			{
 				//We are going to spawn player at exact spot of scaled coordinates by placing air at the spot with honeycomb bottom
 				//This is the last resort
-				destinationWorld.setBlockState(blockpos, Blocks.AIR.getDefaultState());
-				destinationWorld.setBlockState(blockpos.up(), Blocks.AIR.getDefaultState());
-				destinationWorld.setBlockState(blockpos.down(), Blocks.field_226908_md_.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos, Blocks.AIR.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.up(), Blocks.AIR.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.down(), Blocks.field_226908_md_.getDefaultState());
 				validBlockPos = blockpos;
 			}
 			
@@ -342,10 +301,10 @@ public class PlayerTeleportationBehavior
 
 		//let game know we are gonna teleport player
 		ChunkPos chunkpos = new ChunkPos(validBlockPos);
-		destinationWorld.getChunkProvider().registerTicket(TicketType.POST_TELEPORT, chunkpos, 1, playerEntity.getEntityId());
+		bumblezoneWorld.getChunkProvider().registerTicket(TicketType.POST_TELEPORT, chunkpos, 1, playerEntity.getEntityId());
 		
 		((ServerPlayerEntity)playerEntity).teleport(
-			destinationWorld, 
+			bumblezoneWorld, 
 			validBlockPos.getX() + 0.5D, 
 			validBlockPos.getY() + 1, 
 			validBlockPos.getZ() + 0.5D, 

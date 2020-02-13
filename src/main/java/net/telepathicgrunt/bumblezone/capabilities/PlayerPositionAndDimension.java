@@ -8,21 +8,21 @@ import net.minecraft.world.dimension.DimensionType;
 public class PlayerPositionAndDimension implements IPlayerPosAndDim
 {
 
-	public DimensionType prevDimension = null;
+	public DimensionType nonBZDimension = null;
 	public DimensionType nextDimension = null;
 	public boolean isTeleporting = false;
 
 
 	@Override
-	public void setPrevDim(DimensionType incomingDim)
+	public void setNonBZDim(DimensionType incomingDim)
 	{
-		prevDimension = incomingDim;
+		nonBZDimension = incomingDim;
 	}
 
 	@Override
-	public DimensionType getPrevDim()
+	public DimensionType getNonBZDim()
 	{
-		return prevDimension;
+		return nonBZDimension;
 	}
 
 
@@ -57,10 +57,10 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 	{
 		CompoundNBT nbt = new CompoundNBT();
 
-		if (this.getPrevDim() != null)
+		if (this.getNonBZDim() != null)
 		{
-			nbt.putString("PreviousDimensionNamespace", this.getPrevDim().getRegistryName().getNamespace());
-			nbt.putString("PreviousDimensionPath", this.getPrevDim().getRegistryName().getPath());
+			nbt.putString("PreviousDimensionNamespace", this.getNonBZDim().getRegistryName().getNamespace());
+			nbt.putString("PreviousDimensionPath", this.getNonBZDim().getRegistryName().getPath());
 		}
 		
 		if (this.getDestDim() != null)
@@ -86,7 +86,7 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 
 		boolean isteleporting = cnbt.getBoolean("isTeleporting");
 
-		this.setPrevDim(storedDimension);
+		this.setNonBZDim(storedDimension);
 		this.setDestDim(storedDestDimension);
 		this.setTeleporting(isteleporting);
 	}

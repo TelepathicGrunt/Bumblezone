@@ -8,6 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.ItemPickupEvent;
@@ -16,6 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
+import net.telepathicgrunt.bumblezone.dimension.BzWorldProvider;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -92,6 +94,37 @@ public class BeeAggressionBehavior
 				{
 					((MobEntity)bearEntity).addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 1, false, true));
 				}
+			}
+		}
+		
+
+		@SubscribeEvent
+		public static void playerTick(PlayerTickEvent event)
+		{
+			//grabs the capability attached to player for dimension hopping
+			PlayerEntity playerEntity = event.player;
+			
+			//removes the wrath of the hive if it is disallowed outside dimension
+			if(!(BzConfig.allowWrathOfTheHiveOutsideBumblezone || playerEntity.dimension == BzDimension.bumblezone()) &&
+				playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE))
+			{
+				playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
+			}
+			
+			//Makes it so player does not get killed for falling into the void
+			if(playerEntity.dimension == BzDimension.bumblezone() && playerEntity.getY() < -3)
+			{
+				playerEntity.setPosition(playerEntity.getX(), -3, playerEntity.getZ());
+			}
+
+			//Makes the fog redder when this effect is active
+			if(playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE))
+			{
+				BzWorldProvider.ACTIVE_WRATH = true;
+			}
+			else
+			{
+				BzWorldProvider.ACTIVE_WRATH = false;
 			}
 		}
 	}

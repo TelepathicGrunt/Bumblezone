@@ -7,11 +7,11 @@ public interface IPlayerPosAndDim {
 
 	//what methods the capability will have and what the capability is
 	
-	void setPrevDim(DimensionType incomingDim);
+	void setNonBZDim(DimensionType incomingDim);
 	void setDestDim(DimensionType incomingDim);
 	void setTeleporting(boolean teleporting);
 
-	DimensionType getPrevDim();
+	DimensionType getNonBZDim();
 	DimensionType getDestDim();
 	boolean getTeleporting();
 

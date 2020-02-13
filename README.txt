@@ -9,6 +9,12 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
        | The Bumblezone changelog |
        
        
+    (V.1.0.2 Changes) (1.15.2 Minecraft)
+  
+  	Teleportation: 
+·Fixed teleportation math and player previous dimension storing to not allow a bug that lets you reach world border in seconds. Big oops. That's a BIG BUG I missed despite lots of testing! 
+  	
+       
     (V.1.0.1 Changes) (1.15.2 Minecraft)
   
   	Teleportation: 
