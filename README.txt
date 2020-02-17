@@ -9,6 +9,12 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
        | The Bumblezone changelog |
        
        
+    (V.1.0.3 Changes) (1.15.2 Minecraft)
+  
+	Blocks: 
+·Fixed bug so using Glass Bottle or Honey Bottles on the Filled Porous Honeycomb blocks and Porous Honeycomb blocks while in creative mode won't use up the bottle in your hand.
+
+       
     (V.1.0.2 Changes) (1.15.2 Minecraft)
   
   	Teleportation: 

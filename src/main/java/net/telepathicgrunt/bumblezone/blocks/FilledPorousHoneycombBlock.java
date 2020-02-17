@@ -55,17 +55,21 @@ public class FilledPorousHoneycombBlock extends Block
 		{
 			if (!world.isRemote)
 			{
-				itemstack.shrink(1); // remove current empty bottle
 				world.setBlockState(position, BzBlocksInit.POROUS_HONEYCOMB.get().getDefaultState(), 3); // removed honey from this block
-
 				world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-				if (itemstack.isEmpty())
+				
+				if(!playerEntity.isCreative())
 				{
-					playerEntity.setHeldItem(playerHand, new ItemStack(Items.field_226638_pX_)); // places honey bottle in hand
-				}
-				else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.field_226638_pX_))) // places honey bottle in inventory
-				{
-					playerEntity.dropItem(new ItemStack(Items.field_226638_pX_), false); // drops honey bottle if inventory is full
+					itemstack.shrink(1); // remove current empty bottle
+	
+					if (itemstack.isEmpty())
+					{
+						playerEntity.setHeldItem(playerHand, new ItemStack(Items.field_226638_pX_)); // places honey bottle in hand
+					}
+					else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.field_226638_pX_))) // places honey bottle in inventory
+					{
+						playerEntity.dropItem(new ItemStack(Items.field_226638_pX_), false); // drops honey bottle if inventory is full
+					}
 				}
 				
 				

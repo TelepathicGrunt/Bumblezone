@@ -27,6 +27,7 @@ import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.features.BzFeatureInit;
 
+
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Bumblezone.MODID)
 public class Bumblezone
@@ -34,22 +35,26 @@ public class Bumblezone
 	public static final String MODID = "the_bumblezone";
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
-    public Bumblezone() {
+
+	public Bumblezone()
+	{
 		ModLoadingContext modLoadingContext = ModLoadingContext.get();
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        MinecraftForge.EVENT_BUS.register(this);
+		MinecraftForge.EVENT_BUS.register(this);
 
 		modEventBus.addListener(this::setup);
-        
+
 		//generates/handles config
 		modEventBus.addListener(this::modConfig);
 		modLoadingContext.registerConfig(ModConfig.Type.SERVER, BzConfig.SERVER_SPEC);
-    }
+	}
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
+
+	private void setup(final FMLCommonSetupEvent event)
+	{
 		CapabilityPlayerPosAndDim.register();
-    }
+	}
+
 
 	public void modConfig(final ModConfig.ModConfigEvent event)
 	{
@@ -57,11 +62,12 @@ public class Bumblezone
 		if (config.getSpec() == BzConfig.SERVER_SPEC)
 			BzConfig.refreshServer();
 	}
-	
-    // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
-    // Event bus for receiving Registry Events)
-    @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
+
+	// You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
+	// Event bus for receiving Registry Events)
+	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+	public static class RegistryEvents
+	{
 
 		@SubscribeEvent
 		public static void registerBiomes(final RegistryEvent.Register<Biome> event)
@@ -69,8 +75,8 @@ public class Bumblezone
 			//registers all my modified biomes
 			BzBiomeInit.registerBiomes(event);
 		}
-		
-		
+
+
 		/**
 		 * This method will be called by Forge when it is time for the mod to register its Blocks. This method will always be
 		 * called before the Item registry method.
@@ -102,7 +108,7 @@ public class Bumblezone
 			BzFeatureInit.registerFeatures(event);
 		}
 
-		
+
 		/**
 		 * This method will be called by Forge when it is time for the mod to register effects.
 		 */
@@ -111,9 +117,9 @@ public class Bumblezone
 		{
 			BzEffects.registerEffects(event);
 		}
-    }
-	
-    
+	}
+
+
 	/*
 	 * Helper method to quickly register features, blocks, items, structures, biomes, anything that can be registered.
 	 */
