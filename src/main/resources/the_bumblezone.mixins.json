@@ -4,7 +4,11 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "MobSpawnLocationMixin",
-    "HoneyPickupMixin"
+    "HoneyPickupMixin",
+    "HoneyDrinkMixin",
+    "PolarBearTickMixin",
+    "PandaBearTickMixin",
+    "PlayerTickMixin"
   ],
   "client": [
   ],

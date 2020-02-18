@@ -35,7 +35,7 @@ public class HoneyPickupMixin
     @Inject(method = "onPlayerCollision",
             at = @At(value="INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;sendPickup(Lnet/minecraft/entity/Entity;I)V"),
             locals = LocalCapture.CAPTURE_FAILSOFT)
-    public void onItemPickup(PlayerEntity player, CallbackInfo ci, ItemStack itemStack, Item item, int i) {
+    private void onItemPickup(PlayerEntity player, CallbackInfo ci, ItemStack itemStack, Item item, int i) {
 
         //Bumblezone.LOGGER.log(Level.INFO, "started");
         World world = player.world;

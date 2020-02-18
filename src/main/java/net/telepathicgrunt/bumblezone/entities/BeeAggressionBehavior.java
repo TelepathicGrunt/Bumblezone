@@ -3,50 +3,6 @@ package net.telepathicgrunt.bumblezone.entities;
 public class BeeAggressionBehavior
 {
 
-//    //bees attack player that drinks honey.
-//    public static void HoneyDrinkEvent(LivingEntityUseItemEvent.Finish event)
-//    {
-//        if(event.getEntity() instanceof PlayerEntity)
-//        {
-//            PlayerEntity playerEntity = (PlayerEntity)event.getEntity();
-//            World world = playerEntity.world;
-//
-//            //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
-//            //Also checks to make sure we are in dimension and that player isn't in creative or spectator
-//            if (!world.isRemote &&
-//                (playerEntity.dimension == BzDimension.bumblezone() || BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
-//                !playerEntity.isCreative() &&
-//                !playerEntity.isSpectator())
-//            {
-//                //if player drinks honey, bees gets very mad...
-//                if(event.getItem().getItem() == Items.field_226638_pX_ && BzConfig.aggressiveBees)
-//                {
-//                    playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
-//                }
-//            }
-//        }
-//    }
-//
-//
-//    //bees attacks bear mobs that is in the dimension
-//    public static void MobUpdateEvent(LivingUpdateEvent event)
-//    {
-//        Entity bearEntity = event.getEntity();
-//
-//        //must be a bear animal
-//        if(bearEntity instanceof PolarBearEntity || bearEntity instanceof PandaEntity)
-//        {
-//            World world = bearEntity.world;
-//
-//            //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
-//            //Also checks to make sure we are in dimension and that player isn't in creative or spectator
-//            if (!world.isRemote && bearEntity.dimension == BzDimension.bumblezone() && BzConfig.aggressiveBees)
-//            {
-//                ((MobEntity)bearEntity).addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 1, false, true));
-//            }
-//        }
-//    }
-//
 //
 //    public static void playerTick(PlayerTickEvent event)
 //    {
