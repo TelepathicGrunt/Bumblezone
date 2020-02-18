@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -25,6 +26,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
+import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
+import net.telepathicgrunt.bumblezone.effects.BzEffectsInit;
 
 
 public class FilledPorousHoneycombBlock extends Block
@@ -67,15 +70,16 @@ public class FilledPorousHoneycombBlock extends Block
 					}
 				}
 				
-//				
-//				if((playerEntity.dimension == BzDimension.bumblezone() || BzConfig.allowWrathOfTheHiveOutsideBumblezone) && 
-//					!playerEntity.isCreative() && 
-//					!playerEntity.isSpectator() && 
-//					BzConfig.aggressiveBees) 
-//				{
-//					//Now all bees nearby in Bumblezone will get VERY angry!!!
-//					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
-//				}
+
+				if((playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE) &&// || BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+					!playerEntity.isCreative() &&
+					!playerEntity.isSpectator())
+					//&& BzConfig.aggressiveBees)
+				{
+					//Now all bees nearby in Bumblezone will get VERY angry!!!
+//					playerEntity.addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
+					playerEntity.addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, 350, 2, false, true, true));
+				}
 			}
 
 			return ActionResult.SUCCESS;
