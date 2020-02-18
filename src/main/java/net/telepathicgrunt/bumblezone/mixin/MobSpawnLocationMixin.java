@@ -30,21 +30,20 @@ import java.lang.reflect.Type;
 import static net.telepathicgrunt.bumblezone.Bumblezone.*;
 
 @Mixin(SpawnHelper.class)
-public class MobSpawnMixin
+public class MobSpawnLocationMixin
 {
-    @Inject(slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/entity/SpawnRestriction;getLocation(Lnet/minecraft/entity/EntityType;)Lnet/minecraft/entity/SpawnRestriction$Location;")),
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/SpawnRestriction;getLocation(Lnet/minecraft/entity/EntityType;)Lnet/minecraft/entity/SpawnRestriction$Location;", ordinal = 0),
-            method = "Lnet/minecraft/world/SpawnHelper;spawnEntitiesInChunk(Lnet/minecraft/entity/EntityCategory;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/WorldChunk;Lnet/minecraft/util/math/BlockPos;)V",
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/SpawnRestriction;getLocation(Lnet/minecraft/entity/EntityType;)Lnet/minecraft/entity/SpawnRestriction$Location;", ordinal = 0),
+            method = "spawnEntitiesInChunk(Lnet/minecraft/entity/EntityCategory;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/WorldChunk;Lnet/minecraft/util/math/BlockPos;)V",
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
     private static void spawnEntitiesInChunk(EntityCategory category, ServerWorld serverWorld, WorldChunk chunk, BlockPos spawnPos, CallbackInfo ci, ChunkGenerator chunkGenerator, int i, BlockPos blockPos, int j, int k, int l, BlockPos.Mutable mutable, int m, int n, int o, int p, Biome.SpawnEntry spawnEntry, EntityData entityData, int q, int r, int s, float f, float g, PlayerEntity playerEntity, double d, EntityType entityType) {
         if(playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE && mutable.getY() > 255){
             ci.cancel();
-            LOGGER.log(Level.INFO, "canceled. not spawning at "+mutable.getX()+", "+mutable.getY()+", "+mutable.getZ());
+            //Bumblezone.LOGGER.log(Level.INFO, "canceled spawn");
         }
         else
         {
-            //LOGGER.log(Level.INFO, "Not canceled. Spawned at "+mutable.getX()+", "+mutable.getY()+", "+mutable.getZ());
+            //Bumblezone.LOGGER.log(Level.INFO, "allowed spawn");
         }
     }
 

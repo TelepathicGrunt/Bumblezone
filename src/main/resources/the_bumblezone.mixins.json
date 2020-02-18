@@ -3,10 +3,10 @@
   "package": "net.telepathicgrunt.bumblezone.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "MobSpawnLocationMixin",
+    "HoneyPickupMixin"
   ],
   "client": [
-    "ExampleMixin",
-    "MobSpawnMixin"
   ],
   "injectors": {
     "defaultRequire": 1
