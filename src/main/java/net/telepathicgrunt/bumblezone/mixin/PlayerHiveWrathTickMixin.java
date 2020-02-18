@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
-public class PlayerTickMixin
+public class PlayerHiveWrathTickMixin
 {
     // Handles where wrath of the hive can be on,
     // change player fog color when effect is active,
@@ -31,13 +31,6 @@ public class PlayerTickMixin
             playerEntity.hasStatusEffect(BzEffectsInit.WRATH_OF_THE_HIVE))
         {
             playerEntity.removeStatusEffect(BzEffectsInit.WRATH_OF_THE_HIVE);
-        }
-
-        //Makes it so player does not get killed for falling into the void
-        if(playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE && playerEntity.getY() < -3)
-        {
-            playerEntity.setPos(playerEntity.getX(), -3, playerEntity.getZ());
-            playerEntity.updatePosition(playerEntity.getX(), -3, playerEntity.getZ());
         }
 
         //Makes the fog redder when this effect is active
