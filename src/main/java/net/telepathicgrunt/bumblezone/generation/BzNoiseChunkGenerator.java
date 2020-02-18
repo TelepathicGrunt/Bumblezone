@@ -402,7 +402,7 @@ public abstract class BzNoiseChunkGenerator<T extends ChunkGeneratorConfig> exte
 									//place the biome's solid block
 									blockstate = this.defaultBlock;
 								}
-								else if (currentY < getSeaLevel())
+								else if (currentY < 40)
 								{
 									//The sea
 									blockstate = this.defaultFluid;

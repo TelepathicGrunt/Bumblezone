@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import net.fabricmc.api.ModInitializer;
 import net.telepathicgrunt.bumblezone.biome.BzBiomesInit;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocksInit;
+import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
 import net.telepathicgrunt.bumblezone.effects.BzEffectsInit;
 
 
@@ -22,5 +23,7 @@ public class Bumblezone implements ModInitializer
 		BzBlocksInit.registerItems();
 		BzEffectsInit.registerEffects();
 		BzBiomesInit.registerBiomes();
+		BzDimensionType.registerChunkGenerator();
+		BzDimensionType.registerDimension();
 	}
 }
