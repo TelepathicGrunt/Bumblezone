@@ -3,6 +3,7 @@ plugins {
 	id 'maven-publish'
 }
 
+
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
@@ -11,6 +12,13 @@ version = project.mod_version
 group = project.maven_group
 
 minecraft {
+}
+
+repositories {
+	maven {
+		name = "Onyx Studios"
+		url = "https://maven.onyxstudios.dev"
+	}
 }
 
 dependencies {
@@ -22,8 +30,8 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
-	// You may need to force-disable transitiveness on them.
+	modImplementation "com.github.OnyxStudios:Cardinal-Components-API:${project.cardinal_version}"
+	include "com.github.OnyxStudios:Cardinal-Components-API:${project.cardinal_version}"
 }
 
 processResources {
