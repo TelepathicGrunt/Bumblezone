@@ -137,7 +137,7 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
 
 
 	/**
-	 * Cursed. I don't this I touched this. Leave it as is.
+	 * Cursed. Only change was removing check for sealevel as it isnt needed for what we want,
 	 */
 	public int func_222529_a(int chunkX, int chunkZ, Heightmap.Type heightmapType) {
 		int minX = Math.floorDiv(chunkX, this.horizontalNoiseGranularity);
