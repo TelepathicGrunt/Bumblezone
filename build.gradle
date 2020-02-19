@@ -30,8 +30,8 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation "com.github.OnyxStudios:Cardinal-Components-API:${project.cardinal_version}"
-	include "com.github.OnyxStudios:Cardinal-Components-API:${project.cardinal_version}"
+	modImplementation "com.github.NerdHubMC:Cardinal-Components-API:${project.cardinal_version}"
+	include "com.github.NerdHubMC:Cardinal-Components-API:${project.cardinal_version}"
 }
 
 processResources {
