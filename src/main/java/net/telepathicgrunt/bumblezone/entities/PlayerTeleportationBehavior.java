@@ -354,7 +354,7 @@ public class PlayerTeleportationBehavior
 			for (int range = 0; range < maximumRange; range++)
 			{
 				int radius = range * range;
-				int nextRadius = range+1 * range+1;
+				int nextRadius = (range+1) * (range+1);
 				for (int x = 0; x <= range * 2; x++){
 					int x2 = x > range ? -(x - range) : x;
 					
