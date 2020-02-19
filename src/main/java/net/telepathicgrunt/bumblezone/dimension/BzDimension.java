@@ -1,7 +1,6 @@
 package net.telepathicgrunt.bumblezone.dimension;
 
 
-import com.sun.istack.internal.Nullable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.util.math.BlockPos;
@@ -144,7 +143,6 @@ public class BzDimension extends Dimension
 	}
 
 
-	@Nullable
 	@Environment(EnvType.CLIENT)
 	public float[] getBackgroundColor(float skyAngle, float tickDelta)
 	{

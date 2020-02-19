@@ -1,15 +1,11 @@
 package net.telepathicgrunt.bumblezone.dimension;
 
-import com.sun.istack.internal.Nullable;
 import net.fabricmc.fabric.api.dimension.v1.EntityPlacer;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.pattern.BlockPattern;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -311,7 +307,6 @@ public class BzPlacement
 		}
 	}
 
-	@Nullable
 	private static BlockPos validPlayerSpawnLocation(World world, BlockPos position, int maximumRange)
 	{
 		//Try to find 2 non-solid spaces around it that the player can spawn at

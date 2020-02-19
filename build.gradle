@@ -15,10 +15,7 @@ minecraft {
 }
 
 repositories {
-	maven {
-		name = "Onyx Studios"
-		url = "https://maven.onyxstudios.dev"
-	}
+	maven { url = "https://jitpack.io" }
 }
 
 dependencies {
