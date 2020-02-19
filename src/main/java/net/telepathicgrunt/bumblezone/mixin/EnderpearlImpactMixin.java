@@ -10,6 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
 import net.telepathicgrunt.bumblezone.dimension.BzPlacement;
 import org.spongepowered.asm.mixin.Mixin;
@@ -50,7 +51,10 @@ public class EnderpearlImpactMixin {
 
             //if the pearl hit a beehive and is not in our bee dimension, begin the teleportation.
             if (hitHive && playerEntity.dimension != BzDimensionType.BUMBLEZONE_TYPE) {
-                FabricDimensions.teleport(playerEntity, BzDimensionType.BUMBLEZONE_TYPE, BzPlacement.ENTERING);
+                Bumblezone.PLAYER_COMPONENT.get(playerEntity).setIsTeleporting(true);
+                Bumblezone.PLAYER_COMPONENT.get(playerEntity).setNonBZDimension(playerEntity.dimension);
+
+                //FabricDimensions.teleport(playerEntity, BzDimensionType.BUMBLEZONE_TYPE, BzPlacement.ENTERING);
                 //pearlEntity.remove(); // remove pearl from world
                 ci.cancel(); // cancel rest of the enderpearl hit stuff
             }

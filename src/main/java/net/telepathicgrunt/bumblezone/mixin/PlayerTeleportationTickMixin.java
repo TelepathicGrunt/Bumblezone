@@ -3,6 +3,7 @@ package net.telepathicgrunt.bumblezone.mixin;
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.dimension.DimensionType;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
 import net.telepathicgrunt.bumblezone.dimension.BzPlacement;
@@ -33,13 +34,19 @@ public class PlayerTeleportationTickMixin
                 playerEntity.updatePosition(playerEntity.getX(), -3, playerEntity.getZ());
 
                 if(!playerEntity.world.isClient)
-                    FabricDimensions.teleport(playerEntity, DimensionType.OVERWORLD, BzPlacement.LEAVING);
+                    FabricDimensions.teleport(playerEntity, Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension(), BzPlacement.LEAVING);
             }
             else if(playerEntity.getY() > 255)
             {
                 if(!playerEntity.world.isClient)
-                    FabricDimensions.teleport(playerEntity, DimensionType.OVERWORLD, BzPlacement.LEAVING);
+                    FabricDimensions.teleport(playerEntity, Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension(), BzPlacement.LEAVING);
             }
+        }
+        //teleport to bumblezone
+        else if(Bumblezone.PLAYER_COMPONENT.get(playerEntity).getIsTeleporting())
+        {
+            FabricDimensions.teleport(playerEntity, BzDimensionType.BUMBLEZONE_TYPE, BzPlacement.ENTERING);
+            Bumblezone.PLAYER_COMPONENT.get(playerEntity).setIsTeleporting(false);
         }
     }
 

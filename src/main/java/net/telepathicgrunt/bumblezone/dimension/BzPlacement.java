@@ -71,25 +71,25 @@ public class BzPlacement
 
 		//Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone. 
 		//Go to Overworld instead as default
-		if(true)//cap.getNonBZDim() == BzDimensionType.BUMBLEZONE_TYPE)
+		if(false)//cap.getNonBZDim() == BzDimensionType.BUMBLEZONE_TYPE)
 		{
 			destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD); // go to overworld by default
 		}
 		else 
 		{
-			if(true) //BzConfig.forceExitToOverworld
+			if(false) //BzConfig.forceExitToOverworld
 			{
 				destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD); // go to Overworld directly.
 			}
 			else
 			{
-				//destinationWorld = destination; // gets the previous dimension user came from
+				destinationWorld = destination; // gets the previous dimension user came from
 			}
 		}
 
 
 		//converts the position to get the corresponding position in non-bumblezone dimension
-		double coordinateScale = destinationWorld.dimension.isNether() ? 8D / 10D : 1D / 10D;
+		double coordinateScale = destinationWorld.dimension.isNether() ? 10D / 8D : 10D / 1D;
 		BlockPos blockpos = new BlockPos(
 				playerEntity.getPos().getX() * coordinateScale,
 				playerEntity.getPos().getY(), 
@@ -127,7 +127,7 @@ public class BzPlacement
 
 
 		//converts the position to get the corresponding position in bumblezone dimension
-		double coordinateScale = originalWorld.dimension.isNether() ? 10D / 8D : 10D;
+		double coordinateScale = originalWorld.dimension.isNether() ? 8D / 10D : 1D / 10D;
 		BlockPos blockpos = new BlockPos(
 				playerEntity.getPos().getX() * coordinateScale,
 				playerEntity.getPos().getY(), 
