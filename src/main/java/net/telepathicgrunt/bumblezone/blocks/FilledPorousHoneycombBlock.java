@@ -26,6 +26,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
+import net.telepathicgrunt.bumblezone.configs.BzConfig;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
 import net.telepathicgrunt.bumblezone.effects.BzEffectsInit;
 
@@ -71,7 +72,7 @@ public class FilledPorousHoneycombBlock extends Block
 				}
 				
 
-				if((playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE) &&// || BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+				if((playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE || BzConfig.allowWrathOfTheHiveOutsideBumblezone.get().equals("yes")) &&
 					!playerEntity.isCreative() &&
 					!playerEntity.isSpectator())
 					//&& BzConfig.aggressiveBees)

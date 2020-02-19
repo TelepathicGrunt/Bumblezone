@@ -7,8 +7,12 @@ import nerdhub.cardinal.components.api.event.EntityComponentCallback;
 import nerdhub.cardinal.components.api.event.WorldComponentCallback;
 import nerdhub.cardinal.components.api.util.EntityComponents;
 import nerdhub.cardinal.components.api.util.RespawnCopyStrategy;
+import net.dblsaiko.qcommon.cfg.core.api.ConfigApi;
+import net.dblsaiko.qcommon.cfg.core.api.cvar.IntConVar;
+import net.dblsaiko.qcommon.cfg.core.api.cvar.StringConVar;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
+import net.telepathicgrunt.bumblezone.configs.BzConfig;
 import net.telepathicgrunt.bumblezone.entities.IPlayerComponent;
 import net.telepathicgrunt.bumblezone.entities.PlayerComponent;
 import org.apache.logging.log4j.LogManager;
@@ -43,6 +47,8 @@ public class Bumblezone implements ModInitializer
 		//attach component to player
 		EntityComponentCallback.event(PlayerEntity.class).register((player, components) -> components.put(PLAYER_COMPONENT, new PlayerComponent()));
 		EntityComponents.setRespawnCopyStrategy(PLAYER_COMPONENT, RespawnCopyStrategy.INVENTORY);
+
+		BzConfig.initalizeConfigs();;
 	}
 
 }

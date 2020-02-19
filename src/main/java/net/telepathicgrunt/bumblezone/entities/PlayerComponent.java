@@ -4,6 +4,9 @@ import net.fabricmc.fabric.api.dimension.v1.FabricDimensionType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.dimension.DimensionType;
+import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
+import org.apache.logging.log4j.Level;
 
 public class PlayerComponent implements IPlayerComponent  {
     private boolean teleporting = false;
@@ -26,7 +29,15 @@ public class PlayerComponent implements IPlayerComponent  {
 
     @Override
     public void setNonBZDimension(DimensionType nonBZDimension) {
-        this.nonBZDimensionType = nonBZDimension;
+        if(nonBZDimension == BzDimensionType.BUMBLEZONE_TYPE)
+        {
+            this.nonBZDimensionType = DimensionType.OVERWORLD;
+            Bumblezone.LOGGER.log(Level.ERROR, "Error: The non-bz dimension passed in to be stored was bz dimension. Please contact mod creator to let them know of this issue.");
+        }
+        else{
+            this.nonBZDimensionType = nonBZDimension;
+        }
+
     }
 
     @Override public void fromTag(CompoundTag tag)

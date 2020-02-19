@@ -52,10 +52,6 @@ public class EnderpearlImpactMixin {
             //if the pearl hit a beehive and is not in our bee dimension, begin the teleportation.
             if (hitHive && playerEntity.dimension != BzDimensionType.BUMBLEZONE_TYPE) {
                 Bumblezone.PLAYER_COMPONENT.get(playerEntity).setIsTeleporting(true);
-                Bumblezone.PLAYER_COMPONENT.get(playerEntity).setNonBZDimension(playerEntity.dimension);
-
-                //FabricDimensions.teleport(playerEntity, BzDimensionType.BUMBLEZONE_TYPE, BzPlacement.ENTERING);
-                //pearlEntity.remove(); // remove pearl from world
                 ci.cancel(); // cancel rest of the enderpearl hit stuff
             }
         }
