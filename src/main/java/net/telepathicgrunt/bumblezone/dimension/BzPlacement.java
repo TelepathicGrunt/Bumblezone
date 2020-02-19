@@ -217,7 +217,7 @@ public class BzPlacement
 			for(int z = -halfRange; z < halfRange; z++)
 			{	
 				mutableBlockPos.set(position.getX() + x, 0, position.getZ() + z);
-				if(!world.isChunkLoaded(mutableBlockPos.getX() >> 4, mutableBlockPos.getZ() + z >> 4))
+				if(!world.isChunkLoaded(mutableBlockPos.getX() >> 4, mutableBlockPos.getZ() >> 4))
 				{
 					//make game generate chunk so we can get max height of blocks in it
 					world.getChunk(mutableBlockPos);
@@ -238,7 +238,7 @@ public class BzPlacement
 			for (int range = 0; range < maximumRange; range++)
 			{
 				int radius = range * range;
-				int nextRadius = range+1 * range+1;
+				int nextRadius = (range+1) * (range+1);
 				for (int x = 0; x <= range * 2; x++){
 					int x2 = x > range ? -(x - range) : x;
 
