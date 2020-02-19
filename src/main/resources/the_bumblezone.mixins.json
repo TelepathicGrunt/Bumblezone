@@ -10,7 +10,8 @@
     "PandaBearTickMixin",
     "PlayerHiveWrathTickMixin",
     "PlayerTeleportationTickMixin",
-    "EnderpearlImpactMixin"
+    "EnderpearlImpactMixin",
+    "PlayerDimensionChangeMixin"
   ],
   "client": [
   ],

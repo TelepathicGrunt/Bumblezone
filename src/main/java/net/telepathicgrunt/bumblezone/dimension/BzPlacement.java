@@ -16,10 +16,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.telepathicgrunt.bumblezone.features.decorators.BzPlacingUtils;
 
-/**
- * Derived from modmuss50 at https://github.com/modmuss50/SimpleVoidWorld/blob/1.15/src/main/java/me/modmuss50/svw/VoidPlacementHandler.java
- *
- */
 public class BzPlacement
 {
 	//use this to teleport to any dimension
@@ -103,23 +99,14 @@ public class BzPlacement
 
 		//let game know we are gonna teleport player
 		ChunkPos chunkpos = new ChunkPos(validBlockPos);
-//		destinationWorld.getChunkManager().addTicket(ChunkTicketType.POST_TELEPORT, chunkpos, 1, playerEntity.getEntityId());
-//
-//		((ServerPlayerEntity)playerEntity).teleport(
-//			destinationWorld,
-//			validBlockPos.getX() + 0.5D,
-//			validBlockPos.getY() + 1,
-//			validBlockPos.getZ() + 0.5D,
-//			playerEntity.yaw,
-//			playerEntity.pitch);
+
+		//teleportation spot finding complete. return spot
 		return new Vec3d(
 			validBlockPos.getX() + 0.5D,
 			validBlockPos.getY() + 1,
 			validBlockPos.getZ() + 0.5D
 		);
 
-		//teleportation complete. 
-		//cap.setTeleporting(false);
 	}
 
 	private static Vec3d teleportByPearl(PlayerEntity playerEntity, ServerWorld originalWorld, ServerWorld bumblezoneWorld)
@@ -179,24 +166,13 @@ public class BzPlacement
 
 		//let game know we are gonna teleport player
 		ChunkPos chunkpos = new ChunkPos(validBlockPos);
-//		bumblezoneWorld.getChunkManager().addTicket(ChunkTicketType.POST_TELEPORT, chunkpos, 1, playerEntity.getEntityId());
-//
-//		((ServerPlayerEntity)playerEntity).teleport(
-//			bumblezoneWorld,
-//			validBlockPos.getX() + 0.5D,
-//			validBlockPos.getY() + 1,
-//			validBlockPos.getZ() + 0.5D,
-//			playerEntity.yaw,
-//			playerEntity.pitch);
 
+		//teleportation spot finding complete. return spot
 		return new Vec3d(
 				validBlockPos.getX() + 0.5D,
 				validBlockPos.getY() + 1,
 				validBlockPos.getZ() + 0.5D
 		);
-
-		//teleportation complete. 
-		//cap.setTeleporting(false);
 	}
 
 
