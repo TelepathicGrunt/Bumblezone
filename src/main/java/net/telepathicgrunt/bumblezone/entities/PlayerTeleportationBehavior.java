@@ -333,7 +333,7 @@ public class PlayerTeleportationBehavior
 			for(int z = -halfRange; z < halfRange; z++)
 			{	
 				mutableBlockPos.setPos(position.getX() + x, 0, position.getZ() + z);
-				if(!world.chunkExists(mutableBlockPos.getX() >> 4, mutableBlockPos.getZ() + z >> 4))
+				if(!world.chunkExists(mutableBlockPos.getX() >> 4, mutableBlockPos.getZ() >> 4))
 				{
 					//make game generate chunk so we can get max height of blocks in it
 					world.getChunk(mutableBlockPos);
