@@ -19,7 +19,7 @@ repositories {
 		url = "https://jitpack.io"
 	}
 	maven {
-		url = 'https://maven.dblsaiko.net/'
+		url 'http://server.bbkr.space:8081/artifactory/libs-release'
 	}
 }
 
@@ -34,14 +34,10 @@ dependencies {
 
 	modImplementation "com.github.NerdHubMC:Cardinal-Components-API:${project.cardinal_version}"
 	include "com.github.NerdHubMC:Cardinal-Components-API:${project.cardinal_version}"
-	
-	include group: 'net.dblsaiko.qcommon.cfg', name: 'cfg', version: '2.0.2-20'
-	modRuntime(group: 'net.dblsaiko.qcommon.cfg', name: 'cfg', version: '2.1.0-25') {
-		exclude group: 'net.fabricmc.fabric-api'
-	}
-	modImplementation(group: 'net.dblsaiko.qcommon.cfg', name: 'cfg-core', version: '2.1.0-25') {
-		exclude group: 'net.fabricmc.fabric-api'
-	}
+
+	modImplementation "io.github.cottonmc.cotton:cotton:${project.cotton_version}"
+	include "io.github.cottonmc.cotton:cotton:${project.cotton_version}"
+
 }
 
 processResources {

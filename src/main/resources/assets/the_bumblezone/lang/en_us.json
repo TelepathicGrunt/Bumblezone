@@ -7,5 +7,4 @@
   "biome.the_bumblezone.hive_pillar": "Hive Pillar",
   "feature.the_bumblezone.honeycomb_hole": "Honeycomb Hole",
   "effect.the_bumblezone.wrath_of_the_hive": "Wrath of the Hive",
-  "cfg.desc.the_bumblezone_allow_wrath_of_the_hive_outside_bumblezone:.ext": "Determines if Wrath of the Hive can be applied to players outside\nthe Bumblezone dimension when they pick up Honey blocks, take honey\nfrom Filled Porous Honey blocks, or drink Honey Bottles."
 }

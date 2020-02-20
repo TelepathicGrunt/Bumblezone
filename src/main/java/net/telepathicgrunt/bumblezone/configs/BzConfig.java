@@ -11,7 +11,6 @@ public class BzConfig {
 
     public static void initalizeConfigs()
     {
-        ConfigApi.Mutable api = ConfigApi.getInstanceMut();
-        allowWrathOfTheHiveOutsideBumblezone = api.addConVar(MODID+"_allow_wrath_of_the_hive_outside_bumblezone:", StringConVar.owned("no"), CvarOptions.create().save(MODID).sync());
+
     }
 }
