@@ -115,7 +115,7 @@ public class BzConfig
 			                    		+" at the Overworld regardless of which dimension you originally \r\n"
 			                    		+" came from. Use this option if this dimension becomes locked in  \r\n"
 			                    		+" with another dimension so you are stuck teleporting between the \r\n"
-			                    		+" two and cannot get back to the Overworld\r\n")
+			                    		+" two and cannot get back to the Overworld.\r\n")
 			                    .translation("the_bumblezone.config.dimension.forceexittooverworld")
 			                    .define("forceExitToOverworld", false);
 	
