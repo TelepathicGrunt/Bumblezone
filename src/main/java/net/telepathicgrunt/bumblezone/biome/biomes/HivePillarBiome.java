@@ -37,7 +37,7 @@ public final class HivePillarBiome extends BzBaseBiome
 	/**
 	 * returns the chance a creature has to spawn.
 	 */
-	public float getSpawningChance()
+	public float getMaxSpawnLimit()
 	{
 		return 0.6F;
 	}

@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.world.World;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
 import net.telepathicgrunt.bumblezone.effects.BzEffectsInit;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,10 +31,9 @@ public class PolarBearTickMixin
 
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
-        if (!world.isClient && ((PolarBearEntity)(Object)this).dimension == BzDimensionType.BUMBLEZONE_TYPE)// && BzConfig.aggressiveBees)
+        if (!world.isClient && ((PolarBearEntity)(Object)this).dimension == BzDimensionType.BUMBLEZONE_TYPE && Bumblezone.BZ_CONFIG.aggressiveBees)
         {
-//            ((PolarBearEntity)(Object)this).addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 1, false, true));
-            ((PolarBearEntity)(Object)this).addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, 350, 1, false, true));
+            ((PolarBearEntity)(Object)this).addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongWrathOfTheHiveLasts, 1, false, true));
         }
     }
 

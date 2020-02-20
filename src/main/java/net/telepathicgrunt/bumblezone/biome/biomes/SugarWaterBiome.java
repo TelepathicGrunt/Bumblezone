@@ -37,7 +37,7 @@ public final class SugarWaterBiome extends BzBaseBiome
 	/**
 	 * returns the chance a creature has to spawn.
 	 */
-	public float getSpawningChance()
+	public float getMaxSpawnLimit()
 	{
 		return 0.45F;
 	}

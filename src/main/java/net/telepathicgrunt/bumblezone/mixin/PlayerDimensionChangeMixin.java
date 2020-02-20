@@ -32,7 +32,7 @@ public class PlayerDimensionChangeMixin
 
         //Updates the non-BZ dimension that the player is leaving
         if(dimensionLeaving != BzDimensionType.BUMBLEZONE_TYPE){
-            Bumblezone.PLAYER_COMPONENT.get((ServerPlayerEntity)(Object)this).setNonBZDimension(dimensionLeaving);
+            Bumblezone.PLAYER_COMPONENT.get(this).setNonBZDimension(dimensionLeaving);
         }
     }
 }

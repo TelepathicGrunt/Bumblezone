@@ -48,10 +48,10 @@ public class HoneyPickupMixin
             !player.isSpectator())
         {
             //if player picks up a honey block, bees gets very mad...
-            if(item == Items.HONEY_BLOCK)// && BzConfig.aggressiveBees)
+            if(item == Items.HONEY_BLOCK && Bumblezone.BZ_CONFIG.aggressiveBees)
             {
                 //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
-                player.addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, 350/*BzConfig.howLongWrathOfTheHiveLasts*/, 2, false, true/*BzConfig.showWrathOfTheHiveParticles*/, true));
+                player.addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.showWrathOfTheHiveParticles, true));
             }
         }
     }

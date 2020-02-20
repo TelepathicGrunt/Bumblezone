@@ -75,12 +75,11 @@ public class FilledPorousHoneycombBlock extends Block
 
 				if((playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE || Bumblezone.BZ_CONFIG.allowWrathOfTheHiveOutsideBumblezone) &&
 					!playerEntity.isCreative() &&
-					!playerEntity.isSpectator())
-					//&& BzConfig.aggressiveBees)
+					!playerEntity.isSpectator()
+					&& Bumblezone.BZ_CONFIG.aggressiveBees)
 				{
 					//Now all bees nearby in Bumblezone will get VERY angry!!!
-//					playerEntity.addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
-					playerEntity.addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, 350, 2, false, true, true));
+					playerEntity.addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.showWrathOfTheHiveParticles, true));
 				}
 			}
 

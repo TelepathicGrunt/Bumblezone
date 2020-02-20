@@ -12,6 +12,7 @@ import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.ChunkGeneratorType;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.generation.BzBiomeProvider;
 import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 
@@ -70,9 +71,9 @@ public class BzDimension extends Dimension
 	}
 	
 
-	public double getMovementFactor()
+	public static double getMovementFactor()
 	{
-		return 10;//BzConfig.movementFactor;
+		return Bumblezone.BZ_CONFIG.movementFactor;
 	}
 
 
@@ -95,7 +96,7 @@ public class BzDimension extends Dimension
 	@Override
 	public float getSkyAngle(long worldTime, float partialTicks)
 	{
-		if (true)//BzConfig.dayNightCycle || BzConfig.fogBrightnessPercentage > 50)
+		if (Bumblezone.BZ_CONFIG.dayNightCycle || Bumblezone.BZ_CONFIG.fogBrightnessPercentage > 50)
 		{
 			return 0f;
 		}
@@ -161,7 +162,7 @@ public class BzDimension extends Dimension
 	{
 		float colorFactor = 1;
 
-		if (true)//BzConfig.dayNightCycle)
+		if (Bumblezone.BZ_CONFIG.dayNightCycle)
 		{
 			// Modifies the sky angle to be in range of 0 to 1 with 0 as night and 1 as day.
 			float scaledAngle = Math.abs(0.5f - calculateVanillaSkyPositioning(this.world.getTime(), 1.0F)) * 2;
@@ -170,7 +171,7 @@ public class BzDimension extends Dimension
 			colorFactor = Math.min(Math.max(scaledAngle * 3 - 1f, 0), 1);
 
 			// Scales the returned factor by user chosen brightness.
-			colorFactor *= 1;//(BzConfig.fogBrightnessPercentage / 100);
+			colorFactor *= (Bumblezone.BZ_CONFIG.fogBrightnessPercentage / 100);
 		}
 		else
 		{
@@ -178,13 +179,13 @@ public class BzDimension extends Dimension
 			 * The sky will be turned to midnight when brightness is below 50 and the day/night cycle is off. This lets us get the
 			 * full range of brightness by utilizing the default brightness that the current celestial time gives.
 			 */
-			if (true)//BzConfig.fogBrightnessPercentage <= 50)
+			if (Bumblezone.BZ_CONFIG.fogBrightnessPercentage <= 50)
 			{
-				colorFactor *= 1;//(BzConfig.fogBrightnessPercentage / 50);
+				colorFactor *= (Bumblezone.BZ_CONFIG.fogBrightnessPercentage / 50);
 			}
 			else
 			{
-				colorFactor *= 1;//(BzConfig.fogBrightnessPercentage / 100);
+				colorFactor *= (Bumblezone.BZ_CONFIG.fogBrightnessPercentage / 100);
 			}
 		}
 

@@ -19,6 +19,9 @@ repositories {
 		url = "https://jitpack.io"
 	}
 	maven {
+		url 'https://maven.fabricmc.net/io/github/prospector/modmenu/'
+	}
+	maven {
 		url 'http://server.bbkr.space:8081/artifactory/libs-release'
 	}
 }
@@ -35,7 +38,10 @@ dependencies {
 	modImplementation "com.github.NerdHubMC:Cardinal-Components-API:${project.cardinal_version}"
 	include "com.github.NerdHubMC:Cardinal-Components-API:${project.cardinal_version}"
 
-	modImplementation "io.github.cottonmc.cotton:cotton:${project.cotton_version}"
+	modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}";
+	include "io.github.prospector:modmenu:${project.mod_menu_version}";
+
+	modImplementation ("io.github.cottonmc:Cotton:${project.cotton_version}") { exclude(group: "io.github.prospector.modmenu", module: "ModMenu") exclude(group: "io.github.cottonmc", module: "Jankson")}
 	include "io.github.cottonmc.cotton:cotton:${project.cotton_version}"
 
 }

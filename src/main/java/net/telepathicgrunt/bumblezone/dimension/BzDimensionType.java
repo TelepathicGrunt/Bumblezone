@@ -22,6 +22,6 @@ public class BzDimensionType{
 				.skyLight(true)
 				.factory(BzDimension::new)
 				.defaultPlacer(BzPlacement.ENTERING)
-				.buildAndRegister(new Identifier(Bumblezone.MODID));
+				.buildAndRegister(new Identifier(Bumblezone.MODID, Bumblezone.MODID));
 	}
 }

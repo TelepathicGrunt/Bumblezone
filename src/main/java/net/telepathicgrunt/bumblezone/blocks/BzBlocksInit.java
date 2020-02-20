@@ -15,25 +15,12 @@ public class BzBlocksInit
 {
     public static final Block POROUS_HONEYCOMB = new PorousHoneycombBlock();
     public static final Block FILLED_POROUS_HONEYCOMB = new FilledPorousHoneycombBlock();
-    public static final ItemGroup BZ_ITEM_GROUP = FabricItemGroupBuilder.build(new Identifier(Bumblezone.MODID), () -> new ItemStack(FILLED_POROUS_HONEYCOMB.asItem()));
-    
-//    
-//	/**
-//	 * creative tab to hold our block items
-//	 */
-//	public static final ItemGroup BUMBLEZONE_CREATIVE_TAB = new ItemGroup(ItemGroup.GROUPS.length, Bumblezone.MODID)
-//	{
-//		public ItemStack createIcon()
-//		{
-//			return new ItemStack(FILLED_POROUS_HONEYCOMB);
-//		}
-//	};
+    public static final ItemGroup BZ_ITEM_GROUP = FabricItemGroupBuilder.build(new Identifier(Bumblezone.MODID,"item_group"), () -> new ItemStack(FILLED_POROUS_HONEYCOMB.asItem()));
+
 
 	
 	/**
 	 * registers the Blocks so they now exist in the registry
-	 * 
-	 * @param event - registry to add blocks to
 	 */
 	public static void registerBlocks()
 	{
@@ -44,8 +31,6 @@ public class BzBlocksInit
 
 	/**
 	 * registers the item version of the Blocks so they now exist in the registry
-	 * 
-	 * @param event - registry to add items to
 	 */
 	public static void registerItems()
 	{

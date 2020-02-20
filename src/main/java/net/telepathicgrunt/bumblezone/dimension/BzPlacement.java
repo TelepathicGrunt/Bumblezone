@@ -14,6 +14,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.features.decorators.BzPlacingUtils;
 
 public class BzPlacement
@@ -67,13 +68,13 @@ public class BzPlacement
 
 		//Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone. 
 		//Go to Overworld instead as default
-		if(false)//cap.getNonBZDim() == BzDimensionType.BUMBLEZONE_TYPE)
+		if(Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension() == BzDimensionType.BUMBLEZONE_TYPE)
 		{
 			destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD); // go to overworld by default
 		}
 		else 
 		{
-			if(false) //BzConfig.forceExitToOverworld
+			if(Bumblezone.BZ_CONFIG.forceExitToOverworld)
 			{
 				destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD); // go to Overworld directly.
 			}
@@ -85,7 +86,7 @@ public class BzPlacement
 
 
 		//converts the position to get the corresponding position in non-bumblezone dimension
-		double coordinateScale = destinationWorld.dimension.isNether() ? 10D / 8D : 10D / 1D;
+		double coordinateScale = destinationWorld.dimension.isNether() ? BzDimension.getMovementFactor() / 8D : BzDimension.getMovementFactor() / 1D;
 		BlockPos blockpos = new BlockPos(
 				playerEntity.getPos().getX() * coordinateScale,
 				playerEntity.getPos().getY(), 
@@ -114,7 +115,7 @@ public class BzPlacement
 
 
 		//converts the position to get the corresponding position in bumblezone dimension
-		double coordinateScale = originalWorld.dimension.isNether() ? 8D / 10D : 1D / 10D;
+		double coordinateScale = originalWorld.dimension.isNether() ? 8D / BzDimension.getMovementFactor() : 1D / BzDimension.getMovementFactor();
 		BlockPos blockpos = new BlockPos(
 				playerEntity.getPos().getX() * coordinateScale,
 				playerEntity.getPos().getY(), 

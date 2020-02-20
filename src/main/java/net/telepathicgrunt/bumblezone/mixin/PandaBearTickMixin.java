@@ -4,6 +4,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.passive.PandaEntity;
 import net.minecraft.entity.passive.PolarBearEntity;
 import net.minecraft.world.World;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
 import net.telepathicgrunt.bumblezone.effects.BzEffectsInit;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,10 +25,10 @@ public class PandaBearTickMixin
 
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
-        if (!world.isClient && ((PandaEntity)(Object)this).dimension == BzDimensionType.BUMBLEZONE_TYPE)// && BzConfig.aggressiveBees)
+        if (!world.isClient && ((PandaEntity)(Object)this).dimension == BzDimensionType.BUMBLEZONE_TYPE && Bumblezone.BZ_CONFIG.aggressiveBees)
         {
-//            ((PandaEntity)(Object)this).addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 1, false, true));
-            ((PandaEntity)(Object)this).addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, 350, 1, false, true));
+            ((PandaEntity)(Object)this).addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongWrathOfTheHiveLasts, 1, false, true));
+
         }
     }
 

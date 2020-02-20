@@ -39,9 +39,8 @@ public class HoneyDrinkMixin
                     !playerEntity.isSpectator())
             {
                 //if player drinks honey, bees gets very mad...
-                if(stack.getItem() == Items.HONEY_BOTTLE){// && BzConfig.aggressiveBees){
-//                    playerEntity.addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
-                    playerEntity.addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, 350, 2, false, true, true));
+                if(stack.getItem() == Items.HONEY_BOTTLE && Bumblezone.BZ_CONFIG.aggressiveBees){
+                    playerEntity.addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.showWrathOfTheHiveParticles, true));
                 }
             }
         }
