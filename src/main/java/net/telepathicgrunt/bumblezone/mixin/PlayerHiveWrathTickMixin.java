@@ -4,6 +4,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.passive.PolarBearEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.configs.BzConfig;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
@@ -28,7 +29,7 @@ public class PlayerHiveWrathTickMixin
         PlayerEntity playerEntity = ((PlayerEntity)(Object)this);
 
         //removes the wrath of the hive if it is disallowed outside dimension
-        if(!(playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE || BzConfig.allowWrathOfTheHiveOutsideBumblezone.get().equals("yes")) &&
+        if(!(playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE || Bumblezone.BZ_CONFIG.allowWrathOfTheHiveOutsideBumblezone) &&
             playerEntity.hasStatusEffect(BzEffectsInit.WRATH_OF_THE_HIVE))
         {
             playerEntity.removeStatusEffect(BzEffectsInit.WRATH_OF_THE_HIVE);

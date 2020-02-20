@@ -34,7 +34,7 @@ public class HoneyDrinkMixin
             //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
             //Also checks to make sure we are in dimension and that player isn't in creative or spectator
             if (!world.isClient &&
-                    (playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE || BzConfig.allowWrathOfTheHiveOutsideBumblezone.get().equals("yes")) &&
+                    (playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE || Bumblezone.BZ_CONFIG.allowWrathOfTheHiveOutsideBumblezone) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator())
             {
