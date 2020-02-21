@@ -30,6 +30,7 @@ import net.minecraft.world.gen.ChunkRandom;
 import net.minecraft.world.gen.chunk.OverworldChunkGeneratorConfig;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.features.decorators.BzPlacingUtils;
+import net.telepathicgrunt.bumblezone.mixin.BeeEntityAccessor;
 
 
 public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGeneratorConfig>
@@ -69,6 +70,9 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 	 * Dedicated to spawning slimes/bees when generating chunks initially.
 	 * This is so there's lots of bees and the slime can spawn despite the 
 	 * slime having extremely restrictive spawning mechanics.
+	 *
+	 * Also spawns bees with chance to bee full of pollen or be
+	 * a BeeProductive mob if that mod is on.
 	 * 
 	 * This is mainly vanilla code but with biome$spawnlistentry changed to 
 	 * use bee/slime and the restrictive terrain check called on the entity removed.
@@ -77,8 +81,6 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 	 */
 	public void populateEntities(ChunkRegion region)
 	{
-		if(true)
-			return;
 		int xChunk = region.getCenterChunkX();
 		int zChunk = region.getCenterChunkZ();
 		int xCord = xChunk << 4;
@@ -112,36 +114,44 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 				{
 					entity = biome$spawnlistentry.type.create(region.getWorld());
 
-					if(Bumblezone.PRODUCTIVE_BEE != null && biome$spawnlistentry.type == EntityType.BEE){
-						float choosenChance = randomSeed.nextFloat();
-						float thresholdRange = 0.001f; //total chance of 0.9% to spawn a BeeProductive bee.
+					if(biome$spawnlistentry.type == EntityType.BEE){
 
-						if(choosenChance < thresholdRange){
-							BeeProdNectars.GAY_SKIN.onApply((BeeEntity)entity, null);
+						if(Bumblezone.PRODUCTIVE_BEE != null){
+							float choosenChance = randomSeed.nextFloat();
+							float thresholdRange = 0.001f; //total chance of 0.9% to spawn a BeeProductive bee.
+
+							if(choosenChance < thresholdRange){
+								BeeProdNectars.GAY_SKIN.onApply((BeeEntity)entity, null);
+							}
+							else if(choosenChance < thresholdRange*2){
+								BeeProdNectars.BI_SKIN.onApply((BeeEntity)entity, null);
+							}
+							else if(choosenChance < thresholdRange*3){
+								BeeProdNectars.WEATHERPROOF.onApply((BeeEntity)entity, null);
+							}
+							else if(choosenChance < thresholdRange*4){
+								BeeProdNectars.LESBIAN_SKIN.onApply((BeeEntity)entity, null);
+							}
+							else if(choosenChance < thresholdRange*5){
+								BeeProdNectars.NOCTURNAL.onApply((BeeEntity)entity, null);
+							}
+							else if(choosenChance < thresholdRange*6){
+								BeeProdNectars.NONBINARY_SKIN.onApply((BeeEntity)entity, null);
+							}
+							else if(choosenChance < thresholdRange*7){
+								BeeProdNectars.PACIFIST.onApply((BeeEntity)entity, null);
+							}
+							else if(choosenChance < thresholdRange*8){
+								BeeProdNectars.PAN_SKIN.onApply((BeeEntity)entity, null);
+							}
+							else if(choosenChance < thresholdRange*9){
+								BeeProdNectars.TRANS_SKIN.onApply((BeeEntity)entity, null);
+							}
 						}
-						else if(choosenChance < thresholdRange*2){
-							BeeProdNectars.BI_SKIN.onApply((BeeEntity)entity, null);
-						}
-						else if(choosenChance < thresholdRange*3){
-							BeeProdNectars.WEATHERPROOF.onApply((BeeEntity)entity, null);
-						}
-						else if(choosenChance < thresholdRange*4){
-							BeeProdNectars.LESBIAN_SKIN.onApply((BeeEntity)entity, null);
-						}
-						else if(choosenChance < thresholdRange*5){
-							BeeProdNectars.NOCTURNAL.onApply((BeeEntity)entity, null);
-						}
-						else if(choosenChance < thresholdRange*6){
-							BeeProdNectars.NONBINARY_SKIN.onApply((BeeEntity)entity, null);
-						}
-						else if(choosenChance < thresholdRange*7){
-							BeeProdNectars.PACIFIST.onApply((BeeEntity)entity, null);
-						}
-						else if(choosenChance < thresholdRange*8){
-							BeeProdNectars.PAN_SKIN.onApply((BeeEntity)entity, null);
-						}
-						else if(choosenChance < thresholdRange*9){
-							BeeProdNectars.TRANS_SKIN.onApply((BeeEntity)entity, null);
+
+						//20% chance of being full of pollen
+						if(randomSeed.nextFloat() < 0.2f){
+							((BeeEntityAccessor)entity).callSetBeeFlag(8 ,true);
 						}
 					}
 				}

@@ -23,12 +23,13 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(SpawnHelper.class)
 public class BeeProductiveBeeSpawnMixin
 {
+    //spawns bees with chance to bee full of pollen or be a BeeProductive mob if that mod is on
     @Redirect(method = "spawnEntitiesInChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;spawnEntity(Lnet/minecraft/entity/Entity;)Z"))
     private static boolean spawnEntitiesInChunk(ServerWorld serverWorld, Entity entity) {
 
         if(serverWorld.dimension.getType() == BzDimensionType.BUMBLEZONE_TYPE){
             if(entity.getType() == EntityType.BEE){
-                // If BeeProduction is on, add a rare change to spawn their bees too
+                // If BeeProduction is on, add a rare chance to spawn their bees too
                 if(Bumblezone.PRODUCTIVE_BEE != null ){
                     float choosenChance = serverWorld.random.nextFloat();
                     float thresholdRange = 0.001f; //total chance of 0.9% to spawn a BeeProductive bee.
@@ -62,7 +63,10 @@ public class BeeProductiveBeeSpawnMixin
                     }
                 }
 
-                ((BeeEntityAccessor)entity).setBeeFlag(8 ,true);
+                //20% chance of being full of pollen
+                if(serverWorld.random.nextFloat() < 0.2f){
+                    ((BeeEntityAccessor)entity).callSetBeeFlag(8 ,true);
+                }
             }
         }
 
