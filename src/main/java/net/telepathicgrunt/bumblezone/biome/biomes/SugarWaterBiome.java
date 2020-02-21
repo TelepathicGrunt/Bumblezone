@@ -26,12 +26,12 @@ public final class SugarWaterBiome extends BzBaseBiome
 	    this.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(WATER_SPRING_CONFIG).createDecoratedFeature(Decorator.COUNT_BIASED_RANGE.configure(new RangeDecoratorConfig(4, 128, 0, 256))));
 	    this.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(WATER_SPRING_CONFIG).createDecoratedFeature(Decorator.COUNT_BIASED_RANGE.configure(new RangeDecoratorConfig(10, 16, 0, 128))));
 
-	    this.addSpawn(EntityCategory.CREATURE, new Biome.SpawnEntry(EntityType.BEE, 100, 5, 10));
-//		this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.SNOWBALL, 2100, 1, 1)); //Used to make monsters even less common
-//		this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.SPIDER, 12, 1, 1));
-//		this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.ENDERMAN, 2, 1, 1));
-//		this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.PHANTOM, 1, 1, 1));
-//		this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.SLIME, 500, 4, 8));
+		this.addSpawn(EntityCategory.CREATURE, new Biome.SpawnEntry(EntityType.BEE, 100, 5, 10));
+		this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.SNOWBALL, 2100, 1, 1)); //Used to make monsters even less common
+		this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.SPIDER, 12, 1, 1));
+		this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.ENDERMAN, 2, 1, 1));
+		this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.PHANTOM, 1, 1, 1));
+		this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.SLIME, 500, 4, 8));
 	}
 
 	/**

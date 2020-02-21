@@ -77,6 +77,8 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 	 */
 	public void populateEntities(ChunkRegion region)
 	{
+		if(true)
+			return;
 		int xChunk = region.getCenterChunkX();
 		int zChunk = region.getCenterChunkZ();
 		int xCord = xChunk << 4;

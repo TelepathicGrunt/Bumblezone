@@ -11,7 +11,9 @@
     "PlayerHiveWrathTickMixin",
     "PlayerTeleportationTickMixin",
     "EnderpearlImpactMixin",
-    "PlayerDimensionChangeMixin"
+    "PlayerDimensionChangeMixin",
+    "BeeProductiveBeeSpawnMixin",
+    "BeeEntityAccessor"
   ],
   "client": [
   ],
