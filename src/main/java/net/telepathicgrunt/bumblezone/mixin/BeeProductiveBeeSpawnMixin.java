@@ -1,24 +1,16 @@
 package net.telepathicgrunt.bumblezone.mixin;
 
 import io.github.alloffabric.beeproductive.init.BeeProdNectars;
-import net.minecraft.entity.*;
-import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.SpawnHelper;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.WorldChunk;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(SpawnHelper.class)
 public class BeeProductiveBeeSpawnMixin
@@ -32,7 +24,7 @@ public class BeeProductiveBeeSpawnMixin
                 // If BeeProduction is on, add a rare chance to spawn their bees too
                 if(Bumblezone.PRODUCTIVE_BEE != null ){
                     float choosenChance = serverWorld.random.nextFloat();
-                    float thresholdRange = 0.001f; //total chance of 0.9% to spawn a BeeProductive bee.
+                    float thresholdRange = 0.004f; //total chance of 3.6% to spawn a BeeProductive bee.
 
                     if(choosenChance < thresholdRange){
                         BeeProdNectars.GAY_SKIN.onApply((BeeEntity)entity, null);

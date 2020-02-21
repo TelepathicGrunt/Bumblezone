@@ -2,7 +2,6 @@ package net.telepathicgrunt.bumblezone.mixin;
 
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.passive.PandaEntity;
-import net.minecraft.entity.passive.PolarBearEntity;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;

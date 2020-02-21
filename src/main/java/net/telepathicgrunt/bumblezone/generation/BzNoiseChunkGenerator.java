@@ -1,7 +1,5 @@
 package net.telepathicgrunt.bumblezone.generation;
 
-import java.util.Random;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -20,6 +18,8 @@ import net.minecraft.world.chunk.ProtoChunk;
 import net.minecraft.world.gen.ChunkRandom;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
+
+import java.util.Random;
 
 
 public abstract class BzNoiseChunkGenerator<T extends ChunkGeneratorConfig> extends ChunkGenerator<T>

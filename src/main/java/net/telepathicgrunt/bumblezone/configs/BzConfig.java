@@ -9,23 +9,23 @@ public class BzConfig {
     //////////////////////////////////////////////////////////////////////////////
     //bee aggression
 
-    @Comment(value="\n" +
-            "--------------------------------------------------------------\n" +
+    @Comment(value="##############################################################\n" +
+            "##############################################################\n" +
             "\n" +
             "Determines if Wrath of the Hive can be applied to players outside\n" +
             "the Bumblezone dimension when they pick up Honey blocks, take honey\n" +
             " from Filled Porous Honey blocks, or drink Honey Bottles.")
     public boolean allowWrathOfTheHiveOutsideBumblezone = false;
     
-    @Comment(value="\n" +
-            "--------------------------------------------------------------\n" +
+    @Comment(value="##############################################################\n" +
+            "##############################################################\n" +
             "\n" +
             "Show the orangish particles when you get Wrath of the Hive\n" +
             "after you angered the bees in the Bumblezone dimension.")
     public boolean showWrathOfTheHiveParticles = true;
 
-    @Comment(value="\n" +
-            "--------------------------------------------------------------\n" +
+    @Comment(value="##############################################################\n" +
+            "##############################################################\n" +
             "\n" +
             "Turn off or on the ability to get Wrath of the Hive effect.\n" +
             "\n" +
@@ -41,8 +41,8 @@ public class BzConfig {
             "Note: Peaceful mode will always override the bee aggressive setting.")
     public boolean aggressiveBees = true;
 
-    @Comment(value="\n" +
-            "--------------------------------------------------------------\n" +
+    @Comment(value="##############################################################\n" +
+            "##############################################################\n" +
             "\n" +
             "How far away the bee can be to become angry and hunt you down if\n" +
             "you take their honey from the Bumblezone dimension.\n" +
@@ -50,8 +50,8 @@ public class BzConfig {
             "Will also affect the bee's aggression range toward bears in the dimension.")
     public int aggressionTriggerRadius = 64;
 
-    @Comment(value="\n" +
-            "--------------------------------------------------------------\n" +
+    @Comment(value="##############################################################\n" +
+            "##############################################################\n" +
             "\n" +
             "How long bees will keep their effects for (speed, absorption, strength).\n" +
             "\n" +
@@ -59,8 +59,8 @@ public class BzConfig {
             "Only the boosts given to the bees will be gone.")
     public int howLongWrathOfTheHiveLasts = 350;
 
-    @Comment(value="\n" +
-            "--------------------------------------------------------------\n" +
+    @Comment(value="##############################################################\n" +
+            "##############################################################\n" +
             "\n" +
             "How fast bees move along the ground (Not while flying).\n" +
             "You will see this a lot when bees are about to attack\n" +
@@ -69,14 +69,14 @@ public class BzConfig {
             "faster dash attacks from bees.")
     public int speedBoostLevel = 1;
 
-    @Comment(value="\n" +
-            "--------------------------------------------------------------\n" +
+    @Comment(value="##############################################################\n" +
+            "##############################################################\n" +
             "\n" +
             "How much extra unrecoverable health boost the bees gets.")
     public int absorptionBoostLevel = 2;
 
-    @Comment(value="\n" +
-            "--------------------------------------------------------------\n" +
+    @Comment(value="##############################################################\n" +
+            "##############################################################\n" +
             "\n" +
             "How strong the bees attacks become.\n" +
             "(5 or higher will instant kill you without armor).")
@@ -87,8 +87,8 @@ public class BzConfig {
     //////////////////////////////////////////////////////////////////////////////////////
     //dimension
 
-    @Comment(value="\n" +
-            "--------------------------------------------------------------\n" +
+    @Comment(value="##############################################################\n" +
+            "##############################################################\n" +
             "\n" +
             " Determines how the coordinates gets translated when entering\n" +
             "and leaving the Bumblezone. The default ratio is 10 which means\n" +
@@ -103,8 +103,8 @@ public class BzConfig {
             "take you in the dimension and exiting will place you in a different spot too.")
     public int movementFactor = 10;
 
-    @Comment(value="\n" +
-            "--------------------------------------------------------------\n" +
+    @Comment(value="##############################################################\n" +
+            "##############################################################\n" +
             "\n" +
             "Determines if the day/night cycle active in the Bumblezone dimension.\n" +
             "The cycle will be visible by the change in color of the fog. \n" +
@@ -115,8 +115,8 @@ public class BzConfig {
             "will be stuck at \"noon\" for the dimension.")
     public boolean dayNightCycle = true;
 
-    @Comment(value="\n" +
-            "--------------------------------------------------------------\n" +
+    @Comment(value="##############################################################\n" +
+            "##############################################################\n" +
             "\n" +
             "How bright the fog is in the Bumblezone dimension. \n" +
             "This will always affect the fog whether you have the \n" +
@@ -129,8 +129,8 @@ public class BzConfig {
             "but will not be completely black during daytime.")
     public double fogBrightnessPercentage = 100;
 
-    @Comment(value="\n" +
-            "--------------------------------------------------------------\n" +
+    @Comment(value="##############################################################\n" +
+            "##############################################################\n" +
             "\n" +
             "Makes leaving The Bumblezone dimension always places you back\n "
             +"at the Overworld regardless of which dimension you originally \n"

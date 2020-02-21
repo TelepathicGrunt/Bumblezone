@@ -1,34 +1,29 @@
 package net.telepathicgrunt.bumblezone;
 
 import com.sun.istack.internal.Nullable;
-import io.github.alloffabric.beeproductive.api.BeeComponent;
 import io.github.cottonmc.cotton.config.ConfigManager;
 import nerdhub.cardinal.components.api.ComponentRegistry;
 import nerdhub.cardinal.components.api.ComponentType;
-import nerdhub.cardinal.components.api.component.ComponentProvider;
 import nerdhub.cardinal.components.api.event.EntityComponentCallback;
-import nerdhub.cardinal.components.api.event.WorldComponentCallback;
 import nerdhub.cardinal.components.api.util.EntityComponents;
 import nerdhub.cardinal.components.api.util.RespawnCopyStrategy;
+import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
+import net.telepathicgrunt.bumblezone.biome.BzBiomesInit;
+import net.telepathicgrunt.bumblezone.blocks.BzBlocksInit;
 import net.telepathicgrunt.bumblezone.configs.BzConfig;
 import net.telepathicgrunt.bumblezone.configs.FileWatcher;
+import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
+import net.telepathicgrunt.bumblezone.effects.BzEffectsInit;
 import net.telepathicgrunt.bumblezone.entities.IPlayerComponent;
 import net.telepathicgrunt.bumblezone.entities.PlayerComponent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.fabricmc.api.ModInitializer;
-import net.telepathicgrunt.bumblezone.biome.BzBiomesInit;
-import net.telepathicgrunt.bumblezone.blocks.BzBlocksInit;
-import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
-import net.telepathicgrunt.bumblezone.effects.BzEffectsInit;
-
 import java.io.File;
 import java.io.FilenameFilter;
-import java.nio.file.*;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;

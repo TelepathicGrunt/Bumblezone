@@ -1,8 +1,5 @@
 package net.telepathicgrunt.bumblezone.biome;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
@@ -10,6 +7,9 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.biome.biomes.HivePillarBiome;
 import net.telepathicgrunt.bumblezone.biome.biomes.HiveWallBiome;
 import net.telepathicgrunt.bumblezone.biome.biomes.SugarWaterBiome;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class BzBiomesInit

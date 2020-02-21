@@ -7,7 +7,6 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 

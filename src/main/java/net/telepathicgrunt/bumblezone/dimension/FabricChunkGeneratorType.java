@@ -1,8 +1,6 @@
 package net.telepathicgrunt.bumblezone.dimension;
 
 
-import java.util.function.Supplier;
-
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -10,6 +8,8 @@ import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
 import net.minecraft.world.gen.chunk.ChunkGeneratorType;
+
+import java.util.function.Supplier;
 
 /**
  * From modmuss50 at https://github.com/modmuss50/SimpleVoidWorld/blob/d9b6ed8341fa7c5bd58abe0023fd57e5d0ef493a/src/main/java/me/modmuss50/svw/FabricChunkGeneratorType.java

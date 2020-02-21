@@ -25,11 +25,12 @@ public class BzPlacement
 
 	public static final EntityPlacer ENTERING = (teleported, destination, portalDir, horizontalOffset, verticalOffset) ->
 	{
+		//Note, the player does not hold the previous dimension oddly enough.
 		Vec3d destinationPosition;
 
 		if(teleported instanceof PlayerEntity){
 			MinecraftServer minecraftServer = teleported.getServer(); // the server itself
-			destinationPosition = teleportByPearl((PlayerEntity)teleported, minecraftServer.getWorld(teleported.dimension), destination);
+			destinationPosition = teleportByPearl((PlayerEntity)teleported, minecraftServer.getWorld(Bumblezone.PLAYER_COMPONENT.get(teleported).getNonBZDimension()), destination);
 		}
 		else{
 			destinationPosition = new Vec3d(0,0,0);
@@ -62,31 +63,8 @@ public class BzPlacement
 
 	private static Vec3d teleportByOutOfBounds(PlayerEntity playerEntity, ServerWorld destination, boolean checkingUpward)
 	{
-		//gets the world in the destination dimension
-		MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
-		ServerWorld destinationWorld;
-
-		//Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone. 
-		//Go to Overworld instead as default
-		if(Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension() == BzDimensionType.BUMBLEZONE_TYPE)
-		{
-			destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD); // go to overworld by default
-		}
-		else 
-		{
-			if(Bumblezone.BZ_CONFIG.forceExitToOverworld)
-			{
-				destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD); // go to Overworld directly.
-			}
-			else
-			{
-				destinationWorld = destination; // gets the previous dimension user came from
-			}
-		}
-
-
 		//converts the position to get the corresponding position in non-bumblezone dimension
-		double coordinateScale = destinationWorld.dimension.isNether() ? BzDimension.getMovementFactor() / 8D : BzDimension.getMovementFactor() / 1D;
+		double coordinateScale = destination.dimension.isNether() ? BzDimension.getMovementFactor() / 8D : BzDimension.getMovementFactor() / 1D;
 		BlockPos blockpos = new BlockPos(
 				playerEntity.getPos().getX() * coordinateScale,
 				playerEntity.getPos().getY(), 
@@ -95,7 +73,7 @@ public class BzPlacement
 
 		//Gets valid space in other world
 		//Won't ever be null
-		BlockPos validBlockPos = validPlayerSpawnLocationByBeehive(destinationWorld, blockpos, 48, checkingUpward);
+		BlockPos validBlockPos = validPlayerSpawnLocationByBeehive(destination, blockpos, 48, checkingUpward);
 
 
 		//let game know we are gonna teleport player
@@ -129,30 +107,62 @@ public class BzPlacement
 		//No valid space found around destination. Begin secondary valid spot algorithms
 		if (validBlockPos == null)
 		{
-			//Check if destination position is in air and if so, go down to first solid land.
-			if(bumblezoneWorld.getBlockState(blockpos).getMaterial() == Material.AIR &&
-			   bumblezoneWorld.getBlockState(blockpos.up()).getMaterial() == Material.AIR) 
-			{
-				validBlockPos = new BlockPos(
-						blockpos.getX(), 
-						BzPlacingUtils.topOfSurfaceBelowHeight(bumblezoneWorld, blockpos.getY(), 0, blockpos),
-						blockpos.getZ());
+			//go down to first solid land with air above.
+			validBlockPos = new BlockPos(
+					blockpos.getX(),
+					BzPlacingUtils.topOfSurfaceBelowHeightThroughWater(bumblezoneWorld, blockpos.getY(), 0, blockpos) + 1,
+					blockpos.getZ());
 
-				//No solid land was found. Who digs out an entire chunk?!
-				if(validBlockPos.getY() == 0)
-				{
-					validBlockPos = null;
+			//No solid land was found. Who digs out an entire chunk?!
+			if(validBlockPos.getY() == 0)
+			{
+				validBlockPos = null;
+			}
+			//checks if spot is not two water blocks with air block able to be reached above
+			else if(bumblezoneWorld.getBlockState(validBlockPos).getMaterial() == Material.WATER &&
+					bumblezoneWorld.getBlockState(validBlockPos.up()).getMaterial() == Material.WATER)
+			{
+				BlockPos.Mutable mutable = new BlockPos.Mutable(validBlockPos);
+
+				//moves upward looking for air block while not interrupted by a solid block
+				while(mutable.getY() < 255 && !bumblezoneWorld.isAir(mutable) || bumblezoneWorld.getBlockState(mutable).getMaterial() == Material.WATER){
+					mutable.setOffset(Direction.UP);
+				}
+				if(bumblezoneWorld.getBlockState(mutable).getMaterial() != Material.AIR){
+					validBlockPos = null; // No air found. Let's not place player here where they could drown
+				}
+				else{
+					validBlockPos = mutable; // Set player to top of water level
 				}
 			}
+			//checks if spot is not a non-solid block with air block above
+			else if((!bumblezoneWorld.isAir(validBlockPos) && bumblezoneWorld.getBlockState(validBlockPos).getMaterial() != Material.WATER) &&
+					bumblezoneWorld.getBlockState(validBlockPos.up()).getMaterial() != Material.AIR)
+			{
+				validBlockPos = null;
+			}
+
 
 			//still no valid position, time to force a valid location ourselves
 			if(validBlockPos == null) 
 			{
 				//We are going to spawn player at exact spot of scaled coordinates by placing air at the spot with honeycomb bottom
+				//and honeycomb walls to prevent drowning
 				//This is the last resort
 				bumblezoneWorld.setBlockState(blockpos, Blocks.AIR.getDefaultState());
 				bumblezoneWorld.setBlockState(blockpos.up(), Blocks.AIR.getDefaultState());
-				bumblezoneWorld.setBlockState(blockpos.down(), Blocks.BEE_NEST.getDefaultState());
+
+				bumblezoneWorld.setBlockState(blockpos.down(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.up().up(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+
+				bumblezoneWorld.setBlockState(blockpos.north(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.west(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.east(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.south(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.north().up(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.west().up(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.east().up(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.south().up(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
 				validBlockPos = blockpos;
 			}
 
@@ -171,7 +181,7 @@ public class BzPlacement
 		//teleportation spot finding complete. return spot
 		return new Vec3d(
 				validBlockPos.getX() + 0.5D,
-				validBlockPos.getY() + 1,
+				validBlockPos.getY(),
 				validBlockPos.getZ() + 0.5D
 		);
 	}

@@ -1,7 +1,6 @@
 package net.telepathicgrunt.bumblezone.biome;
 
 import com.google.common.collect.ImmutableSet;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;

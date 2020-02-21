@@ -1,10 +1,6 @@
 package net.telepathicgrunt.bumblezone.features;
 
-import java.util.Random;
-import java.util.function.Function;
-
 import com.mojang.datafixers.Dynamic;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -15,6 +11,9 @@ import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocksInit;
+
+import java.util.Random;
+import java.util.function.Function;
 
 
 public class HoneycombHole extends Feature<DefaultFeatureConfig>

@@ -45,7 +45,7 @@ dependencies {
 	include "io.github.cottonmc.cotton:Cotton:${project.cotton_version}"
 
 	modImplementation "io.github.alloffabric:BeeProductive:${project.beeproductive_version}";
-	include "io.github.alloffabric:BeeProductive:${project.beeproductive_version}";
+	//include "io.github.alloffabric:BeeProductive:${project.beeproductive_version}";
 }
 
 processResources {

@@ -3,12 +3,12 @@ package net.telepathicgrunt.bumblezone.mixin;
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.dimension.DimensionType;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
 import net.telepathicgrunt.bumblezone.dimension.BzPlacement;
-import net.telepathicgrunt.bumblezone.effects.BzEffectsInit;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -38,6 +38,7 @@ public class PlayerTeleportationTickMixin
 
                 if(!playerEntity.world.isClient)
                 {
+                    checkAndCorrectStoredDimension(playerEntity);
                     FabricDimensions.teleport(playerEntity, Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension(), BzPlacement.LEAVING);
                     reAddStatusEffect(playerEntity);
                 }
@@ -46,6 +47,7 @@ public class PlayerTeleportationTickMixin
             {
                 if(!playerEntity.world.isClient)
                 {
+                    checkAndCorrectStoredDimension(playerEntity);
                     FabricDimensions.teleport(playerEntity, Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension(), BzPlacement.LEAVING);
                     reAddStatusEffect(playerEntity);
                 }
@@ -85,4 +87,26 @@ public class PlayerTeleportationTickMixin
 			}
 		}
 	}
+
+
+    /**
+     * Looks at stored non-bz dimension and changes it to Overworld if it is
+     * BZ dimension or the config forces going to Overworld.
+     */
+	private static void checkAndCorrectStoredDimension(PlayerEntity playerEntity){
+        MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
+        ServerWorld destinationWorld;
+        DimensionType currentNonBZDimension = Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension();
+
+        //Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone.
+        //Go to Overworld instead as default. Or go to Overworld if config is set.
+        if(currentNonBZDimension == BzDimensionType.BUMBLEZONE_TYPE || Bumblezone.BZ_CONFIG.forceExitToOverworld)
+        {
+            // go to overworld by default
+            destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD);
+
+            //update stored dimension
+            Bumblezone.PLAYER_COMPONENT.get(playerEntity).setNonBZDimension(destinationWorld.dimension.getType());
+        }
+    }
 }

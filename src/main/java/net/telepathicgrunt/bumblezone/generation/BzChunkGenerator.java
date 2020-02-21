@@ -1,18 +1,7 @@
 package net.telepathicgrunt.bumblezone.generation;
 
-import java.util.List;
-
-import io.github.alloffabric.beeproductive.api.hive.Beehive;
-import io.github.alloffabric.beeproductive.api.hive.SimpleBeehive;
 import io.github.alloffabric.beeproductive.init.BeeProdNectars;
-import io.github.alloffabric.beeproductive.init.BeeProdTags;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCategory;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnType;
+import net.minecraft.entity.*;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.nbt.CompoundTag;
@@ -31,6 +20,8 @@ import net.minecraft.world.gen.chunk.OverworldChunkGeneratorConfig;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.features.decorators.BzPlacingUtils;
 import net.telepathicgrunt.bumblezone.mixin.BeeEntityAccessor;
+
+import java.util.List;
 
 
 public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGeneratorConfig>
@@ -118,7 +109,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 
 						if(Bumblezone.PRODUCTIVE_BEE != null){
 							float choosenChance = randomSeed.nextFloat();
-							float thresholdRange = 0.001f; //total chance of 0.9% to spawn a BeeProductive bee.
+							float thresholdRange = 0.004f; //total chance of 3.6% to spawn a BeeProductive bee.
 
 							if(choosenChance < thresholdRange){
 								BeeProdNectars.GAY_SKIN.onApply((BeeEntity)entity, null);

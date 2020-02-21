@@ -1,10 +1,6 @@
 package net.telepathicgrunt.bumblezone.biome.surfacebuilders;
 
-import java.util.Random;
-import java.util.function.Function;
-
 import com.mojang.datafixers.Dynamic;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
@@ -14,6 +10,9 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocksInit;
+
+import java.util.Random;
+import java.util.function.Function;
 
 
 public class HoneySurfaceBuilder extends SurfaceBuilder<TernarySurfaceConfig>
@@ -52,14 +51,14 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<TernarySurfaceConfig>
 				}
 				else if (currentBlockState == POROUS_HONEYCOMB)
 				{
-					if (ypos <= seaLevel + 2 + Math.max(noise, 0) + random.nextInt(2))
+					if (ypos <= 40 + 2 + Math.max(noise, 0) + random.nextInt(2))
 					{
 						chunkIn.setBlockState(blockpos$Mutable, FILLED_POROUS_HONEYCOMB, false);
 					}
 				}
 				else if (currentBlockState == AIR)
 				{
-					if (ypos < seaLevel)
+					if (ypos < 40)
 					{
 						chunkIn.setBlockState(blockpos$Mutable, defaultFluid, false);
 					}
