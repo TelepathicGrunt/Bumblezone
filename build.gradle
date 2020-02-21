@@ -42,8 +42,10 @@ dependencies {
 	include "io.github.prospector:modmenu:${project.mod_menu_version}";
 
 	modImplementation ("io.github.cottonmc:Cotton:${project.cotton_version}") { exclude(group: "io.github.prospector.modmenu", module: "ModMenu") exclude(group: "io.github.cottonmc", module: "Jankson")}
-	include "io.github.cottonmc.cotton:cotton:${project.cotton_version}"
+	include "io.github.cottonmc.cotton:Cotton:${project.cotton_version}"
 
+	modImplementation "io.github.alloffabric:BeeProductive:${project.beeproductive_version}";
+	include "io.github.alloffabric:BeeProductive:${project.beeproductive_version}";
 }
 
 processResources {

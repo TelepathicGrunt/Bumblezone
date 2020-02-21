@@ -2,12 +2,19 @@ package net.telepathicgrunt.bumblezone.generation;
 
 import java.util.List;
 
+import io.github.alloffabric.beeproductive.api.hive.Beehive;
+import io.github.alloffabric.beeproductive.api.hive.SimpleBeehive;
+import io.github.alloffabric.beeproductive.init.BeeProdNectars;
+import io.github.alloffabric.beeproductive.init.BeeProdTags;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCategory;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnType;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Util;
@@ -57,6 +64,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 	private static final Biome.SpawnEntry INITIAL_BEE_ENTRY = new Biome.SpawnEntry(EntityType.BEE, 1, 4, 4);
 
 
+
 	/**
 	 * Dedicated to spawning slimes/bees when generating chunks initially.
 	 * This is so there's lots of bees and the slime can spawn despite the 
@@ -82,7 +90,6 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 			//30% of time, spawn slime. Otherwise, spawn bees.
 			Biome.SpawnEntry biome$spawnlistentry = sharedseedrandom.nextFloat() < 0.4f ? INITIAL_SLIME_ENTRY : INITIAL_BEE_ENTRY;
 			
-			
 			EntityData ilivingentitydata = null;
 			int startingX = xCord + sharedseedrandom.nextInt(16);
 			int startingZ = zCord + sharedseedrandom.nextInt(16);
@@ -102,6 +109,39 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 				try
 				{
 					entity = biome$spawnlistentry.type.create(region.getWorld());
+
+					if(Bumblezone.PRODUCTIVE_BEE != null && biome$spawnlistentry.type == EntityType.BEE){
+						float choosenChance = randomSeed.nextFloat();
+						float thresholdRange = 0.001f; //total chance of 0.9% to spawn a BeeProductive bee.
+
+						if(choosenChance < thresholdRange){
+							BeeProdNectars.GAY_SKIN.onApply((BeeEntity)entity, null);
+						}
+						else if(choosenChance < thresholdRange*2){
+							BeeProdNectars.BI_SKIN.onApply((BeeEntity)entity, null);
+						}
+						else if(choosenChance < thresholdRange*3){
+							BeeProdNectars.WEATHERPROOF.onApply((BeeEntity)entity, null);
+						}
+						else if(choosenChance < thresholdRange*4){
+							BeeProdNectars.LESBIAN_SKIN.onApply((BeeEntity)entity, null);
+						}
+						else if(choosenChance < thresholdRange*5){
+							BeeProdNectars.NOCTURNAL.onApply((BeeEntity)entity, null);
+						}
+						else if(choosenChance < thresholdRange*6){
+							BeeProdNectars.NONBINARY_SKIN.onApply((BeeEntity)entity, null);
+						}
+						else if(choosenChance < thresholdRange*7){
+							BeeProdNectars.PACIFIST.onApply((BeeEntity)entity, null);
+						}
+						else if(choosenChance < thresholdRange*8){
+							BeeProdNectars.PAN_SKIN.onApply((BeeEntity)entity, null);
+						}
+						else if(choosenChance < thresholdRange*9){
+							BeeProdNectars.TRANS_SKIN.onApply((BeeEntity)entity, null);
+						}
+					}
 				}
 				catch (Exception exception)
 				{
