@@ -15,10 +15,10 @@ minecraft {
 }
 
 repositories {
-	maven {
-		name = "Onyx Studios"
-		url = "https://maven.onyxstudios.dev"
-	}
+//	maven {
+//		name = "Onyx Studios"
+//		url = "https://maven.onyxstudios.dev"
+//	}
 	maven {
 		url 'https://maven.fabricmc.net/io/github/prospector/modmenu/'
 	}
