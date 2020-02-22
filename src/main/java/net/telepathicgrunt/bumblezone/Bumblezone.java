@@ -38,7 +38,7 @@ public class Bumblezone implements ModInitializer
 	public static BzConfig BZ_CONFIG;
 
 
-	public static ComponentType<?> PRODUCTIVE_BEE;
+	public static boolean PRODUCTIVE_BEE_PRESENT = false;
 
 	@Override
 	public void onInitialize()
@@ -56,7 +56,7 @@ public class Bumblezone implements ModInitializer
 
 
 		//checks to see if BeeProductive is attached.
-		PRODUCTIVE_BEE = ComponentRegistry.INSTANCE.get(new Identifier("beeproductive", "bee_component"));
+		PRODUCTIVE_BEE_PRESENT = FabricLoader.getInstance().isModLoaded("beeproductive");
 
 
 

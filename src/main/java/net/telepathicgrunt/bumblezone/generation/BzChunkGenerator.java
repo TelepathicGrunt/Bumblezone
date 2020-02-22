@@ -1,6 +1,7 @@
 package net.telepathicgrunt.bumblezone.generation;
 
 import io.github.alloffabric.beeproductive.init.BeeProdNectars;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.BeeEntity;
@@ -106,8 +107,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 					entity = biome$spawnlistentry.type.create(region.getWorld());
 
 					if(biome$spawnlistentry.type == EntityType.BEE){
-
-						if(Bumblezone.PRODUCTIVE_BEE != null){
+						if(Bumblezone.PRODUCTIVE_BEE_PRESENT){
 							float choosenChance = randomSeed.nextFloat();
 							float thresholdRange = 0.0222f; //total chance of 20% to spawn a BeeProductive bee.
 

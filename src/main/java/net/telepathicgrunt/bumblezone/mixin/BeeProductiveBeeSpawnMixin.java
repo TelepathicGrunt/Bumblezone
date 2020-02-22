@@ -22,7 +22,7 @@ public class BeeProductiveBeeSpawnMixin
         if(serverWorld.dimension.getType() == BzDimensionType.BUMBLEZONE_TYPE){
             if(entity.getType() == EntityType.BEE){
                 // If BeeProduction is on, add a rare chance to spawn their bees too
-                if(Bumblezone.PRODUCTIVE_BEE != null ){
+                if(Bumblezone.PRODUCTIVE_BEE_PRESENT){
                     float choosenChance = serverWorld.random.nextFloat();
                     float thresholdRange = 0.004f; //total chance of 3.6% to spawn a BeeProductive bee.
 
