@@ -30,7 +30,10 @@
   "depends": {
     "fabricloader": ">=0.7.2",
     "fabric": "*",
-    "minecraft": "1.15.x"
+    "minecraft": "1.15.x",
+    "cotton": "^1.0.0",
+    "cardinal-components-base": "^2.3.0",
+    "cardinal-components-entity": "^2.3.0"
   },
   "suggests": {
     "flamingo": "*"

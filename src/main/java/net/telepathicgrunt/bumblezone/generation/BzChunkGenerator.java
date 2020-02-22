@@ -109,7 +109,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 
 						if(Bumblezone.PRODUCTIVE_BEE != null){
 							float choosenChance = randomSeed.nextFloat();
-							float thresholdRange = 0.004f; //total chance of 3.6% to spawn a BeeProductive bee.
+							float thresholdRange = 0.0222f; //total chance of 20% to spawn a BeeProductive bee.
 
 							if(choosenChance < thresholdRange){
 								BeeProdNectars.GAY_SKIN.onApply((BeeEntity)entity, null);
