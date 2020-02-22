@@ -1,6 +1,5 @@
 package net.telepathicgrunt.bumblezone;
 
-import com.sun.istack.internal.Nullable;
 import io.github.cottonmc.cotton.config.ConfigManager;
 import nerdhub.cardinal.components.api.ComponentRegistry;
 import nerdhub.cardinal.components.api.ComponentType;
@@ -39,7 +38,6 @@ public class Bumblezone implements ModInitializer
 	public static BzConfig BZ_CONFIG;
 
 
-	@Nullable
 	public static ComponentType<?> PRODUCTIVE_BEE;
 
 	@Override

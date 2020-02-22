@@ -16,13 +16,17 @@ minecraft {
 
 repositories {
 	maven {
-		url = "https://jitpack.io"
+		name = "Onyx Studios"
+		url = "https://maven.onyxstudios.dev"
 	}
 	maven {
 		url 'https://maven.fabricmc.net/io/github/prospector/modmenu/'
 	}
 	maven {
 		url 'http://server.bbkr.space:8081/artifactory/libs-release'
+	}
+	maven {
+		url = "https://jitpack.io"
 	}
 }
 
@@ -35,14 +39,15 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+	//modCompile "com.github.NerdHubMC:Cardinal-Components-API:${project.cardinal_version}"
 	modImplementation "com.github.NerdHubMC:Cardinal-Components-API:${project.cardinal_version}"
 	include "com.github.NerdHubMC:Cardinal-Components-API:${project.cardinal_version}"
 
 	modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}";
-	include "io.github.prospector:modmenu:${project.mod_menu_version}";
+	//include "io.github.prospector:modmenu:${project.mod_menu_version}";
 
 	modImplementation ("io.github.cottonmc:Cotton:${project.cotton_version}") { exclude(group: "io.github.prospector.modmenu", module: "ModMenu") exclude(group: "io.github.cottonmc", module: "Jankson")}
-	include "io.github.cottonmc.cotton:Cotton:${project.cotton_version}"
+	//include "io.github.cottonmc.cotton:Cotton:${project.cotton_version}"
 
 	modImplementation "io.github.alloffabric:BeeProductive:${project.beeproductive_version}";
 	//include "io.github.alloffabric:BeeProductive:${project.beeproductive_version}";
