@@ -1,12 +1,16 @@
 package net.telepathicgrunt.bumblezone.generation;
 
-import io.github.alloffabric.beeproductive.init.BeeProdNectars;
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.game.MinecraftGameProvider;
+import net.fabricmc.loom.providers.MinecraftProvider;
+import net.minecraft.client.MinecraftClientGame;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.dedicated.MinecraftDedicatedServer;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.BaseText;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -21,6 +25,8 @@ import net.minecraft.world.gen.chunk.OverworldChunkGeneratorConfig;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.features.decorators.BzPlacingUtils;
 import net.telepathicgrunt.bumblezone.mixin.BeeEntityAccessor;
+import net.telepathicgrunt.bumblezone.entities.BeeProductiveIntegration;
+import org.apache.logging.log4j.Level;
 
 import java.util.List;
 
@@ -93,7 +99,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 			int currentZ = startingZ;
 
 			BlockPos.Mutable blockpos = new BlockPos.Mutable(currentX, 0, currentZ);
-			int height = BzPlacingUtils.topOfSurfaceBelowHeight(region, sharedseedrandom.nextInt(255), 0, blockpos) + 1;
+			int height = BzPlacingUtils.topOfSurfaceBelowHeight(region, sharedseedrandom.nextInt(255), -1, blockpos) + 1;
 
 			if (biome$spawnlistentry.type.isSummonable() && height > 0 && height < 255)
 			{
@@ -107,42 +113,15 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 					entity = biome$spawnlistentry.type.create(region.getWorld());
 
 					if(biome$spawnlistentry.type == EntityType.BEE){
-						if(Bumblezone.PRODUCTIVE_BEE_PRESENT){
-							float choosenChance = randomSeed.nextFloat();
-							float thresholdRange = 0.0222f; //total chance of 20% to spawn a BeeProductive bee.
-
-							if(choosenChance < thresholdRange){
-								BeeProdNectars.GAY_SKIN.onApply((BeeEntity)entity, null);
-							}
-							else if(choosenChance < thresholdRange*2){
-								BeeProdNectars.BI_SKIN.onApply((BeeEntity)entity, null);
-							}
-							else if(choosenChance < thresholdRange*3){
-								BeeProdNectars.WEATHERPROOF.onApply((BeeEntity)entity, null);
-							}
-							else if(choosenChance < thresholdRange*4){
-								BeeProdNectars.LESBIAN_SKIN.onApply((BeeEntity)entity, null);
-							}
-							else if(choosenChance < thresholdRange*5){
-								BeeProdNectars.NOCTURNAL.onApply((BeeEntity)entity, null);
-							}
-							else if(choosenChance < thresholdRange*6){
-								BeeProdNectars.NONBINARY_SKIN.onApply((BeeEntity)entity, null);
-							}
-							else if(choosenChance < thresholdRange*7){
-								BeeProdNectars.PACIFIST.onApply((BeeEntity)entity, null);
-							}
-							else if(choosenChance < thresholdRange*8){
-								BeeProdNectars.PAN_SKIN.onApply((BeeEntity)entity, null);
-							}
-							else if(choosenChance < thresholdRange*9){
-								BeeProdNectars.TRANS_SKIN.onApply((BeeEntity)entity, null);
-							}
-						}
-
 						//20% chance of being full of pollen
 						if(randomSeed.nextFloat() < 0.2f){
 							((BeeEntityAccessor)entity).callSetBeeFlag(8 ,true);
+						}
+
+						Bumblezone.LOGGER.log(Level.INFO, " outside beeproductive check");
+						if(FabricLoader.getInstance().isModLoaded("beeproductive")) {
+							Bumblezone.LOGGER.log(Level.INFO, " inside beeproductive check. passed with flying colors");
+							entity = BeeProductiveIntegration.spawnBeeProductiveBee(region.getRandom(), entity);
 						}
 					}
 				}

@@ -38,8 +38,6 @@ public class Bumblezone implements ModInitializer
 	public static BzConfig BZ_CONFIG;
 
 
-	public static boolean PRODUCTIVE_BEE_PRESENT = false;
-
 	@Override
 	public void onInitialize()
 	{
@@ -53,11 +51,6 @@ public class Bumblezone implements ModInitializer
 		//attach component to player
 		EntityComponentCallback.event(PlayerEntity.class).register((player, components) -> components.put(PLAYER_COMPONENT, new PlayerComponent()));
 		EntityComponents.setRespawnCopyStrategy(PLAYER_COMPONENT, RespawnCopyStrategy.INVENTORY);
-
-
-		//checks to see if BeeProductive is attached.
-		PRODUCTIVE_BEE_PRESENT = FabricLoader.getInstance().isModLoaded("beeproductive");
-
 
 
 		//Set up config

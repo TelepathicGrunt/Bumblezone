@@ -12,7 +12,7 @@
     "PlayerTeleportationTickMixin",
     "EnderpearlImpactMixin",
     "PlayerDimensionChangeMixin",
-    "BeeProductiveBeeSpawnMixin",
+    "PollenedBeeNaturalSpawnMixin",
     "BeeEntityAccessor"
   ],
   "client": [
