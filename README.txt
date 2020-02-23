@@ -15,8 +15,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
   
  	Mobs:
 •Bees have a 20% of being full of pollen when they spawn nautrally in the Bumblezone dimension.
-•If BeeProduction mod is active as well, the Bumblezone dimension will have a 3.6% of naturally spawning one of their bees.
-  
+
   Teleportation:
 •Improved teleportation to make it place you on surface of water in Bumblezone if you were going to teleport underwater.
 •This mod will treat all other non-Nether-like dimension as having a normal coordinate scaling (10:1 ratio of those dimensions's scale to Bumblezone's scale) and all Nether-like dimensions as having the nether scale (10:8 ratio of those Nether-like dimensions to Bumblezone's scale)

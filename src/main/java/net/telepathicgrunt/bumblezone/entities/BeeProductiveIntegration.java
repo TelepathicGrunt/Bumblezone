@@ -26,8 +26,11 @@ public class BeeProductiveIntegration
     public static Entity spawnBeeProductiveBee(Random random, Entity entity) {
 
         // If BeeProduction is on, add a rare chance to spawn their bees too
+
+        /*
+
         float choosenChance = random.nextFloat();
-        float thresholdRange = 1f; //total chance of 3.6% to spawn a BeeProductive bee.
+        float thresholdRange = 0.006f; //total chance of 3.6% to spawn a BeeProductive bee.
         Bumblezone.LOGGER.log(Level.INFO, " within the productive class method");
         if(choosenChance < thresholdRange){
             BeeProdNectars.GAY_SKIN.onApply((BeeEntity)entity, null);
@@ -48,6 +51,8 @@ public class BeeProductiveIntegration
         else if(choosenChance < thresholdRange*6){
             BeeProdNectars.TRANS_SKIN.onApply((BeeEntity)entity, null);
         }
+
+         */
 
         return entity;
     }

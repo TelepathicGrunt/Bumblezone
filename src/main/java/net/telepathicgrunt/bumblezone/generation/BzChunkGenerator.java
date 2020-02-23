@@ -118,9 +118,9 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 							((BeeEntityAccessor)entity).callSetBeeFlag(8 ,true);
 						}
 
-						Bumblezone.LOGGER.log(Level.INFO, " outside beeproductive check");
+						//Bumblezone.LOGGER.log(Level.INFO, " outside beeproductive check");
 						if(FabricLoader.getInstance().isModLoaded("beeproductive")) {
-							Bumblezone.LOGGER.log(Level.INFO, " inside beeproductive check. passed with flying colors");
+							//Bumblezone.LOGGER.log(Level.INFO, " inside beeproductive check. passed with flying colors");
 							entity = BeeProductiveIntegration.spawnBeeProductiveBee(region.getRandom(), entity);
 						}
 					}
