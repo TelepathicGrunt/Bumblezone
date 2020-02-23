@@ -200,21 +200,14 @@ public class PlayerTeleportationBehavior
 		ServerWorld bumblezoneWorld = minecraftServer.getWorld(BzDimension.bumblezone());
 		
 		//Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone. 
-		//Go to Overworld instead as default
-		if(cap.getNonBZDim() == BzDimension.bumblezone())
+		//Go to Overworld instead as default or when config forces Overworld teleport
+		if(cap.getNonBZDim() == BzDimension.bumblezone() && BzConfig.forceExitToOverworld)
 		{
-			destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD); // go to overworld by default
+			destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD); // go to Overworld
 		}
 		else 
 		{
-			if(BzConfig.forceExitToOverworld)
-			{
-				destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD); // go to Overworld directly.
-			}
-			else
-			{
-				destinationWorld = minecraftServer.getWorld(cap.getNonBZDim()); // gets the previous dimension user came from
-			}
+			destinationWorld = minecraftServer.getWorld(cap.getNonBZDim()); // gets the previous dimension user came from
 		}
 		
 		
@@ -269,34 +262,67 @@ public class PlayerTeleportationBehavior
 		//No valid space found around destination. Begin secondary valid spot algorithms
 		if (validBlockPos == null)
 		{
-			//Check if destination position is in air and if so, go down to first solid land.
-			if(bumblezoneWorld.getBlockState(blockpos).getMaterial() == Material.AIR && 
-			   bumblezoneWorld.getBlockState(blockpos.up()).getMaterial() == Material.AIR) 
+			//go down to first solid land with air above.
+			validBlockPos = new BlockPos(
+					blockpos.getX(),
+					BzPlacingUtils.topOfSurfaceBelowHeightThroughWater(bumblezoneWorld, blockpos.getY(), 0, blockpos) + 1,
+					blockpos.getZ());
+
+			//No solid land was found. Who digs out an entire chunk?!
+			if(validBlockPos.getY() == 0)
 			{
-				validBlockPos = new BlockPos(
-						blockpos.getX(), 
-						BzPlacingUtils.topOfSurfaceBelowHeight(bumblezoneWorld, blockpos.getY(), 0, blockpos),
-						blockpos.getZ());
-				
-				//No solid land was found. Who digs out an entire chunk?!
-				if(validBlockPos.getY() == 0)
-				{
-					validBlockPos = null;
+				validBlockPos = null;
+			}
+			//checks if spot is not two water blocks with air block able to be reached above
+			else if(bumblezoneWorld.getBlockState(validBlockPos).getMaterial() == Material.WATER &&
+					bumblezoneWorld.getBlockState(validBlockPos.up()).getMaterial() == Material.WATER)
+			{
+				BlockPos.Mutable mutable = new BlockPos.Mutable(validBlockPos);
+
+				//moves upward looking for air block while not interrupted by a solid block
+				while(mutable.getY() < 255 && !bumblezoneWorld.isAirBlock(mutable) || bumblezoneWorld.getBlockState(mutable).getMaterial() == Material.WATER){
+					mutable.move(Direction.UP);
+				}
+				if(bumblezoneWorld.getBlockState(mutable).getMaterial() != Material.AIR){
+					validBlockPos = null; // No air found. Let's not place player here where they could drown
+				}
+				else{
+					validBlockPos = mutable; // Set player to top of water level
 				}
 			}
-			
+			//checks if spot is not a non-solid block with air block above
+			else if((!bumblezoneWorld.isAirBlock(validBlockPos) && bumblezoneWorld.getBlockState(validBlockPos).getMaterial() != Material.WATER) &&
+					bumblezoneWorld.getBlockState(validBlockPos.up()).getMaterial() != Material.AIR)
+			{
+				validBlockPos = null;
+			}
+
+
 			//still no valid position, time to force a valid location ourselves
 			if(validBlockPos == null) 
 			{
 				//We are going to spawn player at exact spot of scaled coordinates by placing air at the spot with honeycomb bottom
+				//and honeycomb walls to prevent drowning
 				//This is the last resort
 				bumblezoneWorld.setBlockState(blockpos, Blocks.AIR.getDefaultState());
 				bumblezoneWorld.setBlockState(blockpos.up(), Blocks.AIR.getDefaultState());
+
 				bumblezoneWorld.setBlockState(blockpos.down(), Blocks.field_226908_md_.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.up().up(), Blocks.field_226908_md_.getDefaultState());
+
+				bumblezoneWorld.setBlockState(blockpos.north(), Blocks.field_226908_md_.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.west(), Blocks.field_226908_md_.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.east(), Blocks.field_226908_md_.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.south(), Blocks.field_226908_md_.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.north().up(), Blocks.field_226908_md_.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.west().up(), Blocks.field_226908_md_.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.east().up(), Blocks.field_226908_md_.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.south().up(), Blocks.field_226908_md_.getDefaultState());
 				validBlockPos = blockpos;
 			}
-			
+
 		}
+		
 
 		//if player throws pearl at hive and then goes to sleep, they wake up
 		if (playerEntity.isSleeping())
@@ -312,7 +338,7 @@ public class PlayerTeleportationBehavior
 		((ServerPlayerEntity)playerEntity).teleport(
 			bumblezoneWorld, 
 			validBlockPos.getX() + 0.5D, 
-			validBlockPos.getY() + 1, 
+			validBlockPos.getY(), 
 			validBlockPos.getZ() + 0.5D, 
 			playerEntity.rotationYaw, 
 			playerEntity.rotationPitch);
@@ -405,7 +431,7 @@ public class PlayerTeleportationBehavior
 		}
 		mutableBlockPos.setPos(
 						position.getX(), 
-						BzPlacingUtils.topOfSurfaceBelowHeight(world, maxHeight, 0, position), 
+						BzPlacingUtils.topOfSurfaceBelowHeight(world, maxHeight, -1, position), 
 						position.getZ());
 		
 		if(mutableBlockPos.getY() > 0)

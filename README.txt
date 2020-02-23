@@ -7,7 +7,19 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 ------------------------------------------------
        | The Bumblezone changelog |
+           
        
+    (V.1.0.4 Changes) (1.15.2 Minecraft)
+    
+  	Teleportation: 
+·Improved some edge cases with Teleportation and fixed some potential bugs with other edge cases.
+
+	Config: 
+·lower Absorption default config value from 2 to 1 due to 2 making it way too hard to kill bees. 
+
+	Mobs: 
+·Bees that spawn in a chunk when the chunk is first created has a 20% chance of being pollinated bees.
+
        
     (V.1.0.3 Changes) (1.15.2 Minecraft)
   

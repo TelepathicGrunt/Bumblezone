@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.Util;
@@ -118,6 +119,13 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 						continue;
 					if (mobentity.canSpawn(region, SpawnReason.CHUNK_GENERATION) && mobentity.isNotColliding(region))
 					{
+						if(mobentity instanceof BeeEntity) {
+							//20% chance of being full of pollen
+							if(randomSeed.nextFloat() < 0.2f){
+								((BeeEntity)entity).setBeeFlag(8 ,true);
+							}
+						}
+						
 						ilivingentitydata = mobentity.onInitialSpawn(region, region.getDifficultyForLocation(new BlockPos(mobentity)), SpawnReason.CHUNK_GENERATION, ilivingentitydata, (CompoundNBT) null);
 						region.addEntity(mobentity);
 					}
