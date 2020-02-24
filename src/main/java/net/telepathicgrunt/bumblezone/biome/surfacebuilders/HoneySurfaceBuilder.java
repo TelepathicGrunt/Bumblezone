@@ -29,10 +29,10 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig>
 	private static final BlockState HONEYCOMB_BLOCK = Blocks.field_226908_md_.getDefaultState();
 
 
-	public void buildSurface(Random random, IChunk chunkIn, Biome biomeIn, int x, int z, int startHeight, double noise, BlockState defaultBlock, BlockState defaultFluid, int seaLevel, long seed, SurfaceBuilderConfig config)
+	public void buildSurface(Random random, IChunk chunk, Biome biome, int x, int z, int startHeight, double noise, BlockState defaultBlock, BlockState defaultFluid, int seaLevel, long seed, SurfaceBuilderConfig config)
 	{
 		//creates grass surface normally
-		SurfaceBuilder.DEFAULT.buildSurface(random, chunkIn, biomeIn, x, z, startHeight, noise, defaultBlock, defaultFluid, seaLevel, seed, config);
+		SurfaceBuilder.DEFAULT.buildSurface(random, chunk, biome, x, z, startHeight, noise, defaultBlock, defaultFluid, seaLevel, seed, config);
 
 		int xpos = x & 15;
 		int zpos = z & 15;
@@ -42,26 +42,26 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig>
 		for (int ypos = 255; ypos >= 0; --ypos)
 		{
 			blockpos$Mutable.setPos(xpos, ypos, zpos);
-			BlockState currentBlockState = chunkIn.getBlockState(blockpos$Mutable);
+			BlockState currentBlockState = chunk.getBlockState(blockpos$Mutable);
 
 			if (currentBlockState.getBlock() != null && currentBlockState.getMaterial() != Material.AIR)
 			{
 				if (currentBlockState == STONE)
 				{
-					chunkIn.setBlockState(blockpos$Mutable, HONEYCOMB_BLOCK, false);
+					chunk.setBlockState(blockpos$Mutable, HONEYCOMB_BLOCK, false);
 				}
 				else if (currentBlockState == POROUS_HONEYCOMB)
 				{
 					if (ypos <= seaLevel + 2 + Math.max(noise, 0) + random.nextInt(2))
 					{
-						chunkIn.setBlockState(blockpos$Mutable, FILLED_POROUS_HONEYCOMB, false);
+						chunk.setBlockState(blockpos$Mutable, FILLED_POROUS_HONEYCOMB, false);
 					}
 				}
 				else if (currentBlockState == AIR)
 				{
 					if (ypos < seaLevel)
 					{
-						chunkIn.setBlockState(blockpos$Mutable, defaultFluid, false);
+						chunk.setBlockState(blockpos$Mutable, defaultFluid, false);
 					}
 				}
 			}
