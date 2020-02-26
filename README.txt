@@ -19,7 +19,11 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 	Mobs: 
 ·Bees that spawn in a chunk when the chunk is first created has a 20% chance of being pollinated bees.
+·Patched a bug that could spawn mobs underground and hurt performance as they suffocate. 
 
+	Dimension: 
+·Fixed potential visual bug that causes blue fog in some situations.
+       
        
     (V.1.0.3 Changes) (1.15.2 Minecraft)
   
