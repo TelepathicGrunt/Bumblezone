@@ -124,8 +124,8 @@ public class PlayerTeleportationBehavior
 					reAddPotionEffect(playerEntity);
 				}
 				//teleported by going out of bounds to leave bumblezone dimension
-				else if(playerEntity.dimension == BzDimension.bumblezone() && 
-					    (playerEntity.getY() < -1 || playerEntity.getY() > 255)) 
+				else if((playerEntity.getY() < -1 || playerEntity.getY() > 255) &&
+						playerEntity.dimension == BzDimension.bumblezone()) 
 				{
 					teleportByOutOfBounds(playerEntity, cap, playerEntity.getY() < -1 ? true : false);
 					reAddPotionEffect(playerEntity);
@@ -133,7 +133,7 @@ public class PlayerTeleportationBehavior
 			}
 				
 			//Makes it so player does not get killed for falling into the void
-			if(playerEntity.dimension == BzDimension.bumblezone() && playerEntity.getY() < -3)
+			if(playerEntity.getY() < -3 && playerEntity.dimension == BzDimension.bumblezone())
 			{
 				playerEntity.setPosition(playerEntity.getX(), -3D, playerEntity.getZ());
 			}

@@ -209,13 +209,12 @@ public class BzWorldProvider extends Dimension
 	 * 
 	 * Returns a value between 0 and 1. .25 is dusk and .75 is dawn 0 is noon. 0.5 is midnight
 	 */
-	public float calculateVanillaSkyPositioning(long worldTime, float partialTicks)
+	private float calculateVanillaSkyPositioning(long worldTime, float partialTicks)
 	{
 		double fractionComponent = MathHelper.frac((double) worldTime / 24000.0D - 0.25D);
 		double d1 = 0.5D - Math.cos(fractionComponent * Math.PI) / 2.0D;
 		return (float) (fractionComponent * 2.0D + d1) / 3.0F;
 	}
-
 
 	/**
 	 * Returns fog color
@@ -228,13 +227,14 @@ public class BzWorldProvider extends Dimension
 	public Vec3d getFogColor(float celestialAngle, float partialTicks)
 	{
 		float colorFactor = 1;
+		Vec3d fogColor = Vec3d.ZERO; 
 		
 		if(BzConfig.dayNightCycle)
 		{
 			// Modifies the sky angle to be in range of 0 to 1 with 0 as night and 1 as day.
 			float scaledAngle = Math.abs(0.5f - calculateVanillaSkyPositioning(this.getWorld().getDayTime(), 1.0F)) * 2;
 
-			// Limits angle between 0 to 1 and sharply changes color between 0.333... and 0.666...‬
+			// Limits angle between 0 to 1 and sharply changes color between 0.333... and 0.666...
 			colorFactor = Math.min(Math.max(scaledAngle * 3 - 1f, 0), 1);
 			
 			// Scales the returned factor by user chosen brightness.
@@ -255,6 +255,9 @@ public class BzWorldProvider extends Dimension
 				colorFactor *= (BzConfig.fogBrightnessPercentage/100);
 			}
 		}
+		fogColor.add(Math.min(0.9f * colorFactor, 1.5f), Math.min(0.63f * colorFactor, 1.5f), Math.min(0.0015f * colorFactor, 1.5f));
+		
+		
 		
 		if(ACTIVE_WRATH && reddishFogTint < 0.25f)
 		{
@@ -264,9 +267,12 @@ public class BzWorldProvider extends Dimension
 		{
 			reddishFogTint -= 0.005f;
 		}
+		fogColor.add(reddishFogTint, -reddishFogTint, -reddishFogTint);
 
 		
-		return new Vec3d(Math.min(0.9f * colorFactor, 1.5f) + reddishFogTint, Math.min(0.63f * colorFactor, 1.5f) - reddishFogTint, Math.min(0.0015f * colorFactor, 1.5f) - reddishFogTint);
+		
+		
+		return fogColor;
 	}
 
 

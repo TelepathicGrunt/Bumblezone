@@ -25,7 +25,7 @@ public class MobSpawnLocationBehavior
 			if (!world.isRemote)
 			{
 				//NO SPAWNING ON MY DIMENSION'S ROOF!!!
-				if(entity.dimension == BzDimension.bumblezone() && entity.getPosition().getY() >= 256) 
+				if(entity.getPosition().getY() >= 256 && entity.dimension == BzDimension.bumblezone()) 
 				{
 					//STOP SPAWNING!!!!!!!!
 					event.setResult(Result.DENY);
