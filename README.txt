@@ -15,7 +15,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ·Improved some edge cases with Teleportation and fixed some potential bugs with other edge cases.
 
 	Config: 
-·lower Absorption default config value from 2 to 1 due to 2 making it way too hard to kill bees. 
+·lower Absorption default config value from 2 to 1 due to 2 making it way too hard to kill Wrath of the Hive angered bees. You'll still need Bane of Arthropods.
 
 	Mobs: 
 ·Bees that spawn in a chunk when the chunk is first created has a 20% chance of being pollinated bees.
