@@ -19,7 +19,7 @@ classes/
 bin/
 .classpath
 .project
-assets
+\assets
 
 # fabric
 
