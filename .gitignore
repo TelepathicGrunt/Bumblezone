@@ -21,7 +21,7 @@ build
 eclipse
 run
 .gitattributes
-assets
+\assets
 
 # Files from Forge MDK
 forge*changelog.txt
