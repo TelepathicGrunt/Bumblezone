@@ -29,8 +29,8 @@ public class EnderpearlImpactMixin {
         World world = pearlEntity.world; // world we threw in
 
         //Make sure we are on server by checking if thrower is ServerPlayerEntity
-        if (!world.isClient && pearlEntity.getOwner() instanceof ServerPlayerEntity) {
-            ServerPlayerEntity playerEntity = (ServerPlayerEntity) pearlEntity.getOwner(); // the thrower
+        if (!world.isClient && pearlEntity.method_24921() instanceof ServerPlayerEntity) {
+            ServerPlayerEntity playerEntity = (ServerPlayerEntity) pearlEntity.method_24921(); // the thrower
             Vec3d hitBlockPos = hitResult.getPos(); //position of the collision
             boolean hitHive = false;
 

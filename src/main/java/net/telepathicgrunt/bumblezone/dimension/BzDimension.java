@@ -16,6 +16,8 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.generation.BzBiomeProvider;
 import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 
+import javax.annotation.Nullable;
+
 
 public class BzDimension extends Dimension
 {
@@ -143,13 +145,6 @@ public class BzDimension extends Dimension
 		return (float) (fractionComponent * 2.0D + d1) / 3.0F;
 	}
 
-
-	@Environment(EnvType.CLIENT)
-	public float[] getBackgroundColor(float skyAngle, float tickDelta)
-	{
-		return null;
-	}
-
 	/**
 	 * Returns fog color
 	 * 
@@ -157,9 +152,8 @@ public class BzDimension extends Dimension
 	 * calculateVanillaSkyPositioning returns a value which is between 0 and 1 for day/night and fogChangeSpeed is the range
 	 * that the fog color will cycle between.
 	 */
-	@Override
-	public Vec3d getFogColor(float celestialAngle, float partialTicks)
-	{
+	@Environment(EnvType.CLIENT)
+	public Vec3d modifyFogColor(Vec3d vec3d, float tickDelta) {
 		float colorFactor = 1;
 
 		if (Bumblezone.BZ_CONFIG.dayNightCycle)
@@ -189,18 +183,20 @@ public class BzDimension extends Dimension
 			}
 		}
 
-		if (ACTIVE_WRATH && REDDISH_FOG_TINT < 0.25f)
+		if (ACTIVE_WRATH && REDDISH_FOG_TINT < 0.5f)
 		{
-			REDDISH_FOG_TINT += 0.005f;
+			REDDISH_FOG_TINT += 0.00004f;
 		}
 		else if (REDDISH_FOG_TINT > 0)
 		{
-			REDDISH_FOG_TINT -= 0.005f;
+			REDDISH_FOG_TINT -= 0.00004f;
 		}
 
-		return new Vec3d(Math.min(0.9f * colorFactor, 1.5f) + REDDISH_FOG_TINT, Math.min(0.63f * colorFactor, 1.5f) - REDDISH_FOG_TINT, Math.min(0.0015f * colorFactor, 1.5f) - REDDISH_FOG_TINT);
+		return new Vec3d(
+				Math.min(0.9f * colorFactor, 1.1f + REDDISH_FOG_TINT),
+					Math.min(0.63f * colorFactor, 1.1f) - REDDISH_FOG_TINT * 0.4f,
+				Math.min(0.0015f * colorFactor, 1.1f) - REDDISH_FOG_TINT * 1.75f);
 	}
-
 
 	/**
 	 * Returns a double value representing the Y value relative to the top of the map at which void fog is at its maximum.

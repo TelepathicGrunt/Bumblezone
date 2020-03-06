@@ -20,6 +20,7 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
 
 import java.util.Random;
+import java.util.stream.IntStream;
 
 
 public abstract class BzNoiseChunkGenerator<T extends ChunkGeneratorConfig> extends ChunkGenerator<T>
@@ -54,10 +55,10 @@ public abstract class BzNoiseChunkGenerator<T extends ChunkGeneratorConfig> exte
 		this.noiseSizeY = maxHeight / this.verticalNoiseGranularity;
 		this.noiseSizeZ = 16 / this.horizontalNoiseGranularity;
 		this.randomSeed = new ChunkRandom(this.seed);
-		this.minNoise = new OctavePerlinNoiseSampler(this.randomSeed, 15, 0);
-		this.maxNoise = new OctavePerlinNoiseSampler(this.randomSeed, 15, 0);
-		this.mainNoise = new OctavePerlinNoiseSampler(this.randomSeed, 7, 0);
-		this.surfaceDepthNoise = (NoiseSampler) (new OctaveSimplexNoiseSampler(this.randomSeed, 3, 0));
+		this.minNoise = new OctavePerlinNoiseSampler(this.randomSeed, IntStream.rangeClosed(-15, 0));
+		this.maxNoise = new OctavePerlinNoiseSampler(this.randomSeed, IntStream.rangeClosed(-15, 0));
+		this.mainNoise = new OctavePerlinNoiseSampler(this.randomSeed, IntStream.rangeClosed(-7, 0));
+		this.surfaceDepthNoise = (NoiseSampler) (new OctaveSimplexNoiseSampler(this.randomSeed, IntStream.rangeClosed(-3, 0)));
 	}
 
 

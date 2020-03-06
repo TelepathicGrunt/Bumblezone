@@ -1,6 +1,5 @@
 package net.telepathicgrunt.bumblezone.entities;
 
-import io.github.alloffabric.beeproductive.init.BeeProdNectars;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.BeeEntity;

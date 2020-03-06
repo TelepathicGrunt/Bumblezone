@@ -29,6 +29,7 @@ import net.telepathicgrunt.bumblezone.entities.BeeProductiveIntegration;
 import org.apache.logging.log4j.Level;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 
 public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGeneratorConfig>
@@ -55,7 +56,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 	{
 		super(world, provider, 4, 8, 256, settingsIn);
 		this.randomSeed.consume(2620); 
-		this.depthNoise = new OctavePerlinNoiseSampler(this.randomSeed, 15, 0);
+		this.depthNoise = new OctavePerlinNoiseSampler(this.randomSeed, IntStream.rangeClosed(-15, 0));
 	}
 	
 
@@ -137,7 +138,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 					MobEntity mobentity = (MobEntity) entity;
 					if (mobentity.canSpawn(region, SpawnType.CHUNK_GENERATION) && mobentity.canSpawn(region))
 					{
-						ilivingentitydata = mobentity.initialize(region, region.getLocalDifficulty(new BlockPos(mobentity)), SpawnType.CHUNK_GENERATION, ilivingentitydata, (CompoundTag) null);
+						ilivingentitydata = mobentity.initialize(region, region.getLocalDifficulty(new BlockPos(mobentity.getPos())), SpawnType.CHUNK_GENERATION, ilivingentitydata, (CompoundTag) null);
 						region.spawnEntity(mobentity);
 					}
 				}

@@ -1,4 +1,4 @@
-    Made for Minecraft v.1.15.2
+    Made for Minecraft v.20w10a
     Created by TelepathicGrunt
 
 A Fabric pot of an awesome dimension full of bees that becomes REALLY angry if you take their honey! 
@@ -12,6 +12,9 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 	Backend:
 •Updated to 20w10a Snapshot MC
+
+ 	Config:
+•Nerfed the default Absorption level that bees get when affected by the Wrath of the Hive status from 2 to 1. This is because absorption 2 made it way too hard to kill bees but at 1, its easier but you may still need Bane of Arthropod enchantments.
 
 
    (V.1.0.1 Changes) (1.15.2 Minecraft)

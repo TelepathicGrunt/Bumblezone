@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class PollenedBeeNaturalSpawnMixin
 {
     //spawns bees with chance to bee full of pollen or be a BeeProductive mob if that mod is on
-    @ModifyArg(method = "spawnEntitiesInChunk",
+    @ModifyArg(method = "method_24930",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;spawnEntity(Lnet/minecraft/entity/Entity;)Z"))
     private static Entity spawnEntitiesInChunk(Entity entity) {
         if(!(entity.world.isClient()))

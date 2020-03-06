@@ -4,7 +4,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityCategory;
 import net.minecraft.entity.EntityType;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.decorator.DecoratorConfig;
@@ -19,7 +21,7 @@ public final class HiveWallBiome extends BzBaseBiome
 {
 	public HiveWallBiome()
 	{
-		super((new Settings()).surfaceBuilder(new ConfiguredSurfaceBuilder<>(HONEY_SURFACE_BUILDER, HONEY_CONFIG)).precipitation(Biome.Precipitation.NONE).category(Biome.Category.JUNGLE).depth(0.1F).scale(0.2F).temperature(1.85F).downfall(0.5F).waterColor(16167168).waterFogColor(13528064).parent((String) null));
+		super((new Settings()).surfaceBuilder(new ConfiguredSurfaceBuilder<>(HONEY_SURFACE_BUILDER, HONEY_CONFIG)).precipitation(Biome.Precipitation.NONE).category(Biome.Category.JUNGLE).depth(0.1F).scale(0.2F).temperature(1.85F).downfall(0.5F).effects((new BiomeEffects.Builder()).waterColor(16167168).waterFogColor(13528064).fogColor(12638463).method_24943(SoundEvents.BLOCK_BEEHIVE_WORK).build()).parent((String) null));
 
 		this.addFeature(GenerationStep.Feature.LOCAL_MODIFICATIONS, BzFeatureInit.HONEYCOMB_HOLE.configure(FeatureConfig.DEFAULT).createDecoratedFeature(HONEYCOMB_HOLE_PLACER.configure(DecoratorConfig.DEFAULT)));
 		

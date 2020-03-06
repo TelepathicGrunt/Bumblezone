@@ -122,7 +122,7 @@ public class BzPlacement
 			else if(bumblezoneWorld.getBlockState(validBlockPos).getMaterial() == Material.WATER &&
 					bumblezoneWorld.getBlockState(validBlockPos.up()).getMaterial() == Material.WATER)
 			{
-				BlockPos.Mutable mutable = new BlockPos.Mutable(validBlockPos);
+				BlockPos.Mutable mutable = new BlockPos.Mutable(validBlockPos.getX(), validBlockPos.getY(), validBlockPos.getZ());
 
 				//moves upward looking for air block while not interrupted by a solid block
 				while(mutable.getY() < 255 && !bumblezoneWorld.isAir(mutable) || bumblezoneWorld.getBlockState(mutable).getMaterial() == Material.WATER){
@@ -212,7 +212,7 @@ public class BzPlacement
 				maxHeight = Math.max(maxHeight, world.getTopY(Heightmap.Type.MOTION_BLOCKING, mutableBlockPos.getX(), mutableBlockPos.getZ()));
 			}
 		}
-		maxHeight = Math.min(maxHeight, world.getEffectiveHeight()-1); //cannot place user at roof of other dimension
+		maxHeight = Math.min(maxHeight, world.getHeight()-1); //cannot place user at roof of other dimension
 
 		//snaps the coordinates to chunk origin and then sets height to minimum or maximum based on search direction
 		mutableBlockPos.set(position.getX(), checkingUpward ? 0 : maxHeight, position.getZ());
@@ -264,7 +264,7 @@ public class BzPlacement
 
 		//no valid spot was found, generate a hive and spawn us on the highest land
 		//This if statement is so we dont get placed on roof of other roofed dimension
-		if(maxHeight + 1 < world.getEffectiveHeight())
+		if(maxHeight + 1 < world.getHeight())
 		{
 			maxHeight += 1;
 		}
@@ -285,7 +285,7 @@ public class BzPlacement
 			//Basically just f*** it at this point lol
 			mutableBlockPos.set(
 							position.getX(), 
-							world.getEffectiveHeight()/2,
+							world.getHeight()/2,
 							position.getZ());
 
 			world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
@@ -300,7 +300,7 @@ public class BzPlacement
 		int radius = 0;
 		int outterRadius = 0;
 		int distanceSq = 0;
-		BlockPos.Mutable currentPos = new BlockPos.Mutable(position);
+		BlockPos.Mutable currentPos = new BlockPos.Mutable(position.getX(), position.getY(), position.getZ());
 
 		//checks for 2 non-solid blocks with solid block below feet
 		//checks outward from center position in both x, y, and z.

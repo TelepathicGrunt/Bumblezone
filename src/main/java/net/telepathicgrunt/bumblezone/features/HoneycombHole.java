@@ -90,7 +90,7 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig>
 	public boolean generate(IWorld world, ChunkGenerator<? extends ChunkGeneratorConfig> changedBlock, Random rand, BlockPos position, DefaultFeatureConfig config)
 	{
 		
-		BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(position);
+		BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(position.getX(), position.getY(), position.getZ());
 		
 		generateSlice(world, mutableBlockPos, endCapLayout, rand);
 		generateSlice(world, mutableBlockPos.setOffset(Direction.EAST), smallHoneyLayout, rand);
@@ -111,10 +111,11 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig>
 	private void generateSlice(IWorld world, BlockPos.Mutable centerPos, int[][] slice, Random rand)
 	{
 		//setOffset to the position where the corner of the slice will begin at
-		BlockPos.Mutable currentPosition = new BlockPos.Mutable(centerPos.add(-5, slice.length/2, -slice[0].length/2));
-		
+		BlockPos currentPositionOffsetted = new BlockPos(centerPos.add(-5, slice.length/2, -slice[0].length/2));
+		BlockPos.Mutable currentPosition = new BlockPos.Mutable(currentPositionOffsetted.getX(), currentPositionOffsetted.getY(), currentPositionOffsetted.getZ());
+
 		//go through each row and column while replacing each solid block
-		for(int y = 0; y < slice.length; y++) 
+		for(int y = 0; y < slice.length; y++)
 		{
 			for(int z = 0; z < slice[0].length; z++) 
 			{
@@ -123,11 +124,7 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig>
 				{
 					//replace solid block with the slice's blocks
 					int sliceBlock = slice[y][z];
-					if(sliceBlock == 0)
-					{
-						//do nothing. 
-					}
-					else if(sliceBlock == 1)
+					if(sliceBlock == 1)
 					{
 						//extra check so the ends of the hole exposed will not have this block
 						if(world.getBlockState(currentPosition.west()).isOpaque() && world.getBlockState(currentPosition.east()).isOpaque()) 

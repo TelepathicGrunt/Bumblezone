@@ -72,8 +72,16 @@ public class BzConfig {
     @Comment(value="##############################################################\n" +
             "##############################################################\n" +
             "\n" +
-            "How much extra unrecoverable health boost the bees gets.")
-    public int absorptionBoostLevel = 2;
+            " How much extra health bees get that always instantly regenerates.\r\n" +
+            " This means you need to deal more damage than the extra health gives\r\n" +
+            " order to actually damage the bee's real health bar.\r\n" +
+            " \r\n" +
+            " For example, Absorpton 1 here makes bees get 4 extra padding of hearts.\r\n" +
+            " Your attacks need to deal 4 1/2 or more damage to actuall be able to\r\n" +
+            " kill the bee. This means using Bane of Arthropod 5 is needed to kill bees\r\n" +
+            " if you set the absorption to a higher value like 2 or 3.\r\n" +
+            " If you set this to like 5 or something, bees may be invicible! Game over.\r\n")
+    public int absorptionBoostLevel = 1;
 
     @Comment(value="##############################################################\n" +
             "##############################################################\n" +
@@ -132,10 +140,10 @@ public class BzConfig {
     @Comment(value="##############################################################\n" +
             "##############################################################\n" +
             "\n" +
-            "Makes leaving The Bumblezone dimension always places you back\n "
-            +"at the Overworld regardless of which dimension you originally \n"
-            +"came from. Use this option if this dimension becomes locked in  \n"
-            +"with another dimension so you are stuck teleporting between the \n"
-            +"two and cannot get back to the Overworld")
+            "Makes leaving The Bumblezone dimension always places you back\n " +
+            "at the Overworld regardless of which dimension you originally \n" +
+            "came from. Use this option if this dimension becomes locked in  \n" +
+            "with another dimension so you are stuck teleporting between the \n" +
+            "two and cannot get back to the Overworld")
     public boolean forceExitToOverworld = false;
 }

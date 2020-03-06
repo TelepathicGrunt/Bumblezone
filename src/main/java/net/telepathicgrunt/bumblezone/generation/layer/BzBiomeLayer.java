@@ -7,6 +7,8 @@ import net.minecraft.world.biome.layer.util.LayerRandomnessSource;
 import net.minecraft.world.gen.ChunkRandom;
 import net.telepathicgrunt.bumblezone.biome.BzBiomesInit;
 
+import java.util.stream.IntStream;
+
 
 public enum BzBiomeLayer implements InitLayer
 {
@@ -49,7 +51,7 @@ public enum BzBiomeLayer implements InitLayer
 		if (perlinGen == null)
 		{
 			ChunkRandom sharedseedrandom = new ChunkRandom(seed);
-			perlinGen = new OctaveSimplexNoiseSampler(sharedseedrandom, 0, 0);
+			perlinGen = new OctaveSimplexNoiseSampler(sharedseedrandom, IntStream.rangeClosed(-1, 0));
 		}
 	}
 }
