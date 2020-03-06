@@ -16,8 +16,6 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.generation.BzBiomeProvider;
 import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 
-import javax.annotation.Nullable;
-
 
 public class BzDimension extends Dimension
 {
