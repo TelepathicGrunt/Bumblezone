@@ -119,10 +119,10 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 						}
 
 						//Bumblezone.LOGGER.log(Level.INFO, " outside beeproductive check");
-//						if(FabricLoader.getInstance().isModLoaded("beeproductive")) {
-//							//Bumblezone.LOGGER.log(Level.INFO, " inside beeproductive check. passed with flying colors");
-//							entity = BeeProductiveIntegration.spawnBeeProductiveBee(region.getRandom(), entity);
-//						}
+						if(FabricLoader.getInstance().isModLoaded("beeproductive")) {
+							//Bumblezone.LOGGER.log(Level.INFO, " inside beeproductive check. passed with flying colors");
+							entity = BeeProductiveIntegration.spawnBeeProductiveBee(region.getRandom(), entity);
+						}
 					}
 				}
 				catch (Exception exception)

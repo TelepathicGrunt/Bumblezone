@@ -49,8 +49,10 @@ dependencies {
 	include modApi ("com.github.NerdHubMC.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}")
 	include modApi ("com.github.NerdHubMC.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_version}")
 
-	//modImplementation ("io.github.prospector:modmenu:${project.mod_menu_version}")
-	//modImplementation ("io.github.alloffabric:BeeProductive:${project.beeproductive_version}")
+	modImplementation ("io.github.prospector:modmenu:${project.mod_menu_version}")
+
+
+	modImplementation ("io.github.alloffabric:BeeProductive:${project.beeproductive_version}")
 }
 
 processResources {
