@@ -23,6 +23,7 @@ public class HoneycombHolePlacer extends Placement<NoPlacementConfig>
 		super(configFactory);
 	}
 	
+	@Override
 	public Stream<BlockPos> getPositions(IWorld world, ChunkGenerator<? extends GenerationSettings> chunkGenerator, Random random, NoPlacementConfig placementConfig, BlockPos pos)
 	{
 		//Start at top

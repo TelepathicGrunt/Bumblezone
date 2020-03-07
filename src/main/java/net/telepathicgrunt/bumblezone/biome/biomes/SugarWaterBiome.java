@@ -7,6 +7,7 @@ import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.placement.CountRangeConfig;
+import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.NoPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder;
@@ -21,7 +22,7 @@ public final class SugarWaterBiome extends BzBaseBiome
 	{
 		super((new Builder()).surfaceBuilder(new ConfiguredSurfaceBuilder<>(HONEY_SURFACE_BUILDER, HONEY_CONFIG)).precipitation(Biome.RainType.NONE).category(Biome.Category.JUNGLE).depth(-2F).scale(0.01F).temperature(1.85F).downfall(0.5F).waterColor(16167168).waterFogColor(13528064).parent((String) null));
 
-		this.addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, BzFeatureInit.HONEYCOMB_HOLE.configure(IFeatureConfig.NO_FEATURE_CONFIG).createDecoratedFeature(HONEYCOMB_HOLE_PLACER.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG)));
+		this.addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, BzFeatureInit.HONEYCOMB_HOLE.configure(IFeatureConfig.NO_FEATURE_CONFIG).createDecoratedFeature(HONEYCOMB_HOLE_PLACER.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
 		
 	    this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(WATER_SPRING_CONFIG).createDecoratedFeature(Placement.COUNT_BIASED_RANGE.configure(new CountRangeConfig(4, 128, 0, 256))));
 	    this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(WATER_SPRING_CONFIG).createDecoratedFeature(Placement.COUNT_BIASED_RANGE.configure(new CountRangeConfig(10, 16, 0, 128))));
@@ -37,6 +38,7 @@ public final class SugarWaterBiome extends BzBaseBiome
 	/**
 	 * returns the chance a creature has to spawn.
 	 */
+	@Override
 	public float getSpawningChance()
 	{
 		return 0.45F;
@@ -46,6 +48,7 @@ public final class SugarWaterBiome extends BzBaseBiome
 	/*
 	 * Set sky color
 	 */
+	@Override
 	@OnlyIn(Dist.CLIENT)
 	public int getSkyColor()
 	{

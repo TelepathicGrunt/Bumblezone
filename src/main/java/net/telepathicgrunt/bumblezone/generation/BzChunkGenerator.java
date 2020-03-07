@@ -37,7 +37,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 		{
 			for (int j = -2; j <= 2; ++j)
 			{
-				float f = 10.0F / MathHelper.sqrt((float) (i * i + j * j) + 0.2F);
+				float f = 10.0F / MathHelper.sqrt(i * i + j * j + 0.2F);
 				p_222575_0_[i + 2 + (j + 2) * 5] = f;
 			}
 		}
@@ -68,6 +68,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 	 * The height is also restricted so the mob cannot spawn on the ceiling of this
 	 * dimension as well.
 	 */
+	@Override
 	@SuppressWarnings("deprecation")
 	public void spawnMobs(WorldGenRegion region)
 	{
@@ -97,8 +98,8 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 			if (biome$spawnlistentry.entityType.isSummonable() && height > 0 && height < 255)
 			{
 				float width = biome$spawnlistentry.entityType.getWidth();
-				double xLength = MathHelper.clamp((double) startingX, (double) xCord + (double) width, (double) xCord + 16.0D - (double) width);
-				double zLength = MathHelper.clamp((double) startingZ, (double) zCord + (double) width, (double) zCord + 16.0D - (double) width);
+				double xLength = MathHelper.clamp(startingX, (double) xCord + (double) width, xCord + 16.0D - width);
+				double zLength = MathHelper.clamp(startingZ, (double) zCord + (double) width, zCord + 16.0D - width);
 
 				Entity entity;
 				try
@@ -107,11 +108,11 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 				}
 				catch (Exception exception)
 				{
-					Bumblezone.LOGGER.warn("Failed to create mob", (Throwable) exception);
+					Bumblezone.LOGGER.warn("Failed to create mob", exception);
 					continue;
 				}
 
-				entity.setLocationAndAngles(xLength, (double) height, zLength, sharedseedrandom.nextFloat() * 360.0F, 0.0F);
+				entity.setLocationAndAngles(xLength, height, zLength, sharedseedrandom.nextFloat() * 360.0F, 0.0F);
 				if (entity instanceof MobEntity)
 				{
 					MobEntity mobentity = (MobEntity) entity;
@@ -138,6 +139,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 	/**
 	 * For spawning specific mobs in certain places like structures.
 	 */
+	@Override
 	public List<Biome.SpawnListEntry> getPossibleCreatures(EntityClassification creatureType, BlockPos pos)
 	{
 		return super.getPossibleCreatures(creatureType, pos);
@@ -151,6 +153,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 	 * manipulate the perlin noise generator. This is extremely important.
 	 * The values used is carefully tailored for this dimension.
 	 */
+	@Override
 	protected void fillNoiseColumn(double[] areaArrayIn, int x, int z)
 	{
 		//We step fast in x, slower in z, and neutralish in y.
@@ -165,9 +168,10 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 	 * increase it to make it even smoother. Note, by decreasing the number,
 	 * some biomes might lower in overall height so compensate for that.
 	 */
+	@Override
 	protected double func_222545_a(double p_222545_1_, double p_222545_3_, int p_222545_5_)
 	{
-		double d1 = ((double) p_222545_5_ - (8.5D + p_222545_1_ * 8.5D / 8.0D * 4.0D)) * 12.0D * 128.0D / 256.0D / p_222545_3_;
+		double d1 = (p_222545_5_ - (8.5D + p_222545_1_ * 8.5D / 8.0D * 4.0D)) * 12.0D * 128.0D / 256.0D / p_222545_3_;
 		if (d1 < 0.0D)
 		{
 			d1 *= 2.0D;
@@ -181,6 +185,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 	 * Using the biome's depth and scale + nearby biome heights,
 	 * it gets what the final height should be at each location.
 	 */
+	@Override
 	protected double[] getBiomeNoiseColumn(int x, int z)
 	{
 		double[] adouble = new double[2];
@@ -218,8 +223,8 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 		f1 = f1 / f2;
 		f = f * 0.9F + 0.1F;
 		f1 = (f1 * 4.0F - 1.0F) / 8.0F;
-		adouble[0] = (double) f1 + this.getNoiseDepthAt(x, z);
-		adouble[1] = (double) f;
+		adouble[0] = f1 + this.getNoiseDepthAt(x, z);
+		adouble[1] = f;
 		return adouble;
 	}
 
@@ -228,7 +233,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 	 */
 	private double getNoiseDepthAt(int x, int z)
 	{
-		double noise = this.depthNoise.getValue((double) (x * 200), 10.0D, (double) (z * 200), 1.0D, 0.0D, true) * 65535.0D / 8000.0D;
+		double noise = this.depthNoise.getValue(x * 200, 10.0D, z * 200, 1.0D, 0.0D, true) * 65535.0D / 8000.0D;
 		if (noise < 0.0D)
 		{
 			noise = -noise * 0.3D;
@@ -260,6 +265,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 	 * Pillager outposts, cats in Witch Huts, and Zombie
 	 * Sieges.
 	 */
+	@Override
 	public void spawnMobs(ServerWorld world, boolean spawnHostileMobs, boolean spawnPeacefulMobs)
 	{
 	}
@@ -267,6 +273,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 	/**
 	 * Ground height duh. For spawning purposes which isn't really needed for our dimension.
 	 */
+	@Override
 	public int getGroundHeight()
 	{
 		return getSeaLevel() + 1;

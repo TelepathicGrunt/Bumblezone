@@ -22,9 +22,10 @@ public enum BzBiomeLayer implements IAreaTransformer0
 //	private double min = 1;
 	
 
+	@Override
 	public int apply(INoiseRandom noise, int x, int z)
 	{
-		double perlinNoise = perlinGen.noiseAt((double) x * 0.1D, (double)z * 0.00001D, false) * 0.5D + 0.5D;
+		double perlinNoise = perlinGen.noiseAt(x * 0.1D, z * 0.00001D, false) * 0.5D + 0.5D;
 		
 //		max = Math.max(max, perlinNoise);
 //		min = Math.min(min, perlinNoise);

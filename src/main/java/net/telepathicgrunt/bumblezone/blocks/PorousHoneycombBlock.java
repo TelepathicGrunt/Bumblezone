@@ -30,6 +30,7 @@ public class PorousHoneycombBlock extends Block
 	/**
 	 * Allow player to harvest honey and put honey into this block using bottles
 	 */
+	@Override
 	@SuppressWarnings("deprecation")
 	public ActionResultType onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult)
 	{

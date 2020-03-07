@@ -38,7 +38,7 @@ public class BzWorldProvider extends Dimension
 		 */
 		for (int i = 0; i <= 15; ++i)
 		{
-			this.lightBrightnessTable[i] = (float) i / 20.0F + 0.25F;
+			this.lightBrightnessTable[i] = i / 20.0F + 0.25F;
 		}
 	}
 
@@ -55,7 +55,8 @@ public class BzWorldProvider extends Dimension
     /**
      * Use this to play music in the dimension. 
      */
-    @Nullable
+    @Override
+	@Nullable
     @OnlyIn(Dist.CLIENT)
 	public MusicTicker.MusicType getMusicType()
     {
@@ -211,7 +212,7 @@ public class BzWorldProvider extends Dimension
 	 */
 	public float calculateVanillaSkyPositioning(long worldTime, float partialTicks)
 	{
-		double fractionComponent = MathHelper.frac((double) worldTime / 24000.0D - 0.25D);
+		double fractionComponent = MathHelper.frac(worldTime / 24000.0D - 0.25D);
 		double d1 = 0.5D - Math.cos(fractionComponent * Math.PI) / 2.0D;
 		return (float) (fractionComponent * 2.0D + d1) / 3.0F;
 	}

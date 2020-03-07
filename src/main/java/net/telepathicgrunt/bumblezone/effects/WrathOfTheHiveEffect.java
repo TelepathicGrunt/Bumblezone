@@ -24,6 +24,7 @@ public class WrathOfTheHiveEffect extends Effect
 	/**
 	 * Returns true if the potion has an instant effect instead of a continuous one (eg Harming)
 	 */
+	@Override
 	public boolean isInstant()
 	{
 		return true;
@@ -33,6 +34,7 @@ public class WrathOfTheHiveEffect extends Effect
 	/**
 	 * checks if Potion effect is ready to be applied this tick.
 	 */
+	@Override
 	public boolean isReady(int duration, int amplifier)
 	{
 		return duration >= 1;
@@ -42,6 +44,7 @@ public class WrathOfTheHiveEffect extends Effect
 	/**
 	 * Makes the bees swarm at the entity
 	 */
+	@Override
 	public void performEffect(LivingEntity entity, int amplifier)
 	{
 		//Maximum aggression

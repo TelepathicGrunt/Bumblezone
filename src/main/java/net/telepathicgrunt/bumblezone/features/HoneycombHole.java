@@ -88,6 +88,7 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 	private static final BlockState WATER = Blocks.WATER.getDefaultState();
 	
 
+	@Override
 	public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> changedBlock, Random rand, BlockPos position, NoFeatureConfig config)
 	{
 		

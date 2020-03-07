@@ -43,6 +43,7 @@ public class FilledPorousHoneycombBlock extends Block
 	/**
 	 * Allow player to harvest honey and put honey into this block using bottles
 	 */
+	@Override
 	@SuppressWarnings("deprecation")
 	public ActionResultType onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult)
 	{
@@ -96,6 +97,7 @@ public class FilledPorousHoneycombBlock extends Block
 	 * Called periodically clientside on blocks near the player to show honey particles.
 	 * 50% of attempting to spawn a particle
 	 */
+	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void animateTick(BlockState blockState, World world, BlockPos position, Random random)
 	{
@@ -124,7 +126,7 @@ public class FilledPorousHoneycombBlock extends Block
 				double yStartHeight = currentBlockShape.getStart(Direction.Axis.Y);
 				if (yStartHeight > 0.0D)
 				{
-					this.addHoneyParticle(world, position, currentBlockShape, (double) position.getY() + yStartHeight - 0.05D);
+					this.addHoneyParticle(world, position, currentBlockShape, position.getY() + yStartHeight - 0.05D);
 				}
 				else
 				{
@@ -134,7 +136,7 @@ public class FilledPorousHoneycombBlock extends Block
 					double yEndHeight2 = belowBlockShape.getEnd(Direction.Axis.Y);
 					if ((yEndHeight2 < 1.0D || !belowBlockstate.isFullCube(world, belowBlockpos)) && belowBlockstate.getFluidState().isEmpty())
 					{
-						this.addHoneyParticle(world, position, currentBlockShape, (double) position.getY() - 0.05D);
+						this.addHoneyParticle(world, position, currentBlockShape, position.getY() - 0.05D);
 					}
 				}
 			}
@@ -149,7 +151,7 @@ public class FilledPorousHoneycombBlock extends Block
 	@OnlyIn(Dist.CLIENT)
 	private void addHoneyParticle(World world, BlockPos blockPos, VoxelShape blockShape, double height)
 	{
-		this.addHoneyParticle(world, (double) blockPos.getX() + blockShape.getStart(Direction.Axis.X), (double) blockPos.getX() + blockShape.getEnd(Direction.Axis.X), (double) blockPos.getZ() + blockShape.getStart(Direction.Axis.Z), (double) blockPos.getZ() + blockShape.getEnd(Direction.Axis.Z), height);
+		this.addHoneyParticle(world, blockPos.getX() + blockShape.getStart(Direction.Axis.X), blockPos.getX() + blockShape.getEnd(Direction.Axis.X), blockPos.getZ() + blockShape.getStart(Direction.Axis.Z), blockPos.getZ() + blockShape.getEnd(Direction.Axis.Z), height);
 	}
 
 

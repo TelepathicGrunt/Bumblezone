@@ -32,6 +32,7 @@ public class BzBlocksInit
 	 */
 	public static final ItemGroup BUMBLEZONE_CREATIVE_TAB = new ItemGroup(ItemGroup.GROUPS.length, Bumblezone.MODID)
 	{
+		@Override
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack createIcon()
 		{

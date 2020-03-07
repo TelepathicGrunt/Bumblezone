@@ -18,12 +18,14 @@ public class CapabilityPlayerPosAndDim {
 		public static void register() {
 			CapabilityManager.INSTANCE.register(IPlayerPosAndDim.class, new Capability.IStorage<IPlayerPosAndDim>() 
 			{
+				@Override
 				@Nullable
 				public INBT writeNBT(Capability<IPlayerPosAndDim> capability, IPlayerPosAndDim instance, Direction side) 
 				{
 					return instance.saveNBTData();
 				}
 
+				@Override
 				public void readNBT(Capability<IPlayerPosAndDim> capability, IPlayerPosAndDim instance, Direction side, INBT nbt) 
 				{
 					instance.loadNBTData((CompoundNBT) nbt);

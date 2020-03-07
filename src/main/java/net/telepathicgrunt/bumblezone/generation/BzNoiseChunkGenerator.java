@@ -54,7 +54,7 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
 		this.minNoise = new OctavesNoiseGenerator(this.randomSeed, 15, 0);
 		this.maxNoise = new OctavesNoiseGenerator(this.randomSeed, 15, 0);
 		this.mainNoise = new OctavesNoiseGenerator(this.randomSeed, 7, 0);
-		this.surfaceDepthNoise = (INoiseGenerator) (new PerlinNoiseGenerator(this.randomSeed, 3, 0));
+		this.surfaceDepthNoise = (new PerlinNoiseGenerator(this.randomSeed, 3, 0));
 	}
 	
 	/*
@@ -81,19 +81,19 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
 		double d3 = 1.0D;
 
 		for (int i = 0; i < 16; ++i) {
-			double limitX = OctavesNoiseGenerator.maintainPrecision((double) x * getXCoordinateScale * d3);
-			double limitY = OctavesNoiseGenerator.maintainPrecision((double) y * getHeightScale * d3);
-			double limitZ = OctavesNoiseGenerator.maintainPrecision((double) z * getZCoordinateScale * d3);
+			double limitX = OctavesNoiseGenerator.maintainPrecision(x * getXCoordinateScale * d3);
+			double limitY = OctavesNoiseGenerator.maintainPrecision(y * getHeightScale * d3);
+			double limitZ = OctavesNoiseGenerator.maintainPrecision(z * getZCoordinateScale * d3);
 
-			double mainX = OctavesNoiseGenerator.maintainPrecision((double) x * getMainCoordinateScale * d3);
-			double mainY = OctavesNoiseGenerator.maintainPrecision((double) y * getMainHeightScale * d3);
-			double mainZ = OctavesNoiseGenerator.maintainPrecision((double) z * getMainCoordinateScale * d3);
+			double mainX = OctavesNoiseGenerator.maintainPrecision(x * getMainCoordinateScale * d3);
+			double mainY = OctavesNoiseGenerator.maintainPrecision(y * getMainHeightScale * d3);
+			double mainZ = OctavesNoiseGenerator.maintainPrecision(z * getMainCoordinateScale * d3);
 			
 			double d7 = getHeightScale * d3;
-			d0 += this.minNoise.getOctave(i).func_215456_a(limitX, limitY, limitZ, d7, (double) y * d7) / d3;
-			d1 += this.maxNoise.getOctave(i).func_215456_a(limitX, limitY, limitZ, d7, (double) y * d7) / d3;
+			d0 += this.minNoise.getOctave(i).func_215456_a(limitX, limitY, limitZ, d7, y * d7) / d3;
+			d1 += this.maxNoise.getOctave(i).func_215456_a(limitX, limitY, limitZ, d7, y * d7) / d3;
 			if (i < 8) {
-				d2 += this.mainNoise.getOctave(i).func_215456_a(mainX, mainY, mainZ, p_222552_10_ * d3, (double) y * p_222552_10_ * d3) / d3;
+				d2 += this.mainNoise.getOctave(i).func_215456_a(mainX, mainY, mainZ, p_222552_10_ * d3, y * p_222552_10_ * d3) / d3;
 			}
 
 			d3 /= 2.0D;
@@ -124,10 +124,10 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
 		for (int y = 0; y < this.noiseSizeY + 1; ++y) {
 			double d4 = this.internalSetupPerlinNoiseGenerators(x, y, z, getXCoordinateScale, getZCoordinateScale, getHeightScale, getMainCoordinateScale, getMainHeightScale, p_222546_10_);
 			d4 = d4 - this.func_222545_a(d0, d1, y);
-			if ((double) y > d2) {
-				d4 = MathHelper.clampedLerp(d4, (double) p_222546_13_, ((double) y - d2) / (double) p_222546_12_);
-			} else if ((double) y < d3) {
-				d4 = MathHelper.clampedLerp(d4, -30.0D, (d3 - (double) y) / (d3 - 1.0D));
+			if (y > d2) {
+				d4 = MathHelper.clampedLerp(d4, p_222546_13_, (y - d2) / p_222546_12_);
+			} else if (y < d3) {
+				d4 = MathHelper.clampedLerp(d4, -30.0D, (d3 - y) / (d3 - 1.0D));
 			}
 
 			areaArrayIn[y] = d4;
@@ -139,6 +139,7 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
 	/**
 	 * Cursed. Only change was removing check for sealevel as it isnt needed for what we want,
 	 */
+	@Override
 	public int func_222529_a(int chunkX, int chunkZ, Heightmap.Type heightmapType) {
 		int minX = Math.floorDiv(chunkX, this.horizontalNoiseGranularity);
 		int minZ = Math.floorDiv(chunkZ, this.horizontalNoiseGranularity);
@@ -184,6 +185,7 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
 	 * Self-explanatory. After terrain is made, this comes in to place the surface blocks
 	 * by calling the biome's surface builder for each position in the chunk
 	 */
+	@Override
 	public void buildSurface(WorldGenRegion region, IChunk chunk) {
 		ChunkPos chunkpos = chunk.getPos();
 		int i = chunkpos.x;
@@ -200,7 +202,7 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
 				int xPos = chunkX + x;
 				int zPos = chunkZ + z;
 				int ySurface = chunk.getTopBlockY(Heightmap.Type.WORLD_SURFACE_WG, x, z) + 1;
-				double noise = this.surfaceDepthNoise.noiseAt((double) xPos * 0.0625D, (double) zPos * 0.0625D, 0.0625D, (double) x * 0.0625D) * 10.0D;
+				double noise = this.surfaceDepthNoise.noiseAt(xPos * 0.0625D, zPos * 0.0625D, 0.0625D, x * 0.0625D) * 10.0D;
 				region.getBiome(blockpos$mutable.setPos(chunkX + x, ySurface, chunkZ + z)).buildSurface(sharedseedrandom, chunk, xPos, zPos, ySurface, noise, this.defaultBlock, this.defaultFluid, region.getSeaLevel(), this.world.getSeed());
 			}
 		}
@@ -242,6 +244,7 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
 	 * Creates the actual terrain itself. 
 	 * It seems to go by cubic chunk-like when generating terrain?
 	 */
+	@Override
 	public void makeBase(IWorld world, IChunk chunk) {
 		ChunkPos chunkpos = chunk.getPos();
 		int chunkX = chunkpos.x;

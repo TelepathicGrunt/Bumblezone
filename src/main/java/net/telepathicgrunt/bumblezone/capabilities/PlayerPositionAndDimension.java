@@ -78,7 +78,7 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 	@Override
 	public void loadNBTData(CompoundNBT nbtTag)
 	{
-		CompoundNBT cnbt = (CompoundNBT) nbtTag;
+		CompoundNBT cnbt = nbtTag;
 
 		//grabs past dimension resource location and tries to get that dimension from the registry
 		DimensionType storedDimension = DimensionType.byName(new ResourceLocation(cnbt.getString("PreviousDimensionNamespace"), cnbt.getString("PreviousDimensionPath")));

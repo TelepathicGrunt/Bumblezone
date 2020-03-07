@@ -58,7 +58,7 @@ public class BzBiomeProvider extends BiomeProvider
 
 		for (int i = 0; i < count; ++i)
 		{
-			iareafactory = parent.apply(contextFactory.apply(seed + (long) i), iareafactory);
+			iareafactory = parent.apply(contextFactory.apply(seed + i), iareafactory);
 		}
 		
 		return iareafactory;
@@ -88,6 +88,7 @@ public class BzBiomeProvider extends BiomeProvider
 	}
 
 
+	@Override
 	public Set<Biome> getBiomesInArea(int centerX, int centerY, int centerZ, int sideLength)
 	{
 		int i = centerX - sideLength >> 2;
@@ -149,6 +150,7 @@ public class BzBiomeProvider extends BiomeProvider
 	}
 
 
+	@Override
 	public boolean hasStructure(Structure<?> structureIn)
 	{
 		return this.hasStructureCache.computeIfAbsent(structureIn, (structure) ->
@@ -166,6 +168,7 @@ public class BzBiomeProvider extends BiomeProvider
 	}
 
 
+	@Override
 	public Set<BlockState> getSurfaceBlocks()
 	{
 		if (this.topBlocksCache.isEmpty())
@@ -180,6 +183,7 @@ public class BzBiomeProvider extends BiomeProvider
 	}
 
 
+	@Override
 	public Biome getBiomeForNoiseGen(int x, int y, int z)
 	{
 		return this.genBiomes.func_215738_a(x, z);
