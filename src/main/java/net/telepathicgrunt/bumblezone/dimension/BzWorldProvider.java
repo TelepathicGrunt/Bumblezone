@@ -154,32 +154,6 @@ public class BzWorldProvider extends Dimension
 	}
 
 
-    @OnlyIn(Dist.CLIENT)
-    @Nullable
-	@Override
-	public net.minecraftforge.client.IRenderHandler getSkyRenderer(){
-    	return null;
-    }
-    
-    
-	@Nullable
-	@OnlyIn(Dist.CLIENT)
-	@Override
-	public net.minecraftforge.client.IRenderHandler getWeatherRenderer()
-	{
-		return null;
-	}
-
-
-	@Nullable
-	@OnlyIn(Dist.CLIENT)
-	@Override
-	public net.minecraftforge.client.IRenderHandler getCloudRenderer()
-	{
-		return null;
-	}
-
-
 	/**
 	 * the y level at which clouds are rendered.
 	 */
@@ -187,7 +161,7 @@ public class BzWorldProvider extends Dimension
 	@Override
 	public float getCloudHeight()
 	{
-		return 280;
+		return -1;
 	}
 	
 
