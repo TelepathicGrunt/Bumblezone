@@ -13,21 +13,14 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-repositories {
-    maven {
-        url "https://maven.tterrag.com/"
-    }
-}
-
-version = '1.15.2-1.0.4'
-group = 'net.telepathicgrunt.bumblezone' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+version = '1.15.2-1.1.0'
+group = 'com.telepathicgrunt.bumblezone' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'the_bumblezone'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200123-mixed-1.15.2'
-    
+    mappings channel: 'snapshot', version: '20200331-1.15.1'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
@@ -51,21 +44,6 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-
-            mods {
-                examplemod {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
-
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
 
             mods {
                 examplemod {
