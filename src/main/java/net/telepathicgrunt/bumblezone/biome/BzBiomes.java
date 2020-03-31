@@ -10,12 +10,12 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.biome.biomes.HivePillarBiome;
 import net.telepathicgrunt.bumblezone.biome.biomes.HiveWallBiome;
 import net.telepathicgrunt.bumblezone.biome.biomes.SugarWaterBiome;
+import net.telepathicgrunt.bumblezone.utils.RegUtils;
 
-public class BzBiomeInit {
+public class BzBiomes {
 
 
 	//list of all biomes we registered
@@ -32,15 +32,15 @@ public class BzBiomeInit {
 
    	    IForgeRegistry<Biome> registry = event.getRegistry();
 		
-		initBiome(registry, SUGAR_WATER, "Sugar Water Floor", BiomeType.WARM, Type.PLAINS);
-		initBiome(registry, HIVE_WALL, "Hive Wall", BiomeType.WARM, Type.PLAINS);
-		initBiome(registry, HIVE_PILLAR, "Hive Pillar", BiomeType.WARM, Type.PLAINS);
+		initBiome(registry, SUGAR_WATER, "sugar_water_floor", BiomeType.WARM, Type.PLAINS);
+		initBiome(registry, HIVE_WALL, "hive_wall", BiomeType.WARM, Type.PLAINS);
+		initBiome(registry, HIVE_PILLAR, "hive_pillar", BiomeType.WARM, Type.PLAINS);
 	}
 
 
 	//adds biome to registry with their type to the registry and to the biome dictionary
 	private static Biome initBiome(IForgeRegistry<Biome> registry, Biome biome, String name, BiomeType biomeType, Type... types) {
-		Bumblezone.register(registry, biome, name);
+		RegUtils.register(registry, biome, name);
 		BiomeDictionary.addTypes(biome, types);
 		biomes.add(biome);
 		return biome;

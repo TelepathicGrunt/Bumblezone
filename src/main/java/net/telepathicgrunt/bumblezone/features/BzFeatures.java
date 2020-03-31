@@ -4,15 +4,15 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.utils.RegUtils;
 
-public class BzFeatureInit
+public class BzFeatures
 {
     public static Feature<NoFeatureConfig> HONEYCOMB_HOLE = new HoneycombHole(NoFeatureConfig::deserialize);
 
     public static void registerFeatures(RegistryEvent.Register<Feature<?>> event)
     {
     	IForgeRegistry<Feature<?>> registry = event.getRegistry();
-        Bumblezone.register(registry, HONEYCOMB_HOLE, "honeycomb_hole");
+    	RegUtils.register(registry, HONEYCOMB_HOLE, "honeycomb_hole");
     }
 }

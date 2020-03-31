@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Effect;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.MinecraftForge;
@@ -18,14 +17,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
-import net.telepathicgrunt.bumblezone.biome.BzBiomeInit;
+import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocksInit;
 import net.telepathicgrunt.bumblezone.capabilities.CapabilityPlayerPosAndDim;
 import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
-import net.telepathicgrunt.bumblezone.features.BzFeatureInit;
+import net.telepathicgrunt.bumblezone.features.BzFeatures;
 
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -73,7 +70,7 @@ public class Bumblezone
 		public static void registerBiomes(final RegistryEvent.Register<Biome> event)
 		{
 			//registers all my modified biomes
-			BzBiomeInit.registerBiomes(event);
+			BzBiomes.registerBiomes(event);
 		}
 
 
@@ -105,7 +102,7 @@ public class Bumblezone
 		@SubscribeEvent
 		public static void onRegisterFeatures(final RegistryEvent.Register<Feature<?>> event)
 		{
-			BzFeatureInit.registerFeatures(event);
+			BzFeatures.registerFeatures(event);
 		}
 
 
@@ -117,16 +114,5 @@ public class Bumblezone
 		{
 			BzEffects.registerEffects(event);
 		}
-	}
-
-
-	/*
-	 * Helper method to quickly register features, blocks, items, structures, biomes, anything that can be registered.
-	 */
-	public static <T extends IForgeRegistryEntry<T>> T register(IForgeRegistry<T> registry, T entry, String registryKey)
-	{
-		entry.setRegistryName(new ResourceLocation(MODID, registryKey.toLowerCase().replace(' ', '_')));
-		registry.register(entry);
-		return entry;
 	}
 }

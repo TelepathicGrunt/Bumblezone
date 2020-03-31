@@ -25,7 +25,7 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.layer.Layer;
 import net.minecraft.world.gen.layer.ZoomLayer;
 import net.minecraft.world.gen.layer.traits.IAreaTransformer1;
-import net.telepathicgrunt.bumblezone.biome.BzBiomeInit;
+import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 import net.telepathicgrunt.bumblezone.generation.layer.BzBiomeLayer;
 
 
@@ -37,7 +37,7 @@ public class BzBiomeProvider extends BiomeProvider
 
 	public BzBiomeProvider(long seed, WorldType worldType)
 	{
-		super(BzBiomeInit.biomes);
+		super(BzBiomes.biomes);
 
 		//generates the world and biome layouts
 		Layer[] agenlayer = buildOverworldProcedure(seed, worldType);
