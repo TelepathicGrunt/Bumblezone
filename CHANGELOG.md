@@ -14,10 +14,19 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
    
 ## (V.1.2.0 Changes) (1.15.2 Minecraft)
       
+##### Mob Compatibility: 
+
+-If Buzzier Bees is on, Honey Slime mobs will spawn in The Bumblezone instead of regular Slime mobs.
+
 ##### Teleportation: 
 
 -Throwing Enderpearls at all blocks that extends BeehiveBlock (includes modded and vanilla's BeeNests and BeeHive blocks) will teleport you into the dimension!
-   
+        
+##### Mobs: 
+
+-Nerfed spawnrate for slime mobs when creating chunk for first time.
+
+
 ## (V.1.1.0 Changes) (1.15.2 Minecraft)
       
 ##### Misc: 

@@ -54,8 +54,8 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 	}
 	
 
-	private static final Biome.SpawnListEntry INITIAL_SLIME_ENTRY = new Biome.SpawnListEntry(EntityType.SLIME, 1, 1, 1);
-	private static final Biome.SpawnListEntry INITIAL_BEE_ENTRY = new Biome.SpawnListEntry(EntityType.BEE, 1, 4, 4);
+	public static Biome.SpawnListEntry MOBS_SLIME_ENTRY = new Biome.SpawnListEntry(EntityType.SLIME, 1, 1, 1);
+	public static Biome.SpawnListEntry MOBS_BEE_ENTRY = new Biome.SpawnListEntry(EntityType.BEE, 1, 4, 4);
 
 
 	/**
@@ -82,8 +82,8 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 
 		while (sharedseedrandom.nextFloat() < biome.getSpawningChance())
 		{
-			//30% of time, spawn slime. Otherwise, spawn bees.
-			Biome.SpawnListEntry biome$spawnlistentry = sharedseedrandom.nextFloat() < 0.4f ? INITIAL_SLIME_ENTRY : INITIAL_BEE_ENTRY;
+			//25% of time, spawn slime. Otherwise, spawn bees.
+			Biome.SpawnListEntry biome$spawnlistentry = sharedseedrandom.nextFloat() < 0.25f ? MOBS_SLIME_ENTRY : MOBS_BEE_ENTRY;
 			
 			
 			ILivingEntityData ilivingentitydata = null;
