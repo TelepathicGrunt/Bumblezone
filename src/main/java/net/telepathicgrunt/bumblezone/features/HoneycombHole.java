@@ -82,8 +82,8 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 		};
 
 	private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocksInit.FILLED_POROUS_HONEYCOMB.get().getDefaultState();
-	private static final BlockState HONEY_BLOCK = Blocks.field_226907_mc_.getDefaultState();
-	private static final BlockState HONEYCOMB_BLOCK = Blocks.field_226908_md_.getDefaultState();
+	private static final BlockState HONEY_BLOCK = Blocks.HONEY_BLOCK.getDefaultState();
+	private static final BlockState HONEYCOMB_BLOCK = Blocks.HONEYCOMB_BLOCK.getDefaultState();
 	private static final BlockState AIR = Blocks.AIR.getDefaultState();
 	private static final BlockState WATER = Blocks.WATER.getDefaultState();
 	

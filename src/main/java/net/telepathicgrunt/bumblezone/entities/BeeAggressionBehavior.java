@@ -68,7 +68,7 @@ public class BeeAggressionBehavior
 					!playerEntity.isSpectator())
 				{
 					//if player drinks honey, bees gets very mad...
-					if(event.getItem().getItem() == Items.field_226638_pX_ && BzConfig.aggressiveBees)
+					if(event.getItem().getItem() == Items.HONEY_BOTTLE && BzConfig.aggressiveBees)
 					{
 						playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
 					}

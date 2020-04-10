@@ -186,7 +186,7 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
 	 * by calling the biome's surface builder for each position in the chunk
 	 */
 	@Override
-	public void buildSurface(WorldGenRegion region, IChunk chunk) {
+	public void func_225551_a_(WorldGenRegion region, IChunk chunk) {
 		ChunkPos chunkpos = chunk.getPos();
 		int i = chunkpos.x;
 		int j = chunkpos.z;
@@ -228,13 +228,13 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
 			//fills in gap between top of terrain gen and y = 255 with solid blocks
 			for (int ceilingY = roofHeight; ceilingY >= roofHeight - 7; --ceilingY) 
 			{
-				chunk.setBlockState(blockpos$Mutable.setPos(blockpos.getX(), ceilingY, blockpos.getZ()), Blocks.field_226908_md_.getDefaultState(), false);
+				chunk.setBlockState(blockpos$Mutable.setPos(blockpos.getX(), ceilingY, blockpos.getZ()), Blocks.HONEYCOMB_BLOCK.getDefaultState(), false);
 			}
 		
 			//single layer of solid blocks
 			for (int floorY = floorHeight; floorY<= floorHeight; ++floorY) 
 			{
-				chunk.setBlockState(blockpos$Mutable.setPos(blockpos.getX(), floorY, blockpos.getZ()), Blocks.field_226908_md_.getDefaultState(), false);
+				chunk.setBlockState(blockpos$Mutable.setPos(blockpos.getX(), floorY, blockpos.getZ()), Blocks.HONEYCOMB_BLOCK.getDefaultState(), false);
 			}
 		}
 
@@ -285,7 +285,7 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
 			}
 
 			for (int zNoise = 0; zNoise < this.noiseSizeZ; ++zNoise) {
-				ChunkSection chunksection = chunkprimer.func_217332_a(15);
+				ChunkSection chunksection = chunkprimer.getSection(15);
 				chunksection.lock();
 
 				for (int yNoise = this.noiseSizeY - 1; yNoise >= 0; --yNoise) {
@@ -343,7 +343,7 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
 						int yChunkFinal = currentY >> 4;
 						if (chunksection.getYLocation() >> 4 != yChunkFinal) {
 							chunksection.unlock();
-							chunksection = chunkprimer.func_217332_a(yChunkFinal);
+							chunksection = chunkprimer.getSection(yChunkFinal);
 							chunksection.lock();
 						}
 

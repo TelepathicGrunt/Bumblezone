@@ -55,7 +55,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 	
 
 	private static final Biome.SpawnListEntry INITIAL_SLIME_ENTRY = new Biome.SpawnListEntry(EntityType.SLIME, 1, 1, 1);
-	private static final Biome.SpawnListEntry INITIAL_BEE_ENTRY = new Biome.SpawnListEntry(EntityType.field_226289_e_, 1, 4, 4);
+	private static final Biome.SpawnListEntry INITIAL_BEE_ENTRY = new Biome.SpawnListEntry(EntityType.BEE, 1, 4, 4);
 
 
 	/**
@@ -193,13 +193,13 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 		float f1 = 0.0F;
 		float f2 = 0.0F;
 		int y = this.getSeaLevel();
-		float f3 = this.biomeProvider.getBiomeForNoiseGen(x, y, z).getDepth();
+		float f3 = this.biomeProvider.getNoiseBiome(x, y, z).getDepth();
 
 		for (int j = -2; j <= 2; ++j)
 		{
 			for (int k = -2; k <= 2; ++k)
 			{
-				Biome biome = this.biomeProvider.getBiomeForNoiseGen(x + j, y, z + k);
+				Biome biome = this.biomeProvider.getNoiseBiome(x + j, y, z + k);
 				float depthWeight = biome.getDepth();
 				float scaleWeight = biome.getScale();
 

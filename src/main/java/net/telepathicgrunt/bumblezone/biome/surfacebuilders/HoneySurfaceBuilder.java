@@ -26,7 +26,7 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig>
 	private static final BlockState STONE = Blocks.STONE.getDefaultState();
 	private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocksInit.FILLED_POROUS_HONEYCOMB.get().getDefaultState();
 	private static final BlockState POROUS_HONEYCOMB = BzBlocksInit.POROUS_HONEYCOMB.get().getDefaultState();
-	private static final BlockState HONEYCOMB_BLOCK = Blocks.field_226908_md_.getDefaultState();
+	private static final BlockState HONEYCOMB_BLOCK = Blocks.HONEYCOMB_BLOCK.getDefaultState();
 
 
 	@Override

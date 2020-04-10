@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.BeehiveBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EnderPearlEntity;
@@ -70,14 +72,24 @@ public class PlayerTeleportationBehavior
 				
 				//check with offset in all direction as the position of exact hit point could barely be outside the hive block
 				//even through the pearl hit the block directly.
-				if(world.getBlockState(new BlockPos(hitBlockPos.add(0.1D, 0, 0))).getBlock() == Blocks.field_226905_ma_ ||
-				   world.getBlockState(new BlockPos(hitBlockPos.add(-0.1D, 0, 0))).getBlock() == Blocks.field_226905_ma_ ||
-				   world.getBlockState(new BlockPos(hitBlockPos.add(0, 0, 0.1D))).getBlock() == Blocks.field_226905_ma_ ||
-				   world.getBlockState(new BlockPos(hitBlockPos.add(0, 0, -0.1D))).getBlock() == Blocks.field_226905_ma_ ||
-				   world.getBlockState(new BlockPos(hitBlockPos.add(0, 0.1D, 0))).getBlock() == Blocks.field_226905_ma_ ||
-				   world.getBlockState(new BlockPos(hitBlockPos.add(0, -0.1D, 0))).getBlock() == Blocks.field_226905_ma_  ) 
-				{
-					hitHive = true;
+				for(double offset = -0.1D; offset <= 0.1D; offset += 0.1D) {
+					Block block = world.getBlockState(new BlockPos(hitBlockPos.add(offset, 0, 0))).getBlock();
+					if(block instanceof BeehiveBlock) {
+						hitHive = true;
+						break;
+					}
+					
+					block = world.getBlockState(new BlockPos(hitBlockPos.add(0, offset, 0))).getBlock();
+					if(block instanceof BeehiveBlock) {
+						hitHive = true;
+						break;
+					}
+					
+					block = world.getBlockState(new BlockPos(hitBlockPos.add(0, 0, offset))).getBlock();
+					if(block instanceof BeehiveBlock) {
+						hitHive = true;
+						break;
+					}
 				}
 
 				//if the pearl hit a beehive and is not in our bee dimension, begin the teleportation.
@@ -124,18 +136,18 @@ public class PlayerTeleportationBehavior
 					reAddPotionEffect(playerEntity);
 				}
 				//teleported by going out of bounds to leave bumblezone dimension
-				else if((playerEntity.getY() < -1 || playerEntity.getY() > 255) &&
+				else if((playerEntity.getPosY() < -1 || playerEntity.getPosY() > 255) &&
 						playerEntity.dimension == BzDimension.bumblezone()) 
 				{
-					teleportByOutOfBounds(playerEntity, cap, playerEntity.getY() < -1 ? true : false);
+					teleportByOutOfBounds(playerEntity, cap, playerEntity.getPosY() < -1 ? true : false);
 					reAddPotionEffect(playerEntity);
 				}
 			}
 				
 			//Makes it so player does not get killed for falling into the void
-			if(playerEntity.getY() < -3 && playerEntity.dimension == BzDimension.bumblezone())
+			if(playerEntity.getPosY() < -3 && playerEntity.dimension == BzDimension.bumblezone())
 			{
-				playerEntity.setPosition(playerEntity.getX(), -3D, playerEntity.getZ());
+				playerEntity.setPosition(playerEntity.getPosX(), -3D, playerEntity.getPosZ());
 			}
 		}
 		
@@ -307,17 +319,17 @@ public class PlayerTeleportationBehavior
 				bumblezoneWorld.setBlockState(blockpos, Blocks.AIR.getDefaultState());
 				bumblezoneWorld.setBlockState(blockpos.up(), Blocks.AIR.getDefaultState());
 
-				bumblezoneWorld.setBlockState(blockpos.down(), Blocks.field_226908_md_.getDefaultState());
-				bumblezoneWorld.setBlockState(blockpos.up().up(), Blocks.field_226908_md_.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.down(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.up().up(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
 
-				bumblezoneWorld.setBlockState(blockpos.north(), Blocks.field_226908_md_.getDefaultState());
-				bumblezoneWorld.setBlockState(blockpos.west(), Blocks.field_226908_md_.getDefaultState());
-				bumblezoneWorld.setBlockState(blockpos.east(), Blocks.field_226908_md_.getDefaultState());
-				bumblezoneWorld.setBlockState(blockpos.south(), Blocks.field_226908_md_.getDefaultState());
-				bumblezoneWorld.setBlockState(blockpos.north().up(), Blocks.field_226908_md_.getDefaultState());
-				bumblezoneWorld.setBlockState(blockpos.west().up(), Blocks.field_226908_md_.getDefaultState());
-				bumblezoneWorld.setBlockState(blockpos.east().up(), Blocks.field_226908_md_.getDefaultState());
-				bumblezoneWorld.setBlockState(blockpos.south().up(), Blocks.field_226908_md_.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.north(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.west(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.east(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.south(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.north().up(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.west().up(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.east().up(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+				bumblezoneWorld.setBlockState(blockpos.south().up(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
 				validBlockPos = blockpos;
 			}
 
@@ -398,7 +410,7 @@ public class PlayerTeleportationBehavior
 						{
 							mutableBlockPos.setPos(position.getX() + x2, mutableBlockPos.getY(), position.getZ() + z2);
 							
-							if (world.getBlockState(mutableBlockPos).getBlock() == Blocks.field_226905_ma_)
+							if (world.getBlockState(mutableBlockPos).getBlock() instanceof BeehiveBlock)
 							{
 								//A Hive was found, try to find a valid spot next to it
 								BlockPos validSpot = validPlayerSpawnLocation(world, mutableBlockPos, 4);
@@ -436,7 +448,7 @@ public class PlayerTeleportationBehavior
 		
 		if(mutableBlockPos.getY() > 0)
 		{
-			world.setBlockState(mutableBlockPos, Blocks.field_226905_ma_.getDefaultState());
+			world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
 			world.setBlockState(mutableBlockPos.up(), Blocks.AIR.getDefaultState());
 			return mutableBlockPos;
 		}
@@ -449,7 +461,7 @@ public class PlayerTeleportationBehavior
 							world.getDimension().getActualHeight()/2, 
 							position.getZ());
 
-			world.setBlockState(mutableBlockPos, Blocks.field_226905_ma_.getDefaultState());
+			world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
 			world.setBlockState(mutableBlockPos.up(), Blocks.AIR.getDefaultState());
 			return mutableBlockPos;
 		}

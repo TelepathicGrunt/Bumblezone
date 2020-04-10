@@ -32,19 +32,19 @@ public class PorousHoneycombBlock extends Block
 	 */
 	@Override
 	@SuppressWarnings("deprecation")
-	public ActionResultType onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult)
+	public ActionResultType onBlockActivated(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult)
 	{
 		ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
 		/*
 		 * Player is adding honey to this block if it is not filled with honey
 		 */
-		if (itemstack.getItem() == Items.field_226638_pX_)
+		if (itemstack.getItem() == Items.HONEY_BOTTLE)
 		{
 			if (!world.isRemote)
 			{
 				world.setBlockState(position, BzBlocksInit.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 3); // added honey to this block
-				world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 				
 				if(!playerEntity.isCreative())
 				{
@@ -65,7 +65,7 @@ public class PorousHoneycombBlock extends Block
 		}
 		else
 		{
-			return super.onUse(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+			return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
 		}
 	}
 

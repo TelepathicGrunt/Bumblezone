@@ -45,7 +45,7 @@ public class FilledPorousHoneycombBlock extends Block
 	 */
 	@Override
 	@SuppressWarnings("deprecation")
-	public ActionResultType onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult)
+	public ActionResultType onBlockActivated(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult)
 	{
 		ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
@@ -57,7 +57,7 @@ public class FilledPorousHoneycombBlock extends Block
 			if (!world.isRemote)
 			{
 				world.setBlockState(position, BzBlocksInit.POROUS_HONEYCOMB.get().getDefaultState(), 3); // removed honey from this block
-				world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 				
 				if(!playerEntity.isCreative())
 				{
@@ -65,11 +65,11 @@ public class FilledPorousHoneycombBlock extends Block
 	
 					if (itemstack.isEmpty())
 					{
-						playerEntity.setHeldItem(playerHand, new ItemStack(Items.field_226638_pX_)); // places honey bottle in hand
+						playerEntity.setHeldItem(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
 					}
-					else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.field_226638_pX_))) // places honey bottle in inventory
+					else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
 					{
-						playerEntity.dropItem(new ItemStack(Items.field_226638_pX_), false); // drops honey bottle if inventory is full
+						playerEntity.dropItem(new ItemStack(Items.HONEY_BOTTLE), false); // drops honey bottle if inventory is full
 					}
 				}
 				
@@ -88,7 +88,7 @@ public class FilledPorousHoneycombBlock extends Block
 		}
 		else
 		{
-			return super.onUse(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+			return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
 		}
 	}
 
@@ -134,7 +134,7 @@ public class FilledPorousHoneycombBlock extends Block
 					BlockState belowBlockstate = world.getBlockState(belowBlockpos);
 					VoxelShape belowBlockShape = belowBlockstate.getCollisionShape(world, belowBlockpos);
 					double yEndHeight2 = belowBlockShape.getEnd(Direction.Axis.Y);
-					if ((yEndHeight2 < 1.0D || !belowBlockstate.isFullCube(world, belowBlockpos)) && belowBlockstate.getFluidState().isEmpty())
+					if ((yEndHeight2 < 1.0D || !belowBlockstate.isNormalCube(world, belowBlockpos)) && belowBlockstate.getFluidState().isEmpty())
 					{
 						this.addHoneyParticle(world, position, currentBlockShape, position.getY() - 0.05D);
 					}
@@ -161,6 +161,6 @@ public class FilledPorousHoneycombBlock extends Block
 	@OnlyIn(Dist.CLIENT)
 	private void addHoneyParticle(World world, double xMin, double xMax, double zMax, double zMin, double yHeight)
 	{
-		world.addParticle(ParticleTypes.field_229427_ag_, MathHelper.lerp(world.rand.nextDouble(), xMin, xMax), yHeight, MathHelper.lerp(world.rand.nextDouble(), zMax, zMin), 0.0D, 0.0D, 0.0D);
+		world.addParticle(ParticleTypes.DRIPPING_HONEY, MathHelper.lerp(world.rand.nextDouble(), xMin, xMax), yHeight, MathHelper.lerp(world.rand.nextDouble(), zMax, zMin), 0.0D, 0.0D, 0.0D);
 	}
 }

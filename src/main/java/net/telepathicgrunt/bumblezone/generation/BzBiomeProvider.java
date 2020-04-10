@@ -89,7 +89,7 @@ public class BzBiomeProvider extends BiomeProvider
 
 
 	@Override
-	public Set<Biome> getBiomesInArea(int centerX, int centerY, int centerZ, int sideLength)
+	public Set<Biome> getBiomes(int centerX, int centerY, int centerZ, int sideLength)
 	{
 		int i = centerX - sideLength >> 2;
 		int j = centerY - sideLength >> 2;
@@ -111,7 +111,7 @@ public class BzBiomeProvider extends BiomeProvider
 					int xPos = i + k2;
 					int yPos = j + l2;
 					int zPos = k + j2;
-					set.add(this.getBiomeForNoiseGen(xPos, yPos, zPos));
+					set.add(this.getNoiseBiome(xPos, yPos, zPos));
 				}
 			}
 		}
@@ -135,7 +135,7 @@ public class BzBiomeProvider extends BiomeProvider
 		{
 			int i2 = i + l1 % i1 << 2;
 			int j2 = j + l1 / i1 << 2;
-			if (biomes.contains(this.getBiomeForNoiseGen(i2, k1, j2)))
+			if (biomes.contains(this.getNoiseBiome(i2, k1, j2)))
 			{
 				if (blockpos == null || random.nextInt(k1 + 1) == 0)
 				{
@@ -184,9 +184,8 @@ public class BzBiomeProvider extends BiomeProvider
 
 
 	@Override
-	public Biome getBiomeForNoiseGen(int x, int y, int z)
+	public Biome getNoiseBiome(int x, int y, int z)
 	{
 		return this.genBiomes.func_215738_a(x, z);
 	}
-
 }
