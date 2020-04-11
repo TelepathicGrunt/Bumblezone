@@ -11,7 +11,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
 import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 
 public class BuzzierBeesCompat
@@ -26,21 +25,21 @@ public class BuzzierBeesCompat
 		
 	}
 	
-	//convert 1/10th of bees to honey slime
+	//1/10th of bees spawning will also spawn honey slime
 	public static void BBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event)
 	{
 		MobEntity entity = (MobEntity)event.getEntity();
 		IWorld world = event.getWorld();
 		
-		if(entity.getType() == EntityType.BEE && world.getRandom().nextInt(10) == 0 && entity.isNotColliding(world)) {
+		if(entity.getType() == EntityType.BEE && world.getRandom().nextInt(10) == 0) {
 			MobEntity slimeentity = new HoneySlimeEntity(BBEntities.HONEY_SLIME.get(), entity.world);
-			slimeentity.setLocationAndAngles(entity.getPosX(), entity.getPosY(), entity.getPosZ(), world.getRandom().nextFloat() * 360.0F, 0.0F);
-			ILivingEntityData ilivingentitydata = null;
-			ilivingentitydata = slimeentity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(slimeentity)), event.getSpawnReason(), ilivingentitydata, (CompoundNBT) null);
-			world.addEntity(slimeentity);
+			slimeentity.setLocationAndAngles(entity.getPosX(), entity.getPosY()-2, entity.getPosZ(), world.getRandom().nextFloat() * 360.0F, 0.0F);
 			
-			//deny any other spawn
-			event.setResult(Result.DENY);
+			if(entity.isNotColliding(world)) {
+				ILivingEntityData ilivingentitydata = null;
+				ilivingentitydata = slimeentity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(slimeentity)), event.getSpawnReason(), ilivingentitydata, (CompoundNBT) null);
+				world.addEntity(slimeentity);
+			}
 		}
 	}
 }

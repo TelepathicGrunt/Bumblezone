@@ -15,7 +15,7 @@ public class BuzzierBeesHoneySlimeSpawning
 	{
 		/*
 		 * Manual spawning on honey slime to bypass their heightmap checks and light checks.
-		 * Does so by converting 1/10th of bees to honey slime
+		 * works by making 1/10th of bees spawning also spawn honey slime
 		 */
 		@SubscribeEvent
 		public static void MobSpawnEvent(LivingSpawnEvent.CheckSpawn event)
