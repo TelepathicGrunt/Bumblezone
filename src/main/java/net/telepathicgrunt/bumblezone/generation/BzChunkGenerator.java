@@ -82,8 +82,8 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldGenSettings
 
 		while (sharedseedrandom.nextFloat() < biome.getSpawningChance())
 		{
-			//20% of time, spawn slime. Otherwise, spawn bees.
-			boolean isSlime =  sharedseedrandom.nextFloat() < 0.20f;
+			//25% of time, spawn slime. Otherwise, spawn bees.
+			boolean isSlime =  sharedseedrandom.nextFloat() < 0.25f;
 			Biome.SpawnListEntry biome$spawnlistentry = isSlime ? MOBS_SLIME_ENTRY : MOBS_BEE_ENTRY;
 			
 			

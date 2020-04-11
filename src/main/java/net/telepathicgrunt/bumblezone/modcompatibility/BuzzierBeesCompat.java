@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.Biome;
@@ -26,6 +27,7 @@ public class BuzzierBeesCompat
 	}
 	
 	//1/10th of bees spawning will also spawn honey slime
+	@SuppressWarnings("deprecation")
 	public static void BBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event)
 	{
 		MobEntity entity = (MobEntity)event.getEntity();
@@ -33,13 +35,18 @@ public class BuzzierBeesCompat
 		
 		if(entity.getType() == EntityType.BEE && world.getRandom().nextInt(10) == 0) {
 			MobEntity slimeentity = new HoneySlimeEntity(BBEntities.HONEY_SLIME.get(), entity.world);
-			slimeentity.setLocationAndAngles(entity.getPosX(), entity.getPosY()-2, entity.getPosZ(), world.getRandom().nextFloat() * 360.0F, 0.0F);
 			
-			if(entity.isNotColliding(world)) {
-				ILivingEntityData ilivingentitydata = null;
-				ilivingentitydata = slimeentity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(slimeentity)), event.getSpawnReason(), ilivingentitydata, (CompoundNBT) null);
-				world.addEntity(slimeentity);
+			//move down to first non-air block
+			BlockPos.Mutable blockpos = new BlockPos.Mutable(entity.getPosition());
+			while(world.getBlockState(blockpos).isAir()) {
+				blockpos.move(Direction.DOWN);
 			}
+			blockpos.move(Direction.UP);
+			
+			slimeentity.setLocationAndAngles(blockpos.getX(), blockpos.getY(), blockpos.getZ(), world.getRandom().nextFloat() * 360.0F, 0.0F);
+			ILivingEntityData ilivingentitydata = null;
+			ilivingentitydata = slimeentity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(slimeentity)), event.getSpawnReason(), ilivingentitydata, (CompoundNBT) null);
+			world.addEntity(slimeentity);
 		}
 	}
 }
