@@ -1,34 +1,31 @@
-package net.telepathicgrunt.bumblezone.entities;
+package net.telepathicgrunt.bumblezone.modcompatibility;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.world.World;
+import net.minecraft.entity.MobEntity;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class MobSpawnLocationBehavior
+public class BuzzierBeesHoneySlimeSpawning
 {
 	@Mod.EventBusSubscriber(modid = Bumblezone.MODID)
 	private static class ForgeEvents
 	{
+		/*
+		 * Manual spawning on honey slime to bypass their heightmap checks and light checks.
+		 * Does so by converting 1/10th of bees to honey slime
+		 */
 		@SubscribeEvent
 		public static void MobSpawnEvent(LivingSpawnEvent.CheckSpawn event)
 		{
-			Entity entity = event.getEntity();
-			World world = entity.world;
-			
-			//Make sure we are on server. Vanilla does this check too
-			if (!world.isRemote)
+			if(ModChecking.buzzierBeesPresent) 
 			{
-				//NO SPAWNING ON MY DIMENSION'S ROOF!!!
-				if(entity.getPosition().getY() >= 256 && entity.dimension == BzDimension.bumblezone()) 
+				MobEntity entity = (MobEntity)event.getEntity();
+				if(entity.dimension == BzDimension.bumblezone()) 
 				{
-					//STOP SPAWNING!!!!!!!!
-					event.setResult(Result.DENY);
+					BuzzierBeesCompat.BBMobSpawnEvent(event);
 				}
 			}
 		}

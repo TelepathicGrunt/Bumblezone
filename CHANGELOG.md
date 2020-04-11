@@ -16,7 +16,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
       
 ##### Mob Compatibility: 
 
--If Buzzier Bees is on, Honey Slime mobs will spawn in The Bumblezone instead of regular Slime mobs.
+-If Buzzier Bees is on, Honey Slime mobs will spawn in The Bumblezone instead of regular Slime mobs and monsters will have a slightly higher rate of spawning.
 
 ##### Teleportation: 
 

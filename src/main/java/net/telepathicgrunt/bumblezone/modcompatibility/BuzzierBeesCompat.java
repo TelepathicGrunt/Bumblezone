@@ -1,11 +1,17 @@
 package net.telepathicgrunt.bumblezone.modcompatibility;
 
+import com.bagel.buzzierbees.common.entities.HoneySlimeEntity;
 import com.bagel.buzzierbees.core.registry.BBEntities;
 
-import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.Biome;
-import net.telepathicgrunt.bumblezone.biome.BzBaseBiome;
-import net.telepathicgrunt.bumblezone.biome.BzBiomes;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.eventbus.api.Event.Result;
 import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 
 public class BuzzierBeesCompat
@@ -16,8 +22,25 @@ public class BuzzierBeesCompat
 	{
 		ModChecking.buzzierBeesPresent = true;
 		BzChunkGenerator.MOBS_SLIME_ENTRY = new Biome.SpawnListEntry(BBEntities.HONEY_SLIME.get(), 1, 1, 1);
-		BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addModMobs(EntityClassification.CREATURE, BBEntities.HONEY_SLIME.get(), 1, 4, 8));
+		//BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addModMobs(EntityClassification.CREATURE, BBEntities.HONEY_SLIME.get(), 1, 4, 8));
 		
+	}
+	
+	//convert 1/10th of bees to honey slime
+	public static void BBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event)
+	{
+		MobEntity entity = (MobEntity)event.getEntity();
+		IWorld world = event.getWorld();
 		
+		if(entity.getType() == EntityType.BEE && world.getRandom().nextInt(10) == 0 && entity.isNotColliding(world)) {
+			MobEntity slimeentity = new HoneySlimeEntity(BBEntities.HONEY_SLIME.get(), entity.world);
+			slimeentity.setLocationAndAngles(entity.getPosX(), entity.getPosY(), entity.getPosZ(), world.getRandom().nextFloat() * 360.0F, 0.0F);
+			ILivingEntityData ilivingentitydata = null;
+			ilivingentitydata = slimeentity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(slimeentity)), event.getSpawnReason(), ilivingentitydata, (CompoundNBT) null);
+			world.addEntity(slimeentity);
+			
+			//deny any other spawn
+			event.setResult(Result.DENY);
+		}
 	}
 }

@@ -12,7 +12,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -28,7 +27,6 @@ import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 
 // The value here should match an entry in the META-INF/mods.toml file
-@SuppressWarnings("deprecation")
 @Mod(Bumblezone.MODID)
 public class Bumblezone
 {
@@ -53,11 +51,10 @@ public class Bumblezone
 	private void setup(final FMLCommonSetupEvent event)
 	{
 		CapabilityPlayerPosAndDim.register();
-		DeferredWorkQueue.runLater(ModChecking::setupModCompat);
-
+		ModChecking.setupModCompat();
 		BzBiomes.addVanillaSlimeMobs();
 	}
-
+	
 
 	public void modConfig(final ModConfig.ModConfigEvent event)
 	{
