@@ -3,7 +3,6 @@ package net.telepathicgrunt.bumblezone.entities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.passive.PandaEntity;
-import net.minecraft.entity.passive.PolarBearEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
@@ -84,7 +83,7 @@ public class BeeAggressionBehavior
 			Entity bearEntity = event.getEntity();
 			
 			//must be a bear animal
-			if(bearEntity instanceof PolarBearEntity || bearEntity instanceof PandaEntity)
+			if(bearEntity instanceof PandaEntity || bearEntity.getType().getRegistryName().toString().contains("bear"))
 			{
 				World world = bearEntity.world;
 
