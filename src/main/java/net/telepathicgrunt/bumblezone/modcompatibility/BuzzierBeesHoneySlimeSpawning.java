@@ -25,7 +25,7 @@ public class BuzzierBeesHoneySlimeSpawning
 				MobEntity entity = (MobEntity)event.getEntity();
 				if(entity.dimension == BzDimension.bumblezone()) 
 				{
-					BuzzierBeesCompat.BBMobSpawnEvent(event);
+					BuzzierBeesRedirection.BBMobSpawnEvent(event);
 				}
 			}
 		}

@@ -14,6 +14,8 @@ import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocksInit;
+import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
+import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 
 public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig>
@@ -35,38 +37,43 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig>
 		//creates grass surface normally
 		SurfaceBuilder.DEFAULT.buildSurface(random, chunk, biome, x, z, startHeight, noise, defaultBlock, defaultFluid, seaLevel, seed, config);
 
-		int xpos = x & 15;
-		int zpos = z & 15;
-		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable();
+		//use buzzier bees compat surface builder if the mod is present
+		if(ModChecking.buzzierBeesPresent) {
+			BuzzierBeesRedirection.buildSurface(random, chunk, biome, x, z, startHeight, noise, defaultBlock, defaultFluid, seaLevel, seed, config);
+		}
+		else {
+			int xpos = x & 15;
+			int zpos = z & 15;
+			BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable();
 
-		//makes stone below sea level into end stone
-		for (int ypos = 255; ypos >= 0; --ypos)
-		{
-			blockpos$Mutable.setPos(xpos, ypos, zpos);
-			BlockState currentBlockState = chunk.getBlockState(blockpos$Mutable);
-
-			if (currentBlockState.getBlock() != null && currentBlockState.getMaterial() != Material.AIR)
+			//makes stone below sea level into end stone
+			for (int ypos = 255; ypos >= 0; --ypos)
 			{
-				if (currentBlockState == STONE)
+				blockpos$Mutable.setPos(xpos, ypos, zpos);
+				BlockState currentBlockState = chunk.getBlockState(blockpos$Mutable);
+
+				if (currentBlockState.getBlock() != null && currentBlockState.getMaterial() != Material.AIR)
 				{
-					chunk.setBlockState(blockpos$Mutable, HONEYCOMB_BLOCK, false);
-				}
-				else if (currentBlockState == POROUS_HONEYCOMB)
-				{
-					if (ypos <= seaLevel + 2 + Math.max(noise, 0) + random.nextInt(2))
+					if (currentBlockState == STONE)
 					{
-						chunk.setBlockState(blockpos$Mutable, FILLED_POROUS_HONEYCOMB, false);
+						chunk.setBlockState(blockpos$Mutable, HONEYCOMB_BLOCK, false);
 					}
-				}
-				else if (currentBlockState == AIR)
-				{
-					if (ypos < seaLevel)
+					else if (currentBlockState == POROUS_HONEYCOMB)
 					{
-						chunk.setBlockState(blockpos$Mutable, defaultFluid, false);
+						if (ypos <= seaLevel + 2 + Math.max(noise, 0) + random.nextInt(2))
+						{
+							chunk.setBlockState(blockpos$Mutable, FILLED_POROUS_HONEYCOMB, false);
+						}
+					}
+					else if (currentBlockState.getMaterial() == Material.AIR)
+					{
+						if (ypos < seaLevel)
+						{
+							chunk.setBlockState(blockpos$Mutable, defaultFluid, false);
+						}
 					}
 				}
 			}
 		}
-
 	}
 }

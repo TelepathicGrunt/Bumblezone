@@ -20,6 +20,8 @@ import net.minecraft.world.gen.INoiseGenerator;
 import net.minecraft.world.gen.OctavesNoiseGenerator;
 import net.minecraft.world.gen.PerlinNoiseGenerator;
 import net.minecraft.world.gen.WorldGenRegion;
+import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
+import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extends ChunkGenerator<T> {
 
@@ -217,27 +219,33 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
 	 * We use honeycomb blocks instead of Bedrock.
 	 */
 	protected void makeBedrock(IChunk chunk, Random random) {
-		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable();
-		int xStart = chunk.getPos().getXStart();
-		int zStart = chunk.getPos().getZStart();
-		int roofHeight = 255;
-		int floorHeight = 0;
 
-		for (BlockPos blockpos : BlockPos.getAllInBoxMutable(xStart, 0, zStart, xStart + 15, 0, zStart + 15)) 
-		{
-			//fills in gap between top of terrain gen and y = 255 with solid blocks
-			for (int ceilingY = roofHeight; ceilingY >= roofHeight - 7; --ceilingY) 
+		//use hive planks for roof and floor instead of honeycomb blocks when buzzier bees is on
+		if(ModChecking.buzzierBeesPresent) {
+			BuzzierBeesRedirection.makeBedrock(chunk, random);
+		}
+		else {
+			BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable();
+			int xStart = chunk.getPos().getXStart();
+			int zStart = chunk.getPos().getZStart();
+			int roofHeight = 255;
+			int floorHeight = 0;
+	
+			for (BlockPos blockpos : BlockPos.getAllInBoxMutable(xStart, 0, zStart, xStart + 15, 0, zStart + 15)) 
 			{
-				chunk.setBlockState(blockpos$Mutable.setPos(blockpos.getX(), ceilingY, blockpos.getZ()), Blocks.HONEYCOMB_BLOCK.getDefaultState(), false);
-			}
-		
-			//single layer of solid blocks
-			for (int floorY = floorHeight; floorY<= floorHeight; ++floorY) 
-			{
-				chunk.setBlockState(blockpos$Mutable.setPos(blockpos.getX(), floorY, blockpos.getZ()), Blocks.HONEYCOMB_BLOCK.getDefaultState(), false);
+				//fills in gap between top of terrain gen and y = 255 with solid blocks
+				for (int ceilingY = roofHeight; ceilingY >= roofHeight - 7; --ceilingY) 
+				{
+					chunk.setBlockState(blockpos$Mutable.setPos(blockpos.getX(), ceilingY, blockpos.getZ()), Blocks.HONEYCOMB_BLOCK.getDefaultState(), false);
+				}
+			
+				//single layer of solid blocks
+				for (int floorY = floorHeight; floorY <= floorHeight; ++floorY) 
+				{
+					chunk.setBlockState(blockpos$Mutable.setPos(blockpos.getX(), floorY, blockpos.getZ()), Blocks.HONEYCOMB_BLOCK.getDefaultState(), false);
+				}
 			}
 		}
-
 	}
 
 	/**
