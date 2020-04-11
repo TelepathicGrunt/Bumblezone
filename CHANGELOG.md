@@ -18,11 +18,18 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 -If Buzzier Bees is on, Honey Slime mobs will spawn in The Bumblezone instead of regular Slime mobs and monsters will have a slightly higher rate of spawning.
 
+-If Buzzier Bees is on, the roof and floor boundaries of the dimension will use Hive Planks instead, the top of land above sea level area will use Crystallized Honey Block, and the top layer of land at and below sea level area will use Wax Blocks.
+
+
+-If Buzzier Bees is on, their Honey Wand now can add and remove honey from Porous Honeycomb Block and Honey Filled Porous Honeycomb Block.
+
 ##### Teleportation: 
 
 -Throwing Enderpearls at all blocks that extends BeehiveBlock (includes modded and vanilla's BeeNests and BeeHive blocks) will teleport you into the dimension!
         
 ##### Mobs: 
+
+-In The Bumblezone dimension, Bees will now become aggressive towards all mobs with "bear" in their name including modded bear mobs.
 
 -Nerfed spawnrate for slime mobs when creating chunk for first time.
 
