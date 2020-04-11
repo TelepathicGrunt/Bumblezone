@@ -15,6 +15,8 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
+import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
+import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 
 public class PorousHoneycombBlock extends Block
@@ -35,7 +37,6 @@ public class PorousHoneycombBlock extends Block
 	public ActionResultType onBlockActivated(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult)
 	{
 		ItemStack itemstack = playerEntity.getHeldItem(playerHand);
-
 		/*
 		 * Player is adding honey to this block if it is not filled with honey
 		 */
@@ -65,7 +66,18 @@ public class PorousHoneycombBlock extends Block
 		}
 		else
 		{
-			return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+			//allow compat with honey wand use
+			if(ModChecking.buzzierBeesPresent) {
+				ActionResultType action = BuzzierBeesRedirection.honeyWandGivingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+				if(action == ActionResultType.SUCCESS) {
+					return action;
+				}
+				
+				return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+			}
+			else {
+				return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+			}
 		}
 	}
 

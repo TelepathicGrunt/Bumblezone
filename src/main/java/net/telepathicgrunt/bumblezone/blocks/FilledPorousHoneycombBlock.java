@@ -28,6 +28,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
+import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
+import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 
 public class FilledPorousHoneycombBlock extends Block
@@ -88,7 +90,18 @@ public class FilledPorousHoneycombBlock extends Block
 		}
 		else
 		{
-			return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+			//allow compat with honey wand use
+			if(ModChecking.buzzierBeesPresent) {
+				ActionResultType action = BuzzierBeesRedirection.honeyWandTakingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+				if(action == ActionResultType.SUCCESS) {
+					return action;
+				}
+				
+				return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+			}
+			else {
+				return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+			}
 		}
 	}
 
