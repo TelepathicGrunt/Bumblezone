@@ -85,13 +85,12 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 	private static final BlockState HONEY_BLOCK = Blocks.HONEY_BLOCK.getDefaultState();
 	private static final BlockState HONEYCOMB_BLOCK = Blocks.HONEYCOMB_BLOCK.getDefaultState();
 	private static final BlockState AIR = Blocks.AIR.getDefaultState();
-	private static final BlockState WATER = Blocks.WATER.getDefaultState();
+	private static final BlockState SUGAR_WATER = BzBlocks.SUGAR_WATER_BLOCK.get().getDefaultState();
 	
 
 	@Override
 	public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> changedBlock, Random rand, BlockPos position, NoFeatureConfig config)
 	{
-		
 		BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(position);
 		
 		generateSlice(world, mutableBlockPos, endCapLayout, rand);
@@ -165,7 +164,7 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 						}
 						else
 						{
-							world.setBlockState(currentPosition, WATER, 2);
+							world.setBlockState(currentPosition, SUGAR_WATER, 2);
 						}
 					}
 				}

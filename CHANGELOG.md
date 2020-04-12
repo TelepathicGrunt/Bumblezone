@@ -21,6 +21,12 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 -If Buzzier Bees is on, the roof and floor boundaries of the dimension will use Hive Planks instead, the top of land above sea level area will use Crystallized Honey Block, and the top layer of land at and below sea level area will use Wax Blocks.
 
 -If Buzzier Bees is on, their Honey Wand now can add and remove honey from Porous Honeycomb Block and Honey Filled Porous Honeycomb Block.
+        
+##### Blocks: 
+
+-Added Sugar Water fluid to spawn in The Bumblezone instead of regular water! 
+
+-Sugar Infused Stone and Sugar Infused Cobblestone will be made when Sugar Water touches Lava! When mined, they drop Sugar and Cobblestone but you can use Silk Touch to keep them as is. When put into a Furnace, you can quickly burn out the Sugar from the blocks for some quick cheap XP.
 
 ##### Teleportation: 
 

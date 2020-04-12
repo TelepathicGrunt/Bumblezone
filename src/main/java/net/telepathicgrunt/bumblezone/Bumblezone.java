@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.telepathicgrunt.bumblezone.biome.BzBaseBiome;
 import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.SugarWaterEvents;
@@ -63,6 +64,7 @@ public class Bumblezone
 		ModChecking.setupModCompat();
 		BzBiomes.addVanillaSlimeMobs();
 		SugarWaterEvents.setup();
+		BzBaseBiome.addSprings();
 	}
 	
 

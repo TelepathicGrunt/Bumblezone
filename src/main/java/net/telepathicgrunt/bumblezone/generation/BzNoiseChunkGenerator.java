@@ -20,13 +20,13 @@ import net.minecraft.world.gen.INoiseGenerator;
 import net.minecraft.world.gen.OctavesNoiseGenerator;
 import net.minecraft.world.gen.PerlinNoiseGenerator;
 import net.minecraft.world.gen.WorldGenRegion;
+import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extends ChunkGenerator<T> {
 
 	private static final BlockState STONE = Blocks.STONE.getDefaultState();
-    private static final BlockState WATER = Blocks.WATER.getDefaultState();
     private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
 	
     
@@ -48,7 +48,7 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
 		this.verticalNoiseGranularity = verticalNoiseGranularityIn;
 		this.horizontalNoiseGranularity = horizontalNoiseGranularityIn;
 		this.defaultBlock = STONE;
-		this.defaultFluid = WATER;
+		this.defaultFluid = BzBlocks.SUGAR_WATER_FLUID.get().getDefaultState().getBlockState();
 		this.noiseSizeX = 16 / this.horizontalNoiseGranularity;
 		this.noiseSizeY = maxHeight / this.verticalNoiseGranularity;
 		this.noiseSizeZ = 16 / this.horizontalNoiseGranularity;
