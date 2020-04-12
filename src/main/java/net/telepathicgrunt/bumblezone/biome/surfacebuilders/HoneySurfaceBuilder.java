@@ -14,6 +14,7 @@ import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
@@ -38,7 +39,7 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig>
 		SurfaceBuilder.DEFAULT.buildSurface(random, chunk, biome, x, z, startHeight, noise, defaultBlock, defaultFluid, seaLevel, seed, config);
 
 		//use buzzier bees compat surface builder if the mod is present
-		if(ModChecking.buzzierBeesPresent) {
+		if(ModChecking.buzzierBeesPresent && (BzConfig.waxBlocksWorldgen || BzConfig.crystallizedHoneyWorldgen)) {
 			BuzzierBeesRedirection.buildSurface(random, chunk, biome, x, z, startHeight, noise, defaultBlock, defaultFluid, seaLevel, seed, config);
 		}
 		else {

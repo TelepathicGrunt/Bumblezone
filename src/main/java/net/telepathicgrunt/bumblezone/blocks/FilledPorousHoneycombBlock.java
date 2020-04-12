@@ -90,7 +90,7 @@ public class FilledPorousHoneycombBlock extends Block
 		else
 		{
 			//allow compat with honey wand use
-			if(ModChecking.buzzierBeesPresent) {
+			if(ModChecking.buzzierBeesPresent && BzConfig.allowHoneyWandCompat) {
 				ActionResultType action = BuzzierBeesRedirection.honeyWandTakingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
 				if(action == ActionResultType.SUCCESS) {
 					return action;

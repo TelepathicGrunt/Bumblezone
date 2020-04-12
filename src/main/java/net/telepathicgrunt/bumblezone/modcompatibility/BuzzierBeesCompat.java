@@ -29,6 +29,7 @@ import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 
 public class BuzzierBeesCompat
@@ -38,7 +39,9 @@ public class BuzzierBeesCompat
 	public static void setupBuzzierBees() 
 	{
 		ModChecking.buzzierBeesPresent = true;
-		BzChunkGenerator.MOBS_SLIME_ENTRY = new Biome.SpawnListEntry(BBEntities.HONEY_SLIME.get(), 1, 1, 1);
+		
+		if(BzConfig.spawnHoneySlimeMob)
+			BzChunkGenerator.MOBS_SLIME_ENTRY = new Biome.SpawnListEntry(BBEntities.HONEY_SLIME.get(), 1, 1, 1);
 
 		//unused and not needed. Won't work anyway use the Honey Slime's super restrictive spawning.
 		//BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addModMobs(EntityClassification.CREATURE, BBEntities.HONEY_SLIME.get(), 1, 4, 8));
@@ -92,28 +95,47 @@ public class BuzzierBeesCompat
 
 			if (currentBlockState.getBlock() != null)
 			{
-				if(currentBlockState.getMaterial() == Material.AIR || currentBlockState.getMaterial() == Material.WATER) {
+				if(currentBlockState.getMaterial() == Material.AIR || currentBlockState.getMaterial() == Material.WATER) 
+				{
 					topMostBlock = true;
 				}
-				else {
+				else 
+				{
 					if (currentBlockState == STONE)
 					{
 						chunk.setBlockState(blockpos$Mutable, HONEYCOMB_BLOCK, false);
 					}
 					else if (currentBlockState == POROUS_HONEYCOMB)
 					{
-						if(topMostBlock) {
+						if(topMostBlock) 
+						{
 							//uses WAX_BLOCK for very top layer of land lower than sealevel area
 							if (ypos <= seaLevel + 2 + Math.max(noise, 0) + random.nextInt(2))
 							{
-								chunk.setBlockState(blockpos$Mutable, WAX_BLOCK, false);
+								if(BzConfig.waxBlocksWorldgen) 
+								{
+									chunk.setBlockState(blockpos$Mutable, WAX_BLOCK, false);
+								}
+								else
+								{
+									chunk.setBlockState(blockpos$Mutable, POROUS_HONEYCOMB, false);
+								}
 							}
 							//uses CRYSTALLIZED_HONEY_BLOCK for very top layer of land higher than sealevel area
-							else {
-								chunk.setBlockState(blockpos$Mutable, CRYSTALLIZED_HONEY_BLOCK, false);
+							else 
+							{
+								if(BzConfig.crystallizedHoneyWorldgen) 
+								{
+									chunk.setBlockState(blockpos$Mutable, CRYSTALLIZED_HONEY_BLOCK, false);
+								}
+								else
+								{
+									chunk.setBlockState(blockpos$Mutable, FILLED_POROUS_HONEYCOMB, false);
+								}
 							}
 						}
-						else {
+						else 
+						{
 							if (ypos <= seaLevel + 2 + Math.max(noise, 0) + random.nextInt(2))
 							{
 								chunk.setBlockState(blockpos$Mutable, FILLED_POROUS_HONEYCOMB, false);
@@ -148,13 +170,13 @@ public class BuzzierBeesCompat
 		for (BlockPos blockpos : BlockPos.getAllInBoxMutable(xStart, 0, zStart, xStart + 15, 0, zStart + 15)) 
 		{
 			//fills in gap between top of terrain gen and y = 255 with solid blocks
-			for (int ceilingY = roofHeight; ceilingY >= roofHeight - random.nextInt(2); --ceilingY) 
+			for (int ceilingY = 255; ceilingY >= roofHeight - random.nextInt(2); --ceilingY) 
 			{
 				chunk.setBlockState(blockpos$Mutable.setPos(blockpos.getX(), ceilingY, blockpos.getZ()), HIVE_PLANKS, false);
 			}
 		
 			//single layer of solid blocks
-			for (int floorY = floorHeight; floorY<= floorHeight + random.nextInt(2); ++floorY) 
+			for (int floorY = 0; floorY <= floorHeight + random.nextInt(2); ++floorY) 
 			{
 				chunk.setBlockState(blockpos$Mutable.setPos(blockpos.getX(), floorY, blockpos.getZ()), HIVE_PLANKS, false);
 			}

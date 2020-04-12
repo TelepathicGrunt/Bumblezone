@@ -21,6 +21,7 @@ import net.minecraft.world.gen.OctavesNoiseGenerator;
 import net.minecraft.world.gen.PerlinNoiseGenerator;
 import net.minecraft.world.gen.WorldGenRegion;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
@@ -221,7 +222,7 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
 	protected void makeBedrock(IChunk chunk, Random random) {
 
 		//use hive planks for roof and floor instead of honeycomb blocks when buzzier bees is on
-		if(ModChecking.buzzierBeesPresent) {
+		if(ModChecking.buzzierBeesPresent && BzConfig.hivePlanksWorldgen) {
 			BuzzierBeesRedirection.makeBedrock(chunk, random);
 		}
 		else {

@@ -22,6 +22,10 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 -If Buzzier Bees is on, their Honey Wand now can add and remove honey from Porous Honeycomb Block and Honey Filled Porous Honeycomb Block.
         
+##### Config:        
+        
+-Added configs to control a lot of the interaction between this mod and Buzzier Bees.
+
 ##### Blocks: 
 
 -Added Sugar Water fluid to spawn in The Bumblezone instead of regular water! 
