@@ -1,20 +1,17 @@
 package net.telepathicgrunt.bumblezone.items;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BucketItem;
+import net.minecraft.item.Food;
+import net.minecraft.item.HoneyBottleItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fluids.FluidAttributes;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -57,5 +54,8 @@ public class BzItems
 
     public static final RegistryObject<Item> SUGAR_INFUSED_COBBLESTONE_ITEM = ITEMS.register("sugar_infused_cobblestone", () ->
     	new BlockItem(BzBlocks.SUGAR_INFUSED_COBBLESTONE.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
-    
+
+    @SuppressWarnings("deprecation")
+	public static final RegistryObject<Item> SUGAR_WATER_BOTTLE = ITEMS.register("sugar_water_bottle", () ->
+    	new HoneyBottleItem((new Item.Properties()).containerItem(Items.GLASS_BOTTLE).food((new Food.Builder()).hunger(1).saturation(0.05F).effect(new EffectInstance(Effects.HASTE, 100, 1), 1.0F).build()).group(BUMBLEZONE_CREATIVE_TAB).maxStackSize(16)));
 }

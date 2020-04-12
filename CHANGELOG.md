@@ -27,6 +27,10 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 -Added Sugar Water fluid to spawn in The Bumblezone instead of regular water! 
 
 -Sugar Infused Stone and Sugar Infused Cobblestone will be made when Sugar Water touches Lava! When mined, they drop Sugar and Cobblestone but you can use Silk Touch to keep them as is. When put into a Furnace, you can quickly burn out the Sugar from the blocks for some quick cheap XP.
+        
+##### Items: 
+
+-Added Sugar Water Bottle! To get this, use an empty Glass Bottle on Sugar Water. If you drink a Sugar Water Bottle, you restore a tiny bit of hungry but get Haste 1 effect for a short period of time!
 
 ##### Teleportation: 
 

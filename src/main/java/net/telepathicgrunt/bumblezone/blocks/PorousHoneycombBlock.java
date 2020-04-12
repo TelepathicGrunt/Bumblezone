@@ -79,5 +79,4 @@ public class PorousHoneycombBlock extends Block
 			}
 		}
 	}
-
 }
