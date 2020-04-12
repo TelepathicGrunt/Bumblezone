@@ -28,7 +28,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.telepathicgrunt.bumblezone.blocks.BzBlocksInit;
+import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 
 public class BuzzierBeesCompat
@@ -70,8 +70,8 @@ public class BuzzierBeesCompat
 
 	
 	private static final BlockState STONE = Blocks.STONE.getDefaultState();
-	private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocksInit.FILLED_POROUS_HONEYCOMB.get().getDefaultState();
-	private static final BlockState POROUS_HONEYCOMB = BzBlocksInit.POROUS_HONEYCOMB.get().getDefaultState();
+	private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState();
+	private static final BlockState POROUS_HONEYCOMB = BzBlocks.POROUS_HONEYCOMB.get().getDefaultState();
 	private static final BlockState HONEYCOMB_BLOCK = Blocks.HONEYCOMB_BLOCK.getDefaultState();
 	private static final BlockState WAX_BLOCK = BBBlocks.WAX_BLOCK.get().getDefaultState();
 	private static final BlockState CRYSTALLIZED_HONEY_BLOCK = BBBlocks.CRYSTALLIZED_HONEY_BLOCK.get().getDefaultState();
@@ -168,7 +168,7 @@ public class BuzzierBeesCompat
 		{
 			if (!world.isRemote && !playerEntity.isCrouching())
 			{
-				world.setBlockState(position, BzBlocksInit.POROUS_HONEYCOMB.get().getDefaultState(), 3); // remove honey from this block
+				world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), 3); // remove honey from this block
 				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 				
 				if(!playerEntity.isCreative())
@@ -188,7 +188,7 @@ public class BuzzierBeesCompat
 		{
 			if (!world.isRemote && !playerEntity.isCrouching())
 			{
-				world.setBlockState(position, BzBlocksInit.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 3); // added honey to this block
+				world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 3); // added honey to this block
 				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 				
 				if(!playerEntity.isCreative())

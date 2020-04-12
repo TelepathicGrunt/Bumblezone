@@ -38,7 +38,6 @@ public class FilledPorousHoneycombBlock extends Block
 	public FilledPorousHoneycombBlock()
 	{
 		super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).hardnessAndResistance(0.5F).sound(SoundType.CORAL));
-		setRegistryName("filled_porous_honeycomb_block");
 	}
 
 
@@ -58,7 +57,7 @@ public class FilledPorousHoneycombBlock extends Block
 		{
 			if (!world.isRemote)
 			{
-				world.setBlockState(position, BzBlocksInit.POROUS_HONEYCOMB.get().getDefaultState(), 3); // removed honey from this block
+				world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), 3); // removed honey from this block
 				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 				
 				if(!playerEntity.isCreative())
