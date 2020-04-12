@@ -25,6 +25,7 @@ import net.telepathicgrunt.bumblezone.capabilities.CapabilityPlayerPosAndDim;
 import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.features.BzFeatures;
+import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 
@@ -46,7 +47,7 @@ public class Bumblezone
 		modEventBus.addListener(this::setup);
 
         BzBlocks.BLOCKS.register(modEventBus);
-        BzBlocks.ITEMS.register(modEventBus);
+        BzItems.ITEMS.register(modEventBus);
         BzBlocks.FLUIDS.register(modEventBus);
         
     	DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> ClientEvents.subscribeClientEvents(modEventBus, forgeBus));
