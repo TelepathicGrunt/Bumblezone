@@ -11,6 +11,7 @@ public class ModChecking
 {
 	public static boolean buzzierBeesPresent = false;
 	public static boolean potionOfBeesPresent = false;
+	public static boolean beesourcefulPresent = false;
 	
 
 	public static void setupModCompat() 
@@ -19,6 +20,7 @@ public class ModChecking
 		{
 			runIfModIsLoaded("buzzierbees", () -> () -> BuzzierBeesCompat.setupBuzzierBees());
 			runIfModIsLoaded("potionofbees", () -> () -> PotionOfBeesCompat.setupPotionOfBees());
+			runIfModIsLoaded("beesourceful", () -> () -> BeesourcefulCompat.setupBeesourceful());
 		}
 		catch (Exception e)
 		{

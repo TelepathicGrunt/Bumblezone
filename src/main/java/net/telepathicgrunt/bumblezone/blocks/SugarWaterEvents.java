@@ -37,6 +37,10 @@ public class SugarWaterEvents
 	private static final ResourceLocation	TEXTURE_UNDERWATER	= new ResourceLocation(Bumblezone.MODID + ":textures/misc/sugar_water_underwater.png");
 	public static Block						SUGAR_WATER_BLOCK;
 
+	/**
+	 * Call this in FMLCommonSetupEvent as we cannot create static 
+	 * instance of the block before it is actually made and registered.
+	 */
 	public static void setup()
 	{
 		SUGAR_WATER_BLOCK = BzBlocks.SUGAR_WATER_BLOCK.get().getDefaultState().getBlock();

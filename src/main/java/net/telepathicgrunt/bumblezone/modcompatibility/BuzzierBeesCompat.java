@@ -2,7 +2,6 @@ package net.telepathicgrunt.bumblezone.modcompatibility;
 
 import java.util.Random;
 
-import com.bagel.buzzierbees.common.entities.HoneySlimeEntity;
 import com.bagel.buzzierbees.core.registry.BBBlocks;
 import com.bagel.buzzierbees.core.registry.BBEntities;
 import com.bagel.buzzierbees.core.registry.BBItems;
@@ -55,7 +54,7 @@ public class BuzzierBeesCompat
 		IWorld world = event.getWorld();
 		
 		if(entity.getType() == EntityType.BEE && world.getRandom().nextInt(10) == 0) {
-			MobEntity slimeentity = new HoneySlimeEntity(BBEntities.HONEY_SLIME.get(), entity.world);
+			MobEntity slimeentity = BBEntities.HONEY_SLIME.get().create(entity.world);
 			
 			//move down to first non-air block
 			BlockPos.Mutable blockpos = new BlockPos.Mutable(entity.getPosition());

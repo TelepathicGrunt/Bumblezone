@@ -45,6 +45,8 @@ public class BzConfig
 	public static boolean hivePlanksWorldgen = true;
 	public static boolean waxBlocksWorldgen = true;
 	public static boolean crystallizedHoneyWorldgen = true;
+	public static boolean spawnBeesourcefulBeesMob = true;
+	public static boolean spawnBesourcefulHoneycombVariants = true;
 	
 	public static class ServerConfig
 	{
@@ -71,6 +73,8 @@ public class BzConfig
 	    public final BooleanValue hivePlanksWorldgen;
 	    public final BooleanValue waxBlocksWorldgen;
 	    public final BooleanValue crystallizedHoneyWorldgen;
+	    public final BooleanValue spawnBeesourcefulBeesMob;
+	    public final BooleanValue spawnBesourcefulHoneycombVariants;
 	    
 	    ServerConfig(ForgeConfigSpec.Builder builder) 
 	    {
@@ -275,8 +279,29 @@ public class BzConfig
 		                    		+" surface of land around sea level and above.\r\n")
 		                    .translation("the_bumblezone.config.modcompat.buzzierbees.crystallizedhoneyworldgen")
 		                    .define("crystallizedHoneyWorldgen", true);
+		            
 	            builder.pop();
-	
+	            
+
+	            builder.push("Buzzier Bees Options");
+	            
+	            	spawnBeesourcefulBeesMob = builder
+			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+			                    		+" Spawn Beesourceful's ore and ender bees in The Bumblezone alongside\r\n"
+			                    		+" regular bees at a 1/15th chance when spawning regular bees.\r\n")
+			                    .translation("the_bumblezone.config.modcompat.beesourceful.spawnbeesourcefulbeesmob")
+			                    .define("spawnBeesourcefulBeesMob", true);
+	            
+	            	spawnBesourcefulHoneycombVariants = builder
+			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+			                    		+" Spawn Beesourceful's various honeycomb variants in The Bumblezone\r\n"
+			                    		+" at all kinds of heights and bands. Start exploring to find where they \r\n"
+			                    		+" spawn! Especially waaaay above for the Ender Honeycomb! \r\n")
+			                    .translation("the_bumblezone.config.modcompat.beesourceful.spawnbesourcefulhoneycombvariants")
+			                    .define("spawnBesourcefulHoneycombVariants", true);
+
+	            builder.pop();
+	            
 	        builder.pop();
 	    }
 	        		
@@ -306,5 +331,7 @@ public class BzConfig
 		hivePlanksWorldgen = SERVER.hivePlanksWorldgen.get();
 		waxBlocksWorldgen = SERVER.waxBlocksWorldgen.get();
 		crystallizedHoneyWorldgen = SERVER.crystallizedHoneyWorldgen.get();
+		spawnBeesourcefulBeesMob = SERVER.spawnBeesourcefulBeesMob.get();
+		spawnBesourcefulHoneycombVariants = SERVER.spawnBesourcefulHoneycombVariants.get();
 	}
 }
