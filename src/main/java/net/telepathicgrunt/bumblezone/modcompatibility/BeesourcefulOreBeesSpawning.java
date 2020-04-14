@@ -16,7 +16,7 @@ public class BeesourcefulOreBeesSpawning
 	{
 		/*
 		 * Manual spawning of Beesourceful Bees so it can be disabled real time by config.
-		 * works by making 1/10th of bees spawning also spawn honey slime
+		 * works by making 1/15th of bees spawning also spawn beesourceful bees
 		 */
 		@SubscribeEvent
 		public static void MobSpawnEvent(LivingSpawnEvent.CheckSpawn event)
@@ -24,7 +24,9 @@ public class BeesourcefulOreBeesSpawning
 			if(ModChecking.beesourcefulPresent) 
 			{
 				MobEntity entity = (MobEntity)event.getEntity();
-				if(BzConfig.spawnBeesourcefulBeesMob && entity.dimension == BzDimension.bumblezone()) 
+				if(BzConfig.spawnBeesourcefulBeesMob && 
+					entity.dimension == BzDimension.bumblezone() && 
+					entity.world.getRandom().nextInt(15) == 0) 
 				{
 					BeesourcefulRedirection.BSMobSpawnEvent(event);
 				}

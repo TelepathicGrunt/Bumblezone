@@ -44,13 +44,13 @@ public class BeesourcefulCompat
 			Block lapisHoneycomb = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("beesourceful:lapis_honeycomb_block"));
 			Block redstoneHoneycomb = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("beesourceful:redstone_honeycomb_block"));
 
-			BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.byName(honeycombTarget), diamondHoneycomb.getDefaultState(), 12)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(1, 6, 0, 244)))));	
-			BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.byName(honeycombTarget), emeraldHoneycomb.getDefaultState(), 6)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(1, 6, 0, 244)))));	
+			BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.byName(honeycombTarget), diamondHoneycomb.getDefaultState(), 7)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(1, 6, 0, 244)))));	
+			BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.byName(honeycombTarget), emeraldHoneycomb.getDefaultState(), 4)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(1, 6, 0, 244)))));	
 			BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.byName(honeycombTarget), enderHoneycomb.getDefaultState(), 4)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(1, 200, 0, 50)))));	
-			BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.byName(honeycombTarget), goldHoneycomb.getDefaultState(), 28)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(3, 6, 0, 230)))));	
-			BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.byName(honeycombTarget), ironHoneycomb.getDefaultState(), 18)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(3, 30, 0, 210)))));	
-			BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.byName(honeycombTarget), lapisHoneycomb.getDefaultState(), 18)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(2, 6, 0, 30)))));	
-			BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.byName(honeycombTarget), redstoneHoneycomb.getDefaultState(), 18)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(2, 30, 0, 210)))));	
+			BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.byName(honeycombTarget), goldHoneycomb.getDefaultState(), 34)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(3, 6, 0, 230)))));	
+			BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.byName(honeycombTarget), ironHoneycomb.getDefaultState(), 26)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(2, 30, 0, 210)))));	
+			BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.byName(honeycombTarget), lapisHoneycomb.getDefaultState(), 22)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(1, 6, 0, 30)))));	
+			BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.byName(honeycombTarget), redstoneHoneycomb.getDefaultState(), 22)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(1, 30, 0, 210)))));	
 		}
 	}
 	
@@ -61,7 +61,7 @@ public class BeesourcefulCompat
 		MobEntity entity = (MobEntity)event.getEntity();
 		IWorld world = event.getWorld();
 		
-		if(entity.getType() == EntityType.BEE && world.getRandom().nextInt(15) == 0) {
+		if(entity.getType() == EntityType.BEE) {
 			MobEntity beesourcefulBeeEntity;
 			int beeTypeChance = world.getRandom().nextInt(100);
 			

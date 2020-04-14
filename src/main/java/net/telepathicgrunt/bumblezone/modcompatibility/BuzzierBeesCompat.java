@@ -53,7 +53,7 @@ public class BuzzierBeesCompat
 		MobEntity entity = (MobEntity)event.getEntity();
 		IWorld world = event.getWorld();
 		
-		if(entity.getType() == EntityType.BEE && world.getRandom().nextInt(10) == 0) {
+		if(entity.getType() == EntityType.BEE) {
 			MobEntity slimeentity = BBEntities.HONEY_SLIME.get().create(entity.world);
 			
 			//move down to first non-air block

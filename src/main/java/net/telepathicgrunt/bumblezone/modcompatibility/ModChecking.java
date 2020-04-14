@@ -23,14 +23,14 @@ public class ModChecking
 		}
 		
 		
-		try{ runIfModIsLoaded("potionofbees", () -> () -> PotionOfBeesCompat.setupPotionOfBees());}
+		try{ runIfModIsLoaded("potionofbees", () -> () -> PotionOfBeesCompat.setupPotionOfBees()); }
 		catch (Exception e){
 			Bumblezone.LOGGER.log(Level.INFO, "ERROR: Somehow tried calling potionofbees code when it isn't on.");
 			e.printStackTrace();
 		}
 		
 		
-		try{ runIfModIsLoaded("beesourceful", () -> () -> BeesourcefulCompat.setupBeesourceful());}
+		try{ runIfModIsLoaded("beesourceful", () -> () -> BeesourcefulCompat.setupBeesourceful()); }
 		catch (Exception e){
 			Bumblezone.LOGGER.log(Level.INFO, "ERROR: Somehow tried calling beesourceful code when it isn't on.");
 			e.printStackTrace();
