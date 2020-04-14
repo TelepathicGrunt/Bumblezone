@@ -14,7 +14,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
    
 ## (V.1.2.0 Changes) (1.15.2 Minecraft)
       
-##### Mob Compatibility: 
+##### Mod Compatibility: 
 
 -If Buzzier Bees is on, Honey Slime mobs will spawn in The Bumblezone instead of regular Slime mobs and monsters will have a slightly higher rate of spawning.
 
@@ -25,6 +25,18 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ##### Config:        
         
 -Added configs to control a lot of the interaction between this mod and Buzzier Bees.
+ 
+##### Mobs: 
+
+-Bees will now no longer switch to attacking nearby passive players if they are angered by another mob/player. They will only attack entities with Wrath of the Hive effect in the dimension so there is no more collateral damage anymore.
+
+-Any mob or player hitting a bee will inflict Wrath of the Hive effect onto the attacker.
+
+-In The Bumblezone dimension, Bees will now become aggressive towards all mobs with "bear" in their name including modded bear mobs.
+
+-Bees will now hunt down and attack all insect mobs that doesn't have "bee" in their name if they are in The Bumblezone dimension.
+
+-Nerfed spawnrate for slime mobs when creating chunk for first time.
 
 ##### Blocks: 
 
@@ -39,13 +51,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ##### Teleportation: 
 
 -Throwing Enderpearls at all blocks that extends BeehiveBlock (includes modded and vanilla's BeeNests and BeeHive blocks) will teleport you into the dimension!
-        
-##### Mobs: 
-
--In The Bumblezone dimension, Bees will now become aggressive towards all mobs with "bear" in their name including modded bear mobs.
-
--Nerfed spawnrate for slime mobs when creating chunk for first time.
-
+       
 
 ## (V.1.1.0 Changes) (1.15.2 Minecraft)
       
