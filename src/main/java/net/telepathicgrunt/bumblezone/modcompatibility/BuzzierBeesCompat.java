@@ -118,11 +118,14 @@ public class BuzzierBeesCompat
 								}
 								else
 								{
-									chunk.setBlockState(blockpos$Mutable, POROUS_HONEYCOMB, false);
+									chunk.setBlockState(blockpos$Mutable, FILLED_POROUS_HONEYCOMB, false);
 								}
 							}
+						}
+						else if(!topMostBlock) 
+						{
 							//uses CRYSTALLIZED_HONEY_BLOCK for very top layer of land higher than sealevel area
-							else 
+							if (ypos > seaLevel + 2 + Math.max(noise, 0) + random.nextInt(2))
 							{
 								if(BzConfig.crystallizedHoneyWorldgen) 
 								{
@@ -130,8 +133,12 @@ public class BuzzierBeesCompat
 								}
 								else
 								{
-									chunk.setBlockState(blockpos$Mutable, FILLED_POROUS_HONEYCOMB, false);
+									chunk.setBlockState(blockpos$Mutable, POROUS_HONEYCOMB, false);
 								}
+							}
+							else 
+							{
+								chunk.setBlockState(blockpos$Mutable, FILLED_POROUS_HONEYCOMB, false);
 							}
 						}
 						else 

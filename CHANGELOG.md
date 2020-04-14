@@ -30,13 +30,15 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 -Bees will now no longer switch to attacking nearby passive players if they are angered by another mob/player. They will only attack entities with Wrath of the Hive effect in the dimension so there is no more collateral damage anymore.
 
--Any mob or player hitting a bee will inflict Wrath of the Hive effect onto the attacker.
+-Any mob or player hitting a bee will inflict Wrath of the Hive effect onto the attacker. Now fighting off angry bees will prolong the Wrath of the Hive effect!
 
 -In The Bumblezone dimension, Bees will now become aggressive towards all mobs with "bear" in their name including modded bear mobs.
 
 -Bees will now hunt down and attack all insect mobs that doesn't have "bee" in their name if they are in The Bumblezone dimension.
 
 -Nerfed spawnrate for slime mobs when creating chunk for first time.
+
+-Nerfed spawnrate of Phantoms some more.
 
 ##### Blocks: 
 
@@ -53,7 +55,12 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ##### Teleportation: 
 
 -Throwing Enderpearls at all blocks that extends BeehiveBlock (includes modded and vanilla's BeeNests and BeeHive blocks) will teleport you into the dimension!
-       
+ 
+##### Generation: 
+
+-The dimension uses Air instead of Cave Air to help with feature generation.
+
+-Honeycomb Holes now only generate exposed to the air and not completely buried underground.
 
 ## (V.1.1.0 Changes) (1.15.2 Minecraft)
       

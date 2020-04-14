@@ -8,6 +8,8 @@ import java.util.stream.Stream;
 
 import com.mojang.datafixers.Dynamic;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.ChunkGenerator;
@@ -17,7 +19,8 @@ import net.minecraft.world.gen.placement.Placement;
 
 public class HoneycombHolePlacer extends Placement<NoPlacementConfig>
 {
-
+	private enum SliceState { NEITHER, AIR, SOLID};
+	
 	public HoneycombHolePlacer(Function<Dynamic<?>, ? extends NoPlacementConfig> configFactory)
 	{
 		super(configFactory);
@@ -66,28 +69,38 @@ public class HoneycombHolePlacer extends Placement<NoPlacementConfig>
 	/**
 	 * Checks the entire body length of where the hole would go to make sure that any 
 	 * circular slice within it is entirely solid (so we don't spawn holes in mid-air or 
-	 * have the ends only be made in land. A good chunk of the hole's body must be made)
+	 * have the ends only be made in land. A good chunk of the hole's body must be made).
+	 * 
+	 * It also needs one slide to be invalid so that the hole is not 
+	 * placed inside the terrain and cutoff from the outside.
 	 */
 	private boolean isPlaceValid(IWorld world, BlockPos pos) 
 	{
-		boolean isAnySliceValid = false;
+		boolean completelySolidSlice = false;
+		boolean airInSlice = false;
 		
-		for(int x = -2; x <= 2; x++)
+		for(int x = -3; x <= 3; x++)
 		{
-			if(isSliceValid(world, pos.west(x)))
+			SliceState state = StateOfThisSlice(world, pos.west(x));
+			if(state == SliceState.SOLID)
 			{
-				isAnySliceValid = true;
+				completelySolidSlice = true;
+			}
+			else if(state == SliceState.AIR)
+			{
+				airInSlice = true;
 			}
 		}
 		
-		return isAnySliceValid;
+		return completelySolidSlice && airInSlice;
 	}
 	
 	/**
 	 * Checks if the circular slice here is entirely solid land.
 	 */
-	private boolean isSliceValid(IWorld world, BlockPos pos) 
+	private SliceState StateOfThisSlice(IWorld world, BlockPos pos) 
 	{
+		BlockState blockState;
 		double distanceSq = 0;
 		
 		for(double z = -4.5; z <= 4.5; z++)
@@ -97,9 +110,14 @@ public class HoneycombHolePlacer extends Placement<NoPlacementConfig>
 				distanceSq = z * z + y * y;
 				if(distanceSq > 5 && distanceSq < 18)
 				{
-					if(!world.getBlockState(pos.add(0, y+1, z)).isSolid())
+					blockState = world.getBlockState(pos.add(0, y+1, z));
+					if(!blockState.isSolid())
 					{
-						return false;
+						//only count Air and not Cave Air so holes aren't placed in caves
+						if(blockState.getBlock() == Blocks.AIR)
+							return SliceState.AIR;
+						else
+							return SliceState.NEITHER;
 					}
 					
 					//Visual debugging
@@ -108,6 +126,6 @@ public class HoneycombHolePlacer extends Placement<NoPlacementConfig>
 			}
 		}
 		
-		return true;
+		return SliceState.SOLID;
 	}
 }

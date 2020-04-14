@@ -28,7 +28,7 @@ import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extends ChunkGenerator<T> {
 
 	private static final BlockState STONE = Blocks.STONE.getDefaultState();
-    private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
+    private static final BlockState AIR = Blocks.AIR.getDefaultState();
 	
     
 	private final int verticalNoiseGranularity;
@@ -390,10 +390,10 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
                                 } else 
                                 {
                                 	//The air
-									blockstate = CAVE_AIR;
+									blockstate = AIR;
 								}
 
-								if (blockstate != CAVE_AIR) {
+								if (blockstate != AIR) {
 									if (blockstate.getLightValue() != 0) {
 										blockpos$Mutable.setPos(xCoordinate, currentY, zCoordinate);
 										chunkprimer.addLightPosition(blockpos$Mutable);
