@@ -105,7 +105,7 @@ public class WrathOfTheHiveEffect extends Effect
 		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, see_through_walls, livingEntity, livingEntity.getBoundingBox().grow(BzConfig.aggressionTriggerRadius*0.5D));
 		for (BeeEntity bee : beeList)
 		{
-			if(bee.getAttackTarget().getUniqueID() == livingEntity.getUniqueID()) {
+			if(bee.getAttackTarget() == livingEntity) {
 				bee.setBeeAttacker(null);
 				bee.setAggroed(false);
 				bee.setAnger(0);
