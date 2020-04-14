@@ -51,7 +51,7 @@ public class BzBlocks
             new ForgeFlowingFluid.Flowing(BzBlocks.SUGAR_WATER_FLUID_PROPERTIES)
     );
     public static final RegistryObject<FlowingFluidBlock> SUGAR_WATER_BLOCK = BLOCKS.register("sugar_water_block", () ->
-	    new SugarWaterBlock(SUGAR_WATER_FLUID, Block.Properties.create(net.minecraft.block.material.Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops())
+	    new SugarWaterBlock(SUGAR_WATER_FLUID, Block.Properties.create(net.minecraft.block.material.Material.WATER).speedFactor(0.95F).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops())
 	);
     
     public static final ForgeFlowingFluid.Properties SUGAR_WATER_FLUID_PROPERTIES =

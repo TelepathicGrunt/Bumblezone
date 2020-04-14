@@ -40,9 +40,11 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 ##### Blocks: 
 
--Added Sugar Water fluid to spawn in The Bumblezone instead of regular water! 
+-Added Sugar Water fluid to spawn in The Bumblezone instead of regular water! Swimming in this fluid is slightly slower than swimming in water due to the excess of sugar in it.
 
 -Sugar Infused Stone and Sugar Infused Cobblestone will be made when Sugar Water touches Lava! When mined, they drop Sugar and Cobblestone but you can use Silk Touch to keep them as is. When put into a Furnace, you can quickly burn out the Sugar from the blocks for some quick cheap XP.
+   
+-Walking on Filled Porous Honeycomb Block will now slightly slow your movement due to the sticky honey.
         
 ##### Items: 
 

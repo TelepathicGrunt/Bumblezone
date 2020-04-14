@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -37,10 +38,24 @@ public class FilledPorousHoneycombBlock extends Block
 
 	public FilledPorousHoneycombBlock()
 	{
-		super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).hardnessAndResistance(0.5F).sound(SoundType.CORAL));
+		super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).hardnessAndResistance(0.5F).speedFactor(0.85F).sound(SoundType.CORAL));
 	}
 
+	/**
+	 * Called when the given entity walks on this Block
+	 */
+	public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn)
+	{
+		double yMagnitude = Math.abs(entityIn.getMotion().y);
+		if (yMagnitude < 0.1D)
+		{
+			double slowFactor = 0.85D;
+			entityIn.setMotion(entityIn.getMotion().mul(slowFactor, 1.0D, slowFactor));
+		}
 
+		super.onEntityWalk(worldIn, pos, entityIn);
+	}
+	
 	/**
 	 * Allow player to harvest honey and put honey into this block using bottles
 	 */

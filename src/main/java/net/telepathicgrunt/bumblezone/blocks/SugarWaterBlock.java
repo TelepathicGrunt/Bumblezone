@@ -68,4 +68,6 @@ public class SugarWaterBlock extends FlowingFluidBlock
 	{
 		world.playEvent(1501, pos, 0);
 	}
+
+
 }
