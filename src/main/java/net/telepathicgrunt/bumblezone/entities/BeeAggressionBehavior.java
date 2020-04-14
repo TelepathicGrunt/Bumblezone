@@ -1,7 +1,9 @@
 package net.telepathicgrunt.bumblezone.entities;
 
+import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.PandaEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
@@ -10,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.ItemPickupEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -18,6 +21,7 @@ import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.dimension.BzWorldProvider;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
+import net.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BeeAggressionBehavior
@@ -76,22 +80,55 @@ public class BeeAggressionBehavior
 		}
 		
 		
+		//Bees hit by a mob or player will inflict Wrath of the Hive onto the attacker.
+		@SubscribeEvent
+		public static void MobHitEvent(LivingHurtEvent event)
+		{
+			Entity entity = event.getEntity();
+			Entity attackerEntity = event.getSource().getTrueSource();
+			World world = entity.world;
+
+			//Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
+			//Also checks to make sure we are in dimension and that if it is a player, that they aren't in creative or spectator
+			if (!world.isRemote && 
+				entity.dimension == BzDimension.bumblezone() && 
+				BzConfig.aggressiveBees && 
+				entity instanceof BeeEntity &&
+				attackerEntity != null)
+			{
+				if(attackerEntity instanceof PlayerEntity && 
+					!((PlayerEntity)attackerEntity).isCreative() && 
+					!((PlayerEntity)attackerEntity).isSpectator())
+				{
+					((MobEntity)entity).addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
+				}
+				else if(attackerEntity instanceof MobEntity) 
+				{
+					((MobEntity)entity).addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, true));
+				}
+			}
+		}
+		
 		//bees attacks bear mobs that is in the dimension
 		@SubscribeEvent
 		public static void MobUpdateEvent(LivingUpdateEvent event)
 		{
-			Entity bearEntity = event.getEntity();
-			
-			//must be a bear animal
-			if(bearEntity instanceof PandaEntity || bearEntity.getType().getRegistryName().toString().contains("bear"))
-			{
-				World world = bearEntity.world;
+			Entity entity = event.getEntity();
+			World world = entity.world;
 
-				//Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
-				//Also checks to make sure we are in dimension and that player isn't in creative or spectator
-				if (!world.isRemote && bearEntity.dimension == BzDimension.bumblezone() && BzConfig.aggressiveBees)
+			//Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
+			//Also checks to make sure we are in the dimension.
+			if (!world.isRemote && entity.dimension == BzDimension.bumblezone() && BzConfig.aggressiveBees && entity instanceof MobEntity)
+			{
+				MobEntity mobEntity = (MobEntity)entity;
+				String mobName = mobEntity.getType().getRegistryName().toString();
+				
+				//must be a bear or insect animal
+				if((mobEntity.getCreatureAttribute() == CreatureAttribute.ARTHROPOD && !mobName.contains("bee")) ||
+					mobEntity instanceof PandaEntity || 
+					mobName.contains("bear"))
 				{
-					((MobEntity)bearEntity).addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 1, false, true));
+					((MobEntity)entity).addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 1, false, true));
 				}
 			}
 		}
@@ -117,6 +154,7 @@ public class BeeAggressionBehavior
 			}
 			else
 			{
+				WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
 				BzWorldProvider.ACTIVE_WRATH = false;
 			}
 		}
