@@ -19,7 +19,22 @@ public class BzBlocks
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Bumblezone.MODID);
     public static final DeferredRegister<Fluid> FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, Bumblezone.MODID);
 
+    
+    //normal blocks
+    
+    public static final RegistryObject<Block> POROUS_HONEYCOMB = BLOCKS.register("porous_honeycomb_block",
+            () -> new PorousHoneycombBlock());
+    
+    public static final RegistryObject<Block> FILLED_POROUS_HONEYCOMB = BLOCKS.register("filled_porous_honeycomb_block",
+            () -> new FilledPorousHoneycombBlock());
+    
+    public static final RegistryObject<Block> SUGAR_INFUSED_STONE = BLOCKS.register("sugar_infused_stone",
+            () -> new SugarInfusedStoneBlock());
 
+    public static final RegistryObject<Block> SUGAR_INFUSED_COBBLESTONE = BLOCKS.register("sugar_infused_cobblestone",
+            () -> new SugarInfusedCobblestoneBlock());
+
+    
     //fluid mess
 	
     public static final ResourceLocation FLUID_STILL = new ResourceLocation(Bumblezone.MODID+":block/sugar_water_still");
@@ -39,20 +54,5 @@ public class BzBlocks
     public static final ForgeFlowingFluid.Properties SUGAR_WATER_FLUID_PROPERTIES =
             new ForgeFlowingFluid.Properties(SUGAR_WATER_FLUID, SUGAR_WATER_FLUID_FLOWING, FluidAttributes.Water.builder(FLUID_STILL, FLUID_FLOWING).overlay(FLUID_OVERLAY).viscosity(1500))
                     .bucket(BzItems.SUGAR_WATER_BUCKET).canMultiply().block(SUGAR_WATER_BLOCK);
-    
-    
-    //normal blocks
-    
-    public static final RegistryObject<Block> POROUS_HONEYCOMB = BLOCKS.register("porous_honeycomb_block",
-            () -> new PorousHoneycombBlock());
-    
-    public static final RegistryObject<Block> FILLED_POROUS_HONEYCOMB = BLOCKS.register("filled_porous_honeycomb_block",
-            () -> new FilledPorousHoneycombBlock());
-    
-    public static final RegistryObject<Block> SUGAR_INFUSED_STONE = BLOCKS.register("sugar_infused_stone",
-            () -> new SugarInfusedStoneBlock());
-
-    public static final RegistryObject<Block> SUGAR_INFUSED_COBBLESTONE = BLOCKS.register("sugar_infused_cobblestone",
-            () -> new SugarInfusedCobblestoneBlock());
     
 }

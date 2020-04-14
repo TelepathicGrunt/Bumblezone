@@ -295,8 +295,8 @@ public class BzConfig
 	            	spawnBesourcefulHoneycombVariants = builder
 			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 			                    		+" Spawn Beesourceful's various honeycomb variants in The Bumblezone\r\n"
-			                    		+" at all kinds of heights and bands. Start exploring to find where they \r\n"
-			                    		+" spawn! Especially waaaay above for the Ender Honeycomb! \r\n")
+			                    		+" at all kinds of heights and height bands. Start exploring to find \r\n"
+			                    		+" where they spawn! Especially waaaay above for the Ender Honeycomb! \r\n")
 			                    .translation("the_bumblezone.config.modcompat.beesourceful.spawnbesourcefulhoneycombvariants")
 			                    .define("spawnBesourcefulHoneycombVariants", true);
 
