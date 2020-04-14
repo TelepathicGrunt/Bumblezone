@@ -67,6 +67,11 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.15.2-31.1.41'
 
 	runtimeOnly fg.deobf("ignored:buzzierbees:1.4.0")
+    implementation "com.bagel:buzzierbees:1.4.0"
+    
+	runtimeOnly fg.deobf("ignored:beesourceful:1.1.0")
+    implementation "com.tfar:beesourceful:1.1.0"
+    
 	runtimeOnly fg.deobf("ignored:potionofbees-1.15.2:1.0.0")
 	
 	
