@@ -1,14 +1,12 @@
 package net.telepathicgrunt.bumblezone.features;
 
 import java.util.Random;
-import java.util.Vector;
 import java.util.function.Function;
 
 import com.mojang.datafixers.Dynamic;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
@@ -29,48 +27,131 @@ public class HoneycombCaves extends Feature<NoFeatureConfig>
 	private static final BlockState HONEYCOMB_BLOCK = Blocks.HONEYCOMB_BLOCK.getDefaultState();
 	private static final BlockState SUGAR_WATER = BzBlocks.SUGAR_WATER_BLOCK.get().getDefaultState();
 
-	private static final Vector<Double> V1 = new Vector<Double>();
-	private static final Vector<Double> V2 = new Vector<Double>();
-	private static final Vector<Double> V3 = new Vector<Double>();
-	private static final Vector<Double> V4 = new Vector<Double>();
-	private static final Vector<Double> V5 = new Vector<Double>();
-	private static final Vector<Double> V6 = new Vector<Double>();
 
 	protected long seed;
-	protected OpenSimplexNoise noiseGen;
-	protected OpenSimplexNoise noiseGen2;
+	protected static OpenSimplexNoise noiseGen;
+	protected static OpenSimplexNoise noiseGen2;
 	public void setSeed(long seed)
 	{
-		if (this.seed != seed || this.noiseGen == null)
+		if (this.seed != seed || noiseGen == null)
 		{
-			this.noiseGen = new OpenSimplexNoise(seed);
-			this.noiseGen2 = new OpenSimplexNoise(seed + 1000);
+			noiseGen = new OpenSimplexNoise(seed);
+			noiseGen2 = new OpenSimplexNoise(seed + 1000);
 			this.seed = seed;
 		}
 	}
 	
+
+	private static final int[][] hexagon7 = 
+		{
+		 {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
+		 {0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0},
+		 {0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0},
+		 {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0},
+		 {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+		 {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0},
+		 {0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0},
+		 {0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0},
+		 {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0}
+		};
+
+	private static final int[][] hexagon6 = 
+		{
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
+		 {0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0},
+		 {0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0},
+		 {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0},
+		 {0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0},
+		 {0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0},
+		 {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+		};
+
+	private static final int[][] hexagon5 = 
+		{
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
+		 {0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0},
+		 {0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0},
+		 {0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0},
+		 {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+		};
+	
+	private static final int[][] hexagon4 = 
+		{
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
+		 {0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0},
+		 {0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0},
+		 {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+		};
+
+	private static final int[][] hexagon3 = 
+		{
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 1, 2, 2, 1, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 1, 2, 2, 1, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+		};
+
+	private static final int[][] hexagon2 = 
+		{
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 1, 2, 2, 1, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 1, 2, 2, 1, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+		};
+
+	private static final int[][] hexagon1 = 
+		{
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+		};
+	
+	private static final int[][][] hexagonArray = new int[][][] {hexagon1, hexagon2, hexagon3, hexagon4, hexagon5, hexagon6, hexagon7};
 	
 	public HoneycombCaves(Function<Dynamic<?>, ? extends NoFeatureConfig> configFactory)
 	{
 		super(configFactory);
-		
-		V1.add(Math.sin(0));
-		V1.add(Math.cos(0));
-		
-		V2.add(Math.sin(2*Math.PI/3));
-		V2.add(Math.cos(2*Math.PI/3));
-		
-		V3.add(Math.sin(4*Math.PI/3));
-		V3.add(Math.cos(4*Math.PI/3));
-		
-		V4.add(Math.sin(2*Math.PI));
-		V4.add(Math.cos(2*Math.PI));
-		
-		V5.add(Math.sin(8*Math.PI/3));
-		V5.add(Math.cos(8*Math.PI/3));
-		
-		V6.add(Math.sin(10*Math.PI/3));
-		V6.add(Math.cos(10*Math.PI/3));
 	}
 
 	
@@ -79,35 +160,23 @@ public class HoneycombCaves extends Feature<NoFeatureConfig>
 	{
 		setSeed(world.getSeed());
 		BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(position);
-		BlockState blockState;
 		
 		for(int x = 0; x < 16; x++) {
 			for(int z = 0; z < 16; z++) {
-				for(int y = 5; y < 250; y++) {
-					blockState = world.getBlockState(mutableBlockPos.setPos(position).move(x, y, z));
+				for(int y = 15; y < 241; y++) {
+					mutableBlockPos.setPos(position).move(x, y, z);
+					double noise1 = noiseGen.eval(mutableBlockPos.getX() * 0.02D, 
+														mutableBlockPos.getZ() * 0.02D, 
+														mutableBlockPos.getY() * 0.04D);
 					
-					if(blockState.getBlock() != Blocks.AIR && !isNextToLiquidOrAir(world, mutableBlockPos)) {
-						
-						double noise1 = this.noiseGen.eval(mutableBlockPos.getX() * 0.02D, 
-															mutableBlockPos.getZ() * 0.02D, 
-															mutableBlockPos.getY() * 0.02D);
-						
-						double noise2 = this.noiseGen2.eval(mutableBlockPos.getX() * 0.02D, 
-															mutableBlockPos.getZ() * 0.02D, 
-															mutableBlockPos.getY() * 0.02D);
-						
-						//double finalNoise = noise1 * noise1 + noise2 * noise2;
-						double finalNoise = 
-								Math.abs(dotProduct(V1.get(0), V1.get(1), noise1, noise2)) +
-								Math.abs(dotProduct(V2.get(0), V2.get(1), noise1, noise2)) +
-								Math.abs(dotProduct(V3.get(0), V3.get(1), noise1, noise2)) +
-								Math.abs(dotProduct(V4.get(0), V4.get(1), noise1, noise2)) +
-								Math.abs(dotProduct(V5.get(0), V5.get(1), noise1, noise2)) +
-								Math.abs(dotProduct(V6.get(0), V6.get(1), noise1, noise2));
-						
-						if(finalNoise < 0.3f) {
-							world.setBlockState(mutableBlockPos, Blocks.GREEN_STAINED_GLASS_PANE.getDefaultState(), 2);
-						}
+					double noise2 = noiseGen2.eval(mutableBlockPos.getX() * 0.02D, 
+														mutableBlockPos.getZ() * 0.02D, 
+														mutableBlockPos.getY() * 0.04D);
+					
+					double finalNoise = noise1 * noise1 + noise2 * noise2;
+					
+					if(finalNoise < 0.0009f) {
+						hexagon(world, mutableBlockPos, rand, noise1);
 					}
 				}
 			}
@@ -117,151 +186,65 @@ public class HoneycombCaves extends Feature<NoFeatureConfig>
 		return true;
 	}
 	
-	private static double dotProduct(double x1, double y1, double x2, double y2) {
-		return x1*x2 + y1*y2;
-	}
+
 	
+    private static void hexagon(IWorld world, BlockPos position, Random random, double noise) {
+		BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(position);
+		BlockState blockState;
+		int index = (int) (((noise * 0.5D) + 0.5D) * 7);
+
+		for(int x = 0; x < 14; x++) {
+			for(int z = 0; z < 11; z++) {
+				int posResult = hexagonArray[index][z][x];
+				
+				if(posResult != 0) {
+					blockState = world.getBlockState(mutableBlockPos.setPos(position).move(x-7, 0, z-5));
+					carveAtBlock(world, random, mutableBlockPos, blockState, posResult);
+			    	
+					blockState = world.getBlockState(mutableBlockPos.setPos(position).move(0, x-7, z-5));
+					carveAtBlock(world, random, mutableBlockPos, blockState, posResult);
+					
+					blockState = world.getBlockState(mutableBlockPos.setPos(position).move(z-5, x-7, 0));
+					carveAtBlock(world, random, mutableBlockPos, blockState, posResult);
+				}
+			}
+    	}
+    }
+    
+    private static void carveAtBlock(IWorld world, Random random, BlockPos blockPos, BlockState blockState, int posResult) {
+    	if(blockPos.getY() < world.getSeaLevel() || !isNextToLiquidOrAir(world, blockPos)) {
+    		if(posResult == 2) {
+    			if(blockPos.getY() < world.getSeaLevel()) {
+        			world.setBlockState(blockPos, SUGAR_WATER, 3);
+    			}
+    			else {
+        			world.setBlockState(blockPos, CAVE_AIR, 3);
+    			}
+    		}
+    		else if(posResult == 1 && world.getBlockState(blockPos).isSolid()) {
+				if(random.nextInt(3) == 0)
+				{
+					world.setBlockState(blockPos, HONEYCOMB_BLOCK, 3);
+				}
+				else
+				{
+					world.setBlockState(blockPos, FILLED_POROUS_HONEYCOMB, 3);
+				}
+    		}
+		}
+    }
+    
 	private static boolean isNextToLiquidOrAir(IWorld world, BlockPos pos) {
 		BlockState blockState;
 		for(Direction direction : Direction.values()) {
 			blockState = world.getBlockState(pos.offset(direction));
-			if(!blockState.getFluidState().isEmpty() || blockState.getBlock() == Blocks.AIR) {
+			if(pos.offset(direction).getY() > world.getSeaLevel() && 
+					(!blockState.getFluidState().isEmpty() || 
+					 blockState == Blocks.AIR.getDefaultState())) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	
-	
-	
-//    private static double honeycomb(double x, double y, double reduce) {
-//        double xx = x * 0.7071067811865476;
-//        double yy = y * 1.224744871380249;
-//        double xs = yy + xx, ys = yy - xx;
-//        int xsb = (int)xs; if (xs < xsb) xsb -= 1;
-//        int ysb = (int)ys; if (ys < ysb) ysb -= 1;
-//        double xsi = xs - xsb, ysi = ys - ysb;
-//        
-//        double p = 2 * xsi - ysi;
-//        double q = 2 * ysi - xsi;
-//        double r = xsi + ysi;
-//        if (r > 1) {
-//            p -= 1; q -= 1; r -= 2;
-//            if (p < -1) {
-//                p += 2; q -= 1; r += 1;
-//            } else if (q < -1) {
-//                p -= 1; q += 2; r += 1;
-//            }
-//        } else {
-//            if (p > 1) {
-//                p -= 2; q += 1; r -= 1;
-//            } else if (q > 1) {
-//                p += 1; q -= 2; r -= 1;
-//            }
-//        }
-//        
-//        p *= reduce; q *= reduce; r *= reduce;
-//        if (reduce > 1) {
-//            if (p > 1) p = 1; else if (p < -1) p = -1;
-//            if (q > 1) q = 1; else if (q < -1) q = -1;
-//            if (r > 1) r = 1; else if (r < -1) r = -1;
-//        }
-//        
-//        return (1 - p * p) * (1 - q * q) * (1 - r * r);
-//}
-//
-//            double value = honeycomb((x + OFF_X) * FREQ, (y + OFF_Y) * FREQ, 1.25);
-//            if (value < 0.03) value = 1; else value = -1;
-	
 
-//
-//	private static final int[][] bodyLayout = 
-//		{
-//		 {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
-//		 {0, 0, 0, 1, 3, 3, 3, 3, 1, 0, 0, 0},
-//		 {0, 0, 1, 3, 3, 3, 3, 3, 3, 1, 0, 0},
-//		 {0, 1, 3, 3, 3, 3, 3, 3, 3, 3, 1, 0},
-//		 {1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1},
-//		 {1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1},
-//		 {0, 1, 3, 3, 3, 3, 3, 3, 3, 3, 1, 0},
-//		 {0, 0, 1, 3, 3, 3, 3, 3, 3, 1, 0, 0},
-//		 {0, 0, 0, 1, 3, 3, 3, 3, 1, 0, 0, 0},
-//		 {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0}
-//		};
-//
-//	private void generateSlice(IWorld world, BlockPos.Mutable centerPos, int[][] slice, int orientation, Random rand)
-//	{
-//		int length1 = bodyLayout.length;
-//		int length2 = bodyLayout[0].length;
-//		
-//		//move to the position where the corner of the slice will begin at
-//		BlockPos.Mutable currentPosition = new BlockPos.Mutable();
-//		if(orientation == 0)
-//			currentPosition.setPos(centerPos.add(-5, length1/2, -length2/2));
-//		else if(orientation == 1)
-//			currentPosition.setPos(centerPos.add(length1/2, -5, -length2/2));
-//		else if(orientation == 2)
-//			currentPosition.setPos(centerPos.add(length1/2, -length2/2, -5));
-//		
-//		BlockState blockState;
-//		
-//		//go through each row and column while replacing each solid block
-//		for(int y = 0; y < length1; y++) 
-//		{
-//			for(int z = 0; z < length2; z++) 
-//			{
-//				//finds solid block
-//				blockState = world.getBlockState(currentPosition);
-//				if(blockState.getMaterial() != Material.AIR && blockState.getFluidState().isEmpty() && !isNextToLiquid(world, currentPosition)) 
-//				{
-//					//replace solid block with the slice's blocks
-//					int sliceBlock = slice[y][z];
-//					if(sliceBlock == 0)
-//					{
-//						//do nothing. 
-//					}
-//					else if(sliceBlock == 1)
-//					{
-//						//reduced FILLED_POROUS_HONEYCOMB spawn rate
-//						if(rand.nextInt(3) == 0)
-//						{
-//							world.setBlockState(currentPosition, HONEYCOMB_BLOCK, 2);
-//						}
-//						else
-//						{
-//							world.setBlockState(currentPosition, FILLED_POROUS_HONEYCOMB, 2);
-//						}
-//					}
-//					else if(sliceBlock == 3)
-//					{
-//						if(currentPosition.getY() >= world.getSeaLevel())
-//						{
-//							world.setBlockState(currentPosition, CAVE_AIR, 2);
-//						}
-//						else
-//						{
-//							world.setBlockState(currentPosition, SUGAR_WATER, 2);
-//						}
-//					}
-//				}
-//				
-//				//move down the row
-//				if(orientation == 0)
-//					currentPosition.move(Direction.SOUTH);
-//				else if(orientation == 1)
-//					currentPosition.move(Direction.WEST);
-//				else if(orientation == 2)
-//					currentPosition.move(Direction.WEST);
-//			}
-//			
-//			//move back to start of row and down 1 column
-//			if(orientation == 0)
-//				currentPosition.move(0, -1, -length2);
-//			else if(orientation == 1)
-//				currentPosition.move(-1, 0, -length2);
-//			else if(orientation == 2)
-//				currentPosition.move(-1, -length2, 0);
-//		}
-//	}
 }
