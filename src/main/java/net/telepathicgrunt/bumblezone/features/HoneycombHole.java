@@ -7,6 +7,7 @@ import com.mojang.datafixers.Dynamic;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.material.Material;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
@@ -25,7 +26,7 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 	}
 
 
-	private int[][] bodyLayout = 
+	private static final int[][] bodyLayout = 
 		{
 		 {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
 		 {0, 0, 0, 1, 3, 3, 3, 3, 1, 0, 0, 0},
@@ -53,7 +54,7 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 		 {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0}
 		};
 	
-	private int[][] smallHoneyLayout = 
+	private static final int[][] smallHoneyLayout = 
 		{
 		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		 {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
@@ -67,7 +68,7 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 		};
 	
-	private int[][] endCapLayout = 
+	private static final int[][] endCapLayout = 
 		{
 		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -113,6 +114,7 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 	{
 		//move to the position where the corner of the slice will begin at
 		BlockPos.Mutable currentPosition = new BlockPos.Mutable(centerPos.add(-5, slice.length/2, -slice[0].length/2));
+		BlockState blockState;
 		
 		//go through each row and column while replacing each solid block
 		for(int y = 0; y < slice.length; y++) 
@@ -120,7 +122,8 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 			for(int z = 0; z < slice[0].length; z++) 
 			{
 				//finds solid block
-				if(world.getBlockState(currentPosition).isSolid()) 
+				blockState = world.getBlockState(currentPosition);
+				if(world.getBlockState(currentPosition).getMaterial() != Material.AIR && blockState.getFluidState().isEmpty()) 
 				{
 					//replace solid block with the slice's blocks
 					int sliceBlock = slice[y][z];
