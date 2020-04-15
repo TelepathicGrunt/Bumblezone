@@ -86,15 +86,15 @@ public class HoneycombCaves extends Feature<NoFeatureConfig>
 				for(int y = 5; y < 250; y++) {
 					blockState = world.getBlockState(mutableBlockPos.setPos(position).move(x, y, z));
 					
-					if(blockState.getBlock() != Blocks.AIR && isNextToLiquid(world, mutableBlockPos)) {
+					if(blockState.getBlock() != Blocks.AIR && !isNextToLiquidOrAir(world, mutableBlockPos)) {
 						
 						double noise1 = this.noiseGen.eval(mutableBlockPos.getX() * 0.02D, 
 															mutableBlockPos.getZ() * 0.02D, 
-															mutableBlockPos.getY() * 0.03D);
+															mutableBlockPos.getY() * 0.02D);
 						
 						double noise2 = this.noiseGen2.eval(mutableBlockPos.getX() * 0.02D, 
 															mutableBlockPos.getZ() * 0.02D, 
-															mutableBlockPos.getY() * 0.03D);
+															mutableBlockPos.getY() * 0.02D);
 						
 						//double finalNoise = noise1 * noise1 + noise2 * noise2;
 						double finalNoise = 
@@ -105,7 +105,7 @@ public class HoneycombCaves extends Feature<NoFeatureConfig>
 								Math.abs(dotProduct(V5.get(0), V5.get(1), noise1, noise2)) +
 								Math.abs(dotProduct(V6.get(0), V6.get(1), noise1, noise2));
 						
-						if(finalNoise < 0.5f) {
+						if(finalNoise < 0.3f) {
 							world.setBlockState(mutableBlockPos, Blocks.GREEN_STAINED_GLASS_PANE.getDefaultState(), 2);
 						}
 					}
@@ -121,9 +121,11 @@ public class HoneycombCaves extends Feature<NoFeatureConfig>
 		return x1*x2 + y1*y2;
 	}
 	
-	private static boolean isNextToLiquid(IWorld world, BlockPos pos) {
+	private static boolean isNextToLiquidOrAir(IWorld world, BlockPos pos) {
+		BlockState blockState;
 		for(Direction direction : Direction.values()) {
-			if(!world.getBlockState(pos.offset(direction)).getFluidState().isEmpty()) {
+			blockState = world.getBlockState(pos.offset(direction));
+			if(!blockState.getFluidState().isEmpty() || blockState.getBlock() == Blocks.AIR) {
 				return true;
 			}
 		}
