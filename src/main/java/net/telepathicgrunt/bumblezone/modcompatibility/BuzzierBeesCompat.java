@@ -176,7 +176,7 @@ public class BuzzierBeesCompat
 		for (BlockPos blockpos : BlockPos.getAllInBoxMutable(xStart, 0, zStart, xStart + 15, 0, zStart + 15)) 
 		{
 			//fills in gap between top of terrain gen and y = 255 with solid blocks
-			for (int ceilingY = 255; ceilingY >= roofHeight - random.nextInt(2); --ceilingY) 
+			for (int ceilingY = 255; ceilingY >= roofHeight - 7 - random.nextInt(2); --ceilingY) 
 			{
 				chunk.setBlockState(blockpos$Mutable.setPos(blockpos.getX(), ceilingY, blockpos.getZ()), HIVE_PLANKS, false);
 			}
