@@ -5,7 +5,6 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -24,7 +23,7 @@ public class BeesourcefulOreBeesSpawning
 			if(ModChecking.beesourcefulPresent) 
 			{
 				MobEntity entity = (MobEntity)event.getEntity();
-				if(BzConfig.spawnBeesourcefulBeesMob && 
+				if(Bumblezone.BzConfig.spawnBeesourcefulBeesMob.get() && 
 					entity.dimension == BzDimension.bumblezone() && 
 					entity.world.getRandom().nextInt(15) == 0) 
 				{

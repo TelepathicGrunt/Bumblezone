@@ -1,89 +1,47 @@
 package net.telepathicgrunt.bumblezone.config;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.fml.common.Mod;
+import net.telepathicgrunt.bumblezone.utils.ConfigHelper;
+import net.telepathicgrunt.bumblezone.utils.ConfigHelper.ConfigValueListener;
 
 @Mod.EventBusSubscriber
 public class BzConfig
 {
-	/**
-	* Config to control all sorts of settings.
-	*/
-	
-	public static final ServerConfig SERVER;
-	public static final ForgeConfigSpec SERVER_SPEC;
-	static {
-	    final Pair<ServerConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ServerConfig::new);
-	    SERVER_SPEC = specPair.getRight();
-	    SERVER = specPair.getLeft();
-	}
-	
-	//bee aggression
-	public static boolean allowWrathOfTheHiveOutsideBumblezone = false;
-	public static boolean showWrathOfTheHiveParticles = true;
-	public static boolean aggressiveBees = true;
-	public static int aggressionTriggerRadius = 64;
-	public static int howLongWrathOfTheHiveLasts = 350;
-	public static int speedBoostLevel = 1;
-	public static int absorptionBoostLevel = 2;
-	public static int strengthBoostLevel = 3;
-	
-	//dimension
-	public static int movementFactor = 10;
-	public static boolean dayNightCycle = true;
-	public static double fogBrightnessPercentage = 100;
-	public static boolean forceExitToOverworld = false;
-	
-	//mod compatibility
-	public static boolean spawnHoneySlimeMob = true;
-	public static boolean allowHoneyWandCompat = true;
-	public static boolean hivePlanksWorldgen = true;
-	public static boolean waxBlocksWorldgen = true;
-	public static boolean crystallizedHoneyWorldgen = true;
-	public static boolean spawnBeesourcefulBeesMob = true;
-	public static boolean spawnBesourcefulHoneycombVariants = true;
-	
-	public static class ServerConfig
+	public static class BzConfigValues
 	{
 		//bee aggression
-	    public final BooleanValue allowWrathOfTheHiveOutsideBumblezone;
-	    public final BooleanValue showWrathOfTheHiveParticles;
-	    public final BooleanValue aggressiveBees;
-	    public final IntValue aggressionTriggerRadius;
-	    public final IntValue howLongWrathOfTheHiveLasts;
-	    public final IntValue speedBoostLevel;
-	    public final IntValue absorptionBoostLevel;
-	    public final IntValue strengthBoostLevel;
-	    
-	    //dimension
-	    public final IntValue movementFactor;
-	    public final BooleanValue dayNightCycle;
-	    public final DoubleValue fogBrightnessPercentage;
-	    public final BooleanValue forceExitToOverworld;
-	
-	
-	    //mod compatibility
-	    public final BooleanValue spawnHoneySlimeMob;
-	    public final BooleanValue allowHoneyWandCompat;
-	    public final BooleanValue hivePlanksWorldgen;
-	    public final BooleanValue waxBlocksWorldgen;
-	    public final BooleanValue crystallizedHoneyWorldgen;
-	    public final BooleanValue spawnBeesourcefulBeesMob;
-	    public final BooleanValue spawnBesourcefulHoneycombVariants;
-	    
-	    ServerConfig(ForgeConfigSpec.Builder builder) 
-	    {
-	
-	        
+		public ConfigValueListener<Boolean> allowWrathOfTheHiveOutsideBumblezone;
+		public ConfigValueListener<Boolean> showWrathOfTheHiveParticles;
+		public ConfigValueListener<Boolean> aggressiveBees;
+		public ConfigValueListener<Integer> aggressionTriggerRadius;
+		public ConfigValueListener<Integer> howLongWrathOfTheHiveLasts;
+		public ConfigValueListener<Integer> speedBoostLevel;
+		public ConfigValueListener<Integer> absorptionBoostLevel;
+		public ConfigValueListener<Integer> strengthBoostLevel;
+		
+		//dimension
+		public ConfigValueListener<Integer> movementFactor;
+		public ConfigValueListener<Boolean> dayNightCycle;
+		public ConfigValueListener<Double> fogBrightnessPercentage;
+		public ConfigValueListener<Boolean> forceExitToOverworld;
+		public ConfigValueListener<String> requiredBlockUnderHive;
+		public ConfigValueListener<Boolean> warnPlayersOfWrongBlockUnderHive;
+		
+		//mod compatibility
+		public ConfigValueListener<Boolean> spawnHoneySlimeMob;
+		public ConfigValueListener<Boolean> allowHoneyWandCompat;
+		public ConfigValueListener<Boolean> hivePlanksWorldgen;
+		public ConfigValueListener<Boolean> waxBlocksWorldgen;
+		public ConfigValueListener<Boolean> crystallizedHoneyWorldgen;
+		public ConfigValueListener<Boolean> spawnBeesourcefulBeesMob;
+		public ConfigValueListener<Boolean> spawnBesourcefulHoneycombVariants;
+
+		public BzConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber)
+		{
 	        builder.push("The Bumblezone Dimension Options");
 	
-	        
-	        movementFactor = builder
+	        	movementFactor = subscriber.subscribe(builder
 	                .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 	                		+" Determines how the coordinates gets translated when entering \r\n"
 	                		+" and leaving the Bumblezone. The default ratio is 10 which means\r\n"
@@ -97,10 +55,10 @@ public class BzConfig
 	                		+" Note: Changing this in an already made world will change where Bee Nests will\r\n"
 	                		+" take you in the dimension and exiting will place you in a different spot too.\r\n")
 	                .translation("the_bumblezone.config.dimension.movementfactor")
-	                .defineInRange("movementFactor", 10, 1, 1000);
+	                .defineInRange("movementFactor", 10, 1, 1000));
 	        
 	
-	            dayNightCycle = builder
+	            dayNightCycle = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Determines if the day/night cycle active in the Bumblezone dimension.\r\n "
 		                    		+" The cycle will be visible by the change in color of the fog. \r\n"
@@ -110,10 +68,10 @@ public class BzConfig
 		                    		+" If this setting is set to false, the cycle \r\n"
 		                    		+" will be stuck at \"noon\" for the dimension.\r\n")
 		                    .translation("the_bumblezone.config.dimension.daynightcycle")
-		                    .define("dayNightCycle", true);
+		                    .define("dayNightCycle", true));
 	
 	            
-	            fogBrightnessPercentage = builder
+	            fogBrightnessPercentage = subscriber.subscribe(builder
 	                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 	                    		+" How bright the fog is in the Bumblezone dimension. \r\n"
 	                    		+" This will always affect the fog whether you have the \r\n"
@@ -125,10 +83,10 @@ public class BzConfig
 	                    		+" 100000 will be white. When the cycle is on, 0 will be \r\n"
 	                    		+" but will not be completely black during daytime.\r\n")
 	                    .translation("the_bumblezone.config.dimension.fogbrightnesspercentage")
-	                    .defineInRange("fogBrightnessPercentage", 100D, 0D, 100000D);
+	                    .defineInRange("fogBrightnessPercentage", 100D, 0D, 100000D));
 	
 	            
-	            forceExitToOverworld = builder
+	            forceExitToOverworld = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Makes leaving The Bumblezone dimension always places you back\r\n "
 		                    		+" at the Overworld regardless of which dimension you originally \r\n"
@@ -136,33 +94,58 @@ public class BzConfig
 		                    		+" with another dimension so you are stuck teleporting between the \r\n"
 		                    		+" two and cannot get back to the Overworld.\r\n")
 		                    .translation("the_bumblezone.config.dimension.forceexittooverworld")
-		                    .define("forceExitToOverworld", false);
-	
-	        
+		                    .define("forceExitToOverworld", false));
+	            
+
+	            requiredBlockUnderHive = subscriber.subscribe(builder
+		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		                    		+" If a resource location of a block is specified here,\r\n "
+		                    		+" then teleporting to Bumblezone will need that block under\r\n"
+		                    		+" the Bee Nest/Beehive you threw the Enderpearl at.\r\n"
+		                    		+" \r\n"
+		                    		+" Example: minecraft:emerald_block will require you to place an\r\n"
+		                    		+" Emerald Block under the Bee Nest/Beehive and then throw an\r\n"
+		                    		+" Enderpearl at it to teleport to Bumblezone dimension.\r\n"
+		                    		+" \r\n"
+		                    		+" By default, no resource location is specified so any\r\n"
+		                    		+" block can be under the Bee Nest/Beehive to teleport to dimension.\r\n")
+		                    .translation("the_bumblezone.config.dimension.requiredblockunderhive")
+		                    .define("requiredBlockUnderHive", ""));
+
+	            
+	            warnPlayersOfWrongBlockUnderHive = subscriber.subscribe(builder
+		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		                    		+" If requiredBlockUnderHive has a block specified and this config\r\n "
+		                    		+" is set to true, then player will get a warning if they throw \r\n"
+		                    		+" an Enderpearl at a Bee Nest/Beehive but the block under it is \r\n"
+		                    		+" not the correct required block. It will also tell the player what \r\n"
+		                    		+" block is needed under the Bee Nest/Beehive to teleport to the dimension.\r\n")
+		                    .translation("the_bumblezone.config.dimension.warnplayersofwrongblockunderhive")
+		                    .define("warnPlayersOfWrongBlockUnderHive", true));
 	        builder.pop();
 	        
 	        builder.push("Wrath of the Hive Options");
 	
 	        	builder.push("Bees Aggression Options");
 	        	
-		            allowWrathOfTheHiveOutsideBumblezone = builder
+		            allowWrathOfTheHiveOutsideBumblezone = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Determines if Wrath of the Hive can be applied to players outside\r\n"
 		                    		+" the Bumblezone dimension when they pick up Honey blocks, take honey\r\n"
 		                    		+" from Filled Porous Honey blocks, or drink Honey Bottles.\r\n")
 		                    .translation("the_bumblezone.config.bees.allowwrathofthehiveoutsidebumblezone")
-		                    .define("allowWrathOfTheHiveOutsideBumblezone", false);
+		                    .define("allowWrathOfTheHiveOutsideBumblezone", false));
 		            
 		            
-		            showWrathOfTheHiveParticles = builder
+		            showWrathOfTheHiveParticles = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Show the orangish particles when you get Wrath of the Hive\r\n"
 		                    		+" after you angered the bees in the Bumblezone dimension.\r\n")
 		                    .translation("the_bumblezone.config.bees.showwrathofthehiveparticles")
-		                    .define("showWrathOfTheHiveParticles", true);
+		                    .define("showWrathOfTheHiveParticles", true));
 		
 		            
-		            aggressiveBees = builder
+		            aggressiveBees = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Turn off or on the ability to get Wrath of the Hive effect.\r\n"
 		                    		+" \r\n"
@@ -177,26 +160,26 @@ public class BzConfig
 		                    		+" Will also affect the bee's aggression toward bears in the dimension.\r\n"
 		                    		+" Note: Peaceful mode will always override the bee aggressive setting.\r\n")
 		                    .translation("the_bumblezone.config.bees.aggressivebees")
-		                    .define("aggressiveBees", true);
+		                    .define("aggressiveBees", true));
 		
 		            
-		            aggressionTriggerRadius = builder
+		            aggressionTriggerRadius = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" How far away the bee can be to become angry and hunt you down if\r\n "
 		                    		+" you take their honey from the Bumblezone dimension.\r\n"
 		                    		+" \r\n"
 		                    		+" Will also affect the bee's aggression range toward bears in the dimension.\r\n")
 		                    .translation("the_bumblezone.config.bees.aggressiontriggerradius")
-		                    .defineInRange("aggressionTriggerRadius", 64, 1, 200);
+		                    .defineInRange("aggressionTriggerRadius", 64, 1, 200));
 	           
 		            
-		            howLongWrathOfTheHiveLasts = builder
+		            howLongWrathOfTheHiveLasts = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" How long bees will keep their effects for (speed, absorption, strength).\r\n"
 		                    		+" Note: This is not in seconds at all. And bee's anger will remain.\r\n"
 		                    		+" Only the boosts given to the bees will be gone.\r\n")
 		                    .translation("the_bumblezone.config.bees.howlongwrathofthehivelasts")
-		                    .defineInRange("howLongWrathOfTheHiveLasts", 350, 1, Integer.MAX_VALUE);
+		                    .defineInRange("howLongWrathOfTheHiveLasts", 350, 1, Integer.MAX_VALUE));
 	
 		            
 	            builder.pop();
@@ -204,7 +187,7 @@ public class BzConfig
 	            builder.push("Bees Effects Options");
 		            
 		            
-		            speedBoostLevel = builder
+		            speedBoostLevel = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" How fast bees move along the ground (Not while flying).\r\n"
 		                    		+" You will see this a lot when bees are about to attack\r\n"
@@ -212,10 +195,10 @@ public class BzConfig
 		                    		+" makes them dash forward at you. Set this to higher for\r\n"
 		                    		+" faster dash attacks from bees.\r\n")
 		                    .translation("the_bumblezone.config.bees.speedboostlevel")
-		                    .defineInRange("speedBoostLevel", 1, 1, Integer.MAX_VALUE);
+		                    .defineInRange("speedBoostLevel", 1, 1, Integer.MAX_VALUE));
 		            
 		            
-		            absorptionBoostLevel = builder
+		            absorptionBoostLevel = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" How much extra health bees get that always instantly regenerates.\r\n"
 		                    		+" This means you need to deal more damage than the extra health gives\r\n"
@@ -227,15 +210,15 @@ public class BzConfig
 		                    		+" if you set the absorption to a higher value like 2 or 3.\r\n"
 		                    		+" If you set this to like 5 or something, bees may be invicible! Game over.\r\n")
 		                    .translation("the_bumblezone.config.bees.absorptionboostlevel")
-		                    .defineInRange("absorptionBoostLevel", 1, 1, Integer.MAX_VALUE);
+		                    .defineInRange("absorptionBoostLevel", 1, 1, Integer.MAX_VALUE));
 		            
 		            
-		            strengthBoostLevel = builder
+		            strengthBoostLevel = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" How strong the bees attacks become. \r\n"
 		                    		+" (5 or higher will instant kill you without armor).\r\n")
 		                    .translation("the_bumblezone.config.bees.strengthboostlevel")
-		                    .defineInRange("strengthBoostLevel", 3, 1, Integer.MAX_VALUE);
+		                    .defineInRange("strengthBoostLevel", 3, 1, Integer.MAX_VALUE));
 	
 	            builder.pop();
 	        
@@ -246,92 +229,63 @@ public class BzConfig
 	
 	            builder.push("Buzzier Bees Options");
 	            
-		            spawnHoneySlimeMob = builder
+		            spawnHoneySlimeMob = subscriber.subscribe(builder
 			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 			                    		+" Spawn Buzzier Bees's Honey Slime mob instead of Vanilla Slime.\r\n")
 			                    .translation("the_bumblezone.config.modcompat.buzzierbees.spawnhoneyslimemob")
-			                    .define("spawnHoneySlimeMob", true);
+			                    .define("spawnHoneySlimeMob", true));
 	
-		            allowHoneyWandCompat = builder
+		            allowHoneyWandCompat = subscriber.subscribe(builder
 			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 			                    		+" Allow Honey Wand to take honey from Filled Porous Honeycomb Block \r\n"
 			                    		+" and put honey into Porous Honeycomb Block without angering bees.\r\n")
 			                    .translation("the_bumblezone.config.modcompat.buzzierbees.allowhoneywandcompat")
-			                    .define("allowHoneyWandCompat", true);
+			                    .define("allowHoneyWandCompat", true));
 		            
-		            hivePlanksWorldgen = builder
+		            hivePlanksWorldgen = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Place Hive Planks blocks at the top and bottom of the dimension \r\n"
 		                    		+" so it is like the dimension is actually in a Bee Nest block.\r\n")
 		                    .translation("the_bumblezone.config.modcompat.buzzierbees.hiveplanksworldgen")
-		                    .define("hivePlanksWorldgen", true);
+		                    .define("hivePlanksWorldgen", true));
 		            
-		            waxBlocksWorldgen = builder
+		            waxBlocksWorldgen = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Place Buzzier Bees's Wax Blocks on the surface of land /r/n"
 		                    		+" around sea level and below too.\r\n")
 		                    .translation("the_bumblezone.config.modcompat.buzzierbees.waxblocksworldgen")
-		                    .define("waxBlocksWorldgen", true);
+		                    .define("waxBlocksWorldgen", true));
 		            
-		            crystallizedHoneyWorldgen = builder
+		            crystallizedHoneyWorldgen = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Place Buzzier Bees's Crystallized Honey Blocks on the /r/n"
 		                    		+" surface of land around sea level and above.\r\n")
 		                    .translation("the_bumblezone.config.modcompat.buzzierbees.crystallizedhoneyworldgen")
-		                    .define("crystallizedHoneyWorldgen", true);
+		                    .define("crystallizedHoneyWorldgen", true));
 		            
 	            builder.pop();
 	            
 
 	            builder.push("Buzzier Bees Options");
 	            
-	            	spawnBeesourcefulBeesMob = builder
+	            	spawnBeesourcefulBeesMob = subscriber.subscribe(builder
 			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 			                    		+" Spawn Beesourceful's ore and ender bees in The Bumblezone alongside\r\n"
 			                    		+" regular bees at a 1/15th chance when spawning regular bees.\r\n")
 			                    .translation("the_bumblezone.config.modcompat.beesourceful.spawnbeesourcefulbeesmob")
-			                    .define("spawnBeesourcefulBeesMob", true);
+			                    .define("spawnBeesourcefulBeesMob", true));
 	            
-	            	spawnBesourcefulHoneycombVariants = builder
+	            	spawnBesourcefulHoneycombVariants = subscriber.subscribe(builder
 			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 			                    		+" Spawn Beesourceful's various honeycomb variants in The Bumblezone\r\n"
 			                    		+" at all kinds of heights and height bands. Start exploring to find \r\n"
 			                    		+" where they spawn! Especially waaaay above for the Ender Honeycomb! \r\n")
 			                    .translation("the_bumblezone.config.modcompat.beesourceful.spawnbesourcefulhoneycombvariants")
-			                    .define("spawnBesourcefulHoneycombVariants", true);
+			                    .define("spawnBesourcefulHoneycombVariants", true));
 
 	            builder.pop();
 	            
 	        builder.pop();
-	    }
-	        		
+	    }		
 	} 
-	
-	public static void refreshServer()
-	{
-		//bee aggression
-		allowWrathOfTheHiveOutsideBumblezone = SERVER.allowWrathOfTheHiveOutsideBumblezone.get();
-		showWrathOfTheHiveParticles = SERVER.showWrathOfTheHiveParticles.get();
-		aggressiveBees = SERVER.aggressiveBees.get();
-		aggressionTriggerRadius = SERVER.aggressionTriggerRadius.get();
-		howLongWrathOfTheHiveLasts = SERVER.howLongWrathOfTheHiveLasts.get();
-		speedBoostLevel = SERVER.speedBoostLevel.get();
-		absorptionBoostLevel = SERVER.absorptionBoostLevel.get();
-		strengthBoostLevel = SERVER.strengthBoostLevel.get();
-		
-		//dimension
-		movementFactor = SERVER.movementFactor.get();
-		dayNightCycle = SERVER.dayNightCycle.get();
-		fogBrightnessPercentage = SERVER.fogBrightnessPercentage.get();
-		forceExitToOverworld = SERVER.forceExitToOverworld.get();
-		
-	    //mod compatibility
-		spawnHoneySlimeMob = SERVER.spawnHoneySlimeMob.get();
-		allowHoneyWandCompat = SERVER.allowHoneyWandCompat.get();
-		hivePlanksWorldgen = SERVER.hivePlanksWorldgen.get();
-		waxBlocksWorldgen = SERVER.waxBlocksWorldgen.get();
-		crystallizedHoneyWorldgen = SERVER.crystallizedHoneyWorldgen.get();
-		spawnBeesourcefulBeesMob = SERVER.spawnBeesourcefulBeesMob.get();
-		spawnBesourcefulHoneycombVariants = SERVER.spawnBesourcefulHoneycombVariants.get();
-	}
 }

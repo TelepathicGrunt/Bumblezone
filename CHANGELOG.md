@@ -31,6 +31,8 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 -Added configs to control a lot of the interaction between this mod and Buzzier Bees.
 
 -Added configs to control the interaction between this mod and Beesourceful.
+
+-Added new config options to let players specify if a certain block needs to be under the Bee Nest/Beehive to teleport to The Bumblezone dimension.
  
 ##### Mobs: 
 
@@ -61,6 +63,8 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ##### Teleportation: 
 
 -Throwing Enderpearls at all blocks that extends BeehiveBlock (includes modded and vanilla's BeeNests and BeeHive blocks) will teleport you into the dimension!
+
+-Adjusted teleporting so teleporting to Bumblezone dimension from underground will spawn you trapped underground in the dimension less often.
  
 ##### Generation: 
 

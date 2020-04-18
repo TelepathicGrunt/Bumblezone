@@ -21,9 +21,9 @@ import net.minecraft.world.gen.placement.CountRangeConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.biome.BzBaseBiome;
 import net.telepathicgrunt.bumblezone.biome.BzBiomes;
-import net.telepathicgrunt.bumblezone.config.BzConfig;
 
 public class BeesourcefulCompat
 {
@@ -32,7 +32,7 @@ public class BeesourcefulCompat
 	{
 		ModChecking.beesourcefulPresent = true;
 		
-		if(BzConfig.spawnBesourcefulHoneycombVariants) {
+		if(Bumblezone.BzConfig.spawnBesourcefulHoneycombVariants.get()) {
 			String honeycombTarget = "honeycomb_target";
 			FillerBlockType.create(honeycombTarget.toUpperCase(), honeycombTarget, new BlockMatcher(Blocks.HONEYCOMB_BLOCK));
 

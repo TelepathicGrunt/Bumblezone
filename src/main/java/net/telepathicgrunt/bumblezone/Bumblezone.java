@@ -12,7 +12,6 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -23,10 +22,12 @@ import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.SugarWaterEvents;
 import net.telepathicgrunt.bumblezone.capabilities.CapabilityPlayerPosAndDim;
 import net.telepathicgrunt.bumblezone.config.BzConfig;
+import net.telepathicgrunt.bumblezone.config.BzConfig.BzConfigValues;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.features.BzFeatures;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
+import net.telepathicgrunt.bumblezone.utils.ConfigHelper;
 
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -35,11 +36,11 @@ public class Bumblezone
 {
 	public static final String MODID = "the_bumblezone";
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
+	public static BzConfigValues BzConfig = null;
 
 
 	public Bumblezone()
 	{
-		ModLoadingContext modLoadingContext = ModLoadingContext.get();
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		MinecraftForge.EVENT_BUS.register(this);
 		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
@@ -54,8 +55,7 @@ public class Bumblezone
 
         
 		//generates/handles config
-		modEventBus.addListener(this::modConfig);
-		modLoadingContext.registerConfig(ModConfig.Type.SERVER, BzConfig.SERVER_SPEC);
+		BzConfig = ConfigHelper.register(ModConfig.Type.SERVER, (builder, subscriber) -> new BzConfig.BzConfigValues(builder, subscriber));
 	}
 
 
@@ -66,14 +66,6 @@ public class Bumblezone
 		BzBiomes.addVanillaSlimeMobs();
 		SugarWaterEvents.setup();
 		BzBaseBiome.addSprings();
-	}
-	
-
-	public void modConfig(final ModConfig.ModConfigEvent event)
-	{
-		ModConfig config = event.getConfig();
-		if (config.getSpec() == BzConfig.SERVER_SPEC)
-			BzConfig.refreshServer();
 	}
 
 	// You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD

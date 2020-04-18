@@ -16,7 +16,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent.ItemPickupEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.dimension.BzWorldProvider;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
@@ -41,12 +40,12 @@ public class BeeAggressionBehavior
 			//Also checks to make sure we are in dimension and that player isn't in creative or spectator
 			if (!playerEntity.world.isRemote && 
 				 event.getStack().getItem() == Items.HONEY_BLOCK &&
-				(playerEntity.dimension == BzDimension.bumblezone() || BzConfig.allowWrathOfTheHiveOutsideBumblezone) && 
+				(playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && 
 				!playerEntity.isCreative() && 
 				!playerEntity.isSpectator() &&
-				 BzConfig.aggressiveBees)
+				 Bumblezone.BzConfig.aggressiveBees.get())
 			{
-				playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
+				playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
 			}
 		}
 
@@ -64,12 +63,12 @@ public class BeeAggressionBehavior
 				
 				//Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
 				//Also checks to make sure we are in dimension and that player isn't in creative or spectator
-				if ((playerEntity.dimension == BzDimension.bumblezone() || BzConfig.allowWrathOfTheHiveOutsideBumblezone) && 
+				if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && 
 					!playerEntity.isCreative() && 
 					!playerEntity.isSpectator() &&
-					 BzConfig.aggressiveBees)
+					 Bumblezone.BzConfig.aggressiveBees.get())
 				{
-					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
+					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
 				}
 			}
 		}
@@ -85,8 +84,8 @@ public class BeeAggressionBehavior
 			//Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
 			//Also checks to make sure we are in dimension and that if it is a player, that they aren't in creative or spectator
 			if (!entity.world.isRemote && 
-				(entity.dimension == BzDimension.bumblezone() || BzConfig.allowWrathOfTheHiveOutsideBumblezone) && 
-				BzConfig.aggressiveBees && 
+				(entity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && 
+				Bumblezone.BzConfig.aggressiveBees.get() && 
 				entity instanceof BeeEntity &&
 				attackerEntity != null)
 			{
@@ -94,11 +93,11 @@ public class BeeAggressionBehavior
 					!((PlayerEntity)attackerEntity).isCreative() && 
 					!((PlayerEntity)attackerEntity).isSpectator())
 				{
-					((PlayerEntity)attackerEntity).addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
+					((PlayerEntity)attackerEntity).addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
 				}
 				else if(attackerEntity instanceof MobEntity) 
 				{
-					((MobEntity)attackerEntity).addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, true));
+					((MobEntity)attackerEntity).addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, true));
 				}
 			}
 		}
@@ -112,7 +111,7 @@ public class BeeAggressionBehavior
 			//Also checks to make sure we are in the dimension.
 			if (!entity.world.isRemote && 
 				entity.dimension == BzDimension.bumblezone() && 
-				BzConfig.aggressiveBees && 
+				Bumblezone.BzConfig.aggressiveBees.get() && 
 				entity instanceof MobEntity)
 			{
 				MobEntity mobEntity = (MobEntity)entity;
@@ -124,7 +123,7 @@ public class BeeAggressionBehavior
 					 mobName.contains("bear")) && 
 						!mobEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE))
 				{
-					((MobEntity)entity).addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 1, false, true));
+					((MobEntity)entity).addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 1, false, true));
 				}
 			}
 		}
@@ -139,7 +138,7 @@ public class BeeAggressionBehavior
 			//removes the wrath of the hive if it is disallowed outside dimension
 			if(!playerEntity.world.isRemote &&
 				playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE) && 
-				!(BzConfig.allowWrathOfTheHiveOutsideBumblezone || playerEntity.dimension == BzDimension.bumblezone()))
+				!(Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get() || playerEntity.dimension == BzDimension.bumblezone()))
 			{
 				playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
 				WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);

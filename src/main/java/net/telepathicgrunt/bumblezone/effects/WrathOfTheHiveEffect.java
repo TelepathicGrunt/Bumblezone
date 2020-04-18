@@ -10,7 +10,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
 import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
-import net.telepathicgrunt.bumblezone.config.BzConfig;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 
 
 public class WrathOfTheHiveEffect extends Effect
@@ -65,17 +65,17 @@ public class WrathOfTheHiveEffect extends Effect
 	 */
 	public static void mediumAggression(World world, LivingEntity livingEntity)
 	{
-		EntityPredicate line_of_sight = (new EntityPredicate()).setDistance(BzConfig.aggressionTriggerRadius).setLineOfSiteRequired();
-		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, line_of_sight, livingEntity, livingEntity.getBoundingBox().grow(BzConfig.aggressionTriggerRadius));
+		EntityPredicate line_of_sight = (new EntityPredicate()).setDistance(Bumblezone.BzConfig.aggressionTriggerRadius.get()).setLineOfSiteRequired();
+		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, line_of_sight, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzConfig.aggressionTriggerRadius.get()));
 
 		for (BeeEntity bee : beeList)
 		{
 			bee.setBeeAttacker(livingEntity);
 
 			// weaker potion effects for when attacking bears
-			bee.addPotionEffect(new EffectInstance(Effects.SPEED, 20, Math.max(BzConfig.speedBoostLevel, 1), false, false));
-			bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20, Math.max(BzConfig.absorptionBoostLevel / 2, 1), false, false));
-			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, Math.max(BzConfig.strengthBoostLevel / 3, 1), false, true));
+			bee.addPotionEffect(new EffectInstance(Effects.SPEED, 20, Math.max(Bumblezone.BzConfig.speedBoostLevel.get(), 1), false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20, Math.max(Bumblezone.BzConfig.absorptionBoostLevel.get() / 2, 1), false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, Math.max(Bumblezone.BzConfig.strengthBoostLevel.get() / 3, 1), false, true));
 		}
 	}
 
@@ -85,14 +85,14 @@ public class WrathOfTheHiveEffect extends Effect
 	 */
 	public static void unBEElievablyHighAggression(World world, LivingEntity livingEntity)
 	{
-		EntityPredicate see_through_walls = (new EntityPredicate()).setDistance(BzConfig.aggressionTriggerRadius);
-		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, see_through_walls, livingEntity, livingEntity.getBoundingBox().grow(BzConfig.aggressionTriggerRadius));
+		EntityPredicate see_through_walls = (new EntityPredicate()).setDistance(Bumblezone.BzConfig.aggressionTriggerRadius.get());
+		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, see_through_walls, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzConfig.aggressionTriggerRadius.get()));
 		for (BeeEntity bee : beeList)
 		{
 			bee.setBeeAttacker(livingEntity);
-			bee.addPotionEffect(new EffectInstance(Effects.SPEED, 20, BzConfig.speedBoostLevel, false, false));
-			bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20, BzConfig.absorptionBoostLevel, false, false));
-			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, BzConfig.strengthBoostLevel, false, true));
+			bee.addPotionEffect(new EffectInstance(Effects.SPEED, 20, Bumblezone.BzConfig.speedBoostLevel.get(), false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20, Bumblezone.BzConfig.absorptionBoostLevel.get(), false, false));
+			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, Bumblezone.BzConfig.strengthBoostLevel.get(), false, true));
 		}
 	}
 	
@@ -101,8 +101,8 @@ public class WrathOfTheHiveEffect extends Effect
 	 */
 	public static void calmTheBees(World world, LivingEntity livingEntity)
 	{
-		EntityPredicate see_through_walls = (new EntityPredicate()).setDistance(BzConfig.aggressionTriggerRadius*0.5D);
-		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, see_through_walls, livingEntity, livingEntity.getBoundingBox().grow(BzConfig.aggressionTriggerRadius*0.5D));
+		EntityPredicate see_through_walls = (new EntityPredicate()).setDistance(Bumblezone.BzConfig.aggressionTriggerRadius.get()*0.5D);
+		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, see_through_walls, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzConfig.aggressionTriggerRadius.get()*0.5D));
 		for (BeeEntity bee : beeList)
 		{
 			if(bee.getAttackTarget() == livingEntity) {

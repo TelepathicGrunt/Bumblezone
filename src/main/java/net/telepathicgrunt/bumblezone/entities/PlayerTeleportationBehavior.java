@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.Level;
+
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -14,9 +16,12 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.Heightmap;
@@ -28,10 +33,10 @@ import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.capabilities.IPlayerPosAndDim;
 import net.telepathicgrunt.bumblezone.capabilities.PlayerPositionAndDimension;
-import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.features.placement.BzPlacingUtils;
 
@@ -68,6 +73,7 @@ public class PlayerTeleportationBehavior
 			{
 				ServerPlayerEntity playerEntity = (ServerPlayerEntity) pearlEntity.getThrower(); // the thrower
 				Vec3d hitBlockPos = event.getRayTraceResult().getHitVec(); //position of the collision
+				BlockPos hivePos = new BlockPos(0,0,0);
 				boolean hitHive = false;
 				
 				//check with offset in all direction as the position of exact hit point could barely be outside the hive block
@@ -76,21 +82,57 @@ public class PlayerTeleportationBehavior
 					Block block = world.getBlockState(new BlockPos(hitBlockPos.add(offset, 0, 0))).getBlock();
 					if(block instanceof BeehiveBlock) {
 						hitHive = true;
+						hivePos = new BlockPos(hitBlockPos.add(offset, 0, 0));
 						break;
 					}
 					
 					block = world.getBlockState(new BlockPos(hitBlockPos.add(0, offset, 0))).getBlock();
 					if(block instanceof BeehiveBlock) {
 						hitHive = true;
+						hivePos = new BlockPos(hitBlockPos.add(offset, 0, 0));
 						break;
 					}
 					
 					block = world.getBlockState(new BlockPos(hitBlockPos.add(0, 0, offset))).getBlock();
 					if(block instanceof BeehiveBlock) {
 						hitHive = true;
+						hivePos = new BlockPos(hitBlockPos.add(offset, 0, 0));
 						break;
 					}
 				}
+				
+				//checks if block under hive is correct if config needs one
+				String requiredBlockString = Bumblezone.BzConfig.requiredBlockUnderHive.get();
+				if(!requiredBlockString.isEmpty() && ResourceLocation.isResouceNameValid(requiredBlockString)) 
+				{
+					ResourceLocation requiredBlockRL = new ResourceLocation(requiredBlockString);
+					if(ForgeRegistries.BLOCKS.containsKey(requiredBlockRL)) 
+					{
+						Block requiredBlock = ForgeRegistries.BLOCKS.getValue(requiredBlockRL);
+						if(requiredBlock == world.getBlockState(hivePos.down()).getBlock().getBlock()) 
+						{
+							
+						}
+						else if(Bumblezone.BzConfig.warnPlayersOfWrongBlockUnderHive.get())
+						{
+							//failed. Block below isn't the required block
+							String beeBlock = world.getBlockState(hivePos).getBlock().getNameTextComponent().getString();
+							Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: The block under the "+beeBlock+" is not the correct block to teleport to Bumblezone. The config enter says it needs "+requiredBlockString+" under "+beeBlock+".");
+							ITextComponent message = new StringTextComponent("§eBumblezone:§f The block under the §6"+beeBlock+"§f is not the correct block to teleport to Bumblezone. The config enter says it needs §6"+requiredBlockString+"§f under §6"+beeBlock+"§f.");
+							playerEntity.sendMessage(message);
+							return;
+						}
+					}
+					else 
+					{
+						//failed. the required block config entry is broken
+						Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: The required block under beenest config is broken. Please specify a resourcelocation to a real block or leave it blank so that players can teleport to Bumblezone dimension. Currently, the broken config has this in it: "+requiredBlockString);
+						ITextComponent message = new StringTextComponent("§eBumblezone:§f The required block under beenest config is broken. Please specify a resourcelocation to a real block or leave it blank so that players can teleport to Bumblezone dimension. Currently, the broken config has this in it: §c"+requiredBlockString);
+						playerEntity.sendMessage(message);
+						return;
+					}
+				}
+				
 
 				//if the pearl hit a beehive and is not in our bee dimension, begin the teleportation.
 				if (hitHive && playerEntity.dimension != BzDimension.bumblezone())
@@ -213,7 +255,7 @@ public class PlayerTeleportationBehavior
 		
 		//Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone. 
 		//Go to Overworld instead as default or when config forces Overworld teleport
-		if(cap.getNonBZDim() == BzDimension.bumblezone() && BzConfig.forceExitToOverworld)
+		if(cap.getNonBZDim() == BzDimension.bumblezone() && Bumblezone.BzConfig.forceExitToOverworld.get())
 		{
 			destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD); // go to Overworld
 		}
@@ -277,7 +319,7 @@ public class PlayerTeleportationBehavior
 			//go down to first solid land with air above.
 			validBlockPos = new BlockPos(
 					blockpos.getX(),
-					BzPlacingUtils.topOfSurfaceBelowHeightThroughWater(bumblezoneWorld, blockpos.getY(), 0, blockpos) + 1,
+					BzPlacingUtils.topOfSurfaceBelowHeightThroughWater(bumblezoneWorld, blockpos.getY()+50, 0, blockpos) + 1,
 					blockpos.getZ());
 
 			//No solid land was found. Who digs out an entire chunk?!

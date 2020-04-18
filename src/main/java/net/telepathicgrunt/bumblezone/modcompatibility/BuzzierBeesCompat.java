@@ -27,8 +27,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
-import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 
 public class BuzzierBeesCompat
@@ -39,7 +39,7 @@ public class BuzzierBeesCompat
 	{
 		ModChecking.buzzierBeesPresent = true;
 		
-		if(BzConfig.spawnHoneySlimeMob)
+		if(Bumblezone.BzConfig.spawnHoneySlimeMob.get())
 			BzChunkGenerator.MOBS_SLIME_ENTRY = new Biome.SpawnListEntry(BBEntities.HONEY_SLIME.get(), 1, 1, 1);
 
 		//unused and not needed. Won't work anyway use the Honey Slime's super restrictive spawning.
@@ -111,7 +111,7 @@ public class BuzzierBeesCompat
 							//uses WAX_BLOCK for very top layer of land lower than sealevel area
 							if (ypos <= seaLevel + 2 + Math.max(noise, 0) + random.nextInt(2))
 							{
-								if(BzConfig.waxBlocksWorldgen) 
+								if(Bumblezone.BzConfig.waxBlocksWorldgen.get()) 
 								{
 									chunk.setBlockState(blockpos$Mutable, WAX_BLOCK, false);
 								}
@@ -126,7 +126,7 @@ public class BuzzierBeesCompat
 							//uses CRYSTALLIZED_HONEY_BLOCK for very top layer of land higher than sealevel area
 							if (ypos > seaLevel + 2 + Math.max(noise, 0) + random.nextInt(2))
 							{
-								if(BzConfig.crystallizedHoneyWorldgen) 
+								if(Bumblezone.BzConfig.crystallizedHoneyWorldgen.get()) 
 								{
 									chunk.setBlockState(blockpos$Mutable, CRYSTALLIZED_HONEY_BLOCK, false);
 								}
