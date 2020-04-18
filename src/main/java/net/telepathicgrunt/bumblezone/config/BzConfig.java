@@ -276,7 +276,7 @@ public class BzConfig
 	            builder.pop();
 	            
 
-	            builder.push("Buzzier Bees Options");
+	            builder.push("Beesourceful Options");
 	            
 	            	spawnBeesourcefulBeesMob = subscriber.subscribe(builder
 			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
