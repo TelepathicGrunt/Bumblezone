@@ -34,7 +34,7 @@ public class CaveSugarWaterfall extends Feature<NoFeatureConfig>
 		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position);
 		BlockState blockstate = world.getBlockState(blockpos$Mutable.up());
 
-		if (!blockstate.isSolid())
+		if (!blockstate.isSolid() || blockstate.getBlock().getRegistryName().getPath().contains("honey"))
 		{
 			return false;
 		}
@@ -46,7 +46,7 @@ public class CaveSugarWaterfall extends Feature<NoFeatureConfig>
 			int neededNumberOfSides = 0;
 			blockstate = world.getBlockState(blockpos$Mutable.down());
 
-			if (blockstate.isSolid())
+			if (blockstate.isSolid() && blockstate.getBlock().getRegistryName().getPath().contains("honey"))
 			{
 				neededNumberOfSides = 3;
 			}
@@ -62,7 +62,7 @@ public class CaveSugarWaterfall extends Feature<NoFeatureConfig>
 			for (Direction face : Direction.Plane.HORIZONTAL)
 			{
 				blockstate = world.getBlockState(blockpos$Mutable.offset(face));
-				if (blockstate.isSolid())
+				if (blockstate.isSolid() && blockstate.getBlock().getRegistryName().getPath().contains("honey"))
 				{
 					++numberOfSolidSides;
 				}
