@@ -27,6 +27,7 @@ public class BzConfig
 		public ConfigValueListener<Boolean> forceExitToOverworld;
 		public ConfigValueListener<String> requiredBlockUnderHive;
 		public ConfigValueListener<Boolean> warnPlayersOfWrongBlockUnderHive;
+		public ConfigValueListener<Boolean> allowTeleportationWithModdedBeehives;
 		
 		//mod compatibility
 		public ConfigValueListener<Boolean> spawnHoneySlimeMob;
@@ -122,6 +123,15 @@ public class BzConfig
 		                    		+" block is needed under the Bee Nest/Beehive to teleport to the dimension.\r\n")
 		                    .translation("the_bumblezone.config.dimension.warnplayersofwrongblockunderhive")
 		                    .define("warnPlayersOfWrongBlockUnderHive", true));
+
+	            
+	            allowTeleportationWithModdedBeehives = subscriber.subscribe(builder
+		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		                    		+" Should teleporting to and from The Bumblezone work \r\n"
+		                    		+" with modded Bee Nests and modded Beehives as well. \r\n")
+		                    .translation("the_bumblezone.config.dimension.allowteleportationwithmoddedbeehives")
+		                    .define("allowTeleportationWithModdedBeehives", false));
+	            
 	        builder.pop();
 	        
 	        builder.push("Wrath of the Hive Options");

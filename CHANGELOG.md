@@ -34,6 +34,14 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 -Added new config options to let players specify if a certain block needs to be under the Bee Nest/Beehive to teleport to The Bumblezone dimension.
  
+-Added new config so players can allow or disallow teleporting to and from Bumblezone with modded Bee Nests or modded Beehive blocks.
+
+##### Teleportation: 
+
+-Throwing Enderpearls at all blocks that extends BeehiveBlock (includes modded and vanilla's BeeNests and BeeHive blocks) will teleport you into the dimension!
+
+-Adjusted teleporting so teleporting to Bumblezone dimension from underground will spawn you trapped underground in the dimension less often.
+ 
 ##### Mobs: 
 
 -Bees will now no longer switch to attacking nearby passive players if they are angered by another mob/player. They will only attack entities with Wrath of the Hive effect in the dimension so there is no more collateral damage anymore.
@@ -60,12 +68,6 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 -Added Sugar Water Bottle! To get this, use an empty Glass Bottle on Sugar Water. If you drink a Sugar Water Bottle, you restore a tiny bit of hungry but get Haste 1 effect for a short period of time!
 
-##### Teleportation: 
-
--Throwing Enderpearls at all blocks that extends BeehiveBlock (includes modded and vanilla's BeeNests and BeeHive blocks) will teleport you into the dimension!
-
--Adjusted teleporting so teleporting to Bumblezone dimension from underground will spawn you trapped underground in the dimension less often.
- 
 ##### Generation: 
 
 -The dimension uses Air instead of Cave Air to help with feature generation.

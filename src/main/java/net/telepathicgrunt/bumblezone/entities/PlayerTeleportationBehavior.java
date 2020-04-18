@@ -80,21 +80,21 @@ public class PlayerTeleportationBehavior
 				//even through the pearl hit the block directly.
 				for(double offset = -0.1D; offset <= 0.1D; offset += 0.1D) {
 					Block block = world.getBlockState(new BlockPos(hitBlockPos.add(offset, 0, 0))).getBlock();
-					if(block instanceof BeehiveBlock) {
+					if(isValidBeeHive(block)) {
 						hitHive = true;
 						hivePos = new BlockPos(hitBlockPos.add(offset, 0, 0));
 						break;
 					}
 					
 					block = world.getBlockState(new BlockPos(hitBlockPos.add(0, offset, 0))).getBlock();
-					if(block instanceof BeehiveBlock) {
+					if(isValidBeeHive(block)) {
 						hitHive = true;
 						hivePos = new BlockPos(hitBlockPos.add(offset, 0, 0));
 						break;
 					}
 					
 					block = world.getBlockState(new BlockPos(hitBlockPos.add(0, 0, offset))).getBlock();
-					if(block instanceof BeehiveBlock) {
+					if(isValidBeeHive(block)) {
 						hitHive = true;
 						hivePos = new BlockPos(hitBlockPos.add(offset, 0, 0));
 						break;
@@ -452,7 +452,7 @@ public class PlayerTeleportationBehavior
 						{
 							mutableBlockPos.setPos(position.getX() + x2, mutableBlockPos.getY(), position.getZ() + z2);
 							
-							if (world.getBlockState(mutableBlockPos).getBlock() instanceof BeehiveBlock)
+							if (isValidBeeHive(world.getBlockState(mutableBlockPos).getBlock()))
 							{
 								//A Hive was found, try to find a valid spot next to it
 								BlockPos validSpot = validPlayerSpawnLocation(world, mutableBlockPos, 4);
@@ -554,5 +554,14 @@ public class PlayerTeleportationBehavior
 		}
 		
 		return null;
+	}
+	
+	private static boolean isValidBeeHive(Block block) {
+		if(block instanceof BeehiveBlock) {
+			if(Bumblezone.BzConfig.allowTeleportationWithModdedBeehives.get() || block.getRegistryName().getNamespace().equals("minecraft")) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
