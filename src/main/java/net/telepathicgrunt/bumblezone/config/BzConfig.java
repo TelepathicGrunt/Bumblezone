@@ -130,7 +130,7 @@ public class BzConfig
 		                    		+" Should teleporting to and from The Bumblezone work \r\n"
 		                    		+" with modded Bee Nests and modded Beehives as well. \r\n")
 		                    .translation("the_bumblezone.config.dimension.allowteleportationwithmoddedbeehives")
-		                    .define("allowTeleportationWithModdedBeehives", false));
+		                    .define("allowTeleportationWithModdedBeehives", true));
 	            
 	        builder.pop();
 	        
