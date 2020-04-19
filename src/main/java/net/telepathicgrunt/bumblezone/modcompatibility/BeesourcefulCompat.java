@@ -9,7 +9,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
@@ -55,7 +54,6 @@ public class BeesourcefulCompat
 	}
 	
 	//1/15th of bees spawning will also spawn BeeSourceful bees
-	@SuppressWarnings("deprecation")
 	public static void BSMobSpawnEvent(LivingSpawnEvent.CheckSpawn event)
 	{
 		MobEntity entity = (MobEntity)event.getEntity();
