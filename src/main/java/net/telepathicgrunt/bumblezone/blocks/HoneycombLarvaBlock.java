@@ -186,9 +186,10 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 					if (!world.getBlockState(blockpos).getMaterial().isSolid())
 					{
 						MobEntity beeEntity = EntityType.BEE.create(world);
+						beeEntity.setLocationAndAngles(blockpos.getX()+0.5f, blockpos.getY(), blockpos.getZ()+0.5f, world.getRandom().nextFloat() * 360.0F, 0.0F);
+						
 						if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(beeEntity, world, blockpos.getX()+0.5f, blockpos.getY(), blockpos.getZ()+0.5f, null, SpawnReason.TRIGGERED) != -1)
 						{
-							beeEntity.setLocationAndAngles(blockpos.getX()+0.5f, blockpos.getY(), blockpos.getZ()+0.5f, world.getRandom().nextFloat() * 360.0F, 0.0F);
 							ILivingEntityData ilivingentitydata = null;
 							ilivingentitydata = beeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beeEntity)), SpawnReason.TRIGGERED, ilivingentitydata, (CompoundNBT) null);
 							world.addEntity(beeEntity);
@@ -280,9 +281,10 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 				if (stage == 3 && !world.getBlockState(blockpos).getMaterial().isSolid())
 				{
 					MobEntity beeEntity = EntityType.BEE.create(world);
+					beeEntity.setLocationAndAngles(blockpos.getX(), blockpos.getY(), blockpos.getZ(), world.getRandom().nextFloat() * 360.0F, 0.0F);
+					
 					if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(beeEntity, world, blockpos.getX(), blockpos.getY(), blockpos.getZ(), null, SpawnReason.TRIGGERED) != -1)
 					{
-						beeEntity.setLocationAndAngles(blockpos.getX(), blockpos.getY(), blockpos.getZ(), world.getRandom().nextFloat() * 360.0F, 0.0F);
 						ILivingEntityData ilivingentitydata = null;
 						ilivingentitydata = beeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beeEntity)), SpawnReason.TRIGGERED, ilivingentitydata, (CompoundNBT) null);
 						world.addEntity(beeEntity);

@@ -61,7 +61,7 @@ public class BuzzierBeesCompat
 			while(world.getBlockState(blockpos).isAir()) {
 				blockpos.move(Direction.DOWN);
 			}
-			blockpos.move(Direction.UP);
+			blockpos.move(Direction.UP, 2);
 			
 			slimeentity.setLocationAndAngles(blockpos.getX(), blockpos.getY(), blockpos.getZ(), world.getRandom().nextFloat() * 360.0F, 0.0F);
 			ILivingEntityData ilivingentitydata = null;

@@ -64,7 +64,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
    
 -Walking on Filled Porous Honeycomb Block will now slightly slow your movement due to the sticky honey.
           
--Honeycomb Larva Block is now added! They will grow a larva inside it through 4 stages and on the final stage, it will spawn a bee if there is less than 10 bees within 50 blocks of the block. The larva will grow faster in The Bumblezone dimension than any other dimension. You can use a Honey Bottle to speed up growing by hand or by using a Dispenser on the block. if you use a Glass Bottle, it will kill the larva but you get honey and a bunch of angry bees coming!
+-Honeycomb Larva Block is now added! They will grow a larva inside it through 4 stages and on the final stage, it will spawn a bee if there is less than 10 bees within 50 blocks of the block. The larva will grow faster in The Bumblezone dimension than any other dimension. You can use a Honey Bottle to speed up growing by hand or by using a Dispenser on the block. if you use a Glass Bottle, it will kill the larva but you get honey and a bunch of angry bees coming! If Buzzier Bees is on, it may also sometimes spawn a Honey Slime mob. And if Beesourceful is on, it can sometimes spawn a Beesourceful's resource bee mob.
   
 -Added Dead Honeycomb Larva Block that is created when using a Glass Bottle on a Honeycomb Larva Block. This block is decorative and serves no other use. It's dead. :(
 

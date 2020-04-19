@@ -91,11 +91,7 @@ public class BeesourcefulCompat
 			}
 			
 			
-			//move down 2 if possible so this bee spawns below the bees cluster it's spawning with
 			BlockPos.Mutable blockpos = new BlockPos.Mutable(entity.getPosition());
-			if(world.getBlockState(blockpos.down(2)).isAir()) {
-				blockpos.move(Direction.DOWN, 2);
-			}
 			
 			beesourcefulBeeEntity.setLocationAndAngles(blockpos.getX(), blockpos.getY(), blockpos.getZ(), world.getRandom().nextFloat() * 360.0F, 0.0F);
 			ILivingEntityData ilivingentitydata = null;
