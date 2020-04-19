@@ -46,18 +46,19 @@ public class PotionOfBeesCompat
 	{
 		Entity thrownEntity = event.getEntity(); 
 
-		if(event.getEntity() instanceof SplashPotionOfBeesEntity) {
+		if(thrownEntity instanceof SplashPotionOfBeesEntity) {
 			World world = thrownEntity.world; // world we threw in
 			Vec3d hitBlockPos = event.getRayTraceResult().getHitVec(); //position of the collision
 			BlockPos originalPosition = new BlockPos(hitBlockPos);
 			BlockPos.Mutable position = new BlockPos.Mutable(originalPosition);
+			BlockState block;
 			
 			//revive nearby larva blocks
 			for(int x = -1; x <= 1; x++) {
-				for(int z = -1; z <= 1; z++) {
-					for(int y = -1; y <= 1; y++) {
+				for(int y = -1; y <= 1; y++) {
+					for(int z = -1; z <= 1; z++) {
 						position.setPos(originalPosition).move(x, y, z);
-						BlockState block = world.getBlockState(position);
+						block = world.getBlockState(position);
 						
 						if(block.getBlock() == BzBlocks.DEAD_HONEYCOMB_LARVA.get()) 
 						{

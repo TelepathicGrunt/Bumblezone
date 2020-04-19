@@ -8,7 +8,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
@@ -37,16 +36,14 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid
 	public void randomTick(World world, BlockPos position, IFluidState state, Random random)
 	{
 		//only attempts to grow sugar cane 50% of the time.
-		if (!world.isAreaLoaded(position, 1) || random.nextBoolean())
+		if (random.nextBoolean() || !world.isAreaLoaded(position, 1))
 			return; // Forge: prevent loading unloaded chunks when checking neighbor's light
 
 		//check one of the spot next to sugar water for sugar cane to grow
-		Direction offset = Direction.byHorizontalIndex(random.nextInt(4));
-		BlockPos.Mutable blockPos = new BlockPos.Mutable(position);
-		blockPos.move(Direction.UP);
-		blockPos.move(offset);
-
+		BlockPos.Mutable blockPos = new BlockPos.Mutable(position.up());
+		blockPos.move(Direction.byHorizontalIndex(random.nextInt(4)));
 		BlockState blockstate = world.getBlockState(blockPos);
+		
 		if (blockstate.getBlock() == Blocks.SUGAR_CANE)
 		{
 			int height = 1;
@@ -113,7 +110,7 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid
 	@Override
 	public boolean isEquivalentTo(Fluid fluidIn)
 	{
-		return fluidIn == Fluids.WATER || fluidIn == Fluids.FLOWING_WATER || fluidIn == BzBlocks.SUGAR_WATER_FLUID.get() || fluidIn == BzBlocks.SUGAR_WATER_FLUID_FLOWING.get();
+		return fluidIn == BzBlocks.SUGAR_WATER_FLUID.get() || fluidIn == BzBlocks.SUGAR_WATER_FLUID_FLOWING.get();
 	}
 
 	public static class Flowing extends SugarWaterFluid
