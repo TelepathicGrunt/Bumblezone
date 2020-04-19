@@ -11,6 +11,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -31,6 +32,7 @@ import net.telepathicgrunt.bumblezone.utils.ConfigHelper;
 
 
 // The value here should match an entry in the META-INF/mods.toml file
+@SuppressWarnings("deprecation")
 @Mod(Bumblezone.MODID)
 public class Bumblezone
 {
@@ -62,10 +64,17 @@ public class Bumblezone
 	private void setup(final FMLCommonSetupEvent event)
 	{
 		CapabilityPlayerPosAndDim.register();
-		ModChecking.setupModCompat();
-		BzBiomes.addVanillaSlimeMobs();
 		SugarWaterEvents.setup();
 		BzBaseBiome.addSprings();
+		
+		DeferredWorkQueue.runLater(Bumblezone::lateSetup);
+	}
+
+	//should run after most other mods just in case
+	private static void lateSetup()
+	{
+		ModChecking.setupModCompat();
+		BzBiomes.addVanillaSlimeMobs();
 	}
 
 	// You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD

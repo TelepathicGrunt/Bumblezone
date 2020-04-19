@@ -65,8 +65,6 @@ public class FilledPorousHoneycombBlock extends Block
 	@SuppressWarnings("deprecation")
 	public ActionResultType onBlockActivated(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult)
 	{
-		if (!world.isRemote)
-		{
 			ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
 			/*
@@ -114,7 +112,6 @@ public class FilledPorousHoneycombBlock extends Block
 					}
 				}
 			}
-		}
 		return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
 	}
 

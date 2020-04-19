@@ -1,7 +1,5 @@
 package net.telepathicgrunt.bumblezone.modcompatibility;
 
-import com.bagel.buzzierbees.common.dispenser.BeeBottleDispenseBehavior;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
@@ -16,7 +14,7 @@ import net.telepathicgrunt.bumblezone.blocks.DeadHoneycombLarvaBlock;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombLarvaBlock;
 
 
-public class BuzzierBeeBottledBeeDispenseBehavior extends DefaultDispenseItemBehavior
+public class PotionOfBeesBeePotionDispenseBehavior extends DefaultDispenseItemBehavior
 {
 	/**
 	 * Dispense the specified stack, play the dispense sound and spawn particles.
@@ -30,13 +28,13 @@ public class BuzzierBeeBottledBeeDispenseBehavior extends DefaultDispenseItemBeh
 
 		if (blockstate.getBlock() == BzBlocks.DEAD_HONEYCOMB_LARVA.get())
 		{
-			world.setBlockState(position, BzBlocks.HONEYCOMB_LARVA.get().getDefaultState().with(HoneycombLarvaBlock.FACING, blockstate.get(DeadHoneycombLarvaBlock.FACING)).with(HoneycombLarvaBlock.STAGE, Integer.valueOf(0)));
+			world.setBlockState(position, BzBlocks.HONEYCOMB_LARVA.get().getDefaultState().with(HoneycombLarvaBlock.FACING, blockstate.get(DeadHoneycombLarvaBlock.FACING)).with(HoneycombLarvaBlock.STAGE, Integer.valueOf(world.rand.nextInt(3))));
 			stack.shrink(1);
 			return new ItemStack(Items.GLASS_BOTTLE);
 		}
 		else
 		{
-			return new BeeBottleDispenseBehavior().dispenseStack(source, stack);
+			return super.dispenseStack(source, stack);
 		}
 	}
 
