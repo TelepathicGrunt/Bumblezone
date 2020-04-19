@@ -6,9 +6,11 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DirectionalBlock;
+import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.EntityType;
@@ -46,6 +48,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
+import net.telepathicgrunt.bumblezone.items.HoneyBottleDispenseBehavior;
 import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
@@ -53,11 +56,13 @@ import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 public class HoneycombLarvaBlock extends DirectionalBlock
 {
 	public static final IntegerProperty STAGE = BlockStateProperties.AGE_0_3;
+    private final DefaultDispenseItemBehavior behaviourDefaultDispenseItem = new HoneyBottleDispenseBehavior();
 
 	public HoneycombLarvaBlock()
 	{
 		super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).tickRandomly().hardnessAndResistance(0.5F).speedFactor(0.85F).sound(SoundType.CORAL));
-	      this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.SOUTH).with(STAGE, Integer.valueOf(0)));
+		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.SOUTH).with(STAGE, Integer.valueOf(0)));
+		DispenserBlock.registerDispenseBehavior(Items.HONEY_BOTTLE, behaviourDefaultDispenseItem);
 	}
 
 	@Override
