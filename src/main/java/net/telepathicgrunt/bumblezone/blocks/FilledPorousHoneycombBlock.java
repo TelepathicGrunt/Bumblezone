@@ -110,12 +110,9 @@ public class FilledPorousHoneycombBlock extends Block
 				if(action == ActionResultType.SUCCESS) {
 					return action;
 				}
-				
-				return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
 			}
-			else {
-				return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
-			}
+			
+			return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
 		}
 	}
 
