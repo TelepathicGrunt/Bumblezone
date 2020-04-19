@@ -194,7 +194,7 @@ public class BuzzierBeesCompat
 	public static ActionResultType honeyWandTakingHoney(ItemStack itemstack, BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand) {
 		if (itemstack.getItem() == BBItems.HONEY_WAND.get())
 		{
-			if (!world.isRemote && !playerEntity.isCrouching())
+			if (!playerEntity.isCrouching())
 			{
 				if(!playerEntity.isCreative())
 				{
@@ -211,7 +211,7 @@ public class BuzzierBeesCompat
 	public static ActionResultType honeyWandGivingHoney(ItemStack itemstack, BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand) {
 		if (itemstack.getItem() == BBItems.STICKY_HONEY_WAND.get())
 		{
-			if (!world.isRemote && !playerEntity.isCrouching())
+			if (!playerEntity.isCrouching())
 			{
 				if(!playerEntity.isCreative())
 				{
@@ -228,7 +228,7 @@ public class BuzzierBeesCompat
 	public static ActionResultType bottledBeeInteract(ItemStack itemstack, BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand) {
 		if (itemstack.getItem() == BBItems.BOTTLE_OF_BEE.get())
 		{
-			if (!world.isRemote && !playerEntity.isCrouching())
+			if (!playerEntity.isCrouching())
 			{
 				if(!playerEntity.isCreative())
 				{
