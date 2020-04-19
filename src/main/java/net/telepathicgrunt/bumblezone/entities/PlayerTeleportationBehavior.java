@@ -89,14 +89,14 @@ public class PlayerTeleportationBehavior
 					block = world.getBlockState(new BlockPos(hitBlockPos.add(0, offset, 0))).getBlock();
 					if(isValidBeeHive(block)) {
 						hitHive = true;
-						hivePos = new BlockPos(hitBlockPos.add(offset, 0, 0));
+						hivePos = new BlockPos(hitBlockPos.add(0, offset, 0));
 						break;
 					}
 					
 					block = world.getBlockState(new BlockPos(hitBlockPos.add(0, 0, offset))).getBlock();
 					if(isValidBeeHive(block)) {
 						hitHive = true;
-						hivePos = new BlockPos(hitBlockPos.add(offset, 0, 0));
+						hivePos = new BlockPos(hitBlockPos.add(0, 0, offset));
 						break;
 					}
 				}

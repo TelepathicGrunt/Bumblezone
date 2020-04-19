@@ -3,11 +3,21 @@ package net.telepathicgrunt.bumblezone.modcompatibility;
 import org.apache.logging.log4j.Level;
 
 import com.github.commoble.potionofbees.ResourceLocations;
+import com.github.commoble.potionofbees.SplashPotionOfBeesEntity;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.entity.Entity;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.ProjectileImpactEvent.Throwable;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.blocks.HoneycombLarvaBlock;
 
 public class PotionOfBeesCompat
 {
@@ -30,5 +40,39 @@ public class PotionOfBeesCompat
 		else {
 			Bumblezone.LOGGER.log(Level.WARN, "Error trying to change the dispenser behavior for Potion of Bee's bee splash potion item. Please report this issue to Bumblezone author.");
 		}
+	}
+
+	public static void POBReviveLarvaBlockEvent(Throwable event)
+	{
+		Entity thrownEntity = event.getEntity(); 
+
+		if(event.getEntity() instanceof SplashPotionOfBeesEntity) {
+			World world = thrownEntity.world; // world we threw in
+			Vec3d hitBlockPos = event.getRayTraceResult().getHitVec(); //position of the collision
+			BlockPos originalPosition = new BlockPos(hitBlockPos);
+			BlockPos.Mutable position = new BlockPos.Mutable(originalPosition);
+			
+			//revive nearby larva blocks
+			for(int x = -1; x <= 1; x++) {
+				for(int z = -1; z <= 1; z++) {
+					for(int y = -1; y <= 1; y++) {
+						position.setPos(originalPosition).move(x, y, z);
+						BlockState block = world.getBlockState(position);
+						
+						if(block.getBlock() == BzBlocks.DEAD_HONEYCOMB_LARVA.get()) 
+						{
+							reviveLarvaBlock(world, block, position);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private static void reviveLarvaBlock(World world, BlockState state, BlockPos position) {
+		world.setBlockState(position, 
+				BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
+				.with(BlockStateProperties.FACING, state.get(BlockStateProperties.FACING))
+				.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(world.rand.nextInt(3))));
 	}
 }
