@@ -65,53 +65,53 @@ public class FilledPorousHoneycombBlock extends Block
 	@SuppressWarnings("deprecation")
 	public ActionResultType onBlockActivated(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult)
 	{
-			ItemStack itemstack = playerEntity.getHeldItem(playerHand);
+		ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
-			/*
-			 * Player is harvesting the honey from this block if it is filled with honey
-			 */
-			if (itemstack.getItem() == Items.GLASS_BOTTLE)
+		/*
+		 * Player is harvesting the honey from this block if it is filled with honey
+		 */
+		if (itemstack.getItem() == Items.GLASS_BOTTLE)
+		{
+			world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), 3); // removed honey from this block
+			world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+
+			if (!playerEntity.isCreative())
 			{
-				world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), 3); // removed honey from this block
-				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+				itemstack.shrink(1); // remove current empty bottle
 
-				if (!playerEntity.isCreative())
+				if (itemstack.isEmpty())
 				{
-					itemstack.shrink(1); // remove current empty bottle
-
-					if (itemstack.isEmpty())
-					{
-						playerEntity.setHeldItem(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
-					}
-					else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
-					{
-						playerEntity.dropItem(new ItemStack(Items.HONEY_BOTTLE), false); // drops honey bottle if inventory is full
-					}
+					playerEntity.setHeldItem(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
 				}
-
-				if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
+				else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
 				{
-					//Now all bees nearby in Bumblezone will get VERY angry!!!
-					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
-				}
-
-				return ActionResultType.SUCCESS;
-			}
-			else
-			{
-				//allow compat with honey wand use
-				if (ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowHoneyWandCompat.get())
-				{
-					ActionResultType action = BuzzierBeesRedirection.honeyWandTakingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
-					if (action == ActionResultType.SUCCESS)
-					{
-						world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), 3); // remove honey from this block
-						world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-
-						return action;
-					}
+					playerEntity.dropItem(new ItemStack(Items.HONEY_BOTTLE), false); // drops honey bottle if inventory is full
 				}
 			}
+
+			if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
+			{
+				//Now all bees nearby in Bumblezone will get VERY angry!!!
+				playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
+			}
+
+			return ActionResultType.SUCCESS;
+		}
+		else
+		{
+			//allow compat with honey wand use
+			if (ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowHoneyWandCompat.get())
+			{
+				ActionResultType action = BuzzierBeesRedirection.honeyWandTakingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+				if (action == ActionResultType.SUCCESS)
+				{
+					world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), 3); // remove honey from this block
+					world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+
+					return action;
+				}
+			}
+		}
 		return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
 	}
 

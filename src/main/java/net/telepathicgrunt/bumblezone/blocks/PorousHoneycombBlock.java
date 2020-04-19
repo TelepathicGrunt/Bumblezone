@@ -36,44 +36,46 @@ public class PorousHoneycombBlock extends Block
 	@SuppressWarnings("deprecation")
 	public ActionResultType onBlockActivated(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult)
 	{
-			ItemStack itemstack = playerEntity.getHeldItem(playerHand);
-			/*
-			 * Player is adding honey to this block if it is not filled with honey
-			 */
-			if (itemstack.getItem() == Items.HONEY_BOTTLE)
+		ItemStack itemstack = playerEntity.getHeldItem(playerHand);
+		/*
+		 * Player is adding honey to this block if it is not filled with honey
+		 */
+		if (itemstack.getItem() == Items.HONEY_BOTTLE)
+		{
+			world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 3); // added honey to this block
+			world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+
+			if (!playerEntity.isCreative())
 			{
-				world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 3); // added honey to this block
-				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-				
-				if(!playerEntity.isCreative())
+				itemstack.shrink(1); // remove current honey bottle
+
+				if (itemstack.isEmpty())
 				{
-					itemstack.shrink(1); // remove current honey bottle
-	
-					if (itemstack.isEmpty())
-					{
-						playerEntity.setHeldItem(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places empty bottle in hand
-					}
-					else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE))) // places empty bottle in inventory
-					{
-						playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false); // drops empty bottle if inventory is full
-					}
+					playerEntity.setHeldItem(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places empty bottle in hand
 				}
-	
-				return ActionResultType.SUCCESS;
+				else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE))) // places empty bottle in inventory
+				{
+					playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false); // drops empty bottle if inventory is full
+				}
 			}
-			else
+
+			return ActionResultType.SUCCESS;
+		}
+		else
+		{
+			//allow compat with honey wand use
+			if (ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowHoneyWandCompat.get())
 			{
-				//allow compat with honey wand use
-				if(ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowHoneyWandCompat.get()) {
-					ActionResultType action = BuzzierBeesRedirection.honeyWandGivingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
-					if(action == ActionResultType.SUCCESS) {
-						world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 3); // added honey to this block
-						world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-						
-						return action;
-					}
+				ActionResultType action = BuzzierBeesRedirection.honeyWandGivingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+				if (action == ActionResultType.SUCCESS)
+				{
+					world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 3); // added honey to this block
+					world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+
+					return action;
 				}
 			}
+		}
 		return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
 	}
 }

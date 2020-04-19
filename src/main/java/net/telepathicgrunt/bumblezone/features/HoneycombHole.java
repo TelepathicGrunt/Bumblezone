@@ -16,6 +16,7 @@ import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.blocks.HoneycombLarvaBlock;
 
 
 public class HoneycombHole extends Feature<NoFeatureConfig>
@@ -40,7 +41,7 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 		 {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0}
 		};
 	
-	private int[][] largeHoneyLayout = 
+	private static final int[][] largeHoneyLayout = 
 		{
 		 {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
 		 {0, 0, 0, 1, 1, 2, 2, 1, 1, 0, 0, 0},
@@ -60,8 +61,8 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 		 {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
 		 {0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0},
 		 {0, 0, 0, 1, 1, 2, 2, 1, 1, 0, 0, 0},
-		 {0, 0, 1, 1, 2, 2, 2, 2, 1, 1, 0, 0},
-		 {0, 0, 1, 1, 2, 2, 2, 2, 1, 1, 0, 0},
+		 {0, 0, 1, 1, 2, 5, 5, 2, 1, 1, 0, 0},
+		 {0, 0, 1, 1, 2, 5, 5, 2, 1, 1, 0, 0},
 		 {0, 0, 0, 1, 1, 2, 2, 1, 1, 0, 0, 0},
 		 {0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0},
 		 {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
@@ -94,23 +95,23 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 	{
 		BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(position);
 		
-		generateSlice(world, mutableBlockPos, endCapLayout, rand);
-		generateSlice(world, mutableBlockPos.move(Direction.EAST), smallHoneyLayout, rand);
-		generateSlice(world, mutableBlockPos.move(Direction.EAST), largeHoneyLayout, rand);
-		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout, rand);
-		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout, rand);
-		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout, rand);
-		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout, rand);
-		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout, rand);
-		generateSlice(world, mutableBlockPos.move(Direction.EAST), largeHoneyLayout, rand);
-		generateSlice(world, mutableBlockPos.move(Direction.EAST), smallHoneyLayout, rand);
-		generateSlice(world, mutableBlockPos.move(Direction.EAST), endCapLayout, rand);
+		generateSlice(world, mutableBlockPos, endCapLayout, rand, true);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), smallHoneyLayout, rand, true);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), largeHoneyLayout, rand, true);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout, rand, true);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout, rand, true);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout, rand, false);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout, rand, false);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout, rand, false);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), largeHoneyLayout, rand, false);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), smallHoneyLayout, rand, false);
+		generateSlice(world, mutableBlockPos.move(Direction.EAST), endCapLayout, rand, false);
 		
 			
 		return true;
 	}
 	
-	private void generateSlice(IWorld world, BlockPos.Mutable centerPos, int[][] slice, Random rand)
+	private void generateSlice(IWorld world, BlockPos.Mutable centerPos, int[][] slice, Random rand, boolean westEnd)
 	{
 		//move to the position where the corner of the slice will begin at
 		BlockPos.Mutable currentPosition = new BlockPos.Mutable(centerPos.add(-5, slice.length/2, -slice[0].length/2));
@@ -168,6 +169,29 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 						else
 						{
 							world.setBlockState(currentPosition, SUGAR_WATER, 2);
+						}
+					}
+					else if(sliceBlock == 5)
+					{
+						//reduced HONEY_BLOCK spawn rate 
+						int chance = rand.nextInt(10);
+						if(chance <= 3)
+						{
+							Direction facing;
+							if(westEnd)
+								facing = Direction.WEST;
+							else
+								facing = Direction.EAST;
+								
+							world.setBlockState(currentPosition, BzBlocks.HONEYCOMB_LARVA.get().getDefaultState().with(HoneycombLarvaBlock.STAGE, Integer.valueOf(rand.nextInt(3))).with(HoneycombLarvaBlock.FACING, facing), 2);
+						}
+						else if(chance <= 6)
+						{
+							world.setBlockState(currentPosition, FILLED_POROUS_HONEYCOMB, 2);
+						}
+						else
+						{
+							world.setBlockState(currentPosition, HONEY_BLOCK, 2);
 						}
 					}
 				}

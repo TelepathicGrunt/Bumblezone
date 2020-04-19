@@ -66,28 +66,25 @@ public class DeadHoneycombLarvaBlock extends DirectionalBlock
 	@SuppressWarnings("deprecation")
 	public ActionResultType onBlockActivated(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult)
 	{
-		if (!world.isRemote)
+		ItemStack itemstack = playerEntity.getHeldItem(playerHand);
+
+		//MOD COMPAT
+
+		/*
+		 * Buzzier Bees honey wand compat
+		 */
+		if (ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowHoneyWandCompat.get())
 		{
-			ItemStack itemstack = playerEntity.getHeldItem(playerHand);
-
-			//MOD COMPAT
-
 			/*
-			 * Buzzier Bees honey wand compat
+			 * Player is trying to revive the block
 			 */
-			if (ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowHoneyWandCompat.get())
+			ActionResultType action = BuzzierBeesRedirection.bottledBeeInteract(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+			if (action == ActionResultType.SUCCESS)
 			{
-				/*
-				 * Player is trying to revive the block
-				 */
-				ActionResultType action = BuzzierBeesRedirection.bottledBeeInteract(itemstack, thisBlockState, world, position, playerEntity, playerHand);
-				if (action == ActionResultType.SUCCESS)
-				{
-					world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-					world.setBlockState(position, BzBlocks.HONEYCOMB_LARVA.get().getDefaultState().with(HoneycombLarvaBlock.STAGE, Integer.valueOf(0)));
+				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+				world.setBlockState(position, BzBlocks.HONEYCOMB_LARVA.get().getDefaultState().with(HoneycombLarvaBlock.STAGE, Integer.valueOf(0)));
 
-					return action;
-				}
+				return action;
 			}
 		}
 

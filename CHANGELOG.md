@@ -60,6 +60,10 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 -Nerfed spawnrate of Phantoms some more.
 
+-Increased Spider spawnrates.
+
+-Cave Spider can spawn in Hive Wall biomes now. 
+
 ##### Blocks: 
 
 -Added Sugar Water fluid to spawn in The Bumblezone instead of regular water! Swimming in this fluid is slightly slower than swimming in water due to the excess of sugar in it. If bees swim in the Sugar Water and aren't taking damage, the bees will sip the water and heal themselves very slowly. Also, any Sugar Cane placed next to a Sugar Water block will grow faster and taller (up to 5 blocks high!)
@@ -81,6 +85,8 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 -The dimension uses Air instead of Cave Air to help with feature generation.
 
 -Honeycomb Holes now only generate exposed to the air and not completely buried underground.
+
+-Honeycomb Holes now will generate with Honeycomb Larva Block at various stages in its life cycle!
 
 ## (V.1.1.0 Changes) (1.15.2 Minecraft)
       

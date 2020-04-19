@@ -123,48 +123,47 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 	{
 		ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
-		if (!world.isRemote)
+		//VANILLA COMPAT
+		/*
+		 * Player is taking honey and killing larva
+		 */
+		if (itemstack.getItem() == Items.GLASS_BOTTLE)
 		{
+			world.setBlockState(position, BzBlocks.DEAD_HONEYCOMB_LARVA.get().getDefaultState().with(BlockStateProperties.FACING, thisBlockState.get(BlockStateProperties.FACING)), 3); // removed honey from this block
 
-			//VANILLA COMPAT
-			/*
-			 * Player is taking honey and killing larva
-			 */
-			if (itemstack.getItem() == Items.GLASS_BOTTLE)
+			//spawn angry bee if at final stage and front isn't blocked off
+			int stage = thisBlockState.get(STAGE);
+			spawnBee(world, thisBlockState, position, stage);
+			world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+
+			if (!playerEntity.isCreative())
 			{
-				world.setBlockState(position, BzBlocks.DEAD_HONEYCOMB_LARVA.get().getDefaultState().with(BlockStateProperties.FACING, thisBlockState.get(BlockStateProperties.FACING)), 3); // removed honey from this block
+				itemstack.shrink(1); // remove current empty bottle
 
-				//spawn angry bee if at final stage and front isn't blocked off
-				int stage = thisBlockState.get(STAGE);
-				spawnBee(world, thisBlockState, position, stage);
-				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-
-				if (!playerEntity.isCreative())
+				if (itemstack.isEmpty())
 				{
-					itemstack.shrink(1); // remove current empty bottle
-
-					if (itemstack.isEmpty())
-					{
-						playerEntity.setHeldItem(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
-					}
-					else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
-					{
-						playerEntity.dropItem(new ItemStack(Items.HONEY_BOTTLE), false); // drops honey bottle if inventory is full
-					}
+					playerEntity.setHeldItem(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
 				}
-
-				if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
+				else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
 				{
-					//Now all bees nearby in Bumblezone will get VERY angry!!!
-					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
+					playerEntity.dropItem(new ItemStack(Items.HONEY_BOTTLE), false); // drops honey bottle if inventory is full
 				}
-
-				return ActionResultType.SUCCESS;
 			}
-			/*
-			 * Player is feeding larva
-			 */
-			else if (itemstack.getItem() == Items.HONEY_BOTTLE || itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get())
+
+			if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
+			{
+				//Now all bees nearby in Bumblezone will get VERY angry!!!
+				playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
+			}
+
+			return ActionResultType.SUCCESS;
+		}
+		/*
+		 * Player is feeding larva
+		 */
+		else if (itemstack.getItem() == Items.HONEY_BOTTLE || itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get())
+		{
+			if (!world.isRemote)
 			{
 				boolean successfulGrowth = false;
 
@@ -193,78 +192,78 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 						world.setBlockState(position, thisBlockState.with(STAGE, Integer.valueOf(stage + 1)));
 					}
 				}
-
-				//block grew one stage or bee was spawned
-				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-
-				//removes used item
-				if (!playerEntity.isCreative())
-				{
-					itemstack.shrink(1); // remove current honey bottle
-
-					if (itemstack.isEmpty())
-					{
-						playerEntity.setHeldItem(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places empty bottle in hand
-					}
-					else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE))) // places empty bottle in inventory
-					{
-						playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false); // drops empty bottle if inventory is full
-					}
-				}
-
-				return ActionResultType.SUCCESS;
 			}
 
-			//MOD COMPAT
-			else
+			//block grew one stage or bee was spawned
+			world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+			
+			//removes used item
+			if (!playerEntity.isCreative())
+			{
+				itemstack.shrink(1); // remove current honey bottle
+
+				if (itemstack.isEmpty())
+				{
+					playerEntity.setHeldItem(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places empty bottle in hand
+				}
+				else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE))) // places empty bottle in inventory
+				{
+					playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false); // drops empty bottle if inventory is full
+				}
+			}
+
+			return ActionResultType.SUCCESS;
+		}
+
+		//MOD COMPAT
+		else
+		{
+			/*
+			 * Buzzier Bees honey wand compat
+			 */
+			if (ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowHoneyWandCompat.get())
 			{
 				/*
-				 * Buzzier Bees honey wand compat
+				 * Player is taking honey and killing larva
 				 */
-				if (ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowHoneyWandCompat.get())
+				ActionResultType action = BuzzierBeesRedirection.honeyWandTakingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+				if (action == ActionResultType.SUCCESS)
 				{
-					/*
-					 * Player is taking honey and killing larva
-					 */
-					ActionResultType action = BuzzierBeesRedirection.honeyWandTakingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
-					if (action == ActionResultType.SUCCESS)
-					{
-						world.setBlockState(position, BzBlocks.DEAD_HONEYCOMB_LARVA.get().getDefaultState().with(BlockStateProperties.FACING, thisBlockState.get(BlockStateProperties.FACING)), 3); // removed honey from this block
+					world.setBlockState(position, BzBlocks.DEAD_HONEYCOMB_LARVA.get().getDefaultState().with(BlockStateProperties.FACING, thisBlockState.get(BlockStateProperties.FACING)), 3); // removed honey from this block
 
-						//spawn angry bee if at final stage and front isn't blocked off
-						int stage = thisBlockState.get(STAGE);
+					//spawn angry bee if at final stage and front isn't blocked off
+					int stage = thisBlockState.get(STAGE);
+					spawnBee(world, thisBlockState, position, stage);
+					world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+
+					if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
+					{
+						//Now all bees nearby in Bumblezone will get VERY angry!!!
+						playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
+					}
+
+					return action;
+				}
+
+				/*
+				 * Player is feeding larva
+				 */
+				action = BuzzierBeesRedirection.honeyWandGivingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+				if (action == ActionResultType.SUCCESS)
+				{
+					world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+					//spawn bee if at final stage and front isn't blocked off
+					int stage = thisBlockState.get(STAGE);
+					if (stage == 3)
+					{
 						spawnBee(world, thisBlockState, position, stage);
-						world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-
-						if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
-						{
-							//Now all bees nearby in Bumblezone will get VERY angry!!!
-							playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
-						}
-
-						return action;
 					}
-
-					/*
-					 * Player is feeding larva
-					 */
-					action = BuzzierBeesRedirection.honeyWandGivingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
-					if (action == ActionResultType.SUCCESS)
+					else
 					{
-						world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-						//spawn bee if at final stage and front isn't blocked off
-						int stage = thisBlockState.get(STAGE);
-						if (stage == 3)
-						{
-							spawnBee(world, thisBlockState, position, stage);
-						}
-						else
-						{
-							world.setBlockState(position, thisBlockState.with(STAGE, Integer.valueOf(stage + 1)));
-						}
-
-						return action;
+						world.setBlockState(position, thisBlockState.with(STAGE, Integer.valueOf(stage + 1)));
 					}
+
+					return action;
 				}
 			}
 		}
