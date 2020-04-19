@@ -109,6 +109,9 @@ public class WrathOfTheHiveEffect extends Effect
 				bee.setBeeAttacker(null);
 				bee.setAggroed(false);
 				bee.setAnger(0);
+				bee.removePotionEffect(Effects.STRENGTH);
+				bee.removePotionEffect(Effects.SPEED);
+				bee.removePotionEffect(Effects.ABSORPTION);
 			}
 		}
 	}

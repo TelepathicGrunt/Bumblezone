@@ -61,9 +61,9 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 
 	public HoneycombLarvaBlock()
 	{
-		super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).tickRandomly().hardnessAndResistance(0.5F).speedFactor(0.85F).sound(SoundType.CORAL));
+		super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).tickRandomly().hardnessAndResistance(0.5F).speedFactor(0.9F).sound(SoundType.CORAL));
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.SOUTH).with(STAGE, Integer.valueOf(0)));
-		DispenserBlock.registerDispenseBehavior(Items.HONEY_BOTTLE, behaviourDefaultDispenseItem);
+		DispenserBlock.registerDispenseBehavior(Items.HONEY_BOTTLE, behaviourDefaultDispenseItem); //adds compatibility with honey bottles in dispensers
 	}
 
 	@Override
@@ -123,23 +123,7 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 
 				//spawn angry bee if at final stage and front isn't blocked off
 				int stage = thisBlockState.get(STAGE);
-
-				//the front of the block
-				BlockPos.Mutable blockpos = new BlockPos.Mutable(position);
-				blockpos.move(thisBlockState.get(FACING).getOpposite());
-
-				if (stage == 3 && !world.getBlockState(blockpos).getMaterial().isSolid())
-				{
-					MobEntity beeEntity = EntityType.BEE.create(world);
-					if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(beeEntity, world, blockpos.getX()+0.5f, blockpos.getY(), blockpos.getZ()+0.5f, null, SpawnReason.TRIGGERED) != -1)
-					{
-						beeEntity.setLocationAndAngles(blockpos.getX()+0.5f, blockpos.getY(), blockpos.getZ()+0.5f, world.getRandom().nextFloat() * 360.0F, 0.0F);
-						ILivingEntityData ilivingentitydata = null;
-						ilivingentitydata = beeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beeEntity)), SpawnReason.TRIGGERED, ilivingentitydata, (CompoundNBT) null);
-						world.addEntity(beeEntity);
-					}
-				}
-
+				spawnBee(world, thisBlockState, position, stage);
 				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
 				if (!playerEntity.isCreative())
@@ -178,26 +162,7 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 				int stage = thisBlockState.get(STAGE);
 				if (stage == 3)
 				{
-					//the front of the block
-					BlockPos.Mutable blockpos = new BlockPos.Mutable(position);
-					blockpos.move(thisBlockState.get(FACING).getOpposite());
-
-					//do nothing if front is blocked off
-					if (!world.getBlockState(blockpos).getMaterial().isSolid())
-					{
-						MobEntity beeEntity = EntityType.BEE.create(world);
-						beeEntity.setLocationAndAngles(blockpos.getX()+0.5f, blockpos.getY(), blockpos.getZ()+0.5f, world.getRandom().nextFloat() * 360.0F, 0.0F);
-						
-						if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(beeEntity, world, blockpos.getX()+0.5f, blockpos.getY(), blockpos.getZ()+0.5f, null, SpawnReason.TRIGGERED) != -1)
-						{
-							ILivingEntityData ilivingentitydata = null;
-							ilivingentitydata = beeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beeEntity)), SpawnReason.TRIGGERED, ilivingentitydata, (CompoundNBT) null);
-							world.addEntity(beeEntity);
-						}
-
-						world.setBlockState(position, thisBlockState.with(STAGE, Integer.valueOf(0)));
-						success = true;
-					}
+					success = spawnBee(world, thisBlockState, position, stage);
 				}
 				else
 				{
@@ -272,28 +237,39 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 		}
 		else
 		{
+		    EntityPredicate PLAYER_DISTANCE = (new EntityPredicate()).setDistance(Math.max(Bumblezone.BzConfig.aggressionTriggerRadius.get()*0.5, 1));
+			
 			List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, FIXED_DISTANCE, null, new AxisAlignedBB(position).grow(50));
-			if (beeList.size() < 10) {
-				//the front of the block
-				BlockPos.Mutable blockpos = new BlockPos.Mutable(position);
-				blockpos.move(state.get(FACING).getOpposite());
-
-				if (stage == 3 && !world.getBlockState(blockpos).getMaterial().isSolid())
-				{
-					MobEntity beeEntity = EntityType.BEE.create(world);
-					beeEntity.setLocationAndAngles(blockpos.getX(), blockpos.getY(), blockpos.getZ(), world.getRandom().nextFloat() * 360.0F, 0.0F);
-					
-					if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(beeEntity, world, blockpos.getX(), blockpos.getY(), blockpos.getZ(), null, SpawnReason.TRIGGERED) != -1)
-					{
-						ILivingEntityData ilivingentitydata = null;
-						ilivingentitydata = beeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beeEntity)), SpawnReason.TRIGGERED, ilivingentitydata, (CompoundNBT) null);
-						world.addEntity(beeEntity);
-						
-						world.setBlockState(position, state.with(STAGE, Integer.valueOf(0)));
-					}
-				}
+			List<PlayerEntity> playerList = world.getTargettableEntitiesWithinAABB(PlayerEntity.class, PLAYER_DISTANCE, null, new AxisAlignedBB(position).grow(50));
+			if (beeList.size() < 10 || playerList.stream().anyMatch(player -> player.isPotionActive(BzEffects.WRATH_OF_THE_HIVE))) {
+				spawnBee(world, state, position, stage);
 			}
 		}
+	}
+	
+	private static boolean spawnBee(World world, BlockState state, BlockPos position, int stage) {
+		//the front of the block
+		BlockPos.Mutable blockpos = new BlockPos.Mutable(position);
+		blockpos.move(state.get(FACING).getOpposite());
+
+		if (stage == 3 && !world.getBlockState(blockpos).getMaterial().isSolid())
+		{
+			MobEntity beeEntity = EntityType.BEE.create(world);
+			beeEntity.setLocationAndAngles(blockpos.getX(), blockpos.getY(), blockpos.getZ(), world.getRandom().nextFloat() * 360.0F, 0.0F);
+			
+			if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(beeEntity, world, blockpos.getX(), blockpos.getY(), blockpos.getZ(), null, SpawnReason.TRIGGERED) != -1)
+			{
+				ILivingEntityData ilivingentitydata = null;
+				ilivingentitydata = beeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beeEntity)), SpawnReason.TRIGGERED, ilivingentitydata, (CompoundNBT) null);
+				world.addEntity(beeEntity);
+				
+				world.setBlockState(position, state.with(STAGE, Integer.valueOf(0)));
+				
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 

@@ -38,7 +38,7 @@ public class FilledPorousHoneycombBlock extends Block
 
 	public FilledPorousHoneycombBlock()
 	{
-		super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).hardnessAndResistance(0.5F).speedFactor(0.85F).sound(SoundType.CORAL));
+		super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).hardnessAndResistance(0.5F).speedFactor(0.9F).sound(SoundType.CORAL));
 	}
 
 	/**

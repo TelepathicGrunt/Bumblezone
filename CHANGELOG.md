@@ -51,6 +51,10 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 -In The Bumblezone dimension, Bees will now become aggressive towards all mobs with "bear" in their name including modded bear mobs.
 
 -Bees will now hunt down and attack all insect mobs that doesn't have "bee" in their name if they are in The Bumblezone dimension.
+ 
+-You can feed bees a Sugar Water bottle to slightly heal them. If you feed them a Honey Bottle instead, they will recover a lot more health!
+ 
+-If you have Wrath of the Hive effect on, feeding bees a Sugar Water Bottle will have a 7% chance of removing the effect from yourself and calming the bees. If you feed them a Honey Bottle instead, you have a 30% chance of removing Wrath of the Hive form yourself and calming the bees.
 
 -Nerfed spawnrate for slime mobs when creating chunk for first time.
 
@@ -64,7 +68,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
    
 -Walking on Filled Porous Honeycomb Block will now slightly slow your movement due to the sticky honey.
           
--Honeycomb Larva Block is now added! They will grow a larva inside it through 4 stages and on the final stage, it will spawn a bee if there is less than 10 bees within 50 blocks of the block. The larva will grow faster in The Bumblezone dimension than any other dimension. You can use a Honey Bottle to speed up growing by hand or by using a Dispenser on the block. if you use a Glass Bottle, it will kill the larva but you get honey and a bunch of angry bees coming! If Buzzier Bees is on, it may also sometimes spawn a Honey Slime mob. And if Beesourceful is on, it can sometimes spawn a Beesourceful's resource bee mob.
+-Honeycomb Larva Block is now added! They will grow a larva inside it through 4 stages and on the final stage, it will spawn a bee if there is less than 10 bees within 50 blocks of the block. The larva will grow faster in The Bumblezone dimension than any other dimension. You can use a Honey Bottle to speed up growing by hand or by using a Dispenser on the block. If you use a Glass Bottle, it will kill the larva but you get honey and a bunch of angry bees coming! Finally, if you have Wrath of the Hive effect and you come near a Honeycomb Larva Block that's fully grown, the bee will spawn right away to come after you! If Buzzier Bees is on, it may also sometimes spawn a Honey Slime mob. And if Beesourceful is on, it can sometimes spawn a Beesourceful's resource bee mob.
   
 -Added Dead Honeycomb Larva Block that is created when using a Glass Bottle on a Honeycomb Larva Block. This block is decorative and serves no other use. It's dead. :(
 
