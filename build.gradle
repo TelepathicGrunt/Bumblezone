@@ -68,7 +68,7 @@ dependencies {
 
 	implementation fg.deobf("ignored:buzzierbees:1.4")
 	implementation fg.deobf("ignored:beesourceful:1.1.0")
-	runtimeOnly fg.deobf("ignored:potionofbees-1.15.2:1.0.0")
+	implementation fg.deobf("ignored:potionofbees-1.15.2:1.0.0")
 	
 	//runtimeOnly fg.deobf("ignored:modname-1.15.2:x.x.x")
 }

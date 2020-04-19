@@ -145,17 +145,19 @@ public class BeeAggressionBehavior
 			}
 
 			//Makes the fog redder when this effect is active
-			if(BzWorldProvider.ACTIVE_WRATH == false && playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE))
+			Boolean wrathEffect = playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE);
+			if(BzWorldProvider.ACTIVE_WRATH == false && wrathEffect)
 			{
 				BzWorldProvider.ACTIVE_WRATH = true;
 			}
-			else if(BzWorldProvider.ACTIVE_WRATH == true)
+			else if(BzWorldProvider.ACTIVE_WRATH == true && !wrathEffect)
 			{
 				WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
 				BzWorldProvider.ACTIVE_WRATH = false;
 			}
+			else if(!wrathEffect) {
+				WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
+			}
 		}
 	}
-	
-	
 }

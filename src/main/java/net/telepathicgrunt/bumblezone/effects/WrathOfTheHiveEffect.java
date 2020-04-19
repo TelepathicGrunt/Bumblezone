@@ -15,6 +15,9 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 
 public class WrathOfTheHiveEffect extends Effect
 {
+	private final static EntityPredicate SEE_THROUGH_WALLS = (new EntityPredicate());
+	private final static EntityPredicate LINE_OF_SIGHT = (new EntityPredicate()).setLineOfSiteRequired();
+	
 	public WrathOfTheHiveEffect(EffectType type, int potionColor)
 	{
 		super(type, potionColor);
@@ -65,8 +68,8 @@ public class WrathOfTheHiveEffect extends Effect
 	 */
 	public static void mediumAggression(World world, LivingEntity livingEntity)
 	{
-		EntityPredicate line_of_sight = (new EntityPredicate()).setDistance(Bumblezone.BzConfig.aggressionTriggerRadius.get()).setLineOfSiteRequired();
-		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, line_of_sight, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzConfig.aggressionTriggerRadius.get()));
+		LINE_OF_SIGHT.setDistance(Bumblezone.BzConfig.aggressionTriggerRadius.get());
+		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, LINE_OF_SIGHT, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzConfig.aggressionTriggerRadius.get()));
 
 		for (BeeEntity bee : beeList)
 		{
@@ -85,8 +88,7 @@ public class WrathOfTheHiveEffect extends Effect
 	 */
 	public static void unBEElievablyHighAggression(World world, LivingEntity livingEntity)
 	{
-		EntityPredicate see_through_walls = (new EntityPredicate()).setDistance(Bumblezone.BzConfig.aggressionTriggerRadius.get());
-		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, see_through_walls, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzConfig.aggressionTriggerRadius.get()));
+		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzConfig.aggressionTriggerRadius.get()));
 		for (BeeEntity bee : beeList)
 		{
 			bee.setBeeAttacker(livingEntity);
@@ -95,14 +97,14 @@ public class WrathOfTheHiveEffect extends Effect
 			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, Bumblezone.BzConfig.strengthBoostLevel.get(), false, true));
 		}
 	}
-	
+
 	/**
 	 * Calm the bees that are attacking the incoming entity
 	 */
 	public static void calmTheBees(World world, LivingEntity livingEntity)
 	{
-		EntityPredicate see_through_walls = (new EntityPredicate()).setDistance(Bumblezone.BzConfig.aggressionTriggerRadius.get()*0.5D);
-		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, see_through_walls, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzConfig.aggressionTriggerRadius.get()*0.5D));
+		SEE_THROUGH_WALLS.setDistance(Bumblezone.BzConfig.aggressionTriggerRadius.get()*0.5D);
+		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzConfig.aggressionTriggerRadius.get()*0.5D));
 		for (BeeEntity bee : beeList)
 		{
 			if(bee.getAttackTarget() == livingEntity) {

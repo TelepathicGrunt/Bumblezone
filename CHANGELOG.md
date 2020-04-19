@@ -62,7 +62,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 ##### Blocks: 
 
--Added Sugar Water fluid to spawn in The Bumblezone instead of regular water! Swimming in this fluid is slightly slower than swimming in water due to the excess of sugar in it.
+-Added Sugar Water fluid to spawn in The Bumblezone instead of regular water! Swimming in this fluid is slightly slower than swimming in water due to the excess of sugar in it. If bees swim in the Sugar Water and aren't taking damage, the bees will sip the water and heal themselves very slowly. Also, any Sugar Cane placed next to a Sugar Water block will grow faster and taller (up to 5 blocks high!)
 
 -Sugar Infused Stone and Sugar Infused Cobblestone will be made when Sugar Water touches Lava! When mined, they drop Sugar and Cobblestone but you can use Silk Touch to keep them as is. When put into a Furnace, you can quickly burn out the Sugar from the blocks for some quick cheap XP.
    

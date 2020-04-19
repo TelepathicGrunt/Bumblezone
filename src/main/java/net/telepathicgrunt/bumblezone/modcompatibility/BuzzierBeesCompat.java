@@ -8,18 +8,19 @@ import com.bagel.buzzierbees.core.registry.BBItems;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.material.Material;
+import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -33,7 +34,7 @@ import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 
 public class BuzzierBeesCompat
 {
-	
+	private static final DefaultDispenseItemBehavior BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM = new BuzzierBeeBottledBeeDispenseBehavior();
 	
 	public static void setupBuzzierBees() 
 	{
@@ -41,9 +42,8 @@ public class BuzzierBeesCompat
 		
 		if(Bumblezone.BzConfig.spawnHoneySlimeMob.get())
 			BzChunkGenerator.MOBS_SLIME_ENTRY = new Biome.SpawnListEntry(BBEntities.HONEY_SLIME.get(), 1, 1, 1);
-
-		//unused and not needed. Won't work anyway use the Honey Slime's super restrictive spawning.
-		//BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).addModMobs(EntityClassification.CREATURE, BBEntities.HONEY_SLIME.get(), 1, 4, 8));
+		
+		DispenserBlock.registerDispenseBehavior(BBItems.BOTTLE_OF_BEE.get(), BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); //adds compatibility with honey bottles in dispensers
 	}
 	
 	//1/10th of bees spawning will also spawn honey slime
@@ -196,16 +196,13 @@ public class BuzzierBeesCompat
 		{
 			if (!world.isRemote && !playerEntity.isCrouching())
 			{
-				world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), 3); // remove honey from this block
-				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-				
 				if(!playerEntity.isCreative())
 				{
-					playerEntity.setHeldItem(playerHand, new ItemStack(BBItems.STICKY_HONEY_WAND.get())); //replaced empty honey wand with sticky honey want in hand
+					playerEntity.setHeldItem(playerHand, new ItemStack(BBItems.STICKY_HONEY_WAND.get())); //replaced empty Honey Wand with Sticky Honey Wand in hand
 				}
+				
+				return ActionResultType.SUCCESS;
 			}
-
-			return ActionResultType.SUCCESS;
 		}
 		
 		return ActionResultType.FAIL;
@@ -216,16 +213,30 @@ public class BuzzierBeesCompat
 		{
 			if (!world.isRemote && !playerEntity.isCrouching())
 			{
-				world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 3); // added honey to this block
-				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-				
 				if(!playerEntity.isCreative())
 				{
-					playerEntity.setHeldItem(playerHand, new ItemStack(BBItems.HONEY_WAND.get())); //replaced sticky honey wand with empty honey want in hand
+					playerEntity.setHeldItem(playerHand, new ItemStack(BBItems.HONEY_WAND.get())); //replaced Sticky Honey Wand with empty Honey Wand in hand
 				}
+				
+				return ActionResultType.SUCCESS;
 			}
-
-			return ActionResultType.SUCCESS;
+		}
+		
+		return ActionResultType.FAIL;
+	}
+	
+	public static ActionResultType bottledBeeInteract(ItemStack itemstack, BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand) {
+		if (itemstack.getItem() == BBItems.BOTTLE_OF_BEE.get())
+		{
+			if (!world.isRemote && !playerEntity.isCrouching())
+			{
+				if(!playerEntity.isCreative())
+				{
+					playerEntity.setHeldItem(playerHand, new ItemStack(Items.GLASS_BOTTLE)); //replaced bottled bee with glass bottle
+				}
+				
+				return ActionResultType.SUCCESS;
+			}
 		}
 		
 		return ActionResultType.FAIL;

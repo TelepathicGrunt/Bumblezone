@@ -11,6 +11,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.fluids.SugarWaterFluid;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 
 
@@ -47,13 +48,13 @@ public class BzBlocks
     public static final ResourceLocation FLUID_OVERLAY = new ResourceLocation(Bumblezone.MODID+":block/sugar_water_overlay");
     
     public static final RegistryObject<FlowingFluid> SUGAR_WATER_FLUID = FLUIDS.register("sugar_water_fluid", () ->
-            new ForgeFlowingFluid.Source(BzBlocks.SUGAR_WATER_FLUID_PROPERTIES)
+            new SugarWaterFluid.Source(BzBlocks.SUGAR_WATER_FLUID_PROPERTIES)
     );
     public static final RegistryObject<FlowingFluid> SUGAR_WATER_FLUID_FLOWING = FLUIDS.register("sugar_water_flowing", () ->
-            new ForgeFlowingFluid.Flowing(BzBlocks.SUGAR_WATER_FLUID_PROPERTIES)
+            new SugarWaterFluid.Flowing(BzBlocks.SUGAR_WATER_FLUID_PROPERTIES)
     );
     public static final RegistryObject<FlowingFluidBlock> SUGAR_WATER_BLOCK = BLOCKS.register("sugar_water_block", () ->
-	    new SugarWaterBlock(SUGAR_WATER_FLUID, Block.Properties.create(net.minecraft.block.material.Material.WATER).speedFactor(0.95F).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops())
+	    new SugarWaterBlock(SUGAR_WATER_FLUID)
 	);
     
     public static final ForgeFlowingFluid.Properties SUGAR_WATER_FLUID_PROPERTIES =

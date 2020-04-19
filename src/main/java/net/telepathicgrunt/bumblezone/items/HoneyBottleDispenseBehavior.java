@@ -10,6 +10,7 @@ import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -66,7 +67,7 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior
 			super.dispenseStack(source, stack);
 		}
 
-		return stack;
+		return new ItemStack(Items.GLASS_BOTTLE);
 	}
 
 

@@ -41,6 +41,7 @@ public class FilledPorousHoneycombBlock extends Block
 		super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).hardnessAndResistance(0.5F).speedFactor(0.9F).sound(SoundType.CORAL));
 	}
 
+
 	/**
 	 * Called when the given entity walks on this Block
 	 */
@@ -55,7 +56,8 @@ public class FilledPorousHoneycombBlock extends Block
 
 		super.onEntityWalk(worldIn, pos, entityIn);
 	}
-	
+
+
 	/**
 	 * Allow player to harvest honey and put honey into this block using bottles
 	 */
@@ -63,22 +65,22 @@ public class FilledPorousHoneycombBlock extends Block
 	@SuppressWarnings("deprecation")
 	public ActionResultType onBlockActivated(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult)
 	{
-		ItemStack itemstack = playerEntity.getHeldItem(playerHand);
-
-		/*
-		 * Player is harvesting the honey from this block if it is filled with honey
-		 */
-		if (itemstack.getItem() == Items.GLASS_BOTTLE)
+		if (!world.isRemote)
 		{
-			if (!world.isRemote)
+			ItemStack itemstack = playerEntity.getHeldItem(playerHand);
+
+			/*
+			 * Player is harvesting the honey from this block if it is filled with honey
+			 */
+			if (itemstack.getItem() == Items.GLASS_BOTTLE)
 			{
 				world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), 3); // removed honey from this block
 				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-				
-				if(!playerEntity.isCreative())
+
+				if (!playerEntity.isCreative())
 				{
 					itemstack.shrink(1); // remove current empty bottle
-	
+
 					if (itemstack.isEmpty())
 					{
 						playerEntity.setHeldItem(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
@@ -88,38 +90,38 @@ public class FilledPorousHoneycombBlock extends Block
 						playerEntity.dropItem(new ItemStack(Items.HONEY_BOTTLE), false); // drops honey bottle if inventory is full
 					}
 				}
-				
-				
-				if((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && 
-					!playerEntity.isCreative() && 
-					!playerEntity.isSpectator() && 
-					Bumblezone.BzConfig.aggressiveBees.get()) 
+
+				if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
 				{
 					//Now all bees nearby in Bumblezone will get VERY angry!!!
 					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
 				}
-			}
 
-			return ActionResultType.SUCCESS;
-		}
-		else
-		{
-			//allow compat with honey wand use
-			if(ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowHoneyWandCompat.get()) {
-				ActionResultType action = BuzzierBeesRedirection.honeyWandTakingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
-				if(action == ActionResultType.SUCCESS) {
-					return action;
+				return ActionResultType.SUCCESS;
+			}
+			else
+			{
+				//allow compat with honey wand use
+				if (ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowHoneyWandCompat.get())
+				{
+					ActionResultType action = BuzzierBeesRedirection.honeyWandTakingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+					if (action == ActionResultType.SUCCESS)
+					{
+						world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), 3); // remove honey from this block
+						world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+
+						return action;
+					}
 				}
 			}
-			
-			return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
 		}
+		return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
 	}
 
 
 	/**
-	 * Called periodically clientside on blocks near the player to show honey particles.
-	 * 50% of attempting to spawn a particle
+	 * Called periodically clientside on blocks near the player to show honey particles. 50% of attempting to spawn a
+	 * particle
 	 */
 	@Override
 	@OnlyIn(Dist.CLIENT)
@@ -134,8 +136,8 @@ public class FilledPorousHoneycombBlock extends Block
 
 
 	/**
-	 * Starts checking if the block can take the particle and if so and it passes another rng to reduce spawnrate,
-	 * it then takes the block's dimensions and passes into methods to spawn the actual particle
+	 * Starts checking if the block can take the particle and if so and it passes another rng to reduce spawnrate, it then
+	 * takes the block's dimensions and passes into methods to spawn the actual particle
 	 * 
 	 */
 	@OnlyIn(Dist.CLIENT)
@@ -170,7 +172,8 @@ public class FilledPorousHoneycombBlock extends Block
 
 
 	/**
-	 * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addHoneyParticle method
+	 * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addHoneyParticle
+	 * method
 	 */
 	@OnlyIn(Dist.CLIENT)
 	private void addHoneyParticle(World world, BlockPos blockPos, VoxelShape blockShape, double height)
