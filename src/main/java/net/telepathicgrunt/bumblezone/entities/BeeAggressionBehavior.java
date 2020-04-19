@@ -155,6 +155,9 @@ public class BeeAggressionBehavior
 				WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
 				BzWorldProvider.ACTIVE_WRATH = false;
 			}
+			else if(!wrathEffect) {
+				WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
+			}
 		}
 	}
 }
