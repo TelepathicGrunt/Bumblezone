@@ -63,7 +63,11 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 -Sugar Infused Stone and Sugar Infused Cobblestone will be made when Sugar Water touches Lava! When mined, they drop Sugar and Cobblestone but you can use Silk Touch to keep them as is. When put into a Furnace, you can quickly burn out the Sugar from the blocks for some quick cheap XP.
    
 -Walking on Filled Porous Honeycomb Block will now slightly slow your movement due to the sticky honey.
-        
+          
+-Honeycomb Larva Block is now added! They will grow a larva inside it through 4 stages and on the final stage, it will spawn a bee if there is less than 10 bees within 50 blocks of the block. The larva will grow faster in The Bumblezone dimension than any other dimension. You can use a Honey Bottle to speed up growing by hand or by using a Dispenser on the block. if you use a Glass Bottle, it will kill the larva but you get honey and a bunch of angry bees coming!
+  
+-Added Dead Honeycomb Larva Block that is created when using a Glass Bottle on a Honeycomb Larva Block. This block is decorative and serves no other use. It's dead. :(
+
 ##### Items: 
 
 -Added Sugar Water Bottle! To get this, use an empty Glass Bottle on Sugar Water. If you drink a Sugar Water Bottle, you restore a tiny bit of hungry but get Haste 1 effect for a short period of time!

@@ -57,6 +57,7 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 {
 	public static final IntegerProperty STAGE = BlockStateProperties.AGE_0_3;
     private final DefaultDispenseItemBehavior behaviourDefaultDispenseItem = new HoneyBottleDispenseBehavior();
+    private final EntityPredicate FIXED_DISTANCE = (new EntityPredicate()).setDistance(50);
 
 	public HoneycombLarvaBlock()
 	{
@@ -263,15 +264,14 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 		int stage = state.get(STAGE);
 		if (stage < 3)
 		{
-			if (rand.nextInt(25) == 0)
+			if (world.getDimension().getType() == BzDimension.bumblezone() ? rand.nextInt(25) == 0 : rand.nextInt(60) == 0 )
 			{
 				world.setBlockState(position, state.with(STAGE, Integer.valueOf(stage + 1)), 2);
 			}
 		}
 		else
 		{
-			EntityPredicate line_of_sight = (new EntityPredicate()).setDistance(Bumblezone.BzConfig.aggressionTriggerRadius.get()).setLineOfSiteRequired();
-			List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, line_of_sight, null, new AxisAlignedBB(position).grow(50));
+			List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, FIXED_DISTANCE, null, new AxisAlignedBB(position).grow(50));
 			if (beeList.size() < 10) {
 				//the front of the block
 				BlockPos.Mutable blockpos = new BlockPos.Mutable(position);
