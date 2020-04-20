@@ -80,6 +80,8 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 -Added Sugar Water Bottle! To get this, use an empty Glass Bottle on Sugar Water. If you drink a Sugar Water Bottle, you restore a tiny bit of hungry but get Haste 1 effect for a short period of time!
 
+-Add Sugar Water Bucket to move Sugar Water around. Works with Dispensers too!
+
 ##### Generation: 
 
 -The dimension uses Air instead of Cave Air to help with feature generation.

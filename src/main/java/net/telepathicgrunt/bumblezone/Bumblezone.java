@@ -3,7 +3,18 @@ package net.telepathicgrunt.bumblezone;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.dispenser.IBlockSource;
+import net.minecraft.dispenser.IDispenseItemBehavior;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BucketItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.potion.Effect;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.api.distmarker.Dist;
@@ -27,6 +38,7 @@ import net.telepathicgrunt.bumblezone.config.BzConfig.BzConfigValues;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.features.BzFeatures;
 import net.telepathicgrunt.bumblezone.items.BzItems;
+import net.telepathicgrunt.bumblezone.items.SugarWaterBottleDispenseBehavior;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 import net.telepathicgrunt.bumblezone.utils.ConfigHelper;
 
@@ -65,6 +77,27 @@ public class Bumblezone
 		CapabilityPlayerPosAndDim.register();
 		SugarWaterEvents.setup();
 		BzBaseBiome.addSprings();
+		
+		IDispenseItemBehavior idispenseitembehavior = new DefaultDispenseItemBehavior() {
+	         private final DefaultDispenseItemBehavior field_218406_b = new DefaultDispenseItemBehavior();
+
+	         /**
+	          * Dispense the specified stack, play the dispense sound and spawn particles.
+	          */
+	         public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
+	            BucketItem bucketitem = (BucketItem)stack.getItem();
+	            BlockPos blockpos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
+	            World world = source.getWorld();
+	            if (bucketitem.tryPlaceContainedLiquid((PlayerEntity)null, world, blockpos, (BlockRayTraceResult)null)) {
+	               bucketitem.onLiquidPlaced(world, stack, blockpos);
+	               return new ItemStack(Items.BUCKET);
+	            } else {
+	               return this.field_218406_b.dispense(source, stack);
+	            }
+	         }
+	      };
+		DispenserBlock.registerDispenseBehavior(BzItems.SUGAR_WATER_BUCKET.get(), idispenseitembehavior); //adds compatibility with sugar water buckets in dispensers
+		DispenserBlock.registerDispenseBehavior(BzItems.SUGAR_WATER_BOTTLE.get(), new SugarWaterBottleDispenseBehavior()); //adds compatibility with sugar water bottles in dispensers
 		
 		DeferredWorkQueue.runLater(Bumblezone::lateSetup);
 	}
