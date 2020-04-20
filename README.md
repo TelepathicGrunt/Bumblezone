@@ -154,8 +154,6 @@
 <p>&nbsp;</p>
 <p><span style="font-size: 14px;">Potion of Bees -&nbsp;<a href="https://www.curseforge.com/minecraft/mc-mods/potion-of-bees">https://www.curseforge.com/minecraft/mc-mods/potion-of-bees</a>&nbsp;</span></p>
 <div class="spoiler">
-<p>-Their Potion of Bees item can be used on a Dead Honeycomb Larva Block to revive the block into a stage 1, 2, or 3&nbsp;Honeycomb Larva Block. This can be done by hand or by a Dispenser facing the block.</p>
-<p>&nbsp;</p>
 <p>-Their Splash Potion of Bees item can be thrown and any Dead Honeycomb Larva Block nearby on impact will revive the blocks into a stage 1, 2, or 3&nbsp;Honeycomb Larva Block. If you have this item in a Dispenser directly facing the Dead Honeycomb Larva Block, it'll revive the block into a stage 1, 2, or 3&nbsp;Honeycomb Larva Block without bees going everywhere.</p>
 </div>
 <p>&nbsp;</p>
