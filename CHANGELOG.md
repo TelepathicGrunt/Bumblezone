@@ -22,10 +22,16 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 -If Buzzier Bees is on, their Honey Wand now can add and remove honey from Porous Honeycomb Block and Honey Filled Porous Honeycomb Block.
 
+-If Buzzier Bees is on, you can use their Bottle of Bee item on a Dead Honeycomb Larva Block will revive the block into a stage 1 Honeycomb Larva Block. This can be done by hand or by a Dispenser facing the block.
+
 -If Beesourceful is on, their ore bees and ender bees can now spawn in The Bumblezone! They have a 15% chance of spawning when a regular bee is spawned. Then the chance of each type of Beesourceful bee being chosen is 1% Ender, 2% Diamond, 7% Emerald, 10% Lapis, 10% Quartz, 20% Gold, 20% Redstone, and 30% Iron.
 
 -If Beesourceful is on, their honeycomb variants will now in The Bumblezone at all kinds of heights and height bands. Start exploring to find where they spawn!
         
+-If Potion of Bees is on, you can use their Potion of Bees item on a Dead Honeycomb Larva Block will revive the block into a stage 1, 2, or 3 Honeycomb Larva Block. This can be done by hand or by a Dispenser facing the block.
+
+-If Potion of Bees is on, you can throw their Splash Potion of Bees item and any Dead Honeycomb Larva Block nearby on impact will revive the blocks into a stage 1, 2, or 3 Honeycomb Larva Block. If you have this item in a Dispenser directly facing the Dead Honeycomb Larva Block, it'll revive the block into a stage 1, 2, or 3 Honeycomb Larva Block without bees going everywhere.
+
 ##### Config:        
         
 -Added configs to control a lot of the interaction between this mod and Buzzier Bees.
