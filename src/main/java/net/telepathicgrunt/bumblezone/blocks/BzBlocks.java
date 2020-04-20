@@ -28,12 +28,12 @@ public class BzBlocks
     
     public static final RegistryObject<Block> FILLED_POROUS_HONEYCOMB = BLOCKS.register("filled_porous_honeycomb_block",
             () -> new FilledPorousHoneycombBlock());
-    
-    public static final RegistryObject<Block> HONEYCOMB_LARVA = BLOCKS.register("honeycomb_larva_block",
-            () -> new HoneycombLarvaBlock());
 
     public static final RegistryObject<Block> DEAD_HONEYCOMB_LARVA = BLOCKS.register("dead_honeycomb_larva_block",
             () -> new DeadHoneycombLarvaBlock());
+
+    public static final RegistryObject<Block> HONEYCOMB_LARVA = BLOCKS.register("honeycomb_larva_block",
+            () -> new HoneycombLarvaBlock());
 
     public static final RegistryObject<Block> SUGAR_INFUSED_STONE = BLOCKS.register("sugar_infused_stone",
             () -> new SugarInfusedStoneBlock());
