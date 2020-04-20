@@ -283,7 +283,7 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 		int stage = state.get(STAGE);
 		if (stage < 3)
 		{
-			if (world.getDimension().getType() == BzDimension.bumblezone() ? rand.nextInt(25) == 0 : rand.nextInt(60) == 0)
+			if (world.getDimension().getType() == BzDimension.bumblezone() ? rand.nextInt(8) == 0 : rand.nextInt(22) == 0)
 			{
 				world.setBlockState(position, state.with(STAGE, Integer.valueOf(stage + 1)), 2);
 			}

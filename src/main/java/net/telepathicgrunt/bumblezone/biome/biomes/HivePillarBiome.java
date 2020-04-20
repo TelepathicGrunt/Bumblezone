@@ -39,7 +39,7 @@ public final class HivePillarBiome extends BzBaseBiome
 	@Override
 	public float getSpawningChance()
 	{
-		return 0.6F;
+		return 0.45F;
 	}
 
 	

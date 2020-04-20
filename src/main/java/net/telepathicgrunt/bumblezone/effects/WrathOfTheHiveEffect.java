@@ -73,12 +73,15 @@ public class WrathOfTheHiveEffect extends Effect
 
 		for (BeeEntity bee : beeList)
 		{
-			bee.setBeeAttacker(livingEntity);
-
-			// weaker potion effects for when attacking bears
-			bee.addPotionEffect(new EffectInstance(Effects.SPEED, 20, Math.max(Bumblezone.BzConfig.speedBoostLevel.get(), 1), false, false));
-			bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20, Math.max(Bumblezone.BzConfig.absorptionBoostLevel.get() / 2, 1), false, false));
-			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, Math.max(Bumblezone.BzConfig.strengthBoostLevel.get() / 3, 1), false, true));
+			if(!bee.isAngry() || bee.getAttackTarget() == null)
+			{
+				bee.setBeeAttacker(livingEntity);
+	
+				// weaker potion effects for when attacking bears
+				bee.addPotionEffect(new EffectInstance(Effects.SPEED, 20, Math.max(Bumblezone.BzConfig.speedBoostLevel.get(), 1), false, false));
+				bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20, Math.max(Bumblezone.BzConfig.absorptionBoostLevel.get() / 2, 1), false, false));
+				bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, Math.max(Bumblezone.BzConfig.strengthBoostLevel.get() / 3, 1), false, true));
+			}
 		}
 	}
 
@@ -91,10 +94,13 @@ public class WrathOfTheHiveEffect extends Effect
 		List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzConfig.aggressionTriggerRadius.get()));
 		for (BeeEntity bee : beeList)
 		{
-			bee.setBeeAttacker(livingEntity);
-			bee.addPotionEffect(new EffectInstance(Effects.SPEED, 20, Bumblezone.BzConfig.speedBoostLevel.get(), false, false));
-			bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20, Bumblezone.BzConfig.absorptionBoostLevel.get(), false, false));
-			bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, Bumblezone.BzConfig.strengthBoostLevel.get(), false, true));
+			if(!bee.isAngry() || bee.getAttackTarget() == null)
+			{
+				bee.setBeeAttacker(livingEntity);
+				bee.addPotionEffect(new EffectInstance(Effects.SPEED, 20, Bumblezone.BzConfig.speedBoostLevel.get(), false, false));
+				bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20, Bumblezone.BzConfig.absorptionBoostLevel.get(), false, false));
+				bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, Bumblezone.BzConfig.strengthBoostLevel.get(), false, true));
+			}
 		}
 	}
 

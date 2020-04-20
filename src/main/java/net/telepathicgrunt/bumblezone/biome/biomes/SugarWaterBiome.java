@@ -38,7 +38,7 @@ public final class SugarWaterBiome extends BzBaseBiome
 	@Override
 	public float getSpawningChance()
 	{
-		return 0.45F;
+		return 0.35F;
 	}
 
 	
