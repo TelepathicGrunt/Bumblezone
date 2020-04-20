@@ -78,9 +78,9 @@ public class WrathOfTheHiveEffect extends Effect
 				bee.setBeeAttacker(livingEntity);
 	
 				// weaker potion effects for when attacking bears
-				bee.addPotionEffect(new EffectInstance(Effects.SPEED, 20, Math.max(Bumblezone.BzConfig.speedBoostLevel.get(), 1), false, false));
-				bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20, Math.max(Bumblezone.BzConfig.absorptionBoostLevel.get() / 2, 1), false, false));
-				bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, Math.max(Bumblezone.BzConfig.strengthBoostLevel.get() / 3, 1), false, true));
+				bee.addPotionEffect(new EffectInstance(Effects.SPEED, 20, Bumblezone.BzConfig.speedBoostLevel.get(), false, false));
+				bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20, (int) (Bumblezone.BzConfig.absorptionBoostLevel.get() / 2f + 0.5f), false, false));
+				bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, (int) (Bumblezone.BzConfig.strengthBoostLevel.get() / 3 + 0.7f), false, true));
 			}
 		}
 	}

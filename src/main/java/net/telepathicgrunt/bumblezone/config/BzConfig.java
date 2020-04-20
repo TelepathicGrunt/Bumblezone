@@ -202,9 +202,11 @@ public class BzConfig
 		                    		+" You will see this a lot when bees are about to attack\r\n"
 		                    		+" you, they tend to touch the floor and the speed boost\r\n"
 		                    		+" makes them dash forward at you. Set this to higher for\r\n"
-		                    		+" faster dash attacks from bees.\r\n")
+		                    		+" faster dash attacks from bees.\r\n"
+		                    		+" \r\n"
+		                    		+" NOTE: The actual level of the effect is 1 more than the value set here.\r\n")
 		                    .translation("the_bumblezone.config.bees.speedboostlevel")
-		                    .defineInRange("speedBoostLevel", 1, 1, Integer.MAX_VALUE));
+		                    .defineInRange("speedBoostLevel", 1, 0, Integer.MAX_VALUE));
 		            
 		            
 		            absorptionBoostLevel = subscriber.subscribe(builder
@@ -213,21 +215,25 @@ public class BzConfig
 		                    		+" This means you need to deal more damage than the extra health gives\r\n"
 		                    		+" order to actually damage the bee's real health bar.\r\n"
 		                    		+" \r\n"
-		                    		+" For example, Absorpton 1 here makes bees get 4 extra padding of hearts.\r\n"
-		                    		+" Your attacks need to deal 4 1/2 or more damage to actuall be able to\r\n"
+		                    		+" NOTE: The actual level of the effect is 1 more than the value set here.\r\n"
+		                    		+" \r\n"
+		                    		+" For example, Absorpton 2 here makes bees get 4 extra padding of hearts.\r\n"
+		                    		+" Your attacks need to deal 4 1/2 or more damage to actually be able to\r\n"
 		                    		+" kill the bee. This means using Bane of Arthropod 5 is needed to kill bees\r\n"
 		                    		+" if you set the absorption to a higher value like 2 or 3.\r\n"
 		                    		+" If you set this to like 5 or something, bees may be invicible! Game over.\r\n")
 		                    .translation("the_bumblezone.config.bees.absorptionboostlevel")
-		                    .defineInRange("absorptionBoostLevel", 1, 1, Integer.MAX_VALUE));
+		                    .defineInRange("absorptionBoostLevel", 1, 0, Integer.MAX_VALUE));
 		            
 		            
 		            strengthBoostLevel = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" How strong the bees attacks become. \r\n"
-		                    		+" (5 or higher will instant kill you without armor).\r\n")
+		                    		+" (5 or higher will instant kill you without armor).\r\n"
+		                    		+" \r\n"
+		                    		+" NOTE: The actual level of the effect is 1 more than the value set here.\r\n")
 		                    .translation("the_bumblezone.config.bees.strengthboostlevel")
-		                    .defineInRange("strengthBoostLevel", 3, 1, Integer.MAX_VALUE));
+		                    .defineInRange("strengthBoostLevel", 3, 0, Integer.MAX_VALUE));
 	
 	            builder.pop();
 	        

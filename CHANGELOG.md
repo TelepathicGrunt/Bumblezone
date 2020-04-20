@@ -12,6 +12,18 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 
    
+## (V.1.2.1 Changes) (1.15.2 Minecraft)
+    
+##### Config:        
+        
+-Clarified that the Wrath of the Hive bee effect level values in the config are one less than their actual level applied in game.
+
+-Config for Wrath of the Hive's effects it gives to bees now can be set to 0 which would mean the effect gets applied at effect level 1 in the game.
+  
+##### Blocks: 
+
+-Fixed Sugar Water Block from spamming in the logs that its blockstate model isn't set up even though it had no impact visually or on gameplay.
+   
 ## (V.1.2.0 Changes) (1.15.2 Minecraft)
       
 ##### Mod Compatibility: 

@@ -70,6 +70,7 @@ public class DeadHoneycombLarvaBlock extends DirectionalBlock
 
 		//MOD COMPAT
 
+		//TODO:add support for Potion of Bees being used on this block.
 		/*
 		 * Buzzier Bees honey wand compat
 		 */
