@@ -28,6 +28,12 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 -Exiting Bumblezone dimension by falling into the void will not kill the player with fall damage when they teleport into another dimension. I forgot to reset the player's fall time but now it's fixed.
  
+##### Mobs: 
+
+-Lowered Cave Spider and Spider spawn rates a bit and removed both spiders from Sugar Water Biome. 
+
+-Vanilla Slime mobs will now spawn in Sugar Water biome but only at a low height below sealevel and in certain chunks. That way you can still make a Slime farm in Bumblezone even with Buzzier Bees on.
+
 ## (V.1.2.0 Changes) (1.15.2 Minecraft)
       
 ##### Mod Compatibility: 
