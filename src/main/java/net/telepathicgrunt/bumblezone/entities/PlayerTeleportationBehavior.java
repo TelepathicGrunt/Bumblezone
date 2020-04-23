@@ -181,6 +181,7 @@ public class PlayerTeleportationBehavior
 				else if((playerEntity.getPosY() < -1 || playerEntity.getPosY() > 255) &&
 						playerEntity.dimension == BzDimension.bumblezone()) 
 				{
+					playerEntity.fallDistance = 0;
 					teleportByOutOfBounds(playerEntity, cap, playerEntity.getPosY() < -1 ? true : false);
 					reAddPotionEffect(playerEntity);
 				}
@@ -189,6 +190,7 @@ public class PlayerTeleportationBehavior
 			//Makes it so player does not get killed for falling into the void
 			if(playerEntity.getPosY() < -3 && playerEntity.dimension == BzDimension.bumblezone())
 			{
+				playerEntity.fallDistance = 0;
 				playerEntity.setPosition(playerEntity.getPosX(), -3D, playerEntity.getPosZ());
 			}
 		}
