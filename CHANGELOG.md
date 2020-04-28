@@ -34,6 +34,10 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 -Vanilla Slime mobs will now spawn in Sugar Water biome but only at a low height below sealevel and in certain chunks. That way you can still make a Slime farm in Bumblezone even with Buzzier Bees on.
 
+##### Translation:
+
+-Added more entries to en_us.json. 
+
 ## (V.1.2.0 Changes) (1.15.2 Minecraft)
       
 ##### Mod Compatibility: 
