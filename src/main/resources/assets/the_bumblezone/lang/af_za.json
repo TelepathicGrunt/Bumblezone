@@ -1,0 +1,18 @@
+{
+    "itemGroup.the_bumblezone":"Die Bumblezone",
+    "item.the_bumblezone.sugar_water_bucket":"Suikerwateremmer",
+    "item.the_bumblezone.sugar_water_bottle":"Suikerwaterbottel",
+    "feature.the_bumblezone.honeycomb_hole":"Heuningkoekgat",
+    "feature.the_bumblezone.honeycomb_caves":"Heuningkoekgrotte",
+    "feature.the_bumblezone.cave_sugar_waterfall":"Grot suiker waterval",
+    "effect.the_bumblezone.wrath_of_the_hive":"Kwaai bye",
+    "block.the_bumblezone.sugar_infused_stone":"Suiker geïnfuseerde klip",
+    "block.the_bumblezone.sugar_infused_cobblestone":"Suikergeïnspireerde geplaveide",
+    "block.the_bumblezone.porous_honeycomb_block":"Poreuse heuningkoekblok",
+    "block.the_bumblezone.honeycomb_larva_block":"Heuningkoek Larwe Blok",
+    "block.the_bumblezone.filled_porous_honeycomb_block":"Gevulde poreuse heuningkoekblok",
+    "block.the_bumblezone.dead_honeycomb_larva_block":"Dooie heuningkoek larwe blok",
+    "biome.the_bumblezone.sugar_water_floor":"Suikerwatervloer",
+    "biome.the_bumblezone.hive_wall":"Korfmuur",
+    "biome.the_bumblezone.hive_pillar":"Korfpilaar"
+}
