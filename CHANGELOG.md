@@ -36,6 +36,8 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 ##### Translation:
 
+-German Translation added by Aurum! Thank you!
+
 -Added more entries to en_us.json. 
 
 ## (V.1.2.0 Changes) (1.15.2 Minecraft)

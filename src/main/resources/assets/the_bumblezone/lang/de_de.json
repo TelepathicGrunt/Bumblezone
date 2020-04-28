@@ -1,0 +1,18 @@
+{
+  "itemGroup.the_bumblezone": "Die Bumblezone",
+  "block.the_bumblezone.porous_honeycomb_block": "Poriger Honigwabenblock",
+  "block.the_bumblezone.filled_porous_honeycomb_block": "Gefüllter poriger Honigwabenblock",
+  "block.the_bumblezone.dead_honeycomb_larva_block": "Abgestorbene Honigwabenlarve",
+  "block.the_bumblezone.honeycomb_larva_block": "Honigwabenlarve",
+  "block.the_bumblezone.sugar_infused_cobblestone": "Zuckergetränkter Bruchstein",
+  "block.the_bumblezone.sugar_infused_stone": "Zuckergetränkter Stein",
+  "item.the_bumblezone.sugar_water_bucket": "Zuckerwassereimer",
+  "item.the_bumblezone.sugar_water_bottle": "Zuckerwasserflasche",
+  "biome.the_bumblezone.sugar_water_floor": "Zuckerwassergrund",
+  "biome.the_bumblezone.hive_wall": "Bienenstockmauer",
+  "biome.the_bumblezone.hive_pillar": "Bienenstocksäule",
+  "feature.the_bumblezone.honeycomb_hole": "Honigwabenloch",
+  "feature.the_bumblezone.honeycomb_caves": "Honigwabenhöhle",
+  "feature.the_bumblezone.cave_sugar_waterfall": "Höhlenzuckerwasserfall",
+  "effect.the_bumblezone.wrath_of_the_hive": "Bienenzorn"
+}
