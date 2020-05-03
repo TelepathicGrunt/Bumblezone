@@ -12,8 +12,8 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
-import net.telepathicgrunt.bumblezone.blocks.DeadHoneycombLarvaBlock;
-import net.telepathicgrunt.bumblezone.blocks.HoneycombLarvaBlock;
+import net.telepathicgrunt.bumblezone.blocks.EmptyHoneycombBroodBlock;
+import net.telepathicgrunt.bumblezone.blocks.HoneycombBroodBlock;
 
 
 public class BuzzierBeeBottledBeeDispenseBehavior extends DefaultDispenseItemBehavior
@@ -28,9 +28,9 @@ public class BuzzierBeeBottledBeeDispenseBehavior extends DefaultDispenseItemBeh
 		BlockPos position = new BlockPos(iposition);
 		BlockState blockstate = world.getBlockState(position);
 
-		if (blockstate.getBlock() == BzBlocks.DEAD_HONEYCOMB_LARVA.get())
+		if (blockstate.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD.get())
 		{
-			world.setBlockState(position, BzBlocks.HONEYCOMB_LARVA.get().getDefaultState().with(HoneycombLarvaBlock.FACING, blockstate.get(DeadHoneycombLarvaBlock.FACING)).with(HoneycombLarvaBlock.STAGE, Integer.valueOf(0)));
+			world.setBlockState(position, BzBlocks.HONEYCOMB_BROOD.get().getDefaultState().with(HoneycombBroodBlock.FACING, blockstate.get(EmptyHoneycombBroodBlock.FACING)).with(HoneycombBroodBlock.STAGE, Integer.valueOf(0)));
 			stack.shrink(1);
 			return new ItemStack(Items.GLASS_BOTTLE);
 		}
