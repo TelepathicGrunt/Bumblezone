@@ -16,21 +16,45 @@ public class ModChecking
 
 	public static void setupModCompat() 
 	{
-		try{ runIfModIsLoaded("buzzierbees", () -> () -> BuzzierBeesCompat.setupBuzzierBees()); }
+		try{ 
+			String buzzierBeeID = "buzzierbees";
+			if(ModList.get().isLoaded(buzzierBeeID)) {
+				int majorVersion = ModList.get().getModContainerById(buzzierBeeID).get().getModInfo().getVersion().getMajorVersion();
+				int minorVersion = ModList.get().getModContainerById(buzzierBeeID).get().getModInfo().getVersion().getMinorVersion();
+				
+				//only run setup for mod if it is v1.4 or greater
+				if((majorVersion == 1 && minorVersion >= 4) || majorVersion > 1)
+					runSetupForMod(() -> () -> BuzzierBeesCompat.setupBuzzierBees()); 
+			}
+		}
 		catch (Exception e){
 			Bumblezone.LOGGER.log(Level.INFO, "ERROR: Somehow tried calling buzzierbees code when it isn't on.");
 			e.printStackTrace();
 		}
 		
 		
-		try{ runIfModIsLoaded("potionofbees", () -> () -> PotionOfBeesCompat.setupPotionOfBees()); }
+		try{ 
+			if(ModList.get().isLoaded("potionofbees")) {
+				runSetupForMod(() -> () -> PotionOfBeesCompat.setupPotionOfBees());
+			}
+		}
 		catch (Exception e){
 			Bumblezone.LOGGER.log(Level.INFO, "ERROR: Somehow tried calling potionofbees code when it isn't on.");
 			e.printStackTrace();
 		}
 		
 		
-		try{ runIfModIsLoaded("beesourceful", () -> () -> BeesourcefulCompat.setupBeesourceful()); }
+		try{ 
+			String beesourcefulID = "beesourceful";
+			if(ModList.get().isLoaded(beesourcefulID)) {
+				int majorVersion = ModList.get().getModContainerById(beesourcefulID).get().getModInfo().getVersion().getMajorVersion();
+				int minorVersion = ModList.get().getModContainerById(beesourcefulID).get().getModInfo().getVersion().getMinorVersion();
+				
+				//only run setup for mod if it is v1.1 or greater
+				if(majorVersion == 1 && minorVersion >= 1)
+					runSetupForMod(() -> () -> BeesourcefulCompat.setupBeesourceful()); 
+			} 
+		}
 		catch (Exception e){
 			Bumblezone.LOGGER.log(Level.INFO, "ERROR: Somehow tried calling beesourceful code when it isn't on.");
 			e.printStackTrace();
@@ -48,7 +72,7 @@ public class ModChecking
 	 * 
 	 * So by double wrapping, we prevent Java from loading a class with calls to a mod that isn't present
 	 */
-	public static void runIfModIsLoaded(String modid, Callable<Runnable> toRun) throws Exception{
-		if(ModList.get().isLoaded(modid)) toRun.call().run();
+	public static void runSetupForMod(Callable<Runnable> toRun) throws Exception{
+		toRun.call().run();
 	}
 }

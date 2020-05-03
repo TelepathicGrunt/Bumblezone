@@ -48,6 +48,10 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 -Added more entries to en_us.json. 
 
+##### Misc:
+
+-Added a version check to make sure this mod will not crash with older versions of Buzzier Bees or Beesourceful.
+
 ## (V.1.2.0 Changes) (1.15.2 Minecraft)
       
 ##### Mod Compatibility: 
