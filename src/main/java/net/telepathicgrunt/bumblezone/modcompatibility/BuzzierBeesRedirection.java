@@ -2,6 +2,7 @@ package net.telepathicgrunt.bumblezone.modcompatibility;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -47,5 +48,20 @@ public class BuzzierBeesRedirection
 	
 	public static ActionResultType bottledBeeInteract(ItemStack itemstack, BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand) {
 		return BuzzierBeesCompat.bottledBeeInteract(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+	}
+	
+	public static Block BBGetRandomTier1Candle(Random random)
+	{
+		return BuzzierBeesCompat.BBGetRandomTier1Candle(random);
+	}
+	
+	public static Block BBGetRandomTier2Candle(Random random)
+	{
+		return BuzzierBeesCompat.BBGetRandomTier2Candle(random);
+	}
+	
+	public static Block BBGetRandomTier3Candle(Random random)
+	{
+		return BuzzierBeesCompat.BBGetRandomTier3Candle(random);
 	}
 }

@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
+import org.apache.logging.log4j.Level;
+
+import com.bagel.buzzierbees.common.blocks.CandleBlock;
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.Dynamic;
 import com.mojang.datafixers.util.Pair;
@@ -14,6 +17,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ILiquidContainer;
+import net.minecraft.block.material.Material;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.inventory.IClearable;
 import net.minecraft.nbt.CompoundNBT;
@@ -40,6 +44,9 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombLarvaBlock;
+import net.telepathicgrunt.bumblezone.modcompatibility.BeesourcefulRedirection;
+import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
+import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 
 public class BeeDungeon extends Feature<NoFeatureConfig>
@@ -52,8 +59,8 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 	@Override
 	public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> changedBlock, Random rand, BlockPos position, NoFeatureConfig p_212245_5_)
 	{
-		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position);
-		
+		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position).move(-6, -2, -6);
+		Bumblezone.LOGGER.log(Level.INFO, "Bee Dungeon at X: "+blockpos$Mutable.getX() +", "+blockpos$Mutable.getY()+", "+blockpos$Mutable.getZ());
 
 		TemplateManager templatemanager = ((ServerWorld) world.getWorld()).getSaveHandler().getStructureTemplateManager();
 		Template template = templatemanager.getTemplate(new ResourceLocation(Bumblezone.MODID + ":bee_dungeon/shell"));
@@ -67,92 +74,24 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 		PlacementSettings placementsettings = (new PlacementSettings()).setMirror(Mirror.NONE).setRotation(Rotation.NONE).setIgnoreEntities(false).setChunk((ChunkPos) null);
 		addBlocksToWorld(template, world, blockpos$Mutable, placementsettings, 2);
 
+		
+		template = templatemanager.getTemplate(new ResourceLocation(Bumblezone.MODID + ":bee_dungeon/altar"));
+
+		if (template == null)
+		{
+			Bumblezone.LOGGER.warn("bee_dungeon/altar NTB does not exist!");
+			return false;
+		}
+
+		addBlocksToWorld(template, world, blockpos$Mutable.move(0, 1, 0), placementsettings, 2);
 		return true;
 
-	}
-
-	/**
-	 * Converts the incoming block to the blockstate needed
-	 * @return - a pair of the blockstate to use and whether this block can replace air
-	 */
-	private static Pair<BlockState, Boolean> blockConversion(Block block, Random random)
-	{
-		if(block == Blocks.RED_TERRACOTTA || block == Blocks.PURPLE_TERRACOTTA) {
-			if(random.nextFloat() < 0.4f) {
-				return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(),	new Boolean(false));
-			}
-			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
-			}
-		}
-		
-		else if(block == Blocks.ORANGE_TERRACOTTA) {
-			if(random.nextFloat() < 0.2f) {
-				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
-								.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(random.nextInt(3)))
-								.with(HoneycombLarvaBlock.FACING, Direction.NORTH),	
-								new Boolean(false));
-			}
-			else if(random.nextFloat() < 0.1f) {
-				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
-			}
-			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
-			}
-		}
-		
-		else if(block == Blocks.YELLOW_TERRACOTTA) {
-			if(random.nextFloat() < 0.2f) {
-				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
-								.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(random.nextInt(3)))
-								.with(HoneycombLarvaBlock.FACING, Direction.EAST),	
-								new Boolean(false));
-			}
-			else if(random.nextFloat() < 0.1f) {
-				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
-			}
-			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
-			}
-		}
-		
-		else if(block == Blocks.GREEN_TERRACOTTA) {
-			if(random.nextFloat() < 0.2f) {
-				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
-								.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(random.nextInt(3)))
-								.with(HoneycombLarvaBlock.FACING, Direction.SOUTH),	
-								new Boolean(false));
-			}
-			else if(random.nextFloat() < 0.1f) {
-				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
-			}
-			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
-			}
-		}
-		
-		else if(block == Blocks.BLUE_TERRACOTTA) {
-			if(random.nextFloat() < 0.2f) {
-				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
-								.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(random.nextInt(3)))
-								.with(HoneycombLarvaBlock.FACING, Direction.WEST),	
-								new Boolean(false));
-			}
-			else if(random.nextFloat() < 0.1f) {
-				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
-			}
-			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
-			}
-		}
-		
-		return new Pair<>(Blocks.ACACIA_BUTTON.getDefaultState(), new Boolean(false));
 	}
 	
 	/**
 	 * Adds blocks and entities from this structure to the given world.
 	 */
-	private static boolean addBlocksToWorld(Template template, IWorld worldIn, BlockPos pos, PlacementSettings placementIn, int flags)
+	private static boolean addBlocksToWorld(Template template, IWorld world, BlockPos pos, PlacementSettings placementIn, int flags)
 	{
 		if (template.blocks.isEmpty())
 		{
@@ -173,25 +112,25 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 				int i1 = Integer.MIN_VALUE;
 				int j1 = Integer.MIN_VALUE;
 
-				for (Template.BlockInfo template$blockinfo : Template.processBlockInfos(template, worldIn, pos, placementIn, list))
+				for (Template.BlockInfo template$blockinfo : Template.processBlockInfos(template, world, pos, placementIn, list))
 				{
 					BlockPos blockpos = template$blockinfo.pos;
 					if (mutableboundingbox == null || mutableboundingbox.isVecInside(blockpos))
 					{
-						IFluidState ifluidstate = placementIn.func_204763_l() ? worldIn.getFluidState(blockpos) : null;
+						IFluidState ifluidstate = placementIn.func_204763_l() ? world.getFluidState(blockpos) : null;
 						BlockState blockstate = template$blockinfo.state.mirror(placementIn.getMirror()).rotate(placementIn.getRotation());
 						if (template$blockinfo.nbt != null)
 						{
-							TileEntity tileentity = worldIn.getTileEntity(blockpos);
+							TileEntity tileentity = world.getTileEntity(blockpos);
 							IClearable.clearObj(tileentity);
-							worldIn.setBlockState(blockpos, Blocks.BARRIER.getDefaultState(), 20);
+							world.setBlockState(blockpos, Blocks.BARRIER.getDefaultState(), 20);
 						}
 
 						//converts the blockstate template to the correct block and gets if the block can replace air or not
-						Pair<BlockState, Boolean> pair = blockConversion(blockstate.getBlock(), worldIn.getRandom());
+						Pair<BlockState, Boolean> pair = blockConversion(world, blockpos, blockstate.getBlock(), world.getRandom());
 						blockstate = pair.getFirst();
 						
-						if ((pair.getSecond() || worldIn.getBlockState(blockpos).isSolid()) && worldIn.setBlockState(blockpos, blockstate, flags))
+						if ((pair.getSecond() || world.getBlockState(blockpos).isSolid()) && world.setBlockState(blockpos, blockstate, flags))
 						{
 							i = Math.min(i, blockpos.getX());
 							j = Math.min(j, blockpos.getY());
@@ -202,7 +141,7 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 							list2.add(Pair.of(blockpos, template$blockinfo.nbt));
 							if (template$blockinfo.nbt != null)
 							{
-								TileEntity tileentity1 = worldIn.getTileEntity(blockpos);
+								TileEntity tileentity1 = world.getTileEntity(blockpos);
 								if (tileentity1 != null)
 								{
 									template$blockinfo.nbt.putInt("x", blockpos.getX());
@@ -216,7 +155,7 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 
 							if (ifluidstate != null && blockstate.getBlock() instanceof ILiquidContainer)
 							{
-								((ILiquidContainer) blockstate.getBlock()).receiveFluid(worldIn, blockpos, blockstate, ifluidstate);
+								((ILiquidContainer) blockstate.getBlock()).receiveFluid(world, blockpos, blockstate, ifluidstate);
 								if (!ifluidstate.isSource())
 								{
 									list1.add(blockpos);
@@ -238,13 +177,13 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 					{
 						BlockPos blockpos2 = iterator.next();
 						BlockPos blockpos3 = blockpos2;
-						IFluidState ifluidstate2 = worldIn.getFluidState(blockpos2);
+						IFluidState ifluidstate2 = world.getFluidState(blockpos2);
 
 						for (int k1 = 0; k1 < adirection.length && !ifluidstate2.isSource(); ++k1)
 						{
 							BlockPos blockpos1 = blockpos3.offset(adirection[k1]);
-							IFluidState ifluidstate1 = worldIn.getFluidState(blockpos1);
-							if (ifluidstate1.getActualHeight(worldIn, blockpos1) > ifluidstate2.getActualHeight(worldIn, blockpos3) || ifluidstate1.isSource() && !ifluidstate2.isSource())
+							IFluidState ifluidstate1 = world.getFluidState(blockpos1);
+							if (ifluidstate1.getActualHeight(world, blockpos1) > ifluidstate2.getActualHeight(world, blockpos3) || ifluidstate1.isSource() && !ifluidstate2.isSource())
 							{
 								ifluidstate2 = ifluidstate1;
 								blockpos3 = blockpos1;
@@ -253,11 +192,11 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 
 						if (ifluidstate2.isSource())
 						{
-							BlockState blockstate2 = worldIn.getBlockState(blockpos2);
+							BlockState blockstate2 = world.getBlockState(blockpos2);
 							Block block = blockstate2.getBlock();
 							if (block instanceof ILiquidContainer)
 							{
-								((ILiquidContainer) block).receiveFluid(worldIn, blockpos2, blockstate2, ifluidstate2);
+								((ILiquidContainer) block).receiveFluid(world, blockpos2, blockstate2, ifluidstate2);
 								flag = true;
 								iterator.remove();
 							}
@@ -280,7 +219,7 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 							voxelshapepart.setFilled(blockpos5.getX() - l1, blockpos5.getY() - i2, blockpos5.getZ() - j2, true, true);
 						}
 
-						Template.func_222857_a(worldIn, flags, voxelshapepart, l1, i2, j2);
+						Template.func_222857_a(world, flags, voxelshapepart, l1, i2, j2);
 					}
 
 					for (Pair<BlockPos, CompoundNBT> pair : list2)
@@ -288,19 +227,19 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 						BlockPos blockpos4 = pair.getFirst();
 						if (!placementIn.func_215218_i())
 						{
-							BlockState blockstate1 = worldIn.getBlockState(blockpos4);
-							BlockState blockstate3 = Block.getValidBlockForPosition(blockstate1, worldIn, blockpos4);
+							BlockState blockstate1 = world.getBlockState(blockpos4);
+							BlockState blockstate3 = Block.getValidBlockForPosition(blockstate1, world, blockpos4);
 							if (blockstate1 != blockstate3)
 							{
-								worldIn.setBlockState(blockpos4, blockstate3, flags & -2 | 16);
+								world.setBlockState(blockpos4, blockstate3, flags & -2 | 16);
 							}
 
-							worldIn.notifyNeighbors(blockpos4, blockstate3.getBlock());
+							world.notifyNeighbors(blockpos4, blockstate3.getBlock());
 						}
 
 						if (pair.getSecond() != null)
 						{
-							TileEntity tileentity2 = worldIn.getTileEntity(blockpos4);
+							TileEntity tileentity2 = world.getTileEntity(blockpos4);
 							if (tileentity2 != null)
 							{
 								tileentity2.markDirty();
@@ -327,7 +266,7 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 					{
 						addEntitiesToWorldReflect.invoke(
 								template, 
-								worldIn, 
+								world, 
 								pos,
 								placementIn, 
 								placementIn.getMirror(), 
@@ -349,4 +288,187 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 			}
 		}
 	}
+
+	
+	/**
+	 * Converts the incoming block to the blockstate needed
+	 * @return - a pair of the blockstate to use and whether this block can replace air
+	 */
+	private static Pair<BlockState, Boolean> blockConversion(IWorld world, BlockPos pos, Block block, Random random)
+	{
+		//////////////////////////////////////////////
+		//Shell
+		
+		//main body
+		if(block == Blocks.RED_TERRACOTTA || block == Blocks.PURPLE_TERRACOTTA) {
+			if(ModChecking.beesourcefulPresent && random.nextFloat() < 0.4f) {
+				return new Pair<>(BeesourcefulRedirection.BSGetRandomHoneycomb(random).getDefaultState(), new Boolean(false));
+			}
+			
+			if(random.nextFloat() < 0.4f) {
+				return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(),	new Boolean(false));
+			}
+			else {
+				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
+			}
+		}
+
+		//south wall
+		else if(block == Blocks.ORANGE_TERRACOTTA) {
+			if(random.nextFloat() < 0.6f) {
+				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
+								.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(random.nextInt(3)))
+								.with(HoneycombLarvaBlock.FACING, Direction.SOUTH),	
+								new Boolean(false));
+			}
+			else if(random.nextFloat() < 0.2f) {
+				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
+			}
+			else {
+				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
+			}
+		}
+
+		//west wall
+		else if(block == Blocks.YELLOW_TERRACOTTA) {
+			if(random.nextFloat() < 0.6f) {
+				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
+								.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(random.nextInt(3)))
+								.with(HoneycombLarvaBlock.FACING, Direction.WEST),	
+								new Boolean(false));
+			}
+			else if(random.nextFloat() < 0.2f) {
+				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
+			}
+			else {
+				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
+			}
+		}
+
+		//north wall
+		else if(block == Blocks.LIME_TERRACOTTA) {
+			if(random.nextFloat() < 0.6f) {
+				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
+								.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(random.nextInt(3)))
+								.with(HoneycombLarvaBlock.FACING, Direction.NORTH),	
+								new Boolean(false));
+			}
+			else if(random.nextFloat() < 0.2f) {
+				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
+			}
+			else {
+				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
+			}
+		}
+
+		//east wall
+		else if(block == Blocks.BLUE_TERRACOTTA) {
+			if(random.nextFloat() < 0.6f) {
+				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
+								.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(random.nextInt(3)))
+								.with(HoneycombLarvaBlock.FACING, Direction.EAST),	
+								new Boolean(false));
+			}
+			else if(random.nextFloat() < 0.2f) {
+				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
+			}
+			else {
+				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
+			}
+		}
+
+		//sugar water stream
+		else if(block == BzBlocks.SUGAR_WATER_BLOCK.get()) {
+			return new Pair<>(block.getDefaultState(), new Boolean(false));
+		}
+		
+		//Shell
+		//////////////////////////////////////////////
+		//Altar
+		
+		
+		//base
+		else if(block == Blocks.GREEN_TERRACOTTA) {
+			boolean replaceAir = false;
+			if(world.getBlockState(pos.up()).getMaterial() != Material.AIR && !world.getBlockState(pos.up()).isSolid())
+				replaceAir = true;
+			
+			if(ModChecking.beesourcefulPresent && random.nextFloat() < 0.4f) {
+				return new Pair<>(BeesourcefulRedirection.BSGetRandomHoneycomb(random).getDefaultState(), new Boolean(replaceAir));
+			}
+			
+			if(random.nextFloat() < 0.4f) {
+				return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(),	new Boolean(replaceAir));
+			}
+			else {
+				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(replaceAir));
+			}
+		}
+
+		//outer ring
+		else if(block == Blocks.GRAY_TERRACOTTA) {
+			if(ModChecking.buzzierBeesPresent && world.getBlockState(pos.down()).getMaterial() != Material.AIR) {
+				if(random.nextBoolean())
+					return new Pair<>(BuzzierBeesRedirection.BBGetRandomTier1Candle(random).getDefaultState()
+							.with(CandleBlock.CANDLES, random.nextInt(3)+1)
+							.with(CandleBlock.WATERLOGGED, false)
+							.with(CandleBlock.LIT, true), 
+							new Boolean(true));
+			}
+			else {
+				if(random.nextFloat() < 0.2f) {
+					return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(),	new Boolean(true));
+				}
+				else {
+					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+				}
+			}
+		}
+		
+		//inner ring
+		else if(block == Blocks.CYAN_TERRACOTTA) {
+			if(ModChecking.buzzierBeesPresent && world.getBlockState(pos.down()).getMaterial() != Material.AIR) {
+				if(random.nextBoolean())
+					return new Pair<>(BuzzierBeesRedirection.BBGetRandomTier2Candle(random).getDefaultState()
+							.with(CandleBlock.CANDLES, random.nextInt(random.nextInt(3)+1)+1) //low chance of 3 candles
+							.with(CandleBlock.WATERLOGGED, false)
+							.with(CandleBlock.LIT, true), 
+							new Boolean(true));
+			}
+			else {
+				if(random.nextFloat() < 0.35f) {
+					return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(),	new Boolean(true));
+				}
+				else {
+					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+				}
+			}
+		}
+		
+		//center
+		else if(block == Blocks.BLACK_TERRACOTTA) {
+			if(ModChecking.buzzierBeesPresent && world.getBlockState(pos.down()).getMaterial() != Material.AIR) {
+				return new Pair<>(BuzzierBeesRedirection.BBGetRandomTier3Candle(random).getDefaultState()
+						.with(CandleBlock.CANDLES, random.nextInt(random.nextInt(random.nextInt(3)+1)+1)+1) //lowest chance of 3 candles
+						.with(CandleBlock.WATERLOGGED, false)
+						.with(CandleBlock.LIT, true), 
+						new Boolean(true));
+			}
+			else {
+				if(random.nextFloat() < 0.6f) {
+					return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(),	new Boolean(true));
+				}
+				else {
+					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+				}
+			}
+		}
+
+		//Altar
+		//////////////////////////////////////////////
+		//Misc/air
+		
+		return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+	}
+
 }

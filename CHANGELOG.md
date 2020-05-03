@@ -28,6 +28,8 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
   
 ##### Generation: 
 
+-Added Bee Dungeons that will spawn in Honeycomb Holes or caves in the Bumblezone! They have lots of Honeycomb Brood Blocks but if you use Beesourceful, their ore-based Honeycombs will spawn too with Diamond, Ender, and Emeralds being the rarest honeycombs. And if you have Buzzier Bees on, their candles will also spawn in the dungeon with scented candles that gives potion effects spawning very rarely in the center. 
+
 -Honeycomb Holes now has a chance of having an Empty Honeycomb Larva Block.
 
 ##### Teleportation: 

@@ -32,25 +32,45 @@ public class BeeDungeonPlacer extends Placement<NoPlacementConfig>
 		BlockPos.Mutable mutable = new BlockPos.Mutable(pos);
 		boolean validSpot;
 
-		for (int currentAttempt = 0; currentAttempt <= 8; currentAttempt++)
+		for (int currentAttempt = 0; currentAttempt <= 10; currentAttempt++)
 		{
-			validSpot = true;
+			validSpot = false;
 			int x = random.nextInt(16) + pos.getX();
 			int z = random.nextInt(16) + pos.getZ();
-			int y = random.nextInt(chunkGenerator.getMaxHeight() - chunkGenerator.getSeaLevel()) + chunkGenerator.getSeaLevel();
+			int y = random.nextInt(chunkGenerator.getMaxHeight() - 10 - chunkGenerator.getSeaLevel()) + chunkGenerator.getSeaLevel() + 2;
 
-			for (Direction face : Direction.values())
+			//find a cave air spot
+			for (Direction face : Direction.Plane.HORIZONTAL)
 			{
-				mutable.setPos(x, y, z).move(face);
+				mutable.setPos(x, y, z).move(face, 3);
 
-				if (world.getBlockState(mutable).getBlock() != Blocks.CAVE_AIR)
-					validSpot = false;
+				if (world.getBlockState(mutable).getBlock() == Blocks.CAVE_AIR)
+					validSpot = true;
 			}
-
-			if (validSpot)
+			
+			//make sure we aren't too close to regular air
+			for(int xOffset = -6; xOffset <= 6; xOffset += 6)
+			{
+				for(int zOffset = -6; zOffset <= 6; zOffset += 6)
+				{
+					for(int yOffset = -3; yOffset <= 9; yOffset += 3)
+					{
+						mutable.setPos(x, y, z).move(xOffset, yOffset, zOffset);
+		
+						if (world.getBlockState(mutable).getBlock() == Blocks.AIR)
+							validSpot = false;
+					}
+				}
+			}
+			
+			
+			mutable.setPos(x, y, z);
+			if (validSpot && world.getBlockState(mutable).isSolid()) {
 				validPositions.add(mutable);
+				return validPositions.stream();
+			}
 		}
 
-		return validPositions.parallelStream();
+		return validPositions.stream();
 	}
 }
