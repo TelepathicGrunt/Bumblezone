@@ -51,7 +51,7 @@ public class ModChecking
 				int minorVersion = ModList.get().getModContainerById(beesourcefulID).get().getModInfo().getVersion().getMinorVersion();
 				
 				//only run setup for mod if it is v1.1 or greater
-				if(majorVersion == 1 && minorVersion >= 1)
+				if((majorVersion == 1 && minorVersion >= 1) || majorVersion > 1)
 					runSetupForMod(() -> () -> BeesourcefulCompat.setupBeesourceful()); 
 			} 
 		}
