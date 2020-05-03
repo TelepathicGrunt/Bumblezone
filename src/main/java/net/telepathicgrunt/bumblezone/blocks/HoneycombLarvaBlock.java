@@ -55,14 +55,14 @@ import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 
-public class HoneycombBroodBlock extends DirectionalBlock
+public class HoneycombLarvaBlock extends DirectionalBlock
 {
 	public static final IntegerProperty					STAGE							= BlockStateProperties.AGE_0_3;
 	private static final DefaultDispenseItemBehavior	BEHAVIOUR_DEFAULT_DISPENSE_ITEM	= new HoneyBottleDispenseBehavior();
 	private static final EntityPredicate				FIXED_DISTANCE					= (new EntityPredicate()).setDistance(50);
 	private static final EntityPredicate				PLAYER_DISTANCE					= (new EntityPredicate());
 
-	public HoneycombBroodBlock()
+	public HoneycombLarvaBlock()
 	{
 		super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).tickRandomly().hardnessAndResistance(0.5F).speedFactor(0.9F).sound(SoundType.CORAL));
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.SOUTH).with(STAGE, Integer.valueOf(0)));
@@ -129,7 +129,7 @@ public class HoneycombBroodBlock extends DirectionalBlock
 		 */
 		if (itemstack.getItem() == Items.GLASS_BOTTLE)
 		{
-			world.setBlockState(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().getDefaultState().with(BlockStateProperties.FACING, thisBlockState.get(BlockStateProperties.FACING)), 3); // removed honey from this block
+			world.setBlockState(position, BzBlocks.DEAD_HONEYCOMB_LARVA.get().getDefaultState().with(BlockStateProperties.FACING, thisBlockState.get(BlockStateProperties.FACING)), 3); // removed honey from this block
 
 			//spawn angry bee if at final stage and front isn't blocked off
 			int stage = thisBlockState.get(STAGE);
@@ -229,7 +229,7 @@ public class HoneycombBroodBlock extends DirectionalBlock
 				ActionResultType action = BuzzierBeesRedirection.honeyWandTakingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
 				if (action == ActionResultType.SUCCESS)
 				{
-					world.setBlockState(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().getDefaultState().with(BlockStateProperties.FACING, thisBlockState.get(BlockStateProperties.FACING)), 3); // removed honey from this block
+					world.setBlockState(position, BzBlocks.DEAD_HONEYCOMB_LARVA.get().getDefaultState().with(BlockStateProperties.FACING, thisBlockState.get(BlockStateProperties.FACING)), 3); // removed honey from this block
 
 					//spawn angry bee if at final stage and front isn't blocked off
 					int stage = thisBlockState.get(STAGE);

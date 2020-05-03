@@ -38,23 +38,23 @@ public class BzItems
 
 
     //blocks
-    public static final RegistryObject<Item> POROUS_HONEYCOMB_ITEM = ITEMS.register(BzBlocks.POROUS_HONEYCOMB.get().getRegistryName().getPath(), 
-    		() -> new BlockItem(BzBlocks.POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> POROUS_HONEYCOMB_ITEM = ITEMS.register("porous_honeycomb_block", () ->
+    	new BlockItem(BzBlocks.POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
     
-    public static final RegistryObject<Item> FILLED_POROUS_HONEYCOMB_ITEM = ITEMS.register(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getRegistryName().getPath(), 
-    		() -> new BlockItem(BzBlocks.FILLED_POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> FILLED_POROUS_HONEYCOMB_ITEM = ITEMS.register("filled_porous_honeycomb_block", () ->
+    	new BlockItem(BzBlocks.FILLED_POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
 
-    public static final RegistryObject<Item> EMPTY_HONEYCOMB_BROOD_ITEM = ITEMS.register(BzBlocks.EMPTY_HONEYCOMB_BROOD.get().getRegistryName().getPath(), 
-    		() -> new BlockItem(BzBlocks.EMPTY_HONEYCOMB_BROOD.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> DEAD_HONEYCOMB_LARVA_ITEM = ITEMS.register("dead_honeycomb_larva_block", () ->
+    	new BlockItem(BzBlocks.DEAD_HONEYCOMB_LARVA.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
     
-    public static final RegistryObject<Item> HONEYCOMB_BROOD_ITEM = ITEMS.register(BzBlocks.HONEYCOMB_BROOD.get().getRegistryName().getPath(), 
-    		() -> new BlockItem(BzBlocks.HONEYCOMB_BROOD.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> HONEYCOMB_LARVA_ITEM = ITEMS.register("honeycomb_larva_block", () ->
+    	new BlockItem(BzBlocks.HONEYCOMB_LARVA.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
 
-    public static final RegistryObject<Item> SUGAR_INFUSED_STONE_ITEM = ITEMS.register(BzBlocks.SUGAR_INFUSED_STONE.get().getRegistryName().getPath(), 
-    		() -> new BlockItem(BzBlocks.SUGAR_INFUSED_STONE.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUGAR_INFUSED_STONE_ITEM = ITEMS.register("sugar_infused_stone", () ->
+    	new BlockItem(BzBlocks.SUGAR_INFUSED_STONE.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
 
-    public static final RegistryObject<Item> SUGAR_INFUSED_COBBLESTONE_ITEM = ITEMS.register(BzBlocks.SUGAR_INFUSED_COBBLESTONE.get().getRegistryName().getPath(), 
-    		() -> new BlockItem(BzBlocks.SUGAR_INFUSED_COBBLESTONE.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUGAR_INFUSED_COBBLESTONE_ITEM = ITEMS.register("sugar_infused_cobblestone", () ->
+    	new BlockItem(BzBlocks.SUGAR_INFUSED_COBBLESTONE.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
 
     
     //items

@@ -16,7 +16,7 @@ import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
-import net.telepathicgrunt.bumblezone.blocks.HoneycombBroodBlock;
+import net.telepathicgrunt.bumblezone.blocks.HoneycombLarvaBlock;
 
 
 public class HoneycombHole extends Feature<NoFeatureConfig>
@@ -184,9 +184,9 @@ public class HoneycombHole extends Feature<NoFeatureConfig>
 								facing = Direction.EAST;
 								
 							if(rand.nextFloat() < 0.8f)
-								world.setBlockState(currentPosition, BzBlocks.HONEYCOMB_BROOD.get().getDefaultState().with(HoneycombBroodBlock.STAGE, Integer.valueOf(rand.nextInt(3))).with(HoneycombBroodBlock.FACING, facing), 2);
+								world.setBlockState(currentPosition, BzBlocks.HONEYCOMB_LARVA.get().getDefaultState().with(HoneycombLarvaBlock.STAGE, Integer.valueOf(rand.nextInt(3))).with(HoneycombLarvaBlock.FACING, facing), 2);
 							else
-								world.setBlockState(currentPosition, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().getDefaultState().with(HoneycombBroodBlock.FACING, facing), 2);
+								world.setBlockState(currentPosition, BzBlocks.DEAD_HONEYCOMB_LARVA.get().getDefaultState().with(HoneycombLarvaBlock.FACING, facing), 2);
 						}
 						else if(chance <= 6)
 						{

@@ -19,16 +19,14 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 -Clarified that the Wrath of the Hive bee effect level values in the config are one less than their actual level applied in game.
 
 -Config for Wrath of the Hive's effects it gives to bees now can be set to 0 which would mean the effect gets applied at effect level 1 in the game.
-
-##### Blocks: 
-
--Renamed Honeycomb Larva Block and Dead Honeycomb Larva Block to Honeycomb Brood Block and Empty Honeycomb Brood Block.
-
--Fixed Sugar Water Block from spamming in the logs that its blockstate model isn't set up even though it had no impact visually or on gameplay.
   
 ##### Generation: 
 
 -Honeycomb Holes now has a chance of having a Dead Larva Block.
+
+##### Blocks: 
+
+-Fixed Sugar Water Block from spamming in the logs that its blockstate model isn't set up even though it had no impact visually or on gameplay.
   
 ##### Teleportation: 
 
