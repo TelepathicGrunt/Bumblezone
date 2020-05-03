@@ -35,8 +35,22 @@ public class BzConfig
 		public ConfigValueListener<Boolean> hivePlanksWorldgen;
 		public ConfigValueListener<Boolean> waxBlocksWorldgen;
 		public ConfigValueListener<Boolean> crystallizedHoneyWorldgen;
+		public ConfigValueListener<Boolean> allowRegularCandlesBeeDungeon;
+		public ConfigValueListener<Boolean> allowScentedCandlesBeeDungeon;
+		public ConfigValueListener<Boolean> allowScentedCandlesSpiderBeeDungeon;
+		public ConfigValueListener<Integer> powerfulCandlesRarityBeeDungeon;
+		public ConfigValueListener<Integer> powerfulCandlesRaritySpiderBeeDungeon;
+		public ConfigValueListener<Double> spawnerRateSpiderBeeDungeon;
 		public ConfigValueListener<Boolean> spawnBeesourcefulBeesMob;
 		public ConfigValueListener<Boolean> spawnBesourcefulHoneycombVariants;
+		public ConfigValueListener<Integer> greatHoneycombRarityBeeDungeon;
+		public ConfigValueListener<Double> oreHoneycombSpawnRateBeeDungeon;
+		public ConfigValueListener<Integer> greatHoneycombRaritySpiderBeeDungeon;
+		public ConfigValueListener<Double> oreHoneycombSpawnRateSpiderBeeDungeon;
+		
+		//dungeons
+		public ConfigValueListener<Integer> beeDungeonRarity;
+		public ConfigValueListener<Integer> spiderInfestedBeeDungeonRarity;
 
 		public BzConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber)
 		{
@@ -132,6 +146,30 @@ public class BzConfig
 		                    .translation("the_bumblezone.config.dimension.allowteleportationwithmoddedbeehives")
 		                    .define("allowTeleportationWithModdedBeehives", true));
 	            
+	        builder.pop();
+	        
+            builder.push("Dungeon Options");
+
+    			beeDungeonRarity = subscriber.subscribe(builder
+		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		            		+" How rare Bee Dungeons are. Higher numbers means more rare.\r\n"
+		            		+" Default rate is 1. Setting to 1001 will disable Bee Dungeons.\r\n")
+		            .translation("the_bumblezone.config.dungeons.beedungeonrarity")
+		            .defineInRange("beeDungeonRarity", 1, 1, 1001));
+		
+    			spiderInfestedBeeDungeonRarity = subscriber.subscribe(builder
+    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+    		            		+" How rare Spider Infested Bee Dungeons are. Higher numbers means more rare.\r\n"
+    		            		+" Default rate is 3. Setting to 1001 will disable Bee Dungeons.\r\n")
+    		            .translation("the_bumblezone.config.dungeons.spiderinfestedbeedungeonrarity")
+    		            .defineInRange("spiderInfestedBeeDungeonRarity", 3, 1, 1001));
+
+	    		spawnerRateSpiderBeeDungeon = subscriber.subscribe(builder
+    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+    		            		+" How rare are Spider/Cave Spider Spawners in Spider Infested Bee Dungeons.\r\n"
+    		            		+" 0 is no spawners, 1 is max spawner, and default is 0.3D\r\n")
+    		            .translation("the_bumblezone.config.dungeons.spawnerratespiderbeedungeon")
+    		            .defineInRange("spawnerRateSpiderBeeDungeon", 0D, 0D, 1D));
 	        builder.pop();
 	        
 	        builder.push("Wrath of the Hive Options");
@@ -277,7 +315,42 @@ public class BzConfig
 		                    		+" surface of land around sea level and above.\r\n")
 		                    .translation("the_bumblezone.config.modcompat.buzzierbees.crystallizedhoneyworldgen")
 		                    .define("crystallizedHoneyWorldgen", true));
-		            
+
+
+		    		allowRegularCandlesBeeDungeon = subscriber.subscribe(builder
+		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		                    		+" Allow Bee Dungeons to have normal unscented candles./r/n")
+		                    .translation("the_bumblezone.config.modcompat.buzzierbees.allowregularcandlesbeedungeon")
+		                    .define("allowRegularCandlesBeeDungeon", true));
+
+		    		allowScentedCandlesBeeDungeon = subscriber.subscribe(builder
+		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		                    		+" Allow Bee Dungeons to have scented candles that gives status effects./r/n")
+		                    .translation("the_bumblezone.config.modcompat.buzzierbees.allowscentedcandlesbeedungeon")
+		                    .define("allowScentedCandlesBeeDungeon", true));
+
+		    		allowScentedCandlesSpiderBeeDungeon = subscriber.subscribe(builder
+		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		                    		+" Allow Spider Infested Bee Dungeons to have scented candles that gives status effects./r/n")
+		                    .translation("the_bumblezone.config.modcompat.buzzierbees.allowscentedcandlesspiderbeedungeon")
+		                    .define("allowScentedCandlesSpiderBeeDungeon", true));
+		    		
+		    		powerfulCandlesRarityBeeDungeon = subscriber.subscribe(builder
+	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	    		            		+" How rare are powerful candles in Bee Dungeons. \r\n"
+	    		            		+" Higher numbers means more rare.\r\n"
+	    		            		+" Default rate is 2.\r\n")
+	    		            .translation("the_bumblezone.config.dungeons.powerfulcandlesraritybeedungeon")
+	    		            .defineInRange("powerfulCandlesRarityBeeDungeon", 2, 0, 10));
+		    		
+		    		powerfulCandlesRaritySpiderBeeDungeon = subscriber.subscribe(builder
+	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	    		            		+" How rare are powerful candles in Spider Infested Bee Dungeons. \r\n"
+	    		            		+" Higher numbers means more rare.\r\n"
+	    		            		+" Default rate is 2.\r\n")
+	    		            .translation("the_bumblezone.config.dungeons.powerfulcandlesrarityspiderbeedungeon")
+	    		            .defineInRange("powerfulCandlesRaritySpiderBeeDungeon", 0, 0, 10));
+		    		
 	            builder.pop();
 	            
 
@@ -300,6 +373,35 @@ public class BzConfig
 			                    .translation("the_bumblezone.config.modcompat.beesourceful.spawnbesourcefulhoneycombvariants")
 			                    .define("spawnBesourcefulHoneycombVariants", true));
 
+	        		oreHoneycombSpawnRateBeeDungeon = subscriber.subscribe(builder
+	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	    		            		+" How much of Bee Dungeons is made of ore-based honeycombs.\r\n"
+	    		            		+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.3D\r\n")
+	    		            .translation("the_bumblezone.config.beesourceful.orehoneycombspawnratebeedungeon")
+	    		            .defineInRange("oreHoneycombSpawnRateBeeDungeon", 0.3D, 0D, 1D));
+		    		
+	        		greatHoneycombRarityBeeDungeon = subscriber.subscribe(builder
+	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	    		            		+" How rare good ore-based Honeycombs (diamonds, ender, emerald, etc) are \r\n"
+	    		            		+" in Bee Dungeons. \r\n"
+	    		            		+" Higher numbers means more rare. Default rate is 3.\r\n")
+	    		            .translation("the_bumblezone.config.beesourceful.greathoneycombraritybeedungeon")
+	    		            .defineInRange("greatHoneycombRarityBeeDungeon", 2, 1, 1001));
+
+	        		oreHoneycombSpawnRateSpiderBeeDungeon = subscriber.subscribe(builder
+	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	    		            		+" How much of Spider Infested Bee Dungeons is made of ore-based honeycombs.\r\n"
+	    		            		+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.4D\r\n")
+	    		            .translation("the_bumblezone.config.beesourceful.orehoneycombspawnratespiderbeedungeon")
+	    		            .defineInRange("oreHoneycombSpawnRateSpiderBeeDungeon", 0.4D, 0D, 1D));
+		    		
+	        		greatHoneycombRaritySpiderBeeDungeon = subscriber.subscribe(builder
+	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	    		            		+" How rare good ore-based Honeycombs (diamonds, ender, emerald, etc) are \r\n"
+	    		            		+" in Spider Infested Bee Dungeons. \r\n"
+	    		            		+" Higher numbers means more rare. Default rate is 2.\r\n")
+	    		            .translation("the_bumblezone.config.beesourceful.greathoneycombrarityspiderbeedungeon")
+	    		            .defineInRange("greatHoneycombRaritySpiderBeeDungeon", 2, 1, 1001));
 	            builder.pop();
 	            
 	        builder.pop();

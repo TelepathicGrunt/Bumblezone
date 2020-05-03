@@ -55,13 +55,13 @@ public class BuzzierBeesRedirection
 		return BuzzierBeesCompat.BBGetRandomTier1Candle(random);
 	}
 	
-	public static Block BBGetRandomTier2Candle(Random random)
+	public static Block BBGetRandomTier2Candle(Random random, int lowerEndBias)
 	{
-		return BuzzierBeesCompat.BBGetRandomTier2Candle(random);
+		return BuzzierBeesCompat.BBGetRandomTier2Candle(random, lowerEndBias);
 	}
 	
-	public static Block BBGetRandomTier3Candle(Random random)
+	public static Block BBGetRandomTier3Candle(Random random, int lowerEndBias)
 	{
-		return BuzzierBeesCompat.BBGetRandomTier3Candle(random);
+		return BuzzierBeesCompat.BBGetRandomTier3Candle(random, lowerEndBias);
 	}
 }

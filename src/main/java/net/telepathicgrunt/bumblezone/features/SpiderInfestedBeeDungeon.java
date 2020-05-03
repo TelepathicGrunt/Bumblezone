@@ -16,9 +16,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ILiquidContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.inventory.IClearable;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.MobSpawnerTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
@@ -39,6 +41,7 @@ import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombLarvaBlock;
@@ -47,21 +50,23 @@ import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 
-public class BeeDungeon extends Feature<NoFeatureConfig>
+public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 {
-
-	public BeeDungeon(Function<Dynamic<?>, ? extends NoFeatureConfig> configFactory)
+	private static final ResourceLocation CRYSTALLIZED_HONEY_BLOCK = new ResourceLocation("buzzierbees:crystallized_honey_block");
+	
+	public SpiderInfestedBeeDungeon(Function<Dynamic<?>, ? extends NoFeatureConfig> configFactory)
 	{
 		super(configFactory);
 	}
+	
 	@Override
 	public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> changedBlock, Random rand, BlockPos position, NoFeatureConfig p_212245_5_)
 	{
 		//affect rarity
-		if(rand.nextInt(Bumblezone.BzConfig.beeDungeonRarity.get()) != 0) return false;
+		if(rand.nextInt(Bumblezone.BzConfig.spiderInfestedBeeDungeonRarity.get()) != 0) return false;
 		
 		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position).move(-6, -2, -6);
-		//Bumblezone.LOGGER.log(Level.INFO, "Bee Dungeon at X: "+position.getX() +", "+position.getY()+", "+position.getZ());
+		//Bumblezone.LOGGER.log(Level.INFO, "Spider Infested Bee Dungeon at X: "+position.getX() +", "+position.getY()+", "+position.getZ());
 
 		TemplateManager templatemanager = ((ServerWorld) world.getWorld()).getSaveHandler().getStructureTemplateManager();
 		Template template = templatemanager.getTemplate(new ResourceLocation(Bumblezone.MODID + ":bee_dungeon/shell"));
@@ -133,6 +138,16 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 						
 						if ((pair.getSecond() || world.getBlockState(blockpos).isSolid()) && world.setBlockState(blockpos, blockstate, flags))
 						{
+							if(blockstate.getBlock() == Blocks.SPAWNER) {
+								TileEntity tileentity = world.getTileEntity(blockpos);
+
+								if (tileentity instanceof MobSpawnerTileEntity)
+								{
+									((MobSpawnerTileEntity) tileentity).getSpawnerBaseLogic()
+										.setEntityType(world.getRandom().nextFloat() < 0.2f ? EntityType.CAVE_SPIDER : EntityType.SPIDER);
+								}
+							}
+							
 							i = Math.min(i, blockpos.getX());
 							j = Math.min(j, blockpos.getY());
 							k = Math.min(k, blockpos.getZ());
@@ -302,86 +317,93 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 		
 		//main body
 		if(block == Blocks.RED_TERRACOTTA || block == Blocks.PURPLE_TERRACOTTA) {
-			if(ModChecking.beesourcefulPresent && random.nextFloat() < Bumblezone.BzConfig.oreHoneycombSpawnRateBeeDungeon.get()) {
+			if(ModChecking.beesourcefulPresent && random.nextFloat() < Bumblezone.BzConfig.oreHoneycombSpawnRateSpiderBeeDungeon.get()) {
 				return new Pair<>(BeesourcefulRedirection.BSGetRandomHoneycomb(random, 
-						Bumblezone.BzConfig.greatHoneycombRarityBeeDungeon.get()).getDefaultState(), new Boolean(false));
+						Bumblezone.BzConfig.greatHoneycombRaritySpiderBeeDungeon.get()).getDefaultState(), new Boolean(false));
 			}
 			
-			if(random.nextFloat() < 0.4f) {
+			if(random.nextFloat() < 0.15f) {
 				return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(),	new Boolean(false));
 			}
 			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
+				return new Pair<>(BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
 			}
 		}
 
 		//south wall
 		else if(block == Blocks.ORANGE_TERRACOTTA) {
 			if(random.nextFloat() < 0.6f) {
-				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
-								.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(random.nextInt(3)))
+				return new Pair<>(BzBlocks.DEAD_HONEYCOMB_LARVA.get().getDefaultState()
 								.with(HoneycombLarvaBlock.FACING, Direction.SOUTH),	
 								new Boolean(false));
 			}
-			else if(random.nextFloat() < 0.2f) {
-				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
+			else if(random.nextDouble() < Bumblezone.BzConfig.spawnerRateSpiderBeeDungeon.get()) {
+				return new Pair<>(Blocks.SPAWNER.getDefaultState(), new Boolean(false));
 			}
 			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
+				return new Pair<>(BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
 			}
 		}
 
 		//west wall
 		else if(block == Blocks.YELLOW_TERRACOTTA) {
 			if(random.nextFloat() < 0.6f) {
-				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
-								.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(random.nextInt(3)))
+				return new Pair<>(BzBlocks.DEAD_HONEYCOMB_LARVA.get().getDefaultState()
 								.with(HoneycombLarvaBlock.FACING, Direction.WEST),	
 								new Boolean(false));
 			}
-			else if(random.nextFloat() < 0.2f) {
-				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
+			else if(random.nextDouble() < Bumblezone.BzConfig.spawnerRateSpiderBeeDungeon.get()) {
+				return new Pair<>(Blocks.SPAWNER.getDefaultState(), new Boolean(false));
 			}
 			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
+				return new Pair<>(BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
 			}
 		}
 
 		//north wall
 		else if(block == Blocks.LIME_TERRACOTTA) {
 			if(random.nextFloat() < 0.6f) {
-				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
-								.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(random.nextInt(3)))
+				return new Pair<>(BzBlocks.DEAD_HONEYCOMB_LARVA.get().getDefaultState()
 								.with(HoneycombLarvaBlock.FACING, Direction.NORTH),	
 								new Boolean(false));
 			}
-			else if(random.nextFloat() < 0.2f) {
-				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
+			else if(random.nextDouble() < Bumblezone.BzConfig.spawnerRateSpiderBeeDungeon.get()) {
+				return new Pair<>(Blocks.SPAWNER.getDefaultState(), new Boolean(false));
 			}
 			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
+				return new Pair<>(BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
 			}
 		}
 
 		//east wall
 		else if(block == Blocks.BLUE_TERRACOTTA) {
 			if(random.nextFloat() < 0.6f) {
-				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
-								.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(random.nextInt(3)))
+				return new Pair<>(BzBlocks.DEAD_HONEYCOMB_LARVA.get().getDefaultState()
 								.with(HoneycombLarvaBlock.FACING, Direction.EAST),	
 								new Boolean(false));
 			}
-			else if(random.nextFloat() < 0.2f) {
-				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
+			else if(random.nextDouble() < Bumblezone.BzConfig.spawnerRateSpiderBeeDungeon.get()) {
+				return new Pair<>(Blocks.SPAWNER.getDefaultState(), new Boolean(false));
 			}
 			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
+				return new Pair<>(BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
 			}
 		}
 
 		//sugar water stream
 		else if(block == BzBlocks.SUGAR_WATER_BLOCK.get()) {
-			return new Pair<>(block.getDefaultState(), new Boolean(false));
+			if(ModChecking.buzzierBeesPresent) {
+				return new Pair<>(ForgeRegistries.BLOCKS.getValue(CRYSTALLIZED_HONEY_BLOCK).getDefaultState(), new Boolean(false));
+			}
+			else {
+				return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+			}
+		}
+		
+		//air
+		else if(block.getDefaultState().getMaterial() == Material.AIR) {
+			if(random.nextFloat() < 0.15f)
+				return new Pair<>(Blocks.COBWEB.getDefaultState(), new Boolean(false));
 		}
 		
 		//Shell
@@ -395,72 +417,55 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 			if(world.getBlockState(pos.up()).getMaterial() != Material.AIR && !world.getBlockState(pos.up()).isSolid())
 				replaceAir = true;
 			
-			if(ModChecking.beesourcefulPresent && random.nextFloat() < Bumblezone.BzConfig.oreHoneycombSpawnRateBeeDungeon.get()) {
+			if(ModChecking.beesourcefulPresent && random.nextFloat() < Bumblezone.BzConfig.oreHoneycombSpawnRateSpiderBeeDungeon.get()) {
 				return new Pair<>(BeesourcefulRedirection.BSGetRandomHoneycomb(random, 
-						Bumblezone.BzConfig.greatHoneycombRarityBeeDungeon.get()).getDefaultState(), new Boolean(replaceAir));
+						Bumblezone.BzConfig.greatHoneycombRaritySpiderBeeDungeon.get()).getDefaultState(), new Boolean(replaceAir));
 			}
 			
-			if(random.nextFloat() < 0.4f) {
+			if(random.nextFloat() < 0.15f) {
 				return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(),	new Boolean(replaceAir));
 			}
 			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(replaceAir));
+				return new Pair<>(BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(replaceAir));
 			}
 		}
 
 		//outer ring
 		else if(block == Blocks.GRAY_TERRACOTTA) {
-			if(ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowScentedCandlesBeeDungeon.get()) {
-				if(random.nextBoolean() && world.getBlockState(pos.down()).getMaterial() != Material.AIR)
-					return new Pair<>(BuzzierBeesRedirection.BBGetRandomTier1Candle(random).getDefaultState()
-							.with(CandleBlock.CANDLES, random.nextInt(3)+1)
-							.with(CandleBlock.WATERLOGGED, false)
-							.with(CandleBlock.LIT, true), 
-							new Boolean(true));
+			if(random.nextFloat() < 0.15f) {
+				return new Pair<>(Blocks.COBWEB.getDefaultState(),	new Boolean(true));
 			}
 			else {
-				if(random.nextFloat() < 0.2f) {
-					return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(),	new Boolean(true));
-				}
-				else {
-					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
-				}
+				return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
 			}
 		}
 		
 		//inner ring
 		else if(block == Blocks.CYAN_TERRACOTTA) {
-			if(ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowScentedCandlesBeeDungeon.get()) {
-				if(random.nextBoolean() && world.getBlockState(pos.down()).getMaterial() != Material.AIR)
-					return new Pair<>(BuzzierBeesRedirection.BBGetRandomTier2Candle(random, Bumblezone.BzConfig.powerfulCandlesRarityBeeDungeon.get()).getDefaultState()
-							.with(CandleBlock.CANDLES, random.nextInt(random.nextInt(3)+1)+1) //low chance of 3 candles
-							.with(CandleBlock.WATERLOGGED, false)
-							.with(CandleBlock.LIT, true), 
-							new Boolean(true));
+			if(random.nextFloat() < 0.15f) {
+				return new Pair<>(Blocks.COBWEB.getDefaultState(),	new Boolean(true));
 			}
 			else {
-				if(random.nextFloat() < 0.35f) {
-					return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(),	new Boolean(true));
-				}
-				else {
-					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
-				}
+				return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
 			}
 		}
 		
 		//center
 		else if(block == Blocks.BLACK_TERRACOTTA) {
-			if(ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowScentedCandlesBeeDungeon.get()) {
-				if(world.getBlockState(pos.down()).getMaterial() != Material.AIR)
-					return new Pair<>(BuzzierBeesRedirection.BBGetRandomTier3Candle(random, Bumblezone.BzConfig.powerfulCandlesRarityBeeDungeon.get()+1).getDefaultState()
+			if(ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowScentedCandlesSpiderBeeDungeon.get()) {
+				if(random.nextInt(4) == 0 && world.getBlockState(pos.down()).getMaterial() != Material.AIR)
+					return new Pair<>(BuzzierBeesRedirection.BBGetRandomTier3Candle(random, Bumblezone.BzConfig.powerfulCandlesRaritySpiderBeeDungeon.get() + 1).getDefaultState()
 							.with(CandleBlock.CANDLES, random.nextInt(random.nextInt(random.nextInt(3)+1)+1)+1) //lowest chance of 3 candles
 							.with(CandleBlock.WATERLOGGED, false)
 							.with(CandleBlock.LIT, true), 
 							new Boolean(true));
+				
+				if(random.nextFloat() < 0.1f)
+					return new Pair<>(Blocks.COBWEB.getDefaultState(),	new Boolean(true));
 			}
 			else {
 				if(random.nextFloat() < 0.6f) {
-					return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(),	new Boolean(true));
+					return new Pair<>(Blocks.COBWEB.getDefaultState(),	new Boolean(true));
 				}
 				else {
 					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));

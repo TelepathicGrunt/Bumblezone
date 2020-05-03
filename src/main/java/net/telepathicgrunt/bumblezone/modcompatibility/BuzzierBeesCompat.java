@@ -107,6 +107,7 @@ public class BuzzierBeesCompat
 
 		//tier 3 candles - no effect and generally positive effect candles + wither
 		
+		//16
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.AMBER_CANDLE.get());
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.BEIGE_CANDLE.get());
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.CREAM_CANDLE.get());
@@ -124,6 +125,7 @@ public class BuzzierBeesCompat
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.SLATE_GRAY_CANDLE.get());
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.VIOLET_CANDLE.get());
 
+		//6
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.YELLOW_HIBISCUS_SCENTED_CANDLE.get());
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.ORANGE_HIBISCUS_SCENTED_CANDLE.get());
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.RED_HIBISCUS_SCENTED_CANDLE.get());
@@ -131,6 +133,7 @@ public class BuzzierBeesCompat
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.MAGENTA_HIBISCUS_SCENTED_CANDLE.get());
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.PURPLE_HIBISCUS_SCENTED_CANDLE.get());
 		
+		//9
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.BLUE_ORCHID_SCENTED_CANDLE.get());
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.DANDELION_SCENTED_CANDLE.get());
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.CORNFLOWER_SCENTED_CANDLE.get());
@@ -141,6 +144,7 @@ public class BuzzierBeesCompat
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.BLUEBELL_SCENTED_CANDLE.get());
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.VIOLET_SCENTED_CANDLE.get());
 
+		//9
 		if(ModList.get().isLoaded("atmospheric")) {
 			TIER_3_CANDLES_VARIANTS.add(BBBlocks.WARM_MONKEY_BRUSH_SCENTED_CANDLE.get());
 			TIER_3_CANDLES_VARIANTS.add(BBBlocks.HOT_MONKEY_BRUSH_SCENTED_CANDLE.get());
@@ -370,11 +374,11 @@ public class BuzzierBeesCompat
 	/**
 	 * Picks a random BuzzierBees scented candle with lower indices list being more common
 	 */
-	public static Block BBGetRandomTier2Candle(Random random)
+	public static Block BBGetRandomTier2Candle(Random random, int lowerEndBias)
 	{
 		int index = TIER_2_CANDLES_VARIANTS.size()-1;
 		
-		for(int i = 0; i < 2 && index != 0; i++) {
+		for(int i = 0; i < lowerEndBias && index != 0; i++) {
 			index = random.nextInt(index+1);
 		}
 		
@@ -383,14 +387,24 @@ public class BuzzierBeesCompat
 	
 	/**
 	 * Picks a random BuzzierBees scented candle with lower indices list being more common
+	 * lowerEndBias cannot be 0 or negative. usually 2
 	 */
-	public static Block BBGetRandomTier3Candle(Random random)
+	public static Block BBGetRandomTier3Candle(Random random, int lowerEndBias)
 	{
-		int index = TIER_3_CANDLES_VARIANTS.size()-1;
+		int index = random.nextInt(TIER_3_CANDLES_VARIANTS.size());
 		
-		for(int i = 0; i < 2 && index != 0; i++) {
-			index = random.nextInt(index+1);
+		if(index >= 31 && random.nextInt(lowerEndBias + 2) != 0) {
+			index = random.nextInt(index); //reroll to a lower subtier
 		}
+
+		if(index >= 22 && random.nextInt(lowerEndBias + 1) != 0) {
+			index = random.nextInt(index); //reroll to a lower subtier
+		}
+
+		if(index >= 16 && random.nextInt(lowerEndBias) != 0) {
+			index = random.nextInt(index); //reroll to a lower subtier
+		}
+		
 		
 		return TIER_3_CANDLES_VARIANTS.get(index);
 	}

@@ -116,11 +116,11 @@ public class BeesourcefulCompat
 	/**
 	 * Picks a random Beesourceful Honeycomb with lower index of HONEYCOMB_VARIANTS list being highly common
 	 */
-	public static Block BSGetRandomHoneycomb(Random random)
+	public static Block BSGetRandomHoneycomb(Random random, int lowerBoundBias)
 	{
 		int index = HONEYCOMB_VARIANTS.size()-1;
 		
-		for(int i = 0; i < 3 && index != 0; i++) {
+		for(int i = 0; i < lowerBoundBias && index != 0; i++) {
 			index = random.nextInt(index+1);
 		}
 		

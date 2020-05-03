@@ -19,8 +19,8 @@ public class BeesourcefulRedirection
 		BeesourcefulCompat.BSMobSpawnEvent(event);
 	}
 	
-	public static Block BSGetRandomHoneycomb(Random random)
+	public static Block BSGetRandomHoneycomb(Random random, int lowerBoundBias)
 	{
-		return BeesourcefulCompat.BSGetRandomHoneycomb(random);
+		return BeesourcefulCompat.BSGetRandomHoneycomb(random, lowerBoundBias);
 	}
 }

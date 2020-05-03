@@ -238,9 +238,7 @@ public class HoneycombCaves extends Feature<NoFeatureConfig>
 		BlockState blockState;
 		for(Direction direction : Direction.values()) {
 			blockState = world.getBlockState(pos.offset(direction));
-			if(pos.offset(direction).getY() > world.getSeaLevel() && 
-					(!blockState.getFluidState().isEmpty() || 
-					 blockState == Blocks.AIR.getDefaultState())) {
+			if(pos.offset(direction).getY() >= world.getSeaLevel() && blockState == Blocks.AIR.getDefaultState()) {
 				return true;
 			}
 		}

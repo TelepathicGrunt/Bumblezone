@@ -12,6 +12,7 @@ public class BzFeatures
     public static Feature<NoFeatureConfig> HONEYCOMB_CAVES = new HoneycombCaves(NoFeatureConfig::deserialize);
     public static Feature<NoFeatureConfig> CAVE_SUGAR_WATERFALL = new CaveSugarWaterfall(NoFeatureConfig::deserialize);
     public static Feature<NoFeatureConfig> BEE_DUNGEON = new BeeDungeon(NoFeatureConfig::deserialize);
+    public static Feature<NoFeatureConfig> SPIDER_INFESTED_BEE_DUNGEON = new SpiderInfestedBeeDungeon(NoFeatureConfig::deserialize);
 
     public static void registerFeatures(RegistryEvent.Register<Feature<?>> event)
     {
@@ -20,5 +21,6 @@ public class BzFeatures
     	RegUtils.register(registry, HONEYCOMB_CAVES, "honeycomb_caves");
     	RegUtils.register(registry, CAVE_SUGAR_WATERFALL, "cave_sugar_waterfall");
     	RegUtils.register(registry, BEE_DUNGEON, "bee_dungeon");
+    	RegUtils.register(registry, SPIDER_INFESTED_BEE_DUNGEON, "spider_infested_bee_dungeon");
     }
 }
