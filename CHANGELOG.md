@@ -20,14 +20,16 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 -Config for Wrath of the Hive's effects it gives to bees now can be set to 0 which would mean the effect gets applied at effect level 1 in the game.
   
-##### Generation: 
-
--Honeycomb Holes now has a chance of having a Dead Larva Block.
-
 ##### Blocks: 
 
 -Fixed Sugar Water Block from spamming in the logs that its blockstate model isn't set up even though it had no impact visually or on gameplay.
   
+-Renamed Honeycomb Larva Block and Dead Honeycomb Larva Block to Honeycomb Brood Block and Empty Honeycomb Brood Block.
+  
+##### Generation: 
+
+-Honeycomb Holes now has a chance of having an Empty Honeycomb Larva Block.
+
 ##### Teleportation: 
 
 -Exiting Bumblezone dimension by falling into the void will not kill the player with fall damage when they teleport into another dimension. I forgot to reset the player's fall time but now it's fixed.

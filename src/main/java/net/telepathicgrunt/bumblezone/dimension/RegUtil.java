@@ -38,6 +38,17 @@ public class RegUtil {
         return new Items(registry);
     }
 
+	/**
+	 * Helper method to quickly register features, blocks, items, structures, biomes, anything that can be registered.
+	 */
+	public static <T extends IForgeRegistryEntry<T>> T register(IForgeRegistry<T> registry, T entry, String registryKey)
+	{
+		entry.setRegistryName(new ResourceLocation(Bumblezone.MODID, registryKey));
+		registry.register(entry);
+		return entry;
+	}
+	
+    
     @SuppressWarnings("deprecation")
 	public static void registerStructure(String key, Structure<?> structure) {
         Registry.register(Registry.STRUCTURE_FEATURE, key.toLowerCase(Locale.ROOT), structure);

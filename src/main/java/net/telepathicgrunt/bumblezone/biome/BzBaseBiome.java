@@ -2,7 +2,6 @@ package net.telepathicgrunt.bumblezone.biome;
 
 import com.google.common.collect.ImmutableSet;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
@@ -12,26 +11,11 @@ import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.LiquidsConfig;
 import net.minecraft.world.gen.placement.CountRangeConfig;
-import net.minecraft.world.gen.placement.NoPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
-import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
-import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
-import net.telepathicgrunt.bumblezone.biome.surfacebuilders.HoneySurfaceBuilder;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
-import net.telepathicgrunt.bumblezone.features.placement.HoneycombHolePlacer;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 public class BzBaseBiome extends Biome {
-
-    protected static final BlockState CORAL = Blocks.HORN_CORAL_BLOCK.getDefaultState();
-    protected static final BlockState HONEY = Blocks.HONEY_BLOCK.getDefaultState();
-    protected static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState();
-    protected static final BlockState POROUS_HONEYCOMB = BzBlocks.POROUS_HONEYCOMB.get().getDefaultState();
-    
-    public static final SurfaceBuilderConfig HONEY_CONFIG = new SurfaceBuilderConfig(POROUS_HONEYCOMB, POROUS_HONEYCOMB, POROUS_HONEYCOMB);
-    public static final SurfaceBuilder<SurfaceBuilderConfig> HONEY_SURFACE_BUILDER = new HoneySurfaceBuilder(SurfaceBuilderConfig::deserialize);
-
-	public static final Placement<NoPlacementConfig> HONEYCOMB_HOLE_PLACER = new HoneycombHolePlacer(NoPlacementConfig::deserialize);
 	
 	protected BzBaseBiome(Biome.Builder biomeBuilder) {
 		super(biomeBuilder.precipitation(Biome.RainType.NONE).category(Biome.Category.JUNGLE).waterColor(14402413).waterFogColor(11700268).parent((String) null));
