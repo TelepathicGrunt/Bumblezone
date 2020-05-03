@@ -24,6 +24,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -32,6 +33,7 @@ import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
@@ -105,6 +107,12 @@ public class BuzzierBeesCompat
 		TIER_2_CANDLES_VARIANTS.add(BBBlocks.AZURE_BLUET_SCENTED_CANDLE.get());
 		TIER_2_CANDLES_VARIANTS.add(BBBlocks.LILY_OF_THE_VALLEY_SCENTED_CANDLE.get());
 
+		//this one will be added in future versions of buzzier bees (post v1.4)
+		//This lets us get that future candle when it is added but not crash people on v1.4
+		if(ModList.get().isLoaded("autumnity") && ForgeRegistries.BLOCKS.containsKey(new ResourceLocation("buzzierbees:autumn_crocus_scented_candle"))) {
+			TIER_2_CANDLES_VARIANTS.add(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("buzzierbees:autumn_crocus_scented_candle")));
+		}
+		
 		//tier 3 candles - no effect and generally positive effect candles + wither
 		
 		//16
@@ -161,8 +169,6 @@ public class BuzzierBeesCompat
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.ALLIUM_SCENTED_CANDLE.get());
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.WITHER_ROSE_SCENTED_CANDLE.get());
 		
-		//if((ModList.get().isLoaded("autumnity"))
-		//TIER_1_CANDLES_VARIANTS.add(BBBlocks.AUTUMN_CROCUS_SCENTED_CANDLE.get());
 	}
 	
 	//1/10th of bees spawning will also spawn honey slime
