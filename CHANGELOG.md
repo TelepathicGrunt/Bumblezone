@@ -12,7 +12,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 
    
-## (V.1.2.1 Changes) (1.15.2 Minecraft)
+## (V.1.3.0 Changes) (1.15.2 Minecraft)
     
 ##### Config:        
         
