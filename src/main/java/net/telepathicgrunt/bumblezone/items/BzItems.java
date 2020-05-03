@@ -38,22 +38,22 @@ public class BzItems
 
 
     //blocks
-    public static final RegistryObject<Item> POROUS_HONEYCOMB_ITEM = ITEMS.register("porous_honeycomb_block", 
+    public static final RegistryObject<Item> POROUS_HONEYCOMB_ITEM = ITEMS.register(BzBlocks.POROUS_HONEYCOMB.get().getRegistryName().getPath(), 
     		() -> new BlockItem(BzBlocks.POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
     
-    public static final RegistryObject<Item> FILLED_POROUS_HONEYCOMB_ITEM = ITEMS.register("filled_porous_honeycomb_block", 
+    public static final RegistryObject<Item> FILLED_POROUS_HONEYCOMB_ITEM = ITEMS.register(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getRegistryName().getPath(), 
     		() -> new BlockItem(BzBlocks.FILLED_POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
 
-    public static final RegistryObject<Item> EMPTY_HONEYCOMB_BROOD_ITEM = ITEMS.register("empty_honeycomb_brood_block", 
+    public static final RegistryObject<Item> EMPTY_HONEYCOMB_BROOD_ITEM = ITEMS.register(BzBlocks.EMPTY_HONEYCOMB_BROOD.get().getRegistryName().getPath(), 
     		() -> new BlockItem(BzBlocks.EMPTY_HONEYCOMB_BROOD.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
     
-    public static final RegistryObject<Item> HONEYCOMB_BROOD_ITEM = ITEMS.register("honeycomb_brood_block", 
+    public static final RegistryObject<Item> HONEYCOMB_BROOD_ITEM = ITEMS.register(BzBlocks.HONEYCOMB_BROOD.get().getRegistryName().getPath(), 
     		() -> new BlockItem(BzBlocks.HONEYCOMB_BROOD.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
 
-    public static final RegistryObject<Item> SUGAR_INFUSED_STONE_ITEM = ITEMS.register("sugar_infused_stone", 
+    public static final RegistryObject<Item> SUGAR_INFUSED_STONE_ITEM = ITEMS.register(BzBlocks.SUGAR_INFUSED_STONE.get().getRegistryName().getPath(), 
     		() -> new BlockItem(BzBlocks.SUGAR_INFUSED_STONE.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
 
-    public static final RegistryObject<Item> SUGAR_INFUSED_COBBLESTONE_ITEM = ITEMS.register("sugar_infused_cobblestone", 
+    public static final RegistryObject<Item> SUGAR_INFUSED_COBBLESTONE_ITEM = ITEMS.register(BzBlocks.SUGAR_INFUSED_COBBLESTONE.get().getRegistryName().getPath(), 
     		() -> new BlockItem(BzBlocks.SUGAR_INFUSED_COBBLESTONE.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
 
     

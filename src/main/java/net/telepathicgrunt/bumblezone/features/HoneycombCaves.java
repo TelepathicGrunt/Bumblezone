@@ -1,5 +1,6 @@
 package net.telepathicgrunt.bumblezone.features;
 
+import java.util.BitSet;
 import java.util.Random;
 import java.util.function.Function;
 
@@ -12,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationSettings;
+import net.minecraft.world.gen.GenerationStage.Carving;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
@@ -160,6 +162,7 @@ public class HoneycombCaves extends Feature<NoFeatureConfig>
 	{
 		setSeed(world.getSeed());
 		BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(position);
+		BitSet caveMask = world.getChunk(mutableBlockPos).getCarvingMask(Carving.AIR);
 		
 		for(int x = 0; x < 16; x++) {
 			for(int z = 0; z < 16; z++) {
@@ -176,7 +179,7 @@ public class HoneycombCaves extends Feature<NoFeatureConfig>
 					double finalNoise = noise1 * noise1 + noise2 * noise2;
 					
 					if(finalNoise < 0.0009f) {
-						hexagon(world, mutableBlockPos, rand, noise1);
+						hexagon(world, mutableBlockPos, rand, noise1, caveMask);
 					}
 				}
 			}
@@ -188,7 +191,7 @@ public class HoneycombCaves extends Feature<NoFeatureConfig>
 	
 
 	
-    private static void hexagon(IWorld world, BlockPos position, Random random, double noise) {
+    private static void hexagon(IWorld world, BlockPos position, Random random, double noise, BitSet caveMask) {
 		BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(position);
 		BlockState blockState;
 		int index = (int) (((noise * 0.5D) + 0.5D) * 7);
@@ -199,19 +202,19 @@ public class HoneycombCaves extends Feature<NoFeatureConfig>
 				
 				if(posResult != 0) {
 					blockState = world.getBlockState(mutableBlockPos.setPos(position).move(x-7, 0, z-5));
-					carveAtBlock(world, random, mutableBlockPos, blockState, posResult);
+					carveAtBlock(world, random, mutableBlockPos, blockState, posResult, caveMask);
 			    	
 					blockState = world.getBlockState(mutableBlockPos.setPos(position).move(0, x-7, z-5));
-					carveAtBlock(world, random, mutableBlockPos, blockState, posResult);
+					carveAtBlock(world, random, mutableBlockPos, blockState, posResult, caveMask);
 					
 					blockState = world.getBlockState(mutableBlockPos.setPos(position).move(z-5, x-7, 0));
-					carveAtBlock(world, random, mutableBlockPos, blockState, posResult);
+					carveAtBlock(world, random, mutableBlockPos, blockState, posResult, caveMask);
 				}
 			}
     	}
     }
     
-    private static void carveAtBlock(IWorld world, Random random, BlockPos blockPos, BlockState blockState, int posResult) {
+    private static void carveAtBlock(IWorld world, Random random, BlockPos blockPos, BlockState blockState, int posResult, BitSet caveMask) {
     	if(blockPos.getY() < world.getSeaLevel() || !isNextToLiquidOrAir(world, blockPos)) {
     		if(posResult == 2) {
     			if(blockPos.getY() < world.getSeaLevel()) {
@@ -219,6 +222,7 @@ public class HoneycombCaves extends Feature<NoFeatureConfig>
     			}
     			else {
         			world.setBlockState(blockPos, CAVE_AIR, 3);
+					caveMask.set(blockPos.getX() | blockPos.getZ() << 4 | blockPos.getY() << 8);
     			}
     		}
     		else if(posResult == 1 && world.getBlockState(blockPos).isSolid()) {

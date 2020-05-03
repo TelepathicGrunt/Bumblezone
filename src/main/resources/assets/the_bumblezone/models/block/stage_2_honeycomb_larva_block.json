@@ -2,7 +2,7 @@
     "parent": "block/block",
     "textures": {
         "side": "the_bumblezone:block/filled_porous_honeycomb_block",
-        "front": "the_bumblezone:block/stage_4_honeycomb_brood_block",
+        "front": "the_bumblezone:block/stage_2_honeycomb_larva_block",
         "particle": "the_bumblezone:block/filled_porous_honeycomb_block"
     },
     "elements": [
