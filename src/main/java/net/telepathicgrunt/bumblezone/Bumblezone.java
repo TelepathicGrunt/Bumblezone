@@ -52,7 +52,7 @@ public class Bumblezone
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 	public static BzConfigValues BzConfig = null;
 
-//TODO: add recipe to turn bucket of water into sugar water and bottle of water into sugar water bottle. 
+	//TODO: add recipe to turn bucket of water into sugar water and bottle of water into sugar water bottle. 
 	public Bumblezone()
 	{
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
