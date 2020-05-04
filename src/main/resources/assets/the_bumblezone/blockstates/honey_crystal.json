@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "": [
+            { "model": "the_bumblezone:block/honey_crystal" },
+            { "model": "the_bumblezone:block/honey_crystal", "y": 90 },
+            { "model": "the_bumblezone:block/honey_crystal", "y": 180 },
+            { "model": "the_bumblezone:block/honey_crystal", "y": 270 }
+        ]
+    }
+}

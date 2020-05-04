@@ -41,6 +41,9 @@ public class BzBlocks
     public static final RegistryObject<Block> SUGAR_INFUSED_COBBLESTONE = BLOCKS.register("sugar_infused_cobblestone",
             () -> new SugarInfusedCobblestoneBlock());
 
+    public static final RegistryObject<Block> HONEY_CRYSTAL_BLOCK = BLOCKS.register("honey_crystal",
+            () -> new HoneyCrystalBlock());
+    
     //fluid mess
 	
     public static final ResourceLocation FLUID_STILL = new ResourceLocation(Bumblezone.MODID+":block/sugar_water_still");

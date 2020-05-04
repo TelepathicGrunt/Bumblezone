@@ -56,6 +56,8 @@ public class BzItems
     public static final RegistryObject<Item> SUGAR_INFUSED_COBBLESTONE_ITEM = ITEMS.register("sugar_infused_cobblestone", () ->
     	new BlockItem(BzBlocks.SUGAR_INFUSED_COBBLESTONE.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
 
+    public static final RegistryObject<Item> HONEY_CRYSTAL_BLOCK = ITEMS.register("honey_crystal", () ->
+    	new BlockItem(BzBlocks.HONEY_CRYSTAL_BLOCK.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
     
     //items
     public static final RegistryObject<Item> SUGAR_WATER_BUCKET = ITEMS.register("sugar_water_bucket", () ->
