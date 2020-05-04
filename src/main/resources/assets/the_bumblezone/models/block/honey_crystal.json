@@ -1,4 +1,6 @@
 {
 	"loader": "forge:obj",
-	"model": "the_bumblezone:models/block/honey_crystal.obj"
+	"model": "the_bumblezone:models/block/honey_crystal.obj",
+	"flip-v": false,
+	"detectCullableFaces" : false
 }

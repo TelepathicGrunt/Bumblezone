@@ -10,6 +10,6 @@ public class HoneyCrystalBlock extends Block
 
 	public HoneyCrystalBlock()
 	{
-		super(Block.Properties.create(Material.GLASS, MaterialColor.ADOBE).hardnessAndResistance(0.1F, 0.1F));
+		super(Block.Properties.create(Material.GLASS, MaterialColor.ADOBE).hardnessAndResistance(0.1F, 0.1F).notSolid());
 	}
 }

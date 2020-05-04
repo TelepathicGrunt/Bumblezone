@@ -19,6 +19,7 @@ public class ClientEvents
 
 	public static void onClientSetup(FMLClientSetupEvent event)
 	{
+		RenderTypeLookup.setRenderLayer(BzBlocks.HONEY_CRYSTAL.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(BzBlocks.SUGAR_WATER_BLOCK.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(BzBlocks.SUGAR_WATER_FLUID.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(BzBlocks.SUGAR_WATER_FLUID_FLOWING.get(), RenderType.getTranslucent());
