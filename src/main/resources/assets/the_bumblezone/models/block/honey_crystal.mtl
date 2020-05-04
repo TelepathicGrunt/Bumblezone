@@ -1,6 +1,0 @@
-# Made in Blockbench 3.5.2
-newmtl 1
-map_Kd the_bumblezone:block/honey_crystal_base 
-newmtl 2
-map_Kd the_bumblezone:block/honey_crystal_main
-newmtl none
