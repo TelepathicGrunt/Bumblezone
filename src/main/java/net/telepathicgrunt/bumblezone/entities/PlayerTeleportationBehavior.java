@@ -37,7 +37,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.capabilities.IPlayerPosAndDim;
 import net.telepathicgrunt.bumblezone.capabilities.PlayerPositionAndDimension;
-import net.telepathicgrunt.bumblezone.dimension.BzDimension;
+import net.telepathicgrunt.bumblezone.dimension.BzDimensionRegistration;
 import net.telepathicgrunt.bumblezone.utils.BzPlacingUtils;
 
 
@@ -135,13 +135,13 @@ public class PlayerTeleportationBehavior
 				
 
 				//if the pearl hit a beehive and is not in our bee dimension, begin the teleportation.
-				if (hitHive && playerEntity.dimension != BzDimension.bumblezone())
+				if (hitHive && playerEntity.dimension != BzDimensionRegistration.bumblezone())
 				{
 					//Store current dimension and position of hit 
 
 					//grabs the capability attached to player for dimension hopping
 					PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-					DimensionType destination = BzDimension.bumblezone();
+					DimensionType destination = BzDimensionRegistration.bumblezone();
 
 
 					//Store current dim, next dim, and tells player they are in teleporting phase now.
@@ -179,7 +179,7 @@ public class PlayerTeleportationBehavior
 				}
 				//teleported by going out of bounds to leave bumblezone dimension
 				else if((playerEntity.getPosY() < -1 || playerEntity.getPosY() > 255) &&
-						playerEntity.dimension == BzDimension.bumblezone()) 
+						playerEntity.dimension == BzDimensionRegistration.bumblezone()) 
 				{
 					playerEntity.fallDistance = 0;
 					teleportByOutOfBounds(playerEntity, cap, playerEntity.getPosY() < -1 ? true : false);
@@ -188,7 +188,7 @@ public class PlayerTeleportationBehavior
 			}
 				
 			//Makes it so player does not get killed for falling into the void
-			if(playerEntity.getPosY() < -3 && playerEntity.dimension == BzDimension.bumblezone())
+			if(playerEntity.getPosY() < -3 && playerEntity.dimension == BzDimensionRegistration.bumblezone())
 			{
 				playerEntity.fallDistance = 0;
 				playerEntity.setPosition(playerEntity.getPosX(), -3D, playerEntity.getPosZ());
@@ -206,7 +206,7 @@ public class PlayerTeleportationBehavior
 				// Updates the non-BZ dimension that the player is leaving if going to BZ
 				PlayerEntity playerEntity = (PlayerEntity) event.getEntity();
 				PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-				if(playerEntity.dimension != BzDimension.bumblezone())
+				if(playerEntity.dimension != BzDimensionRegistration.bumblezone())
 				{
 					cap.setNonBZDim(playerEntity.dimension);
 				}
@@ -253,11 +253,11 @@ public class PlayerTeleportationBehavior
 		//gets the world in the destination dimension
 		MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
 		ServerWorld destinationWorld;
-		ServerWorld bumblezoneWorld = minecraftServer.getWorld(BzDimension.bumblezone());
+		ServerWorld bumblezoneWorld = minecraftServer.getWorld(BzDimensionRegistration.bumblezone());
 		
 		//Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone. 
 		//Go to Overworld instead as default or when config forces Overworld teleport
-		if(cap.getNonBZDim() == BzDimension.bumblezone() && Bumblezone.BzConfig.forceExitToOverworld.get())
+		if(cap.getNonBZDim() == BzDimensionRegistration.bumblezone() && Bumblezone.BzConfig.forceExitToOverworld.get())
 		{
 			destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD); // go to Overworld
 		}
@@ -301,7 +301,7 @@ public class PlayerTeleportationBehavior
 		//gets the world in the destination dimension
 		MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
 		ServerWorld originalWorld = minecraftServer.getWorld(playerEntity.dimension);
-		ServerWorld bumblezoneWorld = minecraftServer.getWorld(BzDimension.bumblezone());
+		ServerWorld bumblezoneWorld = minecraftServer.getWorld(BzDimensionRegistration.bumblezone());
 
 		
 		//converts the position to get the corresponding position in bumblezone dimension

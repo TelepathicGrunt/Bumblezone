@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.dimension.BzDimension;
+import net.telepathicgrunt.bumblezone.dimension.BzDimensionRegistration;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
@@ -89,7 +89,7 @@ public class FilledPorousHoneycombBlock extends Block
 				}
 			}
 
-			if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
+			if ((playerEntity.dimension == BzDimensionRegistration.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
 			{
 				//Now all bees nearby in Bumblezone will get VERY angry!!!
 				playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));

@@ -47,7 +47,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.dimension.BzDimension;
+import net.telepathicgrunt.bumblezone.dimension.BzDimensionRegistration;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.HoneyBottleDispenseBehavior;
@@ -150,7 +150,7 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 				}
 			}
 
-			if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
+			if ((playerEntity.dimension == BzDimensionRegistration.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
 			{
 				//Now all bees nearby in Bumblezone will get VERY angry!!!
 				playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
@@ -236,7 +236,7 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 					spawnBee(world, thisBlockState, position, stage);
 					world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
-					if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
+					if ((playerEntity.dimension == BzDimensionRegistration.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
 					{
 						//Now all bees nearby in Bumblezone will get VERY angry!!!
 						playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
@@ -283,7 +283,7 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 		int stage = state.get(STAGE);
 		if (stage < 3)
 		{
-			if (world.getDimension().getType() == BzDimension.bumblezone() ? rand.nextInt(10) == 0 : rand.nextInt(22) == 0)
+			if (world.getDimension().getType() == BzDimensionRegistration.bumblezone() ? rand.nextInt(10) == 0 : rand.nextInt(22) == 0)
 			{
 				world.setBlockState(position, state.with(STAGE, Integer.valueOf(stage + 1)), 2);
 			}
@@ -322,7 +322,7 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 					spawnBee(world, blockState, position, stage);
 				}
 
-				if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
+				if ((playerEntity.dimension == BzDimensionRegistration.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
 				{
 					//Now all bees nearby in Bumblezone will get VERY angry!!!
 					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
