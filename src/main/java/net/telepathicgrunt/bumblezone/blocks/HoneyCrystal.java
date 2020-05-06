@@ -7,7 +7,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -20,8 +23,8 @@ import net.telepathicgrunt.bumblezone.items.BzItems;
 
 public class HoneyCrystal extends FallingBlock
 {
-	protected static final VoxelShape AABB = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 10.0D, 15.0D);
-	private Item item;
+	protected static final VoxelShape	AABB	= Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 10.0D, 15.0D);
+	private Item						item;
 
 	public HoneyCrystal()
 	{
@@ -51,7 +54,14 @@ public class HoneyCrystal extends FallingBlock
 		return PushReaction.DESTROY;
 	}
 
-	
+
+	@Override
+	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items)
+	{
+		items.add(new ItemStack(BzItems.HONEY_CRYSTAL_BLOCK.get()));
+	}
+
+
 	@Override
 	public Item asItem()
 	{
