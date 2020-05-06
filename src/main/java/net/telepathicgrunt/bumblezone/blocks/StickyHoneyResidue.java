@@ -18,12 +18,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 
 
-public class HoneyCrystalBlock extends FallingBlock
+public class StickyHoneyResidue extends FallingBlock
 {
 	protected static final VoxelShape AABB = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 10.0D, 15.0D);
 	private Item item;
 
-	public HoneyCrystalBlock()
+	public StickyHoneyResidue()
 	{
 		super(Block.Properties.create(Material.GLASS, MaterialColor.ADOBE).lightValue(1).hardnessAndResistance(0.3F).notSolid());
 	}

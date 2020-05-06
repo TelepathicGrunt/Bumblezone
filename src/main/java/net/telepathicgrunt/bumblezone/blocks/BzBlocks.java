@@ -24,25 +24,25 @@ public class BzBlocks
     //normal blocks
     
     public static final RegistryObject<Block> POROUS_HONEYCOMB = BLOCKS.register("porous_honeycomb_block",
-            () -> new PorousHoneycombBlock());
+            () -> new PorousHoneycomb());
     
     public static final RegistryObject<Block> FILLED_POROUS_HONEYCOMB = BLOCKS.register("filled_porous_honeycomb_block",
-            () -> new FilledPorousHoneycombBlock());
+            () -> new FilledPorousHoneycomb());
 
     public static final RegistryObject<Block> DEAD_HONEYCOMB_LARVA = BLOCKS.register("dead_honeycomb_larva_block",
-            () -> new DeadHoneycombLarvaBlock());
+            () -> new EmptyHoneycombBrood());
 
     public static final RegistryObject<Block> HONEYCOMB_LARVA = BLOCKS.register("honeycomb_larva_block",
-            () -> new HoneycombLarvaBlock());
+            () -> new HoneycombBrood());
 
     public static final RegistryObject<Block> SUGAR_INFUSED_STONE = BLOCKS.register("sugar_infused_stone",
-            () -> new SugarInfusedStoneBlock());
+            () -> new SugarInfusedStone());
 
     public static final RegistryObject<Block> SUGAR_INFUSED_COBBLESTONE = BLOCKS.register("sugar_infused_cobblestone",
-            () -> new SugarInfusedCobblestoneBlock());
+            () -> new SugarInfusedCobblestone());
 
     public static final RegistryObject<Block> HONEY_CRYSTAL = BLOCKS.register("honey_crystal",
-            () -> new HoneyCrystalBlock());
+            () -> new HoneyCrystal());
     
     //fluid mess
 	

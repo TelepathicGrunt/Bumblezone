@@ -55,14 +55,14 @@ import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 
-public class HoneycombLarvaBlock extends DirectionalBlock
+public class HoneycombBrood extends DirectionalBlock
 {
 	public static final IntegerProperty					STAGE							= BlockStateProperties.AGE_0_3;
 	private static final DefaultDispenseItemBehavior	BEHAVIOUR_DEFAULT_DISPENSE_ITEM	= new HoneyBottleDispenseBehavior();
 	private static final EntityPredicate				FIXED_DISTANCE					= (new EntityPredicate()).setDistance(50);
 	private static final EntityPredicate				PLAYER_DISTANCE					= (new EntityPredicate());
 
-	public HoneycombLarvaBlock()
+	public HoneycombBrood()
 	{
 		super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).tickRandomly().hardnessAndResistance(0.5F).speedFactor(0.9F).sound(SoundType.CORAL));
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.SOUTH).with(STAGE, Integer.valueOf(0)));

@@ -41,7 +41,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
-import net.telepathicgrunt.bumblezone.blocks.HoneycombLarvaBlock;
+import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 import net.telepathicgrunt.bumblezone.modcompatibility.BeesourcefulRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
@@ -319,8 +319,8 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 		else if(block == Blocks.ORANGE_TERRACOTTA) {
 			if(random.nextFloat() < 0.6f) {
 				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
-								.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(random.nextInt(3)))
-								.with(HoneycombLarvaBlock.FACING, Direction.SOUTH),	
+								.with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3)))
+								.with(HoneycombBrood.FACING, Direction.SOUTH),	
 								new Boolean(false));
 			}
 			else if(random.nextFloat() < 0.2f) {
@@ -335,8 +335,8 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 		else if(block == Blocks.YELLOW_TERRACOTTA) {
 			if(random.nextFloat() < 0.6f) {
 				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
-								.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(random.nextInt(3)))
-								.with(HoneycombLarvaBlock.FACING, Direction.WEST),	
+								.with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3)))
+								.with(HoneycombBrood.FACING, Direction.WEST),	
 								new Boolean(false));
 			}
 			else if(random.nextFloat() < 0.2f) {
@@ -351,8 +351,8 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 		else if(block == Blocks.LIME_TERRACOTTA) {
 			if(random.nextFloat() < 0.6f) {
 				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
-								.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(random.nextInt(3)))
-								.with(HoneycombLarvaBlock.FACING, Direction.NORTH),	
+								.with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3)))
+								.with(HoneycombBrood.FACING, Direction.NORTH),	
 								new Boolean(false));
 			}
 			else if(random.nextFloat() < 0.2f) {
@@ -367,8 +367,8 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 		else if(block == Blocks.BLUE_TERRACOTTA) {
 			if(random.nextFloat() < 0.6f) {
 				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
-								.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(random.nextInt(3)))
-								.with(HoneycombLarvaBlock.FACING, Direction.EAST),	
+								.with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3)))
+								.with(HoneycombBrood.FACING, Direction.EAST),	
 								new Boolean(false));
 			}
 			else if(random.nextFloat() < 0.2f) {

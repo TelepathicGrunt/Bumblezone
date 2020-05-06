@@ -4,10 +4,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
 
-public class SugarInfusedCobblestoneBlock extends Block
+public class SugarInfusedCobblestone extends Block
 {
 
-	public SugarInfusedCobblestoneBlock()
+	public SugarInfusedCobblestone()
 	{
 		super(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 6.0F));
 	}
