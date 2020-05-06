@@ -131,6 +131,23 @@ public class FilledPorousHoneycomb extends Block
 		}
 	}
 
+	
+	/**
+	 * tell redstone that this can be use with comparator
+	 */
+	public boolean hasComparatorInputOverride(BlockState state)
+	{
+		return true;
+	}
+
+
+	/**
+	 * the power fed into comparator 1
+	 */
+	public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos)
+	{
+		return 1;
+	}
 
 	/**
 	 * Starts checking if the block can take the particle and if so and it passes another rng to reduce spawnrate, it then

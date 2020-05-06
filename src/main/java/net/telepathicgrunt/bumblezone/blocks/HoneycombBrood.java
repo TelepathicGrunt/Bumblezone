@@ -196,7 +196,7 @@ public class HoneycombBrood extends DirectionalBlock
 
 			//block grew one stage or bee was spawned
 			world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-			
+
 			//removes used item
 			if (!playerEntity.isCreative())
 			{
@@ -343,9 +343,9 @@ public class HoneycombBrood extends DirectionalBlock
 		if (stage == 3 && !world.getBlockState(blockpos).getMaterial().isSolid())
 		{
 			MobEntity beeEntity = EntityType.BEE.create(world);
-			beeEntity.setLocationAndAngles(blockpos.getX(), blockpos.getY(), blockpos.getZ(), world.getRandom().nextFloat() * 360.0F, 0.0F);
+			beeEntity.setLocationAndAngles(blockpos.getX()+0.5D, blockpos.getY()+0.5D, blockpos.getZ()+0.5D, world.getRandom().nextFloat() * 360.0F, 0.0F);
 
-			if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(beeEntity, world, blockpos.getX(), blockpos.getY(), blockpos.getZ(), null, SpawnReason.TRIGGERED) != -1)
+			if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(beeEntity, world, blockpos.getX()+0.5D, blockpos.getY()+0.5D, blockpos.getZ()+0.5D, null, SpawnReason.TRIGGERED) != -1)
 			{
 				ILivingEntityData ilivingentitydata = null;
 				ilivingentitydata = beeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beeEntity)), SpawnReason.TRIGGERED, ilivingentitydata, (CompoundNBT) null);
@@ -358,6 +358,24 @@ public class HoneycombBrood extends DirectionalBlock
 		}
 
 		return false;
+	}
+
+
+	/**
+	 * tell redstone that this can be use with comparator
+	 */
+	public boolean hasComparatorInputOverride(BlockState state)
+	{
+		return true;
+	}
+
+
+	/**
+	 * the power fed into comparator (1 - 4)
+	 */
+	public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos)
+	{
+		return blockState.get(STAGE)+1;
 	}
 
 

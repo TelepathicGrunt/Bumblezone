@@ -26,6 +26,12 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
   
 -Renamed Honeycomb Larva Block and Dead Honeycomb Larva Block to Honeycomb Brood Block and Empty Honeycomb Brood Block.
   
+-Bees spawned by Honeycomb Brood Blocks will now spawn directly in front of block instead of getting stuck in the block and taking damage.
+  
+-Honeycomb Brood Blocks now will output power based on the larva's stage when a comparator is used on the block! The power output will be 1 to 4.
+
+-Filled Porous Honeycomb Blocks now will output power when a comparator is used on the block! The power output will be 1.
+  
 ##### Generation: 
 
 -Added Bee Dungeons that will spawn in Honeycomb Holes or caves in the Bumblezone! They have lots of Honeycomb Brood Blocks but if you use Beesourceful, their ore-based Honeycombs will spawn too with Diamond, Ender, and Emeralds being the rarest honeycombs. And if you have Buzzier Bees on, their candles will also spawn in the dungeon with scented candles that gives potion effects spawning very rarely in the center. 
