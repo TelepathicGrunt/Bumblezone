@@ -32,17 +32,19 @@ public class StickyHoneyResidue extends VineBlock {
 	    .entrySet().stream().collect(Util.toMapCollector());
 
     public StickyHoneyResidue() {
-	super(Block.Properties.create(Material.GLASS, MaterialColor.ADOBE).lightValue(1).hardnessAndResistance(0.3F)
-		.notSolid());
-	this.setDefaultState(
-		this.stateContainer.getBaseState().with(UP, Boolean.valueOf(false)).with(NORTH, Boolean.valueOf(false))
-			.with(EAST, Boolean.valueOf(false)).with(SOUTH, Boolean.valueOf(false))
-			.with(WEST, Boolean.valueOf(false)).with(DOWN, Boolean.valueOf(false)));
+	super(Block.Properties.create(Material.GLASS, MaterialColor.ADOBE).lightValue(1).hardnessAndResistance(0.3F).notSolid());
+	this.setDefaultState(this.stateContainer.getBaseState()
+		.with(UP, Boolean.valueOf(false))
+		.with(NORTH, Boolean.valueOf(false))
+		.with(EAST, Boolean.valueOf(false))
+		.with(SOUTH, Boolean.valueOf(false))
+		.with(WEST, Boolean.valueOf(false))
+		.with(DOWN, Boolean.valueOf(false)));
     }
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-	builder.add(UP, NORTH, EAST, SOUTH, WEST);
+	builder.add(UP, NORTH, EAST, SOUTH, WEST, DOWN);
     }
 
     @Override
