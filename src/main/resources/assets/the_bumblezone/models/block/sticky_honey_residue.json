@@ -1,0 +1,6 @@
+{
+    "parent": "block/block",
+	"textures": {
+    "texture": "the_bumblezone:block/sticky_honey_residue"
+  }
+}

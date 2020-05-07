@@ -45,6 +45,7 @@ public class FilledPorousHoneycomb extends Block
 	/**
 	 * Called when the given entity walks on this Block
 	 */
+	@Override
 	public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn)
 	{
 		double yMagnitude = Math.abs(entityIn.getMotion().y);

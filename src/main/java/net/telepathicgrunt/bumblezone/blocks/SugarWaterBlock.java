@@ -71,6 +71,7 @@ public class SugarWaterBlock extends FlowingFluidBlock
 	 * Heal bees slightly if they are in Sugar Water and aren't taking damage.
 	 */
 	@Deprecated
+	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos position, Entity entity) {
 		if(entity instanceof BeeEntity) {
 			BeeEntity beeEntity = ((BeeEntity)entity);

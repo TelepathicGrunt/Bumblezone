@@ -7,22 +7,27 @@ import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.SixWayBlock;
 import net.minecraft.block.VineBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.material.PushReaction;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 public class StickyHoneyResidue extends VineBlock {
@@ -32,7 +37,7 @@ public class StickyHoneyResidue extends VineBlock {
 	    .entrySet().stream().collect(Util.toMapCollector());
 
     public StickyHoneyResidue() {
-	super(Block.Properties.create(Material.GLASS, MaterialColor.ADOBE).lightValue(1).hardnessAndResistance(0.3F).notSolid());
+	super(Block.Properties.create(Material.ORGANIC, MaterialColor.ADOBE).speedFactor(0.1F).hardnessAndResistance(0.1F).notSolid());
 	this.setDefaultState(this.stateContainer.getBaseState()
 		.with(UP, Boolean.valueOf(false))
 		.with(NORTH, Boolean.valueOf(false))
@@ -76,6 +81,12 @@ public class StickyHoneyResidue extends VineBlock {
 
 	return voxelshape;
     }
+    
+    @Deprecated
+    @Override
+    public void onEntityCollision(BlockState state, World world, BlockPos position, Entity entity) {
+	entity.setMotionMultiplier(state, new Vec3d(0.35D, (double)0.2F, 0.35D));
+    }
 
     @Override
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
@@ -99,24 +110,23 @@ public class StickyHoneyResidue extends VineBlock {
     }
 
     private BlockState setAttachments(BlockState blockstate, IBlockReader blockReader, BlockPos blockpos) {
-	BlockPos blockposOffset = blockpos.up();
 	if (blockstate.get(UP)) {
-	    blockstate = blockstate.with(UP, Boolean.valueOf(canAttachTo(blockReader, blockposOffset, Direction.DOWN)));
+	    blockstate = blockstate.with(UP, Boolean.valueOf(canAttachTo(blockReader, blockpos.offset(Direction.UP), Direction.UP)));
 	}
 
 	if (blockstate.get(DOWN)) {
-	    blockstate = blockstate.with(DOWN, Boolean.valueOf(canAttachTo(blockReader, blockposOffset, Direction.UP)));
+	    blockstate = blockstate.with(DOWN, Boolean.valueOf(canAttachTo(blockReader, blockpos.offset(Direction.DOWN), Direction.DOWN)));
 	}
 
 	BlockState blockstateNearby = null;
 
 	for (Direction direction : Direction.Plane.HORIZONTAL) {
-	    BooleanProperty booleanproperty = getPropertyFor(direction);
+	    BooleanProperty booleanproperty = FACING_TO_PROPERTY_MAP.get(direction);
 	    if (blockstate.get(booleanproperty)) {
-		boolean flag = VineBlock.canAttachTo(blockReader, blockpos, direction);
+		boolean flag = canAttachTo(blockReader, blockpos.offset(direction), direction);
 		if (!flag) {
 		    if (blockstateNearby == null) {
-			blockstateNearby = blockReader.getBlockState(blockposOffset);
+			blockstateNearby = blockReader.getBlockState(blockpos);
 		    }
 
 		    flag = blockstateNearby.getBlock() == this && blockstateNearby.get(booleanproperty);
@@ -137,18 +147,22 @@ public class StickyHoneyResidue extends VineBlock {
 	BlockState blockstate1 = flag ? blockstate : this.getDefaultState();
 
 	for (Direction direction : context.getNearestLookingDirections()) {
-	    if (direction != Direction.DOWN) {
-		BooleanProperty booleanproperty = getPropertyFor(direction);
-		boolean flag1 = flag && blockstate.get(booleanproperty);
-		if (!flag1 && VineBlock.canAttachTo(context.getWorld(), context.getPos(), direction)) {
-		    return blockstate1.with(booleanproperty, Boolean.valueOf(true));
-		}
+	    BooleanProperty booleanproperty = FACING_TO_PROPERTY_MAP.get(direction);
+	    boolean flag1 = flag && blockstate.get(booleanproperty);
+	    if (!flag1 && VineBlock.canAttachTo(context.getWorld(), context.getPos().offset(direction), direction)) {
+		return blockstate1.with(booleanproperty, Boolean.valueOf(true));
 	    }
 	}
 
 	return flag ? blockstate1 : null;
     }
 
+    @Override
+    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+	BlockState blockstate = this.setAttachments(stateIn, worldIn, currentPos);
+	return !this.hasAtleastOneAttachment(blockstate) ? Blocks.AIR.getDefaultState() : blockstate;
+    }
+    
     @Override
     public PushReaction getPushReaction(BlockState state) {
 	return PushReaction.DESTROY;

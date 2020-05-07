@@ -62,6 +62,9 @@ public class BzItems
     
     public static final RegistryObject<Item> HONEY_CRYSTAL_SHARDS = ITEMS.register("honey_crystal_shards", () ->
 		new Item(new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB).food((new Food.Builder()).hunger(2).saturation(0.15F).build())));
+
+    public static final RegistryObject<Item> STICKY_HONEY_RESIDUE = ITEMS.register("sticky_honey_residue", () ->
+    	new BlockItem(BzBlocks.STICKY_HONEY_RESIDUE.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
     
     
     //items
