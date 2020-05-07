@@ -37,7 +37,7 @@ public class DataGenerators {
         @Override
         protected void registerStatesAndModels()
         {
-            ModelFile stickyHoneyResidue = models().singleTexture("sticky_honey_residue", mcLoc("block/sticky_honey_residue"), "texture", mcLoc("block/sticky_honey_residue"));
+            ModelFile stickyHoneyResidue = models().singleTexture("sticky_honey_residue", mcLoc("the_bumblezone:block/sticky_honey_residue"), "texture", mcLoc("the_bumblezone:block/sticky_honey_residue"));
             ModelFile invisbleModel = new UncheckedModelFile(new ResourceLocation("builtin/generated"));
             VariantBlockStateBuilder builder = getVariantBuilder(BzBlocks.STICKY_HONEY_RESIDUE.get());
             for (final boolean down : new boolean[] { false, true} )
