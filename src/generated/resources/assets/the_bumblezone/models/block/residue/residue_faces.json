@@ -1,7 +1,7 @@
 {
   "textures": {
     "residue": "the_bumblezone:block/sticky_honey_residue",
-	"particle": "the_bumblezone:block/sticky_honey_residue"
+    "single": "the_bumblezone:block/sticky_honey_residue"
   },
   "elements": [
     {
@@ -17,7 +17,7 @@
       ],
       "faces": {
         "down": {
-          "texture": "#residue"
+          "texture": "#the_bumblezone:block/sticky_honey_residue"
         }
       }
     }

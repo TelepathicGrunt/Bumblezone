@@ -39,38 +39,37 @@ public class DataGenerators {
         @Override
         protected void registerStatesAndModels()
         {
-            ModelFile stickyHoneyResidue = models().singleTexture("sticky_honey_residue", mcLoc(Bumblezone.MODID+":block/sticky_honey_residue"), "texture", mcLoc(Bumblezone.MODID+":block/sticky_honey_residue"));
-            VariantBlockStateBuilder builder = getVariantBuilder(BzBlocks.STICKY_HONEY_RESIDUE.get());
-            for (final boolean down : new boolean[] { false, true} )
-        	for (final boolean up : new boolean[] { false, true} )
-        	    for (final boolean west : new boolean[] { false, true} )
-        		for (final boolean east : new boolean[] { false, true} )
-        		    for (final boolean north : new boolean[] { false, true} )
-        			for (final boolean south : new boolean[] { false, true} )
-                                    builder.partialState()
-                                            .with(StickyHoneyResidue.DOWN, down)
-                                            .with(StickyHoneyResidue.UP, up)
-                                            .with(StickyHoneyResidue.NORTH, north)
-                                            .with(StickyHoneyResidue.SOUTH, south)
-                                            .with(StickyHoneyResidue.WEST, west)
-                                            .with(StickyHoneyResidue.EAST, east)
-                                            .modelForState()
-                                                .modelFile(stickyHoneyResidue)
-                                            .nextModel()
-                                                .modelFile(stickyHoneyResidue)
-                                                .uvLock(true)
-                                                .weight(100)
-                                            .addModel();
+//            ModelFile stickyHoneyResidue = models().singleTexture("sticky_honey_residue", mcLoc(Bumblezone.MODID+":block/sticky_honey_residue"), "texture", mcLoc(Bumblezone.MODID+":block/sticky_honey_residue"));
+//            VariantBlockStateBuilder builder = getVariantBuilder(BzBlocks.STICKY_HONEY_RESIDUE.get());
+//            for (final boolean down : new boolean[] { false, true} )
+//        	for (final boolean up : new boolean[] { false, true} )
+//        	    for (final boolean west : new boolean[] { false, true} )
+//        		for (final boolean east : new boolean[] { false, true} )
+//        		    for (final boolean north : new boolean[] { false, true} )
+//        			for (final boolean south : new boolean[] { false, true} )
+//                                    builder.partialState()
+//                                            .with(StickyHoneyResidue.DOWN, down)
+//                                            .with(StickyHoneyResidue.UP, up)
+//                                            .with(StickyHoneyResidue.NORTH, north)
+//                                            .with(StickyHoneyResidue.SOUTH, south)
+//                                            .with(StickyHoneyResidue.WEST, west)
+//                                            .with(StickyHoneyResidue.EAST, east)
+//                                            .modelForState()
+//                                                .modelFile(stickyHoneyResidue)
+//                                            .nextModel()
+//                                                .modelFile(stickyHoneyResidue)
+//                                                .uvLock(true)
+//                                                .weight(100)
+//                                            .addModel();
 
-            BlockModelBuilder residueBody = models().getBuilder("block/residue/residue_faces");
+            BlockModelBuilder residueBody = models().getBuilder("block/residue/residue_face");
             residueBody.texture("residue", modLoc("block/sticky_honey_residue"));
             createResidueFaces(BzBlocks.STICKY_HONEY_RESIDUE.get(), residueBody);
         }
 
         private void createResidueFaces(Block block, BlockModelBuilder dimCellFrame) {
             BlockModelBuilder faceModel = models().getBuilder("block/residue/residue_faces")
-                    .element().from(0, 0, 0).to(16, 0.8f, 16).face(Direction.DOWN).texture("#the_bumblezone:block/sticky_honey_residue").end().end()
-                    .texture("single", modLoc("block/sticky_honey_residue"));
+                    .element().from(0, 0, 0).to(16, 0.8f, 16).face(Direction.DOWN).texture("#residue").end().end();
 
             MultiPartBlockStateBuilder bld = getMultipartBuilder(block);
 
