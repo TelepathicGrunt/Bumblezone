@@ -47,6 +47,9 @@ public class BzBlocks
     public static final RegistryObject<Block> STICKY_HONEY_RESIDUE = BLOCKS.register("sticky_honey_residue",
             () -> new StickyHoneyResidue());
     
+    public static final RegistryObject<Block> STICKY_HONEY_REDSTONE = BLOCKS.register("sticky_honey_redstone",
+            () -> new StickyHoneyRedstone());
+    
     //fluid mess
 	
     public static final ResourceLocation FLUID_STILL = new ResourceLocation(Bumblezone.MODID+":block/sugar_water_still");

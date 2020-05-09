@@ -3,7 +3,6 @@ package net.telepathicgrunt.bumblezone.items;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Food;
-import net.minecraft.item.Foods;
 import net.minecraft.item.HoneyBottleItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -65,6 +64,9 @@ public class BzItems
 
     public static final RegistryObject<Item> STICKY_HONEY_RESIDUE = ITEMS.register("sticky_honey_residue", () ->
     	new BlockItem(BzBlocks.STICKY_HONEY_RESIDUE.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
+    
+    public static final RegistryObject<Item> STICKY_HONEY_REDSTONE = ITEMS.register("sticky_honey_redstone", () ->
+	new BlockItem(BzBlocks.STICKY_HONEY_REDSTONE.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
     
     
     //items

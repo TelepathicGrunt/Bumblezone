@@ -5,7 +5,7 @@
         "down": "true"
       },
       "apply": {
-        "model": "the_bumblezone:block/sticky_honey_residue", 
+        "model": "the_bumblezone:block/sticky_honey_redstone", 
         "y": 180
       }
     },
@@ -14,7 +14,7 @@
         "up": "true"
       },
       "apply": {
-        "model": "the_bumblezone:block/sticky_honey_residue",
+        "model": "the_bumblezone:block/sticky_honey_redstone",
         "x": 180
       }
     },
@@ -23,7 +23,7 @@
         "south": "true"
       },
       "apply": {
-        "model": "the_bumblezone:block/sticky_honey_residue",
+        "model": "the_bumblezone:block/sticky_honey_redstone",
         "x": 90
       }
     },
@@ -32,7 +32,7 @@
         "north": "true"
       },
       "apply": {
-        "model": "the_bumblezone:block/sticky_honey_residue",
+        "model": "the_bumblezone:block/sticky_honey_redstone",
         "x": 270
       }
     },
@@ -41,7 +41,7 @@
         "west": "true"
       },
       "apply": {
-        "model": "the_bumblezone:block/sticky_honey_residue",
+        "model": "the_bumblezone:block/sticky_honey_redstone",
         "x": 90,
         "y": 90
       }
@@ -51,7 +51,7 @@
         "east": "true"
       },
       "apply": {
-        "model": "the_bumblezone:block/sticky_honey_residue",
+        "model": "the_bumblezone:block/sticky_honey_redstone",
         "x": 90,
         "y": 270
       }
