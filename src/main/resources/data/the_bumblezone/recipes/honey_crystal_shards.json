@@ -4,6 +4,6 @@
 	    "item": "the_bumblezone:honey_crystal_shards"
 	},
   "result": "the_bumblezone:sticky_honey_residue",
-  "experience": 0.4,
-  "cookingtime":  130
+  "experience": 0.25,
+  "cookingtime":  125
 }

@@ -1,13 +1,13 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-	    "item": "minecraft:honey_block"
+	    "item": "the_bumblezone:honey_crystal"
 	},
   "result": 
     {
         "item": "the_bumblezone:sticky_honey_residue",
-        "count": 6
+        "count": 4
     },
-  "experience": 4.0,
-  "cookingtime":  520
+  "experience": 3.7,
+  "cookingtime":  420
 }

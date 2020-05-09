@@ -32,6 +32,16 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 -Filled Porous Honeycomb Blocks now will output power when a comparator is used on the block! The power output will be 1.
   
+-Added Honey Crystal blocks. Breaking these blocks without Silk Touch or letting it fall onto a block it cannot be placed on will break it and drop Honey Crystal Shards. These blocks are non-renewable so treasure them!
+  
+-Added Sticky Honey Residue that can be placed on multiple surfaces! Mobs touching this residue will be slowed down and the residue can be used to climb up walls. Using a comparator on this block will output a signal based on how many surfaces this block is attached to. You can obtain this block by smelting Honey Blocks, Honey Crystal Shards, or Honey Crystals.
+
+-Added Sticky Honey Redstone that can be placed on multiple surfaces! It has all the same effects as Sticky Honey Residue as well as outputting a redstone signal of 1 when a mob is touching this block! This would help make neat contraptions easier. This block can be made by crafting with 1 Sticky Honey Residue and 1 Redstone in any shape.
+
+##### Items: 
+
+-Added Honey Crystal Shards which drops from Honey Crystal blocks. These shards can be eaten to recover some hunger in a pinch.
+
 ##### Generation: 
 
 -Added Bee Dungeons that will spawn in Honeycomb Holes or caves in the Bumblezone! They have lots of Honeycomb Brood Blocks but if you use Beesourceful, their ore-based Honeycombs will spawn too with Diamond, Ender, and Emeralds being the rarest honeycombs. And if you have Buzzier Bees on, their candles will also spawn in the dungeon with scented candles that gives potion effects spawning very rarely in the center. 
