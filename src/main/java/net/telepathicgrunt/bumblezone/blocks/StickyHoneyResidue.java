@@ -61,29 +61,29 @@ public class StickyHoneyResidue extends VineBlock {
      * Returns the shape based on the state of the block.
      */
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState blockstate, IBlockReader world, BlockPos pos, ISelectionContext context) {
 	VoxelShape voxelshape = VoxelShapes.empty();
-	if (state.get(UP)) {
+	if (blockstate.get(UP)) {
 	    voxelshape = VoxelShapes.or(voxelshape, UP_AABB);
 	}
 
-	else if (state.get(NORTH)) {
+	if (blockstate.get(NORTH)) {
 	    voxelshape = VoxelShapes.or(voxelshape, NORTH_AABB);
 	}
 
-	else if (state.get(EAST)) {
+	if (blockstate.get(EAST)) {
 	    voxelshape = VoxelShapes.or(voxelshape, EAST_AABB);
 	}
 
-	else if (state.get(SOUTH)) {
+	if (blockstate.get(SOUTH)) {
 	    voxelshape = VoxelShapes.or(voxelshape, SOUTH_AABB);
 	}
 
-	else if (state.get(WEST)) {
+	if (blockstate.get(WEST)) {
 	    voxelshape = VoxelShapes.or(voxelshape, WEST_AABB);
 	}
 
-	else if (state.get(DOWN)) {
+	if (blockstate.get(DOWN)) {
 	    voxelshape = VoxelShapes.or(voxelshape, DOWN_AABB);
 	}
 
@@ -96,13 +96,13 @@ public class StickyHoneyResidue extends VineBlock {
      */
     @Deprecated
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos position, Entity entity) {
+    public void onEntityCollision(BlockState blockstate, World world, BlockPos pos, Entity entity) {
 
-	AxisAlignedBB axisalignedbb = getShape(state, world, position, null).getBoundingBox().offset(position);
+	AxisAlignedBB axisalignedbb = getShape(blockstate, world, pos, null).getBoundingBox().offset(pos);
 	List<? extends Entity> list = world.getEntitiesWithinAABB(LivingEntity.class, axisalignedbb);
 
 	if (list.contains(entity)) {
-	    entity.setMotionMultiplier(state, new Vec3d(0.35D, (double)0.2F, 0.35D));
+	    entity.setMotionMultiplier(blockstate, new Vec3d(0.35D, (double)0.2F, 0.35D));
 	}
     }
 
@@ -110,15 +110,15 @@ public class StickyHoneyResidue extends VineBlock {
      * Is spot valid (has at least 1 face possible).
      */
     @Override
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-	return this.hasAtleastOneAttachment(this.setAttachments(state, worldIn, pos));
+    public boolean isValidPosition(BlockState blockstate, IWorldReader world, BlockPos pos) {
+	return this.hasAtleastOneAttachment(this.setAttachments(blockstate, world, pos));
     }
 
     /**
      * Returns true if the block has at least one face (it exists).
      */
-    private boolean hasAtleastOneAttachment(BlockState p_196543_1_) {
-	return this.numberOfAttachments(p_196543_1_) > 0;
+    private boolean hasAtleastOneAttachment(BlockState blockstate) {
+	return this.numberOfAttachments(blockstate) > 0;
     }
 
     /**
@@ -139,29 +139,12 @@ public class StickyHoneyResidue extends VineBlock {
     /**
      * Set the state based on solid blocks around it.
      */
-    private BlockState setAttachments(BlockState blockstate, IBlockReader blockReader, BlockPos blockpos) {
-	if (blockstate.get(UP)) {
-	    blockstate = blockstate.with(UP, Boolean.valueOf(canAttachTo(blockReader, blockpos.offset(Direction.UP), Direction.UP)));
-	}
-
-	if (blockstate.get(DOWN)) {
-	    blockstate = blockstate.with(DOWN, Boolean.valueOf(canAttachTo(blockReader, blockpos.offset(Direction.DOWN), Direction.DOWN)));
-	}
-
-	BlockState blockstateNearby = null;
-
-	for (Direction direction : Direction.Plane.HORIZONTAL) {
+    private BlockState setAttachments(BlockState blockstate, IBlockReader blockReader, BlockPos pos) {
+    
+	for (Direction direction : Direction.values()) {
 	    BooleanProperty booleanproperty = FACING_TO_PROPERTY_MAP.get(direction);
 	    if (blockstate.get(booleanproperty)) {
-		boolean flag = canAttachTo(blockReader, blockpos.offset(direction), direction);
-		if (!flag) {
-		    if (blockstateNearby == null) {
-			blockstateNearby = blockReader.getBlockState(blockpos);
-		    }
-
-		    flag = blockstateNearby.getBlock() == this && blockstateNearby.get(booleanproperty);
-		}
-
+		boolean flag = canAttachTo(blockReader, pos.offset(direction), direction);
 		blockstate = blockstate.with(booleanproperty, Boolean.valueOf(flag));
 	    }
 	}
@@ -175,35 +158,35 @@ public class StickyHoneyResidue extends VineBlock {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-	BlockState blockstate = context.getWorld().getBlockState(context.getPos());
-	boolean flag = blockstate.getBlock() == this;
-	BlockState blockstate1 = flag ? blockstate : this.getDefaultState();
+	BlockState currentBlockstate = context.getWorld().getBlockState(context.getPos());
+	boolean isSameBlock = currentBlockstate.getBlock() == this;
+	BlockState newBlockstate = isSameBlock ? currentBlockstate : this.getDefaultState();
 
 	for (Direction direction : context.getNearestLookingDirections()) {
 	    BooleanProperty booleanproperty = FACING_TO_PROPERTY_MAP.get(direction);
-	    boolean flag1 = flag && blockstate.get(booleanproperty);
-	    if (!flag1 && VineBlock.canAttachTo(context.getWorld(), context.getPos().offset(direction), direction)) {
-		return blockstate1.with(booleanproperty, Boolean.valueOf(true));
+	    boolean faceIsAlreadyTrue = isSameBlock && currentBlockstate.get(booleanproperty);
+	    if (!faceIsAlreadyTrue && VineBlock.canAttachTo(context.getWorld(), context.getPos().offset(direction), direction)) {
+		return newBlockstate.with(booleanproperty, Boolean.valueOf(true));
 	    }
 	}
 
-	return flag ? blockstate1 : null;
+	return isSameBlock ? newBlockstate : null;
     }
 
     /**
      * double check to make sure this block has at least one face and can attach.
      */
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-	BlockState blockstate = this.setAttachments(stateIn, worldIn, currentPos);
-	return !this.hasAtleastOneAttachment(blockstate) ? Blocks.AIR.getDefaultState() : blockstate;
+    public BlockState updatePostPlacement(BlockState blockstate, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+	BlockState newBlockstate = this.setAttachments(blockstate, world, currentPos);
+	return !this.hasAtleastOneAttachment(newBlockstate) ? Blocks.AIR.getDefaultState() : newBlockstate;
     }
     
     /**
      * Destroyed by pistons.
      */
     @Override
-    public PushReaction getPushReaction(BlockState state) {
+    public PushReaction getPushReaction(BlockState blockstate) {
 	return PushReaction.DESTROY;
     }
     
@@ -211,13 +194,13 @@ public class StickyHoneyResidue extends VineBlock {
      * Will make this block climbable if any side is true except for down.
      */
     @Override
-    public boolean isLadder(BlockState state, IWorldReader world, BlockPos pos, net.minecraft.entity.LivingEntity entity) { 
+    public boolean isLadder(BlockState blockstate, IWorldReader world, BlockPos pos, net.minecraft.entity.LivingEntity entity) { 
 	
 	boolean isClimbable = false;
 	for (Direction direction : Direction.values()) {
 	    if(direction == Direction.DOWN) continue;
 	    BooleanProperty booleanproperty = FACING_TO_PROPERTY_MAP.get(direction);
-	    if(state.get(booleanproperty))
+	    if(blockstate.get(booleanproperty))
 		isClimbable = true;
 	}
 	return isClimbable; 
@@ -227,5 +210,21 @@ public class StickyHoneyResidue extends VineBlock {
      * No mobs can spawn in this blcok
      */
     @Override
-    public boolean canEntitySpawn(BlockState state, IBlockReader worldIn, BlockPos pos, EntityType<?> type) { return false; }
+    public boolean canEntitySpawn(BlockState blockstate, IBlockReader world, BlockPos pos, EntityType<?> type) {
+	return false;
+    }
+
+    /**
+     * tell redstone that this can be use with comparator
+     */
+    public boolean hasComparatorInputOverride(BlockState state) {
+	return true;
+    }
+
+    /**
+     * the power fed into comparator (1 - 4)
+     */
+    public int getComparatorInputOverride(BlockState blockstate, World world, BlockPos pos) {
+	return numberOfAttachments(blockstate);
+    }
 }
