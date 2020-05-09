@@ -1,13 +1,19 @@
 package net.telepathicgrunt.bumblezone.blocks;
 
+import java.lang.reflect.Method;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.material.Material.Builder;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.telepathicgrunt.bumblezone.Bumblezone;
@@ -17,6 +23,19 @@ import net.telepathicgrunt.bumblezone.items.BzItems;
 
 public class BzBlocks
 {
+    public static Material RESIDUE;
+    static {
+	Material.Builder builder = (new Material.Builder(MaterialColor.ORANGE_TERRACOTTA)).doesNotBlockMovement().replaceable().notSolid();
+	try {
+	    Method method = ObfuscationReflectionHelper.findMethod(builder.getClass(), "notOpaque");
+	    builder = ((Builder) method.invoke(builder));
+	    method = ObfuscationReflectionHelper.findMethod(builder.getClass(), "pushDestroys");
+	    RESIDUE = ((Builder) method.invoke(builder)).build();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	} 
+    }
+    
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Bumblezone.MODID);
     public static final DeferredRegister<Fluid> FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, Bumblezone.MODID);
 

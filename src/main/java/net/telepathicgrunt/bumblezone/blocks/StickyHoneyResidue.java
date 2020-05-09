@@ -10,19 +10,30 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SixWayBlock;
 import net.minecraft.block.VineBlock;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.BucketItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -31,6 +42,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import net.telepathicgrunt.bumblezone.items.BzItems;
 
 public class StickyHoneyResidue extends VineBlock {
     public static final BooleanProperty DOWN = SixWayBlock.DOWN;
@@ -39,7 +52,7 @@ public class StickyHoneyResidue extends VineBlock {
 	    			SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet().stream().collect(Util.toMapCollector());
 
     public StickyHoneyResidue() {
-	super(Block.Properties.create(Material.ORGANIC, MaterialColor.ADOBE).doesNotBlockMovement().hardnessAndResistance(0.1F).notSolid());
+	super(Block.Properties.create(BzBlocks.RESIDUE, MaterialColor.ORANGE_TERRACOTTA).doesNotBlockMovement().hardnessAndResistance(6.0f, 0.0f).notSolid());
 	this.setDefaultState(this.stateContainer.getBaseState()
 		.with(UP, Boolean.valueOf(false))
 		.with(NORTH, Boolean.valueOf(false))
@@ -227,4 +240,65 @@ public class StickyHoneyResidue extends VineBlock {
     public int getComparatorInputOverride(BlockState blockstate, World world, BlockPos pos) {
 	return numberOfAttachments(blockstate);
     }
+
+
+    /**
+     * This block is full of holes and can let light through
+     */
+    @Override
+    public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	return 1;
+    }
+
+    /**
+     * Allow player to remove this block with water buckets, water bottles, or wet sponges
+     */
+    @Override
+    @SuppressWarnings("deprecation")
+    public ActionResultType onBlockActivated(BlockState blockstate, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
+	ItemStack itemstack = playerEntity.getHeldItem(playerHand);
+	
+	if (( itemstack.getItem() instanceof BucketItem && 
+	      ((BucketItem)itemstack.getItem()).getFluid().getTags().contains(FluidTags.WATER.getId())) || 
+		itemstack.getOrCreateTag().getString("Potion").contains("water") ||
+		itemstack.getItem() == Items.WET_SPONGE ||
+		itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
+	    
+	    world.destroyBlock(position, false); 
+	    
+	    world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), 
+		    		SoundEvents.ENTITY_PHANTOM_SWOOP, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+
+	    if(world instanceof ServerWorld) {
+		if (blockstate.get(UP)) {
+		    ((ServerWorld)world).spawnParticle((ServerPlayerEntity)playerEntity, ParticleTypes.FALLING_WATER, true, position.getX()+0.5D, position.getY()+0.95D, position.getZ()+0.5D, 6, 0.3D, 0.0D, 0.3D, 1);
+		}
+
+		if (blockstate.get(NORTH)) {
+		    ((ServerWorld)world).spawnParticle((ServerPlayerEntity)playerEntity, ParticleTypes.FALLING_WATER, true, position.getX()+0.5D, position.getY()+0.5D, position.getZ()+0.05D, 6, 0.3D, 0.3D, 0.0D, 1);
+		}
+
+		if (blockstate.get(EAST)) {
+		    ((ServerWorld)world).spawnParticle((ServerPlayerEntity)playerEntity, ParticleTypes.FALLING_WATER, true, position.getX()+0.95D, position.getY()+0.5D, position.getZ()+0.5D, 6, 0.0D, 0.3D, 0.3D, 1);
+		}
+
+		if (blockstate.get(SOUTH)) {
+		    ((ServerWorld)world).spawnParticle((ServerPlayerEntity)playerEntity, ParticleTypes.FALLING_WATER, true, position.getX()+0.5D, position.getY()+0.5D, position.getZ()+0.95D, 6, 0.3D, 0.3D, 0.0D, 1);
+		}
+
+		if (blockstate.get(WEST)) {
+		    ((ServerWorld)world).spawnParticle((ServerPlayerEntity)playerEntity, ParticleTypes.FALLING_WATER, true, position.getX()+0.05D, position.getY()+0.5D, position.getZ()+0.5D, 6, 0.0D, 0.3D, 0.3D, 1);
+		}
+
+		if (blockstate.get(DOWN)) {
+		    ((ServerWorld)world).spawnParticle((ServerPlayerEntity)playerEntity, ParticleTypes.FALLING_WATER, true, position.getX()+0.5D, position.getY()+0.05D, position.getZ()+0.5D, 6, 0.3D, 0.0D, 0.3D, 1);
+		}
+	    }
+	    
+	    return ActionResultType.SUCCESS;
+	}
+	    
+	return super.onBlockActivated(blockstate, world, position, playerEntity, playerHand, raytraceResult);
+    }
+
 }
