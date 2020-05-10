@@ -23,8 +23,8 @@ import net.telepathicgrunt.bumblezone.items.BzItems;
 
 public class HoneyCrystal extends FallingBlock
 {
-	protected static final VoxelShape	AABB	= Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 10.0D, 15.0D);
-	private Item						item;
+	protected static final VoxelShape AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
+	private Item item;
 
 	public HoneyCrystal()
 	{

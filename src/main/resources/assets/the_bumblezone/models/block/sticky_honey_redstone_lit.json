@@ -2,8 +2,8 @@
 {
     "ambientocclusion": false,
     "textures": {
-    "residue": "the_bumblezone:block/sticky_honey_residue",
-	"particle": "the_bumblezone:block/sticky_honey_residue"
+    "residue": "the_bumblezone:block/sticky_honey_redstone_lit",
+	"particle": "the_bumblezone:block/sticky_honey_redstone_lit"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],
