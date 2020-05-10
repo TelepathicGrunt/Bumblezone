@@ -86,6 +86,7 @@ public class HoneyCrystal extends Block
 	 */
 	@Override
 	public boolean isValidPosition(BlockState blockstate, IWorldReader world, BlockPos pos) {
+	    
 	    Direction direction = blockstate.get(FACING);
 	    BlockState attachedBlockstate = world.getBlockState(pos.offset(direction.getOpposite()));
 	    return attachedBlockstate.isSolidSide(world,  pos.offset(direction.getOpposite()), direction);
@@ -96,8 +97,10 @@ public class HoneyCrystal extends Block
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public BlockState updatePostPlacement(BlockState blockstate, Direction facing, BlockState facingState,
-		IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+	public BlockState updatePostPlacement(BlockState blockstate, Direction facing, 
+		BlockState facingState, IWorld worldIn, 
+		BlockPos currentPos, BlockPos facingPos) {
+	    
 	    if (facing.getOpposite() == blockstate.get(FACING) && !blockstate.isValidPosition(worldIn, currentPos)) {
 		return Blocks.AIR.getDefaultState();
 	    } else {
@@ -116,22 +119,23 @@ public class HoneyCrystal extends Block
 	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	    
 	    if (!context.replacingClickedOnBlock()) {
-		BlockState blockstate = context.getWorld().getBlockState(context.getPos().offset(context.getFace().getOpposite()));
-		if (blockstate.getBlock() == this && blockstate.get(FACING) == context.getFace()) {
+		BlockState attachedBlockstate = context.getWorld().getBlockState(context.getPos().offset(context.getFace().getOpposite()));
+		if (attachedBlockstate.getBlock() == this && attachedBlockstate.get(FACING) == context.getFace()) {
 		    return null;
 		}
 	    }
 
-	    BlockState blockstate1 = this.getDefaultState();
-	    IWorldReader iworldreader = context.getWorld();
+	    BlockState blockstate = this.getDefaultState();
+	    IWorldReader worldReader = context.getWorld();
 	    BlockPos blockpos = context.getPos();
-	    IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
+	    IFluidState fluidstate = context.getWorld().getFluidState(context.getPos());
 
 	    for (Direction direction : context.getNearestLookingDirections()) {
-		blockstate1 = blockstate1.with(FACING, direction.getOpposite());
-		if (blockstate1.isValidPosition(iworldreader, blockpos)) {
-		    return blockstate1.with(WATERLOGGED, Boolean.valueOf(ifluidstate.getFluid() == Fluids.WATER));
+		blockstate = blockstate.with(FACING, direction.getOpposite());
+		if (blockstate.isValidPosition(worldReader, blockpos)) {
+		    return blockstate.with(WATERLOGGED, Boolean.valueOf(fluidstate.getFluid() == Fluids.WATER));
 		}
 	    }
 
@@ -143,8 +147,9 @@ public class HoneyCrystal extends Block
 	 */
 	@Override
 	@SuppressWarnings("deprecation")
-	public ActionResultType onBlockActivated(BlockState blockstate, World world, BlockPos position,
-		PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
+	public ActionResultType onBlockActivated(BlockState blockstate, World world, 
+		BlockPos position, PlayerEntity playerEntity, 
+		Hand playerHand, BlockRayTraceResult raytraceResult) {
 	    
 	    ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
@@ -156,6 +161,7 @@ public class HoneyCrystal extends Block
 
 		//make block waterlogged
 		world.setBlockState(position, blockstate.with(WATERLOGGED, true));
+		world.getPendingFluidTicks().scheduleTick(position, Fluids.WATER, Fluids.WATER.getTickRate(world));
 		world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(),
 			SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
