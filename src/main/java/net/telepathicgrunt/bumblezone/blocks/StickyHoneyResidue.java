@@ -251,6 +251,14 @@ public class StickyHoneyResidue extends VineBlock {
     }
 
     /**
+     * cannot suffocate mobs
+     */
+    @Override
+    public boolean causesSuffocation(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	return false;
+    }
+
+    /**
      * Allow player to remove this block with water buckets, water bottles, or wet sponges
      */
     @Override
