@@ -7,6 +7,13 @@ Welcome to the Github! If you are looking for the most recent stable version, th
 An awesome dimension full of bees that becomes REALLY angry if you take their honey! 
 Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going above Y = 256 to below Y = 0.
 
+////
+Mods I'm keeping an eye on for future compat
+-https://www.curseforge.com/minecraft/mc-mods/carrier-bees
+-https://www.curseforge.com/minecraft/mc-mods/the-bees-knees-mod
+-https://www.curseforge.com/minecraft/mc-mods/productivebees
+///
+
 ------------------------------------------------
 # | Bumblezone changelog |
 
