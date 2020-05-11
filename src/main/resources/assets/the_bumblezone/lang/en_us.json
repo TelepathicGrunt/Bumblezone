@@ -12,6 +12,8 @@
   "item.the_bumblezone.honey_crystal_shards": "Honey Crystal Shards",
   "item.the_bumblezone.sugar_water_bucket": "Sugar Water Bucket",
   "item.the_bumblezone.sugar_water_bottle": "Sugar Water Bottle",
+  "item.the_bumblezone.honey_crystal_shield": "Honey Crystal Shield",
+  "item.the_bumblezone.honey_crystal_shield.level_tooltip": "Shield Level",
   "biome.the_bumblezone.sugar_water_floor": "Sugar Water Floor",
   "biome.the_bumblezone.hive_wall": "Hive Wall",
   "biome.the_bumblezone.hive_pillar": "Hive Pillar",
