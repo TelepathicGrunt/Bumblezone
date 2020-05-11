@@ -39,7 +39,7 @@ Mods I'm keeping an eye on for future compat
 
 -Filled Porous Honeycomb Blocks now will output power when a comparator is used on the block! The power output will be 1.
   
--Added Honey Crystal blocks. Breaking these blocks without Silk Touch or letting it fall onto a block it cannot be placed on will break it and drop Honey Crystal Shards. These blocks are non-renewable so treasure them!
+-Added Honey Crystal blocks. Breaking these blocks without Silk Touch or breaking the block it's on will drop Honey Crystal Shards. These blocks are non-renewable so treasure them! They can also be waterlogged by any fluid with the water tag as well but it will turn the water inside the block into Sugar Water instead.
   
 -Added Sticky Honey Residue that can be placed on multiple surfaces! Mobs touching this residue will be slowed down and the residue can be used to climb up walls. Using a comparator on this block will output a signal based on how many surfaces this block is attached to. You can obtain this block by smelting Honey Blocks, Honey Crystal Shards, or Honey Crystals. Also, this blocks takes time to mine but can be washed away by fluids or destroyed by right clicking while holding a Wet Sponge, any buckets holding fluids with water tag, or any bottle holding a fluid with water in its name!
 

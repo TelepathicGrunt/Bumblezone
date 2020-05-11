@@ -1,6 +1,10 @@
 package net.telepathicgrunt.bumblezone.blocks;
 
+import java.util.Map;
+
 import javax.annotation.Nullable;
+
+import com.google.common.collect.Maps;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -10,7 +14,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.BucketItem;
@@ -29,6 +32,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -44,7 +48,20 @@ public class HoneyCrystal extends Block
 {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final DirectionProperty FACING = DirectionalBlock.FACING;
-	protected static final VoxelShape AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
+	protected static final VoxelShape DOWN_AABB = Block.makeCuboidShape(0.0D, 1.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+	protected static final VoxelShape UP_AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
+	protected static final VoxelShape WEST_AABB = Block.makeCuboidShape(1.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+	protected static final VoxelShape EAST_AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 15.0D, 16.0D, 16.0D);
+	protected static final VoxelShape NORTH_AABB = Block.makeCuboidShape(0.0D, 0.0D, 1.0D, 16.0D, 16.0D, 16.0D);
+	protected static final VoxelShape SOUTH_AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 15.0D);
+	public static final Map<Direction, VoxelShape> FACING_TO_SHAPE_MAP = Util.make(Maps.newEnumMap(Direction.class), (map) -> {
+		    map.put(Direction.NORTH, NORTH_AABB);
+		    map.put(Direction.EAST, EAST_AABB);
+		    map.put(Direction.SOUTH, SOUTH_AABB);
+		    map.put(Direction.WEST, WEST_AABB);
+		    map.put(Direction.UP, UP_AABB);
+		    map.put(Direction.DOWN, DOWN_AABB);
+		});
 	private Item item;
 
 	public HoneyCrystal()
@@ -65,20 +82,20 @@ public class HoneyCrystal extends Block
 	}
 
 	/**
-	 * Can be waterlogged so return fluid if so
+	 * Can be waterlogged so return sugar water fluid if so
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public IFluidState getFluidState(BlockState state) {
-	    return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+	    return state.get(WATERLOGGED) ? BzBlocks.SUGAR_WATER_FLUID.get().getStillFluidState(false) : super.getFluidState(state);
 	}
 
 	/**
-	 * Custom shape of this block
+	 * Custom shape of this block based on direction
 	 */
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context){
-		return AABB;
+	public VoxelShape getShape(BlockState blockstate, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	    return FACING_TO_SHAPE_MAP.get(blockstate.get(FACING));
 	}
 
 	/**
@@ -89,7 +106,7 @@ public class HoneyCrystal extends Block
 	    
 	    Direction direction = blockstate.get(FACING);
 	    BlockState attachedBlockstate = world.getBlockState(pos.offset(direction.getOpposite()));
-	    return attachedBlockstate.isSolidSide(world,  pos.offset(direction.getOpposite()), direction);
+	    return attachedBlockstate.isSolidSide(world, pos.offset(direction.getOpposite()), direction);
 	}
 
 	/**
@@ -105,8 +122,7 @@ public class HoneyCrystal extends Block
 		return Blocks.AIR.getDefaultState();
 	    } else {
 		if (blockstate.get(WATERLOGGED)) {
-		    worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER,
-			    Fluids.WATER.getTickRate(worldIn));
+		    worldIn.getPendingFluidTicks().scheduleTick(currentPos, BzBlocks.SUGAR_WATER_FLUID.get(), BzBlocks.SUGAR_WATER_FLUID.get().getTickRate(worldIn));
 		}
 
 		return super.updatePostPlacement(blockstate, facing, facingState, worldIn, currentPos, facingPos);
@@ -135,7 +151,7 @@ public class HoneyCrystal extends Block
 	    for (Direction direction : context.getNearestLookingDirections()) {
 		blockstate = blockstate.with(FACING, direction.getOpposite());
 		if (blockstate.isValidPosition(worldReader, blockpos)) {
-		    return blockstate.with(WATERLOGGED, Boolean.valueOf(fluidstate.getFluid() == Fluids.WATER));
+		    return blockstate.with(WATERLOGGED, Boolean.valueOf(fluidstate.getFluid().isIn(FluidTags.WATER)));
 		}
 	    }
 
@@ -161,7 +177,7 @@ public class HoneyCrystal extends Block
 
 		//make block waterlogged
 		world.setBlockState(position, blockstate.with(WATERLOGGED, true));
-		world.getPendingFluidTicks().scheduleTick(position, Fluids.WATER, Fluids.WATER.getTickRate(world));
+		world.getPendingFluidTicks().scheduleTick(position, BzBlocks.SUGAR_WATER_FLUID.get(), BzBlocks.SUGAR_WATER_FLUID.get().getTickRate(world));
 		world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(),
 			SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
