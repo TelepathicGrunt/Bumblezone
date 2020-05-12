@@ -160,9 +160,9 @@ public class BzConfig
     			spiderInfestedBeeDungeonRarity = subscriber.subscribe(builder
     		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
     		            		+" How rare Spider Infested Bee Dungeons are. Higher numbers means more rare.\r\n"
-    		            		+" Default rate is 3. Setting to 1001 will disable Bee Dungeons.\r\n")
+    		            		+" Default rate is 5. Setting to 1001 will disable Bee Dungeons.\r\n")
     		            .translation("the_bumblezone.config.dungeons.spiderinfestedbeedungeonrarity")
-    		            .defineInRange("spiderInfestedBeeDungeonRarity", 3, 1, 1001));
+    		            .defineInRange("spiderInfestedBeeDungeonRarity", 5, 1, 1001));
 
 	    		spawnerRateSpiderBeeDungeon = subscriber.subscribe(builder
     		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"

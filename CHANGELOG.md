@@ -57,6 +57,8 @@ Mods I'm keeping an eye on for future compat
 
 -Honeycomb Holes now has a chance of having an Empty Honeycomb Larva Block.
 
+-Honey Crystal blocks will now generate in caves or underwater in The Bumblezone! They are rare in Sugar Water Biome, uncommon in Hive Pillar biome, and most common in Hive Wall biome.
+
 ##### Teleportation: 
 
 -Exiting Bumblezone dimension by falling into the void will not kill the player with fall damage when they teleport into another dimension. I forgot to reset the player's fall time but now it's fixed.

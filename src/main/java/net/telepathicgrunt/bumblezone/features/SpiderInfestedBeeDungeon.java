@@ -92,12 +92,12 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 		addBlocksToWorld(template, world, blockpos$Mutable.move(0, 1, 0), placementsettings, 2);
 		
 		
-		for(int x = -8; x <= 24; x++) {
-			for(int y = -8; x <= 24; x++) {
-				for(int z = -8; x <= 24; x++) {
+		for(int x = -8; x <= 16; x++) {
+			for(int y = -3; y <= 10; y++) {
+				for(int z = -8; z <= 16; z++) {
 					blockpos$Mutable.setPos(position).move(x, y, z);
-					if(rand.nextFloat() < 0.5f && world.getBlockState(blockpos$Mutable).getBlock() == Blocks.CAVE_AIR) {
-						world.setBlockState(blockpos$Mutable, Blocks.COBWEB.getDefaultState(), 2);
+					if(rand.nextFloat() < 0.07f && world.getBlockState(blockpos$Mutable).getBlock() == Blocks.CAVE_AIR) {
+						world.setBlockState(blockpos$Mutable, Blocks.COBWEB.getDefaultState(), 3);
 					}
 				}
 			}
@@ -416,7 +416,7 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 		
 		//air
 		else if(block.getDefaultState().getMaterial() == Material.AIR) {
-			if(random.nextFloat() < 0.05f)
+			if(random.nextFloat() < 0.07f)
 				return new Pair<>(Blocks.COBWEB.getDefaultState(), new Boolean(false));
 		}
 		
@@ -446,7 +446,7 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 
 		//outer ring
 		else if(block == Blocks.GRAY_TERRACOTTA) {
-			if(random.nextFloat() < 0.05f) {
+			if(random.nextFloat() < 0.07f) {
 				return new Pair<>(Blocks.COBWEB.getDefaultState(),	new Boolean(true));
 			}
 			else {
@@ -456,7 +456,7 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 		
 		//inner ring
 		else if(block == Blocks.CYAN_TERRACOTTA) {
-			if(random.nextFloat() < 0.05f) {
+			if(random.nextFloat() < 0.07f) {
 				return new Pair<>(Blocks.COBWEB.getDefaultState(),	new Boolean(true));
 			}
 			else {
@@ -474,11 +474,11 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 							.with(CandleBlock.LIT, true), 
 							new Boolean(true));
 				
-				if(random.nextFloat() < 0.03f)
+				if(random.nextFloat() < 0.05f)
 					return new Pair<>(Blocks.COBWEB.getDefaultState(),	new Boolean(true));
 			}
 			else {
-				if(random.nextFloat() < 0.05f) {
+				if(random.nextFloat() < 0.07f) {
 					return new Pair<>(Blocks.COBWEB.getDefaultState(),	new Boolean(true));
 				}
 				else {
