@@ -49,6 +49,8 @@ Mods I'm keeping an eye on for future compat
 
 -Added Honey Crystal Shards which drops from Honey Crystal blocks. These shards can be eaten to recover some hunger in a pinch.
 
+-Added Honey Crystal Shield which uses the same recipe as regular shields but uses Honey Crystal Shards for all the slots. The shield starts up super weak but will become stronger as you repair it with Honey Crystal Shards. At maximum strength, this shield has about twice the durability as regular shields and can be enchanted with Unbreaking or Curse of the Binding (No Mending as that would be OP!). However, despite that huge durability benefit, this shield is super weak to blocking explosions or fire damage so be careful of what you block with this shield!
+
 ##### Generation: 
 
 -Added Bee Dungeons that will spawn in Honeycomb Holes or caves in the Bumblezone! They have lots of Honeycomb Brood Blocks but if you use Beesourceful, their ore-based Honeycombs will spawn too with Diamond, Ender, and Emeralds being the rarest honeycombs. And if you have Buzzier Bees on, their candles will also spawn in the dungeon with scented candles that gives potion effects spawning very rarely in the center. 
@@ -149,7 +151,7 @@ Mods I'm keeping an eye on for future compat
 
 -Added Sugar Water Bottle! To get this, use an empty Glass Bottle on Sugar Water. If you drink a Sugar Water Bottle, you restore a tiny bit of hungry but get Haste 1 effect for a short period of time!
 
--Add Sugar Water Bucket to move Sugar Water around. Works with Dispensers too!
+-Added Sugar Water Bucket to move Sugar Water around. Works with Dispensers too!
 
 ##### Generation: 
 

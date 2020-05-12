@@ -33,8 +33,7 @@ public class HoneyCrystalShield extends ShieldItem{
     }
 
     @Override
-    public boolean isShield(ItemStack stack, @Nullable LivingEntity entity)
-    {
+    public boolean isShield(ItemStack stack, @Nullable LivingEntity entity){
         return true;
     }
 
