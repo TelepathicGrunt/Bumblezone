@@ -49,7 +49,7 @@ Mods I'm keeping an eye on for future compat
 
 -Added Honey Crystal Shards which drops from Honey Crystal blocks. These shards can be eaten to recover some hunger in a pinch.
 
--Added Honey Crystal Shield which uses the same recipe as regular shields but uses Honey Crystal Shards for all the slots. The shield starts up super weak but will become stronger as you repair it with Honey Crystal Shards. At maximum strength, this shield has about twice the durability as regular shields and can be enchanted with Unbreaking or Curse of the Binding (No Mending as that would be OP!). However, despite that huge durability benefit, this shield is super weak to blocking explosions or fire damage so be careful of what you block with this shield!
+-Added Honey Crystal Shield which uses the same recipe as regular shields but uses Honey Crystal Shards for all the slots. The shield starts up super weak but will become stronger as you repair it with Honey Crystal Shards. At maximum strength, this shield has about twice the durability as regular shields and can be enchanted with Unbreaking or Curse of the Binding (No Mending as that would be OP!). However, despite that huge durability benefit, this shield is super weak to blocking explosions or fire damage so be careful of what you block with this shield! And lastly, and mob physically attacking your shield will get a slowness effect for 4 seconds due to the honey's stickiness!
 
 ##### Generation: 
 

@@ -48,20 +48,24 @@ public class HoneyCrystalShieldEvents {
 	 */
 	@SubscribeEvent
 	public static void slowPhysicalAttackers(LivingAttackEvent event) {
+	    DamageSource damageSource = event.getSource();
 	    
 	    // checks for living attacker and player victim
-	    if (event.getSource().getImmediateSource() instanceof LivingEntity
-		    && event.getEntityLiving() instanceof PlayerEntity) {
+	    // and also ignores explosions or magic damage
+	    if (damageSource.getImmediateSource() instanceof LivingEntity &&
+		    !damageSource.isExplosion() &&
+		    !damageSource.isMagicDamage() &&
+		    event.getEntityLiving() instanceof PlayerEntity) {
 
 		// checks to see if player is blocking with our shield
 		LivingEntity attacker = (LivingEntity) event.getSource().getImmediateSource();
 		PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-		
+
 		if (player.getActiveItemStack().getItem() instanceof HoneyCrystalShield
 			&& player.isActiveItemStackBlocking()) {
 
 		    // apply slowness to attacker
-		    attacker.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 10, 100, true, true, true));
+		    attacker.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 80, 0, false, false, false));
 		}
 	    }
 	}

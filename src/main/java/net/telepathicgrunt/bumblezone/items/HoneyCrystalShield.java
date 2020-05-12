@@ -19,19 +19,22 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class HoneyCrystalShield extends ShieldItem{
 
     public HoneyCrystalShield() {
+	//starts off with 20 durability so it is super weak
 	super(new Item.Properties().maxDamage(20).group(BzItems.BUMBLEZONE_CREATIVE_TAB));
     }
 
-    @Override
-    public int getUseDuration(ItemStack stack) {
-       return 72000;
-    }
-
+    
+    /**
+     * Specify what item can repair this shield
+     */
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
        return BzItems.HONEY_CRYSTAL_SHARDS.get() == repair.getItem();
     }
-
+    
+    /**
+     * It's a shield of course.
+     */
     @Override
     public boolean isShield(ItemStack stack, @Nullable LivingEntity entity){
         return true;
