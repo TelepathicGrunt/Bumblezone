@@ -11,7 +11,6 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 Mods I'm keeping an eye on for future compat
 -https://www.curseforge.com/minecraft/mc-mods/carrier-bees
 -https://www.curseforge.com/minecraft/mc-mods/the-bees-knees-mod
--https://www.curseforge.com/minecraft/mc-mods/productivebees
 ///
 
 ------------------------------------------------

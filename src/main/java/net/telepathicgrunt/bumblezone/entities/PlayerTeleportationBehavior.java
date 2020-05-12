@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Level;
 
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EnderPearlEntity;
@@ -38,6 +39,8 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.capabilities.IPlayerPosAndDim;
 import net.telepathicgrunt.bumblezone.capabilities.PlayerPositionAndDimension;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionRegistration;
+import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
+import net.telepathicgrunt.bumblezone.modcompatibility.ProductiveBeesRedirection;
 import net.telepathicgrunt.bumblezone.utils.BzPlacingUtils;
 
 
@@ -79,21 +82,21 @@ public class PlayerTeleportationBehavior
 				//check with offset in all direction as the position of exact hit point could barely be outside the hive block
 				//even through the pearl hit the block directly.
 				for(double offset = -0.1D; offset <= 0.1D; offset += 0.1D) {
-					Block block = world.getBlockState(new BlockPos(hitBlockPos.add(offset, 0, 0))).getBlock();
+				    	BlockState block = world.getBlockState(new BlockPos(hitBlockPos.add(offset, 0, 0)));
 					if(isValidBeeHive(block)) {
 						hitHive = true;
 						hivePos = new BlockPos(hitBlockPos.add(offset, 0, 0));
 						break;
 					}
 					
-					block = world.getBlockState(new BlockPos(hitBlockPos.add(0, offset, 0))).getBlock();
+					block = world.getBlockState(new BlockPos(hitBlockPos.add(0, offset, 0)));
 					if(isValidBeeHive(block)) {
 						hitHive = true;
 						hivePos = new BlockPos(hitBlockPos.add(0, offset, 0));
 						break;
 					}
 					
-					block = world.getBlockState(new BlockPos(hitBlockPos.add(0, 0, offset))).getBlock();
+					block = world.getBlockState(new BlockPos(hitBlockPos.add(0, 0, offset)));
 					if(isValidBeeHive(block)) {
 						hitHive = true;
 						hivePos = new BlockPos(hitBlockPos.add(0, 0, offset));
@@ -454,7 +457,7 @@ public class PlayerTeleportationBehavior
 						{
 							mutableBlockPos.setPos(position.getX() + x2, mutableBlockPos.getY(), position.getZ() + z2);
 							
-							if (isValidBeeHive(world.getBlockState(mutableBlockPos).getBlock()))
+							if (isValidBeeHive(world.getBlockState(mutableBlockPos)))
 							{
 								//A Hive was found, try to find a valid spot next to it
 								BlockPos validSpot = validPlayerSpawnLocation(world, mutableBlockPos, 4);
@@ -558,12 +561,18 @@ public class PlayerTeleportationBehavior
 		return null;
 	}
 	
-	private static boolean isValidBeeHive(Block block) {
-		if(block instanceof BeehiveBlock) {
-			if(Bumblezone.BzConfig.allowTeleportationWithModdedBeehives.get() || block.getRegistryName().getNamespace().equals("minecraft")) {
+	private static boolean isValidBeeHive(BlockState block) {
+		if(block.getBlock() instanceof BeehiveBlock) {
+			if(Bumblezone.BzConfig.allowTeleportationWithModdedBeehives.get() || block.getBlock().getRegistryName().getNamespace().equals("minecraft")) {
 				return true;
 			}
 		}
+		
+		if(ModChecking.productiveBeesPresent && Bumblezone.BzConfig.allowTeleportationWithModdedBeehives.get()) {
+		    if(ProductiveBeesRedirection.PBIsAdvancedBeehiveAbstractBlock(block))
+			return true;
+		}
+		
 		return false;
 	}
 }
