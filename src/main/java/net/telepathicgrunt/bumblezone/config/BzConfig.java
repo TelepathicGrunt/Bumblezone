@@ -40,18 +40,20 @@ public class BzConfig
 		public ConfigValueListener<Boolean> allowScentedCandlesSpiderBeeDungeon;
 		public ConfigValueListener<Integer> powerfulCandlesRarityBeeDungeon;
 		public ConfigValueListener<Integer> powerfulCandlesRaritySpiderBeeDungeon;
-		public ConfigValueListener<Double> spawnerRateSpiderBeeDungeon;
+		
 		public ConfigValueListener<Boolean> spawnBeesourcefulBeesMob;
 		public ConfigValueListener<Boolean> spawnBesourcefulHoneycombVariants;
-		public ConfigValueListener<Boolean> spawnProductiveBeesBeesMob;
 		public ConfigValueListener<Integer> greatHoneycombRarityBeeDungeon;
 		public ConfigValueListener<Double> oreHoneycombSpawnRateBeeDungeon;
 		public ConfigValueListener<Integer> greatHoneycombRaritySpiderBeeDungeon;
 		public ConfigValueListener<Double> oreHoneycombSpawnRateSpiderBeeDungeon;
 		
+		public ConfigValueListener<Boolean> spawnProductiveBeesBeesMob;
+		
 		//dungeons
 		public ConfigValueListener<Integer> beeDungeonRarity;
 		public ConfigValueListener<Integer> spiderInfestedBeeDungeonRarity;
+		public ConfigValueListener<Double> spawnerRateSpiderBeeDungeon;
 
 		public BzConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber)
 		{
@@ -170,7 +172,7 @@ public class BzConfig
     		            		+" How rare are Spider/Cave Spider Spawners in Spider Infested Bee Dungeons.\r\n"
     		            		+" 0 is no spawners, 1 is max spawner, and default is 0.3D\r\n")
     		            .translation("the_bumblezone.config.dungeons.spawnerratespiderbeedungeon")
-    		            .defineInRange("spawnerRateSpiderBeeDungeon", 0D, 0D, 1D));
+    		            .defineInRange("spawnerRateSpiderBeeDungeon", 0.3D, 0D, 1D));
 	        builder.pop();
 	        
 	        builder.push("Wrath of the Hive Options");
