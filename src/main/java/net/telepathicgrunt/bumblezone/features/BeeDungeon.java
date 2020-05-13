@@ -41,6 +41,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.blocks.HoneyCrystal;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 import net.telepathicgrunt.bumblezone.modcompatibility.BeesourcefulRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
@@ -50,10 +51,13 @@ import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 public class BeeDungeon extends Feature<NoFeatureConfig>
 {
 
+    	private static final BlockState HONEY_CRYSTAL = BzBlocks.HONEY_CRYSTAL.get().getDefaultState();
+    
 	public BeeDungeon(Function<Dynamic<?>, ? extends NoFeatureConfig> configFactory)
 	{
 		super(configFactory);
 	}
+	
 	@Override
 	public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> changedBlock, Random rand, BlockPos position, NoFeatureConfig p_212245_5_)
 	{
@@ -381,7 +385,12 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 
 		//sugar water stream
 		else if(block == BzBlocks.SUGAR_WATER_BLOCK.get()) {
-			return new Pair<>(block.getDefaultState(), new Boolean(false));
+			if(random.nextFloat() < 0.1f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
+				return new Pair<>(HONEY_CRYSTAL.with(HoneyCrystal.WATERLOGGED, true), new Boolean(false));
+			}
+			else {
+				return new Pair<>(block.getDefaultState(), new Boolean(false));
+			}
 		}
 		
 		//Shell
@@ -401,7 +410,7 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 			}
 			
 			if(random.nextFloat() < 0.4f) {
-				return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(),	new Boolean(replaceAir));
+				return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), new Boolean(replaceAir));
 			}
 			else {
 				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(replaceAir));
@@ -411,16 +420,19 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 		//outer ring
 		else if(block == Blocks.GRAY_TERRACOTTA) {
 			if(ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowScentedCandlesBeeDungeon.get()) {
-				if(random.nextBoolean() && world.getBlockState(pos.down()).getMaterial() != Material.AIR)
+				if(random.nextFloat() < 0.25f && world.getBlockState(pos.down()).getMaterial() != Material.AIR)
 					return new Pair<>(BuzzierBeesRedirection.BBGetRandomTier1Candle(random).getDefaultState()
 							.with(CandleBlock.CANDLES, random.nextInt(3)+1)
 							.with(CandleBlock.WATERLOGGED, false)
 							.with(CandleBlock.LIT, true), 
 							new Boolean(true));
+				else if(random.nextFloat() < 0.4f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
+					return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+				}
 			}
 			else {
-				if(random.nextFloat() < 0.2f) {
-					return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(),	new Boolean(true));
+				if(random.nextFloat() < 0.2f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
+					return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
 				}
 				else {
 					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
@@ -431,16 +443,19 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 		//inner ring
 		else if(block == Blocks.CYAN_TERRACOTTA) {
 			if(ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowScentedCandlesBeeDungeon.get()) {
-				if(random.nextBoolean() && world.getBlockState(pos.down()).getMaterial() != Material.AIR)
+				if(random.nextFloat() < 0.4f && world.getBlockState(pos.down()).getMaterial() != Material.AIR)
 					return new Pair<>(BuzzierBeesRedirection.BBGetRandomTier2Candle(random, Bumblezone.BzConfig.powerfulCandlesRarityBeeDungeon.get()).getDefaultState()
 							.with(CandleBlock.CANDLES, random.nextInt(random.nextInt(3)+1)+1) //low chance of 3 candles
 							.with(CandleBlock.WATERLOGGED, false)
 							.with(CandleBlock.LIT, true), 
 							new Boolean(true));
+				else if(random.nextBoolean() && HONEY_CRYSTAL.isValidPosition(world, pos)) {
+					return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+				}
 			}
 			else {
-				if(random.nextFloat() < 0.35f) {
-					return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(),	new Boolean(true));
+				if(random.nextFloat() < 0.35f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
+					return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
 				}
 				else {
 					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
@@ -451,16 +466,19 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 		//center
 		else if(block == Blocks.BLACK_TERRACOTTA) {
 			if(ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowScentedCandlesBeeDungeon.get()) {
-				if(world.getBlockState(pos.down()).getMaterial() != Material.AIR)
+				if(random.nextFloat() < 0.8f && world.getBlockState(pos.down()).getMaterial() != Material.AIR)
 					return new Pair<>(BuzzierBeesRedirection.BBGetRandomTier3Candle(random, Bumblezone.BzConfig.powerfulCandlesRarityBeeDungeon.get()+1).getDefaultState()
 							.with(CandleBlock.CANDLES, random.nextInt(random.nextInt(random.nextInt(3)+1)+1)+1) //lowest chance of 3 candles
 							.with(CandleBlock.WATERLOGGED, false)
 							.with(CandleBlock.LIT, true), 
 							new Boolean(true));
+				else if(HONEY_CRYSTAL.isValidPosition(world, pos)) {
+					return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+				}
 			}
 			else {
-				if(random.nextFloat() < 0.6f) {
-					return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(),	new Boolean(true));
+				if(random.nextFloat() < 0.6f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
+					return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
 				}
 				else {
 					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));

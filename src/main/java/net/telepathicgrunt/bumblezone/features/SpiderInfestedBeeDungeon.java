@@ -53,6 +53,7 @@ import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 {
 	private static final ResourceLocation CRYSTALLIZED_HONEY_BLOCK = new ResourceLocation("buzzierbees:crystallized_honey_block");
+    	private static final BlockState HONEY_CRYSTAL = BzBlocks.HONEY_CRYSTAL.get().getDefaultState();
 	
 	public SpiderInfestedBeeDungeon(Function<Dynamic<?>, ? extends NoFeatureConfig> configFactory)
 	{
@@ -449,6 +450,9 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 			if(random.nextFloat() < 0.07f) {
 				return new Pair<>(Blocks.COBWEB.getDefaultState(),	new Boolean(true));
 			}
+			else if(random.nextFloat() < 0.4f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
+				return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+			}
 			else {
 				return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
 			}
@@ -458,6 +462,9 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 		else if(block == Blocks.CYAN_TERRACOTTA) {
 			if(random.nextFloat() < 0.07f) {
 				return new Pair<>(Blocks.COBWEB.getDefaultState(),	new Boolean(true));
+			}
+			else if(random.nextFloat() < 0.3f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
+				return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
 			}
 			else {
 				return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
@@ -474,12 +481,19 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 							.with(CandleBlock.LIT, true), 
 							new Boolean(true));
 				
-				if(random.nextFloat() < 0.05f)
+				else if(random.nextFloat() < 0.3f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
+					return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+				}
+				
+				else if(random.nextFloat() < 0.05f)
 					return new Pair<>(Blocks.COBWEB.getDefaultState(),	new Boolean(true));
 			}
 			else {
 				if(random.nextFloat() < 0.07f) {
 					return new Pair<>(Blocks.COBWEB.getDefaultState(),	new Boolean(true));
+				}
+				else if(random.nextFloat() < 0.4f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
+					return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
 				}
 				else {
 					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
