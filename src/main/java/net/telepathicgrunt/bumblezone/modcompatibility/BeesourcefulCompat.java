@@ -9,7 +9,6 @@ import com.tfar.beesourceful.util.BeeType;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.pattern.BlockMatcher;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -72,45 +71,54 @@ public class BeesourcefulCompat
 	{
 		MobEntity entity = (MobEntity)event.getEntity();
 		IWorld world = event.getWorld();
+
+		MobEntity beesourcefulBeeEntity;
+		int beeTypeChance = world.getRandom().nextInt(100);
+
 		
-		if(entity.getType() == EntityType.BEE) {
-			MobEntity beesourcefulBeeEntity;
-			int beeTypeChance = world.getRandom().nextInt(100);
-			
-			if(beeTypeChance < 1) {
-				beesourcefulBeeEntity = BeeType.ender.beeSupplier.get().create(entity.world);
-			}
-			else if(beeTypeChance < 3) {
-				beesourcefulBeeEntity = BeeType.diamond.beeSupplier.get().create(entity.world);
-			}
-			else if(beeTypeChance < 10) {
-				beesourcefulBeeEntity = BeeType.emerald.beeSupplier.get().create(entity.world);
-			}
-			else if(beeTypeChance < 20) {
-				beesourcefulBeeEntity = BeeType.lapis.beeSupplier.get().create(entity.world);
-			}
-			else if(beeTypeChance < 30) {
-				beesourcefulBeeEntity = BeeType.quartz.beeSupplier.get().create(entity.world);
-			}
-			else if(beeTypeChance < 50) {
-				beesourcefulBeeEntity = BeeType.gold.beeSupplier.get().create(entity.world);
-			}
-			else if(beeTypeChance < 70) {
-				beesourcefulBeeEntity = BeeType.redstone.beeSupplier.get().create(entity.world);
-			}
-			else {
-				beesourcefulBeeEntity = BeeType.iron.beeSupplier.get().create(entity.world);
-			}
-			
-			
-			BlockPos.Mutable blockpos = new BlockPos.Mutable(entity.getPosition());
-			
-			beesourcefulBeeEntity.setLocationAndAngles(blockpos.getX(), blockpos.getY(), blockpos.getZ(), world.getRandom().nextFloat() * 360.0F, 0.0F);
-			ILivingEntityData ilivingentitydata = null;
-			ilivingentitydata = beesourcefulBeeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beesourcefulBeeEntity)), event.getSpawnReason(), ilivingentitydata, (CompoundNBT) null);
-			world.addEntity(beesourcefulBeeEntity);
+		if (beeTypeChance < 1) {
+		    beesourcefulBeeEntity = BeeType.ender.beeSupplier.get().create(entity.world);
+		} 
+		else if (beeTypeChance < 3) {
+		    beesourcefulBeeEntity = BeeType.diamond.beeSupplier.get().create(entity.world);
+		} 
+		else if (beeTypeChance < 10) {
+		    beesourcefulBeeEntity = BeeType.emerald.beeSupplier.get().create(entity.world);
+		} 
+		else if (beeTypeChance < 20) {
+		    beesourcefulBeeEntity = BeeType.lapis.beeSupplier.get().create(entity.world);
+		} 
+		else if (beeTypeChance < 30) {
+		    beesourcefulBeeEntity = BeeType.quartz.beeSupplier.get().create(entity.world);
+		} 
+		else if (beeTypeChance < 50) {
+		    beesourcefulBeeEntity = BeeType.gold.beeSupplier.get().create(entity.world);
+		} 
+		else if (beeTypeChance < 70) {
+		    beesourcefulBeeEntity = BeeType.redstone.beeSupplier.get().create(entity.world);
+		} 
+		else {
+		    beesourcefulBeeEntity = BeeType.iron.beeSupplier.get().create(entity.world);
 		}
-	}
+		
+		BlockPos.Mutable blockpos = new BlockPos.Mutable(entity.getPosition());
+		beesourcefulBeeEntity.setLocationAndAngles(
+			blockpos.getX(), 
+			blockpos.getY(),
+			blockpos.getZ(), 
+			world.getRandom().nextFloat() * 360.0F, 
+			0.0F);
+		
+		ILivingEntityData ilivingentitydata = null;
+		ilivingentitydata = beesourcefulBeeEntity.onInitialSpawn(
+			world, 
+			world.getDifficultyForLocation(new BlockPos(beesourcefulBeeEntity)), 
+			event.getSpawnReason(), 
+			ilivingentitydata, 
+			(CompoundNBT) null);
+		
+		world.addEntity(beesourcefulBeeEntity);
+	    }
 
 
 	/**

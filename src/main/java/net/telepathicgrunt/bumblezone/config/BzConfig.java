@@ -43,6 +43,7 @@ public class BzConfig
 		public ConfigValueListener<Double> spawnerRateSpiderBeeDungeon;
 		public ConfigValueListener<Boolean> spawnBeesourcefulBeesMob;
 		public ConfigValueListener<Boolean> spawnBesourcefulHoneycombVariants;
+		public ConfigValueListener<Boolean> spawnProductiveBeesBeesMob;
 		public ConfigValueListener<Integer> greatHoneycombRarityBeeDungeon;
 		public ConfigValueListener<Double> oreHoneycombSpawnRateBeeDungeon;
 		public ConfigValueListener<Integer> greatHoneycombRaritySpiderBeeDungeon;
@@ -356,14 +357,14 @@ public class BzConfig
 
 	            builder.push("Beesourceful Options");
 	            
-	            	spawnBeesourcefulBeesMob = subscriber.subscribe(builder
+	            		spawnBeesourcefulBeesMob = subscriber.subscribe(builder
 			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 			                    		+" Spawn Beesourceful's ore and ender bees in The Bumblezone alongside\r\n"
 			                    		+" regular bees at a 1/15th chance when spawning regular bees.\r\n")
 			                    .translation("the_bumblezone.config.modcompat.beesourceful.spawnbeesourcefulbeesmob")
 			                    .define("spawnBeesourcefulBeesMob", true));
 	            
-	            	spawnBesourcefulHoneycombVariants = subscriber.subscribe(builder
+	            		spawnBesourcefulHoneycombVariants = subscriber.subscribe(builder
 			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 			                    		+" Spawn Beesourceful's various honeycomb variants in The Bumblezone\r\n"
 			                    		+" at all kinds of heights and height bands. Start exploring to find \r\n"
@@ -402,6 +403,17 @@ public class BzConfig
 	    		            		+" Higher numbers means more rare. Default rate is 2.\r\n")
 	    		            .translation("the_bumblezone.config.beesourceful.greathoneycombrarityspiderbeedungeon")
 	    		            .defineInRange("greatHoneycombRaritySpiderBeeDungeon", 2, 1, 1001));
+	            builder.pop();
+	            
+	            builder.push("Productive Bees Options");
+
+	            		spawnProductiveBeesBeesMob = subscriber.subscribe(builder
+		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		                    		+" Spawn Productive Bees in The Bumblezone alongside regular\r\n"
+		                    		+" bees at a 1/15th chance when spawning regular bees.\r\n")
+		                    .translation("the_bumblezone.config.modcompat.productivebees.spawnproductivebeesbeesmob")
+		                    .define("spawnProductiveBeesBeesMob", true));
+        
 	            builder.pop();
 	            
 	        builder.pop();

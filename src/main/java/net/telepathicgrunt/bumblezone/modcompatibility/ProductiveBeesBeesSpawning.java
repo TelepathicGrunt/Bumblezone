@@ -9,7 +9,7 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionRegistration;
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class BeesourcefulOreBeesSpawning
+public class ProductiveBeesBeesSpawning
 {
 	@Mod.EventBusSubscriber(modid = Bumblezone.MODID)
 	private static class ForgeEvents
@@ -21,15 +21,15 @@ public class BeesourcefulOreBeesSpawning
 		@SubscribeEvent
 		public static void MobSpawnEvent(LivingSpawnEvent.CheckSpawn event)
 		{
-			if(ModChecking.beesourcefulPresent) 
+			if(ModChecking.productiveBeesPresent) 
 			{
 				MobEntity entity = (MobEntity)event.getEntity();
-				if(Bumblezone.BzConfig.spawnBeesourcefulBeesMob.get() && 
+				if(Bumblezone.BzConfig.spawnProductiveBeesBeesMob.get() && 
 					entity.dimension == BzDimensionRegistration.bumblezone() && 
 					entity.world.getRandom().nextInt(15) == 0 &&
 					entity.getType() == EntityType.BEE) 
 				{
-					BeesourcefulRedirection.BSMobSpawnEvent(event);
+				    ProductiveBeesRedirection.PBMobSpawnEvent(event);
 				}
 			}
 		}

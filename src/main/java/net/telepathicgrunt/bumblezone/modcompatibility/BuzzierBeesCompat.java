@@ -58,7 +58,7 @@ public class BuzzierBeesCompat
 		TIER_2_CANDLES_VARIANTS = new ArrayList<Block>();
 		TIER_3_CANDLES_VARIANTS = new ArrayList<Block>();
 		
-		//tier 1 candles  - no effects
+		//tier 1 candles  - no effects basic colors candles
 		
 		TIER_1_CANDLES_VARIANTS.add(BBBlocks.CANDLE.get());
 		TIER_1_CANDLES_VARIANTS.add(BBBlocks.WHITE_CANDLE.get());
@@ -78,7 +78,7 @@ public class BuzzierBeesCompat
 		TIER_1_CANDLES_VARIANTS.add(BBBlocks.RED_CANDLE.get());
 		TIER_1_CANDLES_VARIANTS.add(BBBlocks.BLACK_CANDLE.get());
 			
-		//tier 2 candles - no effects plus generally negative effect candles
+		//tier 2 candles - no effects mixed colors candles plus generally negative effect candles
 		
 		TIER_2_CANDLES_VARIANTS.add(BBBlocks.AMBER_CANDLE.get());
 		TIER_2_CANDLES_VARIANTS.add(BBBlocks.BEIGE_CANDLE.get());
@@ -113,7 +113,7 @@ public class BuzzierBeesCompat
 			TIER_2_CANDLES_VARIANTS.add(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("buzzierbees:autumn_crocus_scented_candle")));
 		}
 		
-		//tier 3 candles - no effect and generally positive effect candles + wither
+		//tier 3 candles - no effect mixed colors candles and generally positive effect candles + wither candle
 		
 		//16
 		TIER_3_CANDLES_VARIANTS.add(BBBlocks.AMBER_CANDLE.get());

@@ -1,6 +1,7 @@
 package net.telepathicgrunt.bumblezone.modcompatibility;
 
 import net.minecraft.block.BlockState;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 
 /**
  * This class is used so java wont load BeesourcefulCompat class and crash
@@ -15,4 +16,10 @@ public class ProductiveBeesRedirection
 	{
 	    return ProductiveBeesCompat.PBIsAdvancedBeehiveAbstractBlock(block);
 	}
+	
+	public static void PBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event)
+	{
+	    ProductiveBeesCompat.PBMobSpawnEvent(event);
+	}
+	
 }
