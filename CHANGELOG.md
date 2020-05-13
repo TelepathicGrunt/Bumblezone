@@ -32,7 +32,7 @@ Mods I'm keeping an eye on for future compat
 
 -Productive Bees' bees will now spawn in The Bumblezone at a 1/15th chance and can spawn from the Honeycomb Brood Blocks too.
 
--Productive Bees' Honey Treat item has a 40% chance of removing Wrath of the Hive effect off of you when fed to bees unlike the Honey Bottle's 30% chance.
+-Productive Bees' Honey Treat item has a 40% chance of removing Wrath of the Hive effect off of you when fed to bees unlike the Honey Bottle's 30% chance. Will also heal bees a lot more too!
   
 ##### Blocks: 
 

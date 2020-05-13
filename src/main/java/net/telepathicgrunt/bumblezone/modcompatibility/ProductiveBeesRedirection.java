@@ -1,6 +1,7 @@
 package net.telepathicgrunt.bumblezone.modcompatibility;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.item.Item;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 
 /**
@@ -20,6 +21,11 @@ public class ProductiveBeesRedirection
 	public static void PBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event)
 	{
 	    ProductiveBeesCompat.PBMobSpawnEvent(event);
+	}
+
+	public static boolean PBIsHoneyTreatItem(Item heldItem)
+	{
+	   return ProductiveBeesCompat.PBIsHoneyTreatItem(heldItem);
 	}
 	
 }

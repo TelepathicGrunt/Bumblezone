@@ -6,10 +6,12 @@ import java.util.List;
 import cy.jdkdigital.productivebees.block.AdvancedBeehive;
 import cy.jdkdigital.productivebees.block.AdvancedBeehiveAbstract;
 import cy.jdkdigital.productivebees.block.ExpansionBox;
+import cy.jdkdigital.productivebees.init.ModItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
@@ -51,7 +53,9 @@ public class ProductiveBeesCompat {
 	return false;
     }
 
-    // 1/15th of bees spawning will also spawn Productive Bees' bees
+    /**
+     *  1/15th of bees spawning will also spawn Productive Bees' bees
+     */
     public static void PBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
 	
 	if(productiveBeesList.size() == 0) {
@@ -83,4 +87,13 @@ public class ProductiveBeesCompat {
 	
 	world.addEntity(productiveBeeEntity);
     }
+    
+    
+    /**
+     * Is passed in item a Honey Treat?
+     */
+    public static boolean PBIsHoneyTreatItem(Item heldItem) {
+	return heldItem == ModItems.HONEY_TREAT.get();
+    }
+	
 }

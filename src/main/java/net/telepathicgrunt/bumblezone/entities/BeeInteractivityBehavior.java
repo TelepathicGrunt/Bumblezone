@@ -19,6 +19,7 @@ import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
+import net.telepathicgrunt.bumblezone.modcompatibility.ProductiveBeesRedirection;
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BeeInteractivityBehavior {
@@ -118,7 +119,10 @@ public class BeeInteractivityBehavior {
 		else if (ModChecking.productiveBeesPresent) {
 
 		    //makes honey treat have high chance of removing wrath of the hive
-		    if (itemstack.getItem().getRegistryName().toString().equals("productivebees:honey_treat")) {
+		    if (ProductiveBeesRedirection.PBIsHoneyTreatItem(itemstack.getItem())) {
+			
+			// Heal bee a ton
+			beeEntity.addPotionEffect(new EffectInstance(Effects.INSTANT_HEALTH, 2, 1, false, false, false));
 			
 			// very high chance to remove wrath of the hive from player
 			boolean calmed = world.rand.nextFloat() < 0.4f;
@@ -133,7 +137,7 @@ public class BeeInteractivityBehavior {
 				    beeEntity.getPosX(),
 				    beeEntity.getPosY(), 
 				    beeEntity.getPosZ(), 
-				    3, 
+				    5, 
 				    world.rand.nextFloat() * 0.5 - 1f,
 				    world.rand.nextFloat() * 0.2f + 0.2f, 
 				    world.rand.nextFloat() * 0.5 - 1f,
