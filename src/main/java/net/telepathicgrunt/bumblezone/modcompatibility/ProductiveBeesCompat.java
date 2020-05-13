@@ -29,7 +29,7 @@ public class ProductiveBeesCompat {
 	for(EntityType<?> productiveBeeType : ForgeRegistries.ENTITIES) 
 	{
 	    if(productiveBeeType.getRegistryName().getNamespace().equals("productivebees") &&
-	       productiveBeeType.getRegistryName().getPath().equals("bee")) 
+	       productiveBeeType.getRegistryName().getPath().contains("bee")) 
 	    {
 		productiveBeesList.add(productiveBeeType);
 	    }

@@ -26,6 +26,14 @@ Mods I'm keeping an eye on for future compat
 
 -Config for Wrath of the Hive's effects it gives to bees now can be set to 0 which would mean the effect gets applied at effect level 1 in the game.
   
+##### Mod Compatibility:
+
+-Ender Pearls thrown at Productive Bees' nests and hive will now teleport you to The Bumblezone. The Expansion Box Blocks only teleports you to The Bumblezone if they are placed on their hive block and expanded their hive block.
+
+-Productive Bees' bees will now spawn in The Bumblezone at a 1/15th chance and can spawn from the Honeycomb Brood Blocks too.
+
+-Productive Bees' Honey Treat item has a 40% chance of removing Wrath of the Hive effect off of you when fed to bees unlike the Honey Bottle's 30% chance.
+  
 ##### Blocks: 
 
 -Fixed Sugar Water Block from spamming in the logs that its blockstate model isn't set up even though it had no impact visually or on gameplay.

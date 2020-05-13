@@ -83,7 +83,7 @@ public class BzBlocks
     );
     public static final RegistryObject<FlowingFluidBlock> SUGAR_WATER_BLOCK = BLOCKS.register("sugar_water_block", () ->
 	    new SugarWaterBlock(SUGAR_WATER_FLUID)
-	);
+    );
     
     public static final ForgeFlowingFluid.Properties SUGAR_WATER_FLUID_PROPERTIES =
             new ForgeFlowingFluid.Properties(SUGAR_WATER_FLUID, SUGAR_WATER_FLUID_FLOWING, FluidAttributes.Water.builder(FLUID_STILL, FLUID_FLOWING).overlay(FLUID_OVERLAY).viscosity(1500))
