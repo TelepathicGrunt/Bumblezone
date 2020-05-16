@@ -2,6 +2,7 @@ package net.telepathicgrunt.bumblezone.modcompatibility;
 
 import org.apache.logging.log4j.Level;
 
+import com.github.commoble.potionofbees.RegistryObjects;
 import com.github.commoble.potionofbees.ResourceLocations;
 import com.github.commoble.potionofbees.SplashPotionOfBeesEntity;
 
@@ -9,7 +10,12 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -68,6 +74,23 @@ public class PotionOfBeesCompat
 				}
 			}
 		}
+	}
+	
+	public static ActionResultType potionOfBeeInteract(ItemStack itemstack, BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand) {
+		if (itemstack.getItem() == RegistryObjects.POTION_OF_BEES_ITEM.getItem())
+		{
+			if (!playerEntity.isCrouching())
+			{
+				if(!playerEntity.isCreative())
+				{
+					playerEntity.setHeldItem(playerHand, new ItemStack(Items.GLASS_BOTTLE)); //replaced potion of bee with glass bottle
+				}
+				
+				return ActionResultType.SUCCESS;
+			}
+		}
+		
+		return ActionResultType.FAIL;
 	}
 	
 	private static void reviveLarvaBlock(World world, BlockState state, BlockPos position) {

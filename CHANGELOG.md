@@ -25,8 +25,14 @@ Mods I'm keeping an eye on for future compat
 -Clarified that the Wrath of the Hive bee effect level values in the config are one less than their actual level applied in game.
 
 -Config for Wrath of the Hive's effects it gives to bees now can be set to 0 which would mean the effect gets applied at effect level 1 in the game.
+
+-Added config to control if Buzzier Bee's Bottled Bee item can revive Empty Honeycomb Brood blocks.
   
+-Added config to control if Potion of Bees's Splash Potion of Bee item can revive Empty Honeycomb Brood blocks when splashed near it.
+
 ##### Mod Compatibility:
+
+-Potion of Bees's regular Potion of Bees item now can revive Empty Honeycomb Brood blocks. (added config for it too)
 
 -Ender Pearls thrown at Productive Bees' nests and hive will now teleport you to The Bumblezone. The Expansion Box Blocks only teleports you to The Bumblezone if they are placed on their hive block and expanded their hive block.
 

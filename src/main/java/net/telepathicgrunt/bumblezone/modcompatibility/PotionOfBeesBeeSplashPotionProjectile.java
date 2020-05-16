@@ -17,7 +17,7 @@ public class PotionOfBeesBeeSplashPotionProjectile
 		@SubscribeEvent
 		public static void ProjectileImpactEvent(net.minecraftforge.event.entity.ProjectileImpactEvent.Throwable event)
 		{
-			if(ModChecking.potionOfBeesPresent) 
+			if(ModChecking.potionOfBeesPresent && Bumblezone.BzConfig.allowPotionOfBeesCompat.get()) 
 			{
 				PotionOfBeesRedirection.POBReviveLarvaBlockEvent(event);
 			}

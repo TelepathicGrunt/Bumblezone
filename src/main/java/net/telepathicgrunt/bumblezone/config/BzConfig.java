@@ -32,6 +32,7 @@ public class BzConfig
 		//mod compatibility
 		public ConfigValueListener<Boolean> spawnHoneySlimeMob;
 		public ConfigValueListener<Boolean> allowHoneyWandCompat;
+		public ConfigValueListener<Boolean> allowBottledBeeCompat;
 		public ConfigValueListener<Boolean> hivePlanksWorldgen;
 		public ConfigValueListener<Boolean> waxBlocksWorldgen;
 		public ConfigValueListener<Boolean> crystallizedHoneyWorldgen;
@@ -47,6 +48,9 @@ public class BzConfig
 		public ConfigValueListener<Double> oreHoneycombSpawnRateBeeDungeon;
 		public ConfigValueListener<Integer> greatHoneycombRaritySpiderBeeDungeon;
 		public ConfigValueListener<Double> oreHoneycombSpawnRateSpiderBeeDungeon;
+
+		public ConfigValueListener<Boolean> allowPotionOfBeesCompat;
+		public ConfigValueListener<Boolean> allowSplashPotionOfBeesCompat;
 		
 		public ConfigValueListener<Boolean> spawnProductiveBeesBeesMob;
 		
@@ -285,34 +289,41 @@ public class BzConfig
 	
 	            builder.push("Buzzier Bees Options");
 	            
-		            spawnHoneySlimeMob = subscriber.subscribe(builder
-			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
-			                    		+" Spawn Buzzier Bees's Honey Slime mob instead of Vanilla Slime.\r\n")
-			                    .translation("the_bumblezone.config.modcompat.buzzierbees.spawnhoneyslimemob")
-			                    .define("spawnHoneySlimeMob", true));
+		            	spawnHoneySlimeMob = subscriber.subscribe(builder
+			            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+			                    	+" Spawn Buzzier Bees's Honey Slime mob instead of Vanilla Slime.\r\n")
+			            .translation("the_bumblezone.config.modcompat.buzzierbees.spawnhoneyslimemob")
+			            .define("spawnHoneySlimeMob", true));
 	
-		            allowHoneyWandCompat = subscriber.subscribe(builder
-			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
-			                    		+" Allow Honey Wand to take honey from Filled Porous Honeycomb Block \r\n"
-			                    		+" and put honey into Porous Honeycomb Block without angering bees.\r\n")
-			                    .translation("the_bumblezone.config.modcompat.buzzierbees.allowhoneywandcompat")
-			                    .define("allowHoneyWandCompat", true));
+		            	allowHoneyWandCompat = subscriber.subscribe(builder
+			            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+			                    	+" Allow Honey Wand to take honey from Filled Porous Honeycomb Block \r\n"
+			                    	+" and put honey into Porous Honeycomb Block without angering bees.\r\n")
+			            .translation("the_bumblezone.config.modcompat.buzzierbees.allowhoneywandcompat")
+			            .define("allowHoneyWandCompat", true));
+	
+		            	allowBottledBeeCompat = subscriber.subscribe(builder
+			            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+			                    	+" Allow Bottled Bee item to turn Empty Honeycomb Brood blocks back \r\n"
+			                    	+" into Honeycomb Brood Blocks with a larva in it.\r\n")
+			            .translation("the_bumblezone.config.modcompat.buzzierbees.allowbottledbeecompat")
+			            .define("allowBottledBeeCompat", true));
 		            
-		            hivePlanksWorldgen = subscriber.subscribe(builder
+		            	hivePlanksWorldgen = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Place Hive Planks blocks at the top and bottom of the dimension \r\n"
 		                    		+" so it is like the dimension is actually in a Bee Nest block.\r\n")
 		                    .translation("the_bumblezone.config.modcompat.buzzierbees.hiveplanksworldgen")
 		                    .define("hivePlanksWorldgen", true));
 		            
-		            waxBlocksWorldgen = subscriber.subscribe(builder
+		            	waxBlocksWorldgen = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Place Buzzier Bees's Wax Blocks on the surface of land /r/n"
 		                    		+" around sea level and below too.\r\n")
 		                    .translation("the_bumblezone.config.modcompat.buzzierbees.waxblocksworldgen")
 		                    .define("waxBlocksWorldgen", true));
 		            
-		            crystallizedHoneyWorldgen = subscriber.subscribe(builder
+		            	crystallizedHoneyWorldgen = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Place Buzzier Bees's Crystallized Honey Blocks on the /r/n"
 		                    		+" surface of land around sea level and above.\r\n")
@@ -415,6 +426,26 @@ public class BzConfig
 		                    		+" bees at a 1/15th chance when spawning regular bees.\r\n")
 		                    .translation("the_bumblezone.config.modcompat.productivebees.spawnproductivebeesbeesmob")
 		                    .define("spawnProductiveBeesBeesMob", true));
+        
+	            builder.pop();
+	            
+	            
+	            builder.push("Potion of Bees Options");
+
+	            		allowPotionOfBeesCompat = subscriber.subscribe(builder
+		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		                    		+" Allow Potion of Bees item to turn Empty Honeycomb Brood blocks \r\n"
+			                    	+" back into Honeycomb Brood Blocks with a larva in it.\r\n")
+		                    .translation("the_bumblezone.config.modcompat.potionofbees.allowpotionofbeescompat")
+		                    .define("allowPotionOfBeesCompat", true));
+	            		
+	            		spawnProductiveBeesBeesMob = subscriber.subscribe(builder
+			            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+			                    	+" Allow Splash Potion of Bees item to turn Empty Honeycomb Brood \r\n"
+				                +" blocks back into Honeycomb Brood Blocks with a larva in it when \r\n"
+				                +" the potion is thrown and splashed near the block.\r\n")
+			            .translation("the_bumblezone.config.modcompat.productivebees.spawnproductivebeesbeesmob")
+			            .define("spawnProductiveBeesBeesMob", true));
         
 	            builder.pop();
 	            

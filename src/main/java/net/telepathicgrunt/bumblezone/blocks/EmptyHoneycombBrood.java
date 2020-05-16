@@ -74,7 +74,22 @@ public class EmptyHoneycombBrood extends DirectionalBlock
 		/*
 		 * Buzzier Bees honey wand compat
 		 */
-		if (ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowHoneyWandCompat.get())
+		if (ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowBottledBeeCompat.get())
+		{
+			/*
+			 * Player is trying to revive the block
+			 */
+			ActionResultType action = BuzzierBeesRedirection.bottledBeeInteract(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+			if (action == ActionResultType.SUCCESS)
+			{
+				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+				world.setBlockState(position, BzBlocks.HONEYCOMB_LARVA.get().getDefaultState().with(HoneycombBrood.STAGE, Integer.valueOf(0)));
+
+				return action;
+			}
+		}
+
+		if (ModChecking.potionOfBeesPresent && Bumblezone.BzConfig.allowPotionOfBeesCompat.get())
 		{
 			/*
 			 * Player is trying to revive the block
