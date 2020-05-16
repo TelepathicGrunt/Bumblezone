@@ -69,8 +69,7 @@ public class EmptyHoneycombBrood extends DirectionalBlock
 		ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
 		//MOD COMPAT
-
-		//TODO:add support for Potion of Bees being used on this block.
+		
 		/*
 		 * Buzzier Bees honey wand compat
 		 */
@@ -89,6 +88,9 @@ public class EmptyHoneycombBrood extends DirectionalBlock
 			}
 		}
 
+		/*
+		 * Potion of Bees's regular Potion of Bees item compat
+		 */
 		if (ModChecking.potionOfBeesPresent && Bumblezone.BzConfig.allowPotionOfBeesCompat.get())
 		{
 			/*
