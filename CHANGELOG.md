@@ -32,7 +32,7 @@ Mods I'm keeping an eye on for future compat
 
 ##### Mod Compatibility:
 
--Potion of Bees's regular Potion of Bees item now can revive Empty Honeycomb Brood blocks. (added config for it too)
+-Fixed bug where using Buzzier Bees's Bottled Bee item to revive Empty Honeycomb Brood block will make the block face the wrong way.
 
 -Ender Pearls thrown at Productive Bees' nests and hive will now teleport you to The Bumblezone. The Expansion Box Blocks only teleports you to The Bumblezone if they are placed on their hive block and expanded their hive block.
 

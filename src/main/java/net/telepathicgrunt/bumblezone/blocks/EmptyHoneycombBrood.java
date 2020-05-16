@@ -82,25 +82,9 @@ public class EmptyHoneycombBrood extends DirectionalBlock
 			if (action == ActionResultType.SUCCESS)
 			{
 				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-				world.setBlockState(position, BzBlocks.HONEYCOMB_LARVA.get().getDefaultState().with(HoneycombBrood.STAGE, Integer.valueOf(0)));
-
-				return action;
-			}
-		}
-
-		/*
-		 * Potion of Bees's regular Potion of Bees item compat
-		 */
-		if (ModChecking.potionOfBeesPresent && Bumblezone.BzConfig.allowPotionOfBeesCompat.get())
-		{
-			/*
-			 * Player is trying to revive the block
-			 */
-			ActionResultType action = BuzzierBeesRedirection.bottledBeeInteract(itemstack, thisBlockState, world, position, playerEntity, playerHand);
-			if (action == ActionResultType.SUCCESS)
-			{
-				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-				world.setBlockState(position, BzBlocks.HONEYCOMB_LARVA.get().getDefaultState().with(HoneycombBrood.STAGE, Integer.valueOf(0)));
+				world.setBlockState(position, BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
+					.with(HoneycombBrood.STAGE, Integer.valueOf(0))
+					.with(DirectionalBlock.FACING, thisBlockState.get(DirectionalBlock.FACING)));
 
 				return action;
 			}
