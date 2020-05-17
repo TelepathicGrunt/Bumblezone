@@ -1,6 +1,5 @@
 package net.telepathicgrunt.bumblezone.features;
 
-import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -40,7 +39,6 @@ import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
@@ -112,6 +110,7 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 	/**
 	 * Adds blocks and entities from this structure to the given world.
 	 */
+	@SuppressWarnings("deprecation")
 	private static boolean addBlocksToWorld(Template template, IWorld world, BlockPos pos, PlacementSettings placementIn, int flags)
 	{
 		if (template.blocks.isEmpty())
@@ -282,33 +281,12 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 				
 				if (!placementIn.getIgnoreEntities())
 				{
-					Method addEntitiesToWorldReflect = ObfuscationReflectionHelper.findMethod(
-							Template.class, 
-							"func_207668_a", 
-							IWorld.class,
-							BlockPos.class, 
-							PlacementSettings.class,
-							Mirror.class,
-							Rotation.class,
-							BlockPos.class,
-							MutableBoundingBox.class);
-					
-					try
-					{
-						addEntitiesToWorldReflect.invoke(
-								template, 
-								world, 
+				    template.addEntitiesToWorld(world, 
 								pos,
-								placementIn, 
 								placementIn.getMirror(), 
 								placementIn.getRotation(), 
 								placementIn.getCenterOffset(), 
 								placementIn.getBoundingBox());
-					}
-					catch (Exception e)
-					{
-						e.printStackTrace();
-					}
 				}
 
 				return true;

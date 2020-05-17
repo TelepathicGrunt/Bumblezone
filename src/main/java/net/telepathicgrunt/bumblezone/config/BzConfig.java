@@ -167,9 +167,9 @@ public class BzConfig
     			spiderInfestedBeeDungeonRarity = subscriber.subscribe(builder
     		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
     		            		+" How rare Spider Infested Bee Dungeons are. Higher numbers means more rare.\r\n"
-    		            		+" Default rate is 5. Setting to 1001 will disable Bee Dungeons.\r\n")
+    		            		+" Default rate is 8. Setting to 1001 will disable Bee Dungeons.\r\n")
     		            .translation("the_bumblezone.config.dungeons.spiderinfestedbeedungeonrarity")
-    		            .defineInRange("spiderInfestedBeeDungeonRarity", 5, 1, 1001));
+    		            .defineInRange("spiderInfestedBeeDungeonRarity", 8, 1, 1001));
 
 	    		spawnerRateSpiderBeeDungeon = subscriber.subscribe(builder
     		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
@@ -177,6 +177,7 @@ public class BzConfig
     		            		+" 0 is no spawners, 1 is max spawner, and default is 0.3D\r\n")
     		            .translation("the_bumblezone.config.dungeons.spawnerratespiderbeedungeon")
     		            .defineInRange("spawnerRateSpiderBeeDungeon", 0.3D, 0D, 1D));
+	    		
 	        builder.pop();
 	        
 	        builder.push("Wrath of the Hive Options");
