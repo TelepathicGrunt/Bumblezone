@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "the_bumblezone:block/sticky_honey_redstone_unlit"
+    }
+}

@@ -5,7 +5,7 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.dimension.BzDimension;
+import net.telepathicgrunt.bumblezone.dimension.BzDimensionRegistration;
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BuzzierBeesHoneySlimeSpawning
@@ -24,7 +24,7 @@ public class BuzzierBeesHoneySlimeSpawning
 			{
 				MobEntity entity = (MobEntity)event.getEntity();
 				if(Bumblezone.BzConfig.spawnHoneySlimeMob.get() && 
-					entity.dimension == BzDimension.bumblezone() && 
+					entity.dimension == BzDimensionRegistration.bumblezone() && 
 					entity.world.getRandom().nextInt(10) == 0) 
 				{
 					BuzzierBeesRedirection.BBMobSpawnEvent(event);

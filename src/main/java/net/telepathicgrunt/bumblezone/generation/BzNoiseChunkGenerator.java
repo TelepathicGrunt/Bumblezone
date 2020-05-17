@@ -189,7 +189,7 @@ public abstract class BzNoiseChunkGenerator<T extends GenerationSettings> extend
 	 * by calling the biome's surface builder for each position in the chunk
 	 */
 	@Override
-	public void func_225551_a_(WorldGenRegion region, IChunk chunk) {
+	public void generateSurface(WorldGenRegion region, IChunk chunk) {
 		ChunkPos chunkpos = chunk.getPos();
 		int i = chunkpos.x;
 		int j = chunkpos.z;

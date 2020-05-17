@@ -1,11 +1,14 @@
 package net.telepathicgrunt.bumblezone.modcompatibility;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import com.bagel.buzzierbees.core.registry.BBBlocks;
 import com.bagel.buzzierbees.core.registry.BBEntities;
 import com.bagel.buzzierbees.core.registry.BBItems;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
@@ -21,6 +24,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -28,6 +32,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
@@ -35,6 +41,9 @@ import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 public class BuzzierBeesCompat
 {
 	private static final DefaultDispenseItemBehavior BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM = new BuzzierBeeBottledBeeDispenseBehavior();
+	private static List<Block> TIER_1_CANDLES_VARIANTS;
+	private static List<Block> TIER_2_CANDLES_VARIANTS;
+	private static List<Block> TIER_3_CANDLES_VARIANTS;
 	
 	public static void setupBuzzierBees() 
 	{
@@ -44,6 +53,122 @@ public class BuzzierBeesCompat
 			BzChunkGenerator.MOBS_SLIME_ENTRY = new Biome.SpawnListEntry(BBEntities.HONEY_SLIME.get(), 1, 1, 1);
 		
 		DispenserBlock.registerDispenseBehavior(BBItems.BOTTLE_OF_BEE.get(), BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); //adds compatibility with honey bottles in dispensers
+
+		TIER_1_CANDLES_VARIANTS = new ArrayList<Block>();
+		TIER_2_CANDLES_VARIANTS = new ArrayList<Block>();
+		TIER_3_CANDLES_VARIANTS = new ArrayList<Block>();
+		
+		//tier 1 candles  - no effects basic colors candles
+		
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.CANDLE.get());
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.WHITE_CANDLE.get());
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.ORANGE_CANDLE.get());
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.MAGENTA_CANDLE.get());
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.LIGHT_BLUE_CANDLE.get());
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.YELLOW_CANDLE.get());
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.LIME_CANDLE.get());
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.PINK_CANDLE.get());
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.GRAY_CANDLE.get());
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.LIGHT_GRAY_CANDLE.get());
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.CYAN_CANDLE.get());
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.PURPLE_CANDLE.get());
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.BLUE_CANDLE.get());
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.BROWN_CANDLE.get());
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.GREEN_CANDLE.get());
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.RED_CANDLE.get());
+		TIER_1_CANDLES_VARIANTS.add(BBBlocks.BLACK_CANDLE.get());
+			
+		//tier 2 candles - no effects mixed colors candles plus generally negative effect candles
+		
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.AMBER_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.BEIGE_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.CREAM_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.DARK_GREEN_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.FOREST_GREEN_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.HOT_PINK_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.INDIGO_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.MAROON_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.NAVY_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.OLIVE_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.PALE_GREEN_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.PALE_PINK_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.PALE_YELLOW_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.SKY_BLUE_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.SLATE_GRAY_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.VIOLET_CANDLE.get());
+		
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.COLUMBINE_SCENTED_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.WHITE_CLOVER_SCENTED_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.PINK_CLOVER_SCENTED_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.WHITE_TULIP_SCENTED_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.ORANGE_TULIP_SCENTED_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.PINK_TULIP_SCENTED_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.RED_TULIP_SCENTED_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.AZURE_BLUET_SCENTED_CANDLE.get());
+		TIER_2_CANDLES_VARIANTS.add(BBBlocks.LILY_OF_THE_VALLEY_SCENTED_CANDLE.get());
+
+		//this one will be added in future versions of buzzier bees (post v1.4)
+		//This lets us get that future candle when it is added but not crash people on v1.4
+		if(ModList.get().isLoaded("autumnity") && ForgeRegistries.BLOCKS.containsKey(new ResourceLocation("buzzierbees:autumn_crocus_scented_candle"))) {
+			TIER_2_CANDLES_VARIANTS.add(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("buzzierbees:autumn_crocus_scented_candle")));
+		}
+		
+		//tier 3 candles - no effect mixed colors candles and generally positive effect candles + wither candle
+		
+		//16
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.AMBER_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.BEIGE_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.CREAM_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.DARK_GREEN_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.FOREST_GREEN_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.HOT_PINK_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.INDIGO_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.MAROON_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.NAVY_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.OLIVE_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.PALE_GREEN_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.PALE_PINK_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.PALE_YELLOW_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.SKY_BLUE_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.SLATE_GRAY_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.VIOLET_CANDLE.get());
+
+		//6
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.YELLOW_HIBISCUS_SCENTED_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.ORANGE_HIBISCUS_SCENTED_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.RED_HIBISCUS_SCENTED_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.PINK_HIBISCUS_SCENTED_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.MAGENTA_HIBISCUS_SCENTED_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.PURPLE_HIBISCUS_SCENTED_CANDLE.get());
+		
+		//9
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.BLUE_ORCHID_SCENTED_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.DANDELION_SCENTED_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.CORNFLOWER_SCENTED_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.CARTWHEEL_SCENTED_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.POPPY_SCENTED_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.OXEYE_DAISY_SCENTED_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.DIANTHUS_SCENTED_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.BLUEBELL_SCENTED_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.VIOLET_SCENTED_CANDLE.get());
+
+		//9
+		if(ModList.get().isLoaded("atmospheric")) {
+			TIER_3_CANDLES_VARIANTS.add(BBBlocks.WARM_MONKEY_BRUSH_SCENTED_CANDLE.get());
+			TIER_3_CANDLES_VARIANTS.add(BBBlocks.HOT_MONKEY_BRUSH_SCENTED_CANDLE.get());
+			TIER_3_CANDLES_VARIANTS.add(BBBlocks.SCALDING_MONKEY_BRUSH_SCENTED_CANDLE.get());
+			TIER_3_CANDLES_VARIANTS.add(BBBlocks.GILIA_SCENTED_CANDLE.get());
+			TIER_3_CANDLES_VARIANTS.add(BBBlocks.YUCCA_FLOWER_SCENTED_CANDLE.get());
+		}
+
+		if(ModList.get().isLoaded("upgrade_aquatic")) {
+			TIER_3_CANDLES_VARIANTS.add(BBBlocks.PINK_SEAROCKET_SCENTED_CANDLE.get());
+			TIER_3_CANDLES_VARIANTS.add(BBBlocks.WHITE_SEAROCKET_SCENTED_CANDLE.get());
+		}
+
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.ALLIUM_SCENTED_CANDLE.get());
+		TIER_3_CANDLES_VARIANTS.add(BBBlocks.WITHER_ROSE_SCENTED_CANDLE.get());
+		
 	}
 	
 	//1/10th of bees spawning will also spawn honey slime
@@ -240,5 +365,53 @@ public class BuzzierBeesCompat
 		}
 		
 		return ActionResultType.FAIL;
+	}
+
+	
+	/**
+	 * Picks a random BuzzierBees candle with lower indices list being more common
+	 */
+	public static Block BBGetRandomTier1Candle(Random random)
+	{
+		int index = random.nextInt(TIER_1_CANDLES_VARIANTS.size());
+		return TIER_1_CANDLES_VARIANTS.get(index);
+	}
+	
+	/**
+	 * Picks a random BuzzierBees scented candle with lower indices list being more common
+	 */
+	public static Block BBGetRandomTier2Candle(Random random, int lowerEndBias)
+	{
+		int index = TIER_2_CANDLES_VARIANTS.size()-1;
+		
+		for(int i = 0; i < lowerEndBias && index != 0; i++) {
+			index = random.nextInt(index+1);
+		}
+		
+		return TIER_2_CANDLES_VARIANTS.get(index);
+	}
+	
+	/**
+	 * Picks a random BuzzierBees scented candle with lower indices list being more common
+	 * lowerEndBias cannot be 0 or negative. usually 2
+	 */
+	public static Block BBGetRandomTier3Candle(Random random, int lowerEndBias)
+	{
+		int index = random.nextInt(TIER_3_CANDLES_VARIANTS.size());
+		
+		if(index >= 31 && random.nextInt(lowerEndBias + 2) != 0) {
+			index = random.nextInt(index); //reroll to a lower subtier
+		}
+
+		if(index >= 22 && random.nextInt(lowerEndBias + 1) != 0) {
+			index = random.nextInt(index); //reroll to a lower subtier
+		}
+
+		if(index >= 16 && random.nextInt(lowerEndBias) != 0) {
+			index = random.nextInt(index); //reroll to a lower subtier
+		}
+		
+		
+		return TIER_3_CANDLES_VARIANTS.get(index);
 	}
 }

@@ -17,7 +17,7 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent.Throwable;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
-import net.telepathicgrunt.bumblezone.blocks.HoneycombLarvaBlock;
+import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 
 public class PotionOfBeesCompat
 {
@@ -69,11 +69,11 @@ public class PotionOfBeesCompat
 			}
 		}
 	}
-	
+
 	private static void reviveLarvaBlock(World world, BlockState state, BlockPos position) {
 		world.setBlockState(position, 
 				BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
 				.with(BlockStateProperties.FACING, state.get(BlockStateProperties.FACING))
-				.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(world.rand.nextInt(3))));
+				.with(HoneycombBrood.STAGE, Integer.valueOf(world.rand.nextInt(3))));
 	}
 }

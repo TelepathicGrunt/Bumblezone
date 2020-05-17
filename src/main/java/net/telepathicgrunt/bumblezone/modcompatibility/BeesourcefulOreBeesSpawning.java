@@ -1,11 +1,12 @@
 package net.telepathicgrunt.bumblezone.modcompatibility;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.dimension.BzDimension;
+import net.telepathicgrunt.bumblezone.dimension.BzDimensionRegistration;
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BeesourcefulOreBeesSpawning
@@ -24,8 +25,9 @@ public class BeesourcefulOreBeesSpawning
 			{
 				MobEntity entity = (MobEntity)event.getEntity();
 				if(Bumblezone.BzConfig.spawnBeesourcefulBeesMob.get() && 
-					entity.dimension == BzDimension.bumblezone() && 
-					entity.world.getRandom().nextInt(15) == 0) 
+					entity.dimension == BzDimensionRegistration.bumblezone() && 
+					entity.world.getRandom().nextInt(15) == 0 &&
+					entity.getType() == EntityType.BEE) 
 				{
 					BeesourcefulRedirection.BSMobSpawnEvent(event);
 				}

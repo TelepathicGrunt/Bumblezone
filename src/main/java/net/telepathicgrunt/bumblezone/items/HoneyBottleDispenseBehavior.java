@@ -14,7 +14,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
-import net.telepathicgrunt.bumblezone.blocks.HoneycombLarvaBlock;
+import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 
 
 public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior
@@ -32,12 +32,12 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior
 		if (blockstate.getBlock() == BzBlocks.HONEYCOMB_LARVA.get())
 		{
 			//spawn bee if at final stage and front isn't blocked off
-			int stage = blockstate.get(HoneycombLarvaBlock.STAGE);
+			int stage = blockstate.get(HoneycombBrood.STAGE);
 			if (stage == 3)
 			{
 				//the front of the block
 				BlockPos.Mutable blockpos = new BlockPos.Mutable(position);
-				blockpos.move(blockstate.get(HoneycombLarvaBlock.FACING).getOpposite());
+				blockpos.move(blockstate.get(HoneycombBrood.FACING).getOpposite());
 
 				//do nothing if front is blocked off
 				if (!world.getBlockState(blockpos).getMaterial().isSolid())
@@ -51,12 +51,12 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior
 						world.addEntity(beeEntity);
 					}
 
-					world.setBlockState(position, blockstate.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(0)));
+					world.setBlockState(position, blockstate.with(HoneycombBrood.STAGE, Integer.valueOf(0)));
 				}
 			}
 			else
 			{
-				world.setBlockState(position, blockstate.with(HoneycombLarvaBlock.STAGE, Integer.valueOf(stage + 1)));
+				world.setBlockState(position, blockstate.with(HoneycombBrood.STAGE, Integer.valueOf(stage + 1)));
 			}
 
 			stack.shrink(1);

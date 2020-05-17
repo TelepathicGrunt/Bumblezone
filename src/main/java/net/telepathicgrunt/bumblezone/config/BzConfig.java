@@ -32,11 +32,32 @@ public class BzConfig
 		//mod compatibility
 		public ConfigValueListener<Boolean> spawnHoneySlimeMob;
 		public ConfigValueListener<Boolean> allowHoneyWandCompat;
+		public ConfigValueListener<Boolean> allowBottledBeeCompat;
 		public ConfigValueListener<Boolean> hivePlanksWorldgen;
 		public ConfigValueListener<Boolean> waxBlocksWorldgen;
 		public ConfigValueListener<Boolean> crystallizedHoneyWorldgen;
+		public ConfigValueListener<Boolean> allowRegularCandlesBeeDungeon;
+		public ConfigValueListener<Boolean> allowScentedCandlesBeeDungeon;
+		public ConfigValueListener<Boolean> allowScentedCandlesSpiderBeeDungeon;
+		public ConfigValueListener<Integer> powerfulCandlesRarityBeeDungeon;
+		public ConfigValueListener<Integer> powerfulCandlesRaritySpiderBeeDungeon;
+		
 		public ConfigValueListener<Boolean> spawnBeesourcefulBeesMob;
 		public ConfigValueListener<Boolean> spawnBesourcefulHoneycombVariants;
+		public ConfigValueListener<Integer> greatHoneycombRarityBeeDungeon;
+		public ConfigValueListener<Double> oreHoneycombSpawnRateBeeDungeon;
+		public ConfigValueListener<Integer> greatHoneycombRaritySpiderBeeDungeon;
+		public ConfigValueListener<Double> oreHoneycombSpawnRateSpiderBeeDungeon;
+
+		public ConfigValueListener<Boolean> allowPotionOfBeesCompat;
+		public ConfigValueListener<Boolean> allowSplashPotionOfBeesCompat;
+		
+		public ConfigValueListener<Boolean> spawnProductiveBeesBeesMob;
+		
+		//dungeons
+		public ConfigValueListener<Integer> beeDungeonRarity;
+		public ConfigValueListener<Integer> spiderInfestedBeeDungeonRarity;
+		public ConfigValueListener<Double> spawnerRateSpiderBeeDungeon;
 
 		public BzConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber)
 		{
@@ -134,6 +155,31 @@ public class BzConfig
 	            
 	        builder.pop();
 	        
+            builder.push("Dungeon Options");
+
+    			beeDungeonRarity = subscriber.subscribe(builder
+		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		            		+" How rare Bee Dungeons are. Higher numbers means more rare.\r\n"
+		            		+" Default rate is 1. Setting to 1001 will disable Bee Dungeons.\r\n")
+		            .translation("the_bumblezone.config.dungeons.beedungeonrarity")
+		            .defineInRange("beeDungeonRarity", 1, 1, 1001));
+		
+    			spiderInfestedBeeDungeonRarity = subscriber.subscribe(builder
+    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+    		            		+" How rare Spider Infested Bee Dungeons are. Higher numbers means more rare.\r\n"
+    		            		+" Default rate is 8. Setting to 1001 will disable Bee Dungeons.\r\n")
+    		            .translation("the_bumblezone.config.dungeons.spiderinfestedbeedungeonrarity")
+    		            .defineInRange("spiderInfestedBeeDungeonRarity", 8, 1, 1001));
+
+	    		spawnerRateSpiderBeeDungeon = subscriber.subscribe(builder
+    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+    		            		+" How rare are Spider/Cave Spider Spawners in Spider Infested Bee Dungeons.\r\n"
+    		            		+" 0 is no spawners, 1 is max spawner, and default is 0.2D\r\n")
+    		            .translation("the_bumblezone.config.dungeons.spawnerratespiderbeedungeon")
+    		            .defineInRange("spawnerRateSpiderBeeDungeon", 0.2D, 0D, 1D));
+	    		
+	        builder.pop();
+	        
 	        builder.push("Wrath of the Hive Options");
 	
 	        	builder.push("Bees Aggression Options");
@@ -202,9 +248,11 @@ public class BzConfig
 		                    		+" You will see this a lot when bees are about to attack\r\n"
 		                    		+" you, they tend to touch the floor and the speed boost\r\n"
 		                    		+" makes them dash forward at you. Set this to higher for\r\n"
-		                    		+" faster dash attacks from bees.\r\n")
+		                    		+" faster dash attacks from bees.\r\n"
+		                    		+" \r\n"
+		                    		+" NOTE: The actual level of the effect is 1 more than the value set here.\r\n")
 		                    .translation("the_bumblezone.config.bees.speedboostlevel")
-		                    .defineInRange("speedBoostLevel", 1, 1, Integer.MAX_VALUE));
+		                    .defineInRange("speedBoostLevel", 1, 0, Integer.MAX_VALUE));
 		            
 		            
 		            absorptionBoostLevel = subscriber.subscribe(builder
@@ -213,21 +261,25 @@ public class BzConfig
 		                    		+" This means you need to deal more damage than the extra health gives\r\n"
 		                    		+" order to actually damage the bee's real health bar.\r\n"
 		                    		+" \r\n"
-		                    		+" For example, Absorpton 1 here makes bees get 4 extra padding of hearts.\r\n"
-		                    		+" Your attacks need to deal 4 1/2 or more damage to actuall be able to\r\n"
+		                    		+" NOTE: The actual level of the effect is 1 more than the value set here.\r\n"
+		                    		+" \r\n"
+		                    		+" For example, Absorpton 2 here makes bees get 4 extra padding of hearts.\r\n"
+		                    		+" Your attacks need to deal 4 1/2 or more damage to actually be able to\r\n"
 		                    		+" kill the bee. This means using Bane of Arthropod 5 is needed to kill bees\r\n"
 		                    		+" if you set the absorption to a higher value like 2 or 3.\r\n"
 		                    		+" If you set this to like 5 or something, bees may be invicible! Game over.\r\n")
 		                    .translation("the_bumblezone.config.bees.absorptionboostlevel")
-		                    .defineInRange("absorptionBoostLevel", 1, 1, Integer.MAX_VALUE));
+		                    .defineInRange("absorptionBoostLevel", 1, 0, Integer.MAX_VALUE));
 		            
 		            
 		            strengthBoostLevel = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" How strong the bees attacks become. \r\n"
-		                    		+" (5 or higher will instant kill you without armor).\r\n")
+		                    		+" (5 or higher will instant kill you without armor).\r\n"
+		                    		+" \r\n"
+		                    		+" NOTE: The actual level of the effect is 1 more than the value set here.\r\n")
 		                    .translation("the_bumblezone.config.bees.strengthboostlevel")
-		                    .defineInRange("strengthBoostLevel", 3, 1, Integer.MAX_VALUE));
+		                    .defineInRange("strengthBoostLevel", 3, 0, Integer.MAX_VALUE));
 	
 	            builder.pop();
 	        
@@ -238,53 +290,95 @@ public class BzConfig
 	
 	            builder.push("Buzzier Bees Options");
 	            
-		            spawnHoneySlimeMob = subscriber.subscribe(builder
-			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
-			                    		+" Spawn Buzzier Bees's Honey Slime mob instead of Vanilla Slime.\r\n")
-			                    .translation("the_bumblezone.config.modcompat.buzzierbees.spawnhoneyslimemob")
-			                    .define("spawnHoneySlimeMob", true));
+		            	spawnHoneySlimeMob = subscriber.subscribe(builder
+			            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+			                    	+" Spawn Buzzier Bees's Honey Slime mob instead of Vanilla Slime.\r\n")
+			            .translation("the_bumblezone.config.modcompat.buzzierbees.spawnhoneyslimemob")
+			            .define("spawnHoneySlimeMob", true));
 	
-		            allowHoneyWandCompat = subscriber.subscribe(builder
-			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
-			                    		+" Allow Honey Wand to take honey from Filled Porous Honeycomb Block \r\n"
-			                    		+" and put honey into Porous Honeycomb Block without angering bees.\r\n")
-			                    .translation("the_bumblezone.config.modcompat.buzzierbees.allowhoneywandcompat")
-			                    .define("allowHoneyWandCompat", true));
+		            	allowHoneyWandCompat = subscriber.subscribe(builder
+			            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+			                    	+" Allow Honey Wand to take honey from Filled Porous Honeycomb Block \r\n"
+			                    	+" and put honey into Porous Honeycomb Block without angering bees.\r\n")
+			            .translation("the_bumblezone.config.modcompat.buzzierbees.allowhoneywandcompat")
+			            .define("allowHoneyWandCompat", true));
+	
+		            	allowBottledBeeCompat = subscriber.subscribe(builder
+			            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+			                    	+" Allow Bottled Bee item to turn Empty Honeycomb Brood blocks back \r\n"
+			                    	+" into Honeycomb Brood Blocks with a larva in it.\r\n")
+			            .translation("the_bumblezone.config.modcompat.buzzierbees.allowbottledbeecompat")
+			            .define("allowBottledBeeCompat", true));
 		            
-		            hivePlanksWorldgen = subscriber.subscribe(builder
+		            	hivePlanksWorldgen = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Place Hive Planks blocks at the top and bottom of the dimension \r\n"
 		                    		+" so it is like the dimension is actually in a Bee Nest block.\r\n")
 		                    .translation("the_bumblezone.config.modcompat.buzzierbees.hiveplanksworldgen")
 		                    .define("hivePlanksWorldgen", true));
 		            
-		            waxBlocksWorldgen = subscriber.subscribe(builder
+		            	waxBlocksWorldgen = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Place Buzzier Bees's Wax Blocks on the surface of land /r/n"
 		                    		+" around sea level and below too.\r\n")
 		                    .translation("the_bumblezone.config.modcompat.buzzierbees.waxblocksworldgen")
 		                    .define("waxBlocksWorldgen", true));
 		            
-		            crystallizedHoneyWorldgen = subscriber.subscribe(builder
+		            	crystallizedHoneyWorldgen = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Place Buzzier Bees's Crystallized Honey Blocks on the /r/n"
 		                    		+" surface of land around sea level and above.\r\n")
 		                    .translation("the_bumblezone.config.modcompat.buzzierbees.crystallizedhoneyworldgen")
 		                    .define("crystallizedHoneyWorldgen", true));
-		            
+
+
+		    		allowRegularCandlesBeeDungeon = subscriber.subscribe(builder
+		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		                    		+" Allow Bee Dungeons to have normal unscented candles./r/n")
+		                    .translation("the_bumblezone.config.modcompat.buzzierbees.allowregularcandlesbeedungeon")
+		                    .define("allowRegularCandlesBeeDungeon", true));
+
+		    		allowScentedCandlesBeeDungeon = subscriber.subscribe(builder
+		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		                    		+" Allow Bee Dungeons to have scented candles that gives status effects./r/n")
+		                    .translation("the_bumblezone.config.modcompat.buzzierbees.allowscentedcandlesbeedungeon")
+		                    .define("allowScentedCandlesBeeDungeon", true));
+
+		    		allowScentedCandlesSpiderBeeDungeon = subscriber.subscribe(builder
+		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		                    		+" Allow Spider Infested Bee Dungeons to have scented candles that gives status effects./r/n")
+		                    .translation("the_bumblezone.config.modcompat.buzzierbees.allowscentedcandlesspiderbeedungeon")
+		                    .define("allowScentedCandlesSpiderBeeDungeon", true));
+		    		
+		    		powerfulCandlesRarityBeeDungeon = subscriber.subscribe(builder
+	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	    		            		+" How rare are powerful candles in Bee Dungeons. \r\n"
+	    		            		+" Higher numbers means more rare.\r\n"
+	    		            		+" Default rate is 2.\r\n")
+	    		            .translation("the_bumblezone.config.dungeons.powerfulcandlesraritybeedungeon")
+	    		            .defineInRange("powerfulCandlesRarityBeeDungeon", 2, 0, 10));
+		    		
+		    		powerfulCandlesRaritySpiderBeeDungeon = subscriber.subscribe(builder
+	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	    		            		+" How rare are powerful candles in Spider Infested Bee Dungeons. \r\n"
+	    		            		+" Higher numbers means more rare.\r\n"
+	    		            		+" Default rate is 2.\r\n")
+	    		            .translation("the_bumblezone.config.dungeons.powerfulcandlesrarityspiderbeedungeon")
+	    		            .defineInRange("powerfulCandlesRaritySpiderBeeDungeon", 0, 0, 10));
+		    		
 	            builder.pop();
 	            
 
 	            builder.push("Beesourceful Options");
 	            
-	            	spawnBeesourcefulBeesMob = subscriber.subscribe(builder
+	            		spawnBeesourcefulBeesMob = subscriber.subscribe(builder
 			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 			                    		+" Spawn Beesourceful's ore and ender bees in The Bumblezone alongside\r\n"
 			                    		+" regular bees at a 1/15th chance when spawning regular bees.\r\n")
 			                    .translation("the_bumblezone.config.modcompat.beesourceful.spawnbeesourcefulbeesmob")
 			                    .define("spawnBeesourcefulBeesMob", true));
 	            
-	            	spawnBesourcefulHoneycombVariants = subscriber.subscribe(builder
+	            		spawnBesourcefulHoneycombVariants = subscriber.subscribe(builder
 			                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 			                    		+" Spawn Beesourceful's various honeycomb variants in The Bumblezone\r\n"
 			                    		+" at all kinds of heights and height bands. Start exploring to find \r\n"
@@ -294,6 +388,66 @@ public class BzConfig
 			                    .translation("the_bumblezone.config.modcompat.beesourceful.spawnbesourcefulhoneycombvariants")
 			                    .define("spawnBesourcefulHoneycombVariants", true));
 
+	        		oreHoneycombSpawnRateBeeDungeon = subscriber.subscribe(builder
+	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	    		            		+" How much of Bee Dungeons is made of ore-based honeycombs.\r\n"
+	    		            		+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.3D\r\n")
+	    		            .translation("the_bumblezone.config.beesourceful.orehoneycombspawnratebeedungeon")
+	    		            .defineInRange("oreHoneycombSpawnRateBeeDungeon", 0.3D, 0D, 1D));
+		    		
+	        		greatHoneycombRarityBeeDungeon = subscriber.subscribe(builder
+	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	    		            		+" How rare good ore-based Honeycombs (diamonds, ender, emerald, etc) are \r\n"
+	    		            		+" in Bee Dungeons. \r\n"
+	    		            		+" Higher numbers means more rare. Default rate is 3.\r\n")
+	    		            .translation("the_bumblezone.config.beesourceful.greathoneycombraritybeedungeon")
+	    		            .defineInRange("greatHoneycombRarityBeeDungeon", 2, 1, 1001));
+
+	        		oreHoneycombSpawnRateSpiderBeeDungeon = subscriber.subscribe(builder
+	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	    		            		+" How much of Spider Infested Bee Dungeons is made of ore-based honeycombs.\r\n"
+	    		            		+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.4D\r\n")
+	    		            .translation("the_bumblezone.config.beesourceful.orehoneycombspawnratespiderbeedungeon")
+	    		            .defineInRange("oreHoneycombSpawnRateSpiderBeeDungeon", 0.4D, 0D, 1D));
+		    		
+	        		greatHoneycombRaritySpiderBeeDungeon = subscriber.subscribe(builder
+	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	    		            		+" How rare good ore-based Honeycombs (diamonds, ender, emerald, etc) are \r\n"
+	    		            		+" in Spider Infested Bee Dungeons. \r\n"
+	    		            		+" Higher numbers means more rare. Default rate is 2.\r\n")
+	    		            .translation("the_bumblezone.config.beesourceful.greathoneycombrarityspiderbeedungeon")
+	    		            .defineInRange("greatHoneycombRaritySpiderBeeDungeon", 2, 1, 1001));
+	            builder.pop();
+	            
+	            builder.push("Productive Bees Options");
+
+	            		spawnProductiveBeesBeesMob = subscriber.subscribe(builder
+		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		                    		+" Spawn Productive Bees in The Bumblezone alongside regular\r\n"
+		                    		+" bees at a 1/15th chance when spawning regular bees.\r\n")
+		                    .translation("the_bumblezone.config.modcompat.productivebees.spawnproductivebeesbeesmob")
+		                    .define("spawnProductiveBeesBeesMob", true));
+        
+	            builder.pop();
+	            
+	            
+	            builder.push("Potion of Bees Options");
+
+	            		allowPotionOfBeesCompat = subscriber.subscribe(builder
+		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		                    		+" Allow Potion of Bees item to turn Empty Honeycomb Brood blocks \r\n"
+			                    	+" back into Honeycomb Brood Blocks with a larva in it.\r\n")
+		                    .translation("the_bumblezone.config.modcompat.potionofbees.allowpotionofbeescompat")
+		                    .define("allowPotionOfBeesCompat", true));
+	            		
+	            		spawnProductiveBeesBeesMob = subscriber.subscribe(builder
+			            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+			                    	+" Allow Splash Potion of Bees item to turn Empty Honeycomb Brood \r\n"
+				                +" blocks back into Honeycomb Brood Blocks with a larva in it when \r\n"
+				                +" the potion is thrown and splashed near the block.\r\n")
+			            .translation("the_bumblezone.config.modcompat.productivebees.spawnproductivebeesbeesmob")
+			            .define("spawnProductiveBeesBeesMob", true));
+        
 	            builder.pop();
 	            
 	        builder.pop();

@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.features.placement;
+package net.telepathicgrunt.bumblezone.utils;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.util.Direction;

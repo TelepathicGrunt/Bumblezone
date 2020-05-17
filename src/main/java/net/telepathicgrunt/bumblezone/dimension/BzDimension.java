@@ -1,51 +1,267 @@
 package net.telepathicgrunt.bumblezone.dimension;
 
-import java.util.function.BiFunction;
+import javax.annotation.Nullable;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.audio.MusicTicker;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
-import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.ModDimension;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.world.RegisterDimensionsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.ChunkGeneratorType;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.generation.BzBiomeProvider;
+import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class BzDimension {
+public class BzDimension extends Dimension
+{
+	public static boolean ACTIVE_WRATH = false;
+	public static float reddishFogTint = 0;
 
-	public static final ModDimension BUMBLEZONE = new ModDimension() {
-        @Override
-        public BiFunction<World, DimensionType, ? extends Dimension> getFactory() {
-            return BzWorldProvider::new;
-        }
-    };
+	public BzDimension(World world, DimensionType typeIn)
+	{
+		super(world, typeIn, 1.0f); //set 1.0f. I think it has to do with maximum brightness?
 
-    private static final ResourceLocation BUMBLEZONE_ID = new ResourceLocation(Bumblezone.MODID, "bumblezone");
+		/**
+		 * Creates the light to brightness table. It changes how light levels looks to the players but does not change the
+		 * actual values of the light levels.
+		 */
+		for (int i = 0; i <= 15; ++i)
+		{
+			this.lightBrightnessTable[i] = i / 20.0F + 0.25F;
+		}
+	}
+
 	
-    
-    //registers the dimension
-    @Mod.EventBusSubscriber(modid = Bumblezone.MODID)
-    private static class ForgeEvents {
-        @SubscribeEvent
-        public static void registerDimensions(RegisterDimensionsEvent event) {
-            if (DimensionType.byName(BUMBLEZONE_ID) == null) {
-                DimensionManager.registerDimension(BUMBLEZONE_ID, BUMBLEZONE, null, true);
-            }
-        }
+	/**
+	 * Use our own biome provider and chunk generator for this dimension
+	 */
+	@Override
+	public ChunkGenerator<?> createChunkGenerator()
+	{
+		return new BzChunkGenerator(world, new BzBiomeProvider(world), ChunkGeneratorType.SURFACE.createSettings());
+	}
+	
+    /**
+     * Use this to play music in the dimension. 
+     */
+    @Override
+	@Nullable
+    @OnlyIn(Dist.CLIENT)
+	public MusicTicker.MusicType getMusicType()
+    {
+        return null;
     }
 
-    @SubscribeEvent
-    public static void registerModDimensions(RegistryEvent.Register<ModDimension> event) {
-        RegUtil.generic(event.getRegistry()).add("ultraamplified", BUMBLEZONE);
+	
+	@Override
+    public SleepResult canSleepAt(net.minecraft.entity.player.PlayerEntity player, BlockPos pos)
+    {
+        return SleepResult.DENY; //NO EXPLODING BEDS! But no sleeping too.
+    }
+	
+	@Override
+	public boolean canRespawnHere()
+	{
+		return false; //The bees disallow sleeping! 
+	}
+
+	@Override
+	public BlockPos findSpawn(ChunkPos chunkPosIn, boolean checkValid)
+	{
+		return null;
+	}
+
+	@Override
+	public BlockPos findSpawn(int posX, int posZ, boolean checkValid)
+	{
+		return null;
+	}
+	
+
+	@Override
+	public boolean shouldMapSpin(String entity, double x, double z, double rotation)
+    {
+        return true; //SPINNY MAPS!
     }
 
-    public static DimensionType bumblezone() {
-        return DimensionType.byName(BUMBLEZONE_ID);
+	@Override
+	public double getMovementFactor()
+    {
+        return Bumblezone.BzConfig.movementFactor.get(); 
     }
-    
+
+	
+	@Override
+	public boolean isNether()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isSurfaceWorld()
+	{
+		return false;
+	}
+	
+	
+	@Override
+	public int getSeaLevel()
+	{
+		return 40;
+	}
+
+
+	/**
+	 * Keep sky to noon always so sunset/sunrise color doesn't bleed into our fog
+	 */
+	@Override
+	public float calculateCelestialAngle(long worldTime, float partialTicks)
+	{
+		if(Bumblezone.BzConfig.dayNightCycle.get() || Bumblezone.BzConfig.fogBrightnessPercentage.get() > 50)
+		{
+			return 0f;
+		}
+		else
+		{
+			return 0.5f;
+		}
+	}
+
+
+	@OnlyIn(Dist.CLIENT)
+	@Override
+	public boolean isSkyColored()
+	{
+		return false;
+	}
+
+
+	@Override
+	public boolean hasSkyLight()
+	{
+		return false;
+	}
+
+
+	/**
+	 * the y level at which clouds are rendered.
+	 */
+	@OnlyIn(Dist.CLIENT)
+	@Override
+	public float getCloudHeight()
+	{
+		return -1;
+	}
+	
+
+	@Override
+	public boolean canDoLightning(Chunk chunk)
+    {
+        return false;
+    }
+
+	
+	@Override
+	public boolean canDoRainSnowIce(Chunk chunk)
+    {
+        return false;
+    }
+
+
+	/**
+	 * mimics vanilla Overworld sky timer
+	 * 
+	 * Returns a value between 0 and 1. 
+	 * 0 is noon. 0.25 is dusk. 0.5 is midnight. 0.75 is dawn.
+	 */
+	public float calculateVanillaSkyPositioning(long worldTime, float partialTicks)
+	{
+		double fractionComponent = MathHelper.frac(worldTime / 24000.0D - 0.25D);
+		double d1 = 0.5D - Math.cos(fractionComponent * Math.PI) / 2.0D;
+		return (float) (fractionComponent * 2.0D + d1) / 3.0F;
+	}
+
+
+	/**
+	 * Returns fog color
+	 * 
+	 * What I done is made it be based on the day/night cycle so the fog will darken at night but brighten during day.
+	 * calculateVanillaSkyPositioning returns a value which is between 0 and 1 for day/night and fogChangeSpeed is the range
+	 * that the fog color will cycle between.
+	 */
+	@Override
+	public Vec3d getFogColor(float celestialAngle, float partialTicks)
+	{
+		float colorFactor = 1;
+		
+		if(Bumblezone.BzConfig.dayNightCycle.get())
+		{
+			// Modifies the sky angle to be in range of 0 to 1 with 0 as night and 1 as day.
+			float scaledAngle = Math.abs(0.5f - calculateVanillaSkyPositioning(this.getWorld().getDayTime(), 1.0F)) * 2;
+
+			// Limits angle between 0 to 1 and sharply changes color between 0.333... and 0.666...‬
+			colorFactor = Math.min(Math.max(scaledAngle * 3 - 1f, 0), 1);
+			
+			// Scales the returned factor by user chosen brightness.
+			colorFactor *= (Bumblezone.BzConfig.fogBrightnessPercentage.get()/100);
+		}
+		else
+		{
+			/* The sky will be turned to midnight when brightness is below 50 and
+			 * the day/night cycle is off. This lets us get the full range of brightness
+			 * by utilizing the default brightness that the current celestial time gives.
+			 */
+			if(Bumblezone.BzConfig.fogBrightnessPercentage.get() <= 50)
+			{
+				colorFactor *= (Bumblezone.BzConfig.fogBrightnessPercentage.get()/50);
+			}
+			else
+			{
+				colorFactor *= (Bumblezone.BzConfig.fogBrightnessPercentage.get()/100);
+			}
+		}
+		
+		if(ACTIVE_WRATH && reddishFogTint < 0.25f)
+		{
+			reddishFogTint += 0.005f;
+		}
+		else if(reddishFogTint > 0)
+		{
+			reddishFogTint -= 0.005f;
+		}
+
+		
+		return new Vec3d(Math.max(Math.min(0.9f * colorFactor, 1.5f) + reddishFogTint, 0), Math.max(Math.min(0.63f * colorFactor, 1.5f) - reddishFogTint, 0), Math.max(Math.min(0.0015f * colorFactor, 1.5f) - reddishFogTint, 0));
+	}
+
+
+	/**
+	 * Returns a double value representing the Y value relative to the top of the map at which void fog is at its maximum.
+	 */
+	@OnlyIn(Dist.CLIENT)
+	@Override
+	public double getVoidFogYFactor()
+	{
+		return 1;
+	}
+	
+
+	/**
+	 * Show fog at all?
+	 */
+	@Override
+	public boolean doesXZShowFog(int x, int z)
+	{
+		return true;
+	}
 }

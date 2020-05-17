@@ -27,16 +27,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.dimension.BzDimension;
+import net.telepathicgrunt.bumblezone.dimension.BzDimensionRegistration;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 
-public class FilledPorousHoneycombBlock extends Block
+public class FilledPorousHoneycomb extends Block
 {
 
-	public FilledPorousHoneycombBlock()
+	public FilledPorousHoneycomb()
 	{
 		super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).hardnessAndResistance(0.5F).speedFactor(0.9F).sound(SoundType.CORAL));
 	}
@@ -45,6 +45,7 @@ public class FilledPorousHoneycombBlock extends Block
 	/**
 	 * Called when the given entity walks on this Block
 	 */
+	@Override
 	public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn)
 	{
 		double yMagnitude = Math.abs(entityIn.getMotion().y);
@@ -89,7 +90,7 @@ public class FilledPorousHoneycombBlock extends Block
 				}
 			}
 
-			if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
+			if ((playerEntity.dimension == BzDimensionRegistration.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
 			{
 				//Now all bees nearby in Bumblezone will get VERY angry!!!
 				playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
@@ -131,6 +132,23 @@ public class FilledPorousHoneycombBlock extends Block
 		}
 	}
 
+	
+	/**
+	 * tell redstone that this can be use with comparator
+	 */
+	public boolean hasComparatorInputOverride(BlockState state)
+	{
+		return true;
+	}
+
+
+	/**
+	 * the power fed into comparator 1
+	 */
+	public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos)
+	{
+		return 1;
+	}
 
 	/**
 	 * Starts checking if the block can take the particle and if so and it passes another rng to reduce spawnrate, it then

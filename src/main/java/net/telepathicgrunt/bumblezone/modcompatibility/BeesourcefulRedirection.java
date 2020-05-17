@@ -1,5 +1,8 @@
 package net.telepathicgrunt.bumblezone.modcompatibility;
 
+import java.util.Random;
+
+import net.minecraft.block.Block;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 
 /**
@@ -14,5 +17,10 @@ public class BeesourcefulRedirection
 	public static void BSMobSpawnEvent(LivingSpawnEvent.CheckSpawn event)
 	{
 		BeesourcefulCompat.BSMobSpawnEvent(event);
+	}
+	
+	public static Block BSGetRandomHoneycomb(Random random, int lowerBoundBias)
+	{
+		return BeesourcefulCompat.BSGetRandomHoneycomb(random, lowerBoundBias);
 	}
 }

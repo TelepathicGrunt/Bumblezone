@@ -14,6 +14,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
+import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 
 public class SugarWaterBlock extends FlowingFluidBlock
@@ -69,15 +71,23 @@ public class SugarWaterBlock extends FlowingFluidBlock
 
 	/**
 	 * Heal bees slightly if they are in Sugar Water and aren't taking damage.
+	 * 
+	 * Also make Buzzier Bees' Hive Boat faster in Bumblezone dimension on Sugar Water fluid
 	 */
 	@Deprecated
+	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos position, Entity entity) {
 		if(entity instanceof BeeEntity) {
 			BeeEntity beeEntity = ((BeeEntity)entity);
 			if(beeEntity.hurtTime == 0)
 				beeEntity.addPotionEffect(new EffectInstance(Effects.REGENERATION, 4, 0, false, false));
 		}
+
+		// make sure both buzzier bees and abnormals core is on
+		if(ModChecking.buzzierBeesPresent && ModChecking.AbnormalsCorePresent)
+		    BuzzierBeesRedirection.speedUpHiveBoat(entity); 
 		
+		    
 		super.onEntityCollision(state, world, position, entity);
 	}
 	   

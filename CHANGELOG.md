@@ -7,11 +7,99 @@ Welcome to the Github! If you are looking for the most recent stable version, th
 An awesome dimension full of bees that becomes REALLY angry if you take their honey! 
 Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going above Y = 256 to below Y = 0.
 
+////
+Mods I'm keeping an eye on for future compat
+-https://www.curseforge.com/minecraft/mc-mods/carrier-bees
+-https://www.curseforge.com/minecraft/mc-mods/the-bees-knees-mod
+///
+
 ------------------------------------------------
 # | Bumblezone changelog |
 
 
    
+## (V.1.3.0 Changes) (1.15.2 Minecraft)
+    
+##### Config:        
+        
+-Clarified that the Wrath of the Hive bee effect level values in the config are one less than their actual level applied in game.
+
+-Config for Wrath of the Hive's effects it gives to bees now can be set to 0 which would mean the effect gets applied at effect level 1 in the game.
+
+-Added config to control if Buzzier Bee's Bottled Bee item can revive Empty Honeycomb Brood blocks.
+  
+-Added config to control if Potion of Bees's Splash Potion of Bee item can revive Empty Honeycomb Brood blocks when splashed near it.
+
+##### Mod Compatibility:
+
+-Fixed bug where using Buzzier Bees's Bottled Bee item to revive Empty Honeycomb Brood block will make the block face the wrong way.
+
+-Buzzier Bees's Hive Boat will now move faster than normal boats when on Sugar Water fluid in The Bumblezone dimension!
+
+-Ender Pearls thrown at Productive Bees' nests and hive will now teleport you to The Bumblezone. The Expansion Box Blocks only teleports you to The Bumblezone if they are placed on their hive block and expanded their hive block.
+
+-Productive Bees' bees will now spawn in The Bumblezone at a 1/15th chance and can spawn from the Honeycomb Brood Blocks too.
+
+-Productive Bees' Honey Treat item has a 40% chance of removing Wrath of the Hive effect off of you when fed to bees unlike the Honey Bottle's 30% chance. Will also heal bees a lot more too!
+  
+##### Blocks: 
+
+-Fixed Sugar Water Block from spamming in the logs that its blockstate model isn't set up even though it had no impact visually or on gameplay.
+  
+-Renamed Honeycomb Larva Block and Dead Honeycomb Larva Block to Honeycomb Brood Block and Empty Honeycomb Brood Block.
+  
+-Bees spawned by Honeycomb Brood Blocks will now spawn directly in front of block instead of getting stuck in the block and taking damage.
+  
+-Honeycomb Brood Blocks now will output power based on the larva's stage when a comparator is used on the block! The power output will be 1 to 4.
+
+-Filled Porous Honeycomb Blocks now will output power when a comparator is used on the block! The power output will be 1.
+  
+-Added Honey Crystal blocks. Breaking these blocks without Silk Touch or breaking the block it's on will drop Honey Crystal Shards. These blocks are non-renewable so treasure them! They can also be waterlogged by any fluid with the water tag as well but it will turn the water inside the block into Sugar Water instead.
+  
+-Added Sticky Honey Residue that can be placed on multiple surfaces! Mobs touching this residue will be slowed down and the residue can be used to climb up walls. Using a comparator on this block will output a signal based on how many surfaces this block is attached to. You can obtain this block by smelting Honey Blocks, Honey Crystal Shards, or Honey Crystals. Also, this blocks takes time to mine but can be washed away by fluids or destroyed by right clicking while holding a Wet Sponge, any buckets holding fluids with water tag, or any bottle holding a fluid with water in its name!
+
+-Added Sticky Honey Redstone that can be placed on multiple surfaces! It has all the same effects as Sticky Honey Residue as well as outputting a redstone signal of 1 when a mob is touching this block! This would help make neat contraptions easier. This block can be made by crafting with 1 Sticky Honey Residue and 1 Redstone in any shape.
+
+##### Items: 
+
+-Added Honey Crystal Shards which drops from Honey Crystal blocks. These shards can be eaten to recover some hunger in a pinch.
+
+-Added Honey Crystal Shield which uses the same recipe as regular shields but uses Honey Crystal Shards for all the slots. The shield starts up super weak but will become stronger as you repair it with Honey Crystal Shards. At maximum strength, this shield has about twice the durability as regular shields and can be enchanted with Unbreaking or Curse of the Binding (No Mending as that would be OP!). However, despite that huge durability benefit, this shield is super weak to blocking explosions or fire damage so be careful of what you block with this shield! And lastly, and mob physically attacking your shield will get a slowness effect for 4 seconds due to the honey's stickiness!
+
+-Added recipe to turn Water Bucket into Sugar Water Bucket. Just put 1 Water Bucket and 1 Sugar into a Crafting Table! 
+
+##### Generation: 
+
+-Added Bee Dungeons that will spawn in Honeycomb Holes or caves in the Bumblezone! They have lots of Honeycomb Brood Blocks but if you use Beesourceful, their ore-based Honeycombs will spawn too with Diamond, Ender, and Emeralds being the rarest honeycombs. And if you have Buzzier Bees on, their candles will also spawn in the dungeon with scented candles that gives potion effects spawning very rarely in the center. 
+
+-Honeycomb Holes now has a chance of having an Empty Honeycomb Larva Block.
+
+-Honey Crystal blocks will now generate in caves or underwater in The Bumblezone! They are rare in Sugar Water Biome, uncommon in Hive Pillar biome, and most common in Hive Wall biome.
+
+##### Teleportation: 
+
+-Exiting Bumblezone dimension by falling into the void will not kill the player with fall damage when they teleport into another dimension. I forgot to reset the player's fall time but now it's fixed.
+ 
+##### Mobs: 
+
+-Fixed bug where Bees cannot be angered normally outside of The Bumblezone with default config settings.
+
+-Lowered Cave Spider and Spider spawn rates a bit and removed both spiders from Sugar Water Biome.
+
+-Decreased how many bees will spawn in a bunch when spawning mobs. 
+
+-Vanilla Slime mobs will now spawn in Sugar Water biome but only at a low height below sealevel and in certain chunks. That way you can still make a Slime farm in Bumblezone even with Buzzier Bees on.
+
+##### Translation:
+
+-German Translation added by Aurum! Thank you!
+
+-Added more entries to en_us.json. 
+
+##### Misc:
+
+-Added a version check to make sure this mod will not crash with older versions of Buzzier Bees or Beesourceful.
+
 ## (V.1.2.0 Changes) (1.15.2 Minecraft)
       
 ##### Mod Compatibility: 
@@ -86,7 +174,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 -Added Sugar Water Bottle! To get this, use an empty Glass Bottle on Sugar Water. If you drink a Sugar Water Bottle, you restore a tiny bit of hungry but get Haste 1 effect for a short period of time!
 
--Add Sugar Water Bucket to move Sugar Water around. Works with Dispensers too!
+-Added Sugar Water Bucket to move Sugar Water around. Works with Dispensers too!
 
 ##### Generation: 
 

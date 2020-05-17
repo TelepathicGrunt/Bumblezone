@@ -23,8 +23,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.dimension.BzDimensionRegistration;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
-import net.telepathicgrunt.bumblezone.dimension.BzWorldProvider;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 
@@ -87,7 +87,7 @@ public class BeeAggressionBehavior
 			//Also checks to make sure we are in dimension and that player isn't in creative or spectator
 			if (!playerEntity.world.isRemote && 
 				 event.getStack().getItem() == Items.HONEY_BLOCK &&
-				(playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && 
+				(playerEntity.dimension == BzDimensionRegistration.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && 
 				!playerEntity.isCreative() && 
 				!playerEntity.isSpectator() &&
 				 Bumblezone.BzConfig.aggressiveBees.get())
@@ -110,7 +110,7 @@ public class BeeAggressionBehavior
 				
 				//Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
 				//Also checks to make sure we are in dimension and that player isn't in creative or spectator
-				if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && 
+				if ((playerEntity.dimension == BzDimensionRegistration.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && 
 					!playerEntity.isCreative() && 
 					!playerEntity.isSpectator() &&
 					 Bumblezone.BzConfig.aggressiveBees.get())
@@ -131,7 +131,7 @@ public class BeeAggressionBehavior
 			//Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
 			//Also checks to make sure we are in dimension and that if it is a player, that they aren't in creative or spectator
 			if (!entity.world.isRemote && 
-				(entity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && 
+				(entity.dimension == BzDimensionRegistration.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && 
 				Bumblezone.BzConfig.aggressiveBees.get() && 
 				entity instanceof BeeEntity &&
 				attackerEntity != null)
@@ -158,7 +158,7 @@ public class BeeAggressionBehavior
 
 			//Also checks to make sure we are in the dimension.
 			if (!entity.world.isRemote && 
-				entity.dimension == BzDimension.bumblezone() && 
+				entity.dimension == BzDimensionRegistration.bumblezone() && 
 				Bumblezone.BzConfig.aggressiveBees.get() && 
 				entity instanceof MobEntity)
 			{
@@ -182,7 +182,7 @@ public class BeeAggressionBehavior
 			//removes the wrath of the hive if it is disallowed outside dimension
 			if(!playerEntity.world.isRemote &&
 				playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE) && 
-				!(Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get() || playerEntity.dimension == BzDimension.bumblezone()))
+				!(Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get() || playerEntity.dimension == BzDimensionRegistration.bumblezone()))
 			{
 				playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
 				WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
@@ -190,17 +190,14 @@ public class BeeAggressionBehavior
 
 			//Makes the fog redder when this effect is active
 			Boolean wrathEffect = playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE);
-			if(BzWorldProvider.ACTIVE_WRATH == false && wrathEffect)
+			if(BzDimension.ACTIVE_WRATH == false && wrathEffect)
 			{
-				BzWorldProvider.ACTIVE_WRATH = true;
+				BzDimension.ACTIVE_WRATH = true;
 			}
-			else if(BzWorldProvider.ACTIVE_WRATH == true && !wrathEffect)
+			else if(BzDimension.ACTIVE_WRATH == true && !wrathEffect)
 			{
 				WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
-				BzWorldProvider.ACTIVE_WRATH = false;
-			}
-			else if(!wrathEffect) {
-				WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
+				BzDimension.ACTIVE_WRATH = false;
 			}
 		}
 	}

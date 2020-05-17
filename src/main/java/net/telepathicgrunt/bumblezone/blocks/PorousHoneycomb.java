@@ -20,10 +20,10 @@ import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 
-public class PorousHoneycombBlock extends Block
+public class PorousHoneycomb extends Block
 {
 
-	public PorousHoneycombBlock()
+	public PorousHoneycomb()
 	{
 		super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).hardnessAndResistance(0.5F).sound(SoundType.CORAL));
 	}

@@ -17,6 +17,8 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.placement.Placement;
+import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -30,6 +32,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.telepathicgrunt.bumblezone.biome.BzBaseBiome;
 import net.telepathicgrunt.bumblezone.biome.BzBiomes;
+import net.telepathicgrunt.bumblezone.biome.surfacebuilders.BzSurfaceBuilders;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.SugarWaterEvents;
 import net.telepathicgrunt.bumblezone.capabilities.CapabilityPlayerPosAndDim;
@@ -37,6 +40,7 @@ import net.telepathicgrunt.bumblezone.config.BzConfig;
 import net.telepathicgrunt.bumblezone.config.BzConfig.BzConfigValues;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.features.BzFeatures;
+import net.telepathicgrunt.bumblezone.features.placement.BzPlacements;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.SugarWaterBottleDispenseBehavior;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
@@ -52,7 +56,7 @@ public class Bumblezone
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 	public static BzConfigValues BzConfig = null;
 
-
+//TODO: add recipe to turn bucket of water into sugar water and bottle of water into sugar water bottle. 
 	public Bumblezone()
 	{
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -106,7 +110,7 @@ public class Bumblezone
 	private static void lateSetup()
 	{
 		ModChecking.setupModCompat();
-		BzBiomes.addVanillaSlimeMobs();
+		BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).increaseVanillaSlimeMobsRates());
 	}
 
 	// You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
@@ -140,6 +144,25 @@ public class Bumblezone
 		public static void onRegisterEffects(final RegistryEvent.Register<Effect> event)
 		{
 			BzEffects.registerEffects(event);
+		}
+		
+		/**
+		 * This method will be called by Forge when it is time for the mod to register placement.
+		 */
+		@SubscribeEvent
+		public static void onRegisterPlacements(final RegistryEvent.Register<Placement<?>> event)
+		{
+			BzPlacements.registerPlacements(event);
+		}
+
+
+		/**
+		 * This method will be called by Forge when it is time for the mod to register surface builders.
+		 */
+		@SubscribeEvent
+		public static void onRegisterSurfacebuilders(final RegistryEvent.Register<SurfaceBuilder<?>> event)
+		{
+			BzSurfaceBuilders.registerSurfaceBuilders(event);
 		}
 	}
 }

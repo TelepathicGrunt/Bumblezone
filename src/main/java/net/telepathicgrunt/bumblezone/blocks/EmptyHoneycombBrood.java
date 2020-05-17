@@ -25,10 +25,10 @@ import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 
-public class DeadHoneycombLarvaBlock extends DirectionalBlock
+public class EmptyHoneycombBrood extends DirectionalBlock
 {
 
-	public DeadHoneycombLarvaBlock()
+	public EmptyHoneycombBrood()
 	{
 		super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).hardnessAndResistance(0.5F).sound(SoundType.CORAL));
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.SOUTH));
@@ -69,11 +69,11 @@ public class DeadHoneycombLarvaBlock extends DirectionalBlock
 		ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
 		//MOD COMPAT
-
+		
 		/*
 		 * Buzzier Bees honey wand compat
 		 */
-		if (ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowHoneyWandCompat.get())
+		if (ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowBottledBeeCompat.get())
 		{
 			/*
 			 * Player is trying to revive the block
@@ -82,7 +82,9 @@ public class DeadHoneycombLarvaBlock extends DirectionalBlock
 			if (action == ActionResultType.SUCCESS)
 			{
 				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-				world.setBlockState(position, BzBlocks.HONEYCOMB_LARVA.get().getDefaultState().with(HoneycombLarvaBlock.STAGE, Integer.valueOf(0)));
+				world.setBlockState(position, BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
+					.with(HoneycombBrood.STAGE, Integer.valueOf(0))
+					.with(DirectionalBlock.FACING, thisBlockState.get(DirectionalBlock.FACING)));
 
 				return action;
 			}

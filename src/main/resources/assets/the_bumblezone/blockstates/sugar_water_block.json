@@ -1,0 +1,20 @@
+{
+    "variants": {
+        "level=0": { "model": "the_bumblezone:block/sugar_water_block"},
+        "level=1": { "model": "the_bumblezone:block/sugar_water_block"},
+        "level=2": { "model": "the_bumblezone:block/sugar_water_block"},
+        "level=3": { "model": "the_bumblezone:block/sugar_water_block"},
+        "level=4": { "model": "the_bumblezone:block/sugar_water_block"},
+        "level=5": { "model": "the_bumblezone:block/sugar_water_block"},
+        "level=6": { "model": "the_bumblezone:block/sugar_water_block"},
+        "level=7": { "model": "the_bumblezone:block/sugar_water_block"},
+        "level=8": { "model": "the_bumblezone:block/sugar_water_block"},
+        "level=9": { "model": "the_bumblezone:block/sugar_water_block"},
+        "level=10": { "model": "the_bumblezone:block/sugar_water_block"},
+        "level=11": { "model": "the_bumblezone:block/sugar_water_block"},
+        "level=12": { "model": "the_bumblezone:block/sugar_water_block"},
+        "level=13": { "model": "the_bumblezone:block/sugar_water_block"},
+        "level=14": { "model": "the_bumblezone:block/sugar_water_block"},
+        "level=15": { "model": "the_bumblezone:block/sugar_water_block"}
+    }
+}

@@ -36,11 +36,6 @@ public class BzBiomes {
 		initBiome(registry, HIVE_WALL, "hive_wall", BiomeType.WARM, Type.PLAINS);
 		initBiome(registry, HIVE_PILLAR, "hive_pillar", BiomeType.WARM, Type.PLAINS);
 	}
-
-	public static void addVanillaSlimeMobs() {
-		biomes.forEach(biome -> ((BzBaseBiome)biome).addVanillaSlimeMobs());
-	}
-	
 	
 	//adds biome to registry with their type to the registry and to the biome dictionary
 	private static Biome initBiome(IForgeRegistry<Biome> registry, Biome biome, String name, BiomeType biomeType, Type... types) {

@@ -47,7 +47,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.dimension.BzDimension;
+import net.telepathicgrunt.bumblezone.dimension.BzDimensionRegistration;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.HoneyBottleDispenseBehavior;
@@ -55,14 +55,14 @@ import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
 
-public class HoneycombLarvaBlock extends DirectionalBlock
+public class HoneycombBrood extends DirectionalBlock
 {
 	public static final IntegerProperty					STAGE							= BlockStateProperties.AGE_0_3;
 	private static final DefaultDispenseItemBehavior	BEHAVIOUR_DEFAULT_DISPENSE_ITEM	= new HoneyBottleDispenseBehavior();
 	private static final EntityPredicate				FIXED_DISTANCE					= (new EntityPredicate()).setDistance(50);
 	private static final EntityPredicate				PLAYER_DISTANCE					= (new EntityPredicate());
 
-	public HoneycombLarvaBlock()
+	public HoneycombBrood()
 	{
 		super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).tickRandomly().hardnessAndResistance(0.5F).speedFactor(0.9F).sound(SoundType.CORAL));
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.SOUTH).with(STAGE, Integer.valueOf(0)));
@@ -150,7 +150,7 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 				}
 			}
 
-			if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
+			if ((playerEntity.dimension == BzDimensionRegistration.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
 			{
 				//Now all bees nearby in Bumblezone will get VERY angry!!!
 				playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
@@ -196,7 +196,7 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 
 			//block grew one stage or bee was spawned
 			world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-			
+
 			//removes used item
 			if (!playerEntity.isCreative())
 			{
@@ -236,7 +236,7 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 					spawnBee(world, thisBlockState, position, stage);
 					world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
-					if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
+					if ((playerEntity.dimension == BzDimensionRegistration.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
 					{
 						//Now all bees nearby in Bumblezone will get VERY angry!!!
 						playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
@@ -283,7 +283,7 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 		int stage = state.get(STAGE);
 		if (stage < 3)
 		{
-			if (world.getDimension().getType() == BzDimension.bumblezone() ? rand.nextInt(8) == 0 : rand.nextInt(22) == 0)
+			if (world.getDimension().getType() == BzDimensionRegistration.bumblezone() ? rand.nextInt(10) == 0 : rand.nextInt(22) == 0)
 			{
 				world.setBlockState(position, state.with(STAGE, Integer.valueOf(stage + 1)), 2);
 			}
@@ -322,7 +322,7 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 					spawnBee(world, blockState, position, stage);
 				}
 
-				if ((playerEntity.dimension == BzDimension.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
+				if ((playerEntity.dimension == BzDimensionRegistration.bumblezone() || Bumblezone.BzConfig.allowWrathOfTheHiveOutsideBumblezone.get()) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BzConfig.aggressiveBees.get())
 				{
 					//Now all bees nearby in Bumblezone will get VERY angry!!!
 					playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzConfig.showWrathOfTheHiveParticles.get(), true));
@@ -343,9 +343,9 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 		if (stage == 3 && !world.getBlockState(blockpos).getMaterial().isSolid())
 		{
 			MobEntity beeEntity = EntityType.BEE.create(world);
-			beeEntity.setLocationAndAngles(blockpos.getX(), blockpos.getY(), blockpos.getZ(), world.getRandom().nextFloat() * 360.0F, 0.0F);
+			beeEntity.setLocationAndAngles(blockpos.getX()+0.5D, blockpos.getY()+0.5D, blockpos.getZ()+0.5D, world.getRandom().nextFloat() * 360.0F, 0.0F);
 
-			if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(beeEntity, world, blockpos.getX(), blockpos.getY(), blockpos.getZ(), null, SpawnReason.TRIGGERED) != -1)
+			if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(beeEntity, world, blockpos.getX()+0.5D, blockpos.getY()+0.5D, blockpos.getZ()+0.5D, null, SpawnReason.TRIGGERED) != -1)
 			{
 				ILivingEntityData ilivingentitydata = null;
 				ilivingentitydata = beeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beeEntity)), SpawnReason.TRIGGERED, ilivingentitydata, (CompoundNBT) null);
@@ -358,6 +358,24 @@ public class HoneycombLarvaBlock extends DirectionalBlock
 		}
 
 		return false;
+	}
+
+
+	/**
+	 * tell redstone that this can be use with comparator
+	 */
+	public boolean hasComparatorInputOverride(BlockState state)
+	{
+		return true;
+	}
+
+
+	/**
+	 * the power fed into comparator (1 - 4)
+	 */
+	public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos)
+	{
+		return blockState.get(STAGE)+1;
 	}
 
 

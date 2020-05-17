@@ -11,6 +11,6 @@ public class PotionOfBeesRedirection
 {
 	public static void POBReviveLarvaBlockEvent(net.minecraftforge.event.entity.ProjectileImpactEvent.Throwable event)
 	{
-		PotionOfBeesCompat.POBReviveLarvaBlockEvent(event);
+	    PotionOfBeesCompat.POBReviveLarvaBlockEvent(event);
 	}
 }
