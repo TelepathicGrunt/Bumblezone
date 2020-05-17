@@ -174,9 +174,9 @@ public class BzConfig
 	    		spawnerRateSpiderBeeDungeon = subscriber.subscribe(builder
     		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
     		            		+" How rare are Spider/Cave Spider Spawners in Spider Infested Bee Dungeons.\r\n"
-    		            		+" 0 is no spawners, 1 is max spawner, and default is 0.3D\r\n")
+    		            		+" 0 is no spawners, 1 is max spawner, and default is 0.2D\r\n")
     		            .translation("the_bumblezone.config.dungeons.spawnerratespiderbeedungeon")
-    		            .defineInRange("spawnerRateSpiderBeeDungeon", 0.3D, 0D, 1D));
+    		            .defineInRange("spawnerRateSpiderBeeDungeon", 0.2D, 0D, 1D));
 	    		
 	        builder.pop();
 	        
