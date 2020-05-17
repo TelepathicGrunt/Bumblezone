@@ -52,117 +52,124 @@ import net.telepathicgrunt.bumblezone.utils.ConfigHelper;
 @Mod(Bumblezone.MODID)
 public class Bumblezone
 {
-	public static final String MODID = "the_bumblezone";
-	public static final Logger LOGGER = LogManager.getLogger(MODID);
-	public static BzConfigValues BzConfig = null;
+    public static final String MODID = "the_bumblezone";
+    public static final Logger LOGGER = LogManager.getLogger(MODID);
+    public static BzConfigValues BzConfig = null;
 
-//TODO: add recipe to turn bucket of water into sugar water and bottle of water into sugar water bottle. 
-	public Bumblezone()
+    public Bumblezone() 
+    {
+	IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+	MinecraftForge.EVENT_BUS.register(this);
+	IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+
+	modEventBus.addListener(this::setup);
+
+	BzBlocks.BLOCKS.register(modEventBus);
+	BzItems.ITEMS.register(modEventBus);
+	BzBlocks.FLUIDS.register(modEventBus);
+
+	DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> ClientEvents.subscribeClientEvents(modEventBus, forgeBus));
+
+	// generates/handles config
+	BzConfig = ConfigHelper.register(ModConfig.Type.SERVER, (builder, subscriber) -> new BzConfig.BzConfigValues(builder, subscriber));
+    }
+
+
+    private void setup(final FMLCommonSetupEvent event) 
+    {
+	CapabilityPlayerPosAndDim.register();
+	SugarWaterEvents.setup();
+	BzBaseBiome.addSprings();
+
+	IDispenseItemBehavior idispenseitembehavior = new DefaultDispenseItemBehavior() 
 	{
-		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		MinecraftForge.EVENT_BUS.register(this);
-		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+	    private final DefaultDispenseItemBehavior field_218406_b = new DefaultDispenseItemBehavior();
 
-		modEventBus.addListener(this::setup);
-
-        BzBlocks.BLOCKS.register(modEventBus);
-        BzItems.ITEMS.register(modEventBus);
-        BzBlocks.FLUIDS.register(modEventBus);
-        
-    	DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> ClientEvents.subscribeClientEvents(modEventBus, forgeBus));
-
-		//generates/handles config
-		BzConfig = ConfigHelper.register(ModConfig.Type.SERVER, (builder, subscriber) -> new BzConfig.BzConfigValues(builder, subscriber));
-	}
-
-
-	private void setup(final FMLCommonSetupEvent event)
-	{
-		CapabilityPlayerPosAndDim.register();
-		SugarWaterEvents.setup();
-		BzBaseBiome.addSprings();
+	    /**
+	     * Dispense the specified stack, play the dispense sound and spawn particles.
+	     */
+	    public ItemStack dispenseStack(IBlockSource source, ItemStack stack) 
+	    {
+		BucketItem bucketitem = (BucketItem) stack.getItem();
+		BlockPos blockpos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
+		World world = source.getWorld();
 		
-		IDispenseItemBehavior idispenseitembehavior = new DefaultDispenseItemBehavior() {
-	         private final DefaultDispenseItemBehavior field_218406_b = new DefaultDispenseItemBehavior();
+		if (bucketitem.tryPlaceContainedLiquid((PlayerEntity) null, world, blockpos, (BlockRayTraceResult) null)) 
+		{
+		    bucketitem.onLiquidPlaced(world, stack, blockpos);
+		    return new ItemStack(Items.BUCKET);
+		}
+		else 
+		{
+		    return this.field_218406_b.dispense(source, stack);
+		}
+	    }
+	};
+	DispenserBlock.registerDispenseBehavior(BzItems.SUGAR_WATER_BUCKET.get(), idispenseitembehavior); // adds compatibility with sugar water buckets in dispensers
+	DispenserBlock.registerDispenseBehavior(BzItems.SUGAR_WATER_BOTTLE.get(), new SugarWaterBottleDispenseBehavior()); // adds compatibility with sugar water bottles in dispensers
 
-	         /**
-	          * Dispense the specified stack, play the dispense sound and spawn particles.
-	          */
-	         public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-	            BucketItem bucketitem = (BucketItem)stack.getItem();
-	            BlockPos blockpos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
-	            World world = source.getWorld();
-	            if (bucketitem.tryPlaceContainedLiquid((PlayerEntity)null, world, blockpos, (BlockRayTraceResult)null)) {
-	               bucketitem.onLiquidPlaced(world, stack, blockpos);
-	               return new ItemStack(Items.BUCKET);
-	            } else {
-	               return this.field_218406_b.dispense(source, stack);
-	            }
-	         }
-	      };
-		DispenserBlock.registerDispenseBehavior(BzItems.SUGAR_WATER_BUCKET.get(), idispenseitembehavior); //adds compatibility with sugar water buckets in dispensers
-		DispenserBlock.registerDispenseBehavior(BzItems.SUGAR_WATER_BOTTLE.get(), new SugarWaterBottleDispenseBehavior()); //adds compatibility with sugar water bottles in dispensers
-		
-		DeferredWorkQueue.runLater(Bumblezone::lateSetup);
-	}
+	DeferredWorkQueue.runLater(Bumblezone::lateSetup);
+    }
 
-	//should run after most other mods just in case
-	private static void lateSetup()
+
+    // should run after most other mods just in case
+    private static void lateSetup() 
+    {
+	ModChecking.setupModCompat();
+	BzBiomes.biomes.forEach(biome -> ((BzBaseBiome) biome).increaseVanillaSlimeMobsRates());
+    }
+
+    // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
+    // Event bus for receiving Registry Events)
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class RegistryEvents
+    {
+
+	@SubscribeEvent
+	public static void registerBiomes(final RegistryEvent.Register<Biome> event) 
 	{
-		ModChecking.setupModCompat();
-		BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).increaseVanillaSlimeMobsRates());
+	    // registers all my modified biomes
+	    BzBiomes.registerBiomes(event);
 	}
 
-	// You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
-	// Event bus for receiving Registry Events)
-	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-	public static class RegistryEvents
+
+	/**
+	 * This method will be called by Forge when it is time for the mod to register features.
+	 */
+	@SubscribeEvent
+	public static void onRegisterFeatures(final RegistryEvent.Register<Feature<?>> event) 
 	{
-
-		@SubscribeEvent
-		public static void registerBiomes(final RegistryEvent.Register<Biome> event)
-		{
-			//registers all my modified biomes
-			BzBiomes.registerBiomes(event);
-		}
-
-
-		/**
-		 * This method will be called by Forge when it is time for the mod to register features.
-		 */
-		@SubscribeEvent
-		public static void onRegisterFeatures(final RegistryEvent.Register<Feature<?>> event)
-		{
-			BzFeatures.registerFeatures(event);
-		}
-
-
-		/**
-		 * This method will be called by Forge when it is time for the mod to register effects.
-		 */
-		@SubscribeEvent
-		public static void onRegisterEffects(final RegistryEvent.Register<Effect> event)
-		{
-			BzEffects.registerEffects(event);
-		}
-		
-		/**
-		 * This method will be called by Forge when it is time for the mod to register placement.
-		 */
-		@SubscribeEvent
-		public static void onRegisterPlacements(final RegistryEvent.Register<Placement<?>> event)
-		{
-			BzPlacements.registerPlacements(event);
-		}
-
-
-		/**
-		 * This method will be called by Forge when it is time for the mod to register surface builders.
-		 */
-		@SubscribeEvent
-		public static void onRegisterSurfacebuilders(final RegistryEvent.Register<SurfaceBuilder<?>> event)
-		{
-			BzSurfaceBuilders.registerSurfaceBuilders(event);
-		}
+	    BzFeatures.registerFeatures(event);
 	}
+
+
+	/**
+	 * This method will be called by Forge when it is time for the mod to register effects.
+	 */
+	@SubscribeEvent
+	public static void onRegisterEffects(final RegistryEvent.Register<Effect> event) 
+	{
+	    BzEffects.registerEffects(event);
+	}
+
+
+	/**
+	 * This method will be called by Forge when it is time for the mod to register placement.
+	 */
+	@SubscribeEvent
+	public static void onRegisterPlacements(final RegistryEvent.Register<Placement<?>> event) 
+	{
+	    BzPlacements.registerPlacements(event);
+	}
+
+
+	/**
+	 * This method will be called by Forge when it is time for the mod to register surface builders.
+	 */
+	@SubscribeEvent
+	public static void onRegisterSurfacebuilders(final RegistryEvent.Register<SurfaceBuilder<?>> event) 
+	{
+	    BzSurfaceBuilders.registerSurfaceBuilders(event);
+	}
+    }
 }
