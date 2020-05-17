@@ -30,7 +30,7 @@ public class ModChecking
 					runSetupForMod(() -> () -> BuzzierBeesCompat.setupBuzzierBees()); 
 				
 				//fix for v1.5.0 buzzier bees as the v killed the version checker rip
-				if(majorVersion == 0 && minorVersion == 0)
+				if(ModList.get().getModContainerById(currentModID).get().getModInfo().getVersion().toString().equals("v1.5.0"))
 					runSetupForMod(() -> () -> BuzzierBeesCompat.setupBuzzierBees()); 
 			}
 
