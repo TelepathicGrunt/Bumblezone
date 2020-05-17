@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResultType;
@@ -63,5 +64,9 @@ public class BuzzierBeesRedirection
 	public static Block BBGetRandomTier3Candle(Random random, int lowerEndBias)
 	{
 		return BuzzierBeesCompat.BBGetRandomTier3Candle(random, lowerEndBias);
+	}
+	
+	public static void speedUpHiveBoat(Entity entity) {
+		AbnormalsCoreCompat.speedUpHiveBoat(entity);
 	}
 }
