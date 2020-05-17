@@ -5,9 +5,15 @@ import java.util.concurrent.Callable;
 import org.apache.logging.log4j.Level;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 
+@Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModChecking
 {
 	public static boolean buzzierBeesPresent = false;
@@ -33,12 +39,14 @@ public class ModChecking
 				if(majorVersion == 1 && minorVersion == 4) {
 					runSetupForMod(() -> () -> BuzzierBeesCompat.setupBuzzierBees()); 
 					Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
+					Bumblezone.LOGGER.log(Level.INFO, " ");
 					Bumblezone.LOGGER.log(Level.INFO, "BUMBLEZONE: You're using a version of Buzzier Bees that is know to freeze worlds! Please update Buzzier Bees to v1.5 or greater!");
+					Bumblezone.LOGGER.log(Level.INFO, " ");
 					Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
 				}
 				
 				
-				
+				//EntityJoinWorldEvent
 				//only run for buzzier bees version 1.5 or greater
 				//fix for v1.5.0 buzzier bees as the v killed the version checker rip
 				if(((majorVersion == 1 && minorVersion >= 5) || majorVersion > 1) || bbVersion.toString().equals("v1.5.0"))
@@ -96,5 +104,32 @@ public class ModChecking
 	 */
 	public static void runSetupForMod(Callable<Runnable> toRun) throws Exception{
 		toRun.call().run();
+	}
+	
+	
+
+	@Mod.EventBusSubscriber(modid = Bumblezone.MODID)
+	private static class ForgeEvents
+	{
+		/*
+		 * Manual spawning of Beesourceful Bees so it can be disabled real time by config.
+		 * works by making 1/15th of bees spawning also spawn beesourceful bees
+		 */
+		@SubscribeEvent
+		public static void MobSpawnEvent(PlayerEvent.PlayerLoggedInEvent event)
+		{
+			if(ModChecking.buzzierBeesPresent) 
+			{
+
+			    ArtifactVersion bbVersion = ModList.get().getModContainerById("buzzierbees").get().getModInfo().getVersion();
+			    int majorVersion = bbVersion.getMajorVersion();
+			    int minorVersion = bbVersion.getMinorVersion();
+
+			    // warn players their buzzier bees version is out of date and will cause issues
+			    if (majorVersion == 1 && minorVersion <= 4) {
+				((PlayerEntity)event.getEntity()).sendMessage(new StringTextComponent("§cBumblezone Warning: The version of Buzzier Bees you have on is too old and can cause the game to freeze with Bumblezone. Please update Buzzier Bees to v1.5 or greater!"));
+			    }
+			}
+		}
 	}
 }
