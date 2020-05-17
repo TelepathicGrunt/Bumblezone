@@ -48,7 +48,7 @@ public class ModChecking
 					//1.5+ buzzier bees uses abnormals core which we will need to reference for boats
 					currentModID = "abnormals_core";
 					if(buzzierBeesPresent && ModList.get().isLoaded(currentModID)) {
-						runSetupForMod(() -> () -> PotionOfBeesCompat.setupPotionOfBees());
+						runSetupForMod(() -> () -> AbnormalsCoreCompat.setupAbnormalsCore());
 					}
 				}
 			}

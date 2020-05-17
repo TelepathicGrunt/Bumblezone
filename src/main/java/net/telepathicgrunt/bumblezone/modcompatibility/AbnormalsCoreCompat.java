@@ -9,7 +9,7 @@ import net.telepathicgrunt.bumblezone.dimension.BzDimensionRegistration;
 public class AbnormalsCoreCompat
 {
 	
-	public static void setupBuzzierBees() 
+	public static void setupAbnormalsCore() 
 	{
 		ModChecking.AbnormalsCorePresent = true;
 	}

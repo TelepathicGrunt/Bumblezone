@@ -34,7 +34,7 @@ Mods I'm keeping an eye on for future compat
 
 -Fixed bug where using Buzzier Bees's Bottled Bee item to revive Empty Honeycomb Brood block will make the block face the wrong way.
 
--Buzzier Bees's Hive Boat will now move faster than normal boats on Sugar Water fluid when in The Bumblezone dimension!
+-Buzzier Bees's Hive Boat will now move faster than normal boats when on Sugar Water fluid in The Bumblezone dimension!
 
 -Ender Pearls thrown at Productive Bees' nests and hive will now teleport you to The Bumblezone. The Expansion Box Blocks only teleports you to The Bumblezone if they are placed on their hive block and expanded their hive block.
 
