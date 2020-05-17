@@ -26,7 +26,7 @@ archivesBaseName = 'the_bumblezone'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200409-1.15.1'
+    mappings channel: 'snapshot', version: '20200515-1.15.1'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
@@ -80,12 +80,13 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.15.2-31.1.41'
+    minecraft 'net.minecraftforge:forge:1.15.2-31.2.0'
 
-	implementation fg.deobf("ignored:buzzierbees:1.4")
+	implementation fg.deobf("ignored:buzzierbees:1.5")
 	implementation fg.deobf("ignored:beesourceful:1.1.0")
 	implementation fg.deobf("ignored:potionofbees-1.15.2:1.0.0")
 	implementation fg.deobf("ignored:productivebees-1.15.2:0.1.4")
+	implementation fg.deobf("ignored:Abnormals-Core-1.15.2:1.0.4")
 	
 	//runtimeOnly fg.deobf("ignored:modname-1.15.2:x.x.x")
 }

@@ -27,9 +27,9 @@ public class BzBlocks
     static {
 	Material.Builder builder = (new Material.Builder(MaterialColor.ORANGE_TERRACOTTA)).doesNotBlockMovement().replaceable().notSolid();
 	try {
-	    Method method = ObfuscationReflectionHelper.findMethod(builder.getClass(), "notOpaque");
+	    Method method = ObfuscationReflectionHelper.findMethod(builder.getClass(), "func_200505_j");
 	    builder = ((Builder) method.invoke(builder));
-	    method = ObfuscationReflectionHelper.findMethod(builder.getClass(), "pushDestroys");
+	    method = ObfuscationReflectionHelper.findMethod(builder.getClass(), "func_200511_g");
 	    RESIDUE = ((Builder) method.invoke(builder)).build();
 	} catch (Exception e) {
 	    e.printStackTrace();

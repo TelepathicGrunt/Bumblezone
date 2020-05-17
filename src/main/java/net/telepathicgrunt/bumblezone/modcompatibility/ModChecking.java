@@ -28,6 +28,10 @@ public class ModChecking
 				//only run setup for mod if it is v1.4 or greater
 				if((majorVersion == 1 && minorVersion >= 4) || majorVersion > 1)
 					runSetupForMod(() -> () -> BuzzierBeesCompat.setupBuzzierBees()); 
+				
+				//fix for v1.5.0 buzzier bees as the v killed the version checker rip
+				if(majorVersion == 0 && minorVersion == 0)
+					runSetupForMod(() -> () -> BuzzierBeesCompat.setupBuzzierBees()); 
 			}
 
 
