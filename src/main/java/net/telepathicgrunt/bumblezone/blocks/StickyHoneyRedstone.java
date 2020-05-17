@@ -88,11 +88,12 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      * Notifies blocks that this block is attached to of changes
      */
     protected void updateNeighbors(BlockState blockstate, World world, BlockPos pos) {
-	if (net.minecraftforge.event.ForgeEventFactory.onNeighborNotify(world, pos, world.getBlockState(pos), java.util.EnumSet.allOf(Direction.class), false).isCanceled())
+	if (net.minecraftforge.event.ForgeEventFactory.onNeighborNotify(world, pos, world.getBlockState(pos), java.util.EnumSet.allOf(Direction.class), false).isCanceled()
+		|| blockstate.getBlock() != BzBlocks.STICKY_HONEY_REDSTONE.get())
 	    return;
 
 	for (Direction direction : Direction.values()) {
-	    BooleanProperty booleanproperty = FACING_TO_PROPERTY_MAP.get(direction);
+	    BooleanProperty booleanproperty = StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(direction);
 	    if (blockstate.get(booleanproperty)) {
 		world.neighborChanged(pos.offset(direction), blockstate.getBlock(), pos);
 	    }

@@ -30,10 +30,10 @@ public final class HiveWallBiome extends BzBaseBiome
 		this.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, BzFeatures.HONEY_CRYSTAL_FEATURE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.configure(new FrequencyConfig(4))));
 		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BzFeatures.CAVE_SUGAR_WATERFALL.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.COUNT_BIASED_RANGE.configure(new CountRangeConfig(100, 8, 0, 248))));
 		
-	    this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.BEE, 20, 8, 12));
+	    this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.BEE, 20, 5, 8));
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.SNOWBALL, 3000, 1, 1)); //Used to make monsters even less common
-		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.SPIDER, 50, 1, 1));
-		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.CAVE_SPIDER, 5, 1, 1));
+		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.SPIDER, 10, 1, 1));
+		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.CAVE_SPIDER, 3, 1, 1));
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.ENDERMAN, 10, 1, 1));
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.PHANTOM, 1, 1, 1));
 	}

@@ -110,7 +110,7 @@ public class Bumblezone
 	private static void lateSetup()
 	{
 		ModChecking.setupModCompat();
-		BzBiomes.addVanillaSlimeMobs();
+		BzBiomes.biomes.forEach(biome -> ((BzBaseBiome)biome).increaseVanillaSlimeMobsRates());
 	}
 
 	// You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD

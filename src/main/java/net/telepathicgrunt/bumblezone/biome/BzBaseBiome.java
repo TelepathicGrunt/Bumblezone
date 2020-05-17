@@ -21,7 +21,7 @@ public class BzBaseBiome extends Biome {
 		super(biomeBuilder.precipitation(Biome.RainType.NONE).category(Biome.Category.JUNGLE).waterColor(14402413).waterFogColor(11700268).parent((String) null));
 	}
 	
-	public void addVanillaSlimeMobs() {
+	public void increaseVanillaSlimeMobsRates() {
 		if(!ModChecking.buzzierBeesPresent) {
 			this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.SLIME, 350, 4, 8));
 		}

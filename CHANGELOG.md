@@ -84,7 +84,9 @@ Mods I'm keeping an eye on for future compat
 
 -Fixed bug where Bees cannot be angered normally outside of The Bumblezone with default config settings.
 
--Lowered Cave Spider and Spider spawn rates a bit and removed both spiders from Sugar Water Biome. 
+-Lowered Cave Spider and Spider spawn rates a bit and removed both spiders from Sugar Water Biome.
+
+-Decreased how many bees will spawn in a bunch when spawning mobs. 
 
 -Vanilla Slime mobs will now spawn in Sugar Water biome but only at a low height below sealevel and in certain chunks. That way you can still make a Slime farm in Bumblezone even with Buzzier Bees on.
 

@@ -30,8 +30,8 @@ public final class SugarWaterBiome extends BzBaseBiome
 		this.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, BzFeatures.HONEY_CRYSTAL_FEATURE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.configure(new FrequencyConfig(1))));
 		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, BzFeatures.CAVE_SUGAR_WATERFALL.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.COUNT_BIASED_RANGE.configure(new CountRangeConfig(100, 8, 0, 248))));
 		
-	    this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.BEE, 20, 5, 10));
-		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.SNOWBALL, 2100, 1, 1)); //Used to make monsters even less common
+	    this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.BEE, 20, 4, 8));
+		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.SNOWBALL, 2200, 1, 1)); //Used to make monsters even less common
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.SLIME, 20, 1, 1));
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.ENDERMAN, 2, 1, 1));
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.PHANTOM, 1, 1, 1));
