@@ -3,7 +3,9 @@
 <p style="text-decoration: underline; font-size: 14px; text-align: center;"><strong><a style="text-decoration: underline; font-size: 14px; text-align: center;" href="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-fabric">[Click here for the Fabric version of this mod!]</a></strong></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p style="text-align: center;"><em><span style="font-size: 14px; color: #b00000; text-decoration: underline;"><strong>Recent 1.15.2 News:</strong></span><span style="font-size: 14px;"><b><strong>&nbsp;New dungeons, blocks, items, and mod compatibility!</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px; color: #b00000; text-decoration: underline;"><strong>Recent 1.15.2 News:</strong></span><span style="font-size: 14px;"><b><strong>&nbsp;With v1.3.0+, explore new dungeons, </strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>blocks, </strong></b></span></em><em><span style="font-size: 14px;"><b><strong>items, and mod compatibility including JEI!</strong></b></span></em></p>
+<p style="text-align: center;">&nbsp;</p>
 <p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Also, if you're using Buzzier Bees with this mod,</strong></b></span></em></p>
 <p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>please update your Buzzier Bees to v1.5 or higher!</strong></b></span></em></p>
 <p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Also, several bug fixes was done such as falling out of</strong></b></span></em></p>
@@ -37,7 +39,7 @@
 <p>&nbsp;</p>
 <p>-Use a Silk Touch pickaxe to drop this block. Otherwise, mining it will drop a Honeycomb and a Porous Honeycomb Block.</p>
 <p>&nbsp;</p>
-<p>-Attaching a&nbsp;comparator to this block will always output a redstone power of 1.</p>
+<p>-Attaching a Comparator to this block will always output a redstone power of 1.</p>
 </div>
 <p>&nbsp;</p>
 <p>&nbsp;Porous Honeycomb Block</p>
@@ -53,11 +55,11 @@
 <p>&nbsp;</p>
 <p>-The Larva grows much faster in The Bumblezone dimension but will still grow outside of it. You can speed up the larva stages by feeding it Honey Bottles which always results in growth or feed it Sugar Water Bottle which sometimes results in growth. You can use a Dispenser with Honey Bottles or Sugar Water Bottles right next to the block to automate the growing and spawning of bees with this block!</p>
 <p>&nbsp;</p>
-<p>-If you use a Glass Bottle on this block, you will get a Honey Bottle, turn this block into a&nbsp;Dead Honeycomb Larva Block, and you will get Wrath of the Hive effect.</p>
+<p>-If you use a Glass Bottle on this block, you will get a Honey Bottle, turn this block into a&nbsp;Dead Honeycomb Brood Block, and you will get Wrath of the Hive effect.</p>
 <p>&nbsp;</p>
 <p>-When mined, this block drops&nbsp;Dead Honeycomb Larva Block and a Honeycomb and since you killed the larva, you get Wrath of the Hive effect as well. But if you use a Silk Touch pickaxe, you can get&nbsp;Honeycomb Larva Block instead without angering the bee or getting the effect.</p>
 <p>&nbsp;</p>
-<p>-Attaching a comparator to this block will output redstone power based on what stage the larva is in the block (1 to 4 power).</p>
+<p>-Attaching a Comparator to this block will output redstone power based on what stage the larva is in the block (1 to 4 power).</p>
 </div>
 <p>&nbsp;</p>
 <p>&nbsp;Empty Honeycomb Brood Block</p>
@@ -88,7 +90,7 @@
 <p>&nbsp;</p>
 <p>-Source blocks can be picked up and placed with a Bucket. Using Glass Bottles on this liquid will give you Sugar Water Bottle.</p>
 <p>&nbsp;</p>
-<p>-Uses the water tag so that anything that checks for the water tag will work with Sugar Water. For example; keeping Coral alive or hydrating Farmland blocks. See this page for more details on what the water tagged blocks can do:&nbsp;<a href="https://minecraft.gamepedia.com/Tag#Fluids">https://minecraft.gamepedia.com/Tag#Fluids</a></p>
+<p>-Uses the water tag so that anything that checks for the water tag will work with Sugar Water. For example; keeping Coral alive or hydrating Farmland blocks. See this page for more details on what the water tagged blocks can do: <a href="https://minecraft.gamepedia.com/Tag#Fluids">https://minecraft.gamepedia.com/Tag#Fluids</a></p>
 </div>
 <p>&nbsp;</p>
 <p>Sticky Honey Residue</p>
@@ -169,7 +171,7 @@
 <p>&nbsp;</p>
 <p>-Any mob that physically hits your shield when you're blocking will apply a 4 second slowness effect on the mob due to the honey's stickiness!</p>
 <p>&nbsp;</p>
-<p>-This shield can be enchanted with&nbsp;Unbreaking or Curse of the Binding. (Mending cannot be applied as that would make the shield way too overpowered at maximum durability)</p>
+<p>-This shield can be enchanted with&nbsp;Unbreaking or Curse of the Vanishing. (Mending cannot be applied as that would make the shield way too overpowered at maximum durability)</p>
 </div>
 </div>
 <p>&nbsp;</p>
@@ -207,6 +209,8 @@
 <p>&nbsp;</p>
 <p>-Crystallized Honey Block and&nbsp;Wax Blocks will be incorporated into the terrain generation with&nbsp;Crystallized Honey Block appear just under the surface of land above sealevel and&nbsp;Wax Blocks appearing on the surface on land at and below sealevel.&nbsp;</p>
 <p>&nbsp;</p>
+<p>-Bee Dungeons and Spider Infested Bee Dungeons will now generate several random candles from Buzzier Bees including scented versions!</p>
+<p>&nbsp;</p>
 <p>-Honey Slime mobs will spawn instead of Slime mobs in the dimension. Honey Slime mobs can also rarely spawn from the Honeycomb Brood Block in the dimension.</p>
 <p>&nbsp;</p>
 <p>-With the Honey Wand, you can take/add honey from Filled Porous Honeycomb Blocks and&nbsp;Porous Honeycomb Blocks without angering bees.&nbsp;</p>
@@ -241,6 +245,8 @@
 <p>-Productive Bees' will also rarely spawn in The Bumblezone dimension from regular spawning or from Honeycomb&nbsp;Brood Blocks in the dimension. All of their types of bees have equal chances of spawning.</p>
 <p>&nbsp;</p>
 <p>-Productive Bees' Honey Treat item has a 40% chance of removing the Wrath of the Hive effect from you when you feed the treat to bees unlike the Honey Bottle's 30% chance. The treat will also heal bees a lot more too!</p>
+<p>&nbsp;</p>
+<p>-The Honey Treat can also be fed to Honeycomb Brood Blocks to grow the larva! In fact, there's a 20% chance the larva may grow two stages at a time instead of 1 when fed this item.&nbsp;</p>
 </div>
 <p>&nbsp;</p>
 <p>Aurum's More Blocks (AMB) -&nbsp;<a href="https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks">https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks</a></p>
@@ -257,9 +263,9 @@
 <p>&nbsp;&nbsp;</p>
 <p><strong>______________________________________________________________________________</strong></p>
 <p>&nbsp;</p>
-<h2 id="enter" style="color: #b76a00;"><strong>HOW DO I ENTER THIS WORLD?</strong></h2>
+<h2 id="enter" style="color: #b76a00;"><strong>HOW DO I ENTER OR EXIT THIS WORLD?</strong></h2>
 <p>&nbsp;</p>
-<p><span style="font-size: 14px;">&nbsp; &nbsp; Entering the dimension is super easy! Just throw an Enderpearl at any Bee Nest or Beehive (even modded ones works!) to enter inside it and spawn into the dimension. To teleport out of the dimension, you can either dig down and fall below Y = 0 (don't worry, you won't die as I made sure of that) or climb your way to above Y = 256. The mod will see you are trying to leave and it'll take your coordinates in The Bumblezone, convert it to the correct coordinate in the original dimension you came from and will try to place you in that dimension near any Bee Nest or Beehive (or it'll create a new Bee Nest to place you next to if you does not find one already). Through normal use, you cannot use the mod to jump between dimensions but you can use it to travel long distances in any dimension you want. Just be sure to enter The Bumblezone from the dimension you want to fast travel in and then exiting The Bumblezone will put you back into that dimension.</span></p>
+<p><span style="font-size: 14px;">&nbsp; &nbsp; Entering the dimension is super easy! Just throw an Enderpearl at any Bee Nest or Beehive (even modded ones works!) to enter inside it and spawn into the dimension. To teleport out of the dimension, you can either dig down and fall below <strong>Y = 0</strong> (don't worry, you won't die as I made sure of that) or climb your way to above <strong>Y = 256</strong>. The mod will see you are trying to leave and it'll take your coordinates in The Bumblezone dimension, convert it to the correct coordinate in the original dimension you came from and will try to place you near any Bee Nest or Beehive at that spot (or it'll create a new Bee Nest to place you next to if you does not find one already). Through normal use, you cannot use the mod to jump between dimensions but you can use it to travel long distances in any dimension you want. Just be sure to enter The Bumblezone from the dimension you want to fast travel in and then exiting The Bumblezone will put you back into that dimension.</span></p>
 <p>&nbsp;</p>
 <p><img src="https://i.imgur.com/52ThBt7.jpg" alt="Picture showing how to enter The Bumblezone by a player throwing an Enderpearl at a Bee Nest" width="696" height="363" /></p>
 <p>&nbsp;</p>
@@ -272,6 +278,8 @@
 <p><span style="font-size: 14px;">&nbsp;</span></p>
 <p><span style="font-size: 14px;">&nbsp; &nbsp;There are a TON of config options currently for the mod and all of them has comments on what they do and how to control them. Several configs affects the dimension and lets you control whether the dimension has a day/night cycle (that matches the Overworld's cycle), how bright the fog is, what the movement factor of the dimension is, and whether exiting the dimension will always place you back at Overworld instead of previous dimension you came from. There are even some worldgen options such as how rare the Bee Dungeons are. Some other configs lets you customize the Wrath of the Hive effect so you can change how long it lasts, how far bees has to be to be angered and boosted, how strong the effects given to bees are, whether Wrath of the Hive can be triggered outside The Bumblezone, show particles of the effect, or just turn off the effect completely. Lots of options including some that controls how some mods interacts with this mod! Take a look at the config and let me know if there's anything config that would be super helpful for you to have with this mod. :)</span></p>
 <p><span style="font-size: 14px;">&nbsp;</span></p>
+<p><span style="font-size: 12px;">The ID for the dimension is <strong>the_bumblezone:the_bumblezone</strong> if you need it. Also, if you need the ID for any Bumblezone's block, item, or biome to add into other mod's configs files, check out the <a href="https://github.com/TelepathicGrunt/Bumblezone/blob/master/src/main/resources/assets/the_bumblezone/lang/en_us.json">en_us.json file here</a> as the ID names of all the stuff is on there. For example, <strong><span class="pl-s"><span class="pl-pds">"</span>block.the_bumblezone.porous_honeycomb_block<span class="pl-pds">"</span></span></strong>&nbsp;would be read as <strong>the_bumblezone:porous_honeycomb_block</strong> for the ID.&nbsp;</span></p>
+<p><span style="font-size: 14px;"><strong><a href="https://github.com/TelepathicGrunt/Bumblezone/blob/master/src/main/resources/assets/the_bumblezone/lang/en_us.json">https://github.com/TelepathicGrunt/Bumblezone/blob/master/src/main/resources/assets/the_bumblezone/lang/en_us.json</a></strong></span></p>
 <p>&nbsp;</p>
 <p style="text-align: center;"><strong>______________________________________________________________________________</strong></p>
 <p style="text-align: center;"><em>For the list of changes in this mod, click the Source tab and check out CHANGELOG.md file.</em></p>
