@@ -14,7 +14,6 @@ import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.BeeEntity;
@@ -101,6 +100,7 @@ public class HoneycombBrood extends DirectionalBlock
 	/**
 	 * Called when the given entity walks on this Block
 	 */
+	@Override
 	public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn)
 	{
 		double yMagnitude = Math.abs(entityIn.getMotion().y);
@@ -306,6 +306,7 @@ public class HoneycombBrood extends DirectionalBlock
 	 * Called before the Block is set to air in the world. Called regardless of if the player's tool can actually collect
 	 * this block
 	 */
+	@Override
 	public void onBlockHarvested(World world, BlockPos position, BlockState state, PlayerEntity playerEntity)
 	{
 
@@ -347,8 +348,7 @@ public class HoneycombBrood extends DirectionalBlock
 
 			if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(beeEntity, world, blockpos.getX()+0.5D, blockpos.getY()+0.5D, blockpos.getZ()+0.5D, null, SpawnReason.TRIGGERED) != -1)
 			{
-				ILivingEntityData ilivingentitydata = null;
-				ilivingentitydata = beeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beeEntity)), SpawnReason.TRIGGERED, ilivingentitydata, (CompoundNBT) null);
+				beeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beeEntity)), SpawnReason.TRIGGERED, null, (CompoundNBT) null);
 				world.addEntity(beeEntity);
 
 				world.setBlockState(position, state.with(STAGE, Integer.valueOf(0)));
@@ -364,6 +364,7 @@ public class HoneycombBrood extends DirectionalBlock
 	/**
 	 * tell redstone that this can be use with comparator
 	 */
+	@Override
 	public boolean hasComparatorInputOverride(BlockState state)
 	{
 		return true;
@@ -373,6 +374,7 @@ public class HoneycombBrood extends DirectionalBlock
 	/**
 	 * the power fed into comparator (1 - 4)
 	 */
+	@Override
 	public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos)
 	{
 		return blockState.get(STAGE)+1;
@@ -394,8 +396,10 @@ public class HoneycombBrood extends DirectionalBlock
 		}
 
 		int stage = blockState.get(STAGE);
-		float soundVolume = 0.1F + stage * 0.3F;
-		world.playSound(position.getX(), position.getY(), position.getZ(), SoundEvents.ENTITY_BEE_LOOP, SoundCategory.PLAYERS, soundVolume, 1.0F, false);
+		float soundVolume = 0.05F + stage * 0.1F;
+		
+		if(world.rand.nextInt(20) == 0)
+		    world.playSound(position.getX()+0.5D, position.getY()+0.5D, position.getZ()+0.5D, SoundEvents.ENTITY_BEE_LOOP, SoundCategory.BLOCKS, soundVolume, 1.0F, true);
 	}
 
 

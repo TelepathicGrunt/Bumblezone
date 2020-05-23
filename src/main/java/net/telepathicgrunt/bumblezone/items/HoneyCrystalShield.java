@@ -45,6 +45,7 @@ public class HoneyCrystalShield extends ShieldItem{
      * Display the shield level (repair cost)
      */
     @OnlyIn(Dist.CLIENT)
+    @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 	if(stack.hasTag()) {
 	    int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;

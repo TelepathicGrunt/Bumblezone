@@ -16,7 +16,12 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
 
+   
+## (V.1.3.1 Changes) (1.15.2 Minecraft)
+ 
+##### Blocks: 
 
+-Lower and smoothed out buzzing sound of Honeycomb Brood Blocks.
    
 ## (V.1.3.0 Changes) (1.15.2 Minecraft)
     

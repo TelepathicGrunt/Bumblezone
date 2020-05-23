@@ -34,25 +34,28 @@ public class EmptyHoneycombBrood extends DirectionalBlock
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.SOUTH));
 	}
 
-
+	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(FACING);
 	}
 
 
+	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
 		return this.getDefaultState().with(FACING, context.getFace().getOpposite());
 	}
 
 
+	@Override
 	public BlockState rotate(BlockState state, Rotation rot)
 	{
 		return state.with(FACING, rot.rotate(state.get(FACING)));
 	}
 
 
+	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn)
 	{
 		return state.rotate(mirrorIn.toRotation(state.get(FACING)));
