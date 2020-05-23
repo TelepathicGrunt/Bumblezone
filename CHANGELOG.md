@@ -25,7 +25,7 @@ Mods I'm keeping an eye on for future compat
       
 ##### Items:
 
--Honey Crystal Shield now can be enchanted with Curse of the Binding like the description states along with Curse of the Vanishing. 
+-Honey Crystal Shield description now says it can be enchanted with Curse of the Vanishing as Curse of the Binding is only for armor. 
 
 ##### Mod Compatibility:
 
