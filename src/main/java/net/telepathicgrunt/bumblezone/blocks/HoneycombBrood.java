@@ -52,6 +52,7 @@ import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.HoneyBottleDispenseBehavior;
 import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
+import net.telepathicgrunt.bumblezone.modcompatibility.ProductiveBeesRedirection;
 
 
 public class HoneycombBrood extends DirectionalBlock
@@ -265,6 +266,33 @@ public class HoneycombBrood extends DirectionalBlock
 
 					return action;
 				}
+			}
+			else if (ModChecking.productiveBeesPresent) {
+
+			    // makes honey treat have a slight chance of growing the larva 2 stages instead of 1
+			    if (ProductiveBeesRedirection.PBIsHoneyTreatItem(itemstack.getItem())) {
+				if (!world.isRemote)
+				{
+					// spawn bee if at final stage and front isn't blocked off
+					int stage = thisBlockState.get(STAGE);
+					if (stage == 3) {
+					    spawnBee(world, thisBlockState, position, stage);
+					}
+					else {
+					    int stageIncrease = world.rand.nextFloat() < 0.2f ? 2 : 1;
+					    world.setBlockState(position, thisBlockState.with(STAGE, Math.min(3, stage + stageIncrease)));
+					}
+				}
+
+				//block grew one stage or bee was spawned
+				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+
+				//removes used item
+				if (!playerEntity.isCreative())
+				{
+					itemstack.shrink(1); // item was consumed
+				}
+			    }
 			}
 		}
 

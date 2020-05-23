@@ -4,12 +4,11 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.items.BzItems;
-import net.telepathicgrunt.ultraamplified.UltraAmplified;
 
 @JeiPlugin
 public class JEIIntegration implements IModPlugin
@@ -37,10 +36,10 @@ public class JEIIntegration implements IModPlugin
     }
 
     
-    private static void addInfo(IRecipeRegistration registration, Block block) {
+    private static void addInfo(IRecipeRegistration registration, Item item) {
 	registration.addIngredientInfo(
-		new ItemStack(block), 
+		new ItemStack(item), 
 		VanillaTypes.ITEM, 
-		Bumblezone.MODID+"."+block.getRegistryName().getPath()+".jei_description");
+		Bumblezone.MODID+"."+item.getRegistryName().getPath()+".jei_description");
     }
 }

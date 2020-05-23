@@ -23,6 +23,10 @@ Mods I'm keeping an eye on for future compat
 
 -Lower and smoothed out buzzing sound of Honeycomb Brood Blocks.
    
+##### Mod Compatibility:
+
+-Productive Bees's Honey Treat item can be used to grow Honeycomb Brood Blocks now. They have a 20% of growing the larva by 2 stages instead of 1.T
+
 ## (V.1.3.0 Changes) (1.15.2 Minecraft)
     
 ##### Config:        
