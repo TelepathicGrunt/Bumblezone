@@ -68,7 +68,7 @@ public class HoneycombBrood extends DirectionalBlock
 		DispenserBlock.registerDispenseBehavior(Items.HONEY_BOTTLE, BEHAVIOUR_DEFAULT_DISPENSE_ITEM); //adds compatibility with honey bottles in dispensers
 	}
 
-
+	//TODO: make honey treat grow this block
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
 	{
