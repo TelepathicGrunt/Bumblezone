@@ -230,6 +230,7 @@ public class StickyHoneyResidue extends VineBlock {
     /**
      * tell redstone that this can be use with comparator
      */
+    @Override
     public boolean hasComparatorInputOverride(BlockState state) {
 	return true;
     }
@@ -237,6 +238,7 @@ public class StickyHoneyResidue extends VineBlock {
     /**
      * the power fed into comparator (1 - 4)
      */
+    @Override
     public int getComparatorInputOverride(BlockState blockstate, World world, BlockPos pos) {
 	return numberOfAttachments(blockstate);
     }

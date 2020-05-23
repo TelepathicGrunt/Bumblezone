@@ -31,7 +31,6 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid
 		super(properties);
 	}
 
-
 	@Override
 	public void randomTick(World world, BlockPos position, IFluidState state, Random random)
 	{
@@ -64,7 +63,6 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid
 		}
 	}
 
-
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void animateTick(World worldIn, BlockPos pos, IFluidState state, Random random)
@@ -82,7 +80,6 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid
 		}
 	}
 
-
 	@Nullable
 	@OnlyIn(Dist.CLIENT)
 	@Override
@@ -91,13 +88,11 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid
 		return ParticleTypes.DRIPPING_WATER;
 	}
 
-
 	@Override
 	protected boolean ticksRandomly()
 	{
 		return true;
 	}
-
 
 	@Override
 	public int getTickRate(IWorldReader p_205569_1_)
@@ -105,13 +100,13 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid
 		return 5;
 	}
 
-
-
 	@Override
 	public boolean isEquivalentTo(Fluid fluidIn)
 	{
 		return fluidIn == BzBlocks.SUGAR_WATER_FLUID.get() || fluidIn == BzBlocks.SUGAR_WATER_FLUID_FLOWING.get();
 	}
+	
+	
 
 	public static class Flowing extends SugarWaterFluid
 	{
@@ -122,6 +117,7 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid
 		}
 
 
+		@Override
 		protected void fillStateContainer(StateContainer.Builder<Fluid, IFluidState> builder)
 		{
 			super.fillStateContainer(builder);
@@ -129,12 +125,14 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid
 		}
 
 
+		@Override
 		public int getLevel(IFluidState state)
 		{
 			return state.get(LEVEL_1_8);
 		}
 
 
+		@Override
 		public boolean isSource(IFluidState state)
 		{
 			return false;
@@ -150,12 +148,14 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid
 		}
 
 
+		@Override
 		public int getLevel(IFluidState state)
 		{
 			return 8;
 		}
 
 
+		@Override
 		public boolean isSource(IFluidState state)
 		{
 			return true;

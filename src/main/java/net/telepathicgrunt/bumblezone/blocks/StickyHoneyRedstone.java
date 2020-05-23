@@ -19,7 +19,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class StickyHoneyRedstone extends StickyHoneyResidue {
+public class StickyHoneyRedstone extends StickyHoneyResidue
+{
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     protected static final AxisAlignedBB DOWN_REAL_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.2D, 1D);
     protected static final AxisAlignedBB UP_REAL_AABB = new AxisAlignedBB(0.0D, 0.8D, 0.0D, 1D, 1D, 1D);
@@ -37,21 +38,15 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
 	map.put(Direction.WEST, WEST_REAL_AABB);
 	map.put(Direction.NORTH, NORTH_REAL_AABB);
 	map.put(Direction.SOUTH, SOUTH_REAL_AABB);
-	
+
 	FACING_TO_AABB_MAP = map;
     }
-    
+
     public StickyHoneyRedstone() {
 	super();
-	this.setDefaultState(this.stateContainer.getBaseState()
-		.with(UP, Boolean.valueOf(false))
-		.with(NORTH, Boolean.valueOf(false))
-		.with(EAST, Boolean.valueOf(false))
-		.with(SOUTH, Boolean.valueOf(false))
-		.with(WEST, Boolean.valueOf(false))
-		.with(DOWN, Boolean.valueOf(false))
-		.with(POWERED, false));
+	this.setDefaultState(this.stateContainer.getBaseState().with(UP, Boolean.valueOf(false)).with(NORTH, Boolean.valueOf(false)).with(EAST, Boolean.valueOf(false)).with(SOUTH, Boolean.valueOf(false)).with(WEST, Boolean.valueOf(false)).with(DOWN, Boolean.valueOf(false)).with(POWERED, false));
     }
+
 
     /**
      * Set up properties.
@@ -60,6 +55,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
 	builder.add(UP, NORTH, EAST, SOUTH, WEST, DOWN, POWERED);
     }
+
 
     /**
      * Slows all entities inside the block and triggers being powered.
@@ -71,11 +67,13 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
 	super.onEntityCollision(blockstate, world, pos, entity);
     }
 
+
     @Override
     public int getWeakPower(BlockState blockstate, IBlockReader blockAccess, BlockPos pos, Direction side) {
 	return blockstate.get(POWERED) ? 1 : 0;
     }
-    
+
+
     /**
      * Remove vine's ticking with removing power instead.
      */
@@ -83,14 +81,13 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     public void tick(BlockState blockstate, ServerWorld world, BlockPos pos, Random rand) {
 	this.updateState(world, pos, blockstate, blockstate.get(POWERED) ? 1 : 0);
     }
-    
+
+
     /**
      * Notifies blocks that this block is attached to of changes
      */
     protected void updateNeighbors(BlockState blockstate, World world, BlockPos pos) {
-	if (net.minecraftforge.event.ForgeEventFactory.onNeighborNotify(world, pos, world.getBlockState(pos), java.util.EnumSet.allOf(Direction.class), false).isCanceled()
-		|| blockstate.getBlock() != BzBlocks.STICKY_HONEY_REDSTONE.get())
-	    return;
+	if (net.minecraftforge.event.ForgeEventFactory.onNeighborNotify(world, pos, world.getBlockState(pos), java.util.EnumSet.allOf(Direction.class), false).isCanceled() || blockstate.getBlock() != BzBlocks.STICKY_HONEY_REDSTONE.get()) return;
 
 	for (Direction direction : Direction.values()) {
 	    BooleanProperty booleanproperty = StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(direction);
@@ -99,7 +96,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
 	    }
 	}
     }
-    
+
 
     /**
      * notify neighbor of changes when replaced
@@ -107,31 +104,32 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     @SuppressWarnings("deprecation")
     @Override
     public void onReplaced(BlockState blockstate, World world, BlockPos pos, BlockState newState, boolean isMoving) {
-       if (!isMoving && blockstate.getBlock() != newState.getBlock()) {
-          if (blockstate.get(POWERED)) {
-             this.updateNeighbors(blockstate, world, pos);
-          }
+	if (!isMoving && blockstate.getBlock() != newState.getBlock()) {
+	    if (blockstate.get(POWERED)) {
+		this.updateNeighbors(blockstate, world, pos);
+	    }
 
-          super.onReplaced(blockstate, world, pos, newState, isMoving);
-       }
+	    super.onReplaced(blockstate, world, pos, newState, isMoving);
+	}
     }
-    
+
+
     /**
      * Updates the sticky residue block when entity enters or leaves
      */
     protected void updateState(World world, BlockPos pos, BlockState oldBlockstate, int oldRedstoneStrength) {
-       int newPower = this.computeRedstoneStrength(oldBlockstate, world, pos);
-       boolean flag1 = newPower > 0;
-       if (oldRedstoneStrength != newPower) {
-          BlockState newBlockstate = this.setRedstoneStrength(oldBlockstate, newPower);
-          world.setBlockState(pos, newBlockstate, 2);
-          this.updateNeighbors(oldBlockstate, world, pos);
-          world.markBlockRangeForRenderUpdate(pos, oldBlockstate, newBlockstate);
-       }
+	int newPower = this.computeRedstoneStrength(oldBlockstate, world, pos);
+	boolean flag1 = newPower > 0;
+	if (oldRedstoneStrength != newPower) {
+	    BlockState newBlockstate = this.setRedstoneStrength(oldBlockstate, newPower);
+	    world.setBlockState(pos, newBlockstate, 2);
+	    this.updateNeighbors(oldBlockstate, world, pos);
+	    world.markBlockRangeForRenderUpdate(pos, oldBlockstate, newBlockstate);
+	}
 
-       if (flag1) {
-          world.getPendingBlockTicks().scheduleTick(new BlockPos(pos), this, this.tickRate(world));
-       }
+	if (flag1) {
+	    world.getPendingBlockTicks().scheduleTick(new BlockPos(pos), this, this.tickRate(world));
+	}
     }
 
 
@@ -141,6 +139,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     protected BlockState setRedstoneStrength(BlockState blockstate, int strength) {
 	return blockstate.with(POWERED, Boolean.valueOf(strength > 0));
     }
+
 
     /**
      * Detects if any entity is inside this block and outputs power if so

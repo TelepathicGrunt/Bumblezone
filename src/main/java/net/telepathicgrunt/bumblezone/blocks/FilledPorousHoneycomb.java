@@ -136,6 +136,7 @@ public class FilledPorousHoneycomb extends Block
 	/**
 	 * tell redstone that this can be use with comparator
 	 */
+	@Override
 	public boolean hasComparatorInputOverride(BlockState state)
 	{
 		return true;
@@ -145,6 +146,7 @@ public class FilledPorousHoneycomb extends Block
 	/**
 	 * the power fed into comparator 1
 	 */
+	@Override
 	public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos)
 	{
 		return 1;

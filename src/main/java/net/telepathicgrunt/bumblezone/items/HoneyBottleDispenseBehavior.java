@@ -22,6 +22,7 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior
 	/**
 	 * Dispense the specified stack, play the dispense sound and spawn particles.
 	 */
+	@Override
 	public ItemStack dispenseStack(IBlockSource source, ItemStack stack)
 	{
 		World world = source.getWorld();
@@ -73,6 +74,7 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior
 	/**
 	 * Play the dispense sound from the specified block.
 	 */
+	@Override
 	protected void playDispenseSound(IBlockSource source)
 	{
 		source.getWorld().playEvent(1002, source.getBlockPos(), 0);

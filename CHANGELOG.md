@@ -16,8 +16,23 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
 
-
    
+## (V.1.3.1 Changes) (1.15.2 Minecraft)
+ 
+##### Blocks: 
+
+-Lower and smoothed out buzzing sound of Honeycomb Brood Blocks.
+      
+##### Items:
+
+-Honey Crystal Shield description now says it can be enchanted with Curse of the Vanishing as Curse of the Binding is only for armor. 
+
+##### Mod Compatibility:
+
+-Added JEI integration. All of The Bumblezone's blocks and items now has a description page.
+
+-Productive Bees's Honey Treat item can be used to grow Honeycomb Brood Blocks now. They have a 20% of growing the larva by 2 stages instead of 1.
+
 ## (V.1.3.0 Changes) (1.15.2 Minecraft)
     
 ##### Config:        

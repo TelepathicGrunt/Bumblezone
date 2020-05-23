@@ -14,7 +14,6 @@ import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.BeeEntity;
@@ -53,6 +52,7 @@ import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.HoneyBottleDispenseBehavior;
 import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
+import net.telepathicgrunt.bumblezone.modcompatibility.ProductiveBeesRedirection;
 
 
 public class HoneycombBrood extends DirectionalBlock
@@ -69,7 +69,7 @@ public class HoneycombBrood extends DirectionalBlock
 		DispenserBlock.registerDispenseBehavior(Items.HONEY_BOTTLE, BEHAVIOUR_DEFAULT_DISPENSE_ITEM); //adds compatibility with honey bottles in dispensers
 	}
 
-
+	//TODO: make honey treat grow this block
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
 	{
@@ -101,6 +101,7 @@ public class HoneycombBrood extends DirectionalBlock
 	/**
 	 * Called when the given entity walks on this Block
 	 */
+	@Override
 	public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn)
 	{
 		double yMagnitude = Math.abs(entityIn.getMotion().y);
@@ -266,6 +267,33 @@ public class HoneycombBrood extends DirectionalBlock
 					return action;
 				}
 			}
+			else if (ModChecking.productiveBeesPresent) {
+
+			    // makes honey treat have a slight chance of growing the larva 2 stages instead of 1
+			    if (ProductiveBeesRedirection.PBIsHoneyTreatItem(itemstack.getItem())) {
+				if (!world.isRemote)
+				{
+					// spawn bee if at final stage and front isn't blocked off
+					int stage = thisBlockState.get(STAGE);
+					if (stage == 3) {
+					    spawnBee(world, thisBlockState, position, stage);
+					}
+					else {
+					    int stageIncrease = world.rand.nextFloat() < 0.2f ? 2 : 1;
+					    world.setBlockState(position, thisBlockState.with(STAGE, Math.min(3, stage + stageIncrease)));
+					}
+				}
+
+				//block grew one stage or bee was spawned
+				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+
+				//removes used item
+				if (!playerEntity.isCreative())
+				{
+					itemstack.shrink(1); // item was consumed
+				}
+			    }
+			}
 		}
 
 		return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
@@ -306,6 +334,7 @@ public class HoneycombBrood extends DirectionalBlock
 	 * Called before the Block is set to air in the world. Called regardless of if the player's tool can actually collect
 	 * this block
 	 */
+	@Override
 	public void onBlockHarvested(World world, BlockPos position, BlockState state, PlayerEntity playerEntity)
 	{
 
@@ -347,8 +376,7 @@ public class HoneycombBrood extends DirectionalBlock
 
 			if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(beeEntity, world, blockpos.getX()+0.5D, blockpos.getY()+0.5D, blockpos.getZ()+0.5D, null, SpawnReason.TRIGGERED) != -1)
 			{
-				ILivingEntityData ilivingentitydata = null;
-				ilivingentitydata = beeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beeEntity)), SpawnReason.TRIGGERED, ilivingentitydata, (CompoundNBT) null);
+				beeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beeEntity)), SpawnReason.TRIGGERED, null, (CompoundNBT) null);
 				world.addEntity(beeEntity);
 
 				world.setBlockState(position, state.with(STAGE, Integer.valueOf(0)));
@@ -364,6 +392,7 @@ public class HoneycombBrood extends DirectionalBlock
 	/**
 	 * tell redstone that this can be use with comparator
 	 */
+	@Override
 	public boolean hasComparatorInputOverride(BlockState state)
 	{
 		return true;
@@ -373,6 +402,7 @@ public class HoneycombBrood extends DirectionalBlock
 	/**
 	 * the power fed into comparator (1 - 4)
 	 */
+	@Override
 	public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos)
 	{
 		return blockState.get(STAGE)+1;
@@ -394,8 +424,10 @@ public class HoneycombBrood extends DirectionalBlock
 		}
 
 		int stage = blockState.get(STAGE);
-		float soundVolume = 0.1F + stage * 0.3F;
-		world.playSound(position.getX(), position.getY(), position.getZ(), SoundEvents.ENTITY_BEE_LOOP, SoundCategory.PLAYERS, soundVolume, 1.0F, false);
+		float soundVolume = 0.08F + stage * 0.07F;
+		
+		if(world.rand.nextInt(40) == 0)
+		    world.playSound(position.getX()+0.5D, position.getY()+0.5D, position.getZ()+0.5D, SoundEvents.ENTITY_BEE_LOOP, SoundCategory.BLOCKS, soundVolume, 1.0F, true);
 	}
 
 
