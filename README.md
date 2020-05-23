@@ -88,7 +88,7 @@
 <p>&nbsp;</p>
 <p>-Source blocks can be picked up and placed with a Bucket. Using Glass Bottles on this liquid will give you Sugar Water Bottle.</p>
 <p>&nbsp;</p>
-<p>-Uses the water tag so thing that checks for the water tag will work with this liquid such as keeping Coral alive or hydrating Farmland blocks. See this page for more details on what the water tagged blocks can do:&nbsp;<a href="https://minecraft.gamepedia.com/Tag#Fluids">https://minecraft.gamepedia.com/Tag#Fluids</a></p>
+<p>-Uses the water tag so that anything that checks for the water tag will work with Sugar Water. For example; keeping Coral alive or hydrating Farmland blocks. See this page for more details on what the water tagged blocks can do:&nbsp;<a href="https://minecraft.gamepedia.com/Tag#Fluids">https://minecraft.gamepedia.com/Tag#Fluids</a></p>
 </div>
 <p>&nbsp;</p>
 <p>Sticky Honey Residue</p>

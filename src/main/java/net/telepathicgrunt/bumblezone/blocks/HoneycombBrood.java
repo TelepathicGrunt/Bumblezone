@@ -424,9 +424,9 @@ public class HoneycombBrood extends DirectionalBlock
 		}
 
 		int stage = blockState.get(STAGE);
-		float soundVolume = 0.05F + stage * 0.1F;
+		float soundVolume = 0.08F + stage * 0.07F;
 		
-		if(world.rand.nextInt(20) == 0)
+		if(world.rand.nextInt(40) == 0)
 		    world.playSound(position.getX()+0.5D, position.getY()+0.5D, position.getZ()+0.5D, SoundEvents.ENTITY_BEE_LOOP, SoundCategory.BLOCKS, soundVolume, 1.0F, true);
 	}
 

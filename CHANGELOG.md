@@ -22,10 +22,14 @@ Mods I'm keeping an eye on for future compat
 ##### Blocks: 
 
 -Lower and smoothed out buzzing sound of Honeycomb Brood Blocks.
-   
+      
+##### Items:
+
+-Honey Crystal Shield now can be enchanted with Curse of the Binding like the description states along with Curse of the Vanishing. 
+
 ##### Mod Compatibility:
 
--Productive Bees's Honey Treat item can be used to grow Honeycomb Brood Blocks now. They have a 20% of growing the larva by 2 stages instead of 1.T
+-Productive Bees's Honey Treat item can be used to grow Honeycomb Brood Blocks now. They have a 20% of growing the larva by 2 stages instead of 1.
 
 ## (V.1.3.0 Changes) (1.15.2 Minecraft)
     

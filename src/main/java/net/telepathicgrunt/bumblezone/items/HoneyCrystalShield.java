@@ -97,6 +97,9 @@ public class HoneyCrystalShield extends ShieldItem{
     {
 	if(enchantment == Enchantments.MENDING)
 	    return false;
+
+	if(enchantment == Enchantments.BINDING_CURSE)
+	    return true;
 	
 	return enchantment.type.canEnchantItem(stack.getItem());
     }

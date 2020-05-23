@@ -4,10 +4,13 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 
 @JeiPlugin
@@ -33,6 +36,7 @@ public class JEIIntegration implements IModPlugin
 	addInfo(registration, BzItems.SUGAR_INFUSED_STONE_ITEM.get());
 	addInfo(registration, BzItems.SUGAR_WATER_BOTTLE.get());
 	addInfo(registration, BzItems.SUGAR_WATER_BUCKET.get());
+	addInfo(registration, BzBlocks.SUGAR_WATER_FLUID.get());
     }
 
     
@@ -41,5 +45,12 @@ public class JEIIntegration implements IModPlugin
 		new ItemStack(item), 
 		VanillaTypes.ITEM, 
 		Bumblezone.MODID+"."+item.getRegistryName().getPath()+".jei_description");
+    }
+    
+    private static void addInfo(IRecipeRegistration registration, Fluid fluid) {
+	registration.addIngredientInfo(
+		new FluidStack(fluid, 1), 
+		VanillaTypes.FLUID, 
+		Bumblezone.MODID+"."+fluid.getRegistryName().getPath()+".jei_description");
     }
 }
