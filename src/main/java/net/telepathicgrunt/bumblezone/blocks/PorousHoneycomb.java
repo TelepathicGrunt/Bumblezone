@@ -18,48 +18,41 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 
-public class PorousHoneycomb extends Block
-{
+public class PorousHoneycomb extends Block {
 
-	public PorousHoneycomb()
-	{
-		super(FabricBlockSettings.of(Material.CLAY, MaterialColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build());
-	}
+    public PorousHoneycomb() {
+        super(FabricBlockSettings.of(Material.CLAY, MaterialColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build());
+    }
 
 
-	/**
-	 * Allow player to harvest honey and put honey into this block using bottles
-	 */
-	@Override
-	@SuppressWarnings("deprecation")
-	public ActionResult onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockHitResult raytraceResult)
-	{
-		ItemStack itemstack = playerEntity.getStackInHand(playerHand);
-		/*
-		 * Player is adding honey to this block if it is not filled with honey
-		 */
-		if (itemstack.getItem() == Items.HONEY_BOTTLE)
-		{
-			world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), 3); // added honey to this block
-			world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+    /**
+     * Allow player to harvest honey and put honey into this block using bottles
+     */
+    @Override
+    @SuppressWarnings("deprecation")
+    public ActionResult onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockHitResult raytraceResult) {
+        ItemStack itemstack = playerEntity.getStackInHand(playerHand);
+        /*
+         * Player is adding honey to this block if it is not filled with honey
+         */
+        if (itemstack.getItem() == Items.HONEY_BOTTLE) {
+            world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), 3); // added honey to this block
+            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
-			if (!playerEntity.isCreative())
-			{
-				itemstack.decrement(1); // remove current honey bottle
+            if (!playerEntity.isCreative()) {
+                itemstack.decrement(1); // remove current honey bottle
 
-				if (itemstack.isEmpty())
-				{
-					playerEntity.setStackInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places empty bottle in hand
-				}
-				else if (!playerEntity.inventory.insertStack(new ItemStack(Items.GLASS_BOTTLE))) // places empty bottle in inventory
-				{
-					playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false); // drops empty bottle if inventory is full
-				}
-			}
+                if (itemstack.isEmpty()) {
+                    playerEntity.setStackInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places empty bottle in hand
+                } else if (!playerEntity.inventory.insertStack(new ItemStack(Items.GLASS_BOTTLE))) // places empty bottle in inventory
+                {
+                    playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false); // drops empty bottle if inventory is full
+                }
+            }
 
-			return ActionResult.SUCCESS;
-		}
+            return ActionResult.SUCCESS;
+        }
 
-		return super.onUse(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
-	}
+        return super.onUse(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+    }
 }

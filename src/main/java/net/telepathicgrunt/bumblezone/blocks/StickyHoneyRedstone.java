@@ -1,10 +1,5 @@
 package net.telepathicgrunt.bumblezone.blocks;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -18,6 +13,11 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class StickyHoneyRedstone extends StickyHoneyResidue {
     public static final BooleanProperty POWERED = Properties.POWERED;

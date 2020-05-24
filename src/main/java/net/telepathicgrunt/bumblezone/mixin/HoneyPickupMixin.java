@@ -17,11 +17,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(ItemEntity.class)
-public class HoneyPickupMixin
-{
+public class HoneyPickupMixin {
     //bees attack player that picks up honey blocks
     @Inject(method = "onPlayerCollision",
-            at = @At(value="INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;sendPickup(Lnet/minecraft/entity/Entity;I)V"),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;sendPickup(Lnet/minecraft/entity/Entity;I)V"),
             locals = LocalCapture.CAPTURE_FAILSOFT)
     private void onItemPickup(PlayerEntity player, CallbackInfo ci, ItemStack itemStack, Item item, int i) {
 
@@ -31,12 +30,10 @@ public class HoneyPickupMixin
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
         if ((player.dimension == BzDimensionType.BUMBLEZONE_TYPE || Bumblezone.BZ_CONFIG.allowWrathOfTheHiveOutsideBumblezone) &&
-            !player.isCreative() &&
-            !player.isSpectator())
-        {
+                !player.isCreative() &&
+                !player.isSpectator()) {
             //if player picks up a honey block, bees gets very mad...
-            if(item == Items.HONEY_BLOCK && Bumblezone.BZ_CONFIG.aggressiveBees)
-            {
+            if (item == Items.HONEY_BLOCK && Bumblezone.BZ_CONFIG.aggressiveBees) {
                 //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
                 player.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.showWrathOfTheHiveParticles, true));
             }

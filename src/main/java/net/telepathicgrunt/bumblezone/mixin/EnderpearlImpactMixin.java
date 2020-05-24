@@ -24,7 +24,7 @@ public class EnderpearlImpactMixin {
             cancellable = true)
     private void onPearlHit(HitResult hitResult, CallbackInfo ci) {
 
-        ThrownEnderpearlEntity pearlEntity = ((ThrownEnderpearlEntity)(Object)this);
+        ThrownEnderpearlEntity pearlEntity = ((ThrownEnderpearlEntity) (Object) this);
 
         World world = pearlEntity.world; // world we threw in
 

@@ -1,26 +1,10 @@
 package net.telepathicgrunt.bumblezone.entities;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.world.ChunkRegion;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.SpawnHelper;
-import net.minecraft.world.World;
-import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
-import org.apache.logging.log4j.Level;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
-import javax.swing.plaf.synth.Region;
 import java.util.Random;
 
-public class BeeProductiveIntegration
-{
+public class BeeProductiveIntegration {
     //spawns bees with chance to bee full of pollen or be a BeeProductive mob if that mod is on
     public static Entity spawnBeeProductiveBee(Random random, Entity entity) {
 

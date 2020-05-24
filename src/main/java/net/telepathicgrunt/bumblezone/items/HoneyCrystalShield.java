@@ -1,17 +1,14 @@
 package net.telepathicgrunt.bumblezone.items;
 
-import java.util.List;
-
-
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class HoneyCrystalShield extends ShieldItem {
 

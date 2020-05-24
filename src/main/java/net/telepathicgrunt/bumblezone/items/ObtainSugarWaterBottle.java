@@ -16,24 +16,20 @@ import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 
 public class ObtainSugarWaterBottle {
 
-    public static boolean useBottleOnSugarWater(World world , PlayerEntity playerEntity, Hand playerHand){
+    public static boolean useBottleOnSugarWater(World world, PlayerEntity playerEntity, Hand playerHand) {
         HitResult raytraceresult = rayTrace(world, playerEntity, RayTraceContext.FluidHandling.SOURCE_ONLY);
 
         if (raytraceresult.getType() == HitResult.Type.BLOCK &&
-                world.getBlockState(((BlockHitResult)raytraceresult).getBlockPos()) == BzBlocks.SUGAR_WATER_BLOCK.getDefaultState())
-        {
+                world.getBlockState(((BlockHitResult) raytraceresult).getBlockPos()) == BzBlocks.SUGAR_WATER_BLOCK.getDefaultState()) {
             ItemStack itemstack = playerEntity.getStackInHand(playerHand);
 
-            if (itemstack.getItem() == Items.GLASS_BOTTLE)
-            {
+            if (itemstack.getItem() == Items.GLASS_BOTTLE) {
                 world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
                 itemstack.decrement(1); // remove current honey bottle
 
-                if (itemstack.isEmpty())
-                {
+                if (itemstack.isEmpty()) {
                     playerEntity.setStackInHand(playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE)); // places sugar water bottle in hand
-                }
-                else if (!playerEntity.inventory.insertStack(new ItemStack(BzItems.SUGAR_WATER_BOTTLE))) // places sugar water bottle in inventory
+                } else if (!playerEntity.inventory.insertStack(new ItemStack(BzItems.SUGAR_WATER_BOTTLE))) // places sugar water bottle in inventory
                 {
                     playerEntity.dropItem(new ItemStack(BzItems.SUGAR_WATER_BOTTLE), false); // drops sugar water bottle if inventory is full
                 }
@@ -47,8 +43,7 @@ public class ObtainSugarWaterBottle {
 
 
     //*borrowed* from the Item class lol
-    protected static HitResult rayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidHandling fluidMode)
-    {
+    protected static HitResult rayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidHandling fluidMode) {
         float f = player.pitch;
         float f1 = player.yaw;
         Vec3d vec3d = player.getCameraPosVec(1.0F);

@@ -17,61 +17,55 @@ import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
 import net.telepathicgrunt.bumblezone.biome.BzBaseBiome;
 import net.telepathicgrunt.bumblezone.features.BzFeatureInit;
 
-public final class HiveWallBiome extends BzBaseBiome
-{
-	public HiveWallBiome()
-	{
-		super((new Settings()).surfaceBuilder(new ConfiguredSurfaceBuilder<>(HONEY_SURFACE_BUILDER, HONEY_CONFIG)).precipitation(Biome.Precipitation.NONE).category(Biome.Category.JUNGLE).depth(0.1F).scale(0.2F).temperature(1.85F).downfall(0.5F).effects((new BiomeEffects.Builder()).waterColor(16167168).waterFogColor(13528064).fogColor(12638463).method_24943(SoundEvents.BLOCK_BEEHIVE_WORK).build()).parent((String) null));
+public final class HiveWallBiome extends BzBaseBiome {
+    public HiveWallBiome() {
+        super((new Settings()).surfaceBuilder(new ConfiguredSurfaceBuilder<>(HONEY_SURFACE_BUILDER, HONEY_CONFIG)).precipitation(Biome.Precipitation.NONE).category(Biome.Category.JUNGLE).depth(0.1F).scale(0.2F).temperature(1.85F).downfall(0.5F).effects((new BiomeEffects.Builder()).waterColor(16167168).waterFogColor(13528064).fogColor(12638463).method_24943(SoundEvents.BLOCK_BEEHIVE_WORK).build()).parent((String) null));
 
-		this.addFeature(GenerationStep.Feature.LOCAL_MODIFICATIONS, BzFeatureInit.HONEYCOMB_HOLE.configure(FeatureConfig.DEFAULT).createDecoratedFeature(HONEYCOMB_HOLE_PLACER.configure(DecoratorConfig.DEFAULT)));
-		
-	    this.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(WATER_SPRING_CONFIG).createDecoratedFeature(Decorator.COUNT_BIASED_RANGE.configure(new RangeDecoratorConfig(4, 128, 0, 128))));
-	    this.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(WATER_SPRING_CONFIG).createDecoratedFeature(Decorator.COUNT_BIASED_RANGE.configure(new RangeDecoratorConfig(7, 16, 0, 72))));
+        this.addFeature(GenerationStep.Feature.LOCAL_MODIFICATIONS, BzFeatureInit.HONEYCOMB_HOLE.configure(FeatureConfig.DEFAULT).createDecoratedFeature(HONEYCOMB_HOLE_PLACER.configure(DecoratorConfig.DEFAULT)));
 
-	    this.addSpawn(EntityCategory.CREATURE, new Biome.SpawnEntry(EntityType.BEE, 100, 8, 12));
-		this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.SNOWBALL, 3000, 1, 1)); //Used to make monsters even less common
-		this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.SPIDER, 30, 1, 1));
-		this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.ENDERMAN, 10, 1, 1));
-		this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.PHANTOM, 4, 1, 1));
-		this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.SLIME, 350, 4, 8));
-	}
+        this.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(WATER_SPRING_CONFIG).createDecoratedFeature(Decorator.COUNT_BIASED_RANGE.configure(new RangeDecoratorConfig(4, 128, 0, 128))));
+        this.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(WATER_SPRING_CONFIG).createDecoratedFeature(Decorator.COUNT_BIASED_RANGE.configure(new RangeDecoratorConfig(7, 16, 0, 72))));
 
-	/**
-	 * returns the chance a creature has to spawn.
-	 */
-	public float getMaxSpawnLimit()
-	{
-		return 0.6F;
-	}
+        this.addSpawn(EntityCategory.CREATURE, new Biome.SpawnEntry(EntityType.BEE, 100, 8, 12));
+        this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.SNOWBALL, 3000, 1, 1)); //Used to make monsters even less common
+        this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.SPIDER, 30, 1, 1));
+        this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.ENDERMAN, 10, 1, 1));
+        this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.PHANTOM, 4, 1, 1));
+        this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.SLIME, 350, 4, 8));
+    }
 
-	
-	/*
-	 * Set sky color
-	 */
-	@Environment(EnvType.CLIENT)
-	public int getSkyColor()
-	{
-		return 16759808;
-	}
+    /**
+     * returns the chance a creature has to spawn.
+     */
+    public float getMaxSpawnLimit() {
+        return 0.6F;
+    }
 
 
-	/*
-	 * set grass color
-	 */
-	@Environment(EnvType.CLIENT)
-	public int getGrassColorAt(double p_225528_1_, double p_225528_3_)
-	{
-		return 7600187;
-	}
+    /*
+     * Set sky color
+     */
+    @Environment(EnvType.CLIENT)
+    public int getSkyColor() {
+        return 16759808;
+    }
 
 
-	/*
-	 * set foliage/plant color
-	 */
-	@Environment(EnvType.CLIENT)
-	public int getFoliageColor()
-	{
-		return 7593531;
-	}
+    /*
+     * set grass color
+     */
+    @Environment(EnvType.CLIENT)
+    public int getGrassColorAt(double p_225528_1_, double p_225528_3_) {
+        return 7600187;
+    }
+
+
+    /*
+     * set foliage/plant color
+     */
+    @Environment(EnvType.CLIENT)
+    public int getFoliageColor() {
+        return 7593531;
+    }
 
 }

@@ -11,18 +11,17 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayerEntity.class)
-public class PlayerDimensionChangeMixin
-{
+public class PlayerDimensionChangeMixin {
     // Handles storing of past non-bumblezone dimension the player is leaving
     @Inject(method = "dimensionChanged",
-            at = @At(value="HEAD"))
+            at = @At(value = "HEAD"))
     private void onDimensionChange(ServerWorld targetWorld, CallbackInfo ci) {
 
         //Target world isnt actually target world. It's the world we are leaving.
         DimensionType dimensionLeaving = targetWorld.getWorld().dimension.getType();
 
         //Updates the non-BZ dimension that the player is leaving
-        if(dimensionLeaving != BzDimensionType.BUMBLEZONE_TYPE){
+        if (dimensionLeaving != BzDimensionType.BUMBLEZONE_TYPE) {
             Bumblezone.PLAYER_COMPONENT.get(this).setNonBZDimension(dimensionLeaving);
         }
     }
