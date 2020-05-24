@@ -1,8 +1,5 @@
 package net.telepathicgrunt.bumblezone.blocks;
 
-import java.util.List;
-import java.util.Map;
-
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
@@ -39,6 +36,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.mixin.BucketItemAccessor;
+
+import java.util.List;
+import java.util.Map;
 
 public class StickyHoneyResidue extends VineBlock {
     public static final BooleanProperty DOWN = ConnectingBlock.DOWN;
@@ -208,15 +208,15 @@ public class StickyHoneyResidue extends VineBlock {
     /**
      * tell redstone that this can be use with comparator
      */
-	@Override
-	public boolean hasComparatorOutput(BlockState state){
+    @Override
+    public boolean hasComparatorOutput(BlockState state) {
         return true;
     }
 
     /**
      * the power fed into comparator (1 - 4)
      */
-	@Override
+    @Override
     public int getComparatorOutput(BlockState blockstate, World world, BlockPos pos) {
         return numberOfAttachments(blockstate);
     }
@@ -247,7 +247,7 @@ public class StickyHoneyResidue extends VineBlock {
         ItemStack itemstack = playerEntity.getStackInHand(playerHand);
 
         if ((itemstack.getItem() instanceof BucketItem &&
-				((BucketItemAccessor) ((BucketItem) itemstack.getItem())).getFluid().isIn(FluidTags.WATER)) ||
+                ((BucketItemAccessor) ((BucketItem) itemstack.getItem())).getFluid().isIn(FluidTags.WATER)) ||
                 itemstack.getOrCreateTag().getString("Potion").contains("water") ||
                 itemstack.getItem() == Items.WET_SPONGE ||
                 itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {

@@ -1,7 +1,5 @@
 package net.telepathicgrunt.bumblezone.blocks;
 
-import java.util.Random;
-
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -29,161 +27,139 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 
-
-public class FilledPorousHoneycomb extends Block
-{
-
-	public FilledPorousHoneycomb()
-	{
-		super(FabricBlockSettings.of(Material.CLAY, MaterialColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.9F));
-	}
+import java.util.Random;
 
 
-	/**
-	 * Called when the given entity walks on this Block
-	 */
-	@Override
-	public void onSteppedOn(World worldIn, BlockPos pos, Entity entityIn)
-	{
-		double yMagnitude = Math.abs(entityIn.getVelocity().y);
-		if (yMagnitude < 0.1D)
-		{
-			double slowFactor = 0.85D;
-			entityIn.setVelocity(entityIn.getVelocity().multiply(slowFactor, 1.0D, slowFactor));
-		}
+public class FilledPorousHoneycomb extends Block {
 
-		super.onSteppedOn(worldIn, pos, entityIn);
-	}
+    public FilledPorousHoneycomb() {
+        super(FabricBlockSettings.of(Material.CLAY, MaterialColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.9F));
+    }
 
 
-	/**
-	 * Allow player to harvest honey and put honey into this block using bottles
-	 */
-	@Override
-	@SuppressWarnings("deprecation")
-	public ActionResult onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockHitResult raytraceResult)
-	{
-		ItemStack itemstack = playerEntity.getStackInHand(playerHand);
+    /**
+     * Called when the given entity walks on this Block
+     */
+    @Override
+    public void onSteppedOn(World worldIn, BlockPos pos, Entity entityIn) {
+        double yMagnitude = Math.abs(entityIn.getVelocity().y);
+        if (yMagnitude < 0.1D) {
+            double slowFactor = 0.85D;
+            entityIn.setVelocity(entityIn.getVelocity().multiply(slowFactor, 1.0D, slowFactor));
+        }
 
-		/*
-		 * Player is harvesting the honey from this block if it is filled with honey
-		 */
-		if (itemstack.getItem() == Items.GLASS_BOTTLE)
-		{
-			world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.getDefaultState(), 3); // removed honey from this block
-			world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-
-			if (!playerEntity.isCreative())
-			{
-				itemstack.decrement(1); // remove current empty bottle
-
-				if (itemstack.isEmpty())
-				{
-					playerEntity.setStackInHand(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
-				}
-				else if (!playerEntity.inventory.insertStack(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
-				{
-					playerEntity.dropItem(new ItemStack(Items.HONEY_BOTTLE), false); // drops honey bottle if inventory is full
-				}
-			}
-
-			if ((playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE || Bumblezone.BZ_CONFIG.allowWrathOfTheHiveOutsideBumblezone) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BZ_CONFIG.aggressiveBees)
-			{
-				//Now all bees nearby in Bumblezone will get VERY angry!!!
-				playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.showWrathOfTheHiveParticles, true));
-			}
-
-			return ActionResult.SUCCESS;
-		}
-
-		return super.onUse(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
-	}
+        super.onSteppedOn(worldIn, pos, entityIn);
+    }
 
 
-	/**
-	 * Called periodically clientside on blocks near the player to show honey particles. 50% of attempting to spawn a
-	 * particle
-	 */
-	@Override
-	public void randomDisplayTick(BlockState blockState, World world, BlockPos position, Random random)
-	{
-		//number of particles in this tick
-		for (int i = 0; i < random.nextInt(2); ++i)
-		{
-			this.spawnHoneyParticles(world, position, blockState);
-		}
-	}
+    /**
+     * Allow player to harvest honey and put honey into this block using bottles
+     */
+    @Override
+    @SuppressWarnings("deprecation")
+    public ActionResult onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockHitResult raytraceResult) {
+        ItemStack itemstack = playerEntity.getStackInHand(playerHand);
 
-	
-	/**
-	 * tell redstone that this can be use with comparator
-	 */
-	@Override
-	public boolean hasComparatorOutput(BlockState state)
-	{
-		return true;
-	}
+        /*
+         * Player is harvesting the honey from this block if it is filled with honey
+         */
+        if (itemstack.getItem() == Items.GLASS_BOTTLE) {
+            world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.getDefaultState(), 3); // removed honey from this block
+            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
+            if (!playerEntity.isCreative()) {
+                itemstack.decrement(1); // remove current empty bottle
 
-	/**
-	 * the power fed into comparator 1
-	 */
-	@Override
-	public int getComparatorOutput(BlockState blockState, World worldIn, BlockPos pos)
-	{
-		return 1;
-	}
+                if (itemstack.isEmpty()) {
+                    playerEntity.setStackInHand(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
+                } else if (!playerEntity.inventory.insertStack(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
+                {
+                    playerEntity.dropItem(new ItemStack(Items.HONEY_BOTTLE), false); // drops honey bottle if inventory is full
+                }
+            }
 
-	/**
-	 * Starts checking if the block can take the particle and if so and it passes another rng to reduce spawnrate, it then
-	 * takes the block's dimensions and passes into methods to spawn the actual particle
-	 * 
-	 */
-	private void spawnHoneyParticles(World world, BlockPos position, BlockState blockState)
-	{
-		if (blockState.getFluidState().isEmpty() && world.random.nextFloat() < 0.08F)
-		{
-			VoxelShape currentBlockShape = blockState.getCollisionShape(world, position);
-			double yEndHeight = currentBlockShape.getMaximum(Direction.Axis.Y);
-			if (yEndHeight >= 1.0D && !blockState.matches(BlockTags.IMPERMEABLE))
-			{
-				double yStartHeight = currentBlockShape.getMinimum(Direction.Axis.Y);
-				if (yStartHeight > 0.0D)
-				{
-					this.addHoneyParticle(world, position, currentBlockShape, position.getY() + yStartHeight - 0.05D);
-				}
-				else
-				{
-					BlockPos belowBlockpos = position.down();
-					BlockState belowBlockstate = world.getBlockState(belowBlockpos);
-					VoxelShape belowBlockShape = belowBlockstate.getCollisionShape(world, belowBlockpos);
-					double yEndHeight2 = belowBlockShape.getMaximum(Direction.Axis.Y);
-					if ((yEndHeight2 < 1.0D || !belowBlockstate.isSimpleFullBlock(world, belowBlockpos)) && belowBlockstate.getFluidState().isEmpty())
-					{
-						this.addHoneyParticle(world, position, currentBlockShape, position.getY() - 0.05D);
-					}
-				}
-			}
+            if ((playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE || Bumblezone.BZ_CONFIG.allowWrathOfTheHiveOutsideBumblezone) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BZ_CONFIG.aggressiveBees) {
+                //Now all bees nearby in Bumblezone will get VERY angry!!!
+                playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.showWrathOfTheHiveParticles, true));
+            }
 
-		}
-	}
+            return ActionResult.SUCCESS;
+        }
+
+        return super.onUse(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+    }
 
 
-	/**
-	 * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addHoneyParticle
-	 * method
-	 */
-	private void addHoneyParticle(World world, BlockPos blockPos, VoxelShape blockShape, double height)
-	{
-		this.addHoneyParticle(world, blockPos.getX() + blockShape.getMinimum(Direction.Axis.X), blockPos.getX() + blockShape.getMaximum(Direction.Axis.X), blockPos.getZ() + blockShape.getMinimum(Direction.Axis.Z), blockPos.getZ() + blockShape.getMaximum(Direction.Axis.Z), height);
-	}
+    /**
+     * Called periodically clientside on blocks near the player to show honey particles. 50% of attempting to spawn a
+     * particle
+     */
+    @Override
+    public void randomDisplayTick(BlockState blockState, World world, BlockPos position, Random random) {
+        //number of particles in this tick
+        for (int i = 0; i < random.nextInt(2); ++i) {
+            this.spawnHoneyParticles(world, position, blockState);
+        }
+    }
 
 
-	/**
-	 * Adds the actual honey particle into the world within the given range
-	 */
-	private void addHoneyParticle(World world, double xMin, double xMax, double zMax, double zMin, double yHeight)
-	{
-		world.addParticle(ParticleTypes.DRIPPING_HONEY, MathHelper.lerp(world.random.nextDouble(), xMin, xMax), yHeight, MathHelper.lerp(world.random.nextDouble(), zMax, zMin), 0.0D, 0.0D, 0.0D);
-	}
+    /**
+     * tell redstone that this can be use with comparator
+     */
+    @Override
+    public boolean hasComparatorOutput(BlockState state) {
+        return true;
+    }
+
+
+    /**
+     * the power fed into comparator 1
+     */
+    @Override
+    public int getComparatorOutput(BlockState blockState, World worldIn, BlockPos pos) {
+        return 1;
+    }
+
+    /**
+     * Starts checking if the block can take the particle and if so and it passes another rng to reduce spawnrate, it then
+     * takes the block's dimensions and passes into methods to spawn the actual particle
+     */
+    private void spawnHoneyParticles(World world, BlockPos position, BlockState blockState) {
+        if (blockState.getFluidState().isEmpty() && world.random.nextFloat() < 0.08F) {
+            VoxelShape currentBlockShape = blockState.getCollisionShape(world, position);
+            double yEndHeight = currentBlockShape.getMaximum(Direction.Axis.Y);
+            if (yEndHeight >= 1.0D && !blockState.matches(BlockTags.IMPERMEABLE)) {
+                double yStartHeight = currentBlockShape.getMinimum(Direction.Axis.Y);
+                if (yStartHeight > 0.0D) {
+                    this.addHoneyParticle(world, position, currentBlockShape, position.getY() + yStartHeight - 0.05D);
+                } else {
+                    BlockPos belowBlockpos = position.down();
+                    BlockState belowBlockstate = world.getBlockState(belowBlockpos);
+                    VoxelShape belowBlockShape = belowBlockstate.getCollisionShape(world, belowBlockpos);
+                    double yEndHeight2 = belowBlockShape.getMaximum(Direction.Axis.Y);
+                    if ((yEndHeight2 < 1.0D || !belowBlockstate.isSimpleFullBlock(world, belowBlockpos)) && belowBlockstate.getFluidState().isEmpty()) {
+                        this.addHoneyParticle(world, position, currentBlockShape, position.getY() - 0.05D);
+                    }
+                }
+            }
+
+        }
+    }
+
+
+    /**
+     * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addHoneyParticle
+     * method
+     */
+    private void addHoneyParticle(World world, BlockPos blockPos, VoxelShape blockShape, double height) {
+        this.addHoneyParticle(world, blockPos.getX() + blockShape.getMinimum(Direction.Axis.X), blockPos.getX() + blockShape.getMaximum(Direction.Axis.X), blockPos.getZ() + blockShape.getMinimum(Direction.Axis.Z), blockPos.getZ() + blockShape.getMaximum(Direction.Axis.Z), height);
+    }
+
+
+    /**
+     * Adds the actual honey particle into the world within the given range
+     */
+    private void addHoneyParticle(World world, double xMin, double xMax, double zMax, double zMin, double yHeight) {
+        world.addParticle(ParticleTypes.DRIPPING_HONEY, MathHelper.lerp(world.random.nextDouble(), xMin, xMax), yHeight, MathHelper.lerp(world.random.nextDouble(), zMax, zMin), 0.0D, 0.0D, 0.0D);
+    }
 }

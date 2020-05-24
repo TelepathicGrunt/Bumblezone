@@ -10,15 +10,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(PlayerEntity.class)
-public class PlayerDamagedMixin
-{
+public class PlayerDamagedMixin {
     //bees attacks bear mobs that is in the dimension
     @Inject(method = "damage",
-            at = @At(value="INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;isInvulnerableTo(Lnet/minecraft/entity/damage/DamageSource;)Z"),
+            at = @At(value = "HEAD"),
             locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void playerAttacked(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir, PlayerEntity player) {
-        HoneyCrystalShieldBehavior.damageShieldFromExplosionAndFire(source, player);
-        HoneyCrystalShieldBehavior.slowPhysicalAttackers(source, player);
+    private void playerAttacked(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+        HoneyCrystalShieldBehavior.damageShieldFromExplosionAndFire(source, ((PlayerEntity) (Object) this));
+        HoneyCrystalShieldBehavior.slowPhysicalAttackers(source, ((PlayerEntity) (Object) this));
     }
 
 }

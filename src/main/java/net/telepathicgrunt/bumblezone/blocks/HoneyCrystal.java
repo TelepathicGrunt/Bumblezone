@@ -1,9 +1,6 @@
 package net.telepathicgrunt.bumblezone.blocks;
 
-import java.util.Map;
-
 import com.google.common.collect.Maps;
-
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
@@ -33,6 +30,8 @@ import net.minecraft.world.WorldView;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.mixin.BucketItemAccessor;
 
+import java.util.Map;
+
 
 public class HoneyCrystal extends Block {
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -54,7 +53,7 @@ public class HoneyCrystal extends Block {
     private Item item;
 
     public HoneyCrystal() {
-        super(FabricBlockSettings.of(Material.GLASS, MaterialColor.ORANGE).lightLevel(1).strength(0.3F, 0.3f).noCollision().build());
+        super(FabricBlockSettings.of(Material.GLASS, MaterialColor.ORANGE).lightLevel(1).strength(0.3F, 0.3f).nonOpaque().build());
 
         this.setDefaultState(this.stateManager.getDefaultState()
                 .with(FACING, Direction.UP)

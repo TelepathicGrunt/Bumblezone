@@ -21,17 +21,17 @@ public class BzBaseBiome extends Biome {
     protected static final BlockState HONEYCOMB_BLOCK = Blocks.HONEYCOMB_BLOCK.getDefaultState();
     protected static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState();
     protected static final BlockState POROUS_HONEYCOMB = BzBlocks.POROUS_HONEYCOMB.getDefaultState();
-    
+
     public static final TernarySurfaceConfig HONEY_CONFIG = new TernarySurfaceConfig(POROUS_HONEYCOMB, POROUS_HONEYCOMB, POROUS_HONEYCOMB);
     public static final SpringFeatureConfig WATER_SPRING_CONFIG = new SpringFeatureConfig(Fluids.WATER.getDefaultState(), true, 4, 1, ImmutableSet.of(Blocks.HONEYCOMB_BLOCK, Blocks.HONEY_BLOCK));
 
-	public static final Decorator<NopeDecoratorConfig> HONEYCOMB_HOLE_PLACER = new HoneycombHoleDecorator(NopeDecoratorConfig::deserialize);
-	
+    public static final Decorator<NopeDecoratorConfig> HONEYCOMB_HOLE_PLACER = new HoneycombHoleDecorator(NopeDecoratorConfig::deserialize);
+
     public static final SurfaceBuilder<TernarySurfaceConfig> HONEY_SURFACE_BUILDER = new HoneySurfaceBuilder(TernarySurfaceConfig::deserialize);
 
-	protected BzBaseBiome(Biome.Settings biomeBuilder) {
-		super(biomeBuilder);
-	}
-	
-	
+    protected BzBaseBiome(Biome.Settings biomeBuilder) {
+        super(biomeBuilder);
+    }
+
+
 }

@@ -5,7 +5,10 @@ import net.minecraft.world.dimension.DimensionType;
 
 public interface IPlayerComponent extends Component {
     boolean getIsTeleporting();
+
     void setIsTeleporting(boolean isTeleporting);
+
     DimensionType getNonBZDimension();
+
     void setNonBZDimension(DimensionType nonBZDimension);
 }

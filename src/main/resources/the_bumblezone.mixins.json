@@ -14,12 +14,11 @@
     "PlayerDimensionChangeMixin",
     "PollenedBeeNaturalSpawnMixin",
     "BeeEntityInvoker",
-    "MaterialBuilderInvoker",
     "BucketItemAccessor",
     "ClientPlayerRightClickMixin",
     "ServerPlayerRightClickMixin",
     "PlayerDamagedMixin",
-    "PlayerDamagedShieldInvoker",
+    "PlayerDamageShieldInvoker",
     "BlockOverlayRendererMixin"
   ],
   "client": [
