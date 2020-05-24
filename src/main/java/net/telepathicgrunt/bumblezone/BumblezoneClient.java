@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.block.BlockColors;
+import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.fluid.Fluid;
@@ -80,6 +81,12 @@ public class BumblezoneClient implements ClientModInitializer {
             public Sprite[] getFluidSprites(BlockRenderView view, BlockPos pos, FluidState state)
             {
                 return fluidSprites;
+            }
+
+            @Override
+            public int getFluidColor(BlockRenderView view, BlockPos pos, FluidState state)
+            {
+                return view != null && pos != null ? BiomeColors.getWaterColor(view, pos) : -1;
             }
         };
 

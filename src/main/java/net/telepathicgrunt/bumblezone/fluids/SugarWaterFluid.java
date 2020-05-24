@@ -135,10 +135,7 @@ public abstract class SugarWaterFluid extends BaseFluid {
 
     @Override
     public boolean matchesType(Fluid fluid) {
-        return fluid == BzBlocks.SUGAR_WATER_FLUID ||
-                fluid == BzBlocks.SUGAR_WATER_FLUID_FLOWING ||
-                fluid == Fluids.WATER ||
-                fluid == Fluids.FLOWING_WATER;
+        return fluid.isIn(FluidTags.WATER);
     }
 
     public boolean canBeReplacedWith(FluidState state, BlockView world, BlockPos pos, Fluid fluid, Direction direction) {

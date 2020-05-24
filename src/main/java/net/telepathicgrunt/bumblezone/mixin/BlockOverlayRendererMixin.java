@@ -14,12 +14,12 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(InGameOverlayRenderer.class)
 public class BlockOverlayRendererMixin {
-    //bees attacks bear mobs that is in the dimension
+
     @Inject(method = "renderOverlays",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameOverlayRenderer;renderInWallOverlay(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/texture/Sprite;Lnet/minecraft/client/util/math/MatrixStack;)V"),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameOverlayRenderer;getInWallBlockState(Lnet/minecraft/entity/player/PlayerEntity;)Lnet/minecraft/block/BlockState;"),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
-    private static void clientRightClick(MinecraftClient minecraftClient, MatrixStack matrixStack, CallbackInfo ci, PlayerEntity playerEntity) {
+    private static void blockOverlay(MinecraftClient minecraftClient, MatrixStack matrixStack, CallbackInfo ci, PlayerEntity playerEntity) {
         if (SugarWaterClientOverlay.sugarWaterOverlay(playerEntity, new BlockPos(playerEntity.getPos()), matrixStack))
             ci.cancel();
     }

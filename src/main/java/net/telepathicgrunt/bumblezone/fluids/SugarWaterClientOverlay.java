@@ -18,7 +18,8 @@ public class SugarWaterClientOverlay {
     private static final Identifier TEXTURE_UNDERWATER = new Identifier(Bumblezone.MODID + ":textures/misc/sugar_water_underwater.png");
 
     public static boolean sugarWaterOverlay(PlayerEntity player, BlockPos pos, MatrixStack matrixStack) {
-        if (player.world.getBlockState(pos).getBlock() == BzBlocks.SUGAR_WATER_BLOCK) {
+
+        if (player.world.getBlockState(new BlockPos(player.getCameraPosVec(1))).getBlock() == BzBlocks.SUGAR_WATER_BLOCK) {
             MinecraftClient minecraftIn = MinecraftClient.getInstance();
             minecraftIn.getTextureManager().bindTexture(TEXTURE_UNDERWATER);
             BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();

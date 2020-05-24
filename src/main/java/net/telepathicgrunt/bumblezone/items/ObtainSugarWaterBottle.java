@@ -18,6 +18,7 @@ public class ObtainSugarWaterBottle {
 
     public static boolean useBottleOnSugarWater(World world, PlayerEntity playerEntity, Hand playerHand) {
         HitResult raytraceresult = rayTrace(world, playerEntity, RayTraceContext.FluidHandling.SOURCE_ONLY);
+        if(playerHand == null) return false;
 
         if (raytraceresult.getType() == HitResult.Type.BLOCK &&
                 world.getBlockState(((BlockHitResult) raytraceresult).getBlockPos()) == BzBlocks.SUGAR_WATER_BLOCK.getDefaultState()) {
