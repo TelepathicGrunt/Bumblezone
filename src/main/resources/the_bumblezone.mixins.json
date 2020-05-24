@@ -13,7 +13,9 @@
     "EnderpearlImpactMixin",
     "PlayerDimensionChangeMixin",
     "PollenedBeeNaturalSpawnMixin",
-    "BeeEntityAccessor"
+    "BeeEntityAccessor",
+    "MaterialBuilderInvoker",
+    "BucketItemAccessor"
   ],
   "client": [
   ],

@@ -10,7 +10,7 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
-import net.telepathicgrunt.bumblezone.blocks.BzBlocksInit;
+import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 
 import java.util.Random;
 import java.util.function.Function;
@@ -80,7 +80,7 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig>
 		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 		};
 
-	private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocksInit.FILLED_POROUS_HONEYCOMB.getDefaultState();
+	private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState();
 	private static final BlockState HONEY_BLOCK = Blocks.HONEY_BLOCK.getDefaultState();
 	private static final BlockState HONEYCOMB_BLOCK = Blocks.HONEYCOMB_BLOCK.getDefaultState();
 	private static final BlockState AIR = Blocks.AIR.getDefaultState();

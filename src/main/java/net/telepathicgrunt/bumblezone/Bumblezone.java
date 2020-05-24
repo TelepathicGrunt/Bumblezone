@@ -11,13 +11,14 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.telepathicgrunt.bumblezone.biome.BzBiomesInit;
-import net.telepathicgrunt.bumblezone.blocks.BzBlocksInit;
+import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.configs.BzConfig;
 import net.telepathicgrunt.bumblezone.configs.FileWatcher;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
-import net.telepathicgrunt.bumblezone.effects.BzEffectsInit;
+import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.entities.IPlayerComponent;
 import net.telepathicgrunt.bumblezone.entities.PlayerComponent;
+import net.telepathicgrunt.bumblezone.items.BzItems;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,9 +42,9 @@ public class Bumblezone implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
-		BzBlocksInit.registerBlocks();
-		BzBlocksInit.registerItems();
-		BzEffectsInit.registerEffects();
+		BzBlocks.registerBlocks();
+		BzItems.registerItems();
+		BzEffects.registerEffects();
 		BzBiomesInit.registerBiomes();
 		BzDimensionType.registerChunkGenerator();
 		BzDimensionType.registerDimension();

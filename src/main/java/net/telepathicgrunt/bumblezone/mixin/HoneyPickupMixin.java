@@ -9,7 +9,7 @@ import net.minecraft.item.Items;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
-import net.telepathicgrunt.bumblezone.effects.BzEffectsInit;
+import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -38,7 +38,7 @@ public class HoneyPickupMixin
             if(item == Items.HONEY_BLOCK && Bumblezone.BZ_CONFIG.aggressiveBees)
             {
                 //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
-                player.addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.showWrathOfTheHiveParticles, true));
+                player.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.showWrathOfTheHiveParticles, true));
             }
         }
     }

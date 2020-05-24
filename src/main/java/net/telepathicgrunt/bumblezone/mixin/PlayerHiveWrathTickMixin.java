@@ -4,7 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
-import net.telepathicgrunt.bumblezone.effects.BzEffectsInit;
+import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -26,13 +26,13 @@ public class PlayerHiveWrathTickMixin
 
         //removes the wrath of the hive if it is disallowed outside dimension
         if(!(playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE || Bumblezone.BZ_CONFIG.allowWrathOfTheHiveOutsideBumblezone) &&
-            playerEntity.hasStatusEffect(BzEffectsInit.WRATH_OF_THE_HIVE))
+            playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE))
         {
-            playerEntity.removeStatusEffect(BzEffectsInit.WRATH_OF_THE_HIVE);
+            playerEntity.removeStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
         }
 
         //Makes the fog redder when this effect is active
-        if(playerEntity.hasStatusEffect(BzEffectsInit.WRATH_OF_THE_HIVE))
+        if(playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE))
         {
             BzDimension.ACTIVE_WRATH = true;
         }

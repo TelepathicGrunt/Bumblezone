@@ -6,7 +6,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 
-public class BzEffectsInit
+public class BzEffects
 {
 	public final static StatusEffect WRATH_OF_THE_HIVE = new WrathOfTheHiveEffect(StatusEffectType.HARMFUL, 16748549);
 	

@@ -9,7 +9,7 @@ import net.minecraft.item.Items;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
-import net.telepathicgrunt.bumblezone.effects.BzEffectsInit;
+import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -37,7 +37,7 @@ public class HoneyDrinkMixin
             {
                 //if player drinks honey, bees gets very mad...
                 if(stack.getItem() == Items.HONEY_BOTTLE && Bumblezone.BZ_CONFIG.aggressiveBees){
-                    playerEntity.addStatusEffect(new StatusEffectInstance(BzEffectsInit.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.showWrathOfTheHiveParticles, true));
+                    playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.showWrathOfTheHiveParticles, true));
                 }
             }
         }
