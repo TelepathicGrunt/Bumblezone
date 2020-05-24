@@ -1,33 +1,25 @@
 package net.telepathicgrunt.bumblezone.blocks;
 
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.block.FabricMaterialBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.fluid.BaseFluid;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.fluids.SugarWaterFluid;
-import net.telepathicgrunt.bumblezone.items.BzItems;
-import net.telepathicgrunt.bumblezone.mixin.MaterialBuilderInvoker;
-
-import java.lang.reflect.Method;
 
 
 public class BzBlocks
 {
-	public static Material RESIDUE;
-	static {
-		Material.Builder builder = (new Material.Builder(MaterialColor.ORANGE_TERRACOTTA)).allowsMovement().replaceable().notSolid();
-		((MaterialBuilderInvoker)builder).callDestroyedByPiston();
-		((MaterialBuilderInvoker)builder).callLightPassesThrough();
-		RESIDUE = builder.build();
-	}
+	public static Material RESIDUE = new FabricMaterialBuilder(MaterialColor.ORANGE_TERRACOTTA)
+																.lightPassesThrough()
+																.destroyedByPiston()
+																.allowsMovement()
+																.replaceable()
+																.notSolid()
+																.build();
 
     public static final Block POROUS_HONEYCOMB = new PorousHoneycomb();
     public static final Block FILLED_POROUS_HONEYCOMB = new FilledPorousHoneycomb();
