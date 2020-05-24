@@ -21,6 +21,9 @@
   "entrypoints": {
     "main": [
       "net.telepathicgrunt.bumblezone.Bumblezone"
+    ],
+    "client": [
+      "net.telepathicgrunt.bumblezone.BumblezoneClient"
     ]
   },
   "mixins": [

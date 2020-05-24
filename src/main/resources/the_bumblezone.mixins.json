@@ -19,7 +19,9 @@
     "ServerPlayerRightClickMixin",
     "PlayerDamagedMixin",
     "PlayerDamageShieldInvoker",
-    "BlockOverlayRendererMixin"
+    "BlockOverlayRendererMixin",
+    "WaterEquivalenceMixin",
+    "BlockColorsMixin"
   ],
   "client": [
   ],

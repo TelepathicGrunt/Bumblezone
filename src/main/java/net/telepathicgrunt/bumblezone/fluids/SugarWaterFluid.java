@@ -5,6 +5,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.BaseFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
@@ -133,8 +134,11 @@ public abstract class SugarWaterFluid extends BaseFluid {
 
 
     @Override
-    public boolean matchesType(Fluid fluidIn) {
-        return fluidIn == BzBlocks.SUGAR_WATER_FLUID || fluidIn == BzBlocks.SUGAR_WATER_FLUID_FLOWING;
+    public boolean matchesType(Fluid fluid) {
+        return fluid == BzBlocks.SUGAR_WATER_FLUID ||
+                fluid == BzBlocks.SUGAR_WATER_FLUID_FLOWING ||
+                fluid == Fluids.WATER ||
+                fluid == Fluids.FLOWING_WATER;
     }
 
     public boolean canBeReplacedWith(FluidState state, BlockView world, BlockPos pos, Fluid fluid, Direction direction) {
@@ -142,7 +146,7 @@ public abstract class SugarWaterFluid extends BaseFluid {
     }
 
     public BlockState toBlockState(FluidState state) {
-        return (BlockState) BzBlocks.SUGAR_WATER_BLOCK.getDefaultState().with(FluidBlock.LEVEL, method_15741(state));
+        return BzBlocks.SUGAR_WATER_BLOCK.getDefaultState().with(FluidBlock.LEVEL, method_15741(state));
     }
 
     public static class Flowing extends SugarWaterFluid {

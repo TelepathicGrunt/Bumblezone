@@ -34,12 +34,6 @@ public class BzBlocks {
     public static final Block STICKY_HONEY_RESIDUE = new StickyHoneyResidue();
     public static final Block STICKY_HONEY_REDSTONE = new StickyHoneyRedstone();
 
-
-    //fluid mess
-    public static final Identifier FLUID_STILL = new Identifier(Bumblezone.MODID + ":block/sugar_water_still");
-    public static final Identifier FLUID_FLOWING = new Identifier(Bumblezone.MODID + ":block/sugar_water_flow");
-    public static final Identifier FLUID_OVERLAY = new Identifier(Bumblezone.MODID + ":block/sugar_water_overlay");
-
     public static final BaseFluid SUGAR_WATER_FLUID = new SugarWaterFluid.Source();
     public static final BaseFluid SUGAR_WATER_FLUID_FLOWING = new SugarWaterFluid.Flowing();
     public static final Block SUGAR_WATER_BLOCK = new SugarWaterBlock(SUGAR_WATER_FLUID);
