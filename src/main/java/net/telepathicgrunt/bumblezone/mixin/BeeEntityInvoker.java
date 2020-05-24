@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(BeeEntity.class)
-public interface BeeEntityAccessor {
+public interface BeeEntityInvoker {
 
     @Invoker
     void callSetBeeFlag(int bit, boolean value);

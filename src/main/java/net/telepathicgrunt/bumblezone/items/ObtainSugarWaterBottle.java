@@ -1,7 +1,5 @@
-package net.telepathicgrunt.bumblezone.mixin;
+package net.telepathicgrunt.bumblezone.items;
 
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.passive.PandaEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -14,32 +12,16 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RayTraceContext;
 import net.minecraft.world.World;
-import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
-import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
-import net.telepathicgrunt.bumblezone.effects.BzEffects;
-import net.telepathicgrunt.bumblezone.items.BzItems;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(PandaEntity.class)
-public class PlayerRightClickBottleMixin
-{
-    //bees attacks bear mobs that is in the dimension
-    @Inject(method = "tick",
-            at = @At(value="HEAD"))
-    private void onEntityTick(CallbackInfo ci) {
+public class ObtainSugarWaterBottle {
 
-        PlayerEntity playerEntity = (PlayerEntity) event.getEntity();
-        World world = event.getWorld();
+    public static boolean useBottleOnSugarWater(World world , PlayerEntity playerEntity, Hand playerHand){
         HitResult raytraceresult = rayTrace(world, playerEntity, RayTraceContext.FluidHandling.SOURCE_ONLY);
 
         if (raytraceresult.getType() == HitResult.Type.BLOCK &&
                 world.getBlockState(((BlockHitResult)raytraceresult).getBlockPos()) == BzBlocks.SUGAR_WATER_BLOCK.getDefaultState())
         {
-            Hand playerHand = event.getHand();
             ItemStack itemstack = playerEntity.getStackInHand(playerHand);
 
             if (itemstack.getItem() == Items.GLASS_BOTTLE)
@@ -56,9 +38,11 @@ public class PlayerRightClickBottleMixin
                     playerEntity.dropItem(new ItemStack(BzItems.SUGAR_WATER_BOTTLE), false); // drops sugar water bottle if inventory is full
                 }
 
-                event.setCanceled(true);
+                return true;
             }
         }
+
+        return false;
     }
 
 
@@ -77,5 +61,4 @@ public class PlayerRightClickBottleMixin
         Vec3d vec3d1 = vec3d.add((double) f6 * 5.0D, (double) f5 * 5.0D, (double) f7 * 5.0D);
         return worldIn.rayTrace(new RayTraceContext(vec3d, vec3d1, RayTraceContext.ShapeType.OUTLINE, fluidMode, player));
     }
-
 }

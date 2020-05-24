@@ -1,16 +1,9 @@
 package net.telepathicgrunt.bumblezone.generation;
 
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.game.MinecraftGameProvider;
-import net.fabricmc.loom.providers.MinecraftProvider;
-import net.minecraft.client.MinecraftClientGame;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.dedicated.MinecraftDedicatedServer;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.BaseText;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -24,9 +17,7 @@ import net.minecraft.world.gen.ChunkRandom;
 import net.minecraft.world.gen.chunk.OverworldChunkGeneratorConfig;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.features.decorators.BzPlacingUtils;
-import net.telepathicgrunt.bumblezone.mixin.BeeEntityAccessor;
-import net.telepathicgrunt.bumblezone.entities.BeeProductiveIntegration;
-import org.apache.logging.log4j.Level;
+import net.telepathicgrunt.bumblezone.mixin.BeeEntityInvoker;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -116,7 +107,7 @@ public class BzChunkGenerator extends BzNoiseChunkGenerator<OverworldChunkGenera
 					if(biome$spawnlistentry.type == EntityType.BEE){
 						//20% chance of being full of pollen
 						if(randomSeed.nextFloat() < 0.2f){
-							((BeeEntityAccessor)entity).callSetBeeFlag(8 ,true);
+							((BeeEntityInvoker)entity).callSetBeeFlag(8 ,true);
 						}
 
 						//Bumblezone.LOGGER.log(Level.INFO, " outside beeproductive check");
