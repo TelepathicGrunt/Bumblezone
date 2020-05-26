@@ -85,7 +85,7 @@ public class EmptyHoneycombBrood extends DirectionalBlock
 			if (action == ActionResultType.SUCCESS)
 			{
 				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-				world.setBlockState(position, BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
+				world.setBlockState(position, BzBlocks.HONEYCOMB_BROOD.get().getDefaultState()
 					.with(HoneycombBrood.STAGE, Integer.valueOf(0))
 					.with(DirectionalBlock.FACING, thisBlockState.get(DirectionalBlock.FACING)));
 
