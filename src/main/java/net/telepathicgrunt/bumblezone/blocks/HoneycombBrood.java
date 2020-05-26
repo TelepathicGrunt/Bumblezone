@@ -111,7 +111,7 @@ public class HoneycombBrood extends FacingBlock {
          * Player is taking honey and killing larva
          */
         if (itemstack.getItem() == Items.GLASS_BOTTLE) {
-            world.setBlockState(position, BzBlocks.DEAD_HONEYCOMB_LARVA.getDefaultState().with(Properties.FACING, thisBlockState.get(Properties.FACING)), 3); // removed honey from this block
+            world.setBlockState(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState().with(Properties.FACING, thisBlockState.get(Properties.FACING)), 3); // removed honey from this block
 
             //spawn angry bee if at final stage and front isn't blocked off
             int stage = thisBlockState.get(STAGE);

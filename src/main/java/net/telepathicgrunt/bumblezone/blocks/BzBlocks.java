@@ -26,8 +26,8 @@ public class BzBlocks {
 
     public static final Block POROUS_HONEYCOMB = new PorousHoneycomb();
     public static final Block FILLED_POROUS_HONEYCOMB = new FilledPorousHoneycomb();
-    public static final Block DEAD_HONEYCOMB_LARVA = new EmptyHoneycombBrood();
-    public static final Block HONEYCOMB_LARVA = new HoneycombBrood();
+    public static final Block EMPTY_HONEYCOMB_BROOD = new EmptyHoneycombBrood();
+    public static final Block HONEYCOMB_BROOD = new HoneycombBrood();
     public static final Block SUGAR_INFUSED_STONE = new SugarInfusedStone();
     public static final Block SUGAR_INFUSED_COBBLESTONE = new SugarInfusedCobblestone();
     public static final Block HONEY_CRYSTAL = new HoneyCrystal();
@@ -44,8 +44,8 @@ public class BzBlocks {
     public static void registerBlocks() {
         Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "porous_honeycomb_block"), POROUS_HONEYCOMB);
         Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "filled_porous_honeycomb_block"), FILLED_POROUS_HONEYCOMB);
-        Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "dead_honeycomb_larva_block"), DEAD_HONEYCOMB_LARVA);
-        Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "honeycomb_larva_block"), HONEYCOMB_LARVA);
+        Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "dead_honeycomb_larva_block"), EMPTY_HONEYCOMB_BROOD);
+        Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "honeycomb_larva_block"), HONEYCOMB_BROOD);
         Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "sugar_infused_stone"), SUGAR_INFUSED_STONE);
         Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "sugar_infused_cobblestone"), SUGAR_INFUSED_COBBLESTONE);
         Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "honey_crystal"), HONEY_CRYSTAL);

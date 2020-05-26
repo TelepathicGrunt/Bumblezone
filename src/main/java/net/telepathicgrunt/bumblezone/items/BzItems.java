@@ -22,8 +22,8 @@ public class BzItems {
     //blocks
     public static final Item POROUS_HONEYCOMB = new BlockItem(BzBlocks.POROUS_HONEYCOMB, new Item.Settings().group(BUMBLEZONE_CREATIVE_TAB));
     public static final Item FILLED_POROUS_HONEYCOMB = new BlockItem(BzBlocks.FILLED_POROUS_HONEYCOMB, new Item.Settings().group(BUMBLEZONE_CREATIVE_TAB));
-    public static final Item DEAD_HONEYCOMB_LARVA = new BlockItem(BzBlocks.DEAD_HONEYCOMB_LARVA, new Item.Settings().group(BUMBLEZONE_CREATIVE_TAB));
-    public static final Item HONEYCOMB_LARVA = new BlockItem(BzBlocks.HONEYCOMB_LARVA, new Item.Settings().group(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item DEAD_HONEYCOMB_LARVA = new BlockItem(BzBlocks.EMPTY_HONEYCOMB_BROOD, new Item.Settings().group(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item HONEYCOMB_LARVA = new BlockItem(BzBlocks.HONEYCOMB_BROOD, new Item.Settings().group(BUMBLEZONE_CREATIVE_TAB));
     public static final Item SUGAR_INFUSED_STONE = new BlockItem(BzBlocks.SUGAR_INFUSED_STONE, new Item.Settings().group(BUMBLEZONE_CREATIVE_TAB));
     public static final Item SUGAR_INFUSED_COBBLESTONE = new BlockItem(BzBlocks.SUGAR_INFUSED_COBBLESTONE, new Item.Settings().group(BUMBLEZONE_CREATIVE_TAB));
     public static final Item HONEY_CRYSTAL = new BlockItem(BzBlocks.HONEY_CRYSTAL, new Item.Settings().group(BUMBLEZONE_CREATIVE_TAB));

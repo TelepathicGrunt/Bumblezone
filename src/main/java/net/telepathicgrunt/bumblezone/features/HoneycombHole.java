@@ -157,9 +157,9 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig> {
                                 facing = Direction.EAST;
 
                             if (rand.nextFloat() < 0.8f)
-                                world.setBlockState(currentPosition, BzBlocks.HONEYCOMB_LARVA.getDefaultState().with(HoneycombBrood.STAGE, Integer.valueOf(rand.nextInt(3))).with(HoneycombBrood.FACING, facing), 2);
+                                world.setBlockState(currentPosition, BzBlocks.HONEYCOMB_BROOD.getDefaultState().with(HoneycombBrood.STAGE, Integer.valueOf(rand.nextInt(3))).with(HoneycombBrood.FACING, facing), 2);
                             else
-                                world.setBlockState(currentPosition, BzBlocks.DEAD_HONEYCOMB_LARVA.getDefaultState().with(HoneycombBrood.FACING, facing), 2);
+                                world.setBlockState(currentPosition, BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState().with(HoneycombBrood.FACING, facing), 2);
                         } else if (chance <= 6) {
                             world.setBlockState(currentPosition, FILLED_POROUS_HONEYCOMB, 2);
                         } else {

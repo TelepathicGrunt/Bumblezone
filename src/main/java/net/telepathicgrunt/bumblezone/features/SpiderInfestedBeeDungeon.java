@@ -276,7 +276,7 @@ public class SpiderInfestedBeeDungeon extends Feature<DefaultFeatureConfig> {
         //south wall
         else if (block == Blocks.ORANGE_TERRACOTTA) {
             if (random.nextFloat() < 0.6f) {
-                return new Pair<>(BzBlocks.DEAD_HONEYCOMB_LARVA.getDefaultState()
+                return new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
                         .with(HoneycombBrood.FACING, Direction.SOUTH),
                         new Boolean(false));
             } else if (random.nextDouble() < Bumblezone.BZ_CONFIG.spawnerRateSpiderBeeDungeon) {
@@ -289,7 +289,7 @@ public class SpiderInfestedBeeDungeon extends Feature<DefaultFeatureConfig> {
         //west wall
         else if (block == Blocks.YELLOW_TERRACOTTA) {
             if (random.nextFloat() < 0.6f) {
-                return new Pair<>(BzBlocks.DEAD_HONEYCOMB_LARVA.getDefaultState()
+                return new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
                         .with(HoneycombBrood.FACING, Direction.WEST),
                         new Boolean(false));
             } else if (random.nextDouble() < Bumblezone.BZ_CONFIG.spawnerRateSpiderBeeDungeon) {
@@ -302,7 +302,7 @@ public class SpiderInfestedBeeDungeon extends Feature<DefaultFeatureConfig> {
         //north wall
         else if (block == Blocks.LIME_TERRACOTTA) {
             if (random.nextFloat() < 0.6f) {
-                return new Pair<>(BzBlocks.DEAD_HONEYCOMB_LARVA.getDefaultState()
+                return new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
                         .with(HoneycombBrood.FACING, Direction.NORTH),
                         new Boolean(false));
             } else if (random.nextDouble() < Bumblezone.BZ_CONFIG.spawnerRateSpiderBeeDungeon) {
@@ -315,7 +315,7 @@ public class SpiderInfestedBeeDungeon extends Feature<DefaultFeatureConfig> {
         //east wall
         else if (block == Blocks.BLUE_TERRACOTTA) {
             if (random.nextFloat() < 0.6f) {
-                return new Pair<>(BzBlocks.DEAD_HONEYCOMB_LARVA.getDefaultState()
+                return new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
                         .with(HoneycombBrood.FACING, Direction.EAST),
                         new Boolean(false));
             } else if (random.nextDouble() < Bumblezone.BZ_CONFIG.spawnerRateSpiderBeeDungeon) {
