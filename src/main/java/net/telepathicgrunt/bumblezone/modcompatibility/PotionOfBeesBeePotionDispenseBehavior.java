@@ -37,7 +37,7 @@ public class PotionOfBeesBeePotionDispenseBehavior extends DefaultDispenseItemBe
 	    world.setBlockState(position, BzBlocks.HONEYCOMB_BROOD.get().getDefaultState().with(HoneycombBrood.FACING, blockstate.get(EmptyHoneycombBrood.FACING)).with(HoneycombBrood.STAGE, Integer.valueOf(world.rand.nextInt(3))));
 	    stack.shrink(1);
 
-	    if(Bumblezone.BzConfig.dispensersDropGlassBottles.get()) {
+	    if(!Bumblezone.BzConfig.dispensersDropGlassBottles.get()) {
         	    if (!stack.isEmpty())
         		addGlassBottleToDispenser(source);
         	    else

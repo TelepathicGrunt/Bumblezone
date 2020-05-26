@@ -2,6 +2,7 @@ package net.telepathicgrunt.bumblezone.items;
 
 import java.lang.reflect.Method;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
@@ -11,10 +12,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 
 public class DispenserItemSetup
 {
@@ -32,9 +35,18 @@ public class DispenserItemSetup
 		BucketItem bucketitem = (BucketItem) stack.getItem();
 		BlockPos blockpos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
 		World world = source.getWorld();
+		BlockState blockstate = world.getBlockState(blockpos);
 
 		if (bucketitem.tryPlaceContainedLiquid((PlayerEntity) null, world, blockpos, (BlockRayTraceResult) null)) {
+		    
 		    bucketitem.onLiquidPlaced(world, stack, blockpos);
+		    return new ItemStack(Items.BUCKET);
+		}
+		else if(blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL.get() && !blockstate.get(BlockStateProperties.WATERLOGGED)) {
+		    
+		    world.setBlockState(blockpos, BzBlocks.HONEY_CRYSTAL.get().getDefaultState()
+			    .with(BlockStateProperties.FACING, blockstate.get(BlockStateProperties.FACING))
+			    .with(BlockStateProperties.WATERLOGGED, true));
 		    return new ItemStack(Items.BUCKET);
 		}
 		else {
@@ -57,6 +69,7 @@ public class DispenserItemSetup
 	    Method method = ObfuscationReflectionHelper.findMethod(DispenserBlock.class, "func_149940_a", ItemStack.class);
 	    HoneyBottleDispenseBehavior.DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR = (IDispenseItemBehavior) (method.invoke(Blocks.DISPENSER, new ItemStack(Items.HONEY_BOTTLE)));
 	    GlassBottleDispenseBehavior.DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR = (IDispenseItemBehavior) (method.invoke(Blocks.DISPENSER, new ItemStack(Items.GLASS_BOTTLE)));
+	    EmptyBucketDispenseBehavior.DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR = (IDispenseItemBehavior) (method.invoke(Blocks.DISPENSER, new ItemStack(Items.BUCKET)));
 	}
 	catch (Exception e) {
 	    e.printStackTrace();
@@ -64,5 +77,6 @@ public class DispenserItemSetup
 	
 	DispenserBlock.registerDispenseBehavior(Items.GLASS_BOTTLE, new GlassBottleDispenseBehavior());
 	DispenserBlock.registerDispenseBehavior(Items.HONEY_BOTTLE, new HoneyBottleDispenseBehavior());
+	DispenserBlock.registerDispenseBehavior(Items.BUCKET, new EmptyBucketDispenseBehavior());
     }
 }
