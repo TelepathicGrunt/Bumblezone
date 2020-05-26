@@ -13,18 +13,18 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.DispenserTileEntity;
 import net.minecraft.tileentity.HopperTileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 
 
-public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior
+public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior
 {
-    public static IDispenseItemBehavior DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR;
+    public static IDispenseItemBehavior DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR;
     public static DefaultDispenseItemBehavior DROP_ITEM_BEHAVIOR = new DefaultDispenseItemBehavior();
 
     /**
@@ -55,37 +55,30 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior
 			world.addEntity(beeEntity);
 		    }
 
-		    world.setBlockState(position, blockstate.with(HoneycombBrood.STAGE, Integer.valueOf(0)));
 		}
 	    }
-	    else {
-		world.setBlockState(position, blockstate.with(HoneycombBrood.STAGE, Integer.valueOf(stage + 1)));
-	    }
 
+	    // kill the brood block
+	    world.setBlockState(position, BzBlocks.DEAD_HONEYCOMB_BROOD.get().getDefaultState().with(BlockStateProperties.FACING, blockstate.get(BlockStateProperties.FACING)));
 	    stack.shrink(1);
-	    if(Bumblezone.BzConfig.dispensersDropGlassBottles.get()) {
-        	    if (!stack.isEmpty())
-        		addGlassBottleToDispenser(source);
-        	    else
-        		stack = new ItemStack(Items.GLASS_BOTTLE);
-    	    }
-	    else {
-		DROP_ITEM_BEHAVIOR.dispense(source, new ItemStack(Items.GLASS_BOTTLE));
-	    }
+	    
+	    if(!stack.isEmpty())
+		addHoneyBottleToDispenser(source);
+	    else 
+		stack = new ItemStack(Items.HONEY_BOTTLE);
 	}
-	else if(blockstate.getBlock() == BzBlocks.POROUS_HONEYCOMB.get()) 
-	{
-	    world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState());
+	// remove honey
+	else if (blockstate.getBlock() == BzBlocks.FILLED_POROUS_HONEYCOMB.get()) {
+	    world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.get().getDefaultState());
 	    stack.shrink(1);
-	    if(Bumblezone.BzConfig.dispensersDropGlassBottles.get()) {
-        	    if (!stack.isEmpty())
-        		addGlassBottleToDispenser(source);
-        	    else
-        		stack = new ItemStack(Items.GLASS_BOTTLE);
-	    }
+	    
+	    if(!stack.isEmpty())
+		addHoneyBottleToDispenser(source);
+	    else 
+		stack = new ItemStack(Items.HONEY_BOTTLE);
 	}
 	else {
-	    return DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR.dispense(source, stack);
+	    return DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR.dispense(source, stack);
 	}
 
 	return stack;
@@ -99,14 +92,15 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior
     protected void playDispenseSound(IBlockSource source) {
 	source.getWorld().playEvent(1002, source.getBlockPos(), 0);
     }
-    
+
+
     /**
-     * Adds glass bottle to dispenser or if no room, dispense it
+     * Adds honey bottle to dispenser or if no room, dispense it
      */
-    private static void addGlassBottleToDispenser(IBlockSource source) {
+    private static void addHoneyBottleToDispenser(IBlockSource source) {
 	if(source.getBlockTileEntity() instanceof DispenserTileEntity) {
 	    DispenserTileEntity dispenser = (DispenserTileEntity)source.getBlockTileEntity();
-	    ItemStack honeyBottle = new ItemStack(Items.GLASS_BOTTLE);
+	    ItemStack honeyBottle = new ItemStack(Items.HONEY_BOTTLE);
 	    if(!HopperTileEntity.putStackInInventoryAllSlots(null, dispenser, honeyBottle, null).isEmpty()) {
 		DROP_ITEM_BEHAVIOR.dispense(source, honeyBottle);
 	    }

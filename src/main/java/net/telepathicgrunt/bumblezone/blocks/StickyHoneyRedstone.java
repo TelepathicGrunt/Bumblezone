@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -16,6 +18,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -70,9 +73,26 @@ public class StickyHoneyRedstone extends StickyHoneyResidue
 
     @Override
     public int getWeakPower(BlockState blockstate, IBlockReader blockAccess, BlockPos pos, Direction side) {
-	return blockstate.get(POWERED) ? 1 : 0;
+	if (blockstate.get(POWERED) && blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
+	    for (Direction horizontal : Direction.Plane.HORIZONTAL) {
+		if(horizontal == side) {
+		    return 1;
+		}
+	    }
+	}
+	return blockstate.get(POWERED) && blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(side.getOpposite())) ? 1 : 0;
     }
 
+    @Override
+    public int getStrongPower(BlockState blockstate, IBlockReader blockAccess, BlockPos pos, Direction side) {
+	return blockstate.get(POWERED) && blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(side.getOpposite())) ? 1 : 0;
+    }
+
+    @Override
+    public boolean shouldCheckWeakPower(BlockState state, IWorldReader world, BlockPos pos, Direction side)
+    {
+        return false;
+    }
 
     /**
      * Remove vine's ticking with removing power instead.
@@ -92,11 +112,37 @@ public class StickyHoneyRedstone extends StickyHoneyResidue
 	for (Direction direction : Direction.values()) {
 	    BooleanProperty booleanproperty = StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(direction);
 	    if (blockstate.get(booleanproperty)) {
+	        world.notifyNeighborsOfStateChange(pos.offset(direction), this);
 		world.neighborChanged(pos.offset(direction), blockstate.getBlock(), pos);
+		
+		if(direction == Direction.DOWN) {
+		    for(Direction horizontal : Direction.Plane.HORIZONTAL) {
+			world.neighborChanged(pos.offset(horizontal), blockstate.getBlock(), pos);
+		    }
+		}
 	    }
 	}
     }
 
+
+    @Override
+    public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, @Nullable Direction side)
+    {
+	if (state.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
+	    for (Direction horizontal : Direction.Plane.HORIZONTAL) {
+		if(horizontal == side) {
+		    return true;
+		}
+	    }
+	}
+	
+        return false;
+    }
+
+    @Override
+    public boolean canProvidePower(BlockState state) {
+       return true;
+    }
 
     /**
      * notify neighbor of changes when replaced

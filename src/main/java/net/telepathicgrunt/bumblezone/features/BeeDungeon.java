@@ -300,7 +300,7 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 		//south wall
 		else if(block == Blocks.ORANGE_TERRACOTTA) {
 			if(random.nextFloat() < 0.6f) {
-				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
+				return new Pair<>(BzBlocks.HONEYCOMB_BROOD.get().getDefaultState()
 								.with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3)))
 								.with(HoneycombBrood.FACING, Direction.SOUTH),	
 								new Boolean(false));
@@ -316,7 +316,7 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 		//west wall
 		else if(block == Blocks.YELLOW_TERRACOTTA) {
 			if(random.nextFloat() < 0.6f) {
-				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
+				return new Pair<>(BzBlocks.HONEYCOMB_BROOD.get().getDefaultState()
 								.with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3)))
 								.with(HoneycombBrood.FACING, Direction.WEST),	
 								new Boolean(false));
@@ -332,7 +332,7 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 		//north wall
 		else if(block == Blocks.LIME_TERRACOTTA) {
 			if(random.nextFloat() < 0.6f) {
-				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
+				return new Pair<>(BzBlocks.HONEYCOMB_BROOD.get().getDefaultState()
 								.with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3)))
 								.with(HoneycombBrood.FACING, Direction.NORTH),	
 								new Boolean(false));
@@ -348,7 +348,7 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 		//east wall
 		else if(block == Blocks.BLUE_TERRACOTTA) {
 			if(random.nextFloat() < 0.6f) {
-				return new Pair<>(BzBlocks.HONEYCOMB_LARVA.get().getDefaultState()
+				return new Pair<>(BzBlocks.HONEYCOMB_BROOD.get().getDefaultState()
 								.with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3)))
 								.with(HoneycombBrood.FACING, Direction.EAST),	
 								new Boolean(false));

@@ -5,11 +5,11 @@
 <p>&nbsp;</p>
 <p style="text-align: center;"><em><span style="font-size: 14px; color: #b00000; text-decoration: underline;"><strong>Recent 1.15.2 News:</strong></span><span style="font-size: 14px;"><b><strong>&nbsp;With v1.3.0+, explore new dungeons, </strong></b></span></em></p>
 <p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>blocks, </strong></b></span></em><em><span style="font-size: 14px;"><b><strong>items, and mod compatibility including JEI!</strong></b></span></em></p>
-<p style="text-align: center;">&nbsp;</p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Also, if you're using Buzzier Bees with this mod,</strong></b></span></em></p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>please update your Buzzier Bees to v1.5 or higher!</strong></b></span></em></p>
 <p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Also, several bug fixes was done such as falling out of</strong></b></span></em></p>
 <p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>The Bumblezone will teleport you without fall damage now.</strong></b></span></em></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Lastly, if you're using Buzzier Bees with this mod,</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>please update your Buzzier Bees to v1.5 or higher!</strong></b></span></em></p>
 <p style="text-align: center;"><strong style="color: #3f3bb8; font-size: 18px;"><em>(And like always, please report any <span style="text-decoration: line-through;">glitches</span>&nbsp;BUGS you find)</em></strong></p>
 <p style="text-align: center;">&nbsp;</p>
 <p>&nbsp;</p>
@@ -33,7 +33,7 @@
 <div class="spoiler">
 <p>&nbsp;Filled Porous Honeycomb Block</p>
 <div class="spoiler">
-<p>-Use Glass Bottle on this block to obtain a Honey Bottle and turn this block into a&nbsp;Porous Honeycomb Block. However, you will get a Wrath of the Hive effect if you do this.</p>
+<p>-Use Glass Bottle on this block to obtain a Honey Bottle and turn this block into a&nbsp;Porous Honeycomb Block. However, you will get a Wrath of the Hive effect if you do this. A Dispenser with a Glass Bottle can also pull honey out of this block and turn it into a regular&nbsp;Porous Honeycomb Block.</p>
 <p>&nbsp;</p>
 <p>-You walk 10% slower on this block but barely noticable.</p>
 <p>&nbsp;</p>
@@ -55,11 +55,11 @@
 <p>&nbsp;</p>
 <p>-The Larva grows much faster in The Bumblezone dimension but will still grow outside of it. You can speed up the larva stages by feeding it Honey Bottles which always results in growth or feed it Sugar Water Bottle which sometimes results in growth. You can use a Dispenser with Honey Bottles or Sugar Water Bottles right next to the block to automate the growing and spawning of bees with this block!</p>
 <p>&nbsp;</p>
-<p>-If you use a Glass Bottle on this block, you will get a Honey Bottle, turn this block into a&nbsp;Dead Honeycomb Brood Block, and you will get Wrath of the Hive effect.</p>
+<p>-If you use a Glass Bottle on this block, you will get a Honey Bottle, turn this block into an Empty Honeycomb Brood Block, and you will get Wrath of the Hive effect. A Dispenser with a Glass Bottle can also pull honey out of this block and turn it into an&nbsp;Empty Honeycomb Larva Block.</p>
 <p>&nbsp;</p>
-<p>-When mined, this block drops&nbsp;Dead Honeycomb Larva Block and a Honeycomb and since you killed the larva, you get Wrath of the Hive effect as well. But if you use a Silk Touch pickaxe, you can get&nbsp;Honeycomb Larva Block instead without angering the bee or getting the effect.</p>
+<p>-When mined, this block drops&nbsp;Empty Honeycomb Larva Block and a Honeycomb and since you killed the larva, you get Wrath of the Hive effect as well. But if you use a Silk Touch pickaxe, you can get&nbsp;Honeycomb Larva Block instead without angering the bee or getting the effect.</p>
 <p>&nbsp;</p>
-<p>-Attaching a Comparator to this block will output redstone power based on what stage the larva is in the block (1 to 4 power).</p>
+<p>-Attaching a Comparator to this block will output Redstone power based on what stage the larva is in the block (1 to 4 power).</p>
 </div>
 <p>&nbsp;</p>
 <p>&nbsp;Empty Honeycomb Brood Block</p>
@@ -95,7 +95,7 @@
 <p>&nbsp;</p>
 <p>Sticky Honey Residue</p>
 <div class="spoiler">
-<p>-A very sticky block that can be placed on any solid surface and is created by smelting Honey Crystal blocks, Honey Crystal Shards items, or&nbsp;vanilla's Honey blocks. Breaking this block will drop nothing.</p>
+<p>-A very sticky block that can be placed on multiple solid surfaces at once and is created by smelting Honey Crystal blocks, Honey Crystal Shards items, or&nbsp;vanilla's Honey blocks. Breaking this block will drop nothing.</p>
 <p>&nbsp;</p>
 <p>-When any entity touches this block, they move extremely lowly. This block can also be climbed if it is on a wall.</p>
 <p>&nbsp;</p>
@@ -109,6 +109,8 @@
 <p>-This block does everything Sticky Honey Residue can do and can be created by crafting 1 Sticky Honey Residue with 1 Redstone.&nbsp;</p>
 <p>&nbsp;</p>
 <p>-When an entity gets stuck on this block, this block outputs a redstone signal of 1 which is pretty useful for Redstone contraptions!</p>
+<p>&nbsp;</p>
+<p>-When activated, this block will power whatever block it is attached to and also power through that block as well like turning off a Redstone Torch on the other side. If Sticky Honey Residue is attached to the floor, it will power any adjacent blocks attached to it as well such as Redstone dust on the floor.</p>
 </div>
 <p>&nbsp;</p>
 <p>Sugar Infused Stone</p>

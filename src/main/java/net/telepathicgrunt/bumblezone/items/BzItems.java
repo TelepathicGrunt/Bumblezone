@@ -45,10 +45,10 @@ public class BzItems
     	new BlockItem(BzBlocks.FILLED_POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
 
     public static final RegistryObject<Item> DEAD_HONEYCOMB_LARVA_ITEM = ITEMS.register("dead_honeycomb_larva_block", () ->
-    	new BlockItem(BzBlocks.DEAD_HONEYCOMB_LARVA.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
+    	new BlockItem(BzBlocks.DEAD_HONEYCOMB_BROOD.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
     
     public static final RegistryObject<Item> HONEYCOMB_LARVA_ITEM = ITEMS.register("honeycomb_larva_block", () ->
-    	new BlockItem(BzBlocks.HONEYCOMB_LARVA.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
+    	new BlockItem(BzBlocks.HONEYCOMB_BROOD.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
 
     public static final RegistryObject<Item> SUGAR_INFUSED_STONE_ITEM = ITEMS.register("sugar_infused_stone", () ->
     	new BlockItem(BzBlocks.SUGAR_INFUSED_STONE.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));

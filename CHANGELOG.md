@@ -15,8 +15,38 @@ Mods I'm keeping an eye on for future compat
 
 ------------------------------------------------
 # | Bumblezone changelog |
-
    
+   
+## (V.1.3.2 Changes) (1.15.2 Minecraft)
+ 
+##### Blocks:
+
+-Sticky Honey Redstone now will power through the block it is attached to and will power anything attached to it if it is on the floor. Much more useful now!
+
+##### Items:
+
+-Honey Bottles in Dispensers can now turn Porous Honeycomb Block into Filled Porous Honeycomb Block.
+
+-Honey Bottles in Dispensers will now add Glass Bottles to the Dispenser when used to revive Empty Honeycomb Brood Blocks. (Can be changed in config to always drop the Glass Bottle instead of putting it back into Dispenser)
+
+-Glass Bottles in Dispensers now will take honey from Filled Porous Honeycomb Block and Honeycomb Brood Block. The blocks will turn into their honey-less counterparts and a Honey Bottle will appear in the Dispenser (or dropped if there's no room).
+  
+##### Mod Compat: 
+
+-Fixed naming of allowSplashPotionOfBeesCompat config entry to be correct and actually takes effect now.
+
+-Fixed bug where The Bumblezone's Depenser behavior overrode Potion of Bees's Splash Potion of Bees Dispenser behavior.
+
+-Potion of Bees's regular Potion of Bees item will now revive Dead Honeycomb Brood Blocks correctly.
+
+-Configs for Potion of Bees's potions compatibility with Empty Honeycomb Brood Blocks now applies to the Dispenser behaviors as well.
+   
+-Fixed The Bumblezone's custom Dispenser behavior for Honey Bottles to not completely override other mod's Dispenser behaviors for it.
+  
+-Buzzier Bees's Bottled o Bee and Potion of Bees's regular and splash Potion of Bees items will now add Glass Bottles to the Dispenser when used to revive Empty Honeycomb Brood Blocks.
+
+-Updated Sticky Honey Redstone description in JEI to reflect the new changes to it.
+  
 ## (V.1.3.1 Changes) (1.15.2 Minecraft)
  
 ##### Blocks: 

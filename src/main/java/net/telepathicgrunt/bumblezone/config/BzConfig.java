@@ -59,6 +59,10 @@ public class BzConfig
 		public ConfigValueListener<Integer> spiderInfestedBeeDungeonRarity;
 		public ConfigValueListener<Double> spawnerRateSpiderBeeDungeon;
 
+		//general mechanics
+		public ConfigValueListener<Boolean> dispensersDropGlassBottles;
+		
+		
 		public BzConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber)
 		{
 	        builder.push("The Bumblezone Dimension Options");
@@ -174,7 +178,7 @@ public class BzConfig
 	    		spawnerRateSpiderBeeDungeon = subscriber.subscribe(builder
     		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
     		            		+" How rare are Spider/Cave Spider Spawners in Spider Infested Bee Dungeons.\r\n"
-    		            		+" 0 is no spawners, 1 is max spawner, and default is 0.2D\r\n")
+    		            		+" 0 is no spawners, 1 is maximum spawners, and default is 0.2D\r\n")
     		            .translation("the_bumblezone.config.dungeons.spawnerratespiderbeedungeon")
     		            .defineInRange("spawnerRateSpiderBeeDungeon", 0.2D, 0D, 1D));
 	    		
@@ -436,20 +440,35 @@ public class BzConfig
 	            		allowPotionOfBeesCompat = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Allow Potion of Bees item to turn Empty Honeycomb Brood blocks \r\n"
-			                    	+" back into Honeycomb Brood Blocks with a larva in it.\r\n")
+			                    	+" back into Honeycomb Brood Blocks with a larva in it. (affects Despenser too)\r\n")
 		                    .translation("the_bumblezone.config.modcompat.potionofbees.allowpotionofbeescompat")
 		                    .define("allowPotionOfBeesCompat", true));
 	            		
-	            		spawnProductiveBeesBeesMob = subscriber.subscribe(builder
+	            		allowSplashPotionOfBeesCompat = subscriber.subscribe(builder
 			            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 			                    	+" Allow Splash Potion of Bees item to turn Empty Honeycomb Brood \r\n"
 				                +" blocks back into Honeycomb Brood Blocks with a larva in it when \r\n"
-				                +" the potion is thrown and splashed near the block.\r\n")
-			            .translation("the_bumblezone.config.modcompat.productivebees.spawnproductivebeesbeesmob")
-			            .define("spawnProductiveBeesBeesMob", true));
+				                +" the potion is thrown and splashed near the block. (affects Despenser too)\r\n")
+			            .translation("the_bumblezone.config.modcompat.productivebees.allowsplashpotionofbeescompat")
+			            .define("allowSplashPotionOfBeesCompat", true));
         
 	            builder.pop();
 	            
+	        builder.pop();
+	            
+	        builder.push("General Mechanics Options");
+
+	        	dispensersDropGlassBottles = subscriber.subscribe(builder
+		        .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		        	+" Should Dispensers always drop the Glass Bottle when using specific \r\n"
+			 	+" bottle items on certain The Bumblezone blocks? \r\n"
+			 	+" \r\n"
+			 	+" Example: Using Honey Bottle to feed Honeycomb Brood Blocks will grow the \r\n"
+		 		+" larva and have a Glass Bottle to either drop or put back into Dispenser. \r\n")
+		        .translation("the_bumblezone.config.modcompat.potionofbees.dispensersDropGlassBottles")
+		        .define("dispensersDropGlassBottles", false));
+	            		
+        
 	        builder.pop();
 	    }		
 	} 
