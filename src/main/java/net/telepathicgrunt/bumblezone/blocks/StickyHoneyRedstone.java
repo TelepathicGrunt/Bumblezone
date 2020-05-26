@@ -71,29 +71,6 @@ public class StickyHoneyRedstone extends StickyHoneyResidue
     }
 
 
-    @Override
-    public int getWeakPower(BlockState blockstate, IBlockReader blockAccess, BlockPos pos, Direction side) {
-	if (blockstate.get(POWERED) && blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
-	    for (Direction horizontal : Direction.Plane.HORIZONTAL) {
-		if(horizontal == side) {
-		    return 1;
-		}
-	    }
-	}
-	return blockstate.get(POWERED) && blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(side.getOpposite())) ? 1 : 0;
-    }
-
-    @Override
-    public int getStrongPower(BlockState blockstate, IBlockReader blockAccess, BlockPos pos, Direction side) {
-	return blockstate.get(POWERED) && blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(side.getOpposite())) ? 1 : 0;
-    }
-
-    @Override
-    public boolean shouldCheckWeakPower(BlockState state, IWorldReader world, BlockPos pos, Direction side)
-    {
-        return false;
-    }
-
     /**
      * Remove vine's ticking with removing power instead.
      */
@@ -123,27 +100,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue
 	    }
 	}
     }
-
-
-    @Override
-    public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, @Nullable Direction side)
-    {
-	if (state.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
-	    for (Direction horizontal : Direction.Plane.HORIZONTAL) {
-		if(horizontal == side) {
-		    return true;
-		}
-	    }
-	}
-	
-        return false;
-    }
-
-    @Override
-    public boolean canProvidePower(BlockState state) {
-       return true;
-    }
-
+    
     /**
      * notify neighbor of changes when replaced
      */
@@ -178,14 +135,76 @@ public class StickyHoneyRedstone extends StickyHoneyResidue
 	}
     }
 
+    
+    ////////////////////// REDSTONE SECTION ////////////////////////////
+    
 
+    /**
+     * Make Redstone connect visually to this block
+     */
+    @Override
+    public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, @Nullable Direction side)
+    {
+	if (state.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
+	    for (Direction horizontal : Direction.Plane.HORIZONTAL) {
+		if(horizontal == side) {
+		    return true;
+		}
+	    }
+	}
+	
+        return false;
+    }
+
+    /**
+     * Tells game that this block can generate a Redstone signal
+     */
+    @Override
+    public boolean canProvidePower(BlockState state) {
+       return true;
+    }
+
+    /**
+     * Powers the block it's attached to. Or powers blocks next to if it's on the floor
+     */
+    @Override
+    public int getWeakPower(BlockState blockstate, IBlockReader blockAccess, BlockPos pos, Direction side) {
+	//power nearby blocks if on floor
+	if (blockstate.get(POWERED) && blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
+	    for (Direction horizontal : Direction.Plane.HORIZONTAL) {
+		if(horizontal == side) {
+		    return 1;
+		}
+	    }
+	}
+	
+	//return power for block it is attached on.
+	return getStrongPower(blockstate, blockAccess, pos, side);
+    }
+
+    /**
+     * Powers through the block that it is attached to.
+     */
+    @Override
+    public int getStrongPower(BlockState blockstate, IBlockReader blockAccess, BlockPos pos, Direction side) {
+	return blockstate.get(POWERED) && blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(side.getOpposite())) ? 1 : 0;
+    }
+
+    /**
+     * Tells game to check strong power instead of weak power so it can power through blocks.
+     */
+    @Override
+    public boolean shouldCheckWeakPower(BlockState state, IWorldReader world, BlockPos pos, Direction side)
+    {
+        return false;
+    }
+    
     /**
      * Set if block is powered or not
      */
     protected BlockState setRedstoneStrength(BlockState blockstate, int strength) {
 	return blockstate.with(POWERED, Boolean.valueOf(strength > 0));
     }
-
 
     /**
      * Detects if any entity is inside this block and outputs power if so
