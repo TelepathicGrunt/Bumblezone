@@ -28,6 +28,7 @@ public class BzConfig
 		public ConfigValueListener<String> requiredBlockUnderHive;
 		public ConfigValueListener<Boolean> warnPlayersOfWrongBlockUnderHive;
 		public ConfigValueListener<Boolean> allowTeleportationWithModdedBeehives;
+		public ConfigValueListener<Boolean> seaLevelOrHigherExitTeleporting;
 		
 		//mod compatibility
 		public ConfigValueListener<Boolean> spawnHoneySlimeMob;
@@ -138,6 +139,13 @@ public class BzConfig
 		                    .translation("the_bumblezone.config.dimension.requiredblockunderhive")
 		                    .define("requiredBlockUnderHive", ""));
 
+	            seaLevelOrHigherExitTeleporting = subscriber.subscribe(builder
+	                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	                    		+" Should exiting The Bumblezone always try and place you \r\n"
+	                    		+" above sealevel in the target dimension? (Will only look \r\n"
+	                    		+" for beehives above sealevel as well when placing you)")
+	                    .translation("the_bumblezone.config.dimension.sealevelorhigherexitteleporting")
+	                    .define("seaLevelOrHigherExitTeleporting", true));
 	            
 	            warnPlayersOfWrongBlockUnderHive = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"

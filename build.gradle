@@ -29,7 +29,7 @@ repositories {
 	}
 }
 
-version = '1.15.2-1.3.2'
+version = '1.15.2-1.3.3'
 group = 'com.telepathicgrunt.bumblezone' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'the_bumblezone'
 

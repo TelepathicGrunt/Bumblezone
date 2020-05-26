@@ -105,16 +105,16 @@ public class PlayerTeleportationBehavior
 				}
 				
 				//checks if block under hive is correct if config needs one
+				boolean validBelowBlock = false;
 				String requiredBlockString = Bumblezone.BzConfig.requiredBlockUnderHive.get();
-				if(!requiredBlockString.isEmpty() && ResourceLocation.isResouceNameValid(requiredBlockString)) 
+				if(!requiredBlockString.trim().isEmpty()) 
 				{
-					ResourceLocation requiredBlockRL = new ResourceLocation(requiredBlockString);
-					if(ForgeRegistries.BLOCKS.containsKey(requiredBlockRL)) 
+					if(requiredBlockString.matches("[a-z0-9/._-]+:[a-z0-9/._-]+") && ForgeRegistries.BLOCKS.containsKey(new ResourceLocation(requiredBlockString))) 
 					{
-						Block requiredBlock = ForgeRegistries.BLOCKS.getValue(requiredBlockRL);
+						Block requiredBlock = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(requiredBlockString));
 						if(requiredBlock == world.getBlockState(hivePos.down()).getBlock().getBlock()) 
 						{
-							
+						    validBelowBlock = true;
 						}
 						else if(Bumblezone.BzConfig.warnPlayersOfWrongBlockUnderHive.get())
 						{
@@ -135,10 +135,13 @@ public class PlayerTeleportationBehavior
 						return;
 					}
 				}
+				else {
+				    validBelowBlock = true;
+				}
 				
 
 				//if the pearl hit a beehive and is not in our bee dimension, begin the teleportation.
-				if (hitHive && playerEntity.dimension != BzDimensionRegistration.bumblezone())
+				if (hitHive && validBelowBlock && playerEntity.dimension != BzDimensionRegistration.bumblezone())
 				{
 					//Store current dimension and position of hit 
 
@@ -437,61 +440,59 @@ public class PlayerTeleportationBehavior
 		//snaps the coordinates to chunk origin and then sets height to minimum or maximum based on search direction
 		mutableBlockPos.setPos(position.getX(), checkingUpward ? 0 : maxHeight, position.getZ()); 
 		
-		
-		//scans range from y = 0 to dimension max height for a bee_nest
-		//Does it by checking each y layer at a time
-		for (; mutableBlockPos.getY() >= 0 && mutableBlockPos.getY() <= maxHeight;)
-		{
-			for (int range = 0; range < maximumRange; range++)
-			{
-				int radius = range * range;
-				int nextRadius = (range+1) * (range+1);
-				for (int x = 0; x <= range * 2; x++){
-					int x2 = x > range ? -(x - range) : x;
-					
-					for (int z = 0; z <= range * 2; z++){
-						int z2 = z > range ? -(z - range) : x;
-						
-						//checks within the circular ring and not check the same positions multiple times
-						if (x2 * x2 + z2 * z2 >= radius && x2 * x2 + z2 * z2 < nextRadius)
-						{
-							mutableBlockPos.setPos(position.getX() + x2, mutableBlockPos.getY(), position.getZ() + z2);
-							
-							if (isValidBeeHive(world.getBlockState(mutableBlockPos)))
-							{
-								//A Hive was found, try to find a valid spot next to it
-								BlockPos validSpot = validPlayerSpawnLocation(world, mutableBlockPos, 4);
-								if(validSpot != null) {
-									return validSpot;
-								}
-							}
-						}
-					}
-				}
-			}
+
+		// scans range from y = 0 to dimension max height for a bee_nest
+		// Does it by checking each y layer at a time
+		for (; mutableBlockPos.getY() >= 0 && mutableBlockPos.getY() <= maxHeight;) {
+		    // only false if config requires us to be above sealevel and we are not.
+		    if (!Bumblezone.BzConfig.seaLevelOrHigherExitTeleporting.get() || 
+			    mutableBlockPos.getY() > world.getDimension().getSeaLevel()) {
 			
-			//move the block pos in the direction it needs to go
-			if(checkingUpward)
-			{
-				mutableBlockPos.move(Direction.UP);
+			for (int range = 0; range < maximumRange; range++) {
+			   
+			    int radius = range * range;
+			    int nextRadius = (range + 1) * (range + 1);
+			    for (int x = 0; x <= range * 2; x++) {
+				int x2 = x > range ? -(x - range) : x;
+
+				for (int z = 0; z <= range * 2; z++) {
+				    int z2 = z > range ? -(z - range) : x;
+
+				    // checks within the circular ring and not check the same positions multiple times
+				    if (x2 * x2 + z2 * z2 >= radius && x2 * x2 + z2 * z2 < nextRadius) {
+					mutableBlockPos.setPos(position.getX() + x2, mutableBlockPos.getY(), position.getZ() + z2);
+
+					if (isValidBeeHive(world.getBlockState(mutableBlockPos))) {
+					    // A Hive was found, try to find a valid spot next to it
+					    BlockPos validSpot = validPlayerSpawnLocation(world, mutableBlockPos, 4);
+					    if (validSpot != null) {
+						return validSpot;
+					    }
+					}
+				    }
+				}
+			    }
 			}
-			else
-			{
-				mutableBlockPos.move(Direction.DOWN);
-			}
+		    }
+
+		    // move the block pos in the direction it needs to go
+		    if (checkingUpward) {
+			mutableBlockPos.move(Direction.UP);
+		    }
+		    else {
+			mutableBlockPos.move(Direction.DOWN);
+		    }
 		}
 		
-		
-		//no valid spot was found, generate a hive and spawn us on the highest land
-		//This if statement is so we dont get placed on roof of other roofed dimension
-		if(maxHeight + 1 < world.getActualHeight())
-		{
-			maxHeight += 1;
+
+		// no valid spot was found, generate a hive and spawn us on the highest land
+		// This if statement is so we dont get placed on roof of other roofed dimension
+		if (maxHeight + 1 < world.getActualHeight()) {
+		    maxHeight += 1;
 		}
-		mutableBlockPos.setPos(
-						position.getX(), 
-						BzPlacingUtils.topOfSurfaceBelowHeight(world, maxHeight, -1, position), 
-						position.getZ());
+		mutableBlockPos.setPos(position.getX(), 
+					BzPlacingUtils.topOfSurfaceBelowHeight(world, maxHeight, -1, position), 
+					position.getZ());
 		
 		if(mutableBlockPos.getY() > 0)
 		{
@@ -503,10 +504,9 @@ public class PlayerTeleportationBehavior
 		{
 			//No valid spot was found. Just place character on a generate hive at center of height of coordinate 
 			//Basically just f*** it at this point lol
-			mutableBlockPos.setPos(
-							position.getX(), 
-							world.getDimension().getActualHeight()/2, 
-							position.getZ());
+			mutableBlockPos.setPos(position.getX(), 
+						world.getDimension().getActualHeight()/2, 
+						position.getZ());
 
 			world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
 			world.setBlockState(mutableBlockPos.up(), Blocks.AIR.getDefaultState());

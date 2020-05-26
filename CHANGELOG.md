@@ -17,6 +17,32 @@ Mods I'm keeping an eye on for future compat
 # | Bumblezone changelog |
    
    
+## (V.1.3.3 Changes) (1.15.2 Minecraft)
+ 
+##### Teleportation:
+
+-Fixed serverside crash with teleporting when trying to use the config to require a certain block under beehive. (requiredBlockUnderHive)
+
+-RequiredBlockUnderHive config entry now actually works. 
+
+-Added seaLevelOrHigherExitTeleporting config entry so that when you exit The bumblezone, you can have it where you are only placed near a hive that is above sealevel. This is to help prevent spawning underground due to Beesourceful's Beenests.
+
+##### Blocks:
+
+-Fixed when using a Glass Bottle on a waterlogged Honey Crystal Block gives you Water Bottle instead of Sugar Water Bottle like it should.
+
+-Fixed bug where using Dispenser to make Honey Bottle put honey into Porous Honeycomb Block will not yield a Glass Bottle as waste.
+
+##### Items:
+
+-Fixed dispensersDropGlassBottles's config entry having the opposite effect than what it is currently set as.
+   
+-Glass Bottles in Dispensers facing Sugar Water or waterlogged Honey Crystal Block will now turn into Sugar Water Bottles when the Dispenser is activated.
+
+-Sugar Water Bucket in Dispensers will now waterlog Honey Crystal Block if it is in-front of the Dispenser.
+
+-Empty Bucket in Dispensers will now become Sugar Water Buckets if there is a waterlogged Honey Crystal Block in-front of the Dispenser.
+
 ## (V.1.3.2 Changes) (1.15.2 Minecraft)
  
 ##### Blocks:
