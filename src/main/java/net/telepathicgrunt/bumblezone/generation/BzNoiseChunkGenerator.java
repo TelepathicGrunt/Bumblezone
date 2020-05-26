@@ -18,6 +18,8 @@ import net.minecraft.world.chunk.ProtoChunk;
 import net.minecraft.world.gen.ChunkRandom;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
+import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -26,7 +28,6 @@ import java.util.stream.IntStream;
 public abstract class BzNoiseChunkGenerator<T extends ChunkGeneratorConfig> extends ChunkGenerator<T> {
 
     private static final BlockState STONE = Blocks.STONE.getDefaultState();
-    private static final BlockState WATER = Blocks.WATER.getDefaultState();
     private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
 
     private final int verticalNoiseGranularity;
@@ -48,7 +49,7 @@ public abstract class BzNoiseChunkGenerator<T extends ChunkGeneratorConfig> exte
         this.verticalNoiseGranularity = verticalNoiseGranularityIn;
         this.horizontalNoiseGranularity = horizontalNoiseGranularityIn;
         this.defaultBlock = STONE;
-        this.defaultFluid = WATER;
+        this.defaultFluid = BzBlocks.SUGAR_WATER_BLOCK.getDefaultState();
         this.noiseSizeX = 16 / this.horizontalNoiseGranularity;
         this.noiseSizeY = maxHeight / this.verticalNoiseGranularity;
         this.noiseSizeZ = 16 / this.horizontalNoiseGranularity;
@@ -209,7 +210,7 @@ public abstract class BzNoiseChunkGenerator<T extends ChunkGeneratorConfig> exte
                 int zPos = chunkZ + z;
                 int ySurface = chunk.sampleHeightmap(Heightmap.Type.WORLD_SURFACE_WG, x, z) + 1;
                 double noise = this.surfaceDepthNoise.sample((double) xPos * 0.0625D, (double) zPos * 0.0625D, 0.0625D, (double) x * 0.0625D) * 10.0D;
-                region.getBiome(blockpos$mutable.set(chunkX + x, ySurface, chunkZ + z)).buildSurface(sharedseedrandom, chunk, xPos, zPos, ySurface, noise, this.defaultBlock, this.defaultFluid, region.getSeaLevel(), this.world.getSeed());
+                region.getBiome(blockpos$mutable.set(chunkX + x, ySurface, chunkZ + z)).buildSurface(sharedseedrandom, chunk, xPos, zPos, ySurface, noise, this.defaultBlock, this.defaultFluid, BzDimension.getSeaLevel(), this.world.getSeed());
             }
         }
 

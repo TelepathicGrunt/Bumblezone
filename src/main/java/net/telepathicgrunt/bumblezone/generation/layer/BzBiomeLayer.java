@@ -5,7 +5,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.layer.type.InitLayer;
 import net.minecraft.world.biome.layer.util.LayerRandomnessSource;
 import net.minecraft.world.gen.ChunkRandom;
-import net.telepathicgrunt.bumblezone.biome.BzBiomesInit;
+import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 
 import java.util.stream.IntStream;
 
@@ -13,9 +13,9 @@ import java.util.stream.IntStream;
 public enum BzBiomeLayer implements InitLayer {
     INSTANCE;
 
-    private static final int SUGAR_WATER = Registry.BIOME.getRawId(BzBiomesInit.SUGAR_WATER);
-    private static final int HIVE_WALL = Registry.BIOME.getRawId(BzBiomesInit.HIVE_WALL);
-    private static final int HIVE_PILLAR = Registry.BIOME.getRawId(BzBiomesInit.HIVE_PILLAR);
+    private static final int SUGAR_WATER = Registry.BIOME.getRawId(BzBiomes.SUGAR_WATER);
+    private static final int HIVE_WALL = Registry.BIOME.getRawId(BzBiomes.HIVE_WALL);
+    private static final int HIVE_PILLAR = Registry.BIOME.getRawId(BzBiomes.HIVE_PILLAR);
 
     private static OctaveSimplexNoiseSampler perlinGen;
 //	private double max = 0;

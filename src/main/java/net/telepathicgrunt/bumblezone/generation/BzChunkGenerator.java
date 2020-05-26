@@ -16,8 +16,8 @@ import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.gen.ChunkRandom;
 import net.minecraft.world.gen.chunk.OverworldChunkGeneratorConfig;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.features.decorators.BzPlacingUtils;
 import net.telepathicgrunt.bumblezone.mixin.BeeEntityInvoker;
+import net.telepathicgrunt.bumblezone.utils.BzPlacingUtils;
 
 import java.util.List;
 import java.util.stream.IntStream;

@@ -10,7 +10,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
-import net.telepathicgrunt.bumblezone.biome.BzBiomesInit;
+import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.configs.BzConfig;
 import net.telepathicgrunt.bumblezone.configs.FileWatcher;
@@ -43,7 +43,7 @@ public class Bumblezone implements ModInitializer {
         BzBlocks.registerBlocks();
         BzItems.registerItems();
         BzEffects.registerEffects();
-        BzBiomesInit.registerBiomes();
+        BzBiomes.registerBiomes();
         BzDimensionType.registerChunkGenerator();
         BzDimensionType.registerDimension();
 

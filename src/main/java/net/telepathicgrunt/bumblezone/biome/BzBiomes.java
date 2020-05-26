@@ -1,5 +1,6 @@
 package net.telepathicgrunt.bumblezone.biome;
 
+import net.fabricmc.fabric.api.biomes.v1.FabricBiomes;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
@@ -12,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class BzBiomesInit {
+public class BzBiomes {
 
     //list of all biomes we registered
     public static Set<Biome> biomes = new HashSet<Biome>();

@@ -8,7 +8,7 @@ import net.minecraft.world.biome.layer.util.*;
 import net.minecraft.world.biome.source.BiomeLayerSampler;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.level.LevelGeneratorType;
-import net.telepathicgrunt.bumblezone.biome.BzBiomesInit;
+import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 import net.telepathicgrunt.bumblezone.generation.layer.BzBiomeLayer;
 
 import java.util.function.LongFunction;
@@ -20,7 +20,7 @@ public class BzBiomeProvider extends BiomeSource {
 
 
     public BzBiomeProvider(long seed, LevelGeneratorType worldType) {
-        super(BzBiomesInit.biomes);
+        super(BzBiomes.biomes);
 
         //generates the world and biome layouts
         biomeSampler = buildWorldProcedure(seed, worldType);

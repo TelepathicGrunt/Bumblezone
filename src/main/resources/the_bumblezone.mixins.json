@@ -20,7 +20,8 @@
     "PlayerDamagedMixin",
     "PlayerDamageShieldInvoker",
     "BlockOverlayRendererMixin",
-    "WaterEquivalenceMixin"
+    "WaterEquivalenceMixin",
+    "StructureAccessor"
   ],
   "client": [
   ],
