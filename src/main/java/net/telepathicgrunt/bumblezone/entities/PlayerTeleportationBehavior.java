@@ -16,6 +16,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -112,14 +113,14 @@ public class PlayerTeleportationBehavior
 					if(requiredBlockString.matches("[a-z0-9/._-]+:[a-z0-9/._-]+") && ForgeRegistries.BLOCKS.containsKey(new ResourceLocation(requiredBlockString))) 
 					{
 						Block requiredBlock = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(requiredBlockString));
-						if(requiredBlock == world.getBlockState(hivePos.down()).getBlock().getBlock()) 
+						if(requiredBlock == world.getBlockState(hivePos.down()).getBlock()) 
 						{
 						    validBelowBlock = true;
 						}
 						else if(Bumblezone.BzConfig.warnPlayersOfWrongBlockUnderHive.get())
 						{
 							//failed. Block below isn't the required block
-							String beeBlock = world.getBlockState(hivePos).getBlock().getNameTextComponent().getString();
+							String beeBlock = world.getBlockState(hivePos).getBlock().getRegistryName().toString();
 							Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: The block under the "+beeBlock+" is not the correct block to teleport to Bumblezone. The config enter says it needs "+requiredBlockString+" under "+beeBlock+".");
 							ITextComponent message = new StringTextComponent("§eBumblezone:§f The block under the §6"+beeBlock+"§f is not the correct block to teleport to Bumblezone. The config enter says it needs §6"+requiredBlockString+"§f under §6"+beeBlock+"§f.");
 							playerEntity.sendMessage(message);
@@ -496,7 +497,13 @@ public class PlayerTeleportationBehavior
 		
 		if(mutableBlockPos.getY() > 0)
 		{
-			world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
+		    	if(Bumblezone.BzConfig.generateBeenest.get())
+		    	    world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
+		    	else if(world.getBlockState(mutableBlockPos).getMaterial() == Material.AIR ||
+		    		(!world.getBlockState(mutableBlockPos).getFluidState().isEmpty() &&
+			    	 !world.getBlockState(mutableBlockPos).getFluidState().isTagged(FluidTags.WATER)))
+		    	    world.setBlockState(mutableBlockPos, Blocks.HONEYCOMB_BLOCK.getDefaultState());
+		    	
 			world.setBlockState(mutableBlockPos.up(), Blocks.AIR.getDefaultState());
 			return mutableBlockPos;
 		}
@@ -508,7 +515,13 @@ public class PlayerTeleportationBehavior
 						world.getDimension().getActualHeight()/2, 
 						position.getZ());
 
-			world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
+		    	if(Bumblezone.BzConfig.generateBeenest.get())
+		    	    world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
+		    	else if(world.getBlockState(mutableBlockPos).getMaterial() == Material.AIR ||
+		    		(!world.getBlockState(mutableBlockPos).getFluidState().isEmpty() &&
+			    	 !world.getBlockState(mutableBlockPos).getFluidState().isTagged(FluidTags.WATER)))
+		    	    world.setBlockState(mutableBlockPos, Blocks.HONEYCOMB_BLOCK.getDefaultState());
+		    	
 			world.setBlockState(mutableBlockPos.up(), Blocks.AIR.getDefaultState());
 			return mutableBlockPos;
 		}
