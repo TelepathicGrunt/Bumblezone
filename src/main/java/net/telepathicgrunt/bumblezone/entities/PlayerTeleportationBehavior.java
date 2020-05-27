@@ -216,6 +216,9 @@ public class PlayerTeleportationBehavior
 				if(playerEntity.dimension != BzDimensionRegistration.bumblezone())
 				{
 					cap.setNonBZDim(playerEntity.dimension);
+					cap.setNonBZPos(playerEntity.getPositionVec());
+					cap.setNonBZPitch(playerEntity.rotationPitch);
+					cap.setNonBZYaw(playerEntity.rotationYaw);
 				}
 			}
 		}
@@ -273,30 +276,68 @@ public class PlayerTeleportationBehavior
 			destinationWorld = minecraftServer.getWorld(cap.getNonBZDim()); // gets the previous dimension user came from
 		}
 		
+		BlockPos blockpos = new BlockPos(0,0,0);
+		BlockPos validBlockPos = null;
 		
-		//converts the position to get the corresponding position in non-bumblezone dimension
-		BlockPos blockpos = new BlockPos(
+		if(Bumblezone.BzConfig.teleportationMode.get() == 1 || Bumblezone.BzConfig.teleportationMode.get() == 3 || cap.nonBZPosition == null)
+        		//converts the position to get the corresponding position in non-bumblezone dimension
+        		blockpos = new BlockPos(
 				playerEntity.getPosition().getX() / destinationWorld.getDimension().getMovementFactor() * bumblezoneWorld.getDimension().getMovementFactor(), 
 				playerEntity.getPosition().getY(), 
 				playerEntity.getPosition().getZ() / destinationWorld.getDimension().getMovementFactor() * bumblezoneWorld.getDimension().getMovementFactor());
-		
+
+
+		if(Bumblezone.BzConfig.teleportationMode.get() != 2)
+		    validBlockPos = validPlayerSpawnLocationByBeehive(destinationWorld, blockpos, 48, checkingUpward);
+        	
 		
 		//Gets valid space in other world
 		//Won't ever be null
-		BlockPos validBlockPos = validPlayerSpawnLocationByBeehive(destinationWorld, blockpos, 48, checkingUpward);
+		if(Bumblezone.BzConfig.teleportationMode.get() == 2 || 
+		   (Bumblezone.BzConfig.teleportationMode.get() == 3 && validBlockPos == null)) {
+		    	//Use cap for position
+		    	
+		    	//extra null check
+		    	if(cap.nonBZPosition == null)
+		    	    validBlockPos = blockpos;
+		    	else
+		    	    validBlockPos = new BlockPos(cap.nonBZPosition);
+		    	
+		    	
+		    	if(destinationWorld.getBlockState(validBlockPos.up()).isSolid()) {
+		    	    destinationWorld.setBlockState(validBlockPos, Blocks.AIR.getDefaultState(), 3);
+		    	    destinationWorld.setBlockState(validBlockPos.up(), Blocks.AIR.getDefaultState(), 3);
+		    	}
+		    
+		    	//let game know we are gonna teleport player
+			ChunkPos chunkpos = new ChunkPos(validBlockPos);
+			destinationWorld.getChunkProvider().registerTicket(TicketType.POST_TELEPORT, chunkpos, 1, playerEntity.getEntityId());
+			
+			((ServerPlayerEntity)playerEntity).teleport(
+				destinationWorld, 
+				cap.nonBZPosition.getX(), 
+				cap.nonBZPosition.getY(), 
+				cap.nonBZPosition.getZ(), 
+				cap.nonBZYaw, 
+				cap.nonBZPitch);
+		}
+		else {
+		    	//use found location
+		    
+			//let game know we are gonna teleport player
+			ChunkPos chunkpos = new ChunkPos(validBlockPos);
+			destinationWorld.getChunkProvider().registerTicket(TicketType.POST_TELEPORT, chunkpos, 1, playerEntity.getEntityId());
+			
+			((ServerPlayerEntity)playerEntity).teleport(
+				destinationWorld, 
+				validBlockPos.getX() + 0.5D, 
+				validBlockPos.getY() + 1, 
+				validBlockPos.getZ() + 0.5D, 
+				playerEntity.rotationYaw, 
+				playerEntity.rotationPitch);
+		}
 		
 
-		//let game know we are gonna teleport player
-		ChunkPos chunkpos = new ChunkPos(validBlockPos);
-		destinationWorld.getChunkProvider().registerTicket(TicketType.POST_TELEPORT, chunkpos, 1, playerEntity.getEntityId());
-		
-		((ServerPlayerEntity)playerEntity).teleport(
-			destinationWorld, 
-			validBlockPos.getX() + 0.5D, 
-			validBlockPos.getY() + 1, 
-			validBlockPos.getZ() + 0.5D, 
-			playerEntity.rotationYaw, 
-			playerEntity.rotationPitch);
 
 		
 		//teleportation complete. 
@@ -485,7 +526,11 @@ public class PlayerTeleportationBehavior
 		    }
 		}
 		
+		
+		//this mode will not generate a beenest automatically.
+		if(Bumblezone.BzConfig.teleportationMode.get() == 3) return null;
 
+		
 		// no valid spot was found, generate a hive and spawn us on the highest land
 		// This if statement is so we dont get placed on roof of other roofed dimension
 		if (maxHeight + 1 < world.getActualHeight()) {

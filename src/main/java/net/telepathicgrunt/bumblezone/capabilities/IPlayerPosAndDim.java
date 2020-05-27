@@ -1,6 +1,7 @@
 package net.telepathicgrunt.bumblezone.capabilities;
 
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.dimension.DimensionType;
 
 public interface IPlayerPosAndDim {
@@ -14,6 +15,13 @@ public interface IPlayerPosAndDim {
 	DimensionType getNonBZDim();
 	DimensionType getDestDim();
 	boolean getTeleporting();
+
+	void setNonBZPos(Vec3d incomingPos);
+	Vec3d getNonBZPos();
+	void setNonBZPitch(float incomingPitch);
+	float getNonBZPitch();
+	void setNonBZYaw(float incomingYaw);
+	float getNonBZYaw();
 
 	CompoundNBT saveNBTData();
 	void loadNBTData(CompoundNBT nbtTag);

@@ -25,6 +25,8 @@ Mods I'm keeping an eye on for future compat
 
 -Added generateBeenest config to allow people to turn on or off the creation of Bee Nests when exiting The Bumblezone into an area with no nests or hives nearby.
 
+-Added teleportationMode config to let players pick between spawning at converted coordinates always, spawning at original coordinates always, or a mix when exiting The Bumblezone.
+
 ## (V.1.3.3 Changes) (1.15.2 Minecraft)
  
 ##### Teleportation:

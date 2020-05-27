@@ -103,13 +103,34 @@ public class BzConfig
 	            
                      teleportationMode = subscriber.subscribe(builder
                                      .comment(" \r\n-----------------------------------------------------\r\n\r\n"
-                                   		+"  \r\n")
+                                   		+" Which mode of teleportation should be used when \r\n"
+                                   		+" leaving The Bumblezone dimension. \r\n"
+                                		+" \r\n"
+                                		+" Mode 1: Coordinates will be converted to the other \r\n"
+                                		+" dimension's coordinate scale and the game will look for\r\n"
+                                		+" a Beenest/Beehive at the new spot to spawn players at. \r\n"
+                                		+" If none is found, players will still be placed at the spot.\r\n"
+                                		+" \r\n"
+                                		+" Mode 2: Will always spawn players at the original spot \r\n"
+                                		+" in the non-BZ dimension where they threw the Enderpearl \r\n"
+                                		+" at a Beenest/Beehive. Will place air if the spot is now filled \r\n"
+                                		+" with solid blocks. \r\n"
+                                		+" \r\n"
+                                		+" Mode 3: Coordinates will be converted to the other \r\n"
+                                		+" dimension's coordinate scale and the game will look for\r\n"
+                                		+" a Beenest/Beehive at the new spot to spawn players at. \r\n"
+                                		+" If none is found, players will spawn at the original spot\r\n"
+                                		+" in the non-BZ dimension where they threw the Enderpearl \r\n"
+                                		+" at a Beenest/Beehive. Will place air if the spot is now filled \r\n"
+                                		+" with solid blocks. \r\n")
                                     .translation("the_bumblezone.config.dimension.teleportationmode")
                                     .defineInRange("teleportationMode", 1, 1, 3));
                 
                      
                      movementFactor = subscriber.subscribe(builder
                                     .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+                                		+" ONLY FOR TELEPORTATION MODE 1 AND 3.\r\n"
+                                		+" \r\n"
                                 		+" Determines how the coordinates gets translated when entering \r\n"
                                 		+" and leaving the Bumblezone. The default ratio is 10 which means\r\n"
                                 		+" for every block you traverse in the dimension, it is equal to\r\n"
@@ -126,9 +147,10 @@ public class BzConfig
                      
                     generateBeenest = subscriber.subscribe(builder
         	                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
-        	                    		+" Will a Beenest generate if no Beenest is found when leaving \r\n"
-        	                    		+" The Bumblezone dimension. This only applies to teleportation"
-        	                    		+" mode 1 or 3. Mode 2 will not generate Beenests ever.\r\n")
+                                		+" ONLY FOR TELEPORTATION MODE 1.\r\n"
+                                		+" \r\n"
+        	                    		+" Will a Beenest generate if no Beenest is  \r\n"
+        	                    		+" found when leaving The Bumblezone dimension.\r\n")
         	                    .translation("the_bumblezone.config.dimension.generatebeenest")
         	                    .define("generateBeenest", true));
     	            
@@ -160,6 +182,8 @@ public class BzConfig
 
 	            seaLevelOrHigherExitTeleporting = subscriber.subscribe(builder
 	                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+                        		+" ONLY FOR TELEPORTATION MODE 1 AND 3.\r\n"
+                        		+" \r\n"
 	                    		+" Should exiting The Bumblezone always try and place you \r\n"
 	                    		+" above sealevel in the target dimension? (Will only look \r\n"
 	                    		+" for beehives above sealevel as well when placing you)")
