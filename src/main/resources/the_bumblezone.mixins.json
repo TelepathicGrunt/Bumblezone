@@ -21,7 +21,8 @@
     "PlayerDamageShieldInvoker",
     "BlockOverlayRendererMixin",
     "WaterEquivalenceMixin",
-    "StructureAccessor"
+    "StructureAccessor",
+    "RedstoneDustCanConnectMixin"
   ],
   "client": [
   ],

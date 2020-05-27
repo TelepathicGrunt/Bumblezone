@@ -169,4 +169,51 @@ public class BzConfig {
             "with another dimension so you are stuck teleporting between the \n" +
             "two and cannot get back to the Overworld")
     public boolean forceExitToOverworld = false;
+
+    @Comment(value = "##############################################################\n" +
+            "##############################################################\n" +
+            "\n"
+            +" Should exiting The Bumblezone always try and place you \r\n"
+            +" above sealevel in the target dimension? (Will only look \r\n"
+            +" for beehives above sealevel as well when placing you)")
+    public boolean seaLevelOrHigherExitTeleporting = true;
+
+    @Comment(value = "##############################################################\n" +
+            "##############################################################\n" +
+            "\n"
+            +" If an identifier of a block is specified here,\r\n "
+            +" then teleporting to Bumblezone will need that block under\r\n"
+            +" the Bee Nest/Beehive you threw the Enderpearl at.\r\n"
+            +" \r\n"
+            +" Example: minecraft:emerald_block will require you to place an\r\n"
+            +" Emerald Block under the Bee Nest/Beehive and then throw an\r\n"
+            +" Enderpearl at it to teleport to Bumblezone dimension.\r\n"
+            +" \r\n"
+            +" By default, no identifieris specified so any\r\n"
+            +" block can be under the Bee Nest/Beehive to teleport to dimension.\r\n")
+    public String requiredBlockUnderHive = "";
+
+    @Comment(value = "##############################################################\n" +
+            "##############################################################\n" +
+            "\n"
+            +" If requiredBlockUnderHive has a block specified and this config\r\n "
+            +" is set to true, then player will get a warning if they throw \r\n"
+            +" an Enderpearl at a Bee Nest/Beehive but the block under it is \r\n"
+            +" not the correct required block. It will also tell the player what \r\n"
+            +" block is needed under the Bee Nest/Beehive to teleport to the dimension.\r\n")
+    public boolean warnPlayersOfWrongBlockUnderHive = true;
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //Mechanics
+
+
+    @Comment(value = "##############################################################\n" +
+            "##############################################################\n" +
+            "\n"
+            +" Should Dispensers always drop the Glass Bottle when using specific \n"
+            +" bottle items on certain The Bumblezone blocks? \n"
+            +" \n"
+            +" Example: Using Honey Bottle to feed Honeycomb Brood Blocks will grow the \n"
+            +" larva and have a Glass Bottle to either drop or put back into Dispenser. \n")
+    public boolean dispensersDropGlassBottles = false;
 }

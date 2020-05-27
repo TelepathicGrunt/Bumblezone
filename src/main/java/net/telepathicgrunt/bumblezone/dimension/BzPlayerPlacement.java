@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.utils.BzPlacingUtils;
 
-public class BzPlacement {
+public class BzPlayerPlacement {
     //use this to teleport to any dimension
     //FabricDimensions.teleport(playerEntity, <destination dimension type>, <placement>);
 
@@ -204,24 +204,28 @@ public class BzPlacement {
         //scans range from y = 0 to dimension max height for a bee_nest
         //Does it by checking each y layer at a time
         for (; mutableBlockPos.getY() >= 0 && mutableBlockPos.getY() <= maxHeight; ) {
-            for (int range = 0; range < maximumRange; range++) {
-                int radius = range * range;
-                int nextRadius = (range + 1) * (range + 1);
-                for (int x = 0; x <= range * 2; x++) {
-                    int x2 = x > range ? -(x - range) : x;
+            if (!Bumblezone.BZ_CONFIG.seaLevelOrHigherExitTeleporting ||
+                    mutableBlockPos.getY() > world.getSeaLevel()) {
 
-                    for (int z = 0; z <= range * 2; z++) {
-                        int z2 = z > range ? -(z - range) : x;
+                for (int range = 0; range < maximumRange; range++) {
+                    int radius = range * range;
+                    int nextRadius = (range + 1) * (range + 1);
+                    for (int x = 0; x <= range * 2; x++) {
+                        int x2 = x > range ? -(x - range) : x;
 
-                        //checks within the circular ring and not check the same positions multiple times
-                        if (x2 * x2 + z2 * z2 >= radius && x2 * x2 + z2 * z2 < nextRadius) {
-                            mutableBlockPos.set(position.getX() + x2, mutableBlockPos.getY(), position.getZ() + z2);
+                        for (int z = 0; z <= range * 2; z++) {
+                            int z2 = z > range ? -(z - range) : x;
 
-                            if (world.getBlockState(mutableBlockPos).getBlock() == Blocks.BEE_NEST) {
-                                //A Hive was found, try to find a valid spot next to it
-                                BlockPos validSpot = validPlayerSpawnLocation(world, mutableBlockPos, 4);
-                                if (validSpot != null) {
-                                    return validSpot;
+                            //checks within the circular ring and not check the same positions multiple times
+                            if (x2 * x2 + z2 * z2 >= radius && x2 * x2 + z2 * z2 < nextRadius) {
+                                mutableBlockPos.set(position.getX() + x2, mutableBlockPos.getY(), position.getZ() + z2);
+
+                                if (world.getBlockState(mutableBlockPos).getBlock() == Blocks.BEE_NEST) {
+                                    //A Hive was found, try to find a valid spot next to it
+                                    BlockPos validSpot = validPlayerSpawnLocation(world, mutableBlockPos, 4);
+                                    if (validSpot != null) {
+                                        return validSpot;
+                                    }
                                 }
                             }
                         }

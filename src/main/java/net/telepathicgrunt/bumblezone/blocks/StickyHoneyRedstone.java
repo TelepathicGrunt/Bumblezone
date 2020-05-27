@@ -72,11 +72,6 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         super.onEntityCollision(blockstate, world, pos, entity);
     }
 
-    @Override
-    public int getWeakRedstonePower(BlockState blockstate, BlockView blockAccess, BlockPos pos, Direction side) {
-        return blockstate.get(POWERED) ? 1 : 0;
-    }
-
     /**
      * Remove vine's ticking with removing power instead.
      */
@@ -100,22 +95,6 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         }
     }
 
-
-    /**
-     * notify neighbor of changes when replaced
-     */
-    @SuppressWarnings("deprecation")
-    @Override
-    public void onBlockRemoved(BlockState blockstate, World world, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!isMoving && blockstate.getBlock() != newState.getBlock()) {
-            if (blockstate.get(POWERED)) {
-                this.updateNeighbors(blockstate, world, pos);
-            }
-
-            super.onBlockRemoved(blockstate, world, pos, newState, isMoving);
-        }
-    }
-
     /**
      * Updates the sticky residue block when entity enters or leaves
      */
@@ -132,6 +111,73 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         if (flag1) {
             world.getBlockTickScheduler().schedule(new BlockPos(pos), this, this.getTickRate(world));
         }
+    }
+
+    /**
+     * notify neighbor of changes when replaced
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onBlockRemoved(BlockState blockstate, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!isMoving && blockstate.getBlock() != newState.getBlock()) {
+            if (blockstate.get(POWERED)) {
+                this.updateTarget(world, pos, blockstate);
+            }
+
+            super.onBlockRemoved(blockstate, world, pos, newState, isMoving);
+        }
+    }
+
+    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean moved) {
+        this.updateTarget(world, pos, state);
+    }
+
+    protected void updateTarget(World world, BlockPos pos, BlockState blockstate) {
+        for (Direction direction : Direction.values()) {
+            if (blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(direction))) {
+                BlockPos blockPos = pos.offset(direction);
+                world.updateNeighbor(blockPos, this, pos);
+                world.updateNeighborsExcept(blockPos, this, direction);
+            }
+        }
+    }
+
+
+    ///////////////////////////////////REDSTONE////////////////////////////////////////
+
+
+    /**
+     * Tells game that this block can generate a Redstone signal
+     */
+    @Override
+    public boolean emitsRedstonePower(BlockState state) {
+        return true;
+    }
+
+    /**
+     * Powers the block it's attached to. Or powers blocks next to if it's on the floor
+     */
+    @Override
+    public int getWeakRedstonePower(BlockState blockstate, BlockView blockAccess, BlockPos pos, Direction side) {
+        //power nearby blocks if on floor
+        if (blockstate.get(POWERED) && blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
+            for (Direction horizontal : Direction.Type.HORIZONTAL) {
+                if(horizontal == side) {
+                    return 1;
+                }
+            }
+        }
+
+        //return power for block it is attached on.
+        return getStrongRedstonePower(blockstate, blockAccess, pos, side);
+    }
+
+    /**
+     * Powers through the block that it is attached to.
+     */
+    @Override
+    public int getStrongRedstonePower(BlockState blockstate, BlockView blockAccess, BlockPos pos, Direction side) {
+        return blockstate.get(POWERED) && blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(side.getOpposite())) ? 1 : 0;
     }
 
 

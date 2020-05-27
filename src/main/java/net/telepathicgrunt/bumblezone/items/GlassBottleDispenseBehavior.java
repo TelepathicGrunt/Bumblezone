@@ -9,6 +9,7 @@ import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnType;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
@@ -59,7 +60,7 @@ public class GlassBottleDispenseBehavior extends ItemDispenserBehavior {
             stack.decrement(1);
 
             if (!stack.isEmpty())
-                addHoneyBottleToDispenser(source);
+                addHoneyBottleToDispenser(source, Items.HONEY_BOTTLE);
             else
                 stack = new ItemStack(Items.HONEY_BOTTLE);
         }
@@ -69,10 +70,20 @@ public class GlassBottleDispenseBehavior extends ItemDispenserBehavior {
             stack.decrement(1);
 
             if (!stack.isEmpty())
-                addHoneyBottleToDispenser(source);
+                addHoneyBottleToDispenser(source, Items.HONEY_BOTTLE);
             else
                 stack = new ItemStack(Items.HONEY_BOTTLE);
-        } else {
+        }
+        //pick up sugar water
+        else if (blockstate.getBlock() == BzBlocks.SUGAR_WATER_BLOCK ||
+                (blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL && blockstate.get(Properties.WATERLOGGED))) {
+            stack.decrement(1);
+            if(!stack.isEmpty())
+                addHoneyBottleToDispenser(source, BzItems.SUGAR_WATER_BOTTLE);
+            else
+                stack = new ItemStack(BzItems.SUGAR_WATER_BOTTLE);
+        }
+        else {
             return DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR.dispense(source, stack);
         }
 
@@ -92,10 +103,10 @@ public class GlassBottleDispenseBehavior extends ItemDispenserBehavior {
     /**
      * Adds honey bottle to dispenser or if no room, dispense it
      */
-    private static void addHoneyBottleToDispenser(BlockPointer source) {
+    private static void addHoneyBottleToDispenser(BlockPointer source, Item item) {
         if (source.getBlockEntity() instanceof DispenserBlockEntity) {
             DispenserBlockEntity dispenser = (DispenserBlockEntity) source.getBlockEntity();
-            ItemStack honeyBottle = new ItemStack(Items.HONEY_BOTTLE);
+            ItemStack honeyBottle = new ItemStack(item);
             if (!HopperBlockEntity.transfer(null, dispenser, honeyBottle, null).isEmpty()) {
                 DROP_ITEM_BEHAVIOR.dispense(source, honeyBottle);
             }

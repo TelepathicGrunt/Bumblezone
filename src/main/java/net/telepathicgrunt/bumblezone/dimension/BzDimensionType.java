@@ -21,7 +21,7 @@ public class BzDimensionType {
         BUMBLEZONE_TYPE = FabricDimensionType.builder()
                 .skyLight(true)
                 .factory(BzDimension::new)
-                .defaultPlacer(BzPlacement.ENTERING)
+                .defaultPlacer(BzPlayerPlacement.ENTERING)
                 .buildAndRegister(new Identifier(Bumblezone.MODID, Bumblezone.MODID));
     }
 }

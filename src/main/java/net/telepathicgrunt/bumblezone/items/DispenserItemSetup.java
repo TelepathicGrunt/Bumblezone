@@ -55,8 +55,12 @@ public class DispenserItemSetup {
         GlassBottleDispenseBehavior.DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR =
                 (DispenserBehavior) ((DispenserAccessor) Blocks.DISPENSER).invokeGetBehaviorForItem(new ItemStack(Items.GLASS_BOTTLE));
 
+        EmptyBucketDispenseBehavior.DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR =
+                (DispenserBehavior) ((DispenserAccessor) Blocks.DISPENSER).invokeGetBehaviorForItem(new ItemStack(Items.BUCKET));
+
 
         DispenserBlock.registerBehavior(Items.GLASS_BOTTLE, new GlassBottleDispenseBehavior());
         DispenserBlock.registerBehavior(Items.HONEY_BOTTLE, new HoneyBottleDispenseBehavior());
+        DispenserBlock.registerBehavior(Items.BUCKET, new EmptyBucketDispenseBehavior());
     }
 }

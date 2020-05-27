@@ -8,7 +8,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.dimension.DimensionType;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
-import net.telepathicgrunt.bumblezone.dimension.BzPlacement;
+import net.telepathicgrunt.bumblezone.dimension.BzPlayerPlacement;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -35,20 +35,20 @@ public class PlayerTeleportationTickMixin {
 
                 if (!playerEntity.world.isClient) {
                     checkAndCorrectStoredDimension(playerEntity);
-                    FabricDimensions.teleport(playerEntity, Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension(), BzPlacement.LEAVING);
+                    FabricDimensions.teleport(playerEntity, Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension(), BzPlayerPlacement.LEAVING);
                     reAddStatusEffect(playerEntity);
                 }
             } else if (playerEntity.getY() > 255) {
                 if (!playerEntity.world.isClient) {
                     checkAndCorrectStoredDimension(playerEntity);
-                    FabricDimensions.teleport(playerEntity, Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension(), BzPlacement.LEAVING);
+                    FabricDimensions.teleport(playerEntity, Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension(), BzPlayerPlacement.LEAVING);
                     reAddStatusEffect(playerEntity);
                 }
             }
         }
         //teleport to bumblezone
         else if (Bumblezone.PLAYER_COMPONENT.get(playerEntity).getIsTeleporting()) {
-            FabricDimensions.teleport(playerEntity, BzDimensionType.BUMBLEZONE_TYPE, BzPlacement.ENTERING);
+            FabricDimensions.teleport(playerEntity, BzDimensionType.BUMBLEZONE_TYPE, BzPlayerPlacement.ENTERING);
             Bumblezone.PLAYER_COMPONENT.get(playerEntity).setIsTeleporting(false);
             reAddStatusEffect(playerEntity);
         }

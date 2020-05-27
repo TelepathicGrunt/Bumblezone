@@ -174,6 +174,23 @@ public class HoneyCrystal extends Block {
 
             return ActionResult.SUCCESS;
         }
+        else if (itemstack.getItem() == Items.GLASS_BOTTLE) {
+
+            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
+                    SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+
+            itemstack.decrement(1); // remove current honey bottle
+
+            if (itemstack.isEmpty()) {
+                playerEntity.setStackInHand(playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE)); // places sugar water bottle in hand
+            }
+            else if (!playerEntity.inventory.insertStack(new ItemStack(BzItems.SUGAR_WATER_BOTTLE))) // places sugar water bottle in inventory
+            {
+                playerEntity.dropItem(new ItemStack(BzItems.SUGAR_WATER_BOTTLE), false); // drops sugar water bottle if inventory is full
+            }
+
+            return ActionResult.SUCCESS;
+        }
 
         return super.onUse(blockstate, world, position, playerEntity, playerHand, raytraceResult);
     }
