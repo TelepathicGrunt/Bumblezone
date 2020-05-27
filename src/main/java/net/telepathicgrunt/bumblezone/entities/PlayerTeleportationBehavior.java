@@ -6,6 +6,8 @@ import javax.annotation.Nullable;
 
 import org.apache.logging.log4j.Level;
 
+import com.google.common.primitives.Doubles;
+
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -77,7 +79,7 @@ public class PlayerTeleportationBehavior
 			{
 				ServerPlayerEntity playerEntity = (ServerPlayerEntity) pearlEntity.getThrower(); // the thrower
 				Vec3d hitBlockPos = event.getRayTraceResult().getHitVec(); //position of the collision
-				BlockPos hivePos = new BlockPos(0,0,0);
+				BlockPos hivePos = null;
 				boolean hitHive = false;
 				
 				//check with offset in all direction as the position of exact hit point could barely be outside the hive block
@@ -108,7 +110,7 @@ public class PlayerTeleportationBehavior
 				//checks if block under hive is correct if config needs one
 				boolean validBelowBlock = false;
 				String requiredBlockString = Bumblezone.BzConfig.requiredBlockUnderHive.get();
-				if(!requiredBlockString.trim().isEmpty()) 
+				if(!requiredBlockString.trim().isEmpty() && hivePos != null) 
 				{
 					if(requiredBlockString.matches("[a-z0-9/._-]+:[a-z0-9/._-]+") && ForgeRegistries.BLOCKS.containsKey(new ResourceLocation(requiredBlockString))) 
 					{
@@ -282,9 +284,9 @@ public class PlayerTeleportationBehavior
 		if(Bumblezone.BzConfig.teleportationMode.get() == 1 || Bumblezone.BzConfig.teleportationMode.get() == 3 || cap.nonBZPosition == null)
         		//converts the position to get the corresponding position in non-bumblezone dimension
         		blockpos = new BlockPos(
-				playerEntity.getPosition().getX() / destinationWorld.getDimension().getMovementFactor() * bumblezoneWorld.getDimension().getMovementFactor(), 
+        			Doubles.constrainToRange(playerEntity.getPosition().getX() / destinationWorld.getDimension().getMovementFactor() * bumblezoneWorld.getDimension().getMovementFactor(), -29999936D, 29999936D), 
 				playerEntity.getPosition().getY(), 
-				playerEntity.getPosition().getZ() / destinationWorld.getDimension().getMovementFactor() * bumblezoneWorld.getDimension().getMovementFactor());
+				Doubles.constrainToRange(playerEntity.getPosition().getZ() / destinationWorld.getDimension().getMovementFactor() * bumblezoneWorld.getDimension().getMovementFactor(), -29999936D, 29999936D));
 
 
 		if(Bumblezone.BzConfig.teleportationMode.get() != 2)

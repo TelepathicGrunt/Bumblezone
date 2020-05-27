@@ -27,6 +27,8 @@ Mods I'm keeping an eye on for future compat
 
 -Added teleportationMode config to let players pick between spawning at converted coordinates always, spawning at original coordinates always, or a mix when exiting The Bumblezone.
 
+-Constrained the converted coordinate when exiting The Bumblezone to be within -30 million and 30 million so you do not get stuck outside the world's edge.
+
 ## (V.1.3.3 Changes) (1.15.2 Minecraft)
  
 ##### Teleportation:

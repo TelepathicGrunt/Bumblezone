@@ -129,8 +129,6 @@ public class BzConfig
                      
                      movementFactor = subscriber.subscribe(builder
                                     .comment(" \r\n-----------------------------------------------------\r\n\r\n"
-                                		+" ONLY FOR TELEPORTATION MODE 1 AND 3.\r\n"
-                                		+" \r\n"
                                 		+" Determines how the coordinates gets translated when entering \r\n"
                                 		+" and leaving the Bumblezone. The default ratio is 10 which means\r\n"
                                 		+" for every block you traverse in the dimension, it is equal to\r\n"
@@ -141,16 +139,18 @@ public class BzConfig
                                 		+" coordinate ratios so it'll work for any dimension correctly.\r\n"
                                 		+" \r\n"
                                 		+" Note: Changing this in an already made world will change where Bee Nests will\r\n"
-                                		+" take you in the dimension and exiting will place you in a different spot too.\r\n")
+                                		+" take you in the dimension and exiting will place you in a different spot too.\r\n"
+                                		+" \r\n"
+                                		+" ONLY FOR TELEPORTATION MODE 1 AND 3.\r\n")
                                     .translation("the_bumblezone.config.dimension.movementfactor")
                                     .defineInRange("movementFactor", 10, 1, 1000));
                      
                     generateBeenest = subscriber.subscribe(builder
         	                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
-                                		+" ONLY FOR TELEPORTATION MODE 1.\r\n"
-                                		+" \r\n"
         	                    		+" Will a Beenest generate if no Beenest is  \r\n"
-        	                    		+" found when leaving The Bumblezone dimension.\r\n")
+        	                    		+" found when leaving The Bumblezone dimension.\r\n"
+                                    		+" \r\n"
+                                    		+" ONLY FOR TELEPORTATION MODE 1.\r\n")
         	                    .translation("the_bumblezone.config.dimension.generatebeenest")
         	                    .define("generateBeenest", true));
     	            
@@ -182,11 +182,11 @@ public class BzConfig
 
 	            seaLevelOrHigherExitTeleporting = subscriber.subscribe(builder
 	                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
-                        		+" ONLY FOR TELEPORTATION MODE 1 AND 3.\r\n"
-                        		+" \r\n"
 	                    		+" Should exiting The Bumblezone always try and place you \r\n"
 	                    		+" above sealevel in the target dimension? (Will only look \r\n"
-	                    		+" for beehives above sealevel as well when placing you)")
+	                    		+" for beehives above sealevel as well when placing you)"
+                        		+" \r\n"
+                        		+" ONLY FOR TELEPORTATION MODE 1 AND 3.\r\n")
 	                    .translation("the_bumblezone.config.dimension.sealevelorhigherexitteleporting")
 	                    .define("seaLevelOrHigherExitTeleporting", true));
 	            
