@@ -17,6 +17,18 @@ Mods I'm keeping an eye on for future compat
 # | Bumblezone changelog |
    
    
+## (V.1.3.4 Changes) (1.15.2 Minecraft)
+ 
+##### Teleportation:
+
+-Setting warnPlayersOfWrongBlockUnderHive config to true and putting and invalid resource location into RequiredBlockUnderHive config will no longer crash the server when attempting to teleport to The Bumblezone.
+
+-Added generateBeenest config to allow people to turn on or off the creation of Bee Nests when exiting The Bumblezone into an area with no nests or hives nearby.
+
+-Added teleportationMode config to let players pick between spawning at converted coordinates always, spawning at original coordinates always, or a mix when exiting The Bumblezone.
+
+-Constrained the converted coordinate when exiting The Bumblezone to be within -30 million and 30 million so you do not get stuck outside the world's edge.
+
 ## (V.1.3.3 Changes) (1.15.2 Minecraft)
  
 ##### Teleportation:

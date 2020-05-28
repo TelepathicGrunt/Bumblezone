@@ -6,6 +6,8 @@ import javax.annotation.Nullable;
 
 import org.apache.logging.log4j.Level;
 
+import com.google.common.primitives.Doubles;
+
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -16,6 +18,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -76,7 +79,7 @@ public class PlayerTeleportationBehavior
 			{
 				ServerPlayerEntity playerEntity = (ServerPlayerEntity) pearlEntity.getThrower(); // the thrower
 				Vec3d hitBlockPos = event.getRayTraceResult().getHitVec(); //position of the collision
-				BlockPos hivePos = new BlockPos(0,0,0);
+				BlockPos hivePos = null;
 				boolean hitHive = false;
 				
 				//check with offset in all direction as the position of exact hit point could barely be outside the hive block
@@ -106,20 +109,20 @@ public class PlayerTeleportationBehavior
 				
 				//checks if block under hive is correct if config needs one
 				boolean validBelowBlock = false;
-				String requiredBlockString = Bumblezone.BzConfig.requiredBlockUnderHive.get();
-				if(!requiredBlockString.trim().isEmpty()) 
+				String requiredBlockString = Bumblezone.BzConfig.requiredBlockUnderHive.get().toLowerCase().trim();
+				if(!requiredBlockString.isEmpty() && hivePos != null) 
 				{
 					if(requiredBlockString.matches("[a-z0-9/._-]+:[a-z0-9/._-]+") && ForgeRegistries.BLOCKS.containsKey(new ResourceLocation(requiredBlockString))) 
 					{
 						Block requiredBlock = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(requiredBlockString));
-						if(requiredBlock == world.getBlockState(hivePos.down()).getBlock().getBlock()) 
+						if(requiredBlock == world.getBlockState(hivePos.down()).getBlock()) 
 						{
 						    validBelowBlock = true;
 						}
 						else if(Bumblezone.BzConfig.warnPlayersOfWrongBlockUnderHive.get())
 						{
 							//failed. Block below isn't the required block
-							String beeBlock = world.getBlockState(hivePos).getBlock().getNameTextComponent().getString();
+							String beeBlock = world.getBlockState(hivePos).getBlock().getRegistryName().toString();
 							Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: The block under the "+beeBlock+" is not the correct block to teleport to Bumblezone. The config enter says it needs "+requiredBlockString+" under "+beeBlock+".");
 							ITextComponent message = new StringTextComponent("§eBumblezone:§f The block under the §6"+beeBlock+"§f is not the correct block to teleport to Bumblezone. The config enter says it needs §6"+requiredBlockString+"§f under §6"+beeBlock+"§f.");
 							playerEntity.sendMessage(message);
@@ -215,6 +218,9 @@ public class PlayerTeleportationBehavior
 				if(playerEntity.dimension != BzDimensionRegistration.bumblezone())
 				{
 					cap.setNonBZDim(playerEntity.dimension);
+					cap.setNonBZPos(playerEntity.getPositionVec());
+					cap.setNonBZPitch(playerEntity.rotationPitch);
+					cap.setNonBZYaw(playerEntity.rotationYaw);
 				}
 			}
 		}
@@ -272,30 +278,68 @@ public class PlayerTeleportationBehavior
 			destinationWorld = minecraftServer.getWorld(cap.getNonBZDim()); // gets the previous dimension user came from
 		}
 		
+		BlockPos blockpos = new BlockPos(0,0,0);
+		BlockPos validBlockPos = null;
 		
-		//converts the position to get the corresponding position in non-bumblezone dimension
-		BlockPos blockpos = new BlockPos(
-				playerEntity.getPosition().getX() / destinationWorld.getDimension().getMovementFactor() * bumblezoneWorld.getDimension().getMovementFactor(), 
+		if(Bumblezone.BzConfig.teleportationMode.get() == 1 || Bumblezone.BzConfig.teleportationMode.get() == 3 || cap.nonBZPosition == null)
+        		//converts the position to get the corresponding position in non-bumblezone dimension
+        		blockpos = new BlockPos(
+        			Doubles.constrainToRange(playerEntity.getPosition().getX() / destinationWorld.getDimension().getMovementFactor() * bumblezoneWorld.getDimension().getMovementFactor(), -29999936D, 29999936D), 
 				playerEntity.getPosition().getY(), 
-				playerEntity.getPosition().getZ() / destinationWorld.getDimension().getMovementFactor() * bumblezoneWorld.getDimension().getMovementFactor());
-		
+				Doubles.constrainToRange(playerEntity.getPosition().getZ() / destinationWorld.getDimension().getMovementFactor() * bumblezoneWorld.getDimension().getMovementFactor(), -29999936D, 29999936D));
+
+
+		if(Bumblezone.BzConfig.teleportationMode.get() != 2)
+		    validBlockPos = validPlayerSpawnLocationByBeehive(destinationWorld, blockpos, 48, checkingUpward);
+        	
 		
 		//Gets valid space in other world
 		//Won't ever be null
-		BlockPos validBlockPos = validPlayerSpawnLocationByBeehive(destinationWorld, blockpos, 48, checkingUpward);
+		if(Bumblezone.BzConfig.teleportationMode.get() == 2 || 
+		   (Bumblezone.BzConfig.teleportationMode.get() == 3 && validBlockPos == null)) {
+		    	//Use cap for position
+		    	
+		    	//extra null check
+		    	if(cap.nonBZPosition == null)
+		    	    validBlockPos = blockpos;
+		    	else
+		    	    validBlockPos = new BlockPos(cap.nonBZPosition);
+		    	
+		    	
+		    	if(destinationWorld.getBlockState(validBlockPos.up()).isSolid()) {
+		    	    destinationWorld.setBlockState(validBlockPos, Blocks.AIR.getDefaultState(), 3);
+		    	    destinationWorld.setBlockState(validBlockPos.up(), Blocks.AIR.getDefaultState(), 3);
+		    	}
+		    
+		    	//let game know we are gonna teleport player
+			ChunkPos chunkpos = new ChunkPos(validBlockPos);
+			destinationWorld.getChunkProvider().registerTicket(TicketType.POST_TELEPORT, chunkpos, 1, playerEntity.getEntityId());
+			
+			((ServerPlayerEntity)playerEntity).teleport(
+				destinationWorld, 
+				cap.nonBZPosition.getX(), 
+				cap.nonBZPosition.getY(), 
+				cap.nonBZPosition.getZ(), 
+				cap.nonBZYaw, 
+				cap.nonBZPitch);
+		}
+		else {
+		    	//use found location
+		    
+			//let game know we are gonna teleport player
+			ChunkPos chunkpos = new ChunkPos(validBlockPos);
+			destinationWorld.getChunkProvider().registerTicket(TicketType.POST_TELEPORT, chunkpos, 1, playerEntity.getEntityId());
+			
+			((ServerPlayerEntity)playerEntity).teleport(
+				destinationWorld, 
+				validBlockPos.getX() + 0.5D, 
+				validBlockPos.getY() + 1, 
+				validBlockPos.getZ() + 0.5D, 
+				playerEntity.rotationYaw, 
+				playerEntity.rotationPitch);
+		}
 		
 
-		//let game know we are gonna teleport player
-		ChunkPos chunkpos = new ChunkPos(validBlockPos);
-		destinationWorld.getChunkProvider().registerTicket(TicketType.POST_TELEPORT, chunkpos, 1, playerEntity.getEntityId());
-		
-		((ServerPlayerEntity)playerEntity).teleport(
-			destinationWorld, 
-			validBlockPos.getX() + 0.5D, 
-			validBlockPos.getY() + 1, 
-			validBlockPos.getZ() + 0.5D, 
-			playerEntity.rotationYaw, 
-			playerEntity.rotationPitch);
 
 		
 		//teleportation complete. 
@@ -484,7 +528,11 @@ public class PlayerTeleportationBehavior
 		    }
 		}
 		
+		
+		//this mode will not generate a beenest automatically.
+		if(Bumblezone.BzConfig.teleportationMode.get() == 3) return null;
 
+		
 		// no valid spot was found, generate a hive and spawn us on the highest land
 		// This if statement is so we dont get placed on roof of other roofed dimension
 		if (maxHeight + 1 < world.getActualHeight()) {
@@ -496,7 +544,13 @@ public class PlayerTeleportationBehavior
 		
 		if(mutableBlockPos.getY() > 0)
 		{
-			world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
+		    	if(Bumblezone.BzConfig.generateBeenest.get())
+		    	    world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
+		    	else if(world.getBlockState(mutableBlockPos).getMaterial() == Material.AIR ||
+		    		(!world.getBlockState(mutableBlockPos).getFluidState().isEmpty() &&
+			    	 !world.getBlockState(mutableBlockPos).getFluidState().isTagged(FluidTags.WATER)))
+		    	    world.setBlockState(mutableBlockPos, Blocks.HONEYCOMB_BLOCK.getDefaultState());
+		    	
 			world.setBlockState(mutableBlockPos.up(), Blocks.AIR.getDefaultState());
 			return mutableBlockPos;
 		}
@@ -508,7 +562,13 @@ public class PlayerTeleportationBehavior
 						world.getDimension().getActualHeight()/2, 
 						position.getZ());
 
-			world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
+		    	if(Bumblezone.BzConfig.generateBeenest.get())
+		    	    world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
+		    	else if(world.getBlockState(mutableBlockPos).getMaterial() == Material.AIR ||
+		    		(!world.getBlockState(mutableBlockPos).getFluidState().isEmpty() &&
+			    	 !world.getBlockState(mutableBlockPos).getFluidState().isTagged(FluidTags.WATER)))
+		    	    world.setBlockState(mutableBlockPos, Blocks.HONEYCOMB_BLOCK.getDefaultState());
+		    	
 			world.setBlockState(mutableBlockPos.up(), Blocks.AIR.getDefaultState());
 			return mutableBlockPos;
 		}

@@ -10,80 +10,68 @@ public class BzConfig
 {
 	public static class BzConfigValues
 	{
-		//bee aggression
-		public ConfigValueListener<Boolean> allowWrathOfTheHiveOutsideBumblezone;
-		public ConfigValueListener<Boolean> showWrathOfTheHiveParticles;
-		public ConfigValueListener<Boolean> aggressiveBees;
-		public ConfigValueListener<Integer> aggressionTriggerRadius;
-		public ConfigValueListener<Integer> howLongWrathOfTheHiveLasts;
-		public ConfigValueListener<Integer> speedBoostLevel;
-		public ConfigValueListener<Integer> absorptionBoostLevel;
-		public ConfigValueListener<Integer> strengthBoostLevel;
-		
-		//dimension
-		public ConfigValueListener<Integer> movementFactor;
-		public ConfigValueListener<Boolean> dayNightCycle;
-		public ConfigValueListener<Double> fogBrightnessPercentage;
-		public ConfigValueListener<Boolean> forceExitToOverworld;
-		public ConfigValueListener<String> requiredBlockUnderHive;
-		public ConfigValueListener<Boolean> warnPlayersOfWrongBlockUnderHive;
-		public ConfigValueListener<Boolean> allowTeleportationWithModdedBeehives;
-		public ConfigValueListener<Boolean> seaLevelOrHigherExitTeleporting;
-		
-		//mod compatibility
-		public ConfigValueListener<Boolean> spawnHoneySlimeMob;
-		public ConfigValueListener<Boolean> allowHoneyWandCompat;
-		public ConfigValueListener<Boolean> allowBottledBeeCompat;
-		public ConfigValueListener<Boolean> hivePlanksWorldgen;
-		public ConfigValueListener<Boolean> waxBlocksWorldgen;
-		public ConfigValueListener<Boolean> crystallizedHoneyWorldgen;
-		public ConfigValueListener<Boolean> allowRegularCandlesBeeDungeon;
-		public ConfigValueListener<Boolean> allowScentedCandlesBeeDungeon;
-		public ConfigValueListener<Boolean> allowScentedCandlesSpiderBeeDungeon;
-		public ConfigValueListener<Integer> powerfulCandlesRarityBeeDungeon;
-		public ConfigValueListener<Integer> powerfulCandlesRaritySpiderBeeDungeon;
-		
-		public ConfigValueListener<Boolean> spawnBeesourcefulBeesMob;
-		public ConfigValueListener<Boolean> spawnBesourcefulHoneycombVariants;
-		public ConfigValueListener<Integer> greatHoneycombRarityBeeDungeon;
-		public ConfigValueListener<Double> oreHoneycombSpawnRateBeeDungeon;
-		public ConfigValueListener<Integer> greatHoneycombRaritySpiderBeeDungeon;
-		public ConfigValueListener<Double> oreHoneycombSpawnRateSpiderBeeDungeon;
+	    // bee aggression
+	    public ConfigValueListener<Boolean> allowWrathOfTheHiveOutsideBumblezone;
+	    public ConfigValueListener<Boolean> showWrathOfTheHiveParticles;
+	    public ConfigValueListener<Boolean> aggressiveBees;
+	    public ConfigValueListener<Integer> aggressionTriggerRadius;
+	    public ConfigValueListener<Integer> howLongWrathOfTheHiveLasts;
+	    public ConfigValueListener<Integer> speedBoostLevel;
+	    public ConfigValueListener<Integer> absorptionBoostLevel;
+	    public ConfigValueListener<Integer> strengthBoostLevel;
 
-		public ConfigValueListener<Boolean> allowPotionOfBeesCompat;
-		public ConfigValueListener<Boolean> allowSplashPotionOfBeesCompat;
-		
-		public ConfigValueListener<Boolean> spawnProductiveBeesBeesMob;
-		
-		//dungeons
-		public ConfigValueListener<Integer> beeDungeonRarity;
-		public ConfigValueListener<Integer> spiderInfestedBeeDungeonRarity;
-		public ConfigValueListener<Double> spawnerRateSpiderBeeDungeon;
+	    // dimension
+	    public ConfigValueListener<Boolean> dayNightCycle;
+	    public ConfigValueListener<Double> fogBrightnessPercentage;
+	    
+	    // teleportation
+	    public ConfigValueListener<Integer> teleportationMode;
+	    public ConfigValueListener<Boolean> generateBeenest;
+	    public ConfigValueListener<Integer> movementFactor;
+	    public ConfigValueListener<Boolean> forceExitToOverworld;
+	    public ConfigValueListener<String> requiredBlockUnderHive;
+	    public ConfigValueListener<Boolean> warnPlayersOfWrongBlockUnderHive;
+	    public ConfigValueListener<Boolean> allowTeleportationWithModdedBeehives;
+	    public ConfigValueListener<Boolean> seaLevelOrHigherExitTeleporting;
 
-		//general mechanics
-		public ConfigValueListener<Boolean> dispensersDropGlassBottles;
-		
-		
-		public BzConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber)
-		{
+	    // mod compatibility
+	    public ConfigValueListener<Boolean> spawnHoneySlimeMob;
+	    public ConfigValueListener<Boolean> allowHoneyWandCompat;
+	    public ConfigValueListener<Boolean> allowBottledBeeCompat;
+	    public ConfigValueListener<Boolean> hivePlanksWorldgen;
+	    public ConfigValueListener<Boolean> waxBlocksWorldgen;
+	    public ConfigValueListener<Boolean> crystallizedHoneyWorldgen;
+	    public ConfigValueListener<Boolean> allowRegularCandlesBeeDungeon;
+	    public ConfigValueListener<Boolean> allowScentedCandlesBeeDungeon;
+	    public ConfigValueListener<Boolean> allowScentedCandlesSpiderBeeDungeon;
+	    public ConfigValueListener<Integer> powerfulCandlesRarityBeeDungeon;
+	    public ConfigValueListener<Integer> powerfulCandlesRaritySpiderBeeDungeon;
+
+	    public ConfigValueListener<Boolean> spawnBeesourcefulBeesMob;
+	    public ConfigValueListener<Boolean> spawnBesourcefulHoneycombVariants;
+	    public ConfigValueListener<Integer> greatHoneycombRarityBeeDungeon;
+	    public ConfigValueListener<Double> oreHoneycombSpawnRateBeeDungeon;
+	    public ConfigValueListener<Integer> greatHoneycombRaritySpiderBeeDungeon;
+	    public ConfigValueListener<Double> oreHoneycombSpawnRateSpiderBeeDungeon;
+
+	    public ConfigValueListener<Boolean> allowPotionOfBeesCompat;
+	    public ConfigValueListener<Boolean> allowSplashPotionOfBeesCompat;
+
+	    public ConfigValueListener<Boolean> spawnProductiveBeesBeesMob;
+
+	    // dungeons
+	    public ConfigValueListener<Integer> beeDungeonRarity;
+	    public ConfigValueListener<Integer> spiderInfestedBeeDungeonRarity;
+	    public ConfigValueListener<Double> spawnerRateSpiderBeeDungeon;
+
+	    // general mechanics
+	    public ConfigValueListener<Boolean> dispensersDropGlassBottles;
+
+
+	    public BzConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber) {
+  
 	        builder.push("The Bumblezone Dimension Options");
 	
-	        	movementFactor = subscriber.subscribe(builder
-	                .comment(" \r\n-----------------------------------------------------\r\n\r\n"
-	                		+" Determines how the coordinates gets translated when entering \r\n"
-	                		+" and leaving the Bumblezone. The default ratio is 10 which means\r\n"
-	                		+" for every block you traverse in the dimension, it is equal to\r\n"
-	                		+" traveling 10 blocks in the Overworld. For comparison, the Nether\r\n"
-	                		+" has a 8 to 1 ratio with the Overworld. \r\n"
-	                		+" \r\n"
-	                		+" The scaling of coordinates will take into account other dimension's\r\n"
-	                		+" coordinate ratios so it'll work for any dimension correctly.\r\n"
-	                		+" \r\n"
-	                		+" Note: Changing this in an already made world will change where Bee Nests will\r\n"
-	                		+" take you in the dimension and exiting will place you in a different spot too.\r\n")
-	                .translation("the_bumblezone.config.dimension.movementfactor")
-	                .defineInRange("movementFactor", 10, 1, 1000));
-	        
 	
 	            dayNightCycle = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
@@ -113,6 +101,59 @@ public class BzConfig
 	                    .defineInRange("fogBrightnessPercentage", 100D, 0D, 100000D));
 	
 	            
+                     teleportationMode = subscriber.subscribe(builder
+                                     .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+                                   		+" Which mode of teleportation should be used when \r\n"
+                                   		+" leaving The Bumblezone dimension. \r\n"
+                                		+" \r\n"
+                                		+" Mode 1: Coordinates will be converted to the other \r\n"
+                                		+" dimension's coordinate scale and the game will look for\r\n"
+                                		+" a Beenest/Beehive at the new spot to spawn players at. \r\n"
+                                		+" If none is found, players will still be placed at the spot.\r\n"
+                                		+" \r\n"
+                                		+" Mode 2: Will always spawn players at the original spot \r\n"
+                                		+" in the non-BZ dimension where they threw the Enderpearl \r\n"
+                                		+" at a Beenest/Beehive. Will place air if the spot is now filled \r\n"
+                                		+" with solid blocks. \r\n"
+                                		+" \r\n"
+                                		+" Mode 3: Coordinates will be converted to the other \r\n"
+                                		+" dimension's coordinate scale and the game will look for\r\n"
+                                		+" a Beenest/Beehive at the new spot to spawn players at. \r\n"
+                                		+" If none is found, players will spawn at the original spot\r\n"
+                                		+" in the non-BZ dimension where they threw the Enderpearl \r\n"
+                                		+" at a Beenest/Beehive. Will place air if the spot is now filled \r\n"
+                                		+" with solid blocks. \r\n")
+                                    .translation("the_bumblezone.config.dimension.teleportationmode")
+                                    .defineInRange("teleportationMode", 1, 1, 3));
+                
+                     
+                     movementFactor = subscriber.subscribe(builder
+                                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+                                		+" Determines how the coordinates gets translated when entering \r\n"
+                                		+" and leaving the Bumblezone. The default ratio is 10 which means\r\n"
+                                		+" for every block you traverse in the dimension, it is equal to\r\n"
+                                		+" traveling 10 blocks in the Overworld. For comparison, the Nether\r\n"
+                                		+" has a 8 to 1 ratio with the Overworld. \r\n"
+                                		+" \r\n"
+                                		+" The scaling of coordinates will take into account other dimension's\r\n"
+                                		+" coordinate ratios so it'll work for any dimension correctly.\r\n"
+                                		+" \r\n"
+                                		+" Note: Changing this in an already made world will change where Bee Nests will\r\n"
+                                		+" take you in the dimension and exiting will place you in a different spot too.\r\n"
+                                		+" \r\n"
+                                		+" ONLY FOR TELEPORTATION MODE 1 AND 3.\r\n")
+                                    .translation("the_bumblezone.config.dimension.movementfactor")
+                                    .defineInRange("movementFactor", 10, 1, 1000));
+                     
+                    generateBeenest = subscriber.subscribe(builder
+        	                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+        	                    		+" Will a Beenest generate if no Beenest is  \r\n"
+        	                    		+" found when leaving The Bumblezone dimension.\r\n"
+                                    		+" \r\n"
+                                    		+" ONLY FOR TELEPORTATION MODE 1.\r\n")
+        	                    .translation("the_bumblezone.config.dimension.generatebeenest")
+        	                    .define("generateBeenest", true));
+    	            
 	            forceExitToOverworld = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Makes leaving The Bumblezone dimension always places you back\r\n "
@@ -143,7 +184,9 @@ public class BzConfig
 	                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 	                    		+" Should exiting The Bumblezone always try and place you \r\n"
 	                    		+" above sealevel in the target dimension? (Will only look \r\n"
-	                    		+" for beehives above sealevel as well when placing you)")
+	                    		+" for beehives above sealevel as well when placing you)"
+                        		+" \r\n"
+                        		+" ONLY FOR TELEPORTATION MODE 1 AND 3.\r\n")
 	                    .translation("the_bumblezone.config.dimension.sealevelorhigherexitteleporting")
 	                    .define("seaLevelOrHigherExitTeleporting", true));
 	            
@@ -164,10 +207,10 @@ public class BzConfig
 		                    		+" with modded Bee Nests and modded Beehives as well. \r\n")
 		                    .translation("the_bumblezone.config.dimension.allowteleportationwithmoddedbeehives")
 		                    .define("allowTeleportationWithModdedBeehives", true));
-	            
-	        builder.pop();
 	        
-            builder.push("Dungeon Options");
+		builder.pop();
+		
+		builder.push("Dungeon Options");
 
     			beeDungeonRarity = subscriber.subscribe(builder
 		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
@@ -478,6 +521,6 @@ public class BzConfig
 	            		
         
 	        builder.pop();
-	    }		
-	} 
+	    }
+	}
 }
