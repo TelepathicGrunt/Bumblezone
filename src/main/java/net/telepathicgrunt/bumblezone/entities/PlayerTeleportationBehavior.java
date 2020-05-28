@@ -109,8 +109,8 @@ public class PlayerTeleportationBehavior
 				
 				//checks if block under hive is correct if config needs one
 				boolean validBelowBlock = false;
-				String requiredBlockString = Bumblezone.BzConfig.requiredBlockUnderHive.get();
-				if(!requiredBlockString.trim().isEmpty() && hivePos != null) 
+				String requiredBlockString = Bumblezone.BzConfig.requiredBlockUnderHive.get().toLowerCase().trim();
+				if(!requiredBlockString.isEmpty() && hivePos != null) 
 				{
 					if(requiredBlockString.matches("[a-z0-9/._-]+:[a-z0-9/._-]+") && ForgeRegistries.BLOCKS.containsKey(new ResourceLocation(requiredBlockString))) 
 					{

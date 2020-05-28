@@ -21,7 +21,7 @@ Mods I'm keeping an eye on for future compat
  
 ##### Teleportation:
 
--Setting warnPlayersOfWrongBlockUnderHive config to true and putting and invalid resource location into RequiredBlockUnderHive config will now not crash the server when attempting to teleport to The Bumblezone.
+-Setting warnPlayersOfWrongBlockUnderHive config to true and putting and invalid resource location into RequiredBlockUnderHive config will no longer crash the server when attempting to teleport to The Bumblezone.
 
 -Added generateBeenest config to allow people to turn on or off the creation of Bee Nests when exiting The Bumblezone into an area with no nests or hives nearby.
 
