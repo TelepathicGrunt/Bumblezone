@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -87,10 +88,14 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         if (blockstate.getBlock() != BzBlocks.STICKY_HONEY_REDSTONE)
             return;
 
+        if (blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
+            world.updateNeighbors(pos, this);
+        }
+
         for (Direction direction : Direction.values()) {
             BooleanProperty booleanproperty = StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(direction);
             if (blockstate.get(booleanproperty)) {
-                world.updateNeighbor(pos.offset(direction), blockstate.getBlock(), pos);
+                world.updateNeighborsAlways(pos.offset(direction), this);
             }
         }
     }
@@ -142,6 +147,13 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         }
     }
 
+    public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
+        if (this.computeRedstoneStrength(state, world, pos) > 0) {
+            world.getBlockTickScheduler().schedule(pos, this, 1);
+        }
+
+    }
+
 
     ///////////////////////////////////REDSTONE////////////////////////////////////////
 
@@ -169,7 +181,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         }
 
         //return power for block it is attached on.
-        return getStrongRedstonePower(blockstate, blockAccess, pos, side);
+        return blockstate.get(POWERED) && blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(side.getOpposite())) ? 1 : 0;
     }
 
     /**
@@ -177,7 +189,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      */
     @Override
     public int getStrongRedstonePower(BlockState blockstate, BlockView blockAccess, BlockPos pos, Direction side) {
-        return blockstate.get(POWERED) && blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(side.getOpposite())) ? 1 : 0;
+        return getWeakRedstonePower(blockstate, blockAccess, pos, side);
     }
 
 
