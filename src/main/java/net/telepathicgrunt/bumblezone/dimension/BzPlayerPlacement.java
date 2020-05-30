@@ -1,5 +1,6 @@
 package net.telepathicgrunt.bumblezone.dimension;
 
+import com.google.common.primitives.Doubles;
 import net.fabricmc.fabric.api.dimension.v1.EntityPlacer;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
@@ -7,6 +8,7 @@ import net.minecraft.block.pattern.BlockPattern;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
@@ -45,6 +47,7 @@ public class BzPlayerPlacement {
         Vec3d destinationPosition;
 
         if (teleported instanceof PlayerEntity) {
+            Bumblezone.PLAYER_COMPONENT.get(teleported).setNonBZPos(teleported.getPos());
             destinationPosition = teleportByOutOfBounds((PlayerEntity) teleported, destination, upwardChecking);
         } else {
             destinationPosition = new Vec3d(0, 0, 0);
@@ -60,27 +63,55 @@ public class BzPlayerPlacement {
     private static Vec3d teleportByOutOfBounds(PlayerEntity playerEntity, ServerWorld destination, boolean checkingUpward) {
         //converts the position to get the corresponding position in non-bumblezone dimension
         double coordinateScale = destination.dimension.isNether() ? BzDimension.getMovementFactor() / 8D : BzDimension.getMovementFactor() / 1D;
-        BlockPos blockpos = new BlockPos(
-                playerEntity.getPos().getX() * coordinateScale,
-                playerEntity.getPos().getY(),
-                playerEntity.getPos().getZ() * coordinateScale);
+        BlockPos blockpos;
+        BlockPos validBlockPos = null;
+
+        if (Bumblezone.BZ_CONFIG.teleportationMode != 2 || Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZPos() == null) {
+            blockpos = new BlockPos(
+                    Doubles.constrainToRange(playerEntity.getPos().getX() * coordinateScale, -29999936D, 29999936D),
+                    playerEntity.getPos().getY(),
+                    Doubles.constrainToRange(playerEntity.getPos().getZ() * coordinateScale, -29999936D, 29999936D));
+
+            //Gets valid space in other world
+            validBlockPos = validPlayerSpawnLocationByBeehive(destination, blockpos, 48, checkingUpward);
+        } else {
+            blockpos = new BlockPos(playerEntity.getPos());
+        }
 
 
-        //Gets valid space in other world
-        //Won't ever be null
-        BlockPos validBlockPos = validPlayerSpawnLocationByBeehive(destination, blockpos, 48, checkingUpward);
+        if (Bumblezone.BZ_CONFIG.teleportationMode == 2 ||
+                (Bumblezone.BZ_CONFIG.teleportationMode == 3 && validBlockPos == null)) {
+            //Use cap for position
+
+            //extra null check
+            if (Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZPos() == null)
+                validBlockPos = blockpos;
+            else
+                validBlockPos = new BlockPos(Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZPos());
 
 
-        //let game know we are gonna teleport player
-        ChunkPos chunkpos = new ChunkPos(validBlockPos);
+            if (destination.getBlockState(validBlockPos.up()).isOpaque()) {
+                destination.setBlockState(validBlockPos, Blocks.AIR.getDefaultState(), 3);
+                destination.setBlockState(validBlockPos.up(), Blocks.AIR.getDefaultState(), 3);
+            }
 
-        //teleportation spot finding complete. return spot
-        return new Vec3d(
-                validBlockPos.getX() + 0.5D,
-                validBlockPos.getY() + 1,
-                validBlockPos.getZ() + 0.5D
-        );
-
+            //use found location
+            //teleportation spot finding complete. return spot
+            return new Vec3d(
+                    validBlockPos.getX() + 0.5D,
+                    validBlockPos.getY() + 1,
+                    validBlockPos.getZ() + 0.5D
+            );
+        }
+        else {
+            //use found location
+            //teleportation spot finding complete. return spot
+            return new Vec3d(
+                    validBlockPos.getX() + 0.5D,
+                    validBlockPos.getY() + 1,
+                    validBlockPos.getZ() + 0.5D
+            );
+        }
     }
 
     private static Vec3d teleportByPearl(PlayerEntity playerEntity, ServerWorld originalWorld, ServerWorld bumblezoneWorld) {
@@ -242,6 +273,9 @@ public class BzPlayerPlacement {
         }
 
 
+        //this mode will not generate a beenest automatically.
+        if(Bumblezone.BZ_CONFIG.teleportationMode == 3) return null;
+
         //no valid spot was found, generate a hive and spawn us on the highest land
         //This if statement is so we dont get placed on roof of other roofed dimension
         if (maxHeight + 1 < world.getHeight()) {
@@ -253,8 +287,7 @@ public class BzPlayerPlacement {
                 position.getZ());
 
         if (mutableBlockPos.getY() > 0) {
-            world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
-            world.setBlockState(mutableBlockPos.up(), Blocks.AIR.getDefaultState());
+            createSpaceForPlayer(world, mutableBlockPos);
             return mutableBlockPos;
         } else {
             //No valid spot was found. Just place character on a generate hive at center of height of coordinate
@@ -264,10 +297,20 @@ public class BzPlayerPlacement {
                     world.getHeight() / 2,
                     position.getZ());
 
-            world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
-            world.setBlockState(mutableBlockPos.up(), Blocks.AIR.getDefaultState());
+            createSpaceForPlayer(world, mutableBlockPos);
             return mutableBlockPos;
         }
+    }
+
+    private static void createSpaceForPlayer(World world, BlockPos.Mutable mutableBlockPos) {
+        if(Bumblezone.BZ_CONFIG.generateBeenest)
+            world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
+        else if(world.getBlockState(mutableBlockPos).getMaterial() == Material.AIR ||
+                (!world.getBlockState(mutableBlockPos).getFluidState().isEmpty() &&
+                    !world.getBlockState(mutableBlockPos).getFluidState().matches(FluidTags.WATER)))
+            world.setBlockState(mutableBlockPos, Blocks.HONEYCOMB_BLOCK.getDefaultState());
+
+        world.setBlockState(mutableBlockPos.up(), Blocks.AIR.getDefaultState());
     }
 
     private static BlockPos validPlayerSpawnLocation(World world, BlockPos position, int maximumRange) {

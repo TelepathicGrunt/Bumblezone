@@ -82,7 +82,10 @@ public class BzDimension extends Dimension {
     }
 
 
-    public static int getSeaLevel(){ return 40; }
+    public static int getSeaLevel() {
+        return 40;
+    }
+
     /**
      * Keep sky to noon always so sunset/sunrise color doesn't bleed into our fog
      */

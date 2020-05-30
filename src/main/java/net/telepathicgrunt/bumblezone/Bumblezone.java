@@ -7,15 +7,21 @@ import nerdhub.cardinal.components.api.event.EntityComponentCallback;
 import nerdhub.cardinal.components.api.util.EntityComponents;
 import nerdhub.cardinal.components.api.util.RespawnCopyStrategy;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
+import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.dimension.DimensionType;
 import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.configs.BzConfig;
 import net.telepathicgrunt.bumblezone.configs.FileWatcher;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
+import net.telepathicgrunt.bumblezone.entities.BeeAggression;
 import net.telepathicgrunt.bumblezone.entities.IPlayerComponent;
 import net.telepathicgrunt.bumblezone.entities.PlayerComponent;
 import net.telepathicgrunt.bumblezone.items.BzItems;
@@ -63,6 +69,11 @@ public class Bumblezone implements ModInitializer {
                 BZ_CONFIG = ConfigManager.loadConfig(BzConfig.class);
             }
         };
+
+
+        ServerStartCallback.EVENT.register((MinecraftServer world) -> {
+            BeeAggression.setupBeeHatingList(world.getWorld(DimensionType.OVERWORLD));
+        });
 
         Timer timer = new Timer();
         // repeat the check for a changed config every second

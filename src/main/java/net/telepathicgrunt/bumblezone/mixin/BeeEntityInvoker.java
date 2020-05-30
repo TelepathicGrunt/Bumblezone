@@ -9,4 +9,7 @@ public interface BeeEntityInvoker {
 
     @Invoker
     void callSetBeeFlag(int bit, boolean value);
+
+    @Invoker
+    void callSetAnger(int tick);
 }

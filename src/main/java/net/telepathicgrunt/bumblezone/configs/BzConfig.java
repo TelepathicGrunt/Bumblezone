@@ -131,7 +131,9 @@ public class BzConfig {
             "coordinate ratios so it'll work for any dimension correctly.\n" +
             "\n" +
             "Note: Changing this in an already made world will change where Bee Nests will\n" +
-            "take you in the dimension and exiting will place you in a different spot too.")
+            "take you in the dimension and exiting will place you in a different spot too."
+            +" \r\n"
+            +" ONLY FOR TELEPORTATION MODE 1 AND 3.\r\n")
     public int movementFactor = 10;
 
     @Comment(value = "##############################################################\n" +
@@ -175,7 +177,9 @@ public class BzConfig {
             "\n"
             +" Should exiting The Bumblezone always try and place you \r\n"
             +" above sealevel in the target dimension? (Will only look \r\n"
-            +" for beehives above sealevel as well when placing you)")
+            +" for beehives above sealevel as well when placing you)"
+            +" \r\n"
+            +" ONLY FOR TELEPORTATION MODE 1 AND 3.\r\n")
     public boolean seaLevelOrHigherExitTeleporting = true;
 
     @Comment(value = "##############################################################\n" +
@@ -202,6 +206,40 @@ public class BzConfig {
             +" not the correct required block. It will also tell the player what \r\n"
             +" block is needed under the Bee Nest/Beehive to teleport to the dimension.\r\n")
     public boolean warnPlayersOfWrongBlockUnderHive = true;
+
+    @Comment(value = "##############################################################\n" +
+            "##############################################################\n" +
+            "\n"
+            +" Will a Beenest generate if no Beenest is  \r\n"
+            +" found when leaving The Bumblezone dimension.\r\n"
+            +" \r\n"
+            +" ONLY FOR TELEPORTATION MODE 1.\r\n")
+    public boolean generateBeenest = true;
+
+    @Comment(value = "##############################################################\n" +
+            "##############################################################\n"
+            + "\n"
+            +" Which mode of teleportation should be used when \r\n"
+            +" leaving The Bumblezone dimension. \r\n"
+            +" \r\n"
+            +" Mode 1: Coordinates will be converted to the other \r\n"
+            +" dimension's coordinate scale and the game will look for\r\n"
+            +" a Beenest/Beehive at the new spot to spawn players at. \r\n"
+            +" If none is found, players will still be placed at the spot.\r\n"
+            +" \r\n"
+            +" Mode 2: Will always spawn players at the original spot \r\n"
+            +" in the non-BZ dimension where they threw the Enderpearl \r\n"
+            +" at a Beenest/Beehive. Will place air if the spot is now filled \r\n"
+            +" with solid blocks. \r\n"
+            +" \r\n"
+            +" Mode 3: Coordinates will be converted to the other \r\n"
+            +" dimension's coordinate scale and the game will look for\r\n"
+            +" a Beenest/Beehive at the new spot to spawn players at. \r\n"
+            +" If none is found, players will spawn at the original spot\r\n"
+            +" in the non-BZ dimension where they threw the Enderpearl \r\n"
+            +" at a Beenest/Beehive. Will place air if the spot is now filled \r\n"
+            +" with solid blocks. \r\n")
+    public int teleportationMode = 1;
 
     ///////////////////////////////////////////////////////////////////////////////////////
     //Mechanics

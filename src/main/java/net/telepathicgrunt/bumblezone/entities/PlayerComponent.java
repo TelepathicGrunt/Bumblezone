@@ -3,6 +3,7 @@ package net.telepathicgrunt.bumblezone.entities;
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensionType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.dimension.DimensionType;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
@@ -11,22 +12,34 @@ import org.apache.logging.log4j.Level;
 public class PlayerComponent implements IPlayerComponent {
     private boolean teleporting = false;
     private DimensionType nonBZDimensionType = DimensionType.OVERWORLD;
+    public Vec3d nonBZPosition = null;
 
     @Override
     public boolean getIsTeleporting() {
         return this.teleporting;
     }
-
     @Override
     public void setIsTeleporting(boolean isTeleporting) {
         this.teleporting = isTeleporting;
     }
 
+
+    @Override
+    public void setNonBZPos(Vec3d incomingPos)
+    {
+        nonBZPosition = incomingPos;
+    }
+    @Override
+    public Vec3d getNonBZPos()
+    {
+        return nonBZPosition;
+    }
+
+
     @Override
     public DimensionType getNonBZDimension() {
         return this.nonBZDimensionType;
     }
-
     @Override
     public void setNonBZDimension(DimensionType nonBZDimension) {
         if (nonBZDimension == BzDimensionType.BUMBLEZONE_TYPE) {
@@ -38,13 +51,13 @@ public class PlayerComponent implements IPlayerComponent {
 
     }
 
+
     @Override
     public void fromTag(CompoundTag tag) {
         this.teleporting = tag.getBoolean("teleporting");
         this.nonBZDimensionType = FabricDimensionType.byId(
                 new Identifier(tag.getString("non_bz_dimensiontype_namespace"), tag.getString("non_bz_dmensiontype_path")));
     }
-
     @Override
     public CompoundTag toTag(CompoundTag tag) {
         tag.putBoolean("teleporting", this.teleporting);
