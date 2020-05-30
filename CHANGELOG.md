@@ -17,6 +17,16 @@ Mods I'm keeping an eye on for future compat
 # | Bumblezone changelog |
    
    
+## (V.1.3.5 Changes) (1.15.2 Minecraft)
+ 
+##### Entities:
+ 
+-Bees now will not see through walls to find insects, bears, or players taking honey from certain blocks. And Bees will now see through walls to go after players that anger bees by hitting them, drinking honey, or pick up Honey blocks. (Basically I had the requirement of needing a line of sight for their AI backwards due to bad mapping names from MCP)
+   
+##### Items:
+
+-Using Glass Bottle to obtain Sugar Water in Creative mode will not use up the Glass Bottle now.
+ 
 ## (V.1.3.4 Changes) (1.15.2 Minecraft)
  
 ##### Teleportation:

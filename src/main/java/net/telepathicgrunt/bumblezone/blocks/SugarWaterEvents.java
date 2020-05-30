@@ -53,7 +53,9 @@ public class SugarWaterEvents
 			if (itemstack.getItem() == Items.GLASS_BOTTLE)
 			{
 				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-				itemstack.shrink(1); // remove current honey bottle
+				
+				if(!playerEntity.isCreative())
+				    itemstack.shrink(1); // remove current honey bottle
 
 				if (itemstack.isEmpty())
 				{
