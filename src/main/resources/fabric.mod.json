@@ -30,6 +30,8 @@
     "the_bumblezone.mixins.json"
   ],
 
+  "accessWidener" : "the_bumblezone.accesswidener",
+
   "depends": {
     "fabricloader": ">=0.7.2",
     "fabric": "*",

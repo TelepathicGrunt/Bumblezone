@@ -1,0 +1,3 @@
+accessWidener v1 named
+accessible field net/minecraft/recipe/CookingRecipeSerializer recipeFactory Lnet/minecraft/recipe/CookingRecipeSerializer$RecipeFactory;
+accessible class net/minecraft/recipe/CookingRecipeSerializer$RecipeFactory

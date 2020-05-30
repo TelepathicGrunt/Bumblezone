@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.2.6-SNAPSHOT'
+	id 'fabric-loom' version '0.2.7-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -12,6 +12,7 @@ version = project.mod_version
 group = project.maven_group
 
 minecraft {
+	accessWidener = file("src/main/resources/the_bumblezone.accesswidener")
 }
 
 repositories {
