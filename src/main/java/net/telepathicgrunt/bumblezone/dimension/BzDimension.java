@@ -163,16 +163,16 @@ public class BzDimension extends Dimension {
             }
         }
 
-        if (ACTIVE_WRATH && REDDISH_FOG_TINT < 0.5f) {
-            REDDISH_FOG_TINT += 0.00004f;
+        if (ACTIVE_WRATH && REDDISH_FOG_TINT < 0.65f) {
+            REDDISH_FOG_TINT += 0.00003f;
         } else if (REDDISH_FOG_TINT > 0) {
-            REDDISH_FOG_TINT -= 0.00004f;
+            REDDISH_FOG_TINT -= 0.00003f;
         }
 
         return new Vec3d(
                 Math.min(0.9f * colorFactor, 1.1f + REDDISH_FOG_TINT),
-                Math.min(0.63f * colorFactor, 1.1f) - REDDISH_FOG_TINT * 0.4f,
-                Math.min(0.0015f * colorFactor, 1.1f) - REDDISH_FOG_TINT * 1.75f);
+                Math.max(Math.min(0.63f * colorFactor, 1.1f) - REDDISH_FOG_TINT * 0.4f, 0),
+                Math.max(Math.min(0.0015f * colorFactor, 1.1f) - REDDISH_FOG_TINT * 1.75f, 0));
     }
 
     /**

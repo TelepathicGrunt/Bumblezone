@@ -2,7 +2,6 @@ package net.telepathicgrunt.bumblezone.blocks;
 
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
-import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnType;
@@ -40,7 +39,6 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.items.BzItems;
-import net.telepathicgrunt.bumblezone.items.HoneyBottleDispenseBehavior;
 
 import java.util.List;
 import java.util.Random;
@@ -48,14 +46,12 @@ import java.util.Random;
 
 public class HoneycombBrood extends FacingBlock {
     public static final IntProperty STAGE = Properties.AGE_3;
-    private static final ItemDispenserBehavior BEHAVIOUR_DEFAULT_DISPENSE_ITEM = new HoneyBottleDispenseBehavior();
     private static final TargetPredicate FIXED_DISTANCE = (new TargetPredicate()).setBaseMaxDistance(50);
     private static final TargetPredicate PLAYER_DISTANCE = (new TargetPredicate());
 
     public HoneycombBrood() {
         super(FabricBlockSettings.of(Material.CLAY, MaterialColor.ORANGE).ticksRandomly().strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.9F));
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.SOUTH).with(STAGE, Integer.valueOf(0)));
-        DispenserBlock.registerBehavior(Items.HONEY_BOTTLE, BEHAVIOUR_DEFAULT_DISPENSE_ITEM); //adds compatibility with honey bottles in dispensers
     }
 
 

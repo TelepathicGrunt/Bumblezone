@@ -28,14 +28,18 @@ import static net.minecraft.state.property.Properties.LEVEL_1_8;
 
 
 public abstract class SugarWaterFluid extends BaseFluid {
+
+    @Override
     public Fluid getFlowing() {
         return BzBlocks.SUGAR_WATER_FLUID_FLOWING;
     }
 
+    @Override
     public Fluid getStill() {
         return BzBlocks.SUGAR_WATER_FLUID;
     }
 
+    @Override
     public Item getBucketItem() {
         return BzItems.SUGAR_WATER_BUCKET;
     }
@@ -132,16 +136,17 @@ public abstract class SugarWaterFluid extends BaseFluid {
         return 1;
     }
 
-
     @Override
     public boolean matchesType(Fluid fluid) {
         return fluid.isIn(FluidTags.WATER);
     }
 
+    @Override
     public boolean canBeReplacedWith(FluidState state, BlockView world, BlockPos pos, Fluid fluid, Direction direction) {
         return direction == Direction.DOWN && !fluid.isIn(FluidTags.WATER);
     }
 
+    @Override
     public BlockState toBlockState(FluidState state) {
         return BzBlocks.SUGAR_WATER_BLOCK.getDefaultState().with(FluidBlock.LEVEL, method_15741(state));
     }
@@ -152,16 +157,17 @@ public abstract class SugarWaterFluid extends BaseFluid {
             builder.add(LEVEL_1_8);
         }
 
-
+        @Override
         public int getLevel(FluidState state) {
             return state.get(LEVEL_1_8);
         }
 
-
+        @Override
         public boolean isStill(FluidState state) {
             return false;
         }
 
+        @Override
         protected boolean isInfinite() {
             return true;
         }
@@ -169,16 +175,17 @@ public abstract class SugarWaterFluid extends BaseFluid {
 
     public static class Source extends SugarWaterFluid {
 
+        @Override
         public int getLevel(FluidState state) {
             return 8;
         }
 
-
+        @Override
         public boolean isStill(FluidState state) {
             return true;
         }
 
-
+        @Override
         protected boolean isInfinite() {
             return false;
         }

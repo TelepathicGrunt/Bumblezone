@@ -26,7 +26,9 @@ public class ObtainSugarWaterBottle {
 
             if (itemstack.getItem() == Items.GLASS_BOTTLE) {
                 world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-                itemstack.decrement(1); // remove current honey bottle
+
+                if(!playerEntity.isCreative())
+                    itemstack.decrement(1); // remove current honey bottle
 
                 if (itemstack.isEmpty()) {
                     playerEntity.setStackInHand(playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE)); // places sugar water bottle in hand

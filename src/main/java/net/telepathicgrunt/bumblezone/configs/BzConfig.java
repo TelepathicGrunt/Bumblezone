@@ -160,7 +160,7 @@ public class BzConfig {
             "bright, 100 will be normal orange brightness, and \n" +
             "100000 will be white. When the cycle is on, 0 will be \n" +
             "but will not be completely black during daytime.")
-    public double fogBrightnessPercentage = 100;
+    public double fogBrightnessPercentage = 110;
 
     @Comment(value = "##############################################################\n" +
             "##############################################################\n" +

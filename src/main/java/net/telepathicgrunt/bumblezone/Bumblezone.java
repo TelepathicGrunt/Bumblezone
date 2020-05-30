@@ -25,6 +25,7 @@ import net.telepathicgrunt.bumblezone.entities.BeeAggression;
 import net.telepathicgrunt.bumblezone.entities.IPlayerComponent;
 import net.telepathicgrunt.bumblezone.entities.PlayerComponent;
 import net.telepathicgrunt.bumblezone.items.BzItems;
+import net.telepathicgrunt.bumblezone.items.DispenserItemSetup;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -74,6 +75,8 @@ public class Bumblezone implements ModInitializer {
         ServerStartCallback.EVENT.register((MinecraftServer world) -> {
             BeeAggression.setupBeeHatingList(world.getWorld(DimensionType.OVERWORLD));
         });
+
+        DispenserItemSetup.setupDispenserBehaviors();
 
         Timer timer = new Timer();
         // repeat the check for a changed config every second

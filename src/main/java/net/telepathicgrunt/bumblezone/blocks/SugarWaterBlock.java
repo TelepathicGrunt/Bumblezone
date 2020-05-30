@@ -1,7 +1,5 @@
 package net.telepathicgrunt.bumblezone.blocks;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
@@ -13,17 +11,11 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 
 public class SugarWaterBlock extends FluidBlock {
-    @SuppressWarnings("deprecation")
-    public SugarWaterBlock(BaseFluid fluid, Block.Settings properties) {
-        super(fluid, properties);
-    }
-
 
     public SugarWaterBlock(BaseFluid baseFluid) {
         super(baseFluid, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F, 100.0F).dropsNothing().build().velocityMultiplier(0.95F));
