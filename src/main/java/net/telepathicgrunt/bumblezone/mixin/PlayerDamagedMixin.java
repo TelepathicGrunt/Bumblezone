@@ -14,10 +14,12 @@ public class PlayerDamagedMixin {
     //bees attacks bear mobs that is in the dimension
     @Inject(method = "damage",
             at = @At(value = "HEAD"),
-            locals = LocalCapture.CAPTURE_FAILSOFT)
+            locals = LocalCapture.CAPTURE_FAILSOFT,
+            cancellable = true)
     private void playerAttacked(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        HoneyCrystalShieldBehavior.damageShieldFromExplosionAndFire(source, ((PlayerEntity) (Object) this));
         HoneyCrystalShieldBehavior.slowPhysicalAttackers(source, ((PlayerEntity) (Object) this));
+        if(HoneyCrystalShieldBehavior.damageShieldFromExplosionAndFire(source, ((PlayerEntity) (Object) this)))
+            cir.cancel();
     }
 
 }

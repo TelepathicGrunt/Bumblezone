@@ -1,6 +1,7 @@
 package net.telepathicgrunt.bumblezone.items;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
@@ -8,20 +9,18 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RayTraceContext;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.fluids.SugarWaterFluid;
 
 public class ObtainSugarWaterBottle {
 
-    public static boolean useBottleOnSugarWater(World world, PlayerEntity playerEntity, Hand playerHand) {
-        HitResult raytraceresult = rayTrace(world, playerEntity, RayTraceContext.FluidHandling.SOURCE_ONLY);
-        if(playerHand == null) return false;
-
-        if (raytraceresult.getType() == HitResult.Type.BLOCK &&
-                world.getBlockState(((BlockHitResult) raytraceresult).getBlockPos()) == BzBlocks.SUGAR_WATER_BLOCK.getDefaultState()) {
+    public static boolean useBottleOnSugarWater(World world, PlayerEntity playerEntity, Hand playerHand, BlockPos blockPos) {
+        if (world.getFluidState(blockPos).getFluid() instanceof SugarWaterFluid) {
             ItemStack itemstack = playerEntity.getStackInHand(playerHand);
 
             if (itemstack.getItem() == Items.GLASS_BOTTLE) {
