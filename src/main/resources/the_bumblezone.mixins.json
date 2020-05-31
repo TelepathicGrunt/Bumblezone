@@ -3,6 +3,7 @@
   "package": "net.telepathicgrunt.bumblezone.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "AbstractFurnaceEntityMixin",
     "BeeEntityInvoker",
     "BlockOverlayRendererMixin",
     "BucketItemAccessor",
@@ -18,7 +19,6 @@
     "HoneyShieldDisableMixin",
     "HoneyShieldEnchantmentMixin",
     "HoneyShieldItemstackGetMaximumDamageMixin",
-    "HoneyShieldItemstackIsDamageMixin",
     "HoneyShieldItemstackSetDamageMixin",
     "HoneyShieldPreferredSlotMixin",
     "MobHitMixin",
