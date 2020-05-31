@@ -28,6 +28,12 @@ Mods I'm keeping an eye on for future compat
 -Using Glass Bottle to obtain Sugar Water in Creative mode will not use up the Glass Bottle now.
 
 -Honey Crystal Shields now can be smelted into Sticky Honey Residue so you can still get a use out of nearby destroyed shields.
+
+-Projectile fire damage will now deal an insane more amount of damage to Honey Crystal Shields.
+
+-Made blocking explosions with shields now actually reduce damage taken by the player.
+
+-Significantly improved the texture for Sticky Honey Residue and Sticky Honey Redstone.
  
 ## (V.1.3.4 Changes) (1.15.2 Minecraft)
  
