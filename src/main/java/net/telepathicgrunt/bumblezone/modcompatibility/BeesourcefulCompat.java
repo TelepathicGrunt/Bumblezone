@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.tfar.beesourceful.util.BeeType;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.pattern.BlockMatcher;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -30,12 +29,13 @@ import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 public class BeesourcefulCompat
 {
 	private static List<Block> HONEYCOMB_VARIANTS;
+	private static List<EntityType<?>> BEE_VARIANTS;
 	
 	public static void setupBeesourceful() 
 	{
 		ModChecking.beesourcefulPresent = true;
 		
-		if(Bumblezone.BzConfig.spawnBesourcefulHoneycombVariants.get()) {
+		if(Bumblezone.BzConfig.spawnBeesourcefulHoneycombVariants.get()) {
 			String honeycombTarget = "honeycomb_target";
 			FillerBlockType.create(honeycombTarget.toUpperCase(), honeycombTarget, new BlockMatcher(Blocks.HONEYCOMB_BLOCK));
 
@@ -64,6 +64,16 @@ public class BeesourcefulCompat
 			HONEYCOMB_VARIANTS.add(enderHoneycomb);
 			HONEYCOMB_VARIANTS.add(diamondHoneycomb);
 		}
+
+		BEE_VARIANTS = new ArrayList<EntityType<?>>();
+		BEE_VARIANTS.add(ForgeRegistries.ENTITIES.getValue(new ResourceLocation("beesourceful:ender_bee")));
+		BEE_VARIANTS.add(ForgeRegistries.ENTITIES.getValue(new ResourceLocation("beesourceful:diamond_bee")));
+		BEE_VARIANTS.add(ForgeRegistries.ENTITIES.getValue(new ResourceLocation("beesourceful:emerald_bee")));
+		BEE_VARIANTS.add(ForgeRegistries.ENTITIES.getValue(new ResourceLocation("beesourceful:lapis_bee")));
+		BEE_VARIANTS.add(ForgeRegistries.ENTITIES.getValue(new ResourceLocation("beesourceful:quartz_bee")));
+		BEE_VARIANTS.add(ForgeRegistries.ENTITIES.getValue(new ResourceLocation("beesourceful:gold_bee")));
+		BEE_VARIANTS.add(ForgeRegistries.ENTITIES.getValue(new ResourceLocation("beesourceful:redstone_bee")));
+		BEE_VARIANTS.add(ForgeRegistries.ENTITIES.getValue(new ResourceLocation("beesourceful:iron_bee")));
 	}
 	
 	//1/15th of bees spawning will also spawn BeeSourceful bees
@@ -77,28 +87,28 @@ public class BeesourcefulCompat
 
 		
 		if (beeTypeChance < 1) {
-		    beesourcefulBeeEntity = BeeType.ender.beeSupplier.get().create(entity.world);
+		    beesourcefulBeeEntity = (MobEntity) BEE_VARIANTS.get(0).create(entity.world);
 		} 
 		else if (beeTypeChance < 3) {
-		    beesourcefulBeeEntity = BeeType.diamond.beeSupplier.get().create(entity.world);
+		    beesourcefulBeeEntity = (MobEntity) BEE_VARIANTS.get(1).create(entity.world);
 		} 
 		else if (beeTypeChance < 10) {
-		    beesourcefulBeeEntity = BeeType.emerald.beeSupplier.get().create(entity.world);
+		    beesourcefulBeeEntity = (MobEntity) BEE_VARIANTS.get(2).create(entity.world);
 		} 
 		else if (beeTypeChance < 20) {
-		    beesourcefulBeeEntity = BeeType.lapis.beeSupplier.get().create(entity.world);
+		    beesourcefulBeeEntity = (MobEntity) BEE_VARIANTS.get(3).create(entity.world);
 		} 
 		else if (beeTypeChance < 30) {
-		    beesourcefulBeeEntity = BeeType.quartz.beeSupplier.get().create(entity.world);
+		    beesourcefulBeeEntity = (MobEntity) BEE_VARIANTS.get(4).create(entity.world);
 		} 
 		else if (beeTypeChance < 50) {
-		    beesourcefulBeeEntity = BeeType.gold.beeSupplier.get().create(entity.world);
+		    beesourcefulBeeEntity = (MobEntity) BEE_VARIANTS.get(5).create(entity.world);
 		} 
 		else if (beeTypeChance < 70) {
-		    beesourcefulBeeEntity = BeeType.redstone.beeSupplier.get().create(entity.world);
+		    beesourcefulBeeEntity = (MobEntity) BEE_VARIANTS.get(6).create(entity.world);
 		} 
 		else {
-		    beesourcefulBeeEntity = BeeType.iron.beeSupplier.get().create(entity.world);
+		    beesourcefulBeeEntity = (MobEntity) BEE_VARIANTS.get(7).create(entity.world);
 		}
 		
 		BlockPos.Mutable blockpos = new BlockPos.Mutable(entity.getPosition());

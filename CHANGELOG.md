@@ -19,6 +19,25 @@ Mods I'm keeping an eye on for future compat
    
 ## (V.1.3.5 Changes) (1.15.2 Minecraft)
  
+##### Mod Compatibility:
+
+-Fixed crash when 1.2.0 Beesourceful mod is on.
+
+-Fixed other mod compat getting skipped if one mod crashes or breaks during setup.
+
+-Fixed type in the name of spawnBesourcefulHoneycombVariants config entry.
+
+-Added (v0.1.8+) Productive Bees's honeycomb variants to The Bumblezone!
+
+-Added (v0.1.8+) Productive Bees's Rottened Honeycomb to Spider Infested Bee Dungeons!
+
+-If Beesourceful is off, (v0.1.8+) Productive Bees's ore based honeycombs will be used in worldgen and in Bee Dungeons!
+
+
+##### Structures:
+
+-Centered the Cobwebs around Spider Infested Bee Dungeons much better now.
+
 ##### Entities:
  
 -Bees now will not see through walls to find insects, bears, or players taking honey from certain blocks. And Bees will now see through walls to go after players that anger bees by hitting them, drinking honey, or pick up Honey blocks. (Basically I had the requirement of needing a line of sight for their AI backwards due to bad mapping names from MCP)
