@@ -44,6 +44,7 @@ import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 import net.telepathicgrunt.bumblezone.modcompatibility.BeesourcefulRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
+import net.telepathicgrunt.bumblezone.modcompatibility.ProductiveBeesRedirection;
 
 
 public class BeeDungeon extends Feature<NoFeatureConfig>
@@ -284,12 +285,21 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 		
 		//main body
 		if(block == Blocks.RED_TERRACOTTA || block == Blocks.PURPLE_TERRACOTTA) {
-			if(ModChecking.beesourcefulPresent && random.nextFloat() < Bumblezone.BzConfig.oreHoneycombSpawnRateBeeDungeon.get()) {
-				return new Pair<>(BeesourcefulRedirection.BSGetRandomHoneycomb(random, 
-						Bumblezone.BzConfig.greatHoneycombRarityBeeDungeon.get()).getDefaultState(), new Boolean(false));
+			if(ModChecking.beesourcefulPresent && 
+				random.nextFloat() < Bumblezone.BzConfig.oreHoneycombSpawnRateBeeDungeon.get()) 
+			{
+			    return new Pair<>(BeesourcefulRedirection.BSGetRandomHoneycomb(random, 
+					Bumblezone.BzConfig.PBGreatHoneycombRarityBeeDungeon.get()).getDefaultState(), new Boolean(false));
+			}
+			else if(!ModChecking.beesourcefulPresent && 
+				ModChecking.productiveBeesPresent && 
+				random.nextFloat() < Bumblezone.BzConfig.PBOreHoneycombSpawnRateBeeDungeon.get()) 
+			{
+				return new Pair<>(ProductiveBeesRedirection.PBGetRandomHoneycomb(random, 
+						Bumblezone.BzConfig.PBGreatHoneycombRarityBeeDungeon.get()).getDefaultState(), new Boolean(false));
 			}
 			
-			if(random.nextFloat() < 0.4f) {
+			else if(random.nextFloat() < 0.4f) {
 				return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(),	new Boolean(false));
 			}
 			else {

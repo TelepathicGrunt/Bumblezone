@@ -15,8 +15,8 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 
 public class WrathOfTheHiveEffect extends Effect
 {
-	private final static EntityPredicate SEE_THROUGH_WALLS = (new EntityPredicate());
-	private final static EntityPredicate LINE_OF_SIGHT = (new EntityPredicate()).setLineOfSiteRequired();
+	private final static EntityPredicate SEE_THROUGH_WALLS = (new EntityPredicate()).setLineOfSiteRequired();
+	private final static EntityPredicate LINE_OF_SIGHT = (new EntityPredicate());
 	
 	public WrathOfTheHiveEffect(EffectType type, int potionColor)
 	{

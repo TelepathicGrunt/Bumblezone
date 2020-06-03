@@ -2,50 +2,138 @@ package net.telepathicgrunt.bumblezone.modcompatibility;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import org.apache.logging.log4j.Level;
+import org.apache.maven.artifact.versioning.ArtifactVersion;
 
 import cy.jdkdigital.productivebees.block.AdvancedBeehive;
 import cy.jdkdigital.productivebees.block.AdvancedBeehiveAbstract;
 import cy.jdkdigital.productivebees.block.ExpansionBox;
 import cy.jdkdigital.productivebees.init.ModItems;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.pattern.BlockMatcher;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.OreFeatureConfig;
+import net.minecraft.world.gen.feature.OreFeatureConfig.FillerBlockType;
+import net.minecraft.world.gen.placement.CountRangeConfig;
+import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.biome.BzBaseBiome;
+import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 
-public class ProductiveBeesCompat {
-    
+public class ProductiveBeesCompat
+{
+
+    private static List<Block> ORE_BASED_HONEYCOMB_VARIANTS;
     public static List<EntityType<?>> productiveBeesList = new ArrayList<EntityType<?>>();
-    
-    public static void setupProductiveBees() 
-    {
+    private static Block ROTTENED_HONEYCOMB;
+    private static boolean newEnoughVersion = false;
+
+    public static void setupProductiveBees() {
+	String productivebeesRL = "productivebees";
 	ModChecking.productiveBeesPresent = true;
-	
-	//create list of all Productive Bees' bees
-	for(EntityType<?> productiveBeeType : ForgeRegistries.ENTITIES) 
-	{
-	    if(productiveBeeType.getRegistryName().getNamespace().equals("productivebees") &&
-	       productiveBeeType.getRegistryName().getPath().contains("bee")) 
-	    {
+	ORE_BASED_HONEYCOMB_VARIANTS = new ArrayList<Block>();
+	ROTTENED_HONEYCOMB = Blocks.HONEYCOMB_BLOCK;
+
+	// create list of all Productive Bees' bees
+	for (EntityType<?> productiveBeeType : ForgeRegistries.ENTITIES) {
+	    if (productiveBeeType.getRegistryName().getNamespace().equals(productivebeesRL) && productiveBeeType.getRegistryName().getPath().contains("bee")) {
 		productiveBeesList.add(productiveBeeType);
 	    }
 	}
+
+	// Only do the honeycombs when productive bee's version is new enough
+	ArtifactVersion versionObj = ModList.get().getModContainerById(productivebeesRL).get().getModInfo().getVersion();
+	if (versionObj.getMajorVersion() != 0 || (versionObj.getMinorVersion() >= 1 && versionObj.getBuildNumber() >= 8)) newEnoughVersion = true;
+
+	if (Bumblezone.BzConfig.spawnProductiveBeesHoneycombVariants.get() && newEnoughVersion) {
+	    FillerBlockType.create("honeycomb_target".toUpperCase(), "honeycomb_target", new BlockMatcher(Blocks.HONEYCOMB_BLOCK));
+
+	    // Basic combs that Beesourceful also has.
+	    // Only spawn these if beesourceful is off or their combs are off
+	    if (!(ModChecking.beesourcefulPresent && Bumblezone.BzConfig.spawnBeesourcefulHoneycombVariants.get())) {
+		addCombToWorldgen(new ResourceLocation(productivebeesRL + ":comb_gold"), 34, 3, 6, 230, true);
+		addCombToWorldgen(new ResourceLocation(productivebeesRL + ":comb_iron"), 26, 2, 30, 210, true);
+		addCombToWorldgen(new ResourceLocation(productivebeesRL + ":comb_redstone"), 22, 1, 30, 210, true);
+		addCombToWorldgen(new ResourceLocation(productivebeesRL + ":comb_lapis"), 22, 1, 6, 30, true);
+		addCombToWorldgen(new ResourceLocation(productivebeesRL + ":comb_emerald"), 4, 1, 6, 244, true);
+		addCombToWorldgen(new ResourceLocation(productivebeesRL + ":comb_ender"), 4, 1, 200, 50, true);
+		addCombToWorldgen(new ResourceLocation(productivebeesRL + ":comb_diamond"), 7, 1, 6, 244, true);
+	    }
+
+
+	    // Other combs unique to Productive Bees
+	    addCombToWorldgen(new ResourceLocation(productivebeesRL + ":comb_blazing"), 34, 1, 40, 200, false);
+	    addCombToWorldgen(new ResourceLocation(productivebeesRL + ":comb_glowing"), 34, 1, 40, 200, false);
+	    addCombToWorldgen(new ResourceLocation(productivebeesRL + ":comb_bone"), 22, 1, 6, 25, false);
+	    addCombToWorldgen(new ResourceLocation(productivebeesRL + ":comb_fossilised"), 18, 1, 4, 20, false);
+	    addCombToWorldgen(new ResourceLocation(productivebeesRL + ":comb_draconic"), 4, 1, 200, 50, false);
+	    addCombToWorldgen(new ResourceLocation(productivebeesRL + ":comb_draconic"), 4, 1, 2, 10, false);
+	    addCombToWorldgen(new ResourceLocation(productivebeesRL + ":comb_powdery"), 7, 1, 60, 244, false);
+	    addCombToWorldgen(new ResourceLocation(productivebeesRL + ":comb_quartz"), 7, 1, 60, 244, false);
+
+	    ResourceLocation rottenedHoneycombRL = new ResourceLocation(productivebeesRL + ":comb_rotten");
+	    ROTTENED_HONEYCOMB = ForgeRegistries.BLOCKS.getValue(rottenedHoneycombRL);
+	    wasBlockFound(ROTTENED_HONEYCOMB, rottenedHoneycombRL);
+	}
+
+	//Fluid still needs work to be good
+//	Fluid honeyFluid = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(productivebeesRL + ":honey"));
+//	if (newEnoughVersion && honeyFluid != Fluids.EMPTY) {
+//	    LiquidsConfig honeySpringConfig = new LiquidsConfig(honeyFluid.getDefaultState(), false, 4, 1, ImmutableSet.of(Blocks.HONEY_BLOCK, Blocks.HONEYCOMB_BLOCK));
+//	    BzBiomes.HIVE_PILLAR.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.SPRING_FEATURE.withConfiguration(honeySpringConfig).withPlacement(Placement.COUNT_BIASED_RANGE.configure(new CountRangeConfig(Bumblezone.BzConfig.PBHoneyWaterfallRate.get(), 128, 0, 128))));
+//	    BzBiomes.HIVE_WALL.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.SPRING_FEATURE.withConfiguration(honeySpringConfig).withPlacement(Placement.COUNT_BIASED_RANGE.configure(new CountRangeConfig(Bumblezone.BzConfig.PBHoneyWaterfallRate.get(), 128, 0, 128))));
+//	    BzBiomes.SUGAR_WATER.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.SPRING_FEATURE.withConfiguration(honeySpringConfig).withPlacement(Placement.COUNT_BIASED_RANGE.configure(new CountRangeConfig(Bumblezone.BzConfig.PBHoneyWaterfallRate.get(), 16, 0, 128))));
+//	}
     }
+
+
+    private static boolean wasBlockFound(Block block, ResourceLocation blockRL) {
+	if (block == Blocks.AIR) {
+	    Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
+	    Bumblezone.LOGGER.log(Level.INFO, " ");
+	    Bumblezone.LOGGER.log(Level.INFO, "BUMBLEZONE: Error trying to get the following block: " + blockRL.toString() + ". Please let The Bumblezone developer know about this!");
+	    Bumblezone.LOGGER.log(Level.INFO, " ");
+	    Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
+	    return false;
+	}
+	return true;
+    }
+
+
+    private static void addCombToWorldgen(ResourceLocation blockRL, int veinSize, int count, int bottomOffset, int range, boolean addToHoneycombList) {
+	Block honeycombBlock = ForgeRegistries.BLOCKS.getValue(blockRL);
+	if (!wasBlockFound(honeycombBlock, blockRL)) return;
+
+	BzBiomes.biomes.forEach(biome -> ((BzBaseBiome) biome).addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.byName("honeycomb_target"), honeycombBlock.getDefaultState(), veinSize)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(count, bottomOffset, 0, range)))));
+
+	if (addToHoneycombList) ORE_BASED_HONEYCOMB_VARIANTS.add(honeycombBlock);
+    }
+
 
     /**
      * Is block is a ProductiveBees nest or beenest block
      */
     public static boolean PBIsAdvancedBeehiveAbstractBlock(BlockState block) {
-	
+
 	if (block.getBlock() instanceof ExpansionBox && block.get(AdvancedBeehive.EXPANDED)) {
 	    return true; // expansion boxes only count as beenest when they expand a hive.
-	} 
+	}
 	else if (block.getBlock() instanceof AdvancedBeehiveAbstract) {
 	    return true; // nests/hives here so return true
 	}
@@ -53,47 +141,64 @@ public class ProductiveBeesCompat {
 	return false;
     }
 
+
     /**
-     *  1/15th of bees spawning will also spawn Productive Bees' bees
+     * 1/15th of bees spawning will also spawn Productive Bees' bees
      */
     public static void PBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
-	
-	if(productiveBeesList.size() == 0) {
-	    Bumblezone.LOGGER.warn("Error! List of productive bees is empty! Cannot spawn their bees. Please let TelepathicGrunt (The Bumblezone dev) know about this!"); 
+
+	if (productiveBeesList.size() == 0) {
+	    Bumblezone.LOGGER.warn("Error! List of productive bees is empty! Cannot spawn their bees. Please let TelepathicGrunt (The Bumblezone dev) know about this!");
 	    return;
 	}
-	
+
 	MobEntity entity = (MobEntity) event.getEntity();
 	IWorld world = event.getWorld();
 
-	//randomly pick a productive bee
+	// randomly pick a productive bee
 	MobEntity productiveBeeEntity = (MobEntity) productiveBeesList.get(world.getRandom().nextInt(productiveBeesList.size())).create(entity.world);
 
 	BlockPos.Mutable blockpos = new BlockPos.Mutable(entity.getPosition());
-	productiveBeeEntity.setLocationAndAngles(
-		blockpos.getX(), 
-		blockpos.getY(), 
-		blockpos.getZ(),
-		world.getRandom().nextFloat() * 360.0F, 
-		0.0F);
-	
+	productiveBeeEntity.setLocationAndAngles(blockpos.getX(), blockpos.getY(), blockpos.getZ(), world.getRandom().nextFloat() * 360.0F, 0.0F);
+
 	ILivingEntityData ilivingentitydata = null;
-	ilivingentitydata = productiveBeeEntity.onInitialSpawn(
-		world,
-		world.getDifficultyForLocation(new BlockPos(productiveBeeEntity)), 
-		event.getSpawnReason(),
-		ilivingentitydata, 
-		(CompoundNBT) null);
-	
+	ilivingentitydata = productiveBeeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(productiveBeeEntity)), event.getSpawnReason(), ilivingentitydata, (CompoundNBT) null);
+
 	world.addEntity(productiveBeeEntity);
     }
-    
-    
+
+
+    /**
+     * Safely get Rottened Honeycomb. If Rottened Honeycomb wasn't found, return Vanilla's Honeycomb
+     */
+    public static Block PBGetRottenedHoneycomb() {
+	return ROTTENED_HONEYCOMB == Blocks.AIR ? Blocks.HONEYCOMB_BLOCK : ROTTENED_HONEYCOMB;
+    }
+
+
+    /**
+     * Picks a random Productive Bees Honeycomb with lower index of ORE_BASED_HONEYCOMB_VARIANTS list being highly common
+     */
+    public static Block PBGetRandomHoneycomb(Random random, int lowerBoundBias) {
+	if (newEnoughVersion) {
+	    int index = ORE_BASED_HONEYCOMB_VARIANTS.size() - 1;
+
+	    for (int i = 0; i < lowerBoundBias && index != 0; i++) {
+		index = random.nextInt(index + 1);
+	    }
+
+	    return ORE_BASED_HONEYCOMB_VARIANTS.get(index);
+	}
+
+	return Blocks.HONEYCOMB_BLOCK;
+    }
+
+
     /**
      * Is passed in item a Honey Treat?
      */
     public static boolean PBIsHoneyTreatItem(Item heldItem) {
 	return heldItem == ModItems.HONEY_TREAT.get();
     }
-	
+
 }

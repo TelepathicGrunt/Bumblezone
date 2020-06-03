@@ -3,17 +3,9 @@
 <p style="text-decoration: underline; font-size: 14px; text-align: center;"><strong><a style="text-decoration: underline; font-size: 14px; text-align: center;" href="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-fabric">[Click here for the Fabric version of this mod!]</a></strong></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p style="text-align: center;"><em><span style="font-size: 14px; color: #b00000; text-decoration: underline;"><strong>Recent 1.15.2 News:</strong></span><span style="font-size: 14px;"><b><strong>&nbsp;Fixed serverside crash with one</strong></b></span></em></p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>config option that went unreported for a while.</strong></b></span></em></p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Fixed and added more Dispenser behaviors!<br />Added more teleportation options!</strong></b></span></em></p>
-<p>&nbsp;</p>
-<p style="text-align: center;"><em><span style="font-size: 14px; color: #b00000; text-decoration: underline;"><strong>Past 1.15.2 News:</strong></span><span style="font-size: 14px;"><b><strong>&nbsp;With v1.3.0+, explore new dungeons, </strong></b></span></em></p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>blocks, </strong></b></span></em><em><span style="font-size: 14px;"><b><strong>items, and mod compatibility including JEI!</strong></b></span></em></p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Also, several bug fixes was done such as falling out of</strong></b></span></em></p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>The Bumblezone will teleport you without fall damage now.</strong></b></span></em></p>
-<p style="text-align: center;">&nbsp;</p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Lastly, if you're using Buzzier Bees with this mod,</strong></b></span></em></p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>please update your Buzzier Bees to v1.5 or higher!</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px; color: #b00000; text-decoration: underline;"><strong>Recent 1.15.2 News:</strong></span><span style="font-size: 14px;"><b><strong>&nbsp;Fixed crash with newer versions of</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Beesourceful and added more compat with Productive Bees!</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Greatly improved the texture for Sticky Honey Residue/Redstone!</strong></b></span></em></p>
 <p style="text-align: center;"><strong style="color: #3f3bb8; font-size: 18px;"><em>(And like always, please report any <span style="text-decoration: line-through;">glitches</span>&nbsp;BUGS you find)</em></strong></p>
 <p style="text-align: center;">&nbsp;</p>
 <p>&nbsp;</p>
@@ -99,7 +91,7 @@
 <p>&nbsp;</p>
 <p>Sticky Honey Residue</p>
 <div class="spoiler">
-<p>-A very sticky block that can be placed on multiple solid surfaces at once and is created by smelting Honey Crystal blocks, Honey Crystal Shards items, or&nbsp;vanilla's Honey blocks. Breaking this block will drop nothing.</p>
+<p>-A very sticky block that can be placed on multiple solid surfaces at once and is created by smelting the following in a Furnace: Honey Crystal blocks, Honey Crystal Shards items, Honey Crystal Shields, or&nbsp;vanilla's Honey blocks. Breaking this block will drop nothing.</p>
 <p>&nbsp;</p>
 <p>-When any entity touches this block, they move extremely lowly. This block can also be climbed if it is on a wall.</p>
 <p>&nbsp;</p>
@@ -171,13 +163,15 @@
 <p>&nbsp;</p>
 <p>Honey Crystal Shield</p>
 <div class="spoiler">
-<p>-A shield that starts off super weak but becomes much stronger the more you repair it to the point it has about double the durability of vanilla's Shield! But beware, trying to block fire damage and explosive damage with the shield will destroy the shield very quickly!<br /><br />-The shield can be repaired with Honey Crystal Shards and the recipe to craft the shield is the following with # being Honey Crystal Shards:<br /># # #</p>
+<p>-A shield that starts off super weak but becomes much stronger the more you repair it to the point it has about double the durability of vanilla's Shield! But beware, trying to block fire damage and explosive damage with the shield will destroy the shield very quickly! Yes, Fireballs and Fireworks will also greatly damage the shield so be careful!<br /><br />-The shield can be repaired with Honey Crystal Shards and the recipe to craft the shield is the following with # being Honey Crystal Shards:<br /># # #</p>
 <p># # #</p>
 <p>&nbsp; &nbsp;#&nbsp;</p>
 <p>&nbsp;</p>
 <p>-Any mob that physically hits your shield when you're blocking will apply a 4 second slowness effect on the mob due to the honey's stickiness!</p>
 <p>&nbsp;</p>
 <p>-This shield can be enchanted with&nbsp;Unbreaking or Curse of the Vanishing. (Mending cannot be applied as that would make the shield way too overpowered at maximum durability)</p>
+<p>&nbsp;</p>
+<p>-Can be smelted in a Furnace to make 5 Sticky Honey Residue.</p>
 </div>
 </div>
 <p>&nbsp;</p>
@@ -247,12 +241,13 @@
 <p>Productive Bees - <a href="https://www.curseforge.com/minecraft/mc-mods/productivebees">https://www.curseforge.com/minecraft/mc-mods/productivebees</a></p>
 <div class="spoiler">
 <p>-Enderpearls thrown at their hive blocks or their Expansion Boxes attached to a hive will now teleport you to The Bumblezone!</p>
-<p>&nbsp;</p>
 <p>-Productive Bees' will also rarely spawn in The Bumblezone dimension from regular spawning or from Honeycomb&nbsp;Brood Blocks in the dimension. All of their types of bees have equal chances of spawning.</p>
-<p>&nbsp;</p>
 <p>-Productive Bees' Honey Treat item has a 40% chance of removing the Wrath of the Hive effect from you when you feed the treat to bees unlike the Honey Bottle's 30% chance. The treat will also heal bees a lot more too!</p>
-<p>&nbsp;</p>
 <p>-The Honey Treat can also be fed to Honeycomb Brood Blocks to grow the larva! In fact, there's a 20% chance the larva may grow two stages at a time instead of 1 when fed this item.&nbsp;</p>
+<p>&nbsp;</p>
+<p>-Productive Bees's many Honeycomb variants will spawn in The Bumblezone dimension! If Beesourceful is not on, Productive Bees's honeycombs of the same variants will replace Beesourceful's honeycombs in the dimension (both in terrain and in Bee Dungeons).&nbsp;</p>
+<p>&nbsp;</p>
+<p>-Spider Infested Bee Dungeons will generate Rotten Honeycombs around it as well.&nbsp;</p>
 </div>
 <p>&nbsp;</p>
 <p>Aurum's More Blocks (AMB) -&nbsp;<a href="https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks">https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks</a></p>

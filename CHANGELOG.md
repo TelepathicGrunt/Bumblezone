@@ -17,6 +17,43 @@ Mods I'm keeping an eye on for future compat
 # | Bumblezone changelog |
    
    
+## (V.1.3.5 Changes) (1.15.2 Minecraft)
+ 
+##### Mod Compatibility:
+
+-Fixed crash when 1.2.0 Beesourceful mod is on.
+
+-Fixed other mod compat getting skipped if one mod crashes or breaks during setup.
+
+-Fixed type in the name of spawnBesourcefulHoneycombVariants config entry.
+
+-Added (v0.1.8+) Productive Bees's honeycomb variants to The Bumblezone!
+
+-Added (v0.1.8+) Productive Bees's Rottened Honeycomb to Spider Infested Bee Dungeons!
+
+-If Beesourceful is off, (v0.1.8+) Productive Bees's ore based honeycombs will be used in worldgen and in Bee Dungeons!
+
+
+##### Structures:
+
+-Centered the Cobwebs around Spider Infested Bee Dungeons much better now.
+
+##### Entities:
+ 
+-Bees now will not see through walls to find insects, bears, or players taking honey from certain blocks. And Bees will now see through walls to go after players that anger bees by hitting them, drinking honey, or pick up Honey blocks. (Basically I had the requirement of needing a line of sight for their AI backwards due to bad mapping names from MCP)
+   
+##### Items:
+
+-Using Glass Bottle to obtain Sugar Water in Creative mode will not use up the Glass Bottle now.
+
+-Honey Crystal Shields now can be smelted into Sticky Honey Residue so you can still get a use out of nearly destroyed shields.
+
+-Projectile fire damage will now deal an insane more amount of damage to Honey Crystal Shields.
+
+-Made blocking explosions with shields now actually reduce damage taken by the player.
+
+-Significantly improved the texture for Sticky Honey Residue and Sticky Honey Redstone.
+ 
 ## (V.1.3.4 Changes) (1.15.2 Minecraft)
  
 ##### Teleportation:

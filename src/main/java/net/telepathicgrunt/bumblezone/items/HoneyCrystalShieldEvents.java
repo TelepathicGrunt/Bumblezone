@@ -28,15 +28,23 @@ public class HoneyCrystalShieldEvents {
 
 		// checks to see if player is blocking with our shield
 		PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-		if (player.getActiveItemStack().getItem() instanceof HoneyCrystalShield) {
+		if (player.getActiveItemStack().getItem() instanceof HoneyCrystalShield && player.isActiveItemStackBlocking()) {
 
-		    if(event.getSource().isExplosion() && player.isActiveItemStackBlocking()) {
+		    if(event.getSource().isExplosion()) {
 			    // damage our shield greatly and 1 damage hit player to show shield weakness
 			    player.attackEntityFrom(DamageSource.GENERIC, 1);
 			    player.damageShield(Math.max(player.getActiveItemStack().getMaxDamage() / 3, 18));
+			    event.setCanceled(true);
 		    }
 		    else if(event.getSource().isFireDamage()) {
+			if(event.getSource().isProjectile()) {
+			    player.damageShield(Math.max(player.getActiveItemStack().getMaxDamage() / 6, 3));
+			    event.setCanceled(true);
+			}
+			else {
+			    //player is on fire normally.
 			    player.damageShield(Math.max(player.getActiveItemStack().getMaxDamage() / 100, 3));
+			}
 		    }
 		}
 	    }
