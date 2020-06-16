@@ -17,6 +17,12 @@ Mods I'm keeping an eye on for future compat
 # | Bumblezone changelog |
    
    
+## (V.1.3.6 Changes) (1.15.2 Minecraft)
+ 
+##### Recipes:
+
+-Fixed and renamed several Bumblezone recipes to prevent conflict so that vanilla's Honey Block can be crafted again. (The smelting recipe overrode it before. Sorry!)
+   
 ## (V.1.3.5 Changes) (1.15.2 Minecraft)
  
 ##### Mod Compatibility:
