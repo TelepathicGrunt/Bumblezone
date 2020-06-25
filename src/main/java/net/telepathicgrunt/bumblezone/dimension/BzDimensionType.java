@@ -2,6 +2,7 @@ package net.telepathicgrunt.bumblezone.dimension;
 
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensionType;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.chunk.ChunkGeneratorType;
 import net.minecraft.world.gen.chunk.OverworldChunkGeneratorConfig;
 import net.telepathicgrunt.bumblezone.Bumblezone;
@@ -9,7 +10,7 @@ import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 
 public class BzDimensionType {
 
-    public static FabricDimensionType BUMBLEZONE_TYPE;
+    public static DimensionType BUMBLEZONE_TYPE;
 
     public static ChunkGeneratorType<OverworldChunkGeneratorConfig, BzChunkGenerator> BZ_CHUNK_GENERATOR;
 

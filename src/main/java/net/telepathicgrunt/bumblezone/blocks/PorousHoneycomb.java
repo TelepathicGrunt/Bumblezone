@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 public class PorousHoneycomb extends Block {
 
     public PorousHoneycomb() {
-        super(FabricBlockSettings.of(Material.CLAY, MaterialColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build());
+        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MaterialColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build());
     }
 
 

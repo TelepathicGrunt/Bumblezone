@@ -24,7 +24,7 @@ public class PlayerHiveWrathTickMixin {
         PlayerEntity playerEntity = ((PlayerEntity) (Object) this);
 
         //removes the wrath of the hive if it is disallowed outside dimension
-        if (!(playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE || Bumblezone.BZ_CONFIG.allowWrathOfTheHiveOutsideBumblezone) &&
+        if (!(playerEntity.getEntityWorld().getDimension() == BzDimensionType.BUMBLEZONE_TYPE || Bumblezone.BZ_CONFIG.allowWrathOfTheHiveOutsideBumblezone) &&
                 playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE)) {
             playerEntity.removeStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
         }

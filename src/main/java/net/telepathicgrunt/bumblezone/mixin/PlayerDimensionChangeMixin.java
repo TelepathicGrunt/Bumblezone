@@ -18,7 +18,7 @@ public class PlayerDimensionChangeMixin {
     private void onDimensionChange(ServerWorld targetWorld, CallbackInfo ci) {
 
         //Target world isnt actually target world. It's the world we are leaving.
-        DimensionType dimensionLeaving = targetWorld.getWorld().dimension.getType();
+        DimensionType dimensionLeaving = targetWorld.getWorld().getDimension();
 
         //Updates the non-BZ dimension that the player is leaving
         if (dimensionLeaving != BzDimensionType.BUMBLEZONE_TYPE) {

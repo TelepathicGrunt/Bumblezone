@@ -58,7 +58,7 @@ public class WrathOfTheHiveEffect extends StatusEffect {
         List<BeeEntity> beeList = world.getTargets(BeeEntity.class, LINE_OF_SIGHT, livingEntity, livingEntity.getBoundingBox().expand(Bumblezone.BZ_CONFIG.aggressionTriggerRadius));
 
         for (BeeEntity bee : beeList) {
-            bee.setBeeAttacker(livingEntity);
+            bee.setTarget(livingEntity);
 
             // weaker potion effects for when attacking bears
             bee.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, Math.max(Bumblezone.BZ_CONFIG.speedBoostLevel, 1), false, false));
@@ -75,7 +75,7 @@ public class WrathOfTheHiveEffect extends StatusEffect {
         SEE_THROUGH_WALLS.setBaseMaxDistance(Bumblezone.BZ_CONFIG.aggressionTriggerRadius);
         List<BeeEntity> beeList = world.getTargets(BeeEntity.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().expand(Bumblezone.BZ_CONFIG.aggressionTriggerRadius));
         for (BeeEntity bee : beeList) {
-            bee.setBeeAttacker(livingEntity);
+            bee.setTarget(livingEntity);
             bee.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, Bumblezone.BZ_CONFIG.speedBoostLevel, false, false));
             bee.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 20, Bumblezone.BZ_CONFIG.absorptionBoostLevel, false, false));
             bee.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 20, Bumblezone.BZ_CONFIG.strengthBoostLevel, false, true));
@@ -93,9 +93,9 @@ public class WrathOfTheHiveEffect extends StatusEffect {
         for (BeeEntity bee : beeList)
         {
             if(bee.getTarget() == livingEntity) {
-                bee.setBeeAttacker(null);
+                bee.setTarget(null);
                 bee.setAttacking(false);
-                ((BeeEntityInvoker)bee).callSetAnger(0);
+                bee.setAngerTime(0);
                 bee.removeStatusEffect(StatusEffects.STRENGTH);
                 bee.removeStatusEffect(StatusEffects.SPEED);
                 bee.removeStatusEffect(StatusEffects.ABSORPTION);

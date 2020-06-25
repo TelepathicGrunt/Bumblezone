@@ -1,15 +1,15 @@
 package net.telepathicgrunt.bumblezone.features;
 
-import com.mojang.datafixers.Dynamic;
+import com.mojang.serialization.Codec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
@@ -20,7 +20,7 @@ import java.util.function.Function;
 
 public class HoneyCrystalFeature extends Feature<DefaultFeatureConfig> {
 
-    public HoneyCrystalFeature(Function<Dynamic<?>, ? extends DefaultFeatureConfig> configFactory) {
+    public HoneyCrystalFeature(Codec<DefaultFeatureConfig> configFactory) {
         super(configFactory);
     }
 
@@ -31,7 +31,7 @@ public class HoneyCrystalFeature extends Feature<DefaultFeatureConfig> {
      * Place crystal block attached to a block if it is buried underground or underwater
      */
     @Override
-    public boolean generate(IWorld world, ChunkGenerator<? extends ChunkGeneratorConfig> changedBlock, Random rand, BlockPos position, DefaultFeatureConfig config) {
+    public boolean generate(ServerWorldAccess world, StructureAccessor accessor, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
 
         BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position);
         BlockState originalBlockstate = world.getBlockState(blockpos$Mutable);
@@ -41,7 +41,7 @@ public class HoneyCrystalFeature extends Feature<DefaultFeatureConfig> {
 
             for (Direction face : Direction.values()) {
                 blockpos$Mutable.set(position);
-                blockstate = world.getBlockState(blockpos$Mutable.setOffset(face, 7));
+                blockstate = world.getBlockState(blockpos$Mutable.move(face, 7));
 
                 if (blockstate.getBlock() == AIR) {
                     return false; // too close to the outside. Refuse generation
@@ -62,7 +62,7 @@ public class HoneyCrystalFeature extends Feature<DefaultFeatureConfig> {
                 if (honeyCrystal.canPlaceAt(world, blockpos$Mutable)) {
 
                     //if the spot is invalid, we get air back
-                    BlockState result = HoneyCrystal.getRenderingState(honeyCrystal, world, blockpos$Mutable);
+                    BlockState result = HoneyCrystal.postProcessState(honeyCrystal, world, blockpos$Mutable);
                     if (result.getBlock() != AIR) {
                         world.setBlockState(blockpos$Mutable, result, 3);
                         return true; //crystal was placed

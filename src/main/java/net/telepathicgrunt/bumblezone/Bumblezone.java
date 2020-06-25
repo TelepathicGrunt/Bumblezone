@@ -14,7 +14,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
+import net.telepathicgrunt.bumblezone.biome.BzBaseBiome;
 import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.configs.BzConfig;
@@ -24,6 +26,7 @@ import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.entities.BeeAggression;
 import net.telepathicgrunt.bumblezone.entities.IPlayerComponent;
 import net.telepathicgrunt.bumblezone.entities.PlayerComponent;
+import net.telepathicgrunt.bumblezone.features.BzFeatures;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.DispenserItemSetup;
 import org.apache.logging.log4j.LogManager;
@@ -50,9 +53,11 @@ public class Bumblezone implements ModInitializer {
         BzBlocks.registerBlocks();
         BzItems.registerItems();
         BzEffects.registerEffects();
+        BzFeatures.registerFeatures();
         BzBiomes.registerBiomes();
         BzDimensionType.registerChunkGenerator();
         BzDimensionType.registerDimension();
+        BzBaseBiome.addSprings();
 
         //attach component to player
         EntityComponentCallback.event(PlayerEntity.class).register((player, components) -> components.put(PLAYER_COMPONENT, new PlayerComponent()));
@@ -70,17 +75,18 @@ public class Bumblezone implements ModInitializer {
                 BZ_CONFIG = ConfigManager.loadConfig(BzConfig.class);
             }
         };
-
-
-        ServerStartCallback.EVENT.register((MinecraftServer world) -> {
-            BeeAggression.setupBeeHatingList(world.getWorld(DimensionType.OVERWORLD));
-        });
-
-        DispenserItemSetup.setupDispenserBehaviors();
-
         Timer timer = new Timer();
         // repeat the check for a changed config every second
         timer.schedule(task, new Date(), 1000);
+
+
+
+        ServerStartCallback.EVENT.register((MinecraftServer world) -> {
+            BeeAggression.setupBeeHatingList(world.getWorld(World.OVERWORLD));
+
+        });
+
+        DispenserItemSetup.setupDispenserBehaviors();
     }
 
     // FileNameFilter implementation

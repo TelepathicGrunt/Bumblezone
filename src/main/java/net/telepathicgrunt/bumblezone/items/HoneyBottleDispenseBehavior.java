@@ -7,7 +7,7 @@ import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.entity.DispenserBlockEntity;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -41,13 +41,13 @@ public class HoneyBottleDispenseBehavior extends ItemDispenserBehavior {
             if (stage == 3) {
                 // the front of the block
                 BlockPos.Mutable blockpos = new BlockPos.Mutable().set(position);
-                blockpos.setOffset(blockstate.get(HoneycombBrood.FACING).getOpposite());
+                blockpos.move(blockstate.get(HoneycombBrood.FACING).getOpposite());
 
                 // do nothing if front is blocked off
                 if (!world.getBlockState(blockpos).getMaterial().isSolid()) {
                     MobEntity beeEntity = EntityType.BEE.create(world);
                     beeEntity.refreshPositionAndAngles(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, world.getRandom().nextFloat() * 360.0F, 0.0F);
-                    beeEntity.initialize(world, world.getLocalDifficulty(new BlockPos(beeEntity.getPos())), SpawnType.TRIGGERED, null, (CompoundTag) null);
+                    beeEntity.initialize(world, world.getLocalDifficulty(new BlockPos(beeEntity.getPos())), SpawnReason.TRIGGERED, null, (CompoundTag) null);
                     world.spawnEntity(beeEntity);
                 }
 
@@ -87,7 +87,7 @@ public class HoneyBottleDispenseBehavior extends ItemDispenserBehavior {
      */
     @Override
     protected void playSound(BlockPointer source) {
-        source.getWorld().playGlobalEvent(1002, source.getBlockPos(), 0);
+        source.getWorld().syncWorldEvent(1002, source.getBlockPos(), 0);
     }
 
     /**

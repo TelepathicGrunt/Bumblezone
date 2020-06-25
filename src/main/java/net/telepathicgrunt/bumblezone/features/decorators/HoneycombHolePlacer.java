@@ -1,30 +1,28 @@
 package net.telepathicgrunt.bumblezone.features.decorators;
 
-import com.mojang.datafixers.Dynamic;
+import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
 import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.decorator.NopeDecoratorConfig;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class HoneycombHolePlacer extends Decorator<NopeDecoratorConfig> {
     private enum SliceState {NEITHER, AIR, SOLID}
 
-    public HoneycombHolePlacer(Function<Dynamic<?>, ? extends NopeDecoratorConfig> configFactory) {
-        super(configFactory);
+    public HoneycombHolePlacer(Codec<NopeDecoratorConfig> codec) {
+        super(codec);
     }
 
     @Override
-    public Stream<BlockPos> getPositions(IWorld world, ChunkGenerator<? extends ChunkGeneratorConfig> chunkGenerator, Random random, NopeDecoratorConfig placementConfig, BlockPos pos) {
+    public Stream<BlockPos> getPositions(WorldAccess world, ChunkGenerator chunkGenerator, Random random, NopeDecoratorConfig placementConfig, BlockPos pos) {
         //Start at top
         BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(pos.getX() - 4, 236, pos.getZ() + 4);
         List<BlockPos> blockPosList = new ArrayList<BlockPos>();
@@ -36,9 +34,9 @@ public class HoneycombHolePlacer extends Decorator<NopeDecoratorConfig> {
             for (int count = 0; count < 23; count++) {
                 //Moves back and forth in z coordinate so the holes alternate to make this layer of holes
                 if (alternate) {
-                    mutableBlockPos.setOffset(0, -8, -8);
+                    mutableBlockPos.move(0, -8, -8);
                 } else {
-                    mutableBlockPos.setOffset(0, -8, 8);
+                    mutableBlockPos.move(0, -8, 8);
                 }
 
                 alternate = !alternate;
@@ -64,7 +62,7 @@ public class HoneycombHolePlacer extends Decorator<NopeDecoratorConfig> {
      * It also needs one slide to be invalid so that the hole is not
      * placed inside the terrain and cutoff from the outside.
      */
-    private boolean isPlaceValid(IWorld world, BlockPos pos) {
+    private boolean isPlaceValid(WorldAccess world, BlockPos pos) {
         boolean completelySolidSlice = false;
         boolean airInSlice = false;
 
@@ -83,7 +81,7 @@ public class HoneycombHolePlacer extends Decorator<NopeDecoratorConfig> {
     /**
      * Checks if the circular slice here is entirely solid land.
      */
-    private SliceState StateOfThisSlice(IWorld world, BlockPos pos) {
+    private SliceState StateOfThisSlice(WorldAccess world, BlockPos pos) {
         BlockState blockState;
         double distanceSq = 0;
 

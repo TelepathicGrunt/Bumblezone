@@ -2,10 +2,9 @@ package net.telepathicgrunt.bumblezone.fluids;
 
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.fluid.BaseFluid;
+import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
@@ -16,8 +15,8 @@ import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.items.BzItems;
@@ -27,7 +26,7 @@ import java.util.Random;
 import static net.minecraft.state.property.Properties.LEVEL_1_8;
 
 
-public abstract class SugarWaterFluid extends BaseFluid {
+public abstract class SugarWaterFluid extends FlowableFluid {
 
     @Override
     public Fluid getFlowing() {
@@ -52,16 +51,16 @@ public abstract class SugarWaterFluid extends BaseFluid {
 
         //check one of the spot next to sugar water for sugar cane to grow
         BlockPos.Mutable blockPos = new BlockPos.Mutable().set(position.up());
-        blockPos.setOffset(Direction.fromHorizontal(random.nextInt(4)));
+        blockPos.move(Direction.fromHorizontal(random.nextInt(4)));
         BlockState blockstate = world.getBlockState(blockPos);
 
         if (blockstate.getBlock() == Blocks.SUGAR_CANE) {
             int height = 1;
-            blockstate = world.getBlockState(blockPos.setOffset(Direction.UP));
+            blockstate = world.getBlockState(blockPos.move(Direction.UP));
 
             //find top of sugar cane or
             while (blockstate.getBlock() == Blocks.SUGAR_CANE && height < 5) {
-                blockstate = world.getBlockState(blockPos.setOffset(Direction.UP));
+                blockstate = world.getBlockState(blockPos.move(Direction.UP));
                 height++;
             }
 
@@ -121,13 +120,13 @@ public abstract class SugarWaterFluid extends BaseFluid {
     }
 
     @Override
-    protected void beforeBreakingBlock(IWorld world, BlockPos pos, BlockState state) {
+    protected void beforeBreakingBlock(WorldAccess world, BlockPos pos, BlockState state) {
         BlockEntity blockEntity = state.getBlock().hasBlockEntity() ? world.getBlockEntity(pos) : null;
         Block.dropStacks(state, world.getWorld(), pos, blockEntity);
     }
 
     @Override
-    public int method_15733(WorldView world) {
+    public int getFlowSpeed(WorldView world) {
         return 4;
     }
 

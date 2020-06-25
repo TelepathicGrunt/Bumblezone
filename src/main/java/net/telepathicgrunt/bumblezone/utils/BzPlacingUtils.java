@@ -3,7 +3,8 @@ package net.telepathicgrunt.bumblezone.utils;
 import net.minecraft.block.Material;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldAccess;
 
 public class BzPlacingUtils
 {
@@ -14,7 +15,7 @@ public class BzPlacingUtils
 	 * @param position - x/z position to use
 	 * @return - height of the first non-air block
 	 */
-	public static int topOfSurfaceBelowHeight(IWorld world, int startHeight, int minHeight, BlockPos position)
+	public static int topOfSurfaceBelowHeight(WorldAccess world, int startHeight, int minHeight, BlockPos position)
 	{
 		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position.getX(), startHeight, position.getZ());
 
@@ -26,7 +27,7 @@ public class BzPlacingUtils
 				break;
 			}
 
-			blockpos$Mutable.setOffset(Direction.DOWN);
+			blockpos$Mutable.move(Direction.DOWN);
 		}
 
 		//if height is an air block, move down until we reached a solid block. We are now on the surface of a piece of land
@@ -37,7 +38,7 @@ public class BzPlacingUtils
 				break;
 			}
 
-			blockpos$Mutable.setOffset(Direction.DOWN);
+			blockpos$Mutable.move(Direction.DOWN);
 		}
 
 		return blockpos$Mutable.getY();
@@ -51,11 +52,11 @@ public class BzPlacingUtils
 	 * @param position - x/z position to use
 	 * @return - height of the first non-air block
 	 */
-	public static int topOfSurfaceBelowHeightThroughWater(IWorld world, int startHeight, int minHeight, BlockPos position)
+	public static int topOfSurfaceBelowHeightThroughWater(WorldAccess world, int startHeight, int minHeight, BlockPos position)
 	{
 		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position.getX(), startHeight, position.getZ());
 
-		//if height is inside a non-solid block, setOffset down until we reached an air block
+		//if height is inside a non-solid block, move down until we reached an air block
 		while (blockpos$Mutable.getY() > minHeight)
 		{
 			if (world.isAir(blockpos$Mutable) || world.getBlockState(blockpos$Mutable).getMaterial() == Material.WATER)
@@ -63,10 +64,10 @@ public class BzPlacingUtils
 				break;
 			}
 
-			blockpos$Mutable.setOffset(Direction.DOWN);
+			blockpos$Mutable.move(Direction.DOWN);
 		}
 
-		//if height is a non-solid block, setOffset down until we reached a solid block. We are now on the surface of a piece of land even underwater
+		//if height is a non-solid block, move down until we reached a solid block. We are now on the surface of a piece of land even underwater
 		while (blockpos$Mutable.getY() > minHeight)
 		{
 			if (!world.isAir(blockpos$Mutable) && world.getBlockState(blockpos$Mutable).getMaterial() != Material.WATER)
@@ -74,7 +75,7 @@ public class BzPlacingUtils
 				break;
 			}
 
-			blockpos$Mutable.setOffset(Direction.DOWN);
+			blockpos$Mutable.move(Direction.DOWN);
 		}
 
 		return blockpos$Mutable.getY();
@@ -87,7 +88,7 @@ public class BzPlacingUtils
 	 * @param position - x/z position to use
 	 * @return - height of the first solid block
 	 */
-	public static int topOfCeilingAboveHeight(IWorld world, int startHeight, BlockPos position)
+	public static int topOfCeilingAboveHeight(WorldAccess world, int startHeight, BlockPos position)
 	{
 		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position.getX(), startHeight, position.getZ());
 
@@ -99,7 +100,7 @@ public class BzPlacingUtils
 				break;
 			}
 
-			blockpos$Mutable.setOffset(Direction.UP);
+			blockpos$Mutable.move(Direction.UP);
 		}
 
 		// if height is an air block, move up until we reached a solid block. We are now
@@ -111,7 +112,7 @@ public class BzPlacingUtils
 				break;
 			}
 
-			blockpos$Mutable.setOffset(Direction.UP);
+			blockpos$Mutable.move(Direction.UP);
 		}
 
 		return blockpos$Mutable.getY() > 255 ? 255 : blockpos$Mutable.getY();
@@ -125,7 +126,7 @@ public class BzPlacingUtils
 	 * @param position - x/z position to use
 	 * @return - height of the first solid block
 	 */
-	public static int topOfUnderwaterSurfaceBelowHeight(IWorld world, int startHeight, BlockPos position)
+	public static int topOfUnderwaterSurfaceBelowHeight(WorldAccess world, int startHeight, BlockPos position)
 	{
 		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position.getX(), startHeight, position.getZ());
 
@@ -138,7 +139,7 @@ public class BzPlacingUtils
 				break;
 			}
 
-			blockpos$Mutable.setOffset(Direction.DOWN);
+			blockpos$Mutable.move(Direction.DOWN);
 		}
 
 		//if height is an air/waterlogged block, move down until we reached a solid block. We are now on the surface of a piece of land
@@ -149,7 +150,7 @@ public class BzPlacingUtils
 				break;
 			}
 
-			blockpos$Mutable.setOffset(Direction.DOWN);
+			blockpos$Mutable.move(Direction.DOWN);
 		}
 
 		return blockpos$Mutable.getY();

@@ -8,7 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.fluid.BaseFluid;
+import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.telepathicgrunt.bumblezone.Bumblezone;
@@ -34,8 +34,8 @@ public class BzBlocks {
     public static final Block STICKY_HONEY_RESIDUE = new StickyHoneyResidue();
     public static final Block STICKY_HONEY_REDSTONE = new StickyHoneyRedstone();
 
-    public static final BaseFluid SUGAR_WATER_FLUID = new SugarWaterFluid.Source();
-    public static final BaseFluid SUGAR_WATER_FLUID_FLOWING = new SugarWaterFluid.Flowing();
+    public static final FlowableFluid SUGAR_WATER_FLUID = new SugarWaterFluid.Source();
+    public static final FlowableFluid SUGAR_WATER_FLUID_FLOWING = new SugarWaterFluid.Flowing();
     public static final Block SUGAR_WATER_BLOCK = new SugarWaterBlock(SUGAR_WATER_FLUID);
 
     /**

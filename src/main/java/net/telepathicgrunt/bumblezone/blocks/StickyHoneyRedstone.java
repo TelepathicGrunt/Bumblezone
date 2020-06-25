@@ -14,6 +14,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 
 import java.util.HashMap;
 import java.util.List;
@@ -73,6 +74,10 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         super.onEntityCollision(blockstate, world, pos, entity);
     }
 
+    protected int getTickRate() {
+        return 20;
+    }
+
     /**
      * Remove vine's ticking with removing power instead.
      */
@@ -110,11 +115,11 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
             BlockState newBlockstate = this.setRedstoneStrength(oldBlockstate, newPower);
             world.setBlockState(pos, newBlockstate, 2);
             this.updateNeighbors(oldBlockstate, world, pos);
-            world.checkBlockRerender(pos, oldBlockstate, newBlockstate);
+            world.onBlockChanged(pos, oldBlockstate, newBlockstate);
         }
 
         if (flag1) {
-            world.getBlockTickScheduler().schedule(new BlockPos(pos), this, this.getTickRate(world));
+            world.getBlockTickScheduler().schedule(new BlockPos(pos), this, this.getTickRate());
         }
     }
 
@@ -123,13 +128,13 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      */
     @SuppressWarnings("deprecation")
     @Override
-    public void onBlockRemoved(BlockState blockstate, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onStateReplaced(BlockState blockstate, World world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!isMoving && blockstate.getBlock() != newState.getBlock()) {
             if (blockstate.get(POWERED)) {
                 this.updateTarget(world, pos, blockstate);
             }
 
-            super.onBlockRemoved(blockstate, world, pos, newState, isMoving);
+            super.onStateReplaced(blockstate, world, pos, newState, isMoving);
         }
     }
 

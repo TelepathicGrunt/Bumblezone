@@ -12,13 +12,13 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 @Mixin(SpawnHelper.class)
 public class PollenedBeeNaturalSpawnMixin {
     //spawns bees with chance to bee full of pollen or be a BeeProductive mob if that mod is on
-    @ModifyArg(method = "method_24930",
+    @ModifyArg(method = "spawnEntitiesInChunk(Lnet/minecraft/entity/SpawnGroup;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/Chunk;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/SpawnHelper$Checker;Lnet/minecraft/world/SpawnHelper$Runner;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;spawnEntity(Lnet/minecraft/entity/Entity;)Z"))
     private static Entity spawnEntitiesInChunk(Entity entity) {
         if (!(entity.world.isClient())) {
             ServerWorld serverWorld = (ServerWorld) entity.world;
 
-            if (serverWorld.dimension.getType() == BzDimensionType.BUMBLEZONE_TYPE) {
+            if (serverWorld.getDimension() == BzDimensionType.BUMBLEZONE_TYPE) {
                 if (entity.getType() == EntityType.BEE) {
                     //20% chance of being full of pollen
                     if (serverWorld.random.nextFloat() < 0.2f) {

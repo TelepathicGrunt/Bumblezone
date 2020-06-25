@@ -4,8 +4,6 @@ import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityContext;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BucketItem;
@@ -31,8 +29,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.mixin.BucketItemAccessor;
@@ -69,7 +67,7 @@ public class StickyHoneyResidue extends VineBlock {
      * Returns the shape based on the state of the block.
      */
     @Override
-    public VoxelShape getOutlineShape(BlockState blockstate, BlockView world, BlockPos pos, EntityContext context) {
+    public VoxelShape getOutlineShape(BlockState blockstate, BlockView world, BlockPos pos, ShapeContext context) {
         VoxelShape voxelshape = VoxelShapes.empty();
         if (blockstate.get(UP)) {
             voxelshape = VoxelShapes.union(voxelshape, UP_SHAPE);
@@ -184,7 +182,7 @@ public class StickyHoneyResidue extends VineBlock {
      * double check to make sure this block has at least one face and can attach.
      */
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState blockstate, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState getStateForNeighborUpdate(BlockState blockstate, Direction facing, BlockState facingState, WorldAccess world, BlockPos currentPos, BlockPos facingPos) {
         BlockState newBlockstate = this.setAttachments(blockstate, world, currentPos);
         return !this.hasAtleastOneAttachment(newBlockstate) ? Blocks.AIR.getDefaultState() : newBlockstate;
     }
@@ -195,14 +193,6 @@ public class StickyHoneyResidue extends VineBlock {
     @Override
     public PistonBehavior getPistonBehavior(BlockState blockstate) {
         return PistonBehavior.DESTROY;
-    }
-
-    /**
-     * No mobs can spawn in this blcok
-     */
-    @Override
-    public boolean allowsSpawning(BlockState blockstate, BlockView world, BlockPos pos, EntityType<?> type) {
-        return false;
     }
 
     /**
@@ -226,16 +216,8 @@ public class StickyHoneyResidue extends VineBlock {
      * This block is full of holes and can let light through
      */
     @Override
-    public int getOpacity(BlockState state, BlockView worldIn, BlockPos pos) {
+    public int getOpacity(BlockState state, BlockView world, BlockPos pos) {
         return 1;
-    }
-
-    /**
-     * cannot suffocate mobs
-     */
-    @Override
-    public boolean hasInWallOverlay(BlockState state, BlockView worldIn, BlockPos pos) {
-        return false;
     }
 
     /**

@@ -7,7 +7,7 @@ import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.WorldAccess;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
@@ -15,10 +15,10 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 import java.util.List;
 
 @Mixin(Structure.class)
-public interface StructureAccessor {
+public interface StructureAccessorMixin {
 
-    @Accessor("blocks")
-    List<List<Structure.StructureBlockInfo>> getBlocks();
+    @Accessor("blockInfoLists")
+    List<Structure.PalettedBlockInfoList> getBlocks();
 
     @Accessor("entities")
     List<Structure.StructureEntityInfo> getEntities();
@@ -27,6 +27,6 @@ public interface StructureAccessor {
     BlockPos getSize();
 
 
-    @Invoker("method_15179")
-    void invokemethod_15179(IWorld iWorld, BlockPos blockPos, BlockMirror blockMirror, BlockRotation blockRotation, BlockPos blockPos2, BlockBox blockBox);
+    @Invoker("spawnEntities")
+    void invokespawnEntities(WorldAccess world, BlockPos blockPos, BlockMirror blockMirror, BlockRotation blockRotation, BlockPos blockPos2, BlockBox blockBox, boolean bl);
 }

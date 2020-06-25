@@ -1,8 +1,8 @@
 package net.telepathicgrunt.bumblezone.features;
 
 import com.google.common.collect.Lists;
-import com.mojang.datafixers.Dynamic;
 import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.Codec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.MobSpawnerBlockEntity;
@@ -23,15 +23,15 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.BitSetVoxelSet;
 import net.minecraft.util.shape.VoxelSet;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
-import net.telepathicgrunt.bumblezone.mixin.StructureAccessor;
+import net.telepathicgrunt.bumblezone.mixin.StructureAccessorMixin;
 
 import java.util.Iterator;
 import java.util.List;
@@ -40,22 +40,21 @@ import java.util.function.Function;
 
 
 public class SpiderInfestedBeeDungeon extends Feature<DefaultFeatureConfig> {
-    private static final Identifier CRYSTALLIZED_HONEY_BLOCK = new Identifier("buzzierbees:crystallized_honey_block");
     private static final BlockState HONEY_CRYSTAL = BzBlocks.HONEY_CRYSTAL.getDefaultState();
 
-    public SpiderInfestedBeeDungeon(Function<Dynamic<?>, ? extends DefaultFeatureConfig> configFactory) {
+    public SpiderInfestedBeeDungeon(Codec<DefaultFeatureConfig> configFactory) {
         super(configFactory);
     }
 
     @Override
-    public boolean generate(IWorld world, ChunkGenerator<? extends ChunkGeneratorConfig> changedBlock, Random rand, BlockPos position, DefaultFeatureConfig p_212245_5_) {
+    public boolean generate(ServerWorldAccess world, StructureAccessor accessor, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
         //affect rarity
-        if (rand.nextInt(Bumblezone.BZ_CONFIG.spiderInfestedBeeDungeonRarity) != 0) return false;
+        if (random.nextInt(Bumblezone.BZ_CONFIG.spiderInfestedBeeDungeonRarity) != 0) return false;
 
-        BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position).setOffset(-6, -2, -6);
+        BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position).move(-6, -2, -6);
         //Bumblezone.LOGGER.log(Level.INFO, "Spider Infested Bee Dungeon at X: "+position.getX() +", "+position.getY()+", "+position.getZ());
 
-        StructureManager structureManager = ((ServerWorld) world.getWorld()).getSaveHandler().getStructureManager();
+        StructureManager structureManager = ((ServerWorld) world.getWorld()).getStructureManager();
         Structure structure = structureManager.getStructureOrBlank(new Identifier(Bumblezone.MODID + ":bee_dungeon/shell"));
 
         if (structure == null) {
@@ -74,14 +73,14 @@ public class SpiderInfestedBeeDungeon extends Feature<DefaultFeatureConfig> {
             return false;
         }
 
-        addBlocksToWorld(structure, world, blockpos$Mutable.setOffset(0, 1, 0), placementsettings, 2);
+        addBlocksToWorld(structure, world, blockpos$Mutable.move(0, 1, 0), placementsettings, 2);
 
 
         for (int x = -8; x <= 16; x++) {
             for (int y = -3; y <= 10; y++) {
                 for (int z = -8; z <= 16; z++) {
-                    blockpos$Mutable.set(position).setOffset(x, y, z);
-                    if (rand.nextFloat() < 0.07f && world.getBlockState(blockpos$Mutable).getBlock() == Blocks.CAVE_AIR) {
+                    blockpos$Mutable.set(position).move(x, y, z);
+                    if (random.nextFloat() < 0.07f && world.getBlockState(blockpos$Mutable).getBlock() == Blocks.CAVE_AIR) {
                         world.setBlockState(blockpos$Mutable, Blocks.COBWEB.getDefaultState(), 3);
                     }
                 }
@@ -97,12 +96,12 @@ public class SpiderInfestedBeeDungeon extends Feature<DefaultFeatureConfig> {
      * Adds blocks and entities from this structure to the given world.
      */
     @SuppressWarnings("deprecation")
-    private static boolean addBlocksToWorld(Structure structure, IWorld world, BlockPos pos, StructurePlacementData placementIn, int flags) {
-        StructureAccessor structureAccessor = ((StructureAccessor) (Object) structure);
+    private static boolean addBlocksToWorld(Structure structure, ServerWorldAccess world, BlockPos pos, StructurePlacementData placementIn, int flags) {
+        StructureAccessorMixin structureAccessor = ((StructureAccessorMixin) (Object) structure);
         if (structureAccessor.getBlocks().isEmpty()) {
             return false;
         } else {
-            List<Structure.StructureBlockInfo> list = placementIn.getRandomBlockInfos(structureAccessor.getBlocks(), pos);
+            List<Structure.StructureBlockInfo> list = placementIn.getRandomBlockInfos(structureAccessor.getBlocks(), pos).getAll();
             if ((!list.isEmpty() || !placementIn.shouldIgnoreEntities() && !structureAccessor.getEntities().isEmpty()) && structureAccessor.getSize().getX() >= 1 && structureAccessor.getSize().getY() >= 1 && structureAccessor.getSize().getZ() >= 1) {
                 BlockBox mutableboundingbox = placementIn.getBoundingBox();
                 List<BlockPos> list1 = Lists.newArrayListWithCapacity(placementIn.shouldPlaceFluids() ? list.size() : 0);
@@ -114,7 +113,7 @@ public class SpiderInfestedBeeDungeon extends Feature<DefaultFeatureConfig> {
                 int i1 = Integer.MIN_VALUE;
                 int j1 = Integer.MIN_VALUE;
 
-                for (Structure.StructureBlockInfo template$blockinfo : structure.process(world, pos, placementIn, list)) {
+                for (Structure.StructureBlockInfo template$blockinfo : structure.process(world, pos, pos, placementIn, list)) {
                     BlockPos blockpos = template$blockinfo.pos;
                     if (mutableboundingbox == null || mutableboundingbox.contains(blockpos)) {
                         FluidState ifluidstate = placementIn.shouldPlaceFluids() ? world.getFluidState(blockpos) : null;
@@ -152,7 +151,7 @@ public class SpiderInfestedBeeDungeon extends Feature<DefaultFeatureConfig> {
                                     template$blockinfo.tag.putInt("x", blockpos.getX());
                                     template$blockinfo.tag.putInt("y", blockpos.getY());
                                     template$blockinfo.tag.putInt("z", blockpos.getZ());
-                                    blockentity1.fromTag(template$blockinfo.tag);
+                                    blockentity1.fromTag(template$blockinfo.state, template$blockinfo.tag);
                                     blockentity1.applyMirror(placementIn.getMirror());
                                     blockentity1.applyRotation(placementIn.getRotation());
                                 }
@@ -213,14 +212,14 @@ public class SpiderInfestedBeeDungeon extends Feature<DefaultFeatureConfig> {
                             voxelshapepart.set(blockpos5.getX() - l1, blockpos5.getY() - i2, blockpos5.getZ() - j2, true, true);
                         }
 
-                        Structure.method_20532(world, flags, voxelshapepart, l1, i2, j2);
+                        Structure.updateCorner(world, flags, voxelshapepart, l1, i2, j2);
                     }
 
                     for (Pair<BlockPos, CompoundTag> pair : list2) {
                         BlockPos blockpos4 = pair.getFirst();
                         if (!placementIn.shouldUpdateNeighbors()) {
                             BlockState blockstate1 = world.getBlockState(blockpos4);
-                            BlockState blockstate3 = Block.getRenderingState(blockstate1, world, blockpos4);
+                            BlockState blockstate3 = Block.postProcessState(blockstate1, world, blockpos4);
                             if (blockstate1 != blockstate3) {
                                 world.setBlockState(blockpos4, blockstate3, flags & -2 | 16);
                             }
@@ -239,12 +238,13 @@ public class SpiderInfestedBeeDungeon extends Feature<DefaultFeatureConfig> {
 
 
                 if (!placementIn.shouldIgnoreEntities()) {
-                    structureAccessor.invokemethod_15179(world,
+                    structureAccessor.invokespawnEntities(world,
                             pos,
                             placementIn.getMirror(),
                             placementIn.getRotation(),
                             placementIn.getPosition(),
-                            placementIn.getBoundingBox());
+                            placementIn.getBoundingBox(),
+                            placementIn.method_27265());
                 }
 
                 return true;
@@ -260,7 +260,7 @@ public class SpiderInfestedBeeDungeon extends Feature<DefaultFeatureConfig> {
      *
      * @return - a pair of the blockstate to use and whether this block can replace air
      */
-    private static Pair<BlockState, Boolean> blockConversion(IWorld world, BlockPos pos, Block block, Random random) {
+    private static Pair<BlockState, Boolean> blockConversion(ServerWorldAccess world, BlockPos pos, Block block, Random random) {
         //////////////////////////////////////////////
         //Shell
 

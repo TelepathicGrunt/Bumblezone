@@ -6,24 +6,28 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.fluid.BaseFluid;
+import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 
 public class SugarWaterBlock extends FluidBlock {
 
-    public SugarWaterBlock(BaseFluid baseFluid) {
+    public SugarWaterBlock(FlowableFluid baseFluid) {
         super(baseFluid, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F, 100.0F).dropsNothing().build().velocityMultiplier(0.95F));
     }
 
-
     @Override
-    public boolean receiveNeighborFluids(World world, BlockPos pos, BlockState state) {
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+        if (this.receiveNeighborFluids(world, pos, state)) {
+            world.getFluidTickScheduler().schedule(pos, state.getFluidState().getFluid(), this.fluid.getTickRate(world));
+        }
+    }
+
+    private boolean receiveNeighborFluids(World world, BlockPos pos, BlockState state)  {
         boolean flag = false;
 
         for (Direction direction : Direction.values()) {
@@ -67,7 +71,7 @@ public class SugarWaterBlock extends FluidBlock {
         super.onEntityCollision(state, world, position, entity);
     }
 
-    private void triggerMixEffects(IWorld world, BlockPos pos) {
-        world.playLevelEvent(1501, pos, 0);
+    private void triggerMixEffects(World world, BlockPos pos) {
+        world.syncWorldEvent(1501, pos, 0);
     }
 }

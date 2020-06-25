@@ -1,6 +1,6 @@
 package net.telepathicgrunt.bumblezone.biome.surfacebuilders;
 
-import com.mojang.datafixers.Dynamic;
+import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
@@ -12,12 +12,11 @@ import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 
 import java.util.Random;
-import java.util.function.Function;
 
 
 public class HoneySurfaceBuilder extends SurfaceBuilder<TernarySurfaceConfig> {
-    public HoneySurfaceBuilder(Function<Dynamic<?>, ? extends TernarySurfaceConfig> p_i51310_1_) {
-        super(p_i51310_1_);
+    public HoneySurfaceBuilder(Codec<TernarySurfaceConfig> codec) {
+        super(codec);
     }
 
     private static final BlockState STONE = Blocks.STONE.getDefaultState();

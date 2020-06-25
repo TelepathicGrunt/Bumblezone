@@ -55,7 +55,7 @@ public class EmptyBucketDispenseBehavior extends ItemDispenserBehavior {
      */
     @Override
     protected void playSound(BlockPointer source) {
-        source.getWorld().playGlobalEvent(1002, source.getBlockPos(), 0);
+        source.getWorld().syncWorldEvent(1002, source.getBlockPos(), 0);
     }
 
 

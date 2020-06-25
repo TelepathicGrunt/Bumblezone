@@ -66,7 +66,7 @@ public class BeeInteractivity {
                         WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
                     }
 
-                    if (!beeEntity.isAngry() || calmed)
+                    if (!beeEntity.hasAngerTime() || calmed)
                         ((ServerWorld) world).spawnParticles(
                                 ParticleTypes.HEART,
                                 beeEntity.getX(),
@@ -96,7 +96,7 @@ public class BeeInteractivity {
                     }
 
 
-                    if (!beeEntity.isAngry() || calmed)
+                    if (!beeEntity.hasAngerTime() || calmed)
                         ((ServerWorld) world).spawnParticles(
                                 ParticleTypes.HEART,
                                 beeEntity.getX(),

@@ -26,7 +26,7 @@ import java.util.function.Supplier;
 public class PlayerInteractsEntityMixin {
     //bees attack player that drinks honey bottles
     @Inject(method = "interact",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;interact(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Z"))
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setStackInHand(Lnet/minecraft/util/Hand;Lnet/minecraft/item/ItemStack;)V"))
     private void onHoneyDrink(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         BeeInteractivity.beeFeeding(entity.world, ((PlayerEntity)(Object)this), hand, entity);
     }

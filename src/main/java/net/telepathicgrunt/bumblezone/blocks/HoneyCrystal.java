@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.*;
@@ -16,16 +15,16 @@ import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Util;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.mixin.BucketItemAccessor;
@@ -81,7 +80,7 @@ public class HoneyCrystal extends Block {
      * Custom shape of this block based on direction
      */
     @Override
-    public VoxelShape getOutlineShape(BlockState blockstate, BlockView worldIn, BlockPos pos, EntityContext context) {
+    public VoxelShape getOutlineShape(BlockState blockstate, BlockView worldIn, BlockPos pos, ShapeContext context) {
         return FACING_TO_SHAPE_MAP.get(blockstate.get(FACING));
     }
 
@@ -102,17 +101,17 @@ public class HoneyCrystal extends Block {
     @SuppressWarnings("deprecation")
     @Override
     public BlockState getStateForNeighborUpdate(BlockState blockstate, Direction facing,
-                                                BlockState facingState, IWorld worldIn,
+                                                BlockState facingState, WorldAccess world,
                                                 BlockPos currentPos, BlockPos facingPos) {
 
-        if (facing.getOpposite() == blockstate.get(FACING) && !blockstate.canPlaceAt(worldIn, currentPos)) {
+        if (facing.getOpposite() == blockstate.get(FACING) && !blockstate.canPlaceAt(world, currentPos)) {
             return Blocks.AIR.getDefaultState();
         } else {
             if (blockstate.get(WATERLOGGED)) {
-                worldIn.getFluidTickScheduler().schedule(currentPos, BzBlocks.SUGAR_WATER_FLUID, BzBlocks.SUGAR_WATER_FLUID.getTickRate(worldIn));
+                world.getFluidTickScheduler().schedule(currentPos, BzBlocks.SUGAR_WATER_FLUID, BzBlocks.SUGAR_WATER_FLUID.getTickRate(world));
             }
 
-            return super.getStateForNeighborUpdate(blockstate, facing, facingState, worldIn, currentPos, facingPos);
+            return super.getStateForNeighborUpdate(blockstate, facing, facingState, world, currentPos, facingPos);
         }
     }
 

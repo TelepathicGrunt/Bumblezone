@@ -33,7 +33,7 @@ import java.util.Random;
 public class FilledPorousHoneycomb extends Block {
 
     public FilledPorousHoneycomb() {
-        super(FabricBlockSettings.of(Material.CLAY, MaterialColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.9F));
+        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MaterialColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.9F));
     }
 
 
@@ -78,7 +78,7 @@ public class FilledPorousHoneycomb extends Block {
                 }
             }
 
-            if ((playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE || Bumblezone.BZ_CONFIG.allowWrathOfTheHiveOutsideBumblezone) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BZ_CONFIG.aggressiveBees) {
+            if ((playerEntity.getEntityWorld().getDimension() == BzDimensionType.BUMBLEZONE_TYPE || Bumblezone.BZ_CONFIG.allowWrathOfTheHiveOutsideBumblezone) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BZ_CONFIG.aggressiveBees) {
                 //Now all bees nearby in Bumblezone will get VERY angry!!!
                 playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.showWrathOfTheHiveParticles, true));
             }
@@ -127,17 +127,17 @@ public class FilledPorousHoneycomb extends Block {
     private void spawnHoneyParticles(World world, BlockPos position, BlockState blockState) {
         if (blockState.getFluidState().isEmpty() && world.random.nextFloat() < 0.08F) {
             VoxelShape currentBlockShape = blockState.getCollisionShape(world, position);
-            double yEndHeight = currentBlockShape.getMaximum(Direction.Axis.Y);
-            if (yEndHeight >= 1.0D && !blockState.matches(BlockTags.IMPERMEABLE)) {
-                double yStartHeight = currentBlockShape.getMinimum(Direction.Axis.Y);
+            double yEndHeight = currentBlockShape.getMax(Direction.Axis.Y);
+            if (yEndHeight >= 1.0D && !blockState.isIn(BlockTags.IMPERMEABLE)) {
+                double yStartHeight = currentBlockShape.getMin(Direction.Axis.Y);
                 if (yStartHeight > 0.0D) {
                     this.addHoneyParticle(world, position, currentBlockShape, position.getY() + yStartHeight - 0.05D);
                 } else {
                     BlockPos belowBlockpos = position.down();
                     BlockState belowBlockstate = world.getBlockState(belowBlockpos);
                     VoxelShape belowBlockShape = belowBlockstate.getCollisionShape(world, belowBlockpos);
-                    double yEndHeight2 = belowBlockShape.getMaximum(Direction.Axis.Y);
-                    if ((yEndHeight2 < 1.0D || !belowBlockstate.isSimpleFullBlock(world, belowBlockpos)) && belowBlockstate.getFluidState().isEmpty()) {
+                    double yEndHeight2 = belowBlockShape.getMax(Direction.Axis.Y);
+                    if ((yEndHeight2 < 1.0D || !belowBlockstate.isOpaqueFullCube(world, belowBlockpos)) && belowBlockstate.getFluidState().isEmpty()) {
                         this.addHoneyParticle(world, position, currentBlockShape, position.getY() - 0.05D);
                     }
                 }
@@ -152,7 +152,13 @@ public class FilledPorousHoneycomb extends Block {
      * method
      */
     private void addHoneyParticle(World world, BlockPos blockPos, VoxelShape blockShape, double height) {
-        this.addHoneyParticle(world, blockPos.getX() + blockShape.getMinimum(Direction.Axis.X), blockPos.getX() + blockShape.getMaximum(Direction.Axis.X), blockPos.getZ() + blockShape.getMinimum(Direction.Axis.Z), blockPos.getZ() + blockShape.getMaximum(Direction.Axis.Z), height);
+        this.addHoneyParticle(
+                world,
+                blockPos.getX() + blockShape.getMin(Direction.Axis.X),
+                blockPos.getX() + blockShape.getMax(Direction.Axis.X),
+                blockPos.getZ() + blockShape.getMin(Direction.Axis.Z),
+                blockPos.getZ() + blockShape.getMax(Direction.Axis.Z),
+                height);
     }
 
 

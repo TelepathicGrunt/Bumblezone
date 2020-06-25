@@ -1,28 +1,25 @@
 package net.telepathicgrunt.bumblezone.features.decorators;
 
-import com.mojang.datafixers.Dynamic;
+import com.mojang.serialization.Codec;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
 import net.minecraft.world.gen.decorator.CountDecoratorConfig;
 import net.minecraft.world.gen.decorator.Decorator;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class Random3DUndergroundChunkPlacement extends Decorator<CountDecoratorConfig> {
 
-    public Random3DUndergroundChunkPlacement(Function<Dynamic<?>, ? extends CountDecoratorConfig> configFactory) {
-        super(configFactory);
+    public Random3DUndergroundChunkPlacement(Codec<CountDecoratorConfig> codec) {
+        super(codec);
     }
 
     @Override
-    public Stream<BlockPos> getPositions(IWorld world, ChunkGenerator<? extends ChunkGeneratorConfig> chunkGenerator,
-                                         Random random, CountDecoratorConfig placementConfig, BlockPos pos) {
+    public Stream<BlockPos> getPositions(WorldAccess world, ChunkGenerator chunkGenerator, Random random, CountDecoratorConfig placementConfig, BlockPos pos) {
 
         ArrayList<BlockPos> blockPosList = new ArrayList<BlockPos>();
 

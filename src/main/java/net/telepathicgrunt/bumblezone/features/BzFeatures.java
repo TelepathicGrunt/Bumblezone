@@ -5,12 +5,12 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 
 public class BzFeatures {
-    public static Feature<DefaultFeatureConfig> HONEYCOMB_HOLE = new HoneycombHole(DefaultFeatureConfig::deserialize);
-    public static Feature<DefaultFeatureConfig> HONEYCOMB_CAVES = new HoneycombCaves(DefaultFeatureConfig::deserialize);
-    public static Feature<DefaultFeatureConfig> CAVE_SUGAR_WATERFALL = new CaveSugarWaterfall(DefaultFeatureConfig::deserialize);
-    public static Feature<DefaultFeatureConfig> BEE_DUNGEON = new BeeDungeon(DefaultFeatureConfig::deserialize);
-    public static Feature<DefaultFeatureConfig> SPIDER_INFESTED_BEE_DUNGEON = new SpiderInfestedBeeDungeon(DefaultFeatureConfig::deserialize);
-    public static Feature<DefaultFeatureConfig> HONEY_CRYSTAL_FEATURE = new HoneyCrystalFeature(DefaultFeatureConfig::deserialize);
+    public static Feature<DefaultFeatureConfig> HONEYCOMB_HOLE = new HoneycombHole(DefaultFeatureConfig.CODEC);
+    public static Feature<DefaultFeatureConfig> HONEYCOMB_CAVES = new HoneycombCaves(DefaultFeatureConfig.CODEC);
+    public static Feature<DefaultFeatureConfig> CAVE_SUGAR_WATERFALL = new CaveSugarWaterfall(DefaultFeatureConfig.CODEC);
+    public static Feature<DefaultFeatureConfig> BEE_DUNGEON = new BeeDungeon(DefaultFeatureConfig.CODEC);
+    public static Feature<DefaultFeatureConfig> SPIDER_INFESTED_BEE_DUNGEON = new SpiderInfestedBeeDungeon(DefaultFeatureConfig.CODEC);
+    public static Feature<DefaultFeatureConfig> HONEY_CRYSTAL_FEATURE = new HoneyCrystalFeature(DefaultFeatureConfig.CODEC);
 
     public static void registerFeatures() {
         Registry.register(Registry.FEATURE, "honeycomb_hole", HONEYCOMB_HOLE);

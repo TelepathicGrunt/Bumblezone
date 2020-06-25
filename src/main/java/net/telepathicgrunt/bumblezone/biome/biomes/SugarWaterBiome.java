@@ -4,8 +4,8 @@ import com.google.common.collect.ImmutableSet;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityCategory;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
@@ -19,14 +19,27 @@ import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.SpringFeatureConfig;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
 import net.telepathicgrunt.bumblezone.biome.BzBaseBiome;
-import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.features.BzFeatures;
 import net.telepathicgrunt.bumblezone.features.decorators.BzPlacements;
 
 public final class SugarWaterBiome extends BzBaseBiome {
     public SugarWaterBiome() {
-        super((new Settings()).surfaceBuilder(new ConfiguredSurfaceBuilder<>(HONEY_SURFACE_BUILDER, HONEY_CONFIG)).precipitation(Biome.Precipitation.NONE).category(Biome.Category.JUNGLE).depth(-2F).scale(0.01F).temperature(1.85F).downfall(0.5F).effects((new BiomeEffects.Builder()).waterColor(14402413).waterFogColor(11700268).fogColor(12638463).method_24943(SoundEvents.BLOCK_BEEHIVE_WORK).build()).parent((String) null));
+        super((new Settings())
+                .surfaceBuilder(new ConfiguredSurfaceBuilder<>(HONEY_SURFACE_BUILDER, HONEY_CONFIG))
+                .precipitation(Biome.Precipitation.NONE)
+                .category(Category.NONE)
+                .depth(-2F)
+                .scale(0.01F)
+                .temperature(1.85F)
+                .downfall(0.5F)
+                .effects((new BiomeEffects.Builder())
+                        .waterColor(14402413)
+                        .waterFogColor(11700268)
+                        .fogColor(12638463)
+                        .loopSound(SoundEvents.BLOCK_BEEHIVE_WORK)
+                        .build())
+                .parent((String) null));
 
         this.addFeature(GenerationStep.Feature.LOCAL_MODIFICATIONS, BzFeatures.HONEYCOMB_CAVES.configure(FeatureConfig.DEFAULT).createDecoratedFeature(Decorator.NOPE.configure(DecoratorConfig.DEFAULT)));
         this.addFeature(GenerationStep.Feature.LOCAL_MODIFICATIONS, BzFeatures.HONEYCOMB_HOLE.configure(FeatureConfig.DEFAULT).createDecoratedFeature(BzPlacements.HONEYCOMB_HOLE_PLACER.configure(DecoratorConfig.DEFAULT)));
@@ -39,18 +52,18 @@ public final class SugarWaterBiome extends BzBaseBiome {
         this.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(SUGAR_WATER_SPRING_CONFIG).createDecoratedFeature(Decorator.COUNT_BIASED_RANGE.configure(new RangeDecoratorConfig(1, 128, 0, 256))));
         this.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(SUGAR_WATER_SPRING_CONFIG).createDecoratedFeature(Decorator.COUNT_BIASED_RANGE.configure(new RangeDecoratorConfig(7, 16, 0, 128))));
 
-        this.addSpawn(EntityCategory.CREATURE, new Biome.SpawnEntry(EntityType.BEE, 20, 4, 8));
-        this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.SNOWBALL, 2200, 1, 1)); //Used to make monsters even less common
-        this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.SLIME, 20, 1, 1));
-        this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.ENDERMAN, 2, 1, 1));
-        this.addSpawn(EntityCategory.MONSTER, new Biome.SpawnEntry(EntityType.PHANTOM, 1, 1, 1));
+        this.addSpawn(SpawnGroup.CREATURE, new Biome.SpawnEntry(EntityType.BEE, 20, 4, 8));
+        this.addSpawn(SpawnGroup.MONSTER, new Biome.SpawnEntry(EntityType.SNOWBALL, 2200, 1, 1)); //Used to make monsters even less common
+        this.addSpawn(SpawnGroup.MONSTER, new Biome.SpawnEntry(EntityType.SLIME, 20, 1, 1));
+        this.addSpawn(SpawnGroup.MONSTER, new Biome.SpawnEntry(EntityType.ENDERMAN, 2, 1, 1));
+        this.addSpawn(SpawnGroup.MONSTER, new Biome.SpawnEntry(EntityType.PHANTOM, 1, 1, 1));
     }
 
     /**
      * returns the chance a creature has to spawn.
      */
     @Override
-    public float getMaxSpawnLimit() {
+    public float getMaxSpawnChance() {
         return 0.35F;
     }
 

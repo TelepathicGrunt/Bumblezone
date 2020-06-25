@@ -5,6 +5,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
@@ -28,7 +29,7 @@ public class PlayerTeleportationTickMixin {
         PlayerEntity playerEntity = ((PlayerEntity) (Object) this);
 
         //Makes it so player does not get killed for falling into the void
-        if (playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE) {
+        if (playerEntity.world.getDimension() == BzDimensionType.BUMBLEZONE_TYPE) {
             if (playerEntity.getY() < -3) {
                 playerEntity.setPos(playerEntity.getX(), -3.01D, playerEntity.getZ());
                 playerEntity.updatePosition(playerEntity.getX(), -3.01D, playerEntity.getZ());
@@ -91,10 +92,10 @@ public class PlayerTeleportationTickMixin {
         //Go to Overworld instead as default. Or go to Overworld if config is set.
         if (currentNonBZDimension == BzDimensionType.BUMBLEZONE_TYPE || Bumblezone.BZ_CONFIG.forceExitToOverworld) {
             // go to overworld by default
-            destinationWorld = minecraftServer.getWorld(DimensionType.OVERWORLD);
+            destinationWorld = minecraftServer.getWorld(World.OVERWORLD);
 
             //update stored dimension
-            Bumblezone.PLAYER_COMPONENT.get(playerEntity).setNonBZDimension(destinationWorld.dimension.getType());
+            Bumblezone.PLAYER_COMPONENT.get(playerEntity).setNonBZDimension(destinationWorld.getDimension());
         }
     }
 }

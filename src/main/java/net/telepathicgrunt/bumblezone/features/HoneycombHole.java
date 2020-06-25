@@ -1,14 +1,14 @@
 package net.telepathicgrunt.bumblezone.features;
 
-import com.mojang.datafixers.Dynamic;
+import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
@@ -20,10 +20,7 @@ import java.util.function.Function;
 
 
 public class HoneycombHole extends Feature<DefaultFeatureConfig> {
-    public HoneycombHole(Function<Dynamic<?>, ? extends DefaultFeatureConfig> configFactory) {
-        super(configFactory);
-    }
-
+    
 
     private static final int[][] bodyLayout =
             {
@@ -86,29 +83,32 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig> {
     private static final BlockState HONEYCOMB_BLOCK = Blocks.HONEYCOMB_BLOCK.getDefaultState();
     private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
     private static final BlockState SUGAR_WATER = BzBlocks.SUGAR_WATER_BLOCK.getDefaultState();
-
+    
+    public HoneycombHole(Codec<DefaultFeatureConfig> configFactory) {
+        super(configFactory);
+    }
 
     @Override
-    public boolean generate(IWorld world, ChunkGenerator<? extends ChunkGeneratorConfig> changedBlock, Random rand, BlockPos position, DefaultFeatureConfig config) {
+    public boolean generate(ServerWorldAccess world, StructureAccessor accessor, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
         BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable().set(position);
 
-        generateSlice(world, mutableBlockPos, endCapLayout, rand, true);
-        generateSlice(world, mutableBlockPos.setOffset(Direction.EAST), smallHoneyLayout, rand, true);
-        generateSlice(world, mutableBlockPos.setOffset(Direction.EAST), largeHoneyLayout, rand, true);
-        generateSlice(world, mutableBlockPos.setOffset(Direction.EAST), bodyLayout, rand, true);
-        generateSlice(world, mutableBlockPos.setOffset(Direction.EAST), bodyLayout, rand, true);
-        generateSlice(world, mutableBlockPos.setOffset(Direction.EAST), bodyLayout, rand, false);
-        generateSlice(world, mutableBlockPos.setOffset(Direction.EAST), bodyLayout, rand, false);
-        generateSlice(world, mutableBlockPos.setOffset(Direction.EAST), bodyLayout, rand, false);
-        generateSlice(world, mutableBlockPos.setOffset(Direction.EAST), largeHoneyLayout, rand, false);
-        generateSlice(world, mutableBlockPos.setOffset(Direction.EAST), smallHoneyLayout, rand, false);
-        generateSlice(world, mutableBlockPos.setOffset(Direction.EAST), endCapLayout, rand, false);
+        generateSlice(world, mutableBlockPos, endCapLayout, random, true);
+        generateSlice(world, mutableBlockPos.move(Direction.EAST), smallHoneyLayout, random, true);
+        generateSlice(world, mutableBlockPos.move(Direction.EAST), largeHoneyLayout, random, true);
+        generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout, random, true);
+        generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout, random, true);
+        generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout, random, false);
+        generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout, random, false);
+        generateSlice(world, mutableBlockPos.move(Direction.EAST), bodyLayout, random, false);
+        generateSlice(world, mutableBlockPos.move(Direction.EAST), largeHoneyLayout, random, false);
+        generateSlice(world, mutableBlockPos.move(Direction.EAST), smallHoneyLayout, random, false);
+        generateSlice(world, mutableBlockPos.move(Direction.EAST), endCapLayout, random, false);
 
 
         return true;
     }
 
-    private void generateSlice(IWorld world, BlockPos.Mutable centerPos, int[][] slice, Random rand, boolean westEnd) {
+    private void generateSlice(ServerWorldAccess world, BlockPos.Mutable centerPos, int[][] slice, Random random, boolean westEnd) {
         //move to the position where the corner of the slice will begin at
         BlockPos.Mutable currentPosition = new BlockPos.Mutable().set(centerPos.add(-5, slice.length / 2, -slice[0].length / 2));
         BlockState blockState;
@@ -127,7 +127,7 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig> {
                         //extra check so the ends of the hole exposed will not have this block
                         if (world.getBlockState(currentPosition.west()).isOpaque() && world.getBlockState(currentPosition.east()).isOpaque()) {
                             //reduced FILLED_POROUS_HONEYCOMB spawn rate
-                            if (rand.nextInt(3) == 0) {
+                            if (random.nextInt(3) == 0) {
                                 world.setBlockState(currentPosition, HONEYCOMB_BLOCK, 2);
                             } else {
                                 world.setBlockState(currentPosition, FILLED_POROUS_HONEYCOMB, 2);
@@ -135,7 +135,7 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig> {
                         }
                     } else if (sliceBlock == 2) {
                         //reduced HONEY_BLOCK spawn rate
-                        if (rand.nextInt(3) == 0) {
+                        if (random.nextInt(3) == 0) {
                             world.setBlockState(currentPosition, FILLED_POROUS_HONEYCOMB, 2);
                         } else {
                             world.setBlockState(currentPosition, HONEY_BLOCK, 2);
@@ -148,7 +148,7 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig> {
                         }
                     } else if (sliceBlock == 5) {
                         //reduced HONEY_BLOCK spawn rate
-                        int chance = rand.nextInt(10);
+                        int chance = random.nextInt(10);
                         if (chance <= 3) {
                             Direction facing;
                             if (westEnd)
@@ -156,8 +156,8 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig> {
                             else
                                 facing = Direction.EAST;
 
-                            if (rand.nextFloat() < 0.8f)
-                                world.setBlockState(currentPosition, BzBlocks.HONEYCOMB_BROOD.getDefaultState().with(HoneycombBrood.STAGE, Integer.valueOf(rand.nextInt(3))).with(HoneycombBrood.FACING, facing), 2);
+                            if (random.nextFloat() < 0.8f)
+                                world.setBlockState(currentPosition, BzBlocks.HONEYCOMB_BROOD.getDefaultState().with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3))).with(HoneycombBrood.FACING, facing), 2);
                             else
                                 world.setBlockState(currentPosition, BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState().with(HoneycombBrood.FACING, facing), 2);
                         } else if (chance <= 6) {
@@ -169,11 +169,11 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig> {
                 }
 
                 //move down the row
-                currentPosition.setOffset(Direction.SOUTH);
+                currentPosition.move(Direction.SOUTH);
             }
 
             //move back to start of row and down 1 column
-            currentPosition.setOffset(0, -1, -slice[0].length);
+            currentPosition.move(0, -1, -slice[0].length);
         }
     }
 }

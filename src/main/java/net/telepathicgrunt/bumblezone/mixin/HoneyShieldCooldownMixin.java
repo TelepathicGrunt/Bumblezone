@@ -18,7 +18,7 @@ import java.util.Random;
 @Mixin(MobEntity.class)
 public class HoneyShieldCooldownMixin {
 
-    @Inject(method = "method_24521",
+    @Inject(method = "disablePlayerShield",
             at = @At(value = "HEAD"),
             cancellable = true)
     private void isHoneyCrystalShield(PlayerEntity playerEntity, ItemStack itemStack, ItemStack itemStack2, CallbackInfo ci) {

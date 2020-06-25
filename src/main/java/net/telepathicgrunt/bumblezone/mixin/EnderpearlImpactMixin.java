@@ -3,7 +3,7 @@ package net.telepathicgrunt.bumblezone.mixin;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.thrown.ThrownEnderpearlEntity;
+import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(ThrownEnderpearlEntity.class)
+@Mixin(EnderPearlEntity.class)
 public class EnderpearlImpactMixin {
 
 
@@ -31,13 +31,13 @@ public class EnderpearlImpactMixin {
             cancellable = true)
     private void onPearlHit(HitResult hitResult, CallbackInfo ci) {
 
-        ThrownEnderpearlEntity pearlEntity = ((ThrownEnderpearlEntity) (Object) this);
+        EnderPearlEntity pearlEntity = ((EnderPearlEntity) (Object) this);
 
         World world = pearlEntity.world; // world we threw in
 
         //Make sure we are on server by checking if thrower is ServerPlayerEntity
-        if (!world.isClient && pearlEntity.method_24921() instanceof ServerPlayerEntity) {
-            ServerPlayerEntity playerEntity = (ServerPlayerEntity) pearlEntity.method_24921(); // the thrower
+        if (!world.isClient && pearlEntity.getOwner() instanceof ServerPlayerEntity) {
+            ServerPlayerEntity playerEntity = (ServerPlayerEntity) pearlEntity.getOwner(); // the thrower
             Vec3d hitBlockPos = hitResult.getPos(); //position of the collision
             BlockPos hivePos = new BlockPos(0,0,0);
             boolean hitHive = false;
@@ -85,7 +85,7 @@ public class EnderpearlImpactMixin {
                         String beeBlock = world.getBlockState(hivePos).getBlock().getName().getString();
                         Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: The block under the "+beeBlock+" is not the correct block to teleport to Bumblezone. The config enter says it needs "+requiredBlockString+" under "+beeBlock+".");
                         Text message = new LiteralText("§eBumblezone:§f The block under the §6"+beeBlock+"§f is not the correct block to teleport to Bumblezone. The config enter says it needs §6"+requiredBlockString+"§f under §6"+beeBlock+"§f.");
-                        playerEntity.sendMessage(message);
+                        playerEntity.sendMessage(message, true);
                         return;
                     }
                 }
@@ -94,7 +94,7 @@ public class EnderpearlImpactMixin {
                     //failed. the required block config entry is broken
                     Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: The required block under beenest config is broken. Please specify a resourcelocation to a real block or leave it blank so that players can teleport to Bumblezone dimension. Currently, the broken config has this in it: "+requiredBlockString);
                     Text message = new LiteralText("§eBumblezone:§f The required block under beenest config is broken. Please specify a resourcelocation to a real block or leave it blank so that players can teleport to Bumblezone dimension. Currently, the broken config has this in it: §c"+requiredBlockString);
-                    playerEntity.sendMessage(message);
+                    playerEntity.sendMessage(message, true);
                     return;
                 }
             }
@@ -104,7 +104,7 @@ public class EnderpearlImpactMixin {
 
 
             //if the pearl hit a beehive and is not in our bee dimension, begin the teleportation.
-            if (hitHive && validBelowBlock && playerEntity.dimension != BzDimensionType.BUMBLEZONE_TYPE) {
+            if (hitHive && validBelowBlock && playerEntity.getEntityWorld().getDimension() != BzDimensionType.BUMBLEZONE_TYPE) {
                 Bumblezone.PLAYER_COMPONENT.get(playerEntity).setIsTeleporting(true);
                 ci.cancel(); // cancel rest of the enderpearl hit stuff
             }
