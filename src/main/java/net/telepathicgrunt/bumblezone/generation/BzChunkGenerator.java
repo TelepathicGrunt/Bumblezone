@@ -68,11 +68,11 @@ public class BzChunkGenerator extends ChunkGenerator {
         }
 
     });
-    private static final float[] HEIGHT_LERP = Util.make(new float[49], (fs) -> {
-        for(int i = -3; i <= 3; ++i) {
-            for(int j = -3; j <= 3; ++j) {
+    private static final float[] HEIGHT_LERP = Util.make(new float[25], (fs) -> {
+        for(int i = -2; i <= 2; ++i) {
+            for(int j = -2; j <= 2; ++j) {
                 float f = 10.0F / MathHelper.sqrt((float)(i * i + j * j) + 0.2F);
-                fs[i + 3 + (j + 3) * 7] = f;
+                fs[i + 2 + (j + 2) * 5] = f;
             }
         }
     });
@@ -189,7 +189,7 @@ public class BzChunkGenerator extends ChunkGenerator {
                 float p = biome.getScale();
 
                 float u = o > l ? 0.5F : 1.0F;
-                float v = u * HEIGHT_LERP[m + 3 + (n + 3) * 7] / (o + 2.0F);
+                float v = u * HEIGHT_LERP[m + 2 + (n + 2) * 5] / (o + 2.0F);
                 g += p * v;
                 h += o * v;
                 i += v;
