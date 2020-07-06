@@ -29,8 +29,8 @@ public final class HivePillarBiome extends BzBaseBiome {
                 .surfaceBuilder(new ConfiguredSurfaceBuilder<>(HONEY_SURFACE_BUILDER, HONEY_CONFIG))
                 .precipitation(Biome.Precipitation.NONE)
                 .category(Biome.Category.NONE)
-                .depth(5F)
-                .scale(0.0F)
+                .depth(4F)
+                .scale(1F)
                 .temperature(1.85F)
                 .downfall(0.5F)
                 .effects((new BiomeEffects.Builder())
@@ -39,7 +39,7 @@ public final class HivePillarBiome extends BzBaseBiome {
                         .fogColor(12638463)
                         .loopSound(SoundEvents.BLOCK_BEEHIVE_WORK)
                         .build())
-                .parent((String) null));
+                .parent(null));
 
         this.addFeature(GenerationStep.Feature.LOCAL_MODIFICATIONS, BzFeatures.HONEYCOMB_CAVES.configure(FeatureConfig.DEFAULT).createDecoratedFeature(Decorator.NOPE.configure(DecoratorConfig.DEFAULT)));
         this.addFeature(GenerationStep.Feature.LOCAL_MODIFICATIONS, BzFeatures.HONEYCOMB_HOLE.configure(FeatureConfig.DEFAULT).createDecoratedFeature(BzPlacements.HONEYCOMB_HOLE_PLACER.configure(DecoratorConfig.DEFAULT)));

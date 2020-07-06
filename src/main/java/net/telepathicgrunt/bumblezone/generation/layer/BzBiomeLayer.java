@@ -25,15 +25,15 @@ public enum BzBiomeLayer implements InitLayer {
 
 
     public int sample(LayerRandomnessSource noise, int x, int z) {
-        double perlinNoise = perlinGen.sample((double) x * 0.1D, (double) z * 0.00001D, false) * 0.5D + 0.5D;
+        double perlinNoise = perlinGen.sample((double) x * 1D, (double) z * 0.00001D, false) * 0.5D + 0.5D;
 
-		max = Math.max(max, perlinNoise);
-		min = Math.min(min, perlinNoise);
-		Bumblezone.LOGGER.log(Level.INFO, "Max: " + max +", Min: "+min + ", perlin: "+perlinNoise);
+//		max = Math.max(max, perlinNoise);
+//		min = Math.min(min, perlinNoise);
+//		Bumblezone.LOGGER.log(Level.INFO, "Max: " + max +", Min: "+min + ", perlin: "+perlinNoise);
 
         if (noise.nextInt(5) == 0) {
             return HIVE_PILLAR;
-        } else if (Math.abs(perlinNoise) < 0.55D) {
+        } else if (Math.abs(perlinNoise) < 0.9D) {
             return SUGAR_WATER;
         } else {
             return HIVE_WALL;
