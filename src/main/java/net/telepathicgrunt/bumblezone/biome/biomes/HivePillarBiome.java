@@ -30,7 +30,7 @@ public final class HivePillarBiome extends BzBaseBiome {
                 .precipitation(Biome.Precipitation.NONE)
                 .category(Biome.Category.NONE)
                 .depth(4F)
-                .scale(1F)
+                .scale(3F)
                 .temperature(1.85F)
                 .downfall(0.5F)
                 .effects((new BiomeEffects.Builder())

@@ -70,11 +70,11 @@ public class BzChunkGenerator extends ChunkGenerator {
         }
 
     });
-    private static final float[] field_24775 = (float[])Util.make(new float[25], (fs) -> {
-        for(int i = -1; i <= 1; ++i) {
-            for(int j = -1; j <= 1; ++j) {
+    private static final float[] field_24775 = Util.make(new float[49], (fs) -> {
+        for(int i = -3; i <= 3; ++i) {
+            for(int j = -3; j <= 3; ++j) {
                 float f = 10.0F / MathHelper.sqrt((float)(i * i + j * j) + 0.2F);
-                fs[i + 1 + (j + 1) * 3] = f;
+                fs[i + 3 + (j + 3) * 7] = f;
             }
         }
     });
@@ -191,7 +191,7 @@ public class BzChunkGenerator extends ChunkGenerator {
                 float p = biome.getScale();
 
                 float u = o > l ? 0.5F : 1.0F;
-                float v = u * field_24775[m + 1 + (n + 1) * 3] / (o + 2.0F);
+                float v = u * field_24775[m + 3 + (n + 3) * 7] / (o + 2.0F);
                 g += p * v;
                 h += o * v;
                 i += v;
