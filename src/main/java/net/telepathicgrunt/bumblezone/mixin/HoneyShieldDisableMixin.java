@@ -2,7 +2,6 @@ package net.telepathicgrunt.bumblezone.mixin;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
-import net.telepathicgrunt.bumblezone.items.HoneyCrystalShieldBehavior;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

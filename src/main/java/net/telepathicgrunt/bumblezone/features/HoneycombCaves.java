@@ -11,11 +11,9 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
-import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.utils.OpenSimplexNoise;
 
 import java.util.Random;
-import java.util.function.Function;
 
 
 public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
@@ -207,9 +205,9 @@ public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
     }
 
     private static void carveAtBlock(ServerWorldAccess world, Random random, BlockPos blockPos, BlockState blockState, int posResult) {
-        if (blockPos.getY() < BzDimension.getSeaLevel() || !isNextToLiquidOrAir(world, blockPos)) {
+        if (blockPos.getY() < world.getWorld().getSeaLevel() || !isNextToLiquidOrAir(world, blockPos)) {
             if (posResult == 2) {
-                if (blockPos.getY() < BzDimension.getSeaLevel()) {
+                if (blockPos.getY() < 40) {
                     world.setBlockState(blockPos, SUGAR_WATER, 3);
                 } else {
                     world.setBlockState(blockPos, CAVE_AIR, 3);
@@ -228,7 +226,7 @@ public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
         BlockState blockState;
         for (Direction direction : Direction.values()) {
             blockState = world.getBlockState(pos.offset(direction));
-            if (pos.offset(direction).getY() >= BzDimension.getSeaLevel() && blockState == Blocks.AIR.getDefaultState()) {
+            if (pos.offset(direction).getY() >= world.getWorld().getSeaLevel() && blockState == Blocks.AIR.getDefaultState()) {
                 return true;
             }
         }

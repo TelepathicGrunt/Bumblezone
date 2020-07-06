@@ -16,7 +16,6 @@ import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneyCrystal;
 
 import java.util.Random;
-import java.util.function.Function;
 
 public class HoneyCrystalFeature extends Feature<DefaultFeatureConfig> {
 
@@ -37,7 +36,7 @@ public class HoneyCrystalFeature extends Feature<DefaultFeatureConfig> {
         BlockState originalBlockstate = world.getBlockState(blockpos$Mutable);
         BlockState blockstate;
 
-        if (originalBlockstate.getBlock() == CAVE_AIR || originalBlockstate.getFluidState().matches(FluidTags.WATER)) {
+        if (originalBlockstate.getBlock() == CAVE_AIR || originalBlockstate.getFluidState().isIn(FluidTags.WATER)) {
 
             for (Direction face : Direction.values()) {
                 blockpos$Mutable.set(position);
@@ -50,7 +49,7 @@ public class HoneyCrystalFeature extends Feature<DefaultFeatureConfig> {
 
 
             BlockState honeyCrystal = BzBlocks.HONEY_CRYSTAL.getDefaultState()
-                    .with(HoneyCrystal.WATERLOGGED, originalBlockstate.getFluidState().matches(FluidTags.WATER));
+                    .with(HoneyCrystal.WATERLOGGED, originalBlockstate.getFluidState().isIn(FluidTags.WATER));
 
             //loop through all 6 directions
             blockpos$Mutable.set(position);

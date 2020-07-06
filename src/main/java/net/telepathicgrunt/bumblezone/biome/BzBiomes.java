@@ -1,6 +1,5 @@
 package net.telepathicgrunt.bumblezone.biome;
 
-import net.fabricmc.fabric.api.biomes.v1.FabricBiomes;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;

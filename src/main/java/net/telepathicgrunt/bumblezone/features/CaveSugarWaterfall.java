@@ -14,7 +14,6 @@ import net.minecraft.world.gen.feature.Feature;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 
 import java.util.Random;
-import java.util.function.Function;
 
 
 public class CaveSugarWaterfall extends Feature<DefaultFeatureConfig> {

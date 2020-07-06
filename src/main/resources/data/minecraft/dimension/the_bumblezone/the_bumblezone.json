@@ -1,0 +1,13 @@
+{
+  "generator": {
+    "type": "the_bumblezone:the_bumblezone",
+    "biome_source": {
+      "type": "the_bumblezone:the_bumblezone",
+      "seed": -1
+    },
+    "settings": "minecraft:overworld",
+    "seed": -1
+  },
+  "type": "the_bumblezone:the_bumblezone",
+  "seed": -1
+}

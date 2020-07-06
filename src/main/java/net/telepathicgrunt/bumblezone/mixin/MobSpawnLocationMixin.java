@@ -1,22 +1,36 @@
 package net.telepathicgrunt.bumblezone.mixin;
 
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.EntityGroup;
+import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.SpawnHelper;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(SpawnHelper.class)
 public class MobSpawnLocationMixin {
-//    //Prevents mobs from spawning above y = 256.
-//    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/SpawnHelper;method_24932(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/mob/MobEntity;D)Z", ordinal = 0),
-//            method = "Lnet/minecraft/world/SpawnHelper;spawnEntitiesInChunk(Lnet/minecraft/entity/SpawnGroup;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/Chunk;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/SpawnHelper$Checker;Lnet/minecraft/world/SpawnHelper$Runner;)V",
-//            locals = LocalCapture.CAPTURE_FAILSOFT,
-//            cancellable = true)
-//    private static void spawnEntitiesInChunk(EntityCategory entityCategory, ServerWorld serverWorld, Chunk chunk, BlockPos blockPos, CallbackInfo ci, ChunkGenerator chunkGenerator, int i, BlockPos.Mutable mutable, int j, int k, int l, int m, int n, Biome.SpawnEntry spawnEntry, EntityData entityData, int o, int p, int q, float f, float g, PlayerEntity playerEntity, double d, MobEntity mobEntity) {
-//
-//        //No mobs allowed to spawn on roof of Bumblezone
-//        if (playerEntity.dimension == BzDimensionType.BUMBLEZONE_TYPE && mutable.getY() > 255) {
-//            //Bumblezone.LOGGER.log(Level.INFO, "canceled spawn");
-//            ci.cancel();
-//        }
-//    }
+    //Prevents mobs from spawning above y = 256.
+    @Inject(method = "Lnet/minecraft/world/SpawnHelper;spawnEntitiesInChunk(Lnet/minecraft/entity/SpawnGroup;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/Chunk;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/SpawnHelper$Checker;Lnet/minecraft/world/SpawnHelper$Runner;)V",
+            at = @At(value = "HEAD"),
+            cancellable = true)
+    private static void spawnEntitiesInChunk(SpawnGroup group, ServerWorld world, Chunk chunk, BlockPos pos, SpawnHelper.Checker checker, SpawnHelper.Runner runner, CallbackInfo ci) {
+
+        //No mobs allowed to spawn on roof of Bumblezone
+        if (world.getRegistryKey().getValue() == Bumblezone.MOD_FULL_ID  && pos.getY() > 255) {
+            //Bumblezone.LOGGER.log(Level.INFO, "canceled spawn");
+            ci.cancel();
+        }
+    }
 
 }

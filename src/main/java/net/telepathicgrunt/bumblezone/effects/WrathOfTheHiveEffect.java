@@ -9,7 +9,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.mixin.BeeEntityInvoker;
 
 import java.util.List;
 
@@ -17,6 +16,7 @@ import java.util.List;
 public class WrathOfTheHiveEffect extends StatusEffect {
     private final static TargetPredicate SEE_THROUGH_WALLS = (new TargetPredicate()).includeHidden();
     private final static TargetPredicate LINE_OF_SIGHT = (new TargetPredicate());
+    public static boolean ACTIVE_WRATH = false;
 
     public WrathOfTheHiveEffect(StatusEffectType type, int potionColor) {
         super(type, potionColor);

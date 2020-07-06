@@ -32,6 +32,7 @@
     "PlayerTeleportationTickMixin",
     "PollenedBeeNaturalSpawnMixin",
     "RedstoneDustCanConnectMixin",
+    "SkyPropertiesAccessor",
     "StructureAccessorMixin",
     "WaterEquivalenceMixin"
   ],

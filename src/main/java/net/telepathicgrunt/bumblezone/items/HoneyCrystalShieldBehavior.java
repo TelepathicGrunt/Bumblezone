@@ -9,13 +9,11 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.telepathicgrunt.bumblezone.mixin.PlayerDamageShieldInvoker;
 
-import java.util.Random;
 import java.util.function.Consumer;
 
 public class HoneyCrystalShieldBehavior {

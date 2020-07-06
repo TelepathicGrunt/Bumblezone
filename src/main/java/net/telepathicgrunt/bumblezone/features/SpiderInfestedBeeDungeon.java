@@ -36,7 +36,6 @@ import net.telepathicgrunt.bumblezone.mixin.StructureAccessorMixin;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Function;
 
 
 public class SpiderInfestedBeeDungeon extends Feature<DefaultFeatureConfig> {

@@ -1,7 +1,5 @@
 package net.telepathicgrunt.bumblezone.mixin;
 
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.BucketItem;
 import net.minecraft.structure.Structure;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;

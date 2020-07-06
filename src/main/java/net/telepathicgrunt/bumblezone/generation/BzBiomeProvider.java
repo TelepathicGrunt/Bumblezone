@@ -1,36 +1,44 @@
 package net.telepathicgrunt.bumblezone.generation;
 
-import net.minecraft.world.World;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.layer.ScaleLayer;
 import net.minecraft.world.biome.layer.type.ParentedLayer;
 import net.minecraft.world.biome.layer.util.*;
 import net.minecraft.world.biome.source.BiomeLayerSampler;
 import net.minecraft.world.biome.source.BiomeSource;
-import net.minecraft.world.level.LevelGeneratorType;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 import net.telepathicgrunt.bumblezone.generation.layer.BzBiomeLayer;
 
+import java.util.ArrayList;
 import java.util.function.LongFunction;
 
 
 public class BzBiomeProvider extends BiomeSource {
+    public static void registerBiomeprovider() {
+        Registry.register(Registry.BIOME_SOURCE, Bumblezone.MOD_FULL_ID, BzBiomeProvider.CODEC);
+    }
+
+    public static final Codec<BzBiomeProvider> CODEC = RecordCodecBuilder.create((instance) -> {
+        return instance.group(Codec.LONG.fieldOf("seed").stable().forGetter((bzBiomeProvider) -> {
+            return bzBiomeProvider.seed;
+        })).apply(instance, instance.stable(BzBiomeProvider::new));
+    });
 
     private final BiomeLayerSampler biomeSampler;
+    private final long seed;
 
 
-    public BzBiomeProvider(long seed, LevelGeneratorType worldType) {
-        super(BzBiomes.biomes);
-
-        //generates the world and biome layouts
-        biomeSampler = buildWorldProcedure(seed, worldType);
+    public BzBiomeProvider(long seed) {
+        super(new ArrayList<>(BzBiomes.biomes));
+        BzBiomeLayer.setSeed(seed);
+        this.seed = seed;
+        this.biomeSampler = buildWorldProcedure(seed, 4);
     }
 
-
-    public BzBiomeProvider(World world) {
-        this(world.getSeed(), world.getGeneratorType());
-        BzBiomeLayer.setSeed(world.getSeed());
-    }
 
 
     public static <T extends LayerSampler, C extends LayerSampleContext<T>> LayerFactory<T> stack(long seed, ParentedLayer parent, LayerFactory<T> incomingArea, int count, LongFunction<C> contextFactory) {
@@ -44,7 +52,7 @@ public class BzBiomeProvider extends BiomeSource {
     }
 
 
-    public static BiomeLayerSampler buildWorldProcedure(long seed, LevelGeneratorType generatorType) {
+    public static BiomeLayerSampler buildWorldProcedure(long seed, int generatorType) {
         LayerFactory<CachingLayerSampler> layerFactory = build(generatorType, (salt) ->
         {
             return new CachingLayerContext(25, seed, salt);
@@ -53,7 +61,7 @@ public class BzBiomeProvider extends BiomeSource {
     }
 
 
-    public static <T extends LayerSampler, C extends LayerSampleContext<T>> LayerFactory<T> build(LevelGeneratorType worldTypeIn, LongFunction<C> contextFactory) {
+    public static <T extends LayerSampler, C extends LayerSampleContext<T>> LayerFactory<T> build(int worldTypeIn, LongFunction<C> contextFactory) {
         LayerFactory<T> layer = BzBiomeLayer.INSTANCE.create(contextFactory.apply(200L));
         layer = ScaleLayer.FUZZY.create(contextFactory.apply(2000L), layer);
         layer = ScaleLayer.NORMAL.create((LayerSampleContext<T>) contextFactory.apply(1001L), layer);
@@ -66,4 +74,13 @@ public class BzBiomeProvider extends BiomeSource {
         return this.biomeSampler.sample(x, z);
     }
 
+    @Override
+    protected Codec<? extends BiomeSource> method_28442() {
+        return CODEC;
+    }
+
+    @Override
+    public BiomeSource withSeed(long seed) {
+        return new BzBiomeProvider(seed);
+    }
 }

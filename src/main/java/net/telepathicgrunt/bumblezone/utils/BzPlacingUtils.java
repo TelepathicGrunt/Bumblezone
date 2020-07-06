@@ -4,7 +4,6 @@ import net.minecraft.block.Material;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldAccess;
 
 public class BzPlacingUtils
 {

@@ -4,7 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.SpawnHelper;
-import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -18,7 +18,7 @@ public class PollenedBeeNaturalSpawnMixin {
         if (!(entity.world.isClient())) {
             ServerWorld serverWorld = (ServerWorld) entity.world;
 
-            if (serverWorld.getDimension() == BzDimensionType.BUMBLEZONE_TYPE) {
+            if (serverWorld.getRegistryKey().getValue() == Bumblezone.MOD_FULL_ID ) {
                 if (entity.getType() == EntityType.BEE) {
                     //20% chance of being full of pollen
                     if (serverWorld.random.nextFloat() < 0.2f) {

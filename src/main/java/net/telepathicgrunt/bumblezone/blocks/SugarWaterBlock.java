@@ -1,7 +1,10 @@
 package net.telepathicgrunt.bumblezone.blocks;
 
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.FluidBlock;
+import net.minecraft.block.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -31,7 +34,7 @@ public class SugarWaterBlock extends FluidBlock {
         boolean flag = false;
 
         for (Direction direction : Direction.values()) {
-            if (direction != Direction.DOWN && world.getFluidState(pos.offset(direction)).matches(FluidTags.LAVA)) {
+            if (direction != Direction.DOWN && world.getFluidState(pos.offset(direction)).isIn(FluidTags.LAVA)) {
                 flag = true;
                 break;
             }

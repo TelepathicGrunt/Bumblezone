@@ -7,28 +7,30 @@ import nerdhub.cardinal.components.api.event.EntityComponentCallback;
 import nerdhub.cardinal.components.api.util.EntityComponents;
 import nerdhub.cardinal.components.api.util.RespawnCopyStrategy;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.render.SkyProperties;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
 import net.telepathicgrunt.bumblezone.biome.BzBaseBiome;
 import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.configs.BzConfig;
 import net.telepathicgrunt.bumblezone.configs.FileWatcher;
-import net.telepathicgrunt.bumblezone.dimension.BzDimensionType;
+import net.telepathicgrunt.bumblezone.dimension.BzDimension;
+import net.telepathicgrunt.bumblezone.dimension.BzSkyProperty;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.entities.BeeAggression;
 import net.telepathicgrunt.bumblezone.entities.IPlayerComponent;
 import net.telepathicgrunt.bumblezone.entities.PlayerComponent;
 import net.telepathicgrunt.bumblezone.features.BzFeatures;
+import net.telepathicgrunt.bumblezone.generation.BzBiomeProvider;
+import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.DispenserItemSetup;
+import net.telepathicgrunt.bumblezone.mixin.SkyPropertiesAccessor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,10 +43,11 @@ import java.util.TimerTask;
 
 public class Bumblezone implements ModInitializer {
     public static final String MODID = "the_bumblezone";
+    public static final Identifier MOD_FULL_ID = new Identifier(Bumblezone.MODID, Bumblezone.MODID);
     public static final Logger LOGGER = LogManager.getLogger(MODID);
     public static final ComponentType<IPlayerComponent> PLAYER_COMPONENT =
             ComponentRegistry.INSTANCE.registerIfAbsent(new Identifier(MODID, "player_component"), IPlayerComponent.class)
-                    .attach(EntityComponentCallback.event(PlayerEntity.class), zombie -> new PlayerComponent());
+                    .attach(EntityComponentCallback.event(PlayerEntity.class), player -> new PlayerComponent());
     public static BzConfig BZ_CONFIG;
 
 
@@ -55,12 +58,14 @@ public class Bumblezone implements ModInitializer {
         BzEffects.registerEffects();
         BzFeatures.registerFeatures();
         BzBiomes.registerBiomes();
-        BzDimensionType.registerChunkGenerator();
-        BzDimensionType.registerDimension();
+        BzChunkGenerator.registerChunkgenerator();
+        BzBiomeProvider.registerBiomeprovider();
+        SkyProperties skyProperty = new BzSkyProperty();
+        ((SkyPropertiesAccessor) skyProperty).getBY_DIMENSION_TYPE().put(BzDimension.BZ_DIMENSION_KEY, skyProperty);
         BzBaseBiome.addSprings();
 
         //attach component to player
-        EntityComponentCallback.event(PlayerEntity.class).register((player, components) -> components.put(PLAYER_COMPONENT, new PlayerComponent()));
+       // EntityComponentCallback.event(PlayerEntity.class).register((player, components) -> components.put(PLAYER_COMPONENT, new PlayerComponent()));
         EntityComponents.setRespawnCopyStrategy(PLAYER_COMPONENT, RespawnCopyStrategy.INVENTORY);
 
 

@@ -13,10 +13,8 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
-import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 
 import java.util.Random;
-import java.util.function.Function;
 
 
 public class HoneycombHole extends Feature<DefaultFeatureConfig> {
@@ -141,7 +139,7 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig> {
                             world.setBlockState(currentPosition, HONEY_BLOCK, 2);
                         }
                     } else if (sliceBlock == 3) {
-                        if (currentPosition.getY() >= BzDimension.getSeaLevel()) {
+                        if (currentPosition.getY() >= 40) {
                             world.setBlockState(currentPosition, CAVE_AIR, 2);
                         } else {
                             world.setBlockState(currentPosition, SUGAR_WATER, 2);

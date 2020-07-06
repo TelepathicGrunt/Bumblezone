@@ -13,6 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
@@ -30,7 +32,8 @@ public class BzPlayerPlacement {
 
         if (teleported instanceof PlayerEntity) {
             MinecraftServer minecraftServer = teleported.getServer(); // the server itself
-            destinationPosition = teleportByPearl((PlayerEntity) teleported, minecraftServer.getWorld(Bumblezone.PLAYER_COMPONENT.get(teleported).getNonBZDimension()), destination);
+            RegistryKey<World> world_key = RegistryKey.of(Registry.DIMENSION, Bumblezone.PLAYER_COMPONENT.get(teleported).getNonBZDimension());
+            destinationPosition = teleportByPearl((PlayerEntity) teleported, minecraftServer.getWorld(world_key), destination);
         } else {
             destinationPosition = new Vec3d(0, 0, 0);
         }
@@ -62,7 +65,7 @@ public class BzPlayerPlacement {
 
     private static Vec3d teleportByOutOfBounds(PlayerEntity playerEntity, ServerWorld destination, boolean checkingUpward) {
         //converts the position to get the corresponding position in non-bumblezone dimension
-        double coordinateScale = destination.dimension.isNether() ? BzDimension.getMovementFactor() / 8D : BzDimension.getMovementFactor() / 1D;
+        double coordinateScale = destination.getWorld().getDimension().isShrunk()? Bumblezone.BZ_CONFIG.movementFactor/ 8D : Bumblezone.BZ_CONFIG.movementFactor / 1D;
         BlockPos blockpos;
         BlockPos validBlockPos = null;
 
@@ -118,7 +121,7 @@ public class BzPlayerPlacement {
 
 
         //converts the position to get the corresponding position in bumblezone dimension
-        double coordinateScale = originalWorld.dimension.isNether() ? 8D / BzDimension.getMovementFactor() : 1D / BzDimension.getMovementFactor();
+        double coordinateScale = originalWorld.getWorld().getDimension().isShrunk() ? 8D / Bumblezone.BZ_CONFIG.movementFactor : 1D / Bumblezone.BZ_CONFIG.movementFactor;
         BlockPos blockpos = new BlockPos(
                 playerEntity.getPos().getX() * coordinateScale,
                 playerEntity.getPos().getY(),
@@ -148,7 +151,7 @@ public class BzPlayerPlacement {
 
                 //moves upward looking for air block while not interrupted by a solid block
                 while (mutable.getY() < 255 && !bumblezoneWorld.isAir(mutable) || bumblezoneWorld.getBlockState(mutable).getMaterial() == Material.WATER) {
-                    mutable.setOffset(Direction.UP);
+                    mutable.move(Direction.UP);
                 }
                 if (bumblezoneWorld.getBlockState(mutable).getMaterial() != Material.AIR) {
                     validBlockPos = null; // No air found. Let's not place player here where they could drown
@@ -266,9 +269,9 @@ public class BzPlayerPlacement {
 
             //move the block pos in the direction it needs to go
             if (checkingUpward) {
-                mutableBlockPos.setOffset(Direction.UP);
+                mutableBlockPos.move(Direction.UP);
             } else {
-                mutableBlockPos.setOffset(Direction.DOWN);
+                mutableBlockPos.move(Direction.DOWN);
             }
         }
 
@@ -307,7 +310,7 @@ public class BzPlayerPlacement {
             world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
         else if(world.getBlockState(mutableBlockPos).getMaterial() == Material.AIR ||
                 (!world.getBlockState(mutableBlockPos).getFluidState().isEmpty() &&
-                    !world.getBlockState(mutableBlockPos).getFluidState().matches(FluidTags.WATER)))
+                    !world.getBlockState(mutableBlockPos).getFluidState().isIn(FluidTags.WATER)))
             world.setBlockState(mutableBlockPos, Blocks.HONEYCOMB_BLOCK.getDefaultState());
 
         world.setBlockState(mutableBlockPos.up(), Blocks.AIR.getDefaultState());
