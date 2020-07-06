@@ -29,11 +29,11 @@ public enum BzBiomeLayer implements InitLayer {
 
 		max = Math.max(max, perlinNoise);
 		min = Math.min(min, perlinNoise);
-		Bumblezone.LOGGER.log(Level.DEBUG, "Max: " + max +", Min: "+min + ", perlin: "+perlinNoise);
+		Bumblezone.LOGGER.log(Level.INFO, "Max: " + max +", Min: "+min + ", perlin: "+perlinNoise);
 
         if (noise.nextInt(5) == 0) {
             return HIVE_PILLAR;
-        } else if (Math.abs(perlinNoise) < 0.7) {
+        } else if (Math.abs(perlinNoise) < 0.55D) {
             return SUGAR_WATER;
         } else {
             return HIVE_WALL;

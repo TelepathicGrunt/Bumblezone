@@ -89,7 +89,7 @@ public class BzBaseBiome extends Biome {
         }
 
         return ((int)(Math.min(Math.max(Math.min(0.001f * colorFactor, 0.9f) - REDDISH_FOG_TINT * 1.9f, 0)*255, 255)) << 0 ) |
-                ((int)(Math.min(Math.max(Math.min(0.30f * colorFactor, 0.9f) - REDDISH_FOG_TINT * 0.6f, 0)*255, 255)) << 8 ) |
-                ((int)(Math.min(Math.min(0.5f * colorFactor, 0.65f + REDDISH_FOG_TINT)*255, 255)) << 16 );
+                ((int)(Math.min(Math.max(Math.min(0.35f * colorFactor, 0.9f) - REDDISH_FOG_TINT * 0.6f, 0)*255, 255)) << 8 ) |
+                ((int)(Math.min(Math.min(0.55f * colorFactor, 0.65f + REDDISH_FOG_TINT)*255, 255)) << 16 );
     }
 }
