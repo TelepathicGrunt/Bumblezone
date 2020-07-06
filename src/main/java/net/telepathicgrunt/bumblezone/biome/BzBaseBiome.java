@@ -71,40 +71,25 @@ public class BzBaseBiome extends Biome {
      */
     @Environment(EnvType.CLIENT)
     public int getFogColor() {
-        PlayerEntity player = MinecraftClient.getInstance().player;
-        World world = player.world;
-
         float colorFactor = 1;
-
-        if (Bumblezone.BZ_CONFIG.dayNightCycle) {
-            // Modifies the sky angle to be in range of 0 to 1 with 0 as night and 1 as day.
-            float scaledAngle = Math.abs(0.5f - calculateVanillaSkyPositioning(world.getTime())) * 2;
-
-            // Limits angle between 0 to 1 and sharply changes color between 0.333... and 0.666...‬
-            colorFactor = Math.min(Math.max(scaledAngle * 3 - 1f, 0), 1);
-
-            // Scales the returned factor by user chosen brightness.
-            colorFactor *= (Bumblezone.BZ_CONFIG.fogBrightnessPercentage / 100);
+        /*
+         * The sky will be turned to midnight when brightness is below 50. This lets us get the
+         * full range of brightness by utilizing the default brightness that the current celestial time gives.
+         */
+        if (Bumblezone.BZ_CONFIG.fogBrightnessPercentage <= 50) {
+            colorFactor *= (Bumblezone.BZ_CONFIG.fogBrightnessPercentage / 50);
         } else {
-            /*
-             * The sky will be turned to midnight when brightness is below 50 and the day/night cycle is off. This lets us get the
-             * full range of brightness by utilizing the default brightness that the current celestial time gives.
-             */
-            if (Bumblezone.BZ_CONFIG.fogBrightnessPercentage <= 50) {
-                colorFactor *= (Bumblezone.BZ_CONFIG.fogBrightnessPercentage / 50);
-            } else {
-                colorFactor *= (Bumblezone.BZ_CONFIG.fogBrightnessPercentage / 100);
-            }
+            colorFactor *= (Bumblezone.BZ_CONFIG.fogBrightnessPercentage / 100);
         }
 
-        if (WrathOfTheHiveEffect.ACTIVE_WRATH && REDDISH_FOG_TINT < 0.65f) {
-            REDDISH_FOG_TINT += 0.00003f;
+        if (WrathOfTheHiveEffect.ACTIVE_WRATH && REDDISH_FOG_TINT < 0.35f) {
+            REDDISH_FOG_TINT += 0.00001f;
         } else if (REDDISH_FOG_TINT > 0) {
-            REDDISH_FOG_TINT -= 0.00003f;
+            REDDISH_FOG_TINT -= 0.00001f;
         }
 
-        return ((int)(Math.min(0.9f * colorFactor, 1.1f + REDDISH_FOG_TINT)*255) << 0 ) |
-                ((int)(Math.max(Math.min(0.63f * colorFactor, 1.1f) - REDDISH_FOG_TINT * 0.4f, 0)*255) << 8 ) |
-                ((int)(Math.max(Math.min(0.0015f * colorFactor, 1.1f) - REDDISH_FOG_TINT * 1.75f, 0)*255) << 16 );
+        return ((int)(Math.min(Math.max(Math.min(0.001f * colorFactor, 0.9f) - REDDISH_FOG_TINT * 1.9f, 0)*255, 255)) << 0 ) |
+                ((int)(Math.min(Math.max(Math.min(0.30f * colorFactor, 0.9f) - REDDISH_FOG_TINT * 0.6f, 0)*255, 255)) << 8 ) |
+                ((int)(Math.min(Math.min(0.5f * colorFactor, 0.65f + REDDISH_FOG_TINT)*255, 255)) << 16 );
     }
 }

@@ -10,7 +10,7 @@ public class BzSkyProperty extends SkyProperties {
 
     @Override
     public Vec3d adjustSkyColor(Vec3d color, float sunHeight) {
-        return color;
+        return color.multiply(1.2D);
     }
 
 

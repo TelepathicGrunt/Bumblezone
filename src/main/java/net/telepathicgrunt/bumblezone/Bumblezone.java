@@ -9,28 +9,20 @@ import nerdhub.cardinal.components.api.util.RespawnCopyStrategy;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.render.SkyProperties;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-import net.telepathicgrunt.bumblezone.biome.BzBaseBiome;
-import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.configs.BzConfig;
 import net.telepathicgrunt.bumblezone.configs.FileWatcher;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
-import net.telepathicgrunt.bumblezone.dimension.BzSkyProperty;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.entities.BeeAggression;
 import net.telepathicgrunt.bumblezone.entities.IPlayerComponent;
 import net.telepathicgrunt.bumblezone.entities.PlayerComponent;
-import net.telepathicgrunt.bumblezone.features.BzFeatures;
-import net.telepathicgrunt.bumblezone.generation.BzBiomeProvider;
-import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.DispenserItemSetup;
-import net.telepathicgrunt.bumblezone.mixin.SkyPropertiesAccessor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -56,18 +48,11 @@ public class Bumblezone implements ModInitializer {
         BzBlocks.registerBlocks();
         BzItems.registerItems();
         BzEffects.registerEffects();
-        BzFeatures.registerFeatures();
-        BzBiomes.registerBiomes();
-        BzChunkGenerator.registerChunkgenerator();
-        BzBiomeProvider.registerBiomeprovider();
-        SkyProperties skyProperty = new BzSkyProperty();
-        ((SkyPropertiesAccessor) skyProperty).getBY_DIMENSION_TYPE().put(BzDimension.BZ_DIMENSION_KEY, skyProperty);
-        BzBaseBiome.addSprings();
+        BzDimension.setupDimension();
 
         //attach component to player
-       // EntityComponentCallback.event(PlayerEntity.class).register((player, components) -> components.put(PLAYER_COMPONENT, new PlayerComponent()));
+        //EntityComponentCallback.event(PlayerEntity.class).register((player, components) -> components.put(PLAYER_COMPONENT, new PlayerComponent()));
         EntityComponents.setRespawnCopyStrategy(PLAYER_COMPONENT, RespawnCopyStrategy.INVENTORY);
-
 
         //Set up config
         BZ_CONFIG = ConfigManager.loadConfig(BzConfig.class);

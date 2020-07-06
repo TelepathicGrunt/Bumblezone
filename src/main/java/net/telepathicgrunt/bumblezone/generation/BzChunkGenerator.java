@@ -226,7 +226,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     protected double computeNoiseFalloff(double depth, double scale, int y) {
         double d1 = ((double) y - (8.5D + depth * 8.5D / 8.0D * 4.0D)) * 12.0D * 128.0D / this.height / scale;
         if (d1 < 0.0D) {
-            d1 *= 2.0D;
+            d1 *= 1.75D;
         }
 
         return d1;
