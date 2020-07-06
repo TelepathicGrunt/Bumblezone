@@ -27,7 +27,6 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.*;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.source.BiomeSource;
-import net.minecraft.world.biome.source.TheEndBiomeSource;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkSection;
 import net.minecraft.world.chunk.ProtoChunk;
@@ -42,7 +41,6 @@ import net.telepathicgrunt.bumblezone.utils.BzPlacingUtils;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
@@ -70,7 +68,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         }
 
     });
-    private static final float[] field_24775 = Util.make(new float[49], (fs) -> {
+    private static final float[] HEIGHT_LERP = Util.make(new float[49], (fs) -> {
         for(int i = -3; i <= 3; ++i) {
             for(int j = -3; j <= 3; ++j) {
                 float f = 10.0F / MathHelper.sqrt((float)(i * i + j * j) + 0.2F);
@@ -184,14 +182,14 @@ public class BzChunkGenerator extends ChunkGenerator {
         int k = this.getSeaLevel();
         float l = this.biomeSource.getBiomeForNoiseGen(x, k, z).getDepth();
 
-        for(int m = -1; m <= 1; ++m) {
-            for(int n = -1; n <= 1; ++n) {
+        for(int m = -2; m <= 2; ++m) {
+            for(int n = -2; n <= 2; ++n) {
                 Biome biome = this.biomeSource.getBiomeForNoiseGen(x + m, k, z + n);
                 float o = biome.getDepth();
                 float p = biome.getScale();
 
                 float u = o > l ? 0.5F : 1.0F;
-                float v = u * field_24775[m + 3 + (n + 3) * 7] / (o + 2.0F);
+                float v = u * HEIGHT_LERP[m + 3 + (n + 3) * 7] / (o + 2.0F);
                 g += p * v;
                 h += o * v;
                 i += v;

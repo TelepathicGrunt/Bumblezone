@@ -36,7 +36,7 @@ public class BzBiomeProvider extends BiomeSource {
         super(new ArrayList<>(BzBiomes.biomes));
         BzBiomeLayer.setSeed(seed);
         this.seed = seed;
-        this.biomeSampler = buildWorldProcedure(seed, 4);
+        this.biomeSampler = buildWorldProcedure(seed);
     }
 
 
@@ -52,20 +52,18 @@ public class BzBiomeProvider extends BiomeSource {
     }
 
 
-    public static BiomeLayerSampler buildWorldProcedure(long seed, int generatorType) {
-        LayerFactory<CachingLayerSampler> layerFactory = build(generatorType, (salt) ->
-        {
-            return new CachingLayerContext(25, seed, salt);
-        });
+    public static BiomeLayerSampler buildWorldProcedure(long seed) {
+        LayerFactory<CachingLayerSampler> layerFactory = build((salt) ->
+                new CachingLayerContext(25, seed, salt));
         return new BiomeLayerSampler(layerFactory);
     }
 
 
-    public static <T extends LayerSampler, C extends LayerSampleContext<T>> LayerFactory<T> build(int worldTypeIn, LongFunction<C> contextFactory) {
+    public static <T extends LayerSampler, C extends LayerSampleContext<T>> LayerFactory<T> build(LongFunction<C> contextFactory) {
         LayerFactory<T> layer = BzBiomeLayer.INSTANCE.create(contextFactory.apply(200L));
+     //   layer = ScaleLayer.NORMAL.create(contextFactory.apply(1001L), layer);
+        layer = ScaleLayer.NORMAL.create(contextFactory.apply(1001L), layer);
         layer = ScaleLayer.FUZZY.create(contextFactory.apply(2000L), layer);
-        layer = ScaleLayer.NORMAL.create((LayerSampleContext<T>) contextFactory.apply(1001L), layer);
-        layer = ScaleLayer.NORMAL.create((LayerSampleContext<T>) contextFactory.apply(1001L), layer);
         return layer;
     }
 
