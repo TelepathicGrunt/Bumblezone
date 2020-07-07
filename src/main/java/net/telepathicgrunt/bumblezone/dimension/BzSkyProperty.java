@@ -16,6 +16,6 @@ public class BzSkyProperty extends SkyProperties {
 
     @Override
     public boolean useThickFog(int camX, int camY) {
-        return false;
+        return true;
     }
 }

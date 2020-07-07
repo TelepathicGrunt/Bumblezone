@@ -139,18 +139,6 @@ public class BzConfig {
     @Comment(value = "##############################################################\n" +
             "##############################################################\n" +
             "\n" +
-            "Determines if the day/night cycle active in the Bumblezone dimension.\n" +
-            "The cycle will be visible by the change in color of the fog. \n" +
-            "If kept on, the day/night cycle will match the Overworld's \n" +
-            "cycle even when players sleep to skip night in the Overworld.\n" +
-            "\n" +
-            "If this setting is set to false, the cycle \n" +
-            "will be stuck at \"noon\" for the dimension.")
-    public boolean dayNightCycle = true;
-
-    @Comment(value = "##############################################################\n" +
-            "##############################################################\n" +
-            "\n" +
             "How bright the fog is in the Bumblezone dimension. \n" +
             "This will always affect the fog whether you have the \n" +
             "day/night cycle on or off.\n" +

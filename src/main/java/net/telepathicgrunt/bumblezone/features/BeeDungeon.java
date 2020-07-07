@@ -36,7 +36,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class BeeDungeon extends Feature<DefaultFeatureConfig> {
+public class BeeDungeon extends Feature<DefaultFeatureConfig>{
 
     private static final BlockState HONEY_CRYSTAL = BzBlocks.HONEY_CRYSTAL.getDefaultState();
 
@@ -49,38 +49,38 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig> {
         //affect rarity
         if (random.nextInt(Bumblezone.BZ_CONFIG.beeDungeonRarity) != 0) return false;
 
-        BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position).move(-6, -2, -6);
+        BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position).move(-3, -2, -3);
         //Bumblezone.LOGGER.log(Level.INFO, "Bee Dungeon at X: "+position.getX() +", "+position.getY()+", "+position.getZ());
+
+        return generateShell(world, blockpos$Mutable);
+    }
+
+    protected boolean generateShell(ServerWorldAccess world, BlockPos.Mutable blockpos$Mutable){
 
         StructureManager structureManager = ((ServerWorld) world.getWorld()).getStructureManager();
         Structure structure = structureManager.getStructureOrBlank(new Identifier(Bumblezone.MODID + ":bee_dungeon/shell"));
-
         if (structure == null) {
             Bumblezone.LOGGER.warn("bee_dungeon/shell NTB does not exist!");
             return false;
         }
-
         StructurePlacementData placementsettings = (new StructurePlacementData()).setMirror(BlockMirror.NONE).setRotation(BlockRotation.NONE).setIgnoreEntities(false).setChunkPosition((ChunkPos) null);
         addBlocksToWorld(structure, world, blockpos$Mutable, placementsettings, 2);
 
 
         structure = structureManager.getStructureOrBlank(new Identifier(Bumblezone.MODID + ":bee_dungeon/altar"));
-
         if (structure == null) {
             Bumblezone.LOGGER.warn("bee_dungeon/altar NTB does not exist!");
             return false;
         }
-
-        addBlocksToWorld(structure, world, blockpos$Mutable.move(0, 1, 0), placementsettings, 2);
+        this.addBlocksToWorld(structure, world, blockpos$Mutable.move(0, 1, 0), placementsettings, 2);
         return true;
-
     }
 
     /**
      * Adds blocks and entities from this structure to the given world.
      */
     @SuppressWarnings("deprecation")
-    private static boolean addBlocksToWorld(Structure structure, ServerWorldAccess world, BlockPos pos, StructurePlacementData placementIn, int flags) {
+    public boolean addBlocksToWorld(Structure structure, ServerWorldAccess world, BlockPos pos, StructurePlacementData placementIn, int flags) {
         StructureAccessorMixin structureAccessor = ((StructureAccessorMixin) structure);
         if (structureAccessor.getBlocks().isEmpty()) {
             return false;

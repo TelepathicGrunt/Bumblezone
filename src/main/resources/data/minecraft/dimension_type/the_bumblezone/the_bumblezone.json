@@ -2,7 +2,7 @@
   "name": "the_bumblezone",
   "ultrawarm": false,
   "natural": true,
-  "shrunk": true,
+  "shrunk": false,
   "ambient_light": 0.25,
   "has_skylight": false,
   "has_ceiling": true,

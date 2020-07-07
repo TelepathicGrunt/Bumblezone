@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Random;
 
 
-public class SpiderInfestedBeeDungeon extends Feature<DefaultFeatureConfig> {
+public class SpiderInfestedBeeDungeon extends BeeDungeon{
     private static final BlockState HONEY_CRYSTAL = BzBlocks.HONEY_CRYSTAL.getDefaultState();
 
     public SpiderInfestedBeeDungeon(Codec<DefaultFeatureConfig> configFactory) {
@@ -50,52 +50,33 @@ public class SpiderInfestedBeeDungeon extends Feature<DefaultFeatureConfig> {
         //affect rarity
         if (random.nextInt(Bumblezone.BZ_CONFIG.spiderInfestedBeeDungeonRarity) != 0) return false;
 
-        BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position).move(-6, -2, -6);
-        //Bumblezone.LOGGER.log(Level.INFO, "Spider Infested Bee Dungeon at X: "+position.getX() +", "+position.getY()+", "+position.getZ());
+        BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position).move(-3, -2, -3);
+        //Bumblezone.LOGGER.log(Level.INFO, "Bee Dungeon at X: "+position.getX() +", "+position.getY()+", "+position.getZ());
 
-        StructureManager structureManager = ((ServerWorld) world.getWorld()).getStructureManager();
-        Structure structure = structureManager.getStructureOrBlank(new Identifier(Bumblezone.MODID + ":bee_dungeon/shell"));
+        boolean generated = generateShell(world, blockpos$Mutable);
 
-        if (structure == null) {
-            Bumblezone.LOGGER.warn("bee_dungeon/shell NTB does not exist!");
-            return false;
-        }
-
-        StructurePlacementData placementsettings = (new StructurePlacementData()).setMirror(BlockMirror.NONE).setRotation(BlockRotation.NONE).setIgnoreEntities(false).setChunkPosition((ChunkPos) null);
-        addBlocksToWorld(structure, world, blockpos$Mutable, placementsettings, 2);
-
-
-        structure = structureManager.getStructureOrBlank(new Identifier(Bumblezone.MODID + ":bee_dungeon/altar"));
-
-        if (structure == null) {
-            Bumblezone.LOGGER.warn("bee_dungeon/altar NTB does not exist!");
-            return false;
-        }
-
-        addBlocksToWorld(structure, world, blockpos$Mutable.move(0, 1, 0), placementsettings, 2);
-
-
-        for (int x = -8; x <= 16; x++) {
-            for (int y = -3; y <= 10; y++) {
-                for (int z = -8; z <= 16; z++) {
-                    blockpos$Mutable.set(position).move(x, y, z);
-                    if (random.nextFloat() < 0.07f && world.getBlockState(blockpos$Mutable).getBlock() == Blocks.CAVE_AIR) {
-                        world.setBlockState(blockpos$Mutable, Blocks.COBWEB.getDefaultState(), 3);
+        if(generated){
+            for(int x = -8; x <= 12; x++) {
+                for(int y = -6; y <= 10; y++) {
+                    for(int z = -8; z <= 12; z++) {
+                        blockpos$Mutable.set(position).move(x, y, z);
+                        if(random.nextFloat() < 0.07f && world.getBlockState(blockpos$Mutable).getBlock() == Blocks.CAVE_AIR) {
+                            world.setBlockState(blockpos$Mutable, Blocks.COBWEB.getDefaultState(), 3);
+                        }
                     }
                 }
             }
         }
 
-
-        return true;
-
+        return generated;
     }
 
     /**
      * Adds blocks and entities from this structure to the given world.
      */
     @SuppressWarnings("deprecation")
-    private static boolean addBlocksToWorld(Structure structure, ServerWorldAccess world, BlockPos pos, StructurePlacementData placementIn, int flags) {
+    @Override
+    public boolean addBlocksToWorld(Structure structure, ServerWorldAccess world, BlockPos pos, StructurePlacementData placementIn, int flags) {
         StructureAccessorMixin structureAccessor = ((StructureAccessorMixin) (Object) structure);
         if (structureAccessor.getBlocks().isEmpty()) {
             return false;
@@ -259,7 +240,7 @@ public class SpiderInfestedBeeDungeon extends Feature<DefaultFeatureConfig> {
      *
      * @return - a pair of the blockstate to use and whether this block can replace air
      */
-    private static Pair<BlockState, Boolean> blockConversion(ServerWorldAccess world, BlockPos pos, Block block, Random random) {
+    protected static Pair<BlockState, Boolean> blockConversion(ServerWorldAccess world, BlockPos pos, Block block, Random random) {
         //////////////////////////////////////////////
         //Shell
 

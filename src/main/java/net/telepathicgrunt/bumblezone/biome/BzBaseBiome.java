@@ -82,14 +82,14 @@ public class BzBaseBiome extends Biome {
             colorFactor *= (Bumblezone.BZ_CONFIG.fogBrightnessPercentage / 100);
         }
 
-        if (WrathOfTheHiveEffect.ACTIVE_WRATH && REDDISH_FOG_TINT < 0.35f) {
+        if (WrathOfTheHiveEffect.ACTIVE_WRATH && REDDISH_FOG_TINT < 0.38f) {
             REDDISH_FOG_TINT += 0.00001f;
         } else if (REDDISH_FOG_TINT > 0) {
             REDDISH_FOG_TINT -= 0.00001f;
         }
 
-        return ((int)(Math.min(Math.max(Math.min(0.001f * colorFactor, 0.9f) - REDDISH_FOG_TINT * 1.9f, 0)*255, 255)) << 0 ) |
-                ((int)(Math.min(Math.max(Math.min(0.35f * colorFactor, 0.9f) - REDDISH_FOG_TINT * 0.6f, 0)*255, 255)) << 8 ) |
-                ((int)(Math.min(Math.min(0.55f * colorFactor, 0.65f + REDDISH_FOG_TINT)*255, 255)) << 16 );
+        return ((int)(Math.min(Math.max(Math.min((0.001f * colorFactor) * (colorFactor * colorFactor), 0.9f) - REDDISH_FOG_TINT * 1.9f, 0)*255, 255)) << 0 ) |
+                ((int)(Math.min(Math.max(Math.min(0.34f * colorFactor, 0.87f) - REDDISH_FOG_TINT * 0.6f, 0)*255, 255)) << 8 ) |
+                ((int)(Math.min(Math.min(0.56f * colorFactor, 0.65f + REDDISH_FOG_TINT)*255, 255)) << 16 );
     }
 }
