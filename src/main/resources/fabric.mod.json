@@ -21,16 +21,21 @@
   "entrypoints": {
     "main": [
       "net.telepathicgrunt.bumblezone.Bumblezone"
+    ],
+    "client": [
+      "net.telepathicgrunt.bumblezone.BumblezoneClient"
     ]
   },
   "mixins": [
     "the_bumblezone.mixins.json"
   ],
 
+  "accessWidener" : "the_bumblezone.accesswidener",
+
   "depends": {
     "fabricloader": ">=0.7.2",
     "fabric": "*",
-    "minecraft": "1.15.x",
+    "minecraft": "1.16.x",
     "cotton": "^1.0.0",
     "cardinal-components-base": "^2.3.0",
     "cardinal-components-entity": "^2.3.0"
