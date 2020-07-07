@@ -29,7 +29,7 @@ public final class SugarWaterBiome extends BzBaseBiome {
                 .surfaceBuilder(new ConfiguredSurfaceBuilder<>(HONEY_SURFACE_BUILDER, HONEY_CONFIG))
                 .precipitation(Biome.Precipitation.NONE)
                 .category(Category.NONE)
-                .depth(-1.99F)
+                .depth(-2.5F)
                 .scale(0.4F)
                 .temperature(1.85F)
                 .downfall(0.5F)

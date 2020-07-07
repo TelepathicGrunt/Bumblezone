@@ -12,6 +12,8 @@ import net.minecraft.world.biome.source.BiomeSource;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 import net.telepathicgrunt.bumblezone.generation.layer.BzBiomeLayer;
+import net.telepathicgrunt.bumblezone.generation.layer.BzBiomePillarLayer;
+import net.telepathicgrunt.bumblezone.generation.layer.BzBiomeScalePillarLayer;
 
 import java.util.ArrayList;
 import java.util.function.LongFunction;
@@ -61,9 +63,10 @@ public class BzBiomeProvider extends BiomeSource {
 
     public static <T extends LayerSampler, C extends LayerSampleContext<T>> LayerFactory<T> build(LongFunction<C> contextFactory) {
         LayerFactory<T> layer = BzBiomeLayer.INSTANCE.create(contextFactory.apply(200L));
-     //   layer = ScaleLayer.NORMAL.create(contextFactory.apply(1001L), layer);
-        layer = ScaleLayer.NORMAL.create(contextFactory.apply(1001L), layer);
-        layer = ScaleLayer.FUZZY.create(contextFactory.apply(2000L), layer);
+        layer = BzBiomePillarLayer.INSTANCE.create(contextFactory.apply(1008L), layer);
+        layer = BzBiomeScalePillarLayer.INSTANCE.create(contextFactory.apply(1055L), layer);
+        layer = ScaleLayer.FUZZY.create(contextFactory.apply(2003L), layer);
+        layer = ScaleLayer.FUZZY.create(contextFactory.apply(2523L), layer);
         return layer;
     }
 

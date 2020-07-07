@@ -68,11 +68,13 @@ public class BzChunkGenerator extends ChunkGenerator {
         }
 
     });
-    private static final float[] HEIGHT_LERP = Util.make(new float[25], (fs) -> {
-        for(int i = -2; i <= 2; ++i) {
-            for(int j = -2; j <= 2; ++j) {
-                float f = 10.0F / MathHelper.sqrt((float)(i * i + j * j) + 0.2F);
-                fs[i + 2 + (j + 2) * 5] = f;
+
+    private static final int LERP_RANGE = 3;
+    private static final float[] HEIGHT_LERP = Util.make(new float[(LERP_RANGE * 2 + 1) * (LERP_RANGE * 2  + 1)], (fs) -> {
+        for(int i = -LERP_RANGE; i <= LERP_RANGE; ++i) {
+            for(int j = -LERP_RANGE; j <= LERP_RANGE; ++j) {
+                float f = 1.0F / MathHelper.sqrt((float)(i * i + j * j) + 0.2F);
+                fs[i + LERP_RANGE + (j + LERP_RANGE) * (LERP_RANGE * 2 + 1)] = f;
             }
         }
     });
@@ -182,14 +184,14 @@ public class BzChunkGenerator extends ChunkGenerator {
         int k = this.getSeaLevel();
         float l = this.biomeSource.getBiomeForNoiseGen(x, k, z).getDepth();
 
-        for(int m = -2; m <= 2; ++m) {
-            for(int n = -2; n <= 2; ++n) {
+        for(int m = -LERP_RANGE; m <= LERP_RANGE; ++m) {
+            for(int n = -LERP_RANGE; n <= LERP_RANGE; ++n) {
                 Biome biome = this.biomeSource.getBiomeForNoiseGen(x + m, k, z + n);
                 float o = biome.getDepth();
                 float p = biome.getScale();
 
                 float u = o > l ? 0.5F : 1.0F;
-                float v = u * HEIGHT_LERP[m + 2 + (n + 2) * 5] / (o + 2.0F);
+                float v = u * HEIGHT_LERP[m + LERP_RANGE + (n + LERP_RANGE) * (LERP_RANGE * 2 + 1)] / (3.0F);
                 g += p * v;
                 h += o * v;
                 i += v;
@@ -205,9 +207,9 @@ public class BzChunkGenerator extends ChunkGenerator {
 
         double xScale = 2600D;
         double zScale = 250D;
-        double yScale = 600D;
+        double yScale = 16D;
         double xzStretch = 8D;
-        double yStretch = 4D;
+        double yStretch = 2D;
         topSlideTarget = -10;
         topSlideSize = 3;
         double topSlideOffset = 0;
@@ -219,7 +221,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         double densityOffset = -0.46875D;
 
         for(int y = 0; y <= this.noiseSizeY; ++y) {
-            double as = this.sampleNoise(x, y, z, xScale, yScale, zScale, xzStretch, yStretch);
+            double as = this.sampleNoise(x, y*2, z, xScale, yScale, zScale, xzStretch, yStretch);
             double at = 1.0D - (double)y * 2.0D / (double)this.noiseSizeY + randomDensity;
             double au = at * densityFactor + densityOffset;
             double av = (au + ac) * ad;
@@ -246,7 +248,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     private double method_28553(int i, int j) {
-        double d = this.field_24776.sample((double)(i * 200), 10.0D, (double)(j * 200), 1.0D, 0.0D, true);
+        double d = this.field_24776.sample(i * 200, 10.0D, j * 200, 1.0D, 0.0D, true);
         double f;
         if (d < 0.0D) {
             f = -d * 0.3D;
@@ -259,7 +261,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     public int getHeight(int x, int z, Heightmap.Type heightmapType) {
-        return this.sampleHeightmap(x, z, (BlockState[])null, heightmapType.getBlockPredicate());
+        return this.sampleHeightmap(x, z, null, heightmapType.getBlockPredicate());
     }
 
     public BlockView getColumnSample(int x, int z) {
@@ -408,7 +410,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         ObjectListIterator<StructurePiece> objectListIterator = objectList.iterator();
         ObjectListIterator<JigsawJunction> objectListIterator2 = objectList2.iterator();
 
-        int yChunk;
+        int tempYSection;
         double d;
         double e ;
         double f;
@@ -432,13 +434,13 @@ public class BzChunkGenerator extends ChunkGenerator {
                     /*
                      * When the noise is greater than 16 (chunks), begin the mirroring effect
                      */
-                    if (ySection > 16) {
+                    if (ySection > 15) {
                         /*
                          * Move down one because we ended on that y chunk before and by mirroring that chunk, the transition between the lower
                          * half and upper half is smoother.
                          */
-                        yChunk = ySection - 1;
-                        ySection = 31 - yChunk;
+                        tempYSection = ySection;
+                        ySection = 31 - ySection;
 
                         d = ds[0][p][ySection + 1];
                         e = ds[0][p + 1][ySection + 1];
@@ -449,7 +451,7 @@ public class BzChunkGenerator extends ChunkGenerator {
                         s = ds[1][p][ySection];
                         t = ds[1][p + 1][ySection];
 
-                        ySection = yChunk + 1;
+                        ySection = tempYSection;
                     } else {
                         /*
                          * Generate the y chunk as normal for y chunks 16 and below
@@ -600,11 +602,10 @@ public class BzChunkGenerator extends ChunkGenerator {
         int zCord = zChunk << 4;
         Biome biome = region.getBiome((new ChunkPos(xChunk, zChunk)).getCenterBlockPos());
         ChunkRandom sharedseedrandom = new ChunkRandom();
-        sharedseedrandom.setSeed(region.getSeed());
-
+        sharedseedrandom.setPopulationSeed(region.getSeed(), xCord, zCord);
         while (sharedseedrandom.nextFloat() < biome.getMaxSpawnChance()) {
             //30% of time, spawn slime. Otherwise, spawn bees.
-            Biome.SpawnEntry biome$spawnlistentry = sharedseedrandom.nextFloat() < 0.05f ? INITIAL_SLIME_ENTRY : INITIAL_BEE_ENTRY;
+            Biome.SpawnEntry biome$spawnlistentry = sharedseedrandom.nextFloat() < 0.1f ? INITIAL_SLIME_ENTRY : INITIAL_BEE_ENTRY;
 
             int startingX = xCord + sharedseedrandom.nextInt(16);
             int startingZ = zCord + sharedseedrandom.nextInt(16);
@@ -616,8 +617,8 @@ public class BzChunkGenerator extends ChunkGenerator {
 
             if (biome$spawnlistentry.type.isSummonable() && height > 0 && height < 255) {
                 float width = biome$spawnlistentry.type.getWidth();
-                double xLength = MathHelper.clamp((double) startingX, (double) xCord + (double) width, (double) xCord + 16.0D - (double) width);
-                double zLength = MathHelper.clamp((double) startingZ, (double) zCord + (double) width, (double) zCord + 16.0D - (double) width);
+                double xLength = MathHelper.clamp(startingX, (double) xCord + (double) width, (double) xCord + 16.0D - (double) width);
+                double zLength = MathHelper.clamp(startingZ, (double) zCord + (double) width, (double) zCord + 16.0D - (double) width);
 
                 Entity entity;
                 try {
@@ -640,7 +641,7 @@ public class BzChunkGenerator extends ChunkGenerator {
                     continue;
                 }
 
-                entity.refreshPositionAndAngles(xLength, (double) height, zLength, sharedseedrandom.nextFloat() * 360.0F, 0.0F);
+                entity.refreshPositionAndAngles(xLength, height, zLength, sharedseedrandom.nextFloat() * 360.0F, 0.0F);
                 if (entity instanceof MobEntity) {
                     MobEntity mobentity = (MobEntity) entity;
                     if (mobentity.canSpawn(region, SpawnReason.CHUNK_GENERATION) && mobentity.canSpawn(region)) {
