@@ -50,6 +50,9 @@ dependencies {
 	//modImplementation ("io.github.alloffabric:BeeProductive:${project.beeproductive_version}")
 }
 
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+
 processResources {
 	inputs.property "version", project.version
 
@@ -60,6 +63,26 @@ processResources {
 
 	from(sourceSets.main.resources.srcDirs) {
 		exclude "fabric.mod.json"
+	}
+
+	// Minifies all .json files when building the mod.
+	// Source files are not minified, only the jar copies.
+	doLast {
+
+		def jsonMinifyStart = System.currentTimeMillis()
+		def jsonMinified = 0
+		def jsonBytesSaved = 0
+
+		fileTree(dir: outputs.files.asPath, include: '**/*.json').each {
+
+			File file = it
+			jsonMinified++
+			def oldLength = file.length()
+			file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
+			jsonBytesSaved += oldLength - file.length()
+		}
+
+		println('Minified ' + jsonMinified + ' json files. Saved ' + jsonBytesSaved + ' bytes. Took ' + (System.currentTimeMillis() - jsonMinifyStart) + 'ms.')
 	}
 }
 
