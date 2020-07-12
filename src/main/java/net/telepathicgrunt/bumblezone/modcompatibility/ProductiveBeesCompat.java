@@ -10,7 +10,6 @@ import org.apache.maven.artifact.versioning.ArtifactVersion;
 import cy.jdkdigital.productivebees.block.AdvancedBeehive;
 import cy.jdkdigital.productivebees.block.AdvancedBeehiveAbstract;
 import cy.jdkdigital.productivebees.block.ExpansionBox;
-import cy.jdkdigital.productivebees.init.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -18,7 +17,6 @@ import net.minecraft.block.pattern.BlockMatcher;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -224,12 +222,4 @@ public class ProductiveBeesCompat {
 
 		return Blocks.HONEYCOMB_BLOCK;
 	}
-
-	/**
-	 * Is passed in item a Honey Treat?
-	 */
-	public static boolean PBIsHoneyTreatItem(Item heldItem) {
-		return heldItem == ModItems.HONEY_TREAT.get();
-	}
-
 }

@@ -4,7 +4,6 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 
 /**
@@ -26,10 +25,6 @@ public class ProductiveBeesRedirection {
 
 	public static void PBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
 		ProductiveBeesCompat.PBMobSpawnEvent(event);
-	}
-
-	public static boolean PBIsHoneyTreatItem(Item heldItem) {
-		return ProductiveBeesCompat.PBIsHoneyTreatItem(heldItem);
 	}
 
 	public static Block PBGetRandomHoneycomb(Random random, int lowerBoundBias) {
