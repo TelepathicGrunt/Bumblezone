@@ -1,5 +1,5 @@
 {
-    "type": "minecraft:crafting_shapeless",
+    "type": "the_bumblezone:container_shapeless_recipe_bz",
 	"ingredients": [
 		{
 			"item": "minecraft:water_bucket"

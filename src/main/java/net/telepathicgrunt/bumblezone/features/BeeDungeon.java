@@ -289,21 +289,21 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 				random.nextFloat() < Bumblezone.BzConfig.oreHoneycombSpawnRateBeeDungeon.get()) 
 			{
 			    return new Pair<>(BeesourcefulRedirection.BSGetRandomHoneycomb(random, 
-					Bumblezone.BzConfig.PBGreatHoneycombRarityBeeDungeon.get()).getDefaultState(), new Boolean(false));
+					Bumblezone.BzConfig.PBGreatHoneycombRarityBeeDungeon.get()).getDefaultState(), false);
 			}
 			else if(!ModChecking.beesourcefulPresent && 
 				ModChecking.productiveBeesPresent && 
 				random.nextFloat() < Bumblezone.BzConfig.PBOreHoneycombSpawnRateBeeDungeon.get()) 
 			{
 				return new Pair<>(ProductiveBeesRedirection.PBGetRandomHoneycomb(random, 
-						Bumblezone.BzConfig.PBGreatHoneycombRarityBeeDungeon.get()).getDefaultState(), new Boolean(false));
+						Bumblezone.BzConfig.PBGreatHoneycombRarityBeeDungeon.get()).getDefaultState(), false);
 			}
 			
 			else if(random.nextFloat() < 0.4f) {
-				return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(),	new Boolean(false));
+				return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(),	false);
 			}
 			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
+				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), false);
 			}
 		}
 
@@ -313,13 +313,13 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 				return new Pair<>(BzBlocks.HONEYCOMB_BROOD.get().getDefaultState()
 								.with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3)))
 								.with(HoneycombBrood.FACING, Direction.SOUTH),	
-								new Boolean(false));
+								false);
 			}
 			else if(random.nextFloat() < 0.2f) {
-				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
+				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), false);
 			}
 			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
+				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), false);
 			}
 		}
 
@@ -329,13 +329,13 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 				return new Pair<>(BzBlocks.HONEYCOMB_BROOD.get().getDefaultState()
 								.with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3)))
 								.with(HoneycombBrood.FACING, Direction.WEST),	
-								new Boolean(false));
+								false);
 			}
 			else if(random.nextFloat() < 0.2f) {
-				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
+				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), false);
 			}
 			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
+				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), false);
 			}
 		}
 
@@ -345,13 +345,13 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 				return new Pair<>(BzBlocks.HONEYCOMB_BROOD.get().getDefaultState()
 								.with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3)))
 								.with(HoneycombBrood.FACING, Direction.NORTH),	
-								new Boolean(false));
+								false);
 			}
 			else if(random.nextFloat() < 0.2f) {
-				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
+				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), false);
 			}
 			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
+				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), false);
 			}
 		}
 
@@ -361,23 +361,23 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 				return new Pair<>(BzBlocks.HONEYCOMB_BROOD.get().getDefaultState()
 								.with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3)))
 								.with(HoneycombBrood.FACING, Direction.EAST),	
-								new Boolean(false));
+								false);
 			}
 			else if(random.nextFloat() < 0.2f) {
-				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
+				return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), false);
 			}
 			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(false));
+				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), false);
 			}
 		}
 
 		//sugar water stream
 		else if(block == BzBlocks.SUGAR_WATER_BLOCK.get()) {
 			if(random.nextFloat() < 0.1f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-				return new Pair<>(HONEY_CRYSTAL.with(HoneyCrystal.WATERLOGGED, true), new Boolean(false));
+				return new Pair<>(HONEY_CRYSTAL.with(HoneyCrystal.WATERLOGGED, true), false);
 			}
 			else {
-				return new Pair<>(block.getDefaultState(), new Boolean(false));
+				return new Pair<>(block.getDefaultState(), false);
 			}
 		}
 		
@@ -394,14 +394,14 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 			
 			if(ModChecking.beesourcefulPresent && random.nextFloat() < Bumblezone.BzConfig.oreHoneycombSpawnRateBeeDungeon.get()) {
 				return new Pair<>(BeesourcefulRedirection.BSGetRandomHoneycomb(random, 
-						Bumblezone.BzConfig.greatHoneycombRarityBeeDungeon.get()).getDefaultState(), new Boolean(replaceAir));
+						Bumblezone.BzConfig.greatHoneycombRarityBeeDungeon.get()).getDefaultState(), replaceAir);
 			}
 			
 			if(random.nextFloat() < 0.4f) {
-				return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), new Boolean(replaceAir));
+				return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), replaceAir);
 			}
 			else {
-				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), new Boolean(replaceAir));
+				return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), replaceAir);
 			}
 		}
 
@@ -413,17 +413,17 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 							.with(CandleBlock.CANDLES, random.nextInt(3)+1)
 							.with(CandleBlock.WATERLOGGED, false)
 							.with(CandleBlock.LIT, true), 
-							new Boolean(true));
+							true);
 				else if(random.nextFloat() < 0.4f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-					return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+					return new Pair<>(HONEY_CRYSTAL, true);
 				}
 			}
 			else {
 				if(random.nextFloat() < 0.2f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-					return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+					return new Pair<>(HONEY_CRYSTAL, true);
 				}
 				else {
-					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
 				}
 			}
 		}
@@ -436,17 +436,17 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 							.with(CandleBlock.CANDLES, random.nextInt(random.nextInt(3)+1)+1) //low chance of 3 candles
 							.with(CandleBlock.WATERLOGGED, false)
 							.with(CandleBlock.LIT, true), 
-							new Boolean(true));
+							true);
 				else if(random.nextBoolean() && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-					return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+					return new Pair<>(HONEY_CRYSTAL, true);
 				}
 			}
 			else {
 				if(random.nextFloat() < 0.35f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-					return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+					return new Pair<>(HONEY_CRYSTAL, true);
 				}
 				else {
-					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
 				}
 			}
 		}
@@ -459,17 +459,17 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 							.with(CandleBlock.CANDLES, random.nextInt(random.nextInt(random.nextInt(3)+1)+1)+1) //lowest chance of 3 candles
 							.with(CandleBlock.WATERLOGGED, false)
 							.with(CandleBlock.LIT, true), 
-							new Boolean(true));
+							true);
 				else if(HONEY_CRYSTAL.isValidPosition(world, pos)) {
-					return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+					return new Pair<>(HONEY_CRYSTAL, true);
 				}
 			}
 			else {
 				if(random.nextFloat() < 0.6f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-					return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+					return new Pair<>(HONEY_CRYSTAL, true);
 				}
 				else {
-					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
 				}
 			}
 		}
@@ -478,7 +478,7 @@ public class BeeDungeon extends Feature<NoFeatureConfig>
 		//////////////////////////////////////////////
 		//Misc/air
 		
-		return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+		return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
 	}
 
 }

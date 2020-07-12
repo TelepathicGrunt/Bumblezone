@@ -8,10 +8,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -21,6 +24,12 @@ import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 
 public class BzItems
 {
+	public static final IRecipeSerializer<ContainerCraftingRecipe> CONTAINER_CRAFTING_RECIPE = new ContainerCraftingRecipe.Serializer();
+
+    public static void registerCustomRecipes(final RegistryEvent.Register<IRecipeSerializer<?>> event) {
+        event.getRegistry().register(CONTAINER_CRAFTING_RECIPE.setRegistryName(new ResourceLocation(Bumblezone.MODID, "container_shapeless_recipe_bz")));
+    }
+	
 	/**
 	 * creative tab to hold our block items
 	 */
@@ -34,7 +43,8 @@ public class BzItems
 		}
 	};
     
-    public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Bumblezone.MODID);
+    @SuppressWarnings("deprecation")
+	public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Bumblezone.MODID);
 
 
     //blocks

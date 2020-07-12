@@ -25,19 +25,22 @@ public class BzBlocks
 {
     public static Material RESIDUE;
     static {
-	Material.Builder builder = (new Material.Builder(MaterialColor.ORANGE_TERRACOTTA)).doesNotBlockMovement().replaceable().notSolid();
-	try {
-	    Method method = ObfuscationReflectionHelper.findMethod(builder.getClass(), "func_200505_j");
-	    builder = ((Builder) method.invoke(builder));
-	    method = ObfuscationReflectionHelper.findMethod(builder.getClass(), "func_200511_g");
-	    RESIDUE = ((Builder) method.invoke(builder)).build();
-	} catch (Exception e) {
-	    e.printStackTrace();
-	} 
+		Material.Builder builder = (new Material.Builder(MaterialColor.ORANGE_TERRACOTTA)).doesNotBlockMovement().replaceable().notSolid();
+		try {
+		    Method method = ObfuscationReflectionHelper.findMethod(builder.getClass(), "func_200505_j");
+		    builder = ((Builder) method.invoke(builder));
+		    method = ObfuscationReflectionHelper.findMethod(builder.getClass(), "func_200511_g");
+		    RESIDUE = ((Builder) method.invoke(builder)).build();
+		} catch (Exception e) {
+		    e.printStackTrace();
+		} 
     }
     
-    public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Bumblezone.MODID);
-    public static final DeferredRegister<Fluid> FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, Bumblezone.MODID);
+    @SuppressWarnings("deprecation")
+	public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Bumblezone.MODID);
+    
+    @SuppressWarnings("deprecation")
+	public static final DeferredRegister<Fluid> FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, Bumblezone.MODID);
 
     
     //normal blocks
@@ -76,10 +79,10 @@ public class BzBlocks
     public static final ResourceLocation FLUID_OVERLAY = new ResourceLocation(Bumblezone.MODID+":block/sugar_water_overlay");
     
     public static final RegistryObject<FlowingFluid> SUGAR_WATER_FLUID = FLUIDS.register("sugar_water_fluid", () ->
-            new SugarWaterFluid.Source(BzBlocks.SUGAR_WATER_FLUID_PROPERTIES)
+		new SugarWaterFluid.Source(BzBlocks.SUGAR_WATER_FLUID_PROPERTIES)
     );
     public static final RegistryObject<FlowingFluid> SUGAR_WATER_FLUID_FLOWING = FLUIDS.register("sugar_water_flowing", () ->
-            new SugarWaterFluid.Flowing(BzBlocks.SUGAR_WATER_FLUID_PROPERTIES)
+		new SugarWaterFluid.Flowing(BzBlocks.SUGAR_WATER_FLUID_PROPERTIES)
     );
     public static final RegistryObject<FlowingFluidBlock> SUGAR_WATER_BLOCK = BLOCKS.register("sugar_water_block", () ->
 	    new SugarWaterBlock(SUGAR_WATER_FLUID)
