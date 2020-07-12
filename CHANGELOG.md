@@ -17,6 +17,22 @@ Mods I'm keeping an eye on for future compat
 # | Bumblezone changelog |
    
    
+## (V.1.3.7 Changes) (1.15.2 Minecraft)
+ 
+##### Mod Compatibility:
+
+-Added support for ProductiveBees's new honeycomb variants so they spawn in the dimension now!
+
+-Bees can be fed and/or calmed with Buzzier Bees's Honey Soup or Sticky Honey Wand!
+
+##### Recipes:
+   
+-Fixed bucket duplication when crafting Sugar Water from Water Bucket and Sugar in Crafting Table.
+  
+##### Bees:
+   
+-Feeding bees will swing your arm always now.
+ 
 ## (V.1.3.6 Changes) (1.15.2 Minecraft)
  
 ##### Recipes:

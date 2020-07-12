@@ -3,6 +3,7 @@ package net.telepathicgrunt.bumblezone;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.Feature;
@@ -47,40 +48,40 @@ public class Bumblezone
 
     public Bumblezone() 
     {
-	IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-	MinecraftForge.EVENT_BUS.register(this);
-	IEventBus forgeBus = MinecraftForge.EVENT_BUS;
-
-	modEventBus.addListener(this::setup);
-
-	BzBlocks.BLOCKS.register(modEventBus);
-	BzItems.ITEMS.register(modEventBus);
-	BzBlocks.FLUIDS.register(modEventBus);
-
-	DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> ClientEvents.subscribeClientEvents(modEventBus, forgeBus));
-
-	// generates/handles config
-	BzConfig = ConfigHelper.register(ModConfig.Type.SERVER, (builder, subscriber) -> new BzConfig.BzConfigValues(builder, subscriber));
+		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		MinecraftForge.EVENT_BUS.register(this);
+		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+	
+		modEventBus.addListener(this::setup);
+	
+		BzBlocks.BLOCKS.register(modEventBus);
+		BzItems.ITEMS.register(modEventBus);
+		BzBlocks.FLUIDS.register(modEventBus);
+	
+		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> ClientEvents.subscribeClientEvents(modEventBus, forgeBus));
+	
+		// generates/handles config
+		BzConfig = ConfigHelper.register(ModConfig.Type.SERVER, (builder, subscriber) -> new BzConfig.BzConfigValues(builder, subscriber));
     }
 
 
     private void setup(final FMLCommonSetupEvent event) 
     {
-	CapabilityPlayerPosAndDim.register();
-	SugarWaterEvents.setup();
-	BzBaseBiome.addSprings();
-	DispenserItemSetup.setupDispenserBehaviors();
-
-	DeferredWorkQueue.runLater(Bumblezone::lateSetup);
+		CapabilityPlayerPosAndDim.register();
+		SugarWaterEvents.setup();
+		BzBaseBiome.addSprings();
+		DispenserItemSetup.setupDispenserBehaviors();
+		
+		DeferredWorkQueue.runLater(Bumblezone::lateSetup);
     }
 
 
     // should run after most other mods just in case
     private static void lateSetup() 
     {
-	DispenserItemSetup.lateSetupDespenserBehavior();
-	ModChecking.setupModCompat();
-	BzBiomes.biomes.forEach(biome -> ((BzBaseBiome) biome).increaseVanillaSlimeMobsRates());
+		DispenserItemSetup.lateSetupDespenserBehavior();
+		ModChecking.setupModCompat();
+		BzBiomes.biomes.forEach(biome -> ((BzBaseBiome) biome).increaseVanillaSlimeMobsRates());
     }
 
     // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
@@ -88,52 +89,58 @@ public class Bumblezone
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents
     {
-
-	@SubscribeEvent
-	public static void registerBiomes(final RegistryEvent.Register<Biome> event) 
-	{
-	    // registers all my modified biomes
-	    BzBiomes.registerBiomes(event);
-	}
-
-
-	/**
-	 * This method will be called by Forge when it is time for the mod to register features.
-	 */
-	@SubscribeEvent
-	public static void onRegisterFeatures(final RegistryEvent.Register<Feature<?>> event) 
-	{
-	    BzFeatures.registerFeatures(event);
-	}
-
-
-	/**
-	 * This method will be called by Forge when it is time for the mod to register effects.
-	 */
-	@SubscribeEvent
-	public static void onRegisterEffects(final RegistryEvent.Register<Effect> event) 
-	{
-	    BzEffects.registerEffects(event);
-	}
-
-
-	/**
-	 * This method will be called by Forge when it is time for the mod to register placement.
-	 */
-	@SubscribeEvent
-	public static void onRegisterPlacements(final RegistryEvent.Register<Placement<?>> event) 
-	{
-	    BzPlacements.registerPlacements(event);
-	}
-
-
-	/**
-	 * This method will be called by Forge when it is time for the mod to register surface builders.
-	 */
-	@SubscribeEvent
-	public static void onRegisterSurfacebuilders(final RegistryEvent.Register<SurfaceBuilder<?>> event) 
-	{
-	    BzSurfaceBuilders.registerSurfaceBuilders(event);
-	}
+	
+		@SubscribeEvent
+		public static void registerBiomes(final RegistryEvent.Register<Biome> event) 
+		{
+		    // registers all my modified biomes
+		    BzBiomes.registerBiomes(event);
+		}
+	
+	
+		/**
+		 * This method will be called by Forge when it is time for the mod to register features.
+		 */
+		@SubscribeEvent
+		public static void onRegisterFeatures(final RegistryEvent.Register<Feature<?>> event) 
+		{
+		    BzFeatures.registerFeatures(event);
+		}
+	
+	
+		/**
+		 * This method will be called by Forge when it is time for the mod to register effects.
+		 */
+		@SubscribeEvent
+		public static void onRegisterEffects(final RegistryEvent.Register<Effect> event) 
+		{
+		    BzEffects.registerEffects(event);
+		}
+	
+	
+		/**
+		 * This method will be called by Forge when it is time for the mod to register placement.
+		 */
+		@SubscribeEvent
+		public static void onRegisterPlacements(final RegistryEvent.Register<Placement<?>> event) 
+		{
+		    BzPlacements.registerPlacements(event);
+		}
+	
+	
+		/**
+		 * This method will be called by Forge when it is time for the mod to register surface builders.
+		 */
+		@SubscribeEvent
+		public static void onRegisterSurfacebuilders(final RegistryEvent.Register<SurfaceBuilder<?>> event) 
+		{
+		    BzSurfaceBuilders.registerSurfaceBuilders(event);
+		}
+		
+		
+	    @SubscribeEvent
+	    public static void onRegisterSerializers(final RegistryEvent.Register<IRecipeSerializer<?>> event) {
+	    	BzItems.registerCustomRecipes(event);
+	    }
     }
 }
