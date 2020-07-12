@@ -17,6 +17,16 @@ Mods I'm keeping an eye on for future compat
 # | Bumblezone changelog |
    
    
+## (V.1.3.7 Changes) (1.15.2 Minecraft)
+ 
+##### Mod Compatibility:
+
+-Added support for ProductiveBees's new honeycomb variants so they spawn in the dimension now!D
+
+##### Recipes:
+   
+-Fixed bucket duplication when crafting Sugar Water from Water Bucket and Sugar in Crafting Table.
+   
 ## (V.1.3.6 Changes) (1.15.2 Minecraft)
  
 ##### Recipes:

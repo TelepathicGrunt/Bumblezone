@@ -525,11 +525,11 @@ public class BzConfig
 	        		PBOreHoneycombSpawnRateSpiderBeeDungeon = subscriber.subscribe(builder
 	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 	    		            		+" How much of Spider Infested Bee Dungeons is made of ore-based honeycombs.\r\n"
-	    		            		+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.4D\r\n"
+	    		            		+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.1D\r\n"
 		                    		+" \r\n"
 		                    		+" NOTE: This only takes effect if Productive Bees is on and Beesourceful is not present. \r\n")
 	    		            .translation("the_bumblezone.config.productivebees.pborehoneycombspawnratespiderbeedungeon")
-	    		            .defineInRange("PBOreHoneycombSpawnRateSpiderBeeDungeon", 0.4D, 0D, 1D));
+	    		            .defineInRange("PBOreHoneycombSpawnRateSpiderBeeDungeon", 0.1D, 0D, 1D));
 		    		
 	        		PBGreatHoneycombRaritySpiderBeeDungeon = subscriber.subscribe(builder
 	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"

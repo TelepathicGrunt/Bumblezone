@@ -60,10 +60,10 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 	}
 	
 	@Override
-	public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> changedBlock, Random rand, BlockPos position, NoFeatureConfig p_212245_5_)
+	public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> changedBlock, Random random, BlockPos position, NoFeatureConfig p_212245_5_)
 	{
 		//affect rarity
-		if(rand.nextInt(Bumblezone.BzConfig.spiderInfestedBeeDungeonRarity.get()) != 0) return false;
+		if(random.nextInt(Bumblezone.BzConfig.spiderInfestedBeeDungeonRarity.get()) != 0) return false;
 		
 		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position).move(-3, -2, -3);
 		//Bumblezone.LOGGER.log(Level.INFO, "Spider Infested Bee Dungeon at X: "+position.getX() +", "+position.getY()+", "+position.getZ());
@@ -96,14 +96,14 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 			for(int y = -6; y <= 10; y++) {
 				for(int z = -8; z <= 12; z++) {
 					blockpos$Mutable.setPos(position).move(x, y, z);
-					if(rand.nextFloat() < 0.07f && world.getBlockState(blockpos$Mutable).getBlock() == Blocks.CAVE_AIR) {
+					if(random.nextFloat() < 0.07f && world.getBlockState(blockpos$Mutable).getBlock() == Blocks.CAVE_AIR) {
 						world.setBlockState(blockpos$Mutable, Blocks.COBWEB.getDefaultState(), 3);
 					}
 					if(ModChecking.productiveBeesPresent && 
 						Bumblezone.BzConfig.spawnProductiveBeesHoneycombVariants.get() && 
-						rand.nextFloat() < 0.07f && 
+						random.nextFloat() < 0.07f && 
 						world.getBlockState(blockpos$Mutable).getMaterial().isOpaque()) {
-					    world.setBlockState(blockpos$Mutable, ProductiveBeesRedirection.PBGetRottenedHoneycomb().getDefaultState(), 3);
+					    world.setBlockState(blockpos$Mutable, ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), 3);
 					}
 				}
 			}
@@ -335,7 +335,7 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 				Bumblezone.BzConfig.spawnProductiveBeesHoneycombVariants.get() && 
 				random.nextFloat() < 0.5f) 
 			{
-			    	return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb().getDefaultState(), false);
+			    	return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), false);
 			}
 			
 			else if(random.nextFloat() < 0.15f) {
@@ -359,7 +359,7 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 			else if(ModChecking.productiveBeesPresent && 
 				Bumblezone.BzConfig.spawnProductiveBeesHoneycombVariants.get() && 
 				random.nextFloat() < 0.5f) {
-			    	return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb().getDefaultState(), false);
+			    	return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), false);
 			}
 			else {
 				return new Pair<>(BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), false);
@@ -379,7 +379,7 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 			else if(ModChecking.productiveBeesPresent && 
 				Bumblezone.BzConfig.spawnProductiveBeesHoneycombVariants.get() && 
 				random.nextFloat() < 0.5f) {
-			    	return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb().getDefaultState(), false);
+			    	return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), false);
 			}
 			else {
 				return new Pair<>(BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), false);
@@ -399,7 +399,7 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 			else if(ModChecking.productiveBeesPresent && 
 				Bumblezone.BzConfig.spawnProductiveBeesHoneycombVariants.get() && 
 				random.nextFloat() < 0.5f) {
-			    	return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb().getDefaultState(), false);
+			    	return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), false);
 			}
 			else {
 				return new Pair<>(BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), false);
@@ -419,7 +419,7 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 			else if(ModChecking.productiveBeesPresent && 
 				Bumblezone.BzConfig.spawnProductiveBeesHoneycombVariants.get() && 
 				random.nextFloat() < 0.5f) {
-			    	return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb().getDefaultState(), false);
+			    	return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), false);
 			}
 			else {
 				return new Pair<>(BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), false);
