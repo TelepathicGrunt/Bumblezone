@@ -3,9 +3,8 @@
 <p style="text-decoration: underline; font-size: 14px; text-align: center;"><strong><a style="text-decoration: underline; font-size: 14px; text-align: center;" href="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-fabric">[Click here for the Fabric version of this mod!]</a></strong></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p style="text-align: center;"><em><span style="font-size: 14px; color: #b00000; text-decoration: underline;"><strong>Recent 1.15.2 News:</strong></span><span style="font-size: 14px;"><b><strong>&nbsp;Fixed crash with newer versions of</strong></b></span></em></p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Beesourceful and added more compat with Productive Bees!</strong></b></span></em></p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Greatly improved the texture for Sticky Honey Residue/Redstone!</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px; color: #b00000; text-decoration: underline;"><strong>Recent 1.15.2 News:</strong></span><span style="font-size: 14px;"><b><strong>&nbsp;A</strong></b></span></em><em style="font-size: 1.2rem;"><span style="font-size: 14px;"><b><strong>dded Productive Bees's new</strong></b></span></em></p>
+<p style="text-align: center;"><em style="font-size: 1.2rem;"><span style="font-size: 14px;"><b><strong>honeycombs to the dimension! Fixed bucket duplication recipe.</strong></b></span></em></p>
 <p style="text-align: center;"><strong style="color: #3f3bb8; font-size: 18px;"><em>(And like always, please report any <span style="text-decoration: line-through;">glitches</span>&nbsp;BUGS you find)</em></strong></p>
 <p style="text-align: center;">&nbsp;</p>
 <p>&nbsp;</p>
@@ -23,7 +22,7 @@
 <p>&nbsp;</p>
 <h2 id="additions" style="color: #b76a00;"><strong>WHAT DOES THIS MOD ADD?</strong></h2>
 <p>&nbsp;</p>
-<p><img src="https://media.forgecdn.net/attachments/292/678/2020-05-17_10.png" alt="An image that organizes and shows off all of the items and blocks that The Bumblezone has added." width="623" height="325" /></p>
+<p><img src="https://media.forgecdn.net/attachments/302/227/2020-07-12_14.png" alt="An image that organizes and shows off all of the items and blocks that The Bumblezone has added." width="623" height="325" /></p>
 <p>&nbsp;</p>
 <p><span style="font-size: 14px;"><strong>BLOCKS&nbsp;</strong>- 9 new blocks and 1 new liquid</span></p>
 <div class="spoiler">
@@ -217,6 +216,8 @@
 <p>&nbsp;</p>
 <p>-The Honey Wand can also take honey from Honeycomb Brood Blocks but since you killed the larva, you get Wrath of the Hive effect and angry bees coming at you!</p>
 <p>&nbsp;</p>
+<p>-You can feed bees with Sticky Honey Wand or Honey Soup and can calm angered bees.</p>
+<p>&nbsp;</p>
 <p>-Using a Bottle of Bee item on a Empty Honeycomb Brood Block will revive the block into a stage 1&nbsp;Honeycomb Brood Block. This can be done by hand or by a Dispenser facing the block.</p>
 <p>&nbsp;</p>
 <p>-Buzzier Bees' custom Bee Nest and Bee Hive blocks can be used to teleport to Bumblezone dimension.</p>
@@ -245,9 +246,9 @@
 <p>-Productive Bees' Honey Treat item has a 40% chance of removing the Wrath of the Hive effect from you when you feed the treat to bees unlike the Honey Bottle's 30% chance. The treat will also heal bees a lot more too!</p>
 <p>-The Honey Treat can also be fed to Honeycomb Brood Blocks to grow the larva! In fact, there's a 20% chance the larva may grow two stages at a time instead of 1 when fed this item.&nbsp;</p>
 <p>&nbsp;</p>
-<p>-Productive Bees's many Honeycomb variants will spawn in The Bumblezone dimension! If Beesourceful is not on, Productive Bees's honeycombs of the same variants will replace Beesourceful's honeycombs in the dimension (both in terrain and in Bee Dungeons).&nbsp;</p>
+<p>-Productive Bees's many Honeycomb variants will spawn in The Bumblezone dimension! If Beesourceful is not on, Productive Bees's honeycombs of the same variants will replace Beesourceful's honeycombs in the dimension (both in terrain and in Bee Dungeons).</p>
 <p>&nbsp;</p>
-<p>-Spider Infested Bee Dungeons will generate Rotten Honeycombs around it as well.&nbsp;</p>
+<p>-Some honeycomb variants can only spawn in Spider Infested Bee Dungeons.</p>
 </div>
 <p>&nbsp;</p>
 <p>Aurum's More Blocks (AMB) -&nbsp;<a href="https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks">https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks</a></p>
