@@ -18,7 +18,7 @@ import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 public class BzBaseBiome extends Biome {
 	
 	protected BzBaseBiome(Biome.Builder biomeBuilder) {
-		super(biomeBuilder.precipitation(Biome.RainType.NONE).category(Biome.Category.JUNGLE).waterColor(14402413).waterFogColor(11700268).parent((String) null));
+		super(biomeBuilder.precipitation(Biome.RainType.NONE).category(Biome.Category.NONE).waterColor(14402413).waterFogColor(11700268).parent((String) null));
 	}
 	
 	public void increaseVanillaSlimeMobsRates() {
