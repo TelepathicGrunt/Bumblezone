@@ -15,10 +15,10 @@ import net.minecraft.world.gen.placement.Placement;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
 
-public class BzBaseBiome extends Biome {
+public abstract class BzBaseBiome extends Biome {
 	
 	protected BzBaseBiome(Biome.Builder biomeBuilder) {
-		super(biomeBuilder.precipitation(Biome.RainType.NONE).category(Biome.Category.JUNGLE).waterColor(14402413).waterFogColor(11700268).parent((String) null));
+		super(biomeBuilder.precipitation(Biome.RainType.NONE).category(Biome.Category.NONE).waterColor(14402413).waterFogColor(11700268).parent((String) null));
 	}
 	
 	public void increaseVanillaSlimeMobsRates() {
@@ -30,7 +30,11 @@ public class BzBaseBiome extends Biome {
 	public <T extends Entity> void addModMobs(EntityClassification classification, EntityType<T> mob, int weight, int minGroup, int maxGroup) {
 		this.addSpawn(classification, new Biome.SpawnListEntry(mob, weight, minGroup, maxGroup));
 	}
+
 	
+    public abstract void addBiomeFeatures();
+    public abstract void addBiomeMobs();
+    
 	/**
 	 * We have to add springs after all registration because someone at Forge decided that biomes registry should fire
 	 * before fluids so adding a spring with custom fluid in the biome constructor will crash the game.

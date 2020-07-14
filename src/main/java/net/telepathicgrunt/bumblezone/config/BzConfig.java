@@ -72,12 +72,37 @@ public class BzConfig
 
 	    // general mechanics
 	    public ConfigValueListener<Boolean> dispensersDropGlassBottles;
+	    public ConfigValueListener<Boolean> clearUnwantedBiomeFeatures;
+	    public ConfigValueListener<Boolean> clearUnwantedBiomeMobs;
 
 
 	    public BzConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber) {
   
 	        builder.push("The Bumblezone Dimension Options");
-	
+
+	        	clearUnwantedBiomeFeatures = subscriber.subscribe(builder
+	                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	                    		+" EXPERIMENTAL!\r\n "
+	                    		+" Will attempt to remove all biome features from Bumblezone's \r\n"
+	                    		+" biomes and attempt to re-add them after all mods finish set-up.\r\n"
+	                    		+" Use this if another mod is adding features/structures to Bumblezone's\r\n"
+	                    		+" biomes and those mods didn't give a config to blacklist Bumblezone's\r\n"
+	                    		+" biomes.\r\n"
+	                    		+" (Be sure to let those mods know to add feature/structure configs though!)\r\n")
+	                    .translation("the_bumblezone.config.dimension.clearunwantedbiomefeatures")
+	                    .define("clearUnwantedBiomeFeatures", false));
+
+	        	clearUnwantedBiomeMobs = subscriber.subscribe(builder
+	                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	                    		+" EXPERIMENTAL!\r\n "
+	                    		+" Will attempt to remove all biome features from Bumblezone's \r\n"
+	                    		+" biomes and attempt to re-add them after all mods finish set-up.\r\n"
+	                    		+" Use this if another mod is adding mobs to Bumblezone's\r\n"
+	                    		+" biomes and those mods didn't give a config to blacklist Bumblezone's\r\n"
+	                    		+" biomes.\r\n"
+	                    		+" (Be sure to let those mods know to add mob configs though!)\r\n")
+	                    .translation("the_bumblezone.config.dimension.clearunwantedbiomemobs")
+	                    .define("clearUnwantedBiomeMobs", false));
 	
 	            dayNightCycle = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"

@@ -16,6 +16,13 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
    
+## (V.1.3.8 Changes) (1.15.2 Minecraft)
+ 
+##### Mod Compatibility:
+ 
+-Changed Bumblezone's biome categories from Jungle to None so people can blacklist it from Quark's structures easier.
+
+-Added an experimental option to reset Bumblezone's biomes after all mods are finished setup to try and let players remove other mod's features/structures/mobs out of Bumblezone.
    
 ## (V.1.3.7 Changes) (1.15.2 Minecraft)
  
