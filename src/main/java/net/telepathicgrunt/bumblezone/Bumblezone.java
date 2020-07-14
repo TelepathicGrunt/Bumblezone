@@ -3,9 +3,12 @@ package net.telepathicgrunt.bumblezone;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.GenerationStage.Decoration;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
@@ -69,7 +72,6 @@ public class Bumblezone
     {
 		CapabilityPlayerPosAndDim.register();
 		SugarWaterEvents.setup();
-		BzBaseBiome.addSprings();
 		DispenserItemSetup.setupDispenserBehaviors();
 		
 		DeferredWorkQueue.runLater(Bumblezone::lateSetup);
@@ -79,7 +81,30 @@ public class Bumblezone
     // should run after most other mods just in case
     private static void lateSetup() 
     {
+    	if(BzConfig.clearUnwantedBiomeFeatures.get()) {
+    		for(Biome biome : BzBiomes.biomes) {
+    			for(GenerationStage.Decoration stage : Decoration.values()) {
+    				biome.getFeatures(stage).clear();
+    			}
+    			
+    			biome.structures.clear();
+    			
+    			((BzBaseBiome)biome).addBiomeFeatures();
+    		}
+    	}
+
+    	if(BzConfig.clearUnwantedBiomeMobs.get()) {
+    		for(Biome biome : BzBiomes.biomes) {
+    			for(EntityClassification creatureType : EntityClassification.values()) {
+    				biome.getSpawns(creatureType).clear();
+    			}
+    			
+    			((BzBaseBiome)biome).addBiomeMobs();
+    		}
+    	}
+    	
 		DispenserItemSetup.lateSetupDespenserBehavior();
+		BzBaseBiome.addSprings();
 		ModChecking.setupModCompat();
 		BzBiomes.biomes.forEach(biome -> ((BzBaseBiome) biome).increaseVanillaSlimeMobsRates());
     }
