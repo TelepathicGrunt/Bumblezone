@@ -32,8 +32,9 @@ public class MobSpawnBehavior
 						//STOP SPAWNING!!!!!!!!
 						event.setResult(Result.DENY);
 					}
-					
-					else if (entity.getType() == EntityType.PHANTOM && !Bumblezone.BzConfig.allowPhantomSpawns.get()) {
+
+					else if (entity.getType() == EntityType.PHANTOM && !Bumblezone.BzConfig.allowPhantomSpawns.get() ||
+						 entity.getType() == EntityType.ENDERMAN && !Bumblezone.BzConfig.allowEndermanSpawns.get()) {
 						event.setResult(Result.DENY);
 					}
 				}

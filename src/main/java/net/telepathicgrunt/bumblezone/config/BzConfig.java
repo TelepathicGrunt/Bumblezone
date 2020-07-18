@@ -77,6 +77,7 @@ public class BzConfig
 
 	    // mob controls
 	    public ConfigValueListener<Boolean> allowPhantomSpawns;
+	    public ConfigValueListener<Boolean> allowEndermanSpawns;
 
 
 	    public BzConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber) {
@@ -381,6 +382,12 @@ public class BzConfig
 	                        +" Controls whether or not Phantoms can (rarely) spawn in the Bumblezone.")
 	                .translation("the_bumblezone.config.mobs.allowphantomspawns")
 	                .define("allowPhantomSpawns", true));
+
+	            allowEndermanSpawns = subscriber.subscribe(builder
+	                .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	                        +" Controls whether or not Endermen can (rarely) spawn in the Bumblezone.")
+	                .translation("the_bumblezone.config.mobs.allowendermanspawns")
+	                .define("allowEndermanSpawns", true));
 
             builder.pop();
 	        

@@ -20,8 +20,9 @@ Mods I'm keeping an eye on for future compat
  
 ##### Config:
 
--Added config to turn off/on Phantom spawning in The Bumblezone (Special thanks to wtchappell for the PR!)
- 
+-Added config to turn off/on Phantom spawning in The Bumblezone
+-Added config to turn off/on Enderman spawning in The Bumblezone
+(Special thanks to wtchappell for the PR!)
  
 ## (V.1.3.8 Changes) (1.15.2 Minecraft)
  
