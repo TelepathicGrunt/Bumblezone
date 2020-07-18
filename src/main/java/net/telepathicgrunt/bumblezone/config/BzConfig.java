@@ -376,12 +376,11 @@ public class BzConfig
 	        
             builder.push("Mob Spawning Options");
 
-            allowPhantomSpawns = subscriber.subscribe(builder
-                .comment(" \r\n-----------------------------------------------------\r\n\r\n"
-                        +" Controls whether or not Phantoms can (rarely) spawn in the\r\n"
-                        +" Bumblezone.")
-                .translation("the_bumblezone.config.mobs.allowphantomspawns")
-                .define("allowPhantomSpawns", true));
+	            allowPhantomSpawns = subscriber.subscribe(builder
+	                .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	                        +" Controls whether or not Phantoms can (rarely) spawn in the Bumblezone.")
+	                .translation("the_bumblezone.config.mobs.allowphantomspawns")
+	                .define("allowPhantomSpawns", true));
 
             builder.pop();
 	        
