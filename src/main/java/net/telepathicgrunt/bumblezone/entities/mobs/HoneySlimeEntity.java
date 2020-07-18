@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.entities;
+package net.telepathicgrunt.bumblezone.entities.mobs;
 
 import javax.annotation.Nullable;
 

@@ -52,8 +52,13 @@ public class BeeInteractivity {
                     // high chance to remove wrath of the hive from player
                     boolean calmed = world.getRandom().nextFloat() < 0.3f;
                     if (calmed) {
-                        playerEntity.removeStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
-                        WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
+                        if(playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE)){
+                            playerEntity.removeStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
+                            WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
+                        }
+                        else{
+                            playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, 40, 2, false, false));
+                        }
                     }
 
                     if (!beeEntity.hasAngerTime() || calmed)
@@ -81,10 +86,14 @@ public class BeeInteractivity {
                     // very low chance to remove wrath of the hive from player
                     boolean calmed = world.getRandom().nextFloat() < 0.07f;
                     if (calmed) {
-                        playerEntity.removeStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
-                        WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
+                        if(playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE)){
+                            playerEntity.removeStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
+                            WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
+                        }
+                        else{
+                            playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, 40, 2, false, false));
+                        }
                     }
-
 
                     if (!beeEntity.hasAngerTime() || calmed)
                         ((ServerWorld) world).spawnParticles(

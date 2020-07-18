@@ -37,6 +37,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
+import net.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 
 import java.util.List;
@@ -144,6 +145,12 @@ public class HoneycombBrood extends FacingBlock {
                         successfulGrowth = true;
                 } else {
                     successfulGrowth = true;
+                }
+
+                if (successfulGrowth && world.random.nextFloat() < 0.30F) {
+                    if(!playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE)){
+                        playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, 30, 1, false, false));
+                    }
                 }
 
                 //grows larva
