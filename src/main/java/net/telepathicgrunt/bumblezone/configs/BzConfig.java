@@ -55,7 +55,7 @@ public class BzConfig {
             "\n" +
             "How long bees will keep their effects for (speed, absorption, strength).\n" +
             "\n" +
-            "Note: This is not in seconds at all. And bee's anger will remain.\n" +
+            "Note: This is in ticks. 20 ticks = 1 second. And bee's anger will remain.\n" +
             "Only the boosts given to the bees will be gone.")
     public int howLongWrathOfTheHiveLasts = 350;
 
