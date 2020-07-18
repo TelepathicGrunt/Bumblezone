@@ -8,6 +8,19 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
        | The Bumblezone Fabric changelog |
 
 
+   (V.2.0.1 Changes) (1.16.1 Snapshot Minecraft)
+
+	Backend:
+•Fixed crash on server.
+
+•Fixed log spam due to trying to do clientside mixins on serverside.
+
+•License changed to LGPLv3
+
+	Dimension:
+•Raised cloud height to 1000 to hide clouds.
+
+
    (V.2.0.0 Changes) (1.16.1 Snapshot Minecraft)
 
 	Backend:

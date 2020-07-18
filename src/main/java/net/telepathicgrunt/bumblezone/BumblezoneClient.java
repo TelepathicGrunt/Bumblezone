@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
+import net.minecraft.client.render.SkyProperties;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.fluid.Fluid;
@@ -19,6 +20,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockRenderView;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.dimension.BzDimension;
+import net.telepathicgrunt.bumblezone.dimension.BzSkyProperty;
+import net.telepathicgrunt.bumblezone.mixin.SkyPropertiesAccessor;
 
 import java.util.function.Function;
 
@@ -35,6 +39,9 @@ public class BumblezoneClient implements ClientModInitializer {
     public void onInitializeClient() {
         setupFluidRendering(BzBlocks.SUGAR_WATER_FLUID, BzBlocks.SUGAR_WATER_FLUID_FLOWING, FLUID_STILL, FLUID_FLOWING, 0x0059FF);
         BzBlocks.registerRenderLayers();
+
+        SkyProperties skyProperty = new BzSkyProperty();
+        ((SkyPropertiesAccessor) skyProperty).getBY_DIMENSION_TYPE().put(BzDimension.BZ_DIMENSION_KEY, skyProperty);
     }
 
 

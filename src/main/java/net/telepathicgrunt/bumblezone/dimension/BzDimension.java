@@ -22,9 +22,6 @@ public class BzDimension {
         BzChunkGenerator.registerChunkgenerator();
         BzBiomeProvider.registerBiomeprovider();
 
-        SkyProperties skyProperty = new BzSkyProperty();
-        ((SkyPropertiesAccessor) skyProperty).getBY_DIMENSION_TYPE().put(BzDimension.BZ_DIMENSION_KEY, skyProperty);
-
         BzFeatures.registerFeatures();
         BzBiomes.registerBiomes();
         BzBaseBiome.addSprings();
