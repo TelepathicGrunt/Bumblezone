@@ -102,7 +102,7 @@ dependencies {
 	implementation fg.deobf("ignored:beesourceful:1.2.2")
 	implementation fg.deobf("ignored:Buzzier-Bees-1.15.2:1.5.2")
 	implementation fg.deobf("ignored:potionofbees-1.15.2:1.0.1")
-	implementation fg.deobf("ignored:productivebees-1.15.2:0.1.13")
+	implementation fg.deobf("ignored:productivebees-1.15.2:0.1.14")
 
 	compileOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.4:api")
 	runtimeOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.4")
