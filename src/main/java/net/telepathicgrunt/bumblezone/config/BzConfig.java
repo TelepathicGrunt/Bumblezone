@@ -75,6 +75,9 @@ public class BzConfig
 	    public ConfigValueListener<Boolean> clearUnwantedBiomeFeatures;
 	    public ConfigValueListener<Boolean> clearUnwantedBiomeMobs;
 
+	    // mob controls
+	    public ConfigValueListener<Boolean> allowPhantomSpawns;
+
 
 	    public BzConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber) {
   
@@ -371,6 +374,16 @@ public class BzConfig
 	        
 	        builder.pop();
 	        
+            builder.push("Mob Spawning Options");
+
+            allowPhantomSpawns = subscriber.subscribe(builder
+                .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+                        +" Controls whether or not Phantoms can (rarely) spawn in the\r\n"
+                        +" Bumblezone.")
+                .translation("the_bumblezone.config.mobs.allowphantomspawns")
+                .define("allowPhantomSpawns", true));
+
+            builder.pop();
 	        
 	        builder.push("Mod Compatibility Options");
 	
