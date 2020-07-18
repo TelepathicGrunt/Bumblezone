@@ -44,7 +44,7 @@ dependencies {
 		force = true //Force the version we want rather than trusting Gradle to pick it over transitive suggestions
 	}
 
-	modImplementation ("io.github.cottonmc.cotton:cotton:${project.cotton_version}") {
+	modImplementation ("io.github.cottonmc.cotton:cotton-config:${project.cotton_version}") {
 		exclude(group: "io.github.prospector.modmenu", module: "ModMenu")
 		exclude(group: "io.github.cottonmc", module: "Jankson")
 	}

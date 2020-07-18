@@ -19,6 +19,9 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 	Effects:
 •Added Protection of the Hive! When active, any one that attacks you will get Wrath of the Hive effect! You can get Protection of the Hive by feeding Bees or Honeycomb brood blocks Honey Bottles or Sugar Water items!
 
+	Misc:
+•Attempted reducing file size.
+
    (V.2.0.1 Changes) (1.16.1 Snapshot Minecraft)
 
 	Backend:
