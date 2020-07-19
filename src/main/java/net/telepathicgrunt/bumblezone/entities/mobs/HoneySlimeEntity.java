@@ -3,16 +3,18 @@ package net.telepathicgrunt.bumblezone.entities.mobs;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.Durations;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -22,16 +24,16 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.IntRange;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
@@ -42,16 +44,20 @@ import net.telepathicgrunt.bumblezone.entities.goals.*;
 
 import java.util.HashSet;
 import java.util.Objects;
-import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class HoneySlimeEntity extends AnimalEntity implements Monster {
+public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster {
    private static final TrackedData<Boolean> IN_HONEY = DataTracker.registerData(HoneySlimeEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
    private static final TrackedData<Integer> IN_HONEY_GROWTH_TIME = DataTracker.registerData(HoneySlimeEntity.class, TrackedDataHandlerRegistry.INTEGER);
    private static final Ingredient BREEDING_ITEM = Ingredient.ofItems(Items.SUGAR);
+   private static final TrackedData<Integer> ANGRY_TIMER = DataTracker.registerData(BeeEntity.class, TrackedDataHandlerRegistry.INTEGER);
+   private static final IntRange MAX_ANGER_DURATION = Durations.betweenSeconds(10, 22);
+   private UUID target_UUID;
 
-   private static HashSet<Block> HONEY_BASED_BLOCKS = Stream.of(
+
+   private static final HashSet<Block> HONEY_BASED_BLOCKS = Stream.of(
            Blocks.HONEY_BLOCK,
            BzBlocks.FILLED_POROUS_HONEYCOMB,
            BzBlocks.FILLED_POROUS_HONEYCOMB,
@@ -73,19 +79,55 @@ public class HoneySlimeEntity extends AnimalEntity implements Monster {
       this.moveControl = new HoneySlimeMoveHelperController(this);
    }
 
+   @Override
    protected void initGoals() {
-	  this.goalSelector.add(0, new FloatGoal(this));
-      this.goalSelector.add(1, new BreedGoal(this, 1.0D));
+      this.goalSelector.add(1, new FloatGoal(this));
+      this.targetSelector.add(1, new FacingRevengeGoal(this));
+      this.goalSelector.add(1, new HopGoal(this));
+      this.goalSelector.add(3, new BreedGoal(this, 1.0D));
       this.goalSelector.add(2, new TemptGoal(this, 1.2D, BREEDING_ITEM));
-      this.goalSelector.add(4, new HopGoal(this));
-      this.goalSelector.add(5, new FaceRandomGoal(this));
-      this.goalSelector.add(6, new RevengeGoal(this));
-      this.goalSelector.add(7, new RevengeGoal(this));
+      this.goalSelector.add(4, new FaceRandomGoal(this));
    }
 
+   @Override
    public EntityData initialize(WorldAccess worldIn, LocalDifficulty difficultyIn, SpawnReason reason, EntityData spawnDataIn, CompoundTag dataTag) {
       this.setSlimeSize(2, true);
       return super.initialize(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+   }
+
+   @Override
+   protected void initDataTracker() {
+      super.initDataTracker();
+      this.dataTracker.startTracking(IN_HONEY, false);
+      this.dataTracker.startTracking(IN_HONEY_GROWTH_TIME, 0);
+      this.dataTracker.startTracking(ANGRY_TIMER, 0);
+   }
+
+   @Override
+   public void onTrackedDataSet(TrackedData<?> key) {
+      this.calculateDimensions();
+      this.yaw = this.headYaw;
+      this.bodyYaw = this.headYaw;
+      if (this.isTouchingWater() && this.random.nextInt(20) == 0) {
+         this.onSwimmingStart();
+      }
+      super.onTrackedDataSet(key);
+   }
+
+   @Override
+   public void writeCustomDataToTag(CompoundTag compound) {
+      super.writeCustomDataToTag(compound);
+      compound.putBoolean("inHoney", this.isInHoney());
+      compound.putInt("inHoneyGrowthTimer", this.getInHoneyGrowthTime());
+      compound.putBoolean("wasOnGround", this.wasOnGround);
+   }
+
+   @Override
+   public void readCustomDataFromTag(CompoundTag compound) {
+      super.readCustomDataFromTag(compound);
+      this.setInHoney(compound.getBoolean("inHoney"));
+      this.setInHoneyGrowthTime(compound.getInt("inHoneyGrowthTimer"));
+      this.wasOnGround = compound.getBoolean("wasOnGround");
    }
 
    public static DefaultAttributeContainer.Builder getAttributeBuilder() {
@@ -95,6 +137,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Monster {
              .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0D);
    }
 
+   @Override
    public boolean canSpawn(WorldAccess world, SpawnReason spawnReason) {
       return true;
    }
@@ -110,36 +153,6 @@ public class HoneySlimeEntity extends AnimalEntity implements Monster {
       }
 
       this.experiencePoints = size;
-   }
-
-   protected void initDataTracker() {
-      super.initDataTracker();
-      this.dataTracker.startTracking(IN_HONEY, false);
-      this.dataTracker.startTracking(IN_HONEY_GROWTH_TIME, 0);
-   }
-
-   public void onTrackedDataSet(TrackedData<?> key) {
-      this.calculateDimensions();
-      this.yaw = this.headYaw;
-      this.bodyYaw = this.headYaw;
-      if (this.isTouchingWater() && this.random.nextInt(20) == 0) {
-         this.onSwimmingStart();
-      }
-      super.onTrackedDataSet(key);
-   }
-
-   public void writeCustomDataToTag(CompoundTag compound) {
-      super.writeCustomDataToTag(compound);
-      compound.putBoolean("inHoney", this.isInHoney());
-      compound.putInt("inHoneyGrowthTimer", this.getInHoneyGrowthTime());
-      compound.putBoolean("wasOnGround", this.wasOnGround);
-   }
-
-   public void readCustomDataFromTag(CompoundTag compound) {
-      super.readCustomDataFromTag(compound);
-      this.setInHoney(compound.getBoolean("inHoney"));
-      this.setInHoneyGrowthTime(compound.getInt("inHoneyGrowthTimer"));
-      this.wasOnGround = compound.getBoolean("wasOnGround");
    }
 
    public boolean isInHoney() {
@@ -226,12 +239,19 @@ public class HoneySlimeEntity extends AnimalEntity implements Monster {
          if (!isInHoney()) {
             setInHoneyGrowthTime(getInHoneyGrowthTime() + 1);
 
-            if(HONEY_BASED_BLOCKS.contains(this.world.getBlockState(this.getBlockPos().down()).getBlock())){
-               if(this.random.nextFloat() < 0.02)// 1/50 chance to get honey from certain blocks below mob
+            if(!this.world.isClient && HONEY_BASED_BLOCKS.contains(this.world.getBlockState(this.getBlockPos().down()).getBlock())){
+               if(this.random.nextFloat() < 0.001)
                   setInHoneyGrowthTime(0);
             }
          }
          setInHoney(getInHoneyGrowthTime() >= 0);
+      }
+   }
+
+   @Override
+   protected void mobTick() {
+      if (!this.world.isClient) {
+         this.tickAngerLogic((ServerWorld)this.world, false);
       }
    }
 
@@ -243,10 +263,14 @@ public class HoneySlimeEntity extends AnimalEntity implements Monster {
    @Override
    public PassiveEntity createChild(PassiveEntity ageable) {
       HoneySlimeEntity childHoneySlimeEntity = BzEntities.HONEY_SLIME.create(this.world);
-      childHoneySlimeEntity.setSlimeSize(1, true);
+
+      if (childHoneySlimeEntity != null)
+         childHoneySlimeEntity.setSlimeSize(1, true);
+
       return childHoneySlimeEntity;
    }
 
+   @Override
    protected void onGrowUp() {
       super.onGrowUp();
       if (!this.isBaby()) {
@@ -257,7 +281,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Monster {
    protected void dealDamage(LivingEntity entityIn) {
       if (this.isAlive()) {
          int i = 2;
-         if (this.squaredDistanceTo(entityIn) < 0.6D * (double) i * 0.6D * (double) i && this.canSee(entityIn) && entityIn.damage(DamageSource.mob(this), this.func_225512_er_())) {
+         if (this.squaredDistanceTo(entityIn) < 0.6D * (double) i * 0.6D * (double) i && this.canSee(entityIn) && entityIn.damage(DamageSource.mob(this), this.getAttackStrength())) {
             this.playSound(SoundEvents.ENTITY_SLIME_ATTACK, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             this.dealDamage(this, entityIn);
          }
@@ -268,21 +292,25 @@ public class HoneySlimeEntity extends AnimalEntity implements Monster {
       return !this.isBaby() && this.canMoveVoluntarily();
    }
 
+   @Override
    public void onPlayerCollision(PlayerEntity entityIn) {
-      if (this.canDamagePlayer() && this.getAttacker() == entityIn) {
+      if (this.canDamagePlayer() && this.getTarget() == entityIn) {
          this.dealDamage(entityIn);
       }
    }
 
+   @Override
    @SuppressWarnings("unchecked")
    public EntityType<? extends HoneySlimeEntity> getType() {
       return (EntityType<? extends HoneySlimeEntity>) super.getType();
    }
 
+   @Override
    protected float getActiveEyeHeight(EntityPose poseIn, EntityDimensions sizeIn) {
       return 0.625F * sizeIn.height;
    }
 
+   @Override
    public void calculateDimensions() {
       double d0 = this.getX();
       double d1 = this.getY();
@@ -304,7 +332,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Monster {
       return this.random.nextInt(20) + 10;
    }
 
-   protected float func_225512_er_() {
+   protected float getAttackStrength() {
       return (float) Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).getValue();
    }
 
@@ -320,14 +348,17 @@ public class HoneySlimeEntity extends AnimalEntity implements Monster {
       return this.isBaby() ? SoundEvents.ENTITY_SLIME_SQUISH_SMALL : SoundEvents.ENTITY_SLIME_SQUISH;
    }
 
+   @Override
    protected Identifier getLootTableId() {
       return this.isBaby() ? this.getType().getLootTableId() : LootTables.EMPTY;
    }
 
+   @Override
    public float getSoundVolume() {
       return 0.4F * (float) (isBaby() ? 1 : 2);
    }
 
+   @Override
    public int getLookPitchSpeed() {
       return 0;
    }
@@ -348,5 +379,31 @@ public class HoneySlimeEntity extends AnimalEntity implements Monster {
 
    protected boolean spawnCustomParticles() {
       return false;
+   }
+
+   @Override
+   public int getAngerTime() {
+      return this.dataTracker.get(ANGRY_TIMER);
+   }
+
+   @Override
+   public void setAngerTime(int ticks) {
+      this.dataTracker.set(ANGRY_TIMER, ticks);
+   }
+
+   @Override
+   public UUID getAngryAt() {
+      return this.target_UUID;
+   }
+
+   @Override
+   public void setAngryAt(UUID uuid) {
+      this.target_UUID = uuid;
+   }
+
+   @Override
+   public void chooseRandomAngerTime() {
+      if(MAX_ANGER_DURATION != null)
+         this.setAngerTime(MAX_ANGER_DURATION.choose(this.random));
    }
 }

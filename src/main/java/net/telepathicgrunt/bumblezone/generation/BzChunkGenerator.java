@@ -596,8 +596,8 @@ public class BzChunkGenerator extends ChunkGenerator {
         ChunkRandom sharedseedrandom = new ChunkRandom();
         sharedseedrandom.setPopulationSeed(region.getSeed(), xCord, zCord);
         while (sharedseedrandom.nextFloat() < biome.getMaxSpawnChance()) {
-            //10% of time, spawn honey slime. Otherwise, spawn bees.
-            Biome.SpawnEntry biome$spawnlistentry = sharedseedrandom.nextFloat() < 0.15f ? INITIAL_HONEY_SLIME_ENTRY : INITIAL_BEE_ENTRY;
+            //20% of time, spawn honey slime. Otherwise, spawn bees.
+            Biome.SpawnEntry biome$spawnlistentry = sharedseedrandom.nextFloat() < 0.2f ? INITIAL_HONEY_SLIME_ENTRY : INITIAL_BEE_ENTRY;
 
             int startingX = xCord + sharedseedrandom.nextInt(16);
             int startingZ = zCord + sharedseedrandom.nextInt(16);

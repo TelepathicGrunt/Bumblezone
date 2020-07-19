@@ -59,7 +59,6 @@ public class HoneySlimeMoveHelperController extends MoveControl {
             } else {
                 this.entity.setMovementSpeed((float) (this.speed * this.entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).getValue()));
             }
-
         }
     }
 }
