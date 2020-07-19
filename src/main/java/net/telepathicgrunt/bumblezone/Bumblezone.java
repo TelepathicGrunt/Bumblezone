@@ -9,8 +9,6 @@ import nerdhub.cardinal.components.api.util.RespawnCopyStrategy;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
@@ -24,7 +22,6 @@ import net.telepathicgrunt.bumblezone.entities.BeeAggression;
 import net.telepathicgrunt.bumblezone.entities.BzEntities;
 import net.telepathicgrunt.bumblezone.entities.IPlayerComponent;
 import net.telepathicgrunt.bumblezone.entities.PlayerComponent;
-import net.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.DispenserItemSetup;
 import org.apache.logging.log4j.LogManager;
@@ -33,6 +30,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -55,14 +53,13 @@ public class Bumblezone implements ModInitializer {
         BzEntities.registerEntities();
 
         //attach component to player
-        //EntityComponentCallback.event(PlayerEntity.class).register((player, components) -> components.put(PLAYER_COMPONENT, new PlayerComponent()));
         EntityComponents.setRespawnCopyStrategy(PLAYER_COMPONENT, RespawnCopyStrategy.INVENTORY);
 
         //Set up config
         BZ_CONFIG = ConfigManager.loadConfig(BzConfig.class);
 
         // monitor the config file
-        TimerTask task = new FileWatcher(FabricLoader.getInstance().getConfigDirectory().listFiles(new MyFileNameFilter("TheBumblezoneConfig.json5"))[0]) {
+        TimerTask task = new FileWatcher(Objects.requireNonNull(FabricLoader.getInstance().getConfigDirectory().listFiles(new MyFileNameFilter("TheBumblezoneConfig.json5")))[0]) {
             protected void onChange(File file) {
                 // Config was changed! Update the ingame values based on new config
                 //System.out.println( "File "+ file.getName() +" have change !" );
@@ -74,12 +71,7 @@ public class Bumblezone implements ModInitializer {
         timer.schedule(task, new Date(), 1000);
 
 
-
-        ServerStartCallback.EVENT.register((MinecraftServer world) -> {
-            BeeAggression.setupBeeHatingList(world.getWorld(World.OVERWORLD));
-
-        });
-
+        ServerStartCallback.EVENT.register((MinecraftServer world) -> BeeAggression.setupBeeHatingList(world.getWorld(World.OVERWORLD)));
         DispenserItemSetup.setupDispenserBehaviors();
     }
 
@@ -87,7 +79,7 @@ public class Bumblezone implements ModInitializer {
     // Is used to find and return only our config file
     public static class MyFileNameFilter implements FilenameFilter {
 
-        private String configName;
+        private final String configName;
 
         public MyFileNameFilter(String extension) {
             this.configName = extension.toLowerCase();

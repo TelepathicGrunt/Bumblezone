@@ -1,5 +1,6 @@
 package net.telepathicgrunt.bumblezone.entities.mobs;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.RevengeGoal;
@@ -32,17 +33,28 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.entities.BzEntities;
 import net.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import net.telepathicgrunt.bumblezone.entities.goals.*;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class HoneySlimeEntity extends AnimalEntity implements Monster {
    private static final TrackedData<Boolean> IN_HONEY = DataTracker.registerData(HoneySlimeEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
    private static final TrackedData<Integer> IN_HONEY_GROWTH_TIME = DataTracker.registerData(HoneySlimeEntity.class, TrackedDataHandlerRegistry.INTEGER);
    private static final Ingredient BREEDING_ITEM = Ingredient.ofItems(Items.SUGAR);
+
+   private static HashSet<Block> HONEY_BASED_BLOCKS = Stream.of(
+           Blocks.HONEY_BLOCK,
+           BzBlocks.FILLED_POROUS_HONEYCOMB,
+           BzBlocks.FILLED_POROUS_HONEYCOMB,
+           BzBlocks.STICKY_HONEY_REDSTONE,
+           BzBlocks.STICKY_HONEY_RESIDUE)
+           .collect(Collectors.toCollection(HashSet::new));
 
    public float squishAmount;
    public float squishFactor;
@@ -73,9 +85,10 @@ public class HoneySlimeEntity extends AnimalEntity implements Monster {
       return super.initialize(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
    }
 
-   public static DefaultAttributeContainer.Builder func_234200_m_() {
-	 return MobEntity.createMobAttributes().
-			 add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0D);
+   public static DefaultAttributeContainer.Builder getAttributeBuilder() {
+	 return MobEntity.createMobAttributes()
+             .add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0D).
+             add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0D);
    }
 
    protected void setSlimeSize(int size, boolean resetHealth) {
@@ -196,12 +209,19 @@ public class HoneySlimeEntity extends AnimalEntity implements Monster {
       this.alterSquishAmount();
    }
 
+
+
    @Override
    public void tickMovement() {
       super.tickMovement();
       if (this.isAlive()) {
          if (!isInHoney()) {
             setInHoneyGrowthTime(getInHoneyGrowthTime() + 1);
+
+            if(HONEY_BASED_BLOCKS.contains(this.world.getBlockState(this.getBlockPos().down()).getBlock())){
+               if(this.random.nextFloat() < 0.02)// 1/50 chance to get honey from certain blocks below mob
+                  setInHoneyGrowthTime(0);
+            }
          }
          setInHoney(getInHoneyGrowthTime() >= 0);
       }
@@ -321,6 +341,4 @@ public class HoneySlimeEntity extends AnimalEntity implements Monster {
    protected boolean spawnCustomParticles() {
       return false;
    }
-
-
 }
