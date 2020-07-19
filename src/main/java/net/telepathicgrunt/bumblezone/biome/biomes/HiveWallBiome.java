@@ -20,6 +20,7 @@ import net.minecraft.world.gen.feature.SpringFeatureConfig;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
 import net.telepathicgrunt.bumblezone.biome.BzBaseBiome;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.entities.BzEntities;
 import net.telepathicgrunt.bumblezone.features.BzFeatures;
 import net.telepathicgrunt.bumblezone.features.decorators.BzPlacements;
 
@@ -53,7 +54,8 @@ public final class HiveWallBiome extends BzBaseBiome {
         this.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(SUGAR_WATER_SPRING_CONFIG).createDecoratedFeature(Decorator.COUNT_BIASED_RANGE.configure(new RangeDecoratorConfig(5, 16, 0, 72))));
 
 
-        this.addSpawn(SpawnGroup.CREATURE, new Biome.SpawnEntry(EntityType.BEE, 20, 5, 8));
+        this.addSpawn(SpawnGroup.CREATURE, new Biome.SpawnEntry(EntityType.BEE, 100, 5, 8));
+        this.addSpawn(SpawnGroup.CREATURE, new Biome.SpawnEntry(BzEntities.HONEY_SLIME, 10, 1, 2));
         this.addSpawn(SpawnGroup.MONSTER, new Biome.SpawnEntry(EntityType.SNOWBALL, 3000, 1, 1)); //Used to make monsters even less common
         this.addSpawn(SpawnGroup.MONSTER, new Biome.SpawnEntry(EntityType.SPIDER, 10, 1, 1));
         this.addSpawn(SpawnGroup.MONSTER, new Biome.SpawnEntry(EntityType.CAVE_SPIDER, 3, 1, 1));

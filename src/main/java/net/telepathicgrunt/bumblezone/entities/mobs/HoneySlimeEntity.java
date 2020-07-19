@@ -3,13 +3,13 @@ package net.telepathicgrunt.bumblezone.entities.mobs;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -28,8 +28,10 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
@@ -40,6 +42,7 @@ import net.telepathicgrunt.bumblezone.entities.goals.*;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -87,16 +90,21 @@ public class HoneySlimeEntity extends AnimalEntity implements Monster {
 
    public static DefaultAttributeContainer.Builder getAttributeBuilder() {
 	 return MobEntity.createMobAttributes()
-             .add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0D).
-             add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0D);
+             .add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0D)
+             .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 2.0D)
+             .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0D);
+   }
+
+   public boolean canSpawn(WorldAccess world, SpawnReason spawnReason) {
+      return true;
    }
 
    protected void setSlimeSize(int size, boolean resetHealth) {
       this.refreshPosition();
       this.calculateDimensions();
-      this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(size * size);
-      this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(0.2F + 0.1F * (float)size);
-      this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).setBaseValue(size);
+      Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).setBaseValue(size * size);
+      Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue((0.2F + 0.1F * (float)size)*2);
+      Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(size);
       if (resetHealth) {
          this.setHealth(this.getMaxHealth());
       }

@@ -20,6 +20,7 @@ import net.minecraft.world.gen.feature.SpringFeatureConfig;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
 import net.telepathicgrunt.bumblezone.biome.BzBaseBiome;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.entities.BzEntities;
 import net.telepathicgrunt.bumblezone.features.BzFeatures;
 import net.telepathicgrunt.bumblezone.features.decorators.BzPlacements;
 
@@ -52,7 +53,8 @@ public final class SugarWaterBiome extends BzBaseBiome {
         this.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(SUGAR_WATER_SPRING_CONFIG).createDecoratedFeature(Decorator.COUNT_BIASED_RANGE.configure(new RangeDecoratorConfig(1, 128, 0, 256))));
         this.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.SPRING_FEATURE.configure(SUGAR_WATER_SPRING_CONFIG).createDecoratedFeature(Decorator.COUNT_BIASED_RANGE.configure(new RangeDecoratorConfig(7, 16, 0, 128))));
 
-        this.addSpawn(SpawnGroup.CREATURE, new Biome.SpawnEntry(EntityType.BEE, 20, 4, 8));
+        this.addSpawn(SpawnGroup.CREATURE, new Biome.SpawnEntry(EntityType.BEE, 100, 4, 8));
+        this.addSpawn(SpawnGroup.CREATURE, new Biome.SpawnEntry(BzEntities.HONEY_SLIME, 20, 1, 3));
         this.addSpawn(SpawnGroup.MONSTER, new Biome.SpawnEntry(EntityType.SNOWBALL, 2200, 1, 1)); //Used to make monsters even less common
         this.addSpawn(SpawnGroup.MONSTER, new Biome.SpawnEntry(EntityType.SLIME, 20, 1, 1));
         this.addSpawn(SpawnGroup.MONSTER, new Biome.SpawnEntry(EntityType.ENDERMAN, 2, 1, 1));

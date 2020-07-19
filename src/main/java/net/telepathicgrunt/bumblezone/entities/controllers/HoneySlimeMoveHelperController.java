@@ -5,7 +5,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
 
 public class HoneySlimeMoveHelperController extends MoveControl {
-    private float yRot;
+    private float targetYaw;
     private int jumpDelay;
     private final HoneySlimeEntity slime;
     private boolean isAggressive;
@@ -13,16 +13,16 @@ public class HoneySlimeMoveHelperController extends MoveControl {
     public HoneySlimeMoveHelperController(HoneySlimeEntity slimeIn) {
         super(slimeIn);
         this.slime = slimeIn;
-        this.yRot = 180.0F * slimeIn.yaw / (float) Math.PI;
+        this.targetYaw = 180.0F * slimeIn.yaw / (float) Math.PI;
     }
 
     public void setDirection(float yRotIn, boolean aggressive) {
-        this.yRot = yRotIn;
+        this.targetYaw = yRotIn;
         this.isAggressive = aggressive;
     }
 
     public void setDirection(float yRotIn) {
-        this.yRot = yRotIn;
+        this.targetYaw = yRotIn;
         this.isAggressive = true;
     }
 
@@ -32,7 +32,7 @@ public class HoneySlimeMoveHelperController extends MoveControl {
     }
 
     public void tick() {
-        this.entity.yaw = this.changeAngle(this.entity.yaw, this.yRot, 90.0F);
+        this.entity.yaw = this.changeAngle(this.entity.yaw, this.targetYaw, 90.0F);
         this.entity.headYaw = this.entity.yaw;
         this.entity.bodyYaw = this.entity.yaw;
         if (this.state != MoveControl.State.MOVE_TO) {
@@ -57,7 +57,7 @@ public class HoneySlimeMoveHelperController extends MoveControl {
                     this.entity.setMovementSpeed(0.0F);
                 }
             } else {
-                this.entity.setMovementSpeed((float) (this.speed * this.entity.getAttributeInstance(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE).getValue()));
+                this.entity.setMovementSpeed((float) (this.speed * this.entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).getValue()));
             }
 
         }

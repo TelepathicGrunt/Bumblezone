@@ -31,7 +31,8 @@
     "PollenedBeeNaturalSpawnMixin",
     "RedstoneDustCanConnectMixin",
     "StructureAccessorMixin",
-    "WaterEquivalenceMixin"
+    "WaterEquivalenceMixin",
+    "SpawnRestrictionAccessor"
   ],
   "client": [
     "ClientWorldMixin",
