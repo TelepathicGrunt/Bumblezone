@@ -1,22 +1,20 @@
 package net.telepathicgrunt.bumblezone.entities.goals;
 
-import com.bagel.buzzierbees.common.entities.HoneySlimeEntity;
-import com.bagel.buzzierbees.common.entities.controllers.HoneySlimeMoveHelperController;
-import net.minecraft.entity.EntityPredicate;
+import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.pathing.BirdNavigation;
+import net.minecraft.entity.ai.pathing.MobNavigation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.pathfinding.FlyingPathNavigator;
-import net.minecraft.pathfinding.GroundPathNavigator;
+import net.minecraft.recipe.Ingredient;
+import net.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
+import net.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
 
 import java.util.EnumSet;
 
 public class TemptGoal extends Goal {
-    private static final EntityPredicate ENTITY_PREDICATE = (new EntityPredicate()).setDistance(10.0D).allowInvulnerable().allowFriendlyFire().setSkipAttackChecks().setLineOfSiteRequired();
+    private static final TargetPredicate ENTITY_PREDICATE = (new TargetPredicate()).setBaseMaxDistance(10.0D).includeInvulnerable().includeTeammates().ignoreEntityTargetRules().includeHidden();
     protected final HoneySlimeEntity slime;
-    @SuppressWarnings("unused")
-	private final double speed;
     private double targetX;
     private double targetY;
     private double targetZ;
@@ -29,10 +27,9 @@ public class TemptGoal extends Goal {
 
     public TemptGoal(HoneySlimeEntity creatureIn, double speedIn, Ingredient temptItemsIn) {
         this.slime = creatureIn;
-        this.speed = speedIn;
         this.temptItem = temptItemsIn;
-        this.setMutexFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE, Goal.Flag.LOOK));
-        if (!(creatureIn.getNavigator() instanceof GroundPathNavigator) && !(creatureIn.getNavigator() instanceof FlyingPathNavigator)) {
+        this.setControls(EnumSet.of(Goal.Control.JUMP, Goal.Control.MOVE, Goal.Control.LOOK));
+        if (!(creatureIn.getNavigation() instanceof MobNavigation) && !(creatureIn.getNavigation() instanceof BirdNavigation)) {
             throw new IllegalArgumentException("Unsupported mob type for TemptGoal");
         }
     }
@@ -40,7 +37,7 @@ public class TemptGoal extends Goal {
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
-    public boolean shouldExecute() {
+    public boolean canStart() {
         if (this.delayTemptCounter > 0) {
             --this.delayTemptCounter;
             return false;
@@ -49,7 +46,7 @@ public class TemptGoal extends Goal {
             if (this.closestPlayer == null) {
                 return false;
             } else {
-                return this.isTempting(this.closestPlayer.getHeldItemMainhand()) || this.isTempting(this.closestPlayer.getHeldItemOffhand());
+                return this.isTempting(this.closestPlayer.getMainHandStack()) || this.isTempting(this.closestPlayer.getOffHandStack());
             }
         }
     }
@@ -61,27 +58,27 @@ public class TemptGoal extends Goal {
     /**
      * Returns whether an in-progress EntityAIBase should continue executing
      */
-    public boolean shouldContinueExecuting() {
+    public boolean shouldContinue() {
         if (this.isScaredByPlayerMovement()) {
-            if (this.slime.getDistanceSq(this.closestPlayer) < 36.0D) {
-                if (this.closestPlayer.getDistanceSq(this.targetX, this.targetY, this.targetZ) > 0.010000000000000002D) {
+            if (this.slime.squaredDistanceTo(this.closestPlayer) < 36.0D) {
+                if (this.closestPlayer.squaredDistanceTo(this.targetX, this.targetY, this.targetZ) > 0.010000000000000002D) {
                     return false;
                 }
 
-                if (Math.abs((double)this.closestPlayer.rotationPitch - this.pitch) > 5.0D || Math.abs((double)this.closestPlayer.rotationYaw - this.yaw) > 5.0D) {
+                if (Math.abs((double)this.closestPlayer.pitch - this.pitch) > 5.0D || Math.abs((double)this.closestPlayer.yaw - this.yaw) > 5.0D) {
                     return false;
                 }
             } else {
-                this.targetX = this.closestPlayer.getPosX();
-                this.targetY = this.closestPlayer.getPosY();
-                this.targetZ = this.closestPlayer.getPosZ();
+                this.targetX = this.closestPlayer.getX();
+                this.targetY = this.closestPlayer.getY();
+                this.targetZ = this.closestPlayer.getZ();
             }
 
-            this.pitch = (double)this.closestPlayer.rotationPitch;
-            this.yaw = (double)this.closestPlayer.rotationYaw;
+            this.pitch = this.closestPlayer.pitch;
+            this.yaw = this.closestPlayer.yaw;
         }
 
-        return this.shouldExecute();
+        return this.canStart();
     }
 
     protected boolean isScaredByPlayerMovement() {
@@ -91,19 +88,19 @@ public class TemptGoal extends Goal {
     /**
      * Execute a one shot task or start executing a continuous task
      */
-    public void startExecuting() {
-        this.targetX = this.closestPlayer.getPosX();
-        this.targetY = this.closestPlayer.getPosY();
-        this.targetZ = this.closestPlayer.getPosZ();
+    public void start() {
+        this.targetX = this.closestPlayer.getX();
+        this.targetY = this.closestPlayer.getY();
+        this.targetZ = this.closestPlayer.getZ();
         this.isRunning = true;
     }
 
     /**
      * Reset the task's internal state. Called when this task is interrupted by another one
      */
-    public void resetTask() {
+    public void stop() {
         this.closestPlayer = null;
-        this.slime.getNavigator().clearPath();
+        this.slime.getNavigation().stop();
         this.delayTemptCounter = 100;
         this.isRunning = false;
     }
@@ -112,21 +109,14 @@ public class TemptGoal extends Goal {
      * Keep ticking a continuous task that has already been started
      */
     public void tick() {
-        this.slime.getLookController().setLookPositionWithEntity(this.closestPlayer, (float)(this.slime.getHorizontalFaceSpeed() + 20), (float)this.slime.getVerticalFaceSpeed());
-        if (this.slime.getDistanceSq(this.closestPlayer) < 6.25D) {
-            this.slime.getNavigator().clearPath();
+        this.slime.getLookControl().lookAt(this.closestPlayer, (float)(this.slime.getBodyYawSpeed() + 20), (float)this.slime.getLookPitchSpeed());
+        if (this.slime.squaredDistanceTo(this.closestPlayer) < 6.25D) {
+            this.slime.getNavigation().stop();
         } else {
-            this.slime.faceEntity(this.closestPlayer, 10.0F, 10.0F);
-            ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setDirection(this.slime.rotationYaw, true);
-            ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setSpeed(1.0D);
+            this.slime.lookAtEntity(this.closestPlayer, 10.0F, 10.0F);
+            ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.yaw, true);
+            ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setSpeed(1.0D);
         }
 
-    }
-
-    /**
-     * @see #isRunning
-     */
-    public boolean isRunning() {
-        return this.isRunning;
     }
 }

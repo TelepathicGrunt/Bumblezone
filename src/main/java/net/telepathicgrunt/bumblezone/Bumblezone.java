@@ -9,6 +9,8 @@ import nerdhub.cardinal.components.api.util.RespawnCopyStrategy;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
@@ -19,8 +21,10 @@ import net.telepathicgrunt.bumblezone.configs.FileWatcher;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.entities.BeeAggression;
+import net.telepathicgrunt.bumblezone.entities.BzEntities;
 import net.telepathicgrunt.bumblezone.entities.IPlayerComponent;
 import net.telepathicgrunt.bumblezone.entities.PlayerComponent;
+import net.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.DispenserItemSetup;
 import org.apache.logging.log4j.LogManager;
@@ -42,13 +46,13 @@ public class Bumblezone implements ModInitializer {
                     .attach(EntityComponentCallback.event(PlayerEntity.class), player -> new PlayerComponent());
     public static BzConfig BZ_CONFIG;
 
-
     @Override
     public void onInitialize() {
         BzBlocks.registerBlocks();
         BzItems.registerItems();
         BzEffects.registerEffects();
         BzDimension.setupDimension();
+        BzEntities.registerEntities();
 
         //attach component to player
         //EntityComponentCallback.event(PlayerEntity.class).register((player, components) -> components.put(PLAYER_COMPONENT, new PlayerComponent()));

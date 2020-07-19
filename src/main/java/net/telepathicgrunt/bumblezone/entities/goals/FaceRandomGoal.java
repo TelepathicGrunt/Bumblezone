@@ -1,9 +1,9 @@
 package net.telepathicgrunt.bumblezone.entities.goals;
 
-import com.bagel.buzzierbees.common.entities.HoneySlimeEntity;
-import com.bagel.buzzierbees.common.entities.controllers.HoneySlimeMoveHelperController;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.potion.Effects;
+import net.minecraft.entity.effect.StatusEffects;
+import net.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
+import net.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
 
 import java.util.EnumSet;
 
@@ -14,14 +14,14 @@ public class FaceRandomGoal extends Goal {
 
     public FaceRandomGoal(HoneySlimeEntity slimeIn) {
         this.slime = slimeIn;
-        this.setMutexFlags(EnumSet.of(Goal.Flag.LOOK));
+        this.setControls(EnumSet.of(Goal.Control.LOOK));
     }
 
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
-    public boolean shouldExecute() {
-        return this.slime.getAttackTarget() == null && (this.slime.func_233570_aj_() || this.slime.isInWater() || this.slime.isInLava() || this.slime.isPotionActive(Effects.LEVITATION)) && this.slime.getMoveHelper() instanceof HoneySlimeMoveHelperController;
+    public boolean canStart() {
+        return this.slime.getTarget() == null && (this.slime.isOnGround() || this.slime.isTouchingWater() || this.slime.isInLava() || this.slime.hasStatusEffect(StatusEffects.LEVITATION)) && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
     }
 
     /**
@@ -29,10 +29,10 @@ public class FaceRandomGoal extends Goal {
      */
     public void tick() {
         if (--this.nextRandomizeTime <= 0) {
-            this.nextRandomizeTime = 40 + this.slime.getRNG().nextInt(60);
-            this.chosenDegrees = (float) this.slime.getRNG().nextInt(360);
+            this.nextRandomizeTime = 40 + this.slime.getRandom().nextInt(60);
+            this.chosenDegrees = (float) this.slime.getRandom().nextInt(360);
         }
 
-        ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setDirection(this.chosenDegrees, false);
+        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.chosenDegrees, false);
     }
 }

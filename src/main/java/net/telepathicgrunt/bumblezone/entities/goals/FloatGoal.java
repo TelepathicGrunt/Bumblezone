@@ -1,8 +1,8 @@
 package net.telepathicgrunt.bumblezone.entities.goals;
 
-import com.bagel.buzzierbees.common.entities.HoneySlimeEntity;
-import com.bagel.buzzierbees.common.entities.controllers.HoneySlimeMoveHelperController;
 import net.minecraft.entity.ai.goal.Goal;
+import net.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
+import net.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
 
 import java.util.EnumSet;
 
@@ -11,25 +11,25 @@ public class FloatGoal extends Goal {
 
     public FloatGoal(HoneySlimeEntity slimeIn) {
         this.slime = slimeIn;
-        this.setMutexFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
-        slimeIn.getNavigator().setCanSwim(true);
+        this.setControls(EnumSet.of(Goal.Control.JUMP, Goal.Control.MOVE));
+        slimeIn.getNavigation().setCanSwim(true);
     }
 
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
-    public boolean shouldExecute() {
-        return (this.slime.isInWater() || this.slime.isInLava()) && this.slime.getMoveHelper() instanceof HoneySlimeMoveHelperController;
+    public boolean canStart() {
+        return (this.slime.isTouchingWater() || this.slime.isInLava()) && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
     }
 
     /**
      * Keep ticking a continuous task that has already been started
      */
     public void tick() {
-        if (this.slime.getRNG().nextFloat() < 0.8F) {
-            this.slime.getJumpController().setJumping();
+        if (this.slime.getRandom().nextFloat() < 0.8F) {
+            this.slime.getJumpControl().setActive();
         }
 
-        ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setSpeed(1.2D);
+        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setSpeed(1.2D);
     }
 }
