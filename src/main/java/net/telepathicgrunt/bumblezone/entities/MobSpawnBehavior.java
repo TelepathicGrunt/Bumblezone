@@ -1,6 +1,7 @@
 package net.telepathicgrunt.bumblezone.entities;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
@@ -10,7 +11,7 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimensionRegistration;
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class MobSpawnLocationBehavior
+public class MobSpawnBehavior
 {
 	@Mod.EventBusSubscriber(modid = Bumblezone.MODID)
 	private static class ForgeEvents
@@ -24,11 +25,18 @@ public class MobSpawnLocationBehavior
 			//Make sure we are on server. Vanilla does this check too
 			if (!world.isRemote)
 			{
-				//NO SPAWNING ON MY DIMENSION'S ROOF!!!
-				if(entity.getPosition().getY() >= 256 && entity.dimension == BzDimensionRegistration.bumblezone()) 
-				{
-					//STOP SPAWNING!!!!!!!!
-					event.setResult(Result.DENY);
+				if(entity.dimension == BzDimensionRegistration.bumblezone()) {
+					//NO SPAWNING ON MY DIMENSION'S ROOF!!!
+					if(entity.getPosition().getY() >= 256) 
+					{
+						//STOP SPAWNING!!!!!!!!
+						event.setResult(Result.DENY);
+					}
+
+					else if (entity.getType() == EntityType.PHANTOM && !Bumblezone.BzConfig.allowPhantomSpawns.get() ||
+						 entity.getType() == EntityType.ENDERMAN && !Bumblezone.BzConfig.allowEndermanSpawns.get()) {
+						event.setResult(Result.DENY);
+					}
 				}
 			}
 		}
