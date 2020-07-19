@@ -25,7 +25,6 @@ Mods I'm keeping an eye on for future compat
 -Added config to adjust Spider/Cave Spider in The Bumblezone.
 
 -Fixed clearUnwantedBiomeFeatures and clearUnwantedBiomeMobs configs to actual work. (hopefully!)
-
  
 ## (V.1.3.8 Changes) (1.15.2 Minecraft)
  
