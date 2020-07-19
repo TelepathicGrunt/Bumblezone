@@ -14,6 +14,10 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
  */
 public class BeesourcefulRedirection
 {
+	public static void BSAddHoneycombs() {
+		BeesourcefulCompat.BSAddHoneycombs();
+	}
+	
 	public static void BSMobSpawnEvent(LivingSpawnEvent.CheckSpawn event)
 	{
 		BeesourcefulCompat.BSMobSpawnEvent(event);

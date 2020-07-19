@@ -33,8 +33,10 @@ public class MobSpawnBehavior
 						event.setResult(Result.DENY);
 					}
 
-					else if (entity.getType() == EntityType.PHANTOM && !Bumblezone.BzConfig.allowPhantomSpawns.get() ||
-						 entity.getType() == EntityType.ENDERMAN && !Bumblezone.BzConfig.allowEndermanSpawns.get()) {
+					else if ((entity.getType() == EntityType.PHANTOM && Bumblezone.BzConfig.phantomSpawnrate.get() > world.getRandom().nextFloat()) ||
+							 (entity.getType() == EntityType.ENDERMAN && Bumblezone.BzConfig.endermanSpawnrate.get() > world.getRandom().nextFloat()) ||
+							 (entity.getType() == EntityType.CAVE_SPIDER && Bumblezone.BzConfig.spiderSpawnrate.get() > world.getRandom().nextFloat()) ||
+							 (entity.getType() == EntityType.SPIDER && Bumblezone.BzConfig.caveSpiderSpawnrate.get() > world.getRandom().nextFloat())) {
 						event.setResult(Result.DENY);
 					}
 				}

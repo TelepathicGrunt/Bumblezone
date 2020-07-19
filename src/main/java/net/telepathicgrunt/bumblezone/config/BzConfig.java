@@ -76,8 +76,10 @@ public class BzConfig
 	    public ConfigValueListener<Boolean> clearUnwantedBiomeMobs;
 
 	    // mob controls
-	    public ConfigValueListener<Boolean> allowPhantomSpawns;
-	    public ConfigValueListener<Boolean> allowEndermanSpawns;
+	    public ConfigValueListener<Double> phantomSpawnrate;
+	    public ConfigValueListener<Double> endermanSpawnrate;
+	    public ConfigValueListener<Double> spiderSpawnrate;
+	    public ConfigValueListener<Double> caveSpiderSpawnrate;
 
 
 	    public BzConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber) {
@@ -377,18 +379,33 @@ public class BzConfig
 	        
             builder.push("Mob Spawning Options");
 
-	            allowPhantomSpawns = subscriber.subscribe(builder
+	            phantomSpawnrate = subscriber.subscribe(builder
 	                .comment(" \r\n-----------------------------------------------------\r\n\r\n"
-	                        +" Controls whether or not Phantoms can (rarely) spawn in the Bumblezone.")
-	                .translation("the_bumblezone.config.mobs.allowphantomspawns")
-	                .define("allowPhantomSpawns", true));
+	                        +" Controls Phantoms spawnrate in the Bumblezone.\r\n"
+	                        +" 1 for max spawnrate and 0 for no spawning. 0.5 is half the rate.")
+	                .translation("the_bumblezone.config.mobs.phantomspawnrate")
+	                .defineInRange("phantomSpawnrate", 1D, 0, 1D));
 
-	            allowEndermanSpawns = subscriber.subscribe(builder
+	            endermanSpawnrate = subscriber.subscribe(builder
 	                .comment(" \r\n-----------------------------------------------------\r\n\r\n"
-	                        +" Controls whether or not Endermen can (rarely) spawn in the Bumblezone.")
-	                .translation("the_bumblezone.config.mobs.allowendermanspawns")
-	                .define("allowEndermanSpawns", true));
+	                        +" Controls Endermen spawnrate in the Bumblezone.\r\n"
+	                        +" 1 for max spawnrate and 0 for no spawning. 0.5 is half the rate.")
+	                .translation("the_bumblezone.config.mobs.endermanspawnrate")
+	                .defineInRange("endermanSpawnrate", 1D, 0, 1D));
 
+	            spiderSpawnrate = subscriber.subscribe(builder
+	                .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	                        +" Controls Spider spawnrate in the Bumblezone.\r\n"
+	                        +" 1 for max spawnrate and 0 for no spawning. 0.5 is half the rate.")
+	                .translation("the_bumblezone.config.mobs.spiderspawnrate")
+	                .defineInRange("spiderSpawnrate", 1D, 0, 1D));
+	            
+	            caveSpiderSpawnrate = subscriber.subscribe(builder
+		                .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+		                        +" Controls Cave Spider spawnrate in the Bumblezone.\r\n"
+		                        +" 1 for max spawnrate and 0 for no spawning. 0.5 is half the rate.")
+		                .translation("the_bumblezone.config.mobs.cavespiderspawnrate")
+		                .defineInRange("caveSpiderSpawnrate", 1D, 0, 1D));
             builder.pop();
 	        
 	        builder.push("Mod Compatibility Options");

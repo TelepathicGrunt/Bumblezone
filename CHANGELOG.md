@@ -20,9 +20,12 @@ Mods I'm keeping an eye on for future compat
  
 ##### Config:
 
--Added config to turn off/on Phantom spawning in The Bumblezone
--Added config to turn off/on Enderman spawning in The Bumblezone
-(Special thanks to wtchappell for the PR!)
+-Added config to adjust Phantom and Endermen spawnrates in The Bumblezone. (Special thanks to wtchappell for the PR!)
+
+-Added config to adjust Spider/Cave Spider in The Bumblezone.
+
+-Fixed clearUnwantedBiomeFeatures and clearUnwantedBiomeMobs configs to actual work. (hopefully!)
+
  
 ## (V.1.3.8 Changes) (1.15.2 Minecraft)
  

@@ -15,6 +15,10 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
  * dependent on the mod.
  */
 public class ProductiveBeesRedirection {
+	public static void PBAddHoneycombs(){
+		ProductiveBeesCompat.PBAddHoneycombs();
+	}
+
 	public static boolean PBIsAdvancedBeehiveAbstractBlock(BlockState block) {
 		return ProductiveBeesCompat.PBIsAdvancedBeehiveAbstractBlock(block);
 	}

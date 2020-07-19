@@ -36,7 +36,9 @@ import net.telepathicgrunt.bumblezone.features.BzFeatures;
 import net.telepathicgrunt.bumblezone.features.placement.BzPlacements;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.DispenserItemSetup;
+import net.telepathicgrunt.bumblezone.modcompatibility.BeesourcefulRedirection;
 import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
+import net.telepathicgrunt.bumblezone.modcompatibility.ProductiveBeesRedirection;
 import net.telepathicgrunt.bumblezone.utils.ConfigHelper;
 
 
@@ -56,7 +58,8 @@ public class Bumblezone
 		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 	
 		modEventBus.addListener(this::setup);
-	
+		modEventBus.addListener(this::resetBiomes);
+		
 		BzBlocks.BLOCKS.register(modEventBus);
 		BzItems.ITEMS.register(modEventBus);
 		BzBlocks.FLUIDS.register(modEventBus);
@@ -81,28 +84,6 @@ public class Bumblezone
     // should run after most other mods just in case
     private static void lateSetup() 
     {
-    	if(BzConfig.clearUnwantedBiomeFeatures.get()) {
-    		for(Biome biome : BzBiomes.biomes) {
-    			for(GenerationStage.Decoration stage : Decoration.values()) {
-    				biome.getFeatures(stage).clear();
-    			}
-    			
-    			biome.structures.clear();
-    			
-    			((BzBaseBiome)biome).addBiomeFeatures();
-    		}
-    	}
-
-    	if(BzConfig.clearUnwantedBiomeMobs.get()) {
-    		for(Biome biome : BzBiomes.biomes) {
-    			for(EntityClassification creatureType : EntityClassification.values()) {
-    				biome.getSpawns(creatureType).clear();
-    			}
-    			
-    			((BzBaseBiome)biome).addBiomeMobs();
-    		}
-    	}
-    	
 		DispenserItemSetup.lateSetupDespenserBehavior();
 		BzBaseBiome.addSprings();
 		ModChecking.setupModCompat();
@@ -168,4 +149,38 @@ public class Bumblezone
 	    	BzItems.registerCustomRecipes(event);
 	    }
     }
+    
+
+	public void resetBiomes(final ModConfig.Reloading event)
+	{
+    	if(Bumblezone.BzConfig.clearUnwantedBiomeFeatures.get()) {
+    		for(Biome biome : BzBiomes.biomes) {
+    			for(GenerationStage.Decoration stage : Decoration.values()) {
+    				biome.getFeatures(stage).clear();
+    			}
+    			
+    			biome.structures.clear();
+    			
+    			((BzBaseBiome)biome).addBiomeFeatures();
+    		}
+    		
+    		//re-add biome springs and certain modded features
+			BzBaseBiome.addSprings();
+			BeesourcefulRedirection.BSAddHoneycombs();
+			ProductiveBeesRedirection.PBAddHoneycombs();
+    	}
+
+    	if(Bumblezone.BzConfig.clearUnwantedBiomeMobs.get()) {
+    		for(Biome biome : BzBiomes.biomes) {
+    			for(EntityClassification creatureType : EntityClassification.values()) {
+    				biome.getSpawns(creatureType).clear();
+    			}
+    			
+    			((BzBaseBiome)biome).addBiomeMobs();
+    		}
+    		
+    		//re-add slime
+    		BzBiomes.biomes.forEach(biome -> ((BzBaseBiome) biome).increaseVanillaSlimeMobsRates());
+    	}
+	}
 }
