@@ -16,7 +16,7 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
    
-## (V.1.3.9 Changes) (1.15.2 Minecraft)
+## (V.1.3.9/1.3.10 Changes) (1.15.2 Minecraft)
  
 ##### Config:
 

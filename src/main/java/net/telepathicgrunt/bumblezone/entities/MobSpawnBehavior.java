@@ -32,11 +32,18 @@ public class MobSpawnBehavior
 						//STOP SPAWNING!!!!!!!!
 						event.setResult(Result.DENY);
 					}
+					
 
-					else if ((entity.getType() == EntityType.PHANTOM && Bumblezone.BzConfig.phantomSpawnrate.get() > world.getRandom().nextFloat()) ||
-							 (entity.getType() == EntityType.ENDERMAN && Bumblezone.BzConfig.endermanSpawnrate.get() > world.getRandom().nextFloat()) ||
-							 (entity.getType() == EntityType.CAVE_SPIDER && Bumblezone.BzConfig.spiderSpawnrate.get() > world.getRandom().nextFloat()) ||
-							 (entity.getType() == EntityType.SPIDER && Bumblezone.BzConfig.caveSpiderSpawnrate.get() > world.getRandom().nextFloat())) {
+					if(entity.getType() == EntityType.SPIDER) {
+						if(Bumblezone.BzConfig.spiderSpawnrate.get() <= world.getRandom().nextFloat()) {
+							event.setResult(Result.DENY);
+						}
+					}
+
+					else if ((entity.getType() == EntityType.PHANTOM && Bumblezone.BzConfig.phantomSpawnrate.get() <= world.getRandom().nextFloat()) ||
+							 (entity.getType() == EntityType.ENDERMAN && Bumblezone.BzConfig.endermanSpawnrate.get() <= world.getRandom().nextFloat()) ||
+							 (entity.getType() == EntityType.SPIDER && Bumblezone.BzConfig.spiderSpawnrate.get() <= world.getRandom().nextFloat()) ||
+							 (entity.getType() == EntityType.CAVE_SPIDER && Bumblezone.BzConfig.caveSpiderSpawnrate.get() <= world.getRandom().nextFloat())) {
 						event.setResult(Result.DENY);
 					}
 				}

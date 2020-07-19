@@ -166,8 +166,12 @@ public class Bumblezone
     		
     		//re-add biome springs and certain modded features
 			BzBaseBiome.addSprings();
-			BeesourcefulRedirection.BSAddHoneycombs();
-			ProductiveBeesRedirection.PBAddHoneycombs();
+			
+			if(ModChecking.beesourcefulPresent)
+				BeesourcefulRedirection.BSAddHoneycombs();
+			
+			if(ModChecking.productiveBeesPresent)
+				ProductiveBeesRedirection.PBAddHoneycombs();
     	}
 
     	if(Bumblezone.BzConfig.clearUnwantedBiomeMobs.get()) {

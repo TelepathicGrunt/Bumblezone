@@ -2,7 +2,6 @@ package net.telepathicgrunt.bumblezone.modcompatibility;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -51,19 +50,19 @@ public class BuzzierBeesRedirection
 		return BuzzierBeesCompat.bottledBeeInteract(itemstack, thisBlockState, world, position, playerEntity, playerHand);
 	}
 	
-	public static Block BBGetRandomTier1Candle(Random random)
+	public static BlockState BBGetRandomTier1Candle(Random random, int numOfCandles, boolean waterlogged, boolean lit)
 	{
-		return BuzzierBeesCompat.BBGetRandomTier1Candle(random);
+		return BuzzierBeesCompat.BBGetRandomTier1Candle(random, numOfCandles, waterlogged, lit);
 	}
 	
-	public static Block BBGetRandomTier2Candle(Random random, int lowerEndBias)
+	public static BlockState BBGetRandomTier2Candle(Random random, int lowerEndBias, int numOfCandles, boolean waterlogged, boolean lit)
 	{
-		return BuzzierBeesCompat.BBGetRandomTier2Candle(random, lowerEndBias);
+		return BuzzierBeesCompat.BBGetRandomTier2Candle(random, lowerEndBias, numOfCandles, waterlogged, lit);
 	}
 	
-	public static Block BBGetRandomTier3Candle(Random random, int lowerEndBias)
+	public static BlockState BBGetRandomTier3Candle(Random random, int lowerEndBias, int numOfCandles, boolean waterlogged, boolean lit)
 	{
-		return BuzzierBeesCompat.BBGetRandomTier3Candle(random, lowerEndBias);
+		return BuzzierBeesCompat.BBGetRandomTier3Candle(random, lowerEndBias, numOfCandles, waterlogged, lit);
 	}
 	
 	public static void speedUpHiveBoat(Entity entity) {

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
-import com.bagel.buzzierbees.common.blocks.CandleBlock;
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.Dynamic;
 import com.mojang.datafixers.util.Pair;
@@ -496,10 +495,12 @@ public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
 		else if(block == Blocks.BLACK_TERRACOTTA) {
 			if(ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowScentedCandlesSpiderBeeDungeon.get()) {
 				if(random.nextInt(4) == 0 && world.getBlockState(pos.down()).getMaterial() != Material.AIR)
-					return new Pair<>(BuzzierBeesRedirection.BBGetRandomTier3Candle(random, Bumblezone.BzConfig.powerfulCandlesRaritySpiderBeeDungeon.get() + 1).getDefaultState()
-							.with(CandleBlock.CANDLES, random.nextInt(random.nextInt(random.nextInt(3)+1)+1)+1) //lowest chance of 3 candles
-							.with(CandleBlock.WATERLOGGED, false)
-							.with(CandleBlock.LIT, true), 
+					return new Pair<>(BuzzierBeesRedirection.BBGetRandomTier3Candle(
+							random, 
+							Bumblezone.BzConfig.powerfulCandlesRaritySpiderBeeDungeon.get() + 1,
+							random.nextInt(random.nextInt(random.nextInt(3)+1)+1)+1,
+							false,
+							true), 
 							true);
 				
 				else if(random.nextFloat() < 0.3f && HONEY_CRYSTAL.isValidPosition(world, pos)) {

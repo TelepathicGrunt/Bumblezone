@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.bagel.buzzierbees.common.blocks.CandleBlock;
 import com.bagel.buzzierbees.core.registry.BBBlocks;
 import com.bagel.buzzierbees.core.registry.BBEntities;
 import com.bagel.buzzierbees.core.registry.BBItems;
@@ -371,16 +372,19 @@ public class BuzzierBeesCompat
 	/**
 	 * Picks a random BuzzierBees candle with lower indices list being more common
 	 */
-	public static Block BBGetRandomTier1Candle(Random random)
+	public static BlockState BBGetRandomTier1Candle(Random random, int numOfCandles, boolean waterlogged, boolean lit)
 	{
 		int index = random.nextInt(TIER_1_CANDLES_VARIANTS.size());
-		return TIER_1_CANDLES_VARIANTS.get(index);
+		return TIER_1_CANDLES_VARIANTS.get(index).getDefaultState()
+				.with(CandleBlock.CANDLES, numOfCandles)
+				.with(CandleBlock.WATERLOGGED, waterlogged)
+				.with(CandleBlock.LIT, lit);
 	}
 	
 	/**
 	 * Picks a random BuzzierBees scented candle with lower indices list being more common
 	 */
-	public static Block BBGetRandomTier2Candle(Random random, int lowerEndBias)
+	public static BlockState BBGetRandomTier2Candle(Random random, int lowerEndBias, int numOfCandles, boolean waterlogged, boolean lit)
 	{
 		int index = TIER_2_CANDLES_VARIANTS.size()-1;
 		
@@ -388,14 +392,17 @@ public class BuzzierBeesCompat
 			index = random.nextInt(index+1);
 		}
 		
-		return TIER_2_CANDLES_VARIANTS.get(index);
+		return TIER_2_CANDLES_VARIANTS.get(index).getDefaultState()
+				.with(CandleBlock.CANDLES, numOfCandles)
+				.with(CandleBlock.WATERLOGGED, waterlogged)
+				.with(CandleBlock.LIT, lit);
 	}
 	
 	/**
 	 * Picks a random BuzzierBees scented candle with lower indices list being more common
 	 * lowerEndBias cannot be 0 or negative. usually 2
 	 */
-	public static Block BBGetRandomTier3Candle(Random random, int lowerEndBias)
+	public static BlockState BBGetRandomTier3Candle(Random random, int lowerEndBias, int numOfCandles, boolean waterlogged, boolean lit)
 	{
 		int index = random.nextInt(TIER_3_CANDLES_VARIANTS.size());
 		
@@ -412,6 +419,9 @@ public class BuzzierBeesCompat
 		}
 		
 		
-		return TIER_3_CANDLES_VARIANTS.get(index);
+		return TIER_3_CANDLES_VARIANTS.get(index).getDefaultState()
+				.with(CandleBlock.CANDLES, numOfCandles)
+				.with(CandleBlock.WATERLOGGED, waterlogged)
+				.with(CandleBlock.LIT, lit);
 	}
 }
