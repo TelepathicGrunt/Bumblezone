@@ -50,6 +50,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster {
+   /**
+    * Special thanks to Bagel for the Honey Slime code and texture!
+    */
+
    private static final TrackedData<Boolean> IN_HONEY = DataTracker.registerData(HoneySlimeEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
    private static final TrackedData<Integer> IN_HONEY_GROWTH_TIME = DataTracker.registerData(HoneySlimeEntity.class, TrackedDataHandlerRegistry.INTEGER);
    private static final Ingredient BREEDING_ITEM = Ingredient.ofItems(Items.SUGAR);
@@ -61,7 +65,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    private static final HashSet<Block> HONEY_BASED_BLOCKS = Stream.of(
            Blocks.HONEY_BLOCK,
            BzBlocks.FILLED_POROUS_HONEYCOMB,
-           BzBlocks.EMPTY_HONEYCOMB_BROOD,
+           BzBlocks.HONEYCOMB_BROOD,
            BzBlocks.STICKY_HONEY_REDSTONE,
            BzBlocks.STICKY_HONEY_RESIDUE)
            .collect(Collectors.toCollection(HashSet::new));

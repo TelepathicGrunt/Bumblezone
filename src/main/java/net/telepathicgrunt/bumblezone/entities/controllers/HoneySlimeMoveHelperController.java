@@ -5,6 +5,10 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
 
 public class HoneySlimeMoveHelperController extends MoveControl {
+    /**
+     * Special thanks to Bagel for the Honey Slime code and texture!
+     */
+
     private float targetYaw;
     private int jumpDelay;
     private final HoneySlimeEntity slime;
