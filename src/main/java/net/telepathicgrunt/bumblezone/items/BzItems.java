@@ -37,6 +37,9 @@ public class BzItems {
 
     public static final Item HONEY_CRYSTAL_SHIELD = new HoneyCrystalShield();
 
+    public static final Item HONEY_SLIME_SPAWN_EGG = new HoneySlimeSpawnEgg(
+            null, 16763904,16558080, (new Item.Settings()).group(BUMBLEZONE_CREATIVE_TAB));
+
     public static final Item SUGAR_WATER_BUCKET = new BucketItem(BzBlocks.SUGAR_WATER_FLUID, new Item.Settings()
             .recipeRemainder(Items.BUCKET).maxCount(1).group(BUMBLEZONE_CREATIVE_TAB));
 
@@ -62,5 +65,6 @@ public class BzItems {
         Registry.register(Registry.ITEM, new Identifier(Bumblezone.MODID, "honey_crystal_shield"), HONEY_CRYSTAL_SHIELD);
         Registry.register(Registry.ITEM, new Identifier(Bumblezone.MODID, "sugar_water_bucket"), SUGAR_WATER_BUCKET);
         Registry.register(Registry.ITEM, new Identifier(Bumblezone.MODID, "sugar_water_bottle"), SUGAR_WATER_BOTTLE);
+        Registry.register(Registry.ITEM, new Identifier(Bumblezone.MODID, "honey_slime_spawn_egg"), HONEY_SLIME_SPAWN_EGG);
     }
 }

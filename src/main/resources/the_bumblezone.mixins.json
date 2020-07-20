@@ -5,9 +5,7 @@
   "mixins": [
     "AbstractFurnaceEntityMixin",
     "BeeEntityInvoker",
-    "BlockOverlayRendererMixin",
     "BucketItemAccessor",
-    "ClientWorldMixin",
     "CookingRecipeSerializerMixin",
     "DispenserAccessor",
     "EnderpearlImpactMixin",
@@ -32,11 +30,14 @@
     "PlayerTeleportationTickMixin",
     "PollenedBeeNaturalSpawnMixin",
     "RedstoneDustCanConnectMixin",
-    "SkyPropertiesAccessor",
     "StructureAccessorMixin",
-    "WaterEquivalenceMixin"
+    "WaterEquivalenceMixin",
+    "SpawnRestrictionAccessor"
   ],
   "client": [
+    "ClientWorldMixin",
+    "BlockOverlayRendererMixin",
+    "SkyPropertiesAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

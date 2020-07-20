@@ -1,6 +1,7 @@
-package net.telepathicgrunt.bumblezone;
+package net.telepathicgrunt.bumblezone.client.rendering;
 
-import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
@@ -18,28 +19,14 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockRenderView;
-import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 
 import java.util.function.Function;
 
+@Environment(EnvType.CLIENT)
+public class FluidRender {
 
-@SuppressWarnings("deprecation")
-public class BumblezoneClient implements ClientModInitializer {
-
-    //fluid mess
-    public static final Identifier FLUID_STILL = new Identifier(Bumblezone.MODID + ":block/sugar_water_still");
-    public static final Identifier FLUID_FLOWING = new Identifier(Bumblezone.MODID + ":block/sugar_water_flow");
-    public static final Identifier FLUID_OVERLAY = new Identifier(Bumblezone.MODID + ":block/sugar_water_overlay");
-
-    @Override
-    public void onInitializeClient() {
-        setupFluidRendering(BzBlocks.SUGAR_WATER_FLUID, BzBlocks.SUGAR_WATER_FLUID_FLOWING, FLUID_STILL, FLUID_FLOWING, 0x0059FF);
-        BzBlocks.registerRenderLayers();
-    }
-
-
-
-    public static void setupFluidRendering(final Fluid still, final Fluid flowing, final Identifier stillTextureFluidId,  final Identifier flowTextureFluidId,final int color)
+    @SuppressWarnings("deprecation")
+    public static void setupFluidRendering(final Fluid still, final Fluid flowing, final Identifier stillTextureFluidId, final Identifier flowTextureFluidId)
     {
         // If they're not already present, add the sprites to the block atlas
         ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEX).register((atlasTexture, registry) ->

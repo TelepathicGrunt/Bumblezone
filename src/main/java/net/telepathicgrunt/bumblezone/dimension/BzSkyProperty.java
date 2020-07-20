@@ -5,7 +5,7 @@ import net.minecraft.util.math.Vec3d;
 
 public class BzSkyProperty extends SkyProperties {
     public BzSkyProperty() {
-        super(280, true, SkyType.NONE, false, false);
+        super(1000, true, SkyType.NONE, false, false);
     }
 
     @Override

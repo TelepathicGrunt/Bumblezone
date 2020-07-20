@@ -37,6 +37,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
+import net.telepathicgrunt.bumblezone.entities.BzEntities;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 
 import java.util.List;
@@ -50,7 +51,7 @@ public class HoneycombBrood extends FacingBlock {
 
     public HoneycombBrood() {
         super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MaterialColor.ORANGE).ticksRandomly().strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.9F));
-        this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.SOUTH).with(STAGE, Integer.valueOf(0)));
+        this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.SOUTH).with(STAGE, 0));
     }
 
 
@@ -110,7 +111,7 @@ public class HoneycombBrood extends FacingBlock {
 
             //spawn angry bee if at final stage and front isn't blocked off
             int stage = thisBlockState.get(STAGE);
-            spawnBee(world, thisBlockState, position, stage);
+            spawnBroodMob(world, thisBlockState, position, stage);
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
             if (!playerEntity.isCreative()) {
@@ -146,14 +147,20 @@ public class HoneycombBrood extends FacingBlock {
                     successfulGrowth = true;
                 }
 
+                if (successfulGrowth && world.random.nextFloat() < 0.30F) {
+                    if(!playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE)){
+                        playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, (int) (Bumblezone.BZ_CONFIG.howLongProtectionOfTheHiveLasts * 0.75f), 1, false, false,  true));
+                    }
+                }
+
                 //grows larva
                 if (successfulGrowth) {
                     //spawn bee if at final stage and front isn't blocked off
                     int stage = thisBlockState.get(STAGE);
                     if (stage == 3) {
-                        spawnBee(world, thisBlockState, position, stage);
+                        spawnBroodMob(world, thisBlockState, position, stage);
                     } else {
-                        world.setBlockState(position, thisBlockState.with(STAGE, Integer.valueOf(stage + 1)));
+                        world.setBlockState(position, thisBlockState.with(STAGE, stage + 1));
                     }
                 }
             }
@@ -190,7 +197,7 @@ public class HoneycombBrood extends FacingBlock {
         int stage = state.get(STAGE);
         if (stage < 3) {
             if (world.getRegistryKey().getValue() == Bumblezone.MOD_FULL_ID ? rand.nextInt(10) == 0 : rand.nextInt(22) == 0) {
-                world.setBlockState(position, state.with(STAGE, Integer.valueOf(stage + 1)), 2);
+                world.setBlockState(position, state.with(STAGE, stage + 1), 2);
             }
         } else {
             PLAYER_DISTANCE.setBaseMaxDistance(Math.max(Bumblezone.BZ_CONFIG.aggressionTriggerRadius * 0.5, 1));
@@ -198,7 +205,7 @@ public class HoneycombBrood extends FacingBlock {
             List<BeeEntity> beeList = world.getTargets(BeeEntity.class, FIXED_DISTANCE, null, new Box(position).expand(50));
             List<PlayerEntity> playerList = world.getTargets(PlayerEntity.class, PLAYER_DISTANCE, null, new Box(position).expand(50));
             if (beeList.size() < 10 || playerList.stream().anyMatch(player -> player.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE))) {
-                spawnBee(world, state, position, stage);
+                spawnBroodMob(world, state, position, stage);
             }
         }
     }
@@ -218,7 +225,7 @@ public class HoneycombBrood extends FacingBlock {
                 BlockState blockState = world.getBlockState(position);
                 int stage = blockState.get(STAGE);
                 if (stage == 3) {
-                    spawnBee(world, blockState, position, stage);
+                    spawnBroodMob(world, blockState, position, stage);
                 }
 
                 if ((playerEntity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_FULL_ID || Bumblezone.BZ_CONFIG.allowWrathOfTheHiveOutsideBumblezone) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BZ_CONFIG.aggressiveBees) {
@@ -232,23 +239,32 @@ public class HoneycombBrood extends FacingBlock {
     }
 
 
-    private static boolean spawnBee(World world, BlockState state, BlockPos position, int stage) {
+    private static void spawnBroodMob(World world, BlockState state, BlockPos position, int stage) {
         //the front of the block
         BlockPos.Mutable blockpos = new BlockPos.Mutable().set(position);
         blockpos.move(state.get(FACING).getOpposite());
 
         if (stage == 3 && !world.getBlockState(blockpos).getMaterial().isSolid()) {
-            MobEntity beeEntity = EntityType.BEE.create(world);
-            beeEntity.refreshPositionAndAngles(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, world.getRandom().nextFloat() * 360.0F, 0.0F);
-            beeEntity.initialize(world, world.getLocalDifficulty(new BlockPos(beeEntity.getPos())), SpawnReason.TRIGGERED, null, (CompoundTag) null);
-            world.spawnEntity(beeEntity);
+            MobEntity beeMob = EntityType.BEE.create(world);
 
-            world.setBlockState(position, state.with(STAGE, Integer.valueOf(0)));
+            spawnMob(world, blockpos, beeMob, beeMob);
 
-            return true;
+            if(world.random.nextFloat() < 0.1f){
+                MobEntity honeySlimeMob = BzEntities.HONEY_SLIME.create(world);
+                spawnMob(world, blockpos, beeMob, honeySlimeMob);
+            }
+
+            world.setBlockState(position, state.with(STAGE, 0));
+
         }
 
-        return false;
+    }
+
+    private static void spawnMob(World world, BlockPos.Mutable blockpos, MobEntity beeMob, MobEntity entity) {
+        if(entity == null) return;
+        entity.refreshPositionAndAngles(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, world.getRandom().nextFloat() * 360.0F, 0.0F);
+        entity.initialize(world, world.getLocalDifficulty(new BlockPos(beeMob.getPos())), SpawnReason.TRIGGERED, null, (CompoundTag) null);
+        world.spawnEntity(entity);
     }
 
 

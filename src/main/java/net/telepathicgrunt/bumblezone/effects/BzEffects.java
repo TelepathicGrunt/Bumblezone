@@ -8,8 +8,10 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 
 public class BzEffects {
     public final static StatusEffect WRATH_OF_THE_HIVE = new WrathOfTheHiveEffect(StatusEffectType.HARMFUL, 16748549);
+    public final static StatusEffect PROTECTION_OF_THE_HIVE = new ProtectionOfTheHiveEffect(StatusEffectType.BENEFICIAL, 16570117);
 
     public static void registerEffects() {
         Registry.register(Registry.STATUS_EFFECT, new Identifier(Bumblezone.MODID, "wrath_of_the_hive"), WRATH_OF_THE_HIVE);
+        Registry.register(Registry.STATUS_EFFECT, new Identifier(Bumblezone.MODID, "protection_of_the_hive"), PROTECTION_OF_THE_HIVE);
     }
 }

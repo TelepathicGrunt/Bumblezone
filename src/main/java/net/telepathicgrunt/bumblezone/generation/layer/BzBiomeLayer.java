@@ -5,9 +5,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.layer.type.InitLayer;
 import net.minecraft.world.biome.layer.util.LayerRandomnessSource;
 import net.minecraft.world.gen.ChunkRandom;
-import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.biome.BzBiomes;
-import org.apache.logging.log4j.Level;
 
 import java.util.stream.IntStream;
 

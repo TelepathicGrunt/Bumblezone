@@ -55,9 +55,18 @@ public class BzConfig {
             "\n" +
             "How long bees will keep their effects for (speed, absorption, strength).\n" +
             "\n" +
-            "Note: This is not in seconds at all. And bee's anger will remain.\n" +
+            "Note: This is in ticks. 20 ticks = 1 second. And bee's anger will remain.\n" +
             "Only the boosts given to the bees will be gone.")
     public int howLongWrathOfTheHiveLasts = 350;
+
+    @Comment(value = "##############################################################\n" +
+            "##############################################################\n" +
+            "\n" +
+            "How long entities will keep Protection of the Hive effect after feeding bees\n" +
+            "or Brood Blocks. Bees will attack anyone that damages someone with the effect.\n" +
+            "\n" +
+            "Note: This is in ticks. 20 ticks = 1 second.")
+    public int howLongProtectionOfTheHiveLasts = 500;
 
     @Comment(value = "##############################################################\n" +
             "##############################################################\n" +

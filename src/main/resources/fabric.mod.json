@@ -23,7 +23,7 @@
       "net.telepathicgrunt.bumblezone.Bumblezone"
     ],
     "client": [
-      "net.telepathicgrunt.bumblezone.BumblezoneClient"
+      "net.telepathicgrunt.bumblezone.client.BumblezoneClient"
     ]
   },
   "mixins": [
@@ -36,7 +36,7 @@
     "fabricloader": ">=0.7.2",
     "fabric": "*",
     "minecraft": "1.16.x",
-    "cotton": "^1.0.0",
+    "cotton-config": "^1.0.0-rc.7",
     "cardinal-components-base": "^2.3.0",
     "cardinal-components-entity": "^2.3.0"
   },
