@@ -39,4 +39,5 @@ public class EmptyHoneycombBrood extends FacingBlock {
     public BlockState mirror(BlockState state, BlockMirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.get(FACING)));
     }
+
 }

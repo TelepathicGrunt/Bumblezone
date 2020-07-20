@@ -1,14 +1,9 @@
 package net.telepathicgrunt.bumblezone.generation.layer;
 
-import net.minecraft.util.math.noise.OctaveSimplexNoiseSampler;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.layer.type.CrossSamplingLayer;
-import net.minecraft.world.biome.layer.type.InitLayer;
 import net.minecraft.world.biome.layer.util.LayerRandomnessSource;
-import net.minecraft.world.gen.ChunkRandom;
 import net.telepathicgrunt.bumblezone.biome.BzBiomes;
-
-import java.util.stream.IntStream;
 
 
 public enum BzBiomePillarLayer implements CrossSamplingLayer {

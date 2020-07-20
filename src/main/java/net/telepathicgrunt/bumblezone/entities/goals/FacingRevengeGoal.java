@@ -1,9 +1,7 @@
 package net.telepathicgrunt.bumblezone.entities.goals;
 
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
-import net.minecraft.entity.player.PlayerEntity;
 import net.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import net.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
 
