@@ -149,7 +149,7 @@ public class HoneycombBrood extends FacingBlock {
 
                 if (successfulGrowth && world.random.nextFloat() < 0.30F) {
                     if(!playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE)){
-                        playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, 30, 1, false, false));
+                        playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, (int) (Bumblezone.BZ_CONFIG.howLongProtectionOfTheHiveLasts * 0.75f), 1, false, false,  true));
                     }
                 }
 

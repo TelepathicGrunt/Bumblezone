@@ -61,7 +61,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    private static final HashSet<Block> HONEY_BASED_BLOCKS = Stream.of(
            Blocks.HONEY_BLOCK,
            BzBlocks.FILLED_POROUS_HONEYCOMB,
-           BzBlocks.FILLED_POROUS_HONEYCOMB,
+           BzBlocks.EMPTY_HONEYCOMB_BROOD,
            BzBlocks.STICKY_HONEY_REDSTONE,
            BzBlocks.STICKY_HONEY_RESIDUE)
            .collect(Collectors.toCollection(HashSet::new));

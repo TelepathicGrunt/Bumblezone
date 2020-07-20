@@ -62,6 +62,15 @@ public class BzConfig {
     @Comment(value = "##############################################################\n" +
             "##############################################################\n" +
             "\n" +
+            "How long entities will keep Protection of the Hive effect after feeding bees\n" +
+            "or Brood Blocks. Bees will attack anyone that damages someone with the effect.\n" +
+            "\n" +
+            "Note: This is in ticks. 20 ticks = 1 second.")
+    public int howLongProtectionOfTheHiveLasts = 500;
+
+    @Comment(value = "##############################################################\n" +
+            "##############################################################\n" +
+            "\n" +
             "How fast bees move along the ground (Not while flying).\n" +
             "You will see this a lot when bees are about to attack\n" +
             "you, they tend to touch the floor and the speed boost\n" +

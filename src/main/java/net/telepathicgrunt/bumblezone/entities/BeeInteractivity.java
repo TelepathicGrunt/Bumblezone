@@ -13,6 +13,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 import net.telepathicgrunt.bumblezone.items.BzItems;
@@ -57,7 +58,7 @@ public class BeeInteractivity {
                             WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
                         }
                         else{
-                            playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, 40, 2, false, false));
+                            playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongProtectionOfTheHiveLasts, 2, false, false,  true));
                         }
                     }
 
@@ -91,7 +92,7 @@ public class BeeInteractivity {
                             WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
                         }
                         else{
-                            playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, 40, 2, false, false));
+                            playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongProtectionOfTheHiveLasts, 2, false, false,  true));
                         }
                     }
 
