@@ -14,7 +14,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 •Clarified time units in the duration config for Wrath of the Hive effect.
 
 	Entities:
-•Added Honey Slime! (Special thanks to Bagel for donating Honey Slime to The Bumblezone)
+•Added Honey Slime! (Special thanks to Bagel for donating Honey Slime to The Bumblezone) Spawns naturally in The Bumblezone and can spawn from Honey Brood Blocks with bees.
 
 	Effects:
 •Added Protection of the Hive! When active, any one that attacks you will get Wrath of the Hive effect! You can get Protection of the Hive by feeding Bees or Honeycomb brood blocks Honey Bottles or Sugar Water items!

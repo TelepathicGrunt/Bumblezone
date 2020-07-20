@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.Durations;
+import net.minecraft.entity.ai.goal.AnimalMateGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -83,9 +84,9 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    protected void initGoals() {
       this.goalSelector.add(1, new FloatGoal(this));
       this.targetSelector.add(1, new FacingRevengeGoal(this));
-      this.goalSelector.add(1, new HopGoal(this));
-      this.goalSelector.add(3, new BreedGoal(this, 1.0D));
-      this.goalSelector.add(2, new TemptGoal(this, 1.2D, BREEDING_ITEM));
+      this.goalSelector.add(2, new AnimalMateGoal(this, 1.0D));
+      this.goalSelector.add(3, new TemptGoal(this, 1.2D, BREEDING_ITEM));
+      this.goalSelector.add(4, new HopGoal(this));
       this.goalSelector.add(4, new FaceRandomGoal(this));
    }
 

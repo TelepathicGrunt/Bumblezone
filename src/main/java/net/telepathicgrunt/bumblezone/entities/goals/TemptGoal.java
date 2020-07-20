@@ -22,7 +22,6 @@ public class TemptGoal extends Goal {
     private double yaw;
     protected PlayerEntity closestPlayer;
     private int delayTemptCounter;
-    private boolean isRunning;
     private final Ingredient temptItem;
 
     public TemptGoal(HoneySlimeEntity creatureIn, double speedIn, Ingredient temptItemsIn) {
@@ -92,7 +91,6 @@ public class TemptGoal extends Goal {
         this.targetX = this.closestPlayer.getX();
         this.targetY = this.closestPlayer.getY();
         this.targetZ = this.closestPlayer.getZ();
-        this.isRunning = true;
     }
 
     /**
@@ -102,7 +100,6 @@ public class TemptGoal extends Goal {
         this.closestPlayer = null;
         this.slime.getNavigation().stop();
         this.delayTemptCounter = 100;
-        this.isRunning = false;
     }
 
     /**
