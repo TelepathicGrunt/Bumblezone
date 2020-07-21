@@ -1,7 +1,11 @@
 package net.telepathicgrunt.bumblezone;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent.LoggedInEvent;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent.RespawnEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -16,6 +20,8 @@ public class ClientEvents
 	{
 		modBus.addListener(ClientEvents::onClientSetup);
 		forgeBus.addListener(SugarWaterClientEvents::sugarWaterOverlay);
+		forgeBus.addListener(ClientEvents::logIn);
+		forgeBus.addListener(ClientEvents::respawn);
 	}
 
 	
@@ -30,5 +36,17 @@ public class ClientEvents
         		RenderTypeLookup.setRenderLayer(BzBlocks.SUGAR_WATER_FLUID.get(), RenderType.getTranslucent());
         		RenderTypeLookup.setRenderLayer(BzBlocks.SUGAR_WATER_FLUID_FLOWING.get(), RenderType.getTranslucent());
 	        });
+	}
+	
+	private static void logIn(LoggedInEvent event) {
+		addBeeAmbienceSound(event.getPlayer());
+	}
+	
+	private static void respawn(RespawnEvent event) {
+		addBeeAmbienceSound(event.getPlayer());
+	}
+	
+	private static void addBeeAmbienceSound(ClientPlayerEntity player) {
+		player.ambientSoundHandlers.add(new ClientAmbientSounds(player, Minecraft.getInstance().getSoundHandler()));
 	}
 }
