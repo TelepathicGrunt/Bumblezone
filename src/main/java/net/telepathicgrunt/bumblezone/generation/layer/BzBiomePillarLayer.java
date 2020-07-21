@@ -9,13 +9,12 @@ import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 public enum BzBiomePillarLayer implements CrossSamplingLayer {
     INSTANCE;
 
-    private static final int SUGAR_WATER = Registry.BIOME.getRawId(BzBiomes.SUGAR_WATER);
     private static final int HIVE_PILLAR = Registry.BIOME.getRawId(BzBiomes.HIVE_PILLAR);
 
 
     public int sample(LayerRandomnessSource context, int n, int e, int s, int w, int center) {
 
-        if (context.nextInt(6) == 0 && n == center && e == center && s == center && w == center)
+        if (context.nextInt(8) == 0 && n == center && e == center && s == center && w == center)
         {
             return HIVE_PILLAR;
         }

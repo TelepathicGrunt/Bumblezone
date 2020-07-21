@@ -15,7 +15,6 @@ public enum BzBiomeLayer implements InitLayer {
 
     private static final int SUGAR_WATER = Registry.BIOME.getRawId(BzBiomes.SUGAR_WATER);
     private static final int HIVE_WALL = Registry.BIOME.getRawId(BzBiomes.HIVE_WALL);
-    private static final int HIVE_PILLAR = Registry.BIOME.getRawId(BzBiomes.HIVE_PILLAR);
 
     private static OctaveSimplexNoiseSampler perlinGen;
 //	private double max = -100;
