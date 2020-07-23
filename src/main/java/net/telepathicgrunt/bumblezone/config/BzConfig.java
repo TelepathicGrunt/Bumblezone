@@ -23,6 +23,7 @@ public class BzConfig
 	    // dimension
 	    public ConfigValueListener<Boolean> dayNightCycle;
 	    public ConfigValueListener<Double> fogBrightnessPercentage;
+	    public ConfigValueListener<Boolean> ambienceNoise;
 	    
 	    // teleportation
 	    public ConfigValueListener<Integer> teleportationMode;
@@ -109,7 +110,13 @@ public class BzConfig
 	                    		+" (Be sure to let those mods know to add mob configs though!)\r\n")
 	                    .translation("the_bumblezone.config.dimension.clearunwantedbiomemobs")
 	                    .define("clearUnwantedBiomeMobs", false));
-	
+
+	        	ambienceNoise = subscriber.subscribe(builder
+	                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+	                    		+" Turns on/off the buzzing ambience sound in Bumblezone's dimension.\r\n")
+	                    .translation("the_bumblezone.config.dimension.ambiencenoise")
+	                    .define("ambienceNoise", true));
+
 	            dayNightCycle = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Determines if the day/night cycle active in the Bumblezone dimension.\r\n "
