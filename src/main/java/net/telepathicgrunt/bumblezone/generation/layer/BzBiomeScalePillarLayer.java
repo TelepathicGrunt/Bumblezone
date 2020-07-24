@@ -9,10 +9,7 @@ import net.telepathicgrunt.bumblezone.biome.BzBiomes;
 public enum BzBiomeScalePillarLayer implements CrossSamplingLayer {
     INSTANCE;
 
-    private static final int HIVE_WALL = Registry.BIOME.getRawId(BzBiomes.HIVE_WALL);
     private static final int HIVE_PILLAR = Registry.BIOME.getRawId(BzBiomes.HIVE_PILLAR);
-    private static final int SUGAR_WATER = Registry.BIOME.getRawId(BzBiomes.SUGAR_WATER);
-
     public int sample(LayerRandomnessSource context, int n, int e, int s, int w, int center) {
         if(center != HIVE_PILLAR){
             boolean borderingHivePillar = false;

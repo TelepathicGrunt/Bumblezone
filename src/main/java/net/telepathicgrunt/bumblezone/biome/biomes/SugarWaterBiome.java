@@ -31,7 +31,7 @@ public final class SugarWaterBiome extends BzBaseBiome {
                 .precipitation(Biome.Precipitation.NONE)
                 .category(Category.NONE)
                 .depth(-2.2F)
-                .scale(0.7F)
+                .scale(1.2F)
                 .temperature(1.85F)
                 .downfall(0.5F)
                 .effects((new BiomeEffects.Builder())
