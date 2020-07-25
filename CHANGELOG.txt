@@ -7,6 +7,11 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
+   (V.2.1.2 Changes) (1.16.1 Snapshot Minecraft)
+
+	Misc:
+•Fixed reloadable config causing server to not shut down.
+
    (V.2.1.1 Changes) (1.16.1 Snapshot Minecraft)
 
 	Dimension:
