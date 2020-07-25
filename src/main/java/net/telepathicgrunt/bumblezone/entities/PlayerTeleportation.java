@@ -150,12 +150,12 @@ public class PlayerTeleportation {
                     {
                         validBelowBlock = true;
                     }
-                    else if(Bumblezone.BZ_CONFIG.warnPlayersOfWrongBlockUnderHive && world.isClient)
+                    else if(Bumblezone.BZ_CONFIG.warnPlayersOfWrongBlockUnderHive)
                     {
                         //failed. Block below isn't the required block
-                        String beeBlock = world.getBlockState(hivePos).getBlock().getName().getString();
+                        String beeBlock = Registry.BLOCK.getId(world.getBlockState(hivePos).getBlock()).toString();
                         Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: The block under the "+beeBlock+" is not the correct block to teleport to Bumblezone. The config enter says it needs "+requiredBlockString+" under "+beeBlock+".");
-                        Text message = new LiteralText("§eBumblezone:§f The block under the §6"+beeBlock+"§f is not the correct block to teleport to Bumblezone. The config enter says it needs §6"+requiredBlockString+"§f under §6"+beeBlock+"§f.");
+                        Text message = new LiteralText("The config entry says it needs §6"+requiredBlockString+"§f under §6"+beeBlock+"§f.");
                         playerEntity.sendMessage(message, true);
                         return false;
                     }

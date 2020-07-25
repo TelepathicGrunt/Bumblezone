@@ -7,6 +7,24 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
+   (V.2.1.2 Changes) (1.16.1 Snapshot Minecraft)
+
+	Misc:
+•Fixed reloadable config causing server to not shut down.
+
+   (V.2.1.1 Changes) (1.16.1 Snapshot Minecraft)
+
+	Dimension:
+•Adjusted terrain to try and make it slightly more open.
+
+•Fixed game not warning player that the block under the bee nest is incorrect if the config specified a different block is needed under the bee nest to enter the Bumblezone.
+
+	Entities:
+•Honey Slime now can speed up getting their honey back from being on Honeycomb Brood Blocks.
+
+	Misc:
+•Fixed crash on dedicated servers due to running client sided code in Cave Sugar Waterfall code.
+
 
    (V.2.1.0 Changes) (1.16.1 Snapshot Minecraft)
 

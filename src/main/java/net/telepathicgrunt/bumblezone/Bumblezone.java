@@ -8,14 +8,12 @@ import nerdhub.cardinal.components.api.util.EntityComponents;
 import nerdhub.cardinal.components.api.util.RespawnCopyStrategy;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.server.ServerStartCallback;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.configs.BzConfig;
-import net.telepathicgrunt.bumblezone.configs.FileWatcher;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.entities.BeeAggression;
@@ -29,10 +27,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class Bumblezone implements ModInitializer {
@@ -58,38 +52,7 @@ public class Bumblezone implements ModInitializer {
         //Set up config
         BZ_CONFIG = ConfigManager.loadConfig(BzConfig.class);
 
-        // monitor the config file
-        TimerTask task = new FileWatcher(Objects.requireNonNull(FabricLoader.getInstance().getConfigDirectory().listFiles(new MyFileNameFilter("TheBumblezoneConfig.json5")))[0]) {
-            protected void onChange(File file) {
-                // Config was changed! Update the ingame values based on new config
-                //System.out.println( "File "+ file.getName() +" have change !" );
-                BZ_CONFIG = ConfigManager.loadConfig(BzConfig.class);
-            }
-        };
-        Timer timer = new Timer();
-        // repeat the check for a changed config every second
-        timer.schedule(task, new Date(), 1000);
-
-
         ServerStartCallback.EVENT.register((MinecraftServer world) -> BeeAggression.setupBeeHatingList(world.getWorld(World.OVERWORLD)));
         DispenserItemSetup.setupDispenserBehaviors();
     }
-
-    // FileNameFilter implementation
-    // Is used to find and return only our config file
-    public static class MyFileNameFilter implements FilenameFilter {
-
-        private final String configName;
-
-        public MyFileNameFilter(String extension) {
-            this.configName = extension.toLowerCase();
-        }
-
-        @Override
-        public boolean accept(File dir, String name) {
-            return name.toLowerCase().equals(configName);
-        }
-
-    }
-
 }
