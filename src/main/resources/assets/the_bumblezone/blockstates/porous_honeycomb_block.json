@@ -1,1 +1,3 @@
-{"variants":{"":{"model":"the_bumblezone:block/porous_honeycomb_block"}}}
+{
+  "variants": { "": { "model": "the_bumblezone:block/porous_honeycomb_block" } }
+}

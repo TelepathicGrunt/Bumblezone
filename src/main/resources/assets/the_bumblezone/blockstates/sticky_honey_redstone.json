@@ -1,1 +1,92 @@
-{"multipart":[{"when":{"down":"true","powered":"false"},"apply":{"model":"the_bumblezone:block/sticky_honey_redstone_unlit","y":180}},{"when":{"up":"true","powered":"false"},"apply":{"model":"the_bumblezone:block/sticky_honey_redstone_unlit","x":180}},{"when":{"south":"true","powered":"false"},"apply":{"model":"the_bumblezone:block/sticky_honey_redstone_unlit","x":90}},{"when":{"north":"true","powered":"false"},"apply":{"model":"the_bumblezone:block/sticky_honey_redstone_unlit","x":270}},{"when":{"west":"true","powered":"false"},"apply":{"model":"the_bumblezone:block/sticky_honey_redstone_unlit","x":90,"y":90}},{"when":{"east":"true","powered":"false"},"apply":{"model":"the_bumblezone:block/sticky_honey_redstone_unlit","x":90,"y":270}},{"when":{"down":"true","powered":"true"},"apply":{"model":"the_bumblezone:block/sticky_honey_redstone_lit","y":180}},{"when":{"up":"true","powered":"true"},"apply":{"model":"the_bumblezone:block/sticky_honey_redstone_lit","x":180}},{"when":{"south":"true","powered":"true"},"apply":{"model":"the_bumblezone:block/sticky_honey_redstone_lit","x":90}},{"when":{"north":"true","powered":"true"},"apply":{"model":"the_bumblezone:block/sticky_honey_redstone_lit","x":270}},{"when":{"west":"true","powered":"true"},"apply":{"model":"the_bumblezone:block/sticky_honey_redstone_lit","x":90,"y":90}},{"when":{"east":"true","powered":"true"},"apply":{"model":"the_bumblezone:block/sticky_honey_redstone_lit","x":90,"y":270}}]}
+{
+  "multipart": [
+    {
+      "when": { "down": "true", "powered": "false" },
+      "apply": {
+        "model": "the_bumblezone:block/sticky_honey_redstone_unlit",
+        "y": 180
+      }
+    },
+    {
+      "when": { "up": "true", "powered": "false" },
+      "apply": {
+        "model": "the_bumblezone:block/sticky_honey_redstone_unlit",
+        "x": 180
+      }
+    },
+    {
+      "when": { "south": "true", "powered": "false" },
+      "apply": {
+        "model": "the_bumblezone:block/sticky_honey_redstone_unlit",
+        "x": 90
+      }
+    },
+    {
+      "when": { "north": "true", "powered": "false" },
+      "apply": {
+        "model": "the_bumblezone:block/sticky_honey_redstone_unlit",
+        "x": 270
+      }
+    },
+    {
+      "when": { "west": "true", "powered": "false" },
+      "apply": {
+        "model": "the_bumblezone:block/sticky_honey_redstone_unlit",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": { "east": "true", "powered": "false" },
+      "apply": {
+        "model": "the_bumblezone:block/sticky_honey_redstone_unlit",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": { "down": "true", "powered": "true" },
+      "apply": {
+        "model": "the_bumblezone:block/sticky_honey_redstone_lit",
+        "y": 180
+      }
+    },
+    {
+      "when": { "up": "true", "powered": "true" },
+      "apply": {
+        "model": "the_bumblezone:block/sticky_honey_redstone_lit",
+        "x": 180
+      }
+    },
+    {
+      "when": { "south": "true", "powered": "true" },
+      "apply": {
+        "model": "the_bumblezone:block/sticky_honey_redstone_lit",
+        "x": 90
+      }
+    },
+    {
+      "when": { "north": "true", "powered": "true" },
+      "apply": {
+        "model": "the_bumblezone:block/sticky_honey_redstone_lit",
+        "x": 270
+      }
+    },
+    {
+      "when": { "west": "true", "powered": "true" },
+      "apply": {
+        "model": "the_bumblezone:block/sticky_honey_redstone_lit",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": { "east": "true", "powered": "true" },
+      "apply": {
+        "model": "the_bumblezone:block/sticky_honey_redstone_lit",
+        "x": 90,
+        "y": 270
+      }
+    }
+  ]
+}
