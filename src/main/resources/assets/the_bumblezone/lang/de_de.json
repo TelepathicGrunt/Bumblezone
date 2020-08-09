@@ -1,1 +1,30 @@
-{"itemGroup.the_bumblezone":"The Bumblezone","block.the_bumblezone.porous_honeycomb_block":"Poriger Honigwabenblock","block.the_bumblezone.filled_porous_honeycomb_block":"Gef\u00fcllter poriger Honigwabenblock","block.the_bumblezone.dead_honeycomb_larva_block":"Leerer Wabenbrutblock","block.the_bumblezone.honeycomb_larva_block":"Wabenbrutblock","block.the_bumblezone.sugar_infused_cobblestone":"Zuckergetr\u00e4nkter Bruchstein","block.the_bumblezone.sugar_infused_stone":"Zuckergetr\u00e4nkter Stein","block.the_bumblezone.sticky_honey_residue":"Klebriger Honigrest","block.the_bumblezone.sticky_honey_redstone":"Klebriger Honigredstone","block.the_bumblezone.honey_crystal":"Honigkristall","item.the_bumblezone.honey_crystal_shards":"Honigkristallsplitter","item.the_bumblezone.sugar_water_bucket":"Zuckerwassereimer","item.the_bumblezone.sugar_water_bottle":"Zuckerwasserflasche","item.the_bumblezone.honey_crystal_shield":"Honigkristallschild","item.the_bumblezone.honey_crystal_shield.level_tooltip":"Schildlevel","biome.the_bumblezone.sugar_water_floor":"Zuckerwassergrund","biome.the_bumblezone.hive_wall":"Bienenstockmauer","biome.the_bumblezone.hive_pillar":"Bienenstocks\u00e4ule","feature.the_bumblezone.honeycomb_hole":"Honigwabenloch","feature.the_bumblezone.honeycomb_caves":"Honigwabenh\u00f6hle","feature.the_bumblezone.cave_sugar_waterfall":"H\u00f6hlenzuckerwasserfall","effect.the_bumblezone.wrath_of_the_hive":"Bienenzorn","effect.the_bumblezone.protection_of_the_hive":"Bienenschutz"}
+{
+  "itemGroup.the_bumblezone":"The Bumblezone",
+  
+  "block.the_bumblezone.porous_honeycomb_block":"Poriger Honigwabenblock",
+  "block.the_bumblezone.filled_porous_honeycomb_block":"Gef\u00fcllter poriger Honigwabenblock",
+  "block.the_bumblezone.dead_honeycomb_larva_block":"Leerer Wabenbrutblock",
+  "block.the_bumblezone.honeycomb_larva_block":"Wabenbrutblock",
+  "block.the_bumblezone.sugar_infused_cobblestone":"Zuckergetr\u00e4nkter Bruchstein",
+  "block.the_bumblezone.sugar_infused_stone":"Zuckergetr\u00e4nkter Stein",
+  "block.the_bumblezone.sticky_honey_residue":"Klebriger Honigrest",
+  "block.the_bumblezone.sticky_honey_redstone":"Klebriger Honigredstone",
+  "block.the_bumblezone.honey_crystal":"Honigkristall",
+  
+  "item.the_bumblezone.honey_crystal_shards":"Honigkristallsplitter",
+  "item.the_bumblezone.sugar_water_bucket":"Zuckerwassereimer",
+  "item.the_bumblezone.sugar_water_bottle":"Zuckerwasserflasche",
+  "item.the_bumblezone.honey_crystal_shield":"Honigkristallschild",
+  "item.the_bumblezone.honey_crystal_shield.level_tooltip":"Schildlevel",
+  
+  "biome.the_bumblezone.sugar_water_floor":"Zuckerwassergrund",
+  "biome.the_bumblezone.hive_wall":"Bienenstockmauer",
+  "biome.the_bumblezone.hive_pillar":"Bienenstocks\u00e4ule",
+  
+  "feature.the_bumblezone.honeycomb_hole":"Honigwabenloch",
+  "feature.the_bumblezone.honeycomb_caves":"Honigwabenh\u00f6hle",
+  "feature.the_bumblezone.cave_sugar_waterfall":"H\u00f6hlenzuckerwasserfall",
+  
+  "effect.the_bumblezone.wrath_of_the_hive":"Bienenzorn",
+  "effect.the_bumblezone.protection_of_the_hive":"Bienenschutz"
+}
