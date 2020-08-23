@@ -114,7 +114,7 @@ public class BzPlacingUtils
 			blockpos$Mutable.move(Direction.UP);
 		}
 
-		return blockpos$Mutable.getY() > 255 ? 255 : blockpos$Mutable.getY();
+		return Math.min(blockpos$Mutable.getY(), 255);
 	}
 	
 
