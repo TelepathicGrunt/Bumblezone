@@ -1,6 +1,6 @@
 package net.telepathicgrunt.bumblezone;
 
-import io.github.cottonmc.cotton.config.ConfigManager;
+import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import nerdhub.cardinal.components.api.ComponentRegistry;
 import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.event.EntityComponentCallback;
@@ -25,10 +25,6 @@ import net.telepathicgrunt.bumblezone.items.DispenserItemSetup;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-import java.io.FilenameFilter;
-
-
 public class Bumblezone implements ModInitializer {
     public static final String MODID = "the_bumblezone";
     public static final Identifier MOD_FULL_ID = new Identifier(Bumblezone.MODID, Bumblezone.MODID);
@@ -50,7 +46,7 @@ public class Bumblezone implements ModInitializer {
         EntityComponents.setRespawnCopyStrategy(PLAYER_COMPONENT, RespawnCopyStrategy.INVENTORY);
 
         //Set up config
-        BZ_CONFIG = ConfigManager.loadConfig(BzConfig.class);
+        BZ_CONFIG = AutoConfig.getConfigHolder(BzConfig.class).getConfig();
 
         ServerStartCallback.EVENT.register((MinecraftServer world) -> BeeAggression.setupBeeHatingList(world.getWorld(World.OVERWORLD)));
         DispenserItemSetup.setupDispenserBehaviors();
