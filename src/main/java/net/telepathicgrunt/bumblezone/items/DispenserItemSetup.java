@@ -5,12 +5,10 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -37,7 +35,7 @@ public class DispenserItemSetup {
                 World world = source.getWorld();
                 BlockState blockstate = world.getBlockState(blockpos);
 
-                if (bucketitem.placeFluid((PlayerEntity) null, world, blockpos, (BlockHitResult) null)) {
+                if (bucketitem.placeFluid(null, world, blockpos, null)) {
 
                     bucketitem.onEmptied(world, stack, blockpos);
                     return new ItemStack(Items.BUCKET);
@@ -66,13 +64,13 @@ public class DispenserItemSetup {
         //grab the original bottle behaviors and set it as a fallback for our custom behavior
         //this is so we don't override another mod's Dispenser behavior that they set to the bottles.
         HoneyBottleDispenseBehavior.DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR =
-                (DispenserBehavior) ((DispenserAccessor) Blocks.DISPENSER).invokeGetBehaviorForItem(new ItemStack(Items.HONEY_BOTTLE));
+                ((DispenserAccessor) Blocks.DISPENSER).invokeGetBehaviorForItem(new ItemStack(Items.HONEY_BOTTLE));
 
         GlassBottleDispenseBehavior.DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR =
-                (DispenserBehavior) ((DispenserAccessor) Blocks.DISPENSER).invokeGetBehaviorForItem(new ItemStack(Items.GLASS_BOTTLE));
+                ((DispenserAccessor) Blocks.DISPENSER).invokeGetBehaviorForItem(new ItemStack(Items.GLASS_BOTTLE));
 
         EmptyBucketDispenseBehavior.DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR =
-                (DispenserBehavior) ((DispenserAccessor) Blocks.DISPENSER).invokeGetBehaviorForItem(new ItemStack(Items.BUCKET));
+                ((DispenserAccessor) Blocks.DISPENSER).invokeGetBehaviorForItem(new ItemStack(Items.BUCKET));
 
 
         DispenserBlock.registerBehavior(Items.GLASS_BOTTLE, new GlassBottleDispenseBehavior());

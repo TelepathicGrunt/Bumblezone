@@ -6,11 +6,7 @@ import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.RayTraceContext;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.fluids.SugarWaterFluid;
 
@@ -38,21 +34,5 @@ public class ObtainSugarWaterBottle {
         }
 
         return false;
-    }
-
-
-    //*borrowed* from the Item class lol
-    protected static HitResult rayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidHandling fluidMode) {
-        float f = player.pitch;
-        float f1 = player.yaw;
-        Vec3d vec3d = player.getCameraPosVec(1.0F);
-        float f2 = MathHelper.cos(-f1 * ((float) Math.PI / 180F) - (float) Math.PI);
-        float f3 = MathHelper.sin(-f1 * ((float) Math.PI / 180F) - (float) Math.PI);
-        float f4 = -MathHelper.cos(-f * ((float) Math.PI / 180F));
-        float f5 = MathHelper.sin(-f * ((float) Math.PI / 180F));
-        float f6 = f3 * f4;
-        float f7 = f2 * f4;
-        Vec3d vec3d1 = vec3d.add((double) f6 * 5.0D, (double) f5 * 5.0D, (double) f7 * 5.0D);
-        return worldIn.rayTrace(new RayTraceContext(vec3d, vec3d1, RayTraceContext.ShapeType.OUTLINE, fluidMode, player));
     }
 }

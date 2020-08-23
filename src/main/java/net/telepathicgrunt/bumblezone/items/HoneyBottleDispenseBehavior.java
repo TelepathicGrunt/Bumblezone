@@ -12,10 +12,10 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
-import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
@@ -30,7 +30,7 @@ public class HoneyBottleDispenseBehavior extends ItemDispenserBehavior {
      */
     @Override
     public ItemStack dispenseSilently(BlockPointer source, ItemStack stack) {
-        World world = source.getWorld();
+        ServerWorld world = source.getWorld();
         Position iposition = DispenserBlock.getOutputLocation(source);
         BlockPos position = new BlockPos(iposition);
         BlockState blockstate = world.getBlockState(position);
@@ -51,13 +51,13 @@ public class HoneyBottleDispenseBehavior extends ItemDispenserBehavior {
                     world.spawnEntity(beeEntity);
                 }
 
-                world.setBlockState(position, blockstate.with(HoneycombBrood.STAGE, Integer.valueOf(0)));
+                world.setBlockState(position, blockstate.with(HoneycombBrood.STAGE, 0));
             } else {
-                world.setBlockState(position, blockstate.with(HoneycombBrood.STAGE, Integer.valueOf(stage + 1)));
+                world.setBlockState(position, blockstate.with(HoneycombBrood.STAGE, stage + 1));
             }
 
             stack.decrement(1);
-            if (!Bumblezone.BZ_CONFIG.dispensersDropGlassBottles) {
+            if (!Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.dispensersDropGlassBottles) {
                 if (!stack.isEmpty())
                     addGlassBottleToDispenser(source);
                 else
@@ -68,7 +68,7 @@ public class HoneyBottleDispenseBehavior extends ItemDispenserBehavior {
         } else if (blockstate.getBlock() == BzBlocks.POROUS_HONEYCOMB) {
             world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState());
             stack.decrement(1);
-            if (!Bumblezone.BZ_CONFIG.dispensersDropGlassBottles) {
+            if (!Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.dispensersDropGlassBottles) {
                 if (!stack.isEmpty())
                     addGlassBottleToDispenser(source);
                 else
@@ -95,7 +95,7 @@ public class HoneyBottleDispenseBehavior extends ItemDispenserBehavior {
      */
     private static void addGlassBottleToDispenser(BlockPointer source) {
         if (source.getBlockEntity() instanceof DispenserBlockEntity) {
-			DispenserBlockEntity dispenser = (DispenserBlockEntity) source.getBlockEntity();
+			DispenserBlockEntity dispenser = source.getBlockEntity();
             ItemStack bottle = new ItemStack(Items.GLASS_BOTTLE);
             if (!HopperBlockEntity.transfer(null, dispenser, bottle, null).isEmpty()) {
                 DROP_ITEM_BEHAVIOR.dispense(source, bottle);

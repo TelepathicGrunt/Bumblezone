@@ -13,11 +13,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
-import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 
@@ -31,7 +31,7 @@ public class GlassBottleDispenseBehavior extends ItemDispenserBehavior {
      */
     @Override
     public ItemStack dispenseSilently(BlockPointer source, ItemStack stack) {
-        World world = source.getWorld();
+        ServerWorld world = source.getWorld();
         Position iposition = DispenserBlock.getOutputLocation(source);
         BlockPos position = new BlockPos(iposition);
         BlockState blockstate = world.getBlockState(position);

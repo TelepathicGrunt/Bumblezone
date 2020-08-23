@@ -64,7 +64,7 @@ public class EmptyBucketDispenseBehavior extends ItemDispenserBehavior {
      */
     private static void addItemToDispenser(BlockPointer source, Item newItem) {
         if (source.getBlockEntity() instanceof DispenserBlockEntity) {
-			DispenserBlockEntity dispenser = (DispenserBlockEntity) source.getBlockEntity();
+			DispenserBlockEntity dispenser = source.getBlockEntity();
             ItemStack honeyBottle = new ItemStack(newItem);
             if (!HopperBlockEntity.transfer(null, dispenser, honeyBottle, null).isEmpty()) {
                 DROP_ITEM_BEHAVIOR.dispense(source, honeyBottle);

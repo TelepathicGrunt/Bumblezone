@@ -1,15 +1,10 @@
 package net.telepathicgrunt.bumblezone.mixin;
 
-import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.client.render.WorldRenderer;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.WorldGenerationProgressListener;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.profiler.Profiler;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
 import net.telepathicgrunt.bumblezone.entities.BeeAggression;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
-import java.util.function.Supplier;
 
 
 @Mixin(MinecraftServer.class)

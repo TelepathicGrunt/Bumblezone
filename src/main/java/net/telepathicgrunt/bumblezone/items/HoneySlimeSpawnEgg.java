@@ -11,7 +11,7 @@ public class HoneySlimeSpawnEgg extends SpawnEggItem {
     }
 
     @Override
-    public EntityType<?> getEntityType(CompoundTag p_208076_1_) {
+    public EntityType<?> getEntityType(CompoundTag tag) {
         return BzEntities.HONEY_SLIME;
     }
 }

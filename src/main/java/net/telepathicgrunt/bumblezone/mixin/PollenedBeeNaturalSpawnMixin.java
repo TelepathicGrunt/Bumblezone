@@ -2,7 +2,6 @@ package net.telepathicgrunt.bumblezone.mixin;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.SpawnHelper;
 import net.telepathicgrunt.bumblezone.Bumblezone;

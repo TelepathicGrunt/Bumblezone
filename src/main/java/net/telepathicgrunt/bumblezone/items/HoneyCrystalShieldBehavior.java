@@ -14,8 +14,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.telepathicgrunt.bumblezone.mixin.PlayerDamageShieldInvoker;
 
-import java.util.function.Consumer;
-
 public class HoneyCrystalShieldBehavior {
     /**
      * Deals massive damage to shield when blocking explosion or getting fire damage with Honey Crystal Shield
@@ -81,11 +79,9 @@ public class HoneyCrystalShieldBehavior {
     public static boolean damageHoneyCrystalShield(PlayerEntity player, float amount){
         if(player.getActiveItem().getItem() == BzItems.HONEY_CRYSTAL_SHIELD){
             if (amount >= 3.0F) {
-                int i = 1 + MathHelper.floor(amount);
+                int damageToDo = 1 + MathHelper.floor(amount);
                 Hand hand = player.getActiveHand();
-                player.getActiveItem().damage(i, player, (Consumer)((playerEntity) -> {
-                    ((PlayerEntity)playerEntity).sendToolBreakStatus(hand);
-                }));
+                player.getActiveItem().damage(damageToDo, player, (playerEntity) -> playerEntity.sendToolBreakStatus(hand));
                 if (player.getActiveItem().isEmpty()) {
                     if (hand == Hand.MAIN_HAND) {
                         player.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
