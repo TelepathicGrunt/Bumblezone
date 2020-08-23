@@ -36,6 +36,7 @@ import net.minecraft.util.math.IntRange;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
@@ -95,7 +96,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    }
 
    @Override
-   public EntityData initialize(WorldAccess worldIn, LocalDifficulty difficultyIn, SpawnReason reason, EntityData spawnDataIn, CompoundTag dataTag) {
+   public EntityData initialize(ServerWorldAccess worldIn, LocalDifficulty difficultyIn, SpawnReason reason, EntityData spawnDataIn, CompoundTag dataTag) {
       this.setSlimeSize(2, true);
       return super.initialize(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
    }
@@ -266,8 +267,8 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    }
 
    @Override
-   public PassiveEntity createChild(PassiveEntity ageable) {
-      HoneySlimeEntity childHoneySlimeEntity = BzEntities.HONEY_SLIME.create(this.world);
+   public PassiveEntity createChild(ServerWorld worldIn, PassiveEntity ageable) {
+      HoneySlimeEntity childHoneySlimeEntity = BzEntities.HONEY_SLIME.create(worldIn);
 
       if (childHoneySlimeEntity != null)
          childHoneySlimeEntity.setSlimeSize(1, true);

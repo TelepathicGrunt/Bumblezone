@@ -58,7 +58,13 @@ public class BeeInteractivity {
                             WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
                         }
                         else{
-                            playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongProtectionOfTheHiveLasts, 2, false, false,  true));
+                            playerEntity.addStatusEffect(new StatusEffectInstance(
+                                    BzEffects.PROTECTION_OF_THE_HIVE,
+                                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts,
+                                    2,
+                                    false,
+                                    false,
+                                    true));
                         }
                     }
 
@@ -92,7 +98,13 @@ public class BeeInteractivity {
                             WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
                         }
                         else{
-                            playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongProtectionOfTheHiveLasts, 2, false, false,  true));
+                            playerEntity.addStatusEffect(new StatusEffectInstance(
+                                    BzEffects.PROTECTION_OF_THE_HIVE,
+                                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts,
+                                    2,
+                                    false,
+                                    false,
+                                    true));
                         }
                     }
 

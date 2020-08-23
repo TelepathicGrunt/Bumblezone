@@ -32,9 +32,10 @@ public class PlayerTeleportation {
     public static void playerTick(PlayerEntity playerEntity){
         //Bumblezone.LOGGER.log(Level.INFO, "started");
         //grabs the capability attached to player for dimension hopping
+        MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
 
         //Makes it so player does not get killed for falling into the void
-        if (playerEntity.world.getDimensionRegistryKey() == BzDimension.BZ_DIMENSION_KEY) {
+        if (playerEntity.world.getDimension() == minecraftServer.getRegistryManager().getDimensionTypes().get(BzDimension.BZ_DIMENSION_KEY)) {
             if (playerEntity.getY() < -3) {
                 playerEntity.setPos(playerEntity.getX(), -3.01D, playerEntity.getZ());
                 playerEntity.updatePosition(playerEntity.getX(), -3.01D, playerEntity.getZ());
@@ -46,7 +47,7 @@ public class PlayerTeleportation {
         }
         //teleport to bumblezone
         else if (Bumblezone.PLAYER_COMPONENT.get(playerEntity).getIsTeleporting()) {
-            FabricDimensions.teleport(playerEntity, playerEntity.getServer().getWorld(BzDimension.BZ_WORLD_KEY), BzPlayerPlacement.ENTERING);
+            FabricDimensions.teleport(playerEntity, minecraftServer.getWorld(BzDimension.BZ_WORLD_KEY), BzPlayerPlacement.ENTERING);
             Bumblezone.PLAYER_COMPONENT.get(playerEntity).setIsTeleporting(false);
             reAddStatusEffect(playerEntity);
         }
@@ -92,7 +93,7 @@ public class PlayerTeleportation {
     private static void checkAndCorrectStoredDimension(PlayerEntity playerEntity) {
         //Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone.
         //Go to Overworld instead as default. Or go to Overworld if config is set.
-        if (Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension() == Bumblezone.MOD_FULL_ID || Bumblezone.BZ_CONFIG.forceExitToOverworld) {
+        if (Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension() == Bumblezone.MOD_FULL_ID || Bumblezone.BZ_CONFIG.BZDimensionConfig.forceExitToOverworld) {
             // go to overworld by default
             //update stored dimension
             Bumblezone.PLAYER_COMPONENT.get(playerEntity).setNonBZDimension(World.OVERWORLD.getValue());
@@ -140,7 +141,7 @@ public class PlayerTeleportation {
 
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = false;
-            String requiredBlockString = Bumblezone.BZ_CONFIG.requiredBlockUnderHive;
+            String requiredBlockString = Bumblezone.BZ_CONFIG.BZDimensionConfig.requiredBlockUnderHive;
             if(!requiredBlockString.trim().isEmpty())
             {
                 if(requiredBlockString.matches("[a-z0-9/._-]+:[a-z0-9/._-]+") && Registry.BLOCK.containsId(new Identifier(requiredBlockString)))
@@ -150,7 +151,7 @@ public class PlayerTeleportation {
                     {
                         validBelowBlock = true;
                     }
-                    else if(Bumblezone.BZ_CONFIG.warnPlayersOfWrongBlockUnderHive)
+                    else if(Bumblezone.BZ_CONFIG.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive)
                     {
                         //failed. Block below isn't the required block
                         String beeBlock = Registry.BLOCK.getId(world.getBlockState(hivePos).getBlock()).toString();
