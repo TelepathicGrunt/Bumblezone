@@ -46,8 +46,8 @@ public class ProtectionOfTheHiveEffect extends StatusEffect {
      */
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
 
-        SEE_THROUGH_WALLS.setBaseMaxDistance(Bumblezone.BZ_CONFIG.aggressionTriggerRadius*0.5D);
-        List<BeeEntity> beeList = entity.world.getTargets(BeeEntity.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().expand(Bumblezone.BZ_CONFIG.aggressionTriggerRadius*0.5D));
+        SEE_THROUGH_WALLS.setBaseMaxDistance(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D);
+        List<BeeEntity> beeList = entity.world.getTargets(BeeEntity.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().expand(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D));
 
         for (BeeEntity bee : beeList)
         {
@@ -69,7 +69,7 @@ public class ProtectionOfTheHiveEffect extends StatusEffect {
            resetBeeAngry(entity.world, entity.getAttacker());
 
            if(!(entity.getAttacker() instanceof BeeEntity))
-                entity.getAttacker().addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongWrathOfTheHiveLasts, amplifier, true, true, true));
+                entity.getAttacker().addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, amplifier, true, true, true));
        }
     }
 
@@ -81,8 +81,8 @@ public class ProtectionOfTheHiveEffect extends StatusEffect {
         LivingEntity entity = livingEntity;
         UUID uuid = entity.getUuid();
 
-        SEE_THROUGH_WALLS.setBaseMaxDistance(Bumblezone.BZ_CONFIG.aggressionTriggerRadius*0.5D);
-        List<BeeEntity> beeList = world.getTargets(BeeEntity.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().expand(Bumblezone.BZ_CONFIG.aggressionTriggerRadius*0.5D));
+        SEE_THROUGH_WALLS.setBaseMaxDistance(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D);
+        List<BeeEntity> beeList = world.getTargets(BeeEntity.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().expand(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D));
 
         if(livingEntity instanceof BeeEntity){
             entity = null;
