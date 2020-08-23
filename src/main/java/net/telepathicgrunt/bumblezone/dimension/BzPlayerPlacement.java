@@ -5,8 +5,10 @@ import net.fabricmc.fabric.api.dimension.v1.EntityPlacer;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.pattern.BlockPattern;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
@@ -27,43 +29,45 @@ public class BzPlayerPlacement {
     //use this to teleport to any dimension
     //FabricDimensions.teleport(playerEntity, <destination dimension type>, <placement>);
 
-
-    public static final EntityPlacer ENTERING = (teleported, destination, portalDir, horizontalOffset, verticalOffset) ->
-    {
+    public static void enteringBumblezone(Entity entity, ServerWorld destination){
         //Note, the player does not hold the previous dimension oddly enough.
         Vec3d destinationPosition;
 
-        if (teleported instanceof PlayerEntity) {
-            MinecraftServer minecraftServer = teleported.getServer(); // the server itself
-            RegistryKey<World> world_key = RegistryKey.of(Registry.DIMENSION, Bumblezone.PLAYER_COMPONENT.get(teleported).getNonBZDimension());
-            destinationPosition = teleportByPearl((PlayerEntity) teleported, minecraftServer.getWorld(world_key), destination);
-        } else {
-            destinationPosition = new Vec3d(0, 0, 0);
+        if (entity instanceof ServerPlayerEntity) {
+            MinecraftServer minecraftServer = entity.getServer(); // the server itself
+            RegistryKey<World> world_key = RegistryKey.of(Registry.DIMENSION, Bumblezone.PLAYER_COMPONENT.get(entity).getNonBZDimension());
+            destinationPosition = teleportByPearl((PlayerEntity) entity, minecraftServer.getWorld(world_key), destination);
+
+            ((ServerPlayerEntity)entity).teleport(
+                    destination,
+                    destinationPosition.x,
+                    destinationPosition.y,
+                    destinationPosition.z,
+                    entity.yaw,
+                    entity.pitch
+            );
         }
+    }
 
-        return new BlockPattern.makeCache(
-                destinationPosition,
-                Vec3d.ZERO,
-                (int) teleported.yaw);
-    };
 
-    public static final EntityPlacer LEAVING = (teleported, destination, portalDir, horizontalOffset, verticalOffset) ->
-    {
-        boolean upwardChecking = teleported.getY() > 0;
+    public static void exitingBumblezone(Entity entity, ServerWorld destination){
+        boolean upwardChecking = entity.getY() > 0;
         Vec3d destinationPosition;
 
-        if (teleported instanceof PlayerEntity) {
-            Bumblezone.PLAYER_COMPONENT.get(teleported).setNonBZPos(teleported.getPos());
-            destinationPosition = teleportByOutOfBounds((PlayerEntity) teleported, destination, upwardChecking);
-        } else {
-            destinationPosition = new Vec3d(0, 0, 0);
-        }
+        if (entity instanceof ServerPlayerEntity) {
+            Bumblezone.PLAYER_COMPONENT.get(entity).setNonBZPos(entity.getPos());
+            destinationPosition = teleportByOutOfBounds((PlayerEntity) entity, destination, upwardChecking);
 
-        return new BlockPattern.TeleportTarget(
-                destinationPosition,
-                Vec3d.ZERO,
-                (int) teleported.yaw);
-    };
+            ((ServerPlayerEntity)entity).teleport(
+                    destination,
+                    destinationPosition.x,
+                    destinationPosition.y,
+                    destinationPosition.z,
+                    entity.yaw,
+                    entity.pitch
+            );
+        }
+    }
 
 
     private static Vec3d teleportByOutOfBounds(PlayerEntity playerEntity, ServerWorld destination, boolean checkingUpward) {

@@ -47,7 +47,7 @@ public class PlayerTeleportation {
         }
         //teleport to bumblezone
         else if (Bumblezone.PLAYER_COMPONENT.get(playerEntity).getIsTeleporting()) {
-            FabricDimensions.teleport(playerEntity, minecraftServer.getWorld(BzDimension.BZ_WORLD_KEY), BzPlayerPlacement.ENTERING);
+            BzPlayerPlacement.enteringBumblezone(playerEntity, minecraftServer.getWorld(BzDimension.BZ_WORLD_KEY));
             Bumblezone.PLAYER_COMPONENT.get(playerEntity).setIsTeleporting(false);
             reAddStatusEffect(playerEntity);
         }
@@ -58,7 +58,7 @@ public class PlayerTeleportation {
             checkAndCorrectStoredDimension(playerEntity);
             MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
             RegistryKey<World> world_key = RegistryKey.of(Registry.DIMENSION, Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension());
-            FabricDimensions.teleport(playerEntity, minecraftServer.getWorld(world_key), BzPlayerPlacement.LEAVING);
+            BzPlayerPlacement.exitingBumblezone(playerEntity, minecraftServer.getWorld(world_key));
             reAddStatusEffect(playerEntity);
         }
     }
