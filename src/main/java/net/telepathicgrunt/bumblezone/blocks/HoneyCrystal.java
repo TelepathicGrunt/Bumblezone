@@ -56,7 +56,7 @@ public class HoneyCrystal extends Block {
 
         this.setDefaultState(this.stateManager.getDefaultState()
                 .with(FACING, Direction.UP)
-                .with(WATERLOGGED, Boolean.valueOf(false)));
+                .with(WATERLOGGED, Boolean.FALSE));
     }
 
     /**
@@ -136,7 +136,7 @@ public class HoneyCrystal extends Block {
         for (Direction direction : context.getPlacementDirections()) {
             blockstate = blockstate.with(FACING, direction.getOpposite());
             if (blockstate.canPlaceAt(worldReader, blockpos)) {
-                return blockstate.with(WATERLOGGED, Boolean.valueOf(fluidstate.getFluid().isIn(FluidTags.WATER)));
+                return blockstate.with(WATERLOGGED, fluidstate.getFluid().isIn(FluidTags.WATER));
             }
         }
 
@@ -156,7 +156,7 @@ public class HoneyCrystal extends Block {
 
         //Player uses bucket with water-tagged fluid and this block is not waterlogged
         if ((itemstack.getItem() instanceof BucketItem &&
-                ((BucketItemAccessor) ((BucketItem) itemstack.getItem())).getFluid().isIn(FluidTags.WATER)) &&
+                ((BucketItemAccessor) itemstack.getItem()).getFluid().isIn(FluidTags.WATER)) &&
                 blockstate.getBlock() == this &&
                 !blockstate.get(WATERLOGGED)) {
 

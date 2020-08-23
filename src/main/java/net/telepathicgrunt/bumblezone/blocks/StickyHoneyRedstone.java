@@ -133,7 +133,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
                 this.updateTarget(world, pos, blockstate);
             }
 
-            super.onStateReplaced(blockstate, world, pos, newState, isMoving);
+            super.onStateReplaced(blockstate, world, pos, newState, false);
         }
     }
 
@@ -201,7 +201,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      * Set if block is powered or not
      */
     protected BlockState setRedstoneStrength(BlockState blockstate, int strength) {
-        return blockstate.with(POWERED, Boolean.valueOf(strength > 0));
+        return blockstate.with(POWERED, strength > 0);
     }
 
     /**

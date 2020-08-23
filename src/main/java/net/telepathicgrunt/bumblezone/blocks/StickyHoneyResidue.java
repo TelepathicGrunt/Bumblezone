@@ -34,6 +34,7 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.mixin.BucketItemAccessor;
+import net.telepathicgrunt.bumblezone.mixin.VineBlockAccessor;
 
 import java.util.List;
 import java.util.Map;
@@ -47,12 +48,12 @@ public class StickyHoneyResidue extends VineBlock {
     public StickyHoneyResidue() {
         super(FabricBlockSettings.of(BzBlocks.RESIDUE, MaterialColor.ORANGE_TERRACOTTA).noCollision().strength(6.0f, 0.0f).nonOpaque().build());
         this.setDefaultState(this.stateManager.getDefaultState()
-                .with(UP, Boolean.valueOf(false))
-                .with(NORTH, Boolean.valueOf(false))
-                .with(EAST, Boolean.valueOf(false))
-                .with(SOUTH, Boolean.valueOf(false))
-                .with(WEST, Boolean.valueOf(false))
-                .with(DOWN, Boolean.valueOf(false)));
+                .with(UP, false)
+                .with(NORTH, false)
+                .with(EAST, false)
+                .with(SOUTH, false)
+                .with(WEST, false)
+                .with(DOWN, false));
     }
 
     /**
@@ -70,23 +71,23 @@ public class StickyHoneyResidue extends VineBlock {
     public VoxelShape getOutlineShape(BlockState blockstate, BlockView world, BlockPos pos, ShapeContext context) {
         VoxelShape voxelshape = VoxelShapes.empty();
         if (blockstate.get(UP)) {
-            voxelshape = VoxelShapes.union(voxelshape, UP_SHAPE);
+            voxelshape = VoxelShapes.union(voxelshape, VineBlockAccessor.getUP_SHAPE());
         }
 
         if (blockstate.get(NORTH)) {
-            voxelshape = VoxelShapes.union(voxelshape, NORTH_SHAPE);
+            voxelshape = VoxelShapes.union(voxelshape, VineBlockAccessor.getNORTH_SHAPE());
         }
 
         if (blockstate.get(EAST)) {
-            voxelshape = VoxelShapes.union(voxelshape, EAST_SHAPE);
+            voxelshape = VoxelShapes.union(voxelshape, VineBlockAccessor.getEAST_SHAPE());
         }
 
         if (blockstate.get(SOUTH)) {
-            voxelshape = VoxelShapes.union(voxelshape, SOUTH_SHAPE);
+            voxelshape = VoxelShapes.union(voxelshape, VineBlockAccessor.getSOUTH_SHAPE());
         }
 
         if (blockstate.get(WEST)) {
-            voxelshape = VoxelShapes.union(voxelshape, WEST_SHAPE);
+            voxelshape = VoxelShapes.union(voxelshape, VineBlockAccessor.getWEST_SHAPE());
         }
 
         if (blockstate.get(DOWN)) {
@@ -108,7 +109,7 @@ public class StickyHoneyResidue extends VineBlock {
         List<? extends Entity> list = world.getEntitiesIncludingUngeneratedChunks(LivingEntity.class, axisalignedbb);
 
         if (list.contains(entity)) {
-            entity.slowMovement(blockstate, new Vec3d(0.35D, (double) 0.2F, 0.35D));
+            entity.slowMovement(blockstate, new Vec3d(0.35D, 0.2F, 0.35D));
         }
     }
 
@@ -151,7 +152,7 @@ public class StickyHoneyResidue extends VineBlock {
             BooleanProperty booleanproperty = FACING_TO_PROPERTY_MAP.get(direction);
             if (blockstate.get(booleanproperty)) {
                 boolean flag = shouldConnectTo(blockReader, pos.offset(direction), direction);
-                blockstate = blockstate.with(booleanproperty, Boolean.valueOf(flag));
+                blockstate = blockstate.with(booleanproperty, flag);
             }
         }
 
@@ -171,7 +172,7 @@ public class StickyHoneyResidue extends VineBlock {
             BooleanProperty booleanproperty = FACING_TO_PROPERTY_MAP.get(direction);
             boolean faceIsAlreadyTrue = isSameBlock && currentBlockstate.get(booleanproperty);
             if (!faceIsAlreadyTrue && VineBlock.shouldConnectTo(context.getWorld(), context.getBlockPos().offset(direction), direction)) {
-                return newBlockstate.with(booleanproperty, Boolean.valueOf(true));
+                return newBlockstate.with(booleanproperty, true);
             }
         }
 
@@ -229,7 +230,7 @@ public class StickyHoneyResidue extends VineBlock {
         ItemStack itemstack = playerEntity.getStackInHand(playerHand);
 
         if ((itemstack.getItem() instanceof BucketItem &&
-                ((BucketItemAccessor) ((BucketItem) itemstack.getItem())).getFluid().isIn(FluidTags.WATER)) ||
+                ((BucketItemAccessor) itemstack.getItem()).getFluid().isIn(FluidTags.WATER)) ||
                 itemstack.getOrCreateTag().getString("Potion").contains("water") ||
                 itemstack.getItem() == Items.WET_SPONGE ||
                 itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {

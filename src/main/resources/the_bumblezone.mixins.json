@@ -33,6 +33,7 @@
     "ReloadCommandMixin",
     "SpawnRestrictionAccessor",
     "StructureAccessorInvoker",
+    "VineBlockAccessor",
     "WaterEquivalenceMixin"
   ],
   "client": [

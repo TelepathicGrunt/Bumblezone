@@ -20,6 +20,9 @@ import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.utils.BzPlacingUtils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class BzPlayerPlacement {
     //use this to teleport to any dimension
     //FabricDimensions.teleport(playerEntity, <destination dimension type>, <placement>);
@@ -38,7 +41,7 @@ public class BzPlayerPlacement {
             destinationPosition = new Vec3d(0, 0, 0);
         }
 
-        return new BlockPattern.TeleportTarget(
+        return new BlockPattern.makeCache(
                 destinationPosition,
                 Vec3d.ZERO,
                 (int) teleported.yaw);
@@ -46,7 +49,7 @@ public class BzPlayerPlacement {
 
     public static final EntityPlacer LEAVING = (teleported, destination, portalDir, horizontalOffset, verticalOffset) ->
     {
-        boolean upwardChecking = teleported.getY() > 0 ? true : false;
+        boolean upwardChecking = teleported.getY() > 0;
         Vec3d destinationPosition;
 
         if (teleported instanceof PlayerEntity) {
@@ -65,11 +68,14 @@ public class BzPlayerPlacement {
 
     private static Vec3d teleportByOutOfBounds(PlayerEntity playerEntity, ServerWorld destination, boolean checkingUpward) {
         //converts the position to get the corresponding position in non-bumblezone dimension
-        double coordinateScale = destination.getWorld().getDimension().isShrunk()? Bumblezone.BZ_CONFIG.movementFactor/ 8D : Bumblezone.BZ_CONFIG.movementFactor / 1D;
+        double coordinateScale =destination.getDimension().getCoordinateScale();
         BlockPos blockpos;
         BlockPos validBlockPos = null;
-
-        if (Bumblezone.BZ_CONFIG.teleportationMode != 2 || Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZPos() == null) {
+        Map<Integer, Integer> map = new HashMap<>();
+        map.merge(3, 4, (v1, v2) -> {
+            throw new IllegalArgumentException("Duplicate key '" + 3 + "'.");
+        });
+        if (Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode != 2 || Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZPos() == null) {
             blockpos = new BlockPos(
                     Doubles.constrainToRange(playerEntity.getPos().getX() * coordinateScale, -29999936D, 29999936D),
                     playerEntity.getPos().getY(),
@@ -82,8 +88,8 @@ public class BzPlayerPlacement {
         }
 
 
-        if (Bumblezone.BZ_CONFIG.teleportationMode == 2 ||
-                (Bumblezone.BZ_CONFIG.teleportationMode == 3 && validBlockPos == null)) {
+        if (Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 2 ||
+                (Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 3 && validBlockPos == null)) {
             //Use cap for position
 
             //extra null check
@@ -97,31 +103,22 @@ public class BzPlayerPlacement {
                 destination.setBlockState(validBlockPos, Blocks.AIR.getDefaultState(), 3);
                 destination.setBlockState(validBlockPos.up(), Blocks.AIR.getDefaultState(), 3);
             }
+        }
 
-            //use found location
-            //teleportation spot finding complete. return spot
-            return new Vec3d(
-                    validBlockPos.getX() + 0.5D,
-                    validBlockPos.getY() + 1,
-                    validBlockPos.getZ() + 0.5D
-            );
-        }
-        else {
-            //use found location
-            //teleportation spot finding complete. return spot
-            return new Vec3d(
-                    validBlockPos.getX() + 0.5D,
-                    validBlockPos.getY() + 1,
-                    validBlockPos.getZ() + 0.5D
-            );
-        }
+        //use found location
+        //teleportation spot finding complete. return spot
+        return new Vec3d(
+                validBlockPos.getX() + 0.5D,
+                validBlockPos.getY() + 1,
+                validBlockPos.getZ() + 0.5D
+        );
     }
 
     private static Vec3d teleportByPearl(PlayerEntity playerEntity, ServerWorld originalWorld, ServerWorld bumblezoneWorld) {
 
 
         //converts the position to get the corresponding position in bumblezone dimension
-        double coordinateScale = originalWorld.getWorld().getDimension().isShrunk() ? 8D / Bumblezone.BZ_CONFIG.movementFactor : 1D / Bumblezone.BZ_CONFIG.movementFactor;
+        double coordinateScale = originalWorld.getDimension().getCoordinateScale();
         BlockPos blockpos = new BlockPos(
                 playerEntity.getPos().getX() * coordinateScale,
                 playerEntity.getPos().getY(),
@@ -196,9 +193,6 @@ public class BzPlayerPlacement {
         }
 
 
-        //let game know we are gonna teleport player
-        ChunkPos chunkpos = new ChunkPos(validBlockPos);
-
         //teleportation spot finding complete. return spot
         return new Vec3d(
                 validBlockPos.getX() + 0.5D,
@@ -237,8 +231,8 @@ public class BzPlayerPlacement {
 
         //scans range from y = 0 to dimension max height for a bee_nest
         //Does it by checking each y layer at a time
-        for (; mutableBlockPos.getY() >= 0 && mutableBlockPos.getY() <= maxHeight; ) {
-            if (!Bumblezone.BZ_CONFIG.seaLevelOrHigherExitTeleporting ||
+        while (mutableBlockPos.getY() >= 0 && mutableBlockPos.getY() <= maxHeight) {
+            if (!Bumblezone.BZ_CONFIG.BZDimensionConfig.seaLevelOrHigherExitTeleporting ||
                     mutableBlockPos.getY() > world.getSeaLevel()) {
 
                 for (int range = 0; range < maximumRange; range++) {
@@ -277,7 +271,7 @@ public class BzPlayerPlacement {
 
 
         //this mode will not generate a beenest automatically.
-        if(Bumblezone.BZ_CONFIG.teleportationMode == 3) return null;
+        if(Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 3) return null;
 
         //no valid spot was found, generate a hive and spawn us on the highest land
         //This if statement is so we dont get placed on roof of other roofed dimension
@@ -289,10 +283,7 @@ public class BzPlayerPlacement {
                 BzPlacingUtils.topOfSurfaceBelowHeight(world, maxHeight, 0, position),
                 position.getZ());
 
-        if (mutableBlockPos.getY() > 0) {
-            createSpaceForPlayer(world, mutableBlockPos);
-            return mutableBlockPos;
-        } else {
+        if (mutableBlockPos.getY() <= 0) {
             //No valid spot was found. Just place character on a generate hive at center of height of coordinate
             //Basically just f*** it at this point lol
             mutableBlockPos.set(
@@ -300,13 +291,13 @@ public class BzPlayerPlacement {
                     world.getHeight() / 2,
                     position.getZ());
 
-            createSpaceForPlayer(world, mutableBlockPos);
-            return mutableBlockPos;
         }
+        createSpaceForPlayer(world, mutableBlockPos);
+        return mutableBlockPos;
     }
 
     private static void createSpaceForPlayer(World world, BlockPos.Mutable mutableBlockPos) {
-        if(Bumblezone.BZ_CONFIG.generateBeenest)
+        if(Bumblezone.BZ_CONFIG.BZDimensionConfig.generateBeenest)
             world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
         else if(world.getBlockState(mutableBlockPos).getMaterial() == Material.AIR ||
                 (!world.getBlockState(mutableBlockPos).getFluidState().isEmpty() &&
@@ -318,9 +309,9 @@ public class BzPlayerPlacement {
 
     private static BlockPos validPlayerSpawnLocation(World world, BlockPos position, int maximumRange) {
         //Try to find 2 non-solid spaces around it that the player can spawn at
-        int radius = 0;
-        int outterRadius = 0;
-        int distanceSq = 0;
+        int radius;
+        int outerRadius;
+        int distanceSq;
         BlockPos.Mutable currentPos = new BlockPos.Mutable(position.getX(), position.getY(), position.getZ());
 
         //checks for 2 non-solid blocks with solid block below feet
@@ -328,7 +319,7 @@ public class BzPlayerPlacement {
         //The x2, y2, and z2 is so it checks at center of the range box instead of the corner.
         for (int range = 0; range < maximumRange; range++) {
             radius = range * range;
-            outterRadius = (range + 1) * (range + 1);
+            outerRadius = (range + 1) * (range + 1);
 
             for (int y = 0; y <= range * 2; y++) {
                 int y2 = y > range ? -(y - range) : y;
@@ -342,7 +333,7 @@ public class BzPlayerPlacement {
                         int z2 = z > range ? -(z - range) : z;
 
                         distanceSq = x2 * x2 + z2 * z2 + y2 * y2;
-                        if (distanceSq >= radius && distanceSq < outterRadius) {
+                        if (distanceSq >= radius && distanceSq < outerRadius) {
                             currentPos.set(position.add(x2, y2, z2));
                             if (world.getBlockState(currentPos.down()).isOpaque() &&
                                     world.getBlockState(currentPos).getMaterial() == Material.AIR &&

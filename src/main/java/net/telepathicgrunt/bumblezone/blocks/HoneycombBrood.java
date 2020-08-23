@@ -34,6 +34,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
@@ -125,9 +126,9 @@ public class HoneycombBrood extends FacingBlock {
                 }
             }
 
-            if ((playerEntity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_FULL_ID  || Bumblezone.BZ_CONFIG.allowWrathOfTheHiveOutsideBumblezone) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BZ_CONFIG.aggressiveBees) {
+            if ((playerEntity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_FULL_ID  || Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees) {
                 //Now all bees nearby in Bumblezone will get VERY angry!!!
-                playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.showWrathOfTheHiveParticles, true));
+                playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
             }
 
             return ActionResult.SUCCESS;
@@ -149,7 +150,7 @@ public class HoneycombBrood extends FacingBlock {
 
                 if (successfulGrowth && world.random.nextFloat() < 0.30F) {
                     if(!playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE)){
-                        playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, (int) (Bumblezone.BZ_CONFIG.howLongProtectionOfTheHiveLasts * 0.75f), 1, false, false,  true));
+                        playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, (int) (Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts * 0.75f), 1, false, false,  true));
                     }
                 }
 
@@ -200,7 +201,7 @@ public class HoneycombBrood extends FacingBlock {
                 world.setBlockState(position, state.with(STAGE, stage + 1), 2);
             }
         } else {
-            PLAYER_DISTANCE.setBaseMaxDistance(Math.max(Bumblezone.BZ_CONFIG.aggressionTriggerRadius * 0.5, 1));
+            PLAYER_DISTANCE.setBaseMaxDistance(Math.max(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius * 0.5, 1));
 
             List<BeeEntity> beeList = world.getTargets(BeeEntity.class, FIXED_DISTANCE, null, new Box(position).expand(50));
             List<PlayerEntity> playerList = world.getTargets(PlayerEntity.class, PLAYER_DISTANCE, null, new Box(position).expand(50));
@@ -221,16 +222,16 @@ public class HoneycombBrood extends FacingBlock {
         Hand hand = playerEntity.getActiveHand();
         if (hand != null) {
             ListTag listOfEnchants = playerEntity.getStackInHand(hand).getEnchantments();
-            if (!listOfEnchants.stream().anyMatch(enchant -> enchant.asString().contains("minecraft:silk_touch"))) {
+            if (listOfEnchants.stream().noneMatch(enchant -> enchant.asString().contains("minecraft:silk_touch"))) {
                 BlockState blockState = world.getBlockState(position);
                 int stage = blockState.get(STAGE);
                 if (stage == 3) {
                     spawnBroodMob(world, blockState, position, stage);
                 }
 
-                if ((playerEntity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_FULL_ID || Bumblezone.BZ_CONFIG.allowWrathOfTheHiveOutsideBumblezone) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BZ_CONFIG.aggressiveBees) {
+                if ((playerEntity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_FULL_ID || Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees) {
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
-                    playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.showWrathOfTheHiveParticles, true));
+                    playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
                 }
             }
         }
@@ -261,9 +262,9 @@ public class HoneycombBrood extends FacingBlock {
     }
 
     private static void spawnMob(World world, BlockPos.Mutable blockpos, MobEntity beeMob, MobEntity entity) {
-        if(entity == null) return;
+        if(entity == null || world.isClient) return;
         entity.refreshPositionAndAngles(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, world.getRandom().nextFloat() * 360.0F, 0.0F);
-        entity.initialize(world, world.getLocalDifficulty(new BlockPos(beeMob.getPos())), SpawnReason.TRIGGERED, null, (CompoundTag) null);
+        entity.initialize((ServerWorldAccess) world, world.getLocalDifficulty(new BlockPos(beeMob.getPos())), SpawnReason.TRIGGERED, null, null);
         world.spawnEntity(entity);
     }
 

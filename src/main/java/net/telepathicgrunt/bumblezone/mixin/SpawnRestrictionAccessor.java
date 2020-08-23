@@ -12,5 +12,6 @@ public interface SpawnRestrictionAccessor {
 
     @Invoker("register")
     static <T extends MobEntity> void invokeRegister(EntityType<T> type, SpawnRestriction.Location location, Heightmap.Type heightmapType, SpawnRestriction.SpawnPredicate<T> predicate) {
+        throw new UnsupportedOperationException();
     }
 }
