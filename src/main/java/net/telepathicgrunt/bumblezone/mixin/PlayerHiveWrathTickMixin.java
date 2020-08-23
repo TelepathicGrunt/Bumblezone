@@ -23,17 +23,13 @@ public class PlayerHiveWrathTickMixin {
         PlayerEntity playerEntity = ((PlayerEntity) (Object) this);
 
         //removes the wrath of the hive if it is disallowed outside dimension
-        if (!(playerEntity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_FULL_ID  || Bumblezone.BZ_CONFIG.allowWrathOfTheHiveOutsideBumblezone) &&
+        if (!(playerEntity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_FULL_ID  || Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
                 playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE)) {
             playerEntity.removeStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
         }
 
         //Makes the fog redder when this effect is active
-        if (playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE)) {
-            WrathOfTheHiveEffect.ACTIVE_WRATH = true;
-        } else {
-            WrathOfTheHiveEffect.ACTIVE_WRATH = false;
-        }
+        WrathOfTheHiveEffect.ACTIVE_WRATH = playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
     }
 
 }

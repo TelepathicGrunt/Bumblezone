@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(RedstoneWireBlock.class)
 public class RedstoneDustCanConnectMixin {
 
-    @Inject(method = "Lnet/minecraft/block/RedstoneWireBlock;connectsTo(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/Direction;)Z",
+    @Inject(method = "connectsTo(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/Direction;)Z",
             at = @At(value = "TAIL"),
             cancellable = true)
     private static void canConnectVisually(BlockState state, Direction dir, CallbackInfoReturnable<Boolean> cir) {

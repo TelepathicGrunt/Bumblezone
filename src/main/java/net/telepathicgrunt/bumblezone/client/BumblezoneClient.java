@@ -29,6 +29,6 @@ public class BumblezoneClient implements ClientModInitializer {
                 (dispatcher, context) -> new HoneySlimeRendering(dispatcher));
 
         SkyProperties skyProperty = new BzSkyProperty();
-        ((SkyPropertiesAccessor) skyProperty).getBY_DIMENSION_TYPE().put(BzDimension.BZ_DIMENSION_KEY, skyProperty);
+        ((SkyPropertiesAccessor) skyProperty).getBY_IDENTIFIER().put(BzDimension.BZ_DIMENSION_KEY, skyProperty);
     }
 }

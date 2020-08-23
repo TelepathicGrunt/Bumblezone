@@ -1,5 +1,6 @@
 package net.telepathicgrunt.bumblezone.mixin;
 
+import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.GlassBottleItem;
 import net.minecraft.item.ItemStack;
@@ -24,7 +25,7 @@ public class GlassBottleUseMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;playSound(Lnet/minecraft/entity/player/PlayerEntity;DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FF)V", ordinal = 1),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
-    private void bottleFluidInteract(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir, List list, ItemStack itemStack, HitResult hitResult, BlockPos blockPos) {
+    private void bottleFluidInteract(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir, List<AreaEffectCloudEntity> list, ItemStack itemStack, HitResult hitResult, BlockPos blockPos) {
         if (ObtainSugarWaterBottle.useBottleOnSugarWater(world, user, hand, blockPos))
             cir.setReturnValue(TypedActionResult.success(user.getStackInHand(hand)));
     }

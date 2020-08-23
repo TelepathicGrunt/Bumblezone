@@ -32,12 +32,12 @@
     "RedstoneDustCanConnectMixin",
     "ReloadCommandMixin",
     "SpawnRestrictionAccessor",
-    "StructureAccessorMixin",
+    "StructureAccessorInvoker",
     "WaterEquivalenceMixin"
   ],
   "client": [
     "BlockOverlayRendererMixin",
-    "ClientWorldMixin",
+    "MinecraftServerMixin",
     "SkyPropertiesAccessor"
   ],
   "injectors": {

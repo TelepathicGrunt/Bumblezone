@@ -10,6 +10,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(SkyProperties.class)
 public interface SkyPropertiesAccessor {
 
-    @Accessor("BY_DIMENSION_TYPE")
-    public Object2ObjectMap<RegistryKey<DimensionType>, SkyProperties> getBY_DIMENSION_TYPE();
+    @Accessor("BY_IDENTIFIER")
+    Object2ObjectMap<RegistryKey<DimensionType>, SkyProperties> getBY_IDENTIFIER();
 }

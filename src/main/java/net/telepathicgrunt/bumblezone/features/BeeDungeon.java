@@ -30,7 +30,7 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneyCrystal;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
-import net.telepathicgrunt.bumblezone.mixin.StructureAccessorMixin;
+import net.telepathicgrunt.bumblezone.mixin.StructureAccessorInvoker;
 
 import java.util.Iterator;
 import java.util.List;
@@ -81,7 +81,7 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
      */
     @SuppressWarnings("deprecation")
     public boolean addBlocksToWorld(Structure structure, ServerWorldAccess world, BlockPos pos, StructurePlacementData placementIn, int flags) {
-        StructureAccessorMixin structureAccessor = ((StructureAccessorMixin) structure);
+        StructureAccessorInvoker structureAccessor = ((StructureAccessorInvoker) structure);
         if (structureAccessor.getBlocks().isEmpty()) {
             return false;
         } else {
@@ -213,7 +213,7 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
 
 
                 if (!placementIn.shouldIgnoreEntities()) {
-                    structureAccessor.invokespawnEntities(world,
+                    structureAccessor.invokeSpawnEntities(world,
                             pos,
                             placementIn.getMirror(),
                             placementIn.getRotation(),
