@@ -13,8 +13,10 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 public class PollenedBeeNaturalSpawnMixin {
 
     //spawns bees with chance to bee full of pollen or be a BeeProductive mob if that mod is on
+
     @ModifyArg(method = "spawnEntitiesInChunk(Lnet/minecraft/entity/SpawnGroup;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/Chunk;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/SpawnHelper$Checker;Lnet/minecraft/world/SpawnHelper$Runner;)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/ServerWorldAccess;spawnEntityAndPassengers(Lnet/minecraft/entity/Entity)V"))
+                at = @At(value = "INVOKE", target ="Lnet/minecraft/server/world/ServerWorld;spawnEntityAndPassengers(Lnet/minecraft/entity/Entity;)V"),
+                index = 0)
     private static Entity spawnEntitiesInChunk(Entity entity) {
         ServerWorld serverWorld = (ServerWorld) entity.world;
 

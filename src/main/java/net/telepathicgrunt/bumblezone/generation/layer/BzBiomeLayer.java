@@ -1,11 +1,16 @@
 package net.telepathicgrunt.bumblezone.generation.layer;
 
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.noise.OctaveSimplexNoiseSampler;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.layer.type.InitLayer;
 import net.minecraft.world.biome.layer.util.LayerRandomnessSource;
 import net.minecraft.world.gen.ChunkRandom;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.biome.BzBiomes;
+import net.telepathicgrunt.bumblezone.generation.BzBiomeProvider;
 
 import java.util.stream.IntStream;
 
@@ -13,8 +18,8 @@ import java.util.stream.IntStream;
 public enum BzBiomeLayer implements InitLayer {
     INSTANCE;
 
-    private static final int SUGAR_WATER = Registry.BIOME.getRawId(BzBiomes.SUGAR_WATER);
-    private static final int HIVE_WALL = Registry.BIOME.getRawId(BzBiomes.HIVE_WALL);
+    private static final RegistryKey<Biome> SUGAR_WATER = RegistryKey.of(Registry.BIOME_KEY, new Identifier(Bumblezone.MODID, "sugar_water_floor"));
+    private static final RegistryKey<Biome> HIVE_WALL = RegistryKey.of(Registry.BIOME_KEY, new Identifier(Bumblezone.MODID, "hive_wall"));
 
     private static OctaveSimplexNoiseSampler perlinGen;
 //	private double max = -100;
@@ -29,10 +34,10 @@ public enum BzBiomeLayer implements InitLayer {
 //		Bumblezone.LOGGER.log(Level.INFO, "Max: " + max +", Min: "+min + ", perlin: "+perlinNoise);
 
         if (Math.abs(perlinNoise) % 0.1D < 0.07D) {
-            return HIVE_WALL;
+            return BzBiomeProvider.layersBiomeRegistry.getRawId(BzBiomeProvider.layersBiomeRegistry.get(HIVE_WALL));
         }
         else {
-            return SUGAR_WATER;
+            return BzBiomeProvider.layersBiomeRegistry.getRawId(BzBiomeProvider.layersBiomeRegistry.get(SUGAR_WATER));
         }
     }
 

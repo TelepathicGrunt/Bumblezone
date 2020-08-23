@@ -17,7 +17,7 @@ public class BzDimension {
 
     public static void setupDimension(){
         BzChunkGenerator.registerChunkgenerator();
-        BzBiomeProvider.registerBiomeprovider();
+        BzBiomeProvider.registerBiomeProvider();
 
         BzFeatures.registerFeatures();
         BzBiomes.registerBiomes();

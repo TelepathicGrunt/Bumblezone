@@ -31,6 +31,7 @@ import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.SpawnSettings;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkSection;
@@ -38,8 +39,7 @@ import net.minecraft.world.chunk.ProtoChunk;
 import net.minecraft.world.gen.ChunkRandom;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.chunk.ChunkGeneratorType;
-import net.minecraft.world.gen.chunk.SurfaceChunkGenerator;
+import net.minecraft.world.gen.chunk.ChunkGeneratorSettings;
 import net.minecraft.world.gen.chunk.VerticalBlockSample;
 import net.minecraft.world.gen.feature.StructureFeature;
 import net.telepathicgrunt.bumblezone.Bumblezone;
@@ -52,6 +52,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 
@@ -62,9 +63,9 @@ public class BzChunkGenerator extends ChunkGenerator {
 
     public static final Codec<BzChunkGenerator> CODEC = RecordCodecBuilder.create(
             (instance) -> instance.group(
-                    BiomeSource.field_24713.fieldOf("biome_source").forGetter((surfaceChunkGenerator) -> surfaceChunkGenerator.biomeSource),
+                    BiomeSource.CODEC.fieldOf("biome_source").forGetter((surfaceChunkGenerator) -> surfaceChunkGenerator.biomeSource),
                     Codec.LONG.fieldOf("seed").stable().forGetter((surfaceChunkGenerator) -> surfaceChunkGenerator.seed),
-                    ChunkGeneratorType.field_24781.fieldOf("settings").forGetter((surfaceChunkGenerator) -> surfaceChunkGenerator.settings))
+                    ChunkGeneratorSettings.REGISTRY_CODEC.fieldOf("settings").forGetter((surfaceChunkGenerator) -> () -> surfaceChunkGenerator.settings))
                 .apply(instance, instance.stable(BzChunkGenerator::new)));
 
     private static final float[] field_16649 = Util.make(new float[13824], (array) -> {
@@ -88,8 +89,8 @@ public class BzChunkGenerator extends ChunkGenerator {
         }
     });
 
-    private static final Biome.SpawnEntry INITIAL_HONEY_SLIME_ENTRY = new Biome.SpawnEntry(BzEntities.HONEY_SLIME, 1, 1, 3);
-    private static final Biome.SpawnEntry INITIAL_BEE_ENTRY = new Biome.SpawnEntry(EntityType.BEE, 1, 4, 4);
+    private static final SpawnSettings.SpawnEntry INITIAL_HONEY_SLIME_ENTRY = new SpawnSettings.SpawnEntry(BzEntities.HONEY_SLIME, 1, 1, 3);
+    private static final SpawnSettings.SpawnEntry INITIAL_BEE_ENTRY = new SpawnSettings.SpawnEntry(EntityType.BEE, 1, 4, 4);
     private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
     protected final BlockState defaultBlock;
     protected final BlockState defaultFluid;
@@ -105,15 +106,15 @@ public class BzChunkGenerator extends ChunkGenerator {
     private final NoiseSampler surfaceDepthNoise;
     private final OctavePerlinNoiseSampler field_24776;
     private final long seed;
-    protected final ChunkGeneratorType settings;
+    protected final ChunkGeneratorSettings settings;
     private final int height;
 
-    public BzChunkGenerator(BiomeSource biomeSource, long l, ChunkGeneratorType chunkGeneratorType) {
-        this(biomeSource, biomeSource, l, chunkGeneratorType);
+    public BzChunkGenerator(BiomeSource biomeSource, long l, Supplier<ChunkGeneratorSettings> chunkGeneratorType) {
+        this(biomeSource, biomeSource, l, chunkGeneratorType.get());
     }
 
-    private BzChunkGenerator(BiomeSource biomeSource, BiomeSource biomeSource2, long seedIn, ChunkGeneratorType chunkGeneratorType) {
-        super(biomeSource, biomeSource2, chunkGeneratorType.getConfig(), seedIn);
+    private BzChunkGenerator(BiomeSource biomeSource, BiomeSource biomeSource2, long seedIn, ChunkGeneratorSettings chunkGeneratorType) {
+        super(biomeSource, biomeSource2, chunkGeneratorType.getStructuresConfig(), seedIn);
         this.seed = seedIn;
         this.settings = chunkGeneratorType;
         this.height = 256;
@@ -133,13 +134,15 @@ public class BzChunkGenerator extends ChunkGenerator {
         this.field_24776 = new OctavePerlinNoiseSampler(this.random, IntStream.rangeClosed(-15, 0));
     }
 
-    protected Codec<? extends ChunkGenerator> method_28506() {
+    @Override
+    protected Codec<? extends ChunkGenerator> getCodec() {
         return CODEC;
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
     public ChunkGenerator withSeed(long seed) {
-        return new SurfaceChunkGenerator(this.biomeSource.withSeed(seed), seed, this.settings);
+        return new BzChunkGenerator(this.biomeSource.withSeed(seed), seed, () -> this.settings);
     }
 
     private double sampleNoise(int x, int y, int z, double horizontalScaleX, double verticalScale, double horizontalScaleZ, double horizontalStretch, double verticalStretch) {
@@ -258,10 +261,12 @@ public class BzChunkGenerator extends ChunkGenerator {
         return g < 0.0D ? g * 0.009486607142857142D : Math.min(g, 1.0D) * 0.006640625D;
     }
 
+    @Override
     public int getHeight(int x, int z, Heightmap.Type heightmapType) {
         return this.sampleHeightmap(x, z, null, heightmapType.getBlockPredicate());
     }
 
+    @Override
     public BlockView getColumnSample(int x, int z) {
         BlockState[] blockStates = new BlockState[this.noiseSizeY * this.verticalNoiseResolution];
         this.sampleHeightmap(x, z, blockStates, null);
@@ -318,6 +323,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         return blockState3;
     }
 
+    @Override
     public void buildSurface(ChunkRegion region, Chunk chunk) {
         ChunkPos chunkPos = chunk.getPos();
         int i = chunkPos.x;
@@ -342,6 +348,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         this.makeCeilingAndFloor(chunk, chunkRandom);
     }
 
+    @Override
     public void populateNoise(WorldAccess world, StructureAccessor accessor, Chunk chunk) {
         ObjectList<StructurePiece> objectList = new ObjectArrayList<>(10);
         ObjectList<JigsawJunction> objectList2 = new ObjectArrayList<>(32);
@@ -561,6 +568,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         return h * g;
     }
 
+    @Override
     public int getMaxY() {
         return this.height;
     }
@@ -570,7 +578,7 @@ public class BzChunkGenerator extends ChunkGenerator {
      * For spawning specific mobs in certain places like structures.
      */
     @Override
-    public List<Biome.SpawnEntry> getEntitySpawnList(Biome biome, StructureAccessor accessor, SpawnGroup group, BlockPos pos) {
+    public List<SpawnSettings.SpawnEntry> getEntitySpawnList(Biome biome, StructureAccessor accessor, SpawnGroup group, BlockPos pos) {
         return super.getEntitySpawnList(biome, accessor, group, pos);
     }
 
@@ -595,9 +603,9 @@ public class BzChunkGenerator extends ChunkGenerator {
         Biome biome = region.getBiome((new ChunkPos(xChunk, zChunk)).getCenterBlockPos());
         ChunkRandom sharedseedrandom = new ChunkRandom();
         sharedseedrandom.setPopulationSeed(region.getSeed(), xCord, zCord);
-        while (sharedseedrandom.nextFloat() < biome.getMaxSpawnChance() * 0.75f) {
+        while (sharedseedrandom.nextFloat() < biome.getSpawnSettings().getCreatureSpawnProbability() * 0.75f) {
             //20% of time, spawn honey slime. Otherwise, spawn bees.
-            Biome.SpawnEntry biome$spawnlistentry = sharedseedrandom.nextFloat() < 0.25f ? INITIAL_HONEY_SLIME_ENTRY : INITIAL_BEE_ENTRY;
+            SpawnSettings.SpawnEntry biome$spawnlistentry = sharedseedrandom.nextFloat() < 0.25f ? INITIAL_HONEY_SLIME_ENTRY : INITIAL_BEE_ENTRY;
 
             int startingX = xCord + sharedseedrandom.nextInt(16);
             int startingZ = zCord + sharedseedrandom.nextInt(16);
@@ -612,7 +620,7 @@ public class BzChunkGenerator extends ChunkGenerator {
 
                 Entity entity;
                 try {
-                    entity = biome$spawnlistentry.type.create(region.getWorld());
+                    entity = biome$spawnlistentry.type.create(region.toServerWorld());
                     if(entity == null)
                         continue;
 
@@ -673,6 +681,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         }
     }
 
+    @Override
     public int getSeaLevel() {
         return 40;
     }
