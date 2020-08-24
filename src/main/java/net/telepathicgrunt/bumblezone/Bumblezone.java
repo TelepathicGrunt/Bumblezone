@@ -31,16 +31,23 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Bumblezone implements ModInitializer {
+
     public static final String MODID = "the_bumblezone";
     public static final Identifier MOD_DIMENSION_ID = new Identifier(Bumblezone.MODID, Bumblezone.MODID);
+
+    public static BzConfig BZ_CONFIG;
     public static final Logger LOGGER = LogManager.getLogger(MODID);
     public static final ComponentType<IPlayerComponent> PLAYER_COMPONENT =
             ComponentRegistry.INSTANCE.registerIfAbsent(new Identifier(MODID, "player_component"), IPlayerComponent.class)
                     .attach(EntityComponentCallback.event(PlayerEntity.class), player -> new PlayerComponent());
-    public static BzConfig BZ_CONFIG;
 
     @Override
     public void onInitialize() {
+        //Set up config
+        AutoConfig.register(BzConfig.class, JanksonConfigSerializer::new);
+        BZ_CONFIG = AutoConfig.getConfigHolder(BzConfig.class).getConfig();
+
+
         BzBlocks.registerBlocks();
         BzItems.registerItems();
         BzEffects.registerEffects();
@@ -51,12 +58,9 @@ public class Bumblezone implements ModInitializer {
         BzConfiguredFeatures.registerConfiguredFeatures();
         BzDimension.setupDimension();
 
+
         //attach component to player
         EntityComponents.setRespawnCopyStrategy(PLAYER_COMPONENT, RespawnCopyStrategy.INVENTORY);
-
-        //Set up config
-        AutoConfig.register(BzConfig.class, JanksonConfigSerializer::new);
-        BZ_CONFIG = AutoConfig.getConfigHolder(BzConfig.class).getConfig();
 
         ServerStartCallback.EVENT.register((MinecraftServer world) -> BeeAggression.setupBeeHatingList(world.getWorld(World.OVERWORLD)));
         DispenserItemSetup.setupDispenserBehaviors();

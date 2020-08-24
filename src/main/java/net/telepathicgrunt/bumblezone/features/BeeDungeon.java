@@ -45,7 +45,8 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
     @Override
     public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
         //affect rarity
-        if (random.nextInt(Bumblezone.BZ_CONFIG.BZDungeonsConfig.beeDungeonRarity) != 0) return false;
+        if (Bumblezone.BZ_CONFIG.BZDungeonsConfig.beeDungeonRarity >= 1000 ||
+            random.nextInt(Bumblezone.BZ_CONFIG.BZDungeonsConfig.beeDungeonRarity) != 0) return false;
 
         BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position).move(-3, -2, -3);
         //Bumblezone.LOGGER.log(Level.INFO, "Bee Dungeon at X: "+position.getX() +", "+position.getY()+", "+position.getZ());

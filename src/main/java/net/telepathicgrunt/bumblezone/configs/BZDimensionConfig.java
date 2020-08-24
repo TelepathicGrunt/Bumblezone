@@ -1,11 +1,12 @@
 package net.telepathicgrunt.bumblezone.configs;
 
+import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
 import me.sargunvohra.mcmods.autoconfig1u.shadowed.blue.endless.jankson.Comment;
 
 @Config(name = "Dimension")
-public class BZDimensionConfig {
+public class BZDimensionConfig implements ConfigData {
 
     @ConfigEntry.Gui.Tooltip(count = 6)
     @Comment(value = "\nHow bright the fog is in the Bumblezone dimension. \n" +
@@ -14,6 +15,7 @@ public class BZDimensionConfig {
             "0 will be pitch black, 50 will be half as \n" +
             "bright, 100 will be normal orange brightness, and \n" +
             "100000 will be white.")
+    @ConfigEntry.BoundedDiscrete(min = 0, max = 100000)
     public double fogBrightnessPercentage = 110;
 
     @ConfigEntry.Gui.Tooltip(count = 5)
@@ -72,6 +74,7 @@ public class BZDimensionConfig {
             +"Mode 3: Will use mode 1's teleportation method if Beehive/Beenest\n"
             +"is near the spot when exiting the dimension. If none is found, then\n"
             +"mode 2's teleportation method is used instead.")
+    @ConfigEntry.BoundedDiscrete(min = 1, max = 3)
     public int teleportationMode = 1;
 
 }

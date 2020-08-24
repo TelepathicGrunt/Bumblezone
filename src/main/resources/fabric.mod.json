@@ -22,6 +22,9 @@
     "main": [
       "net.telepathicgrunt.bumblezone.Bumblezone"
     ],
+    "modmenu": [
+      "net.telepathicgrunt.bumblezone.configs.ModMenuConfig"
+    ],
     "client": [
       "net.telepathicgrunt.bumblezone.client.BumblezoneClient"
     ]
