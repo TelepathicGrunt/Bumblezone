@@ -13,11 +13,9 @@ public class EnderpearlImpactMixin {
 
     // Teleports player to Bumblezone when pearl hits bee nest
     @Inject(method = "onCollision",
-            at = @At(value = "TAIL"),
+            at = @At(value = "HEAD"),
             cancellable = true)
     private void onPearlHit(HitResult hitResult, CallbackInfo ci) {
         if(PlayerTeleportation.runEnderpearlImpact(hitResult, ((EnderPearlEntity) (Object) this))) ci.cancel();
     }
-
-
 }

@@ -101,8 +101,6 @@ public class PlayerTeleportation {
 
 
     // Enderpearl
-
-
     public static boolean runEnderpearlImpact(HitResult hitResult, EnderPearlEntity pearlEntity){
         World world = pearlEntity.world; // world we threw in
 

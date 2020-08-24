@@ -17,6 +17,8 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 	Dimension:
 • Can now sleep in the dimension with a bed. No more exploding beds.
 
+• Fixed player taking damage when throwing Enderpearls at Beenests/Beehives
+
 	Features:
 • Adjusted spawnrates and heights of Sugar Waterfalls.
 
