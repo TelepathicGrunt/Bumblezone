@@ -33,6 +33,7 @@ public class BzBlocks {
     public static final Block HONEY_CRYSTAL = new HoneyCrystal();
     public static final Block STICKY_HONEY_RESIDUE = new StickyHoneyResidue();
     public static final Block STICKY_HONEY_REDSTONE = new StickyHoneyRedstone();
+    public static final Block BEESWAX_PLANKS = new BeeswaxPlanks();
 
     public static final FlowableFluid SUGAR_WATER_FLUID = new SugarWaterFluid.Source();
     public static final FlowableFluid SUGAR_WATER_FLUID_FLOWING = new SugarWaterFluid.Flowing();
@@ -51,6 +52,7 @@ public class BzBlocks {
         Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "honey_crystal"), HONEY_CRYSTAL);
         Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "sticky_honey_residue"), STICKY_HONEY_RESIDUE);
         Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "sticky_honey_redstone"), STICKY_HONEY_REDSTONE);
+        Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "beeswax_planks"), BEESWAX_PLANKS);
         Registry.register(Registry.FLUID, new Identifier(Bumblezone.MODID, "sugar_water_still"), SUGAR_WATER_FLUID);
         Registry.register(Registry.FLUID, new Identifier(Bumblezone.MODID, "sugar_water_flowing"), SUGAR_WATER_FLUID_FLOWING);
         Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "sugar_water_block"), SUGAR_WATER_BLOCK);

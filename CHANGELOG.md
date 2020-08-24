@@ -14,14 +14,22 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 • Replaced Cotton Config with Autoconfigu + Cloth.
 
+    Blocks:
+• Added Beeswax Planks which can be used to craft Bee Nests blocks by
+  crafting with 8 Hive Planks with a Honeycomb in the center.
+  
 	Dimension:
 • Can now sleep in the dimension with a bed. No more exploding beds.
 
 • Fixed player taking damage when throwing Enderpearls at Beenests/Beehives
 
+• Beeswax Planks will be placed to mark the boundaries of the dimension's ceiling and floor.
+
 	Features:
 • Adjusted spawnrates and heights of Sugar Waterfalls.
 
+
+  
 
    (V.2.1.2 Changes) (1.16.1 Snapshot Minecraft)
 

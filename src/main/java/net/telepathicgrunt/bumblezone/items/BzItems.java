@@ -29,6 +29,7 @@ public class BzItems {
     public static final Item HONEY_CRYSTAL = new BlockItem(BzBlocks.HONEY_CRYSTAL, new Item.Settings().group(BUMBLEZONE_CREATIVE_TAB));
     public static final Item STICKY_HONEY_RESIDUE = new BlockItem(BzBlocks.STICKY_HONEY_RESIDUE, new Item.Settings().group(BUMBLEZONE_CREATIVE_TAB));
     public static final Item STICKY_HONEY_REDSTONE = new BlockItem(BzBlocks.STICKY_HONEY_REDSTONE, new Item.Settings().group(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item BEESWAX_PLANKS = new BlockItem(BzBlocks.BEESWAX_PLANKS, new Item.Settings().group(BUMBLEZONE_CREATIVE_TAB));
 
 
     //items
@@ -61,6 +62,7 @@ public class BzItems {
         Registry.register(Registry.ITEM, new Identifier(Bumblezone.MODID, "honey_crystal"), HONEY_CRYSTAL);
         Registry.register(Registry.ITEM, new Identifier(Bumblezone.MODID, "sticky_honey_residue"), STICKY_HONEY_RESIDUE);
         Registry.register(Registry.ITEM, new Identifier(Bumblezone.MODID, "sticky_honey_redstone"), STICKY_HONEY_REDSTONE);
+        Registry.register(Registry.ITEM, new Identifier(Bumblezone.MODID, "beeswax_planks"), BEESWAX_PLANKS);
         Registry.register(Registry.ITEM, new Identifier(Bumblezone.MODID, "honey_crystal_shards"), HONEY_CRYSTAL_SHARDS);
         Registry.register(Registry.ITEM, new Identifier(Bumblezone.MODID, "honey_crystal_shield"), HONEY_CRYSTAL_SHIELD);
         Registry.register(Registry.ITEM, new Identifier(Bumblezone.MODID, "sugar_water_bucket"), SUGAR_WATER_BUCKET);
