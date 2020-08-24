@@ -1,0 +1,106 @@
+{
+  "effects": {
+    "ambient_sound": "minecraft:entity.bee.loop",
+    "additions_sound": {
+      "sound": "minecraft:entity.bee.loop_aggressive",
+      "tick_chance": 0.0011
+    },
+    "sky_color": 16759808,
+    "foliage_color": 7593531,
+    "grass_color": 7600187,
+    "fog_color": 12638463,
+    "water_color": 14402413,
+    "water_fog_color": 11700268
+  },
+  "surface_builder": "the_bumblezone:honey_surface_builder",
+  "carvers": {},
+  "features": [
+    [
+      "the_bumblezone:honeycomb_caves",
+      "the_bumblezone:honeycomb_holes"
+    ],
+    [],
+    [],
+    [
+      "the_bumblezone:bee_dungeon",
+      "the_bumblezone:spider_infested_bee_dungeon"
+    ],
+    [],
+    [],
+    [
+      "the_bumblezone:honey_crystals_rare"
+    ],
+    [],
+    [
+      "the_bumblezone:cave_sugar_waterfall",
+      "the_bumblezone:sugar_waterfall_full_range",
+      "the_bumblezone:sugar_waterfall_low"
+    ],
+    []
+  ],
+  "starts": [],
+  "spawners": {
+    "monster": [
+      {
+        "type": "minecraft:slime",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "minecraft:endermen",
+        "weight": 2,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "minecraft:phantom",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "minecraft:snowball",
+        "weight": 2200,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "creature": [
+      {
+        "type": "minecraft:bee",
+        "weight": 100,
+        "minCount": 4,
+        "maxCount": 8
+      },
+      {
+        "type": "the_bumblezome:honey_slime",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 3
+      }
+    ],
+    "ambient": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "creature_spawn_probability": 0.35,
+  "spawn_costs": {
+    "minecraft:endermen": {
+      "energy_budget": 0.02,
+      "charge": 1.5
+    },
+    "minecraft:phantom": {
+      "energy_budget": 0.01,
+      "charge": 2
+    }
+  },
+  "player_spawn_friendly": false,
+  "precipitation": "none",
+  "temperature": 1.85,
+  "downfall": 0.5,
+  "category": "none",
+  "depth": -2.2,
+  "scale": 1.2
+}

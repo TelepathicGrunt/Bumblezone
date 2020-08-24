@@ -1,0 +1,14 @@
+{
+  "config": {
+    "top_material": {
+      "Name": "the_bumblezone:porous_honeycomb_block"
+    },
+    "under_material": {
+      "Name": "the_bumblezone:porous_honeycomb_block"
+    },
+    "underwater_material": {
+      "Name": "the_bumblezone:porous_honeycomb_block"
+    }
+  },
+  "type": "the_bumblezone:honey_surface_builder"
+}
