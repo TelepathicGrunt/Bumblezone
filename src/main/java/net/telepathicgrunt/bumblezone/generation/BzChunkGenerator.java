@@ -660,13 +660,13 @@ public class BzChunkGenerator extends ChunkGenerator {
         BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable();
         int xStart = chunk.getPos().getStartX();
         int zStart = chunk.getPos().getStartZ();
-        int roofHeight = 255;
-        int floorHeight = 0;
+        int roofHeight = 250;
+        int floorHeight = 2;
 
         for (BlockPos blockpos : BlockPos.iterate(xStart, 0, zStart, xStart + 15, 0, zStart + 15))
         {
             //fills in gap between top of terrain gen and y = 255 with solid blocks
-            for (int ceilingY = 255; ceilingY >= roofHeight - 7 - random.nextInt(2); --ceilingY)
+            for (int ceilingY = 255; ceilingY >= roofHeight - random.nextInt(2); --ceilingY)
             {
                 chunk.setBlockState(blockpos$Mutable.set(blockpos.getX(), ceilingY, blockpos.getZ()), BzBlocks.BEESWAX_PLANKS.getDefaultState(), false);
             }
