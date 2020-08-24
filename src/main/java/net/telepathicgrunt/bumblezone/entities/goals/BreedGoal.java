@@ -7,6 +7,7 @@ import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
@@ -102,7 +103,7 @@ public class BreedGoal extends Goal {
      * Spawns a baby animal of the same type.
      */
     protected void spawnBaby() {
-        PassiveEntity childEntity = this.slime.createChild(this.field_75391_e);
+        PassiveEntity childEntity = this.slime.createChild((ServerWorld)this.world, this.field_75391_e);
         if (childEntity != null) {
             ServerPlayerEntity serverplayerentity = this.slime.getLovingPlayer();
             if (serverplayerentity == null && this.field_75391_e.getLovingPlayer() != null) {

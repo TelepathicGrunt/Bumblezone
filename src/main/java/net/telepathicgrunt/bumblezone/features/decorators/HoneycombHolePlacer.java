@@ -4,9 +4,8 @@ import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.decorator.Decorator;
+import net.minecraft.world.gen.decorator.DecoratorContext;
 import net.minecraft.world.gen.decorator.NopeDecoratorConfig;
 
 import java.util.ArrayList;
@@ -22,10 +21,10 @@ public class HoneycombHolePlacer extends Decorator<NopeDecoratorConfig> {
     }
 
     @Override
-    public Stream<BlockPos> getPositions(WorldAccess world, ChunkGenerator chunkGenerator, Random random, NopeDecoratorConfig placementConfig, BlockPos pos) {
+    public Stream<BlockPos> getPositions(DecoratorContext context, Random random, NopeDecoratorConfig placementConfig, BlockPos pos) {
         //Start at top
         BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(pos.getX() - 4, 236, pos.getZ() + 4);
-        List<BlockPos> blockPosList = new ArrayList<BlockPos>();
+        List<BlockPos> blockPosList = new ArrayList<>();
         boolean alternate = false;
 
         //Repeats twice with an offset on second pass
@@ -42,7 +41,7 @@ public class HoneycombHolePlacer extends Decorator<NopeDecoratorConfig> {
                 alternate = !alternate;
 
                 //Makes sure the place for holes is valid
-                if (isPlaceValid(world, mutableBlockPos)) {
+                if (isPlaceValid(context, mutableBlockPos)) {
                     blockPosList.add(mutableBlockPos.toImmutable());
                 }
             }
@@ -62,7 +61,7 @@ public class HoneycombHolePlacer extends Decorator<NopeDecoratorConfig> {
      * It also needs one slide to be invalid so that the hole is not
      * placed inside the terrain and cutoff from the outside.
      */
-    private boolean isPlaceValid(WorldAccess world, BlockPos pos) {
+    private boolean isPlaceValid(DecoratorContext world, BlockPos pos) {
         boolean completelySolidSlice = false;
         boolean airInSlice = false;
 
@@ -81,9 +80,9 @@ public class HoneycombHolePlacer extends Decorator<NopeDecoratorConfig> {
     /**
      * Checks if the circular slice here is entirely solid land.
      */
-    private SliceState StateOfThisSlice(WorldAccess world, BlockPos pos) {
+    private SliceState StateOfThisSlice(DecoratorContext world, BlockPos pos) {
         BlockState blockState;
-        double distanceSq = 0;
+        double distanceSq;
 
         for (double z = -4.5; z <= 4.5; z++) {
             for (double y = -3.5; y <= 3.5; y++) {
