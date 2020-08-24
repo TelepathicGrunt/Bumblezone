@@ -6,8 +6,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.gen.StructureAccessor;
+import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
@@ -25,7 +24,7 @@ public class CaveSugarWaterfall extends Feature<DefaultFeatureConfig> {
     }
 
     @Override
-    public boolean generate(ServerWorldAccess world, StructureAccessor accessor, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
+    public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
         //creates a waterfall
         BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position);
         BlockState blockstate = world.getBlockState(blockpos$Mutable.up());
@@ -36,7 +35,7 @@ public class CaveSugarWaterfall extends Feature<DefaultFeatureConfig> {
             //checks if we are in the side of a wall with air exposed on one side
 
             int numberOfSolidSides = 0;
-            int neededNumberOfSides = 0;
+            int neededNumberOfSides;
             blockstate = world.getBlockState(blockpos$Mutable.down());
 
             if (blockstate.isOpaque() && Registry.BLOCK.getId(blockstate.getBlock()).getPath().contains("honey")) {

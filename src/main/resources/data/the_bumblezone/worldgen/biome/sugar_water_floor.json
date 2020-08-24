@@ -89,11 +89,11 @@
   "spawn_costs": {
     "minecraft:endermen": {
       "energy_budget": 0.02,
-      "charge": 1.5
+      "charge": 3.0
     },
     "minecraft:phantom": {
       "energy_budget": 0.01,
-      "charge": 2
+      "charge": 2.0
     }
   },
   "player_spawn_friendly": false,

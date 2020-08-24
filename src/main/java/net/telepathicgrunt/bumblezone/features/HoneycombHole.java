@@ -7,7 +7,7 @@ import net.minecraft.block.Material;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.gen.StructureAccessor;
+import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
@@ -87,7 +87,7 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig> {
     }
 
     @Override
-    public boolean generate(ServerWorldAccess world, StructureAccessor accessor, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
+    public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
         BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable().set(position);
 
         generateSlice(world, mutableBlockPos, endCapLayout, random, true);
@@ -112,39 +112,43 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig> {
         BlockState blockState;
 
         //go through each row and column while replacing each solid block
-        for (int y = 0; y < slice.length; y++) {
+        for (int[] ints : slice) {
             for (int z = 0; z < slice[0].length; z++) {
                 //finds solid block
                 blockState = world.getBlockState(currentPosition);
                 if (world.getBlockState(currentPosition).getMaterial() != Material.AIR && blockState.getFluidState().isEmpty()) {
                     //replace solid block with the slice's blocks
-                    int sliceBlock = slice[y][z];
-                    if (sliceBlock == 0) {
-                        //do nothing.
-                    } else if (sliceBlock == 1) {
+                    int sliceBlock = ints[z];
+                    if (sliceBlock == 1) {
                         //extra check so the ends of the hole exposed will not have this block
                         if (world.getBlockState(currentPosition.west()).isOpaque() && world.getBlockState(currentPosition.east()).isOpaque()) {
                             //reduced FILLED_POROUS_HONEYCOMB spawn rate
                             if (random.nextInt(3) == 0) {
                                 world.setBlockState(currentPosition, HONEYCOMB_BLOCK, 2);
-                            } else {
+                            }
+                            else {
                                 world.setBlockState(currentPosition, FILLED_POROUS_HONEYCOMB, 2);
                             }
                         }
-                    } else if (sliceBlock == 2) {
+                    }
+                    else if (sliceBlock == 2) {
                         //reduced HONEY_BLOCK spawn rate
                         if (random.nextInt(3) == 0) {
                             world.setBlockState(currentPosition, FILLED_POROUS_HONEYCOMB, 2);
-                        } else {
+                        }
+                        else {
                             world.setBlockState(currentPosition, HONEY_BLOCK, 2);
                         }
-                    } else if (sliceBlock == 3) {
+                    }
+                    else if (sliceBlock == 3) {
                         if (currentPosition.getY() >= 40) {
                             world.setBlockState(currentPosition, CAVE_AIR, 2);
-                        } else {
+                        }
+                        else {
                             world.setBlockState(currentPosition, SUGAR_WATER, 2);
                         }
-                    } else if (sliceBlock == 5) {
+                    }
+                    else if (sliceBlock == 5) {
                         //reduced HONEY_BLOCK spawn rate
                         int chance = random.nextInt(10);
                         if (chance <= 3) {
@@ -155,12 +159,14 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig> {
                                 facing = Direction.EAST;
 
                             if (random.nextFloat() < 0.8f)
-                                world.setBlockState(currentPosition, BzBlocks.HONEYCOMB_BROOD.getDefaultState().with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3))).with(HoneycombBrood.FACING, facing), 2);
+                                world.setBlockState(currentPosition, BzBlocks.HONEYCOMB_BROOD.getDefaultState().with(HoneycombBrood.STAGE, random.nextInt(3)).with(HoneycombBrood.FACING, facing), 2);
                             else
                                 world.setBlockState(currentPosition, BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState().with(HoneycombBrood.FACING, facing), 2);
-                        } else if (chance <= 6) {
+                        }
+                        else if (chance <= 6) {
                             world.setBlockState(currentPosition, FILLED_POROUS_HONEYCOMB, 2);
-                        } else {
+                        }
+                        else {
                             world.setBlockState(currentPosition, HONEY_BLOCK, 2);
                         }
                     }
