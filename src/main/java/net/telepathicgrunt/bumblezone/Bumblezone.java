@@ -1,6 +1,8 @@
 package net.telepathicgrunt.bumblezone;
 
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
+import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
+import me.sargunvohra.mcmods.autoconfig1u.serializer.JanksonConfigSerializer;
 import nerdhub.cardinal.components.api.ComponentRegistry;
 import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.event.EntityComponentCallback;
@@ -20,6 +22,9 @@ import net.telepathicgrunt.bumblezone.entities.BeeAggression;
 import net.telepathicgrunt.bumblezone.entities.BzEntities;
 import net.telepathicgrunt.bumblezone.entities.IPlayerComponent;
 import net.telepathicgrunt.bumblezone.entities.PlayerComponent;
+import net.telepathicgrunt.bumblezone.features.BzConfiguredFeatures;
+import net.telepathicgrunt.bumblezone.features.BzFeatures;
+import net.telepathicgrunt.bumblezone.features.decorators.BzPlacements;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.DispenserItemSetup;
 import org.apache.logging.log4j.LogManager;
@@ -39,13 +44,18 @@ public class Bumblezone implements ModInitializer {
         BzBlocks.registerBlocks();
         BzItems.registerItems();
         BzEffects.registerEffects();
-        BzDimension.setupDimension();
         BzEntities.registerEntities();
+
+        BzPlacements.registerPlacements();
+        BzFeatures.registerFeatures();
+        BzConfiguredFeatures.registerConfiguredFeatures();
+        BzDimension.setupDimension();
 
         //attach component to player
         EntityComponents.setRespawnCopyStrategy(PLAYER_COMPONENT, RespawnCopyStrategy.INVENTORY);
 
         //Set up config
+        AutoConfig.register(BzConfig.class, JanksonConfigSerializer::new);
         BZ_CONFIG = AutoConfig.getConfigHolder(BzConfig.class).getConfig();
 
         ServerStartCallback.EVENT.register((MinecraftServer world) -> BeeAggression.setupBeeHatingList(world.getWorld(World.OVERWORLD)));

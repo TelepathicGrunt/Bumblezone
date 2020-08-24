@@ -13,7 +13,6 @@ import net.telepathicgrunt.bumblezone.generation.BzChunkGenerator;
 import net.telepathicgrunt.bumblezone.surfacebuilders.BzSurfaceBuilders;
 
 public class BzDimension {
-    public static final RegistryKey<DimensionType> BZ_DIMENSION_KEY = RegistryKey.of(Registry.DIMENSION_TYPE_KEY, Bumblezone.MOD_DIMENSION_ID);
     public static final RegistryKey<World> BZ_WORLD_KEY = RegistryKey.of(Registry.DIMENSION, Bumblezone.MOD_DIMENSION_ID);
 
     public static void setupDimension(){
@@ -21,8 +20,5 @@ public class BzDimension {
         BzBiomeProvider.registerBiomeProvider();
 
         BzSurfaceBuilders.registerSurfaceBuilders();
-        BzPlacements.registerPlacements();
-        BzFeatures.registerFeatures();
-        BzConfiguredFeatures.registerConfiguredFeatures();
     }
 }

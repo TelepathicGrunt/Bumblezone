@@ -1,9 +1,10 @@
 package net.telepathicgrunt.bumblezone.features;
 
 import com.google.common.collect.ImmutableSet;
+import com.mojang.serialization.Lifecycle;
 import net.minecraft.block.Blocks;
-import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.*;
 import net.minecraft.world.gen.CountConfig;
 import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.decorator.DecoratorConfig;
@@ -12,8 +13,10 @@ import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.SpringFeatureConfig;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.features.decorators.BzPlacements;
+import net.telepathicgrunt.bumblezone.mixin.DynamicRegistryManagerAccessor;
 
 public class BzConfiguredFeatures {
     private static final SpringFeatureConfig SUGAR_WATER_SPRING_CONFIG = new SpringFeatureConfig(BzBlocks.SUGAR_WATER_FLUID.getDefaultState(), true, 4, 1, ImmutableSet.of(Blocks.HONEY_BLOCK, Blocks.HONEYCOMB_BLOCK));
@@ -30,16 +33,18 @@ public class BzConfiguredFeatures {
     public static final ConfiguredFeature<?,?> CAVE_SUGAR_WATERFALL = BzFeatures.CAVE_SUGAR_WATERFALL.configure(FeatureConfig.DEFAULT).decorate(Decorator.RANGE.configure(new RangeDecoratorConfig(8, 0, 248)).repeat(100));
 
     public static void registerConfiguredFeatures(){
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, "sugar_waterfall_high", SUGAR_WATERFALL_HIGH);
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, "sugar_waterfall_low", SUGAR_WATERFALL_LOW);
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, "sugar_waterfall_full_range", SUGAR_WATERFALL_FULL_RANGE);
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, "honeycomb_caves", HONEYCOMB_CAVES);
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, "honeycomb_hole", HONEYCOMB_HOLE);
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, "bee_dungeon", BEE_DUNGEON);
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, "spider_infested_bee_dungeon", SPIDER_INFESTED_BEE_DUNGEON);
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, "honey_crystals_common", HONEY_CRYSTALS_COMMON);
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, "honey_crystals_uncommon", HONEY_CRYSTALS_UNCOMMON);
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, "honey_crystals_rare", HONEY_CRYSTALS_RARE);
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, "cave_sugar_waterfall", CAVE_SUGAR_WATERFALL);
+        MutableRegistry<ConfiguredFeature<?, ?>> registry = DynamicRegistryManagerAccessor.getBUILTIN().get(Registry.CONFIGURED_FEATURE_WORLDGEN);
+     
+        Registry.register(registry, new Identifier(Bumblezone.MODID, "sugar_waterfall_high"), SUGAR_WATERFALL_HIGH);
+        Registry.register(registry, new Identifier(Bumblezone.MODID, "sugar_waterfall_low"), SUGAR_WATERFALL_LOW);
+        Registry.register(registry, new Identifier(Bumblezone.MODID, "sugar_waterfall_full_range"), SUGAR_WATERFALL_FULL_RANGE);
+        Registry.register(registry, new Identifier(Bumblezone.MODID, "honeycomb_caves"), HONEYCOMB_CAVES);
+        Registry.register(registry, new Identifier(Bumblezone.MODID, "honeycomb_holes"), HONEYCOMB_HOLE);
+        Registry.register(registry, new Identifier(Bumblezone.MODID, "bee_dungeon"), BEE_DUNGEON);
+        Registry.register(registry, new Identifier(Bumblezone.MODID, "spider_infested_bee_dungeon"), SPIDER_INFESTED_BEE_DUNGEON);
+        Registry.register(registry, new Identifier(Bumblezone.MODID, "honey_crystals_common"), HONEY_CRYSTALS_COMMON);
+        Registry.register(registry, new Identifier(Bumblezone.MODID, "honey_crystals_uncommon"), HONEY_CRYSTALS_UNCOMMON);
+        Registry.register(registry, new Identifier(Bumblezone.MODID, "honey_crystals_rare"), HONEY_CRYSTALS_RARE);
+        Registry.register(registry, new Identifier(Bumblezone.MODID, "cave_sugar_waterfall"), CAVE_SUGAR_WATERFALL);
     }
 }

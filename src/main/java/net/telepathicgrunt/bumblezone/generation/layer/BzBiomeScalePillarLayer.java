@@ -13,20 +13,22 @@ import net.telepathicgrunt.bumblezone.generation.BzBiomeProvider;
 public enum BzBiomeScalePillarLayer implements CrossSamplingLayer {
     INSTANCE;
 
-    private static final RegistryKey<Biome> HIVE_PILLAR = RegistryKey.of(Registry.BIOME_KEY, new Identifier(Bumblezone.MODID, "hive_pillar"));
+    private static final Identifier HIVE_PILLAR = new Identifier(Bumblezone.MODID, "hive_pillar");
+
     public int sample(LayerRandomnessSource context, int n, int e, int s, int w, int center) {
-        if(center != BzBiomeProvider.layersBiomeRegistry.getRawId(BzBiomeProvider.layersBiomeRegistry.get(HIVE_PILLAR))){
+        int hive_pillar_id = BzBiomeProvider.layersBiomeRegistry.getRawId(BzBiomeProvider.layersBiomeRegistry.get(HIVE_PILLAR));
+        if(center != hive_pillar_id){
             boolean borderingHivePillar = false;
 
-            if((n == BzBiomeProvider.layersBiomeRegistry.getRawId(BzBiomeProvider.layersBiomeRegistry.get(HIVE_PILLAR)) ||
-                e == BzBiomeProvider.layersBiomeRegistry.getRawId(BzBiomeProvider.layersBiomeRegistry.get(HIVE_PILLAR))) ||
-                    (w == BzBiomeProvider.layersBiomeRegistry.getRawId(BzBiomeProvider.layersBiomeRegistry.get(HIVE_PILLAR)) ||
-                    s == BzBiomeProvider.layersBiomeRegistry.getRawId(BzBiomeProvider.layersBiomeRegistry.get(HIVE_PILLAR)))) {
+            if((n == hive_pillar_id ||
+                e == hive_pillar_id) ||
+                    (w == hive_pillar_id ||
+                    s == hive_pillar_id)) {
                 borderingHivePillar = true;
             }
 
             if (borderingHivePillar) {
-                return BzBiomeProvider.layersBiomeRegistry.getRawId(BzBiomeProvider.layersBiomeRegistry.get(HIVE_PILLAR));
+                return hive_pillar_id;
             }
         }
         return center;

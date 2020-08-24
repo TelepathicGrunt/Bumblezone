@@ -5,11 +5,14 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.SharedConstants;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.util.registry.RegistryLookupCodec;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.biome.layer.ScaleLayer;
 import net.minecraft.world.biome.layer.type.ParentedLayer;
 import net.minecraft.world.biome.layer.util.*;
@@ -19,6 +22,7 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.generation.layer.BzBiomeLayer;
 import net.telepathicgrunt.bumblezone.generation.layer.BzBiomePillarLayer;
 import net.telepathicgrunt.bumblezone.generation.layer.BzBiomeScalePillarLayer;
+import net.telepathicgrunt.bumblezone.mixin.BiomeLayerSamplerAccessor;
 
 import java.util.List;
 import java.util.function.LongFunction;
@@ -84,7 +88,21 @@ public class BzBiomeProvider extends BiomeSource {
 
 
     public Biome getBiomeForNoiseGen(int x, int y, int z) {
-        return this.BIOME_SAMPLER.sample(this.BIOME_REGISTRY, x, z);
+        return this.sample(this.BIOME_REGISTRY, x, z);
+    }
+
+    public Biome sample(Registry<Biome> registry, int i, int j) {
+        int k = ((BiomeLayerSamplerAccessor)this.BIOME_SAMPLER).getSampler().sample(i, j);
+        Biome biome = registry.get(k);
+        if (biome == null) {
+            if (SharedConstants.isDevelopment) {
+                throw Util.throwOrPause(new IllegalStateException("Unknown biome id: " + k));
+            } else {
+                return registry.get(Biomes.fromRawId(0));
+            }
+        } else {
+            return biome;
+        }
     }
 
     @Override

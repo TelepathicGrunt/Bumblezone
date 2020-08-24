@@ -15,7 +15,7 @@ public class BzSkyProperty extends SkyProperties {
 
     @Override
     public Vec3d adjustSkyColor(Vec3d color, float sunHeight) {
-        return getFogColor().multiply(1.2D);
+        return getFogColor().multiply(0.003921568627451); // Divide by 255 to amke values between 0 and 1
     }
 
     @Override
@@ -52,8 +52,8 @@ public class BzSkyProperty extends SkyProperties {
             REDDISH_FOG_TINT -= 0.00001f;
         }
 
-        return new Vec3d((int) (Math.min(Math.max(Math.min((0.001f * colorFactor) * (colorFactor * colorFactor), 0.9f) - REDDISH_FOG_TINT * 1.9f, 0) * 255, 255)),
+        return new Vec3d((int)(Math.min(Math.min(0.56f * colorFactor, 0.65f + REDDISH_FOG_TINT)*255, 255)),
                         ((int)(Math.min(Math.max(Math.min(0.34f * colorFactor, 0.87f) - REDDISH_FOG_TINT * 0.6f, 0)*255, 255))),
-                        ((int)(Math.min(Math.min(0.56f * colorFactor, 0.65f + REDDISH_FOG_TINT)*255, 255))));
+                        ((int)(Math.min(Math.max(Math.min((0.001f * colorFactor) * (colorFactor * colorFactor), 0.9f) - REDDISH_FOG_TINT * 1.9f, 0)*255, 255))));
     }
 }

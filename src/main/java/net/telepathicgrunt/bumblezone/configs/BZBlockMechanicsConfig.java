@@ -8,7 +8,7 @@ import me.sargunvohra.mcmods.autoconfig1u.shadowed.blue.endless.jankson.Comment;
 public class BZBlockMechanicsConfig {
 
     @ConfigEntry.Gui.Tooltip(count = 5)
-    @Comment(value = "Should Dispensers always drop the Glass Bottle when using specific \n"
+    @Comment(value = "\nShould Dispensers always drop the Glass Bottle when using specific \n"
             +"bottle items on certain The Bumblezone blocks? \n"
             +"\n"
             +"Example: Using Honey Bottle to feed Honeycomb Brood Blocks will grow the larva and \n"

@@ -17,8 +17,8 @@ import java.util.stream.IntStream;
 public enum BzBiomeLayer implements InitLayer {
     INSTANCE;
 
-    private static final RegistryKey<Biome> SUGAR_WATER = RegistryKey.of(Registry.BIOME_KEY, new Identifier(Bumblezone.MODID, "sugar_water_floor"));
-    private static final RegistryKey<Biome> HIVE_WALL = RegistryKey.of(Registry.BIOME_KEY, new Identifier(Bumblezone.MODID, "hive_wall"));
+    private static final Identifier SUGAR_WATER = new Identifier(Bumblezone.MODID, "sugar_water_floor");
+    private static final Identifier HIVE_WALL = new Identifier(Bumblezone.MODID, "hive_wall");
 
     private static OctaveSimplexNoiseSampler perlinGen;
 //	private double max = -100;
