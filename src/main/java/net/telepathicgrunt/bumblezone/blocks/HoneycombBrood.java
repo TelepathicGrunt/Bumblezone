@@ -13,7 +13,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -126,7 +125,7 @@ public class HoneycombBrood extends FacingBlock {
                 }
             }
 
-            if ((playerEntity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_FULL_ID  || Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees) {
+            if ((playerEntity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_DIMENSION_ID || Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees) {
                 //Now all bees nearby in Bumblezone will get VERY angry!!!
                 playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
             }
@@ -197,7 +196,7 @@ public class HoneycombBrood extends FacingBlock {
 
         int stage = state.get(STAGE);
         if (stage < 3) {
-            if (world.getRegistryKey().getValue() == Bumblezone.MOD_FULL_ID ? rand.nextInt(10) == 0 : rand.nextInt(22) == 0) {
+            if (world.getRegistryKey().getValue() == Bumblezone.MOD_DIMENSION_ID ? rand.nextInt(10) == 0 : rand.nextInt(22) == 0) {
                 world.setBlockState(position, state.with(STAGE, stage + 1), 2);
             }
         } else {
@@ -229,7 +228,7 @@ public class HoneycombBrood extends FacingBlock {
                     spawnBroodMob(world, blockState, position, stage);
                 }
 
-                if ((playerEntity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_FULL_ID || Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees) {
+                if ((playerEntity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_DIMENSION_ID || Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees) {
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
                     playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
                 }

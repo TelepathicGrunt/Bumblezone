@@ -25,7 +25,7 @@ import java.util.function.LongFunction;
 
 public class BzBiomeProvider extends BiomeSource {
     public static void registerBiomeProvider() {
-        Registry.register(Registry.BIOME_SOURCE, Bumblezone.MOD_FULL_ID, BzBiomeProvider.CODEC);
+        Registry.register(Registry.BIOME_SOURCE, new Identifier(Bumblezone.MODID, "biome_source"), BzBiomeProvider.CODEC);
     }
 
     public static final Codec<BzBiomeProvider> CODEC =

@@ -1,6 +1,5 @@
 package net.telepathicgrunt.bumblezone.entities;
 
-import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -35,7 +34,7 @@ public class PlayerTeleportation {
         MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
 
         //Makes it so player does not get killed for falling into the void
-        if (playerEntity.world.getDimension() == minecraftServer.getRegistryManager().getDimensionTypes().get(BzDimension.BZ_DIMENSION_KEY)) {
+        if (playerEntity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_DIMENSION_ID) {
             if (playerEntity.getY() < -3) {
                 playerEntity.setPos(playerEntity.getX(), -3.01D, playerEntity.getZ());
                 playerEntity.updatePosition(playerEntity.getX(), -3.01D, playerEntity.getZ());
@@ -93,7 +92,7 @@ public class PlayerTeleportation {
     private static void checkAndCorrectStoredDimension(PlayerEntity playerEntity) {
         //Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone.
         //Go to Overworld instead as default. Or go to Overworld if config is set.
-        if (Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension() == Bumblezone.MOD_FULL_ID || Bumblezone.BZ_CONFIG.BZDimensionConfig.forceExitToOverworld) {
+        if (Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension() == Bumblezone.MOD_DIMENSION_ID || Bumblezone.BZ_CONFIG.BZDimensionConfig.forceExitToOverworld) {
             // go to overworld by default
             //update stored dimension
             Bumblezone.PLAYER_COMPONENT.get(playerEntity).setNonBZDimension(World.OVERWORLD.getValue());
@@ -176,7 +175,7 @@ public class PlayerTeleportation {
 
 
             //if the pearl hit a beehive and is not in our bee dimension, begin the teleportation.
-            if (hitHive && validBelowBlock && playerEntity.getEntityWorld().getRegistryKey().getValue() != Bumblezone.MOD_FULL_ID ) {
+            if (hitHive && validBelowBlock && playerEntity.getEntityWorld().getRegistryKey().getValue() != Bumblezone.MOD_DIMENSION_ID) {
                 Bumblezone.PLAYER_COMPONENT.get(playerEntity).setIsTeleporting(true);
 
                 return true;
@@ -190,7 +189,7 @@ public class PlayerTeleportation {
 
     public static void playerLeavingBz(Identifier dimensionLeaving, ServerPlayerEntity serverPlayerEntity){
         //Updates the non-BZ dimension that the player is leaving
-        if (dimensionLeaving != Bumblezone.MOD_FULL_ID) {
+        if (dimensionLeaving != Bumblezone.MOD_DIMENSION_ID) {
             Bumblezone.PLAYER_COMPONENT.get(serverPlayerEntity).setNonBZDimension(dimensionLeaving);
         }
     }

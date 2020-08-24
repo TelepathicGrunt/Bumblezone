@@ -14,6 +14,12 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 • Replaced Cotton Config with Autoconfigu + Cloth.
 
+	Dimension:
+• Can now sleep in the dimension with a bed. No more exploding beds.
+
+	Features:
+• Adjusted spawnrates and heights of Sugar Waterfalls.
+
 
    (V.2.1.2 Changes) (1.16.1 Snapshot Minecraft)
 

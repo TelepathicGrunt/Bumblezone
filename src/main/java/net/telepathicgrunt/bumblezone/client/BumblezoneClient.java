@@ -25,10 +25,7 @@ public class BumblezoneClient implements ClientModInitializer {
         FluidRender.setupFluidRendering(BzBlocks.SUGAR_WATER_FLUID, BzBlocks.SUGAR_WATER_FLUID_FLOWING, FLUID_STILL, FLUID_FLOWING);
         BzBlocks.registerRenderLayers();
 
-        EntityRendererRegistry.INSTANCE.register(BzEntities.HONEY_SLIME,
-                (dispatcher, context) -> new HoneySlimeRendering(dispatcher));
-
-        SkyProperties skyProperty = new BzSkyProperty();
-        ((SkyPropertiesAccessor) skyProperty).getBY_IDENTIFIER().put(BzDimension.BZ_DIMENSION_KEY, skyProperty);
+        EntityRendererRegistry.INSTANCE.register(BzEntities.HONEY_SLIME, (dispatcher, context) -> new HoneySlimeRendering(dispatcher));
+        SkyPropertiesAccessor.getBY_IDENTIFIER().put(new Identifier(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
     }
 }

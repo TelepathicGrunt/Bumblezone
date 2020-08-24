@@ -1,8 +1,12 @@
 package net.telepathicgrunt.bumblezone.features;
 
+import com.google.common.collect.ImmutableSet;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.SpringFeatureConfig;
+import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 
 public class BzFeatures {
     public static Feature<DefaultFeatureConfig> HONEYCOMB_HOLE = new HoneycombHole(DefaultFeatureConfig.CODEC);

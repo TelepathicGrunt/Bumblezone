@@ -27,7 +27,7 @@ import org.apache.logging.log4j.Logger;
 
 public class Bumblezone implements ModInitializer {
     public static final String MODID = "the_bumblezone";
-    public static final Identifier MOD_FULL_ID = new Identifier(Bumblezone.MODID, Bumblezone.MODID);
+    public static final Identifier MOD_DIMENSION_ID = new Identifier(Bumblezone.MODID, Bumblezone.MODID);
     public static final Logger LOGGER = LogManager.getLogger(MODID);
     public static final ComponentType<IPlayerComponent> PLAYER_COMPONENT =
             ComponentRegistry.INSTANCE.registerIfAbsent(new Identifier(MODID, "player_component"), IPlayerComponent.class)

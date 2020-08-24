@@ -19,6 +19,7 @@ import net.minecraft.structure.JigsawJunction;
 import net.minecraft.structure.PoolStructurePiece;
 import net.minecraft.structure.StructurePiece;
 import net.minecraft.structure.pool.StructurePool;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.noise.NoiseSampler;
@@ -58,7 +59,7 @@ import java.util.stream.IntStream;
 
 public class BzChunkGenerator extends ChunkGenerator {
     public static void registerChunkgenerator() {
-        Registry.register(Registry.CHUNK_GENERATOR, Bumblezone.MOD_FULL_ID, BzChunkGenerator.CODEC);
+        Registry.register(Registry.CHUNK_GENERATOR, new Identifier(Bumblezone.MODID, "chunk_generator"), BzChunkGenerator.CODEC);
     }
 
     public static final Codec<BzChunkGenerator> CODEC = RecordCodecBuilder.create(

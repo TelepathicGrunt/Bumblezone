@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.biome.surfacebuilders;
+package net.telepathicgrunt.bumblezone.surfacebuilders;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
@@ -45,7 +45,7 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<TernarySurfaceConfig> {
                     if (ypos <= 40 + 2 + Math.max(noise, 0) + random.nextInt(2)) {
                         chunkIn.setBlockState(blockpos$Mutable, FILLED_POROUS_HONEYCOMB, false);
                     }
-                } else if (currentBlockState == AIR) {
+                } else if (currentBlockState.isAir()) {
                     if (ypos < 40) {
                         chunkIn.setBlockState(blockpos$Mutable, defaultFluid, false);
                     }
