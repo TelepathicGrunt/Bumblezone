@@ -18,7 +18,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.BitSetVoxelSet;
 import net.minecraft.util.shape.VoxelSet;
 import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.gen.StructureAccessor;
+import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.telepathicgrunt.bumblezone.Bumblezone;
@@ -39,9 +39,9 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
     }
 
     @Override
-    public boolean generate(ServerWorldAccess world, StructureAccessor accessor, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
+    public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
         //affect rarity
-        if (random.nextInt(Bumblezone.BZ_CONFIG.spiderInfestedBeeDungeonRarity) != 0) return false;
+        if (random.nextInt(Bumblezone.BZ_CONFIG.BZDungeonsConfig.spiderInfestedBeeDungeonRarity) != 0) return false;
 
         BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position).move(-3, -2, -3);
         //Bumblezone.LOGGER.log(Level.INFO, "Bee Dungeon at X: "+position.getX() +", "+position.getY()+", "+position.getZ());
@@ -67,26 +67,23 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
     /**
      * Adds blocks and entities from this structure to the given world.
      */
-    @SuppressWarnings("deprecation")
     @Override
-    public boolean addBlocksToWorld(Structure structure, ServerWorldAccess world, BlockPos pos, StructurePlacementData placementIn, int flags) {
-        StructureAccessorInvoker structureAccessor = ((StructureAccessorInvoker) (Object) structure);
-        if (structureAccessor.getBlocks().isEmpty()) {
-            return false;
-        } else {
+    public void addBlocksToWorld(Structure structure, ServerWorldAccess world, BlockPos pos, StructurePlacementData placementIn, int flags) {
+        StructureAccessorInvoker structureAccessor = ((StructureAccessorInvoker) structure);
+        if (!structureAccessor.getBlocks().isEmpty()) {
             List<Structure.StructureBlockInfo> list = placementIn.getRandomBlockInfos(structureAccessor.getBlocks(), pos).getAll();
             if ((!list.isEmpty() || !placementIn.shouldIgnoreEntities() && !structureAccessor.getEntities().isEmpty()) && structureAccessor.getSize().getX() >= 1 && structureAccessor.getSize().getY() >= 1 && structureAccessor.getSize().getZ() >= 1) {
                 BlockBox mutableboundingbox = placementIn.getBoundingBox();
                 List<BlockPos> list1 = Lists.newArrayListWithCapacity(placementIn.shouldPlaceFluids() ? list.size() : 0);
                 List<Pair<BlockPos, CompoundTag>> list2 = Lists.newArrayListWithCapacity(list.size());
-                int i = Integer.MAX_VALUE;
-                int j = Integer.MAX_VALUE;
-                int k = Integer.MAX_VALUE;
+                int x = Integer.MAX_VALUE;
+                int y = Integer.MAX_VALUE;
+                int z = Integer.MAX_VALUE;
                 int l = Integer.MIN_VALUE;
                 int i1 = Integer.MIN_VALUE;
                 int j1 = Integer.MIN_VALUE;
 
-                for (Structure.StructureBlockInfo template$blockinfo : structure.process(world, pos, pos, placementIn, list)) {
+                for (Structure.StructureBlockInfo template$blockinfo : Structure.process(world, pos, pos, placementIn, list)) {
                     BlockPos blockpos = template$blockinfo.pos;
                     if (mutableboundingbox == null || mutableboundingbox.contains(blockpos)) {
                         FluidState ifluidstate = placementIn.shouldPlaceFluids() ? world.getFluidState(blockpos) : null;
@@ -111,9 +108,9 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
                                 }
                             }
 
-                            i = Math.min(i, blockpos.getX());
-                            j = Math.min(j, blockpos.getY());
-                            k = Math.min(k, blockpos.getZ());
+                            x = Math.min(x, blockpos.getX());
+                            y = Math.min(y, blockpos.getY());
+                            z = Math.min(z, blockpos.getZ());
                             l = Math.max(l, blockpos.getX());
                             i1 = Math.max(i1, blockpos.getY());
                             j1 = Math.max(j1, blockpos.getZ());
@@ -173,40 +170,14 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
                     }
                 }
 
-                if (i <= l) {
+                if (x <= l) {
                     if (!placementIn.shouldUpdateNeighbors()) {
-                        VoxelSet voxelshapepart = new BitSetVoxelSet(l - i + 1, i1 - j + 1, j1 - k + 1);
-                        int l1 = i;
-                        int i2 = j;
-                        int j2 = k;
-
-                        for (Pair<BlockPos, CompoundTag> pair1 : list2) {
-                            BlockPos blockpos5 = pair1.getFirst();
-                            voxelshapepart.set(blockpos5.getX() - l1, blockpos5.getY() - i2, blockpos5.getZ() - j2, true, true);
-                        }
-
-                        Structure.updateCorner(world, flags, voxelshapepart, l1, i2, j2);
+                        VoxelSet voxelshapepart = new BitSetVoxelSet(l - x + 1, i1 - y + 1, j1 - z + 1);
+                        
+                        BeeDungeon.setVoxelShapeParts(world, flags, list2, x, y, z, voxelshapepart);
                     }
 
-                    for (Pair<BlockPos, CompoundTag> pair : list2) {
-                        BlockPos blockpos4 = pair.getFirst();
-                        if (!placementIn.shouldUpdateNeighbors()) {
-                            BlockState blockstate1 = world.getBlockState(blockpos4);
-                            BlockState blockstate3 = Block.postProcessState(blockstate1, world, blockpos4);
-                            if (blockstate1 != blockstate3) {
-                                world.setBlockState(blockpos4, blockstate3, flags & -2 | 16);
-                            }
-
-                            world.updateNeighbors(blockpos4, blockstate3.getBlock());
-                        }
-
-                        if (pair.getSecond() != null) {
-                            BlockEntity blockentity2 = world.getBlockEntity(blockpos4);
-                            if (blockentity2 != null) {
-                                blockentity2.markDirty();
-                            }
-                        }
-                    }
+                    BeeDungeon.placeBlocks(world, placementIn, flags, list2);
                 }
 
 
@@ -220,9 +191,6 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
                             placementIn.method_27265());
                 }
 
-                return true;
-            } else {
-                return false;
             }
         }
     }
@@ -240,9 +208,9 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
         //main body
         if (block == Blocks.RED_TERRACOTTA || block == Blocks.PURPLE_TERRACOTTA) {
             if (random.nextFloat() < 0.15f) {
-                return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), new Boolean(false));
+                return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), false);
             } else {
-                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), new Boolean(false));
+                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), false);
             }
         }
 
@@ -251,11 +219,11 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
             if (random.nextFloat() < 0.6f) {
                 return new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
                         .with(HoneycombBrood.FACING, Direction.SOUTH),
-                        new Boolean(false));
-            } else if (random.nextDouble() < Bumblezone.BZ_CONFIG.spawnerRateSpiderBeeDungeon) {
-                return new Pair<>(Blocks.SPAWNER.getDefaultState(), new Boolean(false));
+                        false);
+            } else if (random.nextDouble() < Bumblezone.BZ_CONFIG.BZDungeonsConfig.spawnerRateSpiderBeeDungeon) {
+                return new Pair<>(Blocks.SPAWNER.getDefaultState(), false);
             } else {
-                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), new Boolean(false));
+                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), false);
             }
         }
 
@@ -264,11 +232,11 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
             if (random.nextFloat() < 0.6f) {
                 return new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
                         .with(HoneycombBrood.FACING, Direction.WEST),
-                        new Boolean(false));
-            } else if (random.nextDouble() < Bumblezone.BZ_CONFIG.spawnerRateSpiderBeeDungeon) {
-                return new Pair<>(Blocks.SPAWNER.getDefaultState(), new Boolean(false));
+                        false);
+            } else if (random.nextDouble() < Bumblezone.BZ_CONFIG.BZDungeonsConfig.spawnerRateSpiderBeeDungeon) {
+                return new Pair<>(Blocks.SPAWNER.getDefaultState(), false);
             } else {
-                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), new Boolean(false));
+                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), false);
             }
         }
 
@@ -277,11 +245,11 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
             if (random.nextFloat() < 0.6f) {
                 return new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
                         .with(HoneycombBrood.FACING, Direction.NORTH),
-                        new Boolean(false));
-            } else if (random.nextDouble() < Bumblezone.BZ_CONFIG.spawnerRateSpiderBeeDungeon) {
-                return new Pair<>(Blocks.SPAWNER.getDefaultState(), new Boolean(false));
+                        false);
+            } else if (random.nextDouble() < Bumblezone.BZ_CONFIG.BZDungeonsConfig.spawnerRateSpiderBeeDungeon) {
+                return new Pair<>(Blocks.SPAWNER.getDefaultState(), false);
             } else {
-                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), new Boolean(false));
+                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), false);
             }
         }
 
@@ -290,23 +258,23 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
             if (random.nextFloat() < 0.6f) {
                 return new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
                         .with(HoneycombBrood.FACING, Direction.EAST),
-                        new Boolean(false));
-            } else if (random.nextDouble() < Bumblezone.BZ_CONFIG.spawnerRateSpiderBeeDungeon) {
-                return new Pair<>(Blocks.SPAWNER.getDefaultState(), new Boolean(false));
+                        false);
+            } else if (random.nextDouble() < Bumblezone.BZ_CONFIG.BZDungeonsConfig.spawnerRateSpiderBeeDungeon) {
+                return new Pair<>(Blocks.SPAWNER.getDefaultState(), false);
             } else {
-                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), new Boolean(false));
+                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), false);
             }
         }
 
         //sugar water stream
         else if (block == BzBlocks.SUGAR_WATER_BLOCK) {
-            return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+            return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
         }
 
         //air
         else if (block.getDefaultState().getMaterial() == Material.AIR) {
             if (random.nextFloat() < 0.07f)
-                return new Pair<>(Blocks.COBWEB.getDefaultState(), new Boolean(false));
+                return new Pair<>(Blocks.COBWEB.getDefaultState(), false);
         }
 
         //Shell
@@ -321,42 +289,42 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
                 replaceAir = true;
 
             if (random.nextFloat() < 0.15f) {
-                return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), new Boolean(replaceAir));
+                return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), replaceAir);
             } else {
-                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), new Boolean(replaceAir));
+                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), replaceAir);
             }
         }
 
         //outer ring
         else if (block == Blocks.GRAY_TERRACOTTA) {
             if (random.nextFloat() < 0.07f) {
-                return new Pair<>(Blocks.COBWEB.getDefaultState(), new Boolean(true));
+                return new Pair<>(Blocks.COBWEB.getDefaultState(), true);
             } else if (random.nextFloat() < 0.4f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
-                return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+                return new Pair<>(HONEY_CRYSTAL, true);
             } else {
-                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
             }
         }
 
         //inner ring
         else if (block == Blocks.CYAN_TERRACOTTA) {
             if (random.nextFloat() < 0.07f) {
-                return new Pair<>(Blocks.COBWEB.getDefaultState(), new Boolean(true));
+                return new Pair<>(Blocks.COBWEB.getDefaultState(), true);
             } else if (random.nextFloat() < 0.3f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
-                return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+                return new Pair<>(HONEY_CRYSTAL, true);
             } else {
-                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
             }
         }
 
         //center
         else if (block == Blocks.BLACK_TERRACOTTA) {
             if (random.nextFloat() < 0.07f) {
-                return new Pair<>(Blocks.COBWEB.getDefaultState(), new Boolean(true));
+                return new Pair<>(Blocks.COBWEB.getDefaultState(), true);
             } else if (random.nextFloat() < 0.4f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
-                return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+                return new Pair<>(HONEY_CRYSTAL, true);
             } else {
-                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
             }
         }
 
@@ -364,7 +332,7 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
         //////////////////////////////////////////////
         //Misc/air
 
-        return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+        return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
     }
 
 }

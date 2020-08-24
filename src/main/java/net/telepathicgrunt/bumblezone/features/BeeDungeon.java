@@ -7,7 +7,6 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructureManager;
 import net.minecraft.structure.StructurePlacementData;
@@ -17,12 +16,11 @@ import net.minecraft.util.Clearable;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.BitSetVoxelSet;
 import net.minecraft.util.shape.VoxelSet;
 import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.gen.StructureAccessor;
+import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
@@ -45,9 +43,9 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
     }
 
     @Override
-    public boolean generate(ServerWorldAccess world, StructureAccessor accessor, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
+    public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
         //affect rarity
-        if (random.nextInt(Bumblezone.BZ_CONFIG.beeDungeonRarity) != 0) return false;
+        if (random.nextInt(Bumblezone.BZ_CONFIG.BZDungeonsConfig.beeDungeonRarity) != 0) return false;
 
         BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position).move(-3, -2, -3);
         //Bumblezone.LOGGER.log(Level.INFO, "Bee Dungeon at X: "+position.getX() +", "+position.getY()+", "+position.getZ());
@@ -57,13 +55,13 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
 
     protected boolean generateShell(ServerWorldAccess world, BlockPos.Mutable blockpos$Mutable){
 
-        StructureManager structureManager = ((ServerWorld) world.getWorld()).getStructureManager();
+        StructureManager structureManager = world.toServerWorld().getStructureManager();
         Structure structure = structureManager.getStructureOrBlank(new Identifier(Bumblezone.MODID + ":bee_dungeon/shell"));
         if (structure == null) {
             Bumblezone.LOGGER.warn("bee_dungeon/shell NTB does not exist!");
             return false;
         }
-        StructurePlacementData placementsettings = (new StructurePlacementData()).setMirror(BlockMirror.NONE).setRotation(BlockRotation.NONE).setIgnoreEntities(false).setChunkPosition((ChunkPos) null);
+        StructurePlacementData placementsettings = (new StructurePlacementData()).setMirror(BlockMirror.NONE).setRotation(BlockRotation.NONE).setIgnoreEntities(false).setChunkPosition(null);
         addBlocksToWorld(structure, world, blockpos$Mutable, placementsettings, 2);
 
 
@@ -79,25 +77,22 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
     /**
      * Adds blocks and entities from this structure to the given world.
      */
-    @SuppressWarnings("deprecation")
-    public boolean addBlocksToWorld(Structure structure, ServerWorldAccess world, BlockPos pos, StructurePlacementData placementIn, int flags) {
+    public void addBlocksToWorld(Structure structure, ServerWorldAccess world, BlockPos pos, StructurePlacementData placementIn, int flags) {
         StructureAccessorInvoker structureAccessor = ((StructureAccessorInvoker) structure);
-        if (structureAccessor.getBlocks().isEmpty()) {
-            return false;
-        } else {
+        if (!structureAccessor.getBlocks().isEmpty()) {
             List<Structure.StructureBlockInfo> list = placementIn.getRandomBlockInfos(structureAccessor.getBlocks(), pos).getAll();
             if ((!list.isEmpty() || !placementIn.shouldIgnoreEntities() && !structureAccessor.getEntities().isEmpty()) && structureAccessor.getSize().getX() >= 1 && structureAccessor.getSize().getY() >= 1 && structureAccessor.getSize().getZ() >= 1) {
                 BlockBox mutableboundingbox = placementIn.getBoundingBox();
                 List<BlockPos> list1 = Lists.newArrayListWithCapacity(placementIn.shouldPlaceFluids() ? list.size() : 0);
                 List<Pair<BlockPos, CompoundTag>> list2 = Lists.newArrayListWithCapacity(list.size());
-                int i = Integer.MAX_VALUE;
-                int j = Integer.MAX_VALUE;
-                int k = Integer.MAX_VALUE;
+                int x = Integer.MAX_VALUE;
+                int y = Integer.MAX_VALUE;
+                int z = Integer.MAX_VALUE;
                 int l = Integer.MIN_VALUE;
                 int i1 = Integer.MIN_VALUE;
                 int j1 = Integer.MIN_VALUE;
 
-                for (Structure.StructureBlockInfo template$blockinfo : structure.process(world, pos, pos, placementIn, list)) {
+                for (Structure.StructureBlockInfo template$blockinfo : Structure.process(world, pos, pos, placementIn, list)) {
                     BlockPos blockpos = template$blockinfo.pos;
                     if (mutableboundingbox == null || mutableboundingbox.contains(blockpos)) {
                         FluidState ifluidstate = placementIn.shouldPlaceFluids() ? world.getFluidState(blockpos) : null;
@@ -113,9 +108,9 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
                         blockstate = pair.getFirst();
 
                         if ((pair.getSecond() || world.getBlockState(blockpos).isOpaque()) && world.setBlockState(blockpos, blockstate, flags)) {
-                            i = Math.min(i, blockpos.getX());
-                            j = Math.min(j, blockpos.getY());
-                            k = Math.min(k, blockpos.getZ());
+                            x = Math.min(x, blockpos.getX());
+                            y = Math.min(y, blockpos.getY());
+                            z = Math.min(z, blockpos.getZ());
                             l = Math.max(l, blockpos.getX());
                             i1 = Math.max(i1, blockpos.getY());
                             j1 = Math.max(j1, blockpos.getZ());
@@ -175,40 +170,14 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
                     }
                 }
 
-                if (i <= l) {
+                if (x <= l) {
                     if (!placementIn.shouldUpdateNeighbors()) {
-                        VoxelSet voxelshapepart = new BitSetVoxelSet(l - i + 1, i1 - j + 1, j1 - k + 1);
-                        int l1 = i;
-                        int i2 = j;
-                        int j2 = k;
+                        VoxelSet voxelshapepart = new BitSetVoxelSet(l - x + 1, i1 - y + 1, j1 - z + 1);
 
-                        for (Pair<BlockPos, CompoundTag> pair1 : list2) {
-                            BlockPos blockpos5 = pair1.getFirst();
-                            voxelshapepart.set(blockpos5.getX() - l1, blockpos5.getY() - i2, blockpos5.getZ() - j2, true, true);
-                        }
-
-                        Structure.updateCorner(world, flags, voxelshapepart, l1, i2, j2);
+                        setVoxelShapeParts(world, flags, list2, x, y, z, voxelshapepart);
                     }
 
-                    for (Pair<BlockPos, CompoundTag> pair : list2) {
-                        BlockPos blockpos4 = pair.getFirst();
-                        if (!placementIn.shouldUpdateNeighbors()) {
-                            BlockState blockstate1 = world.getBlockState(blockpos4);
-                            BlockState blockstate3 = Block.postProcessState(blockstate1, world, blockpos4);
-                            if (blockstate1 != blockstate3) {
-                                world.setBlockState(blockpos4, blockstate3, flags & -2 | 16);
-                            }
-
-                            world.updateNeighbors(blockpos4, blockstate3.getBlock());
-                        }
-
-                        if (pair.getSecond() != null) {
-                            BlockEntity blockentity2 = world.getBlockEntity(blockpos4);
-                            if (blockentity2 != null) {
-                                blockentity2.markDirty();
-                            }
-                        }
-                    }
+                    placeBlocks(world, placementIn, flags, list2);
                 }
 
 
@@ -222,11 +191,39 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
                             placementIn.method_27265());
                 }
 
-                return true;
-            } else {
-                return false;
             }
         }
+    }
+
+    protected static void placeBlocks(ServerWorldAccess world, StructurePlacementData placementIn, int flags, List<Pair<BlockPos, CompoundTag>> list2) {
+        for (Pair<BlockPos, CompoundTag> pair : list2) {
+            BlockPos blockpos4 = pair.getFirst();
+            if (!placementIn.shouldUpdateNeighbors()) {
+                BlockState blockstate1 = world.getBlockState(blockpos4);
+                BlockState blockstate3 = Block.postProcessState(blockstate1, world, blockpos4);
+                if (blockstate1 != blockstate3) {
+                    world.setBlockState(blockpos4, blockstate3, flags & -2 | 16);
+                }
+
+                world.updateNeighbors(blockpos4, blockstate3.getBlock());
+            }
+
+            if (pair.getSecond() != null) {
+                BlockEntity blockentity2 = world.getBlockEntity(blockpos4);
+                if (blockentity2 != null) {
+                    blockentity2.markDirty();
+                }
+            }
+        }
+    }
+
+    protected static void setVoxelShapeParts(ServerWorldAccess world, int flags, List<Pair<BlockPos, CompoundTag>> list2, int x, int y, int z, VoxelSet voxelshapepart) {
+        for (Pair<BlockPos, CompoundTag> pair1 : list2) {
+            BlockPos blockpos5 = pair1.getFirst();
+            voxelshapepart.set(blockpos5.getX() - x, blockpos5.getY() - y, blockpos5.getZ() - z, true, true);
+        }
+
+        Structure.updateCorner(world, flags, voxelshapepart, x, y, z);
     }
 
 
@@ -243,9 +240,9 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
         if (block == Blocks.RED_TERRACOTTA || block == Blocks.PURPLE_TERRACOTTA) {
 
             if (random.nextFloat() < 0.4f) {
-                return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), new Boolean(false));
+                return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), false);
             } else {
-                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), new Boolean(false));
+                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), false);
             }
         }
 
@@ -253,13 +250,13 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
         else if (block == Blocks.ORANGE_TERRACOTTA) {
             if (random.nextFloat() < 0.6f) {
                 return new Pair<>(BzBlocks.HONEYCOMB_BROOD.getDefaultState()
-                        .with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3)))
+                        .with(HoneycombBrood.STAGE, random.nextInt(3))
                         .with(HoneycombBrood.FACING, Direction.SOUTH),
-                        new Boolean(false));
+                        false);
             } else if (random.nextFloat() < 0.2f) {
-                return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
+                return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), false);
             } else {
-                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), new Boolean(false));
+                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), false);
             }
         }
 
@@ -267,13 +264,13 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
         else if (block == Blocks.YELLOW_TERRACOTTA) {
             if (random.nextFloat() < 0.6f) {
                 return new Pair<>(BzBlocks.HONEYCOMB_BROOD.getDefaultState()
-                        .with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3)))
+                        .with(HoneycombBrood.STAGE, random.nextInt(3))
                         .with(HoneycombBrood.FACING, Direction.WEST),
-                        new Boolean(false));
+                        false);
             } else if (random.nextFloat() < 0.2f) {
-                return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
+                return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), false);
             } else {
-                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), new Boolean(false));
+                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), false);
             }
         }
 
@@ -281,13 +278,13 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
         else if (block == Blocks.LIME_TERRACOTTA) {
             if (random.nextFloat() < 0.6f) {
                 return new Pair<>(BzBlocks.HONEYCOMB_BROOD.getDefaultState()
-                        .with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3)))
+                        .with(HoneycombBrood.STAGE, random.nextInt(3))
                         .with(HoneycombBrood.FACING, Direction.NORTH),
-                        new Boolean(false));
+                        false);
             } else if (random.nextFloat() < 0.2f) {
-                return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
+                return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), false);
             } else {
-                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), new Boolean(false));
+                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), false);
             }
         }
 
@@ -295,22 +292,22 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
         else if (block == Blocks.BLUE_TERRACOTTA) {
             if (random.nextFloat() < 0.6f) {
                 return new Pair<>(BzBlocks.HONEYCOMB_BROOD.getDefaultState()
-                        .with(HoneycombBrood.STAGE, Integer.valueOf(random.nextInt(3)))
+                        .with(HoneycombBrood.STAGE, random.nextInt(3))
                         .with(HoneycombBrood.FACING, Direction.EAST),
-                        new Boolean(false));
+                        false);
             } else if (random.nextFloat() < 0.2f) {
-                return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), new Boolean(false));
+                return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), false);
             } else {
-                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), new Boolean(false));
+                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), false);
             }
         }
 
         //sugar water stream
         else if (block == BzBlocks.SUGAR_WATER_BLOCK) {
             if (random.nextFloat() < 0.1f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
-                return new Pair<>(HONEY_CRYSTAL.with(HoneyCrystal.WATERLOGGED, true), new Boolean(false));
+                return new Pair<>(HONEY_CRYSTAL.with(HoneyCrystal.WATERLOGGED, true), false);
             } else {
-                return new Pair<>(block.getDefaultState(), new Boolean(false));
+                return new Pair<>(block.getDefaultState(), false);
             }
         }
 
@@ -326,21 +323,21 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
                 replaceAir = true;
 
             if (random.nextFloat() < 0.4f) {
-                return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), new Boolean(replaceAir));
+                return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), replaceAir);
             } else {
-                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), new Boolean(replaceAir));
+                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), replaceAir);
             }
         }
 
         //outer ring
         else if (block == Blocks.GRAY_TERRACOTTA) {
             if (random.nextFloat() < 0.4f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
-                return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+                return new Pair<>(HONEY_CRYSTAL, true);
             } else {
                 if (random.nextFloat() < 0.2f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
-                    return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+                    return new Pair<>(HONEY_CRYSTAL, true);
                 } else {
-                    return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+                    return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
                 }
             }
         }
@@ -348,18 +345,18 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
         //inner ring
         else if (block == Blocks.CYAN_TERRACOTTA) {
             if (random.nextFloat() < 0.35f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
-                return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+                return new Pair<>(HONEY_CRYSTAL, true);
             } else {
-                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
             }
         }
 
         //center
         else if (block == Blocks.BLACK_TERRACOTTA) {
             if (random.nextFloat() < 0.6f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
-                return new Pair<>(HONEY_CRYSTAL, new Boolean(true));
+                return new Pair<>(HONEY_CRYSTAL, true);
             } else {
-                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new Boolean(false));
+                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
             }
         }
 
@@ -367,9 +364,7 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
         //////////////////////////////////////////////
         //Misc/air
 
-        return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), new
-
-                Boolean(false));
+        return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
     }
 
 }
