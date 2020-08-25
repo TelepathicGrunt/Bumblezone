@@ -77,9 +77,19 @@ public class FilledPorousHoneycomb extends Block {
                 }
             }
 
-            if ((playerEntity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_DIMENSION_ID || Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) && !playerEntity.isCreative() && !playerEntity.isSpectator() && Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees) {
-                //Now all bees nearby in Bumblezone will get VERY angry!!!
-                playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
+            if ((playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+                    !playerEntity.isCreative() &&
+                    !playerEntity.isSpectator() &&
+                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
+            {
+                if(playerEntity.hasStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
+                    playerEntity.removeStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                }
+                else{
+                    //Now all bees nearby in Bumblezone will get VERY angry!!!
+                    playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
+                }
             }
 
             return ActionResult.SUCCESS;

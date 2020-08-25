@@ -80,7 +80,9 @@ public class BeeInteractivity {
                                 world.getRandom().nextFloat() * 0.5 - 1f,
                                 world.getRandom().nextFloat() * 0.4 + 0.2f);
 
-                } else {
+                }
+                // Sugar water bottle
+                else {
                     // Heal bee slightly but they remain angry
                     beeEntity.addStatusEffect(new StatusEffectInstance(
                             StatusEffects.INSTANT_HEALTH,
@@ -136,6 +138,8 @@ public class BeeInteractivity {
                         playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false);
                     }
                 }
+
+                playerEntity.swingHand(hand, true);
             }
         }
     }

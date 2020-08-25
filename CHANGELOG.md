@@ -14,9 +14,14 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 • Replaced Cotton Config with Autoconfigu + Cloth.
 
+• Attempted to improve performance by removing a few mixins into tick methods.
+
     Blocks:
 • Added Beeswax Planks which can be used to craft Bee Nests blocks by
   crafting with 8 Hive Planks with a Honeycomb in the center.
+  
+• Honeycomb Blocks will not spawn a new bee when left alone
+  and there is 3 or more bees within 50 blocks of it
   
 	Dimension:
 • Can now sleep in the dimension with a bed. No more exploding beds.
@@ -25,11 +30,21 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 • Beeswax Planks will be placed to mark the boundaries of the dimension's ceiling and floor.
 
+	Biomes:
+• Reduced spawnrate a bit to lower bee density.
+
+• Attempted experimental spawn_cost mechanic to make hostile mobs be less dense in the biomes.
+
+	Mobs:
+• Feeding bees Honey Bottle or Sugar Water Bottle will cause 
+  player to swing their hand alongside drinking animation.
+
 	Features:
 • Adjusted spawnrates and heights of Sugar Waterfalls.
 
-
-  
+    Status Effects;
+• Protection of the Hive now will be consumed if the player does anything that would 
+  have trigger Wrath of the Hive. It acts like a second chance now to prevent angry bees.
 
    (V.2.1.2 Changes) (1.16.1 Snapshot Minecraft)
 

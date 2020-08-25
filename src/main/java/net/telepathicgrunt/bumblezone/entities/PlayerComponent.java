@@ -40,7 +40,7 @@ public class PlayerComponent implements IPlayerComponent {
     }
     @Override
     public void setNonBZDimension(Identifier nonBZDimension) {
-        if (nonBZDimension == Bumblezone.MOD_DIMENSION_ID) {
+        if (nonBZDimension.equals(Bumblezone.MOD_DIMENSION_ID)) {
             this.nonBZDimensionType = World.OVERWORLD.getValue();
             Bumblezone.LOGGER.log(Level.ERROR, "Error: The non-bz dimension passed in to be stored was bz dimension. Please contact mod creator to let them know of this issue.");
         } else {

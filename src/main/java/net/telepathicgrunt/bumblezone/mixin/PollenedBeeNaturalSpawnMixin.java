@@ -20,7 +20,7 @@ public class PollenedBeeNaturalSpawnMixin {
     private static Entity spawnEntitiesInChunk(Entity entity) {
         ServerWorld serverWorld = (ServerWorld) entity.world;
 
-        if (serverWorld.getRegistryKey().getValue() == Bumblezone.MOD_DIMENSION_ID) {
+        if (serverWorld.getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (entity.getType() == EntityType.BEE) {
                 //20% chance of being full of pollen
                 if (serverWorld.random.nextFloat() < 0.2f) {

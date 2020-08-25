@@ -9,13 +9,17 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
-public class PlayerTeleportationTickMixin {
-    // Handles player teleportation out of Bumblezone dimension
+public class PlayerTickMixin {
+    // Handles where wrath of the hive can be on,
+    // change player fog color when effect is active
     @Inject(method = "tick",
             at = @At(value = "TAIL"))
     private void onEntityTick(CallbackInfo ci) {
-        PlayerTeleportation.playerTick(((PlayerEntity) (Object) this));
-        BeeAggression.playerTick(((PlayerEntity) (Object) this));
-    }
+        PlayerEntity playerEntity = ((PlayerEntity) (Object) this);
 
+        BeeAggression.playerTick(playerEntity);
+
+        if(!playerEntity.world.isClient)
+            PlayerTeleportation.playerTick(playerEntity);
+    }
 }

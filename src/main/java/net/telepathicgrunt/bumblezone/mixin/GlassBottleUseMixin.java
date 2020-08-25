@@ -20,7 +20,7 @@ import java.util.List;
 
 @Mixin(GlassBottleItem.class)
 public class GlassBottleUseMixin {
-    //bees attacks bear mobs that is in the dimension
+    //using glass bottle to get honey could anger bees
     @Inject(method = "use(Lnet/minecraft/world/World;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/TypedActionResult;",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;playSound(Lnet/minecraft/entity/player/PlayerEntity;DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FF)V", ordinal = 1),
             locals = LocalCapture.CAPTURE_FAILSOFT,

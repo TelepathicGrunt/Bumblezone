@@ -23,19 +23,19 @@
     "HoneyShieldPreferredSlotMixin",
     "MobHitMixin",
     "MobSpawnLocationMixin",
-    "MobTickMixin",
     "PlayerDamagedMixin",
     "PlayerDamageShieldInvoker",
     "PlayerDimensionChangeMixin",
-    "PlayerHiveWrathTickMixin",
+    "PlayerTickMixin",
     "PlayerInteractsEntityMixin",
-    "PlayerTeleportationTickMixin",
     "PollenedBeeNaturalSpawnMixin",
+    "ProtoChunkAddEntityMixin",
     "RedstoneDustCanConnectMixin",
     "SpawnRestrictionAccessor",
     "StructureAccessorInvoker",
     "VineBlockAccessor",
-    "WaterEquivalenceMixin"
+    "WaterEquivalenceMixin",
+    "WorldChunkAddEntityMixin"
   ],
   "client": [
     "BlockOverlayRendererMixin",

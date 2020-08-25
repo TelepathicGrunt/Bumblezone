@@ -68,21 +68,26 @@ public class BeeAggression {
 
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
-        if ((player.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_DIMENSION_ID ||
+        if ((player.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
                 Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
                 !player.isCreative() &&
                 !player.isSpectator()) {
 
             //if player picks up a honey block, bees gets very mad...
             if (item == Items.HONEY_BLOCK && Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees) {
-                //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
-                player.addStatusEffect(new StatusEffectInstance(
-                        BzEffects.WRATH_OF_THE_HIVE,
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
-                        2,
-                        false,
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles,
-                        true));
+                if(player.hasStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
+                    player.removeStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                }
+                else {
+                    //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
+                    player.addStatusEffect(new StatusEffectInstance(
+                            BzEffects.WRATH_OF_THE_HIVE,
+                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                            2,
+                            false,
+                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles,
+                            true));
+                }
             }
         }
     }
@@ -98,20 +103,27 @@ public class BeeAggression {
             //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
             //Also checks to make sure we are in dimension and that player isn't in creative or spectator
             if (!world.isClient &&
-                    (playerEntity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_DIMENSION_ID ||
+                    (playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
                             Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
                     !playerEntity.isCreative() &&
-                    !playerEntity.isSpectator()) {
+                    !playerEntity.isSpectator() &&
+                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
+            {
 
                 //if player drinks honey, bees gets very mad...
-                if (stack.getItem() == Items.HONEY_BOTTLE && Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees) {
-                    playerEntity.addStatusEffect(new StatusEffectInstance(
-                            BzEffects.WRATH_OF_THE_HIVE,
-                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
-                            2,
-                            false,
-                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles,
-                            true));
+                if (stack.getItem() == Items.HONEY_BOTTLE) {
+                    if(playerEntity.hasStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
+                        playerEntity.removeStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                    }
+                    else{
+                        playerEntity.addStatusEffect(new StatusEffectInstance(
+                                BzEffects.WRATH_OF_THE_HIVE,
+                                Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                                2,
+                                false,
+                                Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles,
+                                true));
+                    }
                 }
             }
         }
@@ -124,7 +136,7 @@ public class BeeAggression {
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that if it is a player, that they aren't in creative or spectator
         if (!entity.world.isClient &&
-                (entity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_DIMENSION_ID ||
+                (entity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
                         Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
                 Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees &&
                 entity instanceof BeeEntity &&
@@ -134,22 +146,36 @@ public class BeeAggression {
                     !((PlayerEntity)attackerEntity).isCreative() &&
                     !attackerEntity.isSpectator())
             {
-                ((PlayerEntity)attackerEntity).addStatusEffect(new StatusEffectInstance(
-                        BzEffects.WRATH_OF_THE_HIVE,
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
-                        2,
-                        false,
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles,
-                        true));
+                PlayerEntity player = ((PlayerEntity) attackerEntity);
+                if(player.hasStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
+                    player.removeStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                    WrathOfTheHiveEffect.calmTheBees(player.world, player); // prevent bees from be naturally angry
+                }
+                else {
+                    player.addStatusEffect(new StatusEffectInstance(
+                            BzEffects.WRATH_OF_THE_HIVE,
+                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                            2,
+                            false,
+                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles,
+                            true));
+                }
             }
             else if(attackerEntity instanceof MobEntity)
             {
-                ((MobEntity)attackerEntity).addStatusEffect(new StatusEffectInstance(
-                        BzEffects.WRATH_OF_THE_HIVE,
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
-                        2,
-                        false,
-                        true));
+                MobEntity mob = ((MobEntity) attackerEntity);
+                if(mob.hasStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
+                    mob.removeStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                    WrathOfTheHiveEffect.calmTheBees(mob.world, mob); // prevent bees from be naturally angry
+                }
+                else {
+                    mob.addStatusEffect(new StatusEffectInstance(
+                            BzEffects.WRATH_OF_THE_HIVE,
+                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                            2,
+                            false,
+                            true));
+                }
             }
         }
     }
@@ -158,27 +184,33 @@ public class BeeAggression {
     //bees attacks bear and insect mobs that are in the dimension
     public static void entityTypeBeeAnger(Entity entity)
     {
+        if(doesBeesHateEntity(entity)) {
+            ((MobEntity) entity).addStatusEffect(new StatusEffectInstance(
+                    BzEffects.WRATH_OF_THE_HIVE,
+                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                    1,
+                    false,
+                    true));
+        }
+    }
+
+    //Returns true if bees hate the entity type. (bears, non-bee insects)
+    public static boolean doesBeesHateEntity(Entity entity){
+
         //Also checks to make sure we are in the dimension.
         if (!entity.world.isClient &&
-                entity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_DIMENSION_ID &&
+                entity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) &&
                 Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees &&
                 entity instanceof MobEntity)
         {
             MobEntity mobEntity = (MobEntity)entity;
 
             //must be a bear or insect animal with no wrath of the hive effect on
-            if(SET_OF_BEE_HATED_ENTITIES.contains(entity.getType()) && !mobEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE))
-            {
-                ((MobEntity)entity).addStatusEffect(new StatusEffectInstance(
-                        BzEffects.WRATH_OF_THE_HIVE,
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
-                        1,
-                        false,
-                        true));
-            }
+            return SET_OF_BEE_HATED_ENTITIES.contains(entity.getType()) && !mobEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
         }
-    }
 
+        return false;
+    }
 
     public static void playerTick(PlayerEntity playerEntity)
     {
@@ -186,7 +218,7 @@ public class BeeAggression {
         if(!playerEntity.world.isClient &&
                 playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE) &&
                 !(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone ||
-                        playerEntity.getEntityWorld().getRegistryKey().getValue() == Bumblezone.MOD_DIMENSION_ID))
+                        playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)))
         {
             playerEntity.removeStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
             WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);

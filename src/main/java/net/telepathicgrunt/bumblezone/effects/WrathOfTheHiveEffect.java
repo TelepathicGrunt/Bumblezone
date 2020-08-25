@@ -1,14 +1,18 @@
 package net.telepathicgrunt.bumblezone.effects;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
+import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.entities.BeeAggression;
 
 import java.util.List;
 
@@ -100,6 +104,23 @@ public class WrathOfTheHiveEffect extends StatusEffect {
                 bee.removeStatusEffect(StatusEffects.SPEED);
                 bee.removeStatusEffect(StatusEffects.ABSORPTION);
             }
+        }
+    }
+
+    // Don't remove wrath effect from mobs that bees are to always be angry at (bears, non-bee insects)
+    public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+        if(BeeAggression.doesBeesHateEntity(entity)){
+            //refresh the bee anger timer
+            entity.addStatusEffect(new StatusEffectInstance(
+                    BzEffects.WRATH_OF_THE_HIVE,
+                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                    1,
+                    false,
+                    true));
+        }
+        else{
+            // remove the effect like normal
+            super.onRemoved(entity, attributes, amplifier);
         }
     }
 }

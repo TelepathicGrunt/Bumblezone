@@ -9,6 +9,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.FluidTags;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
@@ -18,6 +20,7 @@ import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.utils.BzPlacingUtils;
+import org.apache.logging.log4j.Level;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,17 +29,26 @@ public class BzPlayerPlacement {
     //use this to teleport to any dimension
     //FabricDimensions.teleport(playerEntity, <destination dimension type>, <placement>);
 
-    public static void enteringBumblezone(Entity entity, ServerWorld destination){
+    public static void enteringBumblezone(Entity entity){
         //Note, the player does not hold the previous dimension oddly enough.
         Vec3d destinationPosition;
 
         if (entity instanceof ServerPlayerEntity) {
             MinecraftServer minecraftServer = entity.getServer(); // the server itself
+            ServerWorld bumblezoneWorld = minecraftServer.getWorld(BzDimension.BZ_WORLD_KEY);
             RegistryKey<World> world_key = RegistryKey.of(Registry.DIMENSION, Bumblezone.PLAYER_COMPONENT.get(entity).getNonBZDimension());
-            destinationPosition = teleportByPearl((PlayerEntity) entity, minecraftServer.getWorld(world_key), destination);
 
+            // Prevent crash due to mojang bug that makes mod's json dimensions not exist upload first creation of world on server. A restart fixes this.
+            if(bumblezoneWorld == null){
+                Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: https://bugs.mojang.com/browse/MC-195468. A restart will fix this.");
+                Text message = new LiteralText("Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: §6https://bugs.mojang.com/browse/MC-195468§f. A restart will fix this.");
+                ((ServerPlayerEntity)entity).sendMessage(message, true);
+                return;
+            }
+
+            destinationPosition = teleportByPearl((PlayerEntity) entity, minecraftServer.getWorld(world_key), bumblezoneWorld);
             ((ServerPlayerEntity)entity).teleport(
-                    destination,
+                    bumblezoneWorld,
                     destinationPosition.x,
                     destinationPosition.y,
                     destinationPosition.z,
@@ -69,7 +81,7 @@ public class BzPlayerPlacement {
 
     private static Vec3d teleportByOutOfBounds(PlayerEntity playerEntity, ServerWorld destination, boolean checkingUpward) {
         //converts the position to get the corresponding position in non-bumblezone dimension
-        double coordinateScale =destination.getDimension().getCoordinateScale();
+        double coordinateScale = destination.getDimension().getCoordinateScale();
         BlockPos blockpos;
         BlockPos validBlockPos = null;
         Map<Integer, Integer> map = new HashMap<>();
