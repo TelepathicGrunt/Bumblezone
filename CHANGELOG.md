@@ -30,6 +30,11 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 • Beeswax Planks will be placed to mark the boundaries of the dimension's ceiling and floor.
 
+• Teleporting into The Bumblezone will place Honeycomb Block at player's feet if there's air
+  at the player's destination spot all the way down into the void. This will prevent players 
+  from teleporting into The Bumblezone and immediately fall out of the dimension due to the 
+  area being heavily mined before.
+
 	Biomes:
 • Reduced spawnrate a bit to lower bee density.
 

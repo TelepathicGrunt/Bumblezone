@@ -200,13 +200,22 @@ public class BzPlayerPlacement {
 
         }
 
-        //if player throws pearl at hive and then goes to sleep, they wake up
+        // if player throws pearl at hive and then goes to sleep, they wake up
         if (playerEntity.isSleeping()) {
             playerEntity.wakeUp();
         }
 
+        // place hive block below player if they would've fallen out of dimension
+        // because there's air all the way down to y = 0 below player
+        int heightCheck = 0;
+        while(heightCheck <= validBlockPos.getY() && bumblezoneWorld.getBlockState(validBlockPos.down(heightCheck)).isAir()){
+            heightCheck++;
+        }
+        if(heightCheck >= validBlockPos.getY()){
+            bumblezoneWorld.setBlockState(validBlockPos.getY() == 0 ? validBlockPos : validBlockPos.down(), Blocks.HONEYCOMB_BLOCK.getDefaultState());
+        }
 
-        //teleportation spot finding complete. return spot
+        // teleportation spot finding complete. return spot
         return new Vec3d(
                 validBlockPos.getX() + 0.5D,
                 validBlockPos.getY(),
