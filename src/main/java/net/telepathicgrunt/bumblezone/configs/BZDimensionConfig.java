@@ -58,7 +58,8 @@ public class BZDimensionConfig implements ConfigData {
             +"ONLY FOR TELEPORTATION MODE 1.")
     public boolean generateBeenest = true;
 
-    @ConfigEntry.Gui.Tooltip(count = 15)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nWhich mode of teleportation should be used when\n"
             +"leaving The Bumblezone dimension.\n"
             +"\n"
