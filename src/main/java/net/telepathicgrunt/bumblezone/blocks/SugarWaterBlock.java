@@ -6,7 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.block.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.EffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.fluid.FlowableFluid;
@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public class SugarWaterBlock extends FluidBlock {
 
     public SugarWaterBlock(FlowableFluid baseFluid) {
-        super(baseFluid, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F, 100.0F).dropsNothing().build().velocityMultiplier(0.95F));
+        super(baseFluid, Block.Properties.create(Material.WATER).noCollision().hardnessAndResistance(100.0F, 100.0F).dropsNothing()).velocityMultiplier(0.95F));
     }
 
     @Override
@@ -68,7 +68,7 @@ public class SugarWaterBlock extends FluidBlock {
         if (entity instanceof BeeEntity) {
             BeeEntity beeEntity = ((BeeEntity) entity);
             if (beeEntity.hurtTime == 0)
-                beeEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 4, 0, false, false));
+                beeEntity.addPotionEffect(new EffectInstance(StatusEffects.REGENERATION, 4, 0, false, false));
         }
 
         super.onEntityCollision(state, world, position, entity);

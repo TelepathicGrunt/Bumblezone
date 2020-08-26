@@ -2,32 +2,34 @@ package net.telepathicgrunt.bumblezone.blocks;
 
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.TargetPredicate;
-import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.ai.EntityPredicate;
+import net.minecraft.entity.effect.EffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundType;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
+import net.minecraft.state.StateContainer;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.tag.BlockTags;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.BlockRayTraceResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
@@ -44,38 +46,38 @@ import java.util.List;
 import java.util.Random;
 
 
-public class HoneycombBrood extends FacingBlock {
+public class HoneycombBrood extends DirectionalBlock {
     public static final IntProperty STAGE = Properties.AGE_3;
-    private static final TargetPredicate FIXED_DISTANCE = (new TargetPredicate()).setBaseMaxDistance(50);
-    private static final TargetPredicate PLAYER_DISTANCE = (new TargetPredicate());
+    private static final EntityPredicate FIXED_DISTANCE = (new EntityPredicate()).setDistance(50);
+    private static final EntityPredicate PLAYER_DISTANCE = (new EntityPredicate());
 
     public HoneycombBrood() {
-        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MaterialColor.ORANGE).ticksRandomly().strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.9F));
-        this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.SOUTH).with(STAGE, 0));
+        super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).ticksRandomly().hardnessAndResistance(0.5F, 0.5F).sound(SoundType.CORAL)).velocityMultiplier(0.9F);
+        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.SOUTH).with(STAGE, 0));
     }
 
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(FACING, STAGE);
     }
 
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext context) {
-        return this.getDefaultState().with(FACING, context.getSide().getOpposite());
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+        return this.getDefaultState().with(FACING, context.getFace().getOpposite());
     }
 
 
     @Override
-    public BlockState rotate(BlockState state, BlockRotation rot) {
+    public BlockState rotate(BlockState state, Rotation rot) {
         return state.with(FACING, rot.rotate(state.get(FACING)));
     }
 
 
     @Override
-    public BlockState mirror(BlockState state, BlockMirror mirrorIn) {
-        return state.rotate(mirrorIn.getRotation(state.get(FACING)));
+    public BlockState mirror(BlockState state, Mirror mirrorIn) {
+        return state.rotate(mirrorIn.toRotation(state.get(FACING)));
     }
 
 
@@ -83,14 +85,14 @@ public class HoneycombBrood extends FacingBlock {
      * Called when the given entity walks on this Block
      */
     @Override
-    public void onSteppedOn(World worldIn, BlockPos pos, Entity entityIn) {
-        double yMagnitude = Math.abs(entityIn.getVelocity().y);
+    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
+        double yMagnitude = Math.abs(entityIn.getMotion().y);
         if (yMagnitude < 0.1D) {
             double slowFactor = 0.85D;
-            entityIn.setVelocity(entityIn.getVelocity().multiply(slowFactor, 1.0D, slowFactor));
+            entityIn.setMotion(entityIn.getMotion().mul(slowFactor, 1.0D, slowFactor));
         }
 
-        super.onSteppedOn(worldIn, pos, entityIn);
+        super.onEntityWalk(worldIn, pos, entityIn);
     }
 
 
@@ -99,8 +101,8 @@ public class HoneycombBrood extends FacingBlock {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResult onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockHitResult raytraceResult) {
-        ItemStack itemstack = playerEntity.getStackInHand(playerHand);
+    public ActionResultType onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
+        ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
         //VANILLA COMPAT
         /*
@@ -115,11 +117,11 @@ public class HoneycombBrood extends FacingBlock {
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
             if (!playerEntity.isCreative()) {
-                itemstack.decrement(1); // remove current empty bottle
+                itemstack.shrink(1); // remove current empty bottle
 
                 if (itemstack.isEmpty()) {
-                    playerEntity.setStackInHand(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
-                } else if (!playerEntity.inventory.insertStack(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
+                    playerEntity.setHeldItem(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
+                } else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
                 {
                     playerEntity.dropItem(new ItemStack(Items.HONEY_BOTTLE), false); // drops honey bottle if inventory is full
                 }
@@ -131,16 +133,16 @@ public class HoneycombBrood extends FacingBlock {
                     !playerEntity.isSpectator() &&
                     Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
             {
-                if(playerEntity.hasStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
-                    playerEntity.removeStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                if(playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
+                    playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                 }
                 else {
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
-                    playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
+                    playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
                 }
             }
 
-            return ActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
         /*
          * Player is feeding larva
@@ -158,8 +160,8 @@ public class HoneycombBrood extends FacingBlock {
                 }
 
                 if (successfulGrowth && world.random.nextFloat() < 0.30F) {
-                    if(!playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE)){
-                        playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, (int) (Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts * 0.75f), 1, false, false,  true));
+                    if(!playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE)){
+                        playerEntity.addPotionEffect(new EffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, (int) (Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts * 0.75f), 1, false, false,  true));
                     }
                 }
 
@@ -180,17 +182,17 @@ public class HoneycombBrood extends FacingBlock {
 
             //removes used item
             if (!playerEntity.isCreative()) {
-                itemstack.decrement(1); // remove current honey bottle
+                itemstack.shrink(1); // remove current honey bottle
 
                 if (itemstack.isEmpty()) {
-                    playerEntity.setStackInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places empty bottle in hand
-                } else if (!playerEntity.inventory.insertStack(new ItemStack(Items.GLASS_BOTTLE))) // places empty bottle in inventory
+                    playerEntity.setHeldItem(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places empty bottle in hand
+                } else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE))) // places empty bottle in inventory
                 {
                     playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false); // drops empty bottle if inventory is full
                 }
             }
 
-            return ActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
 
         return super.onUse(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
@@ -210,11 +212,11 @@ public class HoneycombBrood extends FacingBlock {
                 world.setBlockState(position, state.with(STAGE, stage + 1), 2);
             }
         } else {
-            PLAYER_DISTANCE.setBaseMaxDistance(Math.max(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius * 0.5, 1));
+            PLAYER_DISTANCE.setDistance(Math.max(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius * 0.5, 1));
 
-            List<BeeEntity> beeList = world.getTargets(BeeEntity.class, FIXED_DISTANCE, null, new Box(position).expand(50));
-            List<PlayerEntity> playerList = world.getTargets(PlayerEntity.class, PLAYER_DISTANCE, null, new Box(position).expand(50));
-            if (beeList.size() < 3 || playerList.stream().anyMatch(player -> player.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE))) {
+            List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, FIXED_DISTANCE, null, new Box(position).grow(50));
+            List<PlayerEntity> playerList = world.getTargettableEntitiesWithinAABB(PlayerEntity.class, PLAYER_DISTANCE, null, new Box(position).grow(50));
+            if (beeList.size() < 3 || playerList.stream().anyMatch(player -> player.isPotionActive(BzEffects.WRATH_OF_THE_HIVE))) {
                 spawnBroodMob(world, state, position, stage);
             }
         }
@@ -230,7 +232,7 @@ public class HoneycombBrood extends FacingBlock {
 
         Hand hand = playerEntity.getActiveHand();
         if (hand != null) {
-            ListTag listOfEnchants = playerEntity.getStackInHand(hand).getEnchantments();
+            ListTag listOfEnchants = playerEntity.getHeldItem(hand).getEnchantments();
             if (listOfEnchants.stream().noneMatch(enchant -> enchant.asString().contains("minecraft:silk_touch"))) {
                 BlockState blockState = world.getBlockState(position);
                 int stage = blockState.get(STAGE);
@@ -244,12 +246,12 @@ public class HoneycombBrood extends FacingBlock {
                         !playerEntity.isSpectator() &&
                         Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
                 {
-                    if(playerEntity.hasStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
-                        playerEntity.removeStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                    if(playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
+                        playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                     }
                     else{
                         //Now all bees nearby in Bumblezone will get VERY angry!!!
-                        playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
+                        playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
                     }
                 }
             }

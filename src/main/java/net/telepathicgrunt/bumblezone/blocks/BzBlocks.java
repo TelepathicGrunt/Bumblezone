@@ -16,7 +16,7 @@ import net.telepathicgrunt.bumblezone.fluids.SugarWaterFluid;
 
 
 public class BzBlocks {
-    public static Material RESIDUE = new FabricMaterialBuilder(MaterialColor.ORANGE_TERRACOTTA)
+    public static Material RESIDUE = new FabricMaterialBuilder(MaterialColor.ADOBE_TERRACOTTA)
             .lightPassesThrough()
             .destroyedByPiston()
             .allowsMovement()

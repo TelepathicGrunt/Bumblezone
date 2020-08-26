@@ -4,7 +4,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.EffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -63,7 +63,7 @@ public class HoneyCrystalShieldBehavior {
                     && player.isBlocking()) {
 
                 // apply slowness to attacker
-                attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 80, 0, false, false, false));
+                attacker.addPotionEffect(new EffectInstance(StatusEffects.SLOWNESS, 80, 0, false, false, false));
             }
         }
     }

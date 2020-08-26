@@ -7,7 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BucketItem;
-import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
@@ -15,13 +15,13 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
+import net.minecraft.state.StateContainer;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.tag.FluidTags;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Util;
-import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.BlockRayTraceResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
@@ -46,8 +46,8 @@ public class StickyHoneyResidue extends VineBlock {
             ConnectingBlock.FACING_PROPERTIES.entrySet().stream().collect(Util.toMap());
 
     public StickyHoneyResidue() {
-        super(FabricBlockSettings.of(BzBlocks.RESIDUE, MaterialColor.ORANGE_TERRACOTTA).noCollision().strength(6.0f, 0.0f).nonOpaque().build());
-        this.setDefaultState(this.stateManager.getDefaultState()
+        super(Block.Properties.create(BzBlocks.RESIDUE, MaterialColor.ADOBE_TERRACOTTA).noCollision().hardnessAndResistance(6.0f, 0.0f).nonOpaque()));
+        this.setDefaultState(this.stateContainer.getBaseState()
                 .with(UP, false)
                 .with(NORTH, false)
                 .with(EAST, false)
@@ -60,7 +60,7 @@ public class StickyHoneyResidue extends VineBlock {
      * Set up properties.
      */
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(UP, NORTH, EAST, SOUTH, WEST, DOWN);
     }
 
@@ -163,7 +163,7 @@ public class StickyHoneyResidue extends VineBlock {
      * allows player to add more faces to this block based on player's direction.
      */
     @Override
-    public BlockState getPlacementState(ItemPlacementContext context) {
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
         BlockState currentBlockstate = context.getWorld().getBlockState(context.getBlockPos());
         boolean isSameBlock = currentBlockstate.getBlock() == this;
         BlockState newBlockstate = isSameBlock ? currentBlockstate : this.getDefaultState();
@@ -226,8 +226,8 @@ public class StickyHoneyResidue extends VineBlock {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResult onUse(BlockState blockstate, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockHitResult raytraceResult) {
-        ItemStack itemstack = playerEntity.getStackInHand(playerHand);
+    public ActionResultType onUse(BlockState blockstate, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
+        ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
         if ((itemstack.getItem() instanceof BucketItem &&
                 ((BucketItemAccessor) itemstack.getItem()).getFluid().isIn(FluidTags.WATER)) ||
@@ -266,7 +266,7 @@ public class StickyHoneyResidue extends VineBlock {
                 }
             }
 
-            return ActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
 
         return super.onUse(blockstate, world, position, playerEntity, playerHand, raytraceResult);

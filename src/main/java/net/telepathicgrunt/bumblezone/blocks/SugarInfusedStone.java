@@ -9,6 +9,6 @@ import net.minecraft.block.MaterialColor;
 public class SugarInfusedStone extends Block {
 
     public SugarInfusedStone() {
-        super(FabricBlockSettings.of(Material.STONE, MaterialColor.STONE).strength(1.5F, 6.0F).build());
+        super(Block.Properties.create(Material.STONE, MaterialColor.STONE).hardnessAndResistance(1.5F, 6.0F)));
     }
 }

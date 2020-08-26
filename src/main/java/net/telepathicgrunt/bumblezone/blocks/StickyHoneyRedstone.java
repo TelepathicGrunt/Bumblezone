@@ -6,7 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
+import net.minecraft.state.StateContainer;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
@@ -45,7 +45,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
 
     public StickyHoneyRedstone() {
         super();
-        this.setDefaultState(this.stateManager.getDefaultState()
+        this.setDefaultState(this.stateContainer.getBaseState()
                 .with(UP, false)
                 .with(NORTH, false)
                 .with(EAST, false)
@@ -59,7 +59,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      * Set up properties.
      */
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add().add(UP, NORTH, EAST, SOUTH, WEST, DOWN, POWERED);
     }
 

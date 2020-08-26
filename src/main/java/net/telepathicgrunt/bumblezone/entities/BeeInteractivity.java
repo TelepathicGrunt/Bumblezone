@@ -1,7 +1,7 @@
 package net.telepathicgrunt.bumblezone.entities;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.EffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -42,7 +42,7 @@ public class BeeInteractivity {
                 if (itemstack.getItem() == Items.HONEY_BOTTLE) {
 
                     // Heal bee a lot
-                    beeEntity.addStatusEffect(new StatusEffectInstance(
+                    beeEntity.addPotionEffect(new EffectInstance(
                             StatusEffects.INSTANT_HEALTH,
                             1,
                             1,
@@ -53,12 +53,12 @@ public class BeeInteractivity {
                     // high chance to remove wrath of the hive from player
                     boolean calmed = world.getRandom().nextFloat() < 0.3f;
                     if (calmed) {
-                        if(playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE)){
-                            playerEntity.removeStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
+                        if(playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE)){
+                            playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
                             WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
                         }
                         else{
-                            playerEntity.addStatusEffect(new StatusEffectInstance(
+                            playerEntity.addPotionEffect(new EffectInstance(
                                     BzEffects.PROTECTION_OF_THE_HIVE,
                                     Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts,
                                     2,
@@ -84,7 +84,7 @@ public class BeeInteractivity {
                 // Sugar water bottle
                 else {
                     // Heal bee slightly but they remain angry
-                    beeEntity.addStatusEffect(new StatusEffectInstance(
+                    beeEntity.addPotionEffect(new EffectInstance(
                             StatusEffects.INSTANT_HEALTH,
                             1,
                             0,
@@ -95,12 +95,12 @@ public class BeeInteractivity {
                     // very low chance to remove wrath of the hive from player
                     boolean calmed = world.getRandom().nextFloat() < 0.07f;
                     if (calmed) {
-                        if(playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE)){
-                            playerEntity.removeStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
+                        if(playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE)){
+                            playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
                             WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
                         }
                         else{
-                            playerEntity.addStatusEffect(new StatusEffectInstance(
+                            playerEntity.addPotionEffect(new EffectInstance(
                                     BzEffects.PROTECTION_OF_THE_HIVE,
                                     Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts,
                                     2,

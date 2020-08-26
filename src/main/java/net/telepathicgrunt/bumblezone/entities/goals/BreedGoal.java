@@ -2,7 +2,7 @@ package net.telepathicgrunt.bumblezone.entities.goals;
 
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.entity.ExperienceOrbEntity;
-import net.minecraft.entity.ai.TargetPredicate;
+import net.minecraft.entity.ai.EntityPredicate;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
@@ -18,7 +18,7 @@ import java.util.EnumSet;
 import java.util.List;
 
 public class BreedGoal extends Goal {
-    private static final TargetPredicate field_220689_d = (new TargetPredicate()).setBaseMaxDistance(8.0D).includeInvulnerable().includeTeammates().includeHidden();
+    private static final EntityPredicate field_220689_d = (new EntityPredicate()).setDistance(8.0D).includeInvulnerable().includeTeammates().setLineOfSiteRequired();
     protected final HoneySlimeEntity slime;
     private final Class<? extends AnimalEntity> mateClass;
     protected final World world;
@@ -85,7 +85,7 @@ public class BreedGoal extends Goal {
      * valid mate found.
      */
     private AnimalEntity getNearbyMate() {
-        List<AnimalEntity> list = this.world.getTargets(this.mateClass, field_220689_d, this.slime, this.slime.getBoundingBox().expand(8.0D));
+        List<AnimalEntity> list = this.world.getTargettableEntitiesWithinAABB(this.mateClass, field_220689_d, this.slime, this.slime.getBoundingBox().grow(8.0D));
         double d0 = Double.MAX_VALUE;
         AnimalEntity animalentity = null;
 

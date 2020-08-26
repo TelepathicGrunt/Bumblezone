@@ -1,14 +1,13 @@
 package net.telepathicgrunt.bumblezone.blocks;
 
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.Block;
-import net.minecraft.block.Material;
-import net.minecraft.block.MaterialColor;
-import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 
 
 public class BeeswaxPlanks extends Block {
     public BeeswaxPlanks() {
-        super(FabricBlockSettings.of(Material.WOOD, MaterialColor.YELLOW).strength(0.3F, 0.3F).sounds(BlockSoundGroup.WOOD).build());
+        super(Block.Properties.create(Material.WOOD, MaterialColor.YELLOW).hardnessAndResistance(0.3F, 0.3F).sound(SoundType.WOOD));
     }
 }

@@ -1,27 +1,22 @@
 package net.telepathicgrunt.bumblezone.blocks;
 
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
-import net.minecraft.block.MaterialColor;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.util.ActionResult;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
@@ -32,7 +27,7 @@ import java.util.Random;
 public class FilledPorousHoneycomb extends Block {
 
     public FilledPorousHoneycomb() {
-        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MaterialColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.9F));
+        super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).hardnessAndResistance(0.5F, 0.5F).sound(SoundType.CORAL).velocityMultiplier(0.9f));
     }
 
 
@@ -40,14 +35,14 @@ public class FilledPorousHoneycomb extends Block {
      * Called when the given entity walks on this Block
      */
     @Override
-    public void onSteppedOn(World worldIn, BlockPos pos, Entity entityIn) {
-        double yMagnitude = Math.abs(entityIn.getVelocity().y);
+    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
+        double yMagnitude = Math.abs(entityIn.getMotion().y);
         if (yMagnitude < 0.1D) {
             double slowFactor = 0.85D;
-            entityIn.setVelocity(entityIn.getVelocity().multiply(slowFactor, 1.0D, slowFactor));
+            entityIn.setMotion(entityIn.getMotion().mul(slowFactor, 1.0D, slowFactor));
         }
 
-        super.onSteppedOn(worldIn, pos, entityIn);
+        super.onEntityWalk(worldIn, pos, entityIn);
     }
 
 
@@ -56,8 +51,8 @@ public class FilledPorousHoneycomb extends Block {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResult onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockHitResult raytraceResult) {
-        ItemStack itemstack = playerEntity.getStackInHand(playerHand);
+    public ActionResultType onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
+        ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
         /*
          * Player is harvesting the honey from this block if it is filled with honey
@@ -67,11 +62,11 @@ public class FilledPorousHoneycomb extends Block {
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
             if (!playerEntity.isCreative()) {
-                itemstack.decrement(1); // remove current empty bottle
+                itemstack.shrink(1); // remove current empty bottle
 
                 if (itemstack.isEmpty()) {
-                    playerEntity.setStackInHand(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
-                } else if (!playerEntity.inventory.insertStack(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
+                    playerEntity.setHeldItem(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
+                } else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
                 {
                     playerEntity.dropItem(new ItemStack(Items.HONEY_BOTTLE), false); // drops honey bottle if inventory is full
                 }
@@ -83,16 +78,16 @@ public class FilledPorousHoneycomb extends Block {
                     !playerEntity.isSpectator() &&
                     Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
             {
-                if(playerEntity.hasStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
-                    playerEntity.removeStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                if(playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
+                    playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                 }
                 else{
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
-                    playerEntity.addStatusEffect(new StatusEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
+                    playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
                 }
             }
 
-            return ActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
 
         return super.onUse(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);

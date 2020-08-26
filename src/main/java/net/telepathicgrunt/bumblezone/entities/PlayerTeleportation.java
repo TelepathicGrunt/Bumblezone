@@ -3,7 +3,7 @@ package net.telepathicgrunt.bumblezone.entities;
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.EffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.server.MinecraftServer;
@@ -67,13 +67,13 @@ public class PlayerTeleportation {
      */
     private static void reAddStatusEffect(PlayerEntity playerEntity) {
         //re-adds potion effects so the icon remains instead of disappearing when changing dimensions due to a bug
-        ArrayList<StatusEffectInstance> effectInstanceList = new ArrayList<StatusEffectInstance>(playerEntity.getStatusEffects());
+        ArrayList<EffectInstance> effectInstanceList = new ArrayList<EffectInstance>(playerEntity.getStatusEffects());
         for (int i = effectInstanceList.size() - 1; i >= 0; i--) {
-            StatusEffectInstance effectInstance = effectInstanceList.get(i);
+            EffectInstance effectInstance = effectInstanceList.get(i);
             if (effectInstance != null) {
-                playerEntity.removeStatusEffect(effectInstance.getEffectType());
-                playerEntity.addStatusEffect(
-                        new StatusEffectInstance(
+                playerEntity.removePotionEffect(effectInstance.getEffectType());
+                playerEntity.addPotionEffect(
+                        new EffectInstance(
                                 effectInstance.getEffectType(),
                                 effectInstance.getDuration(),
                                 effectInstance.getAmplifier(),

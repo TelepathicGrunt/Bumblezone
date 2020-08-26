@@ -1,6 +1,6 @@
 package net.telepathicgrunt.bumblezone.entities.goals;
 
-import net.minecraft.entity.ai.TargetPredicate;
+import net.minecraft.entity.ai.EntityPredicate;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.BirdNavigation;
 import net.minecraft.entity.ai.pathing.MobNavigation;
@@ -13,7 +13,7 @@ import net.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
 import java.util.EnumSet;
 
 public class TemptGoal extends Goal {
-    private static final TargetPredicate ENTITY_PREDICATE = (new TargetPredicate()).setBaseMaxDistance(10.0D).includeInvulnerable().includeTeammates().ignoreEntityTargetRules().includeHidden();
+    private static final EntityPredicate ENTITY_PREDICATE = (new EntityPredicate()).setDistance(10.0D).includeInvulnerable().includeTeammates().ignoreEntityTargetRules().setLineOfSiteRequired();
     protected final HoneySlimeEntity slime;
     private double targetX;
     private double targetY;

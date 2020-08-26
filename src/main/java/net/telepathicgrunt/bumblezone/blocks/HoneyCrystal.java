@@ -9,16 +9,16 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.item.*;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
+import net.minecraft.state.StateContainer;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.tag.FluidTags;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Util;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.BlockRayTraceResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -34,7 +34,7 @@ import java.util.Map;
 
 public class HoneyCrystal extends Block {
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-    public static final DirectionProperty FACING = FacingBlock.FACING;
+    public static final DirectionProperty FACING = DirectionalBlock.FACING;
     protected static final VoxelShape DOWN_AABB = Block.createCuboidShape(0.0D, 1.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     protected static final VoxelShape UP_AABB = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
     protected static final VoxelShape WEST_AABB = Block.createCuboidShape(1.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
@@ -52,9 +52,9 @@ public class HoneyCrystal extends Block {
     private Item item;
 
     public HoneyCrystal() {
-        super(FabricBlockSettings.of(Material.GLASS, MaterialColor.ORANGE).lightLevel(1).strength(0.3F, 0.3f).nonOpaque().build());
+        super(Block.Properties.create(Material.GLASS, MaterialColor.ADOBE).lightLevel(1).hardnessAndResistance(0.3F, 0.3f).nonOpaque()));
 
-        this.setDefaultState(this.stateManager.getDefaultState()
+        this.setDefaultState(this.stateContainer.getBaseState()
                 .with(FACING, Direction.UP)
                 .with(WATERLOGGED, Boolean.FALSE));
     }
@@ -63,7 +63,7 @@ public class HoneyCrystal extends Block {
      * Setup properties
      */
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(WATERLOGGED, FACING);
     }
 
@@ -119,11 +119,11 @@ public class HoneyCrystal extends Block {
      * checks if crystal can be placed on block and sets waterlogging as well if replacing water
      */
     @Override
-    public BlockState getPlacementState(ItemPlacementContext context) {
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
 
         if (!context.canReplaceExisting()) {
-            BlockState attachedBlockstate = context.getWorld().getBlockState(context.getBlockPos().offset(context.getSide().getOpposite()));
-            if (attachedBlockstate.getBlock() == this && attachedBlockstate.get(FACING) == context.getSide()) {
+            BlockState attachedBlockstate = context.getWorld().getBlockState(context.getBlockPos().offset(context.getFace().getOpposite()));
+            if (attachedBlockstate.getBlock() == this && attachedBlockstate.get(FACING) == context.getFace()) {
                 return null;
             }
         }
@@ -148,11 +148,11 @@ public class HoneyCrystal extends Block {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResult onUse(BlockState blockstate, World world,
+    public ActionResultType onUse(BlockState blockstate, World world,
                               BlockPos position, PlayerEntity playerEntity,
-                              Hand playerHand, BlockHitResult raytraceResult) {
+                              Hand playerHand, BlockRayTraceResult raytraceResult) {
 
-        ItemStack itemstack = playerEntity.getStackInHand(playerHand);
+        ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
         //Player uses bucket with water-tagged fluid and this block is not waterlogged
         if ((itemstack.getItem() instanceof BucketItem &&
@@ -168,27 +168,27 @@ public class HoneyCrystal extends Block {
 
             //set player bucket to be empty if not in creative
             if (!playerEntity.isCreative()) {
-                playerEntity.setStackInHand(playerHand, new ItemStack(Items.BUCKET));
+                playerEntity.setHeldItem(playerHand, new ItemStack(Items.BUCKET));
             }
 
-            return ActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
         else if (itemstack.getItem() == Items.GLASS_BOTTLE) {
 
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
                     SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
-            itemstack.decrement(1); // remove current honey bottle
+            itemstack.shrink(1); // remove current honey bottle
 
             if (itemstack.isEmpty()) {
-                playerEntity.setStackInHand(playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE)); // places sugar water bottle in hand
+                playerEntity.setHeldItem(playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE)); // places sugar water bottle in hand
             }
-            else if (!playerEntity.inventory.insertStack(new ItemStack(BzItems.SUGAR_WATER_BOTTLE))) // places sugar water bottle in inventory
+            else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(BzItems.SUGAR_WATER_BOTTLE))) // places sugar water bottle in inventory
             {
                 playerEntity.dropItem(new ItemStack(BzItems.SUGAR_WATER_BOTTLE), false); // drops sugar water bottle if inventory is full
             }
 
-            return ActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
 
         return super.onUse(blockstate, world, position, playerEntity, playerHand, raytraceResult);

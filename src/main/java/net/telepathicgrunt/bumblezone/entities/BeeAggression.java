@@ -1,7 +1,7 @@
 package net.telepathicgrunt.bumblezone.entities;
 
 import net.minecraft.entity.*;
-import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.EffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.PandaEntity;
@@ -75,12 +75,12 @@ public class BeeAggression {
 
             //if player picks up a honey block, bees gets very mad...
             if (item == Items.HONEY_BLOCK && Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees) {
-                if(player.hasStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
-                    player.removeStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                if(player.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
+                    player.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                 }
                 else {
                     //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
-                    player.addStatusEffect(new StatusEffectInstance(
+                    player.addPotionEffect(new EffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE,
                             Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
                             2,
@@ -112,11 +112,11 @@ public class BeeAggression {
 
                 //if player drinks honey, bees gets very mad...
                 if (stack.getItem() == Items.HONEY_BOTTLE) {
-                    if(playerEntity.hasStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
-                        playerEntity.removeStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                    if(playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
+                        playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                     }
                     else{
-                        playerEntity.addStatusEffect(new StatusEffectInstance(
+                        playerEntity.addPotionEffect(new EffectInstance(
                                 BzEffects.WRATH_OF_THE_HIVE,
                                 Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
                                 2,
@@ -147,12 +147,12 @@ public class BeeAggression {
                     !attackerEntity.isSpectator())
             {
                 PlayerEntity player = ((PlayerEntity) attackerEntity);
-                if(player.hasStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
-                    player.removeStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                if(player.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
+                    player.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                     WrathOfTheHiveEffect.calmTheBees(player.world, player); // prevent bees from be naturally angry
                 }
                 else {
-                    player.addStatusEffect(new StatusEffectInstance(
+                    player.addPotionEffect(new EffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE,
                             Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
                             2,
@@ -164,12 +164,12 @@ public class BeeAggression {
             else if(attackerEntity instanceof MobEntity)
             {
                 MobEntity mob = ((MobEntity) attackerEntity);
-                if(mob.hasStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
-                    mob.removeStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                if(mob.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
+                    mob.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                     WrathOfTheHiveEffect.calmTheBees(mob.world, mob); // prevent bees from be naturally angry
                 }
                 else {
-                    mob.addStatusEffect(new StatusEffectInstance(
+                    mob.addPotionEffect(new EffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE,
                             Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
                             2,
@@ -185,7 +185,7 @@ public class BeeAggression {
     public static void entityTypeBeeAnger(Entity entity)
     {
         if(doesBeesHateEntity(entity)) {
-            ((MobEntity) entity).addStatusEffect(new StatusEffectInstance(
+            ((MobEntity) entity).addPotionEffect(new EffectInstance(
                     BzEffects.WRATH_OF_THE_HIVE,
                     Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
                     1,
@@ -206,7 +206,7 @@ public class BeeAggression {
             MobEntity mobEntity = (MobEntity)entity;
 
             //must be a bear or insect animal with no wrath of the hive effect on
-            return SET_OF_BEE_HATED_ENTITIES.contains(entity.getType()) && !mobEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
+            return SET_OF_BEE_HATED_ENTITIES.contains(entity.getType()) && !mobEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE);
         }
 
         return false;
@@ -216,16 +216,16 @@ public class BeeAggression {
     {
         //removes the wrath of the hive if it is disallowed outside dimension
         if(!playerEntity.world.isClient &&
-                playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE) &&
+                playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE) &&
                 !(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone ||
                         playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)))
         {
-            playerEntity.removeStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
+            playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
             WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
         }
 
         //Makes the fog redder when this effect is active
-        boolean wrathEffect = playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
+        boolean wrathEffect = playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE);
         if(!WrathOfTheHiveEffect.ACTIVE_WRATH && wrathEffect)
         {
             WrathOfTheHiveEffect.ACTIVE_WRATH = true;

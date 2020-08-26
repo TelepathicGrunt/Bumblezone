@@ -1,7 +1,7 @@
 package net.telepathicgrunt.bumblezone.items;
 
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.EffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
@@ -46,7 +46,7 @@ public class BzItems {
 
     public static final Item SUGAR_WATER_BOTTLE = new HoneyBottleItem((new Item.Settings()).recipeRemainder(Items.GLASS_BOTTLE)
             .food((new FoodComponent.Builder()).hunger(1).saturationModifier(0.05F)
-                    .statusEffect(new StatusEffectInstance(StatusEffects.HASTE, 600, 0), 1.0F).build())
+                    .statusEffect(new EffectInstance(StatusEffects.HASTE, 600, 0), 1.0F).build())
             .group(BUMBLEZONE_CREATIVE_TAB).maxCount(16));
 
     /**

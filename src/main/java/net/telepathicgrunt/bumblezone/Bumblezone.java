@@ -35,6 +35,7 @@ import net.telepathicgrunt.bumblezone.features.decorators.BzPlacements;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.DispenserItemSetup;
 import net.telepathicgrunt.bumblezone.surfacebuilders.BzSurfaceBuilders;
+import net.telepathicgrunt.bumblezone.utils.ConfigHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,7 +47,7 @@ public class Bumblezone{
 
     public static BzConfig BZ_CONFIG;
     public static final Logger LOGGER = LogManager.getLogger(MODID);
-    public static BzConfigValues BzConfig = null;
+    public static net.telepathicgrunt.bumblezone.config.BzConfig.BzConfigValues BzConfig = null;
 
     public Bumblezone() {
         BzDimension.setupDimension();
