@@ -1,96 +1,70 @@
 package net.telepathicgrunt.bumblezone.blocks;
 
-import java.lang.reflect.Method;
-
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.block.FabricMaterialBuilder;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.block.Block;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.Material.Builder;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.Fluid;
+import net.minecraft.block.Material;
+import net.minecraft.block.MaterialColor;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.FluidAttributes;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.util.registry.Registry;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.fluids.SugarWaterFluid;
-import net.telepathicgrunt.bumblezone.items.BzItems;
 
 
-public class BzBlocks
-{
-    public static Material RESIDUE;
-    static {
-		Material.Builder builder = (new Material.Builder(MaterialColor.ORANGE_TERRACOTTA)).doesNotBlockMovement().replaceable().notSolid();
-		try {
-		    Method method = ObfuscationReflectionHelper.findMethod(builder.getClass(), "func_200505_j");
-		    builder = ((Builder) method.invoke(builder));
-		    method = ObfuscationReflectionHelper.findMethod(builder.getClass(), "func_200511_g");
-		    RESIDUE = ((Builder) method.invoke(builder)).build();
-		} catch (Exception e) {
-		    e.printStackTrace();
-		} 
+public class BzBlocks {
+    public static Material RESIDUE = new FabricMaterialBuilder(MaterialColor.ORANGE_TERRACOTTA)
+            .lightPassesThrough()
+            .destroyedByPiston()
+            .allowsMovement()
+            .replaceable()
+            .notSolid()
+            .build();
+
+    public static final Block POROUS_HONEYCOMB = new PorousHoneycomb();
+    public static final Block FILLED_POROUS_HONEYCOMB = new FilledPorousHoneycomb();
+    public static final Block EMPTY_HONEYCOMB_BROOD = new EmptyHoneycombBrood();
+    public static final Block HONEYCOMB_BROOD = new HoneycombBrood();
+    public static final Block SUGAR_INFUSED_STONE = new SugarInfusedStone();
+    public static final Block SUGAR_INFUSED_COBBLESTONE = new SugarInfusedCobblestone();
+    public static final Block HONEY_CRYSTAL = new HoneyCrystal();
+    public static final Block STICKY_HONEY_RESIDUE = new StickyHoneyResidue();
+    public static final Block STICKY_HONEY_REDSTONE = new StickyHoneyRedstone();
+    public static final Block BEESWAX_PLANKS = new BeeswaxPlanks();
+
+    public static final FlowableFluid SUGAR_WATER_FLUID = new SugarWaterFluid.Source();
+    public static final FlowableFluid SUGAR_WATER_FLUID_FLOWING = new SugarWaterFluid.Flowing();
+    public static final Block SUGAR_WATER_BLOCK = new SugarWaterBlock(SUGAR_WATER_FLUID);
+
+    /**
+     * registers the Blocks so they now exist in the registry
+     */
+    public static void registerBlocks() {
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "porous_honeycomb_block"), POROUS_HONEYCOMB);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "filled_porous_honeycomb_block"), FILLED_POROUS_HONEYCOMB);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "dead_honeycomb_larva_block"), EMPTY_HONEYCOMB_BROOD);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "honeycomb_larva_block"), HONEYCOMB_BROOD);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_infused_stone"), SUGAR_INFUSED_STONE);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_infused_cobblestone"), SUGAR_INFUSED_COBBLESTONE);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "honey_crystal"), HONEY_CRYSTAL);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "sticky_honey_residue"), STICKY_HONEY_RESIDUE);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "sticky_honey_redstone"), STICKY_HONEY_REDSTONE);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "beeswax_planks"), BEESWAX_PLANKS);
+        Registry.register(Registry.FLUID, new ResourceLocation(Bumblezone.MODID, "sugar_water_still"), SUGAR_WATER_FLUID);
+        Registry.register(Registry.FLUID, new ResourceLocation(Bumblezone.MODID, "sugar_water_flowing"), SUGAR_WATER_FLUID_FLOWING);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_water_block"), SUGAR_WATER_BLOCK);
     }
-    
-    @SuppressWarnings("deprecation")
-	public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Bumblezone.MODID);
-    
-    @SuppressWarnings("deprecation")
-	public static final DeferredRegister<Fluid> FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, Bumblezone.MODID);
 
-    
-    //normal blocks
-    
-    public static final RegistryObject<Block> POROUS_HONEYCOMB = BLOCKS.register("porous_honeycomb_block",
-            () -> new PorousHoneycomb());
-    
-    public static final RegistryObject<Block> FILLED_POROUS_HONEYCOMB = BLOCKS.register("filled_porous_honeycomb_block",
-            () -> new FilledPorousHoneycomb());
-
-    public static final RegistryObject<Block> DEAD_HONEYCOMB_BROOD = BLOCKS.register("dead_honeycomb_larva_block",
-            () -> new EmptyHoneycombBrood());
-
-    public static final RegistryObject<Block> HONEYCOMB_BROOD = BLOCKS.register("honeycomb_larva_block",
-            () -> new HoneycombBrood());
-
-    public static final RegistryObject<Block> SUGAR_INFUSED_STONE = BLOCKS.register("sugar_infused_stone",
-            () -> new SugarInfusedStone());
-
-    public static final RegistryObject<Block> SUGAR_INFUSED_COBBLESTONE = BLOCKS.register("sugar_infused_cobblestone",
-            () -> new SugarInfusedCobblestone());
-
-    public static final RegistryObject<Block> HONEY_CRYSTAL = BLOCKS.register("honey_crystal",
-            () -> new HoneyCrystal());
-    
-    public static final RegistryObject<Block> STICKY_HONEY_RESIDUE = BLOCKS.register("sticky_honey_residue",
-            () -> new StickyHoneyResidue());
-    
-    public static final RegistryObject<Block> STICKY_HONEY_REDSTONE = BLOCKS.register("sticky_honey_redstone",
-            () -> new StickyHoneyRedstone());
-    
-    //fluid mess
-	
-    public static final ResourceLocation FLUID_STILL = new ResourceLocation(Bumblezone.MODID+":block/sugar_water_still");
-    public static final ResourceLocation FLUID_FLOWING = new ResourceLocation(Bumblezone.MODID+":block/sugar_water_flow");
-    public static final ResourceLocation FLUID_OVERLAY = new ResourceLocation(Bumblezone.MODID+":block/sugar_water_overlay");
-    
-    public static final RegistryObject<FlowingFluid> SUGAR_WATER_FLUID = FLUIDS.register("sugar_water_fluid", () ->
-		new SugarWaterFluid.Source(BzBlocks.SUGAR_WATER_FLUID_PROPERTIES)
-    );
-    public static final RegistryObject<FlowingFluid> SUGAR_WATER_FLUID_FLOWING = FLUIDS.register("sugar_water_flowing", () ->
-		new SugarWaterFluid.Flowing(BzBlocks.SUGAR_WATER_FLUID_PROPERTIES)
-    );
-    public static final RegistryObject<FlowingFluidBlock> SUGAR_WATER_BLOCK = BLOCKS.register("sugar_water_block", () ->
-	    new SugarWaterBlock(SUGAR_WATER_FLUID)
-    );
-    
-    public static final ForgeFlowingFluid.Properties SUGAR_WATER_FLUID_PROPERTIES =
-            new ForgeFlowingFluid.Properties(SUGAR_WATER_FLUID, SUGAR_WATER_FLUID_FLOWING, 
-        	    FluidAttributes.Water.builder(FLUID_STILL, FLUID_FLOWING).overlay(FLUID_OVERLAY).viscosity(1500))
-                    .bucket(BzItems.SUGAR_WATER_BUCKET).canMultiply().block(SUGAR_WATER_BLOCK);
-    
+    @Environment(EnvType.CLIENT)
+    public static void registerRenderLayers() {
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STICKY_HONEY_REDSTONE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STICKY_HONEY_RESIDUE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.HONEY_CRYSTAL, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.SUGAR_WATER_BLOCK, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putFluid(BzBlocks.SUGAR_WATER_FLUID, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putFluid(BzBlocks.SUGAR_WATER_FLUID_FLOWING, RenderLayer.getTranslucent());
+    }
 }

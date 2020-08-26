@@ -1,5 +1,1 @@
-{
-    "variants": {
-        "": { "model": "the_bumblezone:block/sugar_infused_stone" }
-    }
-}
+{ "variants": { "": { "model": "the_bumblezone:block/sugar_infused_stone" } } }

@@ -1,533 +1,339 @@
 package net.telepathicgrunt.bumblezone.features;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
-
 import com.google.common.collect.Lists;
-import com.mojang.datafixers.Dynamic;
 import com.mojang.datafixers.util.Pair;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ILiquidContainer;
-import net.minecraft.block.material.Material;
+import com.mojang.serialization.Codec;
+import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.MobSpawnerBlockEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.fluid.IFluidState;
-import net.minecraft.inventory.IClearable;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.MobSpawnerTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.structure.Structure;
+import net.minecraft.structure.StructurePlacementData;
+import net.minecraft.util.Clearable;
+import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.math.shapes.BitSetVoxelShapePart;
-import net.minecraft.util.math.shapes.VoxelShapePart;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationSettings;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.feature.template.TemplateManager;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.BitSetVoxelSet;
+import net.minecraft.util.shape.VoxelSet;
+import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
-import net.telepathicgrunt.bumblezone.modcompatibility.BeesourcefulRedirection;
-import net.telepathicgrunt.bumblezone.modcompatibility.BuzzierBeesRedirection;
-import net.telepathicgrunt.bumblezone.modcompatibility.ModChecking;
-import net.telepathicgrunt.bumblezone.modcompatibility.ProductiveBeesRedirection;
+import net.telepathicgrunt.bumblezone.mixin.StructureAccessorInvoker;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 
-public class SpiderInfestedBeeDungeon extends Feature<NoFeatureConfig>
-{
-	private static final ResourceLocation CRYSTALLIZED_HONEY_BLOCK = new ResourceLocation("buzzierbees:crystallized_honey_block");
-    	private static final BlockState HONEY_CRYSTAL = BzBlocks.HONEY_CRYSTAL.get().getDefaultState();
-	
-	public SpiderInfestedBeeDungeon(Function<Dynamic<?>, ? extends NoFeatureConfig> configFactory)
-	{
-		super(configFactory);
-	}
-	
-	@Override
-	public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> changedBlock, Random random, BlockPos position, NoFeatureConfig p_212245_5_)
-	{
-		//affect rarity
-		if(random.nextInt(Bumblezone.BzConfig.spiderInfestedBeeDungeonRarity.get()) != 0) return false;
-		
-		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position).move(-3, -2, -3);
-		//Bumblezone.LOGGER.log(Level.INFO, "Spider Infested Bee Dungeon at X: "+position.getX() +", "+position.getY()+", "+position.getZ());
+public class SpiderInfestedBeeDungeon extends BeeDungeon{
+    private static final BlockState HONEY_CRYSTAL = BzBlocks.HONEY_CRYSTAL.getDefaultState();
 
-		TemplateManager templatemanager = ((ServerWorld) world.getWorld()).getSaveHandler().getStructureTemplateManager();
-		Template template = templatemanager.getTemplate(new ResourceLocation(Bumblezone.MODID + ":bee_dungeon/shell"));
+    public SpiderInfestedBeeDungeon(Codec<DefaultFeatureConfig> configFactory) {
+        super(configFactory);
+    }
 
-		if (template == null)
-		{
-			Bumblezone.LOGGER.warn("bee_dungeon/shell NTB does not exist!");
-			return false;
-		}
+    @Override
+    public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
+        //affect rarity
+        if (Bumblezone.BZ_CONFIG.BZDungeonsConfig.spiderInfestedBeeDungeonRarity >= 1000 ||
+            random.nextInt(Bumblezone.BZ_CONFIG.BZDungeonsConfig.spiderInfestedBeeDungeonRarity) != 0) return false;
 
-		PlacementSettings placementsettings = (new PlacementSettings()).setMirror(Mirror.NONE).setRotation(Rotation.NONE).setIgnoreEntities(false).setChunk((ChunkPos) null);
-		addBlocksToWorld(template, world, blockpos$Mutable, placementsettings, 2);
+        BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position).move(-3, -2, -3);
+        //Bumblezone.LOGGER.log(Level.INFO, "Bee Dungeon at X: "+position.getX() +", "+position.getY()+", "+position.getZ());
 
-		
-		template = templatemanager.getTemplate(new ResourceLocation(Bumblezone.MODID + ":bee_dungeon/altar"));
+        boolean generated = generateShell(world, blockpos$Mutable);
 
-		if (template == null)
-		{
-			Bumblezone.LOGGER.warn("bee_dungeon/altar NTB does not exist!");
-			return false;
-		}
+        if(generated){
+            for(int x = -8; x <= 12; x++) {
+                for(int y = -6; y <= 10; y++) {
+                    for(int z = -8; z <= 12; z++) {
+                        blockpos$Mutable.set(position).move(x, y, z);
+                        if(random.nextFloat() < 0.07f && world.getBlockState(blockpos$Mutable).getBlock() == Blocks.CAVE_AIR) {
+                            world.setBlockState(blockpos$Mutable, Blocks.COBWEB.getDefaultState(), 3);
+                        }
+                    }
+                }
+            }
+        }
 
-		addBlocksToWorld(template, world, blockpos$Mutable.move(0, 1, 0), placementsettings, 2);
-		
-		
-		for(int x = -8; x <= 12; x++) {
-			for(int y = -6; y <= 10; y++) {
-				for(int z = -8; z <= 12; z++) {
-					blockpos$Mutable.setPos(position).move(x, y, z);
-					if(random.nextFloat() < 0.07f && world.getBlockState(blockpos$Mutable).getBlock() == Blocks.CAVE_AIR) {
-						world.setBlockState(blockpos$Mutable, Blocks.COBWEB.getDefaultState(), 3);
-					}
-					if(ModChecking.productiveBeesPresent && 
-						Bumblezone.BzConfig.spawnProductiveBeesHoneycombVariants.get() && 
-						random.nextFloat() < 0.07f && 
-						world.getBlockState(blockpos$Mutable).getMaterial().isOpaque()) {
-					    world.setBlockState(blockpos$Mutable, ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), 3);
-					}
-				}
-			}
-		}
+        return generated;
+    }
 
-		
-		
-		return true;
+    /**
+     * Adds blocks and entities from this structure to the given world.
+     */
+    @Override
+    public void addBlocksToWorld(Structure structure, ServerWorldAccess world, BlockPos pos, StructurePlacementData placementIn, int flags) {
+        StructureAccessorInvoker structureAccessor = ((StructureAccessorInvoker) structure);
+        if (!structureAccessor.getBlocks().isEmpty()) {
+            List<Structure.StructureBlockInfo> list = placementIn.getRandomBlockInfos(structureAccessor.getBlocks(), pos).getAll();
+            if ((!list.isEmpty() || !placementIn.shouldIgnoreEntities() && !structureAccessor.getEntities().isEmpty()) && structureAccessor.getSize().getX() >= 1 && structureAccessor.getSize().getY() >= 1 && structureAccessor.getSize().getZ() >= 1) {
+                BlockBox mutableboundingbox = placementIn.getBoundingBox();
+                List<BlockPos> list1 = Lists.newArrayListWithCapacity(placementIn.shouldPlaceFluids() ? list.size() : 0);
+                List<Pair<BlockPos, CompoundTag>> list2 = Lists.newArrayListWithCapacity(list.size());
+                int x = Integer.MAX_VALUE;
+                int y = Integer.MAX_VALUE;
+                int z = Integer.MAX_VALUE;
+                int l = Integer.MIN_VALUE;
+                int i1 = Integer.MIN_VALUE;
+                int j1 = Integer.MIN_VALUE;
 
-	}
-	
-	/**
-	 * Adds blocks and entities from this structure to the given world.
-	 */
-	@SuppressWarnings("deprecation")
-	private static boolean addBlocksToWorld(Template template, IWorld world, BlockPos pos, PlacementSettings placementIn, int flags)
-	{
-		if (template.blocks.isEmpty())
-		{
-			return false;
-		}
-		else
-		{
-			List<Template.BlockInfo> list = placementIn.func_227459_a_(template.blocks, pos);
-			if ((!list.isEmpty() || !placementIn.getIgnoreEntities() && !template.entities.isEmpty()) && template.size.getX() >= 1 && template.size.getY() >= 1 && template.size.getZ() >= 1)
-			{
-				MutableBoundingBox mutableboundingbox = placementIn.getBoundingBox();
-				List<BlockPos> list1 = Lists.newArrayListWithCapacity(placementIn.func_204763_l() ? list.size() : 0);
-				List<Pair<BlockPos, CompoundNBT>> list2 = Lists.newArrayListWithCapacity(list.size());
-				int i = Integer.MAX_VALUE;
-				int j = Integer.MAX_VALUE;
-				int k = Integer.MAX_VALUE;
-				int l = Integer.MIN_VALUE;
-				int i1 = Integer.MIN_VALUE;
-				int j1 = Integer.MIN_VALUE;
+                for (Structure.StructureBlockInfo template$blockinfo : Structure.process(world, pos, pos, placementIn, list)) {
+                    BlockPos blockpos = template$blockinfo.pos;
+                    if (mutableboundingbox == null || mutableboundingbox.contains(blockpos)) {
+                        FluidState ifluidstate = placementIn.shouldPlaceFluids() ? world.getFluidState(blockpos) : null;
+                        BlockState blockstate = template$blockinfo.state.mirror(placementIn.getMirror()).rotate(placementIn.getRotation());
+                        if (template$blockinfo.tag != null) {
+                            BlockEntity blockentity = world.getBlockEntity(blockpos);
+                            Clearable.clear(blockentity);
+                            world.setBlockState(blockpos, Blocks.BARRIER.getDefaultState(), 20);
+                        }
 
-				for (Template.BlockInfo template$blockinfo : Template.processBlockInfos(template, world, pos, placementIn, list))
-				{
-					BlockPos blockpos = template$blockinfo.pos;
-					if (mutableboundingbox == null || mutableboundingbox.isVecInside(blockpos))
-					{
-						IFluidState ifluidstate = placementIn.func_204763_l() ? world.getFluidState(blockpos) : null;
-						BlockState blockstate = template$blockinfo.state.mirror(placementIn.getMirror()).rotate(placementIn.getRotation());
-						if (template$blockinfo.nbt != null)
-						{
-							TileEntity tileentity = world.getTileEntity(blockpos);
-							IClearable.clearObj(tileentity);
-							world.setBlockState(blockpos, Blocks.BARRIER.getDefaultState(), 20);
-						}
+                        //converts the blockstate template to the correct block and gets if the block can replace air or not
+                        Pair<BlockState, Boolean> pair = blockConversion(world, blockpos, blockstate.getBlock(), world.getRandom());
+                        blockstate = pair.getFirst();
 
-						//converts the blockstate template to the correct block and gets if the block can replace air or not
-						Pair<BlockState, Boolean> pair = blockConversion(world, blockpos, blockstate.getBlock(), world.getRandom());
-						blockstate = pair.getFirst();
-						
-						if ((pair.getSecond() || world.getBlockState(blockpos).isSolid()) && world.setBlockState(blockpos, blockstate, flags))
-						{
-							if(blockstate.getBlock() == Blocks.SPAWNER) {
-								TileEntity tileentity = world.getTileEntity(blockpos);
+                        if ((pair.getSecond() || world.getBlockState(blockpos).isOpaque()) && world.setBlockState(blockpos, blockstate, flags)) {
+                            if (blockstate.getBlock() == Blocks.SPAWNER) {
+                                BlockEntity blockentity = world.getBlockEntity(blockpos);
 
-								if (tileentity instanceof MobSpawnerTileEntity)
-								{
-									((MobSpawnerTileEntity) tileentity).getSpawnerBaseLogic()
-										.setEntityType(world.getRandom().nextFloat() < 0.2f ? EntityType.CAVE_SPIDER : EntityType.SPIDER);
-								}
-							}
-							
-							i = Math.min(i, blockpos.getX());
-							j = Math.min(j, blockpos.getY());
-							k = Math.min(k, blockpos.getZ());
-							l = Math.max(l, blockpos.getX());
-							i1 = Math.max(i1, blockpos.getY());
-							j1 = Math.max(j1, blockpos.getZ());
-							list2.add(Pair.of(blockpos, template$blockinfo.nbt));
-							if (template$blockinfo.nbt != null)
-							{
-								TileEntity tileentity1 = world.getTileEntity(blockpos);
-								if (tileentity1 != null)
-								{
-									template$blockinfo.nbt.putInt("x", blockpos.getX());
-									template$blockinfo.nbt.putInt("y", blockpos.getY());
-									template$blockinfo.nbt.putInt("z", blockpos.getZ());
-									tileentity1.read(template$blockinfo.nbt);
-									tileentity1.mirror(placementIn.getMirror());
-									tileentity1.rotate(placementIn.getRotation());
-								}
-							}
+                                if (blockentity instanceof MobSpawnerBlockEntity) {
+                                    ((MobSpawnerBlockEntity) blockentity).getLogic()
+                                            .setEntityId(world.getRandom().nextFloat() < 0.2f ? EntityType.CAVE_SPIDER : EntityType.SPIDER);
+                                }
+                            }
 
-							if (ifluidstate != null && blockstate.getBlock() instanceof ILiquidContainer)
-							{
-								((ILiquidContainer) blockstate.getBlock()).receiveFluid(world, blockpos, blockstate, ifluidstate);
-								if (!ifluidstate.isSource())
-								{
-									list1.add(blockpos);
-								}
-							}
-						}
-					}
-				}
+                            x = Math.min(x, blockpos.getX());
+                            y = Math.min(y, blockpos.getY());
+                            z = Math.min(z, blockpos.getZ());
+                            l = Math.max(l, blockpos.getX());
+                            i1 = Math.max(i1, blockpos.getY());
+                            j1 = Math.max(j1, blockpos.getZ());
+                            list2.add(Pair.of(blockpos, template$blockinfo.tag));
+                            if (template$blockinfo.tag != null) {
+                                BlockEntity blockentity1 = world.getBlockEntity(blockpos);
+                                if (blockentity1 != null) {
+                                    template$blockinfo.tag.putInt("x", blockpos.getX());
+                                    template$blockinfo.tag.putInt("y", blockpos.getY());
+                                    template$blockinfo.tag.putInt("z", blockpos.getZ());
+                                    blockentity1.fromTag(template$blockinfo.state, template$blockinfo.tag);
+                                    blockentity1.applyMirror(placementIn.getMirror());
+                                    blockentity1.applyRotation(placementIn.getRotation());
+                                }
+                            }
 
-				boolean flag = true;
-				Direction[] adirection = new Direction[] { Direction.UP, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST };
+                            if (ifluidstate != null && blockstate.getBlock() instanceof FluidFillable) {
+                                ((FluidFillable) blockstate.getBlock()).tryFillWithFluid(world, blockpos, blockstate, ifluidstate);
+                                if (!ifluidstate.isStill()) {
+                                    list1.add(blockpos);
+                                }
+                            }
+                        }
+                    }
+                }
 
-				while (flag && !list1.isEmpty())
-				{
-					flag = false;
-					Iterator<BlockPos> iterator = list1.iterator();
+                boolean flag = true;
+                Direction[] adirection = new Direction[]{Direction.UP, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
 
-					while (iterator.hasNext())
-					{
-						BlockPos blockpos2 = iterator.next();
-						BlockPos blockpos3 = blockpos2;
-						IFluidState ifluidstate2 = world.getFluidState(blockpos2);
+                while (flag && !list1.isEmpty()) {
+                    flag = false;
+                    Iterator<BlockPos> iterator = list1.iterator();
 
-						for (int k1 = 0; k1 < adirection.length && !ifluidstate2.isSource(); ++k1)
-						{
-							BlockPos blockpos1 = blockpos3.offset(adirection[k1]);
-							IFluidState ifluidstate1 = world.getFluidState(blockpos1);
-							if (ifluidstate1.getActualHeight(world, blockpos1) > ifluidstate2.getActualHeight(world, blockpos3) || ifluidstate1.isSource() && !ifluidstate2.isSource())
-							{
-								ifluidstate2 = ifluidstate1;
-								blockpos3 = blockpos1;
-							}
-						}
+                    while (iterator.hasNext()) {
+                        BlockPos blockpos2 = iterator.next();
+                        BlockPos blockpos3 = blockpos2;
+                        FluidState ifluidstate2 = world.getFluidState(blockpos2);
 
-						if (ifluidstate2.isSource())
-						{
-							BlockState blockstate2 = world.getBlockState(blockpos2);
-							Block block = blockstate2.getBlock();
-							if (block instanceof ILiquidContainer)
-							{
-								((ILiquidContainer) block).receiveFluid(world, blockpos2, blockstate2, ifluidstate2);
-								flag = true;
-								iterator.remove();
-							}
-						}
-					}
-				}
+                        for (int k1 = 0; k1 < adirection.length && !ifluidstate2.isStill(); ++k1) {
+                            BlockPos blockpos1 = blockpos3.offset(adirection[k1]);
+                            FluidState ifluidstate1 = world.getFluidState(blockpos1);
+                            if (ifluidstate1.getHeight(world, blockpos1) > ifluidstate2.getHeight(world, blockpos3) || ifluidstate1.isStill() && !ifluidstate2.isStill()) {
+                                ifluidstate2 = ifluidstate1;
+                                blockpos3 = blockpos1;
+                            }
+                        }
 
-				if (i <= l)
-				{
-					if (!placementIn.func_215218_i())
-					{
-						VoxelShapePart voxelshapepart = new BitSetVoxelShapePart(l - i + 1, i1 - j + 1, j1 - k + 1);
-						int l1 = i;
-						int i2 = j;
-						int j2 = k;
+                        if (ifluidstate2.isStill()) {
+                            BlockState blockstate2 = world.getBlockState(blockpos2);
+                            Block block = blockstate2.getBlock();
+                            if (block instanceof FluidFillable) {
+                                ((FluidFillable) block).tryFillWithFluid(world, blockpos2, blockstate2, ifluidstate2);
+                                flag = true;
+                                iterator.remove();
+                            }
+                        }
+                    }
+                }
 
-						for (Pair<BlockPos, CompoundNBT> pair1 : list2)
-						{
-							BlockPos blockpos5 = pair1.getFirst();
-							voxelshapepart.setFilled(blockpos5.getX() - l1, blockpos5.getY() - i2, blockpos5.getZ() - j2, true, true);
-						}
+                if (x <= l) {
+                    if (!placementIn.shouldUpdateNeighbors()) {
+                        VoxelSet voxelshapepart = new BitSetVoxelSet(l - x + 1, i1 - y + 1, j1 - z + 1);
+                        
+                        BeeDungeon.setVoxelShapeParts(world, flags, list2, x, y, z, voxelshapepart);
+                    }
 
-						Template.func_222857_a(world, flags, voxelshapepart, l1, i2, j2);
-					}
+                    BeeDungeon.placeBlocks(world, placementIn, flags, list2);
+                }
 
-					for (Pair<BlockPos, CompoundNBT> pair : list2)
-					{
-						BlockPos blockpos4 = pair.getFirst();
-						if (!placementIn.func_215218_i())
-						{
-							BlockState blockstate1 = world.getBlockState(blockpos4);
-							BlockState blockstate3 = Block.getValidBlockForPosition(blockstate1, world, blockpos4);
-							if (blockstate1 != blockstate3)
-							{
-								world.setBlockState(blockpos4, blockstate3, flags & -2 | 16);
-							}
 
-							world.notifyNeighbors(blockpos4, blockstate3.getBlock());
-						}
+                if (!placementIn.shouldIgnoreEntities()) {
+                    structureAccessor.invokeSpawnEntities(world,
+                            pos,
+                            placementIn.getMirror(),
+                            placementIn.getRotation(),
+                            placementIn.getPosition(),
+                            placementIn.getBoundingBox(),
+                            placementIn.method_27265());
+                }
 
-						if (pair.getSecond() != null)
-						{
-							TileEntity tileentity2 = world.getTileEntity(blockpos4);
-							if (tileentity2 != null)
-							{
-								tileentity2.markDirty();
-							}
-						}
-					}
-				}
+            }
+        }
+    }
 
-				
-				if (!placementIn.getIgnoreEntities())
-				{
-				    template.addEntitiesToWorld(world, 
-								pos,
-								placementIn.getMirror(), 
-								placementIn.getRotation(), 
-								placementIn.getCenterOffset(), 
-								placementIn.getBoundingBox());
-				}
 
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-	}
+    /**
+     * Converts the incoming block to the blockstate needed
+     *
+     * @return - a pair of the blockstate to use and whether this block can replace air
+     */
+    protected static Pair<BlockState, Boolean> blockConversion(ServerWorldAccess world, BlockPos pos, Block block, Random random) {
+        //////////////////////////////////////////////
+        //Shell
 
-	
-	/**
-	 * Converts the incoming block to the blockstate needed
-	 * @return - a pair of the blockstate to use and whether this block can replace air
-	 */
-	private static Pair<BlockState, Boolean> blockConversion(IWorld world, BlockPos pos, Block block, Random random)
-	{
-		//////////////////////////////////////////////
-		//Shell
-		
-		//main body
-		if(block == Blocks.RED_TERRACOTTA || block == Blocks.PURPLE_TERRACOTTA) {
-			if(ModChecking.beesourcefulPresent && 
-				random.nextFloat() < Bumblezone.BzConfig.oreHoneycombSpawnRateSpiderBeeDungeon.get()) 
-			{
-				return new Pair<>(BeesourcefulRedirection.BSGetRandomHoneycomb(random, 
-						Bumblezone.BzConfig.greatHoneycombRaritySpiderBeeDungeon.get()).getDefaultState(), false);
-			}
-			else if(!ModChecking.beesourcefulPresent && 
-				ModChecking.potionOfBeesPresent && 
-				random.nextFloat() < Bumblezone.BzConfig.PBOreHoneycombSpawnRateSpiderBeeDungeon.get()) 
-			{
-				return new Pair<>(ProductiveBeesRedirection.PBGetRandomHoneycomb(random, 
-						Bumblezone.BzConfig.PBGreatHoneycombRaritySpiderBeeDungeon.get()).getDefaultState(), false);
-			}
-			else if(ModChecking.productiveBeesPresent && 
-				Bumblezone.BzConfig.spawnProductiveBeesHoneycombVariants.get() && 
-				random.nextFloat() < 0.5f) 
-			{
-			    	return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), false);
-			}
-			
-			else if(random.nextFloat() < 0.15f) {
-				return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), false);
-			}
-			else {
-				return new Pair<>(BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), false);
-			}
-		}
+        //main body
+        if (block == Blocks.RED_TERRACOTTA || block == Blocks.PURPLE_TERRACOTTA) {
+            if (random.nextFloat() < 0.15f) {
+                return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), false);
+            } else {
+                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), false);
+            }
+        }
 
-		//south wall
-		else if(block == Blocks.ORANGE_TERRACOTTA) {
-			if(random.nextFloat() < 0.6f) {
-				return new Pair<>(BzBlocks.DEAD_HONEYCOMB_BROOD.get().getDefaultState()
-								.with(HoneycombBrood.FACING, Direction.SOUTH),	
-								false);
-			}
-			else if(random.nextDouble() < Bumblezone.BzConfig.spawnerRateSpiderBeeDungeon.get()) {
-				return new Pair<>(Blocks.SPAWNER.getDefaultState(), false);
-			}
-			else if(ModChecking.productiveBeesPresent && 
-				Bumblezone.BzConfig.spawnProductiveBeesHoneycombVariants.get() && 
-				random.nextFloat() < 0.5f) {
-			    	return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), false);
-			}
-			else {
-				return new Pair<>(BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), false);
-			}
-		}
+        //south wall
+        else if (block == Blocks.ORANGE_TERRACOTTA) {
+            if (random.nextFloat() < 0.6f) {
+                return new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
+                        .with(HoneycombBrood.FACING, Direction.SOUTH),
+                        false);
+            } else if (random.nextDouble() < Bumblezone.BZ_CONFIG.BZDungeonsConfig.spawnerRateSpiderBeeDungeon) {
+                return new Pair<>(Blocks.SPAWNER.getDefaultState(), false);
+            } else {
+                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), false);
+            }
+        }
 
-		//west wall
-		else if(block == Blocks.YELLOW_TERRACOTTA) {
-			if(random.nextFloat() < 0.6f) {
-				return new Pair<>(BzBlocks.DEAD_HONEYCOMB_BROOD.get().getDefaultState()
-								.with(HoneycombBrood.FACING, Direction.WEST),	
-								false);
-			}
-			else if(random.nextDouble() < Bumblezone.BzConfig.spawnerRateSpiderBeeDungeon.get()) {
-				return new Pair<>(Blocks.SPAWNER.getDefaultState(), false);
-			}
-			else if(ModChecking.productiveBeesPresent && 
-				Bumblezone.BzConfig.spawnProductiveBeesHoneycombVariants.get() && 
-				random.nextFloat() < 0.5f) {
-			    	return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), false);
-			}
-			else {
-				return new Pair<>(BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), false);
-			}
-		}
+        //west wall
+        else if (block == Blocks.YELLOW_TERRACOTTA) {
+            if (random.nextFloat() < 0.6f) {
+                return new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
+                        .with(HoneycombBrood.FACING, Direction.WEST),
+                        false);
+            } else if (random.nextDouble() < Bumblezone.BZ_CONFIG.BZDungeonsConfig.spawnerRateSpiderBeeDungeon) {
+                return new Pair<>(Blocks.SPAWNER.getDefaultState(), false);
+            } else {
+                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), false);
+            }
+        }
 
-		//north wall
-		else if(block == Blocks.LIME_TERRACOTTA) {
-			if(random.nextFloat() < 0.6f) {
-				return new Pair<>(BzBlocks.DEAD_HONEYCOMB_BROOD.get().getDefaultState()
-								.with(HoneycombBrood.FACING, Direction.NORTH),	
-								false);
-			}
-			else if(random.nextDouble() < Bumblezone.BzConfig.spawnerRateSpiderBeeDungeon.get()) {
-				return new Pair<>(Blocks.SPAWNER.getDefaultState(), false);
-			}
-			else if(ModChecking.productiveBeesPresent && 
-				Bumblezone.BzConfig.spawnProductiveBeesHoneycombVariants.get() && 
-				random.nextFloat() < 0.5f) {
-			    	return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), false);
-			}
-			else {
-				return new Pair<>(BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), false);
-			}
-		}
+        //north wall
+        else if (block == Blocks.LIME_TERRACOTTA) {
+            if (random.nextFloat() < 0.6f) {
+                return new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
+                        .with(HoneycombBrood.FACING, Direction.NORTH),
+                        false);
+            } else if (random.nextDouble() < Bumblezone.BZ_CONFIG.BZDungeonsConfig.spawnerRateSpiderBeeDungeon) {
+                return new Pair<>(Blocks.SPAWNER.getDefaultState(), false);
+            } else {
+                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), false);
+            }
+        }
 
-		//east wall
-		else if(block == Blocks.BLUE_TERRACOTTA) {
-			if(random.nextFloat() < 0.6f) {
-				return new Pair<>(BzBlocks.DEAD_HONEYCOMB_BROOD.get().getDefaultState()
-								.with(HoneycombBrood.FACING, Direction.EAST),	
-								false);
-			}
-			else if(random.nextDouble() < Bumblezone.BzConfig.spawnerRateSpiderBeeDungeon.get()) {
-				return new Pair<>(Blocks.SPAWNER.getDefaultState(), false);
-			}
-			else if(ModChecking.productiveBeesPresent && 
-				Bumblezone.BzConfig.spawnProductiveBeesHoneycombVariants.get() && 
-				random.nextFloat() < 0.5f) {
-			    	return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), false);
-			}
-			else {
-				return new Pair<>(BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), false);
-			}
-		}
+        //east wall
+        else if (block == Blocks.BLUE_TERRACOTTA) {
+            if (random.nextFloat() < 0.6f) {
+                return new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
+                        .with(HoneycombBrood.FACING, Direction.EAST),
+                        false);
+            } else if (random.nextDouble() < Bumblezone.BZ_CONFIG.BZDungeonsConfig.spawnerRateSpiderBeeDungeon) {
+                return new Pair<>(Blocks.SPAWNER.getDefaultState(), false);
+            } else {
+                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), false);
+            }
+        }
 
-		//sugar water stream
-		else if(block == BzBlocks.SUGAR_WATER_BLOCK.get()) {
-			if(ModChecking.buzzierBeesPresent) {
-				return new Pair<>(ForgeRegistries.BLOCKS.getValue(CRYSTALLIZED_HONEY_BLOCK).getDefaultState(), false);
-			}
-			else {
-				return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
-			}
-		}
-		
-		//air
-		else if(block.getDefaultState().getMaterial() == Material.AIR) {
-			if(random.nextFloat() < 0.07f)
-				return new Pair<>(Blocks.COBWEB.getDefaultState(), false);
-		}
-		
-		//Shell
-		//////////////////////////////////////////////
-		//Altar
-		
-		
-		//base
-		else if(block == Blocks.GREEN_TERRACOTTA) {
-			boolean replaceAir = false;
-			if(world.getBlockState(pos.up()).getMaterial() != Material.AIR && !world.getBlockState(pos.up()).isSolid())
-				replaceAir = true;
-			
-			if(ModChecking.beesourcefulPresent && random.nextFloat() < Bumblezone.BzConfig.oreHoneycombSpawnRateSpiderBeeDungeon.get()) {
-				return new Pair<>(BeesourcefulRedirection.BSGetRandomHoneycomb(random, 
-						Bumblezone.BzConfig.greatHoneycombRaritySpiderBeeDungeon.get()).getDefaultState(), replaceAir);
-			}
-			
-			if(random.nextFloat() < 0.15f) {
-				return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(),	replaceAir);
-			}
-			else {
-				return new Pair<>(BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), replaceAir);
-			}
-		}
+        //sugar water stream
+        else if (block == BzBlocks.SUGAR_WATER_BLOCK) {
+            return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
+        }
 
-		//outer ring
-		else if(block == Blocks.GRAY_TERRACOTTA) {
-			if(random.nextFloat() < 0.07f) {
-				return new Pair<>(Blocks.COBWEB.getDefaultState(),	true);
-			}
-			else if(random.nextFloat() < 0.4f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-				return new Pair<>(HONEY_CRYSTAL, true);
-			}
-			else {
-				return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
-			}
-		}
-		
-		//inner ring
-		else if(block == Blocks.CYAN_TERRACOTTA) {
-			if(random.nextFloat() < 0.07f) {
-				return new Pair<>(Blocks.COBWEB.getDefaultState(),	true);
-			}
-			else if(random.nextFloat() < 0.3f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-				return new Pair<>(HONEY_CRYSTAL, true);
-			}
-			else {
-				return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
-			}
-		}
-		
-		//center
-		else if(block == Blocks.BLACK_TERRACOTTA) {
-			if(ModChecking.buzzierBeesPresent && Bumblezone.BzConfig.allowScentedCandlesSpiderBeeDungeon.get()) {
-				if(random.nextInt(4) == 0 && world.getBlockState(pos.down()).getMaterial() != Material.AIR)
-					return new Pair<>(BuzzierBeesRedirection.BBGetRandomTier3Candle(
-							random, 
-							Bumblezone.BzConfig.powerfulCandlesRaritySpiderBeeDungeon.get() + 1,
-							random.nextInt(random.nextInt(random.nextInt(3)+1)+1)+1,
-							false,
-							true), 
-							true);
-				
-				else if(random.nextFloat() < 0.3f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-					return new Pair<>(HONEY_CRYSTAL, true);
-				}
-				
-				else if(random.nextFloat() < 0.05f)
-					return new Pair<>(Blocks.COBWEB.getDefaultState(),	true);
-			}
-			else {
-				if(random.nextFloat() < 0.07f) {
-					return new Pair<>(Blocks.COBWEB.getDefaultState(),	true);
-				}
-				else if(random.nextFloat() < 0.4f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-					return new Pair<>(HONEY_CRYSTAL, true);
-				}
-				else {
-					return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
-				}
-			}
-		}
+        //air
+        else if (block.getDefaultState().getMaterial() == Material.AIR) {
+            if (random.nextFloat() < 0.07f)
+                return new Pair<>(Blocks.COBWEB.getDefaultState(), false);
+        }
 
-		//Altar
-		//////////////////////////////////////////////
-		//Misc/air
-		
-		return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
-	}
+        //Shell
+        //////////////////////////////////////////////
+        //Altar
+
+
+        //base
+        else if (block == Blocks.GREEN_TERRACOTTA) {
+            boolean replaceAir = false;
+            if (world.getBlockState(pos.up()).getMaterial() != Material.AIR && !world.getBlockState(pos.up()).isOpaque())
+                replaceAir = true;
+
+            if (random.nextFloat() < 0.15f) {
+                return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), replaceAir);
+            } else {
+                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), replaceAir);
+            }
+        }
+
+        //outer ring
+        else if (block == Blocks.GRAY_TERRACOTTA) {
+            if (random.nextFloat() < 0.07f) {
+                return new Pair<>(Blocks.COBWEB.getDefaultState(), true);
+            } else if (random.nextFloat() < 0.4f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
+                return new Pair<>(HONEY_CRYSTAL, true);
+            } else {
+                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
+            }
+        }
+
+        //inner ring
+        else if (block == Blocks.CYAN_TERRACOTTA) {
+            if (random.nextFloat() < 0.07f) {
+                return new Pair<>(Blocks.COBWEB.getDefaultState(), true);
+            } else if (random.nextFloat() < 0.3f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
+                return new Pair<>(HONEY_CRYSTAL, true);
+            } else {
+                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
+            }
+        }
+
+        //center
+        else if (block == Blocks.BLACK_TERRACOTTA) {
+            if (random.nextFloat() < 0.07f) {
+                return new Pair<>(Blocks.COBWEB.getDefaultState(), true);
+            } else if (random.nextFloat() < 0.4f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
+                return new Pair<>(HONEY_CRYSTAL, true);
+            } else {
+                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
+            }
+        }
+
+        //Altar
+        //////////////////////////////////////////////
+        //Misc/air
+
+        return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
+    }
 
 }

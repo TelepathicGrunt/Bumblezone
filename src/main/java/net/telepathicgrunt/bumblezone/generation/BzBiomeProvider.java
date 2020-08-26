@@ -1,191 +1,118 @@
 package net.telepathicgrunt.bumblezone.generation;
 
+import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.SharedConstants;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.util.registry.RegistryLookupCodec;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.biome.layer.ScaleLayer;
+import net.minecraft.world.biome.layer.type.ParentedLayer;
+import net.minecraft.world.biome.layer.util.*;
+import net.minecraft.world.biome.source.BiomeLayerSampler;
+import net.minecraft.world.biome.source.BiomeSource;
+import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.generation.layer.BzBiomeLayer;
+import net.telepathicgrunt.bumblezone.generation.layer.BzBiomePillarLayer;
+import net.telepathicgrunt.bumblezone.generation.layer.BzBiomeScalePillarLayer;
+import net.telepathicgrunt.bumblezone.mixin.BiomeLayerSamplerAccessor;
+
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 import java.util.function.LongFunction;
 
-import javax.annotation.Nullable;
+public class BzBiomeProvider extends BiomeSource {
+    public static void registerBiomeProvider() {
+        Registry.register(Registry.BIOME_SOURCE, new ResourceLocation(Bumblezone.MODID, "biome_source"), BzBiomeProvider.CODEC);
+    }
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Sets;
+    public static final Codec<BzBiomeProvider> CODEC =
+            RecordCodecBuilder.create((instance) -> instance.group(
+                    Codec.LONG.fieldOf("seed").stable().forGetter((bzBiomeProvider) -> bzBiomeProvider.SEED),
+                    RegistryLookupCodec.of(Registry.BIOME_KEY).forGetter((vanillaLayeredBiomeSource) -> vanillaLayeredBiomeSource.BIOME_REGISTRY))
+            .apply(instance, instance.stable(BzBiomeProvider::new)));
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldType;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.provider.BiomeProvider;
-import net.minecraft.world.gen.IExtendedNoiseRandom;
-import net.minecraft.world.gen.LazyAreaLayerContext;
-import net.minecraft.world.gen.area.IArea;
-import net.minecraft.world.gen.area.IAreaFactory;
-import net.minecraft.world.gen.area.LazyArea;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.layer.Layer;
-import net.minecraft.world.gen.layer.ZoomLayer;
-import net.minecraft.world.gen.layer.traits.IAreaTransformer1;
-import net.telepathicgrunt.bumblezone.biome.BzBiomes;
-import net.telepathicgrunt.bumblezone.generation.layer.BzBiomeLayer;
+    private final BiomeLayerSampler BIOME_SAMPLER;
+    private final long SEED;
+    private final Registry<Biome> BIOME_REGISTRY;
+    public static Registry<Biome> layersBiomeRegistry;
+    private static final List<RegistryKey<Biome>> BIOMES = ImmutableList.of(
+            RegistryKey.of(Registry.BIOME_KEY, new ResourceLocation(Bumblezone.MODID, "hive_pillar")),
+            RegistryKey.of(Registry.BIOME_KEY, new ResourceLocation(Bumblezone.MODID, "hive_wall")),
+            RegistryKey.of(Registry.BIOME_KEY, new ResourceLocation(Bumblezone.MODID, "sugar_water_floor")));
 
 
-public class BzBiomeProvider extends BiomeProvider
-{
-
-	private final Layer genBiomes;
-
-
-	public BzBiomeProvider(long seed, WorldType worldType)
-	{
-		super(BzBiomes.biomes);
-
-		//generates the world and biome layouts
-		Layer[] agenlayer = buildOverworldProcedure(seed, worldType);
-		this.genBiomes = agenlayer[0];
-	}
+    public BzBiomeProvider(long seed, Registry<Biome> biomeRegistry) {
+        super(BIOMES.stream().map((registryKey) -> () -> (Biome)biomeRegistry.method_31140(registryKey)));
+        BzBiomeLayer.setSeed(seed);
+        this.SEED = seed;
+        this.BIOME_REGISTRY = biomeRegistry;
+        BzBiomeProvider.layersBiomeRegistry = biomeRegistry;
+        this.BIOME_SAMPLER = buildWorldProcedure(seed);
+    }
 
 
-	public BzBiomeProvider(World world)
-	{
-		this(world.getSeed(), world.getWorldInfo().getGenerator());
-		BzBiomeLayer.setSeed(world.getSeed());
-	}
+
+    public static <T extends LayerSampler, C extends LayerSampleContext<T>> LayerFactory<T> stack(long seed, ParentedLayer parent, LayerFactory<T> incomingArea, int count, LongFunction<C> contextFactory) {
+        LayerFactory<T> LayerFactory = incomingArea;
+
+        for (int i = 0; i < count; ++i) {
+            LayerFactory = parent.create(contextFactory.apply(seed + (long) i), LayerFactory);
+        }
+
+        return LayerFactory;
+    }
 
 
-	public static <T extends IArea, C extends IExtendedNoiseRandom<T>> IAreaFactory<T> repeat(long seed, IAreaTransformer1 parent, IAreaFactory<T> incomingArea, int count, LongFunction<C> contextFactory)
-	{
-		IAreaFactory<T> iareafactory = incomingArea;
-
-		for (int i = 0; i < count; ++i)
-		{
-			iareafactory = parent.apply(contextFactory.apply(seed + i), iareafactory);
-		}
-		
-		return iareafactory;
-	}
+    public static BiomeLayerSampler buildWorldProcedure(long seed) {
+        LayerFactory<CachingLayerSampler> layerFactory = build((salt) ->
+                new CachingLayerContext(25, seed, salt));
+        return new BiomeLayerSampler(layerFactory);
+    }
 
 
-	public static Layer[] buildOverworldProcedure(long seed, WorldType typeIn)
-	{
-		ImmutableList<IAreaFactory<LazyArea>> immutablelist = buildOverworldProcedure(typeIn, (p_215737_2_) ->
-		{
-			return new LazyAreaLayerContext(25, seed, p_215737_2_);
-		});
-		Layer genlayer = new Layer(immutablelist.get(0));
-		Layer genlayer1 = new Layer(immutablelist.get(1));
-		Layer genlayer2 = new Layer(immutablelist.get(2));
-		return new Layer[] { genlayer, genlayer1, genlayer2 };
-	}
+    public static <T extends LayerSampler, C extends LayerSampleContext<T>> LayerFactory<T> build(LongFunction<C> contextFactory) {
+        LayerFactory<T> layer = BzBiomeLayer.INSTANCE.create(contextFactory.apply(200L));
+        layer = BzBiomePillarLayer.INSTANCE.create(contextFactory.apply(1008L), layer);
+        layer = BzBiomeScalePillarLayer.INSTANCE.create(contextFactory.apply(1055L), layer);
+        layer = ScaleLayer.FUZZY.create(contextFactory.apply(2003L), layer);
+        layer = ScaleLayer.FUZZY.create(contextFactory.apply(2523L), layer);
+        return layer;
+    }
 
 
-	public static <T extends IArea, C extends IExtendedNoiseRandom<T>> ImmutableList<IAreaFactory<T>> buildOverworldProcedure(WorldType worldTypeIn, LongFunction<C> contextFactory)
-	{
-	    IAreaFactory<T> layer = BzBiomeLayer.INSTANCE.apply(contextFactory.apply(200L));
-		layer = ZoomLayer.FUZZY.apply(contextFactory.apply(2000L), layer);
-		layer = ZoomLayer.NORMAL.apply((IExtendedNoiseRandom<T>) contextFactory.apply(1001L), layer);
-		layer = ZoomLayer.NORMAL.apply((IExtendedNoiseRandom<T>) contextFactory.apply(1001L), layer);
-		return ImmutableList.of(layer, layer, layer);
-	}
+    public Biome getBiomeForNoiseGen(int x, int y, int z) {
+        return this.sample(this.BIOME_REGISTRY, x, z);
+    }
 
+    public Biome sample(Registry<Biome> registry, int i, int j) {
+        int k = ((BiomeLayerSamplerAccessor)this.BIOME_SAMPLER).getSampler().sample(i, j);
+        Biome biome = registry.get(k);
+        if (biome == null) {
+            if (SharedConstants.isDevelopment) {
+                throw Util.throwOrPause(new IllegalStateException("Unknown biome id: " + k));
+            } else {
+                return registry.get(Biomes.fromRawId(0));
+            }
+        } else {
+            return biome;
+        }
+    }
 
-	@Override
-	public Set<Biome> getBiomes(int centerX, int centerY, int centerZ, int sideLength)
-	{
-		int i = centerX - sideLength >> 2;
-		int j = centerY - sideLength >> 2;
-		int k = centerZ - sideLength >> 2;
-		int l = centerX + sideLength >> 2;
-		int i1 = centerY + sideLength >> 2;
-		int j1 = centerZ + sideLength >> 2;
-		int k1 = l - i + 1;
-		int l1 = i1 - j + 1;
-		int i2 = j1 - k + 1;
-		Set<Biome> set = Sets.newHashSet();
+    @Override
+    protected Codec<? extends BiomeSource> getCodec() {
+        return CODEC;
+    }
 
-		for (int j2 = 0; j2 < i2; ++j2)
-		{
-			for (int k2 = 0; k2 < k1; ++k2)
-			{
-				for (int l2 = 0; l2 < l1; ++l2)
-				{
-					int xPos = i + k2;
-					int yPos = j + l2;
-					int zPos = k + j2;
-					set.add(this.getNoiseBiome(xPos, yPos, zPos));
-				}
-			}
-		}
-		return set;
-	}
-
-
-	@Nullable
-	public BlockPos locateBiome(int x, int z, int range, List<Biome> biomes, Random random)
-	{
-		int i = x - range >> 2;
-		int j = z - range >> 2;
-		int k = x + range >> 2;
-		int l = z + range >> 2;
-		int i1 = k - i + 1;
-		int j1 = l - j + 1;
-		BlockPos blockpos = null;
-		int k1 = 0;
-
-		for (int l1 = 0; l1 < i1 * j1; ++l1)
-		{
-			int i2 = i + l1 % i1 << 2;
-			int j2 = j + l1 / i1 << 2;
-			if (biomes.contains(this.getNoiseBiome(i2, k1, j2)))
-			{
-				if (blockpos == null || random.nextInt(k1 + 1) == 0)
-				{
-					blockpos = new BlockPos(i2, 0, j2);
-				}
-
-				++k1;
-			}
-		}
-
-		return blockpos;
-	}
-
-
-	@Override
-	public boolean hasStructure(Structure<?> structureIn)
-	{
-		return this.hasStructureCache.computeIfAbsent(structureIn, (structure) ->
-		{
-			for (Biome biome : this.biomes)
-			{
-				if (biome.hasStructure(structure))
-				{
-					return true;
-				}
-			}
-
-			return false;
-		});
-	}
-
-
-	@Override
-	public Set<BlockState> getSurfaceBlocks()
-	{
-		if (this.topBlocksCache.isEmpty())
-		{
-			for (Biome biome : this.biomes)
-			{
-				this.topBlocksCache.add(biome.getSurfaceBuilderConfig().getTop());
-			}
-		}
-
-		return this.topBlocksCache;
-	}
-
-
-	@Override
-	public Biome getNoiseBiome(int x, int y, int z)
-	{
-		return this.genBiomes.func_215738_a(x, z);
-	}
+    @Override
+    @Environment(EnvType.CLIENT)
+    public BiomeSource withSeed(long seed) {
+        return new BzBiomeProvider(seed, this.BIOME_REGISTRY);
+    }
 }

@@ -1,45 +1,32 @@
 {
   "multipart": [
     {
-      "when": {
-        "down": "true"
-      },
+      "when": { "down": "true" },
       "apply": {
-        "model": "the_bumblezone:block/sticky_honey_residue", 
+        "model": "the_bumblezone:block/sticky_honey_residue",
         "y": 180
       }
     },
     {
-      "when": {
-        "up": "true"
-      },
+      "when": { "up": "true" },
       "apply": {
         "model": "the_bumblezone:block/sticky_honey_residue",
         "x": 180
       }
     },
     {
-      "when": {
-        "south": "true"
-      },
-      "apply": {
-        "model": "the_bumblezone:block/sticky_honey_residue",
-        "x": 90
-      }
+      "when": { "south": "true" },
+      "apply": { "model": "the_bumblezone:block/sticky_honey_residue", "x": 90 }
     },
     {
-      "when": {
-        "north": "true"
-      },
+      "when": { "north": "true" },
       "apply": {
         "model": "the_bumblezone:block/sticky_honey_residue",
         "x": 270
       }
     },
     {
-      "when": {
-        "west": "true"
-      },
+      "when": { "west": "true" },
       "apply": {
         "model": "the_bumblezone:block/sticky_honey_residue",
         "x": 90,
@@ -47,9 +34,7 @@
       }
     },
     {
-      "when": {
-        "east": "true"
-      },
+      "when": { "east": "true" },
       "apply": {
         "model": "the_bumblezone:block/sticky_honey_residue",
         "x": 90,

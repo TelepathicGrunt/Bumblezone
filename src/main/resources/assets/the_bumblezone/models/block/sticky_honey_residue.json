@@ -1,20 +1,20 @@
-
 {
-    "ambientocclusion": false,
-    "textures": {
+  "ambientocclusion": false,
+  "textures": {
     "residue": "the_bumblezone:block/sticky_honey_residue",
-	"particle": "the_bumblezone:block/sticky_honey_residue"
-    },
-    "elements": [
-        {   "from": [ 0, 0.2, 0 ],
-            "to": [ 16, 0.2, 16 ],
-            "faces": {
-                "down":  { "texture": "#residue" },
-                "up":    { "texture": "#residue" },
-                "north": { "texture": "#residue", "cullface":"north" },
-                "west":  { "texture": "#residue" },
-                "east":  { "texture": "#residue" }
-            }
-        }
-    ]
+    "particle": "the_bumblezone:block/sticky_honey_residue"
+  },
+  "elements": [
+    {
+      "from": [0, 0.2, 0],
+      "to": [16, 0.2, 16],
+      "faces": {
+        "down": { "texture": "#residue" },
+        "up": { "texture": "#residue" },
+        "north": { "texture": "#residue", "cullface": "north" },
+        "west": { "texture": "#residue" },
+        "east": { "texture": "#residue" }
+      }
+    }
+  ]
 }

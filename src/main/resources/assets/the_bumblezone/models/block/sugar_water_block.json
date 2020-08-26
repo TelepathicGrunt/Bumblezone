@@ -1,6 +1,4 @@
 {
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "the_bumblezone:block/sugar_water_still"
-    }
+  "parent": "block/cube_all",
+  "textures": { "all": "the_bumblezone:block/sugar_water_still" }
 }

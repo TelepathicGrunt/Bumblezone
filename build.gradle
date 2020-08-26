@@ -3,11 +3,14 @@ buildscript {
         maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
         mavenCentral()
+        maven {url='https://dist.creeper.host/Sponge/maven'}
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
+
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
@@ -31,26 +34,26 @@ repositories {
 		name = "ModMaven"
 		url = "https://modmaven.k-4u.nl"
 	}
+    maven {
+        url "https://maven.tterrag.com/"
+    }
 }
 
-version = '1.15.2-1.3.10'
+version = "${mc_version}-${mod_version}"
 group = 'com.telepathicgrunt.bumblezone' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'the_bumblezone'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200515-1.15.1'
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    mappings channel: 'snapshot', version: "${mapping}-mixed-${yarnmcp_version}"
+    //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
     runs {
         client {
             workingDirectory project.file('run')
-
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
 
             mods {
                 examplemod {
@@ -62,25 +65,6 @@ minecraft {
         server {
             workingDirectory project.file('run')
 
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                examplemod {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
-
-            args '--mod', 'the_bumblezone', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources')
-
-            environment 'target', 'fmluserdevdata'
             mods {
                 examplemod {
                     source sourceSets.main
@@ -94,19 +78,35 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.15.2-31.2.31'
+    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
 	// Remove these if you don't have a deps folder with these mods in it 
 	// (some of the jars had to be renamed to make it be imported in dev)
-	implementation fg.deobf("ignored:Abnormals-Core-1.15.2:1.0.6")
-	implementation fg.deobf("ignored:beesourceful:1.2.2")
-	implementation fg.deobf("ignored:Buzzier-Bees-1.15.2:1.5.2")
-	implementation fg.deobf("ignored:potionofbees-1.15.2:1.0.1")
-	implementation fg.deobf("ignored:productivebees-1.15.2:0.1.14")
+	// implementation fg.deobf("ignored:Abnormals-Core-1.15.2:1.0.6")
+	// implementation fg.deobf("ignored:beesourceful:1.2.2")
+	// implementation fg.deobf("ignored:Buzzier-Bees-1.15.2:1.5.2")
+	implementation fg.deobf("ignored:potionofbees-1.16.1:1.0.1.0")
+	implementation fg.deobf("ignored:productivebees-1.16.2:0.2.5")
 
-	compileOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.4:api")
-	runtimeOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.4")
+	compileOnly fg.deobf("mezz.jei:jei-1.16.2:7.1.3.19:api")
+	runtimeOnly fg.deobf("mezz.jei:jei-1.16.2:7.1.3.19")
 	//runtimeOnly fg.deobf("ignored:modname-1.15.2:x.x.x")
+}
+
+
+jar {
+    manifest {
+        attributes([
+            "Specification-Title": "the_bumblezone",
+            "Specification-Vendor": "telepathicgrunt",
+            "Specification-Version": "1", // We are version 1 of ourselves
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"telepathicgrunt",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            "MixinConfigs": "the_bumblezone.mixins.json"
+        ])
+    }
 }
 
 
@@ -150,5 +150,10 @@ processResources {
 
 		println('Minified ' + jsonMinified + ' json files. Saved ' + jsonBytesSaved + ' bytes. Took ' + (System.currentTimeMillis() - jsonMinifyStart) + 'ms.')
 	}
+}
+apply plugin: 'org.spongepowered.mixin'
+
+mixin {
+    add sourceSets.main, "repurposed_structures.refmap.json"
 }
 

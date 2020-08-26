@@ -1,6 +1,4 @@
 {
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "the_bumblezone:block/porous_honeycomb_block"
-    }
+  "parent": "block/cube_all",
+  "textures": { "all": "the_bumblezone:block/porous_honeycomb_block" }
 }

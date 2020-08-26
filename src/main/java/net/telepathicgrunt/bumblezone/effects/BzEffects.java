@@ -1,18 +1,17 @@
 package net.telepathicgrunt.bumblezone.effects;
 
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.telepathicgrunt.bumblezone.utils.RegUtils;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectType;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 
-public class BzEffects
-{
-	public final static Effect WRATH_OF_THE_HIVE = new WrathOfTheHiveEffect(EffectType.HARMFUL, 16748549);
-	
-    public static void registerEffects(RegistryEvent.Register<Effect> event)
-    {
-    	IForgeRegistry<Effect> registry = event.getRegistry();
-    	RegUtils.register(registry, WRATH_OF_THE_HIVE, "wrath_of_the_hive");
+public class BzEffects {
+    public final static StatusEffect WRATH_OF_THE_HIVE = new WrathOfTheHiveEffect(StatusEffectType.HARMFUL, 16748549);
+    public final static StatusEffect PROTECTION_OF_THE_HIVE = new ProtectionOfTheHiveEffect(StatusEffectType.BENEFICIAL, 16570117);
+
+    public static void registerEffects() {
+        Registry.register(Registry.STATUS_EFFECT, new ResourceLocation(Bumblezone.MODID, "wrath_of_the_hive"), WRATH_OF_THE_HIVE);
+        Registry.register(Registry.STATUS_EFFECT, new ResourceLocation(Bumblezone.MODID, "protection_of_the_hive"), PROTECTION_OF_THE_HIVE);
     }
 }

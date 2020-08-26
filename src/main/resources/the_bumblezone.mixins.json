@@ -1,0 +1,49 @@
+{
+  "required": true,
+  "package": "net.telepathicgrunt.bumblezone.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "AbstractFurnaceEntityMixin",
+    "BeeEntityInvoker",
+    "BiomeLayerSamplerAccessor",
+    "BucketItemAccessor",
+    "CookingRecipeSerializerMixin",
+    "DispenserAccessor",
+    "DynamicRegistryManagerAccessor",
+    "EnderpearlImpactMixin",
+    "GlassBottleUseMixin",
+    "HoneyDrinkMixin",
+    "HoneyPickupMixin",
+    "HoneyShieldCooldownMixin",
+    "HoneyShieldDamageMixin",
+    "HoneyShieldDisableMixin",
+    "HoneyShieldEnchantmentMixin",
+    "HoneyShieldItemstackGetMaximumDamageMixin",
+    "HoneyShieldItemstackSetDamageMixin",
+    "HoneyShieldPreferredSlotMixin",
+    "MobHitMixin",
+    "MobSpawnLocationMixin",
+    "PlayerDamagedMixin",
+    "PlayerDamageShieldInvoker",
+    "PlayerDimensionChangeMixin",
+    "PlayerTickMixin",
+    "PlayerInteractsEntityMixin",
+    "PollenedBeeNaturalSpawnMixin",
+    "ProtoChunkAddEntityMixin",
+    "RedstoneDustCanConnectMixin",
+    "SpawnRestrictionAccessor",
+    "StructureAccessorInvoker",
+    "VineBlockAccessor",
+    "WaterEquivalenceMixin",
+    "WorldChunkAddEntityMixin"
+  ],
+  "client": [
+    "BlockOverlayRendererMixin",
+    "MinecraftServerMixin",
+    "SkyPropertiesAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

@@ -3,11 +3,11 @@
   "ingredient": {
 	    "item": "the_bumblezone:honey_crystal_shield"
 	},
-  "result": 
-    {
-        "item": "the_bumblezone:sticky_honey_residue",
-        "count": 5
-    },
-  "experience": 1.85,
-  "cookingtime": 360
+  "result":
+  {
+    "item": "the_bumblezone:sticky_honey_residue",
+    "count": 5
+  },
+  "experience": 1.50,
+  "cookingtime": 600
 }

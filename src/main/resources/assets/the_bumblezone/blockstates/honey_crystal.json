@@ -1,22 +1,22 @@
 {
-    "variants": {
-        "facing=down":  { 
-        	"model": "the_bumblezone:block/honey_crystal", "x": 180 
-        },
-        "facing=up":    { 
-        	"model": "the_bumblezone:block/honey_crystal" 
-        },
-        "facing=north": { 
-        	"model": "the_bumblezone:block/honey_crystal", "x": 90 
-        },
-        "facing=south": { 
-        	"model": "the_bumblezone:block/honey_crystal", "x": 90, "y": 180 
-        },
-        "facing=west":  { 
-        	"model": "the_bumblezone:block/honey_crystal", "x": 90, "y": 270 
-        },
-        "facing=east":  { 
-        	"model": "the_bumblezone:block/honey_crystal", "x": 90, "y": 90 
-        }
+  "variants": {
+    "facing=down": { "model": "the_bumblezone:block/honey_crystal", "x": 180 },
+    "facing=up": { "model": "the_bumblezone:block/honey_crystal" },
+    "facing=north": { "model": "the_bumblezone:block/honey_crystal", "x": 90 },
+    "facing=south": {
+      "model": "the_bumblezone:block/honey_crystal",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west": {
+      "model": "the_bumblezone:block/honey_crystal",
+      "x": 90,
+      "y": 270
+    },
+    "facing=east": {
+      "model": "the_bumblezone:block/honey_crystal",
+      "x": 90,
+      "y": 90
     }
+  }
 }

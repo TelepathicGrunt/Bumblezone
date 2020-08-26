@@ -1,28 +1,26 @@
 package net.telepathicgrunt.bumblezone.features;
 
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.BuiltinRegistries;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.telepathicgrunt.bumblezone.utils.RegUtils;
+import net.telepathicgrunt.bumblezone.Bumblezone;
 
-public class BzFeatures
-{
-    public static Feature<NoFeatureConfig> HONEYCOMB_HOLE = new HoneycombHole(NoFeatureConfig::deserialize);
-    public static Feature<NoFeatureConfig> HONEYCOMB_CAVES = new HoneycombCaves(NoFeatureConfig::deserialize);
-    public static Feature<NoFeatureConfig> CAVE_SUGAR_WATERFALL = new CaveSugarWaterfall(NoFeatureConfig::deserialize);
-    public static Feature<NoFeatureConfig> BEE_DUNGEON = new BeeDungeon(NoFeatureConfig::deserialize);
-    public static Feature<NoFeatureConfig> SPIDER_INFESTED_BEE_DUNGEON = new SpiderInfestedBeeDungeon(NoFeatureConfig::deserialize);
-    public static Feature<NoFeatureConfig> HONEY_CRYSTAL_FEATURE = new HoneyCrystalFeature(NoFeatureConfig::deserialize);
+public class BzFeatures {
+    public static Feature<DefaultFeatureConfig> HONEYCOMB_HOLE = new HoneycombHole(DefaultFeatureConfig.CODEC);
+    public static Feature<DefaultFeatureConfig> HONEYCOMB_CAVES = new HoneycombCaves(DefaultFeatureConfig.CODEC);
+    public static Feature<DefaultFeatureConfig> CAVE_SUGAR_WATERFALL = new CaveSugarWaterfall(DefaultFeatureConfig.CODEC);
+    public static Feature<DefaultFeatureConfig> BEE_DUNGEON = new BeeDungeon(DefaultFeatureConfig.CODEC);
+    public static Feature<DefaultFeatureConfig> SPIDER_INFESTED_BEE_DUNGEON = new SpiderInfestedBeeDungeon(DefaultFeatureConfig.CODEC);
+    public static Feature<DefaultFeatureConfig> HONEY_CRYSTAL_FEATURE = new HoneyCrystalFeature(DefaultFeatureConfig.CODEC);
 
-    public static void registerFeatures(RegistryEvent.Register<Feature<?>> event)
-    {
-    	IForgeRegistry<Feature<?>> registry = event.getRegistry();
-    	RegUtils.register(registry, HONEYCOMB_HOLE, "honeycomb_hole");
-    	RegUtils.register(registry, HONEYCOMB_CAVES, "honeycomb_caves");
-    	RegUtils.register(registry, CAVE_SUGAR_WATERFALL, "cave_sugar_waterfall");
-    	RegUtils.register(registry, BEE_DUNGEON, "bee_dungeon");
-    	RegUtils.register(registry, SPIDER_INFESTED_BEE_DUNGEON, "spider_infested_bee_dungeon");
-    	RegUtils.register(registry, HONEY_CRYSTAL_FEATURE, "honey_crystal_feature");
+    public static void registerFeatures() {
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "honeycomb_holes"), HONEYCOMB_HOLE);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "honeycomb_caves"), HONEYCOMB_CAVES);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "cave_sugar_waterfall"), CAVE_SUGAR_WATERFALL);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "bee_dungeon"), BEE_DUNGEON);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "spider_infested_bee_dungeon"), SPIDER_INFESTED_BEE_DUNGEON);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "honey_crystal_feature"), HONEY_CRYSTAL_FEATURE);
     }
 }
