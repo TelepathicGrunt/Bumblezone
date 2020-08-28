@@ -84,10 +84,7 @@ public class BzPlayerPlacement {
         double coordinateScale = destination.getDimension().getCoordinateScale();
         BlockPos blockpos;
         BlockPos validBlockPos = null;
-        Map<Integer, Integer> map = new HashMap<>();
-        map.merge(3, 4, (v1, v2) -> {
-            throw new IllegalArgumentException("Duplicate key '" + 3 + "'.");
-        });
+
         if (Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode != 2 || Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZPos() == null) {
             blockpos = new BlockPos(
                     Doubles.constrainToRange(playerEntity.getPos().getX() * coordinateScale, -29999936D, 29999936D),
