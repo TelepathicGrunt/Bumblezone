@@ -47,16 +47,16 @@ public class GlassBottleDispenseBehavior extends ItemDispenserBehavior {
                 // do nothing if front is blocked off
                 if (!world.getBlockState(blockpos).getMaterial().isSolid()) {
                     MobEntity beeEntity = EntityType.BEE.create(world);
-                    beeEntity.refreshPositionAndAngles(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, world.getRandom().nextFloat() * 360.0F, 0.0F);
-                    beeEntity.initialize(world, world.getLocalDifficulty(new BlockPos(beeEntity.getPos())), SpawnReason.TRIGGERED, null, (CompoundTag) null);
-                    world.spawnEntity(beeEntity);
+                    beeEntity.setLocationAndAngles(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, world.getRandom().nextFloat() * 360.0F, 0.0F);
+                    beeEntity.initialize(world, world.getDifficultyForLocation(new BlockPos(beeEntity.getPos())), SpawnReason.TRIGGERED, null, (CompoundTag) null);
+                    world.addEntity(beeEntity);
 
                 }
             }
 
             // kill the brood block
             world.setBlockState(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
-                    .with(Properties.FACING, blockstate.get(Properties.FACING)));
+                    .with(BlockStateProperties.FACING, blockstate.get(BlockStateProperties.FACING)));
             stack.decrement(1);
 
             if (!stack.isEmpty())
@@ -96,7 +96,7 @@ public class GlassBottleDispenseBehavior extends ItemDispenserBehavior {
      */
     @Override
     protected void playSound(BlockPointer source) {
-        source.getWorld().syncWorldEvent(1002, source.getBlockPos(), 0);
+        source.getWorld().playEvent(1002, source.getBlockPos(), 0);
     }
 
 

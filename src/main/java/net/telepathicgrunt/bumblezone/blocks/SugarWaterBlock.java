@@ -1,32 +1,31 @@
 package net.telepathicgrunt.bumblezone.blocks;
 
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.FluidBlock;
-import net.minecraft.block.Material;
+import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.effect.EffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.fluid.FlowableFluid;
+import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.tag.FluidTags;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 
-public class SugarWaterBlock extends FluidBlock {
+public class SugarWaterBlock extends FlowingFluidBlock {
 
-    public SugarWaterBlock(FlowableFluid baseFluid) {
-        super(baseFluid, Block.Properties.create(Material.WATER).noCollision().hardnessAndResistance(100.0F, 100.0F).dropsNothing()).velocityMultiplier(0.95F));
+    public SugarWaterBlock(FlowingFluid baseFluid) {
+        super(baseFluid, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F, 100.0F).noDrops().velocityMultiplier(0.95F));
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         if (this.receiveNeighborFluids(world, pos, state)) {
-            world.getFluidTickScheduler().schedule(pos, state.getFluidState().getFluid(), this.fluid.getTickRate(world));
+            world.getPendingFluidTicks().scheduleTick(pos, state.getFluidState().getFluid(), this.getFluid().getTickRate(world));
         }
     }
 
@@ -34,7 +33,7 @@ public class SugarWaterBlock extends FluidBlock {
         boolean flag = false;
 
         for (Direction direction : Direction.values()) {
-            if (direction != Direction.DOWN && world.getFluidState(pos.offset(direction)).isIn(FluidTags.LAVA)) {
+            if (direction != Direction.DOWN && world.getFluidState(pos.offset(direction)).isTagged(FluidTags.LAVA)) {
                 flag = true;
                 break;
             }
@@ -42,13 +41,13 @@ public class SugarWaterBlock extends FluidBlock {
 
         if (flag) {
             FluidState ifluidstate = world.getFluidState(pos);
-            if (ifluidstate.isStill()) {
+            if (ifluidstate.isSource()) {
                 world.setBlockState(pos, BzBlocks.SUGAR_INFUSED_STONE.getDefaultState());
                 this.triggerMixEffects(world, pos);
                 return false;
             }
 
-            if (ifluidstate.getHeight(world, pos) >= 0.44444445F) {
+            if (ifluidstate.getActualHeight(world, pos) >= 0.44444445F) {
                 world.setBlockState(pos, BzBlocks.SUGAR_INFUSED_COBBLESTONE.getDefaultState());
                 this.triggerMixEffects(world, pos);
                 return false;
@@ -68,13 +67,18 @@ public class SugarWaterBlock extends FluidBlock {
         if (entity instanceof BeeEntity) {
             BeeEntity beeEntity = ((BeeEntity) entity);
             if (beeEntity.hurtTime == 0)
-                beeEntity.addPotionEffect(new EffectInstance(StatusEffects.REGENERATION, 4, 0, false, false));
+                beeEntity.addPotionEffect(new EffectInstance(
+                        Effects.REGENERATION,
+                        4,
+                        0,
+                        false,
+                        false));
         }
 
         super.onEntityCollision(state, world, position, entity);
     }
 
     private void triggerMixEffects(World world, BlockPos pos) {
-        world.syncWorldEvent(1501, pos, 0);
+        world.playEvent(1501, pos, 0);
     }
 }

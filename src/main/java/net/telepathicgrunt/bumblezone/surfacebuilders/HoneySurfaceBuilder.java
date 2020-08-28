@@ -45,7 +45,7 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<TernarySurfaceConfig> {
                     if (ypos <= 40 + 2 + Math.max(noise, 0) + random.nextInt(2)) {
                         chunkIn.setBlockState(blockpos$Mutable, FILLED_POROUS_HONEYCOMB, false);
                     }
-                } else if (currentBlockState.isAir()) {
+                } else if (currentBlockState.isAirBlock()) {
                     if (ypos < 40) {
                         chunkIn.setBlockState(blockpos$Mutable, defaultFluid, false);
                     }

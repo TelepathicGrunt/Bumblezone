@@ -19,7 +19,7 @@ public class PlayerTickMixin {
 
         BeeAggression.playerTick(playerEntity);
 
-        if(!playerEntity.world.isClient)
+        if(!playerEntity.world.isRemote)
             PlayerTeleportation.playerTick(playerEntity);
     }
 }

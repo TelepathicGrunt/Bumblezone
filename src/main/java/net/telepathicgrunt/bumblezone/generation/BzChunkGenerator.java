@@ -128,7 +128,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         this.upperInterpolatedNoise = new OctavePerlinNoiseSampler(this.random, IntStream.rangeClosed(-15, 0));
         this.interpolationNoise = new OctavePerlinNoiseSampler(this.random, IntStream.rangeClosed(-7, 0));
         this.surfaceDepthNoise = new OctaveSimplexNoiseSampler(this.random, IntStream.rangeClosed(-3, 0));
-        this.random.consume(2620);
+        this.rand.consume(2620);
         this.field_24776 = new OctavePerlinNoiseSampler(this.random, IntStream.rangeClosed(-15, 0));
     }
 
@@ -265,7 +265,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public BlockView getColumnSample(int x, int z) {
+    public IBlockReader getColumnSample(int x, int z) {
         BlockState[] blockStates = new BlockState[this.noiseSizeY * this.verticalNoiseResolution];
         this.sampleHeightmap(x, z, blockStates, null);
         return new VerticalBlockSample(blockStates);
@@ -347,7 +347,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public void populateNoise(WorldAccess world, StructureAccessor accessor, Chunk chunk) {
+    public void populateNoise(IWorld world, StructureAccessor accessor, Chunk chunk) {
         ObjectList<StructurePiece> objectList = new ObjectArrayList<>(10);
         ObjectList<JigsawJunction> objectList2 = new ObjectArrayList<>(32);
         ChunkPos chunkPos = chunk.getPos();
@@ -639,12 +639,12 @@ public class BzChunkGenerator extends ChunkGenerator {
                     continue;
                 }
 
-                entity.refreshPositionAndAngles(xLength, height, zLength, sharedseedrandom.nextFloat() * 360.0F, 0.0F);
+                entity.setLocationAndAngles(xLength, height, zLength, sharedseedrandom.nextFloat() * 360.0F, 0.0F);
                 if (entity instanceof MobEntity) {
                     MobEntity mobentity = (MobEntity) entity;
                     if (mobentity.canSpawn(region, SpawnReason.CHUNK_GENERATION) && mobentity.canSpawn(region)) {
-                        mobentity.initialize(region, region.getLocalDifficulty(new BlockPos(mobentity.getPos())), SpawnReason.CHUNK_GENERATION, null, null);
-                        region.spawnEntity(mobentity);
+                        mobentity.initialize(region, region.getDifficultyForLocation(new BlockPos(mobentity.getPos())), SpawnReason.CHUNK_GENERATION, null, null);
+                        region.addEntity(mobentity);
                     }
                 }
             }

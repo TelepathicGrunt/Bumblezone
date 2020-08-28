@@ -5,7 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.StructureIWorld;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
@@ -150,7 +150,7 @@ public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
 
 
     @Override
-    public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
+    public boolean generate(StructureIWorld world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
         setSeed(world.getSeed());
         BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable().set(position);
 
@@ -180,7 +180,7 @@ public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
     }
 
 
-    private static void hexagon(StructureWorldAccess world, ChunkGenerator generator, BlockPos position, Random random, double noise) {
+    private static void hexagon(StructureIWorld world, ChunkGenerator generator, BlockPos position, Random random, double noise) {
         BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable().set(position);
         BlockState blockState;
         int index = (int) (((noise * 0.5D) + 0.5D) * 7);
@@ -203,7 +203,7 @@ public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
         }
     }
 
-    private static void carveAtBlock(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos blockPos, BlockState blockState, int posResult) {
+    private static void carveAtBlock(StructureIWorld world, ChunkGenerator generator, Random random, BlockPos blockPos, BlockState blockState, int posResult) {
         if (blockPos.getY() < generator.getSeaLevel() || !isNextToLiquidOrAir(world, generator, blockPos)) {
             if (posResult == 2) {
                 if (blockPos.getY() < 40) {
@@ -221,7 +221,7 @@ public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
         }
     }
 
-    private static boolean isNextToLiquidOrAir(StructureWorldAccess world, ChunkGenerator generator, BlockPos pos) {
+    private static boolean isNextToLiquidOrAir(StructureIWorld world, ChunkGenerator generator, BlockPos pos) {
         BlockState blockState;
         for (Direction direction : Direction.values()) {
             blockState = world.getBlockState(pos.offset(direction));

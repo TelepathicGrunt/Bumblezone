@@ -18,8 +18,8 @@ public class FloatGoal extends Goal {
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
-    public boolean canStart() {
-        return (this.slime.isTouchingWater() || this.slime.isInLava()) && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
+    public boolean shouldExecute() {
+        return (this.slime.isTouchingWater() || this.slime.isInLava()) && this.slime.getMoveHelper() instanceof HoneySlimeMoveHelperController;
     }
 
     /**
@@ -30,6 +30,6 @@ public class FloatGoal extends Goal {
             this.slime.getJumpControl().setActive();
         }
 
-        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setSpeed(1.2D);
+        ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setSpeed(1.2D);
     }
 }

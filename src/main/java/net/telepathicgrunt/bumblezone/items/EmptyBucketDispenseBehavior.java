@@ -33,7 +33,7 @@ public class EmptyBucketDispenseBehavior extends ItemDispenserBehavior {
         if (blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL && blockstate.get(Properties.WATERLOGGED)) {
 
             world.setBlockState(position, BzBlocks.HONEY_CRYSTAL.getDefaultState()
-                    .with(Properties.FACING, blockstate.get(Properties.FACING))
+                    .with(BlockStateProperties.FACING, blockstate.get(BlockStateProperties.FACING))
                     .with(Properties.WATERLOGGED, false));
 
             stack.decrement(1);
@@ -55,7 +55,7 @@ public class EmptyBucketDispenseBehavior extends ItemDispenserBehavior {
      */
     @Override
     protected void playSound(BlockPointer source) {
-        source.getWorld().syncWorldEvent(1002, source.getBlockPos(), 0);
+        source.getWorld().playEvent(1002, source.getBlockPos(), 0);
     }
 
 

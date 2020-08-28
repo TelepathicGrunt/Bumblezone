@@ -5,15 +5,15 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.Properties;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockView;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,17 +21,17 @@ import java.util.Map;
 import java.util.Random;
 
 public class StickyHoneyRedstone extends StickyHoneyResidue {
-    public static final BooleanProperty POWERED = Properties.POWERED;
-    protected static final Box DOWN_REAL_AABB = new Box(0.0D, 0.0D, 0.0D, 1D, 0.2D, 1D);
-    protected static final Box UP_REAL_AABB = new Box(0.0D, 0.8D, 0.0D, 1D, 1D, 1D);
-    protected static final Box NORTH_REAL_AABB = new Box(0.0D, 0.0D, 0.0D, 1D, 1D, 0.2D);
-    protected static final Box EAST_REAL_AABB = new Box(0.8D, 0.0D, 0.0D, 1D, 1D, 1D);
-    protected static final Box WEST_REAL_AABB = new Box(0.0D, 0.0D, 0.0D, 0.2D, 1D, 1D);
-    protected static final Box SOUTH_REAL_AABB = new Box(0.0D, 0.0D, 0.2D, 1D, 1D, 1D);
-    public static final Map<Direction, Box> FACING_TO_AABB_MAP;
+    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    protected static final AxisAlignedBB DOWN_REAL_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.2D, 1D);
+    protected static final AxisAlignedBB UP_REAL_AABB = new AxisAlignedBB(0.0D, 0.8D, 0.0D, 1D, 1D, 1D);
+    protected static final AxisAlignedBB NORTH_REAL_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 1D, 0.2D);
+    protected static final AxisAlignedBB EAST_REAL_AABB = new AxisAlignedBB(0.8D, 0.0D, 0.0D, 1D, 1D, 1D);
+    protected static final AxisAlignedBB WEST_REAL_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.2D, 1D, 1D);
+    protected static final AxisAlignedBB SOUTH_REAL_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.2D, 1D, 1D, 1D);
+    public static final Map<Direction, AxisAlignedBB> FACING_TO_AABB_MAP;
 
     static {
-        Map<Direction, Box> map = new HashMap<Direction, Box>();
+        Map<Direction, AxisAlignedBB> map = new HashMap<Direction, AxisAlignedBB>();
 
         map.put(Direction.DOWN, DOWN_REAL_AABB);
         map.put(Direction.UP, UP_REAL_AABB);
@@ -88,7 +88,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     /**
      * Notifies blocks that this block is attached to of changes
      */
-    protected void updateNeighbors(BlockState blockstate, World world, BlockPos pos) {
+    protected void neighborChangeds(BlockState blockstate, World world, BlockPos pos) {
         if (blockstate.getBlock() != BzBlocks.STICKY_HONEY_REDSTONE)
             return;
 
@@ -99,7 +99,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         for (Direction direction : Direction.values()) {
             BooleanProperty booleanproperty = StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(direction);
             if (blockstate.get(booleanproperty)) {
-                world.updateNeighborsAlways(pos.offset(direction), this);
+                world.notifyNeighborsOfStateChange(pos.offset(direction), this);
             }
         }
     }
@@ -113,12 +113,12 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         if (oldRedstoneStrength != newPower) {
             BlockState newBlockstate = this.setRedstoneStrength(oldBlockstate, newPower);
             world.setBlockState(pos, newBlockstate, 2);
-            this.updateNeighbors(oldBlockstate, world, pos);
-            world.onBlockChanged(pos, oldBlockstate, newBlockstate);
+            this.neighborChangeds(oldBlockstate, world, pos);
+            world.onBlockStateChange(pos, oldBlockstate, newBlockstate);
         }
 
         if (flag1) {
-            world.getBlockTickScheduler().schedule(new BlockPos(pos), this, this.getTickRate());
+            world.getPendingBlockTicks().scheduleTick(new BlockPos(pos), this, this.getTickRate());
         }
     }
 
@@ -127,13 +127,13 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      */
     @SuppressWarnings("deprecation")
     @Override
-    public void onStateReplaced(BlockState blockstate, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onReplaced(BlockState blockstate, World world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!isMoving && blockstate.getBlock() != newState.getBlock()) {
             if (blockstate.get(POWERED)) {
                 this.updateTarget(world, pos, blockstate);
             }
 
-            super.onStateReplaced(blockstate, world, pos, newState, false);
+            super.onReplaced(blockstate, world, pos, newState, false);
         }
     }
 
@@ -145,15 +145,15 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         for (Direction direction : Direction.values()) {
             if (blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(direction))) {
                 BlockPos blockPos = pos.offset(direction);
-                world.updateNeighbor(blockPos, this, pos);
-                world.updateNeighborsExcept(blockPos, this, direction);
+                world.neighborChanged(blockPos, this, pos);
+                world.notifyNeighborsOfStateExcept(blockPos, this, direction);
             }
         }
     }
 
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         if (this.computeRedstoneStrength(state, world, pos) > 0) {
-            world.getBlockTickScheduler().schedule(pos, this, 1);
+            world.getPendingBlockTicks().scheduleTick(pos, this, 1);
         }
 
     }
@@ -166,7 +166,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      * Tells game that this block can generate a Redstone signal
      */
     @Override
-    public boolean emitsRedstonePower(BlockState state) {
+    public boolean canProvidePower(BlockState state) {
         return true;
     }
 
@@ -174,10 +174,10 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      * Powers the block it's attached to. Or powers blocks next to if it's on the floor
      */
     @Override
-    public int getWeakRedstonePower(BlockState blockstate, BlockView blockAccess, BlockPos pos, Direction side) {
+    public int getWeakPower(BlockState blockstate, IBlockReader blockAccess, BlockPos pos, Direction side) {
         //power nearby blocks if on floor
         if (blockstate.get(POWERED) && blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
-            for (Direction horizontal : Direction.Type.HORIZONTAL) {
+            for (Direction horizontal : Direction.Plane.HORIZONTAL) {
                 if(horizontal == side) {
                     return 1;
                 }
@@ -192,8 +192,8 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      * Powers through the block that it is attached to.
      */
     @Override
-    public int getStrongRedstonePower(BlockState blockstate, BlockView blockAccess, BlockPos pos, Direction side) {
-        return getWeakRedstonePower(blockstate, blockAccess, pos, side);
+    public int getStrongPower(BlockState blockstate, IBlockReader blockAccess, BlockPos pos, Direction side) {
+        return getWeakPower(blockstate, blockAccess, pos, side);
     }
 
 
@@ -209,7 +209,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      */
     protected int computeRedstoneStrength(BlockState blockstate, World world, BlockPos pos) {
 
-        Box axisalignedbb = getOutlineShape(blockstate, world, pos, null).getBoundingBox().offset(pos);
+        AxisAlignedBB axisalignedbb = getShape(blockstate, world, pos, null).getBoundingBox().offset(pos);
         List<? extends Entity> list = world.getEntitiesIncludingUngeneratedChunks(LivingEntity.class, axisalignedbb);
 
         if (!list.isEmpty()) {

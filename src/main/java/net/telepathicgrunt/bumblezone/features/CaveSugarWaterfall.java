@@ -6,7 +6,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.StructureIWorld;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
@@ -24,7 +24,7 @@ public class CaveSugarWaterfall extends Feature<DefaultFeatureConfig> {
     }
 
     @Override
-    public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
+    public boolean generate(StructureIWorld world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
         //creates a waterfall
         BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position);
         BlockState blockstate = world.getBlockState(blockpos$Mutable.up());
@@ -59,7 +59,7 @@ public class CaveSugarWaterfall extends Feature<DefaultFeatureConfig> {
             //position valid. begin making waterfall
             if (numberOfSolidSides == neededNumberOfSides) {
                 world.setBlockState(blockpos$Mutable, BzBlocks.SUGAR_WATER_BLOCK.getDefaultState(), 2);
-                world.getFluidTickScheduler().schedule(blockpos$Mutable, BzBlocks.SUGAR_WATER_FLUID, 0);
+                world.getPendingFluidTicks().schedule(blockpos$Mutable, BzBlocks.SUGAR_WATER_FLUID, 0);
             }
             return true;
         }

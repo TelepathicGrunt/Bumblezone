@@ -1,23 +1,23 @@
 package net.telepathicgrunt.bumblezone.capabilities;
 
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3d;
 
 public interface IPlayerPosAndDim {
 
 	//what methods the capability will have and what the capability is
 	
-	void setNonBZDim(DimensionType incomingDim);
-	void setDestDim(DimensionType incomingDim);
+	void setNonBZDim(ResourceLocation incomingDim);
+	void setDestDim(ResourceLocation incomingDim);
 	void setTeleporting(boolean teleporting);
 
-	DimensionType getNonBZDim();
-	DimensionType getDestDim();
+	ResourceLocation getNonBZDim();
+	ResourceLocation getDestDim();
 	boolean getTeleporting();
 
-	void setNonBZPos(Vec3d incomingPos);
-	Vec3d getNonBZPos();
+	void setNonBZPos(Vector3d incomingPos);
+	Vector3d getNonBZPos();
 	void setNonBZPitch(float incomingPitch);
 	float getNonBZPitch();
 	void setNonBZYaw(float incomingYaw);

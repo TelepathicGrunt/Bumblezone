@@ -22,7 +22,7 @@ public class BeeInteractivity {
 
     // heal bees with sugar water bottle or honey bottle
     public static void beeFeeding(World world, PlayerEntity playerEntity, Hand hand, Entity target) {
-        if (!world.isClient && target instanceof BeeEntity) {
+        if (!world.isRemote && target instanceof BeeEntity) {
 
             BeeEntity beeEntity = (BeeEntity) target;
             ItemStack itemstack = playerEntity.getStackInHand(hand);

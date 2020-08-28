@@ -15,12 +15,12 @@ public class FacingRevengeGoal extends RevengeGoal {
         this.slime = slimeIn;
         this.setControls(EnumSet.of(Goal.Control.LOOK));
     }
-    public boolean shouldContinue() {
-        return slime.getTarget() != null && super.shouldContinue();
+    public boolean shouldContinueExecuting() {
+        return slime.getTarget() != null && super.shouldContinueExecuting();
     }
 
     public void tick() {
         this.slime.lookAtEntity(this.slime.getTarget(), 10.0F, 10.0F);
-        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.yaw, this.slime.canDamagePlayer());
+        ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setDirection(this.slime.rotationYaw, this.slime.canDamagePlayer());
     }
 }

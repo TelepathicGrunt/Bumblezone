@@ -17,14 +17,14 @@ public class HopGoal extends Goal {
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
-    public boolean canStart() {
-        return !this.slime.hasVehicle() && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
+    public boolean shouldExecute() {
+        return !this.slime.hasVehicle() && this.slime.getMoveHelper() instanceof HoneySlimeMoveHelperController;
     }
 
     /**
      * Keep ticking a continuous task that has already been started
      */
     public void tick() {
-        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setSpeed(1.0D);
+        ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setSpeed(1.0D);
     }
 }

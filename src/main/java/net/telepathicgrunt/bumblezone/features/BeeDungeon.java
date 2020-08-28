@@ -19,8 +19,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.BitSetVoxelSet;
 import net.minecraft.util.shape.VoxelSet;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.IServerWorld;
+import net.minecraft.world.StructureIWorld;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
@@ -43,7 +43,7 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
     }
 
     @Override
-    public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
+    public boolean generate(StructureIWorld world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
         //affect rarity
         if (Bumblezone.BZ_CONFIG.BZDungeonsConfig.beeDungeonRarity >= 1000 ||
             random.nextInt(Bumblezone.BZ_CONFIG.BZDungeonsConfig.beeDungeonRarity) != 0) return false;
@@ -54,7 +54,7 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
         return generateShell(world, blockpos$Mutable);
     }
 
-    protected boolean generateShell(ServerWorldAccess world, BlockPos.Mutable blockpos$Mutable){
+    protected boolean generateShell(IServerWorld world, BlockPos.Mutable blockpos$Mutable){
 
         StructureManager structureManager = world.toServerWorld().getStructureManager();
         Structure structure = structureManager.getStructureOrBlank(new ResourceLocation(Bumblezone.MODID + ":bee_dungeon/shell"));
@@ -78,7 +78,7 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
     /**
      * Adds blocks and entities from this structure to the given world.
      */
-    public void addBlocksToWorld(Structure structure, ServerWorldAccess world, BlockPos pos, StructurePlacementData placementIn, int flags) {
+    public void addBlocksToWorld(Structure structure, IServerWorld world, BlockPos pos, StructurePlacementData placementIn, int flags) {
         StructureAccessorInvoker structureAccessor = ((StructureAccessorInvoker) structure);
         if (!structureAccessor.getBlocks().isEmpty()) {
             List<Structure.StructureBlockInfo> list = placementIn.getRandomBlockInfos(structureAccessor.getBlocks(), pos).getAll();
@@ -196,7 +196,7 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
         }
     }
 
-    protected static void placeBlocks(ServerWorldAccess world, StructurePlacementData placementIn, int flags, List<Pair<BlockPos, CompoundTag>> list2) {
+    protected static void placeBlocks(IServerWorld world, StructurePlacementData placementIn, int flags, List<Pair<BlockPos, CompoundTag>> list2) {
         for (Pair<BlockPos, CompoundTag> pair : list2) {
             BlockPos blockpos4 = pair.getFirst();
             if (!placementIn.shouldUpdateNeighbors()) {
@@ -218,7 +218,7 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
         }
     }
 
-    protected static void setVoxelShapeParts(ServerWorldAccess world, int flags, List<Pair<BlockPos, CompoundTag>> list2, int x, int y, int z, VoxelSet voxelshapepart) {
+    protected static void setVoxelShapeParts(IServerWorld world, int flags, List<Pair<BlockPos, CompoundTag>> list2, int x, int y, int z, VoxelSet voxelshapepart) {
         for (Pair<BlockPos, CompoundTag> pair1 : list2) {
             BlockPos blockpos5 = pair1.getFirst();
             voxelshapepart.set(blockpos5.getX() - x, blockpos5.getY() - y, blockpos5.getZ() - z, true, true);
@@ -233,7 +233,7 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
      *
      * @return - a pair of the blockstate to use and whether this block can replace air
      */
-    private static Pair<BlockState, Boolean> blockConversion(ServerWorldAccess world, BlockPos pos, Block block, Random random) {
+    private static Pair<BlockState, Boolean> blockConversion(IServerWorld world, BlockPos pos, Block block, Random random) {
         //////////////////////////////////////////////
         //Shell
 
@@ -305,7 +305,7 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
 
         //sugar water stream
         else if (block == BzBlocks.SUGAR_WATER_BLOCK) {
-            if (random.nextFloat() < 0.1f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
+            if (random.nextFloat() < 0.1f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
                 return new Pair<>(HONEY_CRYSTAL.with(HoneyCrystal.WATERLOGGED, true), false);
             } else {
                 return new Pair<>(block.getDefaultState(), false);
@@ -332,10 +332,10 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
 
         //outer ring
         else if (block == Blocks.GRAY_TERRACOTTA) {
-            if (random.nextFloat() < 0.4f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
+            if (random.nextFloat() < 0.4f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
                 return new Pair<>(HONEY_CRYSTAL, true);
             } else {
-                if (random.nextFloat() < 0.2f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
+                if (random.nextFloat() < 0.2f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
                     return new Pair<>(HONEY_CRYSTAL, true);
                 } else {
                     return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
@@ -345,7 +345,7 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
 
         //inner ring
         else if (block == Blocks.CYAN_TERRACOTTA) {
-            if (random.nextFloat() < 0.35f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
+            if (random.nextFloat() < 0.35f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
                 return new Pair<>(HONEY_CRYSTAL, true);
             } else {
                 return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
@@ -354,7 +354,7 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
 
         //center
         else if (block == Blocks.BLACK_TERRACOTTA) {
-            if (random.nextFloat() < 0.6f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
+            if (random.nextFloat() < 0.6f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
                 return new Pair<>(HONEY_CRYSTAL, true);
             } else {
                 return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);

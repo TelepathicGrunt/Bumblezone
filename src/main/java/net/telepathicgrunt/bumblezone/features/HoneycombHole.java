@@ -6,8 +6,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.IServerWorld;
+import net.minecraft.world.StructureIWorld;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
@@ -87,7 +87,7 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig> {
     }
 
     @Override
-    public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
+    public boolean generate(StructureIWorld world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
         BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable().set(position);
 
         generateSlice(world, mutableBlockPos, endCapLayout, random, true);
@@ -106,7 +106,7 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig> {
         return true;
     }
 
-    private void generateSlice(ServerWorldAccess world, BlockPos.Mutable centerPos, int[][] slice, Random random, boolean westEnd) {
+    private void generateSlice(IServerWorld world, BlockPos.Mutable centerPos, int[][] slice, Random random, boolean westEnd) {
         //move to the position where the corner of the slice will begin at
         BlockPos.Mutable currentPosition = new BlockPos.Mutable().set(centerPos.add(-5, slice.length / 2, -slice[0].length / 2));
         BlockState blockState;

@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.Text;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.hit.HitResult;
@@ -52,7 +52,7 @@ public class PlayerTeleportation {
     }
 
     private static void teleportOutOfBz(PlayerEntity playerEntity) {
-        if (!playerEntity.world.isClient) {
+        if (!playerEntity.world.isRemote) {
             checkAndCorrectStoredDimension(playerEntity);
             MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
             RegistryKey<World> world_key = RegistryKey.of(Registry.DIMENSION, Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension());
@@ -106,7 +106,7 @@ public class PlayerTeleportation {
         World world = pearlEntity.world; // world we threw in
 
         //Make sure we are on server by checking if thrower is ServerPlayerEntity
-        if (!world.isClient && pearlEntity.getOwner() instanceof ServerPlayerEntity) {
+        if (!world.isRemote && pearlEntity.getOwner() instanceof ServerPlayerEntity) {
             ServerPlayerEntity playerEntity = (ServerPlayerEntity) pearlEntity.getOwner(); // the thrower
             Vec3d hitBlockPos = hitResult.getPos(); //position of the collision
             BlockPos hivePos = new BlockPos(0,0,0);
@@ -154,8 +154,8 @@ public class PlayerTeleportation {
                         //failed. Block below isn't the required block
                         String beeBlock = Registry.BLOCK.getId(world.getBlockState(hivePos).getBlock()).toString();
                         Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: The block under the "+beeBlock+" is not the correct block to teleport to Bumblezone. The config enter says it needs "+requiredBlockString+" under "+beeBlock+".");
-                        Text message = new LiteralText("The config entry says it needs §6"+requiredBlockString+"§f under §6"+beeBlock+"§f.");
-                        playerEntity.sendMessage(message, true);
+                        Text message = new StringTextComponent("The config entry says it needs §6"+requiredBlockString+"§f under §6"+beeBlock+"§f.");
+                        playerEntity.sendStatusMessage(message, true);
                         return false;
                     }
                 }
@@ -163,8 +163,8 @@ public class PlayerTeleportation {
                 {
                     //failed. the required block config entry is broken
                     Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: The required block under beenest config is broken. Please specify a resourcelocation to a real block or leave it blank so that players can teleport to Bumblezone dimension. Currently, the broken config has this in it: "+requiredBlockString);
-                    Text message = new LiteralText("§eBumblezone:§f The required block under beenest config is broken. Please specify a resourcelocation to a real block or leave it blank so that players can teleport to Bumblezone dimension. Currently, the broken config has this in it: §c"+requiredBlockString);
-                    playerEntity.sendMessage(message, true);
+                    Text message = new StringTextComponent("§eBumblezone:§f The required block under beenest config is broken. Please specify a resourcelocation to a real block or leave it blank so that players can teleport to Bumblezone dimension. Currently, the broken config has this in it: §c"+requiredBlockString);
+                    playerEntity.sendStatusMessage(message, true);
                     return false;
                 }
             }

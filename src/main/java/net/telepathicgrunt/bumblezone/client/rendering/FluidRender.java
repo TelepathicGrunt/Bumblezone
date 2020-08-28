@@ -1,82 +1,53 @@
 package net.telepathicgrunt.bumblezone.client.rendering;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
-import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
-import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.texture.SpriteAtlasTexture;
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldVertexBufferUploader;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.resource.ResourceType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.BlockRenderView;
+import net.minecraftforge.client.event.RenderBlockOverlayEvent;
+import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 
-import java.util.function.Function;
 
-@Environment(EnvType.CLIENT)
 public class FluidRender {
+
+    private static final ResourceLocation TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID + ":textures/misc/sugar_water_underwater.png");
 
     @SuppressWarnings("deprecation")
     public static void setupFluidRendering(final Fluid still, final Fluid flowing, final ResourceLocation stillTextureFluidId, final ResourceLocation flowTextureFluidId)
     {
-        // If they're not already present, add the sprites to the block atlas
-        ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEX).register((atlasTexture, registry) ->
+    }
+
+    public static void sugarWaterOverlay(RenderBlockOverlayEvent event)
+    {
+        if (event.getPlayer().world.getBlockState(event.getBlockPos()).getBlock() == BzBlocks.SUGAR_WATER_BLOCK)
         {
-            registry.register(stillTextureFluidId);
-            registry.register(flowTextureFluidId);
-        });
-
-        final ResourceLocation fluidId = Registry.FLUID.getId(still);
-        final ResourceLocation listenerId = new ResourceLocation(fluidId.getNamespace(), fluidId.getPath() + "_reload_listener");
-
-        final Sprite[] fluidSprites = { null, null };
-
-        ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener()
-        {
-            @Override
-            public ResourceLocation getFabricId()
-            {
-                return listenerId;
-            }
-
-            /**
-             * Get the sprites from the block atlas when resources are reloaded
-             */
-            @Override
-            public void apply(ResourceManager resourceManager)
-            {
-                final Function<ResourceLocation, Sprite> atlas = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEX);
-                fluidSprites[0] = atlas.apply(stillTextureFluidId);
-                fluidSprites[1] = atlas.apply(flowTextureFluidId);
-            }
-        });
-
-        // The FluidRenderer gets the sprites and color from a FluidRenderHandler during rendering
-        final FluidRenderHandler renderHandler = new FluidRenderHandler()
-        {
-            @Override
-            public Sprite[] getFluidSprites(BlockRenderView view, BlockPos pos, FluidState state)
-            {
-                return fluidSprites;
-            }
-
-            @Override
-            public int getFluidColor(BlockRenderView view, BlockPos pos, FluidState state)
-            {
-                return view != null && pos != null ? BiomeColors.getWaterColor(view, pos) : -1;
-            }
-        };
-
-        FluidRenderHandlerRegistry.INSTANCE.register(still, renderHandler);
-        FluidRenderHandlerRegistry.INSTANCE.register(flowing, renderHandler);
+            Minecraft minecraftIn = Minecraft.getInstance();
+            minecraftIn.getTextureManager().bindTexture(TEXTURE_UNDERWATER);
+            BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
+            float f = minecraftIn.player.getBrightness();
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+            float f7 = -minecraftIn.player.rotationYaw / 64.0F;
+            float f8 = minecraftIn.player.rotationPitch / 64.0F;
+            Matrix4f matrix4f = event.getMatrixStack().peek().getModel();
+            bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR_TEXTURE);
+            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).color(f, f, f, 0.42F).texture(4.0F + f7, 4.0F + f8).endVertex();
+            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).color(f, f, f, 0.42F).texture(0.0F + f7, 4.0F + f8).endVertex();
+            bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).color(f, f, f, 0.42F).texture(0.0F + f7, 0.0F + f8).endVertex();
+            bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).color(f, f, f, 0.42F).texture(4.0F + f7, 0.0F + f8).endVertex();
+            bufferbuilder.finishDrawing();
+            WorldVertexBufferUploader.draw(bufferbuilder);
+            RenderSystem.disableBlend();
+            event.setCanceled(true);
+        }
     }
 }

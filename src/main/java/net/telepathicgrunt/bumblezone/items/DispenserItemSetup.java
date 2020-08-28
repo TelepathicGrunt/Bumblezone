@@ -43,7 +43,7 @@ public class DispenserItemSetup {
                 else if(blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL && !blockstate.get(Properties.WATERLOGGED)) {
 
                     world.setBlockState(blockpos, BzBlocks.HONEY_CRYSTAL.getDefaultState()
-                            .with(Properties.FACING, blockstate.get(Properties.FACING))
+                            .with(BlockStateProperties.FACING, blockstate.get(BlockStateProperties.FACING))
                             .with(Properties.WATERLOGGED, true));
                     return new ItemStack(Items.BUCKET);
                 }

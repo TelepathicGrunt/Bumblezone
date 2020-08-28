@@ -9,14 +9,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
@@ -99,7 +99,7 @@ public class FilledPorousHoneycomb extends Block {
      * particle
      */
     @Override
-    public void randomDisplayTick(BlockState blockState, World world, BlockPos position, Random random) {
+    public void animateTick(BlockState blockState, World world, BlockPos position, Random random) {
         //number of particles in this tick
         for (int i = 0; i < random.nextInt(2); ++i) {
             this.spawnHoneyParticles(world, position, blockState);
@@ -111,7 +111,7 @@ public class FilledPorousHoneycomb extends Block {
      * tell redstone that this can be use with comparator
      */
     @Override
-    public boolean hasComparatorOutput(BlockState state) {
+    public boolean hasComparatorInputOverride(BlockState state) {
         return true;
     }
 
@@ -120,7 +120,7 @@ public class FilledPorousHoneycomb extends Block {
      * the power fed into comparator 1
      */
     @Override
-    public int getComparatorOutput(BlockState blockState, World worldIn, BlockPos pos) {
+    public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
         return 1;
     }
 
@@ -129,19 +129,19 @@ public class FilledPorousHoneycomb extends Block {
      * takes the block's dimensions and passes into methods to spawn the actual particle
      */
     private void spawnHoneyParticles(World world, BlockPos position, BlockState blockState) {
-        if (blockState.getFluidState().isEmpty() && world.random.nextFloat() < 0.08F) {
+        if (blockState.getFluidState().isEmpty() && world.rand.nextFloat() < 0.08F) {
             VoxelShape currentBlockShape = blockState.getCollisionShape(world, position);
-            double yEndHeight = currentBlockShape.getMax(Direction.Axis.Y);
+            double yEndHeight = currentBlockShape.getEnd(Direction.Axis.Y);
             if (yEndHeight >= 1.0D && !blockState.isIn(BlockTags.IMPERMEABLE)) {
-                double yStartHeight = currentBlockShape.getMin(Direction.Axis.Y);
+                double yStartHeight = currentBlockShape.getStart(Direction.Axis.Y);
                 if (yStartHeight > 0.0D) {
                     this.addHoneyParticle(world, position, currentBlockShape, position.getY() + yStartHeight - 0.05D);
                 } else {
                     BlockPos belowBlockpos = position.down();
                     BlockState belowBlockstate = world.getBlockState(belowBlockpos);
                     VoxelShape belowBlockShape = belowBlockstate.getCollisionShape(world, belowBlockpos);
-                    double yEndHeight2 = belowBlockShape.getMax(Direction.Axis.Y);
-                    if ((yEndHeight2 < 1.0D || !belowBlockstate.isOpaqueFullCube(world, belowBlockpos)) && belowBlockstate.getFluidState().isEmpty()) {
+                    double yEndHeight2 = belowBlockShape.getEnd(Direction.Axis.Y);
+                    if ((yEndHeight2 < 1.0D || !belowBlockstate.isOpaqueCube(world, belowBlockpos)) && belowBlockstate.getFluidState().isEmpty()) {
                         this.addHoneyParticle(world, position, currentBlockShape, position.getY() - 0.05D);
                     }
                 }
@@ -158,10 +158,10 @@ public class FilledPorousHoneycomb extends Block {
     private void addHoneyParticle(World world, BlockPos blockPos, VoxelShape blockShape, double height) {
         this.addHoneyParticle(
                 world,
-                blockPos.getX() + blockShape.getMin(Direction.Axis.X),
-                blockPos.getX() + blockShape.getMax(Direction.Axis.X),
-                blockPos.getZ() + blockShape.getMin(Direction.Axis.Z),
-                blockPos.getZ() + blockShape.getMax(Direction.Axis.Z),
+                blockPos.getX() + blockShape.getStart(Direction.Axis.X),
+                blockPos.getX() + blockShape.getEnd(Direction.Axis.X),
+                blockPos.getZ() + blockShape.getStart(Direction.Axis.Z),
+                blockPos.getZ() + blockShape.getEnd(Direction.Axis.Z),
                 height);
     }
 
@@ -170,6 +170,13 @@ public class FilledPorousHoneycomb extends Block {
      * Adds the actual honey particle into the world within the given range
      */
     private void addHoneyParticle(World world, double xMin, double xMax, double zMax, double zMin, double yHeight) {
-        world.addParticle(ParticleTypes.DRIPPING_HONEY, MathHelper.lerp(world.random.nextDouble(), xMin, xMax), yHeight, MathHelper.lerp(world.random.nextDouble(), zMax, zMin), 0.0D, 0.0D, 0.0D);
+        world.addParticle(
+                ParticleTypes.DRIPPING_HONEY,
+                MathHelper.lerp(world.rand.nextDouble(), xMin, xMax),
+                yHeight,
+                MathHelper.lerp(world.rand.nextDouble(), zMax, zMin),
+                0.0D,
+                0.0D,
+                0.0D);
     }
 }

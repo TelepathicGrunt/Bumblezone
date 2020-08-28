@@ -72,7 +72,7 @@ public class HoneyCrystalShieldBehavior {
         float f = 0.25F + (float) EnchantmentHelper.getEfficiency(mob) * 0.05F;
         if (mob.getRandom().nextFloat() < f) {
             playerEntity.getItemCooldownManager().set(BzItems.HONEY_CRYSTAL_SHIELD, 100);
-            mob.world.sendEntityStatus(playerEntity, (byte)30);
+            mob.world.setEntityState(playerEntity, (byte)30);
         }
     }
 
@@ -90,7 +90,7 @@ public class HoneyCrystalShieldBehavior {
                     }
 
                     player.clearActiveItem();
-                    player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + player.world.random.nextFloat() * 0.4F);
+                    player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + player.world.rand.nextFloat() * 0.4F);
                 }
             }
 

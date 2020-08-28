@@ -1,14 +1,9 @@
 package net.telepathicgrunt.bumblezone.blocks;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.block.FabricMaterialBuilder;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.block.Block;
-import net.minecraft.block.Material;
-import net.minecraft.block.MaterialColor;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.fluid.FlowableFluid;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.telepathicgrunt.bumblezone.Bumblezone;
@@ -16,10 +11,10 @@ import net.telepathicgrunt.bumblezone.fluids.SugarWaterFluid;
 
 
 public class BzBlocks {
-    public static Material RESIDUE = new FabricMaterialBuilder(MaterialColor.ADOBE_TERRACOTTA)
-            .lightPassesThrough()
-            .destroyedByPiston()
-            .allowsMovement()
+    public static Material RESIDUE = new Material.Builder(MaterialColor.ADOBE)
+            .notOpaque()
+            .pushDestroys()
+            .doesNotBlockMovement()
             .replaceable()
             .notSolid()
             .build();
@@ -35,8 +30,8 @@ public class BzBlocks {
     public static final Block STICKY_HONEY_REDSTONE = new StickyHoneyRedstone();
     public static final Block BEESWAX_PLANKS = new BeeswaxPlanks();
 
-    public static final FlowableFluid SUGAR_WATER_FLUID = new SugarWaterFluid.Source();
-    public static final FlowableFluid SUGAR_WATER_FLUID_FLOWING = new SugarWaterFluid.Flowing();
+    public static final FlowingFluid SUGAR_WATER_FLUID = new SugarWaterFluid.Source();
+    public static final FlowingFluid SUGAR_WATER_FLUID_FLOWING = new SugarWaterFluid.Flowing();
     public static final Block SUGAR_WATER_BLOCK = new SugarWaterBlock(SUGAR_WATER_FLUID);
 
     /**
@@ -56,15 +51,5 @@ public class BzBlocks {
         Registry.register(Registry.FLUID, new ResourceLocation(Bumblezone.MODID, "sugar_water_still"), SUGAR_WATER_FLUID);
         Registry.register(Registry.FLUID, new ResourceLocation(Bumblezone.MODID, "sugar_water_flowing"), SUGAR_WATER_FLUID_FLOWING);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_water_block"), SUGAR_WATER_BLOCK);
-    }
-
-    @Environment(EnvType.CLIENT)
-    public static void registerRenderLayers() {
-        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STICKY_HONEY_REDSTONE, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STICKY_HONEY_RESIDUE, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.HONEY_CRYSTAL, RenderLayer.getTranslucent());
-        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.SUGAR_WATER_BLOCK, RenderLayer.getTranslucent());
-        BlockRenderLayerMap.INSTANCE.putFluid(BzBlocks.SUGAR_WATER_FLUID, RenderLayer.getTranslucent());
-        BlockRenderLayerMap.INSTANCE.putFluid(BzBlocks.SUGAR_WATER_FLUID_FLOWING, RenderLayer.getTranslucent());
     }
 }

@@ -3,42 +3,19 @@ package net.telepathicgrunt.bumblezone.entities.mobs;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.Durations;
-import net.minecraft.entity.ai.goal.AnimalMateGoal;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.Angerable;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootTables;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.particle.ItemStackParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.IntRange;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.world.IWorld;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.entities.BzEntities;
 import net.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
@@ -96,7 +73,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    }
 
    @Override
-   public EntityData initialize(ServerWorldAccess worldIn, LocalDifficulty difficultyIn, SpawnReason reason, EntityData spawnDataIn, CompoundTag dataTag) {
+   public EntityData initialize(IServerWorld worldIn, LocalDifficulty difficultyIn, SpawnReason reason, EntityData spawnDataIn, CompoundTag dataTag) {
       this.setSlimeSize(2, true);
       return super.initialize(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
    }
@@ -112,9 +89,9 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    @Override
    public void onTrackedDataSet(TrackedData<?> key) {
       this.calculateDimensions();
-      this.yaw = this.headYaw;
+      this.rotationYaw = this.headYaw;
       this.bodyYaw = this.headYaw;
-      if (this.isTouchingWater() && this.random.nextInt(20) == 0) {
+      if (this.isTouchingWater() && this.rand.nextInt(20) == 0) {
          this.onSwimmingStart();
       }
       super.onTrackedDataSet(key);
@@ -144,7 +121,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    }
 
    @Override
-   public boolean canSpawn(WorldAccess world, SpawnReason spawnReason) {
+   public boolean canSpawn(IWorld world, SpawnReason spawnReason) {
       return true;
    }
 
@@ -219,14 +196,14 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
 
          if (spawnCustomParticles()) i = 0; // don't spawn particles if it's handled by the implementation itself
          for (int j = 0; j < i * 8; ++j) {
-            float f = this.random.nextFloat() * ((float) Math.PI * 2F);
-            float f1 = this.random.nextFloat() * 0.5F + 0.5F;
+            float f = this.rand.nextFloat() * ((float) Math.PI * 2F);
+            float f1 = this.rand.nextFloat() * 0.5F + 0.5F;
             float f2 = MathHelper.sin(f) * (float) i * 0.5F * f1;
             float f3 = MathHelper.cos(f) * (float) i * 0.5F * f1;
             this.world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(Blocks.HONEY_BLOCK)), this.getX() + (double) f2, this.getY(), this.getZ() + (double) f3, 0.0D, 0.0D, 0.0D);
          }
 
-         this.playSound(this.getSquishSound(), this.getSoundVolume(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
+         this.playSound(this.getSquishSound(), this.getSoundVolume(), ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) / 0.8F);
          this.squishAmount = -0.5F;
       } else if (!this.onGround && this.wasOnGround) {
          this.squishAmount = 1.0F;
@@ -245,8 +222,8 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
          if (!isInHoney()) {
             setInHoneyGrowthTime(getInHoneyGrowthTime() + 1);
 
-            if(!this.world.isClient && HONEY_BASED_BLOCKS.contains(this.world.getBlockState(this.getBlockPos().down()).getBlock())){
-               if(this.random.nextFloat() < 0.001)
+            if(!this.world.isRemote && HONEY_BASED_BLOCKS.contains(this.world.getBlockState(this.getBlockPos().down()).getBlock())){
+               if(this.rand.nextFloat() < 0.001)
                   setInHoneyGrowthTime(0);
             }
          }
@@ -256,7 +233,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
 
    @Override
    protected void mobTick() {
-      if (!this.world.isClient) {
+      if (!this.world.isRemote) {
          this.tickAngerLogic((ServerWorld)this.world, false);
       }
    }
@@ -287,8 +264,8 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    protected void dealDamage(LivingEntity entityIn) {
       if (this.isAlive()) {
          int i = 2;
-         if (this.squaredDistanceTo(entityIn) < 0.6D * (double) i * 0.6D * (double) i && this.canSee(entityIn) && entityIn.damage(DamageSource.mob(this), this.getAttackStrength())) {
-            this.playSound(SoundEvents.ENTITY_SLIME_ATTACK, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+         if (this.getDistanceSq(entityIn) < 0.6D * (double) i * 0.6D * (double) i && this.canSee(entityIn) && entityIn.damage(DamageSource.mob(this), this.getAttackStrength())) {
+            this.playSound(SoundEvents.ENTITY_SLIME_ATTACK, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
             this.dealDamage(this, entityIn);
          }
       }
@@ -335,7 +312,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    }
 
    public int getJumpDelay() {
-      return this.random.nextInt(20) + 10;
+      return this.rand.nextInt(20) + 10;
    }
 
    protected float getAttackStrength() {

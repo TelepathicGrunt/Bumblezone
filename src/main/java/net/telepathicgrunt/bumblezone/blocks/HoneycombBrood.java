@@ -1,42 +1,30 @@
 package net.telepathicgrunt.bumblezone.blocks;
 
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.EntityPredicate;
-import net.minecraft.entity.effect.EffectInstance;
-import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundType;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockRayTraceResult;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.*;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.entities.BzEntities;
@@ -47,12 +35,12 @@ import java.util.Random;
 
 
 public class HoneycombBrood extends DirectionalBlock {
-    public static final IntProperty STAGE = Properties.AGE_3;
+    public static final IntegerProperty STAGE = BlockStateProperties.AGE_0_3;
     private static final EntityPredicate FIXED_DISTANCE = (new EntityPredicate()).setDistance(50);
     private static final EntityPredicate PLAYER_DISTANCE = (new EntityPredicate());
 
     public HoneycombBrood() {
-        super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).ticksRandomly().hardnessAndResistance(0.5F, 0.5F).sound(SoundType.CORAL)).velocityMultiplier(0.9F);
+        super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).tickRandomly().hardnessAndResistance(0.5F, 0.5F).sound(SoundType.CORAL).velocityMultiplier(0.9F));
         this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.SOUTH).with(STAGE, 0));
     }
 
@@ -109,7 +97,7 @@ public class HoneycombBrood extends DirectionalBlock {
          * Player is taking honey and killing larva
          */
         if (itemstack.getItem() == Items.GLASS_BOTTLE) {
-            world.setBlockState(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState().with(Properties.FACING, thisBlockState.get(Properties.FACING)), 3); // removed honey from this block
+            world.setBlockState(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState().with(BlockStateProperties.FACING, thisBlockState.get(BlockStateProperties.FACING)), 3); // removed honey from this block
 
             //spawn angry bee if at final stage and front isn't blocked off
             int stage = thisBlockState.get(STAGE);
@@ -138,7 +126,13 @@ public class HoneycombBrood extends DirectionalBlock {
                 }
                 else {
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
-                    playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
+                    playerEntity.addPotionEffect(new EffectInstance(
+                            BzEffects.WRATH_OF_THE_HIVE,
+                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                            2,
+                            false,
+                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles,
+                            true));
                 }
             }
 
@@ -148,18 +142,18 @@ public class HoneycombBrood extends DirectionalBlock {
          * Player is feeding larva
          */
         else if (itemstack.getItem() == Items.HONEY_BOTTLE || itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {
-            if (!world.isClient) {
+            if (!world.isRemote) {
                 boolean successfulGrowth = false;
 
                 //chance of growing the larva
                 if (itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {
-                    if (world.random.nextFloat() < 0.30F)
+                    if (world.rand.nextFloat() < 0.30F)
                         successfulGrowth = true;
                 } else {
                     successfulGrowth = true;
                 }
 
-                if (successfulGrowth && world.random.nextFloat() < 0.30F) {
+                if (successfulGrowth && world.rand.nextFloat() < 0.30F) {
                     if(!playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE)){
                         playerEntity.addPotionEffect(new EffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, (int) (Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts * 0.75f), 1, false, false,  true));
                     }
@@ -203,7 +197,7 @@ public class HoneycombBrood extends DirectionalBlock {
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos position, Random rand) {
         super.scheduledTick(state, world, position, rand);
-        if (!world.isRegionLoaded(position, position))
+        if (!world.isAreaLoaded(position, position))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
 
         int stage = state.get(STAGE);
@@ -214,8 +208,8 @@ public class HoneycombBrood extends DirectionalBlock {
         } else {
             PLAYER_DISTANCE.setDistance(Math.max(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius * 0.5, 1));
 
-            List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, FIXED_DISTANCE, null, new Box(position).grow(50));
-            List<PlayerEntity> playerList = world.getTargettableEntitiesWithinAABB(PlayerEntity.class, PLAYER_DISTANCE, null, new Box(position).grow(50));
+            List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, FIXED_DISTANCE, null, new AxisAlignedBB(position).grow(50));
+            List<PlayerEntity> playerList = world.getTargettableEntitiesWithinAABB(PlayerEntity.class, PLAYER_DISTANCE, null, new AxisAlignedBB(position).grow(50));
             if (beeList.size() < 3 || playerList.stream().anyMatch(player -> player.isPotionActive(BzEffects.WRATH_OF_THE_HIVE))) {
                 spawnBroodMob(world, state, position, stage);
             }
@@ -228,42 +222,40 @@ public class HoneycombBrood extends DirectionalBlock {
      * this block
      */
     @Override
-    public void onBreak(World world, BlockPos position, BlockState state, PlayerEntity playerEntity) {
+    public void onBlockHarvested(World world, BlockPos position, BlockState state, PlayerEntity playerEntity) {
 
         Hand hand = playerEntity.getActiveHand();
-        if (hand != null) {
-            ListTag listOfEnchants = playerEntity.getHeldItem(hand).getEnchantments();
-            if (listOfEnchants.stream().noneMatch(enchant -> enchant.asString().contains("minecraft:silk_touch"))) {
-                BlockState blockState = world.getBlockState(position);
-                int stage = blockState.get(STAGE);
-                if (stage == 3) {
-                    spawnBroodMob(world, blockState, position, stage);
-                }
+        ListNBT listOfEnchants = playerEntity.getHeldItem(hand).getEnchantmentTagList();
+        if (listOfEnchants.stream().noneMatch(enchant -> enchant.getString().contains("minecraft:silk_touch"))) {
+            BlockState blockState = world.getBlockState(position);
+            int stage = blockState.get(STAGE);
+            if (stage == 3) {
+                spawnBroodMob(world, blockState, position, stage);
+            }
 
-                if ((playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
-                        !playerEntity.isCreative() &&
-                        !playerEntity.isSpectator() &&
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
-                {
-                    if(playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
-                        playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
-                    }
-                    else{
-                        //Now all bees nearby in Bumblezone will get VERY angry!!!
-                        playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
-                    }
+            if ((playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+                    !playerEntity.isCreative() &&
+                    !playerEntity.isSpectator() &&
+                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
+            {
+                if(playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
+                    playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                }
+                else{
+                    //Now all bees nearby in Bumblezone will get VERY angry!!!
+                    playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
                 }
             }
         }
 
-        super.onBreak(world, position, state, playerEntity);
+        super.onBlockHarvested(world, position, state, playerEntity);
     }
 
 
     private static void spawnBroodMob(World world, BlockState state, BlockPos position, int stage) {
         //the front of the block
-        BlockPos.Mutable blockpos = new BlockPos.Mutable().set(position);
+        BlockPos.Mutable blockpos = new BlockPos.Mutable().setPos(position);
         blockpos.move(state.get(FACING).getOpposite());
 
         if (stage == 3 && !world.getBlockState(blockpos).getMaterial().isSolid()) {
@@ -271,7 +263,7 @@ public class HoneycombBrood extends DirectionalBlock {
 
             spawnMob(world, blockpos, beeMob, beeMob);
 
-            if(world.random.nextFloat() < 0.1f){
+            if(world.rand.nextFloat() < 0.1f){
                 MobEntity honeySlimeMob = BzEntities.HONEY_SLIME.create(world);
                 spawnMob(world, blockpos, beeMob, honeySlimeMob);
             }
@@ -283,10 +275,10 @@ public class HoneycombBrood extends DirectionalBlock {
     }
 
     private static void spawnMob(World world, BlockPos.Mutable blockpos, MobEntity beeMob, MobEntity entity) {
-        if(entity == null || world.isClient) return;
-        entity.refreshPositionAndAngles(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, world.getRandom().nextFloat() * 360.0F, 0.0F);
-        entity.initialize((ServerWorldAccess) world, world.getLocalDifficulty(new BlockPos(beeMob.getPos())), SpawnReason.TRIGGERED, null, null);
-        world.spawnEntity(entity);
+        if(entity == null || world.isRemote) return;
+        entity.setLocationAndAngles(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, world.getRandom().nextFloat() * 360.0F, 0.0F);
+        entity.onInitialSpawn((IServerWorld) world, world.getDifficultyForLocation(new BlockPos(beeMob.getPositionVec())), SpawnReason.TRIGGERED, null, null);
+        world.addEntity(entity);
     }
 
 
@@ -294,7 +286,7 @@ public class HoneycombBrood extends DirectionalBlock {
      * tell redstone that this can be use with comparator
      */
     @Override
-    public boolean hasComparatorOutput(BlockState state) {
+    public boolean hasComparatorInputOverride(BlockState state) {
         return true;
     }
 
@@ -303,7 +295,7 @@ public class HoneycombBrood extends DirectionalBlock {
      * the power fed into comparator (1 - 4)
      */
     @Override
-    public int getComparatorOutput(BlockState blockState, World worldIn, BlockPos pos) {
+    public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
         return blockState.get(STAGE) + 1;
     }
 
@@ -313,7 +305,7 @@ public class HoneycombBrood extends DirectionalBlock {
      * particle. Also will buzz too based on stage
      */
     @Override
-    public void randomDisplayTick(BlockState blockState, World world, BlockPos position, Random random) {
+    public void animateTick(BlockState blockState, World world, BlockPos position, Random random) {
         //number of particles in this tick
         for (int i = 0; i < random.nextInt(2); ++i) {
             this.spawnHoneyParticles(world, position, blockState);
@@ -321,7 +313,7 @@ public class HoneycombBrood extends DirectionalBlock {
 
         int stage = blockState.get(STAGE);
         float soundVolume = 0.05F + stage * 0.1F;
-        if (world.random.nextInt(20) == 0)
+        if (world.rand.nextInt(20) == 0)
             world.playSound(position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D, SoundEvents.ENTITY_BEE_LOOP, SoundCategory.BLOCKS, soundVolume, 1.0F, true);
     }
 
@@ -331,19 +323,19 @@ public class HoneycombBrood extends DirectionalBlock {
      * takes the block's dimensions and passes into methods to spawn the actual particle
      */
     private void spawnHoneyParticles(World world, BlockPos position, BlockState blockState) {
-        if (blockState.getFluidState().isEmpty() && world.random.nextFloat() < 0.08F) {
+        if (blockState.getFluidState().isEmpty() && world.rand.nextFloat() < 0.08F) {
             VoxelShape currentBlockShape = blockState.getCollisionShape(world, position);
-            double yEndHeight = currentBlockShape.getMax(Direction.Axis.Y);
+            double yEndHeight = currentBlockShape.getEnd(Direction.Axis.Y);
             if (yEndHeight >= 1.0D && !blockState.isIn(BlockTags.IMPERMEABLE)) {
-                double yStartHeight = currentBlockShape.getMin(Direction.Axis.Y);
+                double yStartHeight = currentBlockShape.getStart(Direction.Axis.Y);
                 if (yStartHeight > 0.0D) {
                     this.addHoneyParticle(world, position, currentBlockShape, position.getY() + yStartHeight - 0.05D);
                 } else {
                     BlockPos belowBlockpos = position.down();
                     BlockState belowBlockstate = world.getBlockState(belowBlockpos);
                     VoxelShape belowBlockShape = belowBlockstate.getCollisionShape(world, belowBlockpos);
-                    double yEndHeight2 = belowBlockShape.getMax(Direction.Axis.Y);
-                    if ((yEndHeight2 < 1.0D || !belowBlockstate.isOpaqueFullCube(world, belowBlockpos)) && belowBlockstate.getFluidState().isEmpty()) {
+                    double yEndHeight2 = belowBlockShape.getEnd(Direction.Axis.Y);
+                    if ((yEndHeight2 < 1.0D || !belowBlockstate.isOpaqueCube(world, belowBlockpos)) && belowBlockstate.getFluidState().isEmpty()) {
                         this.addHoneyParticle(world, position, currentBlockShape, position.getY() - 0.05D);
                     }
                 }
@@ -360,10 +352,10 @@ public class HoneycombBrood extends DirectionalBlock {
     private void addHoneyParticle(World world, BlockPos blockPos, VoxelShape blockShape, double height) {
         this.addHoneyParticle(
                 world,
-                blockPos.getX() + blockShape.getMin(Direction.Axis.X),
-                blockPos.getX() + blockShape.getMax(Direction.Axis.X),
-                blockPos.getZ() + blockShape.getMin(Direction.Axis.Z),
-                blockPos.getZ() + blockShape.getMax(Direction.Axis.Z),
+                blockPos.getX() + blockShape.getStart(Direction.Axis.X),
+                blockPos.getX() + blockShape.getEnd(Direction.Axis.X),
+                blockPos.getZ() + blockShape.getStart(Direction.Axis.Z),
+                blockPos.getZ() + blockShape.getEnd(Direction.Axis.Z),
                 height);
     }
 
@@ -372,6 +364,14 @@ public class HoneycombBrood extends DirectionalBlock {
      * Adds the actual honey particle into the world within the given range
      */
     private void addHoneyParticle(World world, double xMin, double xMax, double zMax, double zMin, double yHeight) {
-        world.addParticle(ParticleTypes.DRIPPING_HONEY, MathHelper.lerp(world.random.nextDouble(), xMin, xMax), yHeight, MathHelper.lerp(world.random.nextDouble(), zMax, zMin), 0.0D, 0.0D, 0.0D);
+
+        world.addParticle(
+                ParticleTypes.DRIPPING_HONEY,
+                MathHelper.lerp(world.rand.nextDouble(), xMin, xMax),
+                yHeight,
+                MathHelper.lerp(world.rand.nextDouble(), zMax, zMin),
+                0.0D,
+                0.0D,
+                0.0D);
     }
 }

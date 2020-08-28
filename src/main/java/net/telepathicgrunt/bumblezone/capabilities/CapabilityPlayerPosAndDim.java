@@ -30,6 +30,6 @@ public class CapabilityPlayerPosAndDim {
 				{
 					instance.loadNBTData((CompoundNBT) nbt);
 				}
-			}, () -> new PlayerPositionAndDimension());
+			}, PlayerPositionAndDimension::new);
 		}
 }

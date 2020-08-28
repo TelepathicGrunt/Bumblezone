@@ -20,8 +20,8 @@ public class FaceRandomGoal extends Goal {
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
-    public boolean canStart() {
-        return this.slime.getTarget() == null && (this.slime.isOnGround() || this.slime.isTouchingWater() || this.slime.isInLava() || this.slime.isPotionActive(StatusEffects.LEVITATION)) && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
+    public boolean shouldExecute() {
+        return this.slime.getTarget() == null && (this.slime.isOnGround() || this.slime.isTouchingWater() || this.slime.isInLava() || this.slime.isPotionActive(StatusEffects.LEVITATION)) && this.slime.getMoveHelper() instanceof HoneySlimeMoveHelperController;
     }
 
     /**
@@ -33,6 +33,6 @@ public class FaceRandomGoal extends Goal {
             this.chosenDegrees = (float) this.slime.getRandom().nextInt(360);
         }
 
-        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.chosenDegrees, false);
+        ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setDirection(this.chosenDegrees, false);
     }
 }

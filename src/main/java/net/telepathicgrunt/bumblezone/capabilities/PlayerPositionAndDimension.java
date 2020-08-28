@@ -2,29 +2,28 @@ package net.telepathicgrunt.bumblezone.capabilities;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.util.math.vector.Vector3d;
 
 
 public class PlayerPositionAndDimension implements IPlayerPosAndDim
 {
 
-	public DimensionType nonBZDimension = null;
-	public DimensionType nextDimension = null;
+	public ResourceLocation nonBZDimension = null;
+	public ResourceLocation nextDimension = null;
 	public boolean isTeleporting = false;
-	public Vec3d nonBZPosition = null;
+	public Vector3d nonBZPosition = null;
 	public float nonBZPitch = 0;
 	public float nonBZYaw = 0;
 
 
 	@Override
-	public void setNonBZDim(DimensionType incomingDim)
+	public void setNonBZDim(ResourceLocation incomingDim)
 	{
 		nonBZDimension = incomingDim;
 	}
 
 	@Override
-	public DimensionType getNonBZDim()
+	public ResourceLocation getNonBZDim()
 	{
 		return nonBZDimension;
 	}
@@ -57,26 +56,26 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 
 	
 	@Override
-	public void setNonBZPos(Vec3d incomingPos)
+	public void setNonBZPos(Vector3d incomingPos)
 	{
 		nonBZPosition = incomingPos;
 	}
 
 	@Override
-	public Vec3d getNonBZPos()
+	public Vector3d getNonBZPos()
 	{
 		return nonBZPosition;
 	}
 
 
 	@Override
-	public void setDestDim(DimensionType incomingDim)
+	public void setDestDim(ResourceLocation incomingDim)
 	{
 		nextDimension = incomingDim;
 	}
 
 	@Override
-	public DimensionType getDestDim()
+	public ResourceLocation getDestDim()
 	{
 		return nextDimension;
 	}
@@ -103,8 +102,8 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 
 		if (this.getNonBZDim() != null)
 		{
-			nbt.putString("PreviousDimensionNamespace", this.getNonBZDim().getRegistryName().getNamespace());
-			nbt.putString("PreviousDimensionPath", this.getNonBZDim().getRegistryName().getPath());
+			nbt.putString("PreviousDimensionNamespace", this.getNonBZDim().getNamespace());
+			nbt.putString("PreviousDimensionPath", this.getNonBZDim().getPath());
 
 			if (this.getNonBZPos() != null)
 			{
@@ -118,8 +117,8 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 		
 		if (this.getDestDim() != null)
 		{
-			nbt.putString("NextDimensionNamespace", this.getDestDim().getRegistryName().getNamespace());
-			nbt.putString("NextDimensionPath", this.getDestDim().getRegistryName().getPath());
+			nbt.putString("NextDimensionNamespace", this.getDestDim().getNamespace());
+			nbt.putString("NextDimensionPath", this.getDestDim().getPath());
 		}
 
 		nbt.putBoolean("isTeleporting", this.getTeleporting());
@@ -131,22 +130,20 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 	@Override
 	public void loadNBTData(CompoundNBT nbtTag)
 	{
-		CompoundNBT cnbt = nbtTag;
-
 		//grabs past dimension resource location and tries to get that dimension from the registry
-		DimensionType storedDimension = DimensionType.byName(new ResourceLocation(cnbt.getString("PreviousDimensionNamespace"), cnbt.getString("PreviousDimensionPath")));
-		DimensionType storedDestDimension = DimensionType.byName(new ResourceLocation(cnbt.getString("NextDimensionNamespace"), cnbt.getString("NextDimensionPath")));
-		Vec3d storedPositionNonBZ = null;
-		float storedNonBZPitch = 3.75F;
-		float storedNonBZYaw = 0F;
+		ResourceLocation storedDimension = new ResourceLocation(nbtTag.getString("PreviousDimensionNamespace"), nbtTag.getString("PreviousDimensionPath"));
+		ResourceLocation storedDestDimension = new ResourceLocation(nbtTag.getString("NextDimensionNamespace"), nbtTag.getString("NextDimensionPath"));
+		Vector3d storedPositionNonBZ = null;
+		float storedNonBZPitch;
+		float storedNonBZYaw;
 		//Need check for null so we can let rest for code know the player has not exit the dimension yet for the first time.
-		if (cnbt.contains("NonBZ_X") && cnbt.contains("NonBZ_Y") && cnbt.contains("NonBZ_Z")) {
-		    storedPositionNonBZ = new Vec3d(cnbt.getFloat("NonBZ_X"), cnbt.getFloat("NonBZ_Y"), cnbt.getFloat("NonBZ_Z"));
+		if (nbtTag.contains("NonBZ_X") && nbtTag.contains("NonBZ_Y") && nbtTag.contains("NonBZ_Z")) {
+		    storedPositionNonBZ = new Vector3d(nbtTag.getFloat("NonBZ_X"), nbtTag.getFloat("NonBZ_Y"), nbtTag.getFloat("NonBZ_Z"));
 		}
-		storedNonBZPitch = cnbt.getFloat("NonBZPitch");
-		storedNonBZYaw = cnbt.getFloat("NonBZYaw");
+		storedNonBZPitch = nbtTag.getFloat("NonBZPitch");
+		storedNonBZYaw = nbtTag.getFloat("NonBZYaw");
 
-		boolean isteleporting = cnbt.getBoolean("isTeleporting");
+		boolean isteleporting = nbtTag.getBoolean("isTeleporting");
 
 		this.setNonBZDim(storedDimension);
 		this.setNonBZPitch(storedNonBZPitch);

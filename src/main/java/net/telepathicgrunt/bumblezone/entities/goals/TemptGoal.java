@@ -36,7 +36,7 @@ public class TemptGoal extends Goal {
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
-    public boolean canStart() {
+    public boolean shouldExecute() {
         if (this.delayTemptCounter > 0) {
             --this.delayTemptCounter;
             return false;
@@ -57,14 +57,14 @@ public class TemptGoal extends Goal {
     /**
      * Returns whether an in-progress EntityAIBase should continue executing
      */
-    public boolean shouldContinue() {
+    public boolean shouldContinueExecuting() {
         if (this.isScaredByPlayerMovement()) {
-            if (this.slime.squaredDistanceTo(this.closestPlayer) < 36.0D) {
-                if (this.closestPlayer.squaredDistanceTo(this.targetX, this.targetY, this.targetZ) > 0.010000000000000002D) {
+            if (this.slime.getDistanceSq(this.closestPlayer) < 36.0D) {
+                if (this.closestPlayer.getDistanceSq(this.targetX, this.targetY, this.targetZ) > 0.010000000000000002D) {
                     return false;
                 }
 
-                if (Math.abs((double)this.closestPlayer.pitch - this.pitch) > 5.0D || Math.abs((double)this.closestPlayer.yaw - this.yaw) > 5.0D) {
+                if (Math.abs((double)this.closestPlayer.rotationPitch - this.rotationPitch) > 5.0D || Math.abs((double)this.closestPlayer.rotationYaw - this.rotationYaw) > 5.0D) {
                     return false;
                 }
             } else {
@@ -73,11 +73,11 @@ public class TemptGoal extends Goal {
                 this.targetZ = this.closestPlayer.getZ();
             }
 
-            this.pitch = this.closestPlayer.pitch;
-            this.yaw = this.closestPlayer.yaw;
+            this.rotationPitch = this.closestPlayer.rotationPitch;
+            this.rotationYaw = this.closestPlayer.rotationYaw;
         }
 
-        return this.canStart();
+        return this.shouldExecute();
     }
 
     protected boolean isScaredByPlayerMovement() {
@@ -96,9 +96,9 @@ public class TemptGoal extends Goal {
     /**
      * Reset the task's internal state. Called when this task is interrupted by another one
      */
-    public void stop() {
+    public void resetTask() {
         this.closestPlayer = null;
-        this.slime.getNavigation().stop();
+        this.slime.getNavigation().resetTask();
         this.delayTemptCounter = 100;
     }
 
@@ -107,12 +107,12 @@ public class TemptGoal extends Goal {
      */
     public void tick() {
         this.slime.getLookControl().lookAt(this.closestPlayer, (float)(this.slime.getBodyYawSpeed() + 20), (float)this.slime.getLookPitchSpeed());
-        if (this.slime.squaredDistanceTo(this.closestPlayer) < 6.25D) {
-            this.slime.getNavigation().stop();
+        if (this.slime.getDistanceSq(this.closestPlayer) < 6.25D) {
+            this.slime.getNavigation().resetTask();
         } else {
             this.slime.lookAtEntity(this.closestPlayer, 10.0F, 10.0F);
-            ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.yaw, true);
-            ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setSpeed(1.0D);
+            ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setDirection(this.slime.rotationYaw, true);
+            ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setSpeed(1.0D);
         }
 
     }

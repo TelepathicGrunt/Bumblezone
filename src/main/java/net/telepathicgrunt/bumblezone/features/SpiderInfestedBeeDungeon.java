@@ -17,8 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.BitSetVoxelSet;
 import net.minecraft.util.shape.VoxelSet;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.IServerWorld;
+import net.minecraft.world.StructureIWorld;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.telepathicgrunt.bumblezone.Bumblezone;
@@ -39,7 +39,7 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
     }
 
     @Override
-    public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
+    public boolean generate(StructureIWorld world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
         //affect rarity
         if (Bumblezone.BZ_CONFIG.BZDungeonsConfig.spiderInfestedBeeDungeonRarity >= 1000 ||
             random.nextInt(Bumblezone.BZ_CONFIG.BZDungeonsConfig.spiderInfestedBeeDungeonRarity) != 0) return false;
@@ -69,7 +69,7 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
      * Adds blocks and entities from this structure to the given world.
      */
     @Override
-    public void addBlocksToWorld(Structure structure, ServerWorldAccess world, BlockPos pos, StructurePlacementData placementIn, int flags) {
+    public void addBlocksToWorld(Structure structure, IServerWorld world, BlockPos pos, StructurePlacementData placementIn, int flags) {
         StructureAccessorInvoker structureAccessor = ((StructureAccessorInvoker) structure);
         if (!structureAccessor.getBlocks().isEmpty()) {
             List<Structure.StructureBlockInfo> list = placementIn.getRandomBlockInfos(structureAccessor.getBlocks(), pos).getAll();
@@ -202,7 +202,7 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
      *
      * @return - a pair of the blockstate to use and whether this block can replace air
      */
-    protected static Pair<BlockState, Boolean> blockConversion(ServerWorldAccess world, BlockPos pos, Block block, Random random) {
+    protected static Pair<BlockState, Boolean> blockConversion(IServerWorld world, BlockPos pos, Block block, Random random) {
         //////////////////////////////////////////////
         //Shell
 
@@ -300,7 +300,7 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
         else if (block == Blocks.GRAY_TERRACOTTA) {
             if (random.nextFloat() < 0.07f) {
                 return new Pair<>(Blocks.COBWEB.getDefaultState(), true);
-            } else if (random.nextFloat() < 0.4f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
+            } else if (random.nextFloat() < 0.4f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
                 return new Pair<>(HONEY_CRYSTAL, true);
             } else {
                 return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
@@ -311,7 +311,7 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
         else if (block == Blocks.CYAN_TERRACOTTA) {
             if (random.nextFloat() < 0.07f) {
                 return new Pair<>(Blocks.COBWEB.getDefaultState(), true);
-            } else if (random.nextFloat() < 0.3f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
+            } else if (random.nextFloat() < 0.3f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
                 return new Pair<>(HONEY_CRYSTAL, true);
             } else {
                 return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
@@ -322,7 +322,7 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
         else if (block == Blocks.BLACK_TERRACOTTA) {
             if (random.nextFloat() < 0.07f) {
                 return new Pair<>(Blocks.COBWEB.getDefaultState(), true);
-            } else if (random.nextFloat() < 0.4f && HONEY_CRYSTAL.canPlaceAt(world, pos)) {
+            } else if (random.nextFloat() < 0.4f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
                 return new Pair<>(HONEY_CRYSTAL, true);
             } else {
                 return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);

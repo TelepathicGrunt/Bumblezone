@@ -24,6 +24,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.client.BumblezoneClient;
 import net.telepathicgrunt.bumblezone.configs.BzConfig;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
@@ -57,7 +58,7 @@ public class Bumblezone{
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
         modEventBus.addListener(this::setup);
-        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> ClientEvents.subscribeClientEvents(modEventBus, forgeBus));
+        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> BumblezoneClient.subscribeClientEvents(modEventBus, forgeBus));
 
         // generates/handles config
         BzConfig = ConfigHelper.register(ModConfig.Type.SERVER, (builder, subscriber) -> new BzConfig.BzConfigValues(builder, subscriber));

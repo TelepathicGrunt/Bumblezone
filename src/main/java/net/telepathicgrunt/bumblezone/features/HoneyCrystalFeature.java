@@ -7,7 +7,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.StructureIWorld;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
@@ -29,7 +29,7 @@ public class HoneyCrystalFeature extends Feature<DefaultFeatureConfig> {
      * Place crystal block attached to a block if it is buried underground or underwater
      */
     @Override
-    public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
+    public boolean generate(StructureIWorld world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
 
         BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position);
         BlockState originalBlockstate = world.getBlockState(blockpos$Mutable);
@@ -57,7 +57,7 @@ public class HoneyCrystalFeature extends Feature<DefaultFeatureConfig> {
                 honeyCrystal = honeyCrystal.with(HoneyCrystal.FACING, facing);
 
                 // if the block is solid, place crystal on it
-                if (honeyCrystal.canPlaceAt(world, blockpos$Mutable)) {
+                if (honeyCrystal.isValidPosition(world, blockpos$Mutable)) {
 
                     //if the spot is invalid, we get air back
                     BlockState result = HoneyCrystal.postProcessState(honeyCrystal, world, blockpos$Mutable);

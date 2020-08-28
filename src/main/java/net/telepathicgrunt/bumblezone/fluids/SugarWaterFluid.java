@@ -2,7 +2,7 @@ package net.telepathicgrunt.bumblezone.fluids;
 
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.fluid.FlowableFluid;
+import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
@@ -14,10 +14,10 @@ import net.minecraft.state.StateManager;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockView;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 
@@ -26,7 +26,7 @@ import java.util.Random;
 import static net.minecraft.state.property.Properties.LEVEL_1_8;
 
 
-public abstract class SugarWaterFluid extends FlowableFluid {
+public abstract class SugarWaterFluid extends FlowingFluid {
 
     @Override
     public Fluid getFlowing() {
@@ -34,7 +34,7 @@ public abstract class SugarWaterFluid extends FlowableFluid {
     }
 
     @Override
-    public Fluid getStill() {
+    public Fluid getStillFluid() {
         return BzBlocks.SUGAR_WATER_FLUID;
     }
 
@@ -73,7 +73,7 @@ public abstract class SugarWaterFluid extends FlowableFluid {
 
 
     @Override
-    public void randomDisplayTick(World worldIn, BlockPos pos, FluidState state, Random random) {
+    public void animateTick(World worldIn, BlockPos pos, FluidState state, Random random) {
         if (!state.isStill() && !state.get(FALLING)) {
             if (random.nextInt(64) == 0) {
                 worldIn.playSound(
@@ -110,7 +110,7 @@ public abstract class SugarWaterFluid extends FlowableFluid {
 
 
     @Override
-    public int getTickRate(WorldView world) {
+    public int getTickRate(IWorldReader world) {
         return 5;
     }
 
@@ -120,18 +120,18 @@ public abstract class SugarWaterFluid extends FlowableFluid {
     }
 
     @Override
-    protected void beforeBreakingBlock(WorldAccess world, BlockPos pos, BlockState state) {
+    protected void beforeBreakingBlock(IWorld world, BlockPos pos, BlockState state) {
         BlockEntity blockEntity = state.getBlock().hasBlockEntity() ? world.getBlockEntity(pos) : null;
         Block.dropStacks(state, world, pos, blockEntity);
     }
 
     @Override
-    public int getFlowSpeed(WorldView world) {
+    public int getFlowSpeed(IWorldReader world) {
         return 4;
     }
 
     @Override
-    public int getLevelDecreasePerBlock(WorldView world) {
+    public int getLevelDecreasePerBlock(IWorldReader world) {
         return 1;
     }
 
@@ -141,7 +141,7 @@ public abstract class SugarWaterFluid extends FlowableFluid {
     }
 
     @Override
-    public boolean canBeReplacedWith(FluidState state, BlockView world, BlockPos pos, Fluid fluid, Direction direction) {
+    public boolean canBeReplacedWith(FluidState state, IBlockReader world, BlockPos pos, Fluid fluid, Direction direction) {
         return direction == Direction.DOWN && !fluid.isIn(FluidTags.WATER);
     }
 
