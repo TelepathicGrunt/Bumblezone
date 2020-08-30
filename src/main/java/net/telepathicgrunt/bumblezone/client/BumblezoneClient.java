@@ -2,14 +2,14 @@ package net.telepathicgrunt.bumblezone.client;
 
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.ClientEvents;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.client.rendering.FluidRender;
 import net.telepathicgrunt.bumblezone.client.rendering.HoneySlimeRendering;
@@ -31,6 +31,7 @@ public class BumblezoneClient
 
 
     //Deferred because I have been told RenderTypeLookup is not thread safe
+    @OnlyIn(Dist.CLIENT)
     public static void onClientSetup(FMLClientSetupEvent event)
     {
         RenderingRegistry.registerEntityRenderingHandler(BzEntities.HONEY_SLIME, HoneySlimeRendering::new);

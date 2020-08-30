@@ -1,6 +1,6 @@
 package net.telepathicgrunt.bumblezone.mixin;
 
-import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;

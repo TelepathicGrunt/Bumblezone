@@ -11,14 +11,14 @@ public class HopGoal extends Goal {
 
     public HopGoal(HoneySlimeEntity slimeIn) {
         this.slime = slimeIn;
-        this.setControls(EnumSet.of(Goal.Control.JUMP, Goal.Control.MOVE));
+        this.setMutexFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
     }
 
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
     public boolean shouldExecute() {
-        return !this.slime.hasVehicle() && this.slime.getMoveHelper() instanceof HoneySlimeMoveHelperController;
+        return !this.slime.isPassenger() && this.slime.getMoveHelper() instanceof HoneySlimeMoveHelperController;
     }
 
     /**

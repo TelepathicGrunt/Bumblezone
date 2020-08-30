@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.modcompatibility;
+package net.telepathicgrunt.bumblezone.modCompat;
 
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.modcompatibility;
+package net.telepathicgrunt.bumblezone.modCompat;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
@@ -16,6 +16,7 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.EmptyHoneycombBrood;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
+import net.telepathicgrunt.bumblezone.modcompatibility.PotionOfBeesCompat;
 
 
 public class PotionOfBeesBeePotionDispenseBehavior extends DefaultDispenseItemBehavior
@@ -33,8 +34,8 @@ public class PotionOfBeesBeePotionDispenseBehavior extends DefaultDispenseItemBe
 	BlockPos position = new BlockPos(iposition);
 	BlockState blockstate = world.getBlockState(position);
 
-	if (blockstate.getBlock() == BzBlocks.DEAD_HONEYCOMB_BROOD.get()) {
-	    world.setBlockState(position, BzBlocks.HONEYCOMB_BROOD.get().getDefaultState().with(HoneycombBrood.FACING, blockstate.get(EmptyHoneycombBrood.FACING)).with(HoneycombBrood.STAGE, Integer.valueOf(world.rand.nextInt(3))));
+	if (blockstate.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD) {
+	    world.setBlockState(position, BzBlocks.HONEYCOMB_BROOD.getDefaultState().with(HoneycombBrood.FACING, blockstate.get(EmptyHoneycombBrood.FACING)).with(HoneycombBrood.STAGE, Integer.valueOf(world.rand.nextInt(3))));
 	    stack.shrink(1);
 
 	    if(!Bumblezone.BzConfig.dispensersDropGlassBottles.get()) {
@@ -73,7 +74,7 @@ public class PotionOfBeesBeePotionDispenseBehavior extends DefaultDispenseItemBe
      */
     private static void addGlassBottleToDispenser(IBlockSource source) {
 	if (source.getBlockTileEntity() instanceof DispenserTileEntity) {
-	    DispenserTileEntity dispenser = (DispenserTileEntity) source.getBlockTileEntity();
+	    DispenserTileEntity dispenser = source.getBlockTileEntity();
 	    ItemStack honeyBottle = new ItemStack(Items.GLASS_BOTTLE);
 	    if (!HopperTileEntity.putStackInInventoryAllSlots(null, dispenser, honeyBottle, null).isEmpty()) {
 		DROP_ITEM_BEHAVIOR.dispense(source, honeyBottle);

@@ -1,19 +1,20 @@
 package net.telepathicgrunt.bumblezone.fluids;
 
 import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.material.Material;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
-import net.minecraft.tag.FluidTags;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.state.StateContainer;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.IWorld;
@@ -23,13 +24,11 @@ import net.telepathicgrunt.bumblezone.items.BzItems;
 
 import java.util.Random;
 
-import static net.minecraft.state.property.Properties.LEVEL_1_8;
-
 
 public abstract class SugarWaterFluid extends FlowingFluid {
 
     @Override
-    public Fluid getFlowing() {
+    public Fluid getFlowingFluid() {
         return BzBlocks.SUGAR_WATER_FLUID_FLOWING;
     }
 
@@ -39,19 +38,19 @@ public abstract class SugarWaterFluid extends FlowingFluid {
     }
 
     @Override
-    public Item getBucketItem() {
+    public Item getFilledBucket() {
         return BzItems.SUGAR_WATER_BUCKET;
     }
 
     @Override
-    public void onRandomTick(World world, BlockPos position, FluidState state, Random random) {
+    public void randomTick(World world, BlockPos position, FluidState state, Random random) {
         //only attempts to grow sugar cane 50% of the time.
-        if (random.nextBoolean() || !world.isRegionLoaded(position, position))
+        if (random.nextBoolean() || !world.isAreaLoaded(position, position))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
 
         //check one of the spot next to sugar water for sugar cane to grow
-        BlockPos.Mutable blockPos = new BlockPos.Mutable().set(position.up());
-        blockPos.move(Direction.fromHorizontal(random.nextInt(4)));
+        BlockPos.Mutable blockPos = new BlockPos.Mutable().setPos(position.up());
+        blockPos.move(Direction.byHorizontalIndex(random.nextInt(4)));
         BlockState blockstate = world.getBlockState(blockPos);
 
         if (blockstate.getBlock() == Blocks.SUGAR_CANE) {
@@ -74,7 +73,7 @@ public abstract class SugarWaterFluid extends FlowingFluid {
 
     @Override
     public void animateTick(World worldIn, BlockPos pos, FluidState state, Random random) {
-        if (!state.isStill() && !state.get(FALLING)) {
+        if (!state.isSource() && !state.get(FALLING)) {
             if (random.nextInt(64) == 0) {
                 worldIn.playSound(
                         (double) pos.getX() + 0.5D,
@@ -98,13 +97,13 @@ public abstract class SugarWaterFluid extends FlowingFluid {
 
 
     @Override
-    public ParticleEffect getParticle() {
+    public IParticleData getDripParticleData() {
         return ParticleTypes.DRIPPING_WATER;
     }
 
 
     @Override
-    protected boolean hasRandomTicks() {
+    protected boolean ticksRandomly() {
         return true;
     }
 
@@ -115,18 +114,18 @@ public abstract class SugarWaterFluid extends FlowingFluid {
     }
 
     @Override
-    protected float getBlastResistance() {
+    protected float getExplosionResistance() {
         return 100.0F;
     }
 
     @Override
-    protected void beforeBreakingBlock(IWorld world, BlockPos pos, BlockState state) {
-        BlockEntity blockEntity = state.getBlock().hasBlockEntity() ? world.getBlockEntity(pos) : null;
-        Block.dropStacks(state, world, pos, blockEntity);
+    protected void beforeReplacingBlock(IWorld world, BlockPos pos, BlockState state) {
+        TileEntity blockEntity = state.getBlock().hasBlockEntity() ? world.getTileEntity(pos) : null;
+        Block.spawnDrops(state, world, pos, blockEntity);
     }
 
     @Override
-    public int getFlowSpeed(IWorldReader world) {
+    public int getSlopeFindDistance(IWorldReader world) {
         return 4;
     }
 
@@ -136,23 +135,23 @@ public abstract class SugarWaterFluid extends FlowingFluid {
     }
 
     @Override
-    public boolean matchesType(Fluid fluid) {
+    public boolean isEquivalentTo(Fluid fluid) {
         return fluid.isIn(FluidTags.WATER);
     }
 
     @Override
-    public boolean canBeReplacedWith(FluidState state, IBlockReader world, BlockPos pos, Fluid fluid, Direction direction) {
+    public boolean canDisplace(FluidState state, IBlockReader world, BlockPos pos, Fluid fluid, Direction direction) {
         return direction == Direction.DOWN && !fluid.isIn(FluidTags.WATER);
     }
 
     @Override
-    public BlockState toBlockState(FluidState state) {
-        return BzBlocks.SUGAR_WATER_BLOCK.getDefaultState().with(FluidBlock.LEVEL, method_15741(state));
+    public BlockState getBlockState(FluidState state) {
+        return BzBlocks.SUGAR_WATER_BLOCK.getDefaultState().with(FlowingFluidBlock.LEVEL, getLevelFromState(state));
     }
 
     public static class Flowing extends SugarWaterFluid {
-        protected void appendProperties(StateManager.Builder<Fluid, FluidState> builder) {
-            super.appendProperties(builder);
+        protected void fillStateContainer(StateContainer.Builder<Fluid, FluidState> builder) {
+            super.fillStateContainer(builder);
             builder.add(LEVEL_1_8);
         }
 
@@ -162,12 +161,12 @@ public abstract class SugarWaterFluid extends FlowingFluid {
         }
 
         @Override
-        public boolean isStill(FluidState state) {
+        public boolean isSource(FluidState state) {
             return false;
         }
 
         @Override
-        protected boolean isInfinite() {
+        protected boolean canSourcesMultiply() {
             return true;
         }
     }
@@ -180,12 +179,12 @@ public abstract class SugarWaterFluid extends FlowingFluid {
         }
 
         @Override
-        public boolean isStill(FluidState state) {
+        public boolean isSource(FluidState state) {
             return true;
         }
 
         @Override
-        protected boolean isInfinite() {
+        protected boolean canSourcesMultiply() {
             return false;
         }
     }

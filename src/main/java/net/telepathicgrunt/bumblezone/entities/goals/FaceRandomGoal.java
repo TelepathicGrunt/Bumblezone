@@ -1,7 +1,7 @@
 package net.telepathicgrunt.bumblezone.entities.goals;
 
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.potion.Effects;
 import net.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import net.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
 
@@ -14,14 +14,14 @@ public class FaceRandomGoal extends Goal {
 
     public FaceRandomGoal(HoneySlimeEntity slimeIn) {
         this.slime = slimeIn;
-        this.setControls(EnumSet.of(Goal.Control.LOOK));
+        this.setMutexFlags(EnumSet.of(Goal.Flag.LOOK));
     }
 
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
     public boolean shouldExecute() {
-        return this.slime.getTarget() == null && (this.slime.isOnGround() || this.slime.isTouchingWater() || this.slime.isInLava() || this.slime.isPotionActive(StatusEffects.LEVITATION)) && this.slime.getMoveHelper() instanceof HoneySlimeMoveHelperController;
+        return this.slime.getAttackTarget() == null && (this.slime.isOnGround() || this.slime.isInWater() || this.slime.isInLava() || this.slime.isPotionActive(Effects.LEVITATION)) && this.slime.getMoveHelper() instanceof HoneySlimeMoveHelperController;
     }
 
     /**
@@ -29,8 +29,8 @@ public class FaceRandomGoal extends Goal {
      */
     public void tick() {
         if (--this.nextRandomizeTime <= 0) {
-            this.nextRandomizeTime = 40 + this.slime.getRandom().nextInt(60);
-            this.chosenDegrees = (float) this.slime.getRandom().nextInt(360);
+            this.nextRandomizeTime = 40 + this.slime.getRNG().nextInt(60);
+            this.chosenDegrees = (float) this.slime.getRNG().nextInt(360);
         }
 
         ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setDirection(this.chosenDegrees, false);

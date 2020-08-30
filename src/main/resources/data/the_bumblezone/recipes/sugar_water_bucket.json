@@ -1,5 +1,5 @@
 {
-    "type": "minecraft:crafting_shapeless",
+	"type": "the_bumblezone:container_shapeless_recipe_bz",
 	"ingredients": [
 		{
 			"item": "minecraft:water_bucket"
@@ -8,9 +8,9 @@
 			"item": "minecraft:sugar"
 		}
 	],
-    "result":
-    {
-        "item": "the_bumblezone:sugar_water_bucket",
-        "count": 1
-    }
+	"result":
+	{
+		"item": "the_bumblezone:sugar_water_bucket",
+		"count": 1
+	}
 }

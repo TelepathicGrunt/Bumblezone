@@ -1,29 +1,29 @@
 package net.telepathicgrunt.bumblezone.mixin;
 
-import net.minecraft.structure.Structure;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.math.BlockBox;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IServerWorld;
+import net.minecraft.world.gen.feature.template.PlacementSettings;
+import net.minecraft.world.gen.feature.template.Template;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 import java.util.List;
 
-@Mixin(Structure.class)
+@Mixin(Template.class)
 public interface StructureAccessorInvoker {
 
-    @Accessor("blockInfoLists")
-    List<Structure.PalettedBlockInfoList> getBlocks();
+    @Accessor("blocks")
+    List<Template.Palette> getBlocks();
 
     @Accessor("entities")
-    List<Structure.StructureEntityInfo> getEntities();
+    List<Template.EntityInfo> getEntities();
 
     @Accessor("size")
     BlockPos getSize();
 
-    @Invoker("spawnEntities")
-    void invokeSpawnEntities(IServerWorld serverIWorld, BlockPos pos, BlockMirror blockMirror, BlockRotation blockRotation, BlockPos pivot, BlockBox area, boolean bl);
+    @Invoker("addEntitiesToWorld")
+    void invokeSpawnEntities(IServerWorld serverIWorld, BlockPos pos, PlacementSettings placementIn);
 }

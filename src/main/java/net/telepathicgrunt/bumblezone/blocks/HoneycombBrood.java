@@ -116,10 +116,10 @@ public class HoneycombBrood extends DirectionalBlock {
             }
 
             if ((playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+                    Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&
-                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
+                    Bumblezone.BzBeeAggressionConfig.aggressiveBees.get())
             {
                 if(playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
                     playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
@@ -128,10 +128,10 @@ public class HoneycombBrood extends DirectionalBlock {
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
                     playerEntity.addPotionEffect(new EffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE,
-                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                            Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
                             2,
                             false,
-                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles,
+                            Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(),
                             true));
                 }
             }
@@ -155,7 +155,7 @@ public class HoneycombBrood extends DirectionalBlock {
 
                 if (successfulGrowth && world.rand.nextFloat() < 0.30F) {
                     if(!playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE)){
-                        playerEntity.addPotionEffect(new EffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, (int) (Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts * 0.75f), 1, false, false,  true));
+                        playerEntity.addPotionEffect(new EffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, (int) (Bumblezone.BzBeeAggressionConfig.howLongProtectionOfTheHiveLasts.get() * 0.75f), 1, false, false,  true));
                     }
                 }
 
@@ -206,7 +206,7 @@ public class HoneycombBrood extends DirectionalBlock {
                 world.setBlockState(position, state.with(STAGE, stage + 1), 2);
             }
         } else {
-            PLAYER_DISTANCE.setDistance(Math.max(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius * 0.5, 1));
+            PLAYER_DISTANCE.setDistance(Math.max(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get() * 0.5, 1));
 
             List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, FIXED_DISTANCE, null, new AxisAlignedBB(position).grow(50));
             List<PlayerEntity> playerList = world.getTargettableEntitiesWithinAABB(PlayerEntity.class, PLAYER_DISTANCE, null, new AxisAlignedBB(position).grow(50));
@@ -234,17 +234,17 @@ public class HoneycombBrood extends DirectionalBlock {
             }
 
             if ((playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+                    Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&
-                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
+                    Bumblezone.BzBeeAggressionConfig.aggressiveBees.get())
             {
                 if(playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
                     playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                 }
                 else{
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
-                    playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
+                    playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(), true));
                 }
             }
         }

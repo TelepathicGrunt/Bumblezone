@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.modcompatibility;
+package net.telepathicgrunt.bumblezone.modCompat;
 
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -11,13 +11,12 @@ public class PotionOfBeesBeeSplashPotionProjectile
 	private static class ForgeEvents
 	{
 		/*
-		 * Manual spawning on honey slime to bypass their heightmap checks and light checks.
-		 * works by making 1/10th of bees spawning also spawn honey slime
+		 * Check for if potion of bee's item was thrown and impacted empty honeycomb block to revive it
 		 */
 		@SubscribeEvent
 		public static void ProjectileImpactEvent(net.minecraftforge.event.entity.ProjectileImpactEvent.Throwable event)
 		{
-			if(ModChecking.potionOfBeesPresent && Bumblezone.BzConfig.allowPotionOfBeesCompat.get()) 
+			if(ModChecker.potionOfBeesPresent && Bumblezone.BzConfig.allowPotionOfBeesCompat.get())
 			{
 				PotionOfBeesRedirection.POBReviveLarvaBlockEvent(event);
 			}

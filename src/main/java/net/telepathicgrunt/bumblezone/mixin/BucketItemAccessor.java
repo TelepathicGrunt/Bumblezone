@@ -8,6 +8,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(BucketItem.class)
 public interface BucketItemAccessor {
 
-    @Accessor("fluid")
+    @Accessor("containedBlock")
     Fluid getFluid();
 }

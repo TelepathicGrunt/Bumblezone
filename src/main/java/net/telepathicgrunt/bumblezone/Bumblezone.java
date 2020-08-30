@@ -5,10 +5,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
@@ -24,17 +21,18 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.capabilities.CapabilityPlayerPosAndDim;
 import net.telepathicgrunt.bumblezone.client.BumblezoneClient;
-import net.telepathicgrunt.bumblezone.configs.BzConfig;
+import net.telepathicgrunt.bumblezone.configs.*;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
-import net.telepathicgrunt.bumblezone.entities.BeeAggression;
 import net.telepathicgrunt.bumblezone.entities.BzEntities;
 import net.telepathicgrunt.bumblezone.features.BzConfiguredFeatures;
 import net.telepathicgrunt.bumblezone.features.BzFeatures;
 import net.telepathicgrunt.bumblezone.features.decorators.BzPlacements;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.DispenserItemSetup;
+import net.telepathicgrunt.bumblezone.modCompat.ModChecker;
 import net.telepathicgrunt.bumblezone.surfacebuilders.BzSurfaceBuilders;
 import net.telepathicgrunt.bumblezone.utils.ConfigHelper;
 import org.apache.logging.log4j.LogManager;
@@ -45,13 +43,15 @@ public class Bumblezone{
 
     public static final String MODID = "the_bumblezone";
     public static final ResourceLocation MOD_DIMENSION_ID = new ResourceLocation(Bumblezone.MODID, Bumblezone.MODID);
-
-    public static BzConfig BZ_CONFIG;
     public static final Logger LOGGER = LogManager.getLogger(MODID);
-    public static net.telepathicgrunt.bumblezone.config.BzConfig.BzConfigValues BzConfig = null;
+
+    public static BzBeeAggressionConfigs.BzBeeAggressionConfigValues BzBeeAggressionConfig = null;
+    public static BzBlockMechanicsConfigs.BzBlockMechanicsConfigValues BzBlockMechanicsConfig = null;
+    public static BzDimensionConfigs.BzDimensionConfigValues BzDimensionConfig = null;
+    public static BzDungeonsConfigs.BzDungeonsConfigValues BzDungeonsConfig = null;
+    public static BzModCompatibilityConfigs.BzModCompatibilityConfigValues BzModCompatibilityConfig = null;
 
     public Bumblezone() {
-        BzDimension.setupDimension();
 
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
@@ -61,18 +61,22 @@ public class Bumblezone{
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> BumblezoneClient.subscribeClientEvents(modEventBus, forgeBus));
 
         // generates/handles config
-        BzConfig = ConfigHelper.register(ModConfig.Type.SERVER, (builder, subscriber) -> new BzConfig.BzConfigValues(builder, subscriber));
-        DispenserItemSetup.setupDispenserBehaviors();
+        BzModCompatibilityConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzModCompatibilityConfigs.BzModCompatibilityConfigValues::new);
+        BzBlockMechanicsConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzBlockMechanicsConfigs.BzBlockMechanicsConfigValues::new);
+        BzBeeAggressionConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzBeeAggressionConfigs.BzBeeAggressionConfigValues::new);
+        BzDimensionConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzDimensionConfigs.BzDimensionConfigValues::new);
+        BzDungeonsConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzDungeonsConfigs.BzDungeonsConfigValues::new);
+
+
     }
 
 
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        //CapabilityPlayerPosAndDim.register();
-        //SugarWaterEvents.setup();
+        CapabilityPlayerPosAndDim.register();
+        BzDimension.setupDimension();
         DispenserItemSetup.setupDispenserBehaviors();
-
         DeferredWorkQueue.runLater(Bumblezone::lateSetup);
     }
 
@@ -80,8 +84,7 @@ public class Bumblezone{
     // should run after most other mods just in case
     private static void lateSetup()
     {
-        //DispenserItemSetup.lateSetupDespenserBehavior();
-        //ModChecking.setupModCompat();
+        ModChecker.setupModCompat();
     }
 
     // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD

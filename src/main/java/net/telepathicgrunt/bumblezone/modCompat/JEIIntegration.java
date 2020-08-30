@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.modcompatibility;
+package net.telepathicgrunt.bumblezone.modCompat;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -23,20 +23,21 @@ public class JEIIntegration implements IModPlugin
     
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-	addInfo(registration, BzItems.DEAD_HONEYCOMB_LARVA_ITEM.get());
-	addInfo(registration, BzItems.FILLED_POROUS_HONEYCOMB_ITEM.get());
-	addInfo(registration, BzItems.HONEY_CRYSTAL_BLOCK.get());
-	addInfo(registration, BzItems.HONEY_CRYSTAL_SHARDS.get());
-	addInfo(registration, BzItems.HONEY_CRYSTAL_SHIELD.get());
-	addInfo(registration, BzItems.HONEYCOMB_LARVA_ITEM.get());
-	addInfo(registration, BzItems.POROUS_HONEYCOMB_ITEM.get());
-	addInfo(registration, BzItems.STICKY_HONEY_REDSTONE.get());
-	addInfo(registration, BzItems.STICKY_HONEY_RESIDUE.get());
-	addInfo(registration, BzItems.SUGAR_INFUSED_COBBLESTONE_ITEM.get());
-	addInfo(registration, BzItems.SUGAR_INFUSED_STONE_ITEM.get());
-	addInfo(registration, BzItems.SUGAR_WATER_BOTTLE.get());
-	addInfo(registration, BzItems.SUGAR_WATER_BUCKET.get());
-	addInfo(registration, BzBlocks.SUGAR_WATER_FLUID.get());
+		addInfo(registration, BzItems.EMPTY_HONEYCOMB_LARVA);
+		addInfo(registration, BzItems.FILLED_POROUS_HONEYCOMB);
+		addInfo(registration, BzItems.HONEY_CRYSTAL);
+		addInfo(registration, BzItems.HONEY_CRYSTAL_SHARDS);
+		addInfo(registration, BzItems.HONEY_CRYSTAL_SHIELD);
+		addInfo(registration, BzItems.HONEYCOMB_LARVA);
+		addInfo(registration, BzItems.POROUS_HONEYCOMB);
+		addInfo(registration, BzItems.STICKY_HONEY_REDSTONE);
+		addInfo(registration, BzItems.STICKY_HONEY_RESIDUE);
+		addInfo(registration, BzItems.SUGAR_INFUSED_COBBLESTONE);
+		addInfo(registration, BzItems.SUGAR_INFUSED_STONE);
+		addInfo(registration, BzItems.SUGAR_WATER_BOTTLE);
+		addInfo(registration, BzItems.SUGAR_WATER_BUCKET);
+		addInfo(registration, BzItems.BEESWAX_PLANKS);
+		addInfo(registration, BzBlocks.SUGAR_WATER_FLUID);
     }
 
     

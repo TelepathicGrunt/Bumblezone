@@ -3,21 +3,25 @@ package net.telepathicgrunt.bumblezone.entities;
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.effect.EffectInstance;
+import net.minecraft.entity.item.EnderPearlEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.StringTextComponent;
-import net.minecraft.text.Text;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.capabilities.IPlayerPosAndDim;
+import net.telepathicgrunt.bumblezone.capabilities.PlayerPositionAndDimension;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.dimension.BzPlayerPlacement;
 import org.apache.logging.log4j.Level;
@@ -26,17 +30,20 @@ import java.util.ArrayList;
 
 public class PlayerTeleportation {
 
-    //Player ticks
+    @CapabilityInject(IPlayerPosAndDim.class)
+    public static Capability<IPlayerPosAndDim> PAST_POS_AND_DIM = null;
 
+    //Player ticks
     public static void playerTick(PlayerEntity playerEntity){
         //Bumblezone.LOGGER.log(Level.INFO, "started");
         //grabs the capability attached to player for dimension hopping
 
         //Makes it so player does not get killed for falling into the void
+        PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
         if (playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (playerEntity.getY() < -3) {
                 playerEntity.setPos(playerEntity.getX(), -3.01D, playerEntity.getZ());
-                playerEntity.updatePosition(playerEntity.getX(), -3.01D, playerEntity.getZ());
+                playerEntity.setPosition(playerEntity.getX(), -3.01D, playerEntity.getZ());
 
                 teleportOutOfBz(playerEntity);
             } else if (playerEntity.getY() > 255) {
@@ -44,9 +51,9 @@ public class PlayerTeleportation {
             }
         }
         //teleport to bumblezone
-        else if (Bumblezone.PLAYER_COMPONENT.get(playerEntity).getIsTeleporting()) {
+        else if (cap.getTeleporting()) {
             BzPlayerPlacement.enteringBumblezone(playerEntity);
-            Bumblezone.PLAYER_COMPONENT.get(playerEntity).setIsTeleporting(false);
+            cap.setTeleporting(false);
             reAddStatusEffect(playerEntity);
         }
     }
@@ -55,7 +62,8 @@ public class PlayerTeleportation {
         if (!playerEntity.world.isRemote) {
             checkAndCorrectStoredDimension(playerEntity);
             MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
-            RegistryKey<World> world_key = RegistryKey.of(Registry.DIMENSION, Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension());
+            PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
+            RegistryKey<World> world_key = RegistryKey.of(Registry.DIMENSION, cap.getNonBZDim());
             BzPlayerPlacement.exitingBumblezone(playerEntity, minecraftServer.getWorld(world_key));
             reAddStatusEffect(playerEntity);
         }
@@ -67,19 +75,19 @@ public class PlayerTeleportation {
      */
     private static void reAddStatusEffect(PlayerEntity playerEntity) {
         //re-adds potion effects so the icon remains instead of disappearing when changing dimensions due to a bug
-        ArrayList<EffectInstance> effectInstanceList = new ArrayList<EffectInstance>(playerEntity.getStatusEffects());
+        ArrayList<EffectInstance> effectInstanceList = new ArrayList<>(playerEntity.getActivePotionEffects());
         for (int i = effectInstanceList.size() - 1; i >= 0; i--) {
             EffectInstance effectInstance = effectInstanceList.get(i);
             if (effectInstance != null) {
-                playerEntity.removePotionEffect(effectInstance.getEffectType());
+                playerEntity.removePotionEffect(effectInstance.getPotion());
                 playerEntity.addPotionEffect(
                         new EffectInstance(
-                                effectInstance.getEffectType(),
+                                effectInstance.getPotion(),
                                 effectInstance.getDuration(),
                                 effectInstance.getAmplifier(),
                                 effectInstance.isAmbient(),
-                                effectInstance.shouldShowParticles(),
-                                effectInstance.shouldShowIcon()));
+                                effectInstance.doesShowParticles(),
+                                effectInstance.isShowIcon()));
             }
         }
     }
@@ -91,24 +99,25 @@ public class PlayerTeleportation {
     private static void checkAndCorrectStoredDimension(PlayerEntity playerEntity) {
         //Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone.
         //Go to Overworld instead as default. Or go to Overworld if config is set.
-        if (Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                Bumblezone.BZ_CONFIG.BZDimensionConfig.forceExitToOverworld)
+        PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
+        if (cap.getNonBZDim().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                Bumblezone.BzDimensionConfig.forceExitToOverworld.get())
         {
             // go to overworld by default
             //update stored dimension
-            Bumblezone.PLAYER_COMPONENT.get(playerEntity).setNonBZDimension(World.OVERWORLD.getValue());
+            cap.setNonBZDim(World.OVERWORLD.getValue());
         }
     }
 
 
     // Enderpearl
-    public static boolean runEnderpearlImpact(HitResult hitResult, EnderPearlEntity pearlEntity){
+    public static boolean runEnderpearlImpact(RayTraceResult hitResult, EnderPearlEntity pearlEntity){
         World world = pearlEntity.world; // world we threw in
 
         //Make sure we are on server by checking if thrower is ServerPlayerEntity
         if (!world.isRemote && pearlEntity.getOwner() instanceof ServerPlayerEntity) {
             ServerPlayerEntity playerEntity = (ServerPlayerEntity) pearlEntity.getOwner(); // the thrower
-            Vec3d hitBlockPos = hitResult.getPos(); //position of the collision
+            Vector3d hitBlockPos = hitResult.getHitVec(); //position of the collision
             BlockPos hivePos = new BlockPos(0,0,0);
             boolean hitHive = false;
 
@@ -139,22 +148,22 @@ public class PlayerTeleportation {
 
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = false;
-            String requiredBlockString = Bumblezone.BZ_CONFIG.BZDimensionConfig.requiredBlockUnderHive;
+            String requiredBlockString = Bumblezone.BzDimensionConfig.requiredBlockUnderHive.get();
             if(!requiredBlockString.trim().isEmpty())
             {
-                if(requiredBlockString.matches("[a-z0-9/._-]+:[a-z0-9/._-]+") && Registry.BLOCK.containsId(new ResourceLocation(requiredBlockString)))
+                if(requiredBlockString.matches("[a-z0-9/._-]+:[a-z0-9/._-]+") && Registry.BLOCK.containsKey(new ResourceLocation(requiredBlockString)))
                 {
-                    Block requiredBlock = Registry.BLOCK.get(new ResourceLocation(requiredBlockString));
+                    Block requiredBlock = Registry.BLOCK.getOrDefault(new ResourceLocation(requiredBlockString));
                     if(requiredBlock == world.getBlockState(hivePos.down()).getBlock())
                     {
                         validBelowBlock = true;
                     }
-                    else if(Bumblezone.BZ_CONFIG.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive)
+                    else if(Bumblezone.BzDimensionConfig.warnPlayersOfWrongBlockUnderHive.get())
                     {
                         //failed. Block below isn't the required block
-                        String beeBlock = Registry.BLOCK.getId(world.getBlockState(hivePos).getBlock()).toString();
+                        String beeBlock = Registry.BLOCK.getKey(world.getBlockState(hivePos).getBlock()).toString();
                         Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: The block under the "+beeBlock+" is not the correct block to teleport to Bumblezone. The config enter says it needs "+requiredBlockString+" under "+beeBlock+".");
-                        Text message = new StringTextComponent("The config entry says it needs §6"+requiredBlockString+"§f under §6"+beeBlock+"§f.");
+                        ITextComponent message = new StringTextComponent("The config entry says it needs §6"+requiredBlockString+"§f under §6"+beeBlock+"§f.");
                         playerEntity.sendStatusMessage(message, true);
                         return false;
                     }
@@ -163,7 +172,7 @@ public class PlayerTeleportation {
                 {
                     //failed. the required block config entry is broken
                     Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: The required block under beenest config is broken. Please specify a resourcelocation to a real block or leave it blank so that players can teleport to Bumblezone dimension. Currently, the broken config has this in it: "+requiredBlockString);
-                    Text message = new StringTextComponent("§eBumblezone:§f The required block under beenest config is broken. Please specify a resourcelocation to a real block or leave it blank so that players can teleport to Bumblezone dimension. Currently, the broken config has this in it: §c"+requiredBlockString);
+                    ITextComponent message = new StringTextComponent("§eBumblezone:§f The required block under beenest config is broken. Please specify a resourcelocation to a real block or leave it blank so that players can teleport to Bumblezone dimension. Currently, the broken config has this in it: §c"+requiredBlockString);
                     playerEntity.sendStatusMessage(message, true);
                     return false;
                 }
@@ -175,7 +184,8 @@ public class PlayerTeleportation {
 
             //if the pearl hit a beehive and is not in our bee dimension, begin the teleportation.
             if (hitHive && validBelowBlock && !playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)) {
-                Bumblezone.PLAYER_COMPONENT.get(playerEntity).setIsTeleporting(true);
+                PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
+                cap.setTeleporting(true);
 
                 return true;
             }
@@ -189,7 +199,8 @@ public class PlayerTeleportation {
     public static void playerLeavingBz(ResourceLocation dimensionLeaving, ServerPlayerEntity serverPlayerEntity){
         //Updates the non-BZ dimension that the player is leaving
         if (!dimensionLeaving.equals(Bumblezone.MOD_DIMENSION_ID)) {
-            Bumblezone.PLAYER_COMPONENT.get(serverPlayerEntity).setNonBZDimension(dimensionLeaving);
+            PlayerPositionAndDimension cap = (PlayerPositionAndDimension) serverPlayerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
+            cap.setNonBZDim(dimensionLeaving);
         }
     }
 }

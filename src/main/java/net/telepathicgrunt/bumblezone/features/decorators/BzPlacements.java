@@ -3,15 +3,15 @@ package net.telepathicgrunt.bumblezone.features.decorators;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.gen.CountConfig;
-import net.minecraft.world.gen.decorator.Decorator;
-import net.minecraft.world.gen.decorator.NopeDecoratorConfig;
+import net.minecraft.world.gen.feature.FeatureSpreadConfig;
+import net.minecraft.world.gen.placement.NoPlacementConfig;
+import net.minecraft.world.gen.placement.Placement;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 
 public class BzPlacements {
-    public static final Decorator<NopeDecoratorConfig> HONEYCOMB_HOLE_PLACER = new HoneycombHolePlacer(NopeDecoratorConfig.CODEC);
-    public static final Decorator<NopeDecoratorConfig> BEE_DUNGEON_PLACER = new BeeDungeonPlacer(NopeDecoratorConfig.CODEC);
-    public static final Decorator<CountConfig> RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT = new Random3DUndergroundChunkPlacement(CountConfig.CODEC);
+    public static final Placement<NoPlacementConfig> HONEYCOMB_HOLE_PLACER = new HoneycombHolePlacer(NoPlacementConfig.CODEC);
+    public static final Placement<NoPlacementConfig> BEE_DUNGEON_PLACER = new BeeDungeonPlacer(NoPlacementConfig.CODEC);
+    public static final Placement<FeatureSpreadConfig> RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT = new Random3DUndergroundChunkPlacement(FeatureSpreadConfig.CODEC);
 
 
     public static void registerPlacements() {

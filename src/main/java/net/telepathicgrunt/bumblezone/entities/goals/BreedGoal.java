@@ -72,7 +72,7 @@ public class BreedGoal extends Goal {
      */
     @Override
     public void tick() {
-        this.slime.getLookController().setLookPositionWithEntity(this.field_75391_e, 10.0F, (float)this.slime.getLookPitchSpeed());
+        this.slime.getLookController().setLookPositionWithEntity(this.field_75391_e, 10.0F, (float)this.slime.getVerticalFaceSpeed());
 
         this.slime.faceEntity(this.field_75391_e, 10.0F, 10.0F);
         ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setDirection(this.slime.rotationYaw, true);

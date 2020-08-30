@@ -1,8 +1,8 @@
 package net.telepathicgrunt.bumblezone.utils;
 
-import net.minecraft.block.Material;
+import net.minecraft.block.material.Material;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.IWorld;
 
 public class BzPlacingUtils

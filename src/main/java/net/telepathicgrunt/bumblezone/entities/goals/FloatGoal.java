@@ -11,23 +11,23 @@ public class FloatGoal extends Goal {
 
     public FloatGoal(HoneySlimeEntity slimeIn) {
         this.slime = slimeIn;
-        this.setControls(EnumSet.of(Goal.Control.JUMP, Goal.Control.MOVE));
-        slimeIn.getNavigation().setCanSwim(true);
+        this.setMutexFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
+        slimeIn.getNavigator().setCanSwim(true);
     }
 
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
     public boolean shouldExecute() {
-        return (this.slime.isTouchingWater() || this.slime.isInLava()) && this.slime.getMoveHelper() instanceof HoneySlimeMoveHelperController;
+        return (this.slime.isInWater() || this.slime.isInLava()) && this.slime.getMoveHelper() instanceof HoneySlimeMoveHelperController;
     }
 
     /**
      * Keep ticking a continuous task that has already been started
      */
     public void tick() {
-        if (this.slime.getRandom().nextFloat() < 0.8F) {
-            this.slime.getJumpControl().setActive();
+        if (this.slime.getRNG().nextFloat() < 0.8F) {
+            this.slime.getJumpController().setJumping();
         }
 
         ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setSpeed(1.2D);

@@ -7,13 +7,12 @@ import net.minecraft.util.math.vector.Vector3d;
 
 public class PlayerPositionAndDimension implements IPlayerPosAndDim
 {
-
-	public ResourceLocation nonBZDimension = null;
-	public ResourceLocation nextDimension = null;
-	public boolean isTeleporting = false;
-	public Vector3d nonBZPosition = null;
-	public float nonBZPitch = 0;
-	public float nonBZYaw = 0;
+	private ResourceLocation nonBZDimension = null;
+	private ResourceLocation nextDimension = null;
+	private boolean isTeleporting = false;
+	private Vector3d nonBZPosition = null;
+	private float nonBZPitch = 0;
+	private float nonBZYaw = 0;
 
 
 	@Override

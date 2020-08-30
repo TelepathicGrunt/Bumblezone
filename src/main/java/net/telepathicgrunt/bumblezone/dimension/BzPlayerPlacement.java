@@ -93,7 +93,7 @@ public class BzPlayerPlacement {
         BlockPos validBlockPos = null;
 
         PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-        if (Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode != 2 || cap.getNonBZPos() == null) {
+        if (Bumblezone.BzDimensionConfig.teleportationMode.get() != 2 || cap.getNonBZPos() == null) {
             blockpos = new BlockPos(
                     Doubles.constrainToRange(playerEntity.getPositionVec().getX() * coordinateScale, -29999936D, 29999936D),
                     playerEntity.getPositionVec().getY(),
@@ -106,8 +106,8 @@ public class BzPlayerPlacement {
         }
 
 
-        if (Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 2 ||
-                (Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 3 && validBlockPos == null)) {
+        if (Bumblezone.BzDimensionConfig.teleportationMode.get() == 2 ||
+                (Bumblezone.BzDimensionConfig.teleportationMode.get() == 3 && validBlockPos == null)) {
             //Use cap for position
 
             //extra null check
@@ -259,7 +259,7 @@ public class BzPlayerPlacement {
         //scans range from y = 0 to dimension max height for a bee_nest
         //Does it by checking each y layer at a time
         while (mutableBlockPos.getY() >= 0 && mutableBlockPos.getY() <= maxHeight) {
-            if (!Bumblezone.BZ_CONFIG.BZDimensionConfig.seaLevelOrHigherExitTeleporting ||
+            if (!Bumblezone.BzDimensionConfig.seaLevelOrHigherExitTeleporting.get() ||
                     mutableBlockPos.getY() > world.getSeaLevel()) {
 
                 for (int range = 0; range < maximumRange; range++) {
@@ -298,7 +298,7 @@ public class BzPlayerPlacement {
 
 
         //this mode will not generate a beenest automatically.
-        if(Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 3) return null;
+        if(Bumblezone.BzDimensionConfig.teleportationMode.get() == 3) return null;
 
         //no valid spot was found, generate a hive and spawn us on the highest land
         //This if statement is so we dont get placed on roof of other roofed dimension
@@ -324,7 +324,7 @@ public class BzPlayerPlacement {
     }
 
     private static void createSpaceForPlayer(World world, BlockPos.Mutable mutableBlockPos) {
-        if(Bumblezone.BZ_CONFIG.BZDimensionConfig.generateBeenest)
+        if(Bumblezone.BzDimensionConfig.generateBeenest.get())
             world.setBlockState(mutableBlockPos, Blocks.BEE_NEST.getDefaultState());
         else if(world.getBlockState(mutableBlockPos).getMaterial() == Material.AIR ||
                 (!world.getBlockState(mutableBlockPos).getFluidState().isEmpty() &&

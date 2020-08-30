@@ -2,41 +2,38 @@ package net.telepathicgrunt.bumblezone.items;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.dispenser.DispenserBehavior;
-import net.minecraft.block.dispenser.ItemDispenserBehavior;
-import net.minecraft.block.entity.DispenserBlockEntity;
-import net.minecraft.block.entity.HopperBlockEntity;
+import net.minecraft.dispenser.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPointer;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.DispenserTileEntity;
+import net.minecraft.tileentity.HopperTileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 
 
-public class EmptyBucketDispenseBehavior extends ItemDispenserBehavior {
-    public static DispenserBehavior DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR;
-    public static ItemDispenserBehavior DROP_ITEM_BEHAVIOR = new ItemDispenserBehavior();
+public class EmptyBucketDispenseBehavior extends DefaultDispenseItemBehavior {
+    public static IDispenseItemBehavior DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR;
+    public static DefaultDispenseItemBehavior DROP_ITEM_BEHAVIOR = new DefaultDispenseItemBehavior();
 
     /**
      * Dispense the specified stack, play the dispense sound and spawn particles.
      */
     @Override
-    public ItemStack dispenseSilently(BlockPointer source, ItemStack stack) {
+    public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
         World world = source.getWorld();
-        Position iposition = DispenserBlock.getOutputLocation(source);
+        IPosition iposition = DispenserBlock.getDispensePosition(source);
         BlockPos position = new BlockPos(iposition);
         BlockState blockstate = world.getBlockState(position);
 
-        if (blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL && blockstate.get(Properties.WATERLOGGED)) {
+        if (blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL && blockstate.get(BlockStateProperties.WATERLOGGED)) {
 
             world.setBlockState(position, BzBlocks.HONEY_CRYSTAL.getDefaultState()
                     .with(BlockStateProperties.FACING, blockstate.get(BlockStateProperties.FACING))
-                    .with(Properties.WATERLOGGED, false));
+                    .with(BlockStateProperties.WATERLOGGED, false));
 
-            stack.decrement(1);
+            stack.shrink(1);
 
             if (!stack.isEmpty())
                 addItemToDispenser(source, BzItems.SUGAR_WATER_BUCKET);
@@ -54,7 +51,7 @@ public class EmptyBucketDispenseBehavior extends ItemDispenserBehavior {
      * Play the dispense sound from the specified block.
      */
     @Override
-    protected void playSound(BlockPointer source) {
+    protected void playDispenseSound(IBlockSource source) {
         source.getWorld().playEvent(1002, source.getBlockPos(), 0);
     }
 
@@ -62,11 +59,11 @@ public class EmptyBucketDispenseBehavior extends ItemDispenserBehavior {
     /**
      * Adds honey bottle to dispenser or if no room, dispense it
      */
-    private static void addItemToDispenser(BlockPointer source, Item newItem) {
-        if (source.getBlockEntity() instanceof DispenserBlockEntity) {
-			DispenserBlockEntity dispenser = source.getBlockEntity();
+    private static void addItemToDispenser(IBlockSource source, Item newItem) {
+        if (source.getBlockTileEntity() instanceof DispenserTileEntity) {
+			DispenserTileEntity dispenser = source.getBlockTileEntity();
             ItemStack honeyBottle = new ItemStack(newItem);
-            if (!HopperBlockEntity.transfer(null, dispenser, honeyBottle, null).isEmpty()) {
+            if (!HopperTileEntity.putStackInInventoryAllSlots(null, dispenser, honeyBottle, null).isEmpty()) {
                 DROP_ITEM_BEHAVIOR.dispense(source, honeyBottle);
             }
         }

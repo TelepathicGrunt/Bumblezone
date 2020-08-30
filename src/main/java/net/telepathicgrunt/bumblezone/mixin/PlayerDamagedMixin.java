@@ -1,7 +1,7 @@
 package net.telepathicgrunt.bumblezone.mixin;
 
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.DamageSource;
 import net.telepathicgrunt.bumblezone.items.HoneyCrystalShieldBehavior;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(PlayerEntity.class)
 public class PlayerDamagedMixin {
     //bees attacks bear mobs that is in the dimension
-    @Inject(method = "damage",
+    @Inject(method = "attackEntityFrom",
             at = @At(value = "HEAD"),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)

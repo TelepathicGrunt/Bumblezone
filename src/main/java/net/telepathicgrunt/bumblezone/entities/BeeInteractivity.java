@@ -1,18 +1,18 @@
 package net.telepathicgrunt.bumblezone.entities;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.effect.EffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
@@ -25,7 +25,7 @@ public class BeeInteractivity {
         if (!world.isRemote && target instanceof BeeEntity) {
 
             BeeEntity beeEntity = (BeeEntity) target;
-            ItemStack itemstack = playerEntity.getStackInHand(hand);
+            ItemStack itemstack = playerEntity.getHeldItem(hand);
 
             if (itemstack.getItem() == Items.HONEY_BOTTLE || itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {
 
@@ -43,7 +43,7 @@ public class BeeInteractivity {
 
                     // Heal bee a lot
                     beeEntity.addPotionEffect(new EffectInstance(
-                            StatusEffects.INSTANT_HEALTH,
+                            Effects.INSTANT_HEALTH,
                             1,
                             1,
                             false,
@@ -60,7 +60,7 @@ public class BeeInteractivity {
                         else{
                             playerEntity.addPotionEffect(new EffectInstance(
                                     BzEffects.PROTECTION_OF_THE_HIVE,
-                                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts,
+                                    Bumblezone.BzBeeAggressionConfig.howLongProtectionOfTheHiveLasts.get(),
                                     2,
                                     false,
                                     false,
@@ -69,7 +69,7 @@ public class BeeInteractivity {
                     }
 
                     if (!beeEntity.hasAngerTime() || calmed)
-                        ((ServerWorld) world).spawnParticles(
+                        ((ServerWorld) world).spawnParticle(
                                 ParticleTypes.HEART,
                                 beeEntity.getX(),
                                 beeEntity.getY(),
@@ -85,7 +85,7 @@ public class BeeInteractivity {
                 else {
                     // Heal bee slightly but they remain angry
                     beeEntity.addPotionEffect(new EffectInstance(
-                            StatusEffects.INSTANT_HEALTH,
+                            Effects.INSTANT_HEALTH,
                             1,
                             0,
                             false,
@@ -102,7 +102,7 @@ public class BeeInteractivity {
                         else{
                             playerEntity.addPotionEffect(new EffectInstance(
                                     BzEffects.PROTECTION_OF_THE_HIVE,
-                                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts,
+                                    Bumblezone.BzBeeAggressionConfig.howLongProtectionOfTheHiveLasts.get(),
                                     2,
                                     false,
                                     false,
@@ -111,7 +111,7 @@ public class BeeInteractivity {
                     }
 
                     if (!beeEntity.hasAngerTime() || calmed)
-                        ((ServerWorld) world).spawnParticles(
+                        ((ServerWorld) world).spawnParticle(
                                 ParticleTypes.HEART,
                                 beeEntity.getX(),
                                 beeEntity.getY(),
@@ -126,14 +126,14 @@ public class BeeInteractivity {
                 if (!playerEntity.isCreative()) {
 
                     // remove current honey bottle
-                    itemstack.decrement(1);
+                    itemstack.shrink(1);
 
                     if (itemstack.isEmpty()) {
                         // places empty bottle in hand
-                        playerEntity.setStackInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
+                        playerEntity.setHeldItem(hand, new ItemStack(Items.GLASS_BOTTLE));
                     }
                     // places empty bottle in inventory
-                    else if (!playerEntity.inventory.insertStack(new ItemStack(Items.GLASS_BOTTLE))) {
+                    else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE))) {
                         // drops empty bottle if inventory is full
                         playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false);
                     }

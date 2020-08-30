@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Enchantment.class)
 public class HoneyShieldEnchantmentMixin {
 
-    @Inject(method = "isAcceptableItem",
+    @Inject(method = "canApply",
             at = @At(value = "HEAD"),
             cancellable = true)
     private void isHoneyCrystalShield(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {

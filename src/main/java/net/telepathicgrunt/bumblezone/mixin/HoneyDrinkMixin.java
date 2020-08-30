@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class HoneyDrinkMixin {
 
     //bees attack player that drinks honey bottles
-    @Inject(method = "finishUsing",
+    @Inject(method = "onItemUseFinish",
             at = @At("HEAD"))
     private void onHoneyDrink(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> cir) {
         BeeAggression.honeyDrinkAnger(stack, world, user);

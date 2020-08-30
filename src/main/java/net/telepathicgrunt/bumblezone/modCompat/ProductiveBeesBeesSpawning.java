@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.modcompatibility;
+package net.telepathicgrunt.bumblezone.modCompat;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
@@ -6,7 +6,6 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.dimension.BzDimensionRegistration;
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ProductiveBeesBeesSpawning
@@ -21,11 +20,11 @@ public class ProductiveBeesBeesSpawning
 		@SubscribeEvent
 		public static void MobSpawnEvent(LivingSpawnEvent.CheckSpawn event)
 		{
-			if(ModChecking.productiveBeesPresent) 
+			if(ModChecker.productiveBeesPresent)
 			{
 				MobEntity entity = (MobEntity)event.getEntity();
 				if(Bumblezone.BzConfig.spawnProductiveBeesBeesMob.get() && 
-					entity.dimension == BzDimensionRegistration.bumblezone() && 
+					entity.world.getServer().getRegistryManager().getDimensionTypes().getKey(entity.world.getDimension()) == Bumblezone.MOD_DIMENSION_ID &&
 					entity.world.getRandom().nextInt(15) == 0 &&
 					entity.getType() == EntityType.BEE) 
 				{

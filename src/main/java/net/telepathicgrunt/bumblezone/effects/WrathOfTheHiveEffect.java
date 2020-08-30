@@ -56,16 +56,16 @@ public class WrathOfTheHiveEffect extends Effect {
      * Bees are angry but not crazy angry
      */
     public static void mediumAggression(World world, LivingEntity livingEntity) {
-        LINE_OF_SIGHT.setDistance(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius).setLineOfSiteRequired();
-        List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, LINE_OF_SIGHT, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius));
+        LINE_OF_SIGHT.setDistance(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()).setLineOfSiteRequired();
+        List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, LINE_OF_SIGHT, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()));
 
         for (BeeEntity bee : beeList) {
             bee.setAttackTarget(livingEntity);
 
             // weaker potion effects for when attacking bears
-            bee.addPotionEffect(new EffectInstance(Effects.SPEED, 20, Math.max(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.speedBoostLevel, 1), false, false));
-            bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20, Math.max(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.absorptionBoostLevel / 2, 1), false, false));
-            bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, Math.max(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.strengthBoostLevel / 3, 1), false, true));
+            bee.addPotionEffect(new EffectInstance(Effects.SPEED, 20, Math.max(Bumblezone.BzBeeAggressionConfig.speedBoostLevel.get(), 1), false, false));
+            bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20, Math.max(Bumblezone.BzBeeAggressionConfig.absorptionBoostLevel.get() / 2, 1), false, false));
+            bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, Math.max(Bumblezone.BzBeeAggressionConfig.strengthBoostLevel.get() / 3, 1), false, true));
         }
     }
 
@@ -74,13 +74,13 @@ public class WrathOfTheHiveEffect extends Effect {
      * Bees are REALLY angry!!! HIGH TAIL IT OUTTA THERE BRUH!!!
      */
     public static void unBEElievablyHighAggression(World world, LivingEntity livingEntity) {
-        SEE_THROUGH_WALLS.setDistance(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius);
-        List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius));
+        SEE_THROUGH_WALLS.setDistance(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get());
+        List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()));
         for (BeeEntity bee : beeList) {
             bee.setAttackTarget(livingEntity);
-            bee.addPotionEffect(new EffectInstance(Effects.SPEED, 20, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.speedBoostLevel, false, false));
-            bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.absorptionBoostLevel, false, false));
-            bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.strengthBoostLevel, false, true));
+            bee.addPotionEffect(new EffectInstance(Effects.SPEED, 20, Bumblezone.BzBeeAggressionConfig.speedBoostLevel.get(), false, false));
+            bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20, Bumblezone.BzBeeAggressionConfig.absorptionBoostLevel.get(), false, false));
+            bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, 20, Bumblezone.BzBeeAggressionConfig.strengthBoostLevel.get(), false, true));
 
         }
     }
@@ -90,8 +90,8 @@ public class WrathOfTheHiveEffect extends Effect {
      */
     public static void calmTheBees(World world, LivingEntity livingEntity)
     {
-        SEE_THROUGH_WALLS.setDistance(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D);
-        List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D));
+        SEE_THROUGH_WALLS.setDistance(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D);
+        List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D));
         for (BeeEntity bee : beeList)
         {
             if(bee.getAttackTarget() == livingEntity) {
@@ -111,7 +111,7 @@ public class WrathOfTheHiveEffect extends Effect {
             //refresh the bee anger timer
             entity.addPotionEffect(new EffectInstance(
                     BzEffects.WRATH_OF_THE_HIVE,
-                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                    Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
                     1,
                     false,
                     true));

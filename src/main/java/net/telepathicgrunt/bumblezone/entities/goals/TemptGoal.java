@@ -1,25 +1,25 @@
 package net.telepathicgrunt.bumblezone.entities.goals;
 
-import net.minecraft.entity.ai.EntityPredicate;
+import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.pathing.BirdNavigation;
-import net.minecraft.entity.ai.pathing.MobNavigation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Ingredient;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.pathfinding.FlyingPathNavigator;
+import net.minecraft.pathfinding.GroundPathNavigator;
 import net.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import net.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
 
 import java.util.EnumSet;
 
 public class TemptGoal extends Goal {
-    private static final EntityPredicate ENTITY_PREDICATE = (new EntityPredicate()).setDistance(10.0D).includeInvulnerable().includeTeammates().ignoreEntityTargetRules().setLineOfSiteRequired();
+    private static final EntityPredicate ENTITY_PREDICATE = (new EntityPredicate()).setDistance(10.0D).allowInvulnerable().allowFriendlyFire().setSkipAttackChecks().setLineOfSiteRequired();
     protected final HoneySlimeEntity slime;
     private double targetX;
     private double targetY;
     private double targetZ;
-    private double pitch;
-    private double yaw;
+    private double rotationPitch;
+    private double rotationYaw;
     protected PlayerEntity closestPlayer;
     private int delayTemptCounter;
     private final Ingredient temptItem;
@@ -27,8 +27,8 @@ public class TemptGoal extends Goal {
     public TemptGoal(HoneySlimeEntity creatureIn, double speedIn, Ingredient temptItemsIn) {
         this.slime = creatureIn;
         this.temptItem = temptItemsIn;
-        this.setControls(EnumSet.of(Goal.Control.JUMP, Goal.Control.MOVE, Goal.Control.LOOK));
-        if (!(creatureIn.getNavigation() instanceof MobNavigation) && !(creatureIn.getNavigation() instanceof BirdNavigation)) {
+        this.setMutexFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE, Goal.Flag.LOOK));
+        if (!(creatureIn.getNavigator() instanceof GroundPathNavigator) && !(creatureIn.getNavigator() instanceof FlyingPathNavigator)) {
             throw new IllegalArgumentException("Unsupported mob type for TemptGoal");
         }
     }
@@ -45,7 +45,7 @@ public class TemptGoal extends Goal {
             if (this.closestPlayer == null) {
                 return false;
             } else {
-                return this.isTempting(this.closestPlayer.getMainHandStack()) || this.isTempting(this.closestPlayer.getOffHandStack());
+                return this.isTempting(this.closestPlayer.getHeldItemMainhand()) || this.isTempting(this.closestPlayer.getHeldItemOffhand());
             }
         }
     }
@@ -98,7 +98,7 @@ public class TemptGoal extends Goal {
      */
     public void resetTask() {
         this.closestPlayer = null;
-        this.slime.getNavigation().resetTask();
+        this.slime.getNavigator().clearPath();
         this.delayTemptCounter = 100;
     }
 
@@ -106,11 +106,11 @@ public class TemptGoal extends Goal {
      * Keep ticking a continuous task that has already been started
      */
     public void tick() {
-        this.slime.getLookControl().lookAt(this.closestPlayer, (float)(this.slime.getBodyYawSpeed() + 20), (float)this.slime.getLookPitchSpeed());
+        this.slime.getLookController().setLookPositionWithEntity(this.closestPlayer, (float)(this.slime.getHorizontalFaceSpeed() + 20), (float)this.slime.getVerticalFaceSpeed());
         if (this.slime.getDistanceSq(this.closestPlayer) < 6.25D) {
-            this.slime.getNavigation().resetTask();
+            this.slime.getNavigator().clearPath();
         } else {
-            this.slime.lookAtEntity(this.closestPlayer, 10.0F, 10.0F);
+            this.slime.faceEntity(this.closestPlayer, 10.0F, 10.0F);
             ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setDirection(this.slime.rotationYaw, true);
             ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setSpeed(1.0D);
         }

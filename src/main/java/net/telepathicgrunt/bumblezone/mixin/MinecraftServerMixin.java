@@ -1,10 +1,10 @@
 package net.telepathicgrunt.bumblezone.mixin;
 
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.WorldGenerationProgressListener;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.listener.IChunkStatusListener;
+import net.minecraft.world.server.ServerWorld;
 import net.telepathicgrunt.bumblezone.entities.BeeAggression;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,9 +23,9 @@ public class MinecraftServerMixin {
     //Make list of mobs to attack upon creation of the world as we need
     //the world to make the mobs to check their classification.
     //Thanks Mojang
-    @Inject(method = "Lnet/minecraft/server/MinecraftServer;createWorlds(Lnet/minecraft/server/WorldGenerationProgressListener;)V",
+    @Inject(method = "Lnet/minecraft/server/MinecraftServer;createWorlds(Lnet/minecraft/world/chunk/listener/IChunkStatusListener;)V",
             at = @At("TAIL"))
-    private void onWorldCreation(WorldGenerationProgressListener worldGenerationProgressListener, CallbackInfo ci) {
+    private void onWorldCreation(CallbackInfo ci) {
         BeeAggression.setupBeeHatingList(worlds.get(World.OVERWORLD));
     }
 }

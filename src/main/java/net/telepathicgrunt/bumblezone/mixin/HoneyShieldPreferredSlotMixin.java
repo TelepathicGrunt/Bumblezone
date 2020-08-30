@@ -1,7 +1,7 @@
 package net.telepathicgrunt.bumblezone.mixin;
 
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,12 +12,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(MobEntity.class)
 public class HoneyShieldPreferredSlotMixin {
 
-    @Inject(method = "getPreferredEquipmentSlot",
+    @Inject(method = "getSlotForItemStack",
             at = @At(value = "HEAD"),
             cancellable = true)
-    private static void isHoneyCrystalShield(ItemStack stack, CallbackInfoReturnable<EquipmentSlot> cir) {
+    private static void isHoneyCrystalShield(ItemStack stack, CallbackInfoReturnable<EquipmentSlotType> cir) {
         if(stack.getItem() == BzItems.HONEY_CRYSTAL_SHIELD){
-            cir.setReturnValue(EquipmentSlot.OFFHAND);
+            cir.setReturnValue(EquipmentSlotType.OFFHAND);
         }
     }
 }

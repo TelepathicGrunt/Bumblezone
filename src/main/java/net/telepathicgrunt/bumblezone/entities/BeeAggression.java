@@ -1,16 +1,18 @@
 package net.telepathicgrunt.bumblezone.entities;
 
 import net.minecraft.entity.*;
-import net.minecraft.entity.effect.EffectInstance;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.PandaEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
@@ -18,8 +20,20 @@ import net.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 import java.util.HashSet;
 import java.util.Set;
 
+@Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BeeAggression {
     private static final Set<EntityType<?>> SET_OF_BEE_HATED_ENTITIES = new HashSet<>();
+
+    @Mod.EventBusSubscriber(modid = Bumblezone.MODID)
+    private static class ForgeEvents
+    {
+        //bees attack player that picks up honey blocks
+        @SubscribeEvent
+        public static void HoneyPickupEvent(PlayerEvent.ItemPickupEvent event)
+        {
+            BeeAggression.honeyPickupAnger(event.getPlayer(), event.getStack().getItem());
+        }
+    }
 
     /*
      * Have to run this code at world startup because the only way to check a CreatureAttribute
@@ -39,17 +53,17 @@ public class BeeAggression {
 
         for(EntityType<?> entityType : Registry.ENTITY_TYPE)
         {
-            if(entityType.getSpawnGroup() == SpawnGroup.MONSTER ||
-                    entityType.getSpawnGroup() == SpawnGroup.CREATURE ||
-                    entityType.getSpawnGroup() == SpawnGroup.AMBIENT )
+            if(entityType.getClassification() == EntityClassification.MONSTER ||
+                    entityType.getClassification() == EntityClassification.CREATURE ||
+                    entityType.getClassification() == EntityClassification.AMBIENT )
             {
                 Entity entity = entityType.create(world);
                 if(entity instanceof MobEntity)
                 {
-                    String mobName = Registry.ENTITY_TYPE.getId(entityType).toString();
+                    String mobName = Registry.ENTITY_TYPE.getKey(entityType).toString();
                     MobEntity mobEntity = (MobEntity) entity;
 
-                    if((mobEntity.getGroup() == EntityGroup.ARTHROPOD && !mobName.contains("bee")) ||
+                    if((mobEntity.getCreatureAttribute() == CreatureAttribute.ARTHROPOD && !mobName.contains("bee")) ||
                             mobEntity instanceof PandaEntity ||
                             mobName.contains("bear") ||
                             mobName.contains("wasp"))
@@ -69,12 +83,12 @@ public class BeeAggression {
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
         if ((player.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+                Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                 !player.isCreative() &&
                 !player.isSpectator()) {
 
             //if player picks up a honey block, bees gets very mad...
-            if (item == Items.HONEY_BLOCK && Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees) {
+            if (item == Items.HONEY_BLOCK && Bumblezone.BzBeeAggressionConfig.aggressiveBees.get()) {
                 if(player.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
                     player.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                 }
@@ -82,10 +96,10 @@ public class BeeAggression {
                     //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
                     player.addPotionEffect(new EffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE,
-                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                            Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
                             2,
                             false,
-                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles,
+                            Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(),
                             true));
                 }
             }
@@ -104,10 +118,10 @@ public class BeeAggression {
             //Also checks to make sure we are in dimension and that player isn't in creative or spectator
             if (!world.isRemote &&
                     (playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+                            Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&
-                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
+                    Bumblezone.BzBeeAggressionConfig.aggressiveBees.get())
             {
 
                 //if player drinks honey, bees gets very mad...
@@ -118,10 +132,10 @@ public class BeeAggression {
                     else{
                         playerEntity.addPotionEffect(new EffectInstance(
                                 BzEffects.WRATH_OF_THE_HIVE,
-                                Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                                Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
                                 2,
                                 false,
-                                Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles,
+                                Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(),
                                 true));
                     }
                 }
@@ -137,8 +151,8 @@ public class BeeAggression {
         //Also checks to make sure we are in dimension and that if it is a player, that they aren't in creative or spectator
         if (!entity.world.isRemote &&
                 (entity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
-                Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees &&
+                        Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                Bumblezone.BzBeeAggressionConfig.aggressiveBees.get() &&
                 entity instanceof BeeEntity &&
                 attackerEntity != null)
         {
@@ -154,10 +168,10 @@ public class BeeAggression {
                 else {
                     player.addPotionEffect(new EffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE,
-                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                            Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
                             2,
                             false,
-                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles,
+                            Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(),
                             true));
                 }
             }
@@ -171,7 +185,7 @@ public class BeeAggression {
                 else {
                     mob.addPotionEffect(new EffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE,
-                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                            Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
                             2,
                             false,
                             true));
@@ -187,7 +201,7 @@ public class BeeAggression {
         if(doesBeesHateEntity(entity)) {
             ((MobEntity) entity).addPotionEffect(new EffectInstance(
                     BzEffects.WRATH_OF_THE_HIVE,
-                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                    Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
                     1,
                     false,
                     true));
@@ -200,7 +214,7 @@ public class BeeAggression {
         //Also checks to make sure we are in the dimension.
         if (!entity.world.isRemote &&
                 entity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) &&
-                Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees &&
+                Bumblezone.BzBeeAggressionConfig.aggressiveBees.get() &&
                 entity instanceof MobEntity)
         {
             MobEntity mobEntity = (MobEntity)entity;
@@ -217,7 +231,7 @@ public class BeeAggression {
         //removes the wrath of the hive if it is disallowed outside dimension
         if(!playerEntity.world.isRemote &&
                 playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE) &&
-                !(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone ||
+                !(Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get() ||
                         playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)))
         {
             playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE);

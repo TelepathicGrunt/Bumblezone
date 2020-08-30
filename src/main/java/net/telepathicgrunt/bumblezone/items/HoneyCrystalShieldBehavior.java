@@ -1,16 +1,16 @@
 package net.telepathicgrunt.bumblezone.items;
 
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.EffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.telepathicgrunt.bumblezone.mixin.PlayerDamageShieldInvoker;
 
@@ -21,19 +21,19 @@ public class HoneyCrystalShieldBehavior {
     public static boolean damageShieldFromExplosionAndFire(DamageSource source, PlayerEntity player) {
 
         // checks for explosion and player
-        if ((source.isExplosive() || source.isFire())) {
-            if (player.getActiveItem().getItem() instanceof HoneyCrystalShield) {
+        if ((source.isExplosion() || source.isFireDamage())) {
+            if (player.getActiveItemStack().getItem() instanceof HoneyCrystalShield) {
 
-                if (source.isExplosive() && player.isBlocking()) {
+                if (source.isExplosion() && player.isActiveItemStackBlocking()) {
                     // damage our shield greatly and 1 damage hit player to show shield weakness
-                    player.damage(DamageSource.GENERIC, 1);
-                    ((PlayerDamageShieldInvoker) player).callDamagedShield(Math.max(player.getActiveItem().getMaxDamage() / 3, 18));
-                } else if (source.isFire()) {
+                    player.attackEntityFrom(DamageSource.GENERIC, 1);
+                    ((PlayerDamageShieldInvoker) player).callDamagedShield(Math.max(player.getActiveItemStack().getMaxDamage() / 3, 18));
+                } else if (source.isFireDamage()) {
                     if(source.isProjectile()){
-                        ((PlayerDamageShieldInvoker) player).callDamagedShield(Math.max(player.getActiveItem().getMaxDamage() / 6, 3));
+                        ((PlayerDamageShieldInvoker) player).callDamagedShield(Math.max(player.getActiveItemStack().getMaxDamage() / 6, 3));
                     }
                     else{
-                        ((PlayerDamageShieldInvoker) player).callDamagedShield(Math.max(player.getActiveItem().getMaxDamage() / 100, 3));
+                        ((PlayerDamageShieldInvoker) player).callDamagedShield(Math.max(player.getActiveItemStack().getMaxDamage() / 100, 3));
                         return false; //continue the damaging
                     }
                 }
@@ -52,44 +52,44 @@ public class HoneyCrystalShieldBehavior {
 
         // checks for living attacker and player victim
         // and also ignores explosions or magic damage
-        if (source.getSource() instanceof LivingEntity &&
-                !source.isExplosive() &&
-                !source.getMagic()) {
+        if (source.getImmediateSource() instanceof LivingEntity &&
+                !source.isExplosion() &&
+                !source.isMagicDamage()) {
 
             // checks to see if player is blocking with our shield
-            LivingEntity attacker = (LivingEntity) source.getSource();
+            LivingEntity attacker = (LivingEntity) source.getImmediateSource();
 
-            if (player.getActiveItem().getItem() instanceof HoneyCrystalShield
-                    && player.isBlocking()) {
+            if (player.getActiveItemStack().getItem() instanceof HoneyCrystalShield
+                    && player.isActiveItemStackBlocking()) {
 
                 // apply slowness to attacker
-                attacker.addPotionEffect(new EffectInstance(StatusEffects.SLOWNESS, 80, 0, false, false, false));
+                attacker.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 80, 0, false, false, false));
             }
         }
     }
 
     public static void setShieldCooldown(PlayerEntity playerEntity, MobEntity mob){
-        float f = 0.25F + (float) EnchantmentHelper.getEfficiency(mob) * 0.05F;
-        if (mob.getRandom().nextFloat() < f) {
-            playerEntity.getItemCooldownManager().set(BzItems.HONEY_CRYSTAL_SHIELD, 100);
+        float f = 0.25F + (float) EnchantmentHelper.getEfficiencyModifier(mob) * 0.05F;
+        if (mob.getRNG().nextFloat() < f) {
+            playerEntity.getCooldownTracker().setCooldown(BzItems.HONEY_CRYSTAL_SHIELD, 100);
             mob.world.setEntityState(playerEntity, (byte)30);
         }
     }
 
     public static boolean damageHoneyCrystalShield(PlayerEntity player, float amount){
-        if(player.getActiveItem().getItem() == BzItems.HONEY_CRYSTAL_SHIELD){
+        if(player.getActiveItemStack().getItem() == BzItems.HONEY_CRYSTAL_SHIELD){
             if (amount >= 3.0F) {
                 int damageToDo = 1 + MathHelper.floor(amount);
                 Hand hand = player.getActiveHand();
-                player.getActiveItem().damage(damageToDo, player, (playerEntity) -> playerEntity.sendToolBreakStatus(hand));
-                if (player.getActiveItem().isEmpty()) {
+                player.getActiveItemStack().damageItem(damageToDo, player, (playerEntity) -> playerEntity.sendBreakAnimation(hand));
+                if (player.getActiveItemStack().isEmpty()) {
                     if (hand == Hand.MAIN_HAND) {
-                        player.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+                        player.setItemStackToSlot(EquipmentSlotType.MAINHAND, ItemStack.EMPTY);
                     } else {
-                        player.equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
+                        player.setItemStackToSlot(EquipmentSlotType.OFFHAND, ItemStack.EMPTY);
                     }
 
-                    player.clearActiveItem();
+                    player.resetActiveHand();
                     player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + player.world.rand.nextFloat() * 0.4F);
                 }
             }
