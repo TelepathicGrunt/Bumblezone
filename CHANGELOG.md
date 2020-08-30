@@ -16,6 +16,20 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
    
+## (V.2.0.0 Changes) (1.16.2 Minecraft)
+ 
+##### Major:
+
+- UPDATED TO 1.16.2!! (Ported the 1.16.2 Fabric version to Forge)
+
+- Removed compat with Buzzier Bees and Beesourceful as they are not on 1.16.2 yet.
+
+- Added Honey Slime mob natively to this mod which was donated by the Buzzier Bees dev Bagel! 
+
+- Added Beeswax Planks block to be placed on the Bumblezone dimension's ceiling and floor boundaries.
+
+- See Fabric Bumblezone changelog for more details of changes done in 1.16+.
+ 
 ## (V.1.3.9/1.3.10 Changes) (1.15.2 Minecraft)
  
 ##### Config:
