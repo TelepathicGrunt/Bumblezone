@@ -1,7 +1,5 @@
 package net.telepathicgrunt.bumblezone.mixin;
 
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.gen.feature.template.PlacementSettings;

@@ -1,10 +1,10 @@
 package net.telepathicgrunt.bumblezone.modCompat;
 
-import java.util.concurrent.Callable;
-import org.apache.logging.log4j.Level;
-
 import net.minecraftforge.fml.ModList;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import org.apache.logging.log4j.Level;
+
+import java.util.concurrent.Callable;
 
 public class ModChecker
 {

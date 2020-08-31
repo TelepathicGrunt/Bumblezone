@@ -1,27 +1,12 @@
 package net.telepathicgrunt.bumblezone.entities;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.passive.PandaEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
+import net.minecraft.entity.EntityType;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.effects.BzEffects;
-import net.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 import net.telepathicgrunt.bumblezone.mixin.BeeEntityInvoker;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BeeSpawning {

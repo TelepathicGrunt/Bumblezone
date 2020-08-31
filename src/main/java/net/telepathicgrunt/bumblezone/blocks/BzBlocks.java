@@ -8,12 +8,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.fluids.SugarWaterFluid;
+import net.telepathicgrunt.bumblezone.mixin.MaterialInvoker;
 
 
 public class BzBlocks {
-    public static Material RESIDUE = new Material.Builder(MaterialColor.ADOBE)
-            .notOpaque()
-            .pushDestroys()
+    public static Material RESIDUE = ((MaterialInvoker)((MaterialInvoker)new Material.Builder(MaterialColor.ADOBE))
+            .getNotOpaque())
+            .getPushDestroys()
             .doesNotBlockMovement()
             .replaceable()
             .notSolid()

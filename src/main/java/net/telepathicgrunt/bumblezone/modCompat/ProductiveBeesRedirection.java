@@ -1,10 +1,10 @@
 package net.telepathicgrunt.bumblezone.modCompat;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+
+import java.util.Random;
 
 /**
  * This class is used so java wont load BeesourcefulCompat class and crash if

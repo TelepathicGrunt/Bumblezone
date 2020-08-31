@@ -27,7 +27,7 @@ public class HoneycombBroodEvents
 	@SubscribeEvent
 	public static void reviveByPotionOfBees(PlayerInteractEvent.RightClickItem event)
 	{
-		if(!ModChecker.potionOfBeesPresent && Bumblezone.BzConfig.allowPotionOfBeesCompat.get()) {
+		if(!ModChecker.potionOfBeesPresent && Bumblezone.BzModCompatibilityConfig.allowPotionOfBeesCompat.get()) {
 			return;
 		}
 

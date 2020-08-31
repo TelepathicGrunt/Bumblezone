@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import net.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
-import org.spongepowered.asm.mixin.Overwrite;
 
 import java.util.EnumSet;
 import java.util.List;

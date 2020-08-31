@@ -16,7 +16,6 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.EmptyHoneycombBrood;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
-import net.telepathicgrunt.bumblezone.modcompatibility.PotionOfBeesCompat;
 
 
 public class PotionOfBeesBeePotionDispenseBehavior extends DefaultDispenseItemBehavior
@@ -38,7 +37,7 @@ public class PotionOfBeesBeePotionDispenseBehavior extends DefaultDispenseItemBe
 	    world.setBlockState(position, BzBlocks.HONEYCOMB_BROOD.getDefaultState().with(HoneycombBrood.FACING, blockstate.get(EmptyHoneycombBrood.FACING)).with(HoneycombBrood.STAGE, Integer.valueOf(world.rand.nextInt(3))));
 	    stack.shrink(1);
 
-	    if(!Bumblezone.BzConfig.dispensersDropGlassBottles.get()) {
+	    if(!Bumblezone.BzBlockMechanicsConfig.dispensersDropGlassBottles.get()) {
         	    if (!stack.isEmpty())
         		addGlassBottleToDispenser(source);
         	    else

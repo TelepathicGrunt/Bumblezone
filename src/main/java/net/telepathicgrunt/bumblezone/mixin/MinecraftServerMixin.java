@@ -3,7 +3,6 @@ package net.telepathicgrunt.bumblezone.mixin;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.listener.IChunkStatusListener;
 import net.minecraft.world.server.ServerWorld;
 import net.telepathicgrunt.bumblezone.entities.BeeAggression;
 import org.spongepowered.asm.mixin.Final;

@@ -23,7 +23,7 @@ public class ProductiveBeesBeesSpawning
 			if(ModChecker.productiveBeesPresent)
 			{
 				MobEntity entity = (MobEntity)event.getEntity();
-				if(Bumblezone.BzConfig.spawnProductiveBeesBeesMob.get() && 
+				if(Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesBeesMob.get() &&
 					entity.world.getServer().getRegistryManager().getDimensionTypes().getKey(entity.world.getDimension()) == Bumblezone.MOD_DIMENSION_ID &&
 					entity.world.getRandom().nextInt(15) == 0 &&
 					entity.getType() == EntityType.BEE) 

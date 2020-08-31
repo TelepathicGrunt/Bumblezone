@@ -26,9 +26,6 @@ import net.telepathicgrunt.bumblezone.capabilities.PlayerPositionAndDimension;
 import net.telepathicgrunt.bumblezone.utils.BzPlacingUtils;
 import org.apache.logging.log4j.Level;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class BzPlayerPlacement {
 
     @CapabilityInject(IPlayerPosAndDim.class)

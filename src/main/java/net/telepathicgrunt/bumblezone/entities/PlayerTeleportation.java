@@ -22,7 +22,6 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.capabilities.IPlayerPosAndDim;
 import net.telepathicgrunt.bumblezone.capabilities.PlayerPositionAndDimension;
-import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.dimension.BzPlayerPlacement;
 import org.apache.logging.log4j.Level;
 

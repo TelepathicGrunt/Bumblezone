@@ -18,7 +18,7 @@ apply plugin: 'maven-publish'
 
 // Required to build correctly on platforms that may default to UTF-8 instead, like most Linux
 // installations.
-compileJava {options.encoding = "iso-8859-1"}
+compileJava { options.encoding = "iso-8859-1" }
 
 repositories {
 	flatDir {
@@ -54,22 +54,12 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-
-            mods {
-                examplemod {
-                    source sourceSets.main
-                }
-            }
+            mods { the_bumblezone { source sourceSets.main } }
         }
 
         server {
             workingDirectory project.file('run')
-
-            mods {
-                examplemod {
-                    source sourceSets.main
-                }
-            }
+            mods { the_bumblezone { source sourceSets.main } }
         }
     }
 }
@@ -154,6 +144,6 @@ processResources {
 apply plugin: 'org.spongepowered.mixin'
 
 mixin {
-    add sourceSets.main, "repurposed_structures.refmap.json"
+    add sourceSets.main, "the_bumblezone.refmap.json"
 }
 
