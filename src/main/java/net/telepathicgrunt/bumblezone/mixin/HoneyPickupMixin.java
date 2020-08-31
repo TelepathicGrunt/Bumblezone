@@ -20,7 +20,6 @@ public class HoneyPickupMixin {
             locals = LocalCapture.CAPTURE_FAILSOFT)
     private void onItemPickup(PlayerEntity player, CallbackInfo ci, ItemStack itemStack, Item item, int i) {
         BeeAggression.honeyPickupAnger(player, item);
-        item.isIn(ItemTags.ARROWS);
     }
 
 }

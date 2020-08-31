@@ -25,7 +25,7 @@ public class MinecraftServerMixin {
     //Thanks Mojang
     @Inject(method = "Lnet/minecraft/server/MinecraftServer;createWorlds(Lnet/minecraft/server/WorldGenerationProgressListener;)V",
             at = @At("TAIL"))
-    private void onWorldCreation(WorldGenerationProgressListener worldGenerationProgressListener, CallbackInfo ci) {
+    private void onWorldCreation(CallbackInfo ci) {
         BeeAggression.setupBeeHatingList(worlds.get(World.OVERWORLD));
     }
 }
