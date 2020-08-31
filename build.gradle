@@ -1,14 +1,15 @@
 buildscript {
-    repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
-        mavenCentral()
-        maven {url='https://dist.creeper.host/Sponge/maven'}
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-    }
+	repositories {
+		maven { url = 'https://files.minecraftforge.net/maven' }
+		jcenter()
+		mavenCentral()
+		maven {url='https://dist.creeper.host/Sponge/maven'}
+
+	}
+	dependencies {
+		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+		classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+	}
 }
 
 repositories {
@@ -39,7 +40,7 @@ apply plugin: 'maven-publish'
 compileJava { options.encoding = "iso-8859-1" }
 
 version = "${mc_version}-${mod_version}"
-group = "com.telepathicgrunt.bumblezone"
+group = "com.telepathicgrunt.the_bumblezone"
 archivesBaseName = 'the_bumblezone'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -135,4 +136,3 @@ processResources {
 
 apply plugin: 'org.spongepowered.mixin'
 mixin { add sourceSets.main, "the_bumblezone.refmap.json" }
-

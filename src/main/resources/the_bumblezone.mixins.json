@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "com.telepathicgrunt.bumblezone.mixin",
+  "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_8",
   "refmap": "the_bumblezone.refmap.json",
   "mixins": [
@@ -28,7 +28,7 @@
     "PlayerTickMixin",
     "ProtoChunkAddEntityMixin",
     "RedstoneDustCanConnectMixin",
-    "StructureAccessorInvoker",
+    "TemplateInvoker",
     "VineBlockAccessor",
     "WaterEquivalenceMixin",
     "WorldChunkAddEntityMixin"
