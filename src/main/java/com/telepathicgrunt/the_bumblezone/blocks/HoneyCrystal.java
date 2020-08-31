@@ -31,6 +31,7 @@ import java.util.Map;
 
 
 public class HoneyCrystal extends Block {
+    private static final ResourceLocation EMPTY_FLUID_RL = new ResourceLocation("minecraft:empty");
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final DirectionProperty FACING = DirectionalBlock.FACING;
     protected static final VoxelShape DOWN_AABB = Block.makeCuboidShape(0.0D, 1.0D, 0.0D, 16.0D, 16.0D, 16.0D);
@@ -150,33 +151,58 @@ public class HoneyCrystal extends Block {
                               BlockPos position, PlayerEntity playerEntity,
                               Hand playerHand, BlockRayTraceResult raytraceResult) {
 
+        if(blockstate.getBlock() != this)
+            return super.onUse(blockstate, world, position, playerEntity, playerHand, raytraceResult);
+
         ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
         //Player uses bucket with water-tagged fluid and this block is not waterlogged
-        if ((itemstack.getItem() instanceof BucketItem &&
-                ((BucketItem) itemstack.getItem()).getFluid().isIn(FluidTags.WATER)) &&
-                blockstate.getBlock() == this &&
-                !blockstate.get(WATERLOGGED)) {
+        if (itemstack.getItem() instanceof BucketItem) {
+            if(((BucketItem) itemstack.getItem()).getFluid().isIn(FluidTags.WATER) &&
+                 !blockstate.get(WATERLOGGED)){
 
-            //make block waterlogged
-            world.setBlockState(position, blockstate.with(WATERLOGGED, true));
-            world.getPendingFluidTicks().scheduleTick(position, BzBlocks.SUGAR_WATER_FLUID, BzBlocks.SUGAR_WATER_FLUID.getTickRate(world));
-            world.playSound(
-                    playerEntity,
-                    playerEntity.getX(),
-                    playerEntity.getY(),
-                    playerEntity.getZ(),
-                    SoundEvents.AMBIENT_UNDERWATER_ENTER,
-                    SoundCategory.NEUTRAL,
-                    1.0F,
-                    1.0F);
+                //make block waterlogged
+                world.setBlockState(position, blockstate.with(WATERLOGGED, true));
+                world.getPendingFluidTicks().scheduleTick(position, BzBlocks.SUGAR_WATER_FLUID, BzBlocks.SUGAR_WATER_FLUID.getTickRate(world));
+                world.playSound(
+                        playerEntity,
+                        playerEntity.getX(),
+                        playerEntity.getY(),
+                        playerEntity.getZ(),
+                        SoundEvents.AMBIENT_UNDERWATER_ENTER,
+                        SoundCategory.NEUTRAL,
+                        1.0F,
+                        1.0F);
 
-            //set player bucket to be empty if not in creative
-            if (!playerEntity.isCreative()) {
-                playerEntity.setHeldItem(playerHand, new ItemStack(Items.BUCKET));
+                //set player bucket to be empty if not in creative
+                if (!playerEntity.isCreative()) {
+                    playerEntity.setHeldItem(playerHand, new ItemStack(Items.BUCKET));
+                }
+
+                return ActionResultType.SUCCESS;
             }
+            else if (((BucketItem) itemstack.getItem()).getFluid().getRegistryName().equals(EMPTY_FLUID_RL) &&
+                    blockstate.get(WATERLOGGED)) {
 
-            return ActionResultType.SUCCESS;
+                //make block waterlogged
+                world.setBlockState(position, blockstate.with(WATERLOGGED, false));
+                world.playSound(
+                        playerEntity,
+                        playerEntity.getX(),
+                        playerEntity.getY(),
+                        playerEntity.getZ(),
+                        SoundEvents.AMBIENT_UNDERWATER_ENTER,
+                        SoundCategory.NEUTRAL,
+                        1.0F,
+                        1.0F);
+
+                //set player bucket to be full of sugar water if not in creative
+                if (!playerEntity.isCreative()) {
+                    playerEntity.setHeldItem(playerHand, new ItemStack(BzItems.SUGAR_WATER_BUCKET));
+                }
+
+                return ActionResultType.SUCCESS;
+            }
         }
         else if (itemstack.getItem() == Items.GLASS_BOTTLE) {
 

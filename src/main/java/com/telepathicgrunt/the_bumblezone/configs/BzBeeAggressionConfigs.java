@@ -73,7 +73,7 @@ public class BzBeeAggressionConfigs {
                         .defineInRange("howLongWrathOfTheHiveLasts", 350, 1, Integer.MAX_VALUE));
 
 
-                    howLongWrathOfTheHiveLasts = subscriber.subscribe(builder
+                    howLongProtectionOfTheHiveLasts = subscriber.subscribe(builder
                         .comment(" \r\n-----------------------------------------------------\r\n\r\n"
                         +" How long entities will keep Protection of the Hive effect after feeding bees\r\n"
                         +" or Brood Blocks. Bees will attack anyone that damages someone with the effect.\r\n")

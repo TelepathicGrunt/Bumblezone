@@ -46,7 +46,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    private static final DataParameter<Boolean> IN_HONEY = EntityDataManager.createKey(HoneySlimeEntity.class, DataSerializers.BOOLEAN);
    private static final DataParameter<Integer> IN_HONEY_GROWTH_TIME = EntityDataManager.createKey(HoneySlimeEntity.class, DataSerializers.VARINT);
    private static final Ingredient BREEDING_ITEM = Ingredient.fromItems(Items.SUGAR);
-   private static final DataParameter<Integer> ANGRY_TIMER = EntityDataManager.createKey(BeeEntity.class, DataSerializers.VARINT);
+   private static final DataParameter<Integer> ANGRY_TIMER = EntityDataManager.createKey(HoneySlimeEntity.class, DataSerializers.VARINT);
    private static final RangedInteger MAX_ANGER_DURATION = TickRangeConverter.betweenSeconds(10, 22);
    private UUID target_UUID;
 

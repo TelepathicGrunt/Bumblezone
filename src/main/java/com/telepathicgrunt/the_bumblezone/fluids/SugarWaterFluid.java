@@ -190,6 +190,11 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid {
             setDefaultState(getStateContainer().getBaseState().with(LEVEL_1_8, 7));
         }
 
+        protected void fillStateContainer(StateContainer.Builder<Fluid, FluidState> builder) {
+            super.fillStateContainer(builder);
+            builder.add(LEVEL_1_8);
+        }
+
         @Override
         public int getLevel(FluidState state) {
             return 8;
