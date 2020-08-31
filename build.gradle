@@ -39,7 +39,7 @@ apply plugin: 'maven-publish'
 compileJava { options.encoding = "iso-8859-1" }
 
 version = "${mc_version}-${mod_version}"
-group = "net.telepathicgrunt.bumblezone"
+group = "com.telepathicgrunt.bumblezone"
 archivesBaseName = 'the_bumblezone'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -48,8 +48,6 @@ minecraft {
     mappings channel: 'snapshot', version: "${mapping}-mixed-${yarnmcp_version}"
     //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
-    // Default run configurations.
-    // These can be tweaked, removed, or duplicated as needed.
     runs {
         client {
             workingDirectory project.file('run')
@@ -66,13 +64,11 @@ minecraft {
 }
 
 dependencies {
-    // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
-    // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
-    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-	// Remove these if you don't have a deps folder with these mods in it 
+	// Remove these if you don't have a deps folder with these mods in it
 	// (some of the jars had to be renamed to make it be imported in dev)
+
 	// implementation fg.deobf("ignored:Abnormals-Core-1.15.2:1.0.6")
 	// implementation fg.deobf("ignored:beesourceful:1.2.2")
 	// implementation fg.deobf("ignored:Buzzier-Bees-1.15.2:1.5.2")
