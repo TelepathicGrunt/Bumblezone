@@ -11,18 +11,9 @@ buildscript {
     }
 }
 
-apply plugin: 'net.minecraftforge.gradle'
-// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
-
-// Required to build correctly on platforms that may default to UTF-8 instead, like most Linux
-// installations.
-compileJava { options.encoding = "iso-8859-1" }
-
 repositories {
-	flatDir {
-		dirs 'deps'
+	maven {
+		url "https://maven.tterrag.com/"
 	}
 	maven {
 		// location of the maven that hosts JEI files
@@ -34,13 +25,21 @@ repositories {
 		name = "ModMaven"
 		url = "https://modmaven.k-4u.nl"
 	}
-    maven {
-        url "https://maven.tterrag.com/"
-    }
+	flatDir {
+		dirs 'deps'
+	}
 }
 
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
+// Required to build correctly on platforms that may default to UTF-8 instead, like most Linux
+// installations.
+compileJava { options.encoding = "iso-8859-1" }
+
 version = "${mc_version}-${mod_version}"
-group = 'com.telepathicgrunt.bumblezone' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "net.telepathicgrunt.bumblezone"
 archivesBaseName = 'the_bumblezone'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -54,11 +53,13 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
+			arg "-mixin.config="+archivesBaseName+".mixins.json"
             mods { the_bumblezone { source sourceSets.main } }
         }
 
         server {
             workingDirectory project.file('run')
+			arg "-mixin.config="+archivesBaseName+".mixins.json"
             mods { the_bumblezone { source sourceSets.main } }
         }
     }
@@ -102,8 +103,6 @@ jar {
 
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
-
-// Process resources on build
 processResources {
 	// This will ensure that this task is redone when the versions change.
 	inputs.property 'version', project.version
@@ -124,26 +123,20 @@ processResources {
 	// Minifies all .json files when building the mod.
 	// Source files are not minified, only the jar copies.
 	doLast {
-
 		def jsonMinifyStart = System.currentTimeMillis()
 		def jsonMinified = 0
 		def jsonBytesSaved = 0
-
 		fileTree(dir: outputs.files.asPath, include: '**/*.json').each {
-
 			File file = it
 			jsonMinified++
 			def oldLength = file.length()
 			file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
 			jsonBytesSaved += oldLength - file.length()
 		}
-
 		println('Minified ' + jsonMinified + ' json files. Saved ' + jsonBytesSaved + ' bytes. Took ' + (System.currentTimeMillis() - jsonMinifyStart) + 'ms.')
 	}
 }
-apply plugin: 'org.spongepowered.mixin'
 
-mixin {
-    add sourceSets.main, "the_bumblezone.refmap.json"
-}
+apply plugin: 'org.spongepowered.mixin'
+mixin { add sourceSets.main, "the_bumblezone.refmap.json" }
 
