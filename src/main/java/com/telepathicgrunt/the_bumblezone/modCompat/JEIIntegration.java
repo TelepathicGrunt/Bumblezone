@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.modCompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.items.BzItems;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
@@ -10,8 +12,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
-import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.items.BzItems;
 
 @JeiPlugin
 public class JEIIntegration implements IModPlugin

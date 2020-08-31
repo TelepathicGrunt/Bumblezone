@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.configs;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.common.Mod;
 import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper;
 import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper.ConfigValueListener;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class BzModCompatibilityConfigs

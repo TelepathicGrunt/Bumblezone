@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.items.BzItems;
-import com.telepathicgrunt.the_bumblezone.mixin.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.VineBlockAccessor;
 import net.minecraft.block.*;
 import net.minecraft.block.material.MaterialColor;
@@ -226,7 +225,7 @@ public class StickyHoneyResidue extends VineBlock {
         ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
         if ((itemstack.getItem() instanceof BucketItem &&
-                ((BucketItemAccessor) itemstack.getItem()).getFluid().isIn(FluidTags.WATER)) ||
+                ((BucketItem) itemstack.getItem()).getFluid().isIn(FluidTags.WATER)) ||
                 itemstack.getOrCreateTag().getString("Potion").contains("water") ||
                 itemstack.getItem() == Items.WET_SPONGE ||
                 itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {

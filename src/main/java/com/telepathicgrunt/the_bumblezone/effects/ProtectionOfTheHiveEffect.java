@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.effects;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierManager;
@@ -8,7 +9,6 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
 import net.minecraft.world.World;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 
 import java.util.List;
 import java.util.UUID;

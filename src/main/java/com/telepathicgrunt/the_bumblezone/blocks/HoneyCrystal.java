@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.google.common.collect.Maps;
 import com.telepathicgrunt.the_bumblezone.items.BzItems;
-import com.telepathicgrunt.the_bumblezone.mixin.BucketItemAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -155,7 +154,7 @@ public class HoneyCrystal extends Block {
 
         //Player uses bucket with water-tagged fluid and this block is not waterlogged
         if ((itemstack.getItem() instanceof BucketItem &&
-                ((BucketItemAccessor) itemstack.getItem()).getFluid().isIn(FluidTags.WATER)) &&
+                ((BucketItem) itemstack.getItem()).getFluid().isIn(FluidTags.WATER)) &&
                 blockstate.getBlock() == this &&
                 !blockstate.get(WATERLOGGED)) {
 

@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.features;
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.utils.OpenSimplexNoise;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.Direction;
@@ -9,8 +11,6 @@ import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
-import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.utils.OpenSimplexNoise;
 
 import java.util.Random;
 

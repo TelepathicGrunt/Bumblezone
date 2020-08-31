@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.effects.BzEffects;
 import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
 import com.telepathicgrunt.the_bumblezone.items.BzItems;
 import net.minecraft.block.Block;
@@ -31,7 +32,6 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import com.telepathicgrunt.the_bumblezone.effects.BzEffects;
 
 import java.util.List;
 import java.util.Random;

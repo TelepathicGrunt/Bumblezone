@@ -1,5 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
+import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
+import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.the_bumblezone.entities.goals.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -28,9 +31,6 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
-import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 
 import java.util.HashSet;
 import java.util.Objects;

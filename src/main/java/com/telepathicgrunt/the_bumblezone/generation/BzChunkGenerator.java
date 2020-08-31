@@ -2,6 +2,11 @@ package com.telepathicgrunt.the_bumblezone.generation;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
+import com.telepathicgrunt.the_bumblezone.mixin.BeeEntityInvoker;
+import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
@@ -31,11 +36,6 @@ import net.minecraft.world.gen.feature.structure.StructureManager;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
-import com.telepathicgrunt.the_bumblezone.mixin.BeeEntityInvoker;
-import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 
 import java.util.Iterator;
 import java.util.List;

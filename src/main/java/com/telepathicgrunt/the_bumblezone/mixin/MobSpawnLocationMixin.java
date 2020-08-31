@@ -1,11 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.mixin;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.spawner.WorldEntitySpawner;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

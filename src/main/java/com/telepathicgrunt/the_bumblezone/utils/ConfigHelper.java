@@ -40,76 +40,76 @@ public class ConfigHelper
 {
 	/** as with the other register method, but the contexts are assumed **/
 	public static <T> T register(
-		final ModConfig.Type configType,
-		final BiFunction<ForgeConfigSpec.Builder, Subscriber, T> configBuilder)
+			final ModConfig.Type configType,
+			final BiFunction<ForgeConfigSpec.Builder, Subscriber, T> configBuilder,
+			final String registerConfig)
 	{
-		return register(ModLoadingContext.get(), FMLJavaModLoadingContext.get(), configType, configBuilder);
+		return register(ModLoadingContext.get(), configType, configBuilder, registerConfig);
 	}
-	
+
 	/** call this in either your @Mod class constructor or in FMLCommonSetupEvent or in FMLClientSetupEvent **/
 	public static <T> T register(
-		final ModLoadingContext modContext,
-		final FMLJavaModLoadingContext fmlContext,
-		final ModConfig.Type configType,
-		final BiFunction<ForgeConfigSpec.Builder, Subscriber, T> configBuilder)
+			final ModLoadingContext modContext,
+			final ModConfig.Type configType,
+			final BiFunction<ForgeConfigSpec.Builder, Subscriber, T> configBuilder,
+			final String registerConfig)
 	{
 		final List<ConfigValueListener<?>> subscriptionList = new ArrayList<>();
 		final Pair<T, ForgeConfigSpec> entry = new ForgeConfigSpec.Builder().configure(builder -> configBuilder.apply(builder, getSubscriber(subscriptionList)));
 		final T config = entry.getLeft();
 		final ForgeConfigSpec spec = entry.getRight();
-		
-		modContext.registerConfig(configType, spec);
-		
+
+		modContext.registerConfig(configType, spec, registerConfig);
+
 		final Consumer<ModConfigEvent> configUpdate = event ->
 		{
 			if(event.getConfig().getSpec() == spec)
 				for(ConfigValueListener<?> value : subscriptionList)
 					value.update();
 		};
-		
-		fmlContext.getModEventBus().addListener(configUpdate);
-		
+
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(configUpdate);
 		return config;
 	}
-	
+
 	private static Subscriber getSubscriber(final List<ConfigValueListener<?>> list)
 	{
 		return new Subscriber(list);
 	}
-	
+
 	public static class Subscriber
 	{
 		final List<ConfigValueListener<?>> list;
-		
+
 		Subscriber(final List<ConfigValueListener<?>> list)
 		{
 			this.list = list;
 		}
-		
+
 		public <T> ConfigValueListener<T> subscribe(final ConfigValue<T> value)
 		{
 			return ConfigValueListener.of(value, this.list);
 		}
 	}
-	
+
 	public static class ConfigValueListener<T> implements Supplier<T>
 	{
 		private T value = null;
 		private final ConfigValue<T> configValue;
-		
+
 		private ConfigValueListener(final ConfigValue<T> configValue)
 		{
 			this.configValue = configValue;
 			//this.value = configValue.get();
 		}
-		
+
 		public static <T> ConfigValueListener<T> of(final ConfigValue<T> configValue, final List<ConfigValueListener<?>> valueList)
 		{
-			final ConfigValueListener<T> value = new ConfigValueListener<T>(configValue);
+			final ConfigValueListener<T> value = new ConfigValueListener<>(configValue);
 			valueList.add(value);
 			return value;
 		}
-		
+
 		public void update()
 		{
 			this.value = this.configValue.get();

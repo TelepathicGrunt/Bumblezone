@@ -1,6 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.modCompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
@@ -13,9 +16,6 @@ import net.minecraft.tileentity.DispenserTileEntity;
 import net.minecraft.tileentity.HopperTileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
-import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 
 
 public class PotionOfBeesBeePotionDispenseBehavior extends DefaultDispenseItemBehavior

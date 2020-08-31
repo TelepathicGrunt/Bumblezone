@@ -1,10 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.surfacebuilders;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 
 public class BzSurfaceBuilders {
     public static final SurfaceBuilder<SurfaceBuilderConfig> HONEY_SURFACE_BUILDER = new HoneySurfaceBuilder(SurfaceBuilderConfig.CODEC);

@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.mixin;
 
-import net.minecraft.entity.player.PlayerEntity;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.PlayerTeleportation;
+import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

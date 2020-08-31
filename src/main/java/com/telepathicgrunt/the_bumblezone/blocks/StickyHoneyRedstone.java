@@ -15,6 +15,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -186,6 +187,23 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
 
         //return power for block it is attached on.
         return blockstate.get(POWERED) && blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(side.getOpposite())) ? 1 : 0;
+    }
+
+    @Override
+    public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, @Nullable Direction side)
+    {
+        boolean canConnect = false;
+
+        if (state.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
+            for (Direction horizontal : Direction.Plane.HORIZONTAL) {
+                if (horizontal == side) {
+                    canConnect = true;
+                    break;
+                }
+            }
+        }
+
+        return canConnect;
     }
 
     /**

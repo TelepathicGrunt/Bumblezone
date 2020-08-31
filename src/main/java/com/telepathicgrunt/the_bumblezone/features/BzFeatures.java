@@ -1,10 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.features;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 
 public class BzFeatures {
     public static Feature<NoFeatureConfig> HONEYCOMB_HOLE = new HoneycombHole(NoFeatureConfig.CODEC);

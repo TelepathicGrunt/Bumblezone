@@ -7,7 +7,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
@@ -24,11 +23,16 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 import java.util.Random;
 
 
-public abstract class SugarWaterFluid extends FlowingFluid {
+public abstract class SugarWaterFluid extends ForgeFlowingFluid {
+
+    protected SugarWaterFluid(Properties properties) {
+        super(properties);
+    }
 
     @Override
     public Fluid getFlowingFluid() {
@@ -153,6 +157,11 @@ public abstract class SugarWaterFluid extends FlowingFluid {
     }
 
     public static class Flowing extends SugarWaterFluid {
+        public Flowing(Properties properties) {
+            super(properties);
+            setDefaultState(getStateContainer().getBaseState().with(LEVEL_1_8, 7));
+        }
+
         protected void fillStateContainer(StateContainer.Builder<Fluid, FluidState> builder) {
             super.fillStateContainer(builder);
             builder.add(LEVEL_1_8);
@@ -175,6 +184,11 @@ public abstract class SugarWaterFluid extends FlowingFluid {
     }
 
     public static class Source extends SugarWaterFluid {
+
+        public Source(Properties properties) {
+            super(properties);
+            setDefaultState(getStateContainer().getBaseState().with(LEVEL_1_8, 7));
+        }
 
         @Override
         public int getLevel(FluidState state) {

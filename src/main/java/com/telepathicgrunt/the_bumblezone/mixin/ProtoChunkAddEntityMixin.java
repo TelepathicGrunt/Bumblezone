@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.mixin;
 
+import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.chunk.ChunkPrimer;
-import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

@@ -1,12 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.features.decorators;
 
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.FeatureSpreadConfig;
 import net.minecraft.world.gen.placement.NoPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 
 public class BzPlacements {
     public static final Placement<NoPlacementConfig> HONEYCOMB_HOLE_PLACER = new HoneycombHolePlacer(NoPlacementConfig.CODEC);

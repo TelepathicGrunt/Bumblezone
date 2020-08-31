@@ -1,5 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.capabilities.IPlayerPosAndDim;
+import com.telepathicgrunt.the_bumblezone.capabilities.PlayerPositionAndDimension;
+import com.telepathicgrunt.the_bumblezone.dimension.BzPlayerPlacement;
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -19,18 +23,30 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.capabilities.IPlayerPosAndDim;
-import com.telepathicgrunt.the_bumblezone.capabilities.PlayerPositionAndDimension;
-import com.telepathicgrunt.the_bumblezone.dimension.BzPlayerPlacement;
+import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
 
+@Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PlayerTeleportation {
 
     @CapabilityInject(IPlayerPosAndDim.class)
     public static Capability<IPlayerPosAndDim> PAST_POS_AND_DIM = null;
+
+    @Mod.EventBusSubscriber(modid = Bumblezone.MODID)
+    private static class ForgeEvents {
+        // Fires just before the teleportation to new dimension begins
+        @SubscribeEvent
+        public static void entityTravelToDimensionEvent(EntityTravelToDimensionEvent event) {
+            if (event.getEntity() instanceof ServerPlayerEntity) {
+                PlayerTeleportation.playerLeavingBz(event.getDimension().getValue(), ((ServerPlayerEntity)event.getEntity()));
+            }
+        }
+    }
+
 
     //Player ticks
     public static void playerTick(PlayerEntity playerEntity){

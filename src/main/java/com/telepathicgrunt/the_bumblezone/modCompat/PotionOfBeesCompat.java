@@ -1,27 +1,28 @@
 package com.telepathicgrunt.the_bumblezone.modCompat;
 
-import com.github.commoble.potionofbees.ResourceLocations;
-import com.github.commoble.potionofbees.SplashPotionOfBeesEntity;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.mixin.DispenserBlockInvoker;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.ProjectileImpactEvent.Throwable;
 import net.minecraftforge.registries.ForgeRegistries;
-import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 
 public class PotionOfBeesCompat
 {
 	private static final PotionOfBeesBeePotionDispenseBehavior BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM = new PotionOfBeesBeePotionDispenseBehavior();
+	private static EntityType<?> SPLASH_POTION_OF_BEES_ENTITY;
 	private static Item POTION_OF_BEES;
 	private static Item SPLASH_POTION_OF_BEES;
 	
@@ -32,8 +33,9 @@ public class PotionOfBeesCompat
 		/*
 		 * Sets up our custom behavior for Potion of Bees items withour overriding their default behavior completely
 		 */
-		POTION_OF_BEES = ForgeRegistries.ITEMS.getValue(ResourceLocations.POTION_OF_BEES);
-		SPLASH_POTION_OF_BEES = ForgeRegistries.ITEMS.getValue(ResourceLocations.SPLASH_POTION_OF_BEES);
+		POTION_OF_BEES = ForgeRegistries.ITEMS.getValue(new ResourceLocation("potionofbees:potion_of_bees"));
+		SPLASH_POTION_OF_BEES = ForgeRegistries.ITEMS.getValue(new ResourceLocation("potionofbees:splash_potion_of_bees"));
+		SPLASH_POTION_OF_BEES_ENTITY = ForgeRegistries.ENTITIES.getValue(new ResourceLocation("potionofbees:splash_potion_of_bees"));
 
 		if (POTION_OF_BEES != null && Bumblezone.BzModCompatibilityConfig.allowPotionOfBeesCompat.get()) {
 			PotionOfBeesBeePotionDispenseBehavior.DEFAULT_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker)Blocks.DISPENSER).invokeGetBehaviorForItem(new ItemStack(POTION_OF_BEES));
@@ -46,18 +48,18 @@ public class PotionOfBeesCompat
 	}
 	
 	public static boolean POBIsPotionOfBeesItem(Item item) {
-	    return item == POTION_OF_BEES;
+	    return item.equals(POTION_OF_BEES);
 	}
 	
 	public static boolean POBIsSplashPotionOfBeesItem(Item item) {
-	    return item == SPLASH_POTION_OF_BEES;
+	    return item.equals(SPLASH_POTION_OF_BEES);
 	}
 
 	public static void POBReviveLarvaBlockEvent(Throwable event)
 	{
 		Entity thrownEntity = event.getEntity(); 
 
-		if(thrownEntity instanceof SplashPotionOfBeesEntity) {
+		if(thrownEntity.getType().equals(SPLASH_POTION_OF_BEES_ENTITY)) {
 			World world = thrownEntity.world; // world we threw in
 			Vector3d hitBlockPos = event.getRayTraceResult().getHitVec(); //position of the collision
 			BlockPos originalPosition = new BlockPos(hitBlockPos);
@@ -71,8 +73,7 @@ public class PotionOfBeesCompat
 						position.setPos(originalPosition).move(x, y, z);
 						block = world.getBlockState(position);
 						
-						if(block.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD)
-						{
+						if(block.getBlock().equals(BzBlocks.EMPTY_HONEYCOMB_BROOD)) {
 							reviveLarvaBlock(world, block, position);
 						}
 					}

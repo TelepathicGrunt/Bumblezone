@@ -1,12 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.generation.layer;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.generation.BzBiomeProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.world.gen.INoiseRandom;
 import net.minecraft.world.gen.PerlinNoiseGenerator;
 import net.minecraft.world.gen.layer.traits.IAreaTransformer0;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.generation.BzBiomeProvider;
 
 import java.util.stream.IntStream;
 

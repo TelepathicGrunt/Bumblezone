@@ -1,5 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.effects.BzEffects;
+import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.PandaEntity;
@@ -13,9 +16,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.effects.BzEffects;
-import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 
 import java.util.HashSet;
 import java.util.Set;

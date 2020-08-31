@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.nbt.CompoundNBT;
-import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
 
 public class HoneySlimeSpawnEgg extends SpawnEggItem {
     public HoneySlimeSpawnEgg(EntityType<?> typeIn, int primaryColorIn, int secondaryColorIn, Properties builder) {

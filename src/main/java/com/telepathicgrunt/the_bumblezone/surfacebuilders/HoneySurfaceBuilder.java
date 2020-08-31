@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.surfacebuilders;
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
@@ -9,7 +10,6 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
-import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 
 import java.util.Random;
 

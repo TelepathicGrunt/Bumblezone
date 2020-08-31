@@ -1,6 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.features;
 
 import com.google.common.collect.ImmutableSet;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.features.decorators.BzPlacements;
 import com.telepathicgrunt.the_bumblezone.mixin.DynamicRegistryManagerAccessor;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
@@ -10,9 +13,6 @@ import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.features.decorators.BzPlacements;
 
 public class BzConfiguredFeatures {
     private static final LiquidsConfig SUGAR_WATER_SPRING_CONFIG = new LiquidsConfig(BzBlocks.SUGAR_WATER_FLUID.getDefaultState(), true, 4, 1, ImmutableSet.of(Blocks.HONEY_BLOCK, Blocks.HONEYCOMB_BLOCK));

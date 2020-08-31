@@ -1,6 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.dimension;
 
 import com.google.common.primitives.Doubles;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.capabilities.IPlayerPosAndDim;
+import com.telepathicgrunt.the_bumblezone.capabilities.PlayerPositionAndDimension;
+import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -20,10 +24,6 @@ import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.capabilities.IPlayerPosAndDim;
-import com.telepathicgrunt.the_bumblezone.capabilities.PlayerPositionAndDimension;
-import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import org.apache.logging.log4j.Level;
 
 public class BzPlayerPlacement {

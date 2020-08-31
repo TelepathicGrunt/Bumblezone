@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin;
 
+import com.telepathicgrunt.the_bumblezone.items.ObtainSugarWaterBottle;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.GlassBottleItem;
@@ -9,7 +10,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import com.telepathicgrunt.the_bumblezone.items.ObtainSugarWaterBottle;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

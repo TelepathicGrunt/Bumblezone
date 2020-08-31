@@ -1,10 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.mixin;
 
+import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.HoneyBottleItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
