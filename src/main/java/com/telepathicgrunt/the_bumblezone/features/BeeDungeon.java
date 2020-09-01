@@ -8,6 +8,8 @@ import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.mixin.TemplateInvoker;
+import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modCompat.ProductiveBeesRedirection;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -230,6 +232,12 @@ public class BeeDungeon extends Feature<NoFeatureConfig>{
 
         //main body
         if (block == Blocks.RED_TERRACOTTA || block == Blocks.PURPLE_TERRACOTTA) {
+            if(ModChecker.productiveBeesPresent &&
+                random.nextFloat() < Bumblezone.BzModCompatibilityConfig.PBOreHoneycombSpawnRateBeeDungeon.get())
+            {
+                return new Pair<>(ProductiveBeesRedirection.PBGetRandomHoneycomb(random,
+                        Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRarityBeeDungeon.get()).getDefaultState(), false);
+            }
 
             if (random.nextFloat() < 0.4f) {
                 return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), false);
@@ -313,6 +321,13 @@ public class BeeDungeon extends Feature<NoFeatureConfig>{
             boolean replaceAir = false;
             if (world.getBlockState(pos.up()).getMaterial() != Material.AIR && !world.getBlockState(pos.up()).isSolid())
                 replaceAir = true;
+
+            if(ModChecker.productiveBeesPresent &&
+                    random.nextFloat() < Bumblezone.BzModCompatibilityConfig.PBOreHoneycombSpawnRateBeeDungeon.get())
+            {
+                return new Pair<>(ProductiveBeesRedirection.PBGetRandomHoneycomb(random,
+                        Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRarityBeeDungeon.get()).getDefaultState(), replaceAir);
+            }
 
             if (random.nextFloat() < 0.4f) {
                 return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), replaceAir);

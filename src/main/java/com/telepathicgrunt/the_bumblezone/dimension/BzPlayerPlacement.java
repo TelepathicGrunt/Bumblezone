@@ -36,27 +36,26 @@ public class BzPlayerPlacement {
         Vector3d destinationPosition;
 
         if (entity instanceof ServerPlayerEntity) {
-            MinecraftServer minecraftServer = entity.getServer(); // the server itself
+            ServerPlayerEntity playerEntity = ((ServerPlayerEntity) entity);
+            MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
             ServerWorld bumblezoneWorld = minecraftServer.getWorld(BzDimension.BZ_WORLD_KEY);
-            PlayerPositionAndDimension cap = (PlayerPositionAndDimension) entity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-            RegistryKey<World> world_key = RegistryKey.of(Registry.DIMENSION, cap.getNonBZDim());
 
             // Prevent crash due to mojang bug that makes mod's json dimensions not exist upload first creation of world on server. A restart fixes this.
             if(bumblezoneWorld == null){
                 Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: https://bugs.mojang.com/browse/MC-195468. A restart will fix this.");
                 ITextComponent message = new StringTextComponent("Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: §6https://bugs.mojang.com/browse/MC-195468§f. A restart will fix this.");
-                ((ServerPlayerEntity)entity).sendStatusMessage(message, true);
+                playerEntity.sendStatusMessage(message, true);
                 return;
             }
 
-            destinationPosition = teleportByPearl((PlayerEntity) entity, minecraftServer.getWorld(world_key), bumblezoneWorld);
-            ((ServerPlayerEntity)entity).teleport(
+            destinationPosition = teleportByPearl(playerEntity, playerEntity.getServerWorld(), bumblezoneWorld);
+            playerEntity.teleport(
                     bumblezoneWorld,
                     destinationPosition.x,
                     destinationPosition.y,
                     destinationPosition.z,
-                    entity.rotationYaw,
-                    entity.rotationPitch
+                    playerEntity.rotationYaw,
+                    playerEntity.rotationPitch
             );
         }
     }

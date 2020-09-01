@@ -11,6 +11,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 
 public class BzItems {
@@ -87,6 +88,9 @@ public class BzItems {
                 .group(BUMBLEZONE_CREATIVE_TAB).maxStackSize(16)));
 
         HONEY_SLIME_SPAWN_EGG = Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_slime_spawn_egg"),
-                new HoneySlimeSpawnEgg(null, 16763904,16558080, (new Item.Properties()).group(BUMBLEZONE_CREATIVE_TAB)));
+                new HoneySlimeSpawnEgg(null, 0xFFCC00,0xFCA800,
+                (new Item.Properties()).group(BUMBLEZONE_CREATIVE_TAB)));
+
+        SpawnEggItem.getEggs();
     }
 }

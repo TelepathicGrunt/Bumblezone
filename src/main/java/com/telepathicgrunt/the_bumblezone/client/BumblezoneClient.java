@@ -6,15 +6,23 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HoneySlimeRendering;
 import com.telepathicgrunt.the_bumblezone.dimension.BzSkyProperty;
 import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
+import com.telepathicgrunt.the_bumblezone.items.BzItems;
 import com.telepathicgrunt.the_bumblezone.mixin.SkyPropertiesAccessor;
+import cy.jdkdigital.productivebees.item.SpawnEgg;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.item.Item;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DeferredWorkQueue;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @SuppressWarnings("deprecation")
@@ -26,9 +34,14 @@ public class BumblezoneClient
     public static void subscribeClientEvents(IEventBus modBus, IEventBus forgeBus)
     {
         modBus.addListener(BumblezoneClient::onClientSetup);
+        modBus.addListener(BumblezoneClient::registerItemColors);
         forgeBus.addListener(FluidRender::sugarWaterOverlay);
     }
 
+    public static void registerItemColors(final ColorHandlerEvent.Item event) {
+        event.getItemColors().register((stack, tintIndex) ->
+                ((SpawnEggItem) BzItems.HONEY_SLIME_SPAWN_EGG).getColor(tintIndex), BzItems.HONEY_SLIME_SPAWN_EGG);
+    }
 
     //Deferred because I have been told RenderTypeLookup is not thread safe
     @OnlyIn(Dist.CLIENT)
@@ -46,5 +59,7 @@ public class BumblezoneClient
             RenderTypeLookup.setRenderLayer(BzBlocks.SUGAR_WATER_FLUID, RenderType.getTranslucent());
             RenderTypeLookup.setRenderLayer(BzBlocks.SUGAR_WATER_FLUID_FLOWING, RenderType.getTranslucent());
         });
+
+
     }
 }

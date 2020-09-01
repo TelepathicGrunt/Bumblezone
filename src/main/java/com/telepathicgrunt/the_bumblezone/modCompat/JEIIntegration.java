@@ -37,6 +37,7 @@ public class JEIIntegration implements IModPlugin
 		addInfo(registration, BzItems.SUGAR_WATER_BOTTLE);
 		addInfo(registration, BzItems.SUGAR_WATER_BUCKET);
 		addInfo(registration, BzItems.BEESWAX_PLANKS);
+		addInfo(registration, BzItems.HONEY_SLIME_SPAWN_EGG);
 		addInfo(registration, BzBlocks.SUGAR_WATER_FLUID);
     }
 

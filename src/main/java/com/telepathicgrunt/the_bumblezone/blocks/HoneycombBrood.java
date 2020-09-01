@@ -272,16 +272,25 @@ public class HoneycombBrood extends DirectionalBlock {
             }
 
             world.setBlockState(position, state.with(STAGE, 0));
-
         }
-
     }
 
     private static void spawnMob(World world, BlockPos.Mutable blockpos, MobEntity beeMob, MobEntity entity) {
         if(entity == null || world.isRemote) return;
         entity.setLocationAndAngles(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, world.getRandom().nextFloat() * 360.0F, 0.0F);
-        entity.onInitialSpawn((IServerWorld) world, world.getDifficultyForLocation(new BlockPos(beeMob.getPositionVec())), SpawnReason.TRIGGERED, null, null);
-        world.addEntity(entity);
+
+        if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(
+                entity,
+                world,
+                blockpos.getX() + 0.5D,
+                blockpos.getY() + 0.5D,
+                blockpos.getZ() + 0.5D,
+                null,
+                SpawnReason.TRIGGERED) != -1) {
+
+            entity.onInitialSpawn((IServerWorld) world, world.getDifficultyForLocation(new BlockPos(beeMob.getPositionVec())), SpawnReason.TRIGGERED, null, null);
+            world.addEntity(entity);
+        }
     }
 
 

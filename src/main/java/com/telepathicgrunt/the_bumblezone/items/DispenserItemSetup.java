@@ -8,6 +8,7 @@ import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IDispenseItemBehavior;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -76,5 +77,7 @@ public class DispenserItemSetup {
         DispenserBlock.registerDispenseBehavior(Items.GLASS_BOTTLE, new GlassBottleDispenseBehavior());
         DispenserBlock.registerDispenseBehavior(Items.HONEY_BOTTLE, new HoneyBottleDispenseBehavior());
         DispenserBlock.registerDispenseBehavior(Items.BUCKET, new EmptyBucketDispenseBehavior());
+
+        DispenserBlock.registerDispenseBehavior(BzItems.HONEY_CRYSTAL_SHIELD, ArmorItem.DISPENSER_BEHAVIOR);
     }
 }

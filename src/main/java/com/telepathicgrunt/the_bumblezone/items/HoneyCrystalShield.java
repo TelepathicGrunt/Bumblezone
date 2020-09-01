@@ -4,8 +4,10 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -17,6 +19,16 @@ public class HoneyCrystalShield extends ShieldItem {
     public HoneyCrystalShield() {
         //starts off with 20 durability so it is super weak
         super(new Item.Properties().maxDamage(20).group(BzItems.BUMBLEZONE_CREATIVE_TAB));
+
+        // Allows shield to use the blocking json file for offset
+        ItemModelsProperties.register(
+                this,
+                new ResourceLocation("blocking"),
+                (itemStack, world, livingEntity) ->
+                        livingEntity != null &&
+                                livingEntity.isHandActive() &&
+                                livingEntity.getActiveItemStack() == itemStack ? 1.0F : 0.0F
+        );
     }
 
     /**
