@@ -1,10 +1,11 @@
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.imgur.com/ovPqrFL.png" alt="The banner logo for The Bumblezone with a friendly and hostile bee shown below the mod name." width="999" height="370" /></p>
 <h2 style="text-align: center;"><span style="font-size: 40px; text-align: center; color: #b76a00;"><strong>CURRENTLY FOR 1.16.2 MC</strong></span></h2>
-<p style="text-decoration: underline; font-size: 14px; text-align: center;"><strong><a style="text-decoration: underline; font-size: 14px; text-align: center;" href="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-forge">[Click here for the 1.15.2 Forge version of this mod!]</a></strong></p>
+<p style="text-decoration: underline; font-size: 14px; text-align: center;"><strong><a style="text-decoration: underline; font-size: 14px; text-align: center;" href="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-forge">[Click here for the 1.16.2 Forge version of this mod!]</a></strong></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p style="text-align: center; font-size: 14px;"><strong style="color: #bc3e3e;"><em>Recent 1.16.2 news: </em></strong></p>
-<p style="text-align: center; font-size: 14px;"><strong><em>Some bug fixes and now works f</em></strong><strong><em>or 1.16.2! <br /><br /></em><span style="font-size: 18px;">SERVER OWNERS NOTE:</span> <em><br />If you make a fresh new world with this&nbsp;mod&nbsp;on&nbsp;</em></strong></p>
+<p style="text-align: center; font-size: 14px;"><strong><em>Cleaned up config menu and</em></strong></p>
+<p style="text-align: center; font-size: 14px;"><strong><em>fixed Honey Shield animation! <br /><br /></em><span style="font-size: 18px;">SERVER OWNERS NOTE:</span> <em><br />If you make a fresh new world with this&nbsp;mod&nbsp;on&nbsp;</em></strong></p>
 <p style="text-align: center; font-size: 14px;"><strong><em>&nbsp;a server, restart the&nbsp;server after the world&nbsp;is made</em></strong></p>
 <p style="text-align: center; font-size: 14px;"><strong><em>&nbsp; due to this mojang bug&nbsp;causing json&nbsp;dimensions&nbsp;</em></strong></p>
 <p style="text-align: center; font-size: 14px;"><strong><em>&nbsp;to not be made upon world&nbsp;creation only on servers.</em></strong></p>
@@ -134,7 +135,9 @@
 <div class="spoiler">
 <p>-Merely a decorative block that can be found forming the ceiling and floor boundaries of The Bumblezone Dimension.</p>
 <p>&nbsp;</p>
-<p>-Can be used to craft Bee Nests Blocks by placing 8 Beeswax Planks blocks in a circle with a Honeycomb in the center at a Crafting Table!</p>
+<p>-Can be used to craft Bee Nests Blocks by placing 8 Beeswax Planks blocks in a circle with a Honeycomb in the center at a Crafting Table! The crafting shape is the following with B being Beeswax Planks and H being Honeycomb item.<br />B B B</p>
+<p>B H B</p>
+<p>B B B</p>
 </div>
 </div>
 <p>&nbsp;</p>
