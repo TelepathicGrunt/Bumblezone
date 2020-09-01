@@ -38,11 +38,20 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Mod(Bumblezone.MODID)
 public class Bumblezone{
 
     public static final String MODID = "the_bumblezone";
     public static final ResourceLocation MOD_DIMENSION_ID = new ResourceLocation(Bumblezone.MODID, Bumblezone.MODID);
+    public static final List<ResourceLocation> BIOME_ID_LIST = Arrays.asList(
+            new ResourceLocation(MODID,"hive_pillar"),
+            new ResourceLocation(MODID,"hive_wall"),
+            new ResourceLocation(MODID,"sugar_water_floor")
+    );
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     public static BzBeeAggressionConfigs.BzBeeAggressionConfigValues BzBeeAggressionConfig = null;

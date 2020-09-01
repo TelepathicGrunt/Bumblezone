@@ -9,11 +9,9 @@ public interface IPlayerPosAndDim {
 	//what methods the capability will have and what the capability is
 	
 	void setNonBZDim(ResourceLocation incomingDim);
-	void setDestDim(ResourceLocation incomingDim);
 	void setTeleporting(boolean teleporting);
 
 	ResourceLocation getNonBZDim();
-	ResourceLocation getDestDim();
 	boolean getTeleporting();
 
 	void setNonBZPos(Vector3d incomingPos);

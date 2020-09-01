@@ -8,7 +8,6 @@ import net.minecraft.util.math.vector.Vector3d;
 public class PlayerPositionAndDimension implements IPlayerPosAndDim
 {
 	private ResourceLocation nonBZDimension = null;
-	private ResourceLocation nextDimension = null;
 	private boolean isTeleporting = false;
 	private Vector3d nonBZPosition = null;
 	private float nonBZPitch = 0;
@@ -67,19 +66,6 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 	}
 
 
-	@Override
-	public void setDestDim(ResourceLocation incomingDim)
-	{
-		nextDimension = incomingDim;
-	}
-
-	@Override
-	public ResourceLocation getDestDim()
-	{
-		return nextDimension;
-	}
-
-
 	
 	@Override
 	public void setTeleporting(boolean teleporting)
@@ -113,12 +99,6 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 			nbt.putFloat("NonBZPitch", nonBZPitch);
 			nbt.putFloat("NonBZYaw", nonBZYaw);
 		}
-		
-		if (this.getDestDim() != null)
-		{
-			nbt.putString("NextDimensionNamespace", this.getDestDim().getNamespace());
-			nbt.putString("NextDimensionPath", this.getDestDim().getPath());
-		}
 
 		nbt.putBoolean("isTeleporting", this.getTeleporting());
 
@@ -131,7 +111,6 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 	{
 		//grabs past dimension resource location and tries to get that dimension from the registry
 		ResourceLocation storedDimension = new ResourceLocation(nbtTag.getString("PreviousDimensionNamespace"), nbtTag.getString("PreviousDimensionPath"));
-		ResourceLocation storedDestDimension = new ResourceLocation(nbtTag.getString("NextDimensionNamespace"), nbtTag.getString("NextDimensionPath"));
 		Vector3d storedPositionNonBZ = null;
 		float storedNonBZPitch;
 		float storedNonBZYaw;
@@ -148,7 +127,6 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 		this.setNonBZPitch(storedNonBZPitch);
 		this.setNonBZYaw(storedNonBZYaw);
 		this.setNonBZPos(storedPositionNonBZ);
-		this.setDestDim(storedDestDimension);
 		this.setTeleporting(isteleporting);
 	}
 }

@@ -37,6 +37,12 @@ public class BzPlayerPlacement {
 
         if (entity instanceof ServerPlayerEntity) {
             ServerPlayerEntity playerEntity = ((ServerPlayerEntity) entity);
+            PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
+            cap.setNonBZDim(playerEntity.getEntityWorld().getRegistryKey().getValue());
+            cap.setNonBZYaw(playerEntity.rotationYaw);
+            cap.setNonBZPitch(playerEntity.rotationPitch);
+            cap.setNonBZPos(playerEntity.getPositionVec());
+
             MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
             ServerWorld bumblezoneWorld = minecraftServer.getWorld(BzDimension.BZ_WORLD_KEY);
 
@@ -75,8 +81,8 @@ public class BzPlayerPlacement {
                     destinationPosition.x,
                     destinationPosition.y,
                     destinationPosition.z,
-                    entity.rotationYaw,
-                    entity.rotationPitch
+                    cap.getNonBZYaw(),
+                    cap.getNonBZPitch()
             );
         }
     }

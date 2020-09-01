@@ -22,7 +22,7 @@ Mods I'm keeping an eye on for future compat
 
 - UPDATED TO 1.16.2!! (Ported the 1.16.2 Fabric version to Forge)
 
-- Removed compat with Buzzier Bees and Beesourceful as they are not on 1.16.2 yet.
+- Removed compat with Buzzier Bees, Beesourceful, and Potion of Bees as they are not on 1.16.2 yet.
 
 - Added Honey Slime mob natively to this mod which was donated by the Buzzier Bees dev Bagel! 
 
@@ -241,7 +241,7 @@ Mods I'm keeping an eye on for future compat
 
 -Added recipe to turn Water Bucket into Sugar Water Bucket. Just put 1 Water Bucket and 1 Sugar into a Crafting Table! 
 
-##### Generation: 
+##### Generation:ï¿½
 
 -Added Bee Dungeons that will spawn in Honeycomb Holes or caves in the Bumblezone! They have lots of Honeycomb Brood Blocks but if you use Beesourceful, their ore-based Honeycombs will spawn too with Diamond, Ender, and Emeralds being the rarest honeycombs. And if you have Buzzier Bees on, their candles will also spawn in the dungeon with scented candles that gives potion effects spawning very rarely in the center. 
 
@@ -249,11 +249,11 @@ Mods I'm keeping an eye on for future compat
 
 -Honey Crystal blocks will now generate in caves or underwater in The Bumblezone! They are rare in Sugar Water Biome, uncommon in Hive Pillar biome, and most common in Hive Wall biome.
 
-##### Teleportation: 
+##### Teleportation:ï¿½
 
 -Exiting Bumblezone dimension by falling into the void will not kill the player with fall damage when they teleport into another dimension. I forgot to reset the player's fall time but now it's fixed.
  
-##### Mobs: 
+##### Mobs:ï¿½
 
 -Fixed bug where Bees cannot be angered normally outside of The Bumblezone with default config settings.
 
@@ -267,7 +267,7 @@ Mods I'm keeping an eye on for future compat
 
 -German Translation added by Aurum! Thank you!
 
--Added more entries to en_us.json. 
+-Added more entries to en_us.json.ï¿½
 
 ##### Misc:
 
@@ -275,7 +275,7 @@ Mods I'm keeping an eye on for future compat
 
 ## (V.1.2.0 Changes) (1.15.2 Minecraft)
       
-##### Mod Compatibility: 
+##### Mod Compatibility:ï¿½
 
 -If Buzzier Bees is on, Honey Slime mobs will spawn in The Bumblezone instead of regular Slime mobs and monsters will have a slightly higher rate of spawning.
 
@@ -283,15 +283,15 @@ Mods I'm keeping an eye on for future compat
 
 -If Buzzier Bees is on, their Honey Wand now can add and remove honey from Porous Honeycomb Block and Honey Filled Porous Honeycomb Block.
 
--If Buzzier Bees is on, you can use their Bottle of Bee item on a Dead Honeycomb Larva Block will revive the block into a stage 1 Honeycomb Larva Block. This can be done by hand or by a Dispenser facing the block.
+-If Buzzier Bees is on, you can use their Bottle of Bee item on a Dead Honeycomb Larva Block will revive the block into a stage 1ï¿½Honeycomb Larva Block. This can be done by hand or by a Dispenser facing the block.
 
 -If Beesourceful is on, their ore bees and ender bees can now spawn in The Bumblezone! They have a 15% chance of spawning when a regular bee is spawned. Then the chance of each type of Beesourceful bee being chosen is 1% Ender, 2% Diamond, 7% Emerald, 10% Lapis, 10% Quartz, 20% Gold, 20% Redstone, and 30% Iron.
 
 -If Beesourceful is on, their honeycomb variants will now in The Bumblezone at all kinds of heights and height bands. Start exploring to find where they spawn!
         
--If Potion of Bees is on, you can use their Potion of Bees item on a Dead Honeycomb Larva Block will revive the block into a stage 1, 2, or 3 Honeycomb Larva Block. This can be done by hand or by a Dispenser facing the block.
+-If Potion of Bees is on, you can use their Potion of Bees item on a Dead Honeycomb Larva Block will revive the block into a stage 1, 2, or 3ï¿½Honeycomb Larva Block. This can be done by hand or by a Dispenser facing the block.
 
--If Potion of Bees is on, you can throw their Splash Potion of Bees item and any Dead Honeycomb Larva Block nearby on impact will revive the blocks into a stage 1, 2, or 3 Honeycomb Larva Block. If you have this item in a Dispenser directly facing the Dead Honeycomb Larva Block, it'll revive the block into a stage 1, 2, or 3 Honeycomb Larva Block without bees going everywhere.
+-If Potion of Bees is on, you can throw their Splash Potion of Bees item and any Dead Honeycomb Larva Block nearby on impact will revive the blocks into a stage 1, 2, or 3ï¿½Honeycomb Larva Block. If you have this item in a Dispenser directly facing the Dead Honeycomb Larva Block, it'll revive the block into a stage 1, 2, or 3ï¿½Honeycomb Larva Block without bees going everywhere.
 
 ##### Config:        
         
@@ -303,13 +303,13 @@ Mods I'm keeping an eye on for future compat
  
 -Added new config so players can allow or disallow teleporting to and from Bumblezone with modded Bee Nests or modded Beehive blocks.
 
-##### Teleportation: 
+##### Teleportation:ï¿½
 
 -Throwing Enderpearls at all blocks that extends BeehiveBlock (includes modded and vanilla's BeeNests and BeeHive blocks) will teleport you into the dimension!
 
 -Adjusted teleporting so teleporting to Bumblezone dimension from underground will spawn you trapped underground in the dimension less often.
  
-##### Mobs: 
+##### Mobs:ï¿½
 
 -Bees will now no longer switch to attacking nearby passive players if they are angered by another mob/player. They will only attack entities with Wrath of the Hive effect in the dimension so there is no more collateral damage anymore.
 
@@ -331,7 +331,7 @@ Mods I'm keeping an eye on for future compat
 
 -Cave Spider can spawn in Hive Wall biomes now. 
 
-##### Blocks: 
+##### Blocks:ï¿½
 
 -Added Sugar Water fluid to spawn in The Bumblezone instead of regular water! Swimming in this fluid is slightly slower than swimming in water due to the excess of sugar in it. If bees swim in the Sugar Water and aren't taking damage, the bees will sip the water and heal themselves very slowly. Also, any Sugar Cane placed next to a Sugar Water block will grow faster and taller (up to 5 blocks high!)
 
@@ -343,13 +343,13 @@ Mods I'm keeping an eye on for future compat
   
 -Added Dead Honeycomb Larva Block that is created when using a Glass Bottle on a Honeycomb Larva Block. This block is decorative and serves no other use. It's dead. :(  Buuuut if you have Buzzier Bee's on, you can use a Bottle of Bee to revive the block back to an alive Honeycomb Larva Block at stage 1. If you use Potion of Bee's bee potion items, that too can revive the block but it will be at stage 1, 2, or 3 as a bonus! This behavior can be done by hand or by using a Dispenser with these items in it right up against the Dead Honeycomb Larva Block. If you throw Potion of Bee's Bee Splash Potion item and it lands near some Dead Honeycomb Larva Blocks, it'll revive the blocks too!
 
-##### Items: 
+##### Items:ï¿½
 
 -Added Sugar Water Bottle! To get this, use an empty Glass Bottle on Sugar Water. If you drink a Sugar Water Bottle, you restore a tiny bit of hungry but get Haste 1 effect for a short period of time!
 
 -Added Sugar Water Bucket to move Sugar Water around. Works with Dispensers too!
 
-##### Generation: 
+##### Generation:ï¿½
 
 -The dimension uses Air instead of Cave Air to help with feature generation.
 
@@ -359,72 +359,72 @@ Mods I'm keeping an eye on for future compat
 
 ## (V.1.1.0 Changes) (1.15.2 Minecraft)
       
-##### Misc: 
+##### Misc:ï¿½
 -Fixed potential crash at startup when in a foreign language.
    
 ## (V.1.0.4 Changes) (1.15.2 Minecraft)
     
-##### Teleportation: 
+##### Teleportation:ï¿½
 -Improved some edge cases with Teleportation and fixed some potential bugs with other edge cases.
 
-##### Config: 
+##### Config:ï¿½
 -lower Absorption default config value from 2 to 1 due to 2 making it way too hard to kill Wrath of the Hive angered bees. You'll still need Bane of Arthropods.
 
-##### Mobs: 
+##### Mobs:ï¿½
 -Bees that spawn in a chunk when the chunk is first created has a 20% chance of being pollinated bees.
 -Patched a bug that could spawn mobs underground and hurt performance as they suffocate. 
 
-##### Dimension: 
+##### Dimension:ï¿½
 -Fixed potential visual bug that causes blue fog in some situations.
        
        
 ## (V.1.0.3 Changes) (1.15.2 Minecraft)
   
-##### Blocks: 
+##### Blocks:ï¿½
 -Fixed bug so using Glass Bottle or Honey Bottles on the Filled Porous Honeycomb blocks and Porous Honeycomb blocks while in creative mode won't use up the bottle in your hand.
 
        
 ## (V.1.0.2 Changes) (1.15.2 Minecraft)
   
-##### Teleportation: 
+##### Teleportation:ï¿½
 -Fixed teleportation math and player previous dimension storing to not allow a bug that lets you reach world border in seconds. Big oops. That's a BIG BUG I missed despite lots of testing! 
   	
        
 ## (V.1.0.1 Changes) (1.15.2 Minecraft)
   
-##### Teleportation: 
+##### Teleportation:ï¿½
 -Fixed teleportation not working when trying to enter The Bumblezone from a non-Overworld dimension.
 
-##### Config: 
+##### Config:ï¿½
 -Added config option to make exiting The Bumblezone always place you into the Overworld.
 
        
 ## (V.1.0.0 Changes) (1.15.2 Minecraft)
     
-##### Major: 
+##### Major:ï¿½
 -FIRST RELEASE OF THIS MOD
 
-##### Teleportation: 
+##### Teleportation:ï¿½
 -Throw an Enderpearl at a Bee Nest in any dimension to enter The Bumblezone dimension!
 -To exit The Bumblezone dimension, go to Y = -1 or Y = 256 and it will place you back to the dimension you originally came from and if it can't resolve what dimension you came from, you'll be placed back in the Overworld. 
 -Your XZ coordinates will be scale going to and from the dimension. In fact, traveling 1 block in The Bumblezone is the same as traveling 10 blocks in the Overworld!
 -If you exit the dimension by going down through the floor, it will look for the lowest Bee Nest that is in the general area of your new scaled coordinates and will place you next to it. If no Bee Nest is found, it will place you on highest place and generate a Bee Nest at your feet.
 -If you exit the dimension by going down through the ceiling, it will look for the highest Bee Nest that is in the general area of your new scaled coordinates and will place you next to it. If no Bee Nest is found, it will place you on highest place and generate a Bee Nest at your feet.
 
-##### Blocks: 
+##### Blocks:ï¿½
 -Porous Honeycomb block is added. If you use a Honey Bottle on this block, it'll consume the honey and turn into a Filled Porous Honeycomb block.
 -Filled Porous Honeycomb block is added. If you use a Glass Bottle on this block, you'll get a Honey Bottle and the block turn into a Porous Honeycomb block (this will REALLY anger bees around you in the Bumblezone dimension!).
 
-##### Biomes: 
+##### Biomes:ï¿½
 -Hive Wall biomes will be the giant flat vertical slabs filled with holes that the bees dug out. In each hole is some Honey Blocks! 
 -Between the Hive Wall biomes is the Sugar Water Floor biome which creates a water filled space between each honeycomb wall. Bring a boat!
 -Also Hive Pillar biomes will spawn quite a bit to make massive pillars full of holes that connects the ceiling and floor!
 
-##### Mobs: 
+##### Mobs:ï¿½
 -If you drink a Honey Bottle, pick up a Honey Block in the dimension, take honey from a Filled Porous Honeycomb block, all bees within 64 range of you will become EXTREMELY aggressive towards you. Beware, the bees will be REALLY angry and will get a temporary Strength 3, Absorption 2, and Speed 1 effect!
 -Bees generate at a high rate in the dimension and will become aggressive towards Polar Bears and Pandas if the player somehow gets them into the dimension. The bees will get a temporary Strength 1 and Speed 1 effect.
 -Spiders, Endermen, and Phantoms will spawn at a low rate with Phantoms being extremely rare.
 -Slime will spawn at any height when a new chunk is created for the first time. However, they will only respawn in an already generate chunk if that chunk is marked as a "slime chunk" and at Y = 40 or below just like the Overworld. 
 
-##### Config: 
+##### Config:ï¿½
 -Added 11 configs with 8 affecting the Wrath of the Hive effect and 3 affecting the Bumblezone dimension itself. Here is what the config looks like: https://gist.github.com/TelepathicGrunt/0ad76feeb0bee1fc7eeba25d5f0821b4

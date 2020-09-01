@@ -8,6 +8,7 @@
     "DispenserBlockInvoker",
     "DynamicRegistryManagerAccessor",
     "EnderpearlImpactMixin",
+    "GenerationSettingsAccessor",
     "GlassBottleUseMixin",
     "HoneyDrinkMixin",
     "HoneyShieldCooldownMixin",

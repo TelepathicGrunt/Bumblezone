@@ -4,6 +4,8 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.IPlayerPosAndDim;
 import com.telepathicgrunt.the_bumblezone.capabilities.PlayerPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.dimension.BzPlayerPlacement;
+import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modCompat.ProductiveBeesRedirection;
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -74,12 +76,11 @@ public class PlayerTeleportation {
     }
 
     private static void teleportOutOfBz(PlayerEntity playerEntity) {
-        if (!playerEntity.world.isRemote) {
+        if (!playerEntity.getEntityWorld().isRemote) {
             checkAndCorrectStoredDimension(playerEntity);
-            MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
             PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
             RegistryKey<World> world_key = RegistryKey.of(Registry.DIMENSION, cap.getNonBZDim());
-            BzPlayerPlacement.exitingBumblezone(playerEntity, minecraftServer.getWorld(world_key));
+            BzPlayerPlacement.exitingBumblezone(playerEntity, playerEntity.getEntityWorld().getServer().getWorld(world_key));
             reAddStatusEffect(playerEntity);
         }
     }
@@ -140,21 +141,21 @@ public class PlayerTeleportation {
             //even through the pearl hit the block directly.
             for(double offset = -0.1D; offset <= 0.1D; offset += 0.2D) {
                 BlockState block = world.getBlockState(new BlockPos(hitBlockPos.add(offset, 0, 0)));
-                if(block.getBlock() instanceof BeehiveBlock) {
+                if(isValidBeeHive(block)) {
                     hitHive = true;
                     hivePos = new BlockPos(hitBlockPos.add(offset, 0, 0));
                     break;
                 }
 
                 block = world.getBlockState(new BlockPos(hitBlockPos.add(0, offset, 0)));
-                if(block.getBlock() instanceof BeehiveBlock) {
+                if(isValidBeeHive(block)) {
                     hitHive = true;
                     hivePos = new BlockPos(hitBlockPos.add(0, offset, 0));
                     break;
                 }
 
                 block = world.getBlockState(new BlockPos(hitBlockPos.add(0, 0, offset)));
-                if(block.getBlock() instanceof BeehiveBlock) {
+                if(isValidBeeHive(block)) {
                     hitHive = true;
                     hivePos = new BlockPos(hitBlockPos.add(0, 0, offset));
                     break;
@@ -209,8 +210,23 @@ public class PlayerTeleportation {
     }
 
 
-    // Player exiting Bumblezone dimension
+    private static boolean isValidBeeHive(BlockState block) {
+        if(block.getBlock() instanceof BeehiveBlock) {
+            if(Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get() ||
+                block.getBlock().getRegistryName().getNamespace().equals("minecraft")) {
 
+                return true;
+            }
+        }
+
+        if(ModChecker.productiveBeesPresent && Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get()) {
+            return ProductiveBeesRedirection.PBIsAdvancedBeehiveAbstractBlock(block);
+        }
+
+        return false;
+    }
+
+    // Player exiting Bumblezone dimension
     public static void playerLeavingBz(ResourceLocation dimensionLeaving, ServerPlayerEntity serverPlayerEntity){
         //Updates the non-BZ dimension that the player is leaving
         if (!dimensionLeaving.equals(Bumblezone.MOD_DIMENSION_ID)) {
