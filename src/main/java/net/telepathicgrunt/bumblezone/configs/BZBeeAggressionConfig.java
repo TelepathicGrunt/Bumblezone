@@ -8,18 +8,21 @@ import me.sargunvohra.mcmods.autoconfig1u.shadowed.blue.endless.jankson.Comment;
 @Config(name = "Bee Aggression")
 public class BZBeeAggressionConfig implements ConfigData {
 
-    @ConfigEntry.Gui.Tooltip(count = 3)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nDetermines if Wrath of the Hive can be applied to players outside\n" +
             "the Bumblezone dimension when they pick up Honey blocks, take honey\n" +
             " from Filled Porous Honey blocks, or drink Honey Bottles.")
     public boolean allowWrathOfTheHiveOutsideBumblezone = false;
 
-    @ConfigEntry.Gui.Tooltip(count = 2)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nShow the orangish particles when you get Wrath of the Hive\n" +
             "after you angered the bees in the Bumblezone dimension.")
     public boolean showWrathOfTheHiveParticles = true;
 
-    @ConfigEntry.Gui.Tooltip(count = 9)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nTurn off or on the ability to get Wrath of the Hive effect from certain actions.\n" +
             "\n" +
             "The bees can see you through walls and will have \n" +
@@ -29,7 +32,8 @@ public class BZBeeAggressionConfig implements ConfigData {
             "Note: Peaceful mode will always override the bee aggressive setting.")
     public boolean aggressiveBees = true;
 
-    @ConfigEntry.Gui.Tooltip(count = 4)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nHow far away the bee can be to become angry and hunt you down if\n" +
             "you take their honey from the Bumblezone dimension.\n" +
             "\n" +
@@ -37,7 +41,8 @@ public class BZBeeAggressionConfig implements ConfigData {
     @ConfigEntry.BoundedDiscrete(min = 1, max = 1000)
     public int aggressionTriggerRadius = 64;
 
-    @ConfigEntry.Gui.Tooltip(count = 4)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nHow long bees will keep their effects for (speed, absorption, strength).\n" +
             "\n" +
             "Note: This is in ticks. 20 ticks = 1 second. And bee's anger will remain.\n" +
@@ -45,7 +50,8 @@ public class BZBeeAggressionConfig implements ConfigData {
     @ConfigEntry.BoundedDiscrete(min = 1, max = 1000000)
     public int howLongWrathOfTheHiveLasts = 350;
 
-    @ConfigEntry.Gui.Tooltip(count = 5)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nHow long entities will keep Protection of the Hive effect after feeding bees\n" +
             "or Brood Blocks. Bees will attack anyone that damages someone with the effect.\n" +
             "\n" +
@@ -53,7 +59,8 @@ public class BZBeeAggressionConfig implements ConfigData {
     @ConfigEntry.BoundedDiscrete(min = 1, max = 1000000)
     public int howLongProtectionOfTheHiveLasts = 500;
 
-    @ConfigEntry.Gui.Tooltip(count = 5)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nHow fast bees move along the ground (Not while flying).\n" +
             "You will see this a lot when bees are about to attack\n" +
             "you, they tend to touch the floor and the speed boost\n" +
@@ -62,7 +69,8 @@ public class BZBeeAggressionConfig implements ConfigData {
     @ConfigEntry.BoundedDiscrete(min = 0, max = 1000000)
     public int speedBoostLevel = 1;
 
-    @ConfigEntry.Gui.Tooltip(count = 9)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nHow much extra health bees get that always instantly regenerates.\n" +
             "This means you need to deal more damage than the extra health gives\n" +
             "order to actually damage the bee's real health bar.\n" +
@@ -75,7 +83,8 @@ public class BZBeeAggressionConfig implements ConfigData {
     @ConfigEntry.BoundedDiscrete(min = 0, max = 1000000)
     public int absorptionBoostLevel = 1;
 
-    @ConfigEntry.Gui.Tooltip(count = 2)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nHow strong the bees attacks become.\n" +
             "(5 or higher will instant kill you without armor).")
     @ConfigEntry.BoundedDiscrete(min = 0, max = 1000000)

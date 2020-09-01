@@ -8,7 +8,8 @@ import me.sargunvohra.mcmods.autoconfig1u.shadowed.blue.endless.jankson.Comment;
 @Config(name = "block_mechanics")
 public class BZBlockMechanicsConfig implements ConfigData {
 
-    @ConfigEntry.Gui.Tooltip(count = 6)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nShould Dispensers always drop the Glass Bottle when using specific \n"
             +"bottle items on certain The Bumblezone blocks? \n"
             +"\n"

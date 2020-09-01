@@ -1,12 +1,15 @@
 package net.telepathicgrunt.bumblezone.items;
 
+import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+import net.telepathicgrunt.bumblezone.mixin.ModelPredicateProviderRegistryInvoker;
 
 import java.util.List;
 
@@ -15,6 +18,17 @@ public class HoneyCrystalShield extends ShieldItem {
     public HoneyCrystalShield() {
         //starts off with 20 durability so it is super weak
         super(new Item.Settings().maxDamage(20).group(BzItems.BUMBLEZONE_CREATIVE_TAB));
+
+
+        // Allows shield to use the blocking json file for offset
+        ModelPredicateProviderRegistryInvoker.register(
+                this,
+                new Identifier("blocking"),
+                (itemStack, world, livingEntity) ->
+                        livingEntity != null &&
+                                livingEntity.isUsingItem() &&
+                                livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F
+        );
     }
 
 

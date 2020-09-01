@@ -8,7 +8,8 @@ import me.sargunvohra.mcmods.autoconfig1u.shadowed.blue.endless.jankson.Comment;
 @Config(name = "Dimension")
 public class BZDimensionConfig implements ConfigData {
 
-    @ConfigEntry.Gui.Tooltip(count = 6)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nHow bright the fog is in the Bumblezone dimension. \n" +
             "\n" +
             "The brightness is represented as a percentage so\n" +
@@ -18,7 +19,8 @@ public class BZDimensionConfig implements ConfigData {
     @ConfigEntry.BoundedDiscrete(min = 0, max = 100000)
     public double fogBrightnessPercentage = 110;
 
-    @ConfigEntry.Gui.Tooltip(count = 5)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nMakes leaving The Bumblezone dimension always places you back\n " +
             "at the Overworld regardless of which dimension you originally \n" +
             "came from. Use this option if this dimension becomes locked in \n" +
@@ -26,7 +28,8 @@ public class BZDimensionConfig implements ConfigData {
             "two and cannot get back to the Overworld")
     public boolean forceExitToOverworld = false;
 
-    @ConfigEntry.Gui.Tooltip(count = 5)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nShould exiting The Bumblezone always try and place you\n"
             +"above sealevel in the target dimension? (Will only look\n"
             +"for beehives above sealevel as well when placing you)"
@@ -34,7 +37,8 @@ public class BZDimensionConfig implements ConfigData {
             +"ONLY FOR TELEPORTATION MODE 1 AND 3.")
     public boolean seaLevelOrHigherExitTeleporting = true;
 
-    @ConfigEntry.Gui.Tooltip(count = 6)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nIf an identifier of a block is specified here,\n "
             +"then teleporting to Bumblezone will need that block under\n"
             +"the Bee Nest/Beehive you threw the Enderpearl at.\n"
@@ -43,7 +47,8 @@ public class BZDimensionConfig implements ConfigData {
             +"be under the Bee Nest/Beehive to teleport to the dimension.")
     public String requiredBlockUnderHive = "";
 
-    @ConfigEntry.Gui.Tooltip(count = 5)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nIf requiredBlockUnderHive has a block specified and this config\n "
             +"is set to true, then player will get a warning if they throw\n"
             +"an Enderpearl at a Bee Nest/Beehive but the block under it is\n"
@@ -51,7 +56,8 @@ public class BZDimensionConfig implements ConfigData {
             +"block is needed under the Bee Nest/Beehive to teleport to the dimension.")
     public boolean warnPlayersOfWrongBlockUnderHive = true;
 
-    @ConfigEntry.Gui.Tooltip(count = 4)
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nWill a Beenest generate if no Beenest is \n"
             +"found when leaving The Bumblezone dimension.\n"
             +"\n"
