@@ -8,11 +8,9 @@ import com.telepathicgrunt.the_bumblezone.dimension.BzSkyProperty;
 import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
 import com.telepathicgrunt.the_bumblezone.items.BzItems;
 import com.telepathicgrunt.the_bumblezone.mixin.SkyPropertiesAccessor;
-import cy.jdkdigital.productivebees.item.SpawnEgg;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -20,9 +18,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DeferredWorkQueue;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @SuppressWarnings("deprecation")
@@ -61,5 +57,14 @@ public class BumblezoneClient
         });
 
 
+        // Allows shield to use the blocking json file for offset
+        ItemModelsProperties.register(
+                BzItems.HONEY_CRYSTAL_SHIELD,
+                new ResourceLocation("blocking"),
+                (itemStack, world, livingEntity) ->
+                        livingEntity != null &&
+                                livingEntity.isHandActive() &&
+                                livingEntity.getActiveItemStack() == itemStack ? 1.0F : 0.0F
+        );
     }
 }

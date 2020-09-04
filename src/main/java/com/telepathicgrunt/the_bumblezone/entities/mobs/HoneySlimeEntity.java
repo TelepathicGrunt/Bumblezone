@@ -363,7 +363,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
 
    protected void jump() {
       Vector3d vec3d = this.getMotion();
-      this.setVelocity(vec3d.x, this.getJumpUpwardsMotion(), vec3d.z);
+      this.setMotion(vec3d.x, this.getJumpUpwardsMotion(), vec3d.z);
       this.isAirBorne = true;
    }
 

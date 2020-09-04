@@ -16,6 +16,16 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
    
+## (V.2.0.1 Changes) (1.16.2 Minecraft)
+ 
+##### Major:
+
+- Fixed crash on servers.
+
+##### Mod Compatibility:
+
+- Fixed crash when paired with another mod that registers unfinished mobs that crashes when created.
+ 
 ## (V.2.0.0 Changes) (1.16.2 Minecraft)
  
 ##### Major:

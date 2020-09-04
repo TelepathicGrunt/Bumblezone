@@ -64,15 +64,6 @@ public class ProductiveBeesCompat {
 				isBlockMissing(block, block.getRegistryName());
 			}
 		}
-
-		// Fluid still needs work to be usable and stuff
-		//	Fluid honeyFluid = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(productivebeesRL + ":honey"));
-		//	if (newEnoughVersion && honeyFluid != Fluids.EMPTY) {
-		//	    LiquidsConfig honeySpringConfig = new LiquidsConfig(honeyFluid.getDefaultState(), false, 4, 1, ImmutableSet.of(Blocks.HONEY_BLOCK, Blocks.HONEYCOMB_BLOCK));
-		//	    BzBiomes.HIVE_PILLAR.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.SPRING_FEATURE.withConfiguration(honeySpringConfig).withPlacement(Placement.COUNT_BIASED_RANGE.configure(new CountRangeConfig(Bumblezone.BzConfig.PBHoneyWaterfallRate.get(), 128, 0, 128))));
-		//	    BzBiomes.HIVE_WALL.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.SPRING_FEATURE.withConfiguration(honeySpringConfig).withPlacement(Placement.COUNT_BIASED_RANGE.configure(new CountRangeConfig(Bumblezone.BzConfig.PBHoneyWaterfallRate.get(), 128, 0, 128))));
-		//	    BzBiomes.SUGAR_WATER.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.SPRING_FEATURE.withConfiguration(honeySpringConfig).withPlacement(Placement.COUNT_BIASED_RANGE.configure(new CountRangeConfig(Bumblezone.BzConfig.PBHoneyWaterfallRate.get(), 16, 0, 128))));
-		//	}
 	}
 	
 	public static void PBAddHoneycombs(Biome biome) {

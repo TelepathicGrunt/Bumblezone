@@ -17,6 +17,7 @@
     "HoneyShieldPreferredSlotMixin",
     "LayerAccessor",
     "MaterialInvoker",
+    "MinecraftServerMixin",
     "MobHitMixin",
     "MobSpawnLocationMixin",
     "PlayerDamagedMixin",
@@ -30,7 +31,6 @@
     "WorldChunkAddEntityMixin"
   ],
   "client": [
-    "MinecraftServerMixin",
     "SkyPropertiesAccessor"
   ],
   "injectors": {

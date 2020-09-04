@@ -18,10 +18,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.listener.IChunkStatusListenerFactory;
-import net.minecraft.world.gen.DimensionSettings;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.settings.StructureSeparationSettings;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.IServerConfiguration;
 import net.minecraft.world.storage.SaveFormat;
@@ -34,17 +31,20 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.net.Proxy;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 
 @Mixin(MinecraftServer.class)
 public class MinecraftServerMixin {
-    @Shadow @Final
-    private Map<RegistryKey<World>, ServerWorld> worlds;
 
     @Shadow @Final
     protected DynamicRegistries.Impl registryManager;
+
+    @Shadow @Final
+    private Map<RegistryKey<World>, ServerWorld> worlds;
 
     //Make list of mobs to attack upon creation of the world as we need
     //the world to make the mobs to check their classification.
@@ -56,7 +56,7 @@ public class MinecraftServerMixin {
 
     }
 
-    // Used for adding mod compat dependant features to Bumblezone biomes
+    // Used for adding mod compat dependent features to Bumblezone biomes
     @Inject(
             method = "<init>",
             at = @At(value = "TAIL")
