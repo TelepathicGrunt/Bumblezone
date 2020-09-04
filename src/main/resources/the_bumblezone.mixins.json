@@ -9,7 +9,6 @@
     "BucketItemAccessor",
     "CookingRecipeSerializerMixin",
     "DispenserAccessor",
-    "DynamicRegistryManagerAccessor",
     "EnderpearlImpactMixin",
     "GlassBottleUseMixin",
     "HoneyDrinkMixin",

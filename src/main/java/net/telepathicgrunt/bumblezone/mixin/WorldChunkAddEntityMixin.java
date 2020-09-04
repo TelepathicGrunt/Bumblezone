@@ -1,8 +1,6 @@
 package net.telepathicgrunt.bumblezone.mixin;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.WorldChunk;
 import net.telepathicgrunt.bumblezone.entities.BeeAggression;
 import org.spongepowered.asm.mixin.Mixin;

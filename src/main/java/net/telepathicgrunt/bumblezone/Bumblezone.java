@@ -1,7 +1,6 @@
 package net.telepathicgrunt.bumblezone;
 
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
-import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
 import me.sargunvohra.mcmods.autoconfig1u.serializer.JanksonConfigSerializer;
 import nerdhub.cardinal.components.api.ComponentRegistry;
 import nerdhub.cardinal.components.api.ComponentType;
@@ -57,7 +56,6 @@ public class Bumblezone implements ModInitializer {
         BzFeatures.registerFeatures();
         BzConfiguredFeatures.registerConfiguredFeatures();
         BzDimension.setupDimension();
-
 
         //attach component to player
         EntityComponents.setRespawnCopyStrategy(PLAYER_COMPONENT, RespawnCopyStrategy.INVENTORY);

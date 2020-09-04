@@ -1,10 +1,11 @@
 package net.telepathicgrunt.bumblezone.features;
 
 import com.google.common.collect.ImmutableSet;
-import com.mojang.serialization.Lifecycle;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.*;
+import net.minecraft.util.registry.BuiltinRegistries;
+import net.minecraft.util.registry.MutableRegistry;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.CountConfig;
 import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.decorator.DecoratorConfig;
@@ -16,7 +17,6 @@ import net.minecraft.world.gen.feature.SpringFeatureConfig;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.features.decorators.BzPlacements;
-import net.telepathicgrunt.bumblezone.mixin.DynamicRegistryManagerAccessor;
 
 public class BzConfiguredFeatures {
     private static final SpringFeatureConfig SUGAR_WATER_SPRING_CONFIG = new SpringFeatureConfig(BzBlocks.SUGAR_WATER_FLUID.getDefaultState(), true, 4, 1, ImmutableSet.of(Blocks.HONEY_BLOCK, Blocks.HONEYCOMB_BLOCK));
@@ -33,7 +33,7 @@ public class BzConfiguredFeatures {
     public static final ConfiguredFeature<?,?> CAVE_SUGAR_WATERFALL = BzFeatures.CAVE_SUGAR_WATERFALL.configure(FeatureConfig.DEFAULT).decorate(Decorator.RANGE.configure(new RangeDecoratorConfig(8, 0, 248)).repeat(100));
 
     public static void registerConfiguredFeatures(){
-        MutableRegistry<ConfiguredFeature<?, ?>> registry = DynamicRegistryManagerAccessor.getBUILTIN().get(Registry.CONFIGURED_FEATURE_WORLDGEN);
+        MutableRegistry<ConfiguredFeature<?, ?>> registry = (MutableRegistry<ConfiguredFeature<?, ?>>) BuiltinRegistries.CONFIGURED_FEATURE;
      
         Registry.register(registry, new Identifier(Bumblezone.MODID, "sugar_waterfall_high"), SUGAR_WATERFALL_HIGH);
         Registry.register(registry, new Identifier(Bumblezone.MODID, "sugar_waterfall_low"), SUGAR_WATERFALL_LOW);

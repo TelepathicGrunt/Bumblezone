@@ -8,6 +8,14 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
        | The Bumblezone Fabric changelog |
 
 
+   (V.2.2.3 Changes) (1.16.2 Minecraft)
+   
+    Major:
+• FIXED A SUPER WEIRD BUG THAT KILLED ALMOST ALL OTHER MODS
+  WHEN A CERTAIN NUMBER OF MODS ARE PUT ON NEXT TO THE BUMBLEZONE.
+  I'M SORRY!!! OTHER MODDERS, DO NOT CLASSLOAD DYNAMIC REGISTRY 
+  IN YOUR MOD'S INITIALIZATION!!!
+
    (V.2.2.2 Changes) (1.16.2 Minecraft)
    
     Major:

@@ -22,9 +22,6 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.utils.BzPlacingUtils;
 import org.apache.logging.log4j.Level;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class BzPlayerPlacement {
     //use this to teleport to any dimension
     //FabricDimensions.teleport(playerEntity, <destination dimension type>, <placement>);
