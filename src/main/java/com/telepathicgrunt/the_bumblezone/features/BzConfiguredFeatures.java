@@ -4,11 +4,11 @@ import com.google.common.collect.ImmutableSet;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.features.decorators.BzPlacements;
-import com.telepathicgrunt.the_bumblezone.mixin.DynamicRegistryManagerAccessor;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.MutableRegistry;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
@@ -29,7 +29,7 @@ public class BzConfiguredFeatures {
     public static final ConfiguredFeature<?,?> CAVE_SUGAR_WATERFALL = BzFeatures.CAVE_SUGAR_WATERFALL.configure(IFeatureConfig.NO_FEATURE_CONFIG).decorate(Placement.RANGE.configure(new TopSolidRangeConfig(8, 0, 248)).repeat(100));
 
     public static void registerConfiguredFeatures(){
-        MutableRegistry<ConfiguredFeature<?, ?>> registry = DynamicRegistryManagerAccessor.getBUILTIN().get(Registry.CONFIGURED_FEATURE_WORLDGEN);
+        MutableRegistry<ConfiguredFeature<?, ?>> registry = (MutableRegistry<ConfiguredFeature<?, ?>>) WorldGenRegistries.CONFIGURED_FEATURE;
      
         Registry.register(registry, new ResourceLocation(Bumblezone.MODID, "sugar_waterfall_high"), SUGAR_WATERFALL_HIGH);
         Registry.register(registry, new ResourceLocation(Bumblezone.MODID, "sugar_waterfall_low"), SUGAR_WATERFALL_LOW);

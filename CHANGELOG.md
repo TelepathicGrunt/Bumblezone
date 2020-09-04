@@ -16,6 +16,15 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
    
+## (V.2.0.2 Changes) (1.16.2 Minecraft)
+ 
+##### Major:
+
+- FIXED A SUPER WEIRD BUG THAT KILLED ALMOST ALL OTHER MODS
+  WHEN A CERTAIN NUMBER OF MODS ARE PUT ON NEXT TO THE BUMBLEZONE.
+  I'M SORRY!!! OTHER MODDERS, DO NOT CLASSLOAD DYNAMIC REGISTRY 
+  IN YOUR MOD'S INITIALIZATION!!!
+
 ## (V.2.0.1 Changes) (1.16.2 Minecraft)
  
 ##### Major:
