@@ -8,6 +8,17 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
        | The Bumblezone Fabric changelog |
 
 
+   (V.2.2.2 Changes) (1.16.2 Minecraft)
+   
+    Major:
+• Fixed crash on servers.
+
+    Mod Compatibility:
+• Fixed crash when paired with another mod that registers unfinished mobs that crashes when created.
+ 
+    Teleportation:
+• Fixed message appear about wrong block under Bee Nest when throwing Enderpearls at any non-Bee Nest block.
+
    (V.2.2.1 Changes) (1.16.2 Minecraft)
    
 	Config:

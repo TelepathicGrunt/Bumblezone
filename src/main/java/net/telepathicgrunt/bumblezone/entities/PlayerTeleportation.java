@@ -140,7 +140,7 @@ public class PlayerTeleportation {
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = false;
             String requiredBlockString = Bumblezone.BZ_CONFIG.BZDimensionConfig.requiredBlockUnderHive;
-            if(!requiredBlockString.trim().isEmpty())
+            if(hitHive && !requiredBlockString.trim().isEmpty())
             {
                 if(requiredBlockString.matches("[a-z0-9/._-]+:[a-z0-9/._-]+") && Registry.BLOCK.containsId(new Identifier(requiredBlockString)))
                 {

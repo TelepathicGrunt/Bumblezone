@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
+import org.apache.logging.log4j.Level;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -43,7 +44,27 @@ public class BeeAggression {
                     entityType.getSpawnGroup() == SpawnGroup.CREATURE ||
                     entityType.getSpawnGroup() == SpawnGroup.AMBIENT )
             {
-                Entity entity = entityType.create(world);
+                Entity entity;
+
+                // We could crash if a modded entity is super picky about when they are created or if
+                // the mob we grab is actually unfinished and wasn't supposed to be created.
+                // If it does fail to be made, use weaker way to check if bear or wasp.
+                try {
+                    entity = entityType.create(world);
+                }
+                catch(Exception e){
+                    Bumblezone.LOGGER.log(Level.WARN, "Failed to temporary create " + Registry.ENTITY_TYPE.getKey(entityType) +
+                            " mob in order to check if it is an arthropod that bees should be naturally angry at. " +
+                            "Will check if mob is a bear or wasp in its name instead. Error message is: " + e.getMessage());
+
+                    String mobName = Registry.ENTITY_TYPE.getKey(entityType).toString();
+                    if(mobName.contains("bear") || mobName.contains("wasp"))
+                    {
+                        SET_OF_BEE_HATED_ENTITIES.add(entityType);
+                    }
+                    continue;
+                }
+
                 if(entity instanceof MobEntity)
                 {
                     String mobName = Registry.ENTITY_TYPE.getId(entityType).toString();

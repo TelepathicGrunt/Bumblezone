@@ -11,6 +11,8 @@ import net.telepathicgrunt.bumblezone.client.rendering.FluidRender;
 import net.telepathicgrunt.bumblezone.client.rendering.HoneySlimeRendering;
 import net.telepathicgrunt.bumblezone.dimension.BzSkyProperty;
 import net.telepathicgrunt.bumblezone.entities.BzEntities;
+import net.telepathicgrunt.bumblezone.items.BzItems;
+import net.telepathicgrunt.bumblezone.mixin.ModelPredicateProviderRegistryInvoker;
 import net.telepathicgrunt.bumblezone.mixin.SkyPropertiesAccessor;
 
 @Environment(EnvType.CLIENT)
@@ -25,5 +27,17 @@ public class BumblezoneClient implements ClientModInitializer {
 
         EntityRendererRegistry.INSTANCE.register(BzEntities.HONEY_SLIME, (dispatcher, context) -> new HoneySlimeRendering(dispatcher));
         SkyPropertiesAccessor.getBY_IDENTIFIER().put(new Identifier(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
+
+
+
+        // Allows shield to use the blocking json file for offset
+        ModelPredicateProviderRegistryInvoker.register(
+                BzItems.HONEY_CRYSTAL_SHIELD,
+                new Identifier("blocking"),
+                (itemStack, world, livingEntity) ->
+                        livingEntity != null &&
+                                livingEntity.isUsingItem() &&
+                                livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F
+        );
     }
 }
