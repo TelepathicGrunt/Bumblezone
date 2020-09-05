@@ -6,7 +6,6 @@
   "mixins": [
     "BeeEntityInvoker",
     "DispenserBlockInvoker",
-    "DynamicRegistryManagerAccessor",
     "EnderpearlImpactMixin",
     "GenerationSettingsAccessor",
     "GlassBottleUseMixin",

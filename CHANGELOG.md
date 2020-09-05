@@ -16,6 +16,13 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
    
+## (V.2.0.3 Changes) (1.16.2 Minecraft)
+ 
+##### Major:
+
+- Fix crash at startup becuase I forgot to remove a refrence to a mixin I removed lmao.
+  Never rush your fixes people!
+
 ## (V.2.0.2 Changes) (1.16.2 Minecraft)
  
 ##### Major:
