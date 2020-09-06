@@ -7,6 +7,13 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
+   (V.2.2.4 Changes) (1.16.2 Minecraft)
+     
+    Mod Compat:
+• Moved a mixin that was conflicting with Carpet mod.
+  As a result, Bees spawned in the Bumblezone will have a chance
+  to be pollinated no matter how they are spawned in the dimension.
+
 
    (V.2.2.3 Changes) (1.16.2 Minecraft)
    

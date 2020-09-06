@@ -28,7 +28,7 @@
     "PlayerDimensionChangeMixin",
     "PlayerInteractsEntityMixin",
     "PlayerTickMixin",
-    "PollenedBeeNaturalSpawnMixin",
+    "PollenedBeeSpawnMixin",
     "ProtoChunkAddEntityMixin",
     "RedstoneDustCanConnectMixin",
     "SpawnRestrictionAccessor",
