@@ -226,29 +226,26 @@ public class HoneycombBrood extends DirectionalBlock {
      */
     @Override
     public void onBlockHarvested(World world, BlockPos position, BlockState state, PlayerEntity playerEntity) {
-        Hand hand = playerEntity.getActiveHand();
 
-        if (hand != null) {
-            ListNBT listOfEnchants = playerEntity.getHeldItem(hand).getEnchantmentTagList();
-            if (listOfEnchants.stream().noneMatch(enchant -> enchant.getString().contains("minecraft:silk_touch"))) {
-                BlockState blockState = world.getBlockState(position);
-                int stage = blockState.get(STAGE);
-                if (stage == 3) {
-                    spawnBroodMob(world, blockState, position, stage);
+        ListNBT listOfEnchants = playerEntity.getHeldItemMainhand().getEnchantmentTagList();
+        if (listOfEnchants.stream().noneMatch(enchant -> enchant.getString().contains("minecraft:silk_touch"))) {
+            BlockState blockState = world.getBlockState(position);
+            int stage = blockState.get(STAGE);
+            if (stage == 3) {
+                spawnBroodMob(world, blockState, position, stage);
+            }
+
+            if ((playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                    Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                    !playerEntity.isCreative() &&
+                    !playerEntity.isSpectator() &&
+                    Bumblezone.BzBeeAggressionConfig.aggressiveBees.get()) {
+                if (playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)) {
+                    playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                 }
-
-                if ((playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                        Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
-                        !playerEntity.isCreative() &&
-                        !playerEntity.isSpectator() &&
-                        Bumblezone.BzBeeAggressionConfig.aggressiveBees.get()) {
-                    if (playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)) {
-                        playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
-                    }
-                    else {
-                        //Now all bees nearby in Bumblezone will get VERY angry!!!
-                        playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(), true));
-                    }
+                else {
+                    //Now all bees nearby in Bumblezone will get VERY angry!!!
+                    playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(), true));
                 }
             }
         }
