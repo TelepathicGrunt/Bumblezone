@@ -19,6 +19,8 @@
   "item.the_bumblezone.honey_crystal_shield.level_tooltip": "Shield Level",
   "item.the_bumblezone.honey_slime_spawn_egg": "Honey Slime Spawn Egg",
 
+  "entity.the_bumblezone.honey_slime" : "Honey Slime" ,
+
   "biome.the_bumblezone.sugar_water_floor": "Sugar Water Floor",
   "biome.the_bumblezone.hive_wall": "Hive Wall",
   "biome.the_bumblezone.hive_pillar": "Hive Pillar",

@@ -7,6 +7,15 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
+
+   (V.2.2.5 Changes) (1.16.2 Minecraft)
+   
+    Lang:
+• Added translation for Honey Slime mob name.
+
+• Portuguese translations added by Mikeliro! Thank you!
+
+
    (V.2.2.4 Changes) (1.16.2 Minecraft)
      
     Biomes:
