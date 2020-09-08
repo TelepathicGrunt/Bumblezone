@@ -16,6 +16,13 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
    
+   (V.2.0.5 Changes) (1.16.2 Minecraft)
+ 
+    Lang:
+• Added translation for Honey Slime mob name.
+
+• Portuguese translations added by Mikeliro! Thank you!
+    
    (V.2.0.4 Changes) (1.16.2 Minecraft)
  
     Blocks:

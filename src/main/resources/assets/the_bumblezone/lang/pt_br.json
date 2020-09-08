@@ -17,9 +17,9 @@
   "item.the_bumblezone.sugar_water_bottle": "Frasco de Água Açúcarada",
   "item.the_bumblezone.honey_crystal_shield": "Escudo de Mel Cristalizado",
   "item.the_bumblezone.honey_crystal_shield.level_tooltip": "Nível de Escudo",
-  "item.the_bumblezone.honey_slime_spawn_egg": "Ovo Gerador de Smile de Mel",
-  
-  "entity.the_bumblezone:honey_slime": "Slime de Mel",
+  "item.the_bumblezone.honey_slime_spawn_egg": "Ovo Gerador de Slime de Mel",
+
+  "entity.the_bumblezone.honey_slime": "Slime de Mel",
 
   "biome.the_bumblezone.sugar_water_floor": "Piso de Água Açúcarada",
   "biome.the_bumblezone.hive_wall": "Parede da Colmeia",
@@ -46,6 +46,6 @@
   "the_bumblezone.sugar_water_bucket.jei_description": " Balde com água açúcarada. Pode ser obtido usando um Balde de Água com Açúcar ou usando um Balde Vazio na Água Açúcarada. Também Pode ser usado em Ejetores",
   "the_bumblezone.sugar_water_bottle.jei_description": " Um frasco com água açúcarada. Isso pode ser obtido usando uma garrafa de água com açúcar. \n\n Beber este item restaurará muito pouca fome, mas lhe dará Pressa por um breve período de tempo. \n\ n Pode ser alimento para o Bloco de Favo de Mel de Ninhada para  fazer a larva crescer mudar estágio. Também pode ser usado como alimento para abelhas para curá-las junto com uma chance de remover o efeito 'Ira da Colmeia' de você.",
   "the_bumblezone.honey_crystal_shield.jei_description": " Criado com Fragmentos de Mel Cristalizado, este escudo começa muito fraco, mas se torna mais forte quanto mais você o conserta com Fragmentos de Mel Cristalizado em uma bigorna. No nível máximo, este escudo tem cerca do dobro da durabilidade do Escudo de Vanilla. \n\n No entanto, este escudo sempre sofrerá danos massivos ao bloquear danos explosivos ou de fogo. \n\n Este escudo irá desacelerar brevemente qualquer multidão que cause dano físico ao escudo e, além disso, este escudo pode ser encantado com Inquebrável e Maldição do Desaparecimento (Sem Reparação para ajudar a mantê-lo equilibrado).",
-  "the_bumblezone.honey_slime_spawn_egg.jei_description": " Um ovo que gera Slimes de Mel, que pode ser criado e usado para cultivar Frascos de Mel quando uma Frasco Vasio é usada neles. Este mob foi doado para The Bumblezone por Bagel, o criador das abelhas Buzzier! Agradecimentos especiais a eles!",
+  "the_bumblezone.honey_slime_spawn_egg.jei_description": " Um ovo que gera Slimes de Mel, que pode ser criado e usado para cultivar Frascos de Mel quando uma Frasco Vasio é usada neles. Este mob foi doado para The Bumblezone por Bagel, o criador das Buzzier Bees! Agradecimentos especiais a eles!",
   "the_bumblezone.sugar_water_still.jei_description": " Um fluido que é Água Açúcarada. Qualquer mobs nele é ligeiramente mais lento do que a água normal. Este fluido pode ser encontrado na dimensão Bumblezone, criado por Balde de Água Açúcarada, ou obtido do alagamento Bloco de Mel Cristalizado. \n No geral, Água Açúcarada terá muito do mesmo comportamento que a água normal porque este fluido tem uma etiqueta de água . Isso significa que você pode hidratar terras agrícolas ou manter os corais vivos com este fluido. \n\n\n Este fluido irá curar qualquer abelha que o toque, se a abelha não estiver sofrendo danos. Além disso, este fluido fará crescer a cana-de-açúcar muito mais rápido se colocado próximo à planta (este efeito pode ser acumulado até 4 vezes). \n\n Quando este fluido entra em contato com qualquer outro fluido que tenha uma marca de lava, esse fluido se transforma em blocos de Pedregulho Açúcarado ou de Pedra  Açúcarada."
 }
