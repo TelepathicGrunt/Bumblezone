@@ -104,5 +104,10 @@
   "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spiderInfestedBeeDungeonRarity.@Tooltip":"",
   "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spiderInfestedBeeDungeonRarity.@PrefixText":"How rare Spider Infested Bee Dungeons are. Higher numbers means it is more rare. \nPut 1000 to disable Spider Infested Bee Dungeons.",
   "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spawnerRateSpiderBeeDungeon.@Tooltip":"",
-  "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spawnerRateSpiderBeeDungeon.@PrefixText":"How rare are Spider/Cave Spider Spawners in Spider Infested Bee Dungeons. \n0 is no spawners, 1 is maximum spawners, and default is 0.2f"
+  "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spawnerRateSpiderBeeDungeon.@PrefixText":"How rare are Spider/Cave Spider Spawners in Spider Infested Bee Dungeons. \n0 is no spawners, 1 is maximum spawners, and default is 0.2f",
+
+  "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowPotionOfBeesCompat.@Tooltip":"",
+  "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowPotionOfBeesCompat.@PrefixText":"Allow Potion of Bees item to turn Empty Honeycomb Brood blocks back into Honeycomb Brood Blocks with a larva in it. (affects Dispenser too)",
+  "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat.@Tooltip":"",
+  "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat.@PrefixText":"Allow Splash Potion of Bees item to turn Empty Honeycomb Brood blocks back into Honeycomb Brood Blocks with a larva in it when the potion is thrown and splashed near the block. (affects Dispenser too)"
 }

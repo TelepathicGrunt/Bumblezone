@@ -29,6 +29,7 @@ import net.telepathicgrunt.bumblezone.features.BzFeatures;
 import net.telepathicgrunt.bumblezone.features.decorators.BzPlacements;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.DispenserItemSetup;
+import net.telepathicgrunt.bumblezone.modCompat.ModChecker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -60,15 +61,19 @@ public class Bumblezone implements ModInitializer {
         BzConfiguredFeatures.registerConfiguredFeatures();
         BzDimension.setupDimension();
 
-        //Reserve Bumblezone biome IDs for the json version to replace
-        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "hive_wall"), DefaultBiomeCreator.createNormalOcean(false));
-        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "hive_pillar"), DefaultBiomeCreator.createNormalOcean(false));
-        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "sugar_water_floor"), DefaultBiomeCreator.createNormalOcean(false));
-
         //attach component to player
         EntityComponents.setRespawnCopyStrategy(PLAYER_COMPONENT, RespawnCopyStrategy.INVENTORY);
 
         ServerStartCallback.EVENT.register((MinecraftServer world) -> BeeAggression.setupBeeHatingList(world.getWorld(World.OVERWORLD)));
         DispenserItemSetup.setupDispenserBehaviors();
+
+        ModChecker.setupModCompat();
+    }
+
+    public static void reserveBiomeIDs() {
+        //Reserve Bumblezone biome IDs for the json version to replace
+        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "hive_wall"), DefaultBiomeCreator.createNormalOcean(false));
+        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "hive_pillar"), DefaultBiomeCreator.createNormalOcean(false));
+        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "sugar_water_floor"), DefaultBiomeCreator.createNormalOcean(false));
     }
 }

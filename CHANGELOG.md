@@ -8,26 +8,27 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
        | The Bumblezone Fabric changelog |
 
 
-   (V.2.2.5 Changes) (1.16.2 Minecraft)
+   (V.2.2.4 Changes) (1.16.2 Minecraft)
    
     Lang:
 • Added translation for Honey Slime mob name.
 
 • Portuguese translations added by Mikeliro! Thank you!
 
-
-   (V.2.2.4 Changes) (1.16.2 Minecraft)
+    Mod Compat:
+• Added Mod Compatibility with Potion of Bees! Their potions can be 
+  used to revive Empty Honeycomb blocks by hand or by Dispensers.
+  https://www.curseforge.com/minecraft/mc-mods/potion-of-bees-fabric
+  
+• Moved a mixin that was conflicting with Carpet mod.
+  As a result, Bees spawned in the Bumblezone will have a chance
+  to be pollinated no matter how they are spawned in the dimension.
      
     Biomes:
 • Attempted a workaround fix to prevent generated Bumblezone biomes
   from being replaced with the wrong biome due to a rare Mojang bug 
   that happens when removing other datapack biomes.
   
-    Mod Compat:
-• Moved a mixin that was conflicting with Carpet mod.
-  As a result, Bees spawned in the Bumblezone will have a chance
-  to be pollinated no matter how they are spawned in the dimension.
-
 
    (V.2.2.3 Changes) (1.16.2 Minecraft)
    

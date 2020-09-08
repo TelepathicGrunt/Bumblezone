@@ -24,12 +24,16 @@ repositories {
 		url 'https://maven.fabricmc.net/io/github/prospector/modmenu/'
 	}
 	maven {
+		url = "https://www.cursemaven.com"
+	}
+	maven {
+		name "Siphalor's Maven"
+		url "https://maven.siphalor.de"
+	}
+	maven {
 		name "cotton-config"
 		url 'http://server.bbkr.space:8081/artifactory/libs-release'
 	}
-	//flatDir {
-	//	dirs 'deps'
-	//}
 }
 
 dependencies {
@@ -73,8 +77,11 @@ dependencies {
 	modImplementation ("io.github.prospector:modmenu:${project.mod_menu_version}"){
 		exclude module: 'fabric-api'
 	}
-	
-	//modRuntime "com.github.commoble:potionofbees:1.0.1"
+
+	modImplementation ("curse.maven:potion_of_bees:3052244"){
+		exclude module: 'fabric-api'
+	}
+	modImplementation "de.siphalor:nbtcrafting-1.16:2+"
 	//modImplementation ("io.github.alloffabric:BeeProductive:${project.beeproductive_version}")
 }
 

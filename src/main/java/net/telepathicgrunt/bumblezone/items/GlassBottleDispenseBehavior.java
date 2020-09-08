@@ -105,7 +105,7 @@ public class GlassBottleDispenseBehavior extends ItemDispenserBehavior {
      */
     private static void addHoneyBottleToDispenser(BlockPointer source, Item item) {
         if (source.getBlockEntity() instanceof DispenserBlockEntity) {
-            DispenserBlockEntity dispenser = (DispenserBlockEntity) source.getBlockEntity();
+            DispenserBlockEntity dispenser = source.getBlockEntity();
             ItemStack honeyBottle = new ItemStack(item);
             if (!HopperBlockEntity.transfer(null, dispenser, honeyBottle, null).isEmpty()) {
                 DROP_ITEM_BEHAVIOR.dispense(source, honeyBottle);

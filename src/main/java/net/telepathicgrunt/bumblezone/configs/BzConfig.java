@@ -22,4 +22,8 @@ public class BzConfig implements ConfigData {
     @ConfigEntry.Category("block_mechanics")
     @ConfigEntry.Gui.TransitiveObject
     public BZBlockMechanicsConfig BZBlockMechanicsConfig = new BZBlockMechanicsConfig();
+
+    @ConfigEntry.Category("mod_compatibility")
+    @ConfigEntry.Gui.TransitiveObject
+    public BZModCompatibilityConfig BZModCompatibilityConfig = new BZModCompatibilityConfig();
 }

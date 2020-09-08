@@ -6,6 +6,7 @@
     "AbstractFurnaceEntityMixin",
     "BeeEntityInvoker",
     "BiomeLayerSamplerAccessor",
+    "BootstrapMixin",
     "BucketItemAccessor",
     "CookingRecipeSerializerMixin",
     "DispenserAccessor",
@@ -33,6 +34,7 @@
     "RedstoneDustCanConnectMixin",
     "SpawnRestrictionAccessor",
     "StructureAccessorInvoker",
+    "ThrownEntityImpactMixin",
     "VineBlockAccessor",
     "WaterEquivalenceMixin",
     "WorldChunkAddEntityMixin"
