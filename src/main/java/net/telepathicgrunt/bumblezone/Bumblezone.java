@@ -12,7 +12,10 @@ import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.BuiltinRegistries;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.DefaultBiomeCreator;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.configs.BzConfig;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
@@ -56,6 +59,11 @@ public class Bumblezone implements ModInitializer {
         BzFeatures.registerFeatures();
         BzConfiguredFeatures.registerConfiguredFeatures();
         BzDimension.setupDimension();
+
+        //Reserve Bumblezone biome IDs for the json version to replace
+        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "hive_wall"), DefaultBiomeCreator.createNormalOcean(false));
+        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "hive_pillar"), DefaultBiomeCreator.createNormalOcean(false));
+        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "sugar_water_floor"), DefaultBiomeCreator.createNormalOcean(false));
 
         //attach component to player
         EntityComponents.setRespawnCopyStrategy(PLAYER_COMPONENT, RespawnCopyStrategy.INVENTORY);

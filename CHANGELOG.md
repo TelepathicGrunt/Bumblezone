@@ -9,6 +9,11 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
    (V.2.2.4 Changes) (1.16.2 Minecraft)
      
+    Biomes:
+• Attempted a workaround fix to prevent generated Bumblezone biomes
+  from being replaced with the wrong biome due to a rare Mojang bug 
+  that happens when removing other datapack biomes.
+  
     Mod Compat:
 • Moved a mixin that was conflicting with Carpet mod.
   As a result, Bees spawned in the Bumblezone will have a chance
