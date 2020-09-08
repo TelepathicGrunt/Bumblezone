@@ -226,6 +226,7 @@ public class HoneycombBrood extends DirectionalBlock {
      */
     @Override
     public void onBlockHarvested(World world, BlockPos position, BlockState state, PlayerEntity playerEntity) {
+        if(world.isRemote()) return;
 
         Hand hand = playerEntity.getActiveHand();
         ListNBT listOfEnchants = playerEntity.getHeldItem(hand).getEnchantmentTagList();

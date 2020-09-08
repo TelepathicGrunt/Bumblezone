@@ -23,6 +23,7 @@
     "PlayerDamageShieldInvoker",
     "PlayerInteractsEntityMixin",
     "PlayerTickMixin",
+    "PollenatedBeeSpawnMixin",
     "ProtoChunkAddEntityMixin",
     "TemplateInvoker",
     "VineBlockAccessor",

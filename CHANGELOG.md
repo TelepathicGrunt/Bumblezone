@@ -16,6 +16,17 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
    
+   (V.2.0.4 Changes) (1.16.2 Minecraft)
+ 
+    Blocks:
+• Fixed crash when mining Honeycomb Brood Block.
+
+    Mobs:
+• Bees spawned in the Bumblezone will have a chance to be 
+  pollinated no matter how they are spawned in the dimension.
+  (Due to tiny performance improvement change done in backend)
+
+
 ## (V.2.0.3 Changes) (1.16.2 Minecraft)
  
 ##### Major:
