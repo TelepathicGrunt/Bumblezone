@@ -1,0 +1,49 @@
+{
+  "itemGroup.the_bumblezone": "The Bumblezone",
+
+  "block.the_bumblezone.porous_honeycomb_block": "Bloco de Favo de Mel Poroso",
+  "block.the_bumblezone.filled_porous_honeycomb_block": "Bloco de Favo de Mel Poroso Cheio",
+  "block.the_bumblezone.dead_honeycomb_larva_block": "Bloco de Favo de Mel de Ninhada Vazio",
+  "block.the_bumblezone.honeycomb_larva_block": "Bloco de Favo de Mel de Ninhada",
+  "block.the_bumblezone.sugar_infused_cobblestone": "Pedregulho Açúcarado",
+  "block.the_bumblezone.sugar_infused_stone": "Pedra Açúcarada",
+  "block.the_bumblezone.sticky_honey_residue": "Resíduo de Mel Pegajoso",
+  "block.the_bumblezone.sticky_honey_redstone": "Mel Pegajoso com Redstone",
+  "block.the_bumblezone.beeswax_planks": "Tábuas de Cera de Abelha",
+  "block.the_bumblezone.honey_crystal": "Mel Cristalizado",
+
+  "item.the_bumblezone.honey_crystal_shards": "Fragmentos de Mel Cristalizado",
+  "item.the_bumblezone.sugar_water_bucket": "Balde de Água Açúcarada",
+  "item.the_bumblezone.sugar_water_bottle": "Frasco de Água Açúcarada",
+  "item.the_bumblezone.honey_crystal_shield": "Escudo de Mel Cristalizado",
+  "item.the_bumblezone.honey_crystal_shield.level_tooltip": "Nível de Escudo",
+  "item.the_bumblezone.honey_slime_spawn_egg": "Ovo Gerador de Smile de Mel",
+
+  "biome.the_bumblezone.sugar_water_floor": "Piso de Água Açúcarada",
+  "biome.the_bumblezone.hive_wall": "Parede da Colmeia",
+  "biome.the_bumblezone.hive_pillar": "Coluna da Colmeia",
+
+  "feature.the_bumblezone.honeycomb_hole": "Buraco de Favo de Mel",
+  "feature.the_bumblezone.honeycomb_caves": "Cavernas de Favo de Mel",
+  "feature.the_bumblezone.cave_sugar_waterfall": "Caverna de Cachoeira de Açúcar",
+
+  "effect.the_bumblezone.wrath_of_the_hive": "Ira da Colmeia",
+  "effect.the_bumblezone.protection_of_the_hive": "Proteção da Colmeia",
+
+  "the_bumblezone.porous_honeycomb_block.jei_description": " Um bloco de favo de mel cheio de buracos! Você pode armazenar mel neste bloco com Frascos de Mel.",
+  "the_bumblezone.filled_porous_honeycomb_block.jei_description": " Um bloco de favo de mel cheio até a borda com mel! Você pode tirar o mel deste bloco com um Frasco de vidro. No entanto, isso pode irritar as abelhas próximas. \n\n Quando extraído, este bloco derruba o Bloco de Favo de Mel Poroso e alguns Favos de Mel. A queda é afetada pela Fortuna ou você pode usar o Toque Suave para manter o bloco intacto. \n\n Este bloco também emite um sinal Redstone de 1 quando um comparador está voltado para este bloco.",
+  "the_bumblezone.dead_honeycomb_larva_block.jei_description": " Um bloco de favo de mel com um grande buraco que não contém nada.",
+  "the_bumblezone.honeycomb_larva_block.jei_description": " Uma larva vivendo em um buraco gigante dentro de um bloco de favo de mel! A larva vai crescer lentamente por 4 estágios (mais rápido na dimensão The Bumblezone) e quando estiver no estágio final, ela tem uma chance de desovar uma Abelha ou um Slime de Mel na frente do bloco! Você pode acelerar o bloco alimentando-o com Frascos de Água Açúcarada ou Frascos de Mel, manualmente ou com um Ejetor. \n\n Se o mod 'Productive Bees' estiver ativado e este bloco estiver na dimensão The Bumblezone, suas abelhas terão uma chance de desovar neste bloco também!! \n\n Frascos de vidro podem pegar mel deste bloco, mas o bloco se transformará em um Bloco de Favo de Mel de Ninhada Vazio e as abelhas próximas ficarão furiosas porque você matou uma larva! \n\n Este bloco também emitirá um sinal Redstone entre 1 e 4, com base no estágio de crescimento da larva interna quando um comparador está voltado para este bloco.",
+  "the_bumblezone.sugar_infused_cobblestone.jei_description": " Um bloco decorativo criado quando a Água Açúcarada encontra os fluidos marcados com Lava. Mineirar este bloco derrubará Pedregulho e Açúcas a menos que você usa Toque Suave. Você pode queimar o açúcar deste bloco com uma fornalha por algum EXP.",
+  "the_bumblezone.sugar_infused_stone.jei_description": " Um bloco decorativo criado quando a Água Açúcarada encontra os fluidos marcados com Lava. Mineirar este bloco derrubará Pedregulho e Açúcas a menos que você usa Toque Suave. Você pode queimar o açúcar deste bloco com uma fornalha por algum EXP.",
+  "the_bumblezone.sticky_honey_residue.jei_description": " Um resíduo super pegajoso feito da fusão de Mel Cristalizado, Fragmentos de Mel Cristalizado ou Blocos de Mel em uma fornalha. \n\n Este bloco retarda qualquer mob em contato com ele e também pode ser usado para escalar paredes. \n A mineração deste bloco será lenta e não deixará cair nada. Para se livrar rapidamente desse bloco, clique com o botão direito enquanto segura Frasco de Água, Balde de Água, Esponja Úmida, Frasco de Açúcarada ou Balde de Açúcarada como se estivesse enxaguando a superfície. Este bloco também será destruído instantaneamente se qualquer fluido passar por ele ou se um pistão o empurrar.",
+  "the_bumblezone.sticky_honey_redstone.jei_description": " Um bloco mecânico de Redstone muito útil feito da combinação de Resíduo de mel pegajoso com pó de Redstone. Ele tem todas as mesmas características do Resíduo de Mel Pegajoso, mas também emitirá um sinal de Redstone de 1 quando um mob estiver preso no bloco. \n\n A energia será enviada ao bloco em que ele está conectado e também por meio desse bloco. Ele também alimentará qualquer coisa anexada às laterais se este bloco estiver preso ao chão.",
+  "the_bumblezone.beeswax_planks.jei_description": " Um bloco decorativo que forma os limites do teto / piso da dimensão Bumblezone e pode ser usado para criar blocos de ninhos de abelha.",
+  "the_bumblezone.honey_crystal.jei_description": " Bloco decorativo não renovável encontrado em toda a dimensão Bumblezone em cavernas ou debaixo d'água. O bloco pode ser colocado em qualquer superfície sólida, incluindo lateralmente ou de cabeça para baixo. Este bloco pode ser alagado com qualquer fluido marcado com água, mas quando feito isso, o fluido no bloco se transforma em água com açúcar. \n\n Quando quebrado sem Toque Suave, este bloco derruba Fragmentos de Mel Cristalizado (taxas de queda afetadas pela Fortuna).",
+  "the_bumblezone.honey_crystal_shards.jei_description": " Um fragmento de Mel Cristalizado que pode ser comido para restaurar pequenas porções de fome, derretido em uma Fornalha para fazer Resíduo de Mel Pegajoso ou usado para fabricar e consertar Escudo de Mel Cristalizado.",
+  "the_bumblezone.sugar_water_bucket.jei_description": " Balde com água açúcarada. Pode ser obtido usando um Balde de Água com Açúcar ou usando um Balde Vazio na Água Açúcarada. Também Pode ser usado em Ejetores",
+  "the_bumblezone.sugar_water_bottle.jei_description": " Um frasco com água açúcarada. Isso pode ser obtido usando uma garrafa de água com açúcar. \n\n Beber este item restaurará muito pouca fome, mas lhe dará Pressa por um breve período de tempo. \n\ n Pode ser alimento para o Bloco de Favo de Mel de Ninhada para  fazer a larva crescer mudar estágio. Também pode ser usado como alimento para abelhas para curá-las junto com uma chance de remover o efeito 'Ira da Colmeia' de você.",
+  "the_bumblezone.honey_crystal_shield.jei_description": " Criado com Fragmentos de Mel Cristalizado, este escudo começa muito fraco, mas se torna mais forte quanto mais você o conserta com Fragmentos de Mel Cristalizado em uma bigorna. No nível máximo, este escudo tem cerca do dobro da durabilidade do Escudo de Vanilla. \n\n No entanto, este escudo sempre sofrerá danos massivos ao bloquear danos explosivos ou de fogo. \n\n Este escudo irá desacelerar brevemente qualquer multidão que cause dano físico ao escudo e, além disso, este escudo pode ser encantado com Inquebrável e Maldição do Desaparecimento (Sem Reparação para ajudar a mantê-lo equilibrado).",
+  "the_bumblezone.honey_slime_spawn_egg.jei_description": " Um ovo que gera Slimes de Mel, que pode ser criado e usado para cultivar Frascos de Mel quando uma Frasco de Vidro é usada neles. Este mob foi doado para The Bumblezone por Bagel, o criador das abelhas Buzzier! Agradecimentos especiais a eles!",
+  "the_bumblezone.sugar_water_still.jei_description": " Um fluido que é Água Açúcarada. Qualquer mobs nele é ligeiramente mais lento do que a água normal. Este fluido pode ser encontrado na dimensão Bumblezone, criado por Balde de Água Açúcarada, ou obtido do alagamento Bloco de Mel Cristalizado. \n No geral, Água Açúcarada terá muito do mesmo comportamento que a água normal porque este fluido tem uma etiqueta de água . Isso significa que você pode hidratar terras agrícolas ou manter os corais vivos com este fluido. \n\n\n Este fluido irá curar qualquer abelha que o toque, se a abelha não estiver sofrendo danos. Além disso, este fluido fará crescer a cana-de-açúcar muito mais rápido se colocado próximo à planta (este efeito pode ser acumulado até 4 vezes). \n\n Quando este fluido entra em contato com qualquer outro fluido que tenha uma marca de lava, esse fluido se transforma em blocos de Pedregulho Açúcarado ou de Pedra  Açúcarada."
+}
