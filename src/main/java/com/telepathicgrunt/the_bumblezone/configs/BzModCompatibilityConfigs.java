@@ -93,7 +93,7 @@ public class BzModCompatibilityConfigs
 	            		allowPotionOfBeesCompat = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Allow Potion of Bees item to turn Empty Honeycomb Brood blocks \r\n"
-			                    	+" back into Honeycomb Brood Blocks with a larva in it. (affects Despenser too)\r\n")
+			                    	+" back into Honeycomb Brood Blocks with a larva in it. (affects Dispenser too)\r\n")
 		                    .translation("the_bumblezone.config.modcompat.potionofbees.allowpotionofbeescompat")
 		                    .define("allowPotionOfBeesCompat", true));
 	            		
@@ -101,7 +101,7 @@ public class BzModCompatibilityConfigs
 			            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 			                    	+" Allow Splash Potion of Bees item to turn Empty Honeycomb Brood \r\n"
 				                +" blocks back into Honeycomb Brood Blocks with a larva in it when \r\n"
-				                +" the potion is thrown and splashed near the block. (affects Despenser too)\r\n")
+				                +" the potion is thrown and splashed near the block. (affects Dispenser too)\r\n")
 			            .translation("the_bumblezone.config.modcompat.productivebees.allowsplashpotionofbeescompat")
 			            .define("allowSplashPotionOfBeesCompat", true));
         
