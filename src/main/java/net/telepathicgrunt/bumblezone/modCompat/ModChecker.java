@@ -2,7 +2,6 @@ package net.telepathicgrunt.bumblezone.modCompat;
 
 
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.util.Identifier;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import org.apache.logging.log4j.Level;
 

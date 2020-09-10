@@ -1,4 +1,4 @@
-    Made for Minecraft v.1.16.1
+    Made for Minecraft v.1.16.3
     Created by TelepathicGrunt
 
 A Fabric pot of an awesome dimension full of bees that becomes REALLY angry if you take their honey! 
@@ -8,7 +8,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
        | The Bumblezone Fabric changelog |
 
 
-   (V.2.2.5 Changes) (1.16.2 Minecraft)
+   (V.2.2.5 Changes) (1.16.3 Minecraft)
    
     Lang:   
 • Added Simplified Chinese translation from Samekichi! Thank you!
@@ -24,6 +24,8 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
   1 is now the minimum value instead of 0 as 0 actually was level 1.
   Absorption is now at the correct level to give 4 extra health instead
   of 8 which made bees too hard to kill.
+  
+• Removed empty tooltips after updating autoconfigu library.
 
 
    (V.2.2.4 Changes) (1.16.2 Minecraft)

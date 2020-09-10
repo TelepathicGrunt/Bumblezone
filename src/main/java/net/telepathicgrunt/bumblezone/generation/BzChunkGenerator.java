@@ -359,7 +359,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         int k = i << 4;
         int l = j << 4;
 
-        for (StructureFeature<?> feature : StructureFeature.field_24861) {
+        for (StructureFeature<?> feature : StructureFeature.JIGSAW_STRUCTURES) {
             accessor.getStructuresWithChildren(ChunkSectionPos.from(chunkPos, 0), feature).forEach((start) -> {
             Iterator<StructurePiece> structurePiecesIterator = start.getChildren().iterator();
 
@@ -601,7 +601,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         int zChunk = region.getCenterChunkZ();
         int xCord = xChunk << 4;
         int zCord = zChunk << 4;
-        Biome biome = region.getBiome((new ChunkPos(xChunk, zChunk)).getCenterBlockPos());
+        Biome biome = region.getBiome((new ChunkPos(xChunk, zChunk)).getStartPos());
         ChunkRandom sharedseedrandom = new ChunkRandom();
         sharedseedrandom.setPopulationSeed(region.getSeed(), xCord, zCord);
         while (sharedseedrandom.nextFloat() < biome.getSpawnSettings().getCreatureSpawnProbability() * 0.75f) {
