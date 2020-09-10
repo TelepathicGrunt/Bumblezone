@@ -37,6 +37,7 @@
   "text.autoconfig.the_bumblezone-main.category.bee_aggression": "Bee Aggression",
   "text.autoconfig.the_bumblezone-main.category.dimension": "Dimension",
   "text.autoconfig.the_bumblezone-main.category.block_mechanics": "Block Mechanics",
+  "text.autoconfig.the_bumblezone-main.category.mod_compatibility": "Mod Compatibility",
 
   "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.beeDungeonRarity": "Bee Dungeon Rarity",
   "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spiderInfestedBeeDungeonRarity": "Infested Bee Dungeon Rarity",
@@ -61,6 +62,9 @@
   "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive": "Warn If Wrong Block Under Hive",
   "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.generateBeenest": "Generate Beenest When Exiting Bumblezone",
   "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.teleportationMode": "Teleportation Mode",
+
+  "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowPotionOfBeesCompat": "Potion of Bees Compat",
+  "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat": "Splash Potion of Bees Compat",
 
   "text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.dispensersDropGlassBottles.@Tooltip":"",
   "text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.dispensersDropGlassBottles.@PrefixText":"Should Dispensers always drop the Glass Bottle when using specific bottle items on certain The Bumblezone blocks? \nExample: Using Honey Bottle to feed Honeycomb Brood Blocks will grow the larva and drop the Glass Bottle instead of putting it back into Dispenser if this is set to true.",
@@ -95,7 +99,7 @@
   "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.speedBoostLevel.@Tooltip":"",
   "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.speedBoostLevel.@PrefixText":"How fast bees move along the ground (Not while flying). You will see this a lot when bees are about to attack you, they tend to touch the floor and the speed boost makes them dash forward at you. Set this to higher for faster dash attacks from bees.",
   "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.absorptionBoostLevel.@Tooltip":"",
-  "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.absorptionBoostLevel.@PrefixText":"How much extra health bees get that always instantly regenerates. \nThis means you need to deal more damage than the extra health gives order to actually damage the bee's real health bar. \nFor example, Absorption 1 here makes bees get 4 extra padding of hearts. Your attacks need to deal 4 1/2 or more damage to actually be able to kill the bee. This means using Bane of Arthropod 5 is needed to kill bees If you set this to like 5 or something, bees may be invicible! Game over.",
+  "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.absorptionBoostLevel.@PrefixText":"How much extra health bees get that always instantly regenerates. \nThis means you need to deal more damage than the extra health gives order to actually damage the bee's real health bar. \nFor example, Absorption 1 here makes bees get 4 extra padding of health (or 2 full hearts). Your attacks need to deal 4 1/2 or more damage to actually be able to kill the bee. This means using Bane of Arthropod 5 is needed to kill bees If you set this to like 5 or something, bees may be invicible! Game over.",
   "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.strengthBoostLevel.@Tooltip":"",
   "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.strengthBoostLevel.@PrefixText":"(How strong the bees attacks become. (5 or higher will instant kill you without armor).",
 

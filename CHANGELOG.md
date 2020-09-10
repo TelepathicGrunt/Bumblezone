@@ -8,6 +8,24 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
        | The Bumblezone Fabric changelog |
 
 
+   (V.2.2.5 Changes) (1.16.2 Minecraft)
+   
+    Lang:   
+• Added Simplified Chinese translation from Samekichi! Thank you!
+
+• Added missing lang entries for mod compatibility config entries. 
+
+    Config:
+• Significantly reduced the range of values for bee anger and 
+  bee status effect intensity config options to allow the slider
+  to actually let you pick good values now.
+  
+• The status effect configs now reflect their true level of intensity.
+  1 is now the minimum value instead of 0 as 0 actually was level 1.
+  Absorption is now at the correct level to give 4 extra health instead
+  of 8 which made bees too hard to kill.
+
+
    (V.2.2.4 Changes) (1.16.2 Minecraft)
    
     Lang:
