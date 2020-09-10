@@ -99,7 +99,7 @@
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.speedBoostLevel.@Tooltip":"",
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.speedBoostLevel.@PrefixText":"蜜蜂在向地面移动时 (而非飞行时) 的速度。\n(蜜蜂将要攻击时总是趋向于接近地面, 而速度提升会让它们接近地面的动作更接近俯冲, 因此提高该选项的数值会让蜜蜂以更快的速度进行俯冲攻击。)",
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.absorptionBoostLevel.@Tooltip":"",
-	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.absorptionBoostLevel.@PrefixText":"蜜蜂对每个受到的伤害的吸收量 (表现为蜜蜂不间断地瞬时获得§e额外生命§r)。\n这意味着如果你想对蜜蜂造成实质性的伤害 (减少蜜蜂§c本身的生命§r而非§e额外生命§r, 因为后者会不断再生), 那么你每次造成的伤害都必须大于该选项中设定的伤害吸收等级所对应的§e额外生命§r。\n§l例如: §r伤害吸收 1 会令蜜蜂获得不断再生的 4 点§e额外生命§r (2 颗§e黄心§r) , 因此你的每次攻击都要造成超过 4 点伤害 (2 颗心) 以减少蜜蜂§c本身的生命§r。\n由此可见, 如果你将伤害吸收等级设为了 5 (对应 4*5=20 点§e额外生命§r), 那么你§l通常§r需要一把附有节肢杀手 V 的下界合金剑 (完全冷却后对节肢生物造成 5*2.5+8=20.5 点伤害), 才能实质性地伤害并杀死蜜蜂; 如果你将该选项的数值设置得更高 (比如 9, 对应 4*9=36 点§e额外生命§r), 那么即使你在拥有力量 II 效果的情况下用完全冷却的、附有节肢杀手 V 的下界合金斧对蜜蜂打出了暴击 (6+10*1.5+5*2.5=33.5 点伤害), 也无法造成实质性的伤害 ——换句话说, 这些蜜蜂将在原版体系中近乎于无敌, 那还怎么玩! ",
+	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.absorptionBoostLevel.@PrefixText":"蜜蜂对每个受到的伤害的吸收量 (表现为蜜蜂不间断地瞬时获得§e额外生命§r)。\n这意味着如果你想对蜜蜂造成实质性的伤害 (减少蜜蜂§c本身的生命§r而非§e额外生命§r, 因为后者会不断再生), 那么你每次造成的伤害都必须大于该选项中设定的伤害吸收等级所对应的§e额外生命§r。\n§l例如: §r伤害吸收 1 会令蜜蜂获得不断再生的 4 点§e额外生命§r (2 颗§e黄心§r) , 因此你的每次攻击都要造成超过 4 点伤害 (2 颗心) 以减少蜜蜂§c本身的生命§r。\n由此可见, 如果你将伤害吸收等级设为了 5 (对应 4*5=20 点§e额外生命§r), 那么你§l通常§r需要一把附有节肢杀手 V 的下界合金剑 (完全冷却后对节肢生物造成 5*2.5+8=20.5 点伤害), 才能实质性地伤害并杀死蜜蜂; 如果你将该选项的数值设置得特别高, 蜜蜂在原版体系中可能会近乎于无敌, 那样就不用玩了! ",
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.strengthBoostLevel.@Tooltip":"",
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.strengthBoostLevel.@PrefixText":"蜜蜂攻击伤害的提升幅度。\n( 5 或更高的数值可以秒杀没有防御点数或额外生命的玩家)",
 	
@@ -111,7 +111,7 @@
 	"text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spawnerRateSpiderBeeDungeon.@PrefixText":"在蛛满为患的蜜蜂地牢中, 蜘蛛/洞穴蜘蛛刷怪笼的满度。\n( 0 表示不生成刷怪笼, 1 表示生成最大数量的刷怪笼; 默认值为 0.2 )",
 	
 	"text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowPotionOfBeesCompat.@Tooltip":"",
-	"text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowPotionOfBeesCompat.@PrefixText":"允许对着空巢脾育苗块使用来自 Potion of Bees 模组的蜜蜂药水，以将其转化为带有一只蜜蜂幼虫的巢脾育苗块。(同样适用于发射器)",
+	"text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowPotionOfBeesCompat.@PrefixText":"允许对着空巢脾育苗块使用来自 Potion of Bees 模组的蜜蜂药水, 以将其转化为带有一只蜜蜂幼虫的巢脾育苗块。(同样适用于发射器)",
 	"text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat.@Tooltip":"",
-	"text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat.@PrefixText":"允许在空巢脾育苗块附近投掷来自 Potion of Bees 模组的喷溅型蜜蜂药水，以将其转化为带有一只蜜蜂幼虫的巢脾育苗块。(同样适用于发射器)"
+	"text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat.@PrefixText":"允许在空巢脾育苗块附近投掷来自 Potion of Bees 模组的喷溅型蜜蜂药水, 以将其转化为带有一只蜜蜂幼虫的巢脾育苗块。(同样适用于发射器)"
 }
