@@ -37,7 +37,7 @@
 	"text.autoconfig.the_bumblezone-main.category.bee_aggression":"蜜蜂行为",
 	"text.autoconfig.the_bumblezone-main.category.dimension":"维度",
 	"text.autoconfig.the_bumblezone-main.category.block_mechanics":"方块机制",
-	"text.autoconfig.the_bumblezone-main.category.mod.compatibility":"模组兼容",
+	"text.autoconfig.the_bumblezone-main.category.mod_compatibility":"模组兼容",
 	
 	"text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.beeDungeonRarity":"蜜蜂地牢稀有度",
 	"text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spiderInfestedBeeDungeonRarity":"蛛满为患的蜜蜂地牢稀有度",
@@ -63,8 +63,8 @@
 	"text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.generateBeenest":"离开§6黄蜂领域§r后生成蜂巢",
 	"text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.teleportationMode":"传送模式",
 	
-	"text.autoconfig.the_bumblezone-main.option.BZModCompatibilitynConfig.allowPotionOfBeesCompat":"兼容蜜蜂药水",
-	"text.autoconfig.the_bumblezone-main.option.BZModCompatibilitynConfig.allowSplashPotionOfBeesCompat":"兼容喷溅型蜜蜂药水",
+	"text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowPotionOfBeesCompat":"兼容蜜蜂药水",
+	"text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat":"兼容喷溅型蜜蜂药水",
 	
 	"text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.dispensersDropGlassBottles.@Tooltip":"",
 	"text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.dispensersDropGlassBottles.@PrefixText":"发射器在对特定的§6黄蜂领域§r方块发射特定的瓶子时, 是否总是掉落玻璃瓶? \n\n§l例如: §r如果设定为§a是§r, 那么在发射器对着巢脾育苗块投喂蜂蜜瓶、从而使蜜蜂幼虫生长时, 其会将玻璃瓶掉落出来, 而非将玻璃瓶回收进其物品槽位。",

@@ -63,9 +63,9 @@ public class WrathOfTheHiveEffect extends StatusEffect {
             bee.setTarget(livingEntity);
 
             // weaker potion effects for when attacking bears
-            bee.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, Math.max(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.speedBoostLevel, 1), false, false));
-            bee.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 20, Math.max(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.absorptionBoostLevel / 2, 1), false, false));
-            bee.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 20, Math.max(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.strengthBoostLevel / 3, 1), false, true));
+            bee.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, Math.max(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.speedBoostLevel - 1, 1), false, false));
+            bee.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 20, Math.max((Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.absorptionBoostLevel - 1) / 2, 1), false, false));
+            bee.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 20, Math.max((Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.strengthBoostLevel - 1) / 3, 1), false, true));
         }
     }
 
@@ -78,10 +78,9 @@ public class WrathOfTheHiveEffect extends StatusEffect {
         List<BeeEntity> beeList = world.getTargets(BeeEntity.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().expand(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius));
         for (BeeEntity bee : beeList) {
             bee.setTarget(livingEntity);
-            bee.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.speedBoostLevel, false, false));
-            bee.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 20, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.absorptionBoostLevel, false, false));
-            bee.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 20, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.strengthBoostLevel, false, true));
-
+            bee.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.speedBoostLevel - 1, false, false));
+            bee.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 20, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.absorptionBoostLevel - 1, false, false));
+            bee.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 20, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.strengthBoostLevel - 1, false, true));
         }
     }
 

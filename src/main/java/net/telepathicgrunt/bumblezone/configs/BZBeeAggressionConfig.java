@@ -47,7 +47,7 @@ public class BZBeeAggressionConfig implements ConfigData {
             "\n" +
             "Note: This is in ticks. 20 ticks = 1 second. And bee's anger will remain.\n" +
             "Only the boosts given to the bees will be gone.")
-    @ConfigEntry.BoundedDiscrete(min = 1, max = 1000000)
+    @ConfigEntry.BoundedDiscrete(min = 1, max = 10000)
     public int howLongWrathOfTheHiveLasts = 350;
 
     @ConfigEntry.Gui.PrefixText
@@ -56,7 +56,7 @@ public class BZBeeAggressionConfig implements ConfigData {
             "or Brood Blocks. Bees will attack anyone that damages someone with the effect.\n" +
             "\n" +
             "Note: This is in ticks. 20 ticks = 1 second.")
-    @ConfigEntry.BoundedDiscrete(min = 1, max = 1000000)
+    @ConfigEntry.BoundedDiscrete(min = 1, max = 10000)
     public int howLongProtectionOfTheHiveLasts = 500;
 
     @ConfigEntry.Gui.PrefixText
@@ -66,8 +66,8 @@ public class BZBeeAggressionConfig implements ConfigData {
             "you, they tend to touch the floor and the speed boost\n" +
             "makes them dash forward at you. Set this to higher for\n" +
             "faster dash attacks from bees.")
-    @ConfigEntry.BoundedDiscrete(min = 0, max = 1000000)
-    public int speedBoostLevel = 1;
+    @ConfigEntry.BoundedDiscrete(min = 1, max = 100)
+    public int speedBoostLevel = 2;
 
     @ConfigEntry.Gui.PrefixText
     @ConfigEntry.Gui.Tooltip()
@@ -75,18 +75,18 @@ public class BZBeeAggressionConfig implements ConfigData {
             "This means you need to deal more damage than the extra health gives\n" +
             "order to actually damage the bee's real health bar.\n" +
             "\n" +
-            "For example, Absorpton 1 here makes bees get 4 extra padding of hearts.\n" +
+            "For example, Absorption 1 here makes bees get 4 extra padding of health (2 heart icons).\n" +
             "Your attacks need to deal 4 1/2 or more damage to actually be able to\n" +
             "kill the bee. This means using Bane of Arthropod 5 is needed to kill bees\n" +
             "if you set the absorption to a higher value like 2 or 3.\n" +
             "If you set this to like 5 or something, bees may be invicible! Game over.\n")
-    @ConfigEntry.BoundedDiscrete(min = 0, max = 1000000)
+    @ConfigEntry.BoundedDiscrete(min = 1, max = 100)
     public int absorptionBoostLevel = 1;
 
     @ConfigEntry.Gui.PrefixText
     @ConfigEntry.Gui.Tooltip()
     @Comment(value = "\nHow strong the bees attacks become.\n" +
-            "(5 or higher will instant kill you without armor).")
-    @ConfigEntry.BoundedDiscrete(min = 0, max = 1000000)
-    public int strengthBoostLevel = 2;
+            "(6 or higher will instant kill you without armor).")
+    @ConfigEntry.BoundedDiscrete(min = 1, max = 100)
+    public int strengthBoostLevel = 3;
 }
