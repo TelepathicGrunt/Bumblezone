@@ -95,7 +95,7 @@ public class BzBeeAggressionConfigs {
                         +" makes them dash forward at you. Set this to higher for\r\n"
                         +" faster dash attacks from bees.\r\n")
                         .translation("the_bumblezone.config.bees.speedboostlevel")
-                        .defineInRange("speedBoostLevel", 1, 0, Integer.MAX_VALUE));
+                        .defineInRange("speedBoostLevel", 2, 1, Integer.MAX_VALUE));
 
 
                     absorptionBoostLevel = subscriber.subscribe(builder
@@ -104,13 +104,13 @@ public class BzBeeAggressionConfigs {
                         +" This means you need to deal more damage than the extra health gives\r\n"
                         +" order to actually damage the bee's real health bar.\r\n"
                         +" \r\n"
-                        +" For example, Absorption 1 here makes bees get 4 extra padding of hearts.\r\n"
+                        +" For example, Absorption 1 here makes bees get 4 extra padding of health (2 full hearts).\r\n"
                         +" Your attacks need to deal 4 1/2 or more damage to actually be able to\r\n"
                         +" kill the bee. This means using Bane of Arthropod 5 is needed to kill bees\r\n"
                         +" if you set the absorption to a higher value like 2 or 3.\r\n"
                         +" If you set this to like 5 or something, bees may be invicible! Game over.\r\n")
                         .translation("the_bumblezone.config.bees.absorptionboostlevel")
-                        .defineInRange("absorptionBoostLevel", 1, 0, Integer.MAX_VALUE));
+                        .defineInRange("absorptionBoostLevel", 1, 1, Integer.MAX_VALUE));
 
 
                     strengthBoostLevel = subscriber.subscribe(builder
@@ -118,7 +118,7 @@ public class BzBeeAggressionConfigs {
                         +" How strong the bees attacks become. \r\n"
                         +" (5 or higher will instant kill you without armor).\r\n")
                         .translation("the_bumblezone.config.bees.strengthboostlevel")
-                        .defineInRange("strengthBoostLevel", 3, 0, Integer.MAX_VALUE));
+                        .defineInRange("strengthBoostLevel", 4, 1, Integer.MAX_VALUE));
 
                 builder.pop();
             builder.pop();

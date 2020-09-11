@@ -25,6 +25,13 @@ Mods I'm keeping an eye on for future compat
 
 • Added Simplified Chinese translation from Samekichi! Thank you!
     
+    Config:
+• The status effect configs now reflect their true level of intensity.
+  1 is now the minimum value instead of 0 as 0 actually was level 1.
+  Absorption is now at the correct level to give 4 extra health instead
+  of 8 which made bees too hard to kill.
+    
+    
    (V.2.0.4 Changes) (1.16.2 Minecraft)
  
     Blocks:
