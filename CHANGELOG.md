@@ -22,6 +22,8 @@ Mods I'm keeping an eye on for future compat
 • Added translation for Honey Slime mob name.
 
 • Portuguese translations added by Mikeliro! Thank you!
+
+• Added Simplified Chinese translation from Samekichi! Thank you!
     
    (V.2.0.4 Changes) (1.16.2 Minecraft)
  
