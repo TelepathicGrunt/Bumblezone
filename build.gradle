@@ -30,10 +30,6 @@ repositories {
 		name "Siphalor's Maven"
 		url "https://maven.siphalor.de"
 	}
-	maven {
-		name "cotton-config"
-		url 'http://server.bbkr.space:8081/artifactory/libs-release'
-	}
 }
 
 dependencies {
