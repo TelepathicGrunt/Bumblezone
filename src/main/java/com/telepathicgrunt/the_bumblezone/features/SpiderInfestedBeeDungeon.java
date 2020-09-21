@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.mixin.TemplateInvoker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ProductiveBeesRedirection;
+import cy.jdkdigital.productivebees.tileentity.CombBlockTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -102,8 +103,9 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
                         }
 
                         //converts the blockstate template to the correct block and gets if the block can replace air or not
-                        Pair<BlockState, Boolean> pair = blockConversion(world, blockpos, blockstate.getBlock(), world.getRandom());
-                        blockstate = pair.getFirst();
+                        Pair<Pair<BlockState, String>, Boolean> pair = blockConversion(world, blockpos, blockstate.getBlock(), world.getRandom());
+                        blockstate = pair.getFirst().getFirst();
+                        String type = pair.getFirst().getSecond();
 
                         if ((pair.getSecond() || world.getBlockState(blockpos).isSolid()) && world.setBlockState(blockpos, blockstate, flags)) {
                             if (blockstate.getBlock() == Blocks.SPAWNER) {
@@ -112,6 +114,13 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
                                 if (blockentity instanceof MobSpawnerTileEntity) {
                                     ((MobSpawnerTileEntity) blockentity).getSpawnerBaseLogic()
                                             .setEntityType(world.getRandom().nextFloat() < 0.2f ? EntityType.CAVE_SPIDER : EntityType.SPIDER);
+                                }
+                            }
+
+                            if(type != null){
+                                TileEntity tileentity = world.getTileEntity(blockpos);
+                                if(tileentity instanceof CombBlockTileEntity){
+                                    ((CombBlockTileEntity) tileentity).setType(type);
                                 }
                             }
 
@@ -204,7 +213,7 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
      *
      * @return - a pair of the blockstate to use and whether this block can replace air
      */
-    protected static Pair<BlockState, Boolean> blockConversion(IServerWorld world, BlockPos pos, Block block, Random random) {
+    protected static Pair<Pair<BlockState, String>, Boolean> blockConversion(IServerWorld world, BlockPos pos, Block block, Random random) {
         //////////////////////////////////////////////
         //Shell
 
@@ -215,99 +224,99 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
                 random.nextFloat() < Bumblezone.BzModCompatibilityConfig.PBOreHoneycombSpawnRateSpiderBeeDungeon.get())
             {
                 return new Pair<>(ProductiveBeesRedirection.PBGetRandomHoneycomb(random,
-                        Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRaritySpiderBeeDungeon.get()).getDefaultState(), false);
+                        Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRaritySpiderBeeDungeon.get()), false);
             }
             else if(ModChecker.productiveBeesPresent &&
                     Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get() &&
                     random.nextFloat() < 0.5f)
             {
-                return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), false);
+                return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random), false);
             }
 
             if (random.nextFloat() < 0.15f) {
-                return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), false);
+                return new Pair<>(new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), null), false);
             } else {
-                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), false);
+                return new Pair<>(new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), null), false);
             }
         }
 
         //south wall
         else if (block == Blocks.ORANGE_TERRACOTTA) {
             if (random.nextFloat() < 0.6f) {
-                return new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
-                        .with(HoneycombBrood.FACING, Direction.SOUTH),
+                return new Pair<>(new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
+                        .with(HoneycombBrood.FACING, Direction.SOUTH), null),
                         false);
             } else if (random.nextDouble() < Bumblezone.BzDungeonsConfig.spawnerRateSpiderBeeDungeon.get()) {
-                return new Pair<>(Blocks.SPAWNER.getDefaultState(), false);
+                return new Pair<>(new Pair<>(Blocks.SPAWNER.getDefaultState(), null), false);
             } else if(ModChecker.productiveBeesPresent &&
                     Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get() &&
                     random.nextFloat() < 0.5f) {
-                return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), false);
+                return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random), false);
             } else {
-                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), false);
+                return new Pair<>(new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), null), false);
             }
         }
 
         //west wall
         else if (block == Blocks.YELLOW_TERRACOTTA) {
             if (random.nextFloat() < 0.6f) {
-                return new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
-                        .with(HoneycombBrood.FACING, Direction.WEST),
+                return new Pair<>(new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
+                        .with(HoneycombBrood.FACING, Direction.WEST), null),
                         false);
             } else if (random.nextDouble() < Bumblezone.BzDungeonsConfig.spawnerRateSpiderBeeDungeon.get()) {
-                return new Pair<>(Blocks.SPAWNER.getDefaultState(), false);
+                return new Pair<>(new Pair<>(Blocks.SPAWNER.getDefaultState(), null), false);
             } else if(ModChecker.productiveBeesPresent &&
                     Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get() &&
                     random.nextFloat() < 0.5f) {
-                return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), false);
+                return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random), false);
             } else {
-                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), false);
+                return new Pair<>(new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), null), false);
             }
         }
 
         //north wall
         else if (block == Blocks.LIME_TERRACOTTA) {
             if (random.nextFloat() < 0.6f) {
-                return new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
-                        .with(HoneycombBrood.FACING, Direction.NORTH),
+                return new Pair<>(new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
+                        .with(HoneycombBrood.FACING, Direction.NORTH), null),
                         false);
             } else if (random.nextDouble() < Bumblezone.BzDungeonsConfig.spawnerRateSpiderBeeDungeon.get()) {
-                return new Pair<>(Blocks.SPAWNER.getDefaultState(), false);
+                return new Pair<>(new Pair<>(Blocks.SPAWNER.getDefaultState(), null), false);
             } else if(ModChecker.productiveBeesPresent &&
                     Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get() &&
                     random.nextFloat() < 0.5f) {
-                return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), false);
+                return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random), false);
             } else {
-                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), false);
+                return new Pair<>(new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), null), false);
             }
         }
 
         //east wall
         else if (block == Blocks.BLUE_TERRACOTTA) {
             if (random.nextFloat() < 0.6f) {
-                return new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
-                        .with(HoneycombBrood.FACING, Direction.EAST),
+                return new Pair<>(new Pair<>(BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
+                        .with(HoneycombBrood.FACING, Direction.EAST), null),
                         false);
             } else if (random.nextDouble() < Bumblezone.BzDungeonsConfig.spawnerRateSpiderBeeDungeon.get()) {
-                return new Pair<>(Blocks.SPAWNER.getDefaultState(), false);
+                return new Pair<>(new Pair<>(Blocks.SPAWNER.getDefaultState(), null), false);
             } else if(ModChecker.productiveBeesPresent &&
                     Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get() &&
                     random.nextFloat() < 0.5f) {
-                return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random).getDefaultState(), false);
+                return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random), false);
             } else {
-                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), false);
+                return new Pair<>(new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), null), false);
             }
         }
 
         //sugar water stream
         else if (block == BzBlocks.SUGAR_WATER_BLOCK) {
-            return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
+            return new Pair<>(new Pair<>(Blocks.CAVE_AIR.getDefaultState(), null), false);
         }
 
         //air
         else if (block.getDefaultState().getMaterial() == Material.AIR) {
             if (random.nextFloat() < 0.07f)
-                return new Pair<>(Blocks.COBWEB.getDefaultState(), false);
+                return new Pair<>(new Pair<>(Blocks.COBWEB.getDefaultState(), null), false);
         }
 
         //Shell
@@ -325,46 +334,46 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
                     random.nextFloat() < Bumblezone.BzModCompatibilityConfig.PBOreHoneycombSpawnRateSpiderBeeDungeon.get())
             {
                 return new Pair<>(ProductiveBeesRedirection.PBGetRandomHoneycomb(random,
-                        Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRaritySpiderBeeDungeon.get()).getDefaultState(), replaceAir);
+                        Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRaritySpiderBeeDungeon.get()), replaceAir);
             }
 
             if (random.nextFloat() < 0.15f) {
-                return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), replaceAir);
+                return new Pair<>(new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), null), replaceAir);
             } else {
-                return new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), replaceAir);
+                return new Pair<>(new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), null), replaceAir);
             }
         }
 
         //outer ring
         else if (block == Blocks.GRAY_TERRACOTTA) {
             if (random.nextFloat() < 0.07f) {
-                return new Pair<>(Blocks.COBWEB.getDefaultState(), true);
+                return new Pair<>(new Pair<>(Blocks.COBWEB.getDefaultState(), null), true);
             } else if (random.nextFloat() < 0.4f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-                return new Pair<>(HONEY_CRYSTAL, true);
+                return new Pair<>(new Pair<>(HONEY_CRYSTAL, null), true);
             } else {
-                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
+                return new Pair<>(new Pair<>(Blocks.CAVE_AIR.getDefaultState(), null), false);
             }
         }
 
         //inner ring
         else if (block == Blocks.CYAN_TERRACOTTA) {
             if (random.nextFloat() < 0.07f) {
-                return new Pair<>(Blocks.COBWEB.getDefaultState(), true);
+                return new Pair<>(new Pair<>(Blocks.COBWEB.getDefaultState(), null), true);
             } else if (random.nextFloat() < 0.3f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-                return new Pair<>(HONEY_CRYSTAL, true);
+                return new Pair<>(new Pair<>(HONEY_CRYSTAL, null), true);
             } else {
-                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
+                return new Pair<>(new Pair<>(Blocks.CAVE_AIR.getDefaultState(), null), false);
             }
         }
 
         //center
         else if (block == Blocks.BLACK_TERRACOTTA) {
             if (random.nextFloat() < 0.07f) {
-                return new Pair<>(Blocks.COBWEB.getDefaultState(), true);
+                return new Pair<>(new Pair<>(Blocks.COBWEB.getDefaultState(), null), true);
             } else if (random.nextFloat() < 0.4f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-                return new Pair<>(HONEY_CRYSTAL, true);
+                return new Pair<>(new Pair<>(HONEY_CRYSTAL, null), true);
             } else {
-                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
+                return new Pair<>(new Pair<>(Blocks.CAVE_AIR.getDefaultState(), null), false);
             }
         }
 
@@ -372,7 +381,7 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
         //////////////////////////////////////////////
         //Misc/air
 
-        return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
+        return new Pair<>(new Pair<>(Blocks.CAVE_AIR.getDefaultState(), null), false);
     }
 
 }

@@ -13,6 +13,7 @@ public class BzFeatures {
     public static Feature<NoFeatureConfig> BEE_DUNGEON = new BeeDungeon(NoFeatureConfig.CODEC);
     public static Feature<NoFeatureConfig> SPIDER_INFESTED_BEE_DUNGEON = new SpiderInfestedBeeDungeon(NoFeatureConfig.CODEC);
     public static Feature<NoFeatureConfig> HONEY_CRYSTAL_FEATURE = new HoneyCrystalFeature(NoFeatureConfig.CODEC);
+    public static Feature<BzBEOreFeatureConfig> BZ_BE_ORE_FEATURE = new BzBEOreFeature(BzBEOreFeatureConfig.CODEC);
 
     public static void registerFeatures() {
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "honeycomb_holes"), HONEYCOMB_HOLE);
@@ -21,5 +22,6 @@ public class BzFeatures {
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "bee_dungeon"), BEE_DUNGEON);
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "spider_infested_bee_dungeon"), SPIDER_INFESTED_BEE_DUNGEON);
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "honey_crystal_feature"), HONEY_CRYSTAL_FEATURE);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "bz_be_ore_feature"), BZ_BE_ORE_FEATURE);
     }
 }

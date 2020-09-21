@@ -1,7 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.modCompat;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 
@@ -24,7 +26,7 @@ public class ProductiveBeesRedirection {
 		return ProductiveBeesCompat.PBIsAdvancedBeehiveAbstractBlock(block);
 	}
 
-	public static Block PBGetRottenedHoneycomb(Random random) {
+	public static Pair<BlockState, String> PBGetRottenedHoneycomb(Random random) {
 		return ProductiveBeesCompat.PBGetRottenedHoneycomb(random);
 	}
 
@@ -32,7 +34,7 @@ public class ProductiveBeesRedirection {
 		ProductiveBeesCompat.PBMobSpawnEvent(event);
 	}
 
-	public static Block PBGetRandomHoneycomb(Random random, int lowerBoundBias) {
+	public static Pair<BlockState, String> PBGetRandomHoneycomb(Random random, int lowerBoundBias) {
 		return ProductiveBeesCompat.PBGetRandomHoneycomb(random, lowerBoundBias);
 	}
 }

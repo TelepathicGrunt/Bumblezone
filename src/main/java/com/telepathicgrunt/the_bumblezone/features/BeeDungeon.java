@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.mixin.TemplateInvoker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ProductiveBeesRedirection;
+import cy.jdkdigital.productivebees.tileentity.CombBlockTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -18,6 +19,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.inventory.IClearable;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.MobSpawnerTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
@@ -103,10 +105,19 @@ public class BeeDungeon extends Feature<NoFeatureConfig>{
                         }
 
                         //converts the blockstate template to the correct block and gets if the block can replace air or not
-                        Pair<BlockState, Boolean> pair = blockConversion(world, blockpos, blockstate.getBlock(), world.getRandom());
-                        blockstate = pair.getFirst();
+                        Pair<Pair<BlockState, String>, Boolean> pair = blockConversion(world, blockpos, blockstate.getBlock(), world.getRandom());
+                        blockstate = pair.getFirst().getFirst();
+                        String type = pair.getFirst().getSecond();
 
                         if ((pair.getSecond() || world.getBlockState(blockpos).isSolid()) && world.setBlockState(blockpos, blockstate, flags)) {
+
+                            if(type != null){
+                                TileEntity tileentity = world.getTileEntity(blockpos);
+                                if(tileentity instanceof CombBlockTileEntity){
+                                    ((CombBlockTileEntity) tileentity).setType(type);
+                                }
+                            }
+
                             x = Math.min(x, blockpos.getX());
                             y = Math.min(y, blockpos.getY());
                             z = Math.min(z, blockpos.getZ());
@@ -226,7 +237,7 @@ public class BeeDungeon extends Feature<NoFeatureConfig>{
      *
      * @return - a pair of the blockstate to use and whether this block can replace air
      */
-    private static Pair<BlockState, Boolean> blockConversion(IServerWorld world, BlockPos pos, Block block, Random random) {
+    private static Pair<Pair<BlockState, String>, Boolean> blockConversion(IServerWorld world, BlockPos pos, Block block, Random random) {
         //////////////////////////////////////////////
         //Shell
 
@@ -235,79 +246,80 @@ public class BeeDungeon extends Feature<NoFeatureConfig>{
             if(ModChecker.productiveBeesPresent &&
                 random.nextFloat() < Bumblezone.BzModCompatibilityConfig.PBOreHoneycombSpawnRateBeeDungeon.get())
             {
+
                 return new Pair<>(ProductiveBeesRedirection.PBGetRandomHoneycomb(random,
-                        Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRarityBeeDungeon.get()).getDefaultState(), false);
+                        Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRarityBeeDungeon.get()), false);
             }
 
             if (random.nextFloat() < 0.4f) {
-                return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), false);
+                return new Pair<>(new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), null), false);
             } else {
-                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), false);
+                return new Pair<>(new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), null), false);
             }
         }
 
         //south wall
         else if (block == Blocks.ORANGE_TERRACOTTA) {
             if (random.nextFloat() < 0.6f) {
-                return new Pair<>(BzBlocks.HONEYCOMB_BROOD.getDefaultState()
+                return new Pair<>(new Pair<>(BzBlocks.HONEYCOMB_BROOD.getDefaultState()
                         .with(HoneycombBrood.STAGE, random.nextInt(3))
-                        .with(HoneycombBrood.FACING, Direction.SOUTH),
+                        .with(HoneycombBrood.FACING, Direction.SOUTH), null),
                         false);
             } else if (random.nextFloat() < 0.2f) {
-                return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), false);
+                return new Pair<>(new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), null), false);
             } else {
-                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), false);
+                return new Pair<>(new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), null), false);
             }
         }
 
         //west wall
         else if (block == Blocks.YELLOW_TERRACOTTA) {
             if (random.nextFloat() < 0.6f) {
-                return new Pair<>(BzBlocks.HONEYCOMB_BROOD.getDefaultState()
+                return new Pair<>(new Pair<>(BzBlocks.HONEYCOMB_BROOD.getDefaultState()
                         .with(HoneycombBrood.STAGE, random.nextInt(3))
-                        .with(HoneycombBrood.FACING, Direction.WEST),
+                        .with(HoneycombBrood.FACING, Direction.WEST), null),
                         false);
             } else if (random.nextFloat() < 0.2f) {
-                return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), false);
+                return new Pair<>(new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), null), false);
             } else {
-                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), false);
+                return new Pair<>(new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), null), false);
             }
         }
 
         //north wall
         else if (block == Blocks.LIME_TERRACOTTA) {
             if (random.nextFloat() < 0.6f) {
-                return new Pair<>(BzBlocks.HONEYCOMB_BROOD.getDefaultState()
+                return new Pair<>(new Pair<>(BzBlocks.HONEYCOMB_BROOD.getDefaultState()
                         .with(HoneycombBrood.STAGE, random.nextInt(3))
-                        .with(HoneycombBrood.FACING, Direction.NORTH),
+                        .with(HoneycombBrood.FACING, Direction.NORTH), null),
                         false);
             } else if (random.nextFloat() < 0.2f) {
-                return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), false);
+                return new Pair<>(new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), null), false);
             } else {
-                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), false);
+                return new Pair<>(new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), null), false);
             }
         }
 
         //east wall
         else if (block == Blocks.BLUE_TERRACOTTA) {
             if (random.nextFloat() < 0.6f) {
-                return new Pair<>(BzBlocks.HONEYCOMB_BROOD.getDefaultState()
+                return new Pair<>(new Pair<>(BzBlocks.HONEYCOMB_BROOD.getDefaultState()
                         .with(HoneycombBrood.STAGE, random.nextInt(3))
-                        .with(HoneycombBrood.FACING, Direction.EAST),
+                        .with(HoneycombBrood.FACING, Direction.EAST), null),
                         false);
             } else if (random.nextFloat() < 0.2f) {
-                return new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), false);
+                return new Pair<>(new Pair<>(Blocks.HONEY_BLOCK.getDefaultState(), null), false);
             } else {
-                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), false);
+                return new Pair<>(new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), null), false);
             }
         }
 
         //sugar water stream
         else if (block == BzBlocks.SUGAR_WATER_BLOCK) {
             if (random.nextFloat() < 0.1f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-                return new Pair<>(HONEY_CRYSTAL.with(HoneyCrystal.WATERLOGGED, true), false);
+                return new Pair<>(new Pair<>(HONEY_CRYSTAL.with(HoneyCrystal.WATERLOGGED, true), null), false);
             } else {
-                return new Pair<>(block.getDefaultState(), false);
+                return new Pair<>(new Pair<>(block.getDefaultState(), null), false);
             }
         }
 
@@ -326,25 +338,25 @@ public class BeeDungeon extends Feature<NoFeatureConfig>{
                     random.nextFloat() < Bumblezone.BzModCompatibilityConfig.PBOreHoneycombSpawnRateBeeDungeon.get())
             {
                 return new Pair<>(ProductiveBeesRedirection.PBGetRandomHoneycomb(random,
-                        Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRarityBeeDungeon.get()).getDefaultState(), replaceAir);
+                        Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRarityBeeDungeon.get()), replaceAir);
             }
 
             if (random.nextFloat() < 0.4f) {
-                return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), replaceAir);
+                return new Pair<>(new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), null), replaceAir);
             } else {
-                return new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), replaceAir);
+                return new Pair<>(new Pair<>(BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), null), replaceAir);
             }
         }
 
         //outer ring
         else if (block == Blocks.GRAY_TERRACOTTA) {
             if (random.nextFloat() < 0.4f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-                return new Pair<>(HONEY_CRYSTAL, true);
+                return new Pair<>(new Pair<>(HONEY_CRYSTAL, null), true);
             } else {
                 if (random.nextFloat() < 0.2f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-                    return new Pair<>(HONEY_CRYSTAL, true);
+                    return new Pair<>(new Pair<>(HONEY_CRYSTAL, null), true);
                 } else {
-                    return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
+                    return new Pair<>(new Pair<>(Blocks.CAVE_AIR.getDefaultState(), null), false);
                 }
             }
         }
@@ -352,18 +364,18 @@ public class BeeDungeon extends Feature<NoFeatureConfig>{
         //inner ring
         else if (block == Blocks.CYAN_TERRACOTTA) {
             if (random.nextFloat() < 0.35f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-                return new Pair<>(HONEY_CRYSTAL, true);
+                return new Pair<>(new Pair<>(HONEY_CRYSTAL, null), true);
             } else {
-                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
+                return new Pair<>(new Pair<>(Blocks.CAVE_AIR.getDefaultState(), null), false);
             }
         }
 
         //center
         else if (block == Blocks.BLACK_TERRACOTTA) {
             if (random.nextFloat() < 0.6f && HONEY_CRYSTAL.isValidPosition(world, pos)) {
-                return new Pair<>(HONEY_CRYSTAL, true);
+                return new Pair<>(new Pair<>(HONEY_CRYSTAL, null), true);
             } else {
-                return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
+                return new Pair<>(new Pair<>(Blocks.CAVE_AIR.getDefaultState(), null), false);
             }
         }
 
@@ -371,7 +383,7 @@ public class BeeDungeon extends Feature<NoFeatureConfig>{
         //////////////////////////////////////////////
         //Misc/air
 
-        return new Pair<>(Blocks.CAVE_AIR.getDefaultState(), false);
+        return new Pair<>(new Pair<>(Blocks.CAVE_AIR.getDefaultState(), null), false);
     }
 
 }
