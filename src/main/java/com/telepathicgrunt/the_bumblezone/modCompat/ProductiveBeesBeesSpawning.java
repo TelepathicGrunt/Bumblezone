@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.modCompat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
