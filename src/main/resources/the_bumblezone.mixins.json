@@ -7,7 +7,6 @@
     "BeeEntityInvoker",
     "DispenserBlockInvoker",
     "EnderpearlImpactMixin",
-    "GenerationSettingsAccessor",
     "GlassBottleUseMixin",
     "HoneyDrinkMixin",
     "HoneyShieldCooldownMixin",

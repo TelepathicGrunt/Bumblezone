@@ -2,8 +2,8 @@ package com.telepathicgrunt.the_bumblezone.modCompat;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.BlockState;
-import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 
 import java.util.Random;
 
@@ -16,8 +16,8 @@ import java.util.Random;
  * dependent on the mod.
  */
 public class ProductiveBeesRedirection {
-	public static void PBAddHoneycombs(Biome biome){
-		ProductiveBeesCompat.PBAddHoneycombs(biome);
+	public static void PBAddHoneycombs(BiomeLoadingEvent event){
+		ProductiveBeesCompat.PBAddHoneycombs(event);
 	}
 
 	public static boolean PBIsAdvancedBeehiveAbstractBlock(BlockState block) {

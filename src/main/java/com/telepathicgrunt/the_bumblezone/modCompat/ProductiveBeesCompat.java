@@ -20,13 +20,13 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IServerWorld;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.template.RuleTest;
 import net.minecraft.world.gen.feature.template.TagMatchRuleTest;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -45,7 +45,7 @@ public class ProductiveBeesCompat {
 		ModChecker.productiveBeesPresent = true;
 	}
 	
-	public static void PBAddHoneycombs(Biome biome) {
+	public static void PBAddHoneycombs(BiomeLoadingEvent event) {
 		PB_DATA = new HashMap<>(BeeReloadListener.INSTANCE.getData());
 		PRODUCTIVE_BEES_LIST = PB_DATA.keySet().stream().map(ResourceLocation::toString).collect(Collectors.toList());
 		VALID_COMB_TYPES = new HashSet<>(PB_DATA.keySet());
@@ -65,43 +65,43 @@ public class ProductiveBeesCompat {
 		}
 
 		// Basic combs that that are mostly based on vanilla ores.
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":gold", 34, 3, 6, 230, true, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":iron", 26, 2, 30, 210, true, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":redstone", 22, 1, 30, 210, true, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":lapis", 22, 1, 6, 30, true, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":emerald", 5, 1, 6, 244, true, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":ender", 5, 1, 200, 50, true, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":diamond", 7, 1, 6, 244, true, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":gold", 34, 3, 6, 230, true, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":iron", 26, 2, 30, 210, true, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":redstone", 22, 1, 30, 210, true, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":lapis", 22, 1, 6, 30, true, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":emerald", 5, 1, 6, 244, true, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":ender", 5, 1, 200, 50, true, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":diamond", 7, 1, 6, 244, true, true);
 
 		// Other combs unique to Productive Bees
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":blazing", 34, 1, 40, 200, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":glowing", 34, 1, 40, 200, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":bone", 22, 1, 6, 25, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":fossilised", 18, 1, 4, 20, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":draconic", 5, 1, 200, 50, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":draconic", 5, 1, 2, 10, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":powdery", 7, 1, 60, 244, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":quartz", 7, 1, 60, 244, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":blazing", 34, 1, 40, 200, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":glowing", 34, 1, 40, 200, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":bone", 22, 1, 6, 25, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":fossilised", 18, 1, 4, 20, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":draconic", 5, 1, 200, 50, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":draconic", 5, 1, 2, 10, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":powdery", 7, 1, 60, 244, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":quartz", 7, 1, 60, 244, false, true);
 		
 		//0.1.13 productive bees
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":magmatic", 34, 1, 40, 200, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":amber", 34, 1, 40, 200, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":electrum", 30, 1, 40, 200, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":invar", 10, 1, 2, 244, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":leaden", 10, 1, 1, 30, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":nickel", 10, 1, 1, 30, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":osmium", 9, 1, 1, 30, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":platinum", 5, 1, 1, 30, true, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":silver", 9, 1, 1, 30, true, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":steel", 9, 1, 1, 200, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":tin", 9, 1, 1, 200, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":titanium", 6, 1, 1, 30, true, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":tungsten", 9, 1, 1, 200, false, true);
-		addCombToWorldgen(biome, PRODUCTIVE_BEES_NAMESPACE + ":zinc", 9, 1, 1, 200, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":magmatic", 34, 1, 40, 200, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":amber", 34, 1, 40, 200, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":electrum", 30, 1, 40, 200, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":invar", 10, 1, 2, 244, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":leaden", 10, 1, 1, 30, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":nickel", 10, 1, 1, 30, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":osmium", 9, 1, 1, 30, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":platinum", 5, 1, 1, 30, true, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":silver", 9, 1, 1, 30, true, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":steel", 9, 1, 1, 200, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":tin", 9, 1, 1, 200, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":titanium", 6, 1, 1, 30, true, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":tungsten", 9, 1, 1, 200, false, true);
+		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":zinc", 9, 1, 1, 200, false, true);
 
 		// Remaining combs gets a generic spawning rate
 		for(ResourceLocation remainingCombType : VALID_COMB_TYPES){
-			addCombToWorldgen(biome, remainingCombType.toString(), 18, 1, 1, 235, false, false);
+			addCombToWorldgen(event, remainingCombType.toString(), 18, 1, 1, 235, false, false);
 		}
 	}
 
@@ -118,7 +118,7 @@ public class ProductiveBeesCompat {
 	/**
 	 * Creates a configured feature of the combtype and add it to the biome and/or Bee Dungeon comb list
 	 */
-	private static void addCombToWorldgen(Biome biome, String combBlockType, int veinSize, int count, int bottomOffset, int range, boolean addToHoneycombList, boolean removeFromSet) {
+	private static void addCombToWorldgen(BiomeLoadingEvent event, String combBlockType, int veinSize, int count, int bottomOffset, int range, boolean addToHoneycombList, boolean removeFromSet) {
 		if(removeFromSet){
 			if(!PB_DATA.containsKey(new ResourceLocation(combBlockType)))
 				return;
@@ -126,7 +126,7 @@ public class ProductiveBeesCompat {
 			VALID_COMB_TYPES.remove(new ResourceLocation(combBlockType));
 		}
 
-		biome.getGenerationSettings().getFeatures().get(GenerationStage.Decoration.UNDERGROUND_ORES.ordinal())
+		event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES)
 			.add(() -> BzFeatures.BZ_BE_ORE_FEATURE.configure(new BzBEOreFeatureConfig(HONEYCOMB_BUMBLEZONE, ModBlocks.CONFIGURABLE_COMB.get().getDefaultState(), veinSize, combBlockType))
 				.decorate(Placement.RANGE.configure(new TopSolidRangeConfig(bottomOffset, 0, range)))
 					.spreadHorizontally()

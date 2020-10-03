@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.modCompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraftforge.fml.ModList;
-import noobanidus.mods.carrierbees.entities.CarrierBeeEntity;
 import org.apache.logging.log4j.Level;
 
 import java.util.concurrent.Callable;
