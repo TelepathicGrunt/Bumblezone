@@ -88,7 +88,7 @@ public class BzPlayerPlacement {
 
     private static Vector3d teleportByOutOfBounds(PlayerEntity playerEntity, ServerWorld destination, boolean checkingUpward) {
         //converts the position to get the corresponding position in non-bumblezone dimension
-        double coordinateScale = destination.getDimension().getCoordinateScale();
+        double coordinateScale = playerEntity.getEntityWorld().getDimension().getCoordinateScale() / destination.getDimension().getCoordinateScale();
         BlockPos blockpos;
         BlockPos validBlockPos = null;
 
@@ -136,11 +136,14 @@ public class BzPlayerPlacement {
 
 
         //converts the position to get the corresponding position in bumblezone dimension
-        double coordinateScale = originalWorld.getDimension().getCoordinateScale();
+        double coordinateScale = 1;
+        if (Bumblezone.BzDimensionConfig.teleportationMode.get() != 2) {
+            coordinateScale = originalWorld.getDimension().getCoordinateScale() / bumblezoneWorld.getDimension().getCoordinateScale();
+        }
         BlockPos blockpos = new BlockPos(
-                playerEntity.getPositionVec().getX() * coordinateScale,
+                Doubles.constrainToRange(playerEntity.getPositionVec().getX() * coordinateScale, -29999936D, 29999936D),
                 playerEntity.getPositionVec().getY(),
-                playerEntity.getPositionVec().getZ() * coordinateScale);
+                Doubles.constrainToRange(playerEntity.getPositionVec().getZ() * coordinateScale, -29999936D, 29999936D));
 
 
         //gets valid space in other world

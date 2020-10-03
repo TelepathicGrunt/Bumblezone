@@ -21,7 +21,9 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.Dimension;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
@@ -42,9 +44,6 @@ public class PlayerTeleportation {
         // Fires just before the teleportation to new dimension begins
         @SubscribeEvent
         public static void entityTravelToDimensionEvent(EntityTravelToDimensionEvent event) {
-            if (event.getEntity() instanceof ServerPlayerEntity) {
-                PlayerTeleportation.playerLeavingBz(event.getDimension().getValue(), ((ServerPlayerEntity)event.getEntity()));
-            }
         }
     }
 
@@ -79,7 +78,11 @@ public class PlayerTeleportation {
             checkAndCorrectStoredDimension(playerEntity);
             PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
             RegistryKey<World> world_key = RegistryKey.of(Registry.DIMENSION, cap.getNonBZDim());
-            BzPlayerPlacement.exitingBumblezone(playerEntity, playerEntity.getEntityWorld().getServer().getWorld(world_key));
+            ServerWorld destination = playerEntity.getEntityWorld().getServer().getWorld(world_key);
+            if(destination == null){
+                destination = playerEntity.getEntityWorld().getServer().getWorld(World.OVERWORLD);
+            }
+            BzPlayerPlacement.exitingBumblezone(playerEntity, destination);
             reAddStatusEffect(playerEntity);
         }
     }
@@ -223,14 +226,5 @@ public class PlayerTeleportation {
         }
 
         return false;
-    }
-
-    // Player exiting Bumblezone dimension
-    public static void playerLeavingBz(ResourceLocation dimensionLeaving, ServerPlayerEntity serverPlayerEntity){
-        //Updates the non-BZ dimension that the player is leaving
-        if (!dimensionLeaving.equals(Bumblezone.MOD_DIMENSION_ID)) {
-            PlayerPositionAndDimension cap = (PlayerPositionAndDimension) serverPlayerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-            cap.setNonBZDim(dimensionLeaving);
-        }
     }
 }

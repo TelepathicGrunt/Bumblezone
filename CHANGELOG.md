@@ -18,6 +18,12 @@ Mods I'm keeping an eye on for future compat
    
    (V.2.1.0 Changes) (1.16.3 Minecraft)
  
+    Teleportation:
+
+• Fixed crash when exiting The Bumblezone at times.
+
+• Fixed coordinate scaling not working properly when entering/exiting The Bumblezone.
+
     Mod Compatibility:
 
 • Updated Productive Bees compat to use their configurable bees and honeycombs.

@@ -7,7 +7,7 @@ import net.minecraft.util.math.vector.Vector3d;
 
 public class PlayerPositionAndDimension implements IPlayerPosAndDim
 {
-	private ResourceLocation nonBZDimension = null;
+	private ResourceLocation nonBZDimension = new ResourceLocation("minecraft", "overworld");
 	private boolean isTeleporting = false;
 	private Vector3d nonBZPosition = null;
 	private float nonBZPitch = 0;
@@ -123,7 +123,7 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 
 		boolean isteleporting = nbtTag.getBoolean("isTeleporting");
 
-		this.setNonBZDim(storedDimension);
+		this.setNonBZDim(storedDimension.getPath().isEmpty() ? new ResourceLocation("minecraft", "overworld") : storedDimension);
 		this.setNonBZPitch(storedNonBZPitch);
 		this.setNonBZYaw(storedNonBZYaw);
 		this.setNonBZPos(storedPositionNonBZ);
