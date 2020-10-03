@@ -1,4 +1,4 @@
-# Made for Minecraft v.1.15.2
+# Made for Minecraft v.1.16.3
 
 ## Created by TelepathicGrunt
 
@@ -16,6 +16,21 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
    
+   (V.2.1.0 Changes) (1.16.3 Minecraft)
+ 
+    Mod Compatibility:
+
+• Updated Productive Bees compat to use their configurable bees and honeycombs.
+  Support for their non-configurable bees and blocks was removed as they are 
+  moving away from using them.
+  
+• Added mod support for Carrier Bees's bees!
+  Their bees will now spawn in The Bumblezone!
+  
+• Potion of Bees is working as intended. 
+  (They just ported so this was just me checking if the compat still works)
+  
+
    (V.2.0.5 Changes) (1.16.2 Minecraft)
  
     Lang:

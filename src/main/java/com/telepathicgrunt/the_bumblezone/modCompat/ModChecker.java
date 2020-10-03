@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modCompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraftforge.fml.ModList;
+import noobanidus.mods.carrierbees.entities.CarrierBeeEntity;
 import org.apache.logging.log4j.Level;
 
 import java.util.concurrent.Callable;
@@ -9,7 +10,8 @@ import java.util.concurrent.Callable;
 public class ModChecker
 {
     public static boolean potionOfBeesPresent = false;
-    public static boolean productiveBeesPresent = false;
+	public static boolean productiveBeesPresent = false;
+	public static boolean carrierBeesPresent = false;
 
 
     public static void setupModCompat() {
@@ -25,7 +27,17 @@ public class ModChecker
 		    printErrorToLogs(currentModID);
 		    e.printStackTrace();
 		}
-	
+
+		try {
+			currentModID = "carrierbees";
+			if (ModList.get().isLoaded(currentModID)) {
+				runSetupForMod(() -> CarrierBeesCompat::setupProductiveBees);
+			}
+		}
+		catch (Exception e) {
+			printErrorToLogs(currentModID);
+			e.printStackTrace();
+		}
 	
 		try {
 		    currentModID = "productivebees";

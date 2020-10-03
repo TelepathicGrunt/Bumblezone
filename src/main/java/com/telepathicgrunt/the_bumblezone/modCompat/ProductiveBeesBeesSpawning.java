@@ -26,10 +26,14 @@ public class ProductiveBeesBeesSpawning
 
 				if(Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesBeesMob.get() &&
 					entity.world.getServer().getRegistryManager().getDimensionTypes().getKey(entity.world.getDimension()).equals(Bumblezone.MOD_DIMENSION_ID) &&
-					entity.world.getRandom().nextInt(15) == 0 &&
-					entity.getType() == EntityType.BEE) 
+					entity.getType() == EntityType.BEE)
 				{
-				    ProductiveBeesRedirection.PBMobSpawnEvent(event);
+					if(entity.world.getRandom().nextInt(15) == 0){
+						ProductiveBeesRedirection.PBMobSpawnEvent(event);
+					}
+					else if(entity.world.getRandom().nextInt(3) == 0){
+						CarrierBeeRedirection.CBMobSpawnEvent(event);
+					}
 				}
 			}
 		}
