@@ -85,7 +85,7 @@
     "water_ambient": [],
     "misc": []
   },
-  "creature_spawn_probability": 0.25,
+  "creature_spawn_probability": 0.4,
   "spawn_costs": {
     "minecraft:endermen": {
       "energy_budget": 0.02,

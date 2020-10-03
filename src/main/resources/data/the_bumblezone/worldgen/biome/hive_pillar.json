@@ -97,7 +97,7 @@
     "water_ambient": [],
     "misc": []
   },
-  "creature_spawn_probability": 0.35,
+  "creature_spawn_probability": 0.5,
   "spawn_costs": {
     "minecraft:spider": {
       "energy_budget": 0.05,
