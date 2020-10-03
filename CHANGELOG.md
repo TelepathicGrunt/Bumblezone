@@ -8,6 +8,15 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
        | The Bumblezone Fabric changelog |
 
 
+   (V.2.2.6 Changes) (1.16.3 Minecraft)
+   
+    Teleportation:   
+• Fixed coordinate scaling when entering/leaving The Bumblezone dimension.
+
+• Fixed a possible theoretical crash that could occur when messing with 
+  adding/removing dimensions and attempting to teleport to/from The Bumblezone.
+  
+
    (V.2.2.5 Changes) (1.16.3 Minecraft)
    
     Lang:   

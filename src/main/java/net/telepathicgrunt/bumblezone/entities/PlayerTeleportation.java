@@ -8,6 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -55,7 +56,11 @@ public class PlayerTeleportation {
             checkAndCorrectStoredDimension(playerEntity);
             MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
             RegistryKey<World> world_key = RegistryKey.of(Registry.DIMENSION, Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension());
-            BzPlayerPlacement.exitingBumblezone(playerEntity, minecraftServer.getWorld(world_key));
+            ServerWorld serverWorld = minecraftServer.getWorld(world_key);
+            if(serverWorld == null){
+                serverWorld = minecraftServer.getWorld(World.OVERWORLD);
+            }
+            BzPlayerPlacement.exitingBumblezone(playerEntity, serverWorld);
             reAddStatusEffect(playerEntity);
         }
     }

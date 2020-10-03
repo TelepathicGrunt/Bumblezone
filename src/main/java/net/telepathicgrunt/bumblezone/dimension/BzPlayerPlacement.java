@@ -43,7 +43,11 @@ public class BzPlayerPlacement {
                 return;
             }
 
-            destinationPosition = teleportByPearl((PlayerEntity) entity, minecraftServer.getWorld(world_key), bumblezoneWorld);
+            ServerWorld serverWorld = minecraftServer.getWorld(world_key);
+            if(serverWorld == null){
+                serverWorld = minecraftServer.getWorld(World.OVERWORLD);
+            }
+            destinationPosition = teleportByPearl((PlayerEntity) entity, serverWorld, bumblezoneWorld);
             ((ServerPlayerEntity)entity).teleport(
                     bumblezoneWorld,
                     destinationPosition.x,
@@ -78,7 +82,7 @@ public class BzPlayerPlacement {
 
     private static Vec3d teleportByOutOfBounds(PlayerEntity playerEntity, ServerWorld destination, boolean checkingUpward) {
         //converts the position to get the corresponding position in non-bumblezone dimension
-        double coordinateScale = destination.getDimension().getCoordinateScale();
+        double coordinateScale = playerEntity.getEntityWorld().getDimension().getCoordinateScale() / destination.getDimension().getCoordinateScale();
         BlockPos blockpos;
         BlockPos validBlockPos = null;
 
@@ -125,11 +129,14 @@ public class BzPlayerPlacement {
 
 
         //converts the position to get the corresponding position in bumblezone dimension
-        double coordinateScale = originalWorld.getDimension().getCoordinateScale();
+        double coordinateScale = 1;
+        if (Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode != 2) {
+            coordinateScale = originalWorld.getDimension().getCoordinateScale() / bumblezoneWorld.getDimension().getCoordinateScale();
+        }
         BlockPos blockpos = new BlockPos(
-                playerEntity.getPos().getX() * coordinateScale,
+                Doubles.constrainToRange(playerEntity.getPos().getX() * coordinateScale, -29999936D, 29999936D),
                 playerEntity.getPos().getY(),
-                playerEntity.getPos().getZ() * coordinateScale);
+                Doubles.constrainToRange(playerEntity.getPos().getZ() * coordinateScale, -29999936D, 29999936D));
 
 
         //gets valid space in other world
