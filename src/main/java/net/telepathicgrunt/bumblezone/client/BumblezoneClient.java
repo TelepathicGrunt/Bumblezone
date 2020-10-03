@@ -4,6 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.util.Identifier;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
@@ -12,7 +13,6 @@ import net.telepathicgrunt.bumblezone.client.rendering.HoneySlimeRendering;
 import net.telepathicgrunt.bumblezone.dimension.BzSkyProperty;
 import net.telepathicgrunt.bumblezone.entities.BzEntities;
 import net.telepathicgrunt.bumblezone.items.BzItems;
-import net.telepathicgrunt.bumblezone.mixin.ModelPredicateProviderRegistryInvoker;
 import net.telepathicgrunt.bumblezone.mixin.SkyPropertiesAccessor;
 
 @Environment(EnvType.CLIENT)
@@ -31,7 +31,7 @@ public class BumblezoneClient implements ClientModInitializer {
 
 
         // Allows shield to use the blocking json file for offset
-        ModelPredicateProviderRegistryInvoker.register(
+        FabricModelPredicateProviderRegistry.register(
                 BzItems.HONEY_CRYSTAL_SHIELD,
                 new Identifier("blocking"),
                 (itemStack, world, livingEntity) ->

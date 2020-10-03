@@ -23,7 +23,6 @@
     "HoneyShieldPreferredSlotMixin",
     "MobHitMixin",
     "MobSpawnLocationMixin",
-    "ModelPredicateProviderRegistryInvoker",
     "PlayerDamagedMixin",
     "PlayerDamageShieldInvoker",
     "PlayerDimensionChangeMixin",
