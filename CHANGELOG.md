@@ -36,6 +36,10 @@ Mods I'm keeping an eye on for future compat
 • Potion of Bees is working as intended. 
   (They just ported so this was just me checking if the compat still works)
   
+    Dimension:
+
+• Cleaned up the json format for the dimension's json file.
+
 
    (V.2.0.5 Changes) (1.16.2 Minecraft)
  
