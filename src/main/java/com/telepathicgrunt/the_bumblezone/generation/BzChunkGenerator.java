@@ -34,6 +34,7 @@ import net.minecraft.world.gen.feature.structure.AbstractVillagePiece;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureManager;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
+import net.minecraft.world.gen.settings.DimensionStructuresSettings;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -53,9 +54,8 @@ public class BzChunkGenerator extends ChunkGenerator {
     public static final Codec<BzChunkGenerator> CODEC = RecordCodecBuilder.create(
             (instance) -> instance.group(
                     BiomeProvider.CODEC.fieldOf("biome_source").forGetter((surfaceChunkGenerator) -> surfaceChunkGenerator.biomeProvider),
-                    Codec.LONG.fieldOf("seed").stable().forGetter((surfaceChunkGenerator) -> surfaceChunkGenerator.seed),
-                    DimensionSettings.REGISTRY_CODEC.fieldOf("settings").forGetter((surfaceChunkGenerator) -> () -> surfaceChunkGenerator.settings))
-                .apply(instance, instance.stable(BzChunkGenerator::new)));
+                    DimensionStructuresSettings.CODEC.fieldOf("structures").forGetter((ChunkGenerator::getStructuresConfig))
+            ).apply(instance, instance.stable(BzChunkGenerator::new)));
 
     private static final float[] field_16649 = Util.make(new float[13824], (array) -> {
         for(int i = 0; i < 24; ++i) {
@@ -94,27 +94,28 @@ public class BzChunkGenerator extends ChunkGenerator {
     private final OctavesNoiseGenerator interpolationNoise;
     private final INoiseGenerator surfaceDepthNoise;
     private final OctavesNoiseGenerator field_24776;
-    private final long seed;
-    protected final DimensionSettings settings;
+    private final DimensionStructuresSettings dimensionStructuresSettings;
     private final int height;
 
-    public BzChunkGenerator(BiomeProvider biomeSource, long l, Supplier<DimensionSettings> chunkGeneratorType) {
-        this(biomeSource, biomeSource, l, chunkGeneratorType.get());
+    public BzChunkGenerator(BiomeProvider biomeSource, DimensionStructuresSettings dimensionStructuresSettings) {
+        this(biomeSource, biomeSource, dimensionStructuresSettings);
     }
 
-    private BzChunkGenerator(BiomeProvider biomeSource, BiomeProvider biomeSource2, long seedIn, DimensionSettings chunkGeneratorType) {
-        super(biomeSource, biomeSource2, chunkGeneratorType.getStructuresConfig(), seedIn);
-        this.seed = seedIn;
-        this.settings = chunkGeneratorType;
+    private BzChunkGenerator(BiomeProvider biomeSource, BiomeProvider biomeSource2, DimensionStructuresSettings dimensionStructuresSettings) {
+        super(biomeSource, biomeSource2, dimensionStructuresSettings, 0);
+
+        // we need the seed passed into here
+        this.random = new SharedSeedRandom(0);
+
+        this.dimensionStructuresSettings = dimensionStructuresSettings;
         this.height = 256;
         this.verticalNoiseResolution = 8;
         this.horizontalNoiseResolution = 4;
-        this.defaultBlock = chunkGeneratorType.getDefaultBlock();
+        this.defaultBlock = Blocks.STONE.getDefaultState();
         this.defaultFluid = BzBlocks.SUGAR_WATER_BLOCK.getDefaultState();
         this.noiseSizeX = 16 / this.horizontalNoiseResolution;
         this.noiseSizeY = this.height / this.verticalNoiseResolution;
         this.noiseSizeZ = 16 / this.horizontalNoiseResolution;
-        this.random = new SharedSeedRandom(seedIn);
         this.lowerInterpolatedNoise = new OctavesNoiseGenerator(this.random, IntStream.rangeClosed(-15, 0));
         this.upperInterpolatedNoise = new OctavesNoiseGenerator(this.random, IntStream.rangeClosed(-15, 0));
         this.interpolationNoise = new OctavesNoiseGenerator(this.random, IntStream.rangeClosed(-7, 0));
@@ -131,7 +132,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     @Override
     @OnlyIn(Dist.CLIENT)
     public ChunkGenerator withSeed(long seed) {
-        return new BzChunkGenerator(this.biomeProvider.withSeed(seed), seed, () -> this.settings);
+        return new BzChunkGenerator(this.biomeProvider.withSeed(seed), dimensionStructuresSettings);
     }
 
     private double sampleNoise(int x, int y, int z, double horizontalScaleX, double verticalScale, double horizontalScaleZ, double horizontalStretch, double verticalStretch) {

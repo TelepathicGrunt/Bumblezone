@@ -38,12 +38,10 @@ public class BzBiomeProvider extends BiomeProvider {
 
     public static final Codec<BzBiomeProvider> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
-                    Codec.LONG.fieldOf("seed").stable().forGetter((bzBiomeProvider) -> bzBiomeProvider.SEED),
                     RegistryLookupCodec.of(Registry.BIOME_KEY).forGetter((vanillaLayeredBiomeSource) -> vanillaLayeredBiomeSource.BIOME_REGISTRY))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
 
     private final Layer BIOME_SAMPLER;
-    private final long SEED;
     private final Registry<Biome> BIOME_REGISTRY;
     public static Registry<Biome> layersBiomeRegistry;
     private static final List<RegistryKey<Biome>> BIOMES = ImmutableList.of(
@@ -52,10 +50,12 @@ public class BzBiomeProvider extends BiomeProvider {
             RegistryKey.of(Registry.BIOME_KEY, new ResourceLocation(Bumblezone.MODID, "sugar_water_floor")));
 
 
+    public BzBiomeProvider(Registry<Biome> biomeRegistry) {
+        this(0, biomeRegistry);
+    }
     public BzBiomeProvider(long seed, Registry<Biome> biomeRegistry) {
         super(BIOMES.stream().map((registryKey) -> () -> (Biome)biomeRegistry.getOrThrow(registryKey)));
         BzBiomeLayer.setSeed(seed);
-        this.SEED = seed;
         this.BIOME_REGISTRY = biomeRegistry;
         BzBiomeProvider.layersBiomeRegistry = biomeRegistry;
         this.BIOME_SAMPLER = buildWorldProcedure(seed);
