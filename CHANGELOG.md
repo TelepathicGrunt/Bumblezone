@@ -8,6 +8,13 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
        | The Bumblezone Fabric changelog |
 
 
+   (V.2.2.7 Changes) (1.16.3 Minecraft)
+   
+    Dimension:
+
+• Cleaned up the json format for the dimension's json file.
+
+
    (V.2.2.6 Changes) (1.16.3 Minecraft)
    
     Teleportation:   
