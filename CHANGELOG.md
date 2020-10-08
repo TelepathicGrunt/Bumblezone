@@ -11,8 +11,10 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
    (V.2.2.7 Changes) (1.16.3 Minecraft)
    
     Dimension:
-
 • Cleaned up the json format for the dimension's json file.
+
+    Features:
+• Adjusted Honey Crystals to make them spawn more often.
 
 
    (V.2.2.6 Changes) (1.16.3 Minecraft)

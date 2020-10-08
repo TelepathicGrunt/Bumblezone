@@ -2,6 +2,7 @@ package net.telepathicgrunt.bumblezone.features.decorators;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.block.Blocks;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.CountConfig;
 import net.minecraft.world.gen.decorator.Decorator;
@@ -31,19 +32,21 @@ public class Random3DUndergroundChunkPlacement extends Decorator<CountConfig> {
             // Nice quick way to only generate clusters of crystals within a chunk without
             // going over chunk edges.
             int attempts = 0;
-            mutableBlockPos.set(pos.getX(), random.nextInt(240), pos.getZ());
+            for(; attempts < 8; attempts++){
+                mutableBlockPos.set(pos.getX(), 0, pos.getZ())
+                        .move(random.nextInt(4) + 8,
+                                random.nextInt(253) + 1,
+                                random.nextInt(4) + 8);
 
-            for(; attempts < 24; attempts++){
-                if ((context.getBlockState(mutableBlockPos.add(8, 8, 8)).getBlock() != Blocks.CAVE_AIR
-                        && !context.getBlockState(mutableBlockPos.add(8, 8, 8)).getFluidState().isEmpty())) {
-
-                    mutableBlockPos.set(pos.getX(), random.nextInt(253) + 1, pos.getZ());
+                if ((context.getBlockState(mutableBlockPos).getBlock() == Blocks.CAVE_AIR
+                        || context.getBlockState(mutableBlockPos).getFluidState().isIn(FluidTags.WATER))) {
+                    mutableBlockPos.set(pos.getX(), mutableBlockPos.getY(), pos.getZ());
                     break;
                 }
             }
 
             // failed to find a valid spot.
-            if (attempts == 24)
+            if (attempts == 8)
                 continue;
 
             //returns 180 crystal locations in the 16x16x16 area
