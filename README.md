@@ -1,12 +1,28 @@
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.imgur.com/ovPqrFL.png" alt="The banner logo for The Bumblezone with a friendly and hostile bee shown below the mod name." width="999" height="370" /></p>
-<h2 style="text-align: center;"><span style="font-size: 40px; text-align: center; color: #b76a00;"><strong>CURRENTLY FOR 1.16.2 MC</strong></span></h2>
-<p style="text-decoration: underline; font-size: 14px; text-align: center;"><strong><a style="text-decoration: underline; font-size: 14px; text-align: center;" href="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-fabric">[Click here for the 1.16.2 Fabric version of this mod!]</a></strong></p>
+<h2 style="text-align: center;"><span style="font-size: 40px; text-align: center; color: #b76a00;"><strong>CURRENTLY FOR 1.16.3 MC</strong></span></h2>
+<p style="text-decoration: underline; font-size: 14px; text-align: center;"><strong><a style="font-size: 14px; text-align: center;" href="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-fabric">[Click here for the 1.16.3 Fabric version of this mod!]</a></strong></p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
-<p style="text-align: center;"><em><span style="font-size: 14px; color: #b00000; text-decoration: underline;"><strong>Recent 1.16.2 News:</strong></span><span style="font-size: 14px;"><b><strong>&nbsp;Updated to 1.16.2!<br />Took a lot of work and blood sacrifices</strong></b></span></em></p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>to port from fabric back to Forge.<br />Possibly very buggy so please report bugs!</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px; color: #b00000; text-decoration: underline;"><strong>Recent 1.16.3 News:</strong></span><span style="font-size: 14px;"><b><strong>&nbsp;</strong></b></span></em></p>
+<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>Added mob compat with <a href="https://www.curseforge.com/minecraft/mc-mods/carrier-bees">Carrier Bees</a>!</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>Their bees will spawn when you have Wrath of the Hive on.</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>Mod Compat is restored with <a href="https://www.curseforge.com/minecraft/mc-mods/productivebees">Productive Bees</a> as well!</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>And <a href="https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks">Aurum's More Blocks</a> updated to 1.16.3 with Bumblezone compat!</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>And fixed some bugs as well! (Requires 34.1.0 or newer Forge btw)</em></strong></span></p>
 <p style="text-align: center;"><strong style="color: #3f3bb8; font-size: 18px;"><em>(And like always, please report any <span style="text-decoration: line-through;">glitches</span>&nbsp;BUGS you find)</em></strong></p>
 <p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;"><strong><em><br /></em><span style="font-size: 14px; color: #993300;"><span style="font-size: 18px;">GENERAL NOTE:</span> <em><br /></em></span></strong></p>
+<p style="text-align: center;"><span style="font-size: 14px; color: #993300;"><strong><em>Make a copy of your world before putting on&nbsp;</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px; color: #993300;"><strong><em>The Bumblezone! If you remove any&nbsp;dimension&nbsp;</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px; color: #993300;"><strong><em>mod, the Nether and End dimensions&nbsp;will be&nbsp;</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px; color: #993300;"><strong><em>missing from the game due to a Mojang bug. Also,</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px; color: #993300;"><strong><em>putting the mod back on will not restore the dimension.</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>&nbsp;<a href="https://bugs.mojang.com/browse/MC-197860">https://bugs.mojang.com/browse/MC-197860</a></em></strong></span></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;"><strong><em><br /></em><span style="font-size: 14px; color: #993300;"><span style="font-size: 18px;">SERVER OWNERS NOTE:</span> <em><br />If you make a fresh new world with this&nbsp;mod&nbsp;on&nbsp;</em></span></strong></p>
+<p style="text-align: center;"><span style="font-size: 14px; color: #993300;"><strong><em>&nbsp;a server, restart the&nbsp;server after the world&nbsp;is made</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px; color: #993300;"><strong><em>&nbsp; due to this mojang bug&nbsp;causing json&nbsp;dimensions&nbsp;</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px; color: #993300;"><strong><em>&nbsp;to not be made upon world&nbsp;creation only on servers.</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>&nbsp;<a href="https://bugs.mojang.com/browse/MC-195468">https://bugs.mojang.com/browse/MC-195468</a></em></strong></span></p>
 <p>&nbsp;</p>
 <p><strong>______________________________________________________________________________</strong></p>
 <p>&nbsp;</p>
@@ -207,11 +223,9 @@
 <p>-Honey Crystal Blocks will be scattered throughout the dimension either underwater or inside the caves. They are most common in Hive Wall biome and lest common in Sugar Water biome.</p>
 </div>
 <p>&nbsp;</p>
-<p><span style="font-size: 14px;"><strong>MOD COMPATIBILITY&nbsp;</strong>- Interacts directly with 5 other mods!</span></p>
+<p><span style="font-size: 14px;"><strong>MOD COMPATIBILITY&nbsp;</strong>- Interacts directly with 3 other mods!</span></p>
 <div class="spoiler">
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p><strong>&nbsp;Productive Bees</strong> - <a href="https://www.curseforge.com/minecraft/mc-mods/productivebees">https://www.curseforge.com/minecraft/mc-mods/productivebees</a></p>
+<p>&nbsp;<strong>Productive Bees</strong> - <a href="https://www.curseforge.com/minecraft/mc-mods/productivebees">https://www.curseforge.com/minecraft/mc-mods/productivebees</a></p>
 <div class="spoiler">
 <p>-Enderpearls thrown at their hive blocks or their Expansion Boxes attached to a hive will now teleport you to The Bumblezone!</p>
 <p>&nbsp;</p>
@@ -224,6 +238,21 @@
 <p>-Productive Bees's many Honeycomb variants will spawn in The Bumblezone dimension! If Beesourceful is not on, Productive Bees's honeycombs of the same variants will replace Beesourceful's honeycombs in the dimension (both in terrain and in Bee Dungeons).</p>
 <p>&nbsp;</p>
 <p>-Some honeycomb variants can only spawn in Spider Infested Bee Dungeons.</p>
+</div>
+<p>&nbsp;</p>
+<p><strong>Carrier Bees</strong> -&nbsp;<a href="https://www.curseforge.com/minecraft/mc-mods/carrier-bees">https://www.curseforge.com/minecraft/mc-mods/carrier-bees</a></p>
+<div class="spoiler">
+<p>-When Wrath of the Hive effect is on, Carrier Bees, Fumble Bees, and Bomble Bees will spawn between 10 and 30 blocks away from you and are angry!!</p>
+<p>-If you are using a shield to block, the spawnrate of Bomble Bees increases! No cheesing with shields now!</p>
+<p>-Carrier Bees will spawn holding an item! The items they can hold are the following (stuff higher on the list is more common):</p>
+<p><br /><strong>- Dandelion</strong><br /><strong> - Cornflower</strong><br /><strong> - Sunflower</strong><br /><strong> - Lily Of The Valley</strong><br /><strong> - Lilac</strong><br /><strong> - Rose Bush</strong><br /><strong> - Blue Orchid</strong><br /><strong> - Peony</strong><br /><strong> - Poppy</strong><br /><strong> - Allium</strong><br /><strong> - Azure Bluet</strong><br /><strong> - Oxeye Daisy</strong><br /><strong> - Orange Tulip</strong><br /><strong> - Pink Tulip</strong><br /><strong> - Red Tulip</strong><br /><strong> - White Tulip</strong><br /><strong> - Yellow Terracotta</strong><br /><strong> - Yellow Glazed Terracotta</strong><br /><strong> - Yellow Concrete</strong><br /><strong> - Yellow Concrete Powder</strong><br /><strong> - Yellow Banner</strong><br /><strong> - Yellow Bed</strong><br /><strong> - Yellow Carpet</strong><br /><strong> - Yellow Wool</strong><br /><strong> - Yellow Dye</strong><br /><strong> - Blaze Rod</strong><br /><strong> - Orange Terracotta</strong><br /><strong> - Orange Glazed Terracotta</strong><br /><strong> - Orange Concrete</strong><br /><strong> - Orange Concrete Powder</strong><br /><strong> - Orange Banner</strong><br /><strong> - Orange Bed</strong><br /><strong> - Orange Carpet</strong><br /><strong> - Orange Wool</strong><br /><strong> - Orange Dye</strong><br /><strong> - Honeycomb</strong><br /><strong> - Glowstone Dust</strong><br /><strong> - Magma Cream</strong><br /><strong> - Lantern</strong><br /><strong> - Jack O Lantern</strong><br /><strong> - Apple</strong><br /><strong> - Wheat</strong><br /><strong> - Hay Block</strong><br /><strong> - Horn Coral</strong><br /><strong> - Horn Coral Fan</strong><br /><strong> - Horn Coral Block</strong><br /><strong> - Pufferfish</strong><br /><strong> - Blaze Powder</strong><br /><strong> - Blaze Rod</strong><br /><strong> - Chorus Flower</strong><br /><strong> - Flower Pot</strong><br /><strong> - Brick</strong><br /><strong> - Clay Ball</strong><br /><strong> - Sponge</strong><br /><strong> - Lead</strong><br /><strong> - Bell</strong><br /><strong> - Spectral Arrow</strong><br /><strong> - Map</strong><br /><strong> - Music Disc 11</strong><br /><strong> - Music Disc 13</strong><br /><strong> - Music Disc Blocks</strong><br /><strong> - Golden Apple</strong><br /><strong> - Golden Carrot</strong><br /><strong> - Glistering Melon Slice</strong><br /><strong> - Gold Nugget</strong><br /><strong> - Golden Horse Armor</strong><br /><strong> - Golden Hoe</strong><br /><strong> - Golden Shovel</strong><br /><strong> - Golden Leggings</strong><br /><strong> - Diamond Horse Armor</strong><br /><strong> - Diamond Hoe</strong><br /><strong> - Diamond Shovel</strong><br /><strong> - Netherite Scrap</strong><br /><strong> - Netherite Hoe</strong><br /><strong> - Netherite Shovel</strong><br /><strong> - Turtle Egg</strong></p>
+</div>
+<p>&nbsp;</p>
+<p><strong>Aurum's More Blocks (AMB)</strong> -&nbsp;<a href="https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks">https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks</a></p>
+<div class="spoiler">
+<p>-Sugar Infused Cobblestone and Sugar Infused Stone will get a slab, stairs, walls, pressure plate, and button form!</p>
+<p>&nbsp;</p>
+<p><img src="https://media.forgecdn.net/attachments/289/477/2020-04-30_16.png" width="666" height="374" /></p>
 </div>
 </div>
 </div>
@@ -482,9 +511,9 @@
 <h2 id="config" style="color: #b76a00;"><strong>HOW CAN I CONFIGURE THIS MOD?</strong></h2>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p><span style="font-size: 14px;">&nbsp; &nbsp;To reach this mod's config file, go into the config file and find the Bumblezone config files. The config is applied to all worlds at once so keep that in mind!</span></p>
+<p><span style="font-size: 14px;">&nbsp; &nbsp;To reach this mod's config file, go into the config file and find the Bumblezone config files. The config is applied to all worlds at once so keep that in mind! However, some of the configs for this mod are in JSON so you just need to make a datapack to override those settings. Here's the files the datapack can override:&nbsp;https://github.com/TelepathicGrunt/Bumblezone/tree/master/src/main/resources/data/the_bumblezone</span></p>
 <p><span style="font-size: 14px;">&nbsp;</span></p>
-<p><span style="font-size: 14px;">&nbsp; &nbsp;There are a TON of config options currently for the mod and all of them has comments on what they do and how to control them. I added lots of configs to control teleportation and gave you lots of options on how to tweak it. Several configs affects the dimension, how bright the fog is, and whether exiting the dimension will always place you back at Overworld instead of previous dimension you came from. There are even some worldgen options such as how rare the Bee Dungeons are. Some other configs lets you customize the Wrath of the Hive effect so you can change how long it lasts, how far bees has to be to be angered and boosted, how strong the effects given to bees are, whether Wrath of the Hive can be triggered outside The Bumblezone, show particles of the effect, or just turn off the effect completely. Lots of options including some that controls how some mods interacts with this mod! Take a look at the config and let me know if there's anything config that would be super helpful for you to have with this mod. :)</span></p>
+<p><span style="font-size: 14px;">&nbsp; There are several config options currently for the mod. Some affects the dimension and lets you control how bright the fog is (forge config), what the movement factor of the dimension is (JSON config), and whether exiting the dimension will always place you back at Overworld instead of previous dimension you came from (forge config). Many other configs lets you customize the Wrath of the Hive effect so you can change how long it lasts, how far bees has to be to be angered and boosted, how strong the effects given to bees are, whether Wrath of the Hive can be triggered outside The Bumblezone, show particles of the effect, or just turn off the effect completely. Lots of options! Take a look at the in-game config and JSON files and let me know if there's any config option that would be super helpful for you to have with this mod. :)</span></p>
 <p><span style="font-size: 14px;">&nbsp;</span></p>
 <p><span style="font-size: 12px;">The ID for the dimension is <strong>the_bumblezone:the_bumblezone</strong> if you need it. Also, if you need the ID for any Bumblezone's block, item, or biome to add into other mod's configs files, check out the <a href="https://github.com/TelepathicGrunt/Bumblezone/blob/master/src/main/resources/assets/the_bumblezone/lang/en_us.json">en_us.json file here</a> as the ID names of all the stuff is on there. For example, <strong><span class="pl-s"><span class="pl-pds">"</span>block.the_bumblezone.porous_honeycomb_block<span class="pl-pds">"</span></span></strong>&nbsp;would be read as <strong>the_bumblezone:porous_honeycomb_block</strong> for the ID.&nbsp;</span></p>
 <p><span style="font-size: 14px;"><strong><a href="https://github.com/TelepathicGrunt/Bumblezone/blob/master/src/main/resources/assets/the_bumblezone/lang/en_us.json">https://github.com/TelepathicGrunt/Bumblezone/blob/master/src/main/resources/assets/the_bumblezone/lang/en_us.json</a></strong></span></p>

@@ -32,7 +32,7 @@ Mods I'm keeping an eye on for future compat
   moving away from using them.
   
 • Added mod support for Carrier Bees's bees!
-  Their bees will now spawn in The Bumblezone!
+  Their bees will now spawn in The Bumblezone when you have Wrath of the Hive!
   
 • Potion of Bees is working as intended. 
   (They just ported so this was just me checking if the compat still works)
