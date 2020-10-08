@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modCompat;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 
 /**
@@ -11,7 +12,7 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
  * dependent on the mod.
  */
 public class CarrierBeeRedirection {
-	public static void CBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
-		CarrierBeesCompat.CBMobSpawnEvent(event);
+	public static void CBMobSpawn(LivingEntity entity) {
+		CarrierBeesCompat.CBMobSpawn(entity);
 	}
 }

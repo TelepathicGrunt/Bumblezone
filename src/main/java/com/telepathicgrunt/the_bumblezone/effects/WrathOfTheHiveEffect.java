@@ -2,6 +2,8 @@ package com.telepathicgrunt.the_bumblezone.effects;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import com.telepathicgrunt.the_bumblezone.modCompat.CarrierBeeRedirection;
+import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierManager;
@@ -45,6 +47,9 @@ public class WrathOfTheHiveEffect extends Effect {
         //Maximum aggression
         if (amplifier >= 2) {
             unBEElievablyHighAggression(entity.world, entity);
+            if(ModChecker.carrierBeesPresent){
+                CarrierBeeRedirection.CBMobSpawn(entity);
+            }
         }
         //Anything lower than 2 is medium aggression
         else {

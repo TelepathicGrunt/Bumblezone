@@ -21,9 +21,6 @@ public class ProductiveBeesBeesSpawning
 				if (entity.world.getRandom().nextInt(15) == 0) {
 					ProductiveBeesRedirection.PBMobSpawnEvent(event);
 				}
-				else if (entity.world.getRandom().nextInt(3) == 0) {
-					CarrierBeeRedirection.CBMobSpawnEvent(event);
-				}
 			}
 		}
 	}
