@@ -2,6 +2,8 @@ package com.telepathicgrunt.the_bumblezone.features.decorators;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.block.Blocks;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.feature.FeatureSpreadConfig;
 import net.minecraft.world.gen.feature.WorldDecoratingHelper;
@@ -27,23 +29,25 @@ public class Random3DUndergroundChunkPlacement extends Placement<FeatureSpreadCo
 
         for (int chunkNum = 0; chunkNum <= placementConfig.getCount().getValue(random); chunkNum++) {
 
-            // Tries 24 times to find a chunk's center that is in cave air or fluid.
+            // Tries 8 times to find a chunk's center that is in cave air or fluid.
             // Nice quick way to only generate clusters of crystals within a chunk without
             // going over chunk edges.
             int attempts = 0;
-            mutableBlockPos.setPos(pos.getX(), random.nextInt(240), pos.getZ());
+            for(; attempts < 8; attempts++){
+                mutableBlockPos.setPos(pos.getX(), 0, pos.getZ())
+                                .move(random.nextInt(4) + 8,
+                            random.nextInt(253) + 1,
+                            random.nextInt(4) + 8);
 
-            for(; attempts < 24; attempts++){
-                if ((context.getBlockState(mutableBlockPos.add(8, 8, 8)).getBlock() != Blocks.CAVE_AIR
-                        && !context.getBlockState(mutableBlockPos.add(8, 8, 8)).getFluidState().isEmpty())) {
-
-                    mutableBlockPos.setPos(pos.getX(), random.nextInt(253) + 1, pos.getZ());
+                if ((context.getBlockState(mutableBlockPos).getBlock() == Blocks.CAVE_AIR
+                        || context.getBlockState(mutableBlockPos).getFluidState().isTagged(FluidTags.WATER))) {
+                    mutableBlockPos.setPos(pos.getX(), mutableBlockPos.getY(), pos.getZ());
                     break;
                 }
             }
 
             // failed to find a valid spot.
-            if (attempts == 24)
+            if (attempts == 8)
                 continue;
 
             //returns 180 crystal locations in the 16x16x16 area

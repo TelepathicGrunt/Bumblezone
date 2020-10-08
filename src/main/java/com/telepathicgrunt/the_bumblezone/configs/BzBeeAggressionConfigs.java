@@ -123,6 +123,5 @@ public class BzBeeAggressionConfigs {
                 builder.pop();
             builder.pop();
         }
-
     }
 }

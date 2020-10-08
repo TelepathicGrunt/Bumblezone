@@ -15,16 +15,12 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class HoneycombBroodEvents
 {
 	/**
 	 * Allow player to revive thus block with Potion of Bees item
 	 */
-	@SubscribeEvent
 	public static void reviveByPotionOfBees(PlayerInteractEvent.RightClickItem event)
 	{
 		if(!ModChecker.potionOfBeesPresent && Bumblezone.BzModCompatibilityConfig.allowPotionOfBeesCompat.get()) {

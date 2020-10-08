@@ -25,27 +25,14 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
 
-@Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PlayerTeleportation {
 
     @CapabilityInject(IPlayerPosAndDim.class)
     public static Capability<IPlayerPosAndDim> PAST_POS_AND_DIM = null;
-
-    @Mod.EventBusSubscriber(modid = Bumblezone.MODID)
-    private static class ForgeEvents {
-        // Fires just before the teleportation to new dimension begins
-        @SubscribeEvent
-        public static void entityTravelToDimensionEvent(EntityTravelToDimensionEvent event) {
-        }
-    }
-
 
     //Player ticks
     public static void playerTick(PlayerEntity playerEntity){

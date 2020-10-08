@@ -14,26 +14,18 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.Level;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BeeAggression {
     private static final Set<EntityType<?>> SET_OF_BEE_HATED_ENTITIES = new HashSet<>();
 
-    @Mod.EventBusSubscriber(modid = Bumblezone.MODID)
-    private static class ForgeEvents
+    //bees attack player that picks up honey blocks
+    public static void HoneyPickupEvent(PlayerEvent.ItemPickupEvent event)
     {
-        //bees attack player that picks up honey blocks
-        @SubscribeEvent
-        public static void HoneyPickupEvent(PlayerEvent.ItemPickupEvent event)
-        {
-            BeeAggression.honeyPickupAnger(event.getPlayer(), event.getStack().getItem());
-        }
+        BeeAggression.honeyPickupAnger(event.getPlayer(), event.getStack().getItem());
     }
 
     /*

@@ -18,14 +18,15 @@ Mods I'm keeping an eye on for future compat
    
    (V.2.1.0 Changes) (1.16.3 Minecraft)
  
-    Teleportation:
+    Features:
+• Adjusted Honey Crystals to make them spawn more often.
 
+    Teleportation:
 • Fixed crash when exiting The Bumblezone at times.
 
 • Fixed coordinate scaling not working properly when entering/exiting The Bumblezone.
 
     Mod Compatibility:
-
 • Updated Productive Bees compat to use their configurable bees and honeycombs.
   Support for their non-configurable bees and blocks was removed as they are 
   moving away from using them.
@@ -37,9 +38,10 @@ Mods I'm keeping an eye on for future compat
   (They just ported so this was just me checking if the compat still works)
   
     Dimension:
-
 • Cleaned up the json format for the dimension's json file.
 
+    Misc:
+• Cleaned up codebase a bit.
 
    (V.2.0.5 Changes) (1.16.2 Minecraft)
  

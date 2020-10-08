@@ -16,21 +16,23 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @SuppressWarnings("deprecation")
 public class BumblezoneClient
 {
-    public static final ResourceLocation FLUID_STILL = new ResourceLocation(Bumblezone.MODID + ":block/sugar_water_still");
-    public static final ResourceLocation FLUID_FLOWING = new ResourceLocation(Bumblezone.MODID + ":block/sugar_water_flow");
-
-    public static void subscribeClientEvents(IEventBus modBus, IEventBus forgeBus)
+    public static void subscribeClientEvents()
     {
-        modBus.addListener(BumblezoneClient::onClientSetup);
-        modBus.addListener(BumblezoneClient::registerItemColors);
+        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        modEventBus.addListener(BumblezoneClient::onClientSetup);
+        modEventBus.addListener(BumblezoneClient::registerItemColors);
         forgeBus.addListener(FluidRender::sugarWaterOverlay);
     }
 
@@ -46,7 +48,6 @@ public class BumblezoneClient
         RenderingRegistry.registerEntityRenderingHandler(BzEntities.HONEY_SLIME, HoneySlimeRendering::new);
         SkyPropertiesAccessor.getBY_ResourceLocation().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
 
-        FluidRender.setupFluidRendering(BzBlocks.SUGAR_WATER_FLUID, BzBlocks.SUGAR_WATER_FLUID_FLOWING, FLUID_STILL, FLUID_FLOWING);
         DeferredWorkQueue.runLater(() -> {
             RenderTypeLookup.setRenderLayer(BzBlocks.STICKY_HONEY_REDSTONE, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BzBlocks.STICKY_HONEY_RESIDUE, RenderType.getCutout());
