@@ -34,7 +34,7 @@ public class BzBiomeProvider extends BiomeSource {
 
     public static final Codec<BzBiomeProvider> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
-                    RegistryLookupCodec.of(Registry.BIOME_KEY).forGetter((vanillaLayeredBiomeSource) -> vanillaLayeredBiomeSource.BIOME_REGISTRY))
+                    RegistryLookupCodec.of(Registry.BIOME_KEY).forGetter((biomeSource) -> biomeSource.BIOME_REGISTRY))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
 
     private final BiomeLayerSampler BIOME_SAMPLER;
