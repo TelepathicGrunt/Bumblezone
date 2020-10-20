@@ -54,7 +54,7 @@ public class BzBiomeProvider extends BiomeProvider {
         this(0, biomeRegistry);
     }
     public BzBiomeProvider(long seed, Registry<Biome> biomeRegistry) {
-        super(BZ_BIOMES.stream().map((registryKey) -> () -> (Biome)biomeRegistry.getOrThrow(registryKey)));
+        super(BZ_BIOMES.stream().map((registryKey) -> () -> (Biome)biomeRegistry.get(registryKey)));
         BzBiomeLayer.setSeed(seed);
         this.BIOME_REGISTRY = biomeRegistry;
         BzBiomeProvider.layersBiomeRegistry = biomeRegistry;

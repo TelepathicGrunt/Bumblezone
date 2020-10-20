@@ -22,6 +22,10 @@ Mods I'm keeping an eye on for future compat
 • Fixed SurfaceBuilder for BZ biomes being registered twice
   instead of once. Players will see no change other than 1
   less line in the latest.log file lol.
+  
+• Tried a tiny change to see if it will prevent an issue with the
+  world not saving when put on with another mod that wiped BZ's biomes
+  from the biome registry or something. Super odd.
  
  
    (V.2.1.0 Changes) (1.16.3 Minecraft)
