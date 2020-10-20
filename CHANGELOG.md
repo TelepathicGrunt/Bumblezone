@@ -16,6 +16,14 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
    
+   (V.2.1.1 Changes) (1.16.3 Minecraft)
+ 
+    Dimension:
+• Fixed SurfaceBuilder for BZ biomes being registered twice
+  instead of once. Players will see no change other than 1
+  less line in the latest.log file lol.
+ 
+ 
    (V.2.1.0 Changes) (1.16.3 Minecraft)
  
     Features:

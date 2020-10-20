@@ -44,7 +44,7 @@ public class BzBiomeProvider extends BiomeProvider {
     private final Layer BIOME_SAMPLER;
     private final Registry<Biome> BIOME_REGISTRY;
     public static Registry<Biome> layersBiomeRegistry;
-    private static final List<RegistryKey<Biome>> BIOMES = ImmutableList.of(
+    private static final List<RegistryKey<Biome>> BZ_BIOMES = ImmutableList.of(
             RegistryKey.of(Registry.BIOME_KEY, new ResourceLocation(Bumblezone.MODID, "hive_pillar")),
             RegistryKey.of(Registry.BIOME_KEY, new ResourceLocation(Bumblezone.MODID, "hive_wall")),
             RegistryKey.of(Registry.BIOME_KEY, new ResourceLocation(Bumblezone.MODID, "sugar_water_floor")));
@@ -54,7 +54,7 @@ public class BzBiomeProvider extends BiomeProvider {
         this(0, biomeRegistry);
     }
     public BzBiomeProvider(long seed, Registry<Biome> biomeRegistry) {
-        super(BIOMES.stream().map((registryKey) -> () -> (Biome)biomeRegistry.getOrThrow(registryKey)));
+        super(BZ_BIOMES.stream().map((registryKey) -> () -> (Biome)biomeRegistry.getOrThrow(registryKey)));
         BzBiomeLayer.setSeed(seed);
         this.BIOME_REGISTRY = biomeRegistry;
         BzBiomeProvider.layersBiomeRegistry = biomeRegistry;
