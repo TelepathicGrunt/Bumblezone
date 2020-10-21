@@ -27,11 +27,19 @@
     ],
     "client": [
       "net.telepathicgrunt.bumblezone.client.BumblezoneClient"
+    ],
+    "cardinal-components-entity": [
+      "net.telepathicgrunt.bumblezone.Bumblezone"
     ]
   },
   "mixins": [
     "the_bumblezone.mixins.json"
   ],
+  "custom": {
+    "cardinal-components": [
+      "the_bumblezone:player_component"
+    ]
+  },
 
   "accessWidener" : "the_bumblezone.accesswidener",
 

@@ -1,11 +1,11 @@
 package net.telepathicgrunt.bumblezone;
 
+import dev.onyxstudios.cca.api.v3.component.ComponentKey;
+import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
+import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
+import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import me.sargunvohra.mcmods.autoconfig1u.serializer.JanksonConfigSerializer;
-import nerdhub.cardinal.components.api.ComponentRegistry;
-import nerdhub.cardinal.components.api.ComponentType;
-import nerdhub.cardinal.components.api.event.EntityComponentCallback;
-import nerdhub.cardinal.components.api.util.EntityComponents;
 import nerdhub.cardinal.components.api.util.RespawnCopyStrategy;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.server.ServerStartCallback;
@@ -33,16 +33,15 @@ import net.telepathicgrunt.bumblezone.modCompat.ModChecker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Bumblezone implements ModInitializer {
+public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
     public static final String MODID = "the_bumblezone";
     public static final Identifier MOD_DIMENSION_ID = new Identifier(Bumblezone.MODID, Bumblezone.MODID);
 
     public static BzConfig BZ_CONFIG;
     public static final Logger LOGGER = LogManager.getLogger(MODID);
-    public static final ComponentType<IPlayerComponent> PLAYER_COMPONENT =
-            ComponentRegistry.INSTANCE.registerIfAbsent(new Identifier(MODID, "player_component"), IPlayerComponent.class)
-                    .attach(EntityComponentCallback.event(PlayerEntity.class), player -> new PlayerComponent());
+    public static final ComponentKey<IPlayerComponent> PLAYER_COMPONENT =
+            ComponentRegistry.getOrCreate(new Identifier(MODID, "player_component"), IPlayerComponent.class);
 
     @Override
     public void onInitialize() {
@@ -61,13 +60,16 @@ public class Bumblezone implements ModInitializer {
         BzConfiguredFeatures.registerConfiguredFeatures();
         BzDimension.setupDimension();
 
-        //attach component to player
-        EntityComponents.setRespawnCopyStrategy(PLAYER_COMPONENT, RespawnCopyStrategy.INVENTORY);
-
         ServerStartCallback.EVENT.register((MinecraftServer world) -> BeeAggression.setupBeeHatingList(world.getWorld(World.OVERWORLD)));
         DispenserItemSetup.setupDispenserBehaviors();
 
         ModChecker.setupModCompat();
+    }
+
+    @Override
+    public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
+        //attach component to player
+        registry.registerForPlayers(PLAYER_COMPONENT, p -> new PlayerComponent(), RespawnCopyStrategy.INVENTORY);
     }
 
     public static void reserveBiomeIDs() {
