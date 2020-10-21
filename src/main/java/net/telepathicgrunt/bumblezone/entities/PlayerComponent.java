@@ -51,17 +51,15 @@ public class PlayerComponent implements IPlayerComponent {
 
 
     @Override
-    public void fromTag(CompoundTag tag) {
+    public void readFromNbt(CompoundTag tag) {
         this.teleporting = tag.getBoolean("teleporting");
         this.nonBZDimensionType = new Identifier(tag.getString("non_bz_dimensiontype_namespace"), tag.getString("non_bz_dmensiontype_path"));
     }
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
+    public void writeToNbt(CompoundTag tag) {
         tag.putBoolean("teleporting", this.teleporting);
         tag.putString("non_bz_dimensiontype_namespace", nonBZDimensionType.getNamespace());
         tag.putString("non_bz_dmensiontype_path", nonBZDimensionType.getPath());
-
-        return tag;
     }
 
 }
