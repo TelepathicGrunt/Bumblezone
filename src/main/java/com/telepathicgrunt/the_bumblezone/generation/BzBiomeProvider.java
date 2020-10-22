@@ -28,8 +28,12 @@ import net.minecraft.world.gen.layer.traits.IAreaTransformer1;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.function.LongFunction;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class BzBiomeProvider extends BiomeProvider {
     public static void registerBiomeProvider() {
@@ -44,17 +48,16 @@ public class BzBiomeProvider extends BiomeProvider {
     private final Layer BIOME_SAMPLER;
     private final Registry<Biome> BIOME_REGISTRY;
     public static Registry<Biome> layersBiomeRegistry;
-    private static final List<RegistryKey<Biome>> BZ_BIOMES = ImmutableList.of(
-            RegistryKey.of(Registry.BIOME_KEY, new ResourceLocation(Bumblezone.MODID, "hive_pillar")),
-            RegistryKey.of(Registry.BIOME_KEY, new ResourceLocation(Bumblezone.MODID, "hive_wall")),
-            RegistryKey.of(Registry.BIOME_KEY, new ResourceLocation(Bumblezone.MODID, "sugar_water_floor")));
-
 
     public BzBiomeProvider(Registry<Biome> biomeRegistry) {
         this(0, biomeRegistry);
     }
     public BzBiomeProvider(long seed, Registry<Biome> biomeRegistry) {
-        super(BZ_BIOMES.stream().map((registryKey) -> () -> (Biome)biomeRegistry.get(registryKey)));
+        super(biomeRegistry.getEntries().stream()
+                .filter(entry -> entry.getKey().getValue().getNamespace().equals(Bumblezone.MODID))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList()));
+        
         BzBiomeLayer.setSeed(seed);
         this.BIOME_REGISTRY = biomeRegistry;
         BzBiomeProvider.layersBiomeRegistry = biomeRegistry;
