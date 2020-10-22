@@ -33,7 +33,7 @@ public class BzPlayerPlacement {
         if (entity instanceof ServerPlayerEntity) {
             MinecraftServer minecraftServer = entity.getServer(); // the server itself
             ServerWorld bumblezoneWorld = minecraftServer.getWorld(BzDimension.BZ_WORLD_KEY);
-            RegistryKey<World> world_key = RegistryKey.of(Registry.DIMENSION, Bumblezone.PLAYER_COMPONENT.get(entity).getNonBZDimension());
+            RegistryKey<World> world_key = entity.world.getRegistryKey();
 
             // Prevent crash due to mojang bug that makes mod's json dimensions not exist upload first creation of world on server. A restart fixes this.
             if(bumblezoneWorld == null){
@@ -275,7 +275,7 @@ public class BzPlayerPlacement {
                                     //A Hive was found, try to find a valid spot next to it
                                     BlockPos validSpot = validPlayerSpawnLocation(world, mutableBlockPos, 4);
                                     if (validSpot != null) {
-                                        return validSpot;
+                                        return validSpot.up();
                                     }
                                 }
                             }

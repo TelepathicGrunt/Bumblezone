@@ -7,6 +7,16 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
+   (V.2.2.8 Changes) (1.16.3 Minecraft)
+   
+    Teleportation:
+• Fixed bug where exiting The Bumblezone always put you in Overworld
+  instead of the actual dimension you came from when entering BZ's dimension.
+
+    Dimension:
+• Cleaned up a tiny bit of code and special thanks to
+  Pyrofab for updating Cardinal Component's usage in this mod!
+  
 
    (V.2.2.7 Changes) (1.16.3 Minecraft)
    
