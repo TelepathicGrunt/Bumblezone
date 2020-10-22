@@ -27,6 +27,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeMaker;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
@@ -68,6 +73,7 @@ public class Bumblezone{
 
         modEventBus.addListener(this::setup);
         modEventBus.addGenericListener(Item.class, this::registerItems);
+        modEventBus.addGenericListener(Biome.class, this::registerBiomes);
         modEventBus.addGenericListener(Block.class, this::registerBlocks);
         modEventBus.addGenericListener(Effect.class, this::registerEffects);
         modEventBus.addGenericListener(Feature.class, this::registerFeatures);
@@ -88,8 +94,7 @@ public class Bumblezone{
     }
 
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
+    private void setup(final FMLCommonSetupEvent event) {
         CapabilityPlayerPosAndDim.register();
         BzDimension.setupDimension();
         DispenserItemSetup.setupDispenserBehaviors();
@@ -98,31 +103,26 @@ public class Bumblezone{
 
 
     // should run after most other mods just in case
-    private static void lateSetup()
-    {
+    private static void lateSetup() {
         ModChecker.setupModCompat();
     }
 
-    public void registerBlocks(final RegistryEvent.Register<Block> event)
-    {
+    public void registerBlocks(final RegistryEvent.Register<Block> event) {
         BzBlocks.registerBlocks();
     }
 
-    public void registerItems(final RegistryEvent.Register<Item> event)
-    {
+    public void registerItems(final RegistryEvent.Register<Item> event) {
         BzItems.registerItems();
     }
 
-    public void registerEntity(final RegistryEvent.Register<EntityType<?>> event)
-    {
+    public void registerEntity(final RegistryEvent.Register<EntityType<?>> event) {
         BzEntities.registerEntities();
     }
 
     /**
      * This method will be called by Forge when it is time for the mod to register features.
      */
-    public void registerFeatures(final RegistryEvent.Register<Feature<?>> event)
-    {
+    public void registerFeatures(final RegistryEvent.Register<Feature<?>> event) {
         BzFeatures.registerFeatures();
         BzConfiguredFeatures.registerConfiguredFeatures();
     }
@@ -130,29 +130,36 @@ public class Bumblezone{
     /**
      * This method will be called by Forge when it is time for the mod to register effects.
      */
-    public void registerEffects(final RegistryEvent.Register<Effect> event)
-    {
+    public void registerEffects(final RegistryEvent.Register<Effect> event) {
         BzEffects.registerEffects();
     }
 
     /**
      * This method will be called by Forge when it is time for the mod to register placement.
      */
-    public void registerPlacements(final RegistryEvent.Register<Placement<?>> event)
-    {
+    public void registerPlacements(final RegistryEvent.Register<Placement<?>> event) {
         BzPlacements.registerPlacements();
     }
 
     /**
      * This method will be called by Forge when it is time for the mod to register surface builders.
      */
-    public void registerSurfacebuilders(final RegistryEvent.Register<SurfaceBuilder<?>> event)
-    {
+    public void registerSurfacebuilders(final RegistryEvent.Register<SurfaceBuilder<?>> event) {
         BzSurfaceBuilders.registerSurfaceBuilders();
     }
 
-
     public void registerSerializers(final RegistryEvent.Register<IRecipeSerializer<?>> event) {
-            BzItems.registerCustomRecipes(event);
-        }
+        BzItems.registerCustomRecipes(event);
+    }
+
+    public void registerBiomes(final RegistryEvent.Register<Biome> event) {
+        reserveBiomeIDs();
+    }
+
+    public static void reserveBiomeIDs() {
+        //Reserve Bumblezone biome IDs for the json version to replace
+        Registry.register(WorldGenRegistries.BIOME, new ResourceLocation(Bumblezone.MODID, "hive_wall"), BiomeMaker.createNormalOcean(false));
+        Registry.register(WorldGenRegistries.BIOME, new ResourceLocation(Bumblezone.MODID, "hive_pillar"), BiomeMaker.createNormalOcean(false));
+        Registry.register(WorldGenRegistries.BIOME, new ResourceLocation(Bumblezone.MODID, "sugar_water_floor"), BiomeMaker.createNormalOcean(false));
+    }
 }

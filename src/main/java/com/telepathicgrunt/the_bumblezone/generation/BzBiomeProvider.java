@@ -57,7 +57,7 @@ public class BzBiomeProvider extends BiomeProvider {
                 .filter(entry -> entry.getKey().getValue().getNamespace().equals(Bumblezone.MODID))
                 .map(Map.Entry::getValue)
                 .collect(Collectors.toList()));
-        
+
         BzBiomeLayer.setSeed(seed);
         this.BIOME_REGISTRY = biomeRegistry;
         BzBiomeProvider.layersBiomeRegistry = biomeRegistry;
