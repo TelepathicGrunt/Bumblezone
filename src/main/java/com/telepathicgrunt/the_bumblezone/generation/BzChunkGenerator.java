@@ -13,6 +13,7 @@ import it.unimi.dsi.fastutil.objects.ObjectListIterator;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.Util;
@@ -616,7 +617,7 @@ public class BzChunkGenerator extends ChunkGenerator {
                     if (biome$spawnlistentry.type == EntityType.BEE) {
                         //20% chance of being full of pollen
                         if (random.nextFloat() < 0.2f) {
-                            ((BeeEntityInvoker) entity).callSetBeeFlag(8, true);
+                            ((BeeEntity) entity).setBeeFlag(8, true);
                         }
 
                         //Bumblezone.LOGGER.log(Level.INFO, " outside beeproductive check");

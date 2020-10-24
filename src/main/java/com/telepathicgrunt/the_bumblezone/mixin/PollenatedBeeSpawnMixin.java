@@ -21,7 +21,7 @@ public class PollenatedBeeSpawnMixin {
 
             //20% chance of being full of pollen
             if (world.rand.nextFloat() < 0.2f) {
-                ((BeeEntityInvoker) beeEntity).callSetBeeFlag(8, true);
+                beeEntity.setBeeFlag(8, true);
             }
         }
     }

@@ -16,6 +16,12 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
    
+   (V.2.2.0 Changes) (1.16.3 Minecraft)
+ 
+    Mod Compat:
+• Fixed crash with Resourceful Bees
+   
+   
    (V.2.1.1 Changes) (1.16.3 Minecraft)
  
     Dimension:
