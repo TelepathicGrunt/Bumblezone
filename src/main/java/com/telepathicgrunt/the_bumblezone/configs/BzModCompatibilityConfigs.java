@@ -13,6 +13,7 @@ public class BzModCompatibilityConfigs
 	    public ConfigValueListener<Boolean> allowPotionOfBeesCompat;
 	    public ConfigValueListener<Boolean> allowSplashPotionOfBeesCompat;
 
+		public ConfigValueListener<Boolean> spawnResourcefulBeesBeesMob;
 	    public ConfigValueListener<Boolean> spawnProductiveBeesBeesMob;
 	    public ConfigValueListener<Boolean> spawnProductiveBeesHoneycombVariants;
 	    public ConfigValueListener<Integer> PBGreatHoneycombRarityBeeDungeon;
@@ -23,9 +24,18 @@ public class BzModCompatibilityConfigs
 	    public BzModCompatibilityConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber) {
 
 	        builder.push("Mod Compatibility Options");
+					builder.push("Resourceful Bees Options");
 
-	            builder.push("Productive Bees Options");
-	            
+						spawnResourcefulBeesBeesMob = subscriber.subscribe(builder
+							.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+									+" Spawn Resourceful Bees in The Bumblezone alongside regular\r\n"
+									+" bees at a 1/15th chance when spawning regular bees.\r\n")
+							.translation("the_bumblezone.config.modcompat.resourcefulbees.spawnresourcefulbeesbeesmob")
+							.define("spawnResourcefulBeesBeesMob", true));
+
+
+					builder.push("Productive Bees Options");
+
 	            		spawnProductiveBeesBeesMob = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Spawn Productive Bees in The Bumblezone alongside regular\r\n"

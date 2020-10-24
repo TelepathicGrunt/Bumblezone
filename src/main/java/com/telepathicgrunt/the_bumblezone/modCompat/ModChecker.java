@@ -5,51 +5,36 @@ import net.minecraftforge.fml.ModList;
 import org.apache.logging.log4j.Level;
 
 import java.util.concurrent.Callable;
+import java.util.function.Function;
 
 public class ModChecker
 {
     public static boolean potionOfBeesPresent = false;
 	public static boolean productiveBeesPresent = false;
 	public static boolean carrierBeesPresent = false;
+	public static boolean resourcefulBeesPresent = false;
 
 
     public static void setupModCompat() {
+		loadupModCompat("potionofbees", PotionOfBeesCompat::setupPotionOfBees);
+		loadupModCompat("carrierbees", CarrierBeesCompat::setupProductiveBees);
+		loadupModCompat("productivebees", ProductiveBeesCompat::setupProductiveBees);
+		loadupModCompat("resourcefulbees", ResourcefulBeesCompat::setupResourcefulBees);
+    }
+
+    private static void loadupModCompat(String modid, Runnable runnable){
 		String currentModID = "";
-
 		try {
-		    currentModID = "potionofbees";
-		    if (ModList.get().isLoaded(currentModID)) {
-		    	runSetupForMod(() -> PotionOfBeesCompat::setupPotionOfBees);
-		    }
-		}
-		catch (Exception e) {
-		    printErrorToLogs(currentModID);
-		    e.printStackTrace();
-		}
-
-		try {
-			currentModID = "carrierbees";
+			currentModID = modid;
 			if (ModList.get().isLoaded(currentModID)) {
-				runSetupForMod(() -> CarrierBeesCompat::setupProductiveBees);
+				runnable.run();
 			}
 		}
 		catch (Exception e) {
 			printErrorToLogs(currentModID);
 			e.printStackTrace();
 		}
-	
-		try {
-		    currentModID = "productivebees";
-		    if (ModList.get().isLoaded(currentModID)) {
-		    	runSetupForMod(() -> ProductiveBeesCompat::setupProductiveBees);
-		    }
-	
-		}
-		catch (Exception e) {
-		    printErrorToLogs(currentModID);
-		    e.printStackTrace();
-		}
-    }
+	}
 
 
     private static void printErrorToLogs(String currentModID) {
@@ -60,13 +45,4 @@ public class ModChecker
 		Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
     }
 
-
-    /**
-     * Hack to make Java not load the class beforehand when we don't have the mod installed. Basically:
-     * "java only loads the method body in 2 cases when it runs or when it needs to run the class verifier"
-     * So by double wrapping, we prevent Java from loading a class with calls to a mod that isn't present
-     */
-    public static void runSetupForMod(Callable<Runnable> toRun) throws Exception {
-    	toRun.call().run();
-    }
 }

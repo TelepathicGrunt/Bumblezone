@@ -633,9 +633,25 @@ public class BzChunkGenerator extends ChunkGenerator {
                 entity.setLocationAndAngles(xLength, height, zLength, sharedseedrandom.nextFloat() * 360.0F, 0.0F);
                 if (entity instanceof MobEntity) {
                     MobEntity mobentity = (MobEntity) entity;
-                    if (mobentity.canSpawn(region, SpawnReason.CHUNK_GENERATION) && mobentity.isNotColliding(region)) {
-                        mobentity.onInitialSpawn(region, region.getDifficultyForLocation(new BlockPos(mobentity.getBlockPos())), SpawnReason.CHUNK_GENERATION, null, null);
-                        region.addEntity(mobentity);
+                    if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(
+                            mobentity,
+                            region,
+                            blockpos.getX() + 0.5D,
+                            blockpos.getY() + 0.5D,
+                            blockpos.getZ() + 0.5D,
+                            null,
+                            SpawnReason.CHUNK_GENERATION) != -1)
+                    {
+                        if (mobentity.canSpawn(region, SpawnReason.CHUNK_GENERATION) && mobentity.isNotColliding(region)) {
+                            mobentity.onInitialSpawn(
+                                    region,
+                                    region.getDifficultyForLocation(new BlockPos(mobentity.getBlockPos())),
+                                    SpawnReason.CHUNK_GENERATION,
+                                    null,
+                                    null);
+
+                            region.addEntity(mobentity);
+                        }
                     }
                 }
             }

@@ -23,6 +23,8 @@ Mods I'm keeping an eye on for future compat
   
 • Fixed possible crash with registering Dispenser Behaviors.
    
+• Fixed bug where modded bees do not spawn when chunks are created in Bumblezone.
+
    
    (V.2.1.1 Changes) (1.16.3 Minecraft)
  

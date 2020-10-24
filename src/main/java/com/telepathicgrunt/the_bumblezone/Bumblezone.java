@@ -17,7 +17,7 @@ import com.telepathicgrunt.the_bumblezone.items.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modCompat.HoneycombBroodEvents;
 import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modCompat.PotionOfBeesBeeSplashPotionProjectile;
-import com.telepathicgrunt.the_bumblezone.modCompat.ProductiveBeesBeesSpawning;
+import com.telepathicgrunt.the_bumblezone.modCompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.surfacebuilders.BzSurfaceBuilders;
 import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper;
 import net.minecraft.block.Block;
@@ -65,7 +65,7 @@ public class Bumblezone{
 
         forgeBus.addListener(BzDimension::biomeModification);
         forgeBus.addListener(BeeAggression::HoneyPickupEvent);
-        forgeBus.addListener(ProductiveBeesBeesSpawning::MobSpawnEvent);
+        forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
         forgeBus.addListener(HoneycombBroodEvents::reviveByPotionOfBees);
         forgeBus.addListener(PotionOfBeesBeeSplashPotionProjectile::ProjectileImpactEvent);
         forgeBus.addGenericListener(Entity.class, CapabilityEventHandler::onAttachCapabilitiesToEntities);
