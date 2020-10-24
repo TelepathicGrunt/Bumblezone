@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modCompat;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 
 /**
  * This class is used so java wont load CarrierBeeCompat class and crash if

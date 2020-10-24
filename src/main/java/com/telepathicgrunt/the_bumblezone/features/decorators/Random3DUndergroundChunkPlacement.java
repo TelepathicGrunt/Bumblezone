@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.features.decorators;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.block.Blocks;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.feature.FeatureSpreadConfig;

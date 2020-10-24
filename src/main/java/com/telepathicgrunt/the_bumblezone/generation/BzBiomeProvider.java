@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.generation;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
@@ -8,7 +7,6 @@ import com.telepathicgrunt.the_bumblezone.generation.layer.BzBiomeLayer;
 import com.telepathicgrunt.the_bumblezone.generation.layer.BzBiomePillarLayer;
 import com.telepathicgrunt.the_bumblezone.generation.layer.BzBiomeScalePillarLayer;
 import com.telepathicgrunt.the_bumblezone.mixin.LayerAccessor;
-import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedConstants;
 import net.minecraft.util.Util;
@@ -28,11 +26,8 @@ import net.minecraft.world.gen.layer.traits.IAreaTransformer1;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.function.LongFunction;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class BzBiomeProvider extends BiomeProvider {
