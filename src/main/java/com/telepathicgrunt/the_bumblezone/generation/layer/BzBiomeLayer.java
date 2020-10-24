@@ -14,9 +14,6 @@ import java.util.stream.IntStream;
 public enum BzBiomeLayer implements IAreaTransformer0 {
     INSTANCE;
 
-    private static final ResourceLocation SUGAR_WATER = new ResourceLocation(Bumblezone.MODID, "sugar_water_floor");
-    private static final ResourceLocation HIVE_WALL = new ResourceLocation(Bumblezone.MODID, "hive_wall");
-
     private static PerlinNoiseGenerator perlinGen;
 //	private double max = -100;
 //	private double min = 100;
@@ -30,10 +27,12 @@ public enum BzBiomeLayer implements IAreaTransformer0 {
 //		Bumblezone.LOGGER.log(Level.INFO, "Max: " + max +", Min: "+min + ", perlin: "+perlinNoise);
 
         if (Math.abs(perlinNoise) % 0.1D < 0.07D) {
-            return BzBiomeProvider.layersBiomeRegistry.getId(BzBiomeProvider.layersBiomeRegistry.getOrDefault(HIVE_WALL));
+            return BzBiomeProvider.LAYERS_BIOME_REGISTRY.getId(
+                    BzBiomeProvider.LAYERS_BIOME_REGISTRY.getOrDefault(BzBiomeProvider.HIVE_WALL));
         }
         else {
-            return BzBiomeProvider.layersBiomeRegistry.getId(BzBiomeProvider.layersBiomeRegistry.getOrDefault(SUGAR_WATER));
+            return BzBiomeProvider.LAYERS_BIOME_REGISTRY.getId(
+                    BzBiomeProvider.LAYERS_BIOME_REGISTRY.getOrDefault(BzBiomeProvider.SUGAR_WATER_FLOOR));
         }
     }
 

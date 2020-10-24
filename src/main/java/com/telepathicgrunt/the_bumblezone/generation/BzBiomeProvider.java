@@ -3,9 +3,7 @@ package com.telepathicgrunt.the_bumblezone.generation;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.generation.layer.BzBiomeLayer;
-import com.telepathicgrunt.the_bumblezone.generation.layer.BzBiomePillarLayer;
-import com.telepathicgrunt.the_bumblezone.generation.layer.BzBiomeScalePillarLayer;
+import com.telepathicgrunt.the_bumblezone.generation.layer.*;
 import com.telepathicgrunt.the_bumblezone.mixin.LayerAccessor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedConstants;
@@ -26,6 +24,8 @@ import net.minecraft.world.gen.layer.traits.IAreaTransformer1;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.function.LongFunction;
 import java.util.stream.Collectors;
@@ -40,9 +40,14 @@ public class BzBiomeProvider extends BiomeProvider {
                     RegistryLookupCodec.of(Registry.BIOME_KEY).forGetter((vanillaLayeredBiomeSource) -> vanillaLayeredBiomeSource.BIOME_REGISTRY))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
 
+    public static ResourceLocation HIVE_WALL = new ResourceLocation(Bumblezone.MODID, "hive_wall");
+    public static ResourceLocation HIVE_PILLAR = new ResourceLocation(Bumblezone.MODID, "hive_pillar");
+    public static ResourceLocation SUGAR_WATER_FLOOR = new ResourceLocation(Bumblezone.MODID, "sugar_water_floor");
+
     private final Layer BIOME_SAMPLER;
     private final Registry<Biome> BIOME_REGISTRY;
-    public static Registry<Biome> layersBiomeRegistry;
+    public static Registry<Biome> LAYERS_BIOME_REGISTRY;
+    public static List<Biome> NONSTANDARD_BIOME = new ArrayList<>();
 
     public BzBiomeProvider(Registry<Biome> biomeRegistry) {
         this(0, biomeRegistry);
@@ -53,9 +58,15 @@ public class BzBiomeProvider extends BiomeProvider {
                 .map(Map.Entry::getValue)
                 .collect(Collectors.toList()));
 
+        NONSTANDARD_BIOME = this.biomes.stream()
+                .filter(biome -> biomeRegistry.getKey(biome) != HIVE_WALL &&
+                                biomeRegistry.getKey(biome) != HIVE_PILLAR &&
+                                biomeRegistry.getKey(biome) != SUGAR_WATER_FLOOR)
+                .collect(Collectors.toList());
+
         BzBiomeLayer.setSeed(seed);
         this.BIOME_REGISTRY = biomeRegistry;
-        BzBiomeProvider.layersBiomeRegistry = biomeRegistry;
+        BzBiomeProvider.LAYERS_BIOME_REGISTRY = biomeRegistry;
         this.BIOME_SAMPLER = buildWorldProcedure(seed);
     }
 
@@ -85,6 +96,17 @@ public class BzBiomeProvider extends BiomeProvider {
         layer = BzBiomeScalePillarLayer.INSTANCE.apply(contextFactory.apply(1055L), layer);
         layer = ZoomLayer.FUZZY.apply(contextFactory.apply(2003L), layer);
         layer = ZoomLayer.FUZZY.apply(contextFactory.apply(2523L), layer);
+
+        if(!NONSTANDARD_BIOME.isEmpty()){
+            IAreaFactory<T> layerOverlay = BzBiomeNonstandardLayer.INSTANCE.apply(contextFactory.apply(204L));
+            layerOverlay = ZoomLayer.NORMAL.apply(contextFactory.apply(2423L), layerOverlay);
+            layerOverlay = ZoomLayer.NORMAL.apply(contextFactory.apply(2503L), layerOverlay);
+            layerOverlay = ZoomLayer.NORMAL.apply(contextFactory.apply(2603L), layerOverlay);
+            layerOverlay = ZoomLayer.FUZZY.apply(contextFactory.apply(2853L), layerOverlay);
+            layerOverlay = ZoomLayer.FUZZY.apply(contextFactory.apply(3583L), layerOverlay);
+            layer = BzBiomeMergeLayer.INSTANCE.apply(contextFactory.apply(5583L), layerOverlay, layer);
+        }
+
         return layer;
     }
 

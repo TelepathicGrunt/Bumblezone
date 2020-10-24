@@ -12,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
 import com.telepathicgrunt.the_bumblezone.features.BzConfiguredFeatures;
 import com.telepathicgrunt.the_bumblezone.features.BzFeatures;
 import com.telepathicgrunt.the_bumblezone.features.decorators.BzPlacements;
+import com.telepathicgrunt.the_bumblezone.generation.BzBiomeProvider;
 import com.telepathicgrunt.the_bumblezone.items.BzItems;
 import com.telepathicgrunt.the_bumblezone.items.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modCompat.HoneycombBroodEvents;
@@ -160,8 +161,8 @@ public class Bumblezone{
 
     public static void reserveBiomeIDs() {
         //Reserve Bumblezone biome IDs for the json version to replace
-        Registry.register(WorldGenRegistries.BIOME, new ResourceLocation(Bumblezone.MODID, "hive_wall"), BiomeMaker.createNormalOcean(false));
-        Registry.register(WorldGenRegistries.BIOME, new ResourceLocation(Bumblezone.MODID, "hive_pillar"), BiomeMaker.createNormalOcean(false));
-        Registry.register(WorldGenRegistries.BIOME, new ResourceLocation(Bumblezone.MODID, "sugar_water_floor"), BiomeMaker.createNormalOcean(false));
+        Registry.register(WorldGenRegistries.BIOME, BzBiomeProvider.HIVE_WALL, BiomeMaker.createNormalOcean(false));
+        Registry.register(WorldGenRegistries.BIOME, BzBiomeProvider.HIVE_PILLAR, BiomeMaker.createNormalOcean(false));
+        Registry.register(WorldGenRegistries.BIOME, BzBiomeProvider.SUGAR_WATER_FLOOR, BiomeMaker.createNormalOcean(false));
     }
 }

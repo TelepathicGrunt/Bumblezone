@@ -10,11 +10,11 @@ import net.minecraft.world.gen.layer.traits.ICastleTransformer;
 public enum BzBiomePillarLayer implements ICastleTransformer {
     INSTANCE;
 
-    private static final ResourceLocation HIVE_PILLAR = new ResourceLocation(Bumblezone.MODID, "hive_pillar");
     public int apply(INoiseRandom context, int n, int e, int s, int w, int center) {
 
         if (context.random(12) == 0 && n == center && e == center && s == center && w == center) {
-            return BzBiomeProvider.layersBiomeRegistry.getId(BzBiomeProvider.layersBiomeRegistry.getOrDefault(HIVE_PILLAR));
+            return BzBiomeProvider.LAYERS_BIOME_REGISTRY.getId(
+                    BzBiomeProvider.LAYERS_BIOME_REGISTRY.getOrDefault(BzBiomeProvider.HIVE_PILLAR));
         }
 
         return center;
