@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.features;
 
 import com.mojang.serialization.Codec;
 import cy.jdkdigital.productivebees.tileentity.CombBlockTileEntity;
+import net.minecraft.block.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -115,8 +116,10 @@ public class BzBEOreFeature extends Feature<BzBEOreFeatureConfig> {
                                             bitset.set(l2);
                                             blockpos$mutable.setPos(i2, j2, k2);
                                             if (bzBEOreFeatureConfig.target.test(world.getBlockState(blockpos$mutable), random)) {
-                                                world.setBlockState(blockpos$mutable, bzBEOreFeatureConfig.state, 2);
+                                                //fixes "Tried to access a block entity before it was created." somehow during worldgen. Voodoo to me!
+                                                world.setBlockState(blockpos$mutable, Blocks.AIR.getDefaultState(), 2);
 
+                                                world.setBlockState(blockpos$mutable, bzBEOreFeatureConfig.state, 2);
                                                 TileEntity tileentity = world.getTileEntity(blockpos$mutable);
                                                 if(tileentity instanceof CombBlockTileEntity && bzBEOreFeatureConfig.type != null){
                                                     ((CombBlockTileEntity) tileentity).setType(bzBEOreFeatureConfig.type);

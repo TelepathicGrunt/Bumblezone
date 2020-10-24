@@ -20,6 +20,8 @@ Mods I'm keeping an eye on for future compat
  
     Mod Compat:
 • Fixed crash with Resourceful Bees
+  
+• Fixed possible crash with registering Dispenser Behaviors.
    
    
    (V.2.1.1 Changes) (1.16.3 Minecraft)

@@ -96,7 +96,10 @@ public class Bumblezone{
     private void setup(final FMLCommonSetupEvent event) {
         CapabilityPlayerPosAndDim.register();
         BzDimension.setupDimension();
-        DispenserItemSetup.setupDispenserBehaviors();
+
+        // Dispenser isn't synchronized. Needs to be enqueueWork to prevent crash if
+        // another mod registers to it at the same exact time.
+        event.enqueueWork(DispenserItemSetup::setupDispenserBehaviors);
         event.enqueueWork(Bumblezone::lateSetup);
     }
 
