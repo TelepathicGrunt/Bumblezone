@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class PlayerInteractsEntityMixin {
     // Feeding bees honey or sugar water
     @Inject(method = "interactOn",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isEmpty()Z", ordinal = 0))
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isEmpty()Z", ordinal = 1))
     private void onBeeFeeding(Entity entity, Hand hand, CallbackInfoReturnable<ActionResultType> cir) {
         BeeInteractivity.beeFeeding(entity.world, ((PlayerEntity)(Object)this), hand, entity);
     }
