@@ -19,6 +19,7 @@ public class BzModCompatibilityConfigs
 		public ConfigValueListener<Double> RBOreHoneycombSpawnRateBeeDungeon;
 		public ConfigValueListener<Integer> RBGreatHoneycombRaritySpiderBeeDungeon;
 		public ConfigValueListener<Double> RBOreHoneycombSpawnRateSpiderBeeDungeon;
+		public ConfigValueListener<Boolean> RBBeesWaxWorldgen;
 
 	    public ConfigValueListener<Boolean> spawnProductiveBeesBeesMob;
 	    public ConfigValueListener<Boolean> spawnProductiveBeesHoneycombVariants;
@@ -48,6 +49,12 @@ public class BzModCompatibilityConfigs
 								+" NOTE: Will require a restart of the world to take effect. \r\n")
 						.translation("the_bumblezone.config.modcompat.productivebees.spawnproductivebeeshoneycombvariants")
 						.define("spawnResourcefulBeesHoneycombVariants", true));
+
+					RBBeesWaxWorldgen = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" Spawn Resourceful Bees's Wax Block as part of The Bumblezone's worldgen.\r\n")
+						.translation("the_bumblezone.config.modcompat.resourcefulbees.rbbeeswaxworldgen")
+						.define("RBBeesWaxWorldgen", true));
 
 
 					RBOreHoneycombSpawnRateBeeDungeon = subscriber.subscribe(builder

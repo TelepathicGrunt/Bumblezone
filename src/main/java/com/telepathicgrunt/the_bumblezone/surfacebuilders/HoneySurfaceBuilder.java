@@ -1,7 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.surfacebuilders;
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modCompat.ResourcefulBeesRedirection;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
@@ -32,6 +35,7 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
         int xpos = x & 15;
         int zpos = z & 15;
         BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable();
+        boolean isSurface = false;
 
         //makes stone below sea level into end stone
         for (int ypos = 255; ypos >= 0; --ypos) {
@@ -41,15 +45,30 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
             if (currentBlockState.getMaterial() != Material.AIR) {
                 if (currentBlockState == STONE) {
                     chunkIn.setBlockState(blockpos$Mutable, HONEYCOMB_BLOCK, false);
-                } else if (currentBlockState == POROUS_HONEYCOMB) {
+                    isSurface = false;
+                }
+                else if (currentBlockState == POROUS_HONEYCOMB) {
                     if (ypos <= 40 + 2 + Math.max(noise, 0) + random.nextInt(2)) {
-                        chunkIn.setBlockState(blockpos$Mutable, FILLED_POROUS_HONEYCOMB, false);
+                        if (isSurface && ModChecker.resourcefulBeesPresent && Bumblezone.BzModCompatibilityConfig.RBBeesWaxWorldgen.get()
+                            && noise + random.nextInt(2) < -1)
+                        {
+                            chunkIn.setBlockState(blockpos$Mutable, ResourcefulBeesRedirection.getRBBeesWaxBlock(), false);
+                        }
+                        else{
+                            chunkIn.setBlockState(blockpos$Mutable, FILLED_POROUS_HONEYCOMB, false);
+                        }
                     }
-                } else if (currentBlockState.isAir()) {
+                    isSurface = false;
+                }
+                else if (currentBlockState.isAir()) {
                     if (ypos < 40) {
                         chunkIn.setBlockState(blockpos$Mutable, defaultFluid, false);
                     }
+                    isSurface = true;
                 }
+            }
+            else{
+                isSurface = true;
             }
         }
 

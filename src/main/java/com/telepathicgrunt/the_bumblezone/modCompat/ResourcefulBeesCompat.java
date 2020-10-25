@@ -53,17 +53,14 @@ public class ResourcefulBeesCompat {
 				RESOURCEFUL_HONEYCOMBS_MAP.put(entry.getKey().getValue(), entry.getValue());
 			}
 		}
-
-
 	}
 
 	public static void RBAddWorldgen(BiomeLoadingEvent event) {
-
-		event.getGeneration().getFeatures(GenerationStage.Decoration.VEGETAL_DECORATION)
-				.add(() -> BzConfiguredFeatures.BZ_BEES_WAX_PILLAR_CONFIGURED_FEATURE);
+		if(Bumblezone.BzModCompatibilityConfig.RBBeesWaxWorldgen.get()){
+			event.getGeneration().getFeatures(GenerationStage.Decoration.VEGETAL_DECORATION).add(() -> BzConfiguredFeatures.BZ_BEES_WAX_PILLAR_CONFIGURED_FEATURE);
+		}
 
 		Map<ResourceLocation, Block> unused_honeycombs = new HashMap<>(RESOURCEFUL_HONEYCOMBS_MAP);
-
 		if (Bumblezone.BzModCompatibilityConfig.spawnResourcefulBeesHoneycombVariants.get()) {
 			// Multiple entries influences changes of them being picked. Those in back of list is rarest to be picked
 			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "coal_honeycomb_block"));
