@@ -41,7 +41,7 @@ public class BzBeesWaxPillarFeature extends Feature<NoFeatureConfig> {
       boolean flag2 = true;
       boolean flag3 = true;
 
-      while(world.isAirBlock(blockpos$mutable) || world.getBlockState(blockpos$mutable).getBlock() == ResourcefulBeesRedirection.getRBBeesWaxBlock().getBlock()) {
+      while(!world.getBlockState(blockpos$mutable).isSolid() || world.getBlockState(blockpos$mutable).getBlock() == ResourcefulBeesRedirection.getRBBeesWaxBlock().getBlock()) {
          if (World.isOutsideBuildHeight(blockpos$mutable)) {
             return;
          }
@@ -69,7 +69,7 @@ public class BzBeesWaxPillarFeature extends Feature<NoFeatureConfig> {
                blockpos$mutable2.setPos(blockpos$mutable.add(x, 0, z));
                int y = 3;
 
-               while(world.isAirBlock(blockpos$mutable1.set(blockpos$mutable2, direction))) {
+               while(!world.getBlockState(blockpos$mutable1.set(blockpos$mutable2, direction)).isSolid()) {
                   blockpos$mutable2.move(direction);
                   --y;
                   if (y <= 0) {
@@ -77,7 +77,7 @@ public class BzBeesWaxPillarFeature extends Feature<NoFeatureConfig> {
                   }
                }
 
-               if (!world.isAirBlock(blockpos$mutable1.set(blockpos$mutable2, direction))) {
+               if (world.getBlockState(blockpos$mutable1.set(blockpos$mutable2, direction)).isSolid()) {
                   world.setBlockState(blockpos$mutable2, ResourcefulBeesRedirection.getRBBeesWaxBlock(), 2);
                }
             }
@@ -93,7 +93,7 @@ public class BzBeesWaxPillarFeature extends Feature<NoFeatureConfig> {
    }
 
    private boolean stopOrPlaceWax(IWorld world, Random random, BlockPos pos) {
-      if (random.nextInt(3) != 0) {
+      if (random.nextInt(6) != 0) {
          world.setBlockState(pos, ResourcefulBeesRedirection.getRBBeesWaxBlock(), 2);
          return true;
       } else {

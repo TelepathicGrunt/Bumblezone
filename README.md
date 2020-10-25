@@ -2,13 +2,13 @@
 <h2 style="text-align: center;"><span style="font-size: 40px; text-align: center; color: #b76a00;"><strong>CURRENTLY FOR 1.16.3 MC</strong></span></h2>
 <p style="text-decoration: underline; font-size: 14px; text-align: center;"><strong><a style="font-size: 14px; text-align: center;" href="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-fabric">[Click here for the 1.16.3 Fabric version of this mod!]</a></strong></p>
 <p>&nbsp;</p>
+<p>&nbsp;</p>
 <p style="text-align: center;"><em><span style="font-size: 14px; color: #b00000; text-decoration: underline;"><strong>Recent 1.16.3 News:</strong></span><span style="font-size: 14px;"><b><strong>&nbsp;</strong></b></span></em></p>
-<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>Added mob compat with <a href="https://www.curseforge.com/minecraft/mc-mods/carrier-bees">Carrier Bees</a>!</em></strong></span></p>
-<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>Their bees will spawn when you have Wrath of the Hive on.</em></strong></span></p>
-<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>Mod Compat is restored with <a href="https://www.curseforge.com/minecraft/mc-mods/productivebees">Productive Bees</a> as well!</em></strong></span></p>
-<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>And <a href="https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks">Aurum's More Blocks</a> updated to 1.16.3 with Bumblezone compat!</em></strong></span></p>
-<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>And fixed some bugs as well! (Requires 34.1.0 or newer Forge btw)</em></strong></span></p>
-<p style="text-align: center;"><strong style="color: #3f3bb8; font-size: 18px;"><em>(And like always, please report any <span style="text-decoration: line-through;">glitches</span>&nbsp;BUGS you find)</em></strong></p>
+<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>Added mob compat with <a href="https://www.curseforge.com/minecraft/mc-mods/resourceful-bees">Resourceful Bees</a>!</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>Now if you use a datapack and make a biome </em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>under "the_bumblezone" namespace, this mod </em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>will recognize the namespace and spawn that</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px;"><strong><em> biome in the dimension!</em></strong></span></p>
 <p style="text-align: center;">&nbsp;</p>
 <p style="text-align: center;"><strong><em><br /></em><span style="font-size: 14px; color: #993300;"><span style="font-size: 18px;">GENERAL NOTE:</span> <em><br /></em></span></strong></p>
 <p style="text-align: center;"><span style="font-size: 14px; color: #993300;"><strong><em>Make a copy of your world before putting on&nbsp;</em></strong></span></p>
@@ -40,7 +40,7 @@
 <p>&nbsp;</p>
 <p><img src="https://media.forgecdn.net/attachments/302/227/2020-07-12_14.png" alt="An image that organizes and shows off all of the items and blocks that The Bumblezone has added." width="623" height="325" /></p>
 <p>&nbsp;</p>
-<p><span style="font-size: 24px;"><strong>1.16.2</strong></span></p>
+<p><span style="font-size: 24px;"><strong>1.16.3</strong></span></p>
 <div class="spoiler">
 <p><span style="font-size: 14px;"><strong>BLOCKS&nbsp;</strong>- 10 new blocks and 1 new liquid</span></p>
 <div class="spoiler">
@@ -223,7 +223,7 @@
 <p>-Honey Crystal Blocks will be scattered throughout the dimension either underwater or inside the caves. They are most common in Hive Wall biome and lest common in Sugar Water biome.</p>
 </div>
 <p>&nbsp;</p>
-<p><span style="font-size: 14px;"><strong>MOD COMPATIBILITY&nbsp;</strong>- Interacts directly with 3 other mods!</span></p>
+<p><span style="font-size: 14px;"><strong>MOD COMPATIBILITY&nbsp;</strong>- Interacts directly with 5 other mods!</span></p>
 <div class="spoiler">
 <p>&nbsp;<strong>Productive Bees</strong> - <a href="https://www.curseforge.com/minecraft/mc-mods/productivebees">https://www.curseforge.com/minecraft/mc-mods/productivebees</a></p>
 <div class="spoiler">
@@ -235,9 +235,27 @@
 <p>&nbsp;</p>
 <p>-The Honey Treat can also be fed to Honeycomb Brood Blocks to grow the larva! In fact, there's a 20% chance the larva may grow two stages at a time instead of 1 when fed this item.&nbsp;</p>
 <p>&nbsp;</p>
-<p>-Productive Bees's many Honeycomb variants will spawn in The Bumblezone dimension! If Beesourceful is not on, Productive Bees's honeycombs of the same variants will replace Beesourceful's honeycombs in the dimension (both in terrain and in Bee Dungeons).</p>
+<p>-Productive Bees's many Honeycomb variants will spawn in The Bumblezone dimension!</p>
 <p>&nbsp;</p>
 <p>-Some honeycomb variants can only spawn in Spider Infested Bee Dungeons.</p>
+</div>
+<p>&nbsp;</p>
+<p><strong>Resourceful Bees</strong> -&nbsp;<a href="https://www.curseforge.com/minecraft/mc-mods/resourceful-bees">https://www.curseforge.com/minecraft/mc-mods/resourceful-bees</a></p>
+<div class="spoiler">
+<p>-Enderpearls thrown at their hive blocks or their validated Apiary blocks will now teleport you to The Bumblezone!</p>
+<p>&nbsp;</p>
+<p>-Resourceful Bees' will also rarely spawn in The Bumblezone dimension from regular spawning or from Honeycomb&nbsp;Brood Blocks in the dimension. All of their types of bees have equal chances of spawning.</p>
+<p>&nbsp;</p>
+<p>-Resourceful Bees's Wax Block will spawn at the floor of the dimension sometimes and can be found in the caves and holes!</p>
+<p>&nbsp;</p>
+<p>-Resourceful Bees's many Honeycomb variants will spawn in The Bumblezone dimension!&nbsp;</p>
+<p>&nbsp;</p>
+<p>-Some honeycomb variants can only spawn in Spider Infested Bee Dungeons as well.</p>
+</div>
+<p>&nbsp;</p>
+<p><strong>Potion of Bees</strong> -&nbsp;<a href="https://www.curseforge.com/minecraft/mc-mods/potion-of-bees">https://www.curseforge.com/minecraft/mc-mods/potion-of-bees</a></p>
+<div class="spoiler">
+<p>-Their Splash Potion of Bees item can be thrown onto a Empty Honeycomb Brood Block to revive the block into a stage 1, 2, or 3&nbsp;Honeycomb Brood Block! If you have the splash potion in a Dispenser facing the block, it'll revive the block without bees going everywhere.</p>
 </div>
 <p>&nbsp;</p>
 <p><strong>Carrier Bees</strong> -&nbsp;<a href="https://www.curseforge.com/minecraft/mc-mods/carrier-bees">https://www.curseforge.com/minecraft/mc-mods/carrier-bees</a></p>
@@ -514,6 +532,8 @@
 <p><span style="font-size: 14px;">&nbsp; &nbsp;To reach this mod's config file, go into the config file and find the Bumblezone config files. The config is applied to all worlds at once so keep that in mind! However, some of the configs for this mod are in JSON so you just need to make a datapack to override those settings. Here's the files the datapack can override:&nbsp;https://github.com/TelepathicGrunt/Bumblezone/tree/master/src/main/resources/data/the_bumblezone</span></p>
 <p><span style="font-size: 14px;">&nbsp;</span></p>
 <p><span style="font-size: 14px;">&nbsp; There are several config options currently for the mod. Some affects the dimension and lets you control how bright the fog is (forge config), what the movement factor of the dimension is (JSON config), and whether exiting the dimension will always place you back at Overworld instead of previous dimension you came from (forge config). Many other configs lets you customize the Wrath of the Hive effect so you can change how long it lasts, how far bees has to be to be angered and boosted, how strong the effects given to bees are, whether Wrath of the Hive can be triggered outside The Bumblezone, show particles of the effect, or just turn off the effect completely. Lots of options! Take a look at the in-game config and JSON files and let me know if there's any config option that would be super helpful for you to have with this mod. :)</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14px;">&nbsp; Also, fun fact! If you use a datapack and make a biome under "the_bumblezone" namespace, this mod will recognize the namespace and spawn that biome in the dimension!!</span></p>
 <p><span style="font-size: 14px;">&nbsp;</span></p>
 <p><span style="font-size: 12px;">The ID for the dimension is <strong>the_bumblezone:the_bumblezone</strong> if you need it. Also, if you need the ID for any Bumblezone's block, item, or biome to add into other mod's configs files, check out the <a href="https://github.com/TelepathicGrunt/Bumblezone/blob/master/src/main/resources/assets/the_bumblezone/lang/en_us.json">en_us.json file here</a> as the ID names of all the stuff is on there. For example, <strong><span class="pl-s"><span class="pl-pds">"</span>block.the_bumblezone.porous_honeycomb_block<span class="pl-pds">"</span></span></strong>&nbsp;would be read as <strong>the_bumblezone:porous_honeycomb_block</strong> for the ID.&nbsp;</span></p>
 <p><span style="font-size: 14px;"><strong><a href="https://github.com/TelepathicGrunt/Bumblezone/blob/master/src/main/resources/assets/the_bumblezone/lang/en_us.json">https://github.com/TelepathicGrunt/Bumblezone/blob/master/src/main/resources/assets/the_bumblezone/lang/en_us.json</a></strong></span></p>
