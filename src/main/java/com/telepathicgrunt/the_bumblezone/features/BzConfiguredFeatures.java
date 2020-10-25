@@ -26,6 +26,7 @@ public class BzConfiguredFeatures {
     public static final ConfiguredFeature<?,?> HONEY_CRYSTALS_UNCOMMON = BzFeatures.HONEY_CRYSTAL_FEATURE.configure(IFeatureConfig.NO_FEATURE_CONFIG).decorate(BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.configure(new FeatureSpreadConfig(2)));
     public static final ConfiguredFeature<?,?> HONEY_CRYSTALS_RARE = BzFeatures.HONEY_CRYSTAL_FEATURE.configure(IFeatureConfig.NO_FEATURE_CONFIG).decorate(BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.configure(new FeatureSpreadConfig(1)));
     public static final ConfiguredFeature<?,?> CAVE_SUGAR_WATERFALL = BzFeatures.CAVE_SUGAR_WATERFALL.configure(IFeatureConfig.NO_FEATURE_CONFIG).decorate(Placement.RANGE.configure(new TopSolidRangeConfig(8, 0, 248)).repeat(100));
+    public static ConfiguredFeature<?, ?> BZ_BEES_WAX_PILLAR_CONFIGURED_FEATURE = BzFeatures.BZ_BEES_WAX_PILLAR_FEATURE.configure(IFeatureConfig.NO_FEATURE_CONFIG).method_30377(256).spreadHorizontally().repeat(30);
 
     public static void registerConfiguredFeatures(){
         Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;
@@ -41,5 +42,6 @@ public class BzConfiguredFeatures {
         Registry.register(registry, new ResourceLocation(Bumblezone.MODID, "honey_crystals_uncommon"), HONEY_CRYSTALS_UNCOMMON);
         Registry.register(registry, new ResourceLocation(Bumblezone.MODID, "honey_crystals_rare"), HONEY_CRYSTALS_RARE);
         Registry.register(registry, new ResourceLocation(Bumblezone.MODID, "cave_sugar_waterfall"), CAVE_SUGAR_WATERFALL);
+        Registry.register(registry, new ResourceLocation(Bumblezone.MODID, "bz_bees_wax_pillar_configured_feature"), BZ_BEES_WAX_PILLAR_CONFIGURED_FEATURE);
     }
 }

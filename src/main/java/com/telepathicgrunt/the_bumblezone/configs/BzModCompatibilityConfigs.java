@@ -14,6 +14,12 @@ public class BzModCompatibilityConfigs
 	    public ConfigValueListener<Boolean> allowSplashPotionOfBeesCompat;
 
 		public ConfigValueListener<Boolean> spawnResourcefulBeesBeesMob;
+		public ConfigValueListener<Boolean> spawnResourcefulBeesHoneycombVariants;
+		public ConfigValueListener<Integer> RBGreatHoneycombRarityBeeDungeon;
+		public ConfigValueListener<Double> RBOreHoneycombSpawnRateBeeDungeon;
+		public ConfigValueListener<Integer> RBGreatHoneycombRaritySpiderBeeDungeon;
+		public ConfigValueListener<Double> RBOreHoneycombSpawnRateSpiderBeeDungeon;
+
 	    public ConfigValueListener<Boolean> spawnProductiveBeesBeesMob;
 	    public ConfigValueListener<Boolean> spawnProductiveBeesHoneycombVariants;
 	    public ConfigValueListener<Integer> PBGreatHoneycombRarityBeeDungeon;
@@ -26,31 +32,70 @@ public class BzModCompatibilityConfigs
 	        builder.push("Mod Compatibility Options");
 					builder.push("Resourceful Bees Options");
 
-						spawnResourcefulBeesBeesMob = subscriber.subscribe(builder
+					spawnResourcefulBeesBeesMob = subscriber.subscribe(builder
 							.comment(" \r\n-----------------------------------------------------\r\n\r\n"
 									+" Spawn Resourceful Bees in The Bumblezone alongside regular\r\n"
 									+" bees at a 1/15th chance when spawning regular bees.\r\n")
 							.translation("the_bumblezone.config.modcompat.resourcefulbees.spawnresourcefulbeesbeesmob")
 							.define("spawnResourcefulBeesBeesMob", true));
 
+					spawnResourcefulBeesHoneycombVariants = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" Spawn Resourceful Bees's various honeycomb variants in The Bumblezone\r\n"
+								+" at all kinds of heights and height bands. Start exploring to find \r\n"
+								+" where they spawn!"
+								+" \r\n"
+								+" NOTE: Will require a restart of the world to take effect. \r\n")
+						.translation("the_bumblezone.config.modcompat.productivebees.spawnproductivebeeshoneycombvariants")
+						.define("spawnResourcefulBeesHoneycombVariants", true));
 
-					builder.push("Productive Bees Options");
 
-	            		spawnProductiveBeesBeesMob = subscriber.subscribe(builder
+					RBOreHoneycombSpawnRateBeeDungeon = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" How much of Bee Dungeons is made of ore-based honeycombs.\r\n"
+								+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.3D\r\n")
+						.translation("the_bumblezone.config.productivebees.RBorehoneycombspawnratebeedungeon")
+						.defineInRange("RBOreHoneycombSpawnRateBeeDungeon", 0.3D, 0D, 1D));
+
+					RBGreatHoneycombRarityBeeDungeon = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" How rare good ore-based Honeycombs (diamonds, ender, emerald, etc) are \r\n"
+								+" in Bee Dungeons. \r\n"
+								+" Higher numbers means more rare. Default rate is 3.\r\n")
+						.translation("the_bumblezone.config.productivebees.RBgreathoneycombraritybeedungeon")
+						.defineInRange("RBGreatHoneycombRarityBeeDungeon", 2, 1, 1001));
+
+					RBOreHoneycombSpawnRateSpiderBeeDungeon = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" How much of Spider Infested Bee Dungeons is made of ore-based honeycombs.\r\n"
+								+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.1D\r\n")
+						.translation("the_bumblezone.config.productivebees.RBorehoneycombspawnratespiderbeedungeon")
+						.defineInRange("RBOreHoneycombSpawnRateSpiderBeeDungeon", 0.1D, 0D, 1D));
+
+					RBGreatHoneycombRaritySpiderBeeDungeon = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" How rare good ore-based Honeycombs (diamonds, ender, emerald, etc) are \r\n"
+								+" in Spider Infested Bee Dungeons. \r\n"
+								+" Higher numbers means more rare. Default rate is 2.\r\n")
+						.translation("the_bumblezone.config.productivebees.RBgreathoneycombrarityspiderbeedungeon")
+						.defineInRange("RBGreatHoneycombRaritySpiderBeeDungeon", 2, 1, 1001));
+
+				builder.pop();
+
+				builder.push("Productive Bees Options");
+
+					spawnProductiveBeesBeesMob = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Spawn Productive Bees in The Bumblezone alongside regular\r\n"
 		                    		+" bees at a 1/15th chance when spawning regular bees.\r\n")
 		                    .translation("the_bumblezone.config.modcompat.productivebees.spawnproductivebeesbeesmob")
 		                    .define("spawnProductiveBeesBeesMob", true));
 
-	            		spawnProductiveBeesHoneycombVariants = subscriber.subscribe(builder
+					spawnProductiveBeesHoneycombVariants = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 		                    		+" Spawn Productive Bees's various honeycomb variants in The Bumblezone\r\n"
 		                    		+" at all kinds of heights and height bands. Start exploring to find \r\n"
-		                    		+" where they spawn! Also, due to Beesourceful also having some of the \r\n"
-		                    		+" same honeycomb variants, The Bumblezone will pick Beesourceful's \r\n"
-		                    		+" honeycombs to spawn instead of Beesourceful's when spawning a \r\n"
-		                    		+" honeycomb that's in both mods.\r\n"
+		                    		+" where they spawn!"
 		                    		+" \r\n"
 		                    		+" NOTE: Will require a restart of the world to take effect. \r\n")
 		                    .translation("the_bumblezone.config.modcompat.productivebees.spawnproductivebeeshoneycombvariants")
@@ -60,9 +105,7 @@ public class BzModCompatibilityConfigs
 	        		PBOreHoneycombSpawnRateBeeDungeon = subscriber.subscribe(builder
 	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 	    		            		+" How much of Bee Dungeons is made of ore-based honeycombs.\r\n"
-	    		            		+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.3D\r\n"
-		                    		+" \r\n"
-		                    		+" NOTE: This only takes effect if Productive Bees is on and Beesourceful is not present. \r\n")
+	    		            		+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.3D\r\n")
 	    		            .translation("the_bumblezone.config.productivebees.pborehoneycombspawnratebeedungeon")
 	    		            .defineInRange("PBOreHoneycombSpawnRateBeeDungeon", 0.3D, 0D, 1D));
 		    		
@@ -70,18 +113,14 @@ public class BzModCompatibilityConfigs
 	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 	    		            		+" How rare good ore-based Honeycombs (diamonds, ender, emerald, etc) are \r\n"
 	    		            		+" in Bee Dungeons. \r\n"
-	    		            		+" Higher numbers means more rare. Default rate is 3.\r\n"
-		                    		+" \r\n"
-		                    		+" NOTE: This only takes effect if Productive Bees is on and Beesourceful is not present. \r\n")
+	    		            		+" Higher numbers means more rare. Default rate is 3.\r\n")
 	    		            .translation("the_bumblezone.config.productivebees.pbgreathoneycombraritybeedungeon")
 	    		            .defineInRange("PBGreatHoneycombRarityBeeDungeon", 2, 1, 1001));
 	        		
 	        		PBOreHoneycombSpawnRateSpiderBeeDungeon = subscriber.subscribe(builder
 	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 	    		            		+" How much of Spider Infested Bee Dungeons is made of ore-based honeycombs.\r\n"
-	    		            		+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.1D\r\n"
-		                    		+" \r\n"
-		                    		+" NOTE: This only takes effect if Productive Bees is on and Beesourceful is not present. \r\n")
+	    		            		+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.1D\r\n")
 	    		            .translation("the_bumblezone.config.productivebees.pborehoneycombspawnratespiderbeedungeon")
 	    		            .defineInRange("PBOreHoneycombSpawnRateSpiderBeeDungeon", 0.1D, 0D, 1D));
 		    		
@@ -89,12 +128,10 @@ public class BzModCompatibilityConfigs
 	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 	    		            		+" How rare good ore-based Honeycombs (diamonds, ender, emerald, etc) are \r\n"
 	    		            		+" in Spider Infested Bee Dungeons. \r\n"
-	    		            		+" Higher numbers means more rare. Default rate is 2.\r\n"
-		                    		+" \r\n"
-		                    		+" NOTE: This only takes effect if Productive Bees is on and Beesourceful is not present. \r\n")
+	    		            		+" Higher numbers means more rare. Default rate is 2.\r\n")
 	    		            .translation("the_bumblezone.config.productivebees.pbgreathoneycombrarityspiderbeedungeon")
 	    		            .defineInRange("PBGreatHoneycombRaritySpiderBeeDungeon", 2, 1, 1001));
-	        		
+
 	            builder.pop();
 	            
 	            

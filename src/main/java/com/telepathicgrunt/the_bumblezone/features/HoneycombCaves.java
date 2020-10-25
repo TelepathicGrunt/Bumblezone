@@ -152,11 +152,13 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
     @Override
     public boolean generate(ISeedReader world, ChunkGenerator generator, Random random, BlockPos position, NoFeatureConfig config) {
         setSeed(world.getSeed());
-        BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable().setPos(position);
+        BlockPos.Mutable mutableBlockPos = position.mutableCopy();
+        BlockPos.Mutable mutableBlockPos2 = position.mutableCopy();
+        BlockPos.Mutable mutableBlockPos3 = position.mutableCopy();
 
         for (int x = 0; x < 16; x++) {
-            for (int z = 0; z < 16; z++) {
-                for (int y = 15; y < 241; y++) {
+            for (int y = 15; y < 241; y++) {
+                for (int z = 0; z < 16; z++) {
                     mutableBlockPos.setPos(position).move(x, y, z);
                     double noise1 = noiseGen.eval(mutableBlockPos.getX() * 0.02D,
                             mutableBlockPos.getZ() * 0.02D,
@@ -169,19 +171,18 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
                     double finalNoise = noise1 * noise1 + noise2 * noise2;
 
                     if (finalNoise < 0.0009f) {
-                        hexagon(world, generator, mutableBlockPos, random, noise1);
+                        hexagon(world, generator, mutableBlockPos, mutableBlockPos2, mutableBlockPos3, random, noise1);
                     }
                 }
             }
         }
 
-
         return true;
     }
 
 
-    private static void hexagon(ISeedReader world, ChunkGenerator generator, BlockPos position, Random random, double noise) {
-        BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable().setPos(position);
+    private static void hexagon(ISeedReader world, ChunkGenerator generator, BlockPos.Mutable position,
+                                BlockPos.Mutable position2, BlockPos.Mutable position3, Random random, double noise) {
         BlockState blockState;
         int index = (int) (((noise * 0.5D) + 0.5D) * 7);
 
@@ -190,42 +191,44 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
                 int posResult = hexagonArray[index][z][x];
 
                 if (posResult != 0) {
-                    blockState = world.getBlockState(mutableBlockPos.setPos(position).move(x - 7, 0, z - 5));
-                    carveAtBlock(world, generator, random, mutableBlockPos, blockState, posResult);
+                    blockState = world.getBlockState(position2.setPos(position).move(x - 7, 0, z - 5));
+                    carveAtBlock(world, generator, random, position2, position3, blockState, posResult);
 
-                    blockState = world.getBlockState(mutableBlockPos.setPos(position).move(0, x - 7, z - 5));
-                    carveAtBlock(world, generator, random, mutableBlockPos, blockState, posResult);
+                    blockState = world.getBlockState(position2.setPos(position).move(0, x - 7, z - 5));
+                    carveAtBlock(world, generator, random, position2, position3, blockState, posResult);
 
-                    blockState = world.getBlockState(mutableBlockPos.setPos(position).move(z - 5, x - 7, 0));
-                    carveAtBlock(world, generator, random, mutableBlockPos, blockState, posResult);
+                    blockState = world.getBlockState(position2.setPos(position).move(z - 5, x - 7, 0));
+                    carveAtBlock(world, generator, random, position2, position3, blockState, posResult);
                 }
             }
         }
     }
 
-    private static void carveAtBlock(ISeedReader world, ChunkGenerator generator, Random random, BlockPos blockPos, BlockState blockState, int posResult) {
-        if (blockPos.getY() < generator.getSeaLevel() || !isNextToLiquidOrAir(world, generator, blockPos)) {
-            if (posResult == 2) {
-                if (blockPos.getY() < 40) {
-                    world.setBlockState(blockPos, SUGAR_WATER, 3);
+    private static void carveAtBlock(ISeedReader world, ChunkGenerator generator, Random random, BlockPos.Mutable position,
+                                     BlockPos.Mutable position2, BlockState blockState, int posResult) {
+        if (position.getY() < generator.getSeaLevel() || !isNextToLiquidOrAir(world, generator, position, position2)) {
+            if (posResult == 2 && !blockState.isSolid()) {
+                if (position.getY() < 40) {
+                    world.setBlockState(position, SUGAR_WATER, 3);
                 } else {
-                    world.setBlockState(blockPos, CAVE_AIR, 3);
+                    world.setBlockState(position, CAVE_AIR, 3);
                 }
             } else if (posResult == 1 && blockState.isSolid()) {
                 if (random.nextInt(3) == 0) {
-                    world.setBlockState(blockPos, HONEYCOMB_BLOCK, 3);
+                    world.setBlockState(position, HONEYCOMB_BLOCK, 3);
                 } else {
-                    world.setBlockState(blockPos, FILLED_POROUS_HONEYCOMB, 3);
+                    world.setBlockState(position, FILLED_POROUS_HONEYCOMB, 3);
                 }
             }
         }
     }
 
-    private static boolean isNextToLiquidOrAir(ISeedReader world, ChunkGenerator generator, BlockPos pos) {
+    private static boolean isNextToLiquidOrAir(ISeedReader world, ChunkGenerator generator,
+                                               BlockPos.Mutable position, BlockPos.Mutable position2) {
         BlockState blockState;
         for (Direction direction : Direction.values()) {
-            blockState = world.getBlockState(pos.offset(direction));
-            if (pos.offset(direction).getY() >= generator.getSeaLevel() && blockState == Blocks.AIR.getDefaultState()) {
+            blockState = world.getBlockState(position2.setPos(position).move(direction));
+            if (position2.getY() >= generator.getSeaLevel() && blockState == Blocks.AIR.getDefaultState()) {
                 return true;
             }
         }

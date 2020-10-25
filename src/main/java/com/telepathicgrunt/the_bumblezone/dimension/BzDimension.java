@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.generation.BzBiomeProvider;
 import com.telepathicgrunt.the_bumblezone.generation.BzChunkGenerator;
 import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ProductiveBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modCompat.ResourcefulBeesRedirection;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -23,7 +24,8 @@ public class BzDimension {
 
         if(needToAddModCompatFeatures && event.getName().getNamespace().equals(Bumblezone.MODID)){
             //Add our features to the bumblezone biomes
-            ProductiveBeesRedirection.PBAddHoneycombs(event);
+            ProductiveBeesRedirection.PBAddWorldgen(event);
+            ResourcefulBeesRedirection.RBAddWorldgen(event);
         }
     }
 }

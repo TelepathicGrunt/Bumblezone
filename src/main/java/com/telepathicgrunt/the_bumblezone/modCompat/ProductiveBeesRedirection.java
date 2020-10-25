@@ -16,8 +16,8 @@ import java.util.Random;
  * dependent on the mod.
  */
 public class ProductiveBeesRedirection {
-	public static void PBAddHoneycombs(BiomeLoadingEvent event){
-		ProductiveBeesCompat.PBAddHoneycombs(event);
+	public static void PBAddWorldgen(BiomeLoadingEvent event){
+		ProductiveBeesCompat.PBAddWorldgen(event);
 	}
 
 	public static boolean PBIsAdvancedBeehiveAbstractBlock(BlockState block) {

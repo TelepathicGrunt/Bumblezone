@@ -19,8 +19,11 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.template.RuleTest;
 import net.minecraft.world.gen.feature.template.TagMatchRuleTest;
 import net.minecraft.world.gen.placement.Placement;
@@ -45,13 +48,15 @@ public class ProductiveBeesCompat {
 		ModChecker.productiveBeesPresent = true;
 	}
 	
-	public static void PBAddHoneycombs(BiomeLoadingEvent event) {
+	public static void PBAddWorldgen(BiomeLoadingEvent event) {
+
 		PB_DATA = new HashMap<>(BeeReloadListener.INSTANCE.getData());
 		PRODUCTIVE_BEES_LIST = PB_DATA.keySet().stream().map(ResourceLocation::toString).collect(Collectors.toList());
 		VALID_COMB_TYPES = new HashSet<>(PB_DATA.keySet());
 		SPIDER_DUNGEON_HONEYCOMBS.clear();
 
 		if (Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get()) {
+			// Multiple entries influences changes of them being picked. Those in back of list is rarest to be picked
 			addToSpiderDungeonList(PRODUCTIVE_BEES_NAMESPACE + ":bauxite");
 			addToSpiderDungeonList(PRODUCTIVE_BEES_NAMESPACE + ":brazen");
 			addToSpiderDungeonList(PRODUCTIVE_BEES_NAMESPACE + ":bronze");
@@ -119,18 +124,21 @@ public class ProductiveBeesCompat {
 	 * Creates a configured feature of the combtype and add it to the biome and/or Bee Dungeon comb list
 	 */
 	private static void addCombToWorldgen(BiomeLoadingEvent event, String combBlockType, int veinSize, int count, int bottomOffset, int range, boolean addToHoneycombList, boolean removeFromSet) {
+		ResourceLocation resourceLocation = new ResourceLocation(combBlockType);
 		if(removeFromSet){
-			if(!PB_DATA.containsKey(new ResourceLocation(combBlockType)))
+			if(!PB_DATA.containsKey(resourceLocation))
 				return;
 
-			VALID_COMB_TYPES.remove(new ResourceLocation(combBlockType));
+			VALID_COMB_TYPES.remove(resourceLocation);
 		}
 
-		event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES)
-			.add(() -> BzFeatures.BZ_BE_ORE_FEATURE.configure(new BzBEOreFeatureConfig(HONEYCOMB_BUMBLEZONE, ModBlocks.CONFIGURABLE_COMB.get().getDefaultState(), veinSize, combBlockType))
+		ConfiguredFeature<?, ?> cf = BzFeatures.BZ_BE_ORE_FEATURE.configure(new BzBEOreFeatureConfig(HONEYCOMB_BUMBLEZONE, ModBlocks.CONFIGURABLE_COMB.get().getDefaultState(), veinSize, combBlockType))
 				.decorate(Placement.RANGE.configure(new TopSolidRangeConfig(bottomOffset, 0, range)))
-					.spreadHorizontally()
-					.repeat(count));
+				.spreadHorizontally()
+				.repeat(count);
+
+		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(Bumblezone.MODID, resourceLocation.getPath()), cf);
+		event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES).add(() -> cf);
 
 		if (addToHoneycombList)
 			ORE_BASED_HONEYCOMB_VARIANTS.add(combBlockType);

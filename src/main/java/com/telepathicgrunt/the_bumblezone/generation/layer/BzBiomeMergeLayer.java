@@ -1,18 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.generation.layer;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.generation.BzBiomeProvider;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.world.gen.INoiseRandom;
-import net.minecraft.world.gen.PerlinNoiseGenerator;
 import net.minecraft.world.gen.area.IArea;
-import net.minecraft.world.gen.layer.LayerUtil;
-import net.minecraft.world.gen.layer.traits.IAreaTransformer0;
 import net.minecraft.world.gen.layer.traits.IAreaTransformer2;
 import net.minecraft.world.gen.layer.traits.IDimOffset0Transformer;
-
-import java.util.stream.IntStream;
 
 
 public enum BzBiomeMergeLayer implements IAreaTransformer2, IDimOffset0Transformer {

@@ -4,7 +4,6 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 
 public class ModdedBeesBeesSpawning

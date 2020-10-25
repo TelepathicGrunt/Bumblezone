@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.mixin.TemplateInvoker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ProductiveBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modCompat.ResourcefulBeesRedirection;
 import cy.jdkdigital.productivebees.tileentity.CombBlockTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -220,18 +221,33 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
         //main body
         if (block == Blocks.RED_TERRACOTTA || block == Blocks.PURPLE_TERRACOTTA) {
 
-            if(ModChecker.potionOfBeesPresent &&
-                random.nextFloat() < Bumblezone.BzModCompatibilityConfig.PBOreHoneycombSpawnRateSpiderBeeDungeon.get())
-            {
-                return new Pair<>(ProductiveBeesRedirection.PBGetRandomHoneycomb(random,
-                        Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRaritySpiderBeeDungeon.get()), false);
+            if(ModChecker.productiveBeesPresent){
+                if(random.nextFloat() < Bumblezone.BzModCompatibilityConfig.PBOreHoneycombSpawnRateSpiderBeeDungeon.get())
+                {
+                    return new Pair<>(ProductiveBeesRedirection.PBGetRandomHoneycomb(random,
+                            Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRaritySpiderBeeDungeon.get()), false);
+                }
+                else if(Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get() &&
+                        random.nextFloat() < 0.5f)
+                {
+                    return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random), false);
+                }
             }
-            else if(ModChecker.productiveBeesPresent &&
-                    Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get() &&
-                    random.nextFloat() < 0.5f)
-            {
-                return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random), false);
+
+            if(ModChecker.resourcefulBeesPresent){
+                if(random.nextFloat() < Bumblezone.BzModCompatibilityConfig.RBOreHoneycombSpawnRateSpiderBeeDungeon.get())
+                {
+                    return new Pair<>(ResourcefulBeesRedirection.RBGetRandomHoneycomb(random,
+                            Bumblezone.BzModCompatibilityConfig.RBGreatHoneycombRaritySpiderBeeDungeon.get()), false);
+                }
+                else if(Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get() &&
+                        random.nextFloat() < 0.5f)
+                {
+                    return new Pair<>(ResourcefulBeesRedirection.RBGetSpiderHoneycomb(random), false);
+                }
             }
+
+
 
             if (random.nextFloat() < 0.15f) {
                 return new Pair<>(new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), null), false);
@@ -252,6 +268,10 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
                     Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get() &&
                     random.nextFloat() < 0.5f) {
                 return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random), false);
+            } else if(ModChecker.resourcefulBeesPresent &&
+                    Bumblezone.BzModCompatibilityConfig.spawnResourcefulBeesHoneycombVariants.get() &&
+                    random.nextFloat() < 0.5f) {
+                return new Pair<>(ResourcefulBeesRedirection.RBGetSpiderHoneycomb(random), false);
             } else {
                 return new Pair<>(new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), null), false);
             }
@@ -269,6 +289,10 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
                     Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get() &&
                     random.nextFloat() < 0.5f) {
                 return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random), false);
+            } else if(ModChecker.resourcefulBeesPresent &&
+                    Bumblezone.BzModCompatibilityConfig.spawnResourcefulBeesHoneycombVariants.get() &&
+                    random.nextFloat() < 0.5f) {
+                return new Pair<>(ResourcefulBeesRedirection.RBGetSpiderHoneycomb(random), false);
             } else {
                 return new Pair<>(new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), null), false);
             }
@@ -286,6 +310,10 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
                     Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get() &&
                     random.nextFloat() < 0.5f) {
                 return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random), false);
+            } else if(ModChecker.resourcefulBeesPresent &&
+                    Bumblezone.BzModCompatibilityConfig.spawnResourcefulBeesHoneycombVariants.get() &&
+                    random.nextFloat() < 0.5f) {
+                return new Pair<>(ResourcefulBeesRedirection.RBGetSpiderHoneycomb(random), false);
             } else {
                 return new Pair<>(new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), null), false);
             }
@@ -303,6 +331,10 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
                     Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get() &&
                     random.nextFloat() < 0.5f) {
                 return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random), false);
+            } else if(ModChecker.resourcefulBeesPresent &&
+                    Bumblezone.BzModCompatibilityConfig.spawnResourcefulBeesHoneycombVariants.get() &&
+                    random.nextFloat() < 0.5f) {
+                return new Pair<>(ResourcefulBeesRedirection.RBGetSpiderHoneycomb(random), false);
             } else {
                 return new Pair<>(new Pair<>(BzBlocks.POROUS_HONEYCOMB.getDefaultState(), null), false);
             }

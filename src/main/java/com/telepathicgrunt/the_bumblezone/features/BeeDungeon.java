@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.mixin.TemplateInvoker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ProductiveBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modCompat.ResourcefulBeesRedirection;
 import cy.jdkdigital.productivebees.tileentity.CombBlockTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -245,9 +246,15 @@ public class BeeDungeon extends Feature<NoFeatureConfig>{
             if(ModChecker.productiveBeesPresent &&
                 random.nextFloat() < Bumblezone.BzModCompatibilityConfig.PBOreHoneycombSpawnRateBeeDungeon.get())
             {
-
                 return new Pair<>(ProductiveBeesRedirection.PBGetRandomHoneycomb(random,
                         Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRarityBeeDungeon.get()), false);
+            }
+
+            if(ModChecker.resourcefulBeesPresent &&
+                    random.nextFloat() < Bumblezone.BzModCompatibilityConfig.RBOreHoneycombSpawnRateBeeDungeon.get())
+            {
+                return new Pair<>(ResourcefulBeesRedirection.RBGetRandomHoneycomb(random,
+                        Bumblezone.BzModCompatibilityConfig.RBGreatHoneycombRarityBeeDungeon.get()), false);
             }
 
             if (random.nextFloat() < 0.4f) {
@@ -338,6 +345,13 @@ public class BeeDungeon extends Feature<NoFeatureConfig>{
             {
                 return new Pair<>(ProductiveBeesRedirection.PBGetRandomHoneycomb(random,
                         Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRarityBeeDungeon.get()), replaceAir);
+            }
+
+            if(ModChecker.resourcefulBeesPresent &&
+                    random.nextFloat() < Bumblezone.BzModCompatibilityConfig.RBOreHoneycombSpawnRateBeeDungeon.get())
+            {
+                return new Pair<>(ResourcefulBeesRedirection.RBGetRandomHoneycomb(random,
+                        Bumblezone.BzModCompatibilityConfig.RBGreatHoneycombRarityBeeDungeon.get()), replaceAir);
             }
 
             if (random.nextFloat() < 0.4f) {

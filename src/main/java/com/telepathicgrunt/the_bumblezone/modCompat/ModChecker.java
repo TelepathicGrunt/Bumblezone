@@ -4,9 +4,6 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraftforge.fml.ModList;
 import org.apache.logging.log4j.Level;
 
-import java.util.concurrent.Callable;
-import java.util.function.Function;
-
 public class ModChecker
 {
     public static boolean potionOfBeesPresent = false;
