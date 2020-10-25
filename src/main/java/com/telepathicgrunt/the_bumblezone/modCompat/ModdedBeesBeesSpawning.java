@@ -32,7 +32,7 @@ public class ModdedBeesBeesSpawning
 						Bumblezone.BzModCompatibilityConfig.spawnResourcefulBeesBeesMob.get() &&
 						entity.world.getRandom().nextInt(15) == 0)
 				{
-					ResourcefulBeesCompat.RBMobSpawnEvent(event);
+					ResourcefulBeesRedirection.RBMobSpawnEvent(event);
 				}
 			}
 		}

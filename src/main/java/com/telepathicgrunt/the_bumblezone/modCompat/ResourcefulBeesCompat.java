@@ -1,10 +1,17 @@
 package com.telepathicgrunt.the_bumblezone.modCompat;
 
 import com.mojang.datafixers.util.Pair;
+import com.resourcefulbees.resourcefulbees.block.multiblocks.apiary.ApiaryBlock;
+import com.resourcefulbees.resourcefulbees.block.multiblocks.apiary.ApiaryBreederBlock;
+import com.resourcefulbees.resourcefulbees.block.multiblocks.apiary.ApiaryStorageBlock;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import cy.jdkdigital.productivebees.block.AdvancedBeehive;
+import cy.jdkdigital.productivebees.block.AdvancedBeehiveAbstract;
+import cy.jdkdigital.productivebees.block.ExpansionBox;
 import cy.jdkdigital.productivebees.entity.bee.ConfigurableBeeEntity;
 import cy.jdkdigital.productivebees.init.ModBlocks;
 import cy.jdkdigital.productivebees.init.ModEntities;
+import cy.jdkdigital.productivebees.state.properties.VerticalHive;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -34,6 +41,16 @@ public class ResourcefulBeesCompat {
 			}
 		}
 		Bumblezone.LOGGER.log(Level.WARN, RESOURCEFUL_BEES_LIST);
+	}
+
+	/**
+	 * Is block is a Resourceful Bees Apairy block
+	 */
+	public static boolean RBIsApairyBlock(BlockState block) {
+
+		return (block.getBlock() instanceof ApiaryBlock && block.get(ApiaryBlock.VALIDATED)) ||
+				block.getBlock() instanceof ApiaryBreederBlock ||
+				block.getBlock() instanceof ApiaryStorageBlock; // apairy boxes only count as beenest when they are validated
 	}
 
 

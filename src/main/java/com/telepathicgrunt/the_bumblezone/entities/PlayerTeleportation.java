@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.capabilities.PlayerPositionAndDimensio
 import com.telepathicgrunt.the_bumblezone.dimension.BzPlayerPlacement;
 import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ProductiveBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modCompat.ResourcefulBeesRedirection;
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -201,14 +202,18 @@ public class PlayerTeleportation {
     private static boolean isValidBeeHive(BlockState block) {
         if(block.getBlock() instanceof BeehiveBlock) {
             if(Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get() ||
-                block.getBlock().getRegistryName().getNamespace().equals("minecraft")) {
+                Registry.BLOCK.getKey(block.getBlock()).getNamespace().equals("minecraft")) {
 
                 return true;
             }
         }
 
-        if(ModChecker.productiveBeesPresent && Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get()) {
-            return ProductiveBeesRedirection.PBIsAdvancedBeehiveAbstractBlock(block);
+        if(Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get()) {
+            if(ModChecker.productiveBeesPresent && ProductiveBeesRedirection.PBIsAdvancedBeehiveAbstractBlock(block))
+                return true;
+
+            if(ModChecker.resourcefulBeesPresent && ResourcefulBeesRedirection.RBIsApairyBlock(block))
+                return true;
         }
 
         return false;

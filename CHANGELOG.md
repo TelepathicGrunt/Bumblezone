@@ -24,6 +24,9 @@ Mods I'm keeping an eye on for future compat
 
     Mod Compat:
 • Fixed crash with Resourceful Bees
+
+• Added mod compat with Resourceful Bees! Use their Apairy or hive blocks to enter Bumblezone!
+  Their bees spawn in the dimension and from the Honeycomb Brood Blocks!
   
 • Fixed possible crash with registering Dispenser Behaviors.
    

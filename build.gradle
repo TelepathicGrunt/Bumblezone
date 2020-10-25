@@ -53,12 +53,14 @@ minecraft {
         client {
             workingDirectory project.file('run')
 			arg "-mixin.config="+archivesBaseName+".mixins.json"
+			property 'mixin.env.disableRefMap', 'true'
             mods { the_bumblezone { source sourceSets.main } }
         }
 
         server {
             workingDirectory project.file('run')
 			arg "-mixin.config="+archivesBaseName+".mixins.json"
+			property 'mixin.env.disableRefMap', 'true'
             mods { the_bumblezone { source sourceSets.main } }
         }
     }
@@ -75,7 +77,7 @@ dependencies {
 	// implementation fg.deobf("ignored:Buzzier-Bees-1.15.2:1.5.2")
 	//implementation fg.deobf("ignored:potionofbees-1.16.1:1.0.1.0")
 	implementation fg.deobf("ignored:productivebees-1.16.3:0.4.1.4")
-	//implementation fg.deobf("ignored:resourcefulbees-1.16.3:0.5.4b")
+	implementation fg.deobf("ignored:resourcefulbees-1.16.3:0.5.4b")
 	implementation fg.deobf("ignored:carrierbees-1.16.3:0.0.2.2")
 	implementation fg.deobf("ignored:potionofbees-1.16.3:1.1.0.0")
 	implementation fg.deobf("ignored:amb-1.16.3:0.1.0")
