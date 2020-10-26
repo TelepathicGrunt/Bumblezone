@@ -24,6 +24,7 @@ import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
@@ -111,22 +112,26 @@ public class Bumblezone{
     }
 
     public void registerBlocks(final RegistryEvent.Register<Block> event) {
-        BzBlocks.registerBlocks();
+        BzBlocks.registerBlocks(event);
     }
 
     public void registerItems(final RegistryEvent.Register<Item> event) {
-        BzItems.registerItems();
+        BzItems.registerItems(event);
+    }
+
+    public void registerFluids(final RegistryEvent.Register<Fluid> event) {
+        BzBlocks.registerFluids(event);
     }
 
     public void registerEntity(final RegistryEvent.Register<EntityType<?>> event) {
-        BzEntities.registerEntities();
+        BzEntities.registerEntities(event);
     }
 
     /**
      * This method will be called by Forge when it is time for the mod to register features.
      */
     public void registerFeatures(final RegistryEvent.Register<Feature<?>> event) {
-        BzFeatures.registerFeatures();
+        BzFeatures.registerFeatures(event);
         BzConfiguredFeatures.registerConfiguredFeatures();
     }
 
@@ -134,21 +139,21 @@ public class Bumblezone{
      * This method will be called by Forge when it is time for the mod to register effects.
      */
     public void registerEffects(final RegistryEvent.Register<Effect> event) {
-        BzEffects.registerEffects();
+        BzEffects.registerEffects(event);
     }
 
     /**
      * This method will be called by Forge when it is time for the mod to register placement.
      */
     public void registerPlacements(final RegistryEvent.Register<Placement<?>> event) {
-        BzPlacements.registerPlacements();
+        BzPlacements.registerPlacements(event);
     }
 
     /**
      * This method will be called by Forge when it is time for the mod to register surface builders.
      */
     public void registerSurfacebuilders(final RegistryEvent.Register<SurfaceBuilder<?>> event) {
-        BzSurfaceBuilders.registerSurfaceBuilders();
+        BzSurfaceBuilders.registerSurfaceBuilders(event);
     }
 
     public void registerSerializers(final RegistryEvent.Register<IRecipeSerializer<?>> event) {
@@ -156,13 +161,9 @@ public class Bumblezone{
     }
 
     public void registerBiomes(final RegistryEvent.Register<Biome> event) {
-        reserveBiomeIDs();
-    }
-
-    public static void reserveBiomeIDs() {
         //Reserve Bumblezone biome IDs for the json version to replace
-        Registry.register(WorldGenRegistries.BIOME, BzBiomeProvider.HIVE_WALL, BiomeMaker.createNormalOcean(false));
-        Registry.register(WorldGenRegistries.BIOME, BzBiomeProvider.HIVE_PILLAR, BiomeMaker.createNormalOcean(false));
-        Registry.register(WorldGenRegistries.BIOME, BzBiomeProvider.SUGAR_WATER_FLOOR, BiomeMaker.createNormalOcean(false));
+        event.getRegistry().register(BiomeMaker.createTheVoid().setRegistryName(BzBiomeProvider.HIVE_WALL));
+        event.getRegistry().register(BiomeMaker.createTheVoid().setRegistryName(BzBiomeProvider.HIVE_PILLAR));
+        event.getRegistry().register(BiomeMaker.createTheVoid().setRegistryName(BzBiomeProvider.SUGAR_WATER_FLOOR));
     }
 }

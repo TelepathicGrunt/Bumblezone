@@ -18,12 +18,18 @@ Mods I'm keeping an eye on for future compat
     
    (V.2.2.1 Changes) (1.16.3 Minecraft)
    
+    Major:
+• Register to Forge registry instead of vanilla due to a breaking 
+  change done by Forge and they didn't even give us modders a heads up.
+  Thank you Forge. Thank you so very much. Glad to see them thinking about
+  the modders and making sure we wake up to our mods blowing up. ffs
+
     Dimension:
 • Optimized the SurfaceBuilder and the caves a bit!
   The underwater block in the configured surfacebuilder json file
   was changed from the_bumblezone:porous_honeycomb_block to 
   the_bumblezone:filled_porous_honeycomb_block.
-
+ 
   
    (V.2.2.0 Changes) (1.16.3 Minecraft)
    
