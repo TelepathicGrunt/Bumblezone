@@ -42,30 +42,22 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
             blockpos$Mutable.setPos(xpos, ypos, zpos);
             BlockState currentBlockState = chunkIn.getBlockState(blockpos$Mutable);
 
-            if (currentBlockState.getMaterial() != Material.AIR) {
-                if (currentBlockState == STONE) {
-                    chunkIn.setBlockState(blockpos$Mutable, HONEYCOMB_BLOCK, false);
-                    isSurface = false;
-                }
-                else if (currentBlockState == POROUS_HONEYCOMB) {
-                    if (ypos <= 40 + 2 + Math.max(noise, 0) + random.nextInt(2)) {
-                        if (isSurface && ModChecker.resourcefulBeesPresent && Bumblezone.BzModCompatibilityConfig.RBBeesWaxWorldgen.get()
-                            && noise + random.nextInt(2) < -1)
-                        {
-                            chunkIn.setBlockState(blockpos$Mutable, ResourcefulBeesRedirection.getRBBeesWaxBlock(), false);
-                        }
-                        else{
-                            chunkIn.setBlockState(blockpos$Mutable, FILLED_POROUS_HONEYCOMB, false);
-                        }
+            if (currentBlockState.getMaterial() != Material.AIR && currentBlockState.getFluidState().isEmpty()) {
+
+                if (ypos <= seaLevel + 2 + Math.max(noise, 0) + random.nextInt(2)) {
+                    if (isSurface &&
+                        ModChecker.resourcefulBeesPresent &&
+                        Bumblezone.BzModCompatibilityConfig.RBBeesWaxWorldgen.get() &&
+                        noise + random.nextInt(2) < -1)
+                    {
+                        chunkIn.setBlockState(blockpos$Mutable, ResourcefulBeesRedirection.getRBBeesWaxBlock(), false);
                     }
-                    isSurface = false;
-                }
-                else if (currentBlockState.isAir()) {
-                    if (ypos < 40) {
-                        chunkIn.setBlockState(blockpos$Mutable, defaultFluid, false);
+                    else if (currentBlockState == config.getTop() || currentBlockState == config.getUnder()) {
+                        chunkIn.setBlockState(blockpos$Mutable, config.getUnderWaterMaterial(), false);
                     }
-                    isSurface = true;
                 }
+
+                isSurface = false;
             }
             else{
                 isSurface = true;

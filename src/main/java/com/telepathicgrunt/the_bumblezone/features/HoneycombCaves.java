@@ -155,20 +155,28 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
         BlockPos.Mutable mutableBlockPos = position.mutableCopy();
         BlockPos.Mutable mutableBlockPos2 = position.mutableCopy();
         BlockPos.Mutable mutableBlockPos3 = position.mutableCopy();
+        double noise1;
+        double noise2;
+        double finalNoise;
 
         for (int x = 0; x < 16; x++) {
             for (int y = 15; y < 241; y++) {
                 for (int z = 0; z < 16; z++) {
                     mutableBlockPos.setPos(position).move(x, y, z);
-                    double noise1 = noiseGen.eval(mutableBlockPos.getX() * 0.02D,
+
+                    noise1 = noiseGen.eval(mutableBlockPos.getX() * 0.02D,
                             mutableBlockPos.getZ() * 0.02D,
                             mutableBlockPos.getY() * 0.04D);
 
-                    double noise2 = noiseGen2.eval(mutableBlockPos.getX() * 0.02D,
+                    if(noise1 >= 0.3D){
+                        continue;
+                    }
+
+                    noise2 = noiseGen2.eval(mutableBlockPos.getX() * 0.02D,
                             mutableBlockPos.getZ() * 0.02D,
                             mutableBlockPos.getY() * 0.04D);
 
-                    double finalNoise = noise1 * noise1 + noise2 * noise2;
+                    finalNoise = noise1 * noise1 + noise2 * noise2;
 
                     if (finalNoise < 0.0009f) {
                         hexagon(world, generator, mutableBlockPos, mutableBlockPos2, mutableBlockPos3, random, noise1);

@@ -15,7 +15,16 @@ Mods I'm keeping an eye on for future compat
 
 ------------------------------------------------
 # | Bumblezone changelog |
+    
+   (V.2.2.1 Changes) (1.16.3 Minecraft)
    
+    Dimension:
+• Optimized the SurfaceBuilder and the caves a bit!
+  The underwater block in the configured surfacebuilder json file
+  was changed from the_bumblezone:porous_honeycomb_block to 
+  the_bumblezone:filled_porous_honeycomb_block.
+
+  
    (V.2.2.0 Changes) (1.16.3 Minecraft)
    
     Dimension:

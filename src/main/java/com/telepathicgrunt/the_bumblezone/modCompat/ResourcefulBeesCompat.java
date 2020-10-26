@@ -7,7 +7,6 @@ import com.resourcefulbees.resourcefulbees.block.multiblocks.apiary.ApiaryStorag
 import com.resourcefulbees.resourcefulbees.registry.ModBlocks;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.features.BzConfiguredFeatures;
-import com.telepathicgrunt.the_bumblezone.features.BzFeatures;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
