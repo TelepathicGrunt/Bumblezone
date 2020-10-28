@@ -40,6 +40,6 @@ public class BzFluids
 
     private static <F extends Fluid> RegistryObject<F> createFluid(String name, Supplier<F> fluid)
     {
-		return FLUIDS.register(name, fluid);
-	}
+        return FLUIDS.register(name, fluid);
+    }
 }
