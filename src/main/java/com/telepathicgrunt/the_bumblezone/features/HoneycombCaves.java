@@ -62,6 +62,7 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
         setSeed(world.getSeed());
         BlockPos.Mutable mutableBlockPos = position.mutableCopy();
         BlockPos.Mutable mutableBlockPos2 = position.mutableCopy();
+        double threshold = 0.025;
 
         for (int x = 0; x < 16; x++) {
             for (int y = 15; y < 241; y++) {
@@ -71,22 +72,22 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
                     BlockState state = world.getBlockState(mutableBlockPos);
                     if(!state.isSolid()) continue; // Skip carving non-solid spots
 
-                    double noise1 = noiseGen.eval(mutableBlockPos.getX() * 0.02D,
-                            mutableBlockPos.getZ() * 0.02D,
-                            mutableBlockPos.getY() * 0.04D);
+                    double noise1 = noiseGen.eval(mutableBlockPos.getX() * 0.01D,
+                            mutableBlockPos.getZ() * 0.01D,
+                            mutableBlockPos.getY() * 0.02D);
 
-                    double noise2 = noiseGen2.eval(mutableBlockPos.getX() * 0.02D,
-                            mutableBlockPos.getZ() * 0.02D,
-                            mutableBlockPos.getY() * 0.04D);
+                    double noise2 = noiseGen2.eval(mutableBlockPos.getX() * 0.01D,
+                            mutableBlockPos.getZ() * 0.01D,
+                            mutableBlockPos.getY() * 0.02D);
 
 
-                    double finalNoise0 = noise1 * SIN0 + noise2 * COS0;
-                    double finalNoise1 = noise1 * SIN1 + noise2 * COS1;
-                    double finalNoise2 = noise1 * SIN2 + noise2 * COS2;
+                    double finalNoise0 = Math.abs((noise1 * SIN0) + (noise2 * COS0));
+                    double finalNoise1 = Math.abs((noise1 * SIN1) + (noise2 * COS1));
+                    double finalNoise2 = Math.abs((noise1 * SIN2) + (noise2 * COS2));
                     double finalNoise = Math.min(finalNoise0, Math.min(finalNoise1, finalNoise2));
 
-                    if (finalNoise < -0.75) {
-                        carveAtBlock(world, generator, random, mutableBlockPos, mutableBlockPos2, state, finalNoise > -0.76);
+                    if (finalNoise < threshold) {
+                        carveAtBlock(world, generator, random, mutableBlockPos, mutableBlockPos2, state, finalNoise > threshold - 0.005);
                     }
                 }
             }
