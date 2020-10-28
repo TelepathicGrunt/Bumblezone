@@ -87,7 +87,7 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
                     double finalNoise = Math.min(finalNoise0, Math.min(finalNoise1, finalNoise2));
 
                     if (finalNoise < threshold) {
-                        carveAtBlock(world, generator, random, mutableBlockPos, mutableBlockPos2, state, finalNoise > threshold - 0.005);
+                        carveAtBlock(world, generator, random, mutableBlockPos, mutableBlockPos2, state, false);
                     }
                 }
             }
