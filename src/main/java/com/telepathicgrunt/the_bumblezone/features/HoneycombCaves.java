@@ -1,8 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.features;
 
+import java.util.Random;
+
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplexNoise;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.Direction;
@@ -11,17 +15,16 @@ import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
-
-import java.util.Random;
+import net.minecraftforge.common.util.Lazy;
 
 
 public class HoneycombCaves extends Feature<NoFeatureConfig> {
     //https://github.com/Deadrik/TFC2
 
     private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
-    private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState();
+    private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState();
     private static final BlockState HONEYCOMB_BLOCK = Blocks.HONEYCOMB_BLOCK.getDefaultState();
-    private static final BlockState SUGAR_WATER = BzBlocks.SUGAR_WATER_BLOCK.getDefaultState();
+    private static final Lazy<BlockState> SUGAR_WATER = Lazy.of(() -> BzFluids.SUGAR_WATER_BLOCK.get().getDefaultState());
 
 
     protected long seed;
@@ -218,7 +221,7 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
         {
             if (posResult == 2) {
                 if (position.getY() < 40) {
-                    world.setBlockState(position, SUGAR_WATER, 3);
+                    world.setBlockState(position, SUGAR_WATER.get(), 3);
                 } else {
                     world.setBlockState(position, CAVE_AIR, 3);
                 }

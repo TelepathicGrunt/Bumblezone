@@ -228,7 +228,7 @@ public class StickyHoneyResidue extends VineBlock {
                 ((BucketItem) itemstack.getItem()).getFluid().isIn(FluidTags.WATER)) ||
                 itemstack.getOrCreateTag().getString("Potion").contains("water") ||
                 itemstack.getItem() == Items.WET_SPONGE ||
-                itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {
+                itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
 
             world.destroyBlock(position, false);
 

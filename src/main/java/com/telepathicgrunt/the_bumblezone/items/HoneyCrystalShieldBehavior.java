@@ -71,13 +71,13 @@ public class HoneyCrystalShieldBehavior {
     public static void setShieldCooldown(PlayerEntity playerEntity, MobEntity mob){
         float f = 0.25F + (float) EnchantmentHelper.getEfficiencyModifier(mob) * 0.05F;
         if (mob.getRNG().nextFloat() < f) {
-            playerEntity.getCooldownTracker().setCooldown(BzItems.HONEY_CRYSTAL_SHIELD, 100);
+            playerEntity.getCooldownTracker().setCooldown(BzItems.HONEY_CRYSTAL_SHIELD.get(), 100);
             mob.world.setEntityState(playerEntity, (byte)30);
         }
     }
 
     public static boolean damageHoneyCrystalShield(PlayerEntity player, float amount){
-        if(player.getActiveItemStack().getItem() == BzItems.HONEY_CRYSTAL_SHIELD){
+        if(player.getActiveItemStack().getItem() == BzItems.HONEY_CRYSTAL_SHIELD.get()){
             if (amount >= 3.0F) {
                 int damageToDo = 1 + MathHelper.floor(amount);
                 Hand hand = player.getActiveHand();
@@ -108,10 +108,10 @@ public class HoneyCrystalShieldBehavior {
         if(stack.hasTag()) {
             int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
             if (repairLevel != 0) {
-                return BzItems.HONEY_CRYSTAL_SHIELD.getMaxDamage() + repairLevel * 10;
+                return BzItems.HONEY_CRYSTAL_SHIELD.get().getMaxDamage() + repairLevel * 10;
             }
         }
-        return BzItems.HONEY_CRYSTAL_SHIELD.getMaxDamage();
+        return BzItems.HONEY_CRYSTAL_SHIELD.get().getMaxDamage();
     }
 
     /**

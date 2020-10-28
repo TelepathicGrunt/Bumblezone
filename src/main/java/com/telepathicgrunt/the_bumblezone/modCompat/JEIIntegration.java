@@ -1,8 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.modCompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
 import com.telepathicgrunt.the_bumblezone.items.BzItems;
+
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
@@ -23,22 +24,22 @@ public class JEIIntegration implements IModPlugin
     
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-		addInfo(registration, BzItems.EMPTY_HONEYCOMB_LARVA);
-		addInfo(registration, BzItems.FILLED_POROUS_HONEYCOMB);
-		addInfo(registration, BzItems.HONEY_CRYSTAL);
-		addInfo(registration, BzItems.HONEY_CRYSTAL_SHARDS);
-		addInfo(registration, BzItems.HONEY_CRYSTAL_SHIELD);
-		addInfo(registration, BzItems.HONEYCOMB_LARVA);
-		addInfo(registration, BzItems.POROUS_HONEYCOMB);
-		addInfo(registration, BzItems.STICKY_HONEY_REDSTONE);
-		addInfo(registration, BzItems.STICKY_HONEY_RESIDUE);
-		addInfo(registration, BzItems.SUGAR_INFUSED_COBBLESTONE);
-		addInfo(registration, BzItems.SUGAR_INFUSED_STONE);
-		addInfo(registration, BzItems.SUGAR_WATER_BOTTLE);
-		addInfo(registration, BzItems.SUGAR_WATER_BUCKET);
-		addInfo(registration, BzItems.BEESWAX_PLANKS);
-		addInfo(registration, BzItems.HONEY_SLIME_SPAWN_EGG);
-		addInfo(registration, BzBlocks.SUGAR_WATER_FLUID);
+		addInfo(registration, BzItems.EMPTY_HONEYCOMB_LARVA.get());
+		addInfo(registration, BzItems.FILLED_POROUS_HONEYCOMB.get());
+		addInfo(registration, BzItems.HONEY_CRYSTAL.get());
+		addInfo(registration, BzItems.HONEY_CRYSTAL_SHARDS.get());
+		addInfo(registration, BzItems.HONEY_CRYSTAL_SHIELD.get());
+		addInfo(registration, BzItems.HONEYCOMB_LARVA.get());
+		addInfo(registration, BzItems.POROUS_HONEYCOMB.get());
+		addInfo(registration, BzItems.STICKY_HONEY_REDSTONE.get());
+		addInfo(registration, BzItems.STICKY_HONEY_RESIDUE.get());
+		addInfo(registration, BzItems.SUGAR_INFUSED_COBBLESTONE.get());
+		addInfo(registration, BzItems.SUGAR_INFUSED_STONE.get());
+		addInfo(registration, BzItems.SUGAR_WATER_BOTTLE.get());
+		addInfo(registration, BzItems.SUGAR_WATER_BUCKET.get());
+		addInfo(registration, BzItems.BEESWAX_PLANKS.get());
+		addInfo(registration, BzItems.HONEY_SLIME_SPAWN_EGG.get());
+		addInfo(registration, BzFluids.SUGAR_WATER_FLUID.get());
     }
 
     

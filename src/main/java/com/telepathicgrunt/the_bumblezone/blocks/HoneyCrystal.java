@@ -1,7 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import java.util.Map;
+
 import com.google.common.collect.Maps;
+import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
 import com.telepathicgrunt.the_bumblezone.items.BzItems;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -11,13 +15,25 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.item.*;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.BucketItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -26,8 +42,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-
-import java.util.Map;
 
 
 public class HoneyCrystal extends Block {
@@ -72,7 +86,7 @@ public class HoneyCrystal extends Block {
     @SuppressWarnings("deprecation")
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? BzBlocks.SUGAR_WATER_FLUID.getStillFluidState(false) : super.getFluidState(state);
+        return state.get(WATERLOGGED) ? BzFluids.SUGAR_WATER_FLUID.get().getStillFluidState(false) : super.getFluidState(state);
     }
 
     /**
@@ -107,7 +121,7 @@ public class HoneyCrystal extends Block {
             return Blocks.AIR.getDefaultState();
         } else {
             if (blockstate.get(WATERLOGGED)) {
-                world.getPendingFluidTicks().scheduleTick(currentPos, BzBlocks.SUGAR_WATER_FLUID, BzBlocks.SUGAR_WATER_FLUID.getTickRate(world));
+                world.getPendingFluidTicks().scheduleTick(currentPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickRate(world));
             }
 
             return super.updatePostPlacement(blockstate, facing, facingState, world, currentPos, facingPos);
@@ -163,7 +177,7 @@ public class HoneyCrystal extends Block {
 
                 //make block waterlogged
                 world.setBlockState(position, blockstate.with(WATERLOGGED, true));
-                world.getPendingFluidTicks().scheduleTick(position, BzBlocks.SUGAR_WATER_FLUID, BzBlocks.SUGAR_WATER_FLUID.getTickRate(world));
+                world.getPendingFluidTicks().scheduleTick(position, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickRate(world));
                 world.playSound(
                         playerEntity,
                         playerEntity.getX(),
@@ -198,7 +212,7 @@ public class HoneyCrystal extends Block {
 
                 //set player bucket to be full of sugar water if not in creative
                 if (!playerEntity.isCreative()) {
-                    playerEntity.setHeldItem(playerHand, new ItemStack(BzItems.SUGAR_WATER_BUCKET));
+                    playerEntity.setHeldItem(playerHand, new ItemStack(BzItems.SUGAR_WATER_BUCKET.get()));
                 }
 
                 return ActionResultType.SUCCESS;
@@ -212,11 +226,11 @@ public class HoneyCrystal extends Block {
             itemstack.shrink(1); // remove current honey bottle
 
             if (itemstack.isEmpty()) {
-                playerEntity.setHeldItem(playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE)); // places sugar water bottle in hand
+                playerEntity.setHeldItem(playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get())); // places sugar water bottle in hand
             }
-            else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(BzItems.SUGAR_WATER_BOTTLE))) // places sugar water bottle in inventory
+            else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()))) // places sugar water bottle in inventory
             {
-                playerEntity.dropItem(new ItemStack(BzItems.SUGAR_WATER_BOTTLE), false); // drops sugar water bottle if inventory is full
+                playerEntity.dropItem(new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()), false); // drops sugar water bottle if inventory is full
             }
 
             return ActionResultType.SUCCESS;
@@ -239,7 +253,7 @@ public class HoneyCrystal extends Block {
      */
     @Override
     public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-        items.add(new ItemStack(BzItems.HONEY_CRYSTAL));
+        items.add(new ItemStack(BzItems.HONEY_CRYSTAL.get()));
     }
 
     /**
@@ -248,7 +262,7 @@ public class HoneyCrystal extends Block {
     @Override
     public Item asItem() {
         if (this.item == null) {
-            this.item = BzItems.HONEY_CRYSTAL_SHARDS;
+            this.item = BzItems.HONEY_CRYSTAL_SHARDS.get();
         }
 
         return this.item;

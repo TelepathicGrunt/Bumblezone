@@ -52,10 +52,10 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
 
    private static final HashSet<Block> HONEY_BASED_BLOCKS = Stream.of(
            Blocks.HONEY_BLOCK,
-           BzBlocks.FILLED_POROUS_HONEYCOMB,
-           BzBlocks.HONEYCOMB_BROOD,
-           BzBlocks.STICKY_HONEY_REDSTONE,
-           BzBlocks.STICKY_HONEY_RESIDUE)
+           BzBlocks.FILLED_POROUS_HONEYCOMB.get(),
+           BzBlocks.HONEYCOMB_BROOD.get(),
+           BzBlocks.STICKY_HONEY_REDSTONE.get(),
+           BzBlocks.STICKY_HONEY_RESIDUE.get())
            .collect(Collectors.toCollection(HashSet::new));
 
    public float squishAmount;
@@ -64,7 +64,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    private boolean wasOnGround;
 
    public HoneySlimeEntity(World worldIn) {
-      super(BzEntities.HONEY_SLIME, worldIn);
+      super(BzEntities.HONEY_SLIME.get(), worldIn);
    }
 
    public HoneySlimeEntity(EntityType<? extends HoneySlimeEntity> type, World worldIn) {
@@ -255,7 +255,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
 
    @Override
    public AgeableEntity createChild(ServerWorld worldIn, AgeableEntity ageable) {
-      HoneySlimeEntity childHoneySlimeEntity = BzEntities.HONEY_SLIME.create(worldIn);
+      HoneySlimeEntity childHoneySlimeEntity = BzEntities.HONEY_SLIME.get().create(worldIn);
 
       if (childHoneySlimeEntity != null)
          childHoneySlimeEntity.setSlimeSize(1, true);

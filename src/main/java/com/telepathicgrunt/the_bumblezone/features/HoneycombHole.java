@@ -1,8 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.features;
 
+import java.util.Random;
+
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
@@ -13,8 +17,7 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
-
-import java.util.Random;
+import net.minecraftforge.common.util.Lazy;
 
 
 public class HoneycombHole extends Feature<NoFeatureConfig> {
@@ -76,11 +79,11 @@ public class HoneycombHole extends Feature<NoFeatureConfig> {
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
             };
 
-    private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState();
+    private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState();
     private static final BlockState HONEY_BLOCK = Blocks.HONEY_BLOCK.getDefaultState();
     private static final BlockState HONEYCOMB_BLOCK = Blocks.HONEYCOMB_BLOCK.getDefaultState();
     private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
-    private static final BlockState SUGAR_WATER = BzBlocks.SUGAR_WATER_BLOCK.getDefaultState();
+    private static final Lazy<BlockState> SUGAR_WATER = Lazy.of(() -> BzFluids.SUGAR_WATER_BLOCK.get().getDefaultState());
     
     public HoneycombHole(Codec<NoFeatureConfig> configFactory) {
         super(configFactory);
@@ -145,7 +148,7 @@ public class HoneycombHole extends Feature<NoFeatureConfig> {
                             world.setBlockState(currentPosition, CAVE_AIR, 2);
                         }
                         else {
-                            world.setBlockState(currentPosition, SUGAR_WATER, 2);
+                            world.setBlockState(currentPosition, SUGAR_WATER.get(), 2);
                         }
                     }
                     else if (sliceBlock == 5) {
@@ -159,9 +162,9 @@ public class HoneycombHole extends Feature<NoFeatureConfig> {
                                 facing = Direction.EAST;
 
                             if (random.nextFloat() < 0.8f)
-                                world.setBlockState(currentPosition, BzBlocks.HONEYCOMB_BROOD.getDefaultState().with(HoneycombBrood.STAGE, random.nextInt(3)).with(HoneycombBrood.FACING, facing), 2);
+                                world.setBlockState(currentPosition, BzBlocks.HONEYCOMB_BROOD.get().getDefaultState().with(HoneycombBrood.STAGE, random.nextInt(3)).with(HoneycombBrood.FACING, facing), 2);
                             else
-                                world.setBlockState(currentPosition, BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState().with(HoneycombBrood.FACING, facing), 2);
+                                world.setBlockState(currentPosition, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().getDefaultState().with(HoneycombBrood.FACING, facing), 2);
                         }
                         else if (chance <= 6) {
                             world.setBlockState(currentPosition, FILLED_POROUS_HONEYCOMB, 2);

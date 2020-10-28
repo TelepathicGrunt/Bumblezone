@@ -27,7 +27,7 @@ public class BeeInteractivity {
             BeeEntity beeEntity = (BeeEntity) target;
             ItemStack itemstack = playerEntity.getHeldItem(hand);
 
-            if (itemstack.getItem() == Items.HONEY_BOTTLE || itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {
+            if (itemstack.getItem() == Items.HONEY_BOTTLE || itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
 
                 world.playSound(
                         playerEntity,
@@ -53,13 +53,13 @@ public class BeeInteractivity {
                     // high chance to remove wrath of the hive from player
                     boolean calmed = world.getRandom().nextFloat() < 0.3f;
                     if (calmed) {
-                        if(playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE)){
-                            playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
+                        if(playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE.get())){
+                            playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE.get());
                             WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
                         }
                         else{
                             playerEntity.addPotionEffect(new EffectInstance(
-                                    BzEffects.PROTECTION_OF_THE_HIVE,
+                                    BzEffects.PROTECTION_OF_THE_HIVE.get(),
                                     Bumblezone.BzBeeAggressionConfig.howLongProtectionOfTheHiveLasts.get(),
                                     2,
                                     false,
@@ -95,13 +95,13 @@ public class BeeInteractivity {
                     // very low chance to remove wrath of the hive from player
                     boolean calmed = world.getRandom().nextFloat() < 0.07f;
                     if (calmed) {
-                        if(playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE)){
-                            playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
+                        if(playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE.get())){
+                            playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE.get());
                             WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
                         }
                         else{
                             playerEntity.addPotionEffect(new EffectInstance(
-                                    BzEffects.PROTECTION_OF_THE_HIVE,
+                                    BzEffects.PROTECTION_OF_THE_HIVE.get(),
                                     Bumblezone.BzBeeAggressionConfig.howLongProtectionOfTheHiveLasts.get(),
                                     2,
                                     false,

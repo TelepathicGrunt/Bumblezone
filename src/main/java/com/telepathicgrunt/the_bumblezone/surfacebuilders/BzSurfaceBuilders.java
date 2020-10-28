@@ -1,18 +1,23 @@
 package com.telepathicgrunt.the_bumblezone.surfacebuilders;
 
+import java.util.function.Supplier;
+
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.generation.BzBiomeProvider;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.BiomeMaker;
+
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
-import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
-public class BzSurfaceBuilders {
-    public static final SurfaceBuilder<SurfaceBuilderConfig> HONEY_SURFACE_BUILDER = new HoneySurfaceBuilder(SurfaceBuilderConfig.CODEC);
-
-    public static void registerSurfaceBuilders(final RegistryEvent.Register<SurfaceBuilder<?>> event) {
-        event.getRegistry().register(HONEY_SURFACE_BUILDER.setRegistryName(new ResourceLocation(Bumblezone.MODID, "honey_surface_builder")));
-    }
+public class BzSurfaceBuilders
+{
+	public static final DeferredRegister<SurfaceBuilder<?>> SURFACE_BUILDERS = DeferredRegister.create(ForgeRegistries.SURFACE_BUILDERS, Bumblezone.MODID);
+	
+    public static final RegistryObject<SurfaceBuilder<SurfaceBuilderConfig>> HONEY_SURFACE_BUILDER = createSurfaceBuilder("honey_surface_builder", () -> new HoneySurfaceBuilder(SurfaceBuilderConfig.CODEC));
+    
+    public static <S extends SurfaceBuilder<?>> RegistryObject<S> createSurfaceBuilder(String name, Supplier<? extends S> surfaceBuilder)
+	{
+		return SURFACE_BUILDERS.register(name, surfaceBuilder);
+	}
 }

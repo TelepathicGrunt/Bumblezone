@@ -2,6 +2,8 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
@@ -35,7 +37,7 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
         BlockPos position = new BlockPos(iposition);
         BlockState blockstate = world.getBlockState(position);
 
-        if (blockstate.getBlock() == BzBlocks.HONEYCOMB_BROOD) {
+        if (blockstate.getBlock() == BzBlocks.HONEYCOMB_BROOD.get()) {
             // spawn bee if at final stage and front isn't blocked off
             int stage = blockstate.get(HoneycombBrood.STAGE);
             if (stage == 3) {
@@ -54,7 +56,7 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
             }
 
             // kill the brood block
-            world.setBlockState(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
+            world.setBlockState(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().getDefaultState()
                     .with(BlockStateProperties.FACING, blockstate.get(BlockStateProperties.FACING)));
             stack.shrink(1);
 
@@ -64,8 +66,8 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
                 stack = new ItemStack(Items.HONEY_BOTTLE);
         }
         // remove honey
-        else if (blockstate.getBlock() == BzBlocks.FILLED_POROUS_HONEYCOMB) {
-            world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.getDefaultState());
+        else if (blockstate.getBlock() == BzBlocks.FILLED_POROUS_HONEYCOMB.get()) {
+            world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.get().getDefaultState());
             stack.shrink(1);
 
             if (!stack.isEmpty())
@@ -74,13 +76,13 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
                 stack = new ItemStack(Items.HONEY_BOTTLE);
         }
         //pick up sugar water
-        else if (blockstate.getBlock() == BzBlocks.SUGAR_WATER_BLOCK ||
-                (blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL && blockstate.get(BlockStateProperties.WATERLOGGED))) {
+        else if (blockstate.getBlock() == BzFluids.SUGAR_WATER_BLOCK.get() ||
+                (blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL.get() && blockstate.get(BlockStateProperties.WATERLOGGED))) {
             stack.shrink(1);
             if(!stack.isEmpty())
-                addHoneyBottleToDispenser(source, BzItems.SUGAR_WATER_BOTTLE);
+                addHoneyBottleToDispenser(source, BzItems.SUGAR_WATER_BOTTLE.get());
             else
-                stack = new ItemStack(BzItems.SUGAR_WATER_BOTTLE);
+                stack = new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get());
         }
         else {
             return DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR.dispense(source, stack);

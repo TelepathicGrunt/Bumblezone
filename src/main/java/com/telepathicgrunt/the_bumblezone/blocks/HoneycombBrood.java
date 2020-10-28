@@ -100,7 +100,7 @@ public class HoneycombBrood extends DirectionalBlock {
          * Player is taking honey and killing larva
          */
         if (itemstack.getItem() == Items.GLASS_BOTTLE) {
-            world.setBlockState(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState().with(BlockStateProperties.FACING, thisBlockState.get(BlockStateProperties.FACING)), 3); // removed honey from this block
+            world.setBlockState(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().getDefaultState().with(BlockStateProperties.FACING, thisBlockState.get(BlockStateProperties.FACING)), 3); // removed honey from this block
 
             //spawn angry bee if at final stage and front isn't blocked off
             int stage = thisBlockState.get(STAGE);
@@ -124,13 +124,13 @@ public class HoneycombBrood extends DirectionalBlock {
                     !playerEntity.isSpectator() &&
                     Bumblezone.BzBeeAggressionConfig.aggressiveBees.get())
             {
-                if(playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
-                    playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                if(playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE.get())){
+                    playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                 }
                 else {
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
                     playerEntity.addPotionEffect(new EffectInstance(
-                            BzEffects.WRATH_OF_THE_HIVE,
+                            BzEffects.WRATH_OF_THE_HIVE.get(),
                             Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
                             2,
                             false,
@@ -144,12 +144,12 @@ public class HoneycombBrood extends DirectionalBlock {
         /*
          * Player is feeding larva
          */
-        else if (itemstack.getItem() == Items.HONEY_BOTTLE || itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {
+        else if (itemstack.getItem() == Items.HONEY_BOTTLE || itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
             if (!world.isRemote) {
                 boolean successfulGrowth = false;
 
                 //chance of growing the larva
-                if (itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {
+                if (itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
                     if (world.rand.nextFloat() < 0.30F)
                         successfulGrowth = true;
                 } else {
@@ -157,8 +157,8 @@ public class HoneycombBrood extends DirectionalBlock {
                 }
 
                 if (successfulGrowth && world.rand.nextFloat() < 0.30F) {
-                    if(!playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE)){
-                        playerEntity.addPotionEffect(new EffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, (int) (Bumblezone.BzBeeAggressionConfig.howLongProtectionOfTheHiveLasts.get() * 0.75f), 1, false, false,  true));
+                    if(!playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE.get())){
+                        playerEntity.addPotionEffect(new EffectInstance(BzEffects.PROTECTION_OF_THE_HIVE.get(), (int) (Bumblezone.BzBeeAggressionConfig.howLongProtectionOfTheHiveLasts.get() * 0.75f), 1, false, false,  true));
                     }
                 }
 
@@ -213,7 +213,7 @@ public class HoneycombBrood extends DirectionalBlock {
 
             List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, FIXED_DISTANCE, null, new AxisAlignedBB(position).grow(50));
             List<PlayerEntity> playerList = world.getTargettableEntitiesWithinAABB(PlayerEntity.class, PLAYER_DISTANCE, null, new AxisAlignedBB(position).grow(50));
-            if (beeList.size() < 3 || playerList.stream().anyMatch(player -> player.isPotionActive(BzEffects.WRATH_OF_THE_HIVE))) {
+            if (beeList.size() < 3 || playerList.stream().anyMatch(player -> player.isPotionActive(BzEffects.WRATH_OF_THE_HIVE.get()))) {
                 spawnBroodMob(world, state, position, stage);
             }
         }
@@ -240,12 +240,12 @@ public class HoneycombBrood extends DirectionalBlock {
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&
                     Bumblezone.BzBeeAggressionConfig.aggressiveBees.get()) {
-                if (playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)) {
-                    playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                if (playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
+                    playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                 }
                 else {
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
-                    playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(), true));
+                    playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(), true));
                 }
             }
         }
@@ -265,7 +265,7 @@ public class HoneycombBrood extends DirectionalBlock {
             spawnMob(world, blockpos, beeMob, beeMob);
 
             if(world.rand.nextFloat() < 0.1f){
-                MobEntity honeySlimeMob = BzEntities.HONEY_SLIME.create(world);
+                MobEntity honeySlimeMob = BzEntities.HONEY_SLIME.get().create(world);
                 spawnMob(world, blockpos, beeMob, honeySlimeMob);
             }
 

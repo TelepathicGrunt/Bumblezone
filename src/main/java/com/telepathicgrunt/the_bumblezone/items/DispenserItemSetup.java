@@ -41,9 +41,9 @@ public class DispenserItemSetup {
                     bucketitem.onLiquidPlaced(world, stack, blockpos);
                     return new ItemStack(Items.BUCKET);
                 }
-                else if(blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL && !blockstate.get(BlockStateProperties.WATERLOGGED)) {
+                else if(blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL.get() && !blockstate.get(BlockStateProperties.WATERLOGGED)) {
 
-                    world.setBlockState(blockpos, BzBlocks.HONEY_CRYSTAL.getDefaultState()
+                    world.setBlockState(blockpos, BzBlocks.HONEY_CRYSTAL.get().getDefaultState()
                             .with(BlockStateProperties.FACING, blockstate.get(BlockStateProperties.FACING))
                             .with(BlockStateProperties.WATERLOGGED, true));
                     return new ItemStack(Items.BUCKET);
@@ -53,8 +53,8 @@ public class DispenserItemSetup {
                 }
             }
         };
-        DispenserBlock.registerDispenseBehavior(BzItems.SUGAR_WATER_BUCKET, genericBucketDispenseBehavior); // adds compatibility with sugar water buckets in dispensers
-        DispenserBlock.registerDispenseBehavior(BzItems.SUGAR_WATER_BOTTLE, new SugarWaterBottleDispenseBehavior()); // adds compatibility with sugar water bottles in dispensers
+        DispenserBlock.registerDispenseBehavior(BzItems.SUGAR_WATER_BUCKET.get(), genericBucketDispenseBehavior); // adds compatibility with sugar water buckets in dispensers
+        DispenserBlock.registerDispenseBehavior(BzItems.SUGAR_WATER_BOTTLE.get(), new SugarWaterBottleDispenseBehavior()); // adds compatibility with sugar water bottles in dispensers
 
 
 
@@ -78,6 +78,6 @@ public class DispenserItemSetup {
         DispenserBlock.registerDispenseBehavior(Items.HONEY_BOTTLE, new HoneyBottleDispenseBehavior());
         DispenserBlock.registerDispenseBehavior(Items.BUCKET, new EmptyBucketDispenseBehavior());
 
-        DispenserBlock.registerDispenseBehavior(BzItems.HONEY_CRYSTAL_SHIELD, ArmorItem.DISPENSER_BEHAVIOR);
+        DispenserBlock.registerDispenseBehavior(BzItems.HONEY_CRYSTAL_SHIELD.get(), ArmorItem.DISPENSER_BEHAVIOR);
     }
 }

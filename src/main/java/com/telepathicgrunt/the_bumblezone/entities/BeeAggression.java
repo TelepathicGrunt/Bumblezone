@@ -102,13 +102,13 @@ public class BeeAggression {
 
             //if player picks up a honey block, bees gets very mad...
             if (item == Items.HONEY_BLOCK && Bumblezone.BzBeeAggressionConfig.aggressiveBees.get()) {
-                if(player.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
-                    player.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                if(player.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE.get())){
+                    player.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                 }
                 else {
                     //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
                     player.addPotionEffect(new EffectInstance(
-                            BzEffects.WRATH_OF_THE_HIVE,
+                            BzEffects.WRATH_OF_THE_HIVE.get(),
                             Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
                             2,
                             false,
@@ -139,12 +139,12 @@ public class BeeAggression {
 
                 //if player drinks honey, bees gets very mad...
                 if (stack.getItem() == Items.HONEY_BOTTLE) {
-                    if(playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
-                        playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                    if(playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE.get())){
+                        playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                     }
                     else{
                         playerEntity.addPotionEffect(new EffectInstance(
-                                BzEffects.WRATH_OF_THE_HIVE,
+                                BzEffects.WRATH_OF_THE_HIVE.get(),
                                 Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
                                 2,
                                 false,
@@ -174,13 +174,13 @@ public class BeeAggression {
                     !attackerEntity.isSpectator())
             {
                 PlayerEntity player = ((PlayerEntity) attackerEntity);
-                if(player.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
-                    player.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                if(player.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE.get())){
+                    player.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                     WrathOfTheHiveEffect.calmTheBees(player.world, player); // prevent bees from be naturally angry
                 }
                 else {
                     player.addPotionEffect(new EffectInstance(
-                            BzEffects.WRATH_OF_THE_HIVE,
+                            BzEffects.WRATH_OF_THE_HIVE.get(),
                             Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
                             2,
                             false,
@@ -191,13 +191,13 @@ public class BeeAggression {
             else if(attackerEntity instanceof MobEntity)
             {
                 MobEntity mob = ((MobEntity) attackerEntity);
-                if(mob.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE)){
-                    mob.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                if(mob.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE.get())){
+                    mob.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                     WrathOfTheHiveEffect.calmTheBees(mob.world, mob); // prevent bees from be naturally angry
                 }
                 else {
                     mob.addPotionEffect(new EffectInstance(
-                            BzEffects.WRATH_OF_THE_HIVE,
+                            BzEffects.WRATH_OF_THE_HIVE.get(),
                             Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
                             2,
                             false,
@@ -213,7 +213,7 @@ public class BeeAggression {
     {
         if(doesBeesHateEntity(entity)) {
             ((MobEntity) entity).addPotionEffect(new EffectInstance(
-                    BzEffects.WRATH_OF_THE_HIVE,
+                    BzEffects.WRATH_OF_THE_HIVE.get(),
                     Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
                     1,
                     false,
@@ -233,7 +233,7 @@ public class BeeAggression {
             MobEntity mobEntity = (MobEntity)entity;
 
             //must be a bear or insect animal with no wrath of the hive effect on
-            return SET_OF_BEE_HATED_ENTITIES.contains(entity.getType()) && !mobEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE);
+            return SET_OF_BEE_HATED_ENTITIES.contains(entity.getType()) && !mobEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE.get());
         }
 
         return false;
@@ -243,16 +243,16 @@ public class BeeAggression {
     {
         //removes the wrath of the hive if it is disallowed outside dimension
         if(!playerEntity.world.isRemote &&
-                playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE) &&
+                playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE.get()) &&
                 !(Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get() ||
                         playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)))
         {
-            playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE);
+            playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE.get());
             WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
         }
 
         //Makes the fog redder when this effect is active
-        boolean wrathEffect = playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE);
+        boolean wrathEffect = playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE.get());
         if(!WrathOfTheHiveEffect.ACTIVE_WRATH && wrathEffect)
         {
             WrathOfTheHiveEffect.ACTIVE_WRATH = true;

@@ -33,7 +33,7 @@ public class SugarWaterBottleDispenseBehavior extends DefaultDispenseItemBehavio
         BlockPos position = new BlockPos(iposition);
         BlockState blockstate = world.getBlockState(position);
 
-        if (blockstate.getBlock() == BzBlocks.HONEYCOMB_BROOD) {
+        if (blockstate.getBlock() == BzBlocks.HONEYCOMB_BROOD.get()) {
             float chance = world.rand.nextFloat();
             if (chance <= 0.3F) {
                 // spawn bee if at final stage and front isn't blocked off

@@ -1,21 +1,24 @@
 package com.telepathicgrunt.the_bumblezone.effects;
 
+import java.util.function.Supplier;
+
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.generation.BzBiomeProvider;
+
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.BiomeMaker;
-import net.minecraft.world.gen.placement.Placement;
-import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
-public class BzEffects {
-    public final static Effect WRATH_OF_THE_HIVE = new WrathOfTheHiveEffect(EffectType.HARMFUL, 16748549);
-    public final static Effect PROTECTION_OF_THE_HIVE = new ProtectionOfTheHiveEffect(EffectType.BENEFICIAL, 16570117);
-
-    public static void registerEffects(final RegistryEvent.Register<Effect> event) {
-        event.getRegistry().register(WRATH_OF_THE_HIVE.setRegistryName(new ResourceLocation(Bumblezone.MODID, "wrath_of_the_hive")));
-        event.getRegistry().register(PROTECTION_OF_THE_HIVE.setRegistryName(new ResourceLocation(Bumblezone.MODID, "protection_of_the_hive")));
-    }
+public class BzEffects
+{
+	public static final DeferredRegister<Effect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, Bumblezone.MODID);
+	
+    public static final RegistryObject<Effect> WRATH_OF_THE_HIVE = createEffect("wrath_of_the_hive", () -> new WrathOfTheHiveEffect(EffectType.HARMFUL, 16748549));
+    public static final RegistryObject<Effect> PROTECTION_OF_THE_HIVE = createEffect("protection_of_the_hive", () -> new ProtectionOfTheHiveEffect(EffectType.BENEFICIAL, 16570117));
+    
+    public static <E extends Effect> RegistryObject<E> createEffect(String name, Supplier<? extends E> effect)
+	{
+		return EFFECTS.register(name, effect);
+	}
 }

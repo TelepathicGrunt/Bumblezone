@@ -1,7 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
-import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
+import java.util.Random;
+
 import com.telepathicgrunt.the_bumblezone.items.BzItems;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -25,8 +27,6 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 
-import java.util.Random;
-
 
 public abstract class SugarWaterFluid extends ForgeFlowingFluid {
 
@@ -36,17 +36,17 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid {
 
     @Override
     public Fluid getFlowingFluid() {
-        return BzBlocks.SUGAR_WATER_FLUID_FLOWING;
+        return BzFluids.SUGAR_WATER_FLUID_FLOWING.get();
     }
 
     @Override
     public Fluid getStillFluid() {
-        return BzBlocks.SUGAR_WATER_FLUID;
+        return BzFluids.SUGAR_WATER_FLUID.get();
     }
 
     @Override
     public Item getFilledBucket() {
-        return BzItems.SUGAR_WATER_BUCKET;
+        return BzItems.SUGAR_WATER_BUCKET.get();
     }
 
     @Override
@@ -153,7 +153,7 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid {
 
     @Override
     public BlockState getBlockState(FluidState state) {
-        return BzBlocks.SUGAR_WATER_BLOCK.getDefaultState().with(FlowingFluidBlock.LEVEL, getLevelFromState(state));
+        return BzFluids.SUGAR_WATER_BLOCK.get().getDefaultState().with(FlowingFluidBlock.LEVEL, getLevelFromState(state));
     }
 
     public static class Flowing extends SugarWaterFluid {

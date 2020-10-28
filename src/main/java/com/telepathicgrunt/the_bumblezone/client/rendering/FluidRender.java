@@ -2,7 +2,8 @@ package com.telepathicgrunt.the_bumblezone.client.rendering;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
@@ -22,7 +23,7 @@ public class FluidRender {
 
     public static void sugarWaterOverlay(RenderBlockOverlayEvent event)
     {
-        if (event.getPlayer().world.getBlockState(event.getBlockPos()).getBlock() == BzBlocks.SUGAR_WATER_BLOCK)
+        if (event.getPlayer().world.getBlockState(event.getBlockPos()).getBlock() == BzFluids.SUGAR_WATER_BLOCK.get())
         {
             Minecraft minecraftIn = Minecraft.getInstance();
             minecraftIn.getTextureManager().bindTexture(TEXTURE_UNDERWATER);
