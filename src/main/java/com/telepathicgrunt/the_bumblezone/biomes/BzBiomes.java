@@ -14,10 +14,14 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class BzBiomes
 {
 	public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, Bumblezone.MODID);
-	
-	public static final RegistryObject<Biome> HIVE_WALL = createBiome("hive_wall", () -> BiomeMaker.createTheVoid().setRegistryName(BzBiomeProvider.HIVE_WALL));
-	public static final RegistryObject<Biome> HIVE_PILLAR = createBiome("hive_pillar", () -> BiomeMaker.createTheVoid().setRegistryName(BzBiomeProvider.HIVE_PILLAR));
-	public static final RegistryObject<Biome> SUGAR_WATER_FLOOR = createBiome("sugar_water_floor", () -> BiomeMaker.createTheVoid().setRegistryName(BzBiomeProvider.SUGAR_WATER_FLOOR));
+
+	// Dummy biomes to reserve the numeric ID safely for the json biomes to overwrite.
+	// No static variable to hold as these dummy biomes should NOT be held and referenced elsewhere.
+	static{
+		createBiome("hive_wall", () -> BiomeMaker.createTheVoid().setRegistryName(BzBiomeProvider.HIVE_WALL));
+		createBiome("hive_pillar", () -> BiomeMaker.createTheVoid().setRegistryName(BzBiomeProvider.HIVE_PILLAR));
+		createBiome("sugar_water_floor", () -> BiomeMaker.createTheVoid().setRegistryName(BzBiomeProvider.SUGAR_WATER_FLOOR));
+	}
 
     public static RegistryObject<Biome> createBiome(String name, Supplier<Biome> biome)
  	{

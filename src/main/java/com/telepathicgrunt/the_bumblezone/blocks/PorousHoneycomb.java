@@ -15,12 +15,13 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 
 
 public class PorousHoneycomb extends Block {
 
     public PorousHoneycomb() {
-        super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).hardnessAndResistance(0.5F, 0.5F).sound(SoundType.CORAL));
+        super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).harvestTool(ToolType.AXE).hardnessAndResistance(0.5F, 0.5F).sound(SoundType.CORAL));
     }
 
 

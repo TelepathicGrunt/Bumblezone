@@ -25,18 +25,19 @@ public class BzFluids
     public static final ResourceLocation FLUID_STILL = new ResourceLocation(Bumblezone.MODID+":block/sugar_water_still");
     public static final ResourceLocation FLUID_FLOWING = new ResourceLocation(Bumblezone.MODID+":block/sugar_water_flow");
     public static final ResourceLocation FLUID_OVERLAY = new ResourceLocation(Bumblezone.MODID+":block/sugar_water_overlay");
-    
+
     //Fluids
     public static final RegistryObject<FlowingFluid> SUGAR_WATER_FLUID = createFluid("sugar_water_still", () -> new SugarWaterFluid.Source(BzFluids.SUGAR_WATER_FLUID_PROPERTIES));
     public static final RegistryObject<FlowingFluid> SUGAR_WATER_FLUID_FLOWING = createFluid("sugar_water_flowing", () -> new SugarWaterFluid.Flowing(BzFluids.SUGAR_WATER_FLUID_PROPERTIES));
 
     //FluidBlocks
     public static final RegistryObject<FlowingFluidBlock> SUGAR_WATER_BLOCK = BzBlocks.createBlock("sugar_water_block", () -> new SugarWaterBlock(SUGAR_WATER_FLUID.get()));
-    
-    public static ForgeFlowingFluid.Properties SUGAR_WATER_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(() -> SUGAR_WATER_FLUID.get(), () -> SUGAR_WATER_FLUID_FLOWING.get(),
+
+    //Properties
+    public static final ForgeFlowingFluid.Properties SUGAR_WATER_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(() -> SUGAR_WATER_FLUID.get(), () -> SUGAR_WATER_FLUID_FLOWING.get(),
             FluidAttributes.Water.builder(FLUID_STILL, FLUID_FLOWING).overlay(FLUID_OVERLAY).viscosity(1500))
             .bucket(() -> BzItems.SUGAR_WATER_BUCKET.get()).canMultiply().block(() -> SUGAR_WATER_BLOCK.get());
-    
+
     private static <F extends Fluid> RegistryObject<F> createFluid(String name, Supplier<F> fluid)
     {
 		return FLUIDS.register(name, fluid);

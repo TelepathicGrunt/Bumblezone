@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone;
 
+import com.telepathicgrunt.the_bumblezone.biomes.BzBiomes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -73,14 +74,13 @@ public class Bumblezone{
         modEventBus.addListener(this::setup);
         BzItems.ITEMS.register(modEventBus);
         BzBlocks.BLOCKS.register(modEventBus);
-        BzFluids.FLUIDS.register(modEventBus);//TODO I tried putting this before and after BLOCKS, it didnt change anything from what i can tell - andrew
+        BzFluids.FLUIDS.register(modEventBus);
+        BzBiomes.BIOMES.register(modEventBus);
+        BzItems.RECIPES.register(modEventBus);
         BzEffects.EFFECTS.register(modEventBus);
-        modEventBus.addGenericListener(Biome.class, this::registerBiomes);
-//      BzBiomes.BIOMES.register(modEventBus); had to comment it out because biomes get registered in the biome provider and it causes a duplicate
         BzFeatures.FEATURES.register(modEventBus);
         BzEntities.ENTITIES.register(modEventBus);
         BzPlacements.DECORATORS.register(modEventBus);
-        BzItems.RECIPES.register(modEventBus);
         BzSurfaceBuilders.SURFACE_BUILDERS.register(modEventBus);
 
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> BumblezoneClient::subscribeClientEvents);
@@ -91,7 +91,6 @@ public class Bumblezone{
         BzBeeAggressionConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzBeeAggressionConfigs.BzBeeAggressionConfigValues::new, "the_bumblezone-bee_aggression.toml");
         BzDimensionConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzDimensionConfigs.BzDimensionConfigValues::new, "the_bumblezone-dimension.toml");
         BzDungeonsConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzDungeonsConfigs.BzDungeonsConfigValues::new, "the_bumblezone-dungeons.toml");
-
     }
 
 
@@ -109,13 +108,5 @@ public class Bumblezone{
 	        ModChecker.setupModCompat();
 		});
         CapabilityPlayerPosAndDim.register();
-    }
-    
-    public void registerBiomes(final RegistryEvent.Register<Biome> event)
-    {
-        //Reserve Bumblezone biome IDs for the json version to replace
-        event.getRegistry().register(BiomeMaker.createTheVoid().setRegistryName(BzBiomeProvider.HIVE_WALL));
-        event.getRegistry().register(BiomeMaker.createTheVoid().setRegistryName(BzBiomeProvider.HIVE_PILLAR));
-        event.getRegistry().register(BiomeMaker.createTheVoid().setRegistryName(BzBiomeProvider.SUGAR_WATER_FLOOR));
     }
 }

@@ -43,7 +43,7 @@ public class BzItems
     };
     
     //Recipe
-    public static final RegistryObject<IRecipeSerializer<ContainerCraftingRecipe>> CONTAINER_CRAFTING_RECIPE = RECIPES.register("container_shapeless_recipe_bz", () -> new ContainerCraftingRecipe.Serializer());
+    public static final RegistryObject<IRecipeSerializer<ContainerCraftingRecipe>> CONTAINER_CRAFTING_RECIPE = RECIPES.register("container_shapeless_recipe_bz", ContainerCraftingRecipe.Serializer::new);
 
     //blocks
     public static final RegistryObject<Item> POROUS_HONEYCOMB = createItem("porous_honeycomb_block", () -> new BlockItem(BzBlocks.POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
@@ -60,8 +60,8 @@ public class BzItems
 
     //items
     public static final RegistryObject<Item> HONEY_CRYSTAL_SHARDS = createItem("honey_crystal_shards", () -> new Item(new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB).food((new Food.Builder()).hunger(2).saturation(0.15F).build())));
-    public static final RegistryObject<Item> HONEY_CRYSTAL_SHIELD = createItem("honey_crystal_shield", () -> new HoneyCrystalShield());
-    public static final RegistryObject<Item> SUGAR_WATER_BUCKET = createItem("sugar_water_bucket", () -> new BucketItem(() -> BzFluids.SUGAR_WATER_FLUID.get(), new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> HONEY_CRYSTAL_SHIELD = createItem("honey_crystal_shield", HoneyCrystalShield::new);
+    public static final RegistryObject<Item> SUGAR_WATER_BUCKET = createItem("sugar_water_bucket", () -> new BucketItem(BzFluids.SUGAR_WATER_FLUID, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> SUGAR_WATER_BOTTLE = createItem("sugar_water_bottle", () -> new HoneyBottleItem((new Item.Properties()).containerItem(Items.GLASS_BOTTLE).food((new Food.Builder()).hunger(1).saturation(0.05F).effect(() -> new EffectInstance(Effects.HASTE, 600, 0), 1.0F).build()).group(BUMBLEZONE_CREATIVE_TAB).maxStackSize(16)));
     public static final RegistryObject<Item> HONEY_SLIME_SPAWN_EGG = createItem("honey_slime_spawn_egg", () -> new HoneySlimeSpawnEgg(null, 0xFFCC00,0xFCA800, (new Item.Properties()).group(BUMBLEZONE_CREATIVE_TAB)));
 
