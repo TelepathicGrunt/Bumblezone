@@ -1,14 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.mixin;
 
+import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.WaterFluid;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
-
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.WaterFluid;
 
 @Mixin(WaterFluid.class)
 public class WaterEquivalenceMixin {

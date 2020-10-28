@@ -1,7 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import java.util.function.Supplier;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;

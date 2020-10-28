@@ -1,18 +1,11 @@
 package com.telepathicgrunt.the_bumblezone;
 
 import com.telepathicgrunt.the_bumblezone.biomes.BzBiomes;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityEventHandler;
 import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityPlayerPosAndDim;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
-import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
-import com.telepathicgrunt.the_bumblezone.configs.BzBlockMechanicsConfigs;
-import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
-import com.telepathicgrunt.the_bumblezone.configs.BzDungeonsConfigs;
-import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.*;
 import com.telepathicgrunt.the_bumblezone.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.effects.BzEffects;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
@@ -21,7 +14,6 @@ import com.telepathicgrunt.the_bumblezone.features.BzConfiguredFeatures;
 import com.telepathicgrunt.the_bumblezone.features.BzFeatures;
 import com.telepathicgrunt.the_bumblezone.features.decorators.BzPlacements;
 import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
-import com.telepathicgrunt.the_bumblezone.generation.BzBiomeProvider;
 import com.telepathicgrunt.the_bumblezone.items.BzItems;
 import com.telepathicgrunt.the_bumblezone.items.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modCompat.HoneycombBroodEvents;
@@ -30,20 +22,18 @@ import com.telepathicgrunt.the_bumblezone.modCompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modCompat.PotionOfBeesBeeSplashPotionProjectile;
 import com.telepathicgrunt.the_bumblezone.surfacebuilders.BzSurfaceBuilders;
 import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeMaker;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(Bumblezone.MODID)
 public class Bumblezone{

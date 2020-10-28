@@ -1,15 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.biomes;
 
-import java.util.function.Supplier;
-
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.generation.BzBiomeProvider;
-
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeMaker;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.function.Supplier;
 
 public class BzBiomes
 {

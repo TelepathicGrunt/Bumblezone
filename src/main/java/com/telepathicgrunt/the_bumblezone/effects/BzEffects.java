@@ -1,14 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.effects;
 
-import java.util.function.Supplier;
-
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.function.Supplier;
 
 public class BzEffects
 {

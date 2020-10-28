@@ -1,14 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.features;
 
-import java.util.function.Supplier;
-
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.function.Supplier;
 
 public class BzFeatures {
 	public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Bumblezone.MODID);

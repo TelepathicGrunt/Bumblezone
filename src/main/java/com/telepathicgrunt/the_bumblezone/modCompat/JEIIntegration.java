@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.modCompat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
 import com.telepathicgrunt.the_bumblezone.items.BzItems;
-
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;

@@ -1,9 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
-import java.util.Random;
-
 import com.telepathicgrunt.the_bumblezone.items.BzItems;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -26,6 +23,8 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
+
+import java.util.Random;
 
 
 public abstract class SugarWaterFluid extends ForgeFlowingFluid {

@@ -1,10 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.features;
 
-import java.util.Random;
-
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.Direction;
@@ -14,6 +11,8 @@ import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
+
+import java.util.Random;
 
 
 public class CaveSugarWaterfall extends Feature<NoFeatureConfig> {

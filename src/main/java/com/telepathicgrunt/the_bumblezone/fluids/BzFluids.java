@@ -1,12 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
-import java.util.function.Supplier;
-
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.blocks.SugarWaterBlock;
 import com.telepathicgrunt.the_bumblezone.items.BzItems;
-
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
@@ -16,6 +13,8 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.function.Supplier;
 
 public class BzFluids
 {

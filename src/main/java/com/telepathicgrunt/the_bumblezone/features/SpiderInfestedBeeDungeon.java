@@ -1,9 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.features;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
@@ -15,7 +11,6 @@ import com.telepathicgrunt.the_bumblezone.mixin.TemplateInvoker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ProductiveBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modCompat.ResourcefulBeesRedirection;
-
 import cy.jdkdigital.productivebees.tileentity.CombBlockTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -39,6 +34,10 @@ import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 
 public class SpiderInfestedBeeDungeon extends BeeDungeon{
