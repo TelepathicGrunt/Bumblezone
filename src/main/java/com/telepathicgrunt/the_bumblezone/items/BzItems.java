@@ -69,7 +69,4 @@ public class BzItems
 	{
 		return ITEMS.register(name, item);
 	}
-    
-//  SpawnEggItem.getEggs();TODO Im not sure what exactly this does, but I guess you could make a createSpawnEggItem method and add them in there,
-//								although its a bit sketchy as this is not thread safe - andrew
 }
