@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.features;
 import java.util.Random;
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplexNoise;
@@ -16,6 +17,7 @@ import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.common.util.Lazy;
+import org.apache.logging.log4j.Level;
 
 
 public class HoneycombCaves extends Feature<NoFeatureConfig> {
@@ -39,12 +41,12 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
     }
 
 
-//    private static final double THETA0 = Math.PI * (0.0 / 180.0);
-//    private static final double THETA1 = Math.PI * (60.0 / 180.0);
-//    private static final double THETA2 = Math.PI * (120.0 / 180.0);
-    private static final double THETA0 = Math.PI * (45.0 / 180.0);
-    private static final double THETA1 = Math.PI * (105.0 / 180.0);
-    private static final double THETA2 = Math.PI * (165.0 / 180.0);
+    private static final double THETA0 = Math.PI * (0.0 / 180.0);
+    private static final double THETA1 = Math.PI * (60.0 / 180.0);
+    private static final double THETA2 = Math.PI * (120.0 / 180.0);
+//    private static final double THETA0 = Math.PI * (45.0 / 180.0);
+//    private static final double THETA1 = Math.PI * (105.0 / 180.0);
+//    private static final double THETA2 = Math.PI * (165.0 / 180.0);
     private static final double SIN0 = Math.sin(THETA0), COS0 = Math.cos(THETA0);
     private static final double SIN1 = Math.sin(THETA1), COS1 = Math.cos(THETA1);
     private static final double SIN2 = Math.sin(THETA2), COS2 = Math.cos(THETA2);
@@ -67,7 +69,7 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
                     mutableBlockPos.setPos(position).move(x, y, z);
 
                     BlockState state = world.getBlockState(mutableBlockPos);
-                    if(state.isSolid()) continue; // Skip carving non-solid spots
+                    if(!state.isSolid()) continue; // Skip carving non-solid spots
 
                     double noise1 = noiseGen.eval(mutableBlockPos.getX() * 0.02D,
                             mutableBlockPos.getZ() * 0.02D,
@@ -83,8 +85,8 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
                     double finalNoise2 = noise1 * SIN2 + noise2 * COS2;
                     double finalNoise = Math.min(finalNoise0, Math.min(finalNoise1, finalNoise2));
 
-                    if (finalNoise < 0.12) {
-                        carveAtBlock(world, generator, random, mutableBlockPos, mutableBlockPos2, state, finalNoise < 0.1);
+                    if (finalNoise < -0.75) {
+                        carveAtBlock(world, generator, random, mutableBlockPos, mutableBlockPos2, state, finalNoise > -0.76);
                     }
                 }
             }
@@ -95,7 +97,7 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
 
     private static void carveAtBlock(ISeedReader world, ChunkGenerator generator, Random random, BlockPos.Mutable position,
                                      BlockPos.Mutable position2, BlockState blockState, boolean edge) {
-        if (blockState.isSolid() && (position.getY() < generator.getSeaLevel() || !isNextToLiquidOrAir(world, generator, position, position2)))
+        if (position.getY() < generator.getSeaLevel() || !isNextToLiquidOrAir(world, generator, position, position2))
         {
             if (!edge) {
                 if (position.getY() < 40) {
@@ -116,6 +118,7 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
 
     private static boolean isNextToLiquidOrAir(ISeedReader world, ChunkGenerator generator,
                                                BlockPos.Mutable position, BlockPos.Mutable position2) {
+        if(true) return false;
         BlockState blockState;
         for (Direction direction : Direction.values()) {
             blockState = world.getBlockState(position2.setPos(position).move(direction));

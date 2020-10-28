@@ -48,7 +48,7 @@ public class BumblezoneClient
         RenderingRegistry.registerEntityRenderingHandler(BzEntities.HONEY_SLIME.get(), HoneySlimeRendering::new);
         SkyPropertiesAccessor.getBY_ResourceLocation().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
 
-        //Replaced DeferredWorkQueue.runLater with the method added by the event - andrew TODO make sure it works
+        //Replaced DeferredWorkQueue.runLater with the method added by the event - andrew
         event.enqueueWork(() -> {
             RenderTypeLookup.setRenderLayer(BzBlocks.STICKY_HONEY_REDSTONE.get(), RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BzBlocks.STICKY_HONEY_RESIDUE.get(), RenderType.getCutout());
@@ -56,17 +56,17 @@ public class BumblezoneClient
             RenderTypeLookup.setRenderLayer(BzFluids.SUGAR_WATER_FLUID.get(), RenderType.getTranslucent());
             RenderTypeLookup.setRenderLayer(BzFluids.SUGAR_WATER_FLUID_FLOWING.get(), RenderType.getTranslucent());
             RenderTypeLookup.setRenderLayer(BzFluids.SUGAR_WATER_BLOCK.get(), RenderType.getTranslucent());
+
+            // Allows shield to use the blocking json file for offset
+            ItemModelsProperties.register(
+                    BzItems.HONEY_CRYSTAL_SHIELD.get(),
+                    new ResourceLocation("blocking"),
+                    (itemStack, world, livingEntity) ->
+                            livingEntity != null &&
+                                    livingEntity.isHandActive() &&
+                                    livingEntity.getActiveItemStack() == itemStack ? 1.0F : 0.0F
+            );
         });
 
-
-        // Allows shield to use the blocking json file for offset
-        ItemModelsProperties.register(
-                BzItems.HONEY_CRYSTAL_SHIELD.get(),
-                new ResourceLocation("blocking"),
-                (itemStack, world, livingEntity) ->
-                        livingEntity != null &&
-                                livingEntity.isHandActive() &&
-                                livingEntity.getActiveItemStack() == itemStack ? 1.0F : 0.0F
-        );
     }
 }
