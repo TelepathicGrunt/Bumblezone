@@ -1,10 +1,17 @@
 package com.telepathicgrunt.the_bumblezone;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityEventHandler;
 import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityPlayerPosAndDim;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
-import com.telepathicgrunt.the_bumblezone.configs.*;
+import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzBlockMechanicsConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzDungeonsConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.effects.BzEffects;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
@@ -12,6 +19,7 @@ import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
 import com.telepathicgrunt.the_bumblezone.features.BzConfiguredFeatures;
 import com.telepathicgrunt.the_bumblezone.features.BzFeatures;
 import com.telepathicgrunt.the_bumblezone.features.decorators.BzPlacements;
+import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
 import com.telepathicgrunt.the_bumblezone.generation.BzBiomeProvider;
 import com.telepathicgrunt.the_bumblezone.items.BzItems;
 import com.telepathicgrunt.the_bumblezone.items.DispenserItemSetup;
@@ -21,21 +29,11 @@ import com.telepathicgrunt.the_bumblezone.modCompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modCompat.PotionOfBeesBeeSplashPotionProjectile;
 import com.telepathicgrunt.the_bumblezone.surfacebuilders.BzSurfaceBuilders;
 import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper;
-import net.minecraft.block.Block;
+
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.Item;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.potion.Effect;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeMaker;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.placement.Placement;
-import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -45,8 +43,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @Mod(Bumblezone.MODID)
 public class Bumblezone{
@@ -65,6 +61,7 @@ public class Bumblezone{
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        //Events
         forgeBus.addListener(BzDimension::biomeModification);
         forgeBus.addListener(BeeAggression::HoneyPickupEvent);
         forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
@@ -72,16 +69,19 @@ public class Bumblezone{
         forgeBus.addListener(PotionOfBeesBeeSplashPotionProjectile::ProjectileImpactEvent);
         forgeBus.addGenericListener(Entity.class, CapabilityEventHandler::onAttachCapabilitiesToEntities);
 
+        //Registration
         modEventBus.addListener(this::setup);
-        modEventBus.addGenericListener(Item.class, this::registerItems);
+        BzItems.ITEMS.register(modEventBus);
+        BzBlocks.BLOCKS.register(modEventBus);
+        BzFluids.FLUIDS.register(modEventBus);//TODO I tried putting this before and after BLOCKS, it didnt change anything from what i can tell - andrew
+        BzEffects.EFFECTS.register(modEventBus);
         modEventBus.addGenericListener(Biome.class, this::registerBiomes);
-        modEventBus.addGenericListener(Block.class, this::registerBlocks);
-        modEventBus.addGenericListener(Effect.class, this::registerEffects);
-        modEventBus.addGenericListener(Feature.class, this::registerFeatures);
-        modEventBus.addGenericListener(EntityType.class, this::registerEntity);
-        modEventBus.addGenericListener(Placement.class, this::registerPlacements);
-        modEventBus.addGenericListener(IRecipeSerializer.class, this::registerSerializers);
-        modEventBus.addGenericListener(SurfaceBuilder.class, this::registerSurfacebuilders);
+//      BzBiomes.BIOMES.register(modEventBus); had to comment it out because biomes get registered in the biome provider and it causes a duplicate
+        BzFeatures.FEATURES.register(modEventBus);
+        BzEntities.ENTITIES.register(modEventBus);
+        BzPlacements.DECORATORS.register(modEventBus);
+        BzItems.RECIPES.register(modEventBus);
+        BzSurfaceBuilders.SURFACE_BUILDERS.register(modEventBus);
 
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> BumblezoneClient::subscribeClientEvents);
 
@@ -95,72 +95,24 @@ public class Bumblezone{
     }
 
 
-    private void setup(final FMLCommonSetupEvent event) {
+    private void setup(final FMLCommonSetupEvent event)
+    {
+    	event.enqueueWork(() -> 
+		{
+			BzDimension.setupDimension();
+			BzConfiguredFeatures.registerConfiguredFeatures();
+			BzEntities.registerAdditionalEntityInformation();
+			// Dispenser isn't synchronized. Needs to be enqueueWork to prevent crash if
+	        // another mod registers to it at the same exact time.
+	        DispenserItemSetup.setupDispenserBehaviors();
+	        // should run after most other mods just in case
+	        ModChecker.setupModCompat();
+		});
         CapabilityPlayerPosAndDim.register();
-        BzDimension.setupDimension();
-
-        // Dispenser isn't synchronized. Needs to be enqueueWork to prevent crash if
-        // another mod registers to it at the same exact time.
-        event.enqueueWork(DispenserItemSetup::setupDispenserBehaviors);
-        event.enqueueWork(Bumblezone::lateSetup);
     }
-
-
-    // should run after most other mods just in case
-    private static void lateSetup() {
-        ModChecker.setupModCompat();
-    }
-
-    public void registerBlocks(final RegistryEvent.Register<Block> event) {
-        BzBlocks.registerBlocks(event);
-    }
-
-    public void registerItems(final RegistryEvent.Register<Item> event) {
-        BzItems.registerItems(event);
-    }
-
-    public void registerFluids(final RegistryEvent.Register<Fluid> event) {
-        BzBlocks.registerFluids(event);
-    }
-
-    public void registerEntity(final RegistryEvent.Register<EntityType<?>> event) {
-        BzEntities.registerEntities(event);
-    }
-
-    /**
-     * This method will be called by Forge when it is time for the mod to register features.
-     */
-    public void registerFeatures(final RegistryEvent.Register<Feature<?>> event) {
-        BzFeatures.registerFeatures(event);
-        BzConfiguredFeatures.registerConfiguredFeatures();
-    }
-
-    /**
-     * This method will be called by Forge when it is time for the mod to register effects.
-     */
-    public void registerEffects(final RegistryEvent.Register<Effect> event) {
-        BzEffects.registerEffects(event);
-    }
-
-    /**
-     * This method will be called by Forge when it is time for the mod to register placement.
-     */
-    public void registerPlacements(final RegistryEvent.Register<Placement<?>> event) {
-        BzPlacements.registerPlacements(event);
-    }
-
-    /**
-     * This method will be called by Forge when it is time for the mod to register surface builders.
-     */
-    public void registerSurfacebuilders(final RegistryEvent.Register<SurfaceBuilder<?>> event) {
-        BzSurfaceBuilders.registerSurfaceBuilders(event);
-    }
-
-    public void registerSerializers(final RegistryEvent.Register<IRecipeSerializer<?>> event) {
-        BzItems.registerCustomRecipes(event);
-    }
-
-    public void registerBiomes(final RegistryEvent.Register<Biome> event) {
+    
+    public void registerBiomes(final RegistryEvent.Register<Biome> event)
+    {
         //Reserve Bumblezone biome IDs for the json version to replace
         event.getRegistry().register(BiomeMaker.createTheVoid().setRegistryName(BzBiomeProvider.HIVE_WALL));
         event.getRegistry().register(BiomeMaker.createTheVoid().setRegistryName(BzBiomeProvider.HIVE_PILLAR));

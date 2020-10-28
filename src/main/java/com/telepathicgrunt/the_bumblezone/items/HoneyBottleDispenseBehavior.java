@@ -35,7 +35,7 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior {
         BlockPos position = new BlockPos(iposition);
         BlockState blockstate = world.getBlockState(position);
 
-        if (blockstate.getBlock() == BzBlocks.HONEYCOMB_BROOD) {
+        if (blockstate.getBlock() == BzBlocks.HONEYCOMB_BROOD.get()) {
             // spawn bee if at final stage and front isn't blocked off
             int stage = blockstate.get(HoneycombBrood.STAGE);
             if (stage == 3) {
@@ -65,8 +65,8 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior {
             } else {
                 DROP_ITEM_BEHAVIOR.dispense(source, new ItemStack(Items.GLASS_BOTTLE));
             }
-        } else if (blockstate.getBlock() == BzBlocks.POROUS_HONEYCOMB) {
-            world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState());
+        } else if (blockstate.getBlock() == BzBlocks.POROUS_HONEYCOMB.get()) {
+            world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState());
             stack.shrink(1);
             if (!Bumblezone.BzBlockMechanicsConfig.dispensersDropGlassBottles.get()) {
                 if (!stack.isEmpty())

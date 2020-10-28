@@ -30,18 +30,18 @@ public class EmptyBucketDispenseBehavior extends DefaultDispenseItemBehavior {
         BlockPos position = new BlockPos(iposition);
         BlockState blockstate = world.getBlockState(position);
 
-        if (blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL && blockstate.get(BlockStateProperties.WATERLOGGED)) {
+        if (blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL.get() && blockstate.get(BlockStateProperties.WATERLOGGED)) {
 
-            world.setBlockState(position, BzBlocks.HONEY_CRYSTAL.getDefaultState()
+            world.setBlockState(position, BzBlocks.HONEY_CRYSTAL.get().getDefaultState()
                     .with(BlockStateProperties.FACING, blockstate.get(BlockStateProperties.FACING))
                     .with(BlockStateProperties.WATERLOGGED, false));
 
             stack.shrink(1);
 
             if (!stack.isEmpty())
-                addItemToDispenser(source, BzItems.SUGAR_WATER_BUCKET);
+                addItemToDispenser(source, BzItems.SUGAR_WATER_BUCKET.get());
             else
-                stack = new ItemStack(BzItems.SUGAR_WATER_BUCKET);
+                stack = new ItemStack(BzItems.SUGAR_WATER_BUCKET.get());
         } else {
             return DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR.dispense(source, stack);
         }

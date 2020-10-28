@@ -90,7 +90,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      * Notifies blocks that this block is attached to of changes
      */
     protected void neighborChangeds(BlockState blockstate, World world, BlockPos pos) {
-        if (blockstate.getBlock() != BzBlocks.STICKY_HONEY_REDSTONE)
+        if (blockstate.getBlock() != BzBlocks.STICKY_HONEY_REDSTONE.get())
             return;
 
         if (blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {

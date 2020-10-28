@@ -33,8 +33,8 @@ public class PotionOfBeesBeePotionDispenseBehavior extends DefaultDispenseItemBe
 	BlockPos position = new BlockPos(iposition);
 	BlockState blockstate = world.getBlockState(position);
 
-	if (blockstate.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD) {
-	    world.setBlockState(position, BzBlocks.HONEYCOMB_BROOD.getDefaultState().with(HoneycombBrood.FACING, blockstate.get(EmptyHoneycombBrood.FACING)).with(HoneycombBrood.STAGE, Integer.valueOf(world.rand.nextInt(3))));
+	if (blockstate.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD.get()) {
+	    world.setBlockState(position, BzBlocks.HONEYCOMB_BROOD.get().getDefaultState().with(HoneycombBrood.FACING, blockstate.get(EmptyHoneycombBrood.FACING)).with(HoneycombBrood.STAGE, Integer.valueOf(world.rand.nextInt(3))));
 	    stack.shrink(1);
 
 	    if(!Bumblezone.BzBlockMechanicsConfig.dispensersDropGlassBottles.get()) {

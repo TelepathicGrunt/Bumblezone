@@ -132,7 +132,7 @@ public class ProductiveBeesCompat {
 			VALID_COMB_TYPES.remove(resourceLocation);
 		}
 
-		ConfiguredFeature<?, ?> cf = BzFeatures.BZ_BE_ORE_FEATURE.configure(new BzBEOreFeatureConfig(HONEYCOMB_BUMBLEZONE, ModBlocks.CONFIGURABLE_COMB.get().getDefaultState(), veinSize, combBlockType))
+		ConfiguredFeature<?, ?> cf = BzFeatures.BZ_BE_ORE_FEATURE.get().configure(new BzBEOreFeatureConfig(HONEYCOMB_BUMBLEZONE, ModBlocks.CONFIGURABLE_COMB.get().getDefaultState(), veinSize, combBlockType))
 				.decorate(Placement.RANGE.configure(new TopSolidRangeConfig(bottomOffset, 0, range)))
 				.spreadHorizontally()
 				.repeat(count);

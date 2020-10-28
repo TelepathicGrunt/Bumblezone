@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import java.util.function.Supplier;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
@@ -42,13 +44,13 @@ public class SugarWaterBlock extends FlowingFluidBlock {
         if (flag) {
             FluidState ifluidstate = world.getFluidState(pos);
             if (ifluidstate.isSource()) {
-                world.setBlockState(pos, BzBlocks.SUGAR_INFUSED_STONE.getDefaultState());
+                world.setBlockState(pos, BzBlocks.SUGAR_INFUSED_STONE.get().getDefaultState());
                 this.triggerMixEffects(world, pos);
                 return false;
             }
 
             if (ifluidstate.getActualHeight(world, pos) >= 0.44444445F) {
-                world.setBlockState(pos, BzBlocks.SUGAR_INFUSED_COBBLESTONE.getDefaultState());
+                world.setBlockState(pos, BzBlocks.SUGAR_INFUSED_COBBLESTONE.get().getDefaultState());
                 this.triggerMixEffects(world, pos);
                 return false;
             }

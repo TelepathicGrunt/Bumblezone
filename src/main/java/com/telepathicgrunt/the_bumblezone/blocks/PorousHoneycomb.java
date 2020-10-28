@@ -35,7 +35,7 @@ public class PorousHoneycomb extends Block {
          * Player is adding honey to this block if it is not filled with honey
          */
         if (itemstack.getItem() == Items.HONEY_BOTTLE) {
-            world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), 3); // added honey to this block
+            world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 3); // added honey to this block
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
             if (!playerEntity.isCreative()) {

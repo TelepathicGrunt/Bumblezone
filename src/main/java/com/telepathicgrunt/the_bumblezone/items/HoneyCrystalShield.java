@@ -33,7 +33,7 @@ public class HoneyCrystalShield extends ShieldItem {
      */
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-        return BzItems.HONEY_CRYSTAL_SHARDS == repair.getItem();
+        return BzItems.HONEY_CRYSTAL_SHARDS.get() == repair.getItem();
     }
 
     /**

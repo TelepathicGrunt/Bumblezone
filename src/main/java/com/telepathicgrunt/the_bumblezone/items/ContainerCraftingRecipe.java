@@ -27,7 +27,7 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
     }
 
     public IRecipeSerializer<?> getSerializer() {
-        return BzItems.CONTAINER_CRAFTING_RECIPE;
+        return BzItems.CONTAINER_CRAFTING_RECIPE.get();
     }
 
     @Override

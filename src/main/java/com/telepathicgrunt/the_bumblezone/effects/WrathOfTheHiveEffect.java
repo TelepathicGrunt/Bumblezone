@@ -115,7 +115,7 @@ public class WrathOfTheHiveEffect extends Effect {
         if(BeeAggression.doesBeesHateEntity(entity)){
             //refresh the bee anger timer
             entity.addPotionEffect(new EffectInstance(
-                    BzEffects.WRATH_OF_THE_HIVE,
+                    BzEffects.WRATH_OF_THE_HIVE.get(),
                     Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
                     1,
                     false,

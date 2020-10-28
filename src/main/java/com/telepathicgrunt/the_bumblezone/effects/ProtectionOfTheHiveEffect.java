@@ -63,7 +63,7 @@ public class ProtectionOfTheHiveEffect extends Effect {
            resetBeeAngry(entity.world, entity.getRevengeTarget());
 
            if(!(entity.getRevengeTarget() instanceof BeeEntity))
-                entity.getRevengeTarget().addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(), amplifier, true, true, true));
+                entity.getRevengeTarget().addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(), amplifier, true, true, true));
        }
     }
 

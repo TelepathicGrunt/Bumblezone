@@ -73,7 +73,7 @@ public class PotionOfBeesCompat
 						position.setPos(originalPosition).move(x, y, z);
 						block = world.getBlockState(position);
 						
-						if(block.getBlock().equals(BzBlocks.EMPTY_HONEYCOMB_BROOD)) {
+						if(block.getBlock().equals(BzBlocks.EMPTY_HONEYCOMB_BROOD.get())) {
 							reviveLarvaBlock(world, block, position);
 						}
 					}
@@ -84,7 +84,7 @@ public class PotionOfBeesCompat
 
 	private static void reviveLarvaBlock(World world, BlockState state, BlockPos position) {
 		world.setBlockState(position, 
-				BzBlocks.HONEYCOMB_BROOD.getDefaultState()
+				BzBlocks.HONEYCOMB_BROOD.get().getDefaultState()
 				.with(BlockStateProperties.FACING, state.get(BlockStateProperties.FACING))
 				.with(HoneycombBrood.STAGE, world.rand.nextInt(3)));
 	}
