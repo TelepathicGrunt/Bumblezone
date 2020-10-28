@@ -31,12 +31,12 @@ public class BzFluids
     public static final RegistryObject<FlowingFluid> SUGAR_WATER_FLUID_FLOWING = createFluid("sugar_water_flowing", () -> new SugarWaterFluid.Flowing(BzFluids.SUGAR_WATER_FLUID_PROPERTIES));
 
     //FluidBlocks
-    public static final RegistryObject<FlowingFluidBlock> SUGAR_WATER_BLOCK = BzBlocks.createBlock("sugar_water_block", () -> new SugarWaterBlock(SUGAR_WATER_FLUID.get()));
+    public static final RegistryObject<FlowingFluidBlock> SUGAR_WATER_BLOCK = BzBlocks.createBlock("sugar_water_block", () -> new SugarWaterBlock(SUGAR_WATER_FLUID));
 
     //Properties
-    public static final ForgeFlowingFluid.Properties SUGAR_WATER_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(() -> SUGAR_WATER_FLUID.get(), () -> SUGAR_WATER_FLUID_FLOWING.get(),
+    public static final ForgeFlowingFluid.Properties SUGAR_WATER_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(SUGAR_WATER_FLUID, SUGAR_WATER_FLUID_FLOWING,
             FluidAttributes.Water.builder(FLUID_STILL, FLUID_FLOWING).overlay(FLUID_OVERLAY).viscosity(1500))
-            .bucket(() -> BzItems.SUGAR_WATER_BUCKET.get()).canMultiply().block(() -> SUGAR_WATER_BLOCK.get());
+            .bucket(BzItems.SUGAR_WATER_BUCKET).canMultiply().block(SUGAR_WATER_BLOCK);
 
     private static <F extends Fluid> RegistryObject<F> createFluid(String name, Supplier<F> fluid)
     {

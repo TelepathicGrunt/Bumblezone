@@ -20,8 +20,8 @@ import net.minecraft.world.World;
 
 public class SugarWaterBlock extends FlowingFluidBlock {
 
-    public SugarWaterBlock(FlowingFluid baseFluid) {
-        super(baseFluid, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F, 100.0F).noDrops().velocityMultiplier(0.95F));
+    public SugarWaterBlock(java.util.function.Supplier<? extends FlowingFluid> supplier) {
+        super(supplier, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F, 100.0F).noDrops().velocityMultiplier(0.95F));
     }
 
     @Override
