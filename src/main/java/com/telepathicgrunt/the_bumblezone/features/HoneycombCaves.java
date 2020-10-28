@@ -26,7 +26,6 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
     private static final BlockState HONEYCOMB_BLOCK = Blocks.HONEYCOMB_BLOCK.getDefaultState();
     private static final Lazy<BlockState> SUGAR_WATER = Lazy.of(() -> BzFluids.SUGAR_WATER_BLOCK.get().getDefaultState());
 
-
     protected long seed;
     protected static OpenSimplexNoise noiseGen;
     protected static OpenSimplexNoise noiseGen2;
@@ -40,112 +39,16 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
     }
 
 
-    private static final int[][] hexagon7 =
-            {
-                    {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0},
-                    {0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0},
-                    {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0},
-                    {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-                    {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0},
-                    {0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0},
-                    {0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0},
-                    {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0}
-            };
+//    private static final double THETA0 = Math.PI * (0.0 / 180.0);
+//    private static final double THETA1 = Math.PI * (60.0 / 180.0);
+//    private static final double THETA2 = Math.PI * (120.0 / 180.0);
+    private static final double THETA0 = Math.PI * (45.0 / 180.0);
+    private static final double THETA1 = Math.PI * (105.0 / 180.0);
+    private static final double THETA2 = Math.PI * (165.0 / 180.0);
+    private static final double SIN0 = Math.sin(THETA0), COS0 = Math.cos(THETA0);
+    private static final double SIN1 = Math.sin(THETA1), COS1 = Math.cos(THETA1);
+    private static final double SIN2 = Math.sin(THETA2), COS2 = Math.cos(THETA2);
 
-    private static final int[][] hexagon6 =
-            {
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0},
-                    {0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0},
-                    {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0},
-                    {0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0},
-                    {0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0},
-                    {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-            };
-
-    private static final int[][] hexagon5 =
-            {
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0},
-                    {0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0},
-                    {0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0},
-                    {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-            };
-
-    private static final int[][] hexagon4 =
-            {
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0},
-                    {0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0},
-                    {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-            };
-
-    private static final int[][] hexagon3 =
-            {
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 1, 2, 2, 1, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 1, 2, 2, 1, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-            };
-
-    private static final int[][] hexagon2 =
-            {
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 1, 2, 2, 1, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 1, 2, 2, 1, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-            };
-
-    private static final int[][] hexagon1 =
-            {
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-            };
-
-    private static final int[][][] hexagonArray = new int[][][]{hexagon1, hexagon2, hexagon3, hexagon4, hexagon5, hexagon6, hexagon7};
 
     public HoneycombCaves(Codec<NoFeatureConfig> configFactory) {
         super(configFactory);
@@ -157,32 +60,31 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
         setSeed(world.getSeed());
         BlockPos.Mutable mutableBlockPos = position.mutableCopy();
         BlockPos.Mutable mutableBlockPos2 = position.mutableCopy();
-        BlockPos.Mutable mutableBlockPos3 = position.mutableCopy();
-        double noise1;
-        double noise2;
-        double finalNoise;
 
         for (int x = 0; x < 16; x++) {
             for (int y = 15; y < 241; y++) {
                 for (int z = 0; z < 16; z++) {
                     mutableBlockPos.setPos(position).move(x, y, z);
 
-                    noise1 = noiseGen.eval(mutableBlockPos.getX() * 0.02D,
+                    BlockState state = world.getBlockState(mutableBlockPos);
+                    if(state.isSolid()) continue; // Skip carving non-solid spots
+
+                    double noise1 = noiseGen.eval(mutableBlockPos.getX() * 0.02D,
                             mutableBlockPos.getZ() * 0.02D,
                             mutableBlockPos.getY() * 0.04D);
 
-                    if(noise1 >= 0.3D){
-                        continue;
-                    }
-
-                    noise2 = noiseGen2.eval(mutableBlockPos.getX() * 0.02D,
+                    double noise2 = noiseGen2.eval(mutableBlockPos.getX() * 0.02D,
                             mutableBlockPos.getZ() * 0.02D,
                             mutableBlockPos.getY() * 0.04D);
 
-                    finalNoise = noise1 * noise1 + noise2 * noise2;
 
-                    if (finalNoise < 0.0009f) {
-                        hexagon(world, generator, mutableBlockPos, mutableBlockPos2, mutableBlockPos3, random, noise1);
+                    double finalNoise0 = noise1 * SIN0 + noise2 * COS0;
+                    double finalNoise1 = noise1 * SIN1 + noise2 * COS1;
+                    double finalNoise2 = noise1 * SIN2 + noise2 * COS2;
+                    double finalNoise = Math.min(finalNoise0, Math.min(finalNoise1, finalNoise2));
+
+                    if (finalNoise < 0.12) {
+                        carveAtBlock(world, generator, random, mutableBlockPos, mutableBlockPos2, state, finalNoise < 0.1);
                     }
                 }
             }
@@ -191,41 +93,18 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
         return true;
     }
 
-
-    private static void hexagon(ISeedReader world, ChunkGenerator generator, BlockPos.Mutable position,
-                                BlockPos.Mutable position2, BlockPos.Mutable position3, Random random, double noise) {
-        BlockState blockState;
-        int index = (int) (((noise * 0.5D) + 0.5D) * 7);
-
-        for (int x = 0; x < 14; x++) {
-            for (int z = 0; z < 11; z++) {
-                int posResult = hexagonArray[index][z][x];
-
-                if (posResult != 0) {
-                    blockState = world.getBlockState(position2.setPos(position).move(x - 7, 0, z - 5));
-                    carveAtBlock(world, generator, random, position2, position3, blockState, posResult);
-
-                    blockState = world.getBlockState(position2.setPos(position).move(0, x - 7, z - 5));
-                    carveAtBlock(world, generator, random, position2, position3, blockState, posResult);
-
-                    blockState = world.getBlockState(position2.setPos(position).move(z - 5, x - 7, 0));
-                    carveAtBlock(world, generator, random, position2, position3, blockState, posResult);
-                }
-            }
-        }
-    }
-
     private static void carveAtBlock(ISeedReader world, ChunkGenerator generator, Random random, BlockPos.Mutable position,
-                                     BlockPos.Mutable position2, BlockState blockState, int posResult) {
+                                     BlockPos.Mutable position2, BlockState blockState, boolean edge) {
         if (blockState.isSolid() && (position.getY() < generator.getSeaLevel() || !isNextToLiquidOrAir(world, generator, position, position2)))
         {
-            if (posResult == 2) {
+            if (!edge) {
                 if (position.getY() < 40) {
                     world.setBlockState(position, SUGAR_WATER.get(), 3);
                 } else {
                     world.setBlockState(position, CAVE_AIR, 3);
                 }
-            } else if (posResult == 1 && blockState.isSolid()) {
+            }
+            else if (blockState.isSolid()) {
                 if (random.nextInt(3) == 0) {
                     world.setBlockState(position, HONEYCOMB_BLOCK, 3);
                 } else {
