@@ -36,6 +36,8 @@ Mods I'm keeping an eye on for future compat
     Dimension:
 • If you make a biome under the namespace of "the_bumblezone",
   that biome will now spawn in the Bumblezone dimension!!!
+  
+• Fixed bug where Honey Crystals could be floating from worldgen.
 
     Mod Compat:
 • Fixed crash with Resourceful Bees

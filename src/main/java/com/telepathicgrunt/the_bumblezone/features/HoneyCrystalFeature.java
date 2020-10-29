@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.state.DirectionProperty;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -62,6 +63,17 @@ public class HoneyCrystalFeature extends Feature<NoFeatureConfig> {
                     //if the spot is invalid, we get air back
                     BlockState result = HoneyCrystal.getValidBlockForPosition(honeyCrystal, world, blockpos$Mutable);
                     if (result.getBlock() != AIR) {
+
+                        //avoid placing crystal on block in other chunk as the cave hasn't carved it yet.
+                        Direction directionProp = result.get(HoneyCrystal.FACING);
+                        if( (directionProp == Direction.NORTH && blockpos$Mutable.getZ() % 16 == 15) ||
+                            (directionProp == Direction.SOUTH && blockpos$Mutable.getZ() % 16 == 0) ||
+                            (directionProp == Direction.WEST && blockpos$Mutable.getX() % 16 == 15) ||
+                            (directionProp == Direction.EAST && blockpos$Mutable.getX() % 16 == 0))
+                        {
+                            return false;
+                        }
+
                         world.setBlockState(blockpos$Mutable, result, 3);
                         return true; //crystal was placed
                     }
