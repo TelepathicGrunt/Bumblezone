@@ -191,7 +191,7 @@ public class PlayerTeleportation {
             if (hitHive && validBelowBlock && !playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)) {
                 PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
                 cap.setTeleporting(true);
-
+                pearlEntity.remove(false);
                 return true;
             }
         }

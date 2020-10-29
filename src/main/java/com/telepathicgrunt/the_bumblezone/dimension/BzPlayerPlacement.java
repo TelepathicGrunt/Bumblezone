@@ -71,7 +71,6 @@ public class BzPlayerPlacement {
 
         if (entity instanceof ServerPlayerEntity) {
             PlayerPositionAndDimension cap = (PlayerPositionAndDimension) entity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-            cap.setNonBZPos(entity.getPositionVec());
             destinationPosition = teleportByOutOfBounds((PlayerEntity) entity, destination, upwardChecking);
 
             ((ServerPlayerEntity)entity).teleport(

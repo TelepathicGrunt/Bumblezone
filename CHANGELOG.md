@@ -29,15 +29,22 @@ Mods I'm keeping an eye on for future compat
   The underwater block in the configured surfacebuilder json file
   was changed from the_bumblezone:porous_honeycomb_block to 
   the_bumblezone:filled_porous_honeycomb_block.
+  
+• Fixed bug where Honey Crystals could be floating from worldgen.
+  
  
+    Teleportation:
+• Fixed teleportation mode 1 and 2 not having correct coordinates when exiting Bumblezone.
+
+• Fixed Enderpearls not being removed when thrown and Bee Nest and causing people to teleport
+  back into The Bumblezone immediately when they leave it.
+
   
    (V.2.2.0 Changes) (1.16.3 Minecraft)
    
     Dimension:
 • If you make a biome under the namespace of "the_bumblezone",
   that biome will now spawn in the Bumblezone dimension!!!
-  
-• Fixed bug where Honey Crystals could be floating from worldgen.
 
     Mod Compat:
 • Fixed crash with Resourceful Bees
