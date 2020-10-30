@@ -10,8 +10,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.function.Supplier;
 
 public class BzFeatures {
-	public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Bumblezone.MODID);
-	
+    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Bumblezone.MODID);
+
     public static final RegistryObject<Feature<NoFeatureConfig>> HONEYCOMB_HOLE = createFeature("honeycomb_holes", () -> new HoneycombHole(NoFeatureConfig.CODEC));
     public static final RegistryObject<Feature<NoFeatureConfig>> HONEYCOMB_CAVES = createFeature("honeycomb_caves", () -> new HoneycombCaves(NoFeatureConfig.CODEC));
     public static final RegistryObject<Feature<NoFeatureConfig>> CAVE_SUGAR_WATERFALL = createFeature("cave_sugar_waterfall", () -> new CaveSugarWaterfall(NoFeatureConfig.CODEC));
@@ -21,8 +21,7 @@ public class BzFeatures {
     public static final RegistryObject<Feature<BzBEOreFeatureConfig>> BZ_BE_ORE_FEATURE = createFeature("bz_be_ore_feature", () -> new BzBEOreFeature(BzBEOreFeatureConfig.CODEC));
     public static final RegistryObject<Feature<NoFeatureConfig>> BZ_BEES_WAX_PILLAR_FEATURE = createFeature("bz_bees_wax_pillar_feature", () -> new BzBeesWaxPillarFeature(NoFeatureConfig.CODEC));
 
-    private static <F extends Feature<?>> RegistryObject<F> createFeature(String name, Supplier<F> feature)
-    {
-		return FEATURES.register(name, feature);
-	}
+    private static <F extends Feature<?>> RegistryObject<F> createFeature(String name, Supplier<F> feature) {
+        return FEATURES.register(name, feature);
+    }
 }

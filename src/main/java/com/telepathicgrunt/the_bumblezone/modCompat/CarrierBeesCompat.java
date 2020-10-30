@@ -13,7 +13,6 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ForgeRegistries;
 import noobanidus.mods.carrierbees.entities.AppleBeeEntity;
 import noobanidus.mods.carrierbees.entities.CarrierBeeEntity;
-import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
 import java.util.Arrays;

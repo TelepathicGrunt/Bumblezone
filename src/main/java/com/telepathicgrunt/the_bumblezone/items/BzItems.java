@@ -16,24 +16,21 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.function.Supplier;
 
 
-public class BzItems
-{
-	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Bumblezone.MODID);
-	public static final DeferredRegister<IRecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Bumblezone.MODID);
+public class BzItems {
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Bumblezone.MODID);
+    public static final DeferredRegister<IRecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Bumblezone.MODID);
 
     /**
      * creative tab to hold our block items
      */
-    public static final ItemGroup BUMBLEZONE_CREATIVE_TAB = new ItemGroup(ItemGroup.GROUPS.length, Bumblezone.MODID)
-    {
+    public static final ItemGroup BUMBLEZONE_CREATIVE_TAB = new ItemGroup(ItemGroup.GROUPS.length, Bumblezone.MODID) {
         @Override
         @OnlyIn(Dist.CLIENT)
-        public ItemStack createIcon()
-        {
+        public ItemStack createIcon() {
             return new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB.get());
         }
     };
-    
+
     //Recipe
     public static final RegistryObject<IRecipeSerializer<ContainerCraftingRecipe>> CONTAINER_CRAFTING_RECIPE = RECIPES.register("container_shapeless_recipe_bz", ContainerCraftingRecipe.Serializer::new);
 
@@ -55,10 +52,9 @@ public class BzItems
     public static final RegistryObject<Item> HONEY_CRYSTAL_SHIELD = createItem("honey_crystal_shield", HoneyCrystalShield::new);
     public static final RegistryObject<Item> SUGAR_WATER_BUCKET = createItem("sugar_water_bucket", () -> new BucketItem(BzFluids.SUGAR_WATER_FLUID, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> SUGAR_WATER_BOTTLE = createItem("sugar_water_bottle", () -> new HoneyBottleItem((new Item.Properties()).containerItem(Items.GLASS_BOTTLE).food((new Food.Builder()).hunger(1).saturation(0.05F).effect(() -> new EffectInstance(Effects.HASTE, 600, 0), 1.0F).build()).group(BUMBLEZONE_CREATIVE_TAB).maxStackSize(16)));
-    public static final RegistryObject<Item> HONEY_SLIME_SPAWN_EGG = createItem("honey_slime_spawn_egg", () -> new HoneySlimeSpawnEgg(null, 0xFFCC00,0xFCA800, (new Item.Properties()).group(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> HONEY_SLIME_SPAWN_EGG = createItem("honey_slime_spawn_egg", () -> new HoneySlimeSpawnEgg(null, 0xFFCC00, 0xFCA800, (new Item.Properties()).group(BUMBLEZONE_CREATIVE_TAB)));
 
-    public static <I extends Item> RegistryObject<I> createItem(String name, Supplier<? extends I> item)
-	{
-		return ITEMS.register(name, item);
-	}
+    public static <I extends Item> RegistryObject<I> createItem(String name, Supplier<? extends I> item) {
+        return ITEMS.register(name, item);
+    }
 }

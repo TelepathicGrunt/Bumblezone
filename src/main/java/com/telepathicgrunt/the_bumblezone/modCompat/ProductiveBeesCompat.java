@@ -30,7 +30,6 @@ import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
-import org.apache.logging.log4j.Level;
 
 import java.util.*;
 import java.util.stream.Collectors;

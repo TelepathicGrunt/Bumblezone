@@ -12,12 +12,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.function.Supplier;
 
 
-public class BzBlocks
-{
+public class BzBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Bumblezone.MODID);
-    public static Material RESIDUE = ((MaterialInvoker)((MaterialInvoker)new Material.Builder(MaterialColor.ADOBE))
-    			  .getNotOpaque()).getPushDestroys().doesNotBlockMovement().replaceable().notSolid().build();
-    
+    public static Material RESIDUE = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.ADOBE))
+            .getNotOpaque()).getPushDestroys().doesNotBlockMovement().replaceable().notSolid().build();
+
     //Blocks
     public static final RegistryObject<Block> POROUS_HONEYCOMB = createBlock("porous_honeycomb_block", PorousHoneycomb::new);
     public static final RegistryObject<Block> FILLED_POROUS_HONEYCOMB = createBlock("filled_porous_honeycomb_block", FilledPorousHoneycomb::new);
@@ -29,9 +28,8 @@ public class BzBlocks
     public static final RegistryObject<Block> STICKY_HONEY_RESIDUE = createBlock("sticky_honey_residue", StickyHoneyResidue::new);
     public static final RegistryObject<Block> STICKY_HONEY_REDSTONE = createBlock("sticky_honey_redstone", StickyHoneyRedstone::new);
     public static final RegistryObject<Block> BEESWAX_PLANKS = createBlock("beeswax_planks", BeeswaxPlanks::new);
-    
-    public static <B extends Block> RegistryObject<B> createBlock(String name, Supplier<B> block)
-	{
-		return BLOCKS.register(name, block);
-	}
+
+    public static <B extends Block> RegistryObject<B> createBlock(String name, Supplier<B> block) {
+        return BLOCKS.register(name, block);
+    }
 }

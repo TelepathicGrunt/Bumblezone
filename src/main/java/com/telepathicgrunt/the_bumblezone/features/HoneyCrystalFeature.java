@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.state.DirectionProperty;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;

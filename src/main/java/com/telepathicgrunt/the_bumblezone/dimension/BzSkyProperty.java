@@ -41,18 +41,20 @@ public class BzSkyProperty extends DimensionRenderInfo {
          */
         if (Bumblezone.BzDimensionConfig.fogBrightnessPercentage.get() <= 50) {
             colorFactor *= (Bumblezone.BzDimensionConfig.fogBrightnessPercentage.get() / 50);
-        } else {
+        }
+        else {
             colorFactor *= (Bumblezone.BzDimensionConfig.fogBrightnessPercentage.get() / 100);
         }
 
         if (WrathOfTheHiveEffect.ACTIVE_WRATH && REDDISH_FOG_TINT < 0.38f) {
             REDDISH_FOG_TINT += 0.00001f;
-        } else if (REDDISH_FOG_TINT > 0) {
+        }
+        else if (REDDISH_FOG_TINT > 0) {
             REDDISH_FOG_TINT -= 0.00001f;
         }
 
-        return new Vector3d((int)(Math.min(Math.min(0.56f * colorFactor, 0.65f + REDDISH_FOG_TINT)*255, 255)),
-                        ((int)(Math.min(Math.max(Math.min(0.34f * colorFactor, 0.87f) - REDDISH_FOG_TINT * 0.6f, 0)*255, 255))),
-                        ((int)(Math.min(Math.max(Math.min((0.001f * colorFactor) * (colorFactor * colorFactor), 0.9f) - REDDISH_FOG_TINT * 1.9f, 0)*255, 255))));
+        return new Vector3d((int) (Math.min(Math.min(0.56f * colorFactor, 0.65f + REDDISH_FOG_TINT) * 255, 255)),
+                ((int) (Math.min(Math.max(Math.min(0.34f * colorFactor, 0.87f) - REDDISH_FOG_TINT * 0.6f, 0) * 255, 255))),
+                ((int) (Math.min(Math.max(Math.min((0.001f * colorFactor) * (colorFactor * colorFactor), 0.9f) - REDDISH_FOG_TINT * 1.9f, 0) * 255, 255))));
     }
 }

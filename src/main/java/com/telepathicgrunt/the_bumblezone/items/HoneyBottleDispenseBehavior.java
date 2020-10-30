@@ -14,7 +14,6 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.DispenserTileEntity;
 import net.minecraft.tileentity.HopperTileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -47,7 +46,7 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior {
                 if (!world.getBlockState(blockpos).getMaterial().isSolid()) {
                     MobEntity beeEntity = EntityType.BEE.create(world);
                     beeEntity.setLocationAndAngles(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, world.getRandom().nextFloat() * 360.0F, 0.0F);
-                    beeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beeEntity.getBlockPos())), SpawnReason.TRIGGERED, null, (CompoundNBT) null);
+                    beeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beeEntity.getBlockPos())), SpawnReason.TRIGGERED, null, null);
                     world.addEntity(beeEntity);
                 }
 

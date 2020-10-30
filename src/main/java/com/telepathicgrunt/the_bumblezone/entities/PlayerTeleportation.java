@@ -212,8 +212,7 @@ public class PlayerTeleportation {
             if(ModChecker.productiveBeesPresent && ProductiveBeesRedirection.PBIsAdvancedBeehiveAbstractBlock(block))
                 return true;
 
-            if(ModChecker.resourcefulBeesPresent && ResourcefulBeesRedirection.RBIsApairyBlock(block))
-                return true;
+            return ModChecker.resourcefulBeesPresent && ResourcefulBeesRedirection.RBIsApairyBlock(block);
         }
 
         return false;

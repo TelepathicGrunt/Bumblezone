@@ -16,14 +16,13 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Supplier;
 
-public class BzFluids
-{
+public class BzFluids {
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, Bumblezone.MODID);
-	
-	//Fluid Textures
-    public static final ResourceLocation FLUID_STILL = new ResourceLocation(Bumblezone.MODID+":block/sugar_water_still");
-    public static final ResourceLocation FLUID_FLOWING = new ResourceLocation(Bumblezone.MODID+":block/sugar_water_flow");
-    public static final ResourceLocation FLUID_OVERLAY = new ResourceLocation(Bumblezone.MODID+":block/sugar_water_overlay");
+
+    //Fluid Textures
+    public static final ResourceLocation FLUID_STILL = new ResourceLocation(Bumblezone.MODID + ":block/sugar_water_still");
+    public static final ResourceLocation FLUID_FLOWING = new ResourceLocation(Bumblezone.MODID + ":block/sugar_water_flow");
+    public static final ResourceLocation FLUID_OVERLAY = new ResourceLocation(Bumblezone.MODID + ":block/sugar_water_overlay");
 
     //Fluids
     public static final RegistryObject<FlowingFluid> SUGAR_WATER_FLUID = createFluid("sugar_water_still", () -> new SugarWaterFluid.Source(BzFluids.SUGAR_WATER_FLUID_PROPERTIES));
@@ -37,8 +36,7 @@ public class BzFluids
             FluidAttributes.Water.builder(FLUID_STILL, FLUID_FLOWING).overlay(FLUID_OVERLAY).viscosity(1500))
             .bucket(BzItems.SUGAR_WATER_BUCKET).canMultiply().block(SUGAR_WATER_BLOCK);
 
-    private static <F extends Fluid> RegistryObject<F> createFluid(String name, Supplier<F> fluid)
-    {
+    private static <F extends Fluid> RegistryObject<F> createFluid(String name, Supplier<F> fluid) {
         return FLUIDS.register(name, fluid);
     }
 }
