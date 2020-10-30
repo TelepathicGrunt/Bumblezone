@@ -25,7 +25,7 @@ public class MinecraftServerMixin {
     //the world to make the mobs to check their classification.
     //Thanks Mojang
     @Inject(method = "createWorlds(Lnet/minecraft/world/chunk/listener/IChunkStatusListener;)V",
-            at = @At("TAIL"))
+            at = @At("RETURN"))
     private void onWorldCreation(CallbackInfo ci) {
         BeeAggression.setupBeeHatingList(worlds.get(World.OVERWORLD));
     }

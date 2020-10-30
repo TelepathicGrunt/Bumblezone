@@ -20,12 +20,14 @@ public class BzDimension {
     }
 
     public static void biomeModification(final BiomeLoadingEvent event) {
-        boolean needToAddModCompatFeatures = ModChecker.productiveBeesPresent;
-
-        if(needToAddModCompatFeatures && event.getName().getNamespace().equals(Bumblezone.MODID)){
+        if(event.getName() != null && event.getName().getNamespace().equals(Bumblezone.MODID)){
             //Add our features to the bumblezone biomes
-            ProductiveBeesRedirection.PBAddWorldgen(event);
-            ResourcefulBeesRedirection.RBAddWorldgen(event);
+
+            if(ModChecker.productiveBeesPresent)
+                ProductiveBeesRedirection.PBAddWorldgen(event);
+
+            if(ModChecker.resourcefulBeesPresent)
+                ResourcefulBeesRedirection.RBAddWorldgen(event);
         }
     }
 }
