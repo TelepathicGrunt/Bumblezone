@@ -14,12 +14,12 @@ public class ModChecker
 	public static boolean carrierBeesPresent = false;
 	public static boolean resourcefulBeesPresent = false;
 
-
+	@SuppressWarnings("Unused import statement")
     public static void setupModCompat() {
-    	loadupModCompat("potionofbees", PotionOfBeesCompat::setupPotionOfBees);
-    	loadupModCompat("carrierbees", CarrierBeesCompat::setupProductiveBees);
-    	loadupModCompat("resourcefulbees", ResourcefulBeesCompat::setupResourcefulBees);
-    	loadupModCompat("productivebees", ProductiveBeesCompat::setupProductiveBees);
+    	loadupModCompat("potionofbees", () -> PotionOfBeesCompat.setupPotionOfBees());
+    	loadupModCompat("carrierbees", () -> CarrierBeesCompat.setupProductiveBees());
+    	loadupModCompat("resourcefulbees", () -> ResourcefulBeesCompat.setupResourcefulBees());
+    	loadupModCompat("productivebees", () -> ProductiveBeesCompat.setupProductiveBees());
     }
 
     private static void loadupModCompat(String modid, Runnable runnable){
