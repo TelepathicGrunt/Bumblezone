@@ -16,6 +16,12 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
     
+   (V.2.2.2 Changes) (1.16.3 Minecraft)
+   
+    Mod compat:
+• Fixed classloading issues.
+
+
    (V.2.2.1 Changes) (1.16.3 Minecraft)
    
     Major:
