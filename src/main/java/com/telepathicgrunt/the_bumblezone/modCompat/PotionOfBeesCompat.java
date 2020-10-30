@@ -18,6 +18,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.ProjectileImpactEvent.Throwable;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.Level;
 
 public class PotionOfBeesCompat
 {
@@ -26,9 +27,8 @@ public class PotionOfBeesCompat
 	private static Item POTION_OF_BEES;
 	private static Item SPLASH_POTION_OF_BEES;
 	
-	public static void setupPotionOfBees() 
-	{
-		ModChecker.potionOfBeesPresent = true;
+	public static void setupPotionOfBees() {
+		Bumblezone.LOGGER.log(Level.WARN, "Potion of Bees setup method called");
 
 		/*
 		 * Sets up our custom behavior for Potion of Bees items withour overriding their default behavior completely
@@ -45,6 +45,9 @@ public class PotionOfBeesCompat
 			PotionOfBeesBeePotionDispenseBehavior.DEFAULT_SPLASH_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker)Blocks.DISPENSER).invokeGetBehavior(new ItemStack(SPLASH_POTION_OF_BEES));
 			DispenserBlock.registerDispenseBehavior(SPLASH_POTION_OF_BEES, BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); // adds compatibility with bee splash potion in dispensers
 		}
+
+		// Keep at end so it is only set to true if no exceptions was thrown during setup
+		ModChecker.potionOfBeesPresent = true;
 	}
 	
 	public static boolean POBIsPotionOfBeesItem(Item item) {

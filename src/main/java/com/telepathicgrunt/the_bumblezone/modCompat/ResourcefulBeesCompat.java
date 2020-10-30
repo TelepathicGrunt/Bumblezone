@@ -40,8 +40,7 @@ public class ResourcefulBeesCompat {
 	private static final List<Block> SPIDER_DUNGEON_HONEYCOMBS = new ArrayList<>();
 
 	public static void setupResourcefulBees() {
-		ModChecker.resourcefulBeesPresent = true;
-		Bumblezone.LOGGER.log(Level.WARN, "Compat initiated");
+		Bumblezone.LOGGER.log(Level.WARN, "Resourceful Bees setup method called");
 
 		for(Map.Entry<RegistryKey<EntityType<?>>, EntityType<?>> entry : Registry.ENTITY_TYPE.getEntries()){
 			if(entry.getKey().getValue().getNamespace().equals(RESOURCEFUL_BEES_NAMESPACE)){
@@ -54,6 +53,9 @@ public class ResourcefulBeesCompat {
 				RESOURCEFUL_HONEYCOMBS_MAP.put(entry.getKey().getValue(), entry.getValue());
 			}
 		}
+
+		// Keep at end so it is only set to true if no exceptions was thrown during setup
+		ModChecker.resourcefulBeesPresent = true;
 	}
 
 	public static void RBAddWorldgen(BiomeLoadingEvent event) {

@@ -24,15 +24,17 @@ public class ModChecker
     }
 
     private static void loadupModCompat(String modid, Runnable runnable){
-		String currentModID = "";
 		try {
-			currentModID = modid;
-			if (ModList.get().isLoaded(currentModID)) {
+			Bumblezone.LOGGER.log(Level.WARN, "Before modlist check");
+			if (ModList.get().isLoaded(modid)) {
+				Bumblezone.LOGGER.log(Level.WARN, "After modlist check");
+				Bumblezone.LOGGER.log(Level.WARN, "Runnable: "+runnable+" "+ runnable.toString());
 				runnable.run();
+				Bumblezone.LOGGER.log(Level.WARN, "After runnable");
 			}
 		}
 		catch (Exception e) {
-			printErrorToLogs(currentModID);
+			printErrorToLogs(modid);
 			e.printStackTrace();
 		}
 	}

@@ -30,6 +30,7 @@ import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
+import org.apache.logging.log4j.Level;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -45,6 +46,9 @@ public class ProductiveBeesCompat {
 	private static Map<ResourceLocation, CompoundNBT> PB_DATA;
 
 	public static void setupProductiveBees() {
+		Bumblezone.LOGGER.log(Level.WARN, "Productive Bees setup method called");
+
+		// Keep at end so it is only set to true if no exceptions was thrown during setup
 		ModChecker.productiveBeesPresent = true;
 	}
 	

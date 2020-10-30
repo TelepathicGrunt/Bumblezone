@@ -13,6 +13,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ForgeRegistries;
 import noobanidus.mods.carrierbees.entities.AppleBeeEntity;
 import noobanidus.mods.carrierbees.entities.CarrierBeeEntity;
+import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -103,10 +104,9 @@ public class CarrierBeesCompat {
 	));
 
 	public static void setupProductiveBees() {
-		ModChecker.carrierBeesPresent = true;
+		Bumblezone.LOGGER.log(Level.WARN, "Carrier Bees setup method called");
 
 		for(EntityType<?> cb_entity : ForgeRegistries.ENTITIES){
-
 			ResourceLocation rl = cb_entity.getRegistryName();
 			if(rl != null &&
 				rl.getNamespace().equals("carrierbees") &&
@@ -126,6 +126,9 @@ public class CarrierBeesCompat {
 				}
 			}
 		}
+
+		// Keep at end so it is only set to true if no exceptions was thrown during setup
+		ModChecker.carrierBeesPresent = true;
 	}
 
 	/**
