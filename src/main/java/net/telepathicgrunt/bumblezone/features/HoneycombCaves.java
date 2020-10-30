@@ -10,7 +10,7 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
-import net.telepathicgrunt.bumblezone.utils.OpenSimplexNoise;
+import net.telepathicgrunt.bumblezone.utils.OpenSimplex2F;
 
 import java.util.Random;
 
@@ -25,13 +25,13 @@ public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
 
 
     protected long seed;
-    protected static OpenSimplexNoise noiseGen;
-    protected static OpenSimplexNoise noiseGen2;
+    protected static OpenSimplex2F noiseGen;
+    protected static OpenSimplex2F noiseGen2;
 
     public void setSeed(long seed) {
         if (this.seed != seed || noiseGen == null) {
-            noiseGen = new OpenSimplexNoise(seed);
-            noiseGen2 = new OpenSimplexNoise(seed + 1000);
+            noiseGen = new OpenSimplex2F(seed);
+            noiseGen2 = new OpenSimplex2F(seed + 1000);
             this.seed = seed;
         }
     }
@@ -158,17 +158,22 @@ public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
             for (int z = 0; z < 16; z++) {
                 for (int y = 15; y < 241; y++) {
                     mutableBlockPos.set(position).move(x, y, z);
-                    double noise1 = noiseGen.eval(mutableBlockPos.getX() * 0.02D,
-                            mutableBlockPos.getZ() * 0.02D,
-                            mutableBlockPos.getY() * 0.04D);
 
-                    double noise2 = noiseGen2.eval(mutableBlockPos.getX() * 0.02D,
-                            mutableBlockPos.getZ() * 0.02D,
-                            mutableBlockPos.getY() * 0.04D);
+                    double noise1 = noiseGen.noise3_Classic(mutableBlockPos.getX() * 0.019D,
+                            mutableBlockPos.getZ() * 0.019D,
+                            mutableBlockPos.getY() * 0.038D);
+
+                    if(noise1 >= 0.0360555127546399D){
+                        continue;
+                    }
+
+                    double noise2 = noiseGen2.noise3_Classic(mutableBlockPos.getX() * 0.019D,
+                            mutableBlockPos.getZ() * 0.019D,
+                            mutableBlockPos.getY() * 0.038D);
 
                     double finalNoise = noise1 * noise1 + noise2 * noise2;
 
-                    if (finalNoise < 0.0009f) {
+                    if (finalNoise < 0.0013f) {
                         hexagon(world, generator, mutableBlockPos, random, noise1);
                     }
                 }
@@ -204,14 +209,14 @@ public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
     }
 
     private static void carveAtBlock(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos blockPos, BlockState blockState, int posResult) {
-        if (blockPos.getY() < generator.getSeaLevel() || !isNextToLiquidOrAir(world, generator, blockPos)) {
+        if (blockState.isOpaque() && (blockPos.getY() < generator.getSeaLevel() || !isNextToLiquidOrAir(world, generator, blockPos))) {
             if (posResult == 2) {
                 if (blockPos.getY() < 40) {
                     world.setBlockState(blockPos, SUGAR_WATER, 3);
                 } else {
                     world.setBlockState(blockPos, CAVE_AIR, 3);
                 }
-            } else if (posResult == 1 && blockState.isOpaque()) {
+            } else if (posResult == 1) {
                 if (random.nextInt(3) == 0) {
                     world.setBlockState(blockPos, HONEYCOMB_BLOCK, 3);
                 } else {

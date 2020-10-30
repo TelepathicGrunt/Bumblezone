@@ -7,6 +7,23 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
+   (V.2.2.9 Changes) (1.16.3 Minecraft)
+   
+    Dimension:
+• Optimized the SurfaceBuilder and the caves a bit!
+  The underwater block in the configured surfacebuilder json file
+  was changed from the_bumblezone:porous_honeycomb_block to 
+  the_bumblezone:filled_porous_honeycomb_block.
+  
+• Fixed bug where Honey Crystals could be floating from worldgen.
+  
+• Attempted to optimize cave code slightly. Cave shape changed a bit as a result.
+ 
+    Teleportation:
+• Fixed Enderpearls not being removed when thrown and Bee Nest and causing people to teleport
+  back into The Bumblezone immediately when they leave it.
+
+  
    (V.2.2.8 Changes) (1.16.3 Minecraft)
    
     Teleportation:

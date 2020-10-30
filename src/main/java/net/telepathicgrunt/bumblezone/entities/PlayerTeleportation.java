@@ -180,7 +180,7 @@ public class PlayerTeleportation {
             //if the pearl hit a beehive and is not in our bee dimension, begin the teleportation.
             if (hitHive && validBelowBlock && !playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)) {
                 Bumblezone.PLAYER_COMPONENT.get(playerEntity).setIsTeleporting(true);
-
+                pearlEntity.remove();
                 return true;
             }
         }

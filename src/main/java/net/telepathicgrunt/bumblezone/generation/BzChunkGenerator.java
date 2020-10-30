@@ -121,7 +121,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         this.height = 256;
         this.verticalNoiseResolution = 8;
         this.horizontalNoiseResolution = 4;
-        this.defaultBlock = Blocks.STONE.getDefaultState();
+        this.defaultBlock = Blocks.HONEYCOMB_BLOCK.getDefaultState();
         this.defaultFluid = BzBlocks.SUGAR_WATER_BLOCK.getDefaultState();
         this.noiseSizeX = 16 / this.horizontalNoiseResolution;
         this.noiseSizeY = this.height / this.verticalNoiseResolution;
