@@ -104,8 +104,6 @@ public class CarrierBeesCompat {
 	));
 
 	public static void setupProductiveBees() {
-		Bumblezone.LOGGER.log(Level.WARN, "Carrier Bees setup method called");
-
 		for(EntityType<?> cb_entity : ForgeRegistries.ENTITIES){
 			ResourceLocation rl = cb_entity.getRegistryName();
 			if(rl != null &&

@@ -16,43 +16,22 @@ public class ModChecker
 
 
     public static void setupModCompat() {
-    	try{
-			Bumblezone.LOGGER.log(Level.WARN, "Starting compat");
-			Bumblezone.LOGGER.log(Level.WARN, "Show all mods: "+ModList.get().getMods().stream().map(e -> e.getModId() + ", ").reduce("", String::concat));
-
-			Bumblezone.LOGGER.log(Level.WARN, "Direct resourcefulbees check: " + ModList.get().isLoaded("resourcefulbees") + "\n");
-			loadupModCompat("potionofbees", PotionOfBeesCompat::setupPotionOfBees);
-			loadupModCompat("carrierbees", CarrierBeesCompat::setupProductiveBees);
-			loadupModCompat("productivebees", ProductiveBeesCompat::setupProductiveBees);
-			loadupModCompat("resourcefulbees", ResourcefulBeesCompat::setupResourcefulBees);
-		}
-    	catch(Exception e){
-			Bumblezone.LOGGER.log(Level.WARN, "\n\nhidden error found!");
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			String exceptionAsString = sw.toString();
-			Bumblezone.LOGGER.log(Level.WARN, exceptionAsString);
-			Bumblezone.LOGGER.log(Level.WARN, "\n\n");
-		}
+    	loadupModCompat("potionofbees", PotionOfBeesCompat::setupPotionOfBees);
+    	loadupModCompat("carrierbees", CarrierBeesCompat::setupProductiveBees);
+    	loadupModCompat("resourcefulbees", ResourcefulBeesCompat::setupResourcefulBees);
+    	loadupModCompat("productivebees", ProductiveBeesCompat::setupProductiveBees);
     }
 
     private static void loadupModCompat(String modid, Runnable runnable){
-		Bumblezone.LOGGER.log(Level.WARN, modid+ " - entered loadupModCompat");
 		try {
-			Bumblezone.LOGGER.log(Level.WARN, modid+ " - Before modlist check");
 			if (ModList.get().isLoaded(modid)) {
-				Bumblezone.LOGGER.log(Level.WARN, modid+ " - After modlist check");
-				Bumblezone.LOGGER.log(Level.WARN, modid+ " - Runnable: "+runnable+" "+ runnable.toString());
 				runnable.run();
-				Bumblezone.LOGGER.log(Level.WARN, modid+ " - After runnable");
 			}
 		}
 		catch (Exception e) {
-			Bumblezone.LOGGER.log(Level.WARN, modid+ " - Error catched");
 			printErrorToLogs(modid);
 			e.printStackTrace();
 		}
-		Bumblezone.LOGGER.log(Level.WARN, modid+ " - exiting loadupModCompat\n");
 	}
 
 

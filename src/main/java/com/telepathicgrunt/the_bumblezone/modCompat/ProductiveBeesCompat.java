@@ -46,8 +46,6 @@ public class ProductiveBeesCompat {
 	private static Map<ResourceLocation, CompoundNBT> PB_DATA;
 
 	public static void setupProductiveBees() {
-		Bumblezone.LOGGER.log(Level.WARN, "Productive Bees setup method called");
-
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
 		ModChecker.productiveBeesPresent = true;
 	}

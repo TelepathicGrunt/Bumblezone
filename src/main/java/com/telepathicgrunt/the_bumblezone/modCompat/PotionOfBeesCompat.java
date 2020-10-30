@@ -28,7 +28,6 @@ public class PotionOfBeesCompat
 	private static Item SPLASH_POTION_OF_BEES;
 	
 	public static void setupPotionOfBees() {
-		Bumblezone.LOGGER.log(Level.WARN, "Potion of Bees setup method called");
 
 		/*
 		 * Sets up our custom behavior for Potion of Bees items withour overriding their default behavior completely

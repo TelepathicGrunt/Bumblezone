@@ -20,9 +20,8 @@ Mods I'm keeping an eye on for future compat
    
     Major:
 • Register to Forge registry instead of vanilla due to a breaking 
-  change done by Forge and they didn't even give us modders a heads up.
-  Thank you Forge. Thank you so very much. Glad to see them thinking about
-  the modders and making sure we wake up to our mods blowing up. ffs
+  change done by Forge. Special thanks to andrew0030 for helping
+  out with fixing this!
 
     Dimension:
 • Optimized the SurfaceBuilder and the caves a bit!
@@ -42,6 +41,8 @@ Mods I'm keeping an eye on for future compat
  
     Mod Compat:
 • Fixed possible Dispenser issue if Potion of Bees's setup event is ran after mine.
+
+• Fixed Resourceful Bees compat not running if Productive Bees is off.
   
   
    (V.2.2.0 Changes) (1.16.3 Minecraft)
