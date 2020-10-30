@@ -91,9 +91,11 @@ public class Bumblezone{
 			BzDimension.setupDimension();
 			BzConfiguredFeatures.registerConfiguredFeatures();
 			BzEntities.registerAdditionalEntityInformation();
+
 			// Dispenser isn't synchronized. Needs to be enqueueWork to prevent crash if
 	        // another mod registers to it at the same exact time.
 	        DispenserItemSetup.setupDispenserBehaviors();
+
 	        // should run after most other mods just in case
 	        ModChecker.setupModCompat();
 		});

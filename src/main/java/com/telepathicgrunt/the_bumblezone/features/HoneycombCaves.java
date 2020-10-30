@@ -218,13 +218,16 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
             if (posResult == 2) {
                 if (position.getY() < 40) {
                     world.setBlockState(position, SUGAR_WATER, 3);
-                } else {
+                }
+                else {
                     world.setBlockState(position, CAVE_AIR, 3);
                 }
-            } else if (posResult == 1 && blockState.isSolid()) {
+            }
+            else if (posResult == 1) {
                 if (random.nextInt(3) == 0) {
                     world.setBlockState(position, HONEYCOMB_BLOCK, 3);
-                } else {
+                }
+                else {
                     world.setBlockState(position, FILLED_POROUS_HONEYCOMB, 3);
                 }
             }

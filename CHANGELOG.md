@@ -34,6 +34,7 @@ Mods I'm keeping an eye on for future compat
   
 • Attempted to optimize cave code slightly. Cave shape changed a bit as a result.
  
+ 
     Teleportation:
 • Fixed teleportation mode 1 and 2 not having correct coordinates when exiting Bumblezone.
 

@@ -13,6 +13,10 @@ public class ModChecker
 
 
     public static void setupModCompat() {
+		Bumblezone.LOGGER.log(Level.WARN, "Starting compat");
+		Bumblezone.LOGGER.log(Level.WARN, "Show all mods: "+ModList.get().getMods().stream().map(e -> e.getModId() + ", ").reduce("", String::concat));
+
+		Bumblezone.LOGGER.log(Level.WARN, "Direct resourcefulbees check: " + ModList.get().isLoaded("resourcefulbees"));
 		loadupModCompat("potionofbees", PotionOfBeesCompat::setupPotionOfBees);
 		loadupModCompat("carrierbees", CarrierBeesCompat::setupProductiveBees);
 		loadupModCompat("productivebees", ProductiveBeesCompat::setupProductiveBees);

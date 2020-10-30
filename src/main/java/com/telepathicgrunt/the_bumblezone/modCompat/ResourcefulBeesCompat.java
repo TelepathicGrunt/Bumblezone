@@ -27,6 +27,7 @@ import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
+import org.apache.logging.log4j.Level;
 
 import java.util.*;
 
@@ -40,6 +41,7 @@ public class ResourcefulBeesCompat {
 
 	public static void setupResourcefulBees() {
 		ModChecker.resourcefulBeesPresent = true;
+		Bumblezone.LOGGER.log(Level.WARN, "Compat initiated");
 
 		for(Map.Entry<RegistryKey<EntityType<?>>, EntityType<?>> entry : Registry.ENTITY_TYPE.getEntries()){
 			if(entry.getKey().getValue().getNamespace().equals(RESOURCEFUL_BEES_NAMESPACE)){
