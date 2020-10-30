@@ -26,6 +26,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -61,7 +62,8 @@ public class Bumblezone{
         forgeBus.addGenericListener(Entity.class, CapabilityEventHandler::onAttachCapabilitiesToEntities);
 
         //Registration
-        modEventBus.addListener(this::setup);
+        modEventBus.addListener(EventPriority.NORMAL, this::setup);
+        modEventBus.addListener(EventPriority.LOWEST, this::modCompatSetup); //run after all mods
         BzItems.ITEMS.register(modEventBus);
         BzBlocks.BLOCKS.register(modEventBus);
         BzFluids.FLUIDS.register(modEventBus);
@@ -91,14 +93,20 @@ public class Bumblezone{
 			BzDimension.setupDimension();
 			BzConfiguredFeatures.registerConfiguredFeatures();
 			BzEntities.registerAdditionalEntityInformation();
-
-			// Dispenser isn't synchronized. Needs to be enqueueWork to prevent crash if
-	        // another mod registers to it at the same exact time.
-	        DispenserItemSetup.setupDispenserBehaviors();
-
-	        // should run after most other mods just in case
-	        ModChecker.setupModCompat();
 		});
         CapabilityPlayerPosAndDim.register();
+    }
+
+    private void modCompatSetup(final FMLCommonSetupEvent event)
+    {
+        event.enqueueWork(() ->
+        {
+            // Dispenser isn't synchronized. Needs to be enqueueWork to prevent crash if
+            // another mod registers to it at the same exact time.
+            DispenserItemSetup.setupDispenserBehaviors();
+
+            // should run after most other mods just in case
+            ModChecker.setupModCompat();
+        });
     }
 }

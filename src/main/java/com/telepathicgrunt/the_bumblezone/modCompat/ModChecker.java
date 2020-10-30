@@ -4,6 +4,9 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraftforge.fml.ModList;
 import org.apache.logging.log4j.Level;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 public class ModChecker
 {
     public static boolean potionOfBeesPresent = false;
@@ -13,14 +16,24 @@ public class ModChecker
 
 
     public static void setupModCompat() {
-		Bumblezone.LOGGER.log(Level.WARN, "Starting compat");
-		Bumblezone.LOGGER.log(Level.WARN, "Show all mods: "+ModList.get().getMods().stream().map(e -> e.getModId() + ", ").reduce("", String::concat));
+    	try{
+			Bumblezone.LOGGER.log(Level.WARN, "Starting compat");
+			Bumblezone.LOGGER.log(Level.WARN, "Show all mods: "+ModList.get().getMods().stream().map(e -> e.getModId() + ", ").reduce("", String::concat));
 
-		Bumblezone.LOGGER.log(Level.WARN, "Direct resourcefulbees check: " + ModList.get().isLoaded("resourcefulbees") + "\n");
-		loadupModCompat("potionofbees", PotionOfBeesCompat::setupPotionOfBees);
-		loadupModCompat("carrierbees", CarrierBeesCompat::setupProductiveBees);
-		loadupModCompat("productivebees", ProductiveBeesCompat::setupProductiveBees);
-		loadupModCompat("resourcefulbees", ResourcefulBeesCompat::setupResourcefulBees);
+			Bumblezone.LOGGER.log(Level.WARN, "Direct resourcefulbees check: " + ModList.get().isLoaded("resourcefulbees") + "\n");
+			loadupModCompat("potionofbees", PotionOfBeesCompat::setupPotionOfBees);
+			loadupModCompat("carrierbees", CarrierBeesCompat::setupProductiveBees);
+			loadupModCompat("productivebees", ProductiveBeesCompat::setupProductiveBees);
+			loadupModCompat("resourcefulbees", ResourcefulBeesCompat::setupResourcefulBees);
+		}
+    	catch(Exception e){
+			Bumblezone.LOGGER.log(Level.WARN, "\n\nhidden error found!");
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			String exceptionAsString = sw.toString();
+			Bumblezone.LOGGER.log(Level.WARN, exceptionAsString);
+			Bumblezone.LOGGER.log(Level.WARN, "\n\n");
+		}
     }
 
     private static void loadupModCompat(String modid, Runnable runnable){
