@@ -40,9 +40,8 @@ public class BeeAggression {
      */
     public static void setupBeeHatingList(World world)
     {
-        // Clear the set when changing worlds so it can be rebuilt
-        // (in case json mobs gets added later).
-        if(SET_OF_BEE_HATED_ENTITIES.size() != 0) SET_OF_BEE_HATED_ENTITIES.clear();
+        // Build list only once
+        if(SET_OF_BEE_HATED_ENTITIES.size() != 0) return;
 
         for(EntityType<?> entityType : Registry.ENTITY_TYPE)
         {
