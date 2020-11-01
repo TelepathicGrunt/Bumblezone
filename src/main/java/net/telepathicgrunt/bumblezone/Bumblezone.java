@@ -8,9 +8,11 @@ import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import me.sargunvohra.mcmods.autoconfig1u.serializer.JanksonConfigSerializer;
 import nerdhub.cardinal.components.api.util.RespawnCopyStrategy;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
@@ -60,7 +62,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzConfiguredFeatures.registerConfiguredFeatures();
         BzDimension.setupDimension();
 
-        ServerStartCallback.EVENT.register((MinecraftServer world) -> BeeAggression.setupBeeHatingList(world.getWorld(World.OVERWORLD)));
+        ServerWorldEvents.LOAD.register((MinecraftServer minecraftServer, ServerWorld serverWorld)-> BeeAggression.setupBeeHatingList(serverWorld));
         DispenserItemSetup.setupDispenserBehaviors();
 
         ModChecker.setupModCompat();
@@ -74,8 +76,8 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
     public static void reserveBiomeIDs() {
         //Reserve Bumblezone biome IDs for the json version to replace
-        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "hive_wall"), DefaultBiomeCreator.createNormalOcean(false));
-        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "hive_pillar"), DefaultBiomeCreator.createNormalOcean(false));
-        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "sugar_water_floor"), DefaultBiomeCreator.createNormalOcean(false));
+        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "hive_wall"), DefaultBiomeCreator.createTheVoid());
+        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "hive_pillar"), DefaultBiomeCreator.createTheVoid());
+        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "sugar_water_floor"), DefaultBiomeCreator.createTheVoid());
     }
 }

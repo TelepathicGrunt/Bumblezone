@@ -40,7 +40,6 @@
   ],
   "client": [
     "BlockOverlayRendererMixin",
-    "MinecraftServerMixin",
     "SkyPropertiesAccessor"
   ],
   "injectors": {

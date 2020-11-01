@@ -7,6 +7,14 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
+   (V.2.2.10 Changes) (1.16.3 Minecraft)
+   
+    Backend:
+• Some cleaning up the code. Now requires newer Fabric API and Fabric Loader.
+
+• No longer Jar-in-Jar ModMenu. Was a mistake on my part lol.
+    
+    
    (V.2.2.9 Changes) (1.16.3 Minecraft)
    
     Dimension:

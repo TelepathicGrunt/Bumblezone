@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Bootstrap.class)
 public class BootstrapMixin {
-
+    //TODO: Remove this mixin when fabric fixes biome shuffling bug
     @Inject(
             method = "initialize",
             at = @At(value = "TAIL")

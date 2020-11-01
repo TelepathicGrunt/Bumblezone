@@ -42,41 +42,21 @@ dependencies {
 		force = true //Force the version we want rather than trusting Gradle to pick it over transitive suggestions
 	}
 
-	modImplementation ("me.shedaniel.cloth:config-2:${project.cloth_config_version}"){
-		exclude module: 'fabric-api'
-	}
-	include ("me.shedaniel.cloth:config-2:${project.cloth_config_version}"){
-		exclude module: 'fabric-api'
-	}
+	modImplementation "me.shedaniel.cloth:config-2:${project.cloth_config_version}"
+	include "me.shedaniel.cloth:config-2:${project.cloth_config_version}"
 
-	modImplementation ("me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}"){
-		exclude module: 'fabric-api'
-	}
-	include ("me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}"){
-		exclude module: 'fabric-api'
-	}
+	modImplementation "me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}"
+	include "me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}"
 
-	modApi ("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"){
-		exclude module: 'fabric-api'
-	}
-	include ("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"){
-		exclude module: 'fabric-api'
-	}
+	modApi "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"
+	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"
 
-	modApi ("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_version}"){
-		exclude module: 'fabric-api'
-	}
-	include ("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_version}"){
-		exclude module: 'fabric-api'
-	}
+	modApi "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_version}"
+	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_version}"
 
-	modImplementation ("io.github.prospector:modmenu:${project.mod_menu_version}"){
-		exclude module: 'fabric-api'
-	}
+	modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}"
 
-	modImplementation ("curse.maven:potion_of_bees:3052244"){
-		exclude module: 'fabric-api'
-	}
+	modImplementation "curse.maven:potion_of_bees:3052244"
 	modImplementation "de.siphalor:nbtcrafting-1.16:2+"
 	//modImplementation ("io.github.alloffabric:BeeProductive:${project.beeproductive_version}")
 }

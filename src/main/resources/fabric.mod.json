@@ -44,13 +44,10 @@
   "accessWidener" : "the_bumblezone.accesswidener",
 
   "depends": {
-    "fabricloader": ">=0.7.2",
-    "fabric": "*",
+    "fabricloader": ">=0.10.6",
     "minecraft": ">=1.16.2",
+    "fabric": ">=0.25.0",
     "cardinal-components-base": ">=2.5.0",
     "cardinal-components-entity": ">=2.5.0"
-  },
-  "suggests": {
-    "flamingo": "*"
   }
 }
