@@ -6,6 +6,7 @@ license="https://github.com/TelepathicGrunt/Bumblezone/blob/1.16/LICENSE"
 [[mods]] #mandatory
 modId="the_bumblezone" #mandatory
 logoFile="the_bumblezone_logo.png"
+logoBlur=false
 version="${version}" #mandatory
 displayName="The Bumblezone" #mandatory
 displayURL="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-forge"

@@ -16,10 +16,18 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
     
+   (V.2.2.3 Changes) (1.16.3 Minecraft)
+   
+    Misc:
+• Removed logo blur from logo in mod list.
+   
+   
    (V.2.2.2 Changes) (1.16.3 Minecraft)
    
     Mod compat:
 • Fixed classloading issues.
+
+• Fixed crash if Potion of Bees is on and Productive Bees is off.
 
 
    (V.2.2.1 Changes) (1.16.3 Minecraft)

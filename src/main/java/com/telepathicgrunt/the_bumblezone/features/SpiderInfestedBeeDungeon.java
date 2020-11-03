@@ -363,7 +363,7 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
             if (world.getBlockState(pos.up()).getMaterial() != Material.AIR && !world.getBlockState(pos.up()).isSolid())
                 replaceAir = true;
 
-            if(ModChecker.potionOfBeesPresent &&
+            if(ModChecker.productiveBeesPresent &&
                     random.nextFloat() < Bumblezone.BzModCompatibilityConfig.PBOreHoneycombSpawnRateSpiderBeeDungeon.get())
             {
                 return new Pair<>(ProductiveBeesRedirection.PBGetRandomHoneycomb(random,
