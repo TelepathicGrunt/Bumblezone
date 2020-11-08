@@ -1,6 +1,6 @@
-# Made for Minecraft v.1.16.3
+# Made for Minecraft v.1.16.4
 
-## Created by TelepathicGrunt
+    Created by TelepathicGrunt
 
 Welcome to the Github! If you are looking for the most recent stable version, then checkout the master branch! Branches dedicated to the latest version of Minecraft may be unstable or broken as I test and experiment so stick with the master branch instead.
 
@@ -15,29 +15,37 @@ Mods I'm keeping an eye on for future compat
 
 ------------------------------------------------
 # | Bumblezone changelog |
-    
-   (V.2.2.3 Changes) (1.16.3 Minecraft)
    
-    Misc:
+    (V.2.2.3 Changes) (1.16.3 Minecraft)
+   
+   Mod Compat:
+• Now attempt to try and make sure Productive Bees honeycombs 
+  does not try to be placed out of bounds. Also will now not 
+  spawn any broken combs if that comb type is disabled in 
+  Productive Bees.
+  
+• Fixed log spam about getting a Block Entity before it was made.
+
+   Misc:
 • Removed logo blur from logo in mod list.
    
    
-   (V.2.2.2 Changes) (1.16.3 Minecraft)
+    (V.2.2.2 Changes) (1.16.3 Minecraft)
    
-    Mod compat:
+   Mod compat:
 • Fixed classloading issues.
 
 • Fixed crash if Potion of Bees is on and Productive Bees is off.
 
 
-   (V.2.2.1 Changes) (1.16.3 Minecraft)
+    (V.2.2.1 Changes) (1.16.3 Minecraft)
    
-    Major:
+   Major:
 • Register to Forge registry instead of vanilla due to a breaking 
   change done by Forge. Special thanks to andrew0030 for helping
   out with fixing this!
 
-    Dimension:
+   Dimension:
 • Optimized the SurfaceBuilder and the caves a bit!
   The underwater block in the configured surfacebuilder json file
   was changed from the_bumblezone:porous_honeycomb_block to 
@@ -47,25 +55,25 @@ Mods I'm keeping an eye on for future compat
   
 • Attempted to optimize cave code slightly. Cave shape changed a bit as a result.
  
-    Teleportation:
+   Teleportation:
 • Fixed teleportation mode 1 and 2 not having correct coordinates when exiting Bumblezone.
 
 • Fixed Enderpearls not being removed when thrown and Bee Nest and causing people to teleport
   back into The Bumblezone immediately when they leave it.
  
-    Mod Compat:
+   Mod Compat:
 • Fixed possible Dispenser issue if Potion of Bees's setup event is ran after mine.
 
 • Fixed Resourceful Bees compat not running if Productive Bees is off.
   
   
-   (V.2.2.0 Changes) (1.16.3 Minecraft)
+    (V.2.2.0 Changes) (1.16.3 Minecraft)
    
-    Dimension:
+   Dimension:
 • If you make a biome under the namespace of "the_bumblezone",
   that biome will now spawn in the Bumblezone dimension!!!
 
-    Mod Compat:
+   Mod Compat:
 • Fixed crash with Resourceful Bees
 
 • Added mod compat with Resourceful Bees! Use their Apairy or hive blocks to enter Bumblezone!
@@ -76,13 +84,13 @@ Mods I'm keeping an eye on for future compat
    
 • Fixed bug where modded bees do not spawn when chunks are created in Bumblezone.
 
-    Bee Interactivity:
+   Bee Interactivity:
 • Feeding bees now works again!
 
    
-   (V.2.1.1 Changes) (1.16.3 Minecraft)
+    (V.2.1.1 Changes) (1.16.3 Minecraft)
  
-    Dimension:
+   Dimension:
 • Fixed SurfaceBuilder for BZ biomes being registered twice
   instead of once. Players will see no change other than 1
   less line in the latest.log file lol.
@@ -96,17 +104,17 @@ Mods I'm keeping an eye on for future compat
   Might help with a biome ID shifting issue with adding/removing mods or something.
 
  
-   (V.2.1.0 Changes) (1.16.3 Minecraft)
+    (V.2.1.0 Changes) (1.16.3 Minecraft)
  
-    Features:
+   Features:
 • Adjusted Honey Crystals to make them spawn more often.
 
-    Teleportation:
+   Teleportation:
 • Fixed crash when exiting The Bumblezone at times.
 
 • Fixed coordinate scaling not working properly when entering/exiting The Bumblezone.
 
-    Mod Compatibility:
+   Mod Compatibility:
 • Updated Productive Bees compat to use their configurable bees and honeycombs.
   Support for their non-configurable bees and blocks was removed as they are 
   moving away from using them.
@@ -117,69 +125,69 @@ Mods I'm keeping an eye on for future compat
 • Potion of Bees is working as intended. 
   (They just ported so this was just me checking if the compat still works)
   
-    Dimension:
+   Dimension:
 • Cleaned up the json format for the dimension's json file.
 
-    Misc:
+   Misc:
 • Cleaned up codebase a bit.
 
 
-   (V.2.0.5 Changes) (1.16.2 Minecraft)
+    (V.2.0.5 Changes) (1.16.2 Minecraft)
  
-    Lang:
+   Lang:
 • Added translation for Honey Slime mob name.
 
 • Portuguese translations added by Mikeliro! Thank you!
 
 • Added Simplified Chinese translation from Samekichi! Thank you!
-    
-    Config:
+   
+   Config:
 • The status effect configs now reflect their true level of intensity.
   1 is now the minimum value instead of 0 as 0 actually was level 1.
   Absorption is now at the correct level to give 4 extra health instead
   of 8 which made bees too hard to kill.
-    
-    
-   (V.2.0.4 Changes) (1.16.2 Minecraft)
+   
+   
+    (V.2.0.4 Changes) (1.16.2 Minecraft)
  
-    Blocks:
+   Blocks:
 • Fixed crash when mining Honeycomb Brood Block.
 
-    Mobs:
+   Mobs:
 • Bees spawned in the Bumblezone will have a chance to be 
   pollinated no matter how they are spawned in the dimension.
   (Due to tiny performance improvement change done in backend)
 
 
-## (V.2.0.3 Changes) (1.16.2 Minecraft)
+    (V.2.0.3 Changes) (1.16.2 Minecraft)
  
-##### Major:
+   Major:
 
 - Fix crash at startup becuase I forgot to remove a refrence to a mixin I removed lmao.
   Never rush your fixes people!
 
-## (V.2.0.2 Changes) (1.16.2 Minecraft)
+    (V.2.0.2 Changes) (1.16.2 Minecraft)
  
-##### Major:
+   Major:
 
 - FIXED A SUPER WEIRD BUG THAT KILLED ALMOST ALL OTHER MODS
   WHEN A CERTAIN NUMBER OF MODS ARE PUT ON NEXT TO THE BUMBLEZONE.
   I'M SORRY!!! OTHER MODDERS, DO NOT CLASSLOAD DYNAMIC REGISTRY 
   IN YOUR MOD'S INITIALIZATION!!!
 
-## (V.2.0.1 Changes) (1.16.2 Minecraft)
+    (V.2.0.1 Changes) (1.16.2 Minecraft)
  
-##### Major:
+   Major:
 
 - Fixed crash on servers.
 
-##### Mod Compatibility:
+   Mod Compatibility:
 
 - Fixed crash when paired with another mod that registers unfinished mobs that crashes when created.
  
-## (V.2.0.0 Changes) (1.16.2 Minecraft)
+    (V.2.0.0 Changes) (1.16.2 Minecraft)
  
-##### Major:
+   Major:
 
 - UPDATED TO 1.16.2!! (Ported the 1.16.2 Fabric version to Forge)
 
@@ -191,9 +199,9 @@ Mods I'm keeping an eye on for future compat
 
 - See Fabric Bumblezone changelog for more details of changes done in 1.16+.
  
-## (V.1.3.9/1.3.10 Changes) (1.15.2 Minecraft)
+    (V.1.3.9/1.3.10 Changes) (1.15.2 Minecraft)
  
-##### Config:
+   Config:
 
 -Added config to adjust Phantom and Endermen spawnrates in The Bumblezone. (Special thanks to wtchappell for the PR!)
 
@@ -201,39 +209,39 @@ Mods I'm keeping an eye on for future compat
 
 -Fixed clearUnwantedBiomeFeatures and clearUnwantedBiomeMobs configs to actual work. (hopefully!)
  
-## (V.1.3.8 Changes) (1.15.2 Minecraft)
+    (V.1.3.8 Changes) (1.15.2 Minecraft)
  
-##### Mod Compatibility:
+   Mod Compatibility:
  
 -Changed Bumblezone's biome categories from Jungle to None so people can blacklist it from Quark's structures easier.
 
 -Added an experimental option to reset Bumblezone's biomes after all mods are finished setup to try and let players remove other mod's features/structures/mobs out of Bumblezone.
    
-## (V.1.3.7 Changes) (1.15.2 Minecraft)
+    (V.1.3.7 Changes) (1.15.2 Minecraft)
  
-##### Mod Compatibility:
+   Mod Compatibility:
 
 -Added support for ProductiveBees's new honeycomb variants so they spawn in the dimension now!
 
 -Bees can be fed and/or calmed with Buzzier Bees's Honey Soup or Sticky Honey Wand!
 
-##### Recipes:
+   Recipes:
    
 -Fixed bucket duplication when crafting Sugar Water from Water Bucket and Sugar in Crafting Table.
   
-##### Bees:
+   Bees:
    
 -Feeding bees will swing your arm always now.
  
-## (V.1.3.6 Changes) (1.15.2 Minecraft)
+    (V.1.3.6 Changes) (1.15.2 Minecraft)
  
-##### Recipes:
+   Recipes:
 
 -Fixed and renamed several Bumblezone recipes to prevent conflict so that vanilla's Honey Block can be crafted again. (The smelting recipe overrode it before. Sorry!)
    
-## (V.1.3.5 Changes) (1.15.2 Minecraft)
+    (V.1.3.5 Changes) (1.15.2 Minecraft)
  
-##### Mod Compatibility:
+   Mod Compatibility:
 
 -Fixed crash when 1.2.0 Beesourceful mod is on.
 
@@ -248,15 +256,15 @@ Mods I'm keeping an eye on for future compat
 -If Beesourceful is off, (v0.1.8+) Productive Bees's ore based honeycombs will be used in worldgen and in Bee Dungeons!
 
 
-##### Structures:
+   Structures:
 
 -Centered the Cobwebs around Spider Infested Bee Dungeons much better now.
 
-##### Entities:
+   Entities:
  
 -Bees now will not see through walls to find insects, bears, or players taking honey from certain blocks. And Bees will now see through walls to go after players that anger bees by hitting them, drinking honey, or pick up Honey blocks. (Basically I had the requirement of needing a line of sight for their AI backwards due to bad mapping names from MCP)
    
-##### Items:
+   Items:
 
 -Using Glass Bottle to obtain Sugar Water in Creative mode will not use up the Glass Bottle now.
 
@@ -268,9 +276,9 @@ Mods I'm keeping an eye on for future compat
 
 -Significantly improved the texture for Sticky Honey Residue and Sticky Honey Redstone.
  
-## (V.1.3.4 Changes) (1.15.2 Minecraft)
+    (V.1.3.4 Changes) (1.15.2 Minecraft)
  
-##### Teleportation:
+   Teleportation:
 
 -Setting warnPlayersOfWrongBlockUnderHive config to true and putting and invalid resource location into RequiredBlockUnderHive config will no longer crash the server when attempting to teleport to The Bumblezone.
 
@@ -280,9 +288,9 @@ Mods I'm keeping an eye on for future compat
 
 -Constrained the converted coordinate when exiting The Bumblezone to be within -30 million and 30 million so you do not get stuck outside the world's edge.
 
-## (V.1.3.3 Changes) (1.15.2 Minecraft)
+    (V.1.3.3 Changes) (1.15.2 Minecraft)
  
-##### Teleportation:
+   Teleportation:
 
 -Fixed serverside crash with teleporting when trying to use the config to require a certain block under beehive. (requiredBlockUnderHive)
 
@@ -290,13 +298,13 @@ Mods I'm keeping an eye on for future compat
 
 -Added seaLevelOrHigherExitTeleporting config entry so that when you exit The bumblezone, you can have it where you are only placed near a hive that is above sealevel. This is to help prevent spawning underground due to Beesourceful's Beenests.
 
-##### Blocks:
+   Blocks:
 
 -Fixed when using a Glass Bottle on a waterlogged Honey Crystal Block gives you Water Bottle instead of Sugar Water Bottle like it should.
 
 -Fixed bug where using Dispenser to make Honey Bottle put honey into Porous Honeycomb Block will not yield a Glass Bottle as waste.
 
-##### Items:
+   Items:
 
 -Fixed dispensersDropGlassBottles's config entry having the opposite effect than what it is currently set as.
    
@@ -306,13 +314,13 @@ Mods I'm keeping an eye on for future compat
 
 -Empty Bucket in Dispensers will now become Sugar Water Buckets if there is a waterlogged Honey Crystal Block in-front of the Dispenser.
 
-## (V.1.3.2 Changes) (1.15.2 Minecraft)
+    (V.1.3.2 Changes) (1.15.2 Minecraft)
  
-##### Blocks:
+   Blocks:
 
 -Sticky Honey Redstone now will power through the block it is attached to and will power anything attached to it if it is on the floor. Much more useful now!
 
-##### Items:
+   Items:
 
 -Honey Bottles in Dispensers can now turn Porous Honeycomb Block into Filled Porous Honeycomb Block.
 
@@ -320,7 +328,7 @@ Mods I'm keeping an eye on for future compat
 
 -Glass Bottles in Dispensers now will take honey from Filled Porous Honeycomb Block and Honeycomb Brood Block. The blocks will turn into their honey-less counterparts and a Honey Bottle will appear in the Dispenser (or dropped if there's no room).
   
-##### Mod Compat: 
+   Mod Compat: 
 
 -Fixed naming of allowSplashPotionOfBeesCompat config entry to be correct and actually takes effect now.
 
@@ -336,26 +344,26 @@ Mods I'm keeping an eye on for future compat
 
 -Updated Sticky Honey Redstone description in JEI to reflect the new changes to it.
   
-## (V.1.3.1 Changes) (1.15.2 Minecraft)
+    (V.1.3.1 Changes) (1.15.2 Minecraft)
  
-##### Blocks: 
+   Blocks: 
 
 -Lower and smoothed out buzzing sound of Honeycomb Brood Blocks.
-      
-##### Items:
+     
+   Items:
 
 -Honey Crystal Shield description now says it can be enchanted with Curse of the Vanishing as Curse of the Binding is only for armor. 
 
-##### Mod Compatibility:
+   Mod Compatibility:
 
 -Added JEI integration. All of The Bumblezone's blocks and items now has a description page.
 
 -Productive Bees's Honey Treat item can be used to grow Honeycomb Brood Blocks now. They have a 20% of growing the larva by 2 stages instead of 1.
 
-## (V.1.3.0 Changes) (1.15.2 Minecraft)
-    
-##### Config:        
-        
+    (V.1.3.0 Changes) (1.15.2 Minecraft)
+   
+   Config:      
+      
 -Clarified that the Wrath of the Hive bee effect level values in the config are one less than their actual level applied in game.
 
 -Config for Wrath of the Hive's effects it gives to bees now can be set to 0 which would mean the effect gets applied at effect level 1 in the game.
@@ -364,7 +372,7 @@ Mods I'm keeping an eye on for future compat
   
 -Added config to control if Potion of Bees's Splash Potion of Bee item can revive Empty Honeycomb Brood blocks when splashed near it.
 
-##### Mod Compatibility:
+   Mod Compatibility:
 
 -Fixed bug where using Buzzier Bees's Bottled Bee item to revive Empty Honeycomb Brood block will make the block face the wrong way.
 
@@ -376,7 +384,7 @@ Mods I'm keeping an eye on for future compat
 
 -Productive Bees' Honey Treat item has a 40% chance of removing Wrath of the Hive effect off of you when fed to bees unlike the Honey Bottle's 30% chance. Will also heal bees a lot more too!
   
-##### Blocks: 
+   Blocks: 
 
 -Fixed Sugar Water Block from spamming in the logs that its blockstate model isn't set up even though it had no impact visually or on gameplay.
   
@@ -394,7 +402,7 @@ Mods I'm keeping an eye on for future compat
 
 -Added Sticky Honey Redstone that can be placed on multiple surfaces! It has all the same effects as Sticky Honey Residue as well as outputting a redstone signal of 1 when a mob is touching this block! This would help make neat contraptions easier. This block can be made by crafting with 1 Sticky Honey Residue and 1 Redstone in any shape.
 
-##### Items: 
+   Items: 
 
 -Added Honey Crystal Shards which drops from Honey Crystal blocks. These shards can be eaten to recover some hunger in a pinch.
 
@@ -402,7 +410,7 @@ Mods I'm keeping an eye on for future compat
 
 -Added recipe to turn Water Bucket into Sugar Water Bucket. Just put 1 Water Bucket and 1 Sugar into a Crafting Table! 
 
-##### Generation:�
+   Generation:�
 
 -Added Bee Dungeons that will spawn in Honeycomb Holes or caves in the Bumblezone! They have lots of Honeycomb Brood Blocks but if you use Beesourceful, their ore-based Honeycombs will spawn too with Diamond, Ender, and Emeralds being the rarest honeycombs. And if you have Buzzier Bees on, their candles will also spawn in the dungeon with scented candles that gives potion effects spawning very rarely in the center. 
 
@@ -410,11 +418,11 @@ Mods I'm keeping an eye on for future compat
 
 -Honey Crystal blocks will now generate in caves or underwater in The Bumblezone! They are rare in Sugar Water Biome, uncommon in Hive Pillar biome, and most common in Hive Wall biome.
 
-##### Teleportation:�
+   Teleportation:�
 
 -Exiting Bumblezone dimension by falling into the void will not kill the player with fall damage when they teleport into another dimension. I forgot to reset the player's fall time but now it's fixed.
  
-##### Mobs:�
+   Mobs:�
 
 -Fixed bug where Bees cannot be angered normally outside of The Bumblezone with default config settings.
 
@@ -424,19 +432,19 @@ Mods I'm keeping an eye on for future compat
 
 -Vanilla Slime mobs will now spawn in Sugar Water biome but only at a low height below sealevel and in certain chunks. That way you can still make a Slime farm in Bumblezone even with Buzzier Bees on.
 
-##### Translation:
+   Translation:
 
 -German Translation added by Aurum! Thank you!
 
 -Added more entries to en_us.json.�
 
-##### Misc:
+   Misc:
 
 -Added a version check to make sure this mod will not crash with older versions of Buzzier Bees or Beesourceful.
 
-## (V.1.2.0 Changes) (1.15.2 Minecraft)
-      
-##### Mod Compatibility:�
+    (V.1.2.0 Changes) (1.15.2 Minecraft)
+     
+   Mod Compatibility:�
 
 -If Buzzier Bees is on, Honey Slime mobs will spawn in The Bumblezone instead of regular Slime mobs and monsters will have a slightly higher rate of spawning.
 
@@ -449,13 +457,13 @@ Mods I'm keeping an eye on for future compat
 -If Beesourceful is on, their ore bees and ender bees can now spawn in The Bumblezone! They have a 15% chance of spawning when a regular bee is spawned. Then the chance of each type of Beesourceful bee being chosen is 1% Ender, 2% Diamond, 7% Emerald, 10% Lapis, 10% Quartz, 20% Gold, 20% Redstone, and 30% Iron.
 
 -If Beesourceful is on, their honeycomb variants will now in The Bumblezone at all kinds of heights and height bands. Start exploring to find where they spawn!
-        
+      
 -If Potion of Bees is on, you can use their Potion of Bees item on a Dead Honeycomb Larva Block will revive the block into a stage 1, 2, or 3�Honeycomb Larva Block. This can be done by hand or by a Dispenser facing the block.
 
 -If Potion of Bees is on, you can throw their Splash Potion of Bees item and any Dead Honeycomb Larva Block nearby on impact will revive the blocks into a stage 1, 2, or 3�Honeycomb Larva Block. If you have this item in a Dispenser directly facing the Dead Honeycomb Larva Block, it'll revive the block into a stage 1, 2, or 3�Honeycomb Larva Block without bees going everywhere.
 
-##### Config:        
-        
+   Config:      
+      
 -Added configs to control a lot of the interaction between this mod and Buzzier Bees.
 
 -Added configs to control the interaction between this mod and Beesourceful.
@@ -464,13 +472,13 @@ Mods I'm keeping an eye on for future compat
  
 -Added new config so players can allow or disallow teleporting to and from Bumblezone with modded Bee Nests or modded Beehive blocks.
 
-##### Teleportation:�
+   Teleportation:�
 
 -Throwing Enderpearls at all blocks that extends BeehiveBlock (includes modded and vanilla's BeeNests and BeeHive blocks) will teleport you into the dimension!
 
 -Adjusted teleporting so teleporting to Bumblezone dimension from underground will spawn you trapped underground in the dimension less often.
  
-##### Mobs:�
+   Mobs:�
 
 -Bees will now no longer switch to attacking nearby passive players if they are angered by another mob/player. They will only attack entities with Wrath of the Hive effect in the dimension so there is no more collateral damage anymore.
 
@@ -492,25 +500,25 @@ Mods I'm keeping an eye on for future compat
 
 -Cave Spider can spawn in Hive Wall biomes now. 
 
-##### Blocks:�
+   Blocks:�
 
 -Added Sugar Water fluid to spawn in The Bumblezone instead of regular water! Swimming in this fluid is slightly slower than swimming in water due to the excess of sugar in it. If bees swim in the Sugar Water and aren't taking damage, the bees will sip the water and heal themselves very slowly. Also, any Sugar Cane placed next to a Sugar Water block will grow faster and taller (up to 5 blocks high!)
 
 -Sugar Infused Stone and Sugar Infused Cobblestone will be made when Sugar Water touches Lava! When mined, they drop Sugar and Cobblestone but you can use Silk Touch to keep them as is. When put into a Furnace, you can quickly burn out the Sugar from the blocks for some quick cheap XP.
    
 -Walking on Filled Porous Honeycomb Block will now slightly slow your movement due to the sticky honey.
-          
+        
 -Honeycomb Larva Block is now added! They will grow a larva inside it through 4 stages and on the final stage, it will spawn a bee if there is less than 10 bees within 50 blocks of the block. The larva will grow faster in The Bumblezone dimension than any other dimension. You can use a Honey Bottle or Buzzier Bee's Sticky Honey Wand to speed up the larva growth or by using a Dispenser with Honey Bottles on the block. If you use a Glass Bottle or Buzzier Bee's Honey Wand, it will kill the larva but you get honey and a bunch of angry bees coming! If Buzzier Bees is on, it may also sometimes spawn a Honey Slime mob. And if Beesourceful is on, it can sometimes spawn a Beesourceful's resource bee mob.
   
 -Added Dead Honeycomb Larva Block that is created when using a Glass Bottle on a Honeycomb Larva Block. This block is decorative and serves no other use. It's dead. :(  Buuuut if you have Buzzier Bee's on, you can use a Bottle of Bee to revive the block back to an alive Honeycomb Larva Block at stage 1. If you use Potion of Bee's bee potion items, that too can revive the block but it will be at stage 1, 2, or 3 as a bonus! This behavior can be done by hand or by using a Dispenser with these items in it right up against the Dead Honeycomb Larva Block. If you throw Potion of Bee's Bee Splash Potion item and it lands near some Dead Honeycomb Larva Blocks, it'll revive the blocks too!
 
-##### Items:�
+   Items:�
 
 -Added Sugar Water Bottle! To get this, use an empty Glass Bottle on Sugar Water. If you drink a Sugar Water Bottle, you restore a tiny bit of hungry but get Haste 1 effect for a short period of time!
 
 -Added Sugar Water Bucket to move Sugar Water around. Works with Dispensers too!
 
-##### Generation:�
+   Generation:�
 
 -The dimension uses Air instead of Cave Air to help with feature generation.
 
@@ -518,74 +526,74 @@ Mods I'm keeping an eye on for future compat
 
 -Honeycomb Holes now will generate with Honeycomb Larva Block at various stages in its life cycle!
 
-## (V.1.1.0 Changes) (1.15.2 Minecraft)
-      
-##### Misc:�
+    (V.1.1.0 Changes) (1.15.2 Minecraft)
+     
+   Misc:�
 -Fixed potential crash at startup when in a foreign language.
    
-## (V.1.0.4 Changes) (1.15.2 Minecraft)
-    
-##### Teleportation:�
+    (V.1.0.4 Changes) (1.15.2 Minecraft)
+   
+   Teleportation:�
 -Improved some edge cases with Teleportation and fixed some potential bugs with other edge cases.
 
-##### Config:�
+   Config:�
 -lower Absorption default config value from 2 to 1 due to 2 making it way too hard to kill Wrath of the Hive angered bees. You'll still need Bane of Arthropods.
 
-##### Mobs:�
+   Mobs:�
 -Bees that spawn in a chunk when the chunk is first created has a 20% chance of being pollinated bees.
 -Patched a bug that could spawn mobs underground and hurt performance as they suffocate. 
 
-##### Dimension:�
+   Dimension:�
 -Fixed potential visual bug that causes blue fog in some situations.
-       
-       
-## (V.1.0.3 Changes) (1.15.2 Minecraft)
+      
+      
+    (V.1.0.3 Changes) (1.15.2 Minecraft)
   
-##### Blocks:�
+   Blocks:�
 -Fixed bug so using Glass Bottle or Honey Bottles on the Filled Porous Honeycomb blocks and Porous Honeycomb blocks while in creative mode won't use up the bottle in your hand.
 
-       
-## (V.1.0.2 Changes) (1.15.2 Minecraft)
+      
+    (V.1.0.2 Changes) (1.15.2 Minecraft)
   
-##### Teleportation:�
+   Teleportation:�
 -Fixed teleportation math and player previous dimension storing to not allow a bug that lets you reach world border in seconds. Big oops. That's a BIG BUG I missed despite lots of testing! 
   	
-       
-## (V.1.0.1 Changes) (1.15.2 Minecraft)
+      
+    (V.1.0.1 Changes) (1.15.2 Minecraft)
   
-##### Teleportation:�
+   Teleportation:�
 -Fixed teleportation not working when trying to enter The Bumblezone from a non-Overworld dimension.
 
-##### Config:�
+   Config:�
 -Added config option to make exiting The Bumblezone always place you into the Overworld.
 
-       
-## (V.1.0.0 Changes) (1.15.2 Minecraft)
-    
-##### Major:�
+      
+    (V.1.0.0 Changes) (1.15.2 Minecraft)
+   
+   Major:�
 -FIRST RELEASE OF THIS MOD
 
-##### Teleportation:�
+   Teleportation:�
 -Throw an Enderpearl at a Bee Nest in any dimension to enter The Bumblezone dimension!
 -To exit The Bumblezone dimension, go to Y = -1 or Y = 256 and it will place you back to the dimension you originally came from and if it can't resolve what dimension you came from, you'll be placed back in the Overworld. 
 -Your XZ coordinates will be scale going to and from the dimension. In fact, traveling 1 block in The Bumblezone is the same as traveling 10 blocks in the Overworld!
 -If you exit the dimension by going down through the floor, it will look for the lowest Bee Nest that is in the general area of your new scaled coordinates and will place you next to it. If no Bee Nest is found, it will place you on highest place and generate a Bee Nest at your feet.
 -If you exit the dimension by going down through the ceiling, it will look for the highest Bee Nest that is in the general area of your new scaled coordinates and will place you next to it. If no Bee Nest is found, it will place you on highest place and generate a Bee Nest at your feet.
 
-##### Blocks:�
+   Blocks:�
 -Porous Honeycomb block is added. If you use a Honey Bottle on this block, it'll consume the honey and turn into a Filled Porous Honeycomb block.
 -Filled Porous Honeycomb block is added. If you use a Glass Bottle on this block, you'll get a Honey Bottle and the block turn into a Porous Honeycomb block (this will REALLY anger bees around you in the Bumblezone dimension!).
 
-##### Biomes:�
+   Biomes:�
 -Hive Wall biomes will be the giant flat vertical slabs filled with holes that the bees dug out. In each hole is some Honey Blocks! 
 -Between the Hive Wall biomes is the Sugar Water Floor biome which creates a water filled space between each honeycomb wall. Bring a boat!
 -Also Hive Pillar biomes will spawn quite a bit to make massive pillars full of holes that connects the ceiling and floor!
 
-##### Mobs:�
+   Mobs:�
 -If you drink a Honey Bottle, pick up a Honey Block in the dimension, take honey from a Filled Porous Honeycomb block, all bees within 64 range of you will become EXTREMELY aggressive towards you. Beware, the bees will be REALLY angry and will get a temporary Strength 3, Absorption 2, and Speed 1 effect!
 -Bees generate at a high rate in the dimension and will become aggressive towards Polar Bears and Pandas if the player somehow gets them into the dimension. The bees will get a temporary Strength 1 and Speed 1 effect.
 -Spiders, Endermen, and Phantoms will spawn at a low rate with Phantoms being extremely rare.
 -Slime will spawn at any height when a new chunk is created for the first time. However, they will only respawn in an already generate chunk if that chunk is marked as a "slime chunk" and at Y = 40 or below just like the Overworld. 
 
-##### Config:�
+   Config:�
 -Added 11 configs with 8 affecting the Wrath of the Hive effect and 3 affecting the Bumblezone dimension itself. Here is what the config looks like: https://gist.github.com/TelepathicGrunt/0ad76feeb0bee1fc7eeba25d5f0821b4

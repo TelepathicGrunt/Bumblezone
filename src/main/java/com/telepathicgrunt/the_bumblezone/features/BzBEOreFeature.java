@@ -3,11 +3,13 @@ package com.telepathicgrunt.the_bumblezone.features;
 import com.mojang.serialization.Codec;
 import cy.jdkdigital.productivebees.tileentity.CombBlockTileEntity;
 import net.minecraft.block.Blocks;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.Feature;
@@ -21,6 +23,8 @@ public class BzBEOreFeature extends Feature<BzBEOreFeatureConfig> {
     }
 
     public boolean generate(ISeedReader iSeedReader, ChunkGenerator chunkGenerator, Random random, BlockPos pos, BzBEOreFeatureConfig bzBEOreFeatureConfig) {
+        if(bzBEOreFeatureConfig.type == null) return false;
+
         float f = random.nextFloat() * (float) Math.PI;
         float f1 = (float) bzBEOreFeatureConfig.size / 8.0F;
         int i = MathHelper.ceil(((float) bzBEOreFeatureConfig.size / 16.0F * 2.0F + 1.0F) / 2.0F);
@@ -28,7 +32,6 @@ public class BzBEOreFeature extends Feature<BzBEOreFeatureConfig> {
         double d1 = (double) pos.getX() - Math.sin(f) * (double) f1;
         double d2 = (double) pos.getZ() + Math.cos(f) * (double) f1;
         double d3 = (double) pos.getZ() - Math.cos(f) * (double) f1;
-        int j = 2;
         double d4 = pos.getY() + random.nextInt(3) - 2;
         double d5 = pos.getY() + random.nextInt(3) - 2;
         int k = pos.getX() - MathHelper.ceil(f1) - i;
@@ -51,7 +54,7 @@ public class BzBEOreFeature extends Feature<BzBEOreFeatureConfig> {
     protected boolean func_207803_a(IWorld world, Random random, BzBEOreFeatureConfig bzBEOreFeatureConfig, double v, double v1, double v2, double v3, double v4, double v5, int i4, int i5, int i6, int i7, int i8) {
         int i = 0;
         BitSet bitset = new BitSet(i7 * i8 * i7);
-        BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
+        BlockPos.Mutable blockPos = new BlockPos.Mutable();
         int j = bzBEOreFeatureConfig.size;
         double[] adouble = new double[j * 4];
 
@@ -114,14 +117,13 @@ public class BzBEOreFeature extends Feature<BzBEOreFeatureConfig> {
                                         int l2 = i2 - i4 + (j2 - i5) * i7 + (k2 - i6) * i7 * i8;
                                         if (!bitset.get(l2)) {
                                             bitset.set(l2);
-                                            blockpos$mutable.setPos(i2, j2, k2);
-                                            if (bzBEOreFeatureConfig.target.test(world.getBlockState(blockpos$mutable), random)) {
-                                                //fixes "Tried to access a block entity before it was created." somehow during worldgen. Voodoo to me!
-                                                world.setBlockState(blockpos$mutable, Blocks.AIR.getDefaultState(), 2);
+                                            blockPos.setPos(i2, j2, k2);
+                                            if (blockPos.getY() < world.getDimensionHeight() && blockPos.getY() > 0 && bzBEOreFeatureConfig.target.test(world.getBlockState(blockPos), random)) {
 
-                                                world.setBlockState(blockpos$mutable, bzBEOreFeatureConfig.state, 2);
-                                                TileEntity tileentity = world.getTileEntity(blockpos$mutable);
-                                                if(tileentity instanceof CombBlockTileEntity && bzBEOreFeatureConfig.type != null){
+                                                world.setBlockState(blockPos, bzBEOreFeatureConfig.state, 2);
+
+                                                TileEntity tileentity = world.getTileEntity(blockPos);
+                                                if(tileentity instanceof CombBlockTileEntity){
                                                     ((CombBlockTileEntity) tileentity).setType(bzBEOreFeatureConfig.type);
                                                     tileentity.markDirty();
                                                 }

@@ -30,6 +30,7 @@ import net.minecraft.util.math.shapes.BitSetVoxelShapePart;
 import net.minecraft.util.math.shapes.VoxelShapePart;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.IServerWorld;
+import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
@@ -53,7 +54,7 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
         if (Bumblezone.BzDungeonsConfig.spiderInfestedBeeDungeonRarity.get() >= 1000 ||
             random.nextInt(Bumblezone.BzDungeonsConfig.spiderInfestedBeeDungeonRarity.get()) != 0) return false;
 
-        BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().setPos(position).move(-3, -2, -3);
+        BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().setPos(position).move(-6, -2, -6);
         //Bumblezone.LOGGER.log(Level.INFO, "Bee Dungeon at X: "+position.getX() +", "+position.getY()+", "+position.getZ());
 
         boolean generated = generateShell(world, blockpos$Mutable);
@@ -109,7 +110,9 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
                         blockstate = pair.getFirst().getFirst();
                         String type = pair.getFirst().getSecond();
 
-                        if ((pair.getSecond() || world.getBlockState(blockpos).isSolid()) && world.setBlockState(blockpos, blockstate, flags)) {
+                        if ((pair.getSecond() || world.getBlockState(blockpos).isSolid()) &&
+                                world.setBlockState(blockpos, blockstate, flags)) {
+
                             if (blockstate.getBlock() == Blocks.SPAWNER) {
                                 TileEntity blockentity = world.getTileEntity(blockpos);
 

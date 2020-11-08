@@ -38,8 +38,8 @@ public class ProductiveBeesCompat {
 
 	private static final String PRODUCTIVE_BEES_NAMESPACE = "productivebees";
 	private static final List<String> ORE_BASED_HONEYCOMB_VARIANTS = new ArrayList<>();
-	private static List<String> PRODUCTIVE_BEES_LIST = new ArrayList<>();
 	private static final List<String> SPIDER_DUNGEON_HONEYCOMBS = new ArrayList<>();
+	private static List<String> PRODUCTIVE_BEES_LIST = new ArrayList<>();
 	public static final RuleTest HONEYCOMB_BUMBLEZONE = new TagMatchRuleTest(BlockTags.makeWrapperTag(Bumblezone.MODID+":honeycombs"));
 	private static Set<ResourceLocation> VALID_COMB_TYPES;
 	private static Map<ResourceLocation, CompoundNBT> PB_DATA;
@@ -50,11 +50,12 @@ public class ProductiveBeesCompat {
 	}
 	
 	public static void PBAddWorldgen(BiomeLoadingEvent event) {
+		SPIDER_DUNGEON_HONEYCOMBS.clear();
+		ORE_BASED_HONEYCOMB_VARIANTS.clear();
 
 		PB_DATA = new HashMap<>(BeeReloadListener.INSTANCE.getData());
 		PRODUCTIVE_BEES_LIST = PB_DATA.keySet().stream().map(ResourceLocation::toString).collect(Collectors.toList());
-		VALID_COMB_TYPES = new HashSet<>(PB_DATA.keySet());
-		SPIDER_DUNGEON_HONEYCOMBS.clear();
+		VALID_COMB_TYPES = PB_DATA.keySet().stream().filter(rl -> PB_DATA.get(rl).getBoolean("createComb")).collect(Collectors.toSet());
 
 		if (Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get()) {
 			// Multiple entries influences changes of them being picked. Those in back of list is rarest to be picked
@@ -126,10 +127,10 @@ public class ProductiveBeesCompat {
 	 */
 	private static void addCombToWorldgen(BiomeLoadingEvent event, String combBlockType, int veinSize, int count, int bottomOffset, int range, boolean addToHoneycombList, boolean removeFromSet) {
 		ResourceLocation resourceLocation = new ResourceLocation(combBlockType);
-		if(removeFromSet){
-			if(!PB_DATA.containsKey(resourceLocation))
-				return;
+		if(!VALID_COMB_TYPES.contains(resourceLocation))
+			return;
 
+		if(removeFromSet){
 			VALID_COMB_TYPES.remove(resourceLocation);
 		}
 
