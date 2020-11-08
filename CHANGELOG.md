@@ -16,7 +16,7 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
    
-    (V.2.2.3 Changes) (1.16.3 Minecraft)
+    (V.2.2.3 Changes) (1.16.4 Minecraft)
    
    Mod Compat:
 • Now attempt to try and make sure Productive Bees honeycombs 
