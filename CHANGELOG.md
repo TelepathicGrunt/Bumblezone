@@ -16,6 +16,12 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
    
+    (V.2.2.4 Changes) (1.16.4 Minecraft)
+   
+   Mod Compat:
+• Fixed crash with Resourceful Bees if player disables their honeycombs.
+
+  
     (V.2.2.3 Changes) (1.16.4 Minecraft)
    
    Mod Compat:

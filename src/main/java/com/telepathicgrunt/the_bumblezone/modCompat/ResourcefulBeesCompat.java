@@ -61,46 +61,47 @@ public class ResourcefulBeesCompat {
 			event.getGeneration().getFeatures(GenerationStage.Decoration.VEGETAL_DECORATION).add(() -> BzConfiguredFeatures.BZ_BEES_WAX_PILLAR_CONFIGURED_FEATURE);
 		}
 
-		Map<ResourceLocation, Block> unused_honeycombs = new HashMap<>(RESOURCEFUL_HONEYCOMBS_MAP);
+		Map<ResourceLocation, Block> unusedHoneycombs = new HashMap<>(RESOURCEFUL_HONEYCOMBS_MAP);
 		if (Bumblezone.BzModCompatibilityConfig.spawnResourcefulBeesHoneycombVariants.get()) {
 			// Multiple entries influences changes of them being picked. Those in back of list is rarest to be picked
-			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "coal_honeycomb_block"));
-			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "coal_honeycomb_block"));
-			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "coal_honeycomb_block"));
-			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "iron_honeycomb_block"));
-			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "iron_honeycomb_block"));
-			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "zombie_honeycomb_block"));
-			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "zombie_honeycomb_block"));
-			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "pigman_honeycomb_block"));
-			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "pigman_honeycomb_block"));
-			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "skeleton_honeycomb_block"));
-			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "nether_quartz_honeycomb_block"));
-			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "creeper_honeycomb_block"));
-			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "creeper_honeycomb_block"));
-			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "wither_honeycomb_block"));
-			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "netherite_honeycomb_block"));
-			addToSpiderDungeonList(unused_honeycombs, new ResourceLocation("resourcefulbees", "rgbee_honeycomb_block"));
+			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "coal_honeycomb_block"));
+			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "coal_honeycomb_block"));
+			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "coal_honeycomb_block"));
+			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "iron_honeycomb_block"));
+			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "iron_honeycomb_block"));
+			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "zombie_honeycomb_block"));
+			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "zombie_honeycomb_block"));
+			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "pigman_honeycomb_block"));
+			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "pigman_honeycomb_block"));
+			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "skeleton_honeycomb_block"));
+			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "nether_quartz_honeycomb_block"));
+			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "creeper_honeycomb_block"));
+			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "creeper_honeycomb_block"));
+			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "wither_honeycomb_block"));
+			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "netherite_honeycomb_block"));
+			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "rgbee_honeycomb_block"));
 		}
 
-		addCombToWorldgen(event, unused_honeycombs, new ResourceLocation("resourcefulbees", "gold_honeycomb_block"), 34, 3, 6, 230, true);
-		addCombToWorldgen(event, unused_honeycombs, new ResourceLocation("resourcefulbees", "iron_honeycomb_block"), 26, 2, 30, 210, true);
-		addCombToWorldgen(event, unused_honeycombs, new ResourceLocation("resourcefulbees", "redstone_honeycomb_block"), 22, 1, 30, 210, true);
-		addCombToWorldgen(event, unused_honeycombs, new ResourceLocation("resourcefulbees", "lapis_honeycomb_block"), 22, 1, 6, 30, true);
-		addCombToWorldgen(event, unused_honeycombs, new ResourceLocation("resourcefulbees", "emerald_honeycomb_block"), 5, 1, 6, 244, true);
-		addCombToWorldgen(event, unused_honeycombs, new ResourceLocation("resourcefulbees", "ender_honeycomb_block"), 5, 1, 200, 50, true);
-		addCombToWorldgen(event, unused_honeycombs, new ResourceLocation("resourcefulbees", "diamond_honeycomb_block"), 7, 1, 6, 244, true);
-		addCombToWorldgen(event, unused_honeycombs, new ResourceLocation("resourcefulbees", "rgbee_honeycomb_block"), 7, 1, 6, 244, true);
+		addCombToWorldgen(event, unusedHoneycombs, new ResourceLocation("resourcefulbees", "gold_honeycomb_block"), 34, 3, 6, 230, true);
+		addCombToWorldgen(event, unusedHoneycombs, new ResourceLocation("resourcefulbees", "iron_honeycomb_block"), 26, 2, 30, 210, true);
+		addCombToWorldgen(event, unusedHoneycombs, new ResourceLocation("resourcefulbees", "redstone_honeycomb_block"), 22, 1, 30, 210, true);
+		addCombToWorldgen(event, unusedHoneycombs, new ResourceLocation("resourcefulbees", "lapis_honeycomb_block"), 22, 1, 6, 30, true);
+		addCombToWorldgen(event, unusedHoneycombs, new ResourceLocation("resourcefulbees", "emerald_honeycomb_block"), 5, 1, 6, 244, true);
+		addCombToWorldgen(event, unusedHoneycombs, new ResourceLocation("resourcefulbees", "ender_honeycomb_block"), 5, 1, 200, 50, true);
+		addCombToWorldgen(event, unusedHoneycombs, new ResourceLocation("resourcefulbees", "diamond_honeycomb_block"), 7, 1, 6, 244, true);
+		addCombToWorldgen(event, unusedHoneycombs, new ResourceLocation("resourcefulbees", "rgbee_honeycomb_block"), 7, 1, 6, 244, true);
 
 		// Remaining combs gets a generic spawning rate
-		for(Map.Entry<ResourceLocation, Block> remainingCombs : unused_honeycombs.entrySet()){
+		for(Map.Entry<ResourceLocation, Block> remainingCombs : unusedHoneycombs.entrySet()){
 			addCombToWorldgen(event, null, remainingCombs.getKey(), 18, 1, 1, 235, false);
 		}
 	}
 	/**
 	 * Creates a configured feature of the combtype and add it to the biome and/or Bee Dungeon comb list
 	 */
-	private static void addCombToWorldgen(BiomeLoadingEvent event, Map<ResourceLocation, Block> unused_honeycombs, ResourceLocation blockEntryRL, int veinSize, int count, int bottomOffset, int range, boolean addToBeeDungeon) {
+	private static void addCombToWorldgen(BiomeLoadingEvent event, Map<ResourceLocation, Block> unusedHoneycombs, ResourceLocation blockEntryRL, int veinSize, int count, int bottomOffset, int range, boolean addToBeeDungeon) {
 		Block honeycomb = RESOURCEFUL_HONEYCOMBS_MAP.get(blockEntryRL);
+		if(honeycomb == null) return;
 
 		ConfiguredFeature<?, ?> cf = Feature.ORE.configure(new OreFeatureConfig(new BlockMatchRuleTest(Blocks.HONEYCOMB_BLOCK), honeycomb.getDefaultState(), veinSize))
 				.decorate(Placement.RANGE.configure(new TopSolidRangeConfig(bottomOffset, 0, range)))
@@ -113,16 +114,17 @@ public class ResourcefulBeesCompat {
 		if (addToBeeDungeon)
 			ORE_BASED_HONEYCOMB_VARIANTS.add(honeycomb);
 
-		if(unused_honeycombs != null)
-			unused_honeycombs.remove(blockEntryRL);
+		if(unusedHoneycombs != null)
+			unusedHoneycombs.remove(blockEntryRL);
 	}
 
 	/**
 	 * Add comb to spider dungeon comb list
 	 */
-	private static void addToSpiderDungeonList(Map<ResourceLocation, Block> unused_honeycombs, ResourceLocation blockEntryRL){
-		SPIDER_DUNGEON_HONEYCOMBS.add(RESOURCEFUL_HONEYCOMBS_MAP.get(blockEntryRL));
-		unused_honeycombs.remove(blockEntryRL);
+	private static void addToSpiderDungeonList(Map<ResourceLocation, Block> unusedHoneycombs, ResourceLocation blockEntryRL){
+		Block block = RESOURCEFUL_HONEYCOMBS_MAP.get(blockEntryRL);
+		if(block != null) SPIDER_DUNGEON_HONEYCOMBS.add(block);
+		unusedHoneycombs.remove(blockEntryRL);
 	}
 
 
@@ -190,7 +192,7 @@ public class ResourcefulBeesCompat {
 			return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), null);
 		}
 		else{
-			return new Pair<>(SPIDER_DUNGEON_HONEYCOMBS.get(random.nextInt(random.nextInt(SPIDER_DUNGEON_HONEYCOMBS.size())+1)).getDefaultState(), null);
+			return new Pair<>(SPIDER_DUNGEON_HONEYCOMBS.get(random.nextInt(random.nextInt(SPIDER_DUNGEON_HONEYCOMBS.size()) + 1)).getDefaultState(), null);
 		}
 	}
 
