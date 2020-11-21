@@ -14,7 +14,7 @@ public class BzSkyProperty extends SkyProperties {
     }
 
     @Override
-    public Vec3d adjustSkyColor(Vec3d color, float sunHeight) {
+    public Vec3d adjustFogColor(Vec3d color, float sunHeight) {
         return getFogColor().multiply(0.003921568627451); // Divide by 255 to amke values between 0 and 1
     }
 

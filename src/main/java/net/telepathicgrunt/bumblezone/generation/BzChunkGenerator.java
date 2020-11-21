@@ -569,7 +569,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public int getMaxY() {
+    public int getWorldHeight() {
         return this.height;
     }
 
