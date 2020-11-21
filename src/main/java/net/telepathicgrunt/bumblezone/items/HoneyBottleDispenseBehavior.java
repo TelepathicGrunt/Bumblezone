@@ -19,6 +19,7 @@ import net.minecraft.util.math.Position;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
+import net.telepathicgrunt.bumblezone.mixin.ItemDispenserBehaviorInvoker;
 
 
 public class HoneyBottleDispenseBehavior extends ItemDispenserBehavior {
@@ -75,7 +76,15 @@ public class HoneyBottleDispenseBehavior extends ItemDispenserBehavior {
                     stack = new ItemStack(Items.GLASS_BOTTLE);
             }
         } else {
-            return DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR.dispense(source, stack);
+            // If it instanceof DefaultDispenseItemBehavior, call dispenseStack directly to avoid
+            // playing particles and sound twice due to dispense method having that by default.
+            if(DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR instanceof ItemDispenserBehavior) {
+                return ((ItemDispenserBehaviorInvoker)DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR).invokeDispenseSilently(source, stack);
+            }
+            else {
+                // Fallback to dispense as someone chose to make a custom class without dispenseStack.
+                return DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR.dispense(source, stack);
+            }
         }
 
         return stack;

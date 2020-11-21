@@ -1,4 +1,4 @@
-    Made for Minecraft v.1.16.3
+    Made for Minecraft v.1.16.4
     Created by TelepathicGrunt
 
 A Fabric pot of an awesome dimension full of bees that becomes REALLY angry if you take their honey! 
@@ -7,8 +7,12 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
-   (V.2.2.10 Changes) (1.16.3 Minecraft)
+   (V.2.2.10 Changes) (1.16.4 Minecraft)
    
+   Items:
+• Fixed particles and sounds being played twice for Empty Bucket, 
+  Glass Bottle, and Honey Bottle when activated in a Dispenser.
+  
     Backend:
 • Some cleaning up the code. Now requires newer Fabric API and Fabric Loader.
 

@@ -21,6 +21,7 @@
     "HoneyShieldItemstackGetMaximumDamageMixin",
     "HoneyShieldItemstackSetDamageMixin",
     "HoneyShieldPreferredSlotMixin",
+    "ItemDispenserBehaviorInvoker",
     "MobHitMixin",
     "MobSpawnLocationMixin",
     "PlayerDamagedMixin",
