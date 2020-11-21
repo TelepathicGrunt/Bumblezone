@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
+import com.telepathicgrunt.the_bumblezone.mixin.DefaultDispenseItemBehaviorInvoker;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
@@ -84,7 +85,15 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
                 stack = new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get());
         }
         else {
-            return DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR.dispense(source, stack);
+            // If it instanceof DefaultDispenseItemBehavior, call dispenseStack directly to avoid
+            // playing particles and sound twice due to dispense method having that by default.
+            if(DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR instanceof DefaultDispenseItemBehavior) {
+                return ((DefaultDispenseItemBehaviorInvoker)DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR).invokeDispenseStack(source, stack);
+            }
+            else {
+                // Fallback to dispense as someone chose to make a custom class without dispenseStack.
+                return DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR.dispense(source, stack);
+            }
         }
 
         return stack;

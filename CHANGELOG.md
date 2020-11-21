@@ -16,6 +16,13 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
    
+    (V.2.2.5 Changes) (1.16.4 Minecraft)
+   
+   Items:
+• Fixed particles and sounds being played twice for Empty Bucket, 
+  Glass Bottle, and Honey Bottle when activated in a Dispenser.
+
+ 
     (V.2.2.4 Changes) (1.16.4 Minecraft)
    
    Mod Compat:
