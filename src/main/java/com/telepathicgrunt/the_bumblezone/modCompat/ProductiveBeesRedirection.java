@@ -20,8 +20,8 @@ public class ProductiveBeesRedirection {
 		ProductiveBeesCompat.PBAddWorldgen(event);
 	}
 
-	public static boolean PBIsAdvancedBeehiveAbstractBlock(BlockState block) {
-		return ProductiveBeesCompat.PBIsAdvancedBeehiveAbstractBlock(block);
+	public static boolean PBIsExpandedBeehiveBlock(BlockState block) {
+		return ProductiveBeesCompat.PBIsExpandedBeehiveBlock(block);
 	}
 
 	public static Pair<BlockState, String> PBGetRottenedHoneycomb(Random random) {

@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.features;
 
 import com.mojang.serialization.Codec;
-import cy.jdkdigital.productivebees.tileentity.CombBlockTileEntity;
+import cy.jdkdigital.productivebees.common.tileentity.CombBlockTileEntity;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;

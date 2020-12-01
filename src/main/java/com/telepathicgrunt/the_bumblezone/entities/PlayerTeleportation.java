@@ -14,6 +14,7 @@ import net.minecraft.entity.item.EnderPearlEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -200,7 +201,7 @@ public class PlayerTeleportation {
 
 
     private static boolean isValidBeeHive(BlockState block) {
-        if(block.getBlock() instanceof BeehiveBlock) {
+        if(BlockTags.BEEHIVES.contains(block.getBlock()) || block.getBlock() instanceof BeehiveBlock) {
             if(Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get() ||
                 Registry.BLOCK.getKey(block.getBlock()).getNamespace().equals("minecraft")) {
 
@@ -209,7 +210,7 @@ public class PlayerTeleportation {
         }
 
         if(Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get()) {
-            if(ModChecker.productiveBeesPresent && ProductiveBeesRedirection.PBIsAdvancedBeehiveAbstractBlock(block))
+            if(ModChecker.productiveBeesPresent && ProductiveBeesRedirection.PBIsExpandedBeehiveBlock(block))
                 return true;
 
             return ModChecker.resourcefulBeesPresent && ResourcefulBeesRedirection.RBIsApairyBlock(block);

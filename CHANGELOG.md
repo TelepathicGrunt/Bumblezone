@@ -16,6 +16,15 @@ Mods I'm keeping an eye on for future compat
 ------------------------------------------------
 # | Bumblezone changelog |
    
+ 
+    (V.2.2.6 Changes) (1.16.4 Minecraft)
+   
+   Mod Compat:
+• Updated mod compat with Productive Bees v0.5.0.5.
+
+• Use Beehive tag for what block Enderpearls can hit to teleport to The Bumblezone dimension.
+
+
     (V.2.2.5 Changes) (1.16.4 Minecraft)
    
    Items:

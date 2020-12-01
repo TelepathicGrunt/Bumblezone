@@ -4,10 +4,10 @@ import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.features.BzBEOreFeatureConfig;
 import com.telepathicgrunt.the_bumblezone.features.BzFeatures;
-import cy.jdkdigital.productivebees.block.AdvancedBeehive;
-import cy.jdkdigital.productivebees.block.AdvancedBeehiveAbstract;
-import cy.jdkdigital.productivebees.block.ExpansionBox;
-import cy.jdkdigital.productivebees.entity.bee.ConfigurableBeeEntity;
+import cy.jdkdigital.productivebees.common.block.AdvancedBeehive;
+import cy.jdkdigital.productivebees.common.block.AdvancedBeehiveAbstract;
+import cy.jdkdigital.productivebees.common.block.ExpansionBox;
+import cy.jdkdigital.productivebees.common.entity.bee.ConfigurableBeeEntity;
 import cy.jdkdigital.productivebees.init.ModBlocks;
 import cy.jdkdigital.productivebees.init.ModEntities;
 import cy.jdkdigital.productivebees.setup.BeeReloadListener;
@@ -42,7 +42,7 @@ public class ProductiveBeesCompat {
 	private static List<String> PRODUCTIVE_BEES_LIST = new ArrayList<>();
 	public static final RuleTest HONEYCOMB_BUMBLEZONE = new TagMatchRuleTest(BlockTags.makeWrapperTag(Bumblezone.MODID+":honeycombs"));
 	private static Set<ResourceLocation> VALID_COMB_TYPES;
-	private static Map<ResourceLocation, CompoundNBT> PB_DATA;
+	private static Map<String, CompoundNBT> PB_DATA;
 
 	public static void setupProductiveBees() {
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
@@ -54,8 +54,8 @@ public class ProductiveBeesCompat {
 		ORE_BASED_HONEYCOMB_VARIANTS.clear();
 
 		PB_DATA = new HashMap<>(BeeReloadListener.INSTANCE.getData());
-		PRODUCTIVE_BEES_LIST = PB_DATA.keySet().stream().map(ResourceLocation::toString).collect(Collectors.toList());
-		VALID_COMB_TYPES = PB_DATA.keySet().stream().filter(rl -> PB_DATA.get(rl).getBoolean("createComb")).collect(Collectors.toSet());
+		PRODUCTIVE_BEES_LIST = new ArrayList<>(PB_DATA.keySet());
+		VALID_COMB_TYPES = PB_DATA.keySet().stream().filter(rls -> PB_DATA.get(rls).getBoolean("createComb")).map(ResourceLocation::new).collect(Collectors.toSet());
 
 		if (Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get()) {
 			// Multiple entries influences changes of them being picked. Those in back of list is rarest to be picked
@@ -149,12 +149,18 @@ public class ProductiveBeesCompat {
 	/**
 	 * Is block is a ProductiveBees nest or beenest block
 	 */
-	public static boolean PBIsAdvancedBeehiveAbstractBlock(BlockState block) {
+	public static boolean PBIsExpandedBeehiveBlock(BlockState block) {
 
 		if (block.getBlock() instanceof ExpansionBox && block.get(AdvancedBeehive.EXPANDED) != VerticalHive.NONE) {
 			return true; // expansion boxes only count as beenest when they expand a hive.
-		} else {
-			return block.getBlock() instanceof AdvancedBeehiveAbstract; // all other nests/hives here so return true
+		}
+		else if(BlockTags.getCollection().getTagOrEmpty(new ResourceLocation("productivebees:solitary_overworld_nests")).contains(block.getBlock())){
+			// Solitary nests are technically AdvancedBeehiveAbstract and will pass the next check.
+			// But this is still done in case they do change that in the future to extend something else or something.
+			return true;
+		}
+		else {
+			return block.getBlock() instanceof AdvancedBeehiveAbstract; // all other nests/hives we somehow missed here so return true
 		}
 	}
 

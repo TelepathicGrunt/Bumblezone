@@ -12,7 +12,7 @@ import com.telepathicgrunt.the_bumblezone.mixin.TemplateInvoker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ProductiveBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modCompat.ResourcefulBeesRedirection;
-import cy.jdkdigital.productivebees.tileentity.CombBlockTileEntity;
+import cy.jdkdigital.productivebees.common.tileentity.CombBlockTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

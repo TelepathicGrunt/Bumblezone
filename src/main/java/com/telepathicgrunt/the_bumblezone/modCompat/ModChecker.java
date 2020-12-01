@@ -3,6 +3,8 @@ package com.telepathicgrunt.the_bumblezone.modCompat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraftforge.fml.ModList;
 import org.apache.logging.log4j.Level;
+import org.apache.maven.artifact.versioning.ArtifactVersion;
+import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 
 public class ModChecker
 {
@@ -34,7 +36,8 @@ public class ModChecker
 			loadupModCompat(modid, () -> ResourcefulBeesCompat.setupResourcefulBees());
 
 			modid = "productivebees";
-			loadupModCompat(modid, () -> ProductiveBeesCompat.setupProductiveBees());
+			if(isNotOutdated(modid, "0.5.1", true))
+				loadupModCompat(modid, () -> ProductiveBeesCompat.setupProductiveBees());
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
@@ -54,13 +57,35 @@ public class ModChecker
 		}
 	}
 
-
-    private static void printErrorToLogs(String currentModID) {
+	private static void printErrorToLogs(String currentModID) {
 		Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
 		Bumblezone.LOGGER.log(Level.INFO, " ");
 		Bumblezone.LOGGER.log(Level.INFO, "ERROR: Something broke when trying to add mod compatibility with" + currentModID + ". Please let The Bumblezone developer (TelepathicGrunt) know about this!");
 		Bumblezone.LOGGER.log(Level.INFO, " ");
 		Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
-    }
+	}
+
+    private static boolean isNotOutdated(String currentModID, String minVersion, boolean checkQualifierInstead) {
+    	if(!ModList.get().getModContainerById(currentModID).isPresent()) return true;
+
+		ArtifactVersion modVersion = ModList.get().getModContainerById(currentModID).get().getModInfo().getVersion();
+
+		// some people do 1.16.4-0.5.0.5 and we have to parse the second half instead.
+		// if someone does 0.5.0.5-1.16.4, well, we are screwed lmao. WE HAVE STANDARDS FOR A REASON PEOPLE! lmao
+		if(checkQualifierInstead && modVersion.getQualifier() != null){
+			modVersion = new DefaultArtifactVersion(modVersion.getQualifier());
+		}
+
+		if (modVersion.compareTo(new DefaultArtifactVersion(minVersion)) > 0) {
+			Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
+			Bumblezone.LOGGER.log(Level.INFO, " ");
+			Bumblezone.LOGGER.log(Level.INFO, "BUMBLEZONE: You're using a version of " + currentModID + " that is outdated. Please update " + currentModID + " to the latest version of that mod to enable compat with Bumblezone again.");
+			Bumblezone.LOGGER.log(Level.INFO, " ");
+			Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
+			return false;
+		}
+
+		return true;
+	}
 
 }
