@@ -27,6 +27,7 @@ import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
 
@@ -112,12 +113,20 @@ public class ResourcefulBeesCompat {
 		Block honeycomb = RESOURCEFUL_HONEYCOMBS_MAP.get(blockEntryRL);
 		if(honeycomb == null) return;
 
+		String cfRL = Bumblezone.MODID + ":" + blockEntryRL.getNamespace() + blockEntryRL.getPath();
+
+		// Prevent registry replacements
+		int idOffset = 0;
+		while(WorldGenRegistries.CONFIGURED_FEATURE.containsKey(new ResourceLocation(cfRL + idOffset))){
+			idOffset++;
+		}
+
 		ConfiguredFeature<?, ?> cf = Feature.ORE.configure(new OreFeatureConfig(new BlockMatchRuleTest(Blocks.HONEYCOMB_BLOCK), honeycomb.getDefaultState(), veinSize))
 				.decorate(Placement.RANGE.configure(new TopSolidRangeConfig(bottomOffset, 0, range)))
 				.spreadHorizontally()
 				.repeat(count);
 
-		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(Bumblezone.MODID, blockEntryRL.getPath()), cf);
+		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(cfRL + idOffset), cf);
 		RESOURCEFUL_BEES_CFS.add(cf);
 
 		if (addToBeeDungeon)

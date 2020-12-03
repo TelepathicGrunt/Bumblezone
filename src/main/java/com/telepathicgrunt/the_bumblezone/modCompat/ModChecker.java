@@ -34,7 +34,7 @@ public class ModChecker
 			loadupModCompat(modid, () -> CarrierBeesCompat.setupCarrierBees());
 
 			modid = "resourcefulbees";
-			//loadupModCompat(modid, () -> ResourcefulBeesCompat.setupResourcefulBees());
+			loadupModCompat(modid, () -> ResourcefulBeesCompat.setupResourcefulBees());
 
 			modid = "productivebees";
 			if(isNotOutdated(modid, "0.5.1", true))

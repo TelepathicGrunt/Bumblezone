@@ -2,8 +2,6 @@ package com.telepathicgrunt.the_bumblezone.modCompat;
 
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.features.BzBEOreFeatureConfig;
-import com.telepathicgrunt.the_bumblezone.features.BzFeatures;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehive;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehiveAbstract;
 import cy.jdkdigital.productivebees.common.block.ExpansionBox;
@@ -12,6 +10,7 @@ import cy.jdkdigital.productivebees.init.ModBlocks;
 import cy.jdkdigital.productivebees.init.ModEntities;
 import cy.jdkdigital.productivebees.setup.BeeReloadListener;
 import cy.jdkdigital.productivebees.state.properties.VerticalHive;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.MobEntity;
@@ -24,126 +23,159 @@ import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.feature.template.RuleTest;
 import net.minecraft.world.gen.feature.template.TagMatchRuleTest;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ProductiveBeesCompat {
 
 	private static final String PRODUCTIVE_BEES_NAMESPACE = "productivebees";
-	private static final List<String> ORE_BASED_HONEYCOMB_VARIANTS = new ArrayList<>();
-	private static final List<String> SPIDER_DUNGEON_HONEYCOMBS = new ArrayList<>();
+	private static final List<Block> ORE_BASED_HONEYCOMB_VARIANTS = new ArrayList<>();
+	private static final List<Block> SPIDER_DUNGEON_HONEYCOMBS = new ArrayList<>();
+	private static HashMap<String, CompoundNBT> PB_DATA = new HashMap<>();
 	private static List<String> PRODUCTIVE_BEES_LIST = new ArrayList<>();
 	public static final RuleTest HONEYCOMB_BUMBLEZONE = new TagMatchRuleTest(BlockTags.makeWrapperTag(Bumblezone.MODID+":honeycombs"));
-	private static Set<ResourceLocation> VALID_COMB_TYPES;
-	private static Map<String, CompoundNBT> PB_DATA;
+	private static final List<ConfiguredFeature<?,?>> PRODUCTIVE_BEES_CFS = new ArrayList<>();
 
 	public static void setupProductiveBees() {
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
 		ModChecker.productiveBeesPresent = true;
-	}
-	
-	public static void PBAddWorldgen(BiomeLoadingEvent event) {
-		SPIDER_DUNGEON_HONEYCOMBS.clear();
-		ORE_BASED_HONEYCOMB_VARIANTS.clear();
 
-		PB_DATA = new HashMap<>(BeeReloadListener.INSTANCE.getData());
-		PRODUCTIVE_BEES_LIST = new ArrayList<>(PB_DATA.keySet());
-		VALID_COMB_TYPES = PB_DATA.keySet().stream().filter(rls -> PB_DATA.get(rls).getBoolean("createComb")).map(ResourceLocation::new).collect(Collectors.toSet());
 
 		if (Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get()) {
 			// Multiple entries influences changes of them being picked. Those in back of list is rarest to be picked
-			addToSpiderDungeonList(PRODUCTIVE_BEES_NAMESPACE + ":bauxite");
-			addToSpiderDungeonList(PRODUCTIVE_BEES_NAMESPACE + ":brazen");
-			addToSpiderDungeonList(PRODUCTIVE_BEES_NAMESPACE + ":bronze");
-			addToSpiderDungeonList(PRODUCTIVE_BEES_NAMESPACE + ":copper");
-			addToSpiderDungeonList(PRODUCTIVE_BEES_NAMESPACE + ":rotten");
-			addToSpiderDungeonList(PRODUCTIVE_BEES_NAMESPACE + ":coal");
-			addToSpiderDungeonList(PRODUCTIVE_BEES_NAMESPACE + ":slimy");
-			addToSpiderDungeonList(PRODUCTIVE_BEES_NAMESPACE + ":obsidian");
-			addToSpiderDungeonList(PRODUCTIVE_BEES_NAMESPACE + ":radioactive");
-			addToSpiderDungeonList(PRODUCTIVE_BEES_NAMESPACE + ":withered");
+			addToSpiderDungeonList(ModBlocks.COMB_ROTTEN.get());
+			addToSpiderDungeonList(ModBlocks.COMB_BAUXITE.get());
+			addToSpiderDungeonList(ModBlocks.COMB_BRAZEN.get());
+			addToSpiderDungeonList(ModBlocks.COMB_BRONZE.get());
+			addToSpiderDungeonList(ModBlocks.COMB_COPPER.get());
+			addToSpiderDungeonList(ModBlocks.COMB_EXPERIENCE.get());
+			addToSpiderDungeonList(ModBlocks.COMB_FOSSILISED.get());
+			addToSpiderDungeonList(ModBlocks.COMB_BISMUTH.get());
+			addToSpiderDungeonList(ModBlocks.COMB_CINNABAR.get());
+			addToSpiderDungeonList(ModBlocks.COMB_SLIMY.get());
+			addToSpiderDungeonList(ModBlocks.COMB_OBSIDIAN.get());
+			addToSpiderDungeonList(ModBlocks.COMB_REFINED_OBSIDIAN.get());
+			addToSpiderDungeonList(ModBlocks.COMB_RADIOACTIVE.get());
+			addToSpiderDungeonList(ModBlocks.COMB_URANINITE.get());
+			addToSpiderDungeonList(ModBlocks.COMB_WITHERED.get());
+			addToSpiderDungeonList(ModBlocks.COMB_NETHERITE.get());
 		}
 
 		// Basic combs that that are mostly based on vanilla ores.
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":gold", 34, 3, 6, 230, true, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":iron", 26, 2, 30, 210, true, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":redstone", 22, 1, 30, 210, true, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":lapis", 22, 1, 6, 30, true, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":emerald", 5, 1, 6, 244, true, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":ender", 5, 1, 200, 50, true, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":diamond", 7, 1, 6, 244, true, true);
+		addCombToWorldgen(ModBlocks.COMB_GOLD.get(), 34, 3, 6, 230, true);
+		addCombToWorldgen(ModBlocks.COMB_IRON.get(), 26, 2, 30, 210, true);
+		addCombToWorldgen(ModBlocks.COMB_REDSTONE.get(), 22, 1, 30, 210, true);
+		addCombToWorldgen(ModBlocks.COMB_LAPIS.get(), 22, 1, 6, 30, true);
+		addCombToWorldgen(ModBlocks.COMB_EMERALD.get(), 5, 1, 6, 244, true);
+		addCombToWorldgen(ModBlocks.COMB_ENDER.get(), 5, 1, 200, 50, true);
+		addCombToWorldgen(ModBlocks.COMB_PROSPERITY.get(), 5, 1, 200, 50, true);
+		addCombToWorldgen(ModBlocks.COMB_EXPERIENCE.get(), 1, 0, 0, 1, true);
+		addCombToWorldgen(ModBlocks.COMB_DIAMOND.get(), 7, 1, 6, 244, true);
+		addCombToWorldgen(ModBlocks.COMB_NETHERITE.get(), 5, 1, 6, 244, true);
 
 		// Other combs unique to Productive Bees
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":blazing", 34, 1, 40, 200, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":glowing", 34, 1, 40, 200, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":bone", 22, 1, 6, 25, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":fossilised", 18, 1, 4, 20, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":draconic", 5, 1, 200, 50, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":draconic", 5, 1, 2, 10, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":powdery", 7, 1, 60, 244, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":quartz", 7, 1, 60, 244, false, true);
-		
-		//0.1.13 productive bees
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":magmatic", 34, 1, 40, 200, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":amber", 34, 1, 40, 200, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":electrum", 30, 1, 40, 200, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":invar", 10, 1, 2, 244, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":leaden", 10, 1, 1, 30, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":nickel", 10, 1, 1, 30, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":osmium", 9, 1, 1, 30, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":platinum", 5, 1, 1, 30, true, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":silver", 9, 1, 1, 30, true, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":steel", 9, 1, 1, 200, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":tin", 9, 1, 1, 200, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":titanium", 6, 1, 1, 30, true, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":tungsten", 9, 1, 1, 200, false, true);
-		addCombToWorldgen(event, PRODUCTIVE_BEES_NAMESPACE + ":zinc", 9, 1, 1, 200, false, true);
+		addCombToWorldgen(ModBlocks.COMB_AMBER.get(), 34, 1, 40, 200, false);
+		addCombToWorldgen(ModBlocks.COMB_BLAZING.get(), 34, 1, 40, 200, false);
+		addCombToWorldgen(ModBlocks.COMB_BONE.get(), 22, 1, 6, 25, false);
+		addCombToWorldgen(ModBlocks.COMB_CONSTANTAN.get(), 9, 1, 1, 200, false);
+		addCombToWorldgen(ModBlocks.COMB_DRACONIC.get(), 5, 1, 200, 50, false);
+		addCombToWorldgen(ModBlocks.COMB_DRACONIC.get(), 5, 1, 2, 10, false);
+		addCombToWorldgen(ModBlocks.COMB_ENDERIUM.get(), 5, 1, 200, 50, false);
+		addCombToWorldgen(ModBlocks.COMB_ELECTRUM.get(), 30, 1, 40, 200, false);
+		addCombToWorldgen(ModBlocks.COMB_ELEMENTIUM.get(), 10, 1, 40, 200, false);
+		addCombToWorldgen(ModBlocks.COMB_FOSSILISED.get(), 18, 1, 4, 20, false);
+		addCombToWorldgen(ModBlocks.COMB_GHOSTLY.get(), 5, 1, 2, 10, false);
+		addCombToWorldgen(ModBlocks.COMB_GLOWING.get(), 34, 1, 40, 200, false);
+		addCombToWorldgen(ModBlocks.COMB_IMPERIUM.get(), 10, 1, 2, 244, false);
+		addCombToWorldgen(ModBlocks.COMB_INFERIUM.get(), 10, 1, 2, 244, false);
+		addCombToWorldgen(ModBlocks.COMB_INSANIUM.get(), 10, 1, 2, 244, false);
+		addCombToWorldgen(ModBlocks.COMB_INVAR.get(), 10, 1, 2, 244, false);
+		addCombToWorldgen(ModBlocks.COMB_LEADEN.get(), 10, 1, 1, 30, false);
+		addCombToWorldgen(ModBlocks.COMB_LUMIUM.get(), 10, 1, 1, 150, false);
+		addCombToWorldgen(ModBlocks.COMB_MAGMATIC.get(), 34, 1, 40, 200, false);
+		addCombToWorldgen(ModBlocks.COMB_MANASTEEL.get(), 10, 1, 2, 244, false);
+		addCombToWorldgen(ModBlocks.COMB_MILKY.get(), 10, 1, 2, 244, false);
+		addCombToWorldgen(ModBlocks.COMB_NICKEL.get(), 10, 1, 1, 30, false);
+		addCombToWorldgen(ModBlocks.COMB_OSMIUM.get(), 9, 1, 1, 30, false);
+		addCombToWorldgen(ModBlocks.COMB_PLASTIC.get(), 10, 1, 1, 150, false);
+		addCombToWorldgen(ModBlocks.COMB_PLATINUM.get(), 5, 1, 1, 30, true);
+		addCombToWorldgen(ModBlocks.COMB_PRUDENTIUM.get(), 10, 1, 2, 244, false);
+		addCombToWorldgen(ModBlocks.COMB_POWDERY.get(), 7, 1, 60, 244, false);
+		addCombToWorldgen(ModBlocks.COMB_QUARTZ.get(), 7, 1, 60, 244, false);
+		addCombToWorldgen(ModBlocks.COMB_REFINED_GLOWSTONE.get(), 25, 1, 60, 170, false);
+		addCombToWorldgen(ModBlocks.COMB_SIGNALUM.get(), 10, 1, 1, 244, false);
+		addCombToWorldgen(ModBlocks.COMB_SILICON.get(), 10, 1, 1, 244, false);
+		addCombToWorldgen(ModBlocks.COMB_SILVER.get(), 9, 1, 1, 30, true);
+		addCombToWorldgen(ModBlocks.COMB_SOULIUM.get(), 10, 1, 1, 244, false);
+		addCombToWorldgen(ModBlocks.COMB_STEEL.get(), 9, 1, 1, 200, false);
+		addCombToWorldgen(ModBlocks.COMB_TERRASTEEL.get(), 10, 1, 1, 244, false);
+		addCombToWorldgen(ModBlocks.COMB_TERTIUM.get(), 10, 1, 1, 244, false);
+		addCombToWorldgen(ModBlocks.COMB_TIN.get(), 9, 1, 1, 200, false);
+		addCombToWorldgen(ModBlocks.COMB_TITANIUM.get(), 6, 1, 1, 30, true);
+		addCombToWorldgen(ModBlocks.COMB_TUNGSTEN.get(), 9, 1, 1, 200, false);
+		addCombToWorldgen(ModBlocks.COMB_ZINC.get(), 9, 1, 1, 200, false);
 
-		// Remaining combs gets a generic spawning rate
-		for(ResourceLocation remainingCombType : VALID_COMB_TYPES){
-			addCombToWorldgen(event, remainingCombType.toString(), 18, 1, 1, 235, false, false);
+		addCombToWorldgen(ModBlocks.COMB_ENDER_BIOTITE.get(), 5, 1, 1, 300, false);
+		addCombToWorldgen(ModBlocks.COMB_SUPREMIUM.get(), 5, 1, 1, 300, false);
+		addCombToWorldgen(ModBlocks.COMB_SPACIAL.get(), 5, 1, 1, 300, false);
+		addCombToWorldgen(ModBlocks.COMB_VIBRANIUM.get(), 5, 1, 1, 300, false);
+		addCombToWorldgen(ModBlocks.COMB_ALLTHEMODIUM.get(), 5, 1, 1, 400, false);
+		addCombToWorldgen(ModBlocks.COMB_UNOBTAINIUM.get(), 5, 1, 1, 500, false);
+	}
+	
+	public static void PBAddWorldgen(BiomeLoadingEvent event) {
+		PB_DATA = new HashMap<>(BeeReloadListener.INSTANCE.getData());
+		PRODUCTIVE_BEES_LIST = new ArrayList<>(PB_DATA.keySet());
+
+		// Add all the comb cfs that are registered.
+		// We ignore the datapack combs as that's too much work to support tbh.
+		for(ConfiguredFeature<?,?> cf : PRODUCTIVE_BEES_CFS){
+			event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES).add(() -> cf);
 		}
 	}
 
 	/**
 	 * Add comb to spider dungeon comb list
 	 */
-	private static void addToSpiderDungeonList(String combBlockType){
-		if(!VALID_COMB_TYPES.contains(new ResourceLocation(combBlockType)))
-			return;
-		VALID_COMB_TYPES.remove(new ResourceLocation(combBlockType));
-		SPIDER_DUNGEON_HONEYCOMBS.add(combBlockType);
+	private static void addToSpiderDungeonList(Block combBlock){
+		SPIDER_DUNGEON_HONEYCOMBS.add(combBlock);
 	}
 
 	/**
 	 * Creates a configured feature of the combtype and add it to the biome and/or Bee Dungeon comb list
 	 */
-	private static void addCombToWorldgen(BiomeLoadingEvent event, String combBlockType, int veinSize, int count, int bottomOffset, int range, boolean addToHoneycombList, boolean removeFromSet) {
-		ResourceLocation resourceLocation = new ResourceLocation(combBlockType);
-		if(!VALID_COMB_TYPES.contains(resourceLocation))
+	private static void addCombToWorldgen(Block combBlock, int veinSize, int count, int bottomOffset, int range, boolean addToHoneycombList) {
+		if(combBlock == null || combBlock == Blocks.AIR)
 			return;
 
-		if(removeFromSet){
-			VALID_COMB_TYPES.remove(resourceLocation);
+		ResourceLocation blockRL = ForgeRegistries.BLOCKS.getKey(combBlock);
+		String cfRL = Bumblezone.MODID + ":" + blockRL.getNamespace() + blockRL.getPath();
+
+		// Prevent registry replacements
+		int idOffset = 0;
+		while(WorldGenRegistries.CONFIGURED_FEATURE.containsKey(new ResourceLocation(cfRL + idOffset))){
+			idOffset++;
 		}
 
-		ConfiguredFeature<?, ?> cf = BzFeatures.BZ_BE_ORE_FEATURE.get().configure(new BzBEOreFeatureConfig(HONEYCOMB_BUMBLEZONE, ModBlocks.CONFIGURABLE_COMB.get().getDefaultState(), veinSize, combBlockType))
+		ConfiguredFeature<?, ?> cf = Feature.ORE.configure(new OreFeatureConfig(HONEYCOMB_BUMBLEZONE, combBlock.getDefaultState(), veinSize))
 				.decorate(Placement.RANGE.configure(new TopSolidRangeConfig(bottomOffset, 0, range)))
 				.spreadHorizontally()
 				.repeat(count);
 
-		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(Bumblezone.MODID, resourceLocation.getPath()), cf);
-		event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES).add(() -> cf);
+		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(cfRL + idOffset), cf);
+		PRODUCTIVE_BEES_CFS.add(cf);
 
 		if (addToHoneycombList)
-			ORE_BASED_HONEYCOMB_VARIANTS.add(combBlockType);
+			ORE_BASED_HONEYCOMB_VARIANTS.add(combBlock);
 	}
 
 	/**
@@ -212,7 +244,7 @@ public class ProductiveBeesCompat {
 			return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), null);
 		}
 		else{
-			return new Pair<>(ModBlocks.CONFIGURABLE_COMB.get().getDefaultState(), SPIDER_DUNGEON_HONEYCOMBS.get(random.nextInt(random.nextInt(SPIDER_DUNGEON_HONEYCOMBS.size())+1)));
+			return new Pair<>(SPIDER_DUNGEON_HONEYCOMBS.get(random.nextInt(random.nextInt(SPIDER_DUNGEON_HONEYCOMBS.size())+1)).getDefaultState(), null);
 		}
 	}
 
@@ -231,7 +263,7 @@ public class ProductiveBeesCompat {
 				index = random.nextInt(index + 1);
 			}
 
-			return new Pair<>(ModBlocks.CONFIGURABLE_COMB.get().getDefaultState(), ORE_BASED_HONEYCOMB_VARIANTS.get(index));
+			return new Pair<>(ORE_BASED_HONEYCOMB_VARIANTS.get(index).getDefaultState(), null);
 		}
 	}
 }
