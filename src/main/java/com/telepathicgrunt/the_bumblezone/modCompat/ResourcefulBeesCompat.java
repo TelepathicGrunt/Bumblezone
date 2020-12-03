@@ -37,6 +37,7 @@ public class ResourcefulBeesCompat {
 	private static final Map<ResourceLocation, Block> RESOURCEFUL_HONEYCOMBS_MAP = new HashMap<>();
 	private static final List<Block> ORE_BASED_HONEYCOMB_VARIANTS = new ArrayList<>();
 	private static final List<Block> SPIDER_DUNGEON_HONEYCOMBS = new ArrayList<>();
+	private static final List<ConfiguredFeature<?,?>> RESOURCEFUL_BEES_CFS = new ArrayList<>();
 
 	public static void setupResourcefulBees() {
 
@@ -52,15 +53,7 @@ public class ResourcefulBeesCompat {
 			}
 		}
 
-		// Keep at end so it is only set to true if no exceptions was thrown during setup
-		ModChecker.resourcefulBeesPresent = true;
-	}
-
-	public static void RBAddWorldgen(BiomeLoadingEvent event) {
-		if(Bumblezone.BzModCompatibilityConfig.RBBeesWaxWorldgen.get()){
-			event.getGeneration().getFeatures(GenerationStage.Decoration.VEGETAL_DECORATION).add(() -> BzConfiguredFeatures.BZ_BEES_WAX_PILLAR_CONFIGURED_FEATURE);
-		}
-
+		//Set up lists/maps for adding the worldgen compat stuff to bee dungeons and biomes
 		Map<ResourceLocation, Block> unusedHoneycombs = new HashMap<>(RESOURCEFUL_HONEYCOMBS_MAP);
 		if (Bumblezone.BzModCompatibilityConfig.spawnResourcefulBeesHoneycombVariants.get()) {
 			// Multiple entries influences changes of them being picked. Those in back of list is rarest to be picked
@@ -81,25 +74,41 @@ public class ResourcefulBeesCompat {
 			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "netherite_honeycomb_block"));
 			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "rgbee_honeycomb_block"));
 		}
-
-		addCombToWorldgen(event, unusedHoneycombs, new ResourceLocation("resourcefulbees", "gold_honeycomb_block"), 34, 3, 6, 230, true);
-		addCombToWorldgen(event, unusedHoneycombs, new ResourceLocation("resourcefulbees", "iron_honeycomb_block"), 26, 2, 30, 210, true);
-		addCombToWorldgen(event, unusedHoneycombs, new ResourceLocation("resourcefulbees", "redstone_honeycomb_block"), 22, 1, 30, 210, true);
-		addCombToWorldgen(event, unusedHoneycombs, new ResourceLocation("resourcefulbees", "lapis_honeycomb_block"), 22, 1, 6, 30, true);
-		addCombToWorldgen(event, unusedHoneycombs, new ResourceLocation("resourcefulbees", "emerald_honeycomb_block"), 5, 1, 6, 244, true);
-		addCombToWorldgen(event, unusedHoneycombs, new ResourceLocation("resourcefulbees", "ender_honeycomb_block"), 5, 1, 200, 50, true);
-		addCombToWorldgen(event, unusedHoneycombs, new ResourceLocation("resourcefulbees", "diamond_honeycomb_block"), 7, 1, 6, 244, true);
-		addCombToWorldgen(event, unusedHoneycombs, new ResourceLocation("resourcefulbees", "rgbee_honeycomb_block"), 7, 1, 6, 244, true);
+		addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "gold_honeycomb_block"), 34, 3, 6, 230, true);
+		addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "iron_honeycomb_block"), 26, 2, 30, 210, true);
+		addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "redstone_honeycomb_block"), 22, 1, 30, 210, true);
+		addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "lapis_honeycomb_block"), 22, 1, 6, 30, true);
+		addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "emerald_honeycomb_block"), 5, 1, 6, 244, true);
+		addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "ender_honeycomb_block"), 5, 1, 200, 50, true);
+		addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "diamond_honeycomb_block"), 7, 1, 6, 244, true);
+		addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "rgbee_honeycomb_block"), 7, 1, 6, 244, true);
 
 		// Remaining combs gets a generic spawning rate
 		for(Map.Entry<ResourceLocation, Block> remainingCombs : unusedHoneycombs.entrySet()){
-			addCombToWorldgen(event, null, remainingCombs.getKey(), 18, 1, 1, 235, false);
+			addCombToWorldgen(null, remainingCombs.getKey(), 18, 1, 1, 235, false);
+		}
+
+		// Keep at end so it is only set to true if no exceptions was thrown during setup
+		ModChecker.resourcefulBeesPresent = true;
+	}
+
+	public static void RBAddWorldgen(BiomeLoadingEvent event) {
+		// beeswax block
+		if(Bumblezone.BzModCompatibilityConfig.RBBeesWaxWorldgen.get()){
+			event.getGeneration().getFeatures(GenerationStage.Decoration.VEGETAL_DECORATION).add(() -> BzConfiguredFeatures.BZ_BEES_WAX_PILLAR_CONFIGURED_FEATURE);
+		}
+
+		// add all the comb cfs that are registered
+		for(ConfiguredFeature<?,?> cf : RESOURCEFUL_BEES_CFS){
+			event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES).add(() -> cf);
 		}
 	}
+
+
 	/**
-	 * Creates a configured feature of the combtype and add it to the biome and/or Bee Dungeon comb list
+	 * Creates a configured feature of the combtype and add it to the cf list and/or Bee Dungeon comb list
 	 */
-	private static void addCombToWorldgen(BiomeLoadingEvent event, Map<ResourceLocation, Block> unusedHoneycombs, ResourceLocation blockEntryRL, int veinSize, int count, int bottomOffset, int range, boolean addToBeeDungeon) {
+	private static void addCombToWorldgen(Map<ResourceLocation, Block> unusedHoneycombs, ResourceLocation blockEntryRL, int veinSize, int count, int bottomOffset, int range, boolean addToBeeDungeon) {
 		Block honeycomb = RESOURCEFUL_HONEYCOMBS_MAP.get(blockEntryRL);
 		if(honeycomb == null) return;
 
@@ -109,7 +118,7 @@ public class ResourcefulBeesCompat {
 				.repeat(count);
 
 		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(Bumblezone.MODID, blockEntryRL.getPath()), cf);
-		event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES).add(() -> cf);
+		RESOURCEFUL_BEES_CFS.add(cf);
 
 		if (addToBeeDungeon)
 			ORE_BASED_HONEYCOMB_VARIANTS.add(honeycomb);

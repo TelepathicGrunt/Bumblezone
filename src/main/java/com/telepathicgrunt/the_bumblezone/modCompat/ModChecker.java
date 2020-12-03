@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modCompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.forgespi.language.IModInfo;
 import org.apache.logging.log4j.Level;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
@@ -30,10 +31,10 @@ public class ModChecker
 			loadupModCompat(modid, () -> PotionOfBeesCompat.setupPotionOfBees());
 
 			modid = "carrierbees";
-			loadupModCompat(modid, () -> CarrierBeesCompat.setupProductiveBees());
+			loadupModCompat(modid, () -> CarrierBeesCompat.setupCarrierBees());
 
 			modid = "resourcefulbees";
-			loadupModCompat(modid, () -> ResourcefulBeesCompat.setupResourcefulBees());
+			//loadupModCompat(modid, () -> ResourcefulBeesCompat.setupResourcefulBees());
 
 			modid = "productivebees";
 			if(isNotOutdated(modid, "0.5.1", true))
@@ -68,7 +69,8 @@ public class ModChecker
     private static boolean isNotOutdated(String currentModID, String minVersion, boolean checkQualifierInstead) {
     	if(!ModList.get().getModContainerById(currentModID).isPresent()) return true;
 
-		ArtifactVersion modVersion = ModList.get().getModContainerById(currentModID).get().getModInfo().getVersion();
+		IModInfo modInfo = ModList.get().getModContainerById(currentModID).get().getModInfo();
+		ArtifactVersion modVersion = modInfo.getVersion();
 
 		// some people do 1.16.4-0.5.0.5 and we have to parse the second half instead.
 		// if someone does 0.5.0.5-1.16.4, well, we are screwed lmao. WE HAVE STANDARDS FOR A REASON PEOPLE! lmao
@@ -76,10 +78,10 @@ public class ModChecker
 			modVersion = new DefaultArtifactVersion(modVersion.getQualifier());
 		}
 
-		if (modVersion.compareTo(new DefaultArtifactVersion(minVersion)) > 0) {
+		if (modVersion.compareTo(new DefaultArtifactVersion(minVersion)) < 0) {
 			Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
 			Bumblezone.LOGGER.log(Level.INFO, " ");
-			Bumblezone.LOGGER.log(Level.INFO, "BUMBLEZONE: You're using a version of " + currentModID + " that is outdated. Please update " + currentModID + " to the latest version of that mod to enable compat with Bumblezone again.");
+			Bumblezone.LOGGER.log(Level.INFO, "BUMBLEZONE: You're using a version of " + modInfo.getDisplayName() + " that is outdated. Please update " + modInfo.getDisplayName() + " to the latest version of that mod to enable compat with Bumblezone again.");
 			Bumblezone.LOGGER.log(Level.INFO, " ");
 			Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
 			return false;

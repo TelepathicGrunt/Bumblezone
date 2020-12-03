@@ -76,7 +76,7 @@ dependencies {
 	// implementation fg.deobf("ignored:beesourceful:1.2.2")
 	// implementation fg.deobf("ignored:Buzzier-Bees-1.15.2:1.5.2")
 	//implementation fg.deobf("ignored:potionofbees-1.16.1:1.0.1.0")
-	implementation fg.deobf("ignored:productivebees-1.16.3:0.5.1")
+	implementation fg.deobf("ignored:productivebees-1.16.3:0.5.1.1")
 	implementation fg.deobf("ignored:resourcefulbees-1.16.3:0.5.5b")
 	implementation fg.deobf("ignored:carrierbees-1.16.3:0.0.2.2")
 	implementation fg.deobf("ignored:potionofbees-1.16.4:1.1.0.2")

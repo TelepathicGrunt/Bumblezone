@@ -102,7 +102,7 @@ public class CarrierBeesCompat {
 			Items.TURTLE_EGG
 	));
 
-	public static void setupProductiveBees() {
+	public static void setupCarrierBees() {
 		for(EntityType<?> cb_entity : ForgeRegistries.ENTITIES){
 			ResourceLocation rl = cb_entity.getRegistryName();
 			if(rl != null &&
