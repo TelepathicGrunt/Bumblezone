@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.mixin;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.item.ItemStack;

@@ -33,14 +33,15 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 public class ProductiveBeesCompat {
 
-	private static final String PRODUCTIVE_BEES_NAMESPACE = "productivebees";
 	private static final List<Block> ORE_BASED_HONEYCOMB_VARIANTS = new ArrayList<>();
 	private static final List<Block> SPIDER_DUNGEON_HONEYCOMBS = new ArrayList<>();
-	private static HashMap<String, CompoundNBT> PB_DATA = new HashMap<>();
 	private static List<String> PRODUCTIVE_BEES_LIST = new ArrayList<>();
 	public static final RuleTest HONEYCOMB_BUMBLEZONE = new TagMatchRuleTest(BlockTags.makeWrapperTag(Bumblezone.MODID+":honeycombs"));
 	private static final List<ConfiguredFeature<?,?>> PRODUCTIVE_BEES_CFS = new ArrayList<>();
@@ -133,7 +134,7 @@ public class ProductiveBeesCompat {
 	}
 	
 	public static void PBAddWorldgen(BiomeLoadingEvent event) {
-		PB_DATA = new HashMap<>(BeeReloadListener.INSTANCE.getData());
+		HashMap<String, CompoundNBT> PB_DATA = new HashMap<>(BeeReloadListener.INSTANCE.getData());
 		PRODUCTIVE_BEES_LIST = new ArrayList<>(PB_DATA.keySet());
 
 		// Add all the comb cfs that are registered.

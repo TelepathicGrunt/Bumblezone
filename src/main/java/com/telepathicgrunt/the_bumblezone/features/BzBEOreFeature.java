@@ -2,14 +2,11 @@ package com.telepathicgrunt.the_bumblezone.features;
 
 import com.mojang.serialization.Codec;
 import cy.jdkdigital.productivebees.common.tileentity.CombBlockTileEntity;
-import net.minecraft.block.Blocks;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.Feature;

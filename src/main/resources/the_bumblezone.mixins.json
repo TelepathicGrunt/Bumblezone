@@ -16,7 +16,7 @@
     "LayerAccessor",
     "MaterialInvoker",
     "MinecraftServerMixin",
-    "MobHitMixin",
+    "LivingEntityMixin",
     "MobSpawnLocationMixin",
     "PlayerDamagedMixin",
     "PlayerDamageShieldInvoker",
