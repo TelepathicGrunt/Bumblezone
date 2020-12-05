@@ -22,7 +22,7 @@
     "HoneyShieldItemstackSetDamageMixin",
     "HoneyShieldPreferredSlotMixin",
     "ItemDispenserBehaviorInvoker",
-    "MobHitMixin",
+    "LivingEntityMixin",
     "MobSpawnLocationMixin",
     "PlayerDamagedMixin",
     "PlayerDamageShieldInvoker",

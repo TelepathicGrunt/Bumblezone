@@ -1,6 +1,5 @@
 package net.telepathicgrunt.bumblezone.generation;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;
@@ -9,7 +8,6 @@ import net.minecraft.SharedConstants;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.util.registry.RegistryLookupCodec;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BuiltinBiomes;
@@ -24,7 +22,6 @@ import net.telepathicgrunt.bumblezone.generation.layer.BzBiomePillarLayer;
 import net.telepathicgrunt.bumblezone.generation.layer.BzBiomeScalePillarLayer;
 import net.telepathicgrunt.bumblezone.mixin.BiomeLayerSamplerAccessor;
 
-import java.util.List;
 import java.util.Map;
 import java.util.function.LongFunction;
 import java.util.stream.Collectors;

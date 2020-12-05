@@ -7,6 +7,16 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
+   (V.2.2.11 Changes) (1.16.4 Minecraft)
+   
+   Effects:
+• Adjusted Wrath of the Hive to apply effects to bees with the duration equal to
+  the remaining Wrath of the Hive time on the target. 
+  
+• Fixed bees being able to see through walls to find spiders and bears and not
+  being able to see through walls for players making bees extra angry.
+
+
    (V.2.2.10 Changes) (1.16.4 Minecraft)
    
    Items:
