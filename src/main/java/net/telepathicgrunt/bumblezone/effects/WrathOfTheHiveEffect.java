@@ -78,7 +78,7 @@ public class WrathOfTheHiveEffect extends StatusEffect {
      * Bees are REALLY angry!!! HIGH TAIL IT OUTTA THERE BRUH!!!
      */
     public static void unBEElievablyHighAggression(World world, LivingEntity livingEntity) {
-        SEE_THROUGH_WALLS.setBaseMaxDistance(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius).includeHidden();
+        SEE_THROUGH_WALLS.setBaseMaxDistance(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius);
         List<BeeEntity> beeList = world.getTargets(BeeEntity.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().expand(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius));
         for (BeeEntity bee : beeList) {
             bee.setTarget(livingEntity);
