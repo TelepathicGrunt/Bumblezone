@@ -61,7 +61,7 @@ public class WrathOfTheHiveEffect extends Effect {
      * Bees are angry but not crazy angry
      */
     public static void mediumAggression(World world, LivingEntity livingEntity) {
-        LINE_OF_SIGHT.setDistance(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()).setLineOfSiteRequired();
+        LINE_OF_SIGHT.setDistance(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get());
         List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, LINE_OF_SIGHT, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()));
 
         for (BeeEntity bee : beeList) {
@@ -84,7 +84,7 @@ public class WrathOfTheHiveEffect extends Effect {
      * Bees are REALLY angry!!! HIGH TAIL IT OUTTA THERE BRUH!!!
      */
     public static void unBEElievablyHighAggression(World world, LivingEntity livingEntity) {
-        SEE_THROUGH_WALLS.setDistance(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get());
+        SEE_THROUGH_WALLS.setDistance(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()).setLineOfSiteRequired();
         List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()));
         for (BeeEntity bee : beeList) {
             bee.setAttackTarget(livingEntity);
@@ -104,7 +104,7 @@ public class WrathOfTheHiveEffect extends Effect {
      */
     public static void calmTheBees(World world, LivingEntity livingEntity)
     {
-        SEE_THROUGH_WALLS.setDistance(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D).setLineOfSiteRequired();
+        SEE_THROUGH_WALLS.setDistance(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D);
         List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D));
         for (BeeEntity bee : beeList)
         {
