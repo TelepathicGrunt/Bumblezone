@@ -216,7 +216,7 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
         if (blockState.isSolid() && (position.getY() < generator.getSeaLevel() || !isNextToAir(world, generator, position, position2)))
         {
             if (posResult == 2) {
-                if (position.getY() < 40) {
+                if (position.getY() < generator.getSeaLevel()) {
                     world.setBlockState(position, SUGAR_WATER, 3);
                 }
                 else {

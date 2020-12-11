@@ -12,23 +12,26 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.IServerWorld;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
-import net.minecraft.world.gen.feature.template.BlockMatchRuleTest;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
 
 import java.util.*;
+
+import static com.telepathicgrunt.the_bumblezone.features.BzFeatures.HONEYCOMB_BUMBLEZONE;
 
 public class ResourcefulBeesCompat {
 
@@ -37,7 +40,8 @@ public class ResourcefulBeesCompat {
 	private static final Map<ResourceLocation, Block> RESOURCEFUL_HONEYCOMBS_MAP = new HashMap<>();
 	private static final List<Block> ORE_BASED_HONEYCOMB_VARIANTS = new ArrayList<>();
 	private static final List<Block> SPIDER_DUNGEON_HONEYCOMBS = new ArrayList<>();
-	private static final List<ConfiguredFeature<?,?>> RESOURCEFUL_BEES_CFS = new ArrayList<>();
+	private static final List<Pair<Block, ConfiguredFeature<?,?>>> RESOURCEFUL_BEES_CFS = new ArrayList<>();
+	private static final ITag.INamedTag<Block> BLACKLISTED_RESOURCEFUL_COMBS_TAG = BlockTags.makeWrapperTag(Bumblezone.MODID+":blacklisted_resourceful_bees_combs");
 
 	public static void setupResourcefulBees() {
 
@@ -48,7 +52,8 @@ public class ResourcefulBeesCompat {
 		}
 
 		for(Map.Entry<RegistryKey<Block>, Block> entry : Registry.BLOCK.getEntries()){
-			if(entry.getKey().getValue().getNamespace().equals(RESOURCEFUL_BEES_NAMESPACE) && entry.getKey().getValue().getPath().contains("honeycomb")){
+			ResourceLocation rl = entry.getKey().getValue();
+			if(rl.getNamespace().equals(RESOURCEFUL_BEES_NAMESPACE) && rl.getPath().contains("honeycomb")){
 				RESOURCEFUL_HONEYCOMBS_MAP.put(entry.getKey().getValue(), entry.getValue());
 			}
 		}
@@ -85,23 +90,29 @@ public class ResourcefulBeesCompat {
 
 		// Remaining combs gets a generic spawning rate
 		for(Map.Entry<ResourceLocation, Block> remainingCombs : unusedHoneycombs.entrySet()){
-			addCombToWorldgen(null, remainingCombs.getKey(), 18, 1, 1, 235, false);
+			addCombToWorldgen(null, remainingCombs.getKey(), 10, 1, 1, 235, false);
 		}
 
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
 		ModChecker.resourcefulBeesPresent = true;
 	}
 
-	public static void RBAddWorldgen(BiomeLoadingEvent event) {
-		// beeswax block
-		if(Bumblezone.BzModCompatibilityConfig.RBBeesWaxWorldgen.get()){
-			event.getGeneration().getFeatures(GenerationStage.Decoration.VEGETAL_DECORATION).add(() -> BzConfiguredFeatures.BZ_BEES_WAX_PILLAR_CONFIGURED_FEATURE);
+	public static void RBAddWorldgen(List<Biome> bumblezone_biomes) {
+		for(Biome biome : bumblezone_biomes){
+			// beeswax block
+			if(Bumblezone.BzModCompatibilityConfig.RBBeesWaxWorldgen.get()){
+				biome.getGenerationSettings().getFeatures().get(GenerationStage.Decoration.VEGETAL_DECORATION.ordinal()).add(() -> BzConfiguredFeatures.BZ_BEES_WAX_PILLAR_CONFIGURED_FEATURE);
+			}
+
+			// add all the comb cfs that are registered
+			for(Pair<Block, ConfiguredFeature<?, ?>> cf : RESOURCEFUL_BEES_CFS){
+				if(!BLACKLISTED_RESOURCEFUL_COMBS_TAG.contains(cf.getFirst()))
+					biome.getGenerationSettings().getFeatures().get(GenerationStage.Decoration.UNDERGROUND_ORES.ordinal()).add(cf::getSecond);
+			}
 		}
 
-		// add all the comb cfs that are registered
-		for(ConfiguredFeature<?,?> cf : RESOURCEFUL_BEES_CFS){
-			event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES).add(() -> cf);
-		}
+		ORE_BASED_HONEYCOMB_VARIANTS.removeIf(BLACKLISTED_RESOURCEFUL_COMBS_TAG::contains);
+		SPIDER_DUNGEON_HONEYCOMBS.removeIf(BLACKLISTED_RESOURCEFUL_COMBS_TAG::contains);
 	}
 
 
@@ -116,17 +127,17 @@ public class ResourcefulBeesCompat {
 
 		// Prevent registry replacements
 		int idOffset = 0;
-		while(WorldGenRegistries.CONFIGURED_FEATURE.containsKey(new ResourceLocation(cfRL + idOffset))){
+		while(WorldGenRegistries.CONFIGURED_FEATURE.getOrEmpty(new ResourceLocation(cfRL + idOffset)).isPresent()){
 			idOffset++;
 		}
 
-		ConfiguredFeature<?, ?> cf = Feature.ORE.configure(new OreFeatureConfig(new BlockMatchRuleTest(Blocks.HONEYCOMB_BLOCK), honeycomb.getDefaultState(), veinSize))
+		ConfiguredFeature<?, ?> cf = Feature.ORE.configure(new OreFeatureConfig(HONEYCOMB_BUMBLEZONE, honeycomb.getDefaultState(), veinSize))
 				.decorate(Placement.RANGE.configure(new TopSolidRangeConfig(bottomOffset, 0, range)))
 				.spreadHorizontally()
 				.repeat(count);
 
 		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(cfRL + idOffset), cf);
-		RESOURCEFUL_BEES_CFS.add(cf);
+		RESOURCEFUL_BEES_CFS.add(Pair.of(honeycomb, cf));
 
 		if (addToBeeDungeon)
 			ORE_BASED_HONEYCOMB_VARIANTS.add(honeycomb);
@@ -140,7 +151,9 @@ public class ResourcefulBeesCompat {
 	 */
 	private static void addToSpiderDungeonList(Map<ResourceLocation, Block> unusedHoneycombs, ResourceLocation blockEntryRL){
 		Block block = RESOURCEFUL_HONEYCOMBS_MAP.get(blockEntryRL);
-		if(block != null) SPIDER_DUNGEON_HONEYCOMBS.add(block);
+		if(block != null)
+			SPIDER_DUNGEON_HONEYCOMBS.add(block);
+
 		unusedHoneycombs.remove(blockEntryRL);
 	}
 

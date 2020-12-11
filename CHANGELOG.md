@@ -17,6 +17,36 @@ Mods I'm keeping an eye on for future compat
 # | Bumblezone changelog |
   
   
+   (V.2.2.8 Changes) (1.16.4 Minecraft)
+   
+   Misc:
+• Fixed various serverside crashes.
+ 
+   Dimension:
+• Fixed Sugar Waterfalls only being placed in a single x/z column instead of spread out.
+
+• Reduced Sugar Waterfall amount.
+
+   Teleportation:
+• Added blacklisted_teleportable_hive_blocks.json tag file that datapacks can override.
+  Add hive blocks to here if you don't want them to allow teleportation to the Bumblezone dimension.
+
+   Mod Compat:
+• Added blacklisted_resourceful_bees_combs.json and blacklisted_productive_bees_combs.json
+  tag files that datapacks can override. Add combs to these tags to blacklist them from being
+  imported into the dimension.
+  
+• Now future combs that Productive Bees adds will be added to the dimension automatically.
+   
+   Config:
+• Moved the Mod Compat config file to be now per-startup instead of per-world.
+  It can be found in the config folder next to the mods folder now.
+  
+• Removed the requiredBlockUnderHive config and instead, replaced it with the tag:
+  the_bumblezone/tags/blocks/required_blocks_under_hive_to_teleport.json. Override
+  this tag file with a datapack to change what blocks are needed under hives to allow
+  teleportation.
+  
    (V.2.2.7 Changes) (1.16.4 Minecraft)
    
    Effects:

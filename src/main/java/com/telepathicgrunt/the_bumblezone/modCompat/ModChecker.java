@@ -9,7 +9,7 @@ import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 
 public class ModChecker
 {
-    public static boolean potionOfBeesPresent = false;
+	public static boolean potionOfBeesPresent = false;
 	public static boolean productiveBeesPresent = false;
 	public static boolean carrierBeesPresent = false;
 	public static boolean resourcefulBeesPresent = false;

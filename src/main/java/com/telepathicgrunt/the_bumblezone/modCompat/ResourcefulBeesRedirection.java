@@ -2,9 +2,10 @@ package com.telepathicgrunt.the_bumblezone.modCompat;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.BlockState;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -18,8 +19,8 @@ import java.util.Random;
 public class ResourcefulBeesRedirection {
 	public static boolean RBIsApairyBlock(BlockState blockState){ return ResourcefulBeesCompat.RBIsApairyBlock(blockState); }
 
-	public static void RBAddWorldgen(BiomeLoadingEvent event){
-		ResourcefulBeesCompat.RBAddWorldgen(event);
+	public static void RBAddWorldgen(List<Biome> bumblezone_biomes){
+		ResourcefulBeesCompat.RBAddWorldgen(bumblezone_biomes);
 	}
 
 	public static BlockState getRBBeesWaxBlock(){

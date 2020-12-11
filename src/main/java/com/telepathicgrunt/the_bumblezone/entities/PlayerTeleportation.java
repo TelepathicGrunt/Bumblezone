@@ -15,8 +15,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
 import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
@@ -32,6 +32,9 @@ import org.apache.logging.log4j.Level;
 import java.util.ArrayList;
 
 public class PlayerTeleportation {
+
+    public static final ITag.INamedTag<Block> REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT_TAG = BlockTags.makeWrapperTag(Bumblezone.MODID+":required_blocks_under_hive_to_teleport");
+    private static final ITag.INamedTag<Block> BLACKLISTED_TELEPORTATION_HIVES_TAG = BlockTags.makeWrapperTag(Bumblezone.MODID+":blacklisted_teleportable_hive_blocks");
 
     @CapabilityInject(IPlayerPosAndDim.class)
     public static Capability<IPlayerPosAndDim> PAST_POS_AND_DIM = null;
@@ -154,31 +157,14 @@ public class PlayerTeleportation {
 
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = false;
-            String requiredBlockString = Bumblezone.BzDimensionConfig.requiredBlockUnderHive.get();
-            if(!requiredBlockString.trim().isEmpty())
-            {
-                if(requiredBlockString.matches("[a-z0-9/._-]+:[a-z0-9/._-]+") && Registry.BLOCK.containsKey(new ResourceLocation(requiredBlockString)))
-                {
-                    Block requiredBlock = Registry.BLOCK.getOrDefault(new ResourceLocation(requiredBlockString));
-                    if(requiredBlock == world.getBlockState(hivePos.down()).getBlock())
-                    {
-                        validBelowBlock = true;
-                    }
-                    else if(Bumblezone.BzDimensionConfig.warnPlayersOfWrongBlockUnderHive.get())
-                    {
-                        //failed. Block below isn't the required block
-                        String beeBlock = Registry.BLOCK.getKey(world.getBlockState(hivePos).getBlock()).toString();
-                        Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: The block under the "+beeBlock+" is not the correct block to teleport to Bumblezone. The config enter says it needs "+requiredBlockString+" under "+beeBlock+".");
-                        ITextComponent message = new StringTextComponent("The config entry says it needs §6"+requiredBlockString+"§f under §6"+beeBlock+"§f.");
-                        playerEntity.sendStatusMessage(message, true);
-                        return false;
-                    }
+            if(!REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT_TAG.values().isEmpty()) {
+                if(REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT_TAG.contains(world.getBlockState(hivePos.down()).getBlock())) {
+                    validBelowBlock = true;
                 }
-                else
-                {
-                    //failed. the required block config entry is broken
-                    Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: The required block under beenest config is broken. Please specify a resourcelocation to a real block or leave it blank so that players can teleport to Bumblezone dimension. Currently, the broken config has this in it: "+requiredBlockString);
-                    ITextComponent message = new StringTextComponent("§eBumblezone:§f The required block under beenest config is broken. Please specify a resourcelocation to a real block or leave it blank so that players can teleport to Bumblezone dimension. Currently, the broken config has this in it: §c"+requiredBlockString);
+                else if(Bumblezone.BzDimensionConfig.warnPlayersOfWrongBlockUnderHive.get()) {
+                    //failed. Block below isn't the required block
+                    Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
+                    ITextComponent message = new StringTextComponent("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
                     playerEntity.sendStatusMessage(message, true);
                     return false;
                 }
@@ -201,6 +187,8 @@ public class PlayerTeleportation {
 
 
     private static boolean isValidBeeHive(BlockState block) {
+        if(BLACKLISTED_TELEPORTATION_HIVES_TAG.contains(block.getBlock())) return false;
+
         if(BlockTags.BEEHIVES.contains(block.getBlock()) || block.getBlock() instanceof BeehiveBlock) {
             if(Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get() ||
                 Registry.BLOCK.getKey(block.getBlock()).getNamespace().equals("minecraft")) {

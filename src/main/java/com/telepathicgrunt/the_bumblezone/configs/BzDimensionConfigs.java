@@ -17,7 +17,6 @@ public class BzDimensionConfigs{
         public ConfigHelper.ConfigValueListener<Integer> teleportationMode;
         public ConfigHelper.ConfigValueListener<Boolean> generateBeenest;
         public ConfigHelper.ConfigValueListener<Boolean> forceExitToOverworld;
-        public ConfigHelper.ConfigValueListener<String> requiredBlockUnderHive;
         public ConfigHelper.ConfigValueListener<Boolean> warnPlayersOfWrongBlockUnderHive;
         public ConfigHelper.ConfigValueListener<Boolean> allowTeleportationWithModdedBeehives;
         public ConfigHelper.ConfigValueListener<Boolean> seaLevelOrHigherExitTeleporting;
@@ -93,26 +92,11 @@ public class BzDimensionConfigs{
                     .translation("the_bumblezone.config.dimension.sealevelorhigherexitteleporting")
                     .define("seaLevelOrHigherExitTeleporting", true));
 
-                requiredBlockUnderHive = subscriber.subscribe(builder
-                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
-                            +" If a resource location of a block is specified here,\r\n "
-                            +" then teleporting to Bumblezone will need that block under\r\n"
-                            +" the Bee Nest/Beehive you threw the Enderpearl at.\r\n"
-                            +" \r\n"
-                            +" Example: minecraft:emerald_block will require you to place an\r\n"
-                            +" Emerald Block under the Bee Nest/Beehive and then throw an\r\n"
-                            +" Enderpearl at it to teleport to Bumblezone dimension.\r\n"
-                            +" \r\n"
-                            +" By default, no resource location is specified so any\r\n"
-                            +" block can be under the Bee Nest/Beehive to teleport to dimension.\r\n")
-                    .translation("the_bumblezone.config.dimension.requiredblockunderhive")
-                    .define("requiredBlockUnderHive", ""));
-
                 warnPlayersOfWrongBlockUnderHive = subscriber.subscribe(builder
                     .comment(" \r\n-----------------------------------------------------\r\n\r\n"
-                            +" If requiredBlockUnderHive has a block specified and this config\r\n "
-                            +" is set to true, then player will get a warning if they throw \r\n"
-                            +" an Enderpearl at a Bee Nest/Beehive but the block under it is \r\n"
+                            +" If the block tag file required_block_under_hive.json has blocks specified\r\n "
+                            +" and this config is set to true, then player will get a warning if they\r\n"
+                            +" throw an Enderpearl at a Bee Nest/Beehive but the block under it is \r\n"
                             +" not the correct required block. It will also tell the player what \r\n"
                             +" block is needed under the Bee Nest/Beehive to teleport to the dimension.\r\n")
                     .translation("the_bumblezone.config.dimension.warnplayersofwrongblockunderhive")

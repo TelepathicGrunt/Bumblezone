@@ -54,7 +54,7 @@ public class Bumblezone{
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         //Events
-        forgeBus.addListener(BzDimension::biomeModification);
+        //forgeBus.addListener(BzDimension::biomeModification);
         forgeBus.addListener(BeeAggression::HoneyPickupEvent);
         forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
         forgeBus.addListener(HoneycombBroodEvents::reviveByPotionOfBees);
@@ -78,7 +78,7 @@ public class Bumblezone{
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> BumblezoneClient::subscribeClientEvents);
 
         // generates/handles config
-        BzModCompatibilityConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzModCompatibilityConfigs.BzModCompatibilityConfigValues::new, "the_bumblezone-mod_compatibility.toml");
+        BzModCompatibilityConfig = ConfigHelper.register(ModConfig.Type.COMMON, BzModCompatibilityConfigs.BzModCompatibilityConfigValues::new, "the_bumblezone-mod_compatibility.toml");
         BzBlockMechanicsConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzBlockMechanicsConfigs.BzBlockMechanicsConfigValues::new, "the_bumblezone-block_mechanics.toml");
         BzBeeAggressionConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzBeeAggressionConfigs.BzBeeAggressionConfigValues::new, "the_bumblezone-bee_aggression.toml");
         BzDimensionConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzDimensionConfigs.BzDimensionConfigValues::new, "the_bumblezone-dimension.toml");
@@ -93,6 +93,16 @@ public class Bumblezone{
 			BzDimension.setupDimension();
 			BzConfiguredFeatures.registerConfiguredFeatures();
 			BzEntities.registerAdditionalEntityInformation();
+
+			// Generates the tag data I want so I can update honeycombs_that_features_can_carve.json lol
+//			StringBuilder s = new StringBuilder("\n\n\n");
+//			for(Map.Entry<RegistryKey<Block>, Block> entry : ForgeRegistries.BLOCKS.getEntries()){
+//			    ResourceLocation rl = entry.getKey().getValue();
+//			    if(rl.getPath().contains("comb") && (rl.getNamespace().equals("resourcefulbees") || rl.getNamespace().equals("productivebees"))){
+//                    s.append("\n    {\n" + "      \"id\": \"").append(entry.getKey().getValue()).append("\",\n").append("      \"required\": false\n").append("    },");
+//                }
+//            }
+//			LOGGER.log(Level.WARN, s.toString());
 		});
         CapabilityPlayerPosAndDim.register();
     }
