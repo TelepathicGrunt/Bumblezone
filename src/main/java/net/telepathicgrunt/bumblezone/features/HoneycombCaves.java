@@ -211,7 +211,7 @@ public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
     private static void carveAtBlock(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos blockPos, BlockState blockState, int posResult) {
         if (blockState.isOpaque() && (blockPos.getY() < generator.getSeaLevel() || !isNextToLiquidOrAir(world, generator, blockPos))) {
             if (posResult == 2) {
-                if (blockPos.getY() < 40) {
+                if (blockPos.getY() < generator.getSeaLevel()) {
                     world.setBlockState(blockPos, SUGAR_WATER, 3);
                 } else {
                     world.setBlockState(blockPos, CAVE_AIR, 3);

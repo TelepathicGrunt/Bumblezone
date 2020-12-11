@@ -6,6 +6,7 @@
     "AbstractFurnaceEntityMixin",
     "BeeEntityInvoker",
     "BiomeLayerSamplerAccessor",
+    "BlockTagsAccessor",
     "BootstrapMixin",
     "BucketItemAccessor",
     "CookingRecipeSerializerMixin",

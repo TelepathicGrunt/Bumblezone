@@ -39,16 +39,6 @@ public class BZDimensionConfig implements ConfigData {
 
     @ConfigEntry.Gui.PrefixText
     @ConfigEntry.Gui.Tooltip(count = 0)
-    @Comment(value = "\nIf an identifier of a block is specified here,\n "
-            +"then teleporting to Bumblezone will need that block under\n"
-            +"the Bee Nest/Beehive you threw the Enderpearl at.\n"
-            +"\n"
-            +"By default, no identifier is specified so any block can\n"
-            +"be under the Bee Nest/Beehive to teleport to the dimension.")
-    public String requiredBlockUnderHive = "";
-
-    @ConfigEntry.Gui.PrefixText
-    @ConfigEntry.Gui.Tooltip(count = 0)
     @Comment(value = "\nIf requiredBlockUnderHive has a block specified and this config\n "
             +"is set to true, then player will get a warning if they throw\n"
             +"an Enderpearl at a Bee Nest/Beehive but the block under it is\n"

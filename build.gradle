@@ -56,7 +56,7 @@ dependencies {
 
 	modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}"
 
-	modImplementation "curse.maven:potion_of_bees:3052244"
+	modImplementation "curse.maven:potion_of_bees-356673:3052244"
 	modImplementation "de.siphalor:nbtcrafting-1.16:2+"
 	//modImplementation ("io.github.alloffabric:BeeProductive:${project.beeproductive_version}")
 }

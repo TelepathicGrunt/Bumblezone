@@ -7,6 +7,27 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
+   (V.2.2.12 Changes) (1.16.4 Minecraft)
+   
+   Misc:
+• Fixed various serverside crashes.
+ 
+   Dimension:
+• Fixed Sugar Waterfalls only being placed in a single x/z column instead of spread out.
+
+• Reduced Sugar Waterfall amount.
+
+   Teleportation:
+• Added blacklisted_teleportable_hive_blocks.json tag file that datapacks can override.
+  Add hive blocks to here if you don't want them to allow teleportation to the Bumblezone dimension.
+
+   Config:
+• Removed the requiredBlockUnderHive config and instead, replaced it with the tag:
+  the_bumblezone/tags/blocks/required_blocks_under_hive_to_teleport.json. Override
+  this tag file with a datapack to change what blocks are needed under hives to allow
+  teleportation.
+  
+
    (V.2.2.11 Changes) (1.16.4 Minecraft)
    
    Effects:
