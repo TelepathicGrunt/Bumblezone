@@ -21,6 +21,7 @@ import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modCompat.PotionOfBeesBeeSplashPotionProjectile;
 import com.telepathicgrunt.the_bumblezone.surfacebuilders.BzSurfaceBuilders;
+import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
 import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -52,6 +53,7 @@ public class Bumblezone{
     public Bumblezone() {
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        BZBlockTags.tagInit(); // Done extra early as some features needs the tag wrapper.
 
         //Events
         //forgeBus.addListener(BzDimension::biomeModification);

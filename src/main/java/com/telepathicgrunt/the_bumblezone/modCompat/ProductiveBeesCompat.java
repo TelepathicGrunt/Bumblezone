@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modCompat;
 
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehive;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehiveAbstract;
 import cy.jdkdigital.productivebees.common.block.ExpansionBox;
@@ -16,7 +17,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -45,7 +45,6 @@ public class ProductiveBeesCompat {
 	private static List<String> PRODUCTIVE_BEES_LIST = new ArrayList<>();
 	private static final Map<ResourceLocation, Block> PRODUCTIVE_BEES_HONEYCOMBS_MAP = new HashMap<>();
 	private static final List<Pair<Block, ConfiguredFeature<?,?>>> PRODUCTIVE_BEES_CFS = new ArrayList<>();
-	private static final ITag.INamedTag<Block> BLACKLISTED_PRODUCTIVEBEES_COMBS_TAG = BlockTags.makeWrapperTag(Bumblezone.MODID+":blacklisted_productive_bees_combs");
 
 	public static void setupProductiveBees() {
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
@@ -154,13 +153,13 @@ public class ProductiveBeesCompat {
 			// Add all the comb cfs that are registered.
 			// We ignore the datapack combs as that's too much work to support tbh.
 			for (Pair<Block, ConfiguredFeature<?, ?>> cf : PRODUCTIVE_BEES_CFS) {
-				if (!BLACKLISTED_PRODUCTIVEBEES_COMBS_TAG.contains(cf.getFirst()))
+				if (!BZBlockTags.BLACKLISTED_PRODUCTIVEBEES_COMBS.contains(cf.getFirst()))
 					biome.getGenerationSettings().getFeatures().get(GenerationStage.Decoration.UNDERGROUND_ORES.ordinal()).add(cf::getSecond);
 			}
 		}
 
-		SPIDER_DUNGEON_HONEYCOMBS.removeIf(BLACKLISTED_PRODUCTIVEBEES_COMBS_TAG::contains);
-		ORE_BASED_HONEYCOMB_VARIANTS.removeIf(BLACKLISTED_PRODUCTIVEBEES_COMBS_TAG::contains);
+		SPIDER_DUNGEON_HONEYCOMBS.removeIf(BZBlockTags.BLACKLISTED_PRODUCTIVEBEES_COMBS::contains);
+		ORE_BASED_HONEYCOMB_VARIANTS.removeIf(BZBlockTags.BLACKLISTED_PRODUCTIVEBEES_COMBS::contains);
 	}
 
 	/**

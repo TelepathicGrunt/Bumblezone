@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.features;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import net.minecraft.tags.BlockTags;
+import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.template.RuleTest;
@@ -14,7 +14,8 @@ import java.util.function.Supplier;
 
 public class BzFeatures {
     // For making ore features replace combs
-    public static final RuleTest HONEYCOMB_BUMBLEZONE = new TagMatchRuleTest(BlockTags.makeWrapperTag(Bumblezone.MODID+":honeycombs_that_features_can_carve"));
+    // Init at mod startup when adding FEATURES to event bus
+    public static final RuleTest HONEYCOMB_BUMBLEZONE = new TagMatchRuleTest(BZBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE);
 
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Bumblezone.MODID);
 

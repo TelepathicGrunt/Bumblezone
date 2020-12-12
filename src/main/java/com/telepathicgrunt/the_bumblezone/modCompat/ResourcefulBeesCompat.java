@@ -7,13 +7,12 @@ import com.resourcefulbees.resourcefulbees.block.multiblocks.apiary.ApiaryStorag
 import com.resourcefulbees.resourcefulbees.registry.ModBlocks;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.features.BzConfiguredFeatures;
+import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -41,7 +40,6 @@ public class ResourcefulBeesCompat {
 	private static final List<Block> ORE_BASED_HONEYCOMB_VARIANTS = new ArrayList<>();
 	private static final List<Block> SPIDER_DUNGEON_HONEYCOMBS = new ArrayList<>();
 	private static final List<Pair<Block, ConfiguredFeature<?,?>>> RESOURCEFUL_BEES_CFS = new ArrayList<>();
-	private static final ITag.INamedTag<Block> BLACKLISTED_RESOURCEFUL_COMBS_TAG = BlockTags.makeWrapperTag(Bumblezone.MODID+":blacklisted_resourceful_bees_combs");
 
 	public static void setupResourcefulBees() {
 
@@ -106,13 +104,13 @@ public class ResourcefulBeesCompat {
 
 			// add all the comb cfs that are registered
 			for(Pair<Block, ConfiguredFeature<?, ?>> cf : RESOURCEFUL_BEES_CFS){
-				if(!BLACKLISTED_RESOURCEFUL_COMBS_TAG.contains(cf.getFirst()))
+				if(!BZBlockTags.BLACKLISTED_RESOURCEFUL_COMBS.contains(cf.getFirst()))
 					biome.getGenerationSettings().getFeatures().get(GenerationStage.Decoration.UNDERGROUND_ORES.ordinal()).add(cf::getSecond);
 			}
 		}
 
-		ORE_BASED_HONEYCOMB_VARIANTS.removeIf(BLACKLISTED_RESOURCEFUL_COMBS_TAG::contains);
-		SPIDER_DUNGEON_HONEYCOMBS.removeIf(BLACKLISTED_RESOURCEFUL_COMBS_TAG::contains);
+		ORE_BASED_HONEYCOMB_VARIANTS.removeIf(BZBlockTags.BLACKLISTED_RESOURCEFUL_COMBS::contains);
+		SPIDER_DUNGEON_HONEYCOMBS.removeIf(BZBlockTags.BLACKLISTED_RESOURCEFUL_COMBS::contains);
 	}
 
 

@@ -7,15 +7,14 @@ import com.telepathicgrunt.the_bumblezone.dimension.BzPlayerPlacement;
 import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ProductiveBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modCompat.ResourcefulBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
 import net.minecraft.block.BeehiveBlock;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.EnderPearlEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -32,9 +31,6 @@ import org.apache.logging.log4j.Level;
 import java.util.ArrayList;
 
 public class PlayerTeleportation {
-
-    public static final ITag.INamedTag<Block> REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT_TAG = BlockTags.makeWrapperTag(Bumblezone.MODID+":required_blocks_under_hive_to_teleport");
-    private static final ITag.INamedTag<Block> BLACKLISTED_TELEPORTATION_HIVES_TAG = BlockTags.makeWrapperTag(Bumblezone.MODID+":blacklisted_teleportable_hive_blocks");
 
     @CapabilityInject(IPlayerPosAndDim.class)
     public static Capability<IPlayerPosAndDim> PAST_POS_AND_DIM = null;
@@ -157,8 +153,8 @@ public class PlayerTeleportation {
 
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = false;
-            if(!REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT_TAG.values().isEmpty()) {
-                if(REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT_TAG.contains(world.getBlockState(hivePos.down()).getBlock())) {
+            if(!BZBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.values().isEmpty()) {
+                if(BZBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.down()).getBlock())) {
                     validBelowBlock = true;
                 }
                 else if(Bumblezone.BzDimensionConfig.warnPlayersOfWrongBlockUnderHive.get()) {
@@ -187,7 +183,7 @@ public class PlayerTeleportation {
 
 
     private static boolean isValidBeeHive(BlockState block) {
-        if(BLACKLISTED_TELEPORTATION_HIVES_TAG.contains(block.getBlock())) return false;
+        if(BZBlockTags.BLACKLISTED_TELEPORTATION_HIVES.contains(block.getBlock())) return false;
 
         if(BlockTags.BEEHIVES.contains(block.getBlock()) || block.getBlock() instanceof BeehiveBlock) {
             if(Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get() ||
