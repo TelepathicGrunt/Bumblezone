@@ -7,6 +7,12 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
+   (V.2.2.13 Changes) (1.16.4 Minecraft)
+   
+   Tags:
+• Fixed tags so that they do not crash on servers.
+
+   
    (V.2.2.12 Changes) (1.16.4 Minecraft)
    
    Misc:

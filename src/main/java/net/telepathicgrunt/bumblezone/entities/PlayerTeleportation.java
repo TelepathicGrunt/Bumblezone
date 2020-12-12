@@ -23,14 +23,12 @@ import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzPlayerPlacement;
 import net.telepathicgrunt.bumblezone.mixin.BlockTagsAccessor;
+import net.telepathicgrunt.bumblezone.tags.BZBlockTags;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
 
 public class PlayerTeleportation {
-
-    public static final Tag.Identified<Block> REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT_TAG = BlockTagsAccessor.callRegister(Bumblezone.MODID + ":required_blocks_under_hive_to_teleport");
-    private static final Tag.Identified<Block> BLACKLISTED_TELEPORTATION_HIVES_TAG = BlockTagsAccessor.callRegister(Bumblezone.MODID+":blacklisted_teleportable_hive_blocks");
 
     //Player ticks
     public static void playerTick(PlayerEntity playerEntity){
@@ -148,8 +146,8 @@ public class PlayerTeleportation {
 
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = false;
-            if(!REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT_TAG.values().isEmpty()) {
-                if(REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT_TAG.contains(world.getBlockState(hivePos.down()).getBlock())) {
+            if(!BZBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT_TAG.values().isEmpty()) {
+                if(BZBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT_TAG.contains(world.getBlockState(hivePos.down()).getBlock())) {
                     validBelowBlock = true;
                 }
                 else if(Bumblezone.BZ_CONFIG.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive)
@@ -178,7 +176,7 @@ public class PlayerTeleportation {
 
 
     private static boolean isValidBeeHive(BlockState block) {
-        if(BLACKLISTED_TELEPORTATION_HIVES_TAG.contains(block.getBlock())) return false;
+        if(BZBlockTags.BLACKLISTED_TELEPORTATION_HIVES_TAG.contains(block.getBlock())) return false;
 
         if(BlockTags.BEEHIVES.contains(block.getBlock()) || block.getBlock() instanceof BeehiveBlock) {
             return true;

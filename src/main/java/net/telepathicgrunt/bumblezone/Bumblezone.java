@@ -9,8 +9,10 @@ import me.sargunvohra.mcmods.autoconfig1u.serializer.JanksonConfigSerializer;
 import nerdhub.cardinal.components.api.util.RespawnCopyStrategy;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
+import net.minecraft.block.Block;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
@@ -19,16 +21,14 @@ import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.configs.BzConfig;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
-import net.telepathicgrunt.bumblezone.entities.BeeAggression;
-import net.telepathicgrunt.bumblezone.entities.BzEntities;
-import net.telepathicgrunt.bumblezone.entities.IPlayerComponent;
-import net.telepathicgrunt.bumblezone.entities.PlayerComponent;
+import net.telepathicgrunt.bumblezone.entities.*;
 import net.telepathicgrunt.bumblezone.features.BzConfiguredFeatures;
 import net.telepathicgrunt.bumblezone.features.BzFeatures;
 import net.telepathicgrunt.bumblezone.features.decorators.BzPlacements;
 import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.DispenserItemSetup;
 import net.telepathicgrunt.bumblezone.modCompat.ModChecker;
+import net.telepathicgrunt.bumblezone.tags.BZBlockTags;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -47,6 +47,8 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         //Set up config
         AutoConfig.register(BzConfig.class, JanksonConfigSerializer::new);
         BZ_CONFIG = AutoConfig.getConfigHolder(BzConfig.class).getConfig();
+
+        BZBlockTags.initTags();
 
         BzBlocks.registerBlocks();
         BzItems.registerItems();

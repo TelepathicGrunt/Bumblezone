@@ -1,0 +1,14 @@
+package net.telepathicgrunt.bumblezone.tags;
+
+import net.minecraft.block.Block;
+import net.minecraft.tag.Tag;
+import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.mixin.BlockTagsAccessor;
+
+public class BZBlockTags {
+    // Sole purpose is to initalize the tag wrappers at mod startup
+    public static void initTags(){}
+
+    public static final Tag.Identified<Block> REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT_TAG = BlockTagsAccessor.callRegister(Bumblezone.MODID + ":required_blocks_under_hive_to_teleport");
+    public static final Tag.Identified<Block> BLACKLISTED_TELEPORTATION_HIVES_TAG = BlockTagsAccessor.callRegister(Bumblezone.MODID+":blacklisted_teleportable_hive_blocks");
+}
