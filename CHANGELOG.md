@@ -7,6 +7,12 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
+   (V.2.2.14 Changes) (1.16.4 Minecraft)
+   
+   Blocks:
+• Optimized HoneycombBrood block's bee spawning from ticking.
+
+
    (V.2.2.13 Changes) (1.16.4 Minecraft)
    
    Tags:

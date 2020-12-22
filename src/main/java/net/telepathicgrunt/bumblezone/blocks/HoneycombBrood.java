@@ -209,13 +209,16 @@ public class HoneycombBrood extends FacingBlock {
             if (world.getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ? rand.nextInt(10) == 0 : rand.nextInt(22) == 0) {
                 world.setBlockState(position, state.with(STAGE, stage + 1), 2);
             }
-        } else {
-            PLAYER_DISTANCE.setBaseMaxDistance(Math.max(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius * 0.5, 1));
-
-            List<BeeEntity> beeList = world.getTargets(BeeEntity.class, FIXED_DISTANCE, null, new Box(position).expand(50));
-            List<PlayerEntity> playerList = world.getTargets(PlayerEntity.class, PLAYER_DISTANCE, null, new Box(position).expand(50));
-            if (beeList.size() < 3 || playerList.stream().anyMatch(player -> player.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE))) {
-                spawnBroodMob(world, state, position, stage);
+        }
+        else {
+            double distance = Math.max(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius * 0.5, 1);
+            PLAYER_DISTANCE.setBaseMaxDistance(distance);
+            List<PlayerEntity> playerList = world.getTargets(PlayerEntity.class, PLAYER_DISTANCE, null, new Box(position).expand(distance));
+            if (playerList.stream().anyMatch(player -> player.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE))) {
+                List<BeeEntity> beeList = world.getTargets(BeeEntity.class, FIXED_DISTANCE, null, new Box(position).expand(50));
+                if(beeList.size() < 3){
+                    spawnBroodMob(world, state, position, stage);
+                }
             }
         }
     }
