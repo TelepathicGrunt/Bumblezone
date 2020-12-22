@@ -32,6 +32,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import org.apache.logging.log4j.Level;
 
 import java.util.List;
 import java.util.Random;
@@ -208,13 +209,17 @@ public class HoneycombBrood extends DirectionalBlock {
             if (world.getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ? rand.nextInt(10) == 0 : rand.nextInt(22) == 0) {
                 world.setBlockState(position, state.with(STAGE, stage + 1), 2);
             }
-        } else {
-            PLAYER_DISTANCE.setDistance(Math.max(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get() * 0.5, 1));
+        }
+        else {
+            double distance = Math.max(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get() * 0.5, 1);
+            PLAYER_DISTANCE.setDistance(distance);
 
-            List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, FIXED_DISTANCE, null, new AxisAlignedBB(position).grow(50));
-            List<PlayerEntity> playerList = world.getTargettableEntitiesWithinAABB(PlayerEntity.class, PLAYER_DISTANCE, null, new AxisAlignedBB(position).grow(50));
-            if (beeList.size() < 3 || playerList.stream().anyMatch(player -> player.isPotionActive(BzEffects.WRATH_OF_THE_HIVE.get()))) {
-                spawnBroodMob(world, state, position, stage);
+            List<PlayerEntity> playerList = world.getTargettableEntitiesWithinAABB(PlayerEntity.class, PLAYER_DISTANCE, null, new AxisAlignedBB(position).grow(distance));
+            if (playerList.stream().anyMatch(player -> player.isPotionActive(BzEffects.WRATH_OF_THE_HIVE.get()))) {
+                List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, FIXED_DISTANCE, null, new AxisAlignedBB(position).grow(50));
+                if(beeList.size() < 3){
+                    spawnBroodMob(world, state, position, stage);
+                }
             }
         }
     }

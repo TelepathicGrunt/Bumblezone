@@ -17,6 +17,15 @@ Mods I'm keeping an eye on for future compat
 # | Bumblezone changelog |
   
   
+   (V.2.2.9 Changes) (1.16.4 Minecraft)
+   
+   Blocks:
+• Optimized HoneycombBrood block's bee spawning from ticking.
+
+   Dimension:
+• Falling out of Bumblezone dimension shouldn't deal fall damage now.
+
+  
    (V.2.2.8 Changes) (1.16.4 Minecraft)
    
    Misc:

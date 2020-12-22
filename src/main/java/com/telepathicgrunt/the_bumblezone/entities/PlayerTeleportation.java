@@ -26,6 +26,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.util.LazyOptional;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
@@ -41,11 +42,11 @@ public class PlayerTeleportation {
         //grabs the capability attached to player for dimension hopping
 
         //Makes it so player does not get killed for falling into the void
-        PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
         if (playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (playerEntity.getY() < -3) {
                 playerEntity.setPos(playerEntity.getX(), -3.01D, playerEntity.getZ());
                 playerEntity.setPosition(playerEntity.getX(), -3.01D, playerEntity.getZ());
+                playerEntity.fallDistance = 0;
 
                 teleportOutOfBz(playerEntity);
             } else if (playerEntity.getY() > 255) {
@@ -53,10 +54,16 @@ public class PlayerTeleportation {
             }
         }
         //teleport to bumblezone
-        else if (cap.getTeleporting()) {
-            BzPlayerPlacement.enteringBumblezone(playerEntity);
-            cap.setTeleporting(false);
-            reAddStatusEffect(playerEntity);
+        else{
+            LazyOptional<IPlayerPosAndDim> lazyOptionalCap = playerEntity.getCapability(PAST_POS_AND_DIM);
+            if (lazyOptionalCap.isPresent()) {
+                PlayerPositionAndDimension cap = (PlayerPositionAndDimension) lazyOptionalCap.orElseThrow(RuntimeException::new);
+                if (cap.getTeleporting()) {
+                    BzPlayerPlacement.enteringBumblezone(playerEntity);
+                    cap.setTeleporting(false);
+                    reAddStatusEffect(playerEntity);
+                }
+            }
         }
     }
 
