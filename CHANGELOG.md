@@ -12,6 +12,9 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
    Blocks:
 • Optimized HoneycombBrood block's bee spawning from ticking.
 
+   Teleportation:
+• Fixed Teleportation mode 2 and 3 being broken and not saving previous pos and dims.
+
 
    (V.2.2.13 Changes) (1.16.4 Minecraft)
    

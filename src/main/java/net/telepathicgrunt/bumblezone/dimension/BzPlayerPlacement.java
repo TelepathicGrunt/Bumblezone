@@ -30,6 +30,8 @@ public class BzPlayerPlacement {
         Vec3d destinationPosition;
 
         if (entity instanceof ServerPlayerEntity) {
+            Bumblezone.PLAYER_COMPONENT.get(entity).setNonBZPos(entity.getPos());
+            Bumblezone.PLAYER_COMPONENT.get(entity).setNonBZDimension(((ServerPlayerEntity) entity).getServerWorld().getRegistryKey().getValue());
             MinecraftServer minecraftServer = entity.getServer(); // the server itself
             ServerWorld bumblezoneWorld = minecraftServer.getWorld(BzDimension.BZ_WORLD_KEY);
             RegistryKey<World> world_key = entity.world.getRegistryKey();
@@ -64,7 +66,6 @@ public class BzPlayerPlacement {
         Vec3d destinationPosition;
 
         if (entity instanceof ServerPlayerEntity) {
-            Bumblezone.PLAYER_COMPONENT.get(entity).setNonBZPos(entity.getPos());
             destinationPosition = teleportByOutOfBounds((PlayerEntity) entity, destination, upwardChecking);
 
             ((ServerPlayerEntity)entity).teleport(
@@ -82,45 +83,65 @@ public class BzPlayerPlacement {
     private static Vec3d teleportByOutOfBounds(PlayerEntity playerEntity, ServerWorld destination, boolean checkingUpward) {
         //converts the position to get the corresponding position in non-bumblezone dimension
         double coordinateScale = playerEntity.getEntityWorld().getDimension().getCoordinateScale() / destination.getDimension().getCoordinateScale();
-        BlockPos blockpos;
+        BlockPos finalSpawnPos;
         BlockPos validBlockPos = null;
 
-        if (Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode != 2 || Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZPos() == null) {
-            blockpos = new BlockPos(
+        if(Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 1){
+            finalSpawnPos = new BlockPos(
                     Doubles.constrainToRange(playerEntity.getPos().getX() * coordinateScale, -29999936D, 29999936D),
                     playerEntity.getPos().getY(),
                     Doubles.constrainToRange(playerEntity.getPos().getZ() * coordinateScale, -29999936D, 29999936D));
 
             //Gets valid space in other world
-            validBlockPos = validPlayerSpawnLocationByBeehive(destination, blockpos, 48, checkingUpward);
-        } else {
-            blockpos = new BlockPos(playerEntity.getPos());
+            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 48, checkingUpward);
         }
 
+        else if(Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 2){
+            Vec3d playerPos = Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZPos();
+            if(playerPos != null){
+                validBlockPos = new BlockPos(playerPos);
+            }
+        }
 
+        // Teleportaion mod 3
+        else{
+            finalSpawnPos = new BlockPos(
+                    Doubles.constrainToRange(playerEntity.getPos().getX() * coordinateScale, -29999936D, 29999936D),
+                    playerEntity.getPos().getY(),
+                    Doubles.constrainToRange(playerEntity.getPos().getZ() * coordinateScale, -29999936D, 29999936D));
+
+            //Gets valid space in other world
+            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 48, checkingUpward);
+
+            Vec3d playerPos = Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZPos();
+            if(validBlockPos == null && playerPos != null) {
+                validBlockPos = new BlockPos(playerPos);
+            }
+        }
+
+        // If all else fails, fallback to player pos
+        finalSpawnPos = validBlockPos;
+        if(finalSpawnPos == null) {
+            finalSpawnPos = new BlockPos(playerEntity.getPos());
+        }
+
+        // Make sure spacing is safe if in mode 2 or mode 3 when doing forced teleportation when valid land isn't found.
         if (Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 2 ||
-                (Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 3 && validBlockPos == null)) {
-            //Use cap for position
+            (Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 3 && validBlockPos == null))
+        {
 
-            //extra null check
-            if (Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZPos() == null)
-                validBlockPos = blockpos;
-            else
-                validBlockPos = new BlockPos(Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZPos());
-
-
-            if (destination.getBlockState(validBlockPos.up()).isOpaque()) {
-                destination.setBlockState(validBlockPos, Blocks.AIR.getDefaultState(), 3);
-                destination.setBlockState(validBlockPos.up(), Blocks.AIR.getDefaultState(), 3);
+            if (destination.getBlockState(finalSpawnPos.up()).isOpaque()) {
+                destination.setBlockState(finalSpawnPos, Blocks.AIR.getDefaultState(), 3);
+                destination.setBlockState(finalSpawnPos.up(), Blocks.AIR.getDefaultState(), 3);
             }
         }
 
         //use found location
         //teleportation spot finding complete. return spot
         return new Vec3d(
-                validBlockPos.getX() + 0.5D,
-                validBlockPos.getY() + 1,
-                validBlockPos.getZ() + 0.5D
+                finalSpawnPos.getX() + 0.5D,
+                finalSpawnPos.getY() + 1,
+                finalSpawnPos.getZ() + 0.5D
         );
     }
 
