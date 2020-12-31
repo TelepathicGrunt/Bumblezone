@@ -26,7 +26,10 @@ Mods I'm keeping an eye on for future compat
 • Falling out of Bumblezone dimension shouldn't deal fall damage now.
 
    Teleportation:
-• Fixed Teleportation mode 2 and 3 being broken and not saving previous pos and dims.
+• Fixed Teleportation mode 2 and 3 being broken and not saving previous pos and dims. 
+
+   Items:
+• Fixed Honey Shield registering its Dispenser behavior twice.
 
   
    (V.2.2.8 Changes) (1.16.4 Minecraft)

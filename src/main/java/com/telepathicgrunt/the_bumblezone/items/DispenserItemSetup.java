@@ -77,7 +77,5 @@ public class DispenserItemSetup {
         DispenserBlock.registerDispenseBehavior(Items.GLASS_BOTTLE, new GlassBottleDispenseBehavior());
         DispenserBlock.registerDispenseBehavior(Items.HONEY_BOTTLE, new HoneyBottleDispenseBehavior());
         DispenserBlock.registerDispenseBehavior(Items.BUCKET, new EmptyBucketDispenseBehavior());
-
-        DispenserBlock.registerDispenseBehavior(BzItems.HONEY_CRYSTAL_SHIELD.get(), ArmorItem.DISPENSER_BEHAVIOR);
     }
 }
