@@ -25,6 +25,9 @@ Mods I'm keeping an eye on for future compat
    Dimension:
 • Falling out of Bumblezone dimension shouldn't deal fall damage now.
 
+   Teleportation:
+• Fixed Teleportation mode 2 and 3 being broken and not saving previous pos and dims.
+
   
    (V.2.2.8 Changes) (1.16.4 Minecraft)
    
