@@ -70,19 +70,6 @@ public class BzBiomeProvider extends BiomeProvider {
         this.BIOME_SAMPLER = buildWorldProcedure(seed);
     }
 
-
-
-    public static <T extends IArea, C extends IExtendedNoiseRandom<T>> IAreaFactory<T> stack(long seed, IAreaTransformer1 parent, IAreaFactory<T> incomingArea, int count, LongFunction<C> contextFactory) {
-        IAreaFactory<T> IAreaFactory = incomingArea;
-
-        for (int i = 0; i < count; ++i) {
-            IAreaFactory = parent.apply(contextFactory.apply(seed + (long) i), IAreaFactory);
-        }
-
-        return IAreaFactory;
-    }
-
-
     public static Layer buildWorldProcedure(long seed) {
         IAreaFactory<LazyArea> layerFactory = build((salt) ->
                 new LazyAreaLayerContext(25, seed, salt));
