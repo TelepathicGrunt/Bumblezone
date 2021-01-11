@@ -103,7 +103,7 @@ public class BzPlayerPlacement {
             }
         }
 
-        // Teleportaion mod 3
+        // Teleportaion mode 3
         else{
             finalSpawnPos = new BlockPos(
                     Doubles.constrainToRange(playerEntity.getPos().getX() * coordinateScale, -29999936D, 29999936D),

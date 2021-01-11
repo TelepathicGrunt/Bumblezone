@@ -44,6 +44,7 @@
   "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spawnerRateSpiderBeeDungeon": "Spider Spawner Rate",
 
   "text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.dispensersDropGlassBottles": "Dispensers Drop Glass Bottles",
+  "text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity": "Brood Blocks Bee Spawn Capacity",
 
   "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone": "Bumblezone Status Outside Dimension",
   "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.showWrathOfTheHiveParticles": "Visible Status Particles",
@@ -67,6 +68,7 @@
   "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat": "Splash Potion of Bees Compat",
 
   "text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.dispensersDropGlassBottles.@PrefixText":"Should Dispensers always drop the Glass Bottle when using specific bottle items on certain The Bumblezone blocks? \nExample: Using Honey Bottle to feed Honeycomb Brood Blocks will grow the larva and drop the Glass Bottle instead of putting it back into Dispenser if this is set to true.",
+  "text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity.@PrefixText":"Brood Blocks will automatically spawn bees until the number of active bees is the value below. Set this higher to allow Brood Blocks to spawn more bees in a smaller area or set it to 0 to turn off automatic Brood Block bee spawning.",
 
   "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.fogBrightnessPercentage.@PrefixText":"How bright the fog is in the Bumblezone dimension. \nThe brightness is represented as a percentage so 0 will be pitch black, 50 will be half as bright, 100 will be normal orange brightness, and 100000 will be white.",
   "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.forceExitToOverworld.@PrefixText":"Makes leaving The Bumblezone dimension always places you back at the Overworld regardless of which dimension you originally came from. Use this option if this dimension becomes locked in with another dimension so you are stuck teleporting between the two and cannot get back to the Overworld",

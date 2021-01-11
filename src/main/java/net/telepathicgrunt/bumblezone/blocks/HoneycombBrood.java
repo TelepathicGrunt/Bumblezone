@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -34,11 +35,13 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.SpawnHelper;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.entities.BzEntities;
 import net.telepathicgrunt.bumblezone.items.BzItems;
+import net.telepathicgrunt.bumblezone.mixin.SpawnHelperAccessor;
 
 import java.util.List;
 import java.util.Random;
@@ -210,15 +213,10 @@ public class HoneycombBrood extends FacingBlock {
                 world.setBlockState(position, state.with(STAGE, stage + 1), 2);
             }
         }
-        else {
-            double distance = Math.max(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius * 0.5, 1);
-            PLAYER_DISTANCE.setBaseMaxDistance(distance);
-            List<PlayerEntity> playerList = world.getTargets(PlayerEntity.class, PLAYER_DISTANCE, null, new Box(position).expand(distance));
-            if (playerList.stream().anyMatch(player -> player.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE))) {
-                List<BeeEntity> beeList = world.getTargets(BeeEntity.class, FIXED_DISTANCE, null, new Box(position).expand(50));
-                if(beeList.size() < 3){
-                    spawnBroodMob(world, state, position, stage);
-                }
+        else if(Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity != 0){
+            List<Entity> beeList = world.getEntitiesByType(EntityType.BEE, (entity) -> true);
+            if(beeList.size() < Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity * SpawnGroup.CREATURE.getCapacity()){
+                spawnBroodMob(world, state, position, stage);
             }
         }
     }
