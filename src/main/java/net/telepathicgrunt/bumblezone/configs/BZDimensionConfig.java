@@ -21,6 +21,13 @@ public class BZDimensionConfig implements ConfigData {
 
     @ConfigEntry.Gui.PrefixText
     @ConfigEntry.Gui.Tooltip(count = 0)
+    @Comment(value = "\nMakes throwing Enderpearls at Bee Nests or Hives only\n " +
+            "work in the Overworld. What this means setting this to true makes it \n" +
+            "only possible to enter The Bumblezone dimension from the Overworld")
+    public boolean onlyOverworldHivesTeleports = false;
+
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip(count = 0)
     @Comment(value = "\nMakes leaving The Bumblezone dimension always places you back\n " +
             "at the Overworld regardless of which dimension you originally \n" +
             "came from. Use this option if this dimension becomes locked in \n" +

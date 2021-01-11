@@ -63,6 +63,7 @@
   "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive": "Warn If Wrong Block Under Hive",
   "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.generateBeenest": "Generate Beenest When Exiting Bumblezone",
   "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.teleportationMode": "Teleportation Mode",
+  "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.onlyOverworldHivesTeleports": "Only Overworld Hives Teleports",
 
   "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowPotionOfBeesCompat": "Potion of Bees Compat",
   "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat": "Splash Potion of Bees Compat",
@@ -77,6 +78,7 @@
   "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive.@PrefixText":"If requiredBlockUnderHive has a block specified and this config is set to true, then player will get a warning if they throw an Enderpearl at a Bee Nest/Beehive but the block under it is not the correct required block. It will also tell the player what block is needed under the Bee Nest/Beehive to teleport to the dimension.",
   "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.generateBeenest.@PrefixText":"Will a Beenest generate if no Beenest is found when leaving The Bumblezone dimension.\nONLY FOR TELEPORTATION MODE 1.",
   "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.teleportationMode.@PrefixText": "Teleportation Mode:  Which mode of teleportation should be used when leaving The Bumblezone dimension.\n\nMode 1: Coordinates will be converted to the other dimension's coordinate scale and the game will look for a Bee Nest/Beehive at the new spot to spawn players at. If none is found, players will still be placed at the spot.\n\nMode 2: Will always spawn players at the original spot in the non-BZ dimension where they threw the Enderpearl at a Beenest/Beehive.\n\nMode 3: Will use mode 1's teleportation method if Bee Nest/Beehive is near the spot when exiting the dimension. If none is found, then mode 2's teleportation method is used instead.",
+  "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.onlyOverworldHivesTeleports.@PrefixText": "Makes throwing Enderpearls at Bee Nests or Hives only work in the Overworld. What this means setting this to true makes it only possible to enter The Bumblezone dimension from the Overworld",
 
   "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.@PrefixText":"Determines if Wrath of the Hive can be applied to players outside the Bumblezone dimension when they pick up Honey blocks, take honey from Filled Porous Honey blocks, or drink Honey Bottles.",
   "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.showWrathOfTheHiveParticles.@PrefixText":"Show the orangish particles when you get Wrath of the Hive after you angered the bees in the Bumblezone dimension.",

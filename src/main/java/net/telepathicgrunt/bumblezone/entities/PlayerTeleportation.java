@@ -112,8 +112,12 @@ public class PlayerTeleportation {
     public static boolean runEnderpearlImpact(HitResult hitResult, EnderPearlEntity pearlEntity){
         World world = pearlEntity.world; // world we threw in
 
-        //Make sure we are on server by checking if thrower is ServerPlayerEntity
-        if (!world.isClient && pearlEntity.getOwner() instanceof ServerPlayerEntity) {
+        // Make sure we are on server by checking if thrower is ServerPlayerEntity and that we are not in bumblezone.
+        // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
+        if (!world.isClient && pearlEntity.getOwner() instanceof ServerPlayerEntity &&
+            !world.getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) &&
+            (!Bumblezone.BZ_CONFIG.BZDimensionConfig.onlyOverworldHivesTeleports || world.getRegistryKey().equals(World.OVERWORLD)))
+        {
             ServerPlayerEntity playerEntity = (ServerPlayerEntity) pearlEntity.getOwner(); // the thrower
             Vec3d hitBlockPos = hitResult.getPos(); //position of the collision
             BlockPos hivePos = new BlockPos(0,0,0);
@@ -164,8 +168,8 @@ public class PlayerTeleportation {
             }
 
 
-            //if the pearl hit a beehive and is not in our bee dimension, begin the teleportation.
-            if (hitHive && validBelowBlock && !playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)) {
+            //if the pearl hit a beehive, begin the teleportation.
+            if (hitHive && validBelowBlock) {
                 Bumblezone.PLAYER_COMPONENT.get(playerEntity).setIsTeleporting(true);
                 pearlEntity.remove();
                 return true;
