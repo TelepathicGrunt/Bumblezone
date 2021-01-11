@@ -210,16 +210,10 @@ public class HoneycombBrood extends DirectionalBlock {
                 world.setBlockState(position, state.with(STAGE, stage + 1), 2);
             }
         }
-        else {
-            double distance = Math.max(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get() * 0.5, 1);
-            PLAYER_DISTANCE.setDistance(distance);
-
-            List<PlayerEntity> playerList = world.getTargettableEntitiesWithinAABB(PlayerEntity.class, PLAYER_DISTANCE, null, new AxisAlignedBB(position).grow(distance));
-            if (playerList.stream().anyMatch(player -> player.isPotionActive(BzEffects.WRATH_OF_THE_HIVE.get()))) {
-                List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, FIXED_DISTANCE, null, new AxisAlignedBB(position).grow(50));
-                if(beeList.size() < 3){
-                    spawnBroodMob(world, state, position, stage);
-                }
+        else if(Bumblezone.BzBlockMechanicsConfig.broodBlocksBeeSpawnCapacity.get() != 0){
+            List<Entity> beeList = world.getEntities(EntityType.BEE, (entity) -> true);
+            if(beeList.size() < Bumblezone.BzBlockMechanicsConfig.broodBlocksBeeSpawnCapacity.get() * EntityClassification.CREATURE.getMaxNumberOfCreature()){
+                spawnBroodMob(world, state, position, stage);
             }
         }
     }

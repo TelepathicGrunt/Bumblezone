@@ -18,9 +18,9 @@ Mods I'm keeping an eye on for future compat
   
   
    (V.2.2.9 Changes) (1.16.4 Minecraft)
-   
+     
    Blocks:
-• Optimized HoneycombBrood block's bee spawning from ticking.
+• Added broodBlocksBeeSpawnCapacity config option to allow users to change the automatic bee spawning mechanics of Honeycomb Brood Blocks.
 
    Dimension:
 • Falling out of Bumblezone dimension shouldn't deal fall damage now.
