@@ -23,7 +23,7 @@ Mods I'm keeping an eye on for future compat
 • Added broodBlocksBeeSpawnCapacity config option to allow users to change the automatic bee spawning mechanics of Honeycomb Brood Blocks.
 
    Dimension:
-• Falling out of Bumblezone dimension shouldn't deal fall damage now.
+• Falling out of Bumblezone dimension to teleport out shouldn't deal fall damage now.
 
 • Added onlyOverworldHivesTeleports config option to allow people to make it only possible to enter The Bumblezone from the Overworld.
 
