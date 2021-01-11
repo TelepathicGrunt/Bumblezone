@@ -102,7 +102,7 @@ public class BzBiomeProvider extends BiomeProvider {
     }
 
     public Biome sample(Registry<Biome> registry, int i, int j) {
-        int k = ((LayerAccessor)this.BIOME_SAMPLER).getSampler().getValue(i, j);
+        int k = ((LayerAccessor)this.BIOME_SAMPLER).bz_getSampler().getValue(i, j);
         Biome biome = registry.getByValue(k);
         if (biome == null) {
             if (SharedConstants.developmentMode) {

@@ -37,6 +37,10 @@ Mods I'm keeping an eye on for future compat
    Items:
 • Fixed Honey Shield registering its Dispenser behavior twice.
 
+   Mixins:
+-Prefixed all my accessor and invoker mixins due to this bug in mixins that could cause a crash with other mods for same named mixins.
+ https://github.com/SpongePowered/Mixin/issues/430
+ 
   
    (V.2.2.8 Changes) (1.16.4 Minecraft)
    

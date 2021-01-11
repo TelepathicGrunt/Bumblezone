@@ -36,11 +36,11 @@ public class PotionOfBeesCompat
 		SPLASH_POTION_OF_BEES_ENTITY = ForgeRegistries.ENTITIES.getValue(new ResourceLocation("potionofbees:splash_potion_of_bees"));
 
 		if (POTION_OF_BEES != null && Bumblezone.BzModCompatibilityConfig.allowPotionOfBeesCompat.get()) {
-			PotionOfBeesBeePotionDispenseBehavior.DEFAULT_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker)Blocks.DISPENSER).invokeGetBehavior(new ItemStack(POTION_OF_BEES));
+			PotionOfBeesBeePotionDispenseBehavior.DEFAULT_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker)Blocks.DISPENSER).bz_invokeGetBehavior(new ItemStack(POTION_OF_BEES));
 			DispenserBlock.registerDispenseBehavior(POTION_OF_BEES, BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); // adds compatibility with bee potions in dispensers
 		}
 		if (SPLASH_POTION_OF_BEES != null && Bumblezone.BzModCompatibilityConfig.allowSplashPotionOfBeesCompat.get()) {
-			PotionOfBeesBeePotionDispenseBehavior.DEFAULT_SPLASH_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker)Blocks.DISPENSER).invokeGetBehavior(new ItemStack(SPLASH_POTION_OF_BEES));
+			PotionOfBeesBeePotionDispenseBehavior.DEFAULT_SPLASH_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker)Blocks.DISPENSER).bz_invokeGetBehavior(new ItemStack(SPLASH_POTION_OF_BEES));
 			DispenserBlock.registerDispenseBehavior(SPLASH_POTION_OF_BEES, BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); // adds compatibility with bee splash potion in dispensers
 		}
 

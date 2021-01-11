@@ -8,9 +8,9 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface MaterialInvoker {
 
     @Invoker("notOpaque")
-    Material.Builder getNotOpaque();
+    Material.Builder bz_getNotOpaque();
 
     @Invoker("pushDestroys")
-    Material.Builder getPushDestroys();
+    Material.Builder bz_getPushDestroys();
 
 }

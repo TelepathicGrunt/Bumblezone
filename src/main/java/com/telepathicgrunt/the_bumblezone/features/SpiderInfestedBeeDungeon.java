@@ -80,9 +80,9 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
     @Override
     public void addBlocksToWorld(Template structure, IServerWorld world, BlockPos pos, PlacementSettings placementIn, int flags) {
         TemplateInvoker structureAccessor = ((TemplateInvoker) structure);
-        if (!structureAccessor.getBlocks().isEmpty()) {
-            List<Template.BlockInfo> list = placementIn.getRandomBlockInfos(structureAccessor.getBlocks(), pos).getAll();
-            if ((!list.isEmpty() || !placementIn.getIgnoreEntities() && !structureAccessor.getEntities().isEmpty()) && structureAccessor.getSize().getX() >= 1 && structureAccessor.getSize().getY() >= 1 && structureAccessor.getSize().getZ() >= 1) {
+        if (!structureAccessor.bz_getBlocks().isEmpty()) {
+            List<Template.BlockInfo> list = placementIn.getRandomBlockInfos(structureAccessor.bz_getBlocks(), pos).getAll();
+            if ((!list.isEmpty() || !placementIn.getIgnoreEntities() && !structureAccessor.bz_getEntities().isEmpty()) && structureAccessor.bz_getSize().getX() >= 1 && structureAccessor.bz_getSize().getY() >= 1 && structureAccessor.bz_getSize().getZ() >= 1) {
                 MutableBoundingBox mutableboundingbox = placementIn.getBoundingBox();
                 List<BlockPos> list1 = Lists.newArrayListWithCapacity(placementIn.func_204763_l() ? list.size() : 0);
                 List<Pair<BlockPos, CompoundNBT>> list2 = Lists.newArrayListWithCapacity(list.size());
@@ -202,7 +202,7 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
 
 
                 if (!placementIn.getIgnoreEntities()) {
-                    structureAccessor.invokeSpawnEntities(world,
+                    structureAccessor.bz_invokeSpawnEntities(world,
                             pos,
                             placementIn);
                 }

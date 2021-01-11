@@ -9,27 +9,27 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface VineBlockAccessor {
 
     @Accessor("UP_AABB")
-    static VoxelShape getUP_SHAPE() {
+    static VoxelShape bz_getUP_SHAPE() {
         throw new UnsupportedOperationException();
     }
 
     @Accessor("NORTH_AABB")
-    static VoxelShape getNORTH_SHAPE() {
+    static VoxelShape bz_getNORTH_SHAPE() {
         throw new UnsupportedOperationException();
     }
 
     @Accessor("EAST_AABB")
-    static VoxelShape getEAST_SHAPE() {
+    static VoxelShape bz_getEAST_SHAPE() {
         throw new UnsupportedOperationException();
     }
 
     @Accessor("SOUTH_AABB")
-    static VoxelShape getSOUTH_SHAPE() {
+    static VoxelShape bz_getSOUTH_SHAPE() {
         throw new UnsupportedOperationException();
     }
 
     @Accessor("WEST_AABB")
-    static VoxelShape getWEST_SHAPE() {
+    static VoxelShape bz_getWEST_SHAPE() {
         throw new UnsupportedOperationException();
     }
 }

@@ -66,23 +66,23 @@ public class StickyHoneyResidue extends VineBlock {
     public VoxelShape getShape(BlockState blockstate, IBlockReader world, BlockPos pos, ISelectionContext context) {
         VoxelShape voxelshape = VoxelShapes.empty();
         if (blockstate.get(UP)) {
-            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.getUP_SHAPE());
+            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.bz_getUP_SHAPE());
         }
 
         if (blockstate.get(SOUTH)) {
-            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.getNORTH_SHAPE());
+            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.bz_getNORTH_SHAPE());
         }
 
         if (blockstate.get(WEST)) {
-            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.getEAST_SHAPE());
+            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.bz_getEAST_SHAPE());
         }
 
         if (blockstate.get(NORTH)) {
-            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.getSOUTH_SHAPE());
+            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.bz_getSOUTH_SHAPE());
         }
 
         if (blockstate.get(EAST)) {
-            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.getWEST_SHAPE());
+            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.bz_getWEST_SHAPE());
         }
 
         if (blockstate.get(DOWN)) {

@@ -27,13 +27,13 @@ public class HoneyCrystalShieldBehavior {
                 if (source.isExplosion() && player.isActiveItemStackBlocking()) {
                     // damage our shield greatly and 1 damage hit player to show shield weakness
                     player.attackEntityFrom(DamageSource.GENERIC, 1);
-                    ((PlayerDamageShieldInvoker) player).callDamagedShield(Math.max(player.getActiveItemStack().getMaxDamage() / 3, 18));
+                    ((PlayerDamageShieldInvoker) player).bz_callDamagedShield(Math.max(player.getActiveItemStack().getMaxDamage() / 3, 18));
                 } else if (source.isFireDamage()) {
                     if(source.isProjectile()){
-                        ((PlayerDamageShieldInvoker) player).callDamagedShield(Math.max(player.getActiveItemStack().getMaxDamage() / 6, 3));
+                        ((PlayerDamageShieldInvoker) player).bz_callDamagedShield(Math.max(player.getActiveItemStack().getMaxDamage() / 6, 3));
                     }
                     else{
-                        ((PlayerDamageShieldInvoker) player).callDamagedShield(Math.max(player.getActiveItemStack().getMaxDamage() / 100, 3));
+                        ((PlayerDamageShieldInvoker) player).bz_callDamagedShield(Math.max(player.getActiveItemStack().getMaxDamage() / 100, 3));
                         return false; //continue the damaging
                     }
                 }

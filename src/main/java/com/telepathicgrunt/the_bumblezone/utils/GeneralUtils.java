@@ -16,7 +16,7 @@ public class GeneralUtils {
      */
     public static void makeBiomeMutable(Biome biome){
         // Make the structure and features list mutable for modification late
-        List<List<Supplier<ConfiguredFeature<?, ?>>>> tempFeature = ((BiomeGenerationSettingsAccessor)biome.getGenerationSettings()).getFeatures();
+        List<List<Supplier<ConfiguredFeature<?, ?>>>> tempFeature = ((BiomeGenerationSettingsAccessor)biome.getGenerationSettings()).bz_getFeatures();
         List<List<Supplier<ConfiguredFeature<?, ?>>>> mutableGenerationStages = new ArrayList<>();
 
         // Fill in generation stages so there are at least 10 or else Minecraft crashes.
@@ -30,6 +30,6 @@ public class GeneralUtils {
         }
 
         // Make the Structure and GenerationStages (features) list mutable for modification later
-        ((BiomeGenerationSettingsAccessor)biome.getGenerationSettings()).setFeatures(mutableGenerationStages);
+        ((BiomeGenerationSettingsAccessor)biome.getGenerationSettings()).bz_setFeatures(mutableGenerationStages);
     }
 }

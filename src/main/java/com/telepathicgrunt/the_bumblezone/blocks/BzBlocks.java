@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 public class BzBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Bumblezone.MODID);
     public static Material RESIDUE = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.ADOBE))
-            .getNotOpaque()).getPushDestroys().doesNotBlockMovement().replaceable().notSolid().build();
+            .bz_getNotOpaque()).bz_getPushDestroys().doesNotBlockMovement().replaceable().notSolid().build();
 
     //Blocks
     public static final RegistryObject<Block> POROUS_HONEYCOMB = createBlock("porous_honeycomb_block", PorousHoneycomb::new);

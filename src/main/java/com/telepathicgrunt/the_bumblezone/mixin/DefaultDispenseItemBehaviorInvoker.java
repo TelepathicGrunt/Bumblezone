@@ -10,5 +10,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface DefaultDispenseItemBehaviorInvoker {
 
     @Invoker("dispenseStack")
-    ItemStack invokeDispenseStack(IBlockSource p_82487_1_, ItemStack p_82487_2_);
+    ItemStack bz_invokeDispenseStack(IBlockSource p_82487_1_, ItemStack p_82487_2_);
 }

@@ -45,7 +45,7 @@ public class BumblezoneClient
     public static void onClientSetup(FMLClientSetupEvent event)
     {
         RenderingRegistry.registerEntityRenderingHandler(BzEntities.HONEY_SLIME.get(), HoneySlimeRendering::new);
-        SkyPropertiesAccessor.getBY_ResourceLocation().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
+        SkyPropertiesAccessor.bz_getBY_ResourceLocation().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
 
         //Replaced DeferredWorkQueue.runLater with the method added by the event - andrew
         event.enqueueWork(() -> {

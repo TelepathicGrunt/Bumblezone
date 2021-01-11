@@ -47,7 +47,7 @@ public class EmptyBucketDispenseBehavior extends DefaultDispenseItemBehavior {
             // If it instanceof DefaultDispenseItemBehavior, call dispenseStack directly to avoid
             // playing particles and sound twice due to dispense method having that by default.
             if(DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR instanceof DefaultDispenseItemBehavior) {
-                return ((DefaultDispenseItemBehaviorInvoker)DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR).invokeDispenseStack(source, stack);
+                return ((DefaultDispenseItemBehaviorInvoker)DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR).bz_invokeDispenseStack(source, stack);
             }
             else {
                 // Fallback to dispense as someone chose to make a custom class without dispenseStack.
