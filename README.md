@@ -1,21 +1,33 @@
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.imgur.com/ovPqrFL.png" alt="The banner logo for The Bumblezone with a friendly and hostile bee shown below the mod name." width="999" height="370" /></p>
-<h2 style="text-align: center;"><span style="font-size: 40px; text-align: center; color: #b76a00;"><strong>CURRENTLY FOR 1.16.2 MC</strong></span></h2>
-<p style="text-decoration: underline; font-size: 14px; text-align: center;"><strong><a style="text-decoration: underline; font-size: 14px; text-align: center;" href="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-forge">[Click here for the 1.16.2 Forge version of this mod!]</a></strong></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p style="text-align: center; font-size: 14px;"><strong style="color: #bc3e3e;"><em>Recent 1.16.2 news: </em></strong></p>
-<p style="text-align: center; font-size: 14px;"><strong><em>Cleaned up config menu and</em></strong></p>
-<p style="text-align: center; font-size: 14px;"><strong><em>fixed Honey Shield animation! <br /><br /></em><span style="font-size: 18px;">SERVER OWNERS NOTE:</span> <em><br />If you make a fresh new world with this&nbsp;mod&nbsp;on&nbsp;</em></strong></p>
-<p style="text-align: center; font-size: 14px;"><strong><em>&nbsp;a server, restart the&nbsp;server after the world&nbsp;is made</em></strong></p>
-<p style="text-align: center; font-size: 14px;"><strong><em>&nbsp; due to this mojang bug&nbsp;causing json&nbsp;dimensions&nbsp;</em></strong></p>
-<p style="text-align: center; font-size: 14px;"><strong><em>&nbsp;to not be made upon world&nbsp;creation only on servers.</em></strong></p>
-<p style="text-align: center; font-size: 14px;"><strong><em>&nbsp;<a href="https://bugs.mojang.com/browse/MC-195468">https://bugs.mojang.com/browse/MC-195468</a></em></strong></p>
-<p style="text-align: center; font-size: 14px;">&nbsp;</p>
-<p style="text-align: center;"><strong style="color: #3f3bb8; font-size: 18px;"><em>(Also, please report any <span style="text-decoration: line-through;">glitches</span>&nbsp;BUGS you find)</em></strong></p>
-<p style="text-align: left;"><strong style="font-size: 14px;"><em>Requires:</em></strong></p>
-<div class="project-avatar project-avatar-30"><a class="bg-white" href="https://www.curseforge.com/minecraft/mc-mods/fabric-api"><img class="mx-auto" src="https://media.forgecdn.net/avatars/thumbnails/185/822/30/30/636829723898798601.png" alt="" /></a>
-<p class="font-bold"><a class="truncate float-left w-full" href="https://www.curseforge.com/minecraft/mc-mods/fabric-api">Fabric API</a> by <a href="https://www.curseforge.com/members/asiekierka">asiekierka</a></p>
-</div>
+<h2 style="text-align: center;"><span style="font-size: 40px; text-align: center; color: #b76a00;"><strong>CURRENTLY FOR 1.16.4 MC</strong></span></h2>
+<p style="text-align: center;"><span style="font-size: 14px; text-align: center; color: #b76a00;"><strong>(Play this mod with<span style="text-decoration: underline;"><em> <a href="https://www.curseforge.com/minecraft/mc-mods/lithium">Lithium </a></em></span>for best performance!)</strong></span></p>
+<p style="text-decoration: underline; font-size: 14px; text-align: center;"><strong><a style="font-size: 14px; text-align: center;" href="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-forge">[Click here for the 1.16.4 Forge version of this mod!]</a></strong></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;"><em><span style="font-size: 14px; color: #b00000; text-decoration: underline;"><strong>Recent 1.16.4 News:</strong></span><span style="font-size: 14px;"><b><strong>&nbsp;</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Fixed teleportation mode 2 and 3 not working.&nbsp;</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Squashed bug that made players take fall damage if they </strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>fall out of The Bumblezone dimension. And now added&nbsp;</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>broodBlocksBeeSpawnCapacity &amp; onlyOverworldHivesTeleports</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>config options that you can edit!</strong></b></span></em></p>
+<p style="text-align: center;"><strong style="color: #5467d3; font-size: 18px;"><em>(Also, please report any <span style="text-decoration: line-through;">glitches</span>&nbsp;BUGS you find)</em></strong></p>
+<p style="text-align: center;">&nbsp;&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;"><strong><em><br /></em><span style="font-size: 14px; color: #aa3e00;"><span style="font-size: 18px;">GENERAL NOTE:</span> <em><br /></em></span></strong></p>
+<p style="text-align: center;"><span style="font-size: 14px; color: #aa3e00;"><strong><em>Make a copy of your world before putting on&nbsp;</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px; color: #aa3e00;"><strong><em>The Bumblezone! If you remove any&nbsp;dimension&nbsp;</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px; color: #aa3e00;"><strong><em>mod, the Nether and End dimensions&nbsp;will be&nbsp;</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px; color: #aa3e00;"><strong><em>missing from the game due to a Mojang bug. Also,</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px; color: #aa3e00;"><strong><em>putting the mod back on will not restore the dimension.</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>&nbsp;<a href="https://bugs.mojang.com/browse/MC-197860">https://bugs.mojang.com/browse/MC-197860</a></em></strong></span>&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;"><strong><em><br /></em><span style="font-size: 14px; color: #aa3e00;"><span style="font-size: 18px;">SERVER OWNERS NOTE:</span> <em><br />If you make a fresh new world with this&nbsp;mod&nbsp;on&nbsp;</em></span></strong></p>
+<p style="text-align: center;"><span style="font-size: 14px; color: #aa3e00;"><strong><em>&nbsp;a server, restart the&nbsp;server after the world&nbsp;is made</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px; color: #aa3e00;"><strong><em>&nbsp; due to this mojang bug&nbsp;causing json&nbsp;dimensions&nbsp;</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px; color: #aa3e00;"><strong><em>&nbsp;to not be made upon world&nbsp;creation only on servers.</em></strong></span></p>
+<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>&nbsp;<a href="https://bugs.mojang.com/browse/MC-195468">https://bugs.mojang.com/browse/MC-195468</a></em></strong></span></p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;">&nbsp;</p>
 <p><strong>______________________________________________________________________________</strong></p>
 <p>&nbsp;</p>
 <h2 style="color: #b76a00;"><strong>WHAT IS THE BUMBLEZONE?</strong></h2>
@@ -69,7 +81,7 @@
 <p>&nbsp;</p>
 <p><strong>&nbsp;Empty Honeycomb Brood Block</strong></p>
 <div class="spoiler">
-<p>-Does nothing by itself. Merely a decorative block at the moment.</p>
+<p>-Does nothing by itself. Merely a decorative block&nbsp;unless certain other mods are on. See the Mod Compatibility section below.</p>
 </div>
 <p>&nbsp;</p>
 <p><strong>&nbsp;Honey Crystal</strong></p>
@@ -233,7 +245,15 @@
 <p>-Honey Crystal Blocks will be scattered throughout the dimension either underwater or inside the caves. They are most common in Hive Wall biome and lest common in Sugar Water biome.</p>
 </div>
 <p>&nbsp;</p>
+<p><strong>MOD COMPATIBILITY&nbsp;</strong>- Interacts directly with 1 other mods!</p>
+<div class="spoiler">
+<p>Potion of Bees -&nbsp;<a href="https://www.curseforge.com/minecraft/mc-mods/potion-of-bees-fabric">https://www.curseforge.com/minecraft/mc-mods/potion-of-bees-fabric</a></p>
+<div class="spoiler">
+<p>-Their Potion of Bees item can be used to revive a Empty Honeycomb Brood Block into a stage 1, 2, or 3&nbsp;Honeycomb Brood Block by right clicking or using a Dispenser!</p>
 <p>&nbsp;</p>
+<p>-Their Splash Potion of Bees item can be thrown onto a Empty Honeycomb Brood Block to revive the block into a stage 1, 2, or 3&nbsp;Honeycomb Brood Block! If you have the splash potion in a Dispenser facing the block, it'll revive the block without bees going everywhere.</p>
+</div>
+</div>
 <p>&nbsp;</p>
 <p><span style="font-size: 14px;"><strong>&nbsp; &nbsp; Also, be sure to check out the images page for several screenshots of what the world looks like!</strong></span></p>
 <p>&nbsp;&nbsp;</p>
@@ -250,9 +270,9 @@
 <h2 style="color: #b76a00;"><strong>HOW CAN I CONFIGURE THIS MOD?</strong></h2>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p><span style="font-size: 14px;">&nbsp; &nbsp;To reach this mod's config file, go into your world's save folder, open the config folder, and edit the the_bumblezone.json5 file with an editor like Notepad to change the config. Then either restart the game or use the /reload command in-game to make the config changes take effect!</span></p>
+<p><span style="font-size: 14px;">&nbsp; &nbsp;To reach this mod's configs you'll find most of the configs in the config screen in-game! Just put on Mod Menu and find my mod in there and edit away! When done, restart the game to make the config changes take effect! The other configs for this mod are in JSON so you just need to make a datapack to override those settings. In fact, some block tags used in this mod can be used to blacklist what hive block can teleport you to the dimension or if hive blocks need a certain block under them to allow teleportation! Here's the files the datapack can override:&nbsp;https://github.com/TelepathicGrunt/Bumblezone-Fabric/tree/master/src/main/resources/data/the_bumblezone</span></p>
 <p><span style="font-size: 14px;">&nbsp;</span></p>
-<p><span style="font-size: 14px;">&nbsp; &nbsp;There are several config options currently for the mod. Some affects the dimension and lets you control how bright the fog is, what the movement factor of the dimension is, and whether exiting the dimension will always place you back at Overworld instead of previous dimension you came from. Many other configs lets you customize the Wrath of the Hive effect so you can change how long it lasts, how far bees has to be to be angered and boosted, how strong the effects given to bees are, whether Wrath of the Hive can be triggered outside The Bumblezone, show particles of the effect, or just turn off the effect completely. Lots of options! Take a look at the config and let me know if there's anything config that would be super helpful for you to have with this mod. :)</span></p>
+<p><span style="font-size: 14px;">&nbsp; &nbsp;There are several config options currently for the mod. Some affects the dimension and lets you control how bright the fog is (in-game config), what the movement factor of the dimension is (JSON config), and whether exiting the dimension will always place you back at Overworld instead of previous dimension you came from (in-game config). Many other configs lets you customize the Wrath of the Hive effect so you can change how long it lasts, how far bees has to be to be angered and boosted, how strong the effects given to bees are, whether Wrath of the Hive can be triggered outside The Bumblezone, show particles of the effect, or just turn off the effect completely. Lots of options! Take a look at the in-game config and JSON files and let me know if there's any config option that would be super helpful for you to have with this mod. :)</span></p>
 <p><span style="font-size: 14px;">&nbsp;</span></p>
 <p>&nbsp;</p>
 <p style="text-align: center;"><strong>______________________________________________________________________________</strong></p>
@@ -265,5 +285,7 @@
 <p>&nbsp;</p>
 <p style="color: #b76a00;"><strong>*If you find an issue, glitch, or have a suggestion about my mod, let me know! But if you don't have a GitHub account to report in the Issue tab above, just comment what the problem is below and I'll try and get back to you ASAP! :)&nbsp;</strong></p>
 <p>&nbsp;</p>
-<p><span style="font-size: 24px; color: #ff9900;"><strong>Discord Link for my channel about my mods! :&nbsp;<a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" style="font-size: 24px; color: #ff9900;" tabindex="0" title="https://discord.gg/4eHptfV" role="button" href="https://discord.gg/4eHptfV" target="_blank" rel="noopener noreferrer">https://discord.gg/4eHptfV</a></strong></span></p>
+<p><span style="font-size: 24px;"><strong>Discord Link for my channel about my mods! :&nbsp;</strong></span></p>
+<p><span style="font-size: 24px;"><strong><a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" style="font-size: 24px;" tabindex="0" title="https://discord.gg/4eHptfV" role="button" href="https://discord.gg/4eHptfV" target="_blank" rel="noopener noreferrer">https://discord.gg/4eHptfV</a></strong></span></p>
 <p><span style="font-size: 24px; color: #333399;"><strong>&nbsp;</strong></span></p>
+<p><span style="font-size: 24px;"><strong><a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" style="font-size: 24px;" tabindex="0" title="https://discord.gg/4eHptfV" role="button" href="https://discord.gg/4eHptfV" target="_blank" rel="noopener noreferrer"><img src="https://beeimg.com/images/g00282193071.png" alt="discord-logo-png-free-transparent-png-logos-discord-png-logo-300_300 (PNG)  | BeeIMG" width="67" height="67" /></a></strong></span></p>
