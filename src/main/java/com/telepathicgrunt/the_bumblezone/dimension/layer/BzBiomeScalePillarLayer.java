@@ -1,6 +1,6 @@
-package com.telepathicgrunt.the_bumblezone.generation.layer;
+package com.telepathicgrunt.the_bumblezone.dimension.layer;
 
-import com.telepathicgrunt.the_bumblezone.generation.BzBiomeProvider;
+import com.telepathicgrunt.the_bumblezone.dimension.BzBiomeProvider;
 import net.minecraft.world.gen.INoiseRandom;
 import net.minecraft.world.gen.layer.traits.ICastleTransformer;
 

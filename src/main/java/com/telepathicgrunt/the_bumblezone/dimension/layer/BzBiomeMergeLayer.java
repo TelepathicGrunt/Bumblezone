@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.generation.layer;
+package com.telepathicgrunt.the_bumblezone.dimension.layer;
 
 import net.minecraft.world.gen.INoiseRandom;
 import net.minecraft.world.gen.area.IArea;

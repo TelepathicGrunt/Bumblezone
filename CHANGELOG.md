@@ -27,6 +27,10 @@ Mods I'm keeping an eye on for future compat
 
 • Added onlyOverworldHivesTeleports config option to allow people to make it only possible to enter The Bumblezone from the Overworld.
 
+• Vanilla Bees in The Bumblezone now have a new AI that makes them wander better, lag less, and not cluster on the ceiling anymore. (for Forge version only)
+
+• Bees spawned from new chunks are less likely to be pollenated.
+
    Teleportation:
 • Fixed Teleportation mode 2 and 3 being broken and not saving previous pos and dims. 
 

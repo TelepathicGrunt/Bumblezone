@@ -1,8 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.dimension;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.generation.BzBiomeProvider;
-import com.telepathicgrunt.the_bumblezone.generation.BzChunkGenerator;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
