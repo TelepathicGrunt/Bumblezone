@@ -17,6 +17,7 @@ public class BzDimensionConfigs{
         public ConfigHelper.ConfigValueListener<Integer> teleportationMode;
         public ConfigHelper.ConfigValueListener<Boolean> generateBeenest;
         public ConfigHelper.ConfigValueListener<Boolean> forceExitToOverworld;
+        public ConfigHelper.ConfigValueListener<Boolean> onlyOverworldHivesTeleports;
         public ConfigHelper.ConfigValueListener<Boolean> warnPlayersOfWrongBlockUnderHive;
         public ConfigHelper.ConfigValueListener<Boolean> allowTeleportationWithModdedBeehives;
         public ConfigHelper.ConfigValueListener<Boolean> seaLevelOrHigherExitTeleporting;
@@ -81,6 +82,15 @@ public class BzDimensionConfigs{
                             +" two and cannot get back to the Overworld.\r\n")
                     .translation("the_bumblezone.config.dimension.forceexittooverworld")
                     .define("forceExitToOverworld", false));
+
+            onlyOverworldHivesTeleports = subscriber.subscribe(builder
+                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
+                            +" Makes throwing Enderpearls at Bee Nests or Hives only\r\n "
+                            +" work in the Overworld. What this means setting this to true makes it \r\n"
+                            +" only possible to enter The Bumblezone dimension from the Overworld")
+                    .translation("the_bumblezone.config.dimension.onlyoverworldhivesteleports")
+                    .define("onlyOverworldHivesTeleports", false));
+
 
                 seaLevelOrHigherExitTeleporting = subscriber.subscribe(builder
                     .comment(" \r\n-----------------------------------------------------\r\n\r\n"

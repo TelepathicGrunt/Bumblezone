@@ -25,6 +25,8 @@ Mods I'm keeping an eye on for future compat
    Dimension:
 • Falling out of Bumblezone dimension shouldn't deal fall damage now.
 
+• Added onlyOverworldHivesTeleports config option to allow people to make it only possible to enter The Bumblezone from the Overworld.
+
    Teleportation:
 • Fixed Teleportation mode 2 and 3 being broken and not saving previous pos and dims. 
 

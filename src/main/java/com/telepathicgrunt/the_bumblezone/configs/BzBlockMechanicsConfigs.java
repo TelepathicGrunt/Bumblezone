@@ -22,7 +22,7 @@ public class BzBlockMechanicsConfigs {
                         +" \r\n"
                         +" Example: Using Honey Bottle to feed Honeycomb Brood Blocks will grow the larva and\r\n"
                         +" drop the Glass Bottle instead of putting it back into Dispenser if this is set to true.\r\n")
-                    .translation("the_bumblezone.config.bzblockmechanicsconfigs.dispensersDropGlassBottles")
+                    .translation("the_bumblezone.config.bzblockmechanicsconfigs.dispensersdropglassbottles")
                     .define("dispensersDropGlassBottles", false));
 
             broodBlocksBeeSpawnCapacity = subscriber.subscribe(builder
@@ -30,7 +30,7 @@ public class BzBlockMechanicsConfigs {
                             +" Brood Blocks will automatically spawn bees until the number of active bees is the value below. \r\n"
                             +" Set this higher to allow Brood Blocks to spawn more bees in a smaller area or set it to 0 to turn \r\n"
                             +" off automatic Brood Block bee spawning.\r\n")
-                    .translation("the_bumblezone.config.bzblockmechanicsconfigs.broodBlocksBeeSpawnCapacity")
+                    .translation("the_bumblezone.config.bzblockmechanicsconfigs.broodblocksbeespawncapacity")
                     .defineInRange("broodBlocksBeeSpawnCapacity", 30, 0, 1000));
 
             builder.pop();
