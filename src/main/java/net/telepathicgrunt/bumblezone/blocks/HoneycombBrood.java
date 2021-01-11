@@ -9,7 +9,6 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
@@ -30,18 +29,15 @@ import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.SpawnHelper;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.effects.BzEffects;
 import net.telepathicgrunt.bumblezone.entities.BzEntities;
 import net.telepathicgrunt.bumblezone.items.BzItems;
-import net.telepathicgrunt.bumblezone.mixin.SpawnHelperAccessor;
 
 import java.util.List;
 import java.util.Random;
@@ -49,8 +45,6 @@ import java.util.Random;
 
 public class HoneycombBrood extends FacingBlock {
     public static final IntProperty STAGE = Properties.AGE_3;
-    private static final TargetPredicate FIXED_DISTANCE = (new TargetPredicate()).setBaseMaxDistance(50);
-    private static final TargetPredicate PLAYER_DISTANCE = (new TargetPredicate());
 
     public HoneycombBrood() {
         super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MaterialColor.ORANGE).ticksRandomly().strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.9F));

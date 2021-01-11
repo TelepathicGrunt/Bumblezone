@@ -1,7 +1,6 @@
 package net.telepathicgrunt.bumblezone.entities;
 
 import net.minecraft.block.BeehiveBlock;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,7 +9,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.BlockTags;
-import net.minecraft.tag.Tag;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -22,7 +20,6 @@ import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzPlayerPlacement;
-import net.telepathicgrunt.bumblezone.mixin.BlockTagsAccessor;
 import net.telepathicgrunt.bumblezone.tags.BZBlockTags;
 import org.apache.logging.log4j.Level;
 
