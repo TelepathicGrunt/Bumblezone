@@ -16,6 +16,8 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 • Fixed Teleportation mode 2 and 3 being broken and not saving previous pos and dims.
 
    Dimension:
+• Falling out of Bumblezone dimension to teleport out shouldn't deal fall damage now.
+
 • Added onlyOverworldHivesTeleports config option to allow people to make it only possible to enter The Bumblezone from the Overworld.
 
 

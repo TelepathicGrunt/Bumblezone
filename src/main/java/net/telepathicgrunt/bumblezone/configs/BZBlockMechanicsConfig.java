@@ -23,5 +23,5 @@ public class BZBlockMechanicsConfig implements ConfigData {
                     "Set this higher to allow Brood Blocks to spawn more bees in a smaller area or set it to 0 to turn \n" +
                     "off automatic Brood Block bee spawning.")
     @ConfigEntry.BoundedDiscrete(min = 0, max = 1000)
-    public int broodBlocksBeeSpawnCapacity = 40;
+    public int broodBlocksBeeSpawnCapacity = 50;
 }

@@ -37,6 +37,7 @@ public class PlayerTeleportation {
             if (playerEntity.getY() < -3) {
                 playerEntity.setPos(playerEntity.getX(), -3.01D, playerEntity.getZ());
                 playerEntity.updatePosition(playerEntity.getX(), -3.01D, playerEntity.getZ());
+                playerEntity.fallDistance = 0;
 
                 teleportOutOfBz(playerEntity);
             } else if (playerEntity.getY() > 255) {
