@@ -20,7 +20,6 @@ import net.minecraft.world.gen.area.IAreaFactory;
 import net.minecraft.world.gen.area.LazyArea;
 import net.minecraft.world.gen.layer.Layer;
 import net.minecraft.world.gen.layer.ZoomLayer;
-import net.minecraft.world.gen.layer.traits.IAreaTransformer1;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 

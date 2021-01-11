@@ -11,7 +11,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.*;
-import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
@@ -24,7 +23,6 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
@@ -32,7 +30,6 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import org.apache.logging.log4j.Level;
 
 import java.util.List;
 import java.util.Random;
@@ -40,8 +37,6 @@ import java.util.Random;
 
 public class HoneycombBrood extends DirectionalBlock {
     public static final IntegerProperty STAGE = BlockStateProperties.AGE_0_3;
-    private static final EntityPredicate FIXED_DISTANCE = (new EntityPredicate()).setDistance(50);
-    private static final EntityPredicate PLAYER_DISTANCE = (new EntityPredicate());
 
     public HoneycombBrood() {
         super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).tickRandomly().hardnessAndResistance(0.5F, 0.5F).sound(SoundType.CORAL).velocityMultiplier(0.9F));
