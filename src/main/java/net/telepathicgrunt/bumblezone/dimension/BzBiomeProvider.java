@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.generation;
+package net.telepathicgrunt.bumblezone.dimension;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -17,9 +17,9 @@ import net.minecraft.world.biome.layer.util.*;
 import net.minecraft.world.biome.source.BiomeLayerSampler;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.generation.layer.BzBiomeLayer;
-import net.telepathicgrunt.bumblezone.generation.layer.BzBiomePillarLayer;
-import net.telepathicgrunt.bumblezone.generation.layer.BzBiomeScalePillarLayer;
+import net.telepathicgrunt.bumblezone.dimension.layer.BzBiomeLayer;
+import net.telepathicgrunt.bumblezone.dimension.layer.BzBiomePillarLayer;
+import net.telepathicgrunt.bumblezone.dimension.layer.BzBiomeScalePillarLayer;
 import net.telepathicgrunt.bumblezone.mixin.BiomeLayerSamplerAccessor;
 
 import java.util.Map;
@@ -92,7 +92,7 @@ public class BzBiomeProvider extends BiomeSource {
     }
 
     public Biome sample(Registry<Biome> registry, int i, int j) {
-        int k = ((BiomeLayerSamplerAccessor)this.BIOME_SAMPLER).getSampler().sample(i, j);
+        int k = ((BiomeLayerSamplerAccessor)this.BIOME_SAMPLER).bz_getSampler().sample(i, j);
         Biome biome = registry.get(k);
         if (biome == null) {
             if (SharedConstants.isDevelopment) {

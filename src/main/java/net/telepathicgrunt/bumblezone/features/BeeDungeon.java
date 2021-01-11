@@ -80,9 +80,9 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
      */
     public void addBlocksToWorld(Structure structure, ServerWorldAccess world, BlockPos pos, StructurePlacementData placementIn, int flags) {
         StructureAccessorInvoker structureAccessor = ((StructureAccessorInvoker) structure);
-        if (!structureAccessor.getBlocks().isEmpty()) {
-            List<Structure.StructureBlockInfo> list = placementIn.getRandomBlockInfos(structureAccessor.getBlocks(), pos).getAll();
-            if ((!list.isEmpty() || !placementIn.shouldIgnoreEntities() && !structureAccessor.getEntities().isEmpty()) && structureAccessor.getSize().getX() >= 1 && structureAccessor.getSize().getY() >= 1 && structureAccessor.getSize().getZ() >= 1) {
+        if (!structureAccessor.bz_getBlocks().isEmpty()) {
+            List<Structure.StructureBlockInfo> list = placementIn.getRandomBlockInfos(structureAccessor.bz_getBlocks(), pos).getAll();
+            if ((!list.isEmpty() || !placementIn.shouldIgnoreEntities() && !structureAccessor.bz_getEntities().isEmpty()) && structureAccessor.bz_getSize().getX() >= 1 && structureAccessor.bz_getSize().getY() >= 1 && structureAccessor.bz_getSize().getZ() >= 1) {
                 BlockBox mutableboundingbox = placementIn.getBoundingBox();
                 List<BlockPos> list1 = Lists.newArrayListWithCapacity(placementIn.shouldPlaceFluids() ? list.size() : 0);
                 List<Pair<BlockPos, CompoundTag>> list2 = Lists.newArrayListWithCapacity(list.size());
@@ -183,7 +183,7 @@ public class BeeDungeon extends Feature<DefaultFeatureConfig>{
 
 
                 if (!placementIn.shouldIgnoreEntities()) {
-                    structureAccessor.invokeSpawnEntities(world,
+                    structureAccessor.bz_invokeSpawnEntities(world,
                             pos,
                             placementIn.getMirror(),
                             placementIn.getRotation(),

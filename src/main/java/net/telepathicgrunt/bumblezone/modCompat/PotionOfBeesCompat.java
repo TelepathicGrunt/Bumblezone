@@ -38,11 +38,11 @@ public class PotionOfBeesCompat
 		 * Sets up our custom behavior for Potion of Bees items withour overriding their default behavior completely
 		 */
 		if (Registry.ITEM.getOrEmpty(POB_POTION_OF_BEES_ITEM_ID).isPresent() && Bumblezone.BZ_CONFIG.BZModCompatibilityConfig.allowPotionOfBeesCompat) {
-			PotionOfBeesBeePotionDispenseBehavior.DEFAULT_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserAccessor)Blocks.DISPENSER).invokeGetBehaviorForItem(new ItemStack(Registry.ITEM.get(POB_POTION_OF_BEES_ITEM_ID)));
+			PotionOfBeesBeePotionDispenseBehavior.DEFAULT_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserAccessor)Blocks.DISPENSER).bz_invokeGetBehaviorForItem(new ItemStack(Registry.ITEM.get(POB_POTION_OF_BEES_ITEM_ID)));
 			DispenserBlock.registerBehavior(Registry.ITEM.get(POB_POTION_OF_BEES_ITEM_ID), BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); // adds compatibility with bee potions in dispensers
 		}
 		if (Registry.ITEM.getOrEmpty(POB_SPLASH_POTION_OF_BEES_ITEM_ID).isPresent() && Bumblezone.BZ_CONFIG.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat) {
-			PotionOfBeesBeePotionDispenseBehavior.DEFAULT_SPLASH_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserAccessor)Blocks.DISPENSER).invokeGetBehaviorForItem(new ItemStack(Registry.ITEM.get(POB_SPLASH_POTION_OF_BEES_ITEM_ID)));
+			PotionOfBeesBeePotionDispenseBehavior.DEFAULT_SPLASH_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserAccessor)Blocks.DISPENSER).bz_invokeGetBehaviorForItem(new ItemStack(Registry.ITEM.get(POB_SPLASH_POTION_OF_BEES_ITEM_ID)));
 			DispenserBlock.registerBehavior(Registry.ITEM.get(POB_SPLASH_POTION_OF_BEES_ITEM_ID), BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); // adds compatibility with bee splash potion in dispensers
 		}
 

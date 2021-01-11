@@ -7,6 +7,17 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
+
+   (V.2.2.15 Changes) (1.16.4 Minecraft)
+   
+   Dimension:
+• Bees spawned from new chunks are less likely to be pollenated.
+
+   Mixins:
+-Prefixed all my accessor and invoker mixins due to this bug in mixins that could cause a crash with other mods for same named mixins.
+ https://github.com/SpongePowered/Mixin/issues/430
+
+
    (V.2.2.14 Changes) (1.16.4 Minecraft)
    
    Blocks:

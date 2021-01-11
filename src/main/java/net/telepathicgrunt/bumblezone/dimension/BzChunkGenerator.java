@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.generation;
+package net.telepathicgrunt.bumblezone.dimension;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -46,7 +46,6 @@ import net.minecraft.world.gen.feature.StructureFeature;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.entities.BzEntities;
-import net.telepathicgrunt.bumblezone.mixin.BeeEntityInvoker;
 import net.telepathicgrunt.bumblezone.utils.BzPlacingUtils;
 
 import java.util.Iterator;
@@ -618,28 +617,9 @@ public class BzChunkGenerator extends ChunkGenerator {
                 double xLength = MathHelper.clamp(startingX, (double) xCord + (double) width, (double) xCord + 16.0D - (double) width);
                 double zLength = MathHelper.clamp(startingZ, (double) zCord + (double) width, (double) zCord + 16.0D - (double) width);
 
-                Entity entity;
-                try {
-                    entity = biome$spawnlistentry.type.create(region.toServerWorld());
-                    if(entity == null)
-                        continue;
-
-                    if (biome$spawnlistentry.type == EntityType.BEE) {
-                        //20% chance of being full of pollen
-                        if (random.nextFloat() < 0.2f) {
-                            ((BeeEntityInvoker) entity).callSetBeeFlag(8, true);
-                        }
-
-                        //Bumblezone.LOGGER.log(Level.INFO, " outside beeproductive check");
-//						if(FabricLoader.getInstance().isModLoaded("beeproductive")) {
-//							//Bumblezone.LOGGER.log(Level.INFO, " inside beeproductive check. passed with flying colors");
-//							entity = BeeProductiveIntegration.spawnBeeProductiveBee(region.getRandom(), entity);
-//						}
-                    }
-                } catch (Exception exception) {
-                    Bumblezone.LOGGER.warn("Failed to create mob", exception);
+                Entity entity = biome$spawnlistentry.type.create(region.toServerWorld());
+                if(entity == null)
                     continue;
-                }
 
                 entity.refreshPositionAndAngles(xLength, height, zLength, sharedseedrandom.nextFloat() * 360.0F, 0.0F);
                 if (entity instanceof MobEntity) {

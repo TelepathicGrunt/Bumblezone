@@ -8,6 +8,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface PlayerDamageShieldInvoker {
 
     @Invoker("damageShield")
-    void callDamagedShield(float amount);
+    void bz_callDamagedShield(float amount);
 
 }

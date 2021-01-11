@@ -1,4 +1,4 @@
-package net.telepathicgrunt.bumblezone.generation.layer;
+package net.telepathicgrunt.bumblezone.dimension.layer;
 
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.noise.OctaveSimplexNoiseSampler;
@@ -6,7 +6,7 @@ import net.minecraft.world.biome.layer.type.InitLayer;
 import net.minecraft.world.biome.layer.util.LayerRandomnessSource;
 import net.minecraft.world.gen.ChunkRandom;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.generation.BzBiomeProvider;
+import net.telepathicgrunt.bumblezone.dimension.BzBiomeProvider;
 
 import java.util.stream.IntStream;
 

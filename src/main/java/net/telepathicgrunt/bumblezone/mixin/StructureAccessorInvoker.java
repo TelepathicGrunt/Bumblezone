@@ -16,14 +16,14 @@ import java.util.List;
 public interface StructureAccessorInvoker {
 
     @Accessor("blockInfoLists")
-    List<Structure.PalettedBlockInfoList> getBlocks();
+    List<Structure.PalettedBlockInfoList> bz_getBlocks();
 
     @Accessor("entities")
-    List<Structure.StructureEntityInfo> getEntities();
+    List<Structure.StructureEntityInfo> bz_getEntities();
 
     @Accessor("size")
-    BlockPos getSize();
+    BlockPos bz_getSize();
 
     @Invoker("spawnEntities")
-    void invokeSpawnEntities(ServerWorldAccess serverWorldAccess, BlockPos pos, BlockMirror blockMirror, BlockRotation blockRotation, BlockPos pivot, BlockBox area, boolean bl);
+    void bz_invokeSpawnEntities(ServerWorldAccess serverWorldAccess, BlockPos pos, BlockMirror blockMirror, BlockRotation blockRotation, BlockPos pivot, BlockBox area, boolean bl);
 }

@@ -26,7 +26,7 @@ public class BumblezoneClient implements ClientModInitializer {
         BzBlocks.registerRenderLayers();
 
         EntityRendererRegistry.INSTANCE.register(BzEntities.HONEY_SLIME, (dispatcher, context) -> new HoneySlimeRendering(dispatcher));
-        SkyPropertiesAccessor.getBY_IDENTIFIER().put(new Identifier(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
+        SkyPropertiesAccessor.bz_getBY_IDENTIFIER().put(new Identifier(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
 
 
 

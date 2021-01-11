@@ -71,23 +71,23 @@ public class StickyHoneyResidue extends VineBlock {
     public VoxelShape getOutlineShape(BlockState blockstate, BlockView world, BlockPos pos, ShapeContext context) {
         VoxelShape voxelshape = VoxelShapes.empty();
         if (blockstate.get(UP)) {
-            voxelshape = VoxelShapes.union(voxelshape, VineBlockAccessor.getUP_SHAPE());
+            voxelshape = VoxelShapes.union(voxelshape, VineBlockAccessor.bz_getUP_SHAPE());
         }
 
         if (blockstate.get(NORTH)) {
-            voxelshape = VoxelShapes.union(voxelshape, VineBlockAccessor.getNORTH_SHAPE());
+            voxelshape = VoxelShapes.union(voxelshape, VineBlockAccessor.bz_getNORTH_SHAPE());
         }
 
         if (blockstate.get(EAST)) {
-            voxelshape = VoxelShapes.union(voxelshape, VineBlockAccessor.getEAST_SHAPE());
+            voxelshape = VoxelShapes.union(voxelshape, VineBlockAccessor.bz_getEAST_SHAPE());
         }
 
         if (blockstate.get(SOUTH)) {
-            voxelshape = VoxelShapes.union(voxelshape, VineBlockAccessor.getSOUTH_SHAPE());
+            voxelshape = VoxelShapes.union(voxelshape, VineBlockAccessor.bz_getSOUTH_SHAPE());
         }
 
         if (blockstate.get(WEST)) {
-            voxelshape = VoxelShapes.union(voxelshape, VineBlockAccessor.getWEST_SHAPE());
+            voxelshape = VoxelShapes.union(voxelshape, VineBlockAccessor.bz_getWEST_SHAPE());
         }
 
         if (blockstate.get(DOWN)) {
@@ -230,7 +230,7 @@ public class StickyHoneyResidue extends VineBlock {
         ItemStack itemstack = playerEntity.getStackInHand(playerHand);
 
         if ((itemstack.getItem() instanceof BucketItem &&
-                ((BucketItemAccessor) itemstack.getItem()).getFluid().isIn(FluidTags.WATER)) ||
+                ((BucketItemAccessor) itemstack.getItem()).bz_getFluid().isIn(FluidTags.WATER)) ||
                 itemstack.getOrCreateTag().getString("Potion").contains("water") ||
                 itemstack.getItem() == Items.WET_SPONGE ||
                 itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {

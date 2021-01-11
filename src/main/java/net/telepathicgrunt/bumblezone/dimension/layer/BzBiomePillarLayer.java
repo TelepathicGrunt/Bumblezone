@@ -1,10 +1,10 @@
-package net.telepathicgrunt.bumblezone.generation.layer;
+package net.telepathicgrunt.bumblezone.dimension.layer;
 
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.layer.type.CrossSamplingLayer;
 import net.minecraft.world.biome.layer.util.LayerRandomnessSource;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.generation.BzBiomeProvider;
+import net.telepathicgrunt.bumblezone.dimension.BzBiomeProvider;
 
 
 public enum BzBiomePillarLayer implements CrossSamplingLayer {

@@ -10,5 +10,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface ItemDispenserBehaviorInvoker {
 
     @Invoker("dispenseSilently")
-    ItemStack invokeDispenseSilently(BlockPointer pointer, ItemStack stack);
+    ItemStack bz_invokeDispenseSilently(BlockPointer pointer, ItemStack stack);
 }
