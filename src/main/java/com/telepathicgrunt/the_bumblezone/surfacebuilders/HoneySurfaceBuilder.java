@@ -35,7 +35,8 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
         int xpos = x & 15;
         int zpos = z & 15;
         BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable();
-        boolean isSurface = false;
+        BlockState prevBlockState = defaultBlock;
+        int depth = 0;
 
         //makes stone below sea level into end stone
         for (int ypos = 255; ypos >= 0; --ypos) {
@@ -45,7 +46,7 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
             if (currentBlockState.getMaterial() != Material.AIR && currentBlockState.getFluidState().isEmpty()) {
 
                 if (ypos <= seaLevel + 2 + Math.max(noise, 0) + random.nextInt(2)) {
-                    if (isSurface &&
+                    if (depth == 0 &&
                         ModChecker.resourcefulBeesPresent &&
                         Bumblezone.BzModCompatibilityConfig.RBBeesWaxWorldgen.get() &&
                         noise + random.nextInt(2) < -1)
@@ -56,17 +57,26 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
                         chunkIn.setBlockState(blockpos$Mutable, config.getUnderWaterMaterial(), false);
                     }
                 }
-                else if(ypos >= seaLevel + 5 + Math.max(noise, 0) + random.nextInt(2) &&
-                        ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.crystallizedHoneyWorldgen.get())
+                else if(ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.crystallizedHoneyWorldgen.get() &&
+                        !prevBlockState.isAir() && prevBlockState.getFluidState().isEmpty())
                 {
-                    chunkIn.setBlockState(blockpos$Mutable, BuzzierBeesRedirection.getCrystallizedHoneyBlock(), false);
+                    if(depth > 0 && depth < 1 + Math.abs(noise - 1) + random.nextInt(2) &&
+                        blockpos$Mutable.getY() > (seaLevel + 24) + (noise * 1.5d) + random.nextInt(5))
+                    {
+                        chunkIn.setBlockState(blockpos$Mutable, BuzzierBeesRedirection.getCrystallizedHoneyBlock(), false);
+                    }
+                    else if(depth < 7 && blockpos$Mutable.getY() > (seaLevel + 19)){
+                        chunkIn.setBlockState(blockpos$Mutable, defaultBlock, false);
+                    }
                 }
 
-                isSurface = false;
+                depth++;
             }
             else{
-                isSurface = true;
+                depth = 0;
             }
+
+            prevBlockState = currentBlockState;
         }
 
     }

@@ -31,6 +31,7 @@ public class BzModCompatibilityConfigs
 		public ConfigValueListener<Boolean> RBBeesWaxWorldgen;
 
 	    public ConfigValueListener<Boolean> spawnProductiveBeesBeesMob;
+		public ConfigValueListener<Boolean> allowHoneyTreatCompat;
 	    public ConfigValueListener<Boolean> spawnProductiveBeesHoneycombVariants;
 	    public ConfigValueListener<Integer> PBGreatHoneycombRarityBeeDungeon;
 	    public ConfigValueListener<Double> PBOreHoneycombSpawnRateBeeDungeon;
@@ -116,6 +117,12 @@ public class BzModCompatibilityConfigs
 		                    		+" NOTE: Will require a restart of the world to take effect. \r\n")
 		                    .translation("the_bumblezone.config.modcompat.productivebees.spawnproductivebeeshoneycombvariants")
 		                    .define("spawnProductiveBeesHoneycombVariants", true));
+
+					allowHoneyTreatCompat = subscriber.subscribe(builder
+							.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+									+" Allow Honey Treat to be able to feed bees and Honeycomb Brood Blocks.\r\n")
+							.translation("the_bumblezone.config.modcompat.productivebees.allowhoneytreatcompat")
+							.define("allowHoneyTreatCompat", true));
 
 
 	        		PBOreHoneycombSpawnRateBeeDungeon = subscriber.subscribe(builder

@@ -44,15 +44,15 @@ public class ResourcefulBeesCompat {
 	public static void setupResourcefulBees() {
 
 		for(Map.Entry<RegistryKey<EntityType<?>>, EntityType<?>> entry : Registry.ENTITY_TYPE.getEntries()){
-			if(entry.getKey().getValue().getNamespace().equals(RESOURCEFUL_BEES_NAMESPACE)){
+			if(entry.getKey().getLocation().getNamespace().equals(RESOURCEFUL_BEES_NAMESPACE)){
 				RESOURCEFUL_BEES_LIST.add(entry.getValue());
 			}
 		}
 
 		for(Map.Entry<RegistryKey<Block>, Block> entry : Registry.BLOCK.getEntries()){
-			ResourceLocation rl = entry.getKey().getValue();
+			ResourceLocation rl = entry.getKey().getLocation();
 			if(rl.getNamespace().equals(RESOURCEFUL_BEES_NAMESPACE) && rl.getPath().contains("honeycomb")){
-				RESOURCEFUL_HONEYCOMBS_MAP.put(entry.getKey().getValue(), entry.getValue());
+				RESOURCEFUL_HONEYCOMBS_MAP.put(entry.getKey().getLocation(), entry.getValue());
 			}
 		}
 
@@ -125,14 +125,14 @@ public class ResourcefulBeesCompat {
 
 		// Prevent registry replacements
 		int idOffset = 0;
-		while(WorldGenRegistries.CONFIGURED_FEATURE.getOrEmpty(new ResourceLocation(cfRL + idOffset)).isPresent()){
+		while(WorldGenRegistries.CONFIGURED_FEATURE.getOptional(new ResourceLocation(cfRL + idOffset)).isPresent()){
 			idOffset++;
 		}
 
-		ConfiguredFeature<?, ?> cf = Feature.ORE.configure(new OreFeatureConfig(HONEYCOMB_BUMBLEZONE, honeycomb.getDefaultState(), veinSize))
-				.decorate(Placement.RANGE.configure(new TopSolidRangeConfig(bottomOffset, 0, range)))
-				.spreadHorizontally()
-				.repeat(count);
+		ConfiguredFeature<?, ?> cf = Feature.ORE.withConfiguration(new OreFeatureConfig(HONEYCOMB_BUMBLEZONE, honeycomb.getDefaultState(), veinSize))
+				.withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(bottomOffset, 0, range)))
+				.square()
+				.func_242731_b(count);
 
 		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(cfRL + idOffset), cf);
 		RESOURCEFUL_BEES_CFS.add(Pair.of(honeycomb, cf));
@@ -192,7 +192,7 @@ public class ResourcefulBeesCompat {
 		MobEntity resourcefulBeeEntity = (MobEntity) RESOURCEFUL_BEES_LIST.get(world.getRandom().nextInt(RESOURCEFUL_BEES_LIST.size())).create(entity.world);
 		if(resourcefulBeeEntity == null) return;
 
-		BlockPos.Mutable blockpos = new BlockPos.Mutable().setPos(entity.getBlockPos());
+		BlockPos.Mutable blockpos = new BlockPos.Mutable().setPos(entity.getPosition());
 		resourcefulBeeEntity.setLocationAndAngles(
 				blockpos.getX(),
 				blockpos.getY(),
@@ -202,7 +202,7 @@ public class ResourcefulBeesCompat {
 
 		resourcefulBeeEntity.onInitialSpawn(
 				world,
-				world.getDifficultyForLocation(resourcefulBeeEntity.getBlockPos()),
+				world.getDifficultyForLocation(resourcefulBeeEntity.getPosition()),
 				event.getSpawnReason(),
 				null,
 				null);

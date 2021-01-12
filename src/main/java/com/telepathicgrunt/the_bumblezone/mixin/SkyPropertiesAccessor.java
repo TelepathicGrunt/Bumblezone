@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(DimensionRenderInfo.class)
 public interface SkyPropertiesAccessor {
 
-    @Accessor("BY_IDENTIFIER")
+    @Accessor("field_239208_a_")
     static Object2ObjectMap<ResourceLocation, DimensionRenderInfo> bz_getBY_ResourceLocation() {
         throw new UnsupportedOperationException();
     }

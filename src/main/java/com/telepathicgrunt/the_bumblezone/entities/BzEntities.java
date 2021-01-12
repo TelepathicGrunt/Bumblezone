@@ -17,7 +17,7 @@ import java.util.function.Supplier;
 public class BzEntities {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, Bumblezone.MODID);
 
-    public static final RegistryObject<EntityType<HoneySlimeEntity>> HONEY_SLIME = createEntity("honey_slime", () -> EntityType.Builder.<HoneySlimeEntity>create(HoneySlimeEntity::new, EntityClassification.CREATURE).size(0.6F, 1.99F).maxTrackingRange(8).build("honey_slime"));
+    public static final RegistryObject<EntityType<HoneySlimeEntity>> HONEY_SLIME = createEntity("honey_slime", () -> EntityType.Builder.<HoneySlimeEntity>create(HoneySlimeEntity::new, EntityClassification.CREATURE).size(0.6F, 1.99F).trackingRange(8).build("honey_slime"));
 
     private static <E extends EntityType<?>> RegistryObject<E> createEntity(String name, Supplier<E> entity) {
         return ENTITIES.register(name, entity);
@@ -33,6 +33,6 @@ public class BzEntities {
     }
 
     private static void registerEntityAttributes() {
-        GlobalEntityTypeAttributes.put(HONEY_SLIME.get(), HoneySlimeEntity.getAttributeBuilder().build());
+        GlobalEntityTypeAttributes.put(HONEY_SLIME.get(), HoneySlimeEntity.getAttributeBuilder().create());
     }
 }

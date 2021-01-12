@@ -51,9 +51,9 @@ public class ProductiveBeesCompat {
 		ModChecker.productiveBeesPresent = true;
 
 		for(Map.Entry<RegistryKey<Block>, Block> entry : Registry.BLOCK.getEntries()){
-			ResourceLocation rl = entry.getKey().getValue();
+			ResourceLocation rl = entry.getKey().getLocation();
 			if(rl.getNamespace().equals(PRODUCTIVE_BEES_NAMESPACE) && rl.getPath().contains("comb")){
-				PRODUCTIVE_BEES_HONEYCOMBS_MAP.put(entry.getKey().getValue(), entry.getValue());
+				PRODUCTIVE_BEES_HONEYCOMBS_MAP.put(entry.getKey().getLocation(), entry.getValue());
 			}
 		}
 		Set<Block> unusedHoneycombs = new HashSet<>(PRODUCTIVE_BEES_HONEYCOMBS_MAP.values());
@@ -182,14 +182,14 @@ public class ProductiveBeesCompat {
 
 		// Prevent registry replacements
 		int idOffset = 0;
-		while(WorldGenRegistries.CONFIGURED_FEATURE.getOrEmpty(new ResourceLocation(cfRL + idOffset)).isPresent()){
+		while(WorldGenRegistries.CONFIGURED_FEATURE.getOptional(new ResourceLocation(cfRL + idOffset)).isPresent()){
 			idOffset++;
 		}
 
-		ConfiguredFeature<?, ?> cf = Feature.ORE.configure(new OreFeatureConfig(HONEYCOMB_BUMBLEZONE, combBlock.getDefaultState(), veinSize))
-				.decorate(Placement.RANGE.configure(new TopSolidRangeConfig(bottomOffset, 0, range)))
-				.spreadHorizontally()
-				.repeat(count);
+		ConfiguredFeature<?, ?> cf = Feature.ORE.withConfiguration(new OreFeatureConfig(HONEYCOMB_BUMBLEZONE, combBlock.getDefaultState(), veinSize))
+				.withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(bottomOffset, 0, range)))
+				.square()
+				.func_242731_b(count);
 
 		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(cfRL + idOffset), cf);
 		PRODUCTIVE_BEES_CFS.add(Pair.of(combBlock, cf));
@@ -208,7 +208,7 @@ public class ProductiveBeesCompat {
 		if (block.getBlock() instanceof ExpansionBox && block.get(AdvancedBeehive.EXPANDED) != VerticalHive.NONE) {
 			return true; // expansion boxes only count as beenest when they expand a hive.
 		}
-		else if(BlockTags.getCollection().getTagOrEmpty(new ResourceLocation("productivebees:solitary_overworld_nests")).contains(block.getBlock())){
+		else if(BlockTags.getCollection().getTagByID(new ResourceLocation("productivebees:solitary_overworld_nests")).contains(block.getBlock())){
 			// Solitary nests are technically AdvancedBeehiveAbstract and will pass the next check.
 			// But this is still done in case they do change that in the future to extend something else or something.
 			return true;
@@ -237,7 +237,7 @@ public class ProductiveBeesCompat {
 		ConfigurableBeeEntity productiveBeeEntity = ModEntities.CONFIGURABLE_BEE.get().create(entity.world);
 		if(productiveBeeEntity == null) return;
 
-		BlockPos.Mutable blockpos = new BlockPos.Mutable().setPos(entity.getBlockPos());
+		BlockPos.Mutable blockpos = new BlockPos.Mutable().setPos(entity.getPosition());
 		productiveBeeEntity.setLocationAndAngles(
 				blockpos.getX(),
 				blockpos.getY(),
@@ -247,7 +247,7 @@ public class ProductiveBeesCompat {
 
 		productiveBeeEntity.onInitialSpawn(
 				world,
-				world.getDifficultyForLocation(productiveBeeEntity.getBlockPos()),
+				world.getDifficultyForLocation(productiveBeeEntity.getPosition()),
 				event.getSpawnReason(),
 				null,
 				null);

@@ -151,9 +151,9 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
     @Override
     public boolean generate(ISeedReader world, ChunkGenerator generator, Random random, BlockPos position, NoFeatureConfig config) {
         setSeed(world.getSeed());
-        BlockPos.Mutable mutableBlockPos = position.mutableCopy();
-        BlockPos.Mutable mutableBlockPos2 = position.mutableCopy();
-        BlockPos.Mutable mutableBlockPos3 = position.mutableCopy();
+        BlockPos.Mutable mutableBlockPos = position.toMutable();
+        BlockPos.Mutable mutableBlockPos2 = position.toMutable();
+        BlockPos.Mutable mutableBlockPos3 = position.toMutable();
         double noise1;
         double noise2;
         double finalNoise;

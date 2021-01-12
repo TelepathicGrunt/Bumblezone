@@ -107,7 +107,7 @@ public class BreedGoal extends Goal {
      * Spawns a baby animal of the same type.
      */
     protected void spawnBaby() {
-        AgeableEntity childEntity = this.slime.createChild((ServerWorld)this.world, this.field_75391_e);
+        AgeableEntity childEntity = this.slime.func_241840_a((ServerWorld)this.world, this.field_75391_e);
         if (childEntity != null) {
             ServerPlayerEntity serverplayerentity = this.slime.getLoveCause();
             if (serverplayerentity == null && this.field_75391_e.getLoveCause() != null) {
@@ -124,11 +124,11 @@ public class BreedGoal extends Goal {
             this.slime.resetInLove();
             this.field_75391_e.resetInLove();
             childEntity.setGrowingAge(-24000);
-            childEntity.setLocationAndAngles(this.slime.getX(), this.slime.getY(), this.slime.getZ(), 0.0F, 0.0F);
+            childEntity.setLocationAndAngles(this.slime.getPosX(), this.slime.getPosY(), this.slime.getPosZ(), 0.0F, 0.0F);
             this.world.addEntity(childEntity);
             this.world.setEntityState(this.slime, (byte)18);
             if (this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT)) {
-                this.world.addEntity(new ExperienceOrbEntity(this.world, this.slime.getX(), this.slime.getY(), this.slime.getZ(), this.slime.getRNG().nextInt(7) + 1));
+                this.world.addEntity(new ExperienceOrbEntity(this.world, this.slime.getPosX(), this.slime.getPosY(), this.slime.getPosZ(), this.slime.getRNG().nextInt(7) + 1));
             }
 
         }

@@ -46,7 +46,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    private static final DataParameter<Integer> IN_HONEY_GROWTH_TIME = EntityDataManager.createKey(HoneySlimeEntity.class, DataSerializers.VARINT);
    private static final Ingredient BREEDING_ITEM = Ingredient.fromItems(Items.SUGAR);
    private static final DataParameter<Integer> ANGRY_TIMER = EntityDataManager.createKey(HoneySlimeEntity.class, DataSerializers.VARINT);
-   private static final RangedInteger MAX_ANGER_DURATION = TickRangeConverter.betweenSeconds(10, 22);
+   private static final RangedInteger MAX_ANGER_DURATION = TickRangeConverter.convertRange(10, 22);
    private UUID target_UUID;
 
 
@@ -124,10 +124,10 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    }
 
    public static AttributeModifierMap.MutableAttribute getAttributeBuilder() {
-	 return MobEntity.createMobAttributes()
-             .add(Attributes.GENERIC_MAX_HEALTH, 40.0D)
-             .add(Attributes.GENERIC_MOVEMENT_SPEED, 2.0D)
-             .add(Attributes.GENERIC_ATTACK_DAMAGE, 1.0D);
+	 return MobEntity.func_233666_p_()
+             .createMutableAttribute(Attributes.MAX_HEALTH, 40.0D)
+             .createMutableAttribute(Attributes.MOVEMENT_SPEED, 2.0D)
+             .createMutableAttribute(Attributes.ATTACK_DAMAGE, 1.0D);
    }
 
    @Override
@@ -136,11 +136,11 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    }
 
    protected void setSlimeSize(int size, boolean resetHealth) {
-      this.refreshPosition();
+      this.recenterBoundingBox();
       this.recalculateSize();
-      Objects.requireNonNull(this.getAttribute(Attributes.GENERIC_MAX_HEALTH)).setBaseValue(size * size);
-      Objects.requireNonNull(this.getAttribute(Attributes.GENERIC_MOVEMENT_SPEED)).setBaseValue((0.2F + 0.1F * (float)size)*2);
-      Objects.requireNonNull(this.getAttribute(Attributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(size);
+      Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(size * size);
+      Objects.requireNonNull(this.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue((0.2F + 0.1F * (float)size)*2);
+      Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(size);
       if (resetHealth) {
          this.setHealth(this.getMaxHealth());
       }
@@ -165,13 +165,13 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    }
 
    @Override
-   public ActionResultType interactMob(PlayerEntity player, Hand hand) {
+   public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
       ItemStack itemstack = player.getHeldItem(hand);
       World world = player.getEntityWorld();
       if (!this.isChild() && this.isInHoney()) {
          //Bottling
          if (itemstack.getItem() == Items.GLASS_BOTTLE) {
-            world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            world.playSound(player, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
             if (!player.abilities.isCreativeMode) {
                itemstack.shrink(1);
                if (itemstack.isEmpty()) {
@@ -186,7 +186,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
             return ActionResultType.SUCCESS;
          }
       }
-      return super.interactMob(player, hand);
+      return super.func_230254_b_(player, hand);
    }
 
    private void getHoneyFromSlime(LivingEntity entity) {
@@ -210,7 +210,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
             float f1 = this.rand.nextFloat() * 0.5F + 0.5F;
             float f2 = MathHelper.sin(f) * (float) i * 0.5F * f1;
             float f3 = MathHelper.cos(f) * (float) i * 0.5F * f1;
-            this.world.addParticle(new ItemParticleData(ParticleTypes.ITEM, new ItemStack(Blocks.HONEY_BLOCK)), this.getX() + (double) f2, this.getY(), this.getZ() + (double) f3, 0.0D, 0.0D, 0.0D);
+            this.world.addParticle(new ItemParticleData(ParticleTypes.ITEM, new ItemStack(Blocks.HONEY_BLOCK)), this.getPosX() + (double) f2, this.getPosY(), this.getPosZ() + (double) f3, 0.0D, 0.0D, 0.0D);
          }
 
          this.playSound(this.getSquishSound(), this.getSoundVolume(), ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) / 0.8F);
@@ -232,7 +232,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
          if (!isInHoney()) {
             setInHoneyGrowthTime(getInHoneyGrowthTime() + 1);
 
-            if(!this.world.isRemote && HONEY_BASED_BLOCKS.contains(this.world.getBlockState(this.getBlockPos().down()).getBlock())){
+            if(!this.world.isRemote && HONEY_BASED_BLOCKS.contains(this.world.getBlockState(this.getPosition().down()).getBlock())){
                if(this.rand.nextFloat() < 0.001)
                   setInHoneyGrowthTime(0);
             }
@@ -244,7 +244,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    @Override
    protected void updateAITasks() {
       if (!this.world.isRemote) {
-         this.tickAngerLogic((ServerWorld)this.world, false);
+         this.func_241359_a_((ServerWorld)this.world, false);
       }
    }
 
@@ -254,7 +254,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    }
 
    @Override
-   public AgeableEntity createChild(ServerWorld worldIn, AgeableEntity ageable) {
+   public AgeableEntity func_241840_a(ServerWorld worldIn, AgeableEntity ageable) {
       HoneySlimeEntity childHoneySlimeEntity = BzEntities.HONEY_SLIME.get().create(worldIn);
 
       if (childHoneySlimeEntity != null)
@@ -305,9 +305,9 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
 
    @Override
    public void recalculateSize() {
-      double d0 = this.getX();
-      double d1 = this.getY();
-      double d2 = this.getZ();
+      double d0 = this.getPosX();
+      double d1 = this.getPosY();
+      double d2 = this.getPosZ();
       super.recalculateSize();
       this.setPosition(d0, d1, d2);
    }
@@ -326,7 +326,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    }
 
    protected float getAttackStrength() {
-      return (float) Objects.requireNonNull(this.getAttribute(Attributes.GENERIC_ATTACK_DAMAGE)).getValue();
+      return (float) Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).getValue();
    }
 
    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
@@ -385,7 +385,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    }
 
    @Override
-   public UUID getAngryAt() {
+   public UUID getAngerTarget() {
       return this.target_UUID;
    }
 
@@ -395,8 +395,8 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    }
 
    @Override
-   public void chooseRandomAngerTime() {
+   public void func_230258_H__() {
       if(MAX_ANGER_DURATION != null)
-         this.setAngerTime(MAX_ANGER_DURATION.choose(this.rand));
+         this.setAngerTime(MAX_ANGER_DURATION.getRandomWithinRange(this.rand));
    }
 }

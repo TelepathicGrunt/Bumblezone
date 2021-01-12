@@ -126,7 +126,7 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid {
 
     @Override
     protected void beforeReplacingBlock(IWorld world, BlockPos pos, BlockState state) {
-        TileEntity blockEntity = state.getBlock().hasBlockEntity() ? world.getTileEntity(pos) : null;
+        TileEntity blockEntity = state.getBlock().isTileEntityProvider() ? world.getTileEntity(pos) : null;
         Block.spawnDrops(state, world, pos, blockEntity);
     }
 

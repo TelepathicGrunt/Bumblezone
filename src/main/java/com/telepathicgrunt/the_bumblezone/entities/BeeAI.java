@@ -11,7 +11,7 @@ public class BeeAI {
     public static CachedPathHolder smartBeesTM(BeeEntity beeEntity, CachedPathHolder cachedPathHolder){
 
         if(cachedPathHolder == null || cachedPathHolder.pathTimer > 100 || cachedPathHolder.cachedPath == null ||
-            beeEntity.getBlockPos().withinDistance(cachedPathHolder.cachedPath.getTarget(), 3) ||
+            beeEntity.getPosition().withinDistance(cachedPathHolder.cachedPath.getTarget(), 3) ||
             (cachedPathHolder.cachedPath.getFinalPathPoint() != null && cachedPathHolder.cachedPath.getFinalPathPoint().distanceToTarget > 5))
         {
             BlockPos.Mutable mutable = new BlockPos.Mutable();
@@ -19,7 +19,7 @@ public class BeeAI {
 
             for(int attempt = 0; attempt < 11; attempt++){
                 // pick a random place to fly to
-                mutable.setPos(beeEntity.getBlockPos()).move(
+                mutable.setPos(beeEntity.getPosition()).move(
                         world.rand.nextInt(21) - 10,
                         world.rand.nextInt(21) - 10,
                         world.rand.nextInt(21) - 10

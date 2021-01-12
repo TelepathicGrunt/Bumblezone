@@ -68,102 +68,96 @@ public class BuzzierBeesCompat {
         TIER_2_CANDLES_VARIANTS = new ArrayList<>();
         TIER_3_CANDLES_VARIANTS = new ArrayList<>();
 
-        //tier 1 candles  - no effects basic colors candles
+        //Tier 1 candles - basic no effects basic colors candles
+        TIER_1_CANDLES_VARIANTS.addAll(Arrays.asList(
+                BBBlocks.CANDLE.get(),
+                BBBlocks.WHITE_CANDLE.get(),
+                BBBlocks.ORANGE_CANDLE.get(),
+                BBBlocks.MAGENTA_CANDLE.get(),
+                BBBlocks.LIGHT_BLUE_CANDLE.get(),
+                BBBlocks.YELLOW_CANDLE.get(),
+                BBBlocks.LIME_CANDLE.get(),
+                BBBlocks.PINK_CANDLE.get(),
+                BBBlocks.GRAY_CANDLE.get(),
+                BBBlocks.LIGHT_GRAY_CANDLE.get(),
+                BBBlocks.CYAN_CANDLE.get(),
+                BBBlocks.PURPLE_CANDLE.get(),
+                BBBlocks.BLUE_CANDLE.get(),
+                BBBlocks.BROWN_CANDLE.get(),
+                BBBlocks.GREEN_CANDLE.get(),
+                BBBlocks.RED_CANDLE.get(),
+                BBBlocks.BLACK_CANDLE.get()
+        ));
 
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.CANDLE.get());
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.WHITE_CANDLE.get());
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.ORANGE_CANDLE.get());
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.MAGENTA_CANDLE.get());
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.LIGHT_BLUE_CANDLE.get());
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.YELLOW_CANDLE.get());
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.LIME_CANDLE.get());
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.PINK_CANDLE.get());
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.GRAY_CANDLE.get());
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.LIGHT_GRAY_CANDLE.get());
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.CYAN_CANDLE.get());
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.PURPLE_CANDLE.get());
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.BLUE_CANDLE.get());
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.BROWN_CANDLE.get());
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.GREEN_CANDLE.get());
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.RED_CANDLE.get());
-        TIER_1_CANDLES_VARIANTS.add(BBBlocks.BLACK_CANDLE.get());
+        //tier 2 candles - mixed colors candles plus generally negative effect candles
+        TIER_2_CANDLES_VARIANTS.addAll(Arrays.asList(
+                BBBlocks.WHITE_CANDLE.get(),
+                BBBlocks.ORANGE_CANDLE.get(),
+                BBBlocks.YELLOW_CANDLE.get(),
+                BBBlocks.BLUE_CANDLE.get(),
+                BBBlocks.GREEN_CANDLE.get(),
+                BBBlocks.PURPLE_CANDLE.get(),
+                BBBlocks.RED_CANDLE.get(),
+                BBBlocks.BLACK_CANDLE.get(),
 
-        //tier 2 candles - no effects mixed colors candles plus generally negative effect candles
+                BBBlocks.SOUL_CANDLE.get(),
+                BBBlocks.ENDER_CANDLE.get(),
 
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.WHITE_CANDLE.get());
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.ORANGE_CANDLE.get());
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.YELLOW_CANDLE.get());
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.BLUE_CANDLE.get());
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.GREEN_CANDLE.get());
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.PURPLE_CANDLE.get());
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.RED_CANDLE.get());
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.BLACK_CANDLE.get());
+                BBBlocks.WHITE_CLOVER_SCENTED_CANDLE.get(),
+                BBBlocks.PINK_CLOVER_SCENTED_CANDLE.get(),
+                BBBlocks.AUTUMN_CROCUS_SCENTED_CANDLE.get(),
+                BBBlocks.WATER_HYACINTH_SCENTED_CANDLE.get(),
 
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.WHITE_CLOVER_SCENTED_CANDLE.get());
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.PINK_CLOVER_SCENTED_CANDLE.get());
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.WHITE_TULIP_SCENTED_CANDLE.get());
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.ORANGE_TULIP_SCENTED_CANDLE.get());
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.PINK_TULIP_SCENTED_CANDLE.get());
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.RED_TULIP_SCENTED_CANDLE.get());
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.AZURE_BLUET_SCENTED_CANDLE.get());
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.LILY_OF_THE_VALLEY_SCENTED_CANDLE.get());
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.SOUL_CANDLE.get());
-        TIER_2_CANDLES_VARIANTS.add(BBBlocks.ENDER_CANDLE.get());
+                BBBlocks.WHITE_TULIP_SCENTED_CANDLE.get(),
+                BBBlocks.ORANGE_TULIP_SCENTED_CANDLE.get(),
+                BBBlocks.PINK_TULIP_SCENTED_CANDLE.get(),
+                BBBlocks.RED_TULIP_SCENTED_CANDLE.get(),
 
-        //tier 3 candles - no effect mixed colors candles and generally positive effect candles + wither candle
+                BBBlocks.LILY_OF_THE_VALLEY_SCENTED_CANDLE.get(),
+                BBBlocks.AZURE_BLUET_SCENTED_CANDLE.get(),
 
-        //16
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.WHITE_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.ORANGE_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.YELLOW_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.BLUE_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.GREEN_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.PURPLE_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.RED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.BLACK_CANDLE.get());
+                BBBlocks.BUTTERCUP_SCENTED_CANDLE.get(),
+                BBBlocks.BUTTERCUP_SCENTED_CANDLE.get()
+        ));
 
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.WHITE_CLOVER_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.PINK_CLOVER_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.WHITE_TULIP_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.ORANGE_TULIP_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.PINK_TULIP_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.RED_TULIP_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.AZURE_BLUET_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.LILY_OF_THE_VALLEY_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.SOUL_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.ENDER_CANDLE.get());
+        //tier 3 candles - generally positive effect candles + wither candle
+        TIER_3_CANDLES_VARIANTS.addAll(Arrays.asList(
+                BBBlocks.SOUL_CANDLE.get(),
+                BBBlocks.ENDER_CANDLE.get(),
+                BBBlocks.BUTTERCUP_SCENTED_CANDLE.get(),
 
-        //6
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.YELLOW_HIBISCUS_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.ORANGE_HIBISCUS_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.RED_HIBISCUS_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.PINK_HIBISCUS_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.MAGENTA_HIBISCUS_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.PURPLE_HIBISCUS_SCENTED_CANDLE.get());
+                BBBlocks.YELLOW_HIBISCUS_SCENTED_CANDLE.get(),
+                BBBlocks.ORANGE_HIBISCUS_SCENTED_CANDLE.get(),
+                BBBlocks.RED_HIBISCUS_SCENTED_CANDLE.get(),
+                BBBlocks.PINK_HIBISCUS_SCENTED_CANDLE.get(),
+                BBBlocks.MAGENTA_HIBISCUS_SCENTED_CANDLE.get(),
+                BBBlocks.PURPLE_HIBISCUS_SCENTED_CANDLE.get(),
 
-        //9
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.BLUE_ORCHID_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.DANDELION_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.CORNFLOWER_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.CARTWHEEL_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.POPPY_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.OXEYE_DAISY_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.DIANTHUS_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.BLUEBELL_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.VIOLET_SCENTED_CANDLE.get());
+                BBBlocks.CORNFLOWER_SCENTED_CANDLE.get(),
+                BBBlocks.RED_LOTUS_FLOWER_SCENTED_CANDLE.get(),
+                BBBlocks.WHITE_LOTUS_FLOWER_SCENTED_CANDLE.get(),
+                BBBlocks.BLUEBELL_SCENTED_CANDLE.get(),
 
-        //9
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.WARM_MONKEY_BRUSH_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.HOT_MONKEY_BRUSH_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.SCALDING_MONKEY_BRUSH_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.GILIA_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.YUCCA_FLOWER_SCENTED_CANDLE.get());
+                BBBlocks.BLUE_ORCHID_SCENTED_CANDLE.get(),
+                BBBlocks.DANDELION_SCENTED_CANDLE.get(),
+                BBBlocks.CARTWHEEL_SCENTED_CANDLE.get(),
+                BBBlocks.POPPY_SCENTED_CANDLE.get(),
+                BBBlocks.OXEYE_DAISY_SCENTED_CANDLE.get(),
+                BBBlocks.DIANTHUS_SCENTED_CANDLE.get(),
+                BBBlocks.VIOLET_SCENTED_CANDLE.get(),
 
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.PINK_SEAROCKET_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.WHITE_SEAROCKET_SCENTED_CANDLE.get());
+                BBBlocks.WARM_MONKEY_BRUSH_SCENTED_CANDLE.get(),
+                BBBlocks.HOT_MONKEY_BRUSH_SCENTED_CANDLE.get(),
+                BBBlocks.SCALDING_MONKEY_BRUSH_SCENTED_CANDLE.get(),
+                BBBlocks.GILIA_SCENTED_CANDLE.get(),
+                BBBlocks.YUCCA_FLOWER_SCENTED_CANDLE.get(),
 
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.ALLIUM_SCENTED_CANDLE.get());
-        TIER_3_CANDLES_VARIANTS.add(BBBlocks.WITHER_ROSE_SCENTED_CANDLE.get());
+                BBBlocks.PINK_SEAROCKET_SCENTED_CANDLE.get(),
+                BBBlocks.WHITE_SEAROCKET_SCENTED_CANDLE.get(),
+
+                BBBlocks.ALLIUM_SCENTED_CANDLE.get(),
+                BBBlocks.WITHER_ROSE_SCENTED_CANDLE.get()
+        ));
 
         // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.buzzierBeesPresent = true;

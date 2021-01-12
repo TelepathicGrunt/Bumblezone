@@ -83,7 +83,7 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
     public void addBlocksToWorld(Template structure, IServerWorld world, BlockPos pos, PlacementSettings placementIn, int flags) {
         TemplateInvoker structureAccessor = ((TemplateInvoker) structure);
         if (!structureAccessor.bz_getBlocks().isEmpty()) {
-            List<Template.BlockInfo> list = placementIn.getRandomBlockInfos(structureAccessor.bz_getBlocks(), pos).getAll();
+            List<Template.BlockInfo> list = placementIn.func_237132_a_(structureAccessor.bz_getBlocks(), pos).func_237157_a_();
             if ((!list.isEmpty() || !placementIn.getIgnoreEntities() && !structureAccessor.bz_getEntities().isEmpty()) && structureAccessor.bz_getSize().getX() >= 1 && structureAccessor.bz_getSize().getY() >= 1 && structureAccessor.bz_getSize().getZ() >= 1) {
                 MutableBoundingBox mutableboundingbox = placementIn.getBoundingBox();
                 List<BlockPos> list1 = Lists.newArrayListWithCapacity(placementIn.func_204763_l() ? list.size() : 0);
@@ -95,7 +95,7 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
                 int i1 = Integer.MIN_VALUE;
                 int j1 = Integer.MIN_VALUE;
 
-                for (Template.BlockInfo template$blockinfo : Template.process(world, pos, pos, placementIn, list)) {
+                for (Template.BlockInfo template$blockinfo : Template.func_237145_a_(world, pos, pos, placementIn, list)) {
                     BlockPos blockpos = template$blockinfo.pos;
                     if (mutableboundingbox == null || mutableboundingbox.isVecInside(blockpos)) {
                         FluidState ifluidstate = placementIn.func_204763_l() ? world.getFluidState(blockpos) : null;
@@ -143,7 +143,7 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
                                     template$blockinfo.nbt.putInt("x", blockpos.getX());
                                     template$blockinfo.nbt.putInt("y", blockpos.getY());
                                     template$blockinfo.nbt.putInt("z", blockpos.getZ());
-                                    blockentity1.fromTag(template$blockinfo.state, template$blockinfo.nbt);
+                                    blockentity1.read(template$blockinfo.state, template$blockinfo.nbt);
                                     blockentity1.mirror(placementIn.getMirror());
                                     blockentity1.rotate(placementIn.getRotation());
                                 }

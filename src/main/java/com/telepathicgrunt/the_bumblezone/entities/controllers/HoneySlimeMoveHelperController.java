@@ -44,7 +44,7 @@ public class HoneySlimeMoveHelperController extends MovementController {
         } else {
             this.action = MovementController.Action.WAIT;
             if (this.mob.isOnGround()) {
-                this.mob.setAIMoveSpeed((float) (this.speed * this.mob.getAttribute(Attributes.GENERIC_KNOCKBACK_RESISTANCE).getValue()));
+                this.mob.setAIMoveSpeed((float) (this.speed * this.mob.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue()));
                 if (this.jumpDelay-- <= 0) {
                     this.jumpDelay = this.slime.getJumpDelay();
                     if (this.isAggressive) {
@@ -61,7 +61,7 @@ public class HoneySlimeMoveHelperController extends MovementController {
                     this.mob.setAIMoveSpeed(0.0F);
                 }
             } else {
-                this.mob.setAIMoveSpeed((float) (this.speed * this.mob.getAttribute(Attributes.GENERIC_MOVEMENT_SPEED).getValue()));
+                this.mob.setAIMoveSpeed((float) (this.speed * this.mob.getAttribute(Attributes.MOVEMENT_SPEED).getValue()));
             }
         }
     }

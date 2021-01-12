@@ -46,7 +46,7 @@ public class SugarWaterBottleDispenseBehavior extends DefaultDispenseItemBehavio
                     if (!world.getBlockState(blockpos).getMaterial().isSolid()) {
                         MobEntity beeEntity = EntityType.BEE.create(world);
                         beeEntity.setLocationAndAngles(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, world.getRandom().nextFloat() * 360.0F, 0.0F);
-                        beeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beeEntity.getBlockPos())), SpawnReason.TRIGGERED, null, null);
+                        beeEntity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(beeEntity.getPosition())), SpawnReason.TRIGGERED, null, null);
                         world.addEntity(beeEntity);
                         world.setBlockState(position, blockstate.with(HoneycombBrood.STAGE, 0));
                     }

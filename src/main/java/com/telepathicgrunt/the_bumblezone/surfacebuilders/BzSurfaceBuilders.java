@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 public class BzSurfaceBuilders {
     public static final DeferredRegister<SurfaceBuilder<?>> SURFACE_BUILDERS = DeferredRegister.create(ForgeRegistries.SURFACE_BUILDERS, Bumblezone.MODID);
 
-    public static final RegistryObject<SurfaceBuilder<SurfaceBuilderConfig>> HONEY_SURFACE_BUILDER = createSurfaceBuilder("honey_surface_builder", () -> new HoneySurfaceBuilder(SurfaceBuilderConfig.CODEC));
+    public static final RegistryObject<SurfaceBuilder<SurfaceBuilderConfig>> HONEY_SURFACE_BUILDER = createSurfaceBuilder("honey_surface_builder", () -> new HoneySurfaceBuilder(SurfaceBuilderConfig.field_237203_a_));
 
     public static <S extends SurfaceBuilder<?>> RegistryObject<S> createSurfaceBuilder(String name, Supplier<? extends S> surfaceBuilder) {
         return SURFACE_BUILDERS.register(name, surfaceBuilder);

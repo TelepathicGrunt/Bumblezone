@@ -44,7 +44,7 @@ public class PlayerTeleportation {
         //Makes it so player does not get killed for falling into the void
         if (playerEntity.getEntityWorld().getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (playerEntity.getPosY() < -3) {
-                playerEntity.setPos(playerEntity.getPosX(), -3.01D, playerEntity.getPosZ());
+                playerEntity.setRawPosition(playerEntity.getPosX(), -3.01D, playerEntity.getPosZ());
                 playerEntity.setPosition(playerEntity.getPosX(), -3.01D, playerEntity.getPosZ());
                 playerEntity.fallDistance = 0;
 
@@ -71,7 +71,7 @@ public class PlayerTeleportation {
         if (!playerEntity.getEntityWorld().isRemote) {
             checkAndCorrectStoredDimension(playerEntity);
             PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-            RegistryKey<World> world_key = RegistryKey.of(Registry.DIMENSION, cap.getNonBZDim());
+            RegistryKey<World> world_key = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, cap.getNonBZDim());
             ServerWorld destination = playerEntity.getEntityWorld().getServer().getWorld(world_key);
             if(destination == null){
                 destination = playerEntity.getEntityWorld().getServer().getWorld(World.OVERWORLD);
@@ -117,7 +117,7 @@ public class PlayerTeleportation {
         {
             // go to overworld by default
             //update stored dimension
-            cap.setNonBZDim(World.OVERWORLD.getValue());
+            cap.setNonBZDim(World.OVERWORLD.getLocation());
         }
     }
 
@@ -128,11 +128,11 @@ public class PlayerTeleportation {
 
         // Make sure we are on server by checking if thrower is ServerPlayerEntity and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (!world.isRemote && pearlEntity.getOwner() instanceof ServerPlayerEntity &&
+        if (!world.isRemote && pearlEntity.func_234616_v_() instanceof ServerPlayerEntity &&
             !world.getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID) &&
             (!Bumblezone.BzDimensionConfig.onlyOverworldHivesTeleports.get() || world.getDimensionKey().equals(World.OVERWORLD)))
         {
-            ServerPlayerEntity playerEntity = (ServerPlayerEntity) pearlEntity.getOwner(); // the thrower
+            ServerPlayerEntity playerEntity = (ServerPlayerEntity) pearlEntity.func_234616_v_(); // the thrower
             Vector3d hitBlockPos = hitResult.getHitVec(); //position of the collision
             BlockPos hivePos = new BlockPos(0,0,0);
             boolean hitHive = false;
@@ -164,7 +164,7 @@ public class PlayerTeleportation {
 
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = false;
-            if(!BZBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.values().isEmpty()) {
+            if(!BZBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.getAllElements().isEmpty()) {
                 if(BZBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.down()).getBlock())) {
                     validBelowBlock = true;
                 }

@@ -43,7 +43,7 @@ public class HoneyCrystalShield extends ShieldItem {
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (stack.hasTag()) {
             int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
-            tooltip.add(new TranslationTextComponent("item.the_bumblezone.honey_crystal_shield.level_tooltip").append(": " + (repairLevel + 1)));
+            tooltip.add(new TranslationTextComponent("item.the_bumblezone.honey_crystal_shield.level_tooltip").appendString(": " + (repairLevel + 1)));
         }
     }
 

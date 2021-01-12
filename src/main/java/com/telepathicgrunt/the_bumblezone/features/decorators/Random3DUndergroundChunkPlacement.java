@@ -26,7 +26,7 @@ public class Random3DUndergroundChunkPlacement extends Placement<FeatureSpreadCo
         // finds the origin of the 16x16x16 area we will be picking from
         BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable();
 
-        for (int chunkNum = 0; chunkNum <= placementConfig.getCount().getValue(random); chunkNum++) {
+        for (int chunkNum = 0; chunkNum <= placementConfig.func_242799_a().func_242259_a(random); chunkNum++) {
 
             // Tries 8 times to find a chunk's center that is in cave air or fluid.
             // Nice quick way to only generate clusters of crystals within a chunk without
@@ -38,8 +38,8 @@ public class Random3DUndergroundChunkPlacement extends Placement<FeatureSpreadCo
                             random.nextInt(253) + 1,
                             random.nextInt(4) + 8);
 
-                if ((context.getBlockState(mutableBlockPos).getBlock() == Blocks.CAVE_AIR
-                        || context.getBlockState(mutableBlockPos).getFluidState().isTagged(FluidTags.WATER))) {
+                if ((context.func_242894_a(mutableBlockPos).getBlock() == Blocks.CAVE_AIR
+                        || context.func_242894_a(mutableBlockPos).getFluidState().isTagged(FluidTags.WATER))) {
                     mutableBlockPos.setPos(pos.getX(), mutableBlockPos.getY(), pos.getZ());
                     break;
                 }

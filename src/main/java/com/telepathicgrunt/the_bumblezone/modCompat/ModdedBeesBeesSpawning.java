@@ -15,7 +15,7 @@ public class ModdedBeesBeesSpawning
 	public static void MobSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
 		if (ModChecker.productiveBeesPresent || ModChecker.resourcefulBeesPresent) {
 			MobEntity entity = (MobEntity) event.getEntity();
-			ResourceLocation worldRL = entity.world.getServer().getRegistryManager().getDimensionTypes().getKey(entity.world.getDimension());
+			ResourceLocation worldRL = entity.world.getServer().func_244267_aX().func_230520_a_().getKey(entity.world.getDimensionType());
 
 			if (worldRL != null && worldRL.equals(Bumblezone.MOD_DIMENSION_ID) &&
 				entity.getType() == EntityType.BEE)

@@ -27,6 +27,6 @@ public class GlassBottleUseMixin {
             cancellable = true)
     private void bottleFluidInteract(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<ActionResult<ItemStack>> cir, List<AreaEffectCloudEntity> list, ItemStack itemStack, RayTraceResult hitResult, BlockPos blockPos) {
         if (ObtainSugarWaterBottle.useBottleOnSugarWater(world, user, hand, blockPos))
-            cir.setReturnValue(ActionResult.success(user.getHeldItem(hand)));
+            cir.setReturnValue(ActionResult.resultSuccess(user.getHeldItem(hand)));
     }
 }

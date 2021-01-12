@@ -115,7 +115,7 @@ public class BzBEOreFeature extends Feature<BzBEOreFeatureConfig> {
                                         if (!bitset.get(l2)) {
                                             bitset.set(l2);
                                             blockPos.setPos(i2, j2, k2);
-                                            if (blockPos.getY() < world.getDimensionHeight() && blockPos.getY() > 0 && bzBEOreFeatureConfig.target.test(world.getBlockState(blockPos), random)) {
+                                            if (blockPos.getY() < world.func_234938_ad_() && blockPos.getY() > 0 && bzBEOreFeatureConfig.target.test(world.getBlockState(blockPos), random)) {
 
                                                 world.setBlockState(blockPos, bzBEOreFeatureConfig.state, 2);
 

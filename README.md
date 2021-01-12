@@ -1,14 +1,12 @@
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.imgur.com/ovPqrFL.png" alt="The banner logo for The Bumblezone with a friendly and hostile bee shown below the mod name." width="999" height="370" /></p>
-<h2 style="text-align: center;"><span style="font-size: 40px; text-align: center; color: #b76a00;"><strong>CURRENTLY FOR 1.16.3 MC</strong></span></h2>
-<p style="text-decoration: underline; font-size: 14px; text-align: center;"><strong><a style="font-size: 14px; text-align: center;" href="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-fabric">[Click here for the 1.16.3 Fabric version of this mod!]</a></strong></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p style="text-align: center;"><em><span style="font-size: 14px; color: #b00000; text-decoration: underline;"><strong>Recent 1.16.3 News:</strong></span><span style="font-size: 14px;"><b><strong>&nbsp;</strong></b></span></em></p>
-<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>Added mob compat with <a href="https://www.curseforge.com/minecraft/mc-mods/resourceful-bees">Resourceful Bees</a>!</em></strong></span></p>
-<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>Now if you use a datapack and make a biome </em></strong></span></p>
-<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>under "the_bumblezone" namespace, this mod </em></strong></span></p>
-<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>will recognize the namespace and spawn that</em></strong></span></p>
-<p style="text-align: center;"><span style="font-size: 14px;"><strong><em> biome in the dimension!</em></strong></span></p>
+<h2 style="text-align: center;"><span style="font-size: 40px; text-align: center; color: #b76a00;"><strong>CURRENTLY FOR 1.16.4 MC</strong></span></h2>
+<p style="text-decoration: underline; font-size: 14px; text-align: center;"><strong><a style="font-size: 14px; text-align: center;" href="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-fabric">[Click here for the 1.16.4 Fabric version of this mod!]</a></strong></p>
+<p>&nbsp;<br />&nbsp;</p>
+<p style="text-align: center;"><em><span style="font-size: 14px; color: #b00000; text-decoration: underline;"><strong>Recent 1.16.4 News:</strong></span><span style="font-size: 14px;"><b><strong>&nbsp;</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Updated to now work with 1.16.4 Buzzier Bees!</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Now go have fun hunting powerful candles in Bee Dungeon!</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Also, lots of bug fixes plus an experimental new Bee AI to</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>try and optimize the bees in Bumblezone dimension!</strong></b></span></em></p>
 <p style="text-align: center;">&nbsp;</p>
 <p style="text-align: center;"><strong><em><br /></em><span style="font-size: 14px; color: #993300;"><span style="font-size: 18px;">GENERAL NOTE:</span> <em><br /></em></span></strong></p>
 <p style="text-align: center;"><span style="font-size: 14px; color: #993300;"><strong><em>Make a copy of your world before putting on&nbsp;</em></strong></span></p>
@@ -17,12 +15,7 @@
 <p style="text-align: center;"><span style="font-size: 14px; color: #993300;"><strong><em>missing from the game due to a Mojang bug. Also,</em></strong></span></p>
 <p style="text-align: center;"><span style="font-size: 14px; color: #993300;"><strong><em>putting the mod back on will not restore the dimension.</em></strong></span></p>
 <p style="text-align: center;"><span style="font-size: 14px;"><strong><em>&nbsp;<a href="https://bugs.mojang.com/browse/MC-197860">https://bugs.mojang.com/browse/MC-197860</a></em></strong></span></p>
-<p style="text-align: center;">&nbsp;</p>
-<p style="text-align: center;"><strong><em><br /></em><span style="font-size: 14px; color: #993300;"><span style="font-size: 18px;">SERVER OWNERS NOTE:</span> <em><br />If you make a fresh new world with this&nbsp;mod&nbsp;on&nbsp;</em></span></strong></p>
-<p style="text-align: center;"><span style="font-size: 14px; color: #993300;"><strong><em>&nbsp;a server, restart the&nbsp;server after the world&nbsp;is made</em></strong></span></p>
-<p style="text-align: center;"><span style="font-size: 14px; color: #993300;"><strong><em>&nbsp; due to this mojang bug&nbsp;causing json&nbsp;dimensions&nbsp;</em></strong></span></p>
-<p style="text-align: center;"><span style="font-size: 14px; color: #993300;"><strong><em>&nbsp;to not be made upon world&nbsp;creation only on servers.</em></strong></span></p>
-<p style="text-align: center;"><span style="font-size: 14px;"><strong><em>&nbsp;<a href="https://bugs.mojang.com/browse/MC-195468">https://bugs.mojang.com/browse/MC-195468</a></em></strong></span></p>
+<p style="text-align: center;">&nbsp;&nbsp;</p>
 <p>&nbsp;</p>
 <p><strong>______________________________________________________________________________</strong></p>
 <p>&nbsp;</p>
@@ -32,7 +25,7 @@
 <p><span style="font-size: 14px;">&nbsp;</span></p>
 <p><span style="font-size: 14px;">&nbsp; &nbsp;But that isn't all! Within the dimension, bees are extremely protective of their honey. If you pick up a Honey Block, take honey from a Filled Porous Honeycomb block or Honeycomb Brood Block with a Glass Bottle, or you drink a Honey Bottle, all bees around you will get a speed, absorption, and strength potion effect and will become VERY angry at you! You will know you are in DEEP trouble when you get the Wrath of the Hive icon showing you got that effect and the fog in the dimension become more red! The bee will swarm you like crazy and will kill you unless you come very well prepared. A full set of unenchanted Diamond gear will not be enough but if you use a Bane of Arthropod V Diamond Sword, you might stand a chance. (but you can nerf the bees in the config if you find them too strong or buff them if you want to die!). And Bumblezone's experience can be enhanced when you have certain mods on such as Buzzier Bees, Potion of Bees, Beesourceful, or Productive Bees!&nbsp;</span></p>
 <p>&nbsp;</p>
-<p><span style="font-size: 14px;">For more info on all the blocks and what mods Bumblezone has direct support for, just click each spoiler in the section below! <strong>And yes, you can use this mod in a modpack or download and modify the source code. It is all under MIT License so you can do whatever you want!</strong></span></p>
+<p><span style="font-size: 14px;">For more info on all the blocks and what mods Bumblezone has direct support for, just click each spoiler in the section below! <strong>And yes, you can use this mod in a modpack!</strong></span></p>
 <p>&nbsp;</p>
 <p><strong>______________________________________________________________________________</strong></p>
 <p>&nbsp;</p>
@@ -40,7 +33,7 @@
 <p>&nbsp;</p>
 <p><img src="https://media.forgecdn.net/attachments/302/227/2020-07-12_14.png" alt="An image that organizes and shows off all of the items and blocks that The Bumblezone has added." width="623" height="325" /></p>
 <p>&nbsp;</p>
-<p><span style="font-size: 24px;"><strong>1.16.3</strong></span></p>
+<p><span style="font-size: 24px;"><strong>1.16.4</strong></span></p>
 <div class="spoiler">
 <p><span style="font-size: 14px;"><strong>BLOCKS&nbsp;</strong>- 10 new blocks and 1 new liquid</span></p>
 <div class="spoiler">
@@ -223,9 +216,26 @@
 <p>-Honey Crystal Blocks will be scattered throughout the dimension either underwater or inside the caves. They are most common in Hive Wall biome and lest common in Sugar Water biome.</p>
 </div>
 <p>&nbsp;</p>
-<p><span style="font-size: 14px;"><strong>MOD COMPATIBILITY&nbsp;</strong>- Interacts directly with 5 other mods!</span></p>
+<p><span style="font-size: 14px;"><strong>MOD COMPATIBILITY&nbsp;</strong>- Interacts directly with 6 other mods!</span></p>
 <div class="spoiler">
-<p>&nbsp;<strong>Productive Bees</strong> - <a href="https://www.curseforge.com/minecraft/mc-mods/productivebees">https://www.curseforge.com/minecraft/mc-mods/productivebees</a></p>
+<p>&nbsp;<strong>Buzzier Bees</strong> -&nbsp;<a href="https://www.curseforge.com/minecraft/mc-mods/buzzier-bees">https://www.curseforge.com/minecraft/mc-mods/buzzier-bees</a></p>
+<div class="spoiler">
+<p>-Crystallized Honey Block will be incorporated into the terrain generation above sea level!&nbsp;</p>
+<p>&nbsp;</p>
+<p>-Bee Dungeons and Spider Infested Bee Dungeons will now generate several random candles from Buzzier Bees including scented versions!</p>
+<p>&nbsp;</p>
+<p>-With the Honey Wand, you can take/add honey from Filled Porous Honeycomb Blocks and&nbsp;Porous Honeycomb Blocks without angering bees.&nbsp;</p>
+<p>&nbsp;</p>
+<p>-The Honey Wand can also take honey from Honeycomb Brood Blocks but since you killed the larva, you get Wrath of the Hive effect and angry bees coming at you!</p>
+<p>&nbsp;</p>
+<p>-You can feed bees with Sticky Honey Wand or Honey Soup and can calm angered bees.</p>
+<p>&nbsp;</p>
+<p>-Using a Bottle of Bee item on a Empty Honeycomb Brood Block will revive the block into a stage 1&nbsp;Honeycomb Brood Block. This can be done by hand or by a Dispenser facing the block.</p>
+<p>&nbsp;</p>
+<p>-Buzzier Bees' custom Bee Nest and Bee Hive blocks can be used to teleport to Bumblezone dimension.</p>
+</div>
+<p>&nbsp;</p>
+<p><strong>Productive Bees</strong> - <a href="https://www.curseforge.com/minecraft/mc-mods/productivebees">https://www.curseforge.com/minecraft/mc-mods/productivebees</a></p>
 <div class="spoiler">
 <p>-Enderpearls thrown at their hive blocks or their Expansion Boxes attached to a hive will now teleport you to The Bumblezone!</p>
 <p>&nbsp;</p>
@@ -529,7 +539,7 @@
 <h2 id="config" style="color: #b76a00;"><strong>HOW CAN I CONFIGURE THIS MOD?</strong></h2>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p><span style="font-size: 14px;">&nbsp; &nbsp;To reach this mod's config file, go into the config file and find the Bumblezone config files. The config is applied to all worlds at once so keep that in mind! However, some of the configs for this mod are in JSON so you just need to make a datapack to override those settings. Here's the files the datapack can override:&nbsp;https://github.com/TelepathicGrunt/Bumblezone/tree/master/src/main/resources/data/the_bumblezone</span></p>
+<p><span style="font-size: 14px;">&nbsp; &nbsp;To reach this mod's config file, go into the serverconfig folder in the world's save folder and find the Bumblezone config files. The config is applied to all worlds at once so keep that in mind! The mod compat config will be in the regular config folder next to the mod folder because it has to be loaded much earlier. However, some of the configs for this mod are in JSON so you just need to make a datapack to override those settings. In fact, some block tags used in this mod can be used to blacklist modded combs from being imported into the dimension! Here's the files the datapack can override:&nbsp;https://github.com/TelepathicGrunt/Bumblezone/tree/master/src/main/resources/data/the_bumblezone</span></p>
 <p><span style="font-size: 14px;">&nbsp;</span></p>
 <p><span style="font-size: 14px;">&nbsp; There are several config options currently for the mod. Some affects the dimension and lets you control how bright the fog is (forge config), what the movement factor of the dimension is (JSON config), and whether exiting the dimension will always place you back at Overworld instead of previous dimension you came from (forge config). Many other configs lets you customize the Wrath of the Hive effect so you can change how long it lasts, how far bees has to be to be angered and boosted, how strong the effects given to bees are, whether Wrath of the Hive can be triggered outside The Bumblezone, show particles of the effect, or just turn off the effect completely. Lots of options! Take a look at the in-game config and JSON files and let me know if there's any config option that would be super helpful for you to have with this mod. :)</span></p>
 <p>&nbsp;</p>
@@ -545,5 +555,8 @@
 <p>&nbsp;</p>
 <p style="color: #b76a00;"><strong>*If you find an issue, glitch, or have a suggestion about my mod, let me know! But if you don't have a GitHub account to report in the Issue tab above, just comment what the problem is below and I'll try and get back to you ASAP! :)&nbsp;</strong></p>
 <p>&nbsp;</p>
-<p><span style="font-size: 24px; color: #ff9900;"><strong>Discord Link for my channel about my mods! :&nbsp;<a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" style="font-size: 24px; color: #ff9900;" tabindex="0" title="https://discord.gg/4eHptfV" role="button" href="https://discord.gg/4eHptfV" target="_blank" rel="noopener noreferrer">https://discord.gg/4eHptfV</a></strong></span></p>
+<p><span style="font-size: 24px;"><strong>Discord Link for my channel about my mods! :&nbsp;</strong></span></p>
+<p><span style="font-size: 24px;"><strong><a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" style="font-size: 24px;" tabindex="0" title="https://discord.gg/4eHptfV" role="button" href="https://discord.gg/4eHptfV" target="_blank" rel="noopener noreferrer">https://discord.gg/4eHptfV</a></strong></span></p>
+<p><span style="font-size: 24px; color: #333399;"><strong>&nbsp;</strong></span></p>
+<p><span style="font-size: 24px;"><strong><a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" style="font-size: 24px;" tabindex="0" title="https://discord.gg/4eHptfV" role="button" href="https://discord.gg/4eHptfV" target="_blank" rel="noopener noreferrer"><img src="https://beeimg.com/images/g00282193071.png" alt="discord-logo-png-free-transparent-png-logos-discord-png-logo-300_300 (PNG)  | BeeIMG" width="67" height="67" /></a></strong></span></p>
 <p><span style="font-size: 24px; color: #333399;"><strong>&nbsp;</strong></span></p>

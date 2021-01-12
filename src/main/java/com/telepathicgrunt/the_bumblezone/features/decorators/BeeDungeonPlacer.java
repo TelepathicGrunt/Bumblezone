@@ -28,13 +28,13 @@ public class BeeDungeonPlacer extends Placement<NoPlacementConfig> {
             validSpot = false;
             int x = random.nextInt(4) + pos.getX() + 6;
             int z = random.nextInt(4) + pos.getZ() + 6;
-            int y = random.nextInt(context.getMaxY() - 10 - context.getSeaLevel()) + context.getSeaLevel() + 2;
+            int y = random.nextInt(context.func_242891_a() - 10 - context.func_242895_b()) + context.func_242895_b() + 2;
 
             //find a cave air spot
             for (Direction face : Direction.Plane.HORIZONTAL) {
                 mutable.setPos(x, y, z).move(face, 3);
 
-                if (context.getBlockState(mutable).getBlock() == Blocks.CAVE_AIR)
+                if (context.func_242894_a(mutable).getBlock() == Blocks.CAVE_AIR)
                     validSpot = true;
             }
 
@@ -44,7 +44,7 @@ public class BeeDungeonPlacer extends Placement<NoPlacementConfig> {
                     for (int yOffset = -3; yOffset <= 9; yOffset += 3) {
                         mutable.setPos(x, y, z).move(xOffset, yOffset, zOffset);
 
-                        if (context.getBlockState(mutable).getBlock() == Blocks.AIR)
+                        if (context.func_242894_a(mutable).getBlock() == Blocks.AIR)
                             validSpot = false;
                     }
                 }
@@ -52,7 +52,7 @@ public class BeeDungeonPlacer extends Placement<NoPlacementConfig> {
 
 
             mutable.setPos(x, y, z);
-            if (validSpot && context.getBlockState(mutable).isSolid()) {
+            if (validSpot && context.func_242894_a(mutable).isSolid()) {
                 validPositions.add(mutable);
                 return validPositions.stream();
             }

@@ -152,9 +152,9 @@ public class CarrierBeesCompat {
 
 		// Grab a nearby air materialposition not in the player's field of view
 		BlockPos spawnBlockPos = new BlockPos(
-				entity.getX() + (world.rand.nextInt(30) + 10) * (world.rand.nextBoolean() ? 1 : -1),
-				entity.getY() + (world.rand.nextInt(30) + 10) * (world.rand.nextBoolean() ? 1 : -1),
-				entity.getZ() + (world.rand.nextInt(30) + 10) * (world.rand.nextBoolean() ? 1 : -1));
+				entity.getPosX() + (world.rand.nextInt(30) + 10) * (world.rand.nextBoolean() ? 1 : -1),
+				entity.getPosY() + (world.rand.nextInt(30) + 10) * (world.rand.nextBoolean() ? 1 : -1),
+				entity.getPosZ() + (world.rand.nextInt(30) + 10) * (world.rand.nextBoolean() ? 1 : -1));
 		if(world.getBlockState(spawnBlockPos).getMaterial() != Material.AIR){
 			return;
 		}
@@ -191,7 +191,7 @@ public class CarrierBeesCompat {
 
 		((MobEntity)beeEntity).onInitialSpawn(
 				world,
-				world.getDifficultyForLocation(beeEntity.getBlockPos()),
+				world.getDifficultyForLocation(beeEntity.getPosition()),
 				SpawnReason.EVENT,
 				null,
 				null);

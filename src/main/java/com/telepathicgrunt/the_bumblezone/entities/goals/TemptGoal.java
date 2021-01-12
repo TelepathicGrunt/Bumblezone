@@ -68,9 +68,9 @@ public class TemptGoal extends Goal {
                     return false;
                 }
             } else {
-                this.targetX = this.closestPlayer.getX();
-                this.targetY = this.closestPlayer.getY();
-                this.targetZ = this.closestPlayer.getZ();
+                this.targetX = this.closestPlayer.getPosX();
+                this.targetY = this.closestPlayer.getPosY();
+                this.targetZ = this.closestPlayer.getPosZ();
             }
 
             this.rotationPitch = this.closestPlayer.rotationPitch;
@@ -88,9 +88,9 @@ public class TemptGoal extends Goal {
      * Execute a one shot task or start executing a continuous task
      */
     public void start() {
-        this.targetX = this.closestPlayer.getX();
-        this.targetY = this.closestPlayer.getY();
-        this.targetZ = this.closestPlayer.getZ();
+        this.targetX = this.closestPlayer.getPosX();
+        this.targetY = this.closestPlayer.getPosY();
+        this.targetZ = this.closestPlayer.getPosZ();
     }
 
     /**

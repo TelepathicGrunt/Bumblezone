@@ -44,7 +44,7 @@ public class MinecraftServerMixin {
     //Make list of mobs to attack upon creation of the world as we need
     //the world to make the mobs to check their classification.
     //Thanks Mojang
-    @Inject(method = "createWorlds(Lnet/minecraft/world/chunk/listener/IChunkStatusListener;)V",
+    @Inject(method = "func_240787_a_(Lnet/minecraft/world/chunk/listener/IChunkStatusListener;)V",
             at = @At("RETURN"))
     private void onWorldCreation(CallbackInfo ci) {
         BeeAggression.setupBeeHatingList(worlds.get(World.OVERWORLD));
@@ -67,8 +67,8 @@ public class MinecraftServerMixin {
         if(ModChecker.productiveBeesPresent || ModChecker.resourcefulBeesPresent){
             // make my biomes mutable
 
-            List<Biome> bumblezone_biomes = impl.get(Registry.BIOME_KEY).getEntries().stream()
-                    .filter(entry -> entry.getKey().getValue().getNamespace().equals(Bumblezone.MODID))
+            List<Biome> bumblezone_biomes = impl.getRegistry(Registry.BIOME_KEY).getEntries().stream()
+                    .filter(entry -> entry.getKey().getLocation().getNamespace().equals(Bumblezone.MODID))
                     .map(Map.Entry::getValue)
                     .collect(Collectors.toList());
 

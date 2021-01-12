@@ -34,8 +34,8 @@ public class BzBeesWaxPillarFeature extends Feature<NoFeatureConfig> {
 
    private void makeColumn(Direction direction, ISeedReader world, Random random, BlockPos pos){
 
-      BlockPos.Mutable blockpos$mutable = pos.mutableCopy();
-      BlockPos.Mutable blockpos$mutable1 = pos.mutableCopy();
+      BlockPos.Mutable blockpos$mutable = pos.toMutable();
+      BlockPos.Mutable blockpos$mutable1 = pos.toMutable();
       boolean flag = true;
       boolean flag1 = true;
       boolean flag2 = true;
@@ -47,18 +47,18 @@ public class BzBeesWaxPillarFeature extends Feature<NoFeatureConfig> {
          }
 
          world.setBlockState(blockpos$mutable, ResourcefulBeesRedirection.getRBBeesWaxBlock(), 2);
-         flag = flag && this.stopOrPlaceWax(world, random, blockpos$mutable1.set(blockpos$mutable, Direction.NORTH));
-         flag1 = flag1 && this.stopOrPlaceWax(world, random, blockpos$mutable1.set(blockpos$mutable, Direction.SOUTH));
-         flag2 = flag2 && this.stopOrPlaceWax(world, random, blockpos$mutable1.set(blockpos$mutable, Direction.WEST));
-         flag3 = flag3 && this.stopOrPlaceWax(world, random, blockpos$mutable1.set(blockpos$mutable, Direction.EAST));
+         flag = flag && this.stopOrPlaceWax(world, random, blockpos$mutable1.setAndMove(blockpos$mutable, Direction.NORTH));
+         flag1 = flag1 && this.stopOrPlaceWax(world, random, blockpos$mutable1.setAndMove(blockpos$mutable, Direction.SOUTH));
+         flag2 = flag2 && this.stopOrPlaceWax(world, random, blockpos$mutable1.setAndMove(blockpos$mutable, Direction.WEST));
+         flag3 = flag3 && this.stopOrPlaceWax(world, random, blockpos$mutable1.setAndMove(blockpos$mutable, Direction.EAST));
          blockpos$mutable.move(direction);
       }
 
       blockpos$mutable.move(direction.getOpposite());
-      this.tryPlaceWax(world, random, blockpos$mutable1.set(blockpos$mutable, Direction.NORTH));
-      this.tryPlaceWax(world, random, blockpos$mutable1.set(blockpos$mutable, Direction.SOUTH));
-      this.tryPlaceWax(world, random, blockpos$mutable1.set(blockpos$mutable, Direction.WEST));
-      this.tryPlaceWax(world, random, blockpos$mutable1.set(blockpos$mutable, Direction.EAST));
+      this.tryPlaceWax(world, random, blockpos$mutable1.setAndMove(blockpos$mutable, Direction.NORTH));
+      this.tryPlaceWax(world, random, blockpos$mutable1.setAndMove(blockpos$mutable, Direction.SOUTH));
+      this.tryPlaceWax(world, random, blockpos$mutable1.setAndMove(blockpos$mutable, Direction.WEST));
+      this.tryPlaceWax(world, random, blockpos$mutable1.setAndMove(blockpos$mutable, Direction.EAST));
       blockpos$mutable.move(direction);
       BlockPos.Mutable blockpos$mutable2 = new BlockPos.Mutable();
 
@@ -69,7 +69,7 @@ public class BzBeesWaxPillarFeature extends Feature<NoFeatureConfig> {
                blockpos$mutable2.setPos(blockpos$mutable.add(x, 0, z));
                int y = 3;
 
-               while(!world.getBlockState(blockpos$mutable1.set(blockpos$mutable2, direction)).isSolid()) {
+               while(!world.getBlockState(blockpos$mutable1.setAndMove(blockpos$mutable2, direction)).isSolid()) {
                   blockpos$mutable2.move(direction);
                   --y;
                   if (y <= 0) {
@@ -77,7 +77,7 @@ public class BzBeesWaxPillarFeature extends Feature<NoFeatureConfig> {
                   }
                }
 
-               if (world.getBlockState(blockpos$mutable1.set(blockpos$mutable2, direction)).isSolid()) {
+               if (world.getBlockState(blockpos$mutable1.setAndMove(blockpos$mutable2, direction)).isSolid()) {
                   world.setBlockState(blockpos$mutable2, ResourcefulBeesRedirection.getRBBeesWaxBlock(), 2);
                }
             }

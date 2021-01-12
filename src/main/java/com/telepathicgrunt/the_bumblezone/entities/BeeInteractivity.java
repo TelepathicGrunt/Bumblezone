@@ -25,8 +25,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class BeeInteractivity {
 
-    private static final ResourceLocation STICKY_HONEY_WAND = new ResourceLocation("buzzierbees:sticky_honey_wand");
-    private static final ResourceLocation BEE_SOUP = new ResourceLocation("buzzierbees:bee_soup");
+    private static final ResourceLocation STICKY_HONEY_WAND = new ResourceLocation("buzzier_bees:sticky_honey_wand");
+    private static final ResourceLocation BEE_SOUP = new ResourceLocation("buzzier_bees:bee_soup");
+    private static final ResourceLocation HONEY_TREAT = new ResourceLocation("productivebees:honey_treat");
 
     // heal bees with sugar water bottle or honey bottle
     public static void beeFeeding(World world, PlayerEntity playerEntity, Hand hand, Entity target) {
@@ -94,10 +95,23 @@ public class BeeInteractivity {
                     }
                 }
 
-                playerEntity.swingHand(hand, true);
+                playerEntity.swing(hand, true);
+            }
+            else if (ModChecker.productiveBeesPresent && Bumblezone.BzModCompatibilityConfig.allowHoneyTreatCompat.get()
+                    && itemRL != null && itemRL.equals(HONEY_TREAT))
+            {
+
+                // Heal bee a ton
+                beeEntity.addPotionEffect(new EffectInstance(Effects.INSTANT_HEALTH, 2, 1, false, false, false));
+
+                // very high chance to remove wrath of the hive from player
+                calmAndSpawnHearts(world, playerEntity, beeEntity, 0.4f, 5);
+
+                playerEntity.swing(hand, true);
             }
             else if (ModChecker.buzzierBeesPresent && itemRL != null &&
-                    (itemRL.equals(BEE_SOUP) || itemRL.equals(STICKY_HONEY_WAND)))
+                    (itemRL.equals(BEE_SOUP) ||
+                    (itemRL.equals(STICKY_HONEY_WAND) && Bumblezone.BzModCompatibilityConfig.allowHoneyWandCompat.get())))
             {
 
                 // Heal bee a bit
@@ -135,12 +149,12 @@ public class BeeInteractivity {
             }
         }
 
-        if (!beeEntity.hasAngerTime() || calmed)
+        if (!beeEntity.func_233678_J__() || calmed)
             ((ServerWorld) world).spawnParticle(
                     ParticleTypes.HEART,
-                    beeEntity.getX(),
-                    beeEntity.getY(),
-                    beeEntity.getZ(),
+                    beeEntity.getPosX(),
+                    beeEntity.getPosY(),
+                    beeEntity.getPosZ(),
                     hearts,
                     world.getRandom().nextFloat() * 0.5 - 0.25f,
                     world.getRandom().nextFloat() * 0.2f + 0.2f,
@@ -165,7 +179,7 @@ public class BeeInteractivity {
             }
         }
         else {
-            playerEntity.swingHand(hand, true);
+            playerEntity.swing(hand, true);
         }
     }
 }

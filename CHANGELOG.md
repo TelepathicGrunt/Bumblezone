@@ -7,11 +7,6 @@ Welcome to the Github! If you are looking for the most recent stable version, th
 An awesome dimension full of bees that becomes REALLY angry if you take their honey! 
 Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going above Y = 256 to below Y = 0.
 
-////
-Mods I'm keeping an eye on for future compat
--https://www.curseforge.com/minecraft/mc-mods/carrier-bees
--https://www.curseforge.com/minecraft/mc-mods/the-bees-knees-mod
-///
 
 ------------------------------------------------
 # | Bumblezone changelog |
@@ -19,23 +14,29 @@ Mods I'm keeping an eye on for future compat
   
    (V.2.2.9 Changes) (1.16.4 Minecraft)
      
+   Mod Compat:
+-Productive Bees's Honey Treat item now can be fed to bees or Honeycomb Brood Blocks.
+
+-Buzzier Bees compatibility is restored! Honey Wands can feed bees and Honeycomb Brood Blocks, take honey from blocks, 
+ Crystallized Honey spawns in the dimension, Bottled Bees can restore Empty Honeycon Brood Blocks, and Candles spawn in Bee Dungeons!
+
    Blocks:
-• Added broodBlocksBeeSpawnCapacity config option to allow users to change the automatic bee spawning mechanics of Honeycomb Brood Blocks.
+-Added broodBlocksBeeSpawnCapacity config option to allow users to change the automatic bee spawning mechanics of Honeycomb Brood Blocks.
 
    Dimension:
-• Falling out of Bumblezone dimension to teleport out shouldn't deal fall damage now.
+-Falling out of Bumblezone dimension to teleport out shouldn't deal fall damage now.
 
-• Added onlyOverworldHivesTeleports config option to allow people to make it only possible to enter The Bumblezone from the Overworld.
+-Added onlyOverworldHivesTeleports config option to allow people to make it only possible to enter The Bumblezone from the Overworld.
 
-• Vanilla Bees in The Bumblezone now have a new AI that makes them wander better, lag less, and not cluster on the ceiling anymore. (for Forge version only)
+-Vanilla Bees in The Bumblezone now have a new AI that makes them wander better, lag less, and not cluster on the ceiling anymore. (for Forge version only)
 
-• Bees spawned from new chunks are less likely to be pollenated.
+-Bees spawned from new chunks are less likely to be pollenated.
 
    Teleportation:
-• Fixed Teleportation mode 2 and 3 being broken and not saving previous pos and dims. 
+-Fixed Teleportation mode 2 and 3 being broken and not saving previous pos and dims. 
 
    Items:
-• Fixed Honey Shield registering its Dispenser behavior twice.
+-Fixed Honey Shield registering its Dispenser behavior twice.
 
    Mixins:
 -Prefixed all my accessor and invoker mixins due to this bug in mixins that could cause a crash with other mods for same named mixins.
@@ -45,29 +46,29 @@ Mods I'm keeping an eye on for future compat
    (V.2.2.8 Changes) (1.16.4 Minecraft)
    
    Misc:
-• Fixed various serverside crashes.
+-Fixed various serverside crashes.
  
    Dimension:
-• Fixed Sugar Waterfalls only being placed in a single x/z column instead of spread out.
+-Fixed Sugar Waterfalls only being placed in a single x/z column instead of spread out.
 
-• Reduced Sugar Waterfall amount.
+-Reduced Sugar Waterfall amount.
 
    Teleportation:
-• Added blacklisted_teleportable_hive_blocks.json tag file that datapacks can override.
+-Added blacklisted_teleportable_hive_blocks.json tag file that datapacks can override.
   Add hive blocks to here if you don't want them to allow teleportation to the Bumblezone dimension.
 
    Mod Compat:
-• Added blacklisted_resourceful_bees_combs.json and blacklisted_productive_bees_combs.json
+-Added blacklisted_resourceful_bees_combs.json and blacklisted_productive_bees_combs.json
   tag files that datapacks can override. Add combs to these tags to blacklist them from being
   imported into the dimension.
   
-• Now future combs that Productive Bees adds will be added to the dimension automatically.
+-Now future combs that Productive Bees adds will be added to the dimension automatically.
    
    Config:
-• Moved the Mod Compat config file to be now per-startup instead of per-world.
+-Moved the Mod Compat config file to be now per-startup instead of per-world.
   It can be found in the config folder next to the mods folder now.
   
-• Removed the requiredBlockUnderHive config and instead, replaced it with the tag:
+-Removed the requiredBlockUnderHive config and instead, replaced it with the tag:
   the_bumblezone/tags/blocks/required_blocks_under_hive_to_teleport.json. Override
   this tag file with a datapack to change what blocks are needed under hives to allow
   teleportation.
@@ -75,168 +76,168 @@ Mods I'm keeping an eye on for future compat
    (V.2.2.7 Changes) (1.16.4 Minecraft)
    
    Effects:
-• Adjusted Wrath of the Hive to apply effects to bees with the duration equal to
+-Adjusted Wrath of the Hive to apply effects to bees with the duration equal to
   the remaining Wrath of the Hive time on the target. 
  
-• Fixed bees being able to see through walls to find spiders and bears and not
+-Fixed bees being able to see through walls to find spiders and bears and not
   being able to see through walls for players making bees extra angry.
  
    Dimension:
-• Reduced mob cap a bit in The Bumblezone dimension to reduce amount of Bees due to lag.
+-Reduced mob cap a bit in The Bumblezone dimension to reduce amount of Bees due to lag.
 
  
     (V.2.2.6 Changes) (1.16.4 Minecraft)
    
    Mod Compat:
-• Fixed Resourceful Bees compat running way more than needed.
+-Fixed Resourceful Bees compat running way more than needed.
 
-• Fixed unregistered ConfiguredFeatures from occurring from my code.
+-Fixed unregistered ConfiguredFeatures from occurring from my code.
 
-• Updated mod compat with Productive Bees v0.5.1.1 but dropped support for TileEntity based combs.
+-Updated mod compat with Productive Bees v0.5.1.1 but dropped support for TileEntity based combs.
 
-• Use Beehive tag for what block Enderpearls can hit to teleport to The Bumblezone dimension.
+-Use Beehive tag for what block Enderpearls can hit to teleport to The Bumblezone dimension.
 
 
     (V.2.2.5 Changes) (1.16.4 Minecraft)
    
    Items:
-• Fixed particles and sounds being played twice for Empty Bucket, 
+-Fixed particles and sounds being played twice for Empty Bucket, 
   Glass Bottle, and Honey Bottle when activated in a Dispenser.
 
  
     (V.2.2.4 Changes) (1.16.4 Minecraft)
    
    Mod Compat:
-• Fixed crash with Resourceful Bees if player disables their honeycombs.
+-Fixed crash with Resourceful Bees if player disables their honeycombs.
 
   
     (V.2.2.3 Changes) (1.16.4 Minecraft)
    
    Mod Compat:
-• Now attempt to try and make sure Productive Bees honeycombs 
+-Now attempt to try and make sure Productive Bees honeycombs 
   does not try to be placed out of bounds. Also will now not 
   spawn any broken combs if that comb type is disabled in 
   Productive Bees.
   
-• Fixed log spam about getting a Block Entity before it was made.
+-Fixed log spam about getting a Block Entity before it was made.
 
    Misc:
-• Removed logo blur from logo in mod list.
+-Removed logo blur from logo in mod list.
    
    
     (V.2.2.2 Changes) (1.16.3 Minecraft)
    
    Mod compat:
-• Fixed classloading issues.
+-Fixed classloading issues.
 
-• Fixed crash if Potion of Bees is on and Productive Bees is off.
+-Fixed crash if Potion of Bees is on and Productive Bees is off.
 
 
     (V.2.2.1 Changes) (1.16.3 Minecraft)
    
    Major:
-• Register to Forge registry instead of vanilla due to a breaking 
+-Register to Forge registry instead of vanilla due to a breaking 
   change done by Forge. Special thanks to andrew0030 for helping
   out with fixing this!
 
    Dimension:
-• Optimized the SurfaceBuilder and the caves a bit!
+-Optimized the SurfaceBuilder and the caves a bit!
   The underwater block in the configured surfacebuilder json file
   was changed from the_bumblezone:porous_honeycomb_block to 
   the_bumblezone:filled_porous_honeycomb_block.
   
-• Fixed bug where Honey Crystals could be floating from worldgen.
+-Fixed bug where Honey Crystals could be floating from worldgen.
   
-• Attempted to optimize cave code slightly. Cave shape changed a bit as a result.
+-Attempted to optimize cave code slightly. Cave shape changed a bit as a result.
  
    Teleportation:
-• Fixed teleportation mode 1 and 2 not having correct coordinates when exiting Bumblezone.
+-Fixed teleportation mode 1 and 2 not having correct coordinates when exiting Bumblezone.
 
-• Fixed Enderpearls not being removed when thrown and Bee Nest and causing people to teleport
+-Fixed Enderpearls not being removed when thrown and Bee Nest and causing people to teleport
   back into The Bumblezone immediately when they leave it.
  
    Mod Compat:
-• Fixed possible Dispenser issue if Potion of Bees's setup event is ran after mine.
+-Fixed possible Dispenser issue if Potion of Bees's setup event is ran after mine.
 
-• Fixed Resourceful Bees compat not running if Productive Bees is off.
+-Fixed Resourceful Bees compat not running if Productive Bees is off.
   
   
     (V.2.2.0 Changes) (1.16.3 Minecraft)
    
    Dimension:
-• If you make a biome under the namespace of "the_bumblezone",
+-If you make a biome under the namespace of "the_bumblezone",
   that biome will now spawn in the Bumblezone dimension!!!
 
    Mod Compat:
-• Fixed crash with Resourceful Bees
+-Fixed crash with Resourceful Bees
 
-• Added mod compat with Resourceful Bees! Use their Apairy or hive blocks to enter Bumblezone!
+-Added mod compat with Resourceful Bees! Use their Apairy or hive blocks to enter Bumblezone!
   Their bees spawn in the dimension and from the Honeycomb Brood Blocks! Their Honeycombs spawns
   in the dimension!
   
-• Fixed possible crash with registering Dispenser Behaviors.
+-Fixed possible crash with registering Dispenser Behaviors.
    
-• Fixed bug where modded bees do not spawn when chunks are created in Bumblezone.
+-Fixed bug where modded bees do not spawn when chunks are created in Bumblezone.
 
    Bee Interactivity:
-• Feeding bees now works again!
+-Feeding bees now works again!
 
    
     (V.2.1.1 Changes) (1.16.3 Minecraft)
  
    Dimension:
-• Fixed SurfaceBuilder for BZ biomes being registered twice
+-Fixed SurfaceBuilder for BZ biomes being registered twice
   instead of once. Players will see no change other than 1
   less line in the latest.log file lol.
   
-• Fixed an issue on my end with Biomes O Plenty on so now
+-Fixed an issue on my end with Biomes O Plenty on so now
   it will crash showing the real issue with BoP in the logs.
   Still working on a real fix. Watch https://github.com/Glitchfiend/BiomesOPlenty/issues/1704
   for any progress.
  
-• Trying to register biomes ahead of time to reserve their IDs. 
+-Trying to register biomes ahead of time to reserve their IDs. 
   Might help with a biome ID shifting issue with adding/removing mods or something.
 
  
     (V.2.1.0 Changes) (1.16.3 Minecraft)
  
    Features:
-• Adjusted Honey Crystals to make them spawn more often.
+-Adjusted Honey Crystals to make them spawn more often.
 
    Teleportation:
-• Fixed crash when exiting The Bumblezone at times.
+-Fixed crash when exiting The Bumblezone at times.
 
-• Fixed coordinate scaling not working properly when entering/exiting The Bumblezone.
+-Fixed coordinate scaling not working properly when entering/exiting The Bumblezone.
 
    Mod Compatibility:
-• Updated Productive Bees compat to use their configurable bees and honeycombs.
+-Updated Productive Bees compat to use their configurable bees and honeycombs.
   Support for their non-configurable bees and blocks was removed as they are 
   moving away from using them.
   
-• Added mod support for Carrier Bees's bees!
+-Added mod support for Carrier Bees's bees!
   Their bees will now spawn in The Bumblezone when you have Wrath of the Hive!
   
-• Potion of Bees is working as intended. 
+-Potion of Bees is working as intended. 
   (They just ported so this was just me checking if the compat still works)
   
    Dimension:
-• Cleaned up the json format for the dimension's json file.
+-Cleaned up the json format for the dimension's json file.
 
    Misc:
-• Cleaned up codebase a bit.
+-Cleaned up codebase a bit.
 
 
     (V.2.0.5 Changes) (1.16.2 Minecraft)
  
    Lang:
-• Added translation for Honey Slime mob name.
+-Added translation for Honey Slime mob name.
 
-• Portuguese translations added by Mikeliro! Thank you!
+-Portuguese translations added by Mikeliro! Thank you!
 
-• Added Simplified Chinese translation from Samekichi! Thank you!
+-Added Simplified Chinese translation from Samekichi! Thank you!
    
    Config:
-• The status effect configs now reflect their true level of intensity.
+-The status effect configs now reflect their true level of intensity.
   1 is now the minimum value instead of 0 as 0 actually was level 1.
   Absorption is now at the correct level to give 4 extra health instead
   of 8 which made bees too hard to kill.
@@ -245,10 +246,10 @@ Mods I'm keeping an eye on for future compat
     (V.2.0.4 Changes) (1.16.2 Minecraft)
  
    Blocks:
-• Fixed crash when mining Honeycomb Brood Block.
+-Fixed crash when mining Honeycomb Brood Block.
 
    Mobs:
-• Bees spawned in the Bumblezone will have a chance to be 
+-Bees spawned in the Bumblezone will have a chance to be 
   pollinated no matter how they are spawned in the dimension.
   (Due to tiny performance improvement change done in backend)
 
