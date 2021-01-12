@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.mixin.DefaultDispenseItemBehaviorInvoker;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
@@ -62,10 +63,12 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior {
                     addGlassBottleToDispenser(source);
                 else
                     stack = new ItemStack(Items.GLASS_BOTTLE);
-            } else {
+            }
+            else {
                 DROP_ITEM_BEHAVIOR.dispense(source, new ItemStack(Items.GLASS_BOTTLE));
             }
-        } else if (blockstate.getBlock() == BzBlocks.POROUS_HONEYCOMB.get()) {
+        }
+        else if (blockstate.getBlock() == BzBlocks.POROUS_HONEYCOMB.get()) {
             world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState());
             stack.shrink(1);
             if (!Bumblezone.BzBlockMechanicsConfig.dispensersDropGlassBottles.get()) {
@@ -75,15 +78,7 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior {
                     stack = new ItemStack(Items.GLASS_BOTTLE);
             }
         } else {
-            // If it instanceof DefaultDispenseItemBehavior, call dispenseStack directly to avoid
-            // playing particles and sound twice due to dispense method having that by default.
-            if(DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR instanceof DefaultDispenseItemBehavior) {
-                return ((DefaultDispenseItemBehaviorInvoker)DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR).bz_invokeDispenseStack(source, stack);
-            }
-            else {
-                // Fallback to dispense as someone chose to make a custom class without dispenseStack.
-                return DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR.dispense(source, stack);
-            }
+            return GeneralUtils.dispenseStackProperly(source, stack, DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR);
         }
 
         return stack;

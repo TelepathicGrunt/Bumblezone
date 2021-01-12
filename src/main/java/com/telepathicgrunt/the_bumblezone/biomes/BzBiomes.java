@@ -15,9 +15,9 @@ public class BzBiomes {
     // Dummy biomes to reserve the numeric ID safely for the json biomes to overwrite.
     // No static variable to hold as these dummy biomes should NOT be held and referenced elsewhere.
     static {
-        createBiome("hive_wall", BiomeMaker::createTheVoid);
-        createBiome("hive_pillar", BiomeMaker::createTheVoid);
-        createBiome("sugar_water_floor", BiomeMaker::createTheVoid);
+        createBiome("hive_wall", BiomeMaker::makeVoidBiome);
+        createBiome("hive_pillar", BiomeMaker::makeVoidBiome);
+        createBiome("sugar_water_floor", BiomeMaker::makeVoidBiome);
     }
 
     public static RegistryObject<Biome> createBiome(String name, Supplier<Biome> biome) {

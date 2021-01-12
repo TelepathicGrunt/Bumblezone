@@ -40,7 +40,7 @@ public class HoneycombBroodEvents
 			if (raytraceresult.getType() == RayTraceResult.Type.BLOCK && foundBlock.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD.get()) {
 
 				playerEntity.swingArm(playerHand);
-				world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 				world.setBlockState(raytracedPos, BzBlocks.HONEYCOMB_BROOD.get().getDefaultState()
 						.with(HoneycombBrood.STAGE, 0)
 						.with(DirectionalBlock.FACING, foundBlock.get(DirectionalBlock.FACING)));

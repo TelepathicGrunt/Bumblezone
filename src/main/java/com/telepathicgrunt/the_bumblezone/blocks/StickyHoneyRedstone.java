@@ -82,7 +82,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      * Remove vine's ticking with removing power instead.
      */
     @Override
-    public void scheduledTick(BlockState blockstate, ServerWorld world, BlockPos pos, Random rand) {
+    public void tick(BlockState blockstate, ServerWorld world, BlockPos pos, Random rand) {
         this.updateState(world, pos, blockstate, blockstate.get(POWERED) ? 1 : 0);
     }
 
@@ -94,7 +94,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
             return;
 
         if (blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
-            world.updateNeighbors(pos, this);
+            world.func_230547_a_(pos, this);
         }
 
         for (Direction direction : Direction.values()) {
@@ -228,7 +228,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     protected int computeRedstoneStrength(BlockState blockstate, World world, BlockPos pos) {
 
         AxisAlignedBB axisalignedbb = getShape(blockstate, world, pos, null).getBoundingBox().offset(pos);
-        List<? extends Entity> list = world.getEntitiesIncludingUngeneratedChunks(LivingEntity.class, axisalignedbb);
+        List<? extends Entity> list = world.getLoadedEntitiesWithinAABB(LivingEntity.class, axisalignedbb);
 
         if (!list.isEmpty()) {
             return 1;

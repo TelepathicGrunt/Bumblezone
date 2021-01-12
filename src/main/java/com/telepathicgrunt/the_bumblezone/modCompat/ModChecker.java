@@ -13,6 +13,7 @@ public class ModChecker
 	public static boolean productiveBeesPresent = false;
 	public static boolean carrierBeesPresent = false;
 	public static boolean resourcefulBeesPresent = false;
+	public static boolean buzzierBeesPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -35,6 +36,9 @@ public class ModChecker
 
 			modid = "resourcefulbees";
 			loadupModCompat(modid, () -> ResourcefulBeesCompat.setupResourcefulBees());
+
+			modid = "buzzier_bees";
+			loadupModCompat(modid, () -> BuzzierBeesCompat.setupBuzzierBees());
 
 			modid = "productivebees";
 			if(isNotOutdated(modid, "0.5.1", true))

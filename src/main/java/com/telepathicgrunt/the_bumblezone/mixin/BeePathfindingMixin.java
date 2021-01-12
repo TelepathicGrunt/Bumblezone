@@ -39,7 +39,7 @@ public class BeePathfindingMixin {
         BeeEntity beeEntity = (BeeEntity)FIELD.get(wanderGoal);
 
         // Do our own bee AI in the Bumblezone. Makes bees wander more and should be slightly better performance. Maybe...
-        if(beeEntity.world.getRegistryKey().equals(BzDimension.BZ_WORLD_KEY)){
+        if(beeEntity.world.getDimensionKey().equals(BzDimension.BZ_WORLD_KEY)){
             cachedPathHolder = BeeAI.smartBeesTM(beeEntity, cachedPathHolder);
             ci.cancel();
         }

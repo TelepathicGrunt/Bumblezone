@@ -32,12 +32,12 @@ public class FluidRender {
             RenderSystem.defaultBlendFunc();
             float f7 = -event.getPlayer().rotationYaw / 64.0F;
             float f8 = event.getPlayer().rotationPitch / 64.0F;
-            Matrix4f matrix4f = event.getMatrixStack().peek().getModel();
-            bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR_TEXTURE);
-            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).color(f, f, f, 0.42F).texture(4.0F + f7, 4.0F + f8).endVertex();
-            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).color(f, f, f, 0.42F).texture(0.0F + f7, 4.0F + f8).endVertex();
-            bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).color(f, f, f, 0.42F).texture(0.0F + f7, 0.0F + f8).endVertex();
-            bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).color(f, f, f, 0.42F).texture(4.0F + f7, 0.0F + f8).endVertex();
+            Matrix4f matrix4f = event.getMatrixStack().getLast().getMatrix();
+            bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR_TEX);
+            bufferbuilder.pos(matrix4f, -1.0F, -1.0F, -0.5F).color(f, f, f, 0.42F).tex(4.0F + f7, 4.0F + f8).endVertex();
+            bufferbuilder.pos(matrix4f, 1.0F, -1.0F, -0.5F).color(f, f, f, 0.42F).tex(0.0F + f7, 4.0F + f8).endVertex();
+            bufferbuilder.pos(matrix4f, 1.0F, 1.0F, -0.5F).color(f, f, f, 0.42F).tex(0.0F + f7, 0.0F + f8).endVertex();
+            bufferbuilder.pos(matrix4f, -1.0F, 1.0F, -0.5F).color(f, f, f, 0.42F).tex(4.0F + f7, 0.0F + f8).endVertex();
             bufferbuilder.finishDrawing();
             WorldVertexBufferUploader.draw(bufferbuilder);
             RenderSystem.disableBlend();

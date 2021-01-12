@@ -42,14 +42,14 @@ public class PlayerTeleportation {
         //grabs the capability attached to player for dimension hopping
 
         //Makes it so player does not get killed for falling into the void
-        if (playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)) {
-            if (playerEntity.getY() < -3) {
-                playerEntity.setPos(playerEntity.getX(), -3.01D, playerEntity.getZ());
-                playerEntity.setPosition(playerEntity.getX(), -3.01D, playerEntity.getZ());
+        if (playerEntity.getEntityWorld().getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID)) {
+            if (playerEntity.getPosY() < -3) {
+                playerEntity.setPos(playerEntity.getPosX(), -3.01D, playerEntity.getPosZ());
+                playerEntity.setPosition(playerEntity.getPosX(), -3.01D, playerEntity.getPosZ());
                 playerEntity.fallDistance = 0;
 
                 teleportOutOfBz(playerEntity);
-            } else if (playerEntity.getY() > 255) {
+            } else if (playerEntity.getPosY() > 255) {
                 teleportOutOfBz(playerEntity);
             }
         }
@@ -129,8 +129,8 @@ public class PlayerTeleportation {
         // Make sure we are on server by checking if thrower is ServerPlayerEntity and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (!world.isRemote && pearlEntity.getOwner() instanceof ServerPlayerEntity &&
-            !world.getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!Bumblezone.BzDimensionConfig.onlyOverworldHivesTeleports.get() || world.getRegistryKey().equals(World.OVERWORLD)))
+            !world.getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID) &&
+            (!Bumblezone.BzDimensionConfig.onlyOverworldHivesTeleports.get() || world.getDimensionKey().equals(World.OVERWORLD)))
         {
             ServerPlayerEntity playerEntity = (ServerPlayerEntity) pearlEntity.getOwner(); // the thrower
             Vector3d hitBlockPos = hitResult.getHitVec(); //position of the collision

@@ -2,6 +2,8 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.effects.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modCompat.BuzzierBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -27,7 +29,7 @@ import java.util.Random;
 public class FilledPorousHoneycomb extends Block {
 
     public FilledPorousHoneycomb() {
-        super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).hardnessAndResistance(0.5F, 0.5F).sound(SoundType.CORAL).velocityMultiplier(0.9f));
+        super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).hardnessAndResistance(0.5F, 0.5F).sound(SoundType.CORAL).speedFactor(0.9f));
     }
 
 
@@ -51,7 +53,7 @@ public class FilledPorousHoneycomb extends Block {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResultType onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
+    public ActionResultType onBlockActivated(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
         ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
         /*
@@ -59,7 +61,7 @@ public class FilledPorousHoneycomb extends Block {
          */
         if (itemstack.getItem() == Items.GLASS_BOTTLE) {
             world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), 3); // removed honey from this block
-            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
             if (!playerEntity.isCreative()) {
                 itemstack.shrink(1); // remove current empty bottle
@@ -72,7 +74,7 @@ public class FilledPorousHoneycomb extends Block {
                 }
             }
 
-            if ((playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
+            if ((playerEntity.getEntityWorld().getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID) ||
                     Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&
@@ -89,8 +91,20 @@ public class FilledPorousHoneycomb extends Block {
 
             return ActionResultType.SUCCESS;
         }
+        //allow compat with honey wand use
+        else if (ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.allowHoneyWandCompat.get())
+        {
+            ActionResultType action = BuzzierBeesRedirection.honeyWandTakingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+            if (action == ActionResultType.SUCCESS)
+            {
+                world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.get().getDefaultState(), 3); // remove honey from this block
+                world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
-        return super.onUse(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+                return action;
+            }
+        }
+
+        return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
     }
 
 

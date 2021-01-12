@@ -47,13 +47,13 @@ import java.util.stream.IntStream;
 
 public class BzChunkGenerator extends ChunkGenerator {
     public static void registerChunkgenerator() {
-        Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Bumblezone.MODID, "chunk_generator"), BzChunkGenerator.CODEC);
+        Registry.register(Registry.CHUNK_GENERATOR_CODEC, new ResourceLocation(Bumblezone.MODID, "chunk_generator"), BzChunkGenerator.CODEC);
     }
 
     public static final Codec<BzChunkGenerator> CODEC = RecordCodecBuilder.create(
             (instance) -> instance.group(
                     BiomeProvider.CODEC.fieldOf("biome_source").forGetter((surfaceChunkGenerator) -> surfaceChunkGenerator.biomeProvider),
-                    DimensionStructuresSettings.CODEC.fieldOf("structures").forGetter((ChunkGenerator::getStructuresConfig))
+                    DimensionStructuresSettings.field_236190_a_.fieldOf("structures").forGetter((ChunkGenerator::func_235957_b_))
             ).apply(instance, instance.stable(BzChunkGenerator::new)));
 
     private static final float[] field_16649 = Util.make(new float[13824], (array) -> {
@@ -123,14 +123,14 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    protected Codec<? extends ChunkGenerator> getCodec() {
+    protected Codec<? extends ChunkGenerator> func_230347_a_() {
         return CODEC;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public ChunkGenerator withSeed(long seed) {
-        return new BzChunkGenerator(this.biomeProvider.withSeed(seed), dimensionStructuresSettings);
+    public ChunkGenerator func_230349_a_(long seed) {
+        return new BzChunkGenerator(this.biomeProvider.getBiomeProvider(seed), dimensionStructuresSettings);
     }
 
     private double sampleNoise(int x, int y, int z, double horizontalScaleX, double verticalScale, double horizontalScaleZ, double horizontalStretch, double verticalStretch) {
@@ -182,11 +182,11 @@ public class BzChunkGenerator extends ChunkGenerator {
         float h = 0.0F;
         float i = 0.0F;
         int k = this.getSeaLevel();
-        float l = this.biomeProvider.getBiomeForNoiseGen(x, k, z).getDepth();
+        float l = this.biomeProvider.getNoiseBiome(x, k, z).getDepth();
 
         for(int m = -LERP_RANGE; m <= LERP_RANGE; ++m) {
             for(int n = -LERP_RANGE; n <= LERP_RANGE; ++n) {
-                Biome biome = this.biomeProvider.getBiomeForNoiseGen(x + m, k, z + n);
+                Biome biome = this.biomeProvider.getNoiseBiome(x + m, k, z + n);
                 float o = biome.getDepth();
                 float p = biome.getScale();
 
@@ -250,12 +250,12 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public int func_222529_a(int x, int z, Heightmap.Type heightmapType) {
+    public int getHeight(int x, int z, Heightmap.Type heightmapType) {
         return this.sampleHeightmap(x, z, null, heightmapType.getHeightLimitPredicate());
     }
 
     @Override
-    public IBlockReader getColumnSample(int x, int z) {
+    public IBlockReader func_230348_a_(int x, int z) {
         BlockState[] blockStates = new BlockState[this.noiseSizeY * this.verticalNoiseResolution];
         this.sampleHeightmap(x, z, blockStates, null);
         return new Blockreader(blockStates);
@@ -312,7 +312,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public void buildSurface(WorldGenRegion region, IChunk chunk) {
+    public void generateSurface(WorldGenRegion region, IChunk chunk) {
         ChunkPos chunkPos = chunk.getPos();
         int i = chunkPos.x;
         int j = chunkPos.z;
@@ -337,7 +337,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public void populateNoise(IWorld world, StructureManager accessor, IChunk chunk) {
+    public void func_230352_b_(IWorld world, StructureManager accessor, IChunk chunk) {
         ObjectList<StructurePiece> objectList = new ObjectArrayList<>(10);
         ObjectList<JigsawJunction> objectList2 = new ObjectArrayList<>(32);
         ChunkPos chunkPos = chunk.getPos();
@@ -346,8 +346,8 @@ public class BzChunkGenerator extends ChunkGenerator {
         int k = i << 4;
         int l = j << 4;
 
-        for (Structure<?> feature : Structure.JIGSAW_STRUCTURES) {
-            accessor.getStructuresWithChildren(SectionPos.from(chunkPos, 0), feature).forEach((start) -> {
+        for (Structure<?> feature : Structure.field_236384_t_) {
+            accessor.func_235011_a_(SectionPos.from(chunkPos, 0), feature).forEach((start) -> {
             Iterator<StructurePiece> structurePiecesIterator = start.getComponents().iterator();
 
             while (true) {
@@ -413,7 +413,7 @@ public class BzChunkGenerator extends ChunkGenerator {
             }
 
             for(p = 0; p < this.noiseSizeZ; ++p) {
-                ChunkSection chunkSection = protoChunk.func_217332_a(15);
+                ChunkSection chunkSection = protoChunk.getSection(15);
                 chunkSection.lock();
 
                 for(int ySection = this.noiseSizeY - 1; ySection >= 0; --ySection) {
@@ -460,7 +460,7 @@ public class BzChunkGenerator extends ChunkGenerator {
                         int yChunkSection = currentY >> 4;
                         if (chunkSection.getYLocation() >> 4 != yChunkSection) {
                             chunkSection.unlock();
-                            chunkSection = protoChunk.func_217332_a(yChunkSection);
+                            chunkSection = protoChunk.getSection(yChunkSection);
                             chunkSection.lock();
                         }
 
@@ -557,7 +557,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public int getMaxY() {
+    public int getMaxBuildHeight() {
         return this.height;
     }
 
@@ -566,8 +566,8 @@ public class BzChunkGenerator extends ChunkGenerator {
      * For spawning specific mobs in certain places like structures.
      */
     @Override
-    public List<MobSpawnInfo.Spawners> getEntitySpawnList(Biome biome, StructureManager accessor, EntityClassification group, BlockPos pos) {
-        return super.getEntitySpawnList(biome, accessor, group, pos);
+    public List<MobSpawnInfo.Spawners> func_230353_a_(Biome biome, StructureManager accessor, EntityClassification group, BlockPos pos) {
+        return super.func_230353_a_(biome, accessor, group, pos);
     }
 
     /**
@@ -583,7 +583,7 @@ public class BzChunkGenerator extends ChunkGenerator {
      * dimension as well.
      */
     @Override
-    public void populateEntities(WorldGenRegion region) {
+    public void func_230354_a_(WorldGenRegion region) {
         int xChunk = region.getMainChunkX();
         int zChunk = region.getMainChunkZ();
         int xCord = xChunk << 4;
@@ -591,7 +591,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         Biome biome = region.getBiome((new ChunkPos(xChunk, zChunk)).asBlockPos());
         SharedSeedRandom sharedseedrandom = new SharedSeedRandom();
         sharedseedrandom.setDecorationSeed(region.getSeed(), xCord, zCord);
-        while (sharedseedrandom.nextFloat() < biome.getSpawnSettings().getCreatureSpawnProbability() * 0.75f) {
+        while (sharedseedrandom.nextFloat() < biome.getMobSpawnInfo().getCreatureSpawnProbability() * 0.75f) {
             //20% of time, spawn honey slime. Otherwise, spawn bees.
             MobSpawnInfo.Spawners biome$spawnlistentry = sharedseedrandom.nextFloat() < 0.25f ? INITIAL_HONEY_SLIME_ENTRY : INITIAL_BEE_ENTRY;
 
@@ -625,7 +625,7 @@ public class BzChunkGenerator extends ChunkGenerator {
                         if (mobentity.canSpawn(region, SpawnReason.CHUNK_GENERATION) && mobentity.isNotColliding(region)) {
                             mobentity.onInitialSpawn(
                                     region,
-                                    region.getDifficultyForLocation(new BlockPos(mobentity.getBlockPos())),
+                                    region.getDifficultyForLocation(new BlockPos(mobentity.getPosition())),
                                     SpawnReason.CHUNK_GENERATION,
                                     null,
                                     null);

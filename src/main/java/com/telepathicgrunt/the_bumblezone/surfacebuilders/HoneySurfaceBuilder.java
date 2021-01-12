@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.surfacebuilders;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.modCompat.BuzzierBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ResourcefulBeesRedirection;
 import net.minecraft.block.BlockState;
@@ -54,6 +55,11 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
                     else if (currentBlockState == config.getTop() || currentBlockState == config.getUnder()) {
                         chunkIn.setBlockState(blockpos$Mutable, config.getUnderWaterMaterial(), false);
                     }
+                }
+                else if(ypos >= seaLevel + 5 + Math.max(noise, 0) + random.nextInt(2) &&
+                        ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.crystallizedHoneyWorldgen.get())
+                {
+                    chunkIn.setBlockState(blockpos$Mutable, BuzzierBeesRedirection.getCrystallizedHoneyBlock(), false);
                 }
 
                 isSurface = false;

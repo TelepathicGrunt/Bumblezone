@@ -47,7 +47,7 @@ public class ProtectionOfTheHiveEffect extends Effect {
         {
             if(bee.getAttackTarget() == entity){
                 bee.setAttackTarget(null);
-                bee.setAngryAt(null);
+                bee.setAngerTarget(null);
                 bee.setAngerTime(0);
             }
         }
@@ -86,7 +86,7 @@ public class ProtectionOfTheHiveEffect extends Effect {
         for (BeeEntity bee : beeList)
         {
             bee.setAttackTarget(entity);
-            bee.setAngryAt(uuid);
+            bee.setAngerTarget(uuid);
             if(entity == null){
                 bee.setAngerTime(0);
             }

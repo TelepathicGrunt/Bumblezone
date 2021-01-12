@@ -1,6 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
 import com.telepathicgrunt.the_bumblezone.mixin.BiomeGenerationSettingsAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.DefaultDispenseItemBehaviorInvoker;
+import net.minecraft.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.dispenser.IBlockSource;
+import net.minecraft.dispenser.IDispenseItemBehavior;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -31,5 +36,18 @@ public class GeneralUtils {
 
         // Make the Structure and GenerationStages (features) list mutable for modification later
         ((BiomeGenerationSettingsAccessor)biome.getGenerationSettings()).bz_setFeatures(mutableGenerationStages);
+    }
+
+    // If it instanceof DefaultDispenseItemBehavior, call dispenseStack directly to avoid
+    // playing particles and sound twice due to dispense method having that by default.
+    public static ItemStack dispenseStackProperly(IBlockSource source, ItemStack stack, IDispenseItemBehavior defaultDispenseBehavior) {
+
+        if (defaultDispenseBehavior instanceof DefaultDispenseItemBehavior) {
+            return ((DefaultDispenseItemBehaviorInvoker) defaultDispenseBehavior).bz_invokeDispenseStack(source, stack);
+        }
+        else {
+            // Fallback to dispense as someone chose to make a custom class without dispenseStack.
+            return defaultDispenseBehavior.dispense(source, stack);
+        }
     }
 }

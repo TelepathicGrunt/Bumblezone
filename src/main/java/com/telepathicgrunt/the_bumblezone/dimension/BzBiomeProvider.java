@@ -31,12 +31,12 @@ import java.util.stream.Collectors;
 
 public class BzBiomeProvider extends BiomeProvider {
     public static void registerBiomeProvider() {
-        Registry.register(Registry.BIOME_SOURCE, new ResourceLocation(Bumblezone.MODID, "biome_source"), BzBiomeProvider.CODEC);
+        Registry.register(Registry.BIOME_PROVIDER_CODEC, new ResourceLocation(Bumblezone.MODID, "biome_source"), BzBiomeProvider.CODEC);
     }
 
     public static final Codec<BzBiomeProvider> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
-                    RegistryLookupCodec.of(Registry.BIOME_KEY).forGetter((vanillaLayeredBiomeSource) -> vanillaLayeredBiomeSource.BIOME_REGISTRY))
+                    RegistryLookupCodec.getLookUpCodec(Registry.BIOME_KEY).forGetter((vanillaLayeredBiomeSource) -> vanillaLayeredBiomeSource.BIOME_REGISTRY))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
 
     public static ResourceLocation HIVE_WALL = new ResourceLocation(Bumblezone.MODID, "hive_wall");
@@ -53,7 +53,7 @@ public class BzBiomeProvider extends BiomeProvider {
     }
     public BzBiomeProvider(long seed, Registry<Biome> biomeRegistry) {
         super(biomeRegistry.getEntries().stream()
-                .filter(entry -> entry.getKey().getValue().getNamespace().equals(Bumblezone.MODID))
+                .filter(entry -> entry.getKey().getLocation().getNamespace().equals(Bumblezone.MODID))
                 .map(Map.Entry::getValue)
                 .collect(Collectors.toList()));
 
@@ -96,8 +96,8 @@ public class BzBiomeProvider extends BiomeProvider {
         return layer;
     }
 
-
-    public Biome getBiomeForNoiseGen(int x, int y, int z) {
+    @Override
+    public Biome getNoiseBiome(int x, int y, int z) {
         return this.sample(this.BIOME_REGISTRY, x, z);
     }
 
@@ -106,9 +106,9 @@ public class BzBiomeProvider extends BiomeProvider {
         Biome biome = registry.getByValue(k);
         if (biome == null) {
             if (SharedConstants.developmentMode) {
-                throw Util.throwOrPause(new IllegalStateException("Unknown biome id: " + k));
+                throw Util.pauseDevMode(new IllegalStateException("Unknown biome id: " + k));
             } else {
-                return registry.get(BiomeRegistry.fromRawId(0));
+                return registry.getValueForKey(BiomeRegistry.getKeyFromID(0));
             }
         } else {
             return biome;
@@ -116,13 +116,13 @@ public class BzBiomeProvider extends BiomeProvider {
     }
 
     @Override
-    protected Codec<? extends BiomeProvider> getCodec() {
+    protected Codec<? extends BiomeProvider> getBiomeProviderCodec() {
         return CODEC;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public BiomeProvider withSeed(long seed) {
+    public BiomeProvider getBiomeProvider(long seed) {
         return new BzBiomeProvider(seed, this.BIOME_REGISTRY);
     }
 }

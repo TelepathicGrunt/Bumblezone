@@ -52,7 +52,7 @@ public class HoneyCrystal extends Block {
     private Item item;
 
     public HoneyCrystal() {
-        super(Block.Properties.create(Material.GLASS, MaterialColor.ADOBE).lightLevel((blockstate) -> 1).hardnessAndResistance(0.3F, 0.3f).nonOpaque());
+        super(Block.Properties.create(Material.GLASS, MaterialColor.ADOBE).setLightLevel((blockstate) -> 1).hardnessAndResistance(0.3F, 0.3f).notSolid());
 
         this.setDefaultState(this.stateContainer.getBaseState()
                 .with(FACING, Direction.UP)
@@ -92,7 +92,7 @@ public class HoneyCrystal extends Block {
 
         Direction direction = blockstate.get(FACING);
         BlockState attachedBlockstate = world.getBlockState(pos.offset(direction.getOpposite()));
-        return attachedBlockstate.isSideSolidFullSquare(world, pos.offset(direction.getOpposite()), direction);
+        return attachedBlockstate.isSolidSide(world, pos.offset(direction.getOpposite()), direction);
     }
 
     /**
@@ -148,12 +148,12 @@ public class HoneyCrystal extends Block {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResultType onUse(BlockState blockstate, World world,
+    public ActionResultType onBlockActivated(BlockState blockstate, World world,
                               BlockPos position, PlayerEntity playerEntity,
                               Hand playerHand, BlockRayTraceResult raytraceResult) {
 
         if(blockstate.getBlock() != this)
-            return super.onUse(blockstate, world, position, playerEntity, playerHand, raytraceResult);
+            return super.onBlockActivated(blockstate, world, position, playerEntity, playerHand, raytraceResult);
 
         ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
@@ -167,9 +167,9 @@ public class HoneyCrystal extends Block {
                 world.getPendingFluidTicks().scheduleTick(position, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickRate(world));
                 world.playSound(
                         playerEntity,
-                        playerEntity.getX(),
-                        playerEntity.getY(),
-                        playerEntity.getZ(),
+                        playerEntity.getPosX(),
+                        playerEntity.getPosY(),
+                        playerEntity.getPosZ(),
                         SoundEvents.AMBIENT_UNDERWATER_ENTER,
                         SoundCategory.NEUTRAL,
                         1.0F,
@@ -189,9 +189,9 @@ public class HoneyCrystal extends Block {
                 world.setBlockState(position, blockstate.with(WATERLOGGED, false));
                 world.playSound(
                         playerEntity,
-                        playerEntity.getX(),
-                        playerEntity.getY(),
-                        playerEntity.getZ(),
+                        playerEntity.getPosX(),
+                        playerEntity.getPosY(),
+                        playerEntity.getPosZ(),
                         SoundEvents.AMBIENT_UNDERWATER_ENTER,
                         SoundCategory.NEUTRAL,
                         1.0F,
@@ -207,7 +207,7 @@ public class HoneyCrystal extends Block {
         }
         else if (itemstack.getItem() == Items.GLASS_BOTTLE) {
 
-            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
+            world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(),
                     SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
             itemstack.shrink(1); // remove current honey bottle
@@ -223,7 +223,7 @@ public class HoneyCrystal extends Block {
             return ActionResultType.SUCCESS;
         }
 
-        return super.onUse(blockstate, world, position, playerEntity, playerHand, raytraceResult);
+        return super.onBlockActivated(blockstate, world, position, playerEntity, playerHand, raytraceResult);
     }
 
     /**

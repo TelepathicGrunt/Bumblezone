@@ -94,7 +94,7 @@ public class BeeAggression {
 
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
-        if ((player.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
+        if ((player.getEntityWorld().getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID) ||
                 Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                 !player.isCreative() &&
                 !player.isSpectator()) {
@@ -129,7 +129,7 @@ public class BeeAggression {
             //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
             //Also checks to make sure we are in dimension and that player isn't in creative or spectator
             if (!world.isRemote &&
-                    (playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                    (playerEntity.getEntityWorld().getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID) ||
                             Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&
@@ -162,7 +162,7 @@ public class BeeAggression {
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that if it is a player, that they aren't in creative or spectator
         if (!entity.world.isRemote &&
-                (entity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                (entity.getEntityWorld().getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID) ||
                         Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                 Bumblezone.BzBeeAggressionConfig.aggressiveBees.get() &&
                 entity instanceof BeeEntity &&
@@ -225,7 +225,7 @@ public class BeeAggression {
 
         //Also checks to make sure we are in the dimension.
         if (!entity.world.isRemote &&
-                entity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) &&
+                entity.getEntityWorld().getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID) &&
                 Bumblezone.BzBeeAggressionConfig.aggressiveBees.get() &&
                 entity instanceof MobEntity)
         {
@@ -244,7 +244,7 @@ public class BeeAggression {
         if(!playerEntity.world.isRemote &&
                 playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE.get()) &&
                 !(Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get() ||
-                        playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)))
+                        playerEntity.getEntityWorld().getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID)))
         {
             playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE.get());
             WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);

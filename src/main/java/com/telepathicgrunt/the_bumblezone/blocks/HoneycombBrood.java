@@ -1,9 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.effects.BzEffects;
 import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
 import com.telepathicgrunt.the_bumblezone.items.BzItems;
+import com.telepathicgrunt.the_bumblezone.modCompat.BuzzierBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DirectionalBlock;
@@ -39,7 +42,7 @@ public class HoneycombBrood extends DirectionalBlock {
     public static final IntegerProperty STAGE = BlockStateProperties.AGE_0_3;
 
     public HoneycombBrood() {
-        super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).tickRandomly().hardnessAndResistance(0.5F, 0.5F).sound(SoundType.CORAL).velocityMultiplier(0.9F));
+        super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).tickRandomly().hardnessAndResistance(0.5F, 0.5F).sound(SoundType.CORAL).speedFactor(0.9F));
         this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.SOUTH).with(STAGE, 0));
     }
 
@@ -88,7 +91,7 @@ public class HoneycombBrood extends DirectionalBlock {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResultType onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
+    public ActionResultType onBlockActivated(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
         ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
         //VANILLA COMPAT
@@ -101,7 +104,7 @@ public class HoneycombBrood extends DirectionalBlock {
             //spawn angry bee if at final stage and front isn't blocked off
             int stage = thisBlockState.get(STAGE);
             spawnBroodMob(world, thisBlockState, position, stage);
-            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
             if (!playerEntity.isCreative()) {
                 itemstack.shrink(1); // remove current empty bottle
@@ -114,7 +117,7 @@ public class HoneycombBrood extends DirectionalBlock {
                 }
             }
 
-            if ((playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
+            if ((playerEntity.getEntityWorld().getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID) ||
                     Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&
@@ -137,6 +140,7 @@ public class HoneycombBrood extends DirectionalBlock {
 
             return ActionResultType.SUCCESS;
         }
+
         /*
          * Player is feeding larva
          */
@@ -171,7 +175,7 @@ public class HoneycombBrood extends DirectionalBlock {
             }
 
             //block grew one stage or bee was spawned
-            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
             //removes used item
             if (!playerEntity.isCreative()) {
@@ -188,20 +192,84 @@ public class HoneycombBrood extends DirectionalBlock {
             return ActionResultType.SUCCESS;
         }
 
-        return super.onUse(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+        // Buzzier Bees honey wand compat
+        else if (ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.allowHoneyWandCompat.get()) {
+
+            // Player is taking honey and killing larva/
+            ActionResultType action = BuzzierBeesRedirection.honeyWandTakingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+            if (action == ActionResultType.SUCCESS) {
+
+                // removed honey from this block
+                world.setBlockState(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().getDefaultState().with(BlockStateProperties.FACING, thisBlockState.get(BlockStateProperties.FACING)), 3);
+
+                // spawn angry bee if at final stage and front isn't blocked off
+                int stage = thisBlockState.get(STAGE);
+                spawnBroodMob(world, thisBlockState, position, stage);
+
+                world.playSound(
+                        playerEntity,
+                        playerEntity.getPosX(),
+                        playerEntity.getPosY(),
+                        playerEntity.getPosZ(),
+                        SoundEvents.BLOCK_HONEY_BLOCK_BREAK,
+                        SoundCategory.NEUTRAL,
+                        1.0F,
+                        1.0F);
+
+                if ((world.getDimensionKey().equals(BzDimension.BZ_WORLD_KEY) ||
+                        Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                        !playerEntity.isCreative() &&
+                        !playerEntity.isSpectator() &&
+                        Bumblezone.BzBeeAggressionConfig.aggressiveBees.get()) {
+
+                    // Now all bees nearby in Bumblezone will get VERY angry!!!
+                    playerEntity.addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(),
+                            Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(), 2, false,
+                            Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(), true));
+                }
+
+                return action;
+            }
+
+            // Player is feeding larva
+            action = BuzzierBeesRedirection.honeyWandGivingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+            if (action == ActionResultType.SUCCESS) {
+                world.playSound(
+                        playerEntity,
+                        playerEntity.getPosX(),
+                        playerEntity.getPosY(),
+                        playerEntity.getPosZ(),
+                        SoundEvents.BLOCK_HONEY_BLOCK_BREAK,
+                        SoundCategory.NEUTRAL,
+                        1.0F,
+                        1.0F);
+
+                // spawn bee if at final stage and front isn't blocked off
+                int stage = thisBlockState.get(STAGE);
+                if (stage == 3) {
+                    spawnBroodMob(world, thisBlockState, position, stage);
+                } else {
+                    world.setBlockState(position, thisBlockState.with(STAGE, stage + 1));
+                }
+
+                return action;
+            }
+        }
+
+        return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
     }
 
 
     @SuppressWarnings("deprecation")
     @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos position, Random rand) {
-        super.scheduledTick(state, world, position, rand);
+    public void tick(BlockState state, ServerWorld world, BlockPos position, Random rand) {
+        super.tick(state, world, position, rand);
         if (!world.isAreaLoaded(position, position))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
 
         int stage = state.get(STAGE);
         if (stage < 3) {
-            if (world.getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ? rand.nextInt(10) == 0 : rand.nextInt(22) == 0) {
+            if (world.getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID) ? rand.nextInt(10) == 0 : rand.nextInt(22) == 0) {
                 world.setBlockState(position, state.with(STAGE, stage + 1), 2);
             }
         }
@@ -229,7 +297,7 @@ public class HoneycombBrood extends DirectionalBlock {
                 spawnBroodMob(world, blockState, position, stage);
             }
 
-            if ((playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
+            if ((playerEntity.getEntityWorld().getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID) ||
                     Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&

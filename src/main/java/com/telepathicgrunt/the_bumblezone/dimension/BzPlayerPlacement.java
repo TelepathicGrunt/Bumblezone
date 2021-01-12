@@ -36,7 +36,7 @@ public class BzPlayerPlacement {
         if (entity instanceof ServerPlayerEntity) {
             ServerPlayerEntity playerEntity = ((ServerPlayerEntity) entity);
             PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-            cap.setNonBZDim(playerEntity.getEntityWorld().getRegistryKey().getValue());
+            cap.setNonBZDim(playerEntity.getEntityWorld().getDimensionKey().getLocation());
             cap.setNonBZYaw(playerEntity.rotationYaw);
             cap.setNonBZPitch(playerEntity.rotationPitch);
             cap.setNonBZPos(playerEntity.getPositionVec());
@@ -66,7 +66,7 @@ public class BzPlayerPlacement {
 
 
     public static void exitingBumblezone(Entity entity, ServerWorld destination){
-        boolean upwardChecking = entity.getY() > 0;
+        boolean upwardChecking = entity.getPosY() > 0;
         Vector3d destinationPosition;
 
         if (entity instanceof ServerPlayerEntity) {
@@ -87,7 +87,7 @@ public class BzPlayerPlacement {
 
     private static Vector3d teleportByOutOfBounds(PlayerEntity playerEntity, ServerWorld destination, boolean checkingUpward) {
         //converts the position to get the corresponding position in non-bumblezone dimension
-        double coordinateScale = playerEntity.getEntityWorld().getDimension().getCoordinateScale() / destination.getDimension().getCoordinateScale();
+        double coordinateScale = playerEntity.getEntityWorld().getDimensionType().getCoordinateScale() / destination.getDimensionType().getCoordinateScale();
         BlockPos finalSpawnPos;
         BlockPos validBlockPos = null;
 
@@ -156,7 +156,7 @@ public class BzPlayerPlacement {
         //converts the position to get the corresponding position in bumblezone dimension
         double coordinateScale = 1;
         if (Bumblezone.BzDimensionConfig.teleportationMode.get() != 2) {
-            coordinateScale = originalWorld.getDimension().getCoordinateScale() / bumblezoneWorld.getDimension().getCoordinateScale();
+            coordinateScale = originalWorld.getDimensionType().getCoordinateScale() / bumblezoneWorld.getDimensionType().getCoordinateScale();
         }
         BlockPos blockpos = new BlockPos(
                 Doubles.constrainToRange(playerEntity.getPositionVec().getX() * coordinateScale, -29999936D, 29999936D),

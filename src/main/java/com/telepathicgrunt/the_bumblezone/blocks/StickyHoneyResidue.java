@@ -41,7 +41,7 @@ public class StickyHoneyResidue extends VineBlock {
             SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet().stream().collect(Util.toMapCollector());
 
     public StickyHoneyResidue() {
-        super(Block.Properties.create(BzBlocks.RESIDUE, MaterialColor.ADOBE).doesNotBlockMovement().hardnessAndResistance(6.0f, 0.0f).nonOpaque());
+        super(Block.Properties.create(BzBlocks.RESIDUE, MaterialColor.ADOBE).doesNotBlockMovement().hardnessAndResistance(6.0f, 0.0f).notSolid());
         this.setDefaultState(this.stateContainer.getBaseState()
                 .with(UP, false)
                 .with(NORTH, false)
@@ -101,7 +101,7 @@ public class StickyHoneyResidue extends VineBlock {
     public void onEntityCollision(BlockState blockstate, World world, BlockPos pos, Entity entity) {
 
         AxisAlignedBB axisalignedbb = getShape(blockstate, world, pos, null).getBoundingBox().offset(pos);
-        List<? extends Entity> list = world.getEntitiesIncludingUngeneratedChunks(LivingEntity.class, axisalignedbb);
+        List<? extends Entity> list = world.getLoadedEntitiesWithinAABB(LivingEntity.class, axisalignedbb);
 
         if (list.contains(entity)) {
             entity.setMotionMultiplier(blockstate, new Vector3d(0.35D, 0.2F, 0.35D));
@@ -221,7 +221,7 @@ public class StickyHoneyResidue extends VineBlock {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResultType onUse(BlockState blockstate, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
+    public ActionResultType onBlockActivated(BlockState blockstate, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
         ItemStack itemstack = playerEntity.getHeldItem(playerHand);
 
         if ((itemstack.getItem() instanceof BucketItem &&
@@ -232,7 +232,7 @@ public class StickyHoneyResidue extends VineBlock {
 
             world.destroyBlock(position, false);
 
-            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
+            world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(),
                     SoundEvents.ENTITY_PHANTOM_SWOOP, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
             if (world instanceof ServerWorld) {
@@ -329,7 +329,7 @@ public class StickyHoneyResidue extends VineBlock {
             return ActionResultType.SUCCESS;
         }
 
-        return super.onUse(blockstate, world, position, playerEntity, playerHand, raytraceResult);
+        return super.onBlockActivated(blockstate, world, position, playerEntity, playerHand, raytraceResult);
     }
 
 }

@@ -16,7 +16,7 @@ public class PollenatedBeeSpawnMixin {
     @Inject(method = "<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V",
                 at = @At(value = "TAIL"))
     private void pollinateSpawnedBee(EntityType<? extends BeeEntity> entityType, World world, CallbackInfo ci) {
-        if (!world.isRemote() && world.getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)) {
+        if (!world.isRemote() && world.getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID)) {
             BeeEntity beeEntity = (BeeEntity)(Object)this;
 
             //20% chance of being full of pollen

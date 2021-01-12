@@ -390,7 +390,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    }
 
    @Override
-   public void setAngryAt(UUID uuid) {
+   public void setAngerTarget(UUID uuid) {
       this.target_UUID = uuid;
    }
 

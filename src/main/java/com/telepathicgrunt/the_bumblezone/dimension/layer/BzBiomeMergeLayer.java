@@ -10,8 +10,8 @@ public enum BzBiomeMergeLayer implements IAreaTransformer2, IDimOffset0Transform
     INSTANCE;
 
     public int apply(INoiseRandom iNoiseRandom, IArea iArea, IArea iArea1, int x, int z) {
-        int biomeID1 = iArea.getValue(this.func_215721_a(x), this.func_215722_b(z));
-        int biomeID2 = iArea1.getValue(this.func_215721_a(x), this.func_215722_b(z));
+        int biomeID1 = iArea.getValue(this.getOffsetX(x), this.getOffsetZ(z));
+        int biomeID2 = iArea1.getValue(this.getOffsetX(x), this.getOffsetZ(z));
 
         if (biomeID1 == -1) {
             return biomeID2;

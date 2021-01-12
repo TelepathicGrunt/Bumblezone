@@ -57,7 +57,7 @@ public class BumblezoneClient
             RenderTypeLookup.setRenderLayer(BzFluids.SUGAR_WATER_BLOCK.get(), RenderType.getTranslucent());
 
             // Allows shield to use the blocking json file for offset
-            ItemModelsProperties.register(
+            ItemModelsProperties.registerProperty(
                     BzItems.HONEY_CRYSTAL_SHIELD.get(),
                     new ResourceLocation("blocking"),
                     (itemStack, world, livingEntity) ->

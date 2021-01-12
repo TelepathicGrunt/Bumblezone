@@ -10,6 +10,15 @@ public class BzModCompatibilityConfigs
 {
 	public static class BzModCompatibilityConfigValues
 	{
+		public ConfigValueListener<Boolean> allowBottledBeesCompat;
+		public ConfigValueListener<Boolean> allowHoneyWandCompat;
+		public ConfigValueListener<Boolean> crystallizedHoneyWorldgen;
+		public ConfigValueListener<Boolean> allowRegularCandlesBeeDungeon;
+		public ConfigValueListener<Boolean> allowScentedCandlesBeeDungeon;
+		public ConfigValueListener<Boolean> allowScentedCandlesSpiderBeeDungeon;
+		public ConfigValueListener<Integer> powerfulCandlesRarityBeeDungeon;
+		public ConfigValueListener<Integer> powerfulCandlesRaritySpiderBeeDungeon;
+
 	    public ConfigValueListener<Boolean> allowPotionOfBeesCompat;
 	    public ConfigValueListener<Boolean> allowSplashPotionOfBeesCompat;
 
@@ -160,8 +169,69 @@ public class BzModCompatibilityConfigs
 			            .define("allowSplashPotionOfBeesCompat", true));
         
 	            builder.pop();
-	            
-	        builder.pop();
+
+
+			builder.push("Buzzier Bees Options");
+
+				allowBottledBeesCompat = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" Allow Bottles Bees item to turn Empty Honeycomb Brood blocks \r\n"
+								+" back into Honeycomb Brood Blocks with a larva in it. (affects Dispenser too)\r\n")
+						.translation("the_bumblezone.config.modcompat.buzzierbees.allowbottledbeescompat")
+						.define("allowBottledBeesCompat", true));
+
+				allowHoneyWandCompat = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" Allow Honey Wand to take honey from Filled Porous Honeycomb Block \r\n"
+								+" and put honey into Porous Honeycomb Block without angering bees.\r\n")
+						.translation("the_bumblezone.config.modcompat.buzzierbees.allowhoneywandcompat")
+						.define("allowHoneyWandCompat", true));
+
+				crystallizedHoneyWorldgen = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" Place Buzzier Bees's Crystallized Honey Blocks on the /r/n"
+								+" surface of land around sea level and above.\r\n")
+						.translation("the_bumblezone.config.modcompat.buzzierbees.crystallizedhoneyworldgen")
+						.define("crystallizedHoneyWorldgen", true));
+
+				allowRegularCandlesBeeDungeon = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" Allow Bee Dungeons to have normal unscented candles./r/n")
+						.translation("the_bumblezone.config.modcompat.buzzierbees.allowregularcandlesbeedungeon")
+						.define("allowRegularCandlesBeeDungeon", true));
+
+				allowScentedCandlesBeeDungeon = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" Allow Bee Dungeons to have scented candles that gives status effects./r/n")
+						.translation("the_bumblezone.config.modcompat.buzzierbees.allowscentedcandlesbeedungeon")
+						.define("allowScentedCandlesBeeDungeon", true));
+
+				allowScentedCandlesSpiderBeeDungeon = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" Allow Spider Infested Bee Dungeons to have scented candles that gives status effects./r/n")
+						.translation("the_bumblezone.config.modcompat.buzzierbees.allowscentedcandlesspiderbeedungeon")
+						.define("allowScentedCandlesSpiderBeeDungeon", true));
+
+				powerfulCandlesRarityBeeDungeon = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" How rare are powerful candles in Bee Dungeons. \r\n"
+								+" Higher numbers means more rare.\r\n"
+								+" Default rate is 2.\r\n")
+						.translation("the_bumblezone.config.dungeons.powerfulcandlesraritybeedungeon")
+						.defineInRange("powerfulCandlesRarityBeeDungeon", 2, 0, 10));
+
+				powerfulCandlesRaritySpiderBeeDungeon = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" How rare are powerful candles in Spider Infested Bee Dungeons. \r\n"
+								+" Higher numbers means more rare.\r\n"
+								+" Default rate is 2.\r\n")
+						.translation("the_bumblezone.config.dungeons.powerfulcandlesrarityspiderbeedungeon")
+						.defineInRange("powerfulCandlesRaritySpiderBeeDungeon", 0, 0, 10));
+
+			builder.pop();
+
+
+			builder.pop();
 	    }
 	}
 }

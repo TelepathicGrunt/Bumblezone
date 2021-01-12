@@ -1,5 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.modCompat.BuzzierBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -30,14 +33,14 @@ public class PorousHoneycomb extends Block {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResultType onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
+    public ActionResultType onBlockActivated(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
         ItemStack itemstack = playerEntity.getHeldItem(playerHand);
         /*
          * Player is adding honey to this block if it is not filled with honey
          */
         if (itemstack.getItem() == Items.HONEY_BOTTLE) {
             world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 3); // added honey to this block
-            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
             if (!playerEntity.isCreative()) {
                 itemstack.shrink(1); // remove current honey bottle
@@ -53,6 +56,19 @@ public class PorousHoneycomb extends Block {
             return ActionResultType.SUCCESS;
         }
 
-        return super.onUse(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+        //allow compat with honey wand use
+        else if (ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.allowHoneyWandCompat.get())
+        {
+            ActionResultType action = BuzzierBeesRedirection.honeyWandGivingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+            if (action == ActionResultType.SUCCESS)
+            {
+                world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 3); // added honey to this block
+                world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+
+                return action;
+            }
+        }
+
+        return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
     }
 }

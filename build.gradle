@@ -46,7 +46,7 @@ archivesBaseName = 'the_bumblezone'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: "${mapping}-mixed-${yarnmcp_version}"
+	mappings channel: "snapshot", version: "${mappings_version}"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
@@ -81,6 +81,8 @@ dependencies {
 	implementation fg.deobf("ignored:carrierbees-1.16.3:0.0.2.2")
 	implementation fg.deobf("ignored:potionofbees-1.16.4:1.1.0.2")
 	implementation fg.deobf("ignored:amb-1.16.3:0.1.0")
+	implementation fg.deobf("ignored:buzzier_bees-1.16.4:3.0.0")
+	implementation fg.deobf("ignored:abnormals_core-1.16.4:3.0.6")
 
 	compileOnly fg.deobf("mezz.jei:jei-1.16.3:7.6.0.49:api")
 	runtimeOnly fg.deobf("mezz.jei:jei-1.16.3:7.6.0.49")
