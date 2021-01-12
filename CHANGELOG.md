@@ -42,6 +42,9 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 -Prefixed all my accessor and invoker mixins due to this bug in mixins that could cause a crash with other mods for same named mixins.
  https://github.com/SpongePowered/Mixin/issues/430
  
+   Backend:
+-Quite a bit of general cleaning up and switched from Yarn over MCP mappings to full MCP mappings.
+  
   
    (V.2.2.8 Changes) (1.16.4 Minecraft)
    
