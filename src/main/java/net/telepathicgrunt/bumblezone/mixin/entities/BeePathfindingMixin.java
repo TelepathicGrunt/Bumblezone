@@ -24,7 +24,7 @@ public class BeePathfindingMixin {
     @Unique
     private BeeAI.CachedPathHolder cachedPathHolder;
 
-    @Inject(method = "<init>()V", at = @At(value = "RETURN"))
+    @Inject(method = "<init>(Lnet/minecraft/entity/passive/BeeEntity;)V", at = @At(value = "RETURN"))
     private void init(BeeEntity beeEntity, CallbackInfo ci){
         this.beeEntity = beeEntity;
     }

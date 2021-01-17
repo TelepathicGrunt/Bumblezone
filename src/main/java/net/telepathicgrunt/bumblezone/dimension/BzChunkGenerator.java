@@ -88,7 +88,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     });
 
     private static final SpawnSettings.SpawnEntry INITIAL_HONEY_SLIME_ENTRY = new SpawnSettings.SpawnEntry(BzEntities.HONEY_SLIME, 1, 1, 3);
-    private static final SpawnSettings.SpawnEntry INITIAL_BEE_ENTRY = new SpawnSettings.SpawnEntry(EntityType.BEE, 1, 4, 4);
+    private static final SpawnSettings.SpawnEntry INITIAL_BEE_ENTRY = new SpawnSettings.SpawnEntry(EntityType.BEE, 1, 1, 4);
     private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
     protected final BlockState defaultBlock;
     protected final BlockState defaultFluid;
