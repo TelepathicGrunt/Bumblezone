@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 public class BeeAI {
 
-    // Make bees not get stuck on ceiling anymore and lag people as a result. (Only for Forge version of Bumblezone)
+    // Make bees not get stuck on ceiling anymore and lag people as a result.
     public static CachedPathHolder smartBeesTM(BeeEntity beeEntity, CachedPathHolder cachedPathHolder){
 
         if(cachedPathHolder == null || cachedPathHolder.pathTimer > 50 || cachedPathHolder.cachedPath == null ||
@@ -43,6 +43,7 @@ public class BeeAI {
             beeEntity.getNavigation().startMovingAlong(cachedPathHolder.cachedPath, 1);
             cachedPathHolder.pathTimer += 1;
         }
+
         return cachedPathHolder;
     }
 
