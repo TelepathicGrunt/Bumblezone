@@ -22,14 +22,14 @@ public class BeePathfindingMixin {
 
     /**
      * @author TelepathicGrunt
-     * @reason Make bees not get stuck on ceiling anymore and lag people as a result. (Only for Forge version of Bumblezone)
+     * @reason Make bees not get stuck on ceiling anymore and lag people as a result. (Only applies in Bumblezone dimension)
      */
     @Inject(method = "start()V",
             at = @At(value = "HEAD"),
             cancellable = true)
     private void newWander(CallbackInfo ci) throws NoSuchFieldException, IllegalAccessException {
 
-        // Reflection needed to get BeeEntity outer class of WanderGoal as BeeEntity.this does not work inside mixins.
+        // Reflection needed to get BeeEntity outer class of BeeWanderAroundGoal as BeeEntity.this does not work inside mixins.
         BeeEntity.BeeWanderAroundGoal wanderGoal = ((BeeEntity.BeeWanderAroundGoal)(Object)this);
         if(FIELD == null){
             // Cache the field for better performance and set it accessible.
