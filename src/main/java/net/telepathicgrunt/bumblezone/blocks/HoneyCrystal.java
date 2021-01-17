@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import net.telepathicgrunt.bumblezone.items.BzItems;
-import net.telepathicgrunt.bumblezone.mixin.BucketItemAccessor;
+import net.telepathicgrunt.bumblezone.mixin.items.BucketItemAccessor;
 
 import java.util.Map;
 

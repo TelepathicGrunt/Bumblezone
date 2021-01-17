@@ -1,4 +1,11 @@
 {
+  "player_spawn_friendly": false,
+  "precipitation": "none",
+  "temperature": 1.85,
+  "downfall": 0.5,
+  "category": "none",
+  "depth": -2.2,
+  "scale": 1.2,
   "effects": {
     "ambient_sound": "minecraft:entity.bee.loop",
     "additions_sound": {
@@ -39,6 +46,7 @@
     []
   ],
   "starts": [],
+  "creature_spawn_probability": 0.075,
   "spawners": {
     "monster": [
       {
@@ -85,7 +93,6 @@
     "water_ambient": [],
     "misc": []
   },
-  "creature_spawn_probability": 0.4,
   "spawn_costs": {
     "minecraft:endermen": {
       "energy_budget": 0.02,
@@ -95,12 +102,5 @@
       "energy_budget": 0.01,
       "charge": 2.0
     }
-  },
-  "player_spawn_friendly": false,
-  "precipitation": "none",
-  "temperature": 1.85,
-  "downfall": 0.5,
-  "category": "none",
-  "depth": -2.2,
-  "scale": 1.2
+  }
 }

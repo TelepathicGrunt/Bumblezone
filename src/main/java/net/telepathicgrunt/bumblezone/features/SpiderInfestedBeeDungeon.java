@@ -24,7 +24,7 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
-import net.telepathicgrunt.bumblezone.mixin.StructureAccessorInvoker;
+import net.telepathicgrunt.bumblezone.mixin.world.StructureAccessorInvoker;
 
 import java.util.Iterator;
 import java.util.List;

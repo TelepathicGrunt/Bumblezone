@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
-import net.telepathicgrunt.bumblezone.mixin.DispenserAccessor;
+import net.telepathicgrunt.bumblezone.mixin.blocks.DispenserAccessor;
 
 public class DispenserItemSetup {
     /**

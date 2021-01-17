@@ -10,7 +10,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Heightmap;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
-import net.telepathicgrunt.bumblezone.mixin.SpawnRestrictionAccessor;
+import net.telepathicgrunt.bumblezone.mixin.entities.SpawnRestrictionAccessor;
 
 public class BzEntities {
 

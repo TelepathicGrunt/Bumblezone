@@ -3,7 +3,7 @@ package net.telepathicgrunt.bumblezone.tags;
 import net.minecraft.block.Block;
 import net.minecraft.tag.Tag;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.mixin.BlockTagsAccessor;
+import net.telepathicgrunt.bumblezone.mixin.blocks.BlockTagsAccessor;
 
 public class BZBlockTags {
     // Sole purpose is to initalize the tag wrappers at mod startup

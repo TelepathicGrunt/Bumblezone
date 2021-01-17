@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
-import net.telepathicgrunt.bumblezone.mixin.PlayerDamageShieldInvoker;
+import net.telepathicgrunt.bumblezone.mixin.items.PlayerDamageShieldInvoker;
 
 public class HoneyCrystalShieldBehavior {
     /**

@@ -13,7 +13,7 @@ import net.telepathicgrunt.bumblezone.client.rendering.HoneySlimeRendering;
 import net.telepathicgrunt.bumblezone.dimension.BzSkyProperty;
 import net.telepathicgrunt.bumblezone.entities.BzEntities;
 import net.telepathicgrunt.bumblezone.items.BzItems;
-import net.telepathicgrunt.bumblezone.mixin.SkyPropertiesAccessor;
+import net.telepathicgrunt.bumblezone.mixin.world.SkyPropertiesAccessor;
 
 @Environment(EnvType.CLIENT)
 public class BumblezoneClient implements ClientModInitializer {

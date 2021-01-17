@@ -19,7 +19,7 @@ import net.minecraft.util.math.Position;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
-import net.telepathicgrunt.bumblezone.mixin.ItemDispenserBehaviorInvoker;
+import net.telepathicgrunt.bumblezone.mixin.blocks.ItemDispenserBehaviorInvoker;
 
 
 public class HoneyBottleDispenseBehavior extends ItemDispenserBehavior {

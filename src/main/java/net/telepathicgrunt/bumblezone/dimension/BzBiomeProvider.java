@@ -20,7 +20,7 @@ import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.layer.BzBiomeLayer;
 import net.telepathicgrunt.bumblezone.dimension.layer.BzBiomePillarLayer;
 import net.telepathicgrunt.bumblezone.dimension.layer.BzBiomeScalePillarLayer;
-import net.telepathicgrunt.bumblezone.mixin.BiomeLayerSamplerAccessor;
+import net.telepathicgrunt.bumblezone.mixin.world.BiomeLayerSamplerAccessor;
 
 import java.util.Map;
 import java.util.function.LongFunction;

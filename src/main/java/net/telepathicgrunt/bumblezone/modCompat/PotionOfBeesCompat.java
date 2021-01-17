@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
-import net.telepathicgrunt.bumblezone.mixin.DispenserAccessor;
+import net.telepathicgrunt.bumblezone.mixin.blocks.DispenserAccessor;
 
 public class PotionOfBeesCompat
 {

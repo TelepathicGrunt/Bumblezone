@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
-import net.telepathicgrunt.bumblezone.mixin.ItemDispenserBehaviorInvoker;
+import net.telepathicgrunt.bumblezone.mixin.blocks.ItemDispenserBehaviorInvoker;
 
 
 public class EmptyBucketDispenseBehavior extends ItemDispenserBehavior {

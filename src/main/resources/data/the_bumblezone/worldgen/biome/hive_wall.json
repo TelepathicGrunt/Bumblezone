@@ -1,4 +1,11 @@
 {
+  "player_spawn_friendly": false,
+  "precipitation": "none",
+  "temperature": 1.85,
+  "downfall": 0.5,
+  "category": "none",
+  "depth": 1.8,
+  "scale": 3.0,
   "effects": {
     "ambient_sound": "minecraft:entity.bee.loop",
     "additions_sound": {
@@ -39,6 +46,7 @@
     []
   ],
   "starts": [],
+  "creature_spawn_probability": 0.1,
   "spawners": {
     "monster": [
       {
@@ -97,7 +105,6 @@
     "water_ambient": [],
     "misc": []
   },
-  "creature_spawn_probability": 0.5,
   "spawn_costs": {
     "minecraft:spider": {
       "energy_budget": 0.05,
@@ -115,12 +122,5 @@
       "energy_budget": 0.01,
       "charge": 2.5
     }
-  },
-  "player_spawn_friendly": false,
-  "precipitation": "none",
-  "temperature": 1.85,
-  "downfall": 0.5,
-  "category": "none",
-  "depth": 1.8,
-  "scale": 3.0
+  }
 }
