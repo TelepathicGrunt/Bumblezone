@@ -209,7 +209,7 @@ public class HoneycombBrood extends FacingBlock {
         }
         else if(Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity != 0){
             List<Entity> beeList = world.getEntitiesByType(EntityType.BEE, (entity) -> true);
-            if(beeList.size() < Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity * SpawnGroup.CREATURE.getCapacity()){
+            if(beeList.size() < Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity){
                 spawnBroodMob(world, state, position, stage);
             }
         }

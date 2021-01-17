@@ -8,6 +8,13 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
        | The Bumblezone Fabric changelog |
 
 
+   (V.2.2.16 Changes) (1.16.4 Minecraft) Quickfix
+   
+   Config:
+-Changed broodBlocksBeeSpawnCapacity so that it is not multiplied by 10 anymore for bee limit. 
+ If it is set to 50 now, then the Brood blocks will not spawn more bees if 50 bees already exist.
+
+
    (V.2.2.15 Changes) (1.16.4 Minecraft)
    
    Dimension:
