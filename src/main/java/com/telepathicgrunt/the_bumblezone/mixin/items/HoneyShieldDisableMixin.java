@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin;
+package com.telepathicgrunt.the_bumblezone.mixin.items;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;

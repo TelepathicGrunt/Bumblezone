@@ -8,7 +8,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
-import com.telepathicgrunt.the_bumblezone.mixin.TemplateInvoker;
+import com.telepathicgrunt.the_bumblezone.mixin.world.TemplateInvoker;
 import com.telepathicgrunt.the_bumblezone.modCompat.BuzzierBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ProductiveBeesRedirection;

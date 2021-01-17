@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin;
+package com.telepathicgrunt.the_bumblezone.mixin.items;
 
 import com.telepathicgrunt.the_bumblezone.items.ObtainSugarWaterBottle;
 import net.minecraft.entity.AreaEffectCloudEntity;

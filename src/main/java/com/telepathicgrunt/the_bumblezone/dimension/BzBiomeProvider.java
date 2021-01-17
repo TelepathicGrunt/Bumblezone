@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.dimension.layer.*;
-import com.telepathicgrunt.the_bumblezone.mixin.LayerAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.world.LayerAccessor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedConstants;
 import net.minecraft.util.Util;

@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.modCompat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
-import com.telepathicgrunt.the_bumblezone.mixin.DispenserBlockInvoker;
+import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;

@@ -1,4 +1,11 @@
 {
+  "player_spawn_friendly": false,
+  "precipitation": "none",
+  "temperature": 1.85,
+  "downfall": 0.5,
+  "category": "none",
+  "depth": 5.5,
+  "scale": 0.5,
   "effects": {
     "ambient_sound": "minecraft:entity.bee.loop",
     "additions_sound": {
@@ -115,12 +122,5 @@
       "energy_budget": 0.01,
       "charge": 2.5
     }
-  },
-  "player_spawn_friendly": false,
-  "precipitation": "none",
-  "temperature": 1.85,
-  "downfall": 0.5,
-  "category": "none",
-  "depth": 5.5,
-  "scale": 0.5
+  }
 }

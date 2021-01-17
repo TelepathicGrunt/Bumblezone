@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
-import com.telepathicgrunt.the_bumblezone.mixin.PlayerDamageShieldInvoker;
+import com.telepathicgrunt.the_bumblezone.mixin.items.PlayerDamageShieldInvoker;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;

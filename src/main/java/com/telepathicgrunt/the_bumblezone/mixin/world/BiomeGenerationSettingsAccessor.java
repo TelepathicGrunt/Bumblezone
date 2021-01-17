@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin;
+package com.telepathicgrunt.the_bumblezone.mixin.world;
 
 import net.minecraft.world.biome.BiomeGenerationSettings;
 import net.minecraft.world.gen.feature.ConfiguredFeature;

@@ -1,29 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.modCompat;
 
-import com.minecraftabnormals.buzzier_bees.common.blocks.CandleBlock;
-import com.minecraftabnormals.buzzier_bees.core.registry.BBBlocks;
-import com.minecraftabnormals.buzzier_bees.core.registry.BBItems;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.mixin.DispenserBlockInvoker;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class BuzzierBeesRedirection {

@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin;
+package com.telepathicgrunt.the_bumblezone.mixin.world;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IServerWorld;

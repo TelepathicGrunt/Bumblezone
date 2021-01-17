@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin;
+package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
 import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
 import net.minecraft.fluid.Fluid;

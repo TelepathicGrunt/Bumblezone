@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.items.BzItems;
-import com.telepathicgrunt.the_bumblezone.mixin.VineBlockAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.blocks.VineBlockAccessor;
 import net.minecraft.block.*;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.material.PushReaction;
