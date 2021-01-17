@@ -10,7 +10,17 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 ------------------------------------------------
 # | Bumblezone changelog |
-  
+    
+    
+   (V.2.2.10 Changes) (1.16.4 Minecraft)
+     
+   Dimension:
+-Improved Bumblezone Bee AI to not stop in midair as often.
+     
+   Config:
+-Changed broodBlocksBeeSpawnCapacity so that it is not multiplied by 10 anymore for bee limit. 
+ If it is set to 50 now, then the Brood blocks will not spawn more bees if 50 bees already exist.
+
   
    (V.2.2.9 Changes) (1.16.4 Minecraft)
      

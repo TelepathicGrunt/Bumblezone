@@ -308,7 +308,7 @@ public class HoneycombBrood extends DirectionalBlock {
         }
         else if(Bumblezone.BzBlockMechanicsConfig.broodBlocksBeeSpawnCapacity.get() != 0){
             List<Entity> beeList = world.getEntities(EntityType.BEE, (entity) -> true);
-            if(beeList.size() < Bumblezone.BzBlockMechanicsConfig.broodBlocksBeeSpawnCapacity.get() * EntityClassification.CREATURE.getMaxNumberOfCreature()){
+            if(beeList.size() < Bumblezone.BzBlockMechanicsConfig.broodBlocksBeeSpawnCapacity.get()){
                 spawnBroodMob(world, state, position, stage);
             }
         }

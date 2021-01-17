@@ -9,35 +9,28 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.lang.reflect.Field;
-
 @Mixin(BeeEntity.WanderGoal.class)
 public class BeePathfindingMixin {
 
     @Unique
-    private static Field FIELD;
+    private BeeEntity beeEntity;
 
     @Unique
     private BeeAI.CachedPathHolder cachedPathHolder;
 
+    @Inject(method = "<init>(Lnet/minecraft/entity/passive/BeeEntity;)V", at = @At(value = "RETURN"))
+    private void init(BeeEntity beeEntity, CallbackInfo ci){
+        this.beeEntity = beeEntity;
+    }
+
     /**
      * @author TelepathicGrunt
-     * @reason Make bees not get stuck on ceiling anymore and lag people as a result. (Only for Forge version of Bumblezone)
+     * @reason Make bees not get stuck on ceiling anymore and lag people as a result. (Only applies in Bumblezone dimension)
      */
     @Inject(method = "startExecuting()V",
             at = @At(value = "HEAD"),
             cancellable = true)
-    private void newWander(CallbackInfo ci) throws NoSuchFieldException, IllegalAccessException {
-
-        // Reflection needed to get BeeEntity outer class of WanderGoal as BeeEntity.this does not work inside mixins.
-        BeeEntity.WanderGoal wanderGoal = ((BeeEntity.WanderGoal)(Object)this);
-        if(FIELD == null){
-            // Cache the field for better performance and set it accessible.
-            FIELD = BeeEntity.WanderGoal.class.getDeclaredField("this$0");
-            FIELD.setAccessible(true);
-        }
-        BeeEntity beeEntity = (BeeEntity)FIELD.get(wanderGoal);
-
+    private void newWander(CallbackInfo ci){
         // Do our own bee AI in the Bumblezone. Makes bees wander more and should be slightly better performance. Maybe...
         if(beeEntity.world.getDimensionKey().equals(BzDimension.BZ_WORLD_KEY)){
             cachedPathHolder = BeeAI.smartBeesTM(beeEntity, cachedPathHolder);

@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.modCompat;
 
-import com.minecraftabnormals.buzzier_bees.common.dispenser.BeeBottleDispenseBehavior;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;

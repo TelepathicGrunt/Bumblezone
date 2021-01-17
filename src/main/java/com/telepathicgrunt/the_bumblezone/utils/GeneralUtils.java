@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
-import com.telepathicgrunt.the_bumblezone.mixin.world.BiomeGenerationSettingsAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DefaultDispenseItemBehaviorInvoker;
+import com.telepathicgrunt.the_bumblezone.mixin.world.BiomeGenerationSettingsAccessor;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IDispenseItemBehavior;

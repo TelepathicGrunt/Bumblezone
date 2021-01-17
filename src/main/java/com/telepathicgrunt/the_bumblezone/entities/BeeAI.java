@@ -7,17 +7,17 @@ import net.minecraft.world.World;
 
 public class BeeAI {
 
-    // Make bees not get stuck on ceiling anymore and lag people as a result. (Only for Forge version of Bumblezone)
+    // Make bees not get stuck on ceiling anymore and lag people as a result.
     public static CachedPathHolder smartBeesTM(BeeEntity beeEntity, CachedPathHolder cachedPathHolder){
 
-        if(cachedPathHolder == null || cachedPathHolder.pathTimer > 100 || cachedPathHolder.cachedPath == null ||
-            beeEntity.getPosition().withinDistance(cachedPathHolder.cachedPath.getTarget(), 3) ||
-            (cachedPathHolder.cachedPath.getFinalPathPoint() != null && cachedPathHolder.cachedPath.getFinalPathPoint().distanceToTarget > 5))
+        if(cachedPathHolder == null || cachedPathHolder.pathTimer > 50 || cachedPathHolder.cachedPath == null ||
+                (beeEntity.getMotion().length() <= 0.05d && cachedPathHolder.pathTimer > 5) ||
+                beeEntity.getPosition().manhattanDistance(cachedPathHolder.cachedPath.getTarget()) <= 4)
         {
             BlockPos.Mutable mutable = new BlockPos.Mutable();
             World world = beeEntity.world;
 
-            for(int attempt = 0; attempt < 11; attempt++){
+            for(int attempt = 0; attempt < 11 || beeEntity.getPosition().manhattanDistance(mutable) <= 5; attempt++){
                 // pick a random place to fly to
                 mutable.setPos(beeEntity.getPosition()).move(
                         world.rand.nextInt(21) - 10,
@@ -38,13 +38,13 @@ public class BeeAI {
             }
             cachedPathHolder.cachedPath = newPath;
             cachedPathHolder.pathTimer = 0;
-            return cachedPathHolder;
         }
         else{
             beeEntity.getNavigator().setPath(cachedPathHolder.cachedPath, 1);
             cachedPathHolder.pathTimer += 1;
-            return cachedPathHolder;
         }
+
+        return cachedPathHolder;
     }
 
     public static class CachedPathHolder {

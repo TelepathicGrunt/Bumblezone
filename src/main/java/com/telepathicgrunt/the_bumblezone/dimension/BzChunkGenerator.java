@@ -77,7 +77,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     });
 
     private static final MobSpawnInfo.Spawners INITIAL_HONEY_SLIME_ENTRY = new MobSpawnInfo.Spawners(BzEntities.HONEY_SLIME.get(), 1, 1, 3);
-    private static final MobSpawnInfo.Spawners INITIAL_BEE_ENTRY = new MobSpawnInfo.Spawners(EntityType.BEE, 1, 4, 4);
+    private static final MobSpawnInfo.Spawners INITIAL_BEE_ENTRY = new MobSpawnInfo.Spawners(EntityType.BEE, 1, 1, 4);
     private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
     protected final BlockState defaultBlock;
     protected final BlockState defaultFluid;
