@@ -43,6 +43,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
     public static final ComponentKey<IPlayerComponent> PLAYER_COMPONENT =
             ComponentRegistry.getOrCreate(new Identifier(MODID, "player_component"), IPlayerComponent.class);
 
+    //TODO: make tag anvil_fix:force_incremental_repair_cost to honey crystal shield
     @Override
     public void onInitialize() {
         //Set up config

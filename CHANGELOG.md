@@ -8,10 +8,16 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
        | The Bumblezone Fabric changelog |
 
 
+   (V.2.2.17 Changes) (1.16.4 Minecraft) Quickfix
+   
+   Mod Compat:
+• Added compat with AnvilFix so that Honey Crystal Shield can still be upgraded again and cost XP for balance.
+
+
    (V.2.2.16 Changes) (1.16.4 Minecraft) Quickfix
    
    Config:
--Changed broodBlocksBeeSpawnCapacity so that it is not multiplied by 10 anymore for bee limit. 
+• Changed broodBlocksBeeSpawnCapacity so that it is not multiplied by 10 anymore for bee limit. 
  If it is set to 50 now, then the Brood blocks will not spawn more bees if 50 bees already exist.
 
 
@@ -22,7 +28,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
   Bee rates have been lowered a bit as well.
 
    Mixins:
--Prefixed all my accessor and invoker mixins due to this bug in mixins that could cause a crash with other mods for same named mixins.
+• Prefixed all my accessor and invoker mixins due to this bug in mixins that could cause a crash with other mods for same named mixins.
  https://github.com/SpongePowered/Mixin/issues/430
 
 
