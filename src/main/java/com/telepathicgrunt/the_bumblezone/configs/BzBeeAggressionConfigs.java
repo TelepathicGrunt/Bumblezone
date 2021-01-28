@@ -4,7 +4,6 @@ import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
 public class BzBeeAggressionConfigs {
 
     public static class BzBeeAggressionConfigValues {
