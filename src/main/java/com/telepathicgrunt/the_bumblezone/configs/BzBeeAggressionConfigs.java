@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.configs;
 
 import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.common.Mod;
 
 public class BzBeeAggressionConfigs {
 
