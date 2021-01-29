@@ -39,6 +39,7 @@ public class HoneyCrystalShield extends ShieldItem {
     /**
      * Display the shield level (repair cost)
      */
+    // CLIENT-SIDED
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (stack.hasTag()) {

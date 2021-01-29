@@ -10,10 +10,8 @@ import net.minecraft.client.renderer.entity.layers.SlimeGelLayer;
 import net.minecraft.client.renderer.entity.model.SlimeModel;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+// CLIENT-SIDED
 public class HoneySlimeRendering extends MobRenderer<HoneySlimeEntity, SlimeModel<HoneySlimeEntity>> {
     private static final ResourceLocation HONEY_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/entity/honey_slime.png");
     private static final ResourceLocation HONEYLESS_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/entity/honey_slime_naked.png");

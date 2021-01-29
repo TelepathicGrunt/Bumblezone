@@ -35,8 +35,6 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureManager;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
 import net.minecraft.world.gen.settings.DimensionStructuresSettings;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Iterator;
 import java.util.List;
@@ -128,7 +126,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    // CLIENT-SIDED
     public ChunkGenerator func_230349_a_(long seed) {
         return new BzChunkGenerator(this.biomeProvider.getBiomeProvider(seed), dimensionStructuresSettings);
     }

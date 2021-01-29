@@ -14,8 +14,6 @@ import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -41,7 +39,7 @@ public class BumblezoneClient
     }
 
     //Deferred because I have been told RenderTypeLookup is not thread safe
-    @OnlyIn(Dist.CLIENT)
+    // CLIENT-SIDED
     public static void onClientSetup(FMLClientSetupEvent event)
     {
         RenderingRegistry.registerEntityRenderingHandler(BzEntities.HONEY_SLIME.get(), HoneySlimeRendering::new);

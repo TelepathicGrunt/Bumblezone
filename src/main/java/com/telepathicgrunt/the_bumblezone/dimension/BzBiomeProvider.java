@@ -20,8 +20,6 @@ import net.minecraft.world.gen.area.IAreaFactory;
 import net.minecraft.world.gen.area.LazyArea;
 import net.minecraft.world.gen.layer.Layer;
 import net.minecraft.world.gen.layer.ZoomLayer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,7 +119,7 @@ public class BzBiomeProvider extends BiomeProvider {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    // CLIENT-SIDED
     public BiomeProvider getBiomeProvider(long seed) {
         return new BzBiomeProvider(seed, this.BIOME_REGISTRY);
     }

@@ -7,8 +7,6 @@ import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -25,7 +23,7 @@ public class BzItems {
      */
     public static final ItemGroup BUMBLEZONE_CREATIVE_TAB = new ItemGroup(ItemGroup.GROUPS.length, Bumblezone.MODID) {
         @Override
-        @OnlyIn(Dist.CLIENT)
+        // CLIENT-SIDED
         public ItemStack createIcon() {
             return new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB.get());
         }

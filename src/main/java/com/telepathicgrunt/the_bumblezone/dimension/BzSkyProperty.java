@@ -4,10 +4,8 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import net.minecraft.client.world.DimensionRenderInfo;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+// CLIENT-SIDED
 public class BzSkyProperty extends DimensionRenderInfo {
     public BzSkyProperty() {
         super(1000, true, DimensionRenderInfo.FogType.NONE, false, false);
