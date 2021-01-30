@@ -8,6 +8,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.entities.BzEntities;
 
 
 public class BzItems {
@@ -38,8 +39,8 @@ public class BzItems {
 
     public static final Item HONEY_CRYSTAL_SHIELD = new HoneyCrystalShield();
 
-    public static final Item HONEY_SLIME_SPAWN_EGG = new HoneySlimeSpawnEgg(
-            null, 16763904,16558080, (new Item.Settings()).group(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item HONEY_SLIME_SPAWN_EGG = new SpawnEggItem(
+            BzEntities.HONEY_SLIME, 16763904,16558080, (new Item.Settings()).group(BUMBLEZONE_CREATIVE_TAB));
 
     public static final Item SUGAR_WATER_BUCKET = new BucketItem(BzBlocks.SUGAR_WATER_FLUID, new Item.Settings()
             .recipeRemainder(Items.BUCKET).maxCount(1).group(BUMBLEZONE_CREATIVE_TAB));
