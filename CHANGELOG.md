@@ -10,6 +10,12 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 ------------------------------------------------
 # | Bumblezone changelog |
+     
+     
+   (V.2.2.12 Changes) (1.16.5 Minecraft)
+     
+   Items:
+- Fixed Honey Slime Spawn Eggs not working with Dispensers and now use better code practices. 
     
     
    (V.2.2.11 Changes) (1.16.5 Minecraft)

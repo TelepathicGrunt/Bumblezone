@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
 import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -50,7 +51,7 @@ public class BzItems {
     public static final RegistryObject<Item> HONEY_CRYSTAL_SHIELD = createItem("honey_crystal_shield", HoneyCrystalShield::new);
     public static final RegistryObject<Item> SUGAR_WATER_BUCKET = createItem("sugar_water_bucket", () -> new BucketItem(BzFluids.SUGAR_WATER_FLUID, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> SUGAR_WATER_BOTTLE = createItem("sugar_water_bottle", () -> new HoneyBottleItem((new Item.Properties()).containerItem(Items.GLASS_BOTTLE).food((new Food.Builder()).hunger(1).saturation(0.05F).effect(() -> new EffectInstance(Effects.HASTE, 600, 0), 1.0F).build()).group(BUMBLEZONE_CREATIVE_TAB).maxStackSize(16)));
-    public static final RegistryObject<Item> HONEY_SLIME_SPAWN_EGG = createItem("honey_slime_spawn_egg", () -> new HoneySlimeSpawnEgg(null, 0xFFCC00, 0xFCA800, (new Item.Properties()).group(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> HONEY_SLIME_SPAWN_EGG = createItem("honey_slime_spawn_egg", () -> new HoneySlimeSpawnEgg(BzEntities.HONEY_SLIME_RAW, 0xFFCC00, 0xFCA800, (new Item.Properties()).group(BUMBLEZONE_CREATIVE_TAB)));
 
     public static <I extends Item> RegistryObject<I> createItem(String name, Supplier<? extends I> item) {
         return ITEMS.register(name, item);

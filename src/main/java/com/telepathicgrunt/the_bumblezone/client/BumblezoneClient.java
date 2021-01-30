@@ -29,13 +29,7 @@ public class BumblezoneClient
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         modEventBus.addListener(BumblezoneClient::onClientSetup);
-        modEventBus.addListener(BumblezoneClient::registerItemColors);
         forgeBus.addListener(FluidRender::sugarWaterOverlay);
-    }
-
-    public static void registerItemColors(final ColorHandlerEvent.Item event) {
-        event.getItemColors().register((stack, tintIndex) ->
-                ((SpawnEggItem) BzItems.HONEY_SLIME_SPAWN_EGG.get()).getColor(tintIndex), BzItems.HONEY_SLIME_SPAWN_EGG.get());
     }
 
     //Deferred because I have been told RenderTypeLookup is not thread safe
