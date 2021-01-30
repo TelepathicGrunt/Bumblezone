@@ -8,7 +8,6 @@
     "world.BiomeGenerationSettingsAccessor",
     "blocks.DefaultDispenseItemBehaviorInvoker",
     "blocks.DispenserBlockInvoker",
-    "items.EnderpearlImpactMixin",
     "items.GlassBottleUseMixin",
     "items.HoneyDrinkMixin",
     "items.HoneyShieldCooldownMixin",

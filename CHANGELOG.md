@@ -12,6 +12,13 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 # | Bumblezone changelog |
     
     
+   (V.2.2.11 Changes) (1.16.4 Minecraft)
+     
+   Dimension:
+- Changed Enderpearl impact mixin to be Forge's EnderTeleportEvent instead to have better mod compat with mods replacing Enderpearls.
+  However, due to a limitation of Forge's event, any modded Enderpearl (even those that doesn't replace vanilla's) will now teleport you to Bumblezone if it hits a beehive.
+
+    
    (V.2.2.10 Changes) (1.16.4 Minecraft)
      
    Dimension:

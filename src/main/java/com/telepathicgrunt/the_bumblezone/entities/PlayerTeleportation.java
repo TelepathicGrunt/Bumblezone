@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.modCompat.ResourcefulBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EnderPearlEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -123,23 +124,22 @@ public class PlayerTeleportation {
 
 
     // Enderpearl
-    public static boolean runEnderpearlImpact(RayTraceResult hitResult, EnderPearlEntity pearlEntity){
-        World world = pearlEntity.world; // world we threw in
+    public static boolean runEnderpearlImpact(Vector3d hitBlockPos, Entity thrower){
+        World world = thrower.world; // world we threw in
 
         // Make sure we are on server by checking if thrower is ServerPlayerEntity and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (!world.isRemote && pearlEntity.func_234616_v_() instanceof ServerPlayerEntity &&
+        if (!world.isRemote && thrower instanceof ServerPlayerEntity &&
             !world.getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID) &&
             (!Bumblezone.BzDimensionConfig.onlyOverworldHivesTeleports.get() || world.getDimensionKey().equals(World.OVERWORLD)))
         {
-            ServerPlayerEntity playerEntity = (ServerPlayerEntity) pearlEntity.func_234616_v_(); // the thrower
-            Vector3d hitBlockPos = hitResult.getHitVec(); //position of the collision
+            ServerPlayerEntity playerEntity = (ServerPlayerEntity) thrower; // the thrower
             BlockPos hivePos = new BlockPos(0,0,0);
             boolean hitHive = false;
 
             //check with offset in all direction as the position of exact hit point could barely be outside the hive block
             //even through the pearl hit the block directly.
-            for(double offset = -0.1D; offset <= 0.1D; offset += 0.2D) {
+            for(double offset = -0.45D; offset <= 0.45D; offset += 0.9D) {
                 BlockState block = world.getBlockState(new BlockPos(hitBlockPos.add(offset, 0, 0)));
                 if(isValidBeeHive(block)) {
                     hitHive = true;
@@ -185,7 +185,6 @@ public class PlayerTeleportation {
             if (hitHive && validBelowBlock) {
                 PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
                 cap.setTeleporting(true);
-                pearlEntity.remove(false);
                 return true;
             }
         }

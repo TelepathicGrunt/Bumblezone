@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.effects.BzEffects;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
+import com.telepathicgrunt.the_bumblezone.entities.EnderpearlImpact;
 import com.telepathicgrunt.the_bumblezone.features.BzConfiguredFeatures;
 import com.telepathicgrunt.the_bumblezone.features.BzFeatures;
 import com.telepathicgrunt.the_bumblezone.features.decorators.BzPlacements;
@@ -60,6 +61,7 @@ public class Bumblezone{
         forgeBus.addListener(BeeAggression::HoneyPickupEvent);
         forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
         forgeBus.addListener(HoneycombBroodEvents::reviveByPotionOfBees);
+        forgeBus.addListener(EventPriority.HIGH, EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
         forgeBus.addListener(PotionOfBeesBeeSplashPotionProjectile::ProjectileImpactEvent);
         forgeBus.addGenericListener(Entity.class, CapabilityEventHandler::onAttachCapabilitiesToEntities);
 
