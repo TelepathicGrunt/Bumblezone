@@ -1,4 +1,4 @@
-# Made for Minecraft v.1.16.4
+# Made for Minecraft v.1.16.5
 
     Created by TelepathicGrunt
 
@@ -12,7 +12,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 # | Bumblezone changelog |
     
     
-   (V.2.2.11 Changes) (1.16.4 Minecraft)
+   (V.2.2.11 Changes) (1.16.5 Minecraft)
      
    Dimension:
 - Changed Enderpearl impact mixin to be Forge's EnderTeleportEvent instead to have better mod compat with mods replacing Enderpearls.
