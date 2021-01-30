@@ -1,4 +1,4 @@
-    Made for Minecraft v.1.16.4
+    Made for Minecraft v.1.16.5
     Created by TelepathicGrunt
 
 A Fabric pot of an awesome dimension full of bees that becomes REALLY angry if you take their honey! 
@@ -7,8 +7,13 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
+   (V.2.2.18 Changes) (1.16.5 Minecraft)
+     
+   Items:
+• Honey Slime Spawn Eggs now use better code practices in backend. 
 
-   (V.2.2.17 Changes) (1.16.4 Minecraft) Quickfix
+
+   (V.2.2.17 Changes) (1.16.4 Minecraft)
    
    Mod Compat:
 • Added compat with AnvilFix so that Honey Crystal Shield can still be upgraded again and cost XP for balance.
