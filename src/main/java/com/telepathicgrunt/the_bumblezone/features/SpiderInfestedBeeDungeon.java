@@ -247,7 +247,7 @@ public class SpiderInfestedBeeDungeon extends BeeDungeon{
                 else if(Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get() &&
                         random.nextFloat() < 0.5f)
                 {
-                    return new Pair<>(ResourcefulBeesRedirection.RBGetSpiderHoneycomb(random), false);
+                    return new Pair<>(ProductiveBeesRedirection.PBGetRottenedHoneycomb(random), false);
                 }
             }
 

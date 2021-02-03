@@ -24,10 +24,12 @@ import com.telepathicgrunt.the_bumblezone.modCompat.PotionOfBeesBeeSplashPotionP
 import com.telepathicgrunt.the_bumblezone.surfacebuilders.BzSurfaceBuilders;
 import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
 import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -35,6 +37,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -64,6 +67,7 @@ public class Bumblezone{
         forgeBus.addListener(EventPriority.HIGH, EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
         forgeBus.addListener(PotionOfBeesBeeSplashPotionProjectile::ProjectileImpactEvent);
         forgeBus.addGenericListener(Entity.class, CapabilityEventHandler::onAttachCapabilitiesToEntities);
+        forgeBus.addGenericListener(Block.class, Bumblezone::missingMappingDimension);
 
         //Registration
         modEventBus.addListener(EventPriority.NORMAL, this::setup);
@@ -89,6 +93,16 @@ public class Bumblezone{
         BzDungeonsConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzDungeonsConfigs.BzDungeonsConfigValues::new, "the_bumblezone-dungeons.toml");
     }
 
+
+    public static void missingMappingDimension(RegistryEvent.MissingMappings<Block> event) {
+        ResourceLocation test = new ResourceLocation(MODID, "dead_honeycomb_larva_block");
+        ResourceLocation test2 = new ResourceLocation(MODID, "empty_honeycomb_brood_block");
+        for (RegistryEvent.MissingMappings.Mapping<Block> entry : event.getAllMappings()) {
+            if (entry.key.equals(test)) {
+                entry.remap(ForgeRegistries.BLOCKS.getValue(test2));
+            }
+        }
+    }
 
     private void setup(final FMLCommonSetupEvent event)
     {

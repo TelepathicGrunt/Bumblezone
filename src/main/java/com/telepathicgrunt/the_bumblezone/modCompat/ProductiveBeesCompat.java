@@ -76,72 +76,72 @@ public class ProductiveBeesCompat {
 			addToSpiderDungeonList(unusedHoneycombs, ModBlocks.COMB_URANINITE.get());
 			addToSpiderDungeonList(unusedHoneycombs, ModBlocks.COMB_WITHERED.get());
 			addToSpiderDungeonList(unusedHoneycombs, ModBlocks.COMB_NETHERITE.get());
-		}
 
-		// Basic combs that that are mostly based on vanilla ores.
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_GOLD.get(), 34, 3, 6, 230, true);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_IRON.get(), 26, 2, 30, 210, true);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_REDSTONE.get(), 22, 1, 30, 210, true);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_LAPIS.get(), 22, 1, 6, 30, true);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_EMERALD.get(), 5, 1, 6, 244, true);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_ENDER.get(), 5, 1, 200, 50, true);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_PROSPERITY.get(), 5, 1, 200, 50, true);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_EXPERIENCE.get(), 1, 0, 0, 1, true);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_DIAMOND.get(), 7, 1, 6, 244, true);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_NETHERITE.get(), 5, 1, 6, 244, true);
+			// Basic combs that that are mostly based on vanilla ores.
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_GOLD.get(), 34, 3, 6, 230, true);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_IRON.get(), 26, 2, 30, 210, true);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_REDSTONE.get(), 22, 1, 30, 210, true);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_LAPIS.get(), 22, 1, 6, 30, true);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_EMERALD.get(), 5, 1, 6, 244, true);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_ENDER.get(), 5, 1, 200, 50, true);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_PROSPERITY.get(), 5, 1, 200, 50, true);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_EXPERIENCE.get(), 1, 0, 0, 1, true);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_DIAMOND.get(), 7, 1, 6, 244, true);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_NETHERITE.get(), 5, 1, 6, 244, true);
 
-		// Other combs unique to Productive Bees
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_AMBER.get(), 34, 1, 40, 200, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_BLAZING.get(), 34, 1, 40, 200, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_BONE.get(), 22, 1, 6, 25, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_CONSTANTAN.get(), 9, 1, 1, 200, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_DRACONIC.get(), 5, 1, 200, 50, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_DRACONIC.get(), 5, 1, 2, 10, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_ENDERIUM.get(), 5, 1, 200, 50, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_ELECTRUM.get(), 30, 1, 40, 200, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_ELEMENTIUM.get(), 10, 1, 40, 200, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_FOSSILISED.get(), 18, 1, 4, 20, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_GHOSTLY.get(), 5, 1, 2, 10, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_GLOWING.get(), 34, 1, 40, 200, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_IMPERIUM.get(), 10, 1, 2, 244, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_INFERIUM.get(), 10, 1, 2, 244, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_INSANIUM.get(), 10, 1, 2, 244, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_INVAR.get(), 10, 1, 2, 244, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_LEADEN.get(), 10, 1, 1, 30, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_LUMIUM.get(), 10, 1, 1, 150, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_MAGMATIC.get(), 34, 1, 40, 200, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_MANASTEEL.get(), 10, 1, 2, 244, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_MILKY.get(), 10, 1, 2, 244, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_NICKEL.get(), 10, 1, 1, 30, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_OSMIUM.get(), 9, 1, 1, 30, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_PLASTIC.get(), 10, 1, 1, 150, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_PLATINUM.get(), 5, 1, 1, 30, true);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_PRUDENTIUM.get(), 10, 1, 2, 244, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_POWDERY.get(), 7, 1, 60, 244, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_QUARTZ.get(), 7, 1, 60, 244, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_REFINED_GLOWSTONE.get(), 25, 1, 60, 170, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_SIGNALUM.get(), 10, 1, 1, 244, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_SILICON.get(), 10, 1, 1, 244, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_SILVER.get(), 9, 1, 1, 30, true);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_SOULIUM.get(), 10, 1, 1, 244, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_STEEL.get(), 9, 1, 1, 200, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_TERRASTEEL.get(), 10, 1, 1, 244, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_TERTIUM.get(), 10, 1, 1, 244, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_TIN.get(), 9, 1, 1, 200, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_TITANIUM.get(), 6, 1, 1, 30, true);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_TUNGSTEN.get(), 9, 1, 1, 200, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_ZINC.get(), 9, 1, 1, 200, false);
+			// Other combs unique to Productive Bees
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_AMBER.get(), 34, 1, 40, 200, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_BLAZING.get(), 34, 1, 40, 200, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_BONE.get(), 22, 1, 6, 25, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_CONSTANTAN.get(), 9, 1, 1, 200, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_DRACONIC.get(), 5, 1, 200, 50, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_DRACONIC.get(), 5, 1, 2, 10, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_ENDERIUM.get(), 5, 1, 200, 50, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_ELECTRUM.get(), 30, 1, 40, 200, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_ELEMENTIUM.get(), 10, 1, 40, 200, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_FOSSILISED.get(), 18, 1, 4, 20, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_GHOSTLY.get(), 5, 1, 2, 10, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_GLOWING.get(), 34, 1, 40, 200, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_IMPERIUM.get(), 10, 1, 2, 244, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_INFERIUM.get(), 10, 1, 2, 244, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_INSANIUM.get(), 10, 1, 2, 244, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_INVAR.get(), 10, 1, 2, 244, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_LEADEN.get(), 10, 1, 1, 30, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_LUMIUM.get(), 10, 1, 1, 150, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_MAGMATIC.get(), 34, 1, 40, 200, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_MANASTEEL.get(), 10, 1, 2, 244, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_MILKY.get(), 10, 1, 2, 244, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_NICKEL.get(), 10, 1, 1, 30, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_OSMIUM.get(), 9, 1, 1, 30, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_PLASTIC.get(), 10, 1, 1, 150, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_PLATINUM.get(), 5, 1, 1, 30, true);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_PRUDENTIUM.get(), 10, 1, 2, 244, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_POWDERY.get(), 7, 1, 60, 244, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_QUARTZ.get(), 7, 1, 60, 244, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_REFINED_GLOWSTONE.get(), 25, 1, 60, 170, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_SIGNALUM.get(), 10, 1, 1, 244, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_SILICON.get(), 10, 1, 1, 244, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_SILVER.get(), 9, 1, 1, 30, true);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_SOULIUM.get(), 10, 1, 1, 244, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_STEEL.get(), 9, 1, 1, 200, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_TERRASTEEL.get(), 10, 1, 1, 244, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_TERTIUM.get(), 10, 1, 1, 244, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_TIN.get(), 9, 1, 1, 200, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_TITANIUM.get(), 6, 1, 1, 30, true);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_TUNGSTEN.get(), 9, 1, 1, 200, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_ZINC.get(), 9, 1, 1, 200, false);
 
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_ENDER_BIOTITE.get(), 5, 1, 1, 300, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_SUPREMIUM.get(), 5, 1, 1, 300, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_SPACIAL.get(), 5, 1, 1, 300, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_VIBRANIUM.get(), 5, 1, 1, 300, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_ALLTHEMODIUM.get(), 5, 1, 1, 400, false);
-		addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_UNOBTAINIUM.get(), 5, 1, 1, 500, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_ENDER_BIOTITE.get(), 5, 1, 1, 300, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_SUPREMIUM.get(), 5, 1, 1, 300, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_SPACIAL.get(), 5, 1, 1, 300, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_VIBRANIUM.get(), 5, 1, 1, 300, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_ALLTHEMODIUM.get(), 5, 1, 1, 400, false);
+			addCombToWorldgen(unusedHoneycombs, ModBlocks.COMB_UNOBTAINIUM.get(), 5, 1, 1, 500, false);
 
-		// Remaining combs gets a generic spawning rate
-		for(Block remainingCombs : unusedHoneycombs){
-			addCombToWorldgen(null, remainingCombs, 10, 1, 1, 235, false);
+			// Remaining combs gets a generic spawning rate
+			for(Block remainingCombs : unusedHoneycombs){
+				addCombToWorldgen(null, remainingCombs, 10, 1, 1, 235, false);
+			}
 		}
 	}
 	
