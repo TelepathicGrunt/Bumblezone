@@ -145,11 +145,11 @@ public class ProductiveBeesCompat {
 		ModChecker.productiveBeesPresent = true;
 	}
 	
-	public static void PBAddWorldgen(List<Biome> bumblezone_biomes) {
+	public static void PBAddWorldgen(List<Biome> bumblezoneBiomes) {
 		HashMap<String, CompoundNBT> PB_DATA = new HashMap<>(BeeReloadListener.INSTANCE.getData());
 		PRODUCTIVE_BEES_LIST = new ArrayList<>(PB_DATA.keySet());
 
-		for(Biome biome : bumblezone_biomes) {
+		for(Biome biome : bumblezoneBiomes) {
 			// Add all the comb cfs that are registered.
 			// We ignore the datapack combs as that's too much work to support tbh.
 			for (Pair<Block, ConfiguredFeature<?, ?>> cf : PRODUCTIVE_BEES_CFS) {

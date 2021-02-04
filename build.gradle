@@ -71,9 +71,9 @@ dependencies {
 
 	// Remove these if you don't have a deps folder with these mods in it
 	// (some of the jars had to be renamed to make it be imported in dev)
-	implementation fg.deobf("ignored:productivebees-1.16.4:0.5.2.10")
-	implementation fg.deobf("ignored:ResourcefulBees1.16.3-1.16.4:0.5.8b")
-	implementation fg.deobf("ignored:carrierbees-1.16.3:0.0.2.2")
+	implementation fg.deobf("ignored:productivebees-1.16.5:0.6.2")
+	implementation fg.deobf("ignored:resourcefulbees-1.16.5:0.5.9_3b")
+	implementation fg.deobf("ignored:carrierbees-1.16.3:0.0.2.3")
 	implementation fg.deobf("ignored:potionofbees-1.16.4:1.1.0.2")
 	implementation fg.deobf("ignored:amb-1.16.3:0.1.0")
 	implementation fg.deobf("ignored:buzzier_bees-1.16.4:3.0.0")
