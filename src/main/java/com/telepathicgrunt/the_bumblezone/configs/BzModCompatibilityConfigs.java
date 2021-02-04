@@ -21,6 +21,7 @@ public class BzModCompatibilityConfigs
 	    public ConfigValueListener<Boolean> allowSplashPotionOfBeesCompat;
 
 		public ConfigValueListener<Boolean> spawnResourcefulBeesBeesMob;
+		public ConfigValueListener<Boolean> RBRestrictSpawnsToCanSpawnInWorld;
 		public ConfigValueListener<Boolean> spawnResourcefulBeesHoneycombVariants;
 		public ConfigValueListener<Integer> RBGreatHoneycombRarityBeeDungeon;
 		public ConfigValueListener<Double> RBOreHoneycombSpawnRateBeeDungeon;
@@ -64,6 +65,12 @@ public class BzModCompatibilityConfigs
 								+" Spawn Resourceful Bees's Wax Block as part of The Bumblezone's worldgen.\r\n")
 						.translation("the_bumblezone.config.modcompat.resourcefulbees.rbbeeswaxworldgen")
 						.define("RBBeesWaxWorldgen", true));
+
+					RBRestrictSpawnsToCanSpawnInWorld = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" Only spawn resourceful bees that have, \"canSpawnInWorld\": true.\r\n")
+						.translation("the_bumblezone.config.modcompat.resourcefulbees.rbrestrictspawnstocanspawninworld")
+						.define("RBRestrictSpawnsToCanSpawnInWorld", false));
 
 
 					RBOreHoneycombSpawnRateBeeDungeon = subscriber.subscribe(builder
@@ -130,7 +137,7 @@ public class BzModCompatibilityConfigs
 	    		            		+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.3D\r\n")
 	    		            .translation("the_bumblezone.config.productivebees.pborehoneycombspawnratebeedungeon")
 	    		            .defineInRange("PBOreHoneycombSpawnRateBeeDungeon", 0.3D, 0D, 1D));
-		    		
+
 	        		PBGreatHoneycombRarityBeeDungeon = subscriber.subscribe(builder
 	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 	    		            		+" How rare good ore-based Honeycombs (diamonds, ender, emerald, etc) are \r\n"
@@ -138,14 +145,14 @@ public class BzModCompatibilityConfigs
 	    		            		+" Higher numbers means more rare. Default rate is 3.\r\n")
 	    		            .translation("the_bumblezone.config.productivebees.pbgreathoneycombraritybeedungeon")
 	    		            .defineInRange("PBGreatHoneycombRarityBeeDungeon", 2, 1, 1001));
-	        		
+
 	        		PBOreHoneycombSpawnRateSpiderBeeDungeon = subscriber.subscribe(builder
 	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 	    		            		+" How much of Spider Infested Bee Dungeons is made of ore-based honeycombs.\r\n"
 	    		            		+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.1D\r\n")
 	    		            .translation("the_bumblezone.config.productivebees.pborehoneycombspawnratespiderbeedungeon")
 	    		            .defineInRange("PBOreHoneycombSpawnRateSpiderBeeDungeon", 0.1D, 0D, 1D));
-		    		
+
 	        		PBGreatHoneycombRaritySpiderBeeDungeon = subscriber.subscribe(builder
 	    		            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 	    		            		+" How rare good ore-based Honeycombs (diamonds, ender, emerald, etc) are \r\n"
@@ -167,8 +174,8 @@ public class BzModCompatibilityConfigs
 							.define("PBBlacklistedBees", ""));
 
 	            builder.pop();
-	            
-	            
+
+
 	            builder.push("Potion of Bees Options");
 
 	            		allowPotionOfBeesCompat = subscriber.subscribe(builder
@@ -177,7 +184,7 @@ public class BzModCompatibilityConfigs
 			                    	+" back into Honeycomb Brood Blocks with a larva in it. (affects Dispenser too)\r\n")
 		                    .translation("the_bumblezone.config.modcompat.potionofbees.allowpotionofbeescompat")
 		                    .define("allowPotionOfBeesCompat", true));
-	            		
+
 	            		allowSplashPotionOfBeesCompat = subscriber.subscribe(builder
 			            .comment(" \r\n-----------------------------------------------------\r\n\r\n"
 			                    	+" Allow Splash Potion of Bees item to turn Empty Honeycomb Brood \r\n"
@@ -185,7 +192,7 @@ public class BzModCompatibilityConfigs
 				                +" the potion is thrown and splashed near the block. (affects Dispenser too)\r\n")
 			            .translation("the_bumblezone.config.modcompat.productivebees.allowsplashpotionofbeescompat")
 			            .define("allowSplashPotionOfBeesCompat", true));
-        
+
 	            builder.pop();
 
 
