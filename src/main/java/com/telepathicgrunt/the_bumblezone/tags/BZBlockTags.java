@@ -17,6 +17,4 @@ public class BZBlockTags {
     public static final ITag.INamedTag<Block> BLACKLISTED_RESOURCEFUL_COMBS = BlockTags.makeWrapperTag(Bumblezone.MODID+":blacklisted_resourceful_bees_combs");
     public static final ITag.INamedTag<Block> BLACKLISTED_PRODUCTIVEBEES_COMBS = BlockTags.makeWrapperTag(Bumblezone.MODID+":blacklisted_productive_bees_combs");
     public static final ITag.INamedTag<Block> HONEYCOMBS_THAT_FEATURES_CAN_CARVE = BlockTags.makeWrapperTag(Bumblezone.MODID+":honeycombs_that_features_can_carve");
-
-    public static final ITag.INamedTag<EntityType<?>> BLACKLISTED_RESOURCEFUL_BEES_ENTITIES = EntityTypeTags.createOptional(new ResourceLocation(Bumblezone.MODID, "blacklisted_resourceful_bees_entities"));
 }

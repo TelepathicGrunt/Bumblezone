@@ -10,6 +10,7 @@ import com.resourcefulbees.resourcefulbees.registry.ModBlocks;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.features.BzConfiguredFeatures;
 import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
+import com.telepathicgrunt.the_bumblezone.tags.BZEntityTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -46,30 +47,33 @@ public class ResourcefulBeesCompat {
 
     public static void setupResourcefulBees() {
 
+    	// get all bees
         Map<CustomBeeData, EntityType<?>> tempBeeMap = new HashMap<>();
-        BeeRegistry.getRegistry().getBees().forEach((s, b) -> {
-            tempBeeMap.put(b, ForgeRegistries.ENTITIES.getValue(b.getEntityTypeRegistryID()));
-        });
+        BeeRegistry.getRegistry().getBees().forEach((s, b) -> tempBeeMap.put(b, ForgeRegistries.ENTITIES.getValue(b.getEntityTypeRegistryID())));
 
-        if (Bumblezone.BzModCompatibilityConfig.RBRestrictSpawnsToCanSpawnInWorld.get()) {
+        // remove bees that RB will not spawn in the world
+        if (Bumblezone.BzModCompatibilityConfig.useSpawnInWorldConfigFromRB.get()) {
             tempBeeMap.forEach((b, e) -> {
-                if (!b.getSpawnData().canSpawnInWorld()) tempBeeMap.remove(b);
+                if (!b.getSpawnData().canSpawnInWorld()){
+                	tempBeeMap.remove(b);
+				}
             });
         }
 
-        // do blacklist removal here.
+        // remove bees that bumblezone tag blacklists
         tempBeeMap.forEach((b, e) -> {
-
+			if(BZEntityTags.BLACKLISTED_RESOURCEFUL_BEES_ENTITIES.contains(e)){
+				tempBeeMap.remove(b);
+			}
 		});
 
-        // register combs and bees
+        // Now create list of bees and honecombs to spawn
         tempBeeMap.forEach((b, e) -> {
         	if (b.hasHoneycomb()) {
         		RESOURCEFUL_HONEYCOMBS_MAP.put(b.getCombBlockRegistryObject().getId(), b.getCombBlockRegistryObject().get());
 			}
         	RESOURCEFUL_BEES_LIST.add(e);
 		});
-
 
 
         for (Map.Entry<RegistryKey<Block>, Block> entry : Registry.BLOCK.getEntries()) {

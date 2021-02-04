@@ -18,13 +18,20 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 - Fixed Honey Slime Spawn Eggs not working with Dispensers and now use better code practices. 
     
    Mod Compat:
+- Special thanks to Vaerys-Dawn for improving Resourceful Bees compat in Bumblezone!
+  Bees will now only spawn in Bumblezone if canSpawnInWorld is set to true in Resourceful Bees and 
+  useSpawnInWorldConfigFromRB config in Bumblezone is set to true. Also added a new entity type tag 
+  called blacklisted_resourceful_bees_entities.json that you can use to blacklist specific bees as well.
+  
+- Only Resourceful Bees Honeycombs of bees spawnable in Bumblezone will generate in the dimension now.
+
+- Added PBBlacklistedBees config entry to allow users to blacklist what Productive Bees spawns in Bumblezone.
+
 - Fixed spawnProductiveBeesHoneycombVariants config not preventing all Productive Bees combs from spawning in Bumblezone.
 
 - Fixed Spider Dungeon grabbing Resourceful Bees comb instead of Productive Bees's in certain cases. 
 
 - Fixed spawnResourcefulBeesHoneycombVariants config not preventing all Resourceful Bees combs from spawning in Bumblezone.
-
-- Added PBBlacklistedBees config entry to allow users to blacklist what Productive Bees spawns in Bumblezone.
   
     
    (V.2.2.11 Changes) (1.16.5 Minecraft)

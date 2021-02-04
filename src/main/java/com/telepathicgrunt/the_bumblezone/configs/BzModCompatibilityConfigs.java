@@ -21,7 +21,7 @@ public class BzModCompatibilityConfigs
 	    public ConfigValueListener<Boolean> allowSplashPotionOfBeesCompat;
 
 		public ConfigValueListener<Boolean> spawnResourcefulBeesBeesMob;
-		public ConfigValueListener<Boolean> RBRestrictSpawnsToCanSpawnInWorld;
+		public ConfigValueListener<Boolean> useSpawnInWorldConfigFromRB;
 		public ConfigValueListener<Boolean> spawnResourcefulBeesHoneycombVariants;
 		public ConfigValueListener<Integer> RBGreatHoneycombRarityBeeDungeon;
 		public ConfigValueListener<Double> RBOreHoneycombSpawnRateBeeDungeon;
@@ -66,11 +66,16 @@ public class BzModCompatibilityConfigs
 						.translation("the_bumblezone.config.modcompat.resourcefulbees.rbbeeswaxworldgen")
 						.define("RBBeesWaxWorldgen", true));
 
-					RBRestrictSpawnsToCanSpawnInWorld = subscriber.subscribe(builder
+					useSpawnInWorldConfigFromRB = subscriber.subscribe(builder
 						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
-								+" Only spawn resourceful bees that have, \"canSpawnInWorld\": true.\r\n")
-						.translation("the_bumblezone.config.modcompat.resourcefulbees.rbrestrictspawnstocanspawninworld")
-						.define("RBRestrictSpawnsToCanSpawnInWorld", false));
+								+" Use Resourceful Bees's canSpawnInWorld config on their bee data\r\n"
+								+" to know what bees to spawn in Bumblezone. This will stack with\r\n"
+								+" blacklisted_resourceful_bees_entities tag that Bumblezone uses.\r\n"
+								+" Bees blacklisted from either will not spawn and their combs will not spawn either.\r\n"
+								+" \r\n"
+								+" NOTE: Will require a restart of the world to take effect. \r\n")
+						.translation("the_bumblezone.config.modcompat.productivebees.usespawninworldconfigfromrb")
+						.define("useSpawnInWorldConfigFromRB", false));
 
 
 					RBOreHoneycombSpawnRateBeeDungeon = subscriber.subscribe(builder
