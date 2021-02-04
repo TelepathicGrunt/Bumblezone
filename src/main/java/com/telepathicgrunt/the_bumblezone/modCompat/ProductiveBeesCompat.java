@@ -47,9 +47,6 @@ public class ProductiveBeesCompat {
 	private static final List<Pair<Block, ConfiguredFeature<?,?>>> PRODUCTIVE_BEES_CFS = new ArrayList<>();
 
 	public static void setupProductiveBees() {
-		// Keep at end so it is only set to true if no exceptions was thrown during setup
-		ModChecker.productiveBeesPresent = true;
-
 		for(Map.Entry<RegistryKey<Block>, Block> entry : Registry.BLOCK.getEntries()){
 			ResourceLocation rl = entry.getKey().getLocation();
 			if(rl.getNamespace().equals(PRODUCTIVE_BEES_NAMESPACE) && rl.getPath().contains("comb")){
@@ -143,6 +140,9 @@ public class ProductiveBeesCompat {
 				addCombToWorldgen(null, remainingCombs, 10, 1, 1, 235, false);
 			}
 		}
+
+		// Keep at end so it is only set to true if no exceptions was thrown during setup
+		ModChecker.productiveBeesPresent = true;
 	}
 	
 	public static void PBAddWorldgen(List<Biome> bumblezone_biomes) {

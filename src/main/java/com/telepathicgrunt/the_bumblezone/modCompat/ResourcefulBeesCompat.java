@@ -76,19 +76,20 @@ public class ResourcefulBeesCompat {
 			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "wither_honeycomb_block"));
 			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "netherite_honeycomb_block"));
 			addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "rgbee_honeycomb_block"));
-		}
-		addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "gold_honeycomb_block"), 34, 3, 6, 230, true);
-		addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "iron_honeycomb_block"), 26, 2, 30, 210, true);
-		addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "redstone_honeycomb_block"), 22, 1, 30, 210, true);
-		addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "lapis_honeycomb_block"), 22, 1, 6, 30, true);
-		addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "emerald_honeycomb_block"), 5, 1, 6, 244, true);
-		addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "ender_honeycomb_block"), 5, 1, 200, 50, true);
-		addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "diamond_honeycomb_block"), 7, 1, 6, 244, true);
-		addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "rgbee_honeycomb_block"), 7, 1, 6, 244, true);
 
-		// Remaining combs gets a generic spawning rate
-		for(Map.Entry<ResourceLocation, Block> remainingCombs : unusedHoneycombs.entrySet()){
-			addCombToWorldgen(null, remainingCombs.getKey(), 10, 1, 1, 235, false);
+			addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "gold_honeycomb_block"), 34, 3, 6, 230, true);
+			addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "iron_honeycomb_block"), 26, 2, 30, 210, true);
+			addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "redstone_honeycomb_block"), 22, 1, 30, 210, true);
+			addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "lapis_honeycomb_block"), 22, 1, 6, 30, true);
+			addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "emerald_honeycomb_block"), 5, 1, 6, 244, true);
+			addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "ender_honeycomb_block"), 5, 1, 200, 50, true);
+			addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "diamond_honeycomb_block"), 7, 1, 6, 244, true);
+			addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "rgbee_honeycomb_block"), 7, 1, 6, 244, true);
+
+			// Remaining combs gets a generic spawning rate
+			for(Map.Entry<ResourceLocation, Block> remainingCombs : unusedHoneycombs.entrySet()){
+				addCombToWorldgen(null, remainingCombs.getKey(), 10, 1, 1, 235, false);
+			}
 		}
 
 		// Keep at end so it is only set to true if no exceptions was thrown during setup

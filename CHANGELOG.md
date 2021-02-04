@@ -21,6 +21,8 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 - Fixed spawnProductiveBeesHoneycombVariants config not preventing all Productive Bees combs from spawning in Bumblezone.
 
 - Fixed Spider Dungeon grabbing Resourceful Bees comb instead of Productive Bees's in certain cases. 
+
+- Fixed spawnResourcefulBeesHoneycombVariants config not preventing all Resourceful Bees combs from spawning in Bumblezone.
   
     
    (V.2.2.11 Changes) (1.16.5 Minecraft)
