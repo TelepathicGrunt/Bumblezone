@@ -28,6 +28,7 @@ public class BzModCompatibilityConfigs
 		public ConfigValueListener<Integer> RBGreatHoneycombRaritySpiderBeeDungeon;
 		public ConfigValueListener<Double> RBOreHoneycombSpawnRateSpiderBeeDungeon;
 		public ConfigValueListener<Boolean> RBBeesWaxWorldgen;
+		public ConfigValueListener<String> RBBlacklistedBees;
 
 	    public ConfigValueListener<Boolean> spawnProductiveBeesBeesMob;
 		public ConfigValueListener<Boolean> allowHoneyTreatCompat;
@@ -57,7 +58,7 @@ public class BzModCompatibilityConfigs
 								+" where they spawn!\r\n"
 								+" \r\n"
 								+" NOTE: Will require a restart of the world to take effect. \r\n")
-						.translation("the_bumblezone.config.modcompat.productivebees.spawnproductivebeeshoneycombvariants")
+						.translation("the_bumblezone.config.modcompat.resourcefulbees.spawnproductivebeeshoneycombvariants")
 						.define("spawnResourcefulBeesHoneycombVariants", true));
 
 					RBBeesWaxWorldgen = subscriber.subscribe(builder
@@ -70,19 +71,27 @@ public class BzModCompatibilityConfigs
 						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
 								+" Use Resourceful Bees's canSpawnInWorld config on their bee data\r\n"
 								+" to know what bees to spawn in Bumblezone. This will stack with\r\n"
-								+" blacklisted_resourceful_bees_entities tag that Bumblezone uses.\r\n"
+								+" RBBlacklistedBees config entry that Bumblezone uses.\r\n"
 								+" Bees blacklisted from either will not spawn and their combs will not spawn either.\r\n"
 								+" \r\n"
 								+" NOTE: Will require a restart of the world to take effect. \r\n")
-						.translation("the_bumblezone.config.modcompat.productivebees.usespawninworldconfigfromrb")
+						.translation("the_bumblezone.config.modcompat.resourcefulbees.usespawninworldconfigfromrb")
 						.define("useSpawnInWorldConfigFromRB", false));
 
+					RBBlacklistedBees = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" Blacklist what Resourceful Bees bees should not spawn in Bumblezone. \r\n"
+								+" Separate each entry with a comma. Example: \"resourcefulbees:iron,resourcefulbees:coal\"\r\n"
+								+" \r\n"
+								+" Note: Blacklisted bees will automatically blacklist their respective combs from worldgen too.")
+						.translation("the_bumblezone.config.resourcefulbees.RBBlacklistedBees")
+						.define("RBBlacklistedBees", ""));
 
 					RBOreHoneycombSpawnRateBeeDungeon = subscriber.subscribe(builder
 						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
 								+" How much of Bee Dungeons is made of ore-based honeycombs.\r\n"
 								+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.3D\r\n")
-						.translation("the_bumblezone.config.productivebees.RBorehoneycombspawnratebeedungeon")
+						.translation("the_bumblezone.config.resourcefulbees.RBorehoneycombspawnratebeedungeon")
 						.defineInRange("RBOreHoneycombSpawnRateBeeDungeon", 0.3D, 0D, 1D));
 
 					RBGreatHoneycombRarityBeeDungeon = subscriber.subscribe(builder
@@ -90,14 +99,14 @@ public class BzModCompatibilityConfigs
 								+" How rare good ore-based Honeycombs (diamonds, ender, emerald, etc) are \r\n"
 								+" in Bee Dungeons. \r\n"
 								+" Higher numbers means more rare. Default rate is 3.\r\n")
-						.translation("the_bumblezone.config.productivebees.RBgreathoneycombraritybeedungeon")
+						.translation("the_bumblezone.config.resourcefulbees.RBgreathoneycombraritybeedungeon")
 						.defineInRange("RBGreatHoneycombRarityBeeDungeon", 2, 1, 1001));
 
 					RBOreHoneycombSpawnRateSpiderBeeDungeon = subscriber.subscribe(builder
 						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
 								+" How much of Spider Infested Bee Dungeons is made of ore-based honeycombs.\r\n"
 								+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.1D\r\n")
-						.translation("the_bumblezone.config.productivebees.RBorehoneycombspawnratespiderbeedungeon")
+						.translation("the_bumblezone.config.resourcefulbees.RBorehoneycombspawnratespiderbeedungeon")
 						.defineInRange("RBOreHoneycombSpawnRateSpiderBeeDungeon", 0.1D, 0D, 1D));
 
 					RBGreatHoneycombRaritySpiderBeeDungeon = subscriber.subscribe(builder
@@ -105,7 +114,7 @@ public class BzModCompatibilityConfigs
 								+" How rare good ore-based Honeycombs (diamonds, ender, emerald, etc) are \r\n"
 								+" in Spider Infested Bee Dungeons. \r\n"
 								+" Higher numbers means more rare. Default rate is 2.\r\n")
-						.translation("the_bumblezone.config.productivebees.RBgreathoneycombrarityspiderbeedungeon")
+						.translation("the_bumblezone.config.resourcefulbees.RBgreathoneycombrarityspiderbeedungeon")
 						.defineInRange("RBGreatHoneycombRaritySpiderBeeDungeon", 2, 1, 1001));
 
 				builder.pop();
@@ -167,7 +176,7 @@ public class BzModCompatibilityConfigs
 	    		            .defineInRange("PBGreatHoneycombRaritySpiderBeeDungeon", 2, 1, 1001));
 
 
-						PBBlacklistedBees = subscriber.subscribe(builder
+					PBBlacklistedBees = subscriber.subscribe(builder
 							.comment(" \r\n-----------------------------------------------------\r\n\r\n"
 									+" Blacklist what Productive Bees bees should not spawn in Bumblezone. \r\n"
 									+" Separate each entry with a comma. Example: \"productivebees:iron,productivebees:coal\"\r\n"

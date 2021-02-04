@@ -35,7 +35,7 @@ public class ResourcefulBeesRedirection {
 		return ResourcefulBeesCompat.RBGetRandomHoneycomb(random, lowerBoundBias);
 	}
 
-	public static void RBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
-		ResourcefulBeesCompat.RBMobSpawnEvent(event);
+	public static void RBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event, boolean isChild) {
+		ResourcefulBeesCompat.RBMobSpawnEvent(event, isChild);
 	}
 }

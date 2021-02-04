@@ -10,7 +10,6 @@ import com.resourcefulbees.resourcefulbees.registry.ModBlocks;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.features.BzConfiguredFeatures;
 import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
-import com.telepathicgrunt.the_bumblezone.tags.BZEntityTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -33,6 +32,7 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.telepathicgrunt.the_bumblezone.features.BzFeatures.HONEYCOMB_BUMBLEZONE;
 
@@ -62,14 +62,16 @@ public class ResourcefulBeesCompat {
 
         // remove bees that bumblezone tag blacklists
         tempBeeMap.forEach((b, e) -> {
-			if(BZEntityTags.BLACKLISTED_RESOURCEFUL_BEES_ENTITIES.contains(e)){
+            Set<ResourceLocation> blacklistedBees = Arrays.stream(Bumblezone.BzModCompatibilityConfig.RBBlacklistedBees.get().split(",")).map(String::trim).map(ResourceLocation::new).collect(Collectors.toSet());
+            if(blacklistedBees.contains(e.getRegistryName())){
 				tempBeeMap.remove(b);
 			}
 		});
 
         // Now create list of bees and honecombs to spawn
         tempBeeMap.forEach((b, e) -> {
-        	if (b.hasHoneycomb()) {
+            // check if comb block exist as oreo bee has an item instead which means getCombBlockRegistryObject is null
+        	if (b.hasHoneycomb() && b.getCombBlockRegistryObject() != null) {
         		RESOURCEFUL_HONEYCOMBS_MAP.put(b.getCombBlockRegistryObject().getId(), b.getCombBlockRegistryObject().get());
 			}
         	RESOURCEFUL_BEES_LIST.add(e);
@@ -204,7 +206,7 @@ public class ResourcefulBeesCompat {
     /**
      * 1/15th of bees spawning will also spawn Resourceful Bees' bees
      */
-    public static void RBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
+    public static void RBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event, boolean isChild) {
 
         if (RESOURCEFUL_BEES_LIST.size() == 0) {
             Bumblezone.LOGGER.warn(
@@ -220,6 +222,7 @@ public class ResourcefulBeesCompat {
         MobEntity resourcefulBeeEntity = (MobEntity) RESOURCEFUL_BEES_LIST.get(world.getRandom().nextInt(RESOURCEFUL_BEES_LIST.size())).create(entity.world);
         if (resourcefulBeeEntity == null) return;
 
+        resourcefulBeeEntity.setChild(isChild);
         BlockPos.Mutable blockpos = new BlockPos.Mutable().setPos(entity.getPosition());
         resourcefulBeeEntity.setLocationAndAngles(
                 blockpos.getX(),

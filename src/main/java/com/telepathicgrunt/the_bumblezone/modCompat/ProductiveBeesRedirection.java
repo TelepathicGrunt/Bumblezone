@@ -29,8 +29,8 @@ public class ProductiveBeesRedirection {
 		return ProductiveBeesCompat.PBGetRottenedHoneycomb(random);
 	}
 
-	public static void PBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
-		ProductiveBeesCompat.PBMobSpawnEvent(event);
+	public static void PBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event, boolean isChild) {
+		ProductiveBeesCompat.PBMobSpawnEvent(event, isChild);
 	}
 
 	public static Pair<BlockState, String> PBGetRandomHoneycomb(Random random, int lowerBoundBias) {

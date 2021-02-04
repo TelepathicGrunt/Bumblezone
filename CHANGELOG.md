@@ -13,7 +13,10 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
      
      
    (V.2.2.12 Changes) (1.16.5 Minecraft)
-     
+      
+   Blocks:
+- Honeycomb Brood Blocks now spawn child Bees and child Honey Slime mobs.
+
    Items:
 - Fixed Honey Slime Spawn Eggs not working with Dispensers and now use better code practices. 
     

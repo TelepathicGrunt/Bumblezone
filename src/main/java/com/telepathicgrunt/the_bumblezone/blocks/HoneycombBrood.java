@@ -359,11 +359,12 @@ public class HoneycombBrood extends DirectionalBlock {
 
         if (stage == 3 && !world.getBlockState(blockpos).getMaterial().isSolid()) {
             MobEntity beeMob = EntityType.BEE.create(world);
-
+            beeMob.setChild(true);
             spawnMob(world, blockpos, beeMob, beeMob);
 
             if(world.rand.nextFloat() < 0.1f){
                 MobEntity honeySlimeMob = BzEntities.HONEY_SLIME.get().create(world);
+                honeySlimeMob.setChild(true);
                 spawnMob(world, blockpos, beeMob, honeySlimeMob);
             }
 

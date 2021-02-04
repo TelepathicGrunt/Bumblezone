@@ -224,7 +224,7 @@ public class ProductiveBeesCompat {
 	/**
 	 * 1/15th of bees spawning will also spawn Productive Bees' bees
 	 */
-	public static void PBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
+	public static void PBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event, boolean isChild) {
 
 		if (PRODUCTIVE_BEES_LIST.size() == 0) {
 			Bumblezone.LOGGER.warn(
