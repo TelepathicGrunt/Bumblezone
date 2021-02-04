@@ -8,6 +8,9 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
        | The Bumblezone Fabric changelog |
 
    (V.2.2.18 Changes) (1.16.5 Minecraft)
+      
+   Blocks:
+• Honeycomb Brood Blocks now spawn child Bees and child Honey Slime mobs.
      
    Items:
 • Honey Slime Spawn Eggs now use better code practices in backend. 

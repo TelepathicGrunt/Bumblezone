@@ -259,11 +259,12 @@ public class HoneycombBrood extends FacingBlock {
 
         if (stage == 3 && !world.getBlockState(blockpos).getMaterial().isSolid()) {
             MobEntity beeMob = EntityType.BEE.create(world);
-
+            beeMob.setBaby(true);
             spawnMob(world, blockpos, beeMob, beeMob);
 
             if(world.random.nextFloat() < 0.1f){
                 MobEntity honeySlimeMob = BzEntities.HONEY_SLIME.create(world);
+                honeySlimeMob.setBaby(true);
                 spawnMob(world, blockpos, beeMob, honeySlimeMob);
             }
 
