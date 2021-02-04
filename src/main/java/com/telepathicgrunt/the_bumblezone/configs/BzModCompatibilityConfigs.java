@@ -35,6 +35,7 @@ public class BzModCompatibilityConfigs
 	    public ConfigValueListener<Double> PBOreHoneycombSpawnRateBeeDungeon;
 	    public ConfigValueListener<Integer> PBGreatHoneycombRaritySpiderBeeDungeon;
 	    public ConfigValueListener<Double> PBOreHoneycombSpawnRateSpiderBeeDungeon;
+		public ConfigValueListener<String> PBBlacklistedBees;
 
 	    public BzModCompatibilityConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber) {
 
@@ -52,7 +53,7 @@ public class BzModCompatibilityConfigs
 						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
 								+" Spawn Resourceful Bees's various honeycomb variants in The Bumblezone\r\n"
 								+" at all kinds of heights and height bands. Start exploring to find \r\n"
-								+" where they spawn!"
+								+" where they spawn!\r\n"
 								+" \r\n"
 								+" NOTE: Will require a restart of the world to take effect. \r\n")
 						.translation("the_bumblezone.config.modcompat.productivebees.spawnproductivebeeshoneycombvariants")
@@ -152,6 +153,18 @@ public class BzModCompatibilityConfigs
 	    		            		+" Higher numbers means more rare. Default rate is 2.\r\n")
 	    		            .translation("the_bumblezone.config.productivebees.pbgreathoneycombrarityspiderbeedungeon")
 	    		            .defineInRange("PBGreatHoneycombRaritySpiderBeeDungeon", 2, 1, 1001));
+
+
+						PBBlacklistedBees = subscriber.subscribe(builder
+							.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+									+" Blacklist what Productive Bees bees should not spawn in Bumblezone. \r\n"
+									+" Separate each entry with a comma. Example: \"productivebees:iron,productivebees:coal\"\r\n"
+									+" \r\n"
+									+" Note: this is only for the entities. To blacklist blocks as well,\r\n"
+									+" use a datapack to add blacklisted blocks to this tag:\r\n"
+									+" data/the_bumblezone/tags/blocks/blacklisted_productive_bees_combs.json\r\n")
+							.translation("the_bumblezone.config.productivebees.pbblacklistedbees")
+							.define("PBBlacklistedBees", ""));
 
 	            builder.pop();
 	            

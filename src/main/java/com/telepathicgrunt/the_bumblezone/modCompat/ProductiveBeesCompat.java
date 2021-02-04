@@ -34,6 +34,7 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.telepathicgrunt.the_bumblezone.features.BzFeatures.HONEYCOMB_BUMBLEZONE;
 
@@ -148,6 +149,8 @@ public class ProductiveBeesCompat {
 	public static void PBAddWorldgen(List<Biome> bumblezoneBiomes) {
 		HashMap<String, CompoundNBT> PB_DATA = new HashMap<>(BeeReloadListener.INSTANCE.getData());
 		PRODUCTIVE_BEES_LIST = new ArrayList<>(PB_DATA.keySet());
+		Set<String> blacklistedBees = Arrays.stream(Bumblezone.BzModCompatibilityConfig.PBBlacklistedBees.get().split(",")).map(String::trim).collect(Collectors.toSet());
+		PRODUCTIVE_BEES_LIST.removeIf(blacklistedBees::contains);
 
 		for(Biome biome : bumblezoneBiomes) {
 			// Add all the comb cfs that are registered.
