@@ -11,6 +11,13 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
 # | Bumblezone changelog |
      
+   (V.2.2.13 Changes) (1.16.5 Minecraft)
+      
+   Blocks:
+- Renamed the registry name of Brood Blocks from honeycomb_larva_block to honeycomb_brood_block.
+
+- Renamed the registry name of Empty Brood Blocks from dead_honeycomb_larva_block to empty_honeycomb_brood_block. (fixes some having missing texture too if you used 2.2.12)
+     
      
    (V.2.2.12 Changes) (1.16.5 Minecraft)
       

@@ -94,12 +94,17 @@ public class Bumblezone{
     }
 
 
+    private static final ResourceLocation old1 = new ResourceLocation(MODID, "dead_honeycomb_larva_block");
+    private static final ResourceLocation new1 = new ResourceLocation(MODID, "empty_honeycomb_brood_block");
+    private static final ResourceLocation old2 = new ResourceLocation(MODID, "honeycomb_larva_block");
+    private static final ResourceLocation new2 = new ResourceLocation(MODID, "honeycomb_brood_block");
     public static void missingMappingDimension(RegistryEvent.MissingMappings<Block> event) {
-        ResourceLocation test = new ResourceLocation(MODID, "dead_honeycomb_larva_block");
-        ResourceLocation test2 = new ResourceLocation(MODID, "empty_honeycomb_brood_block");
-        for (RegistryEvent.MissingMappings.Mapping<Block> entry : event.getAllMappings()) {
-            if (entry.key.equals(test)) {
-                entry.remap(ForgeRegistries.BLOCKS.getValue(test2));
+        for (RegistryEvent.MissingMappings.Mapping<Block> entry : event.getMappings(Bumblezone.MODID)) {
+            if (entry.key.equals(old1)) {
+                entry.remap(ForgeRegistries.BLOCKS.getValue(new1));
+            }
+            else if (entry.key.equals(old2)) {
+                entry.remap(ForgeRegistries.BLOCKS.getValue(new2));
             }
         }
     }

@@ -28,7 +28,7 @@
 							}
 						}
 					],
-					"name":"the_bumblezone:honeycomb_larva_block"
+					"name":"the_bumblezone:honeycomb_brood_block"
 				},
 				{
 					"type":"minecraft:item",
@@ -94,7 +94,7 @@
 				},
 				{
 					"type":"minecraft:item",
-					"name":"the_bumblezone:dead_honeycomb_larva_block"
+					"name":"the_bumblezone:empty_honeycomb_brood_block"
 				}
 			]
 		}

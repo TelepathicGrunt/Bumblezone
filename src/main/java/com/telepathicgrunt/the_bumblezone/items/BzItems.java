@@ -36,8 +36,8 @@ public class BzItems {
     //blocks
     public static final RegistryObject<Item> POROUS_HONEYCOMB = createItem("porous_honeycomb_block", () -> new BlockItem(BzBlocks.POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> FILLED_POROUS_HONEYCOMB = createItem("filled_porous_honeycomb_block", () -> new BlockItem(BzBlocks.FILLED_POROUS_HONEYCOMB.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
-    public static final RegistryObject<Item> EMPTY_HONEYCOMB_LARVA = createItem("dead_honeycomb_larva_block", () -> new BlockItem(BzBlocks.EMPTY_HONEYCOMB_BROOD.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
-    public static final RegistryObject<Item> HONEYCOMB_LARVA = createItem("honeycomb_larva_block", () -> new BlockItem(BzBlocks.HONEYCOMB_BROOD.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> EMPTY_HONEYCOMB_LARVA = createItem("empty_honeycomb_brood_block", () -> new BlockItem(BzBlocks.EMPTY_HONEYCOMB_BROOD.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> HONEYCOMB_LARVA = createItem("honeycomb_brood_block", () -> new BlockItem(BzBlocks.HONEYCOMB_BROOD.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> SUGAR_INFUSED_STONE = createItem("sugar_infused_stone", () -> new BlockItem(BzBlocks.SUGAR_INFUSED_STONE.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> SUGAR_INFUSED_COBBLESTONE = createItem("sugar_infused_cobblestone", () -> new BlockItem(BzBlocks.SUGAR_INFUSED_COBBLESTONE.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> HONEY_CRYSTAL = createItem("honey_crystal", () -> new BlockItem(BzBlocks.HONEY_CRYSTAL.get(), new Item.Properties().group(BUMBLEZONE_CREATIVE_TAB)));

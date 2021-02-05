@@ -21,7 +21,7 @@ public class BzBlocks {
     public static final RegistryObject<Block> POROUS_HONEYCOMB = createBlock("porous_honeycomb_block", PorousHoneycomb::new);
     public static final RegistryObject<Block> FILLED_POROUS_HONEYCOMB = createBlock("filled_porous_honeycomb_block", FilledPorousHoneycomb::new);
     public static final RegistryObject<Block> EMPTY_HONEYCOMB_BROOD = createBlock("empty_honeycomb_brood_block", EmptyHoneycombBrood::new);
-    public static final RegistryObject<Block> HONEYCOMB_BROOD = createBlock("honeycomb_larva_block", HoneycombBrood::new);
+    public static final RegistryObject<Block> HONEYCOMB_BROOD = createBlock("honeycomb_brood_block", HoneycombBrood::new);
     public static final RegistryObject<Block> SUGAR_INFUSED_STONE = createBlock("sugar_infused_stone", SugarInfusedStone::new);
     public static final RegistryObject<Block> SUGAR_INFUSED_COBBLESTONE = createBlock("sugar_infused_cobblestone", SugarInfusedCobblestone::new);
     public static final RegistryObject<Block> HONEY_CRYSTAL = createBlock("honey_crystal", HoneyCrystal::new);
