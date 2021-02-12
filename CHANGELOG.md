@@ -7,14 +7,20 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
-   (V.2.2.18 Changes) (1.16.5 Minecraft)
-      
+   (V.2.3.0 Changes) (1.16.5 Minecraft)
+       
+   Mod Compat:
+• Added compatibility with Bee Better.
+
    Blocks:
 • Honeycomb Brood Blocks now spawn child Bees and child Honey Slime mobs.
      
    Items:
 • Honey Slime Spawn Eggs now use better code practices in backend. 
 
+   Teleportation:
+- Throwing Enderpearl at Beehives will teleport you to dimension more consistently.
+   
 
    (V.2.2.17 Changes) (1.16.4 Minecraft)
    

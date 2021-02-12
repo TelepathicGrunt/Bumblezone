@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.4-SNAPSHOT'
+	id 'fabric-loom' version '0.5-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -30,6 +30,13 @@ repositories {
 		name "Siphalor's Maven"
 		url "https://maven.siphalor.de"
 	}
+	maven {
+		url 'https://jitpack.io'
+	}
+	maven {
+		name = "Cotton"
+		url = "http://server.bbkr.space:8081/artifactory/libs-release/"
+	}
 }
 
 dependencies {
@@ -58,7 +65,9 @@ dependencies {
 
 	modImplementation "curse.maven:potion_of_bees-356673:3052244"
 	modImplementation "de.siphalor:nbtcrafting-1.16:2+"
-	//modImplementation ("io.github.alloffabric:BeeProductive:${project.beeproductive_version}")
+
+	modImplementation "io.github.cottonmc:LibCD:${project.libcd_version}"
+	modImplementation "com.github.Draylar:bee-better:${project.beeproductive_version}"
 }
 
 import groovy.json.JsonSlurper

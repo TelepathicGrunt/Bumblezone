@@ -8,6 +8,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
+import net.telepathicgrunt.bumblezone.modCompat.BeeBetterRedirection;
+import net.telepathicgrunt.bumblezone.modCompat.ModChecker;
 
 import java.util.Random;
 
@@ -24,7 +26,7 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<TernarySurfaceConfig> {
         int xpos = x & 15;
         int zpos = z & 15;
         BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable();
-       // boolean isSurface = false;
+        int depth = 0;
 
         //makes stone below sea level into end stone
         for (int ypos = 255; ypos >= 0; --ypos) {
@@ -34,15 +36,21 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<TernarySurfaceConfig> {
             if (currentBlockState.getMaterial() != Material.AIR && currentBlockState.getFluidState().isEmpty()) {
 
                 if (ypos <= seaLevel + 2 + Math.max(noise, 0) + random.nextInt(2)) {
-                    if (currentBlockState == config.getTopMaterial() || currentBlockState == config.getUnderMaterial()) {
+                    if (depth == 0 &&
+                            ModChecker.beeBetterPresent &&
+                            noise + random.nextInt(2) < -1)
+                    {
+                        chunkIn.setBlockState(blockpos$Mutable, BeeBetterRedirection.getBeeswaxBlock(), false);
+                    }
+                    else if (currentBlockState == config.getTopMaterial() || currentBlockState == config.getUnderMaterial()) {
                         chunkIn.setBlockState(blockpos$Mutable, config.getUnderwaterMaterial(), false);
                     }
                 }
 
-                //isSurface = false;
+                depth++;
             }
             else{
-                //isSurface = true;
+                depth = 0;
             }
         }
     }

@@ -32,8 +32,6 @@ public class PotionOfBeesCompat
 
 	public static void setupPotionOfBees() 
 	{
-		ModChecker.potionOfBeesPresent = true;
-
 		/*
 		 * Sets up our custom behavior for Potion of Bees items withour overriding their default behavior completely
 		 */
@@ -49,6 +47,8 @@ public class PotionOfBeesCompat
 		POB_SPLASH_POTION_OF_BEES_ENTITY = Registry.ENTITY_TYPE.get(POB_SPLASH_POTION_OF_BEES_ENTITY_ID);
 		POB_POTION_OF_BEES_ITEM = Registry.ITEM.get(POB_POTION_OF_BEES_ITEM_ID);
 		POB_SPLASH_POTION_OF_BEES_ITEM = Registry.ITEM.get(POB_SPLASH_POTION_OF_BEES_ITEM_ID);
+
+		ModChecker.potionOfBeesPresent = true;
 	}
 
 
