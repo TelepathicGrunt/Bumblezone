@@ -11,6 +11,15 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
 # | Bumblezone changelog |
      
+   (V.2.2.14 Changes) (1.16.5 Minecraft)
+     
+   Mod Compat:
+- Fixed Spider Dungeon crash if ResourcefulBees is on and not Productive Bees.
+
+   Teleportation:
+- Throwing Enderpearl at Beehives will teleport you to dimension more consistently.
+   
+   
    (V.2.2.13 Changes) (1.16.5 Minecraft)
       
    Blocks:
