@@ -10,7 +10,13 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 ------------------------------------------------
 # | Bumblezone changelog |
+         
+   (V.2.2.15 Changes) (1.16.5 Minecraft)
      
+   Translations:
+- Removed English that was accidentally left in the Russian translations - by Alepod
+
+
    (V.2.2.14 Changes) (1.16.5 Minecraft)
      
    Mod Compat:
