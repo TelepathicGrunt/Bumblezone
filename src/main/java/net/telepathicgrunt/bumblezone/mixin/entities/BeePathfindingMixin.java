@@ -1,7 +1,6 @@
 package net.telepathicgrunt.bumblezone.mixin.entities;
 
 import net.minecraft.entity.passive.BeeEntity;
-import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.entities.BeeAI;
 import org.spongepowered.asm.mixin.Mixin;
@@ -9,11 +8,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Mixin(BeeEntity.BeeWanderAroundGoal.class)
 public class BeePathfindingMixin {

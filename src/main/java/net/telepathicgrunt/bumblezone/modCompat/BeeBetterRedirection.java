@@ -1,9 +1,6 @@
 package net.telepathicgrunt.bumblezone.modCompat;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.Item;
-import net.minecraft.util.math.Vec3d;
 
 import java.util.Random;
 

@@ -91,17 +91,18 @@ public class BzBiomeProvider extends BiomeSource {
     public Biome getBiomeForNoiseGen(int x, int y, int z) {
         return this.sample(this.BIOME_REGISTRY, x, z);
     }
-    
-    public Biome sample(Registry<Biome> registry, int x, int z) {
+
+    public Biome sample(Registry<Biome> dynamicBiomeRegistry, int x, int z) {
         int resultBiomeID = ((BiomeLayerSamplerAccessor)this.BIOME_SAMPLER).bz_getSampler().sample(x, z);
-        Biome biome = registry.get(resultBiomeID);
+        Biome biome = dynamicBiomeRegistry.get(resultBiomeID);
         if (biome == null) {
             if (SharedConstants.isDevelopment) {
                 throw Util.throwOrPause(new IllegalStateException("Unknown biome id: " + resultBiomeID));
             } else {
+                // Spawn ocean if we can't resolve the biome from the layers.
                 RegistryKey<Biome> backupBiomeKey = BuiltinBiomes.fromRawId(0);
                 Bumblezone.LOGGER.warn("Unknown biome id: ${}. Will spawn ${} instead.", resultBiomeID, backupBiomeKey.getValue());
-                return registry.get(backupBiomeKey);
+                return dynamicBiomeRegistry.get(backupBiomeKey);
             }
         } else {
             return biome;

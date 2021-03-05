@@ -1,26 +1,9 @@
 package net.telepathicgrunt.bumblezone.modCompat;
 
-import com.github.draylar.beebetter.BeeBetter;
 import com.github.draylar.beebetter.registry.BeeBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
-import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
-import net.telepathicgrunt.bumblezone.configs.BZModCompatibilityConfig;
-import net.telepathicgrunt.bumblezone.mixin.blocks.DispenserAccessor;
 
 import java.util.ArrayList;
 import java.util.List;
