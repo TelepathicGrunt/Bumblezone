@@ -7,6 +7,12 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
+   (V.2.3.1 Changes) (1.16.5 Minecraft)
+   
+   Features:
+- Optimized waterfall feature to use honeycombs_that_features_can_carve block tag.
+
+
    (V.2.3.0 Changes) (1.16.5 Minecraft)
        
    Mod Compat:

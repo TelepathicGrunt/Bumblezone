@@ -4,6 +4,42 @@
     {
       "id": "minecraft:honeycomb_block",
       "required": true
+    },
+    {
+      "id": "beebetter:beeswax",
+      "required": false
+    },
+    {
+      "id": "beebetter:bubbly_beeswax_bricks",
+      "required": false
+    },
+    {
+      "id": "beebetter:antique_beeswax_bricks",
+      "required": false
+    },
+    {
+      "id": "beebetter:antique_chiseled_beeswax",
+      "required": false
+    },
+    {
+      "id": "beebetter:chiseled_beeswax_pimple",
+      "required": false
+    },
+    {
+      "id": "beebetter:ancient_crumbling_beeswax",
+      "required": false
+    },
+    {
+      "id": "beebetter:ancient_gravelled_beeswax",
+      "required": false
+    },
+    {
+      "id": "beebetter:ancient_mossy_crumbling_beeswax",
+      "required": false
+    },
+    {
+      "id": "beebetter:mossy_beeswax_bricks",
+      "required": false
     }
   ]
 }

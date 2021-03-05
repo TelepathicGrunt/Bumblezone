@@ -20,7 +20,7 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<TernarySurfaceConfig> {
     }
 
     public void generate(Random random, Chunk chunkIn, Biome biomeIn, int x, int z, int startHeight, double noise, BlockState defaultBlock, BlockState defaultFluid, int seaLevel, long seed, TernarySurfaceConfig config) {
-        //creates grass surface normally
+        //creates the default surface normally
         SurfaceBuilder.DEFAULT.generate(random, chunkIn, biomeIn, x, z, startHeight, noise, defaultBlock, defaultFluid, seaLevel, seed, config);
 
         int xpos = x & 15;
@@ -28,8 +28,8 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<TernarySurfaceConfig> {
         BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable();
         int depth = 0;
 
-        //makes stone below sea level into end stone
-        for (int ypos = 255; ypos >= 0; --ypos) {
+        // Adds underwater surface blocks that default surface builder cant do.
+        for (int ypos = startHeight; ypos >= 0; --ypos) {
             blockpos$Mutable.set(xpos, ypos, zpos);
             BlockState currentBlockState = chunkIn.getBlockState(blockpos$Mutable);
 

@@ -8,6 +8,7 @@ import net.minecraft.SharedConstants;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.util.registry.RegistryLookupCodec;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BuiltinBiomes;
@@ -90,15 +91,17 @@ public class BzBiomeProvider extends BiomeSource {
     public Biome getBiomeForNoiseGen(int x, int y, int z) {
         return this.sample(this.BIOME_REGISTRY, x, z);
     }
-
-    public Biome sample(Registry<Biome> registry, int i, int j) {
-        int k = ((BiomeLayerSamplerAccessor)this.BIOME_SAMPLER).bz_getSampler().sample(i, j);
-        Biome biome = registry.get(k);
+    
+    public Biome sample(Registry<Biome> registry, int x, int z) {
+        int resultBiomeID = ((BiomeLayerSamplerAccessor)this.BIOME_SAMPLER).bz_getSampler().sample(x, z);
+        Biome biome = registry.get(resultBiomeID);
         if (biome == null) {
             if (SharedConstants.isDevelopment) {
-                throw Util.throwOrPause(new IllegalStateException("Unknown biome id: " + k));
+                throw Util.throwOrPause(new IllegalStateException("Unknown biome id: " + resultBiomeID));
             } else {
-                return registry.get(BuiltinBiomes.fromRawId(0));
+                RegistryKey<Biome> backupBiomeKey = BuiltinBiomes.fromRawId(0);
+                Bumblezone.LOGGER.warn("Unknown biome id: ${}. Will spawn ${} instead.", resultBiomeID, backupBiomeKey.getValue());
+                return registry.get(backupBiomeKey);
             }
         } else {
             return biome;
