@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.dimension.layer.*;
 import com.telepathicgrunt.the_bumblezone.mixin.world.LayerAccessor;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedConstants;
 import net.minecraft.util.Util;
@@ -99,14 +100,16 @@ public class BzBiomeProvider extends BiomeProvider {
         return this.sample(this.BIOME_REGISTRY, x, z);
     }
 
-    public Biome sample(Registry<Biome> registry, int i, int j) {
-        int k = ((LayerAccessor)this.BIOME_SAMPLER).bz_getSampler().getValue(i, j);
-        Biome biome = registry.getByValue(k);
+    public Biome sample(Registry<Biome> registry, int x, int z) {
+        int resultBiomeID = ((LayerAccessor)this.BIOME_SAMPLER).bz_getSampler().getValue(x, z);
+        Biome biome = registry.getByValue(resultBiomeID);
         if (biome == null) {
             if (SharedConstants.developmentMode) {
-                throw Util.pauseDevMode(new IllegalStateException("Unknown biome id: " + k));
+                throw Util.pauseDevMode(new IllegalStateException("Unknown biome id: " + resultBiomeID));
             } else {
-                return registry.getValueForKey(BiomeRegistry.getKeyFromID(0));
+                RegistryKey<Biome> backupBiomeKey = BiomeRegistry.getKeyFromID(0);
+                Bumblezone.LOGGER.warn("Unknown biome id: ${}. Will spawn ${} instead.", resultBiomeID, backupBiomeKey.getLocation());
+                return registry.getValueForKey(backupBiomeKey);
             }
         } else {
             return biome;

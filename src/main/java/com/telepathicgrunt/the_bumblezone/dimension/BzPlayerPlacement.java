@@ -15,6 +15,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -44,7 +45,7 @@ public class BzPlayerPlacement {
             MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
             ServerWorld bumblezoneWorld = minecraftServer.getWorld(BzDimension.BZ_WORLD_KEY);
 
-            // Prevent crash due to mojang bug that makes mod's json dimensions not exist upload first creation of world on server. A restart fixes this.
+        // Prevent crash due to mojang bug that makes mod's json dimensions not exist upload first creation of world on server. A restart fixes this.
             if(bumblezoneWorld == null){
                 Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: https://bugs.mojang.com/browse/MC-195468. A restart will fix this.");
                 ITextComponent message = new StringTextComponent("Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: §6https://bugs.mojang.com/browse/MC-195468§f. A restart will fix this.");

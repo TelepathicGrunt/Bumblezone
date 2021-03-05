@@ -29,7 +29,7 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
 
 
     public void buildSurface(Random random, IChunk chunkIn, Biome biomeIn, int x, int z, int startHeight, double noise, BlockState defaultBlock, BlockState defaultFluid, int seaLevel, long seed, SurfaceBuilderConfig config) {
-        //creates grass surface normally
+        //creates the default surface normally
         SurfaceBuilder.DEFAULT.buildSurface(random, chunkIn, biomeIn, x, z, startHeight, noise, defaultBlock, defaultFluid, seaLevel, seed, config);
 
         int xpos = x & 15;
@@ -38,8 +38,8 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
         BlockState prevBlockState = defaultBlock;
         int depth = 0;
 
-        //makes stone below sea level into end stone
-        for (int ypos = 255; ypos >= 0; --ypos) {
+        // Adds underwater surface blocks and modded surface blocks dynamically that default surface builder cant do.
+        for (int ypos = startHeight; ypos >= 0; --ypos) {
             blockpos$Mutable.setPos(xpos, ypos, zpos);
             BlockState currentBlockState = chunkIn.getBlockState(blockpos$Mutable);
 

@@ -16,6 +16,9 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
    Translations:
 - Removed English that was accidentally left in the Russian translations - by Alepod
 
+   Features:
+- Optimized waterfall feature to use honeycombs_that_features_can_carve block tag.
+
 
    (V.2.2.14 Changes) (1.16.5 Minecraft)
      
