@@ -18,19 +18,8 @@ import java.util.function.Supplier;
 public class BzEntities {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, Bumblezone.MODID);
 
-    public static final EntityType<HoneySlimeEntity> HONEY_SLIME_RAW;
-    static {
-        // turns off "No data fixer registered for honey_slime" log spam just for our entity.
-        boolean datafixer = SharedConstants.useDatafixers;
-        SharedConstants.useDatafixers = false;
-        HONEY_SLIME_RAW = EntityType.Builder.<HoneySlimeEntity>create(HoneySlimeEntity::new, EntityClassification.CREATURE).size(0.6F, 1.99F).trackingRange(8).build("honey_slime");
-        SharedConstants.useDatafixers = datafixer;
-    }
-    public static final RegistryObject<EntityType<HoneySlimeEntity>> HONEY_SLIME = createEntity("honey_slime", () -> HONEY_SLIME_RAW);
-
-    private static <E extends EntityType<?>> RegistryObject<E> createEntity(String name, Supplier<E> entity) {
-        return ENTITIES.register(name, entity);
-    }
+    public static final EntityType<HoneySlimeEntity> HONEY_SLIME_RAW = EntityType.Builder.<HoneySlimeEntity>create(HoneySlimeEntity::new, EntityClassification.CREATURE).size(0.6F, 1.99F).trackingRange(8).build("honey_slime");
+    public static final RegistryObject<EntityType<HoneySlimeEntity>> HONEY_SLIME = ENTITIES.register("honey_slime", () -> HONEY_SLIME_RAW);
 
     public static void registerAdditionalEntityInformation() {
         registerEntitySpawnRestrictions();
