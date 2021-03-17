@@ -15,14 +15,7 @@ import net.telepathicgrunt.bumblezone.mixin.entities.SpawnRestrictionAccessor;
 
 public class BzEntities {
 
-    public static final EntityType<HoneySlimeEntity> HONEY_SLIME;
-    static {
-        // turns off "No data fixer registered for honey_slime" log spam just for our entity.
-        boolean datafixer = SharedConstants.useChoiceTypeRegistrations;
-        SharedConstants.useChoiceTypeRegistrations = false;
-        HONEY_SLIME = EntityType.Builder.<HoneySlimeEntity>create(HoneySlimeEntity::new, SpawnGroup.CREATURE).setDimensions(0.6F, 1.99F).maxTrackingRange(8).build("honey_slime");
-        SharedConstants.useChoiceTypeRegistrations = datafixer;
-    }
+    public static final EntityType<HoneySlimeEntity> HONEY_SLIME = EntityType.Builder.<HoneySlimeEntity>create(HoneySlimeEntity::new, SpawnGroup.CREATURE).setDimensions(0.6F, 1.99F).maxTrackingRange(8).build("honey_slime");
 
     public static void registerEntities() {
         Registry.register(Registry.ENTITY_TYPE, new Identifier(Bumblezone.MODID, "honey_slime"), HONEY_SLIME);

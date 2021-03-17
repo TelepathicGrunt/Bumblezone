@@ -23,5 +23,4 @@ public class BlockOverlayRendererMixin {
         if (SugarWaterClientOverlay.sugarWaterOverlay(playerEntity, new BlockPos(playerEntity.getPos()), matrixStack))
             ci.cancel();
     }
-
 }
