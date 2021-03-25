@@ -9,7 +9,6 @@ import com.telepathicgrunt.the_bumblezone.modCompat.BuzzierBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.DirectionalBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -41,7 +40,7 @@ import java.util.List;
 import java.util.Random;
 
 
-public class HoneycombBrood extends DirectionalBlock {
+public class HoneycombBrood extends ProperFacingBlock {
     private static final ResourceLocation HONEY_TREAT = new ResourceLocation("productivebees:honey_treat");
     public static final IntegerProperty STAGE = BlockStateProperties.AGE_0_3;
 
@@ -60,18 +59,6 @@ public class HoneycombBrood extends DirectionalBlock {
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         return this.getDefaultState().with(FACING, context.getFace().getOpposite());
-    }
-
-
-    @Override
-    public BlockState rotate(BlockState state, Rotation rot) {
-        return state.with(FACING, rot.rotate(state.get(FACING)));
-    }
-
-
-    @Override
-    public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.rotate(mirrorIn.toRotation(state.get(FACING)));
     }
 
 

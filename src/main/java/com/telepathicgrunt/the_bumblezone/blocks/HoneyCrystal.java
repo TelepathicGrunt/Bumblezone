@@ -262,4 +262,5 @@ public class HoneyCrystal extends Block {
     public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
         return 1;
     }
-}
+
+ }

@@ -12,7 +12,10 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 # | Bumblezone changelog |
          
    (V.2.2.15 Changes) (1.16.5 Minecraft)
-     
+
+   Blocks:
+- Fixed Honey Crystal block so that it rotates and mirrors properly when loaded from nbt files.
+
    Translations:
 - Removed English that was accidentally left in the Russian translations - by Alepod
 

@@ -7,8 +7,6 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.function.Supplier;
-
 public class BzSurfaceBuilders {
     public static final DeferredRegister<SurfaceBuilder<?>> SURFACE_BUILDERS = DeferredRegister.create(ForgeRegistries.SURFACE_BUILDERS, Bumblezone.MODID);
     public static final RegistryObject<SurfaceBuilder<SurfaceBuilderConfig>> HONEY_SURFACE_BUILDER = SURFACE_BUILDERS.register("honey_surface_builder", () -> new HoneySurfaceBuilder(SurfaceBuilderConfig.field_237203_a_));
