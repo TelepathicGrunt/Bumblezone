@@ -11,8 +11,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -22,7 +20,7 @@ import net.telepathicgrunt.bumblezone.modCompat.ModChecker;
 import net.telepathicgrunt.bumblezone.modCompat.PotionOfBeesRedirection;
 
 
-public class EmptyHoneycombBrood extends FacingBlock {
+public class EmptyHoneycombBrood extends ProperFacingBlock {
 
     public EmptyHoneycombBrood() {
         super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MaterialColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build());
@@ -78,17 +76,4 @@ public class EmptyHoneycombBrood extends FacingBlock {
 
         return super.onUse(thisBlockState, world, position, playerEntity, playerHand, HitResult);
     }
-
-
-    @Override
-    public BlockState rotate(BlockState state, BlockRotation rot) {
-        return state.with(FACING, rot.rotate(state.get(FACING)));
-    }
-
-
-    @Override
-    public BlockState mirror(BlockState state, BlockMirror mirrorIn) {
-        return state.rotate(mirrorIn.getRotation(state.get(FACING)));
-    }
-
 }
