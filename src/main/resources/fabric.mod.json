@@ -48,6 +48,7 @@
     "minecraft": ">=1.16.2",
     "fabric": ">=0.25.0",
     "cardinal-components-base": ">=2.5.0",
-    "cardinal-components-entity": ">=2.5.0"
+    "cardinal-components-entity": ">=2.5.0",
+    "cloth-config2": ">=4.11.0"
   }
 }

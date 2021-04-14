@@ -43,7 +43,6 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
     public static final ComponentKey<IPlayerComponent> PLAYER_COMPONENT =
             ComponentRegistry.getOrCreate(new Identifier(MODID, "player_component"), IPlayerComponent.class);
 
-    //TODO: add mod compat with https://www.curseforge.com/minecraft/mc-mods/bee-better
     @Override
     public void onInitialize() {
         //Set up config
