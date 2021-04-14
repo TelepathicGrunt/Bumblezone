@@ -16,26 +16,21 @@ minecraft {
 }
 
 repositories {
+	maven { url 'https://maven.fabricmc.net/io/github/prospector/modmenu/' }
+	maven { url = "https://www.cursemaven.com" }
+	maven { url 'https://jitpack.io' }
+	maven { url "https://maven.shedaniel.me/" }
 	maven {
 		name = "Ladysnake Libs"
 		url = 'https://dl.bintray.com/ladysnake/libs'
 	}
 	maven {
-		url 'https://maven.fabricmc.net/io/github/prospector/modmenu/'
-	}
-	maven {
-		url = "https://www.cursemaven.com"
+		name = "Cotton"
+		url = "http://server.bbkr.space:8081/artifactory/libs-release/"
 	}
 	maven {
 		name "Siphalor's Maven"
 		url "https://maven.siphalor.de"
-	}
-	maven {
-		url 'https://jitpack.io'
-	}
-	maven {
-		name = "Cotton"
-		url = "http://server.bbkr.space:8081/artifactory/libs-release/"
 	}
 }
 
@@ -49,11 +44,9 @@ dependencies {
 		force = true //Force the version we want rather than trusting Gradle to pick it over transitive suggestions
 	}
 
-	modImplementation "me.shedaniel.cloth:config-2:${project.cloth_config_version}"
-	include "me.shedaniel.cloth:config-2:${project.cloth_config_version}"
-
-	modImplementation "me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}"
-	include "me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}"
+	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
+		exclude(group: "net.fabricmc.fabric-api")
+	}
 
 	modApi "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"
 	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"

@@ -7,7 +7,6 @@
     "entities.BeeEntityInvoker",
     "entities.BeePathfindingMixin",
     "world.BiomeLayerSamplerAccessor",
-    "blocks.BlockTagsAccessor",
     "world.BootstrapMixin",
     "items.BucketItemAccessor",
     "items.CookingRecipeSerializerMixin",

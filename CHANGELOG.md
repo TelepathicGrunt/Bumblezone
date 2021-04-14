@@ -9,11 +9,17 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
    (V.2.3.1 Changes) (1.16.5 Minecraft)
 
+   Dependencies:
+- Cloth Config is no longer JIJ (jar-in-jar) into Bumblezone. You will need to download that mod separately.
+
    Blocks:
 - Fixed Honey Crystal block so that it rotates and mirrors properly when loaded from nbt files.
+  
+- Switched to using TagRegistry.block in backend for block tags.
 
    Features:
 - Optimized waterfall feature to use honeycombs_that_features_can_carve block tag.
+
 
 
    (V.2.3.0 Changes) (1.16.5 Minecraft)

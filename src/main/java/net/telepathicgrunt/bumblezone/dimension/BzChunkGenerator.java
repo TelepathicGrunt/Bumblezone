@@ -5,7 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
-import me.sargunvohra.mcmods.autoconfig1u.shadowed.blue.endless.jankson.annotation.Nullable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -272,7 +271,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         return new VerticalBlockSample(blockStates);
     }
 
-    private int sampleHeightmap(int x, int z, @Nullable BlockState[] states, @Nullable Predicate<BlockState> predicate) {
+    private int sampleHeightmap(int x, int z, BlockState[] states, Predicate<BlockState> predicate) {
         int i = Math.floorDiv(x, this.horizontalNoiseResolution);
         int j = Math.floorDiv(z, this.horizontalNoiseResolution);
         int k = Math.floorMod(x, this.horizontalNoiseResolution);
