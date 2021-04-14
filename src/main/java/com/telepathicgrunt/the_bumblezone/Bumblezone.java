@@ -72,6 +72,7 @@ public class Bumblezone{
         //Registration
         modEventBus.addListener(EventPriority.NORMAL, this::setup);
         modEventBus.addListener(EventPriority.LOWEST, this::modCompatSetup); //run after all mods
+        modEventBus.addListener(EventPriority.NORMAL, BzEntities::registerEntityAttributes);
         BzItems.ITEMS.register(modEventBus);
         BzBlocks.BLOCKS.register(modEventBus);
         BzFluids.FLUIDS.register(modEventBus);

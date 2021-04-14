@@ -13,7 +13,10 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
          
    (V.2.2.15 Changes) (1.16.5 Minecraft)
 
-   Blocks:
+   Major:
+- Now requires 36.0.42 Forge or newer as I am now using EntityAttributeCreationEvent to register entity attributes.
+
+ Blocks:
 - Fixed Honey Crystal block so that it rotates and mirrors properly when loaded from nbt files.
 
    Translations:

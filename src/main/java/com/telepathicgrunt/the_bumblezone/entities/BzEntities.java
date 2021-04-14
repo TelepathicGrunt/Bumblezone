@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -20,14 +21,13 @@ public class BzEntities {
 
     public static void registerAdditionalEntityInformation() {
         registerEntitySpawnRestrictions();
-        registerEntityAttributes();
     }
 
     private static void registerEntitySpawnRestrictions() {
         EntitySpawnPlacementRegistry.register(HONEY_SLIME.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::canSpawnOn);
     }
 
-    private static void registerEntityAttributes() {
-        GlobalEntityTypeAttributes.put(HONEY_SLIME.get(), HoneySlimeEntity.getAttributeBuilder().create());
+    public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
+        event.put(HONEY_SLIME.get(), HoneySlimeEntity.getAttributeBuilder().create());
     }
 }
