@@ -7,6 +7,7 @@ import net.minecraft.item.ShieldItem;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.world.World;
+import net.telepathicgrunt.bumblezone.tags.BZItemTags;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class HoneyCrystalShield extends ShieldItem {
      */
     @Override
     public boolean canRepair(ItemStack toRepair, ItemStack repair) {
-        return BzItems.HONEY_CRYSTAL_SHARDS == repair.getItem();
+        return BZItemTags.HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS.contains(repair.getItem());
     }
 
     /**

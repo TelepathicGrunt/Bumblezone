@@ -23,6 +23,9 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
   
 - Switched to using TagRegistry.block in backend for block tags.
 
+   Items:
+- Honey Crystal Shield's valid repair items is now controlled by the item tag: "the_bumblezone:honey_crystal_shield_repair_items"
+
    Features:
 - Optimized waterfall feature to use honeycombs_that_features_can_carve block tag.
 
