@@ -16,7 +16,10 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
    Major:
 - Now requires 36.0.42 Forge or newer as I am now using EntityAttributeCreationEvent to register entity attributes.
 
- Blocks:
+   Entities:
+- Using Honey Blocks on vanilla Slime mobs that are size 1 or 2 will turn them into Honey Slime mobs!
+
+   Blocks:
 - Fixed Honey Crystal block so that it rotates and mirrors properly when loaded from nbt files.
 
    Translations:

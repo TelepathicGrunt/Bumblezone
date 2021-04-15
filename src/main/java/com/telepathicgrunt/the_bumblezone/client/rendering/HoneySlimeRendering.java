@@ -23,6 +23,7 @@ public class HoneySlimeRendering extends MobRenderer<HoneySlimeEntity, SlimeMode
 
     public void render(HoneySlimeEntity honeySlimeEntity, float f, float g, MatrixStack matrixStack, IRenderTypeBuffer vertexConsumerProvider, int i) {
         this.shadowSize = 0.25F * (float)(honeySlimeEntity.isChild() ? 1 : 2);
+        scale(honeySlimeEntity, matrixStack, f);
         super.render(honeySlimeEntity, f, g, matrixStack, vertexConsumerProvider, i);
     }
 
