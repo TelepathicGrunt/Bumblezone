@@ -8,8 +8,8 @@
             "values": {
               "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
               "rate": "0.33",
-              "level": 9,
-              "variance": "x + (3 * rand())"
+              "level": 4,
+              "variance": "x + (11 * rand())"
             }
           }
         ]
@@ -23,8 +23,8 @@
             "values": {
               "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
               "rate": "0.15",
-              "level": 16,
-              "variance": "x + (3 * rand())"
+              "level": 12,
+              "variance": "x + (7 * rand())"
             }
           }
         ]
@@ -53,8 +53,8 @@
             "values": {
               "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
               "rate": "0.55",
-              "level": 12,
-              "variance": "x + (3 * rand())"
+              "level": 10,
+              "variance": "x + (8 * rand())"
             }
           }
         ]
@@ -67,7 +67,7 @@
           {
             "values": {
               "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
-              "rate": "0.05",
+              "rate": "0.1",
               "level": 35,
               "variance": "x + (3 * rand())"
             }
@@ -82,9 +82,9 @@
           {
             "values": {
               "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
-              "rate": "0.25",
-              "level": 10,
-              "variance": "x + (3 * rand())"
+              "rate": "0.33",
+              "level": 8,
+              "variance": "x + (8 * rand())"
             }
           }
         ]
@@ -97,7 +97,7 @@
           {
             "values": {
               "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
-              "rate": "0.05",
+              "rate": "0.1",
               "level": 29,
               "variance": "x + (3 * rand())"
             }

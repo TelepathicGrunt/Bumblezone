@@ -46,7 +46,7 @@ public class BzModCompatibilityConfigs
 	        builder.push("Mod Compatibility Options");
 					builder.push("Pokecube Options");
 
-					spawnResourcefulBeesBeesMob = subscriber.subscribe(builder
+					spawnPokecubeBeePokemon = subscriber.subscribe(builder
 							.comment(" \r\n-----------------------------------------------------\r\n\r\n"
 									+" Spawn Pokecube's bee-like pokemon in The Bumblezone and from Honey Brood Blocks.\r\n")
 							.translation("the_bumblezone.config.modcompat.pokecube.spawnpokecubebeepokemon")
