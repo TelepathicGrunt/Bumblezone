@@ -14,6 +14,7 @@ public class ModChecker
 	public static boolean carrierBeesPresent = false;
 	public static boolean resourcefulBeesPresent = false;
 	public static boolean buzzierBeesPresent = false;
+	public static boolean pokecubePresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -43,6 +44,9 @@ public class ModChecker
 			modid = "productivebees";
 			if(isNotOutdated(modid, "0.5.1", true))
 				loadupModCompat(modid, () -> ProductiveBeesCompat.setupProductiveBees());
+
+			modid = "pokecube_mobs";
+			loadupModCompat(modid, () -> PokecubeCompat.setupPokecube());
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

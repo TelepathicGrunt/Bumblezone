@@ -242,9 +242,9 @@ public class ProductiveBeesCompat {
 
 		BlockPos.Mutable blockpos = new BlockPos.Mutable().setPos(entity.getPosition());
 		productiveBeeEntity.setLocationAndAngles(
-				blockpos.getX(),
-				blockpos.getY(),
-				blockpos.getZ(),
+				blockpos.getX() + 0.5f,
+				blockpos.getY() + 0.5f,
+				blockpos.getZ() + 0.5f,
 				world.getRandom().nextFloat() * 360.0F,
 				0.0F);
 

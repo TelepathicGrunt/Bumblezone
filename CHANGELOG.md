@@ -36,6 +36,10 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 - Optimized waterfall feature to use honeycombs_that_features_can_carve block tag.
 
   Mod Compat:
+- Pokecube's Weedle, Combee, and Cutiefly evolution lines now spawn in Bumblezone! 
+
+- If Pokecube is on, feeding Honey Brood Blocks will now have a chance of spawning a lvl 1 Weedle, Combee, or Cutiefly.
+
 - Blacklisting any Bumblezone Biomes with Resourceful Bees's biome blacklist will prevent the bee from spawning at all in Bumblezone's Dimension.
 
 

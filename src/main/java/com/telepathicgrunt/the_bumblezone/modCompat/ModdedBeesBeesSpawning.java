@@ -13,7 +13,7 @@ public class ModdedBeesBeesSpawning
 	 * works by making 1/15th of bees spawning also spawn modded bees
 	 */
 	public static void MobSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
-		if (ModChecker.productiveBeesPresent || ModChecker.resourcefulBeesPresent) {
+		if (ModChecker.productiveBeesPresent || ModChecker.resourcefulBeesPresent || ModChecker.pokecubePresent) {
 			MobEntity entity = (MobEntity) event.getEntity();
 			ResourceLocation worldRL = entity.world.getServer().func_244267_aX().func_230520_a_().getKey(entity.world.getDimensionType());
 
@@ -32,6 +32,13 @@ public class ModdedBeesBeesSpawning
 						entity.world.getRandom().nextInt(15) == 0)
 				{
 					ResourcefulBeesRedirection.RBMobSpawnEvent(event, entity.isChild());
+				}
+
+				if (ModChecker.pokecubePresent &&
+						Bumblezone.BzModCompatibilityConfig.spawnPokecubeBeePokemon.get() &&
+						entity.world.getRandom().nextInt(8) == 0)
+				{
+					PokecubeCompat.PCMobSpawnEvent(event, entity.isChild());
 				}
 			}
 		}

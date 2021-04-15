@@ -39,15 +39,27 @@ public class BzModCompatibilityConfigs
 	    public ConfigValueListener<Double> PBOreHoneycombSpawnRateSpiderBeeDungeon;
 		public ConfigValueListener<String> PBBlacklistedBees;
 
+		public ConfigValueListener<Boolean> spawnPokecubeBeePokemon;
+
 	    public BzModCompatibilityConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber) {
 
 	        builder.push("Mod Compatibility Options");
+					builder.push("Pokecube Options");
+
+					spawnResourcefulBeesBeesMob = subscriber.subscribe(builder
+							.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+									+" Spawn Pokecube's bee-like pokemon in The Bumblezone and from Honey Brood Blocks.\r\n")
+							.translation("the_bumblezone.config.modcompat.pokecube.spawnpokecubebeepokemon")
+							.define("spawnPokecubeBeePokemon", true));
+
+					builder.pop();
+
 					builder.push("Resourceful Bees Options");
 
 					spawnResourcefulBeesBeesMob = subscriber.subscribe(builder
 							.comment(" \r\n-----------------------------------------------------\r\n\r\n"
-									+" Spawn Resourceful Bees in The Bumblezone alongside regular\r\n"
-									+" bees at a 1/15th chance when spawning regular bees.\r\n")
+									+" Spawn Resourceful Bees in The Bumblezone and from Honey Brood Blocks\r\n"
+									+" alongside regular bees at a 1/15th chance when spawning regular bees.\r\n")
 							.translation("the_bumblezone.config.modcompat.resourcefulbees.spawnresourcefulbeesbeesmob")
 							.define("spawnResourcefulBeesBeesMob", true));
 
@@ -123,8 +135,8 @@ public class BzModCompatibilityConfigs
 
 					spawnProductiveBeesBeesMob = subscriber.subscribe(builder
 		                    .comment(" \r\n-----------------------------------------------------\r\n\r\n"
-		                    		+" Spawn Productive Bees in The Bumblezone alongside regular\r\n"
-		                    		+" bees at a 1/15th chance when spawning regular bees.\r\n")
+		                    		+" Spawn Productive Bees in The Bumblezone and from Honey Brood Blocks\r\n"
+		                    		+" alongside regular bees at a 1/15th chance when spawning regular bees.\r\n")
 		                    .translation("the_bumblezone.config.modcompat.productivebees.spawnproductivebeesbeesmob")
 		                    .define("spawnProductiveBeesBeesMob", true));
 

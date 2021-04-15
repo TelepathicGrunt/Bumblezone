@@ -1,0 +1,109 @@
+{
+  "pokemon": [
+    {
+      "name": "Weedle",
+      "stats": {
+        "spawnRules": [
+          {
+            "values": {
+              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
+              "rate": "0.33",
+              "level": 9,
+              "variance": "x + (3 * rand())"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kakuna",
+      "stats": {
+        "spawnRules": [
+          {
+            "values": {
+              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
+              "rate": "0.15",
+              "level": 16,
+              "variance": "x + (3 * rand())"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Beedrill",
+      "stats": {
+        "spawnRules": [
+          {
+            "values": {
+              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
+              "rate": "0.1",
+              "level": 33,
+              "variance": "x + (3 * rand())"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Combee",
+      "stats": {
+        "spawnRules": [
+          {
+            "values": {
+              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
+              "rate": "0.55",
+              "level": 12,
+              "variance": "x + (3 * rand())"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vespiquen",
+      "stats": {
+        "spawnRules": [
+          {
+            "values": {
+              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
+              "rate": "0.05",
+              "level": 35,
+              "variance": "x + (3 * rand())"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cutiefly",
+      "stats": {
+        "spawnRules": [
+          {
+            "values": {
+              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
+              "rate": "0.25",
+              "level": 10,
+              "variance": "x + (3 * rand())"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Ribombee",
+      "stats": {
+        "spawnRules": [
+          {
+            "values": {
+              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
+              "rate": "0.05",
+              "level": 29,
+              "variance": "x + (3 * rand())"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
