@@ -36,7 +36,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.telepathicgrunt.the_bumblezone.features.BzFeatures.HONEYCOMB_BUMBLEZONE;
+import static com.telepathicgrunt.the_bumblezone.world.features.BzFeatures.HONEYCOMB_BUMBLEZONE;
 
 public class ProductiveBeesCompat {
 

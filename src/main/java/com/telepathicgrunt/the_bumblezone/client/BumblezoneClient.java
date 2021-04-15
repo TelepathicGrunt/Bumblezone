@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HoneySlimeRendering;
-import com.telepathicgrunt.the_bumblezone.dimension.BzSkyProperty;
+import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
 import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
 import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
 import com.telepathicgrunt.the_bumblezone.items.BzItems;

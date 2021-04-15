@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.IPlayerPosAndDim;
 import com.telepathicgrunt.the_bumblezone.capabilities.PlayerPositionAndDimension;
-import com.telepathicgrunt.the_bumblezone.dimension.BzPlayerPlacement;
+import com.telepathicgrunt.the_bumblezone.world.dimension.BzPlayerPlacement;
 import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modCompat.ProductiveBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modCompat.ResourcefulBeesRedirection;

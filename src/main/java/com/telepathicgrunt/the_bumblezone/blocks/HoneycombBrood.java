@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.dimension.BzDimension;
+import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.effects.BzEffects;
 import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
 import com.telepathicgrunt.the_bumblezone.items.BzItems;

@@ -1,46 +1,18 @@
 package com.telepathicgrunt.the_bumblezone.modCompat;
 
-import com.mojang.datafixers.util.Pair;
-import com.resourcefulbees.resourcefulbees.api.beedata.CustomBeeData;
-import com.resourcefulbees.resourcefulbees.block.multiblocks.apiary.ApiaryBlock;
-import com.resourcefulbees.resourcefulbees.block.multiblocks.apiary.ApiaryBreederBlock;
-import com.resourcefulbees.resourcefulbees.block.multiblocks.apiary.ApiaryStorageBlock;
-import com.resourcefulbees.resourcefulbees.registry.BeeRegistry;
-import com.resourcefulbees.resourcefulbees.registry.ModBlocks;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.features.BzConfiguredFeatures;
-import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import com.telepathicgrunt.the_bumblezone.world.features.BzConfiguredFeatures;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.IServerWorld;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.WorldGenRegion;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
-import net.minecraft.world.gen.placement.Placement;
-import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 import pokecube.core.database.Database;
-import pokecube.core.database.PokedexEntry;
-import pokecube.core.entity.pokemobs.EntityPokemob;
-import pokecube.core.entity.pokemobs.PokemobType;
-import pokecube.mobs.PokecubeMobs;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-import static com.telepathicgrunt.the_bumblezone.features.BzFeatures.HONEYCOMB_BUMBLEZONE;
+import static com.telepathicgrunt.the_bumblezone.world.features.BzFeatures.HONEYCOMB_BUMBLEZONE;
 
 public class PokecubeCompat {
     private static final List<EntityType<?>> POKECUBE_POKEMON_LIST = new ArrayList<>();

@@ -8,7 +8,7 @@ import com.resourcefulbees.resourcefulbees.block.multiblocks.apiary.ApiaryStorag
 import com.resourcefulbees.resourcefulbees.registry.BeeRegistry;
 import com.resourcefulbees.resourcefulbees.registry.ModBlocks;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.features.BzConfiguredFeatures;
+import com.telepathicgrunt.the_bumblezone.world.features.BzConfiguredFeatures;
 import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -34,7 +34,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.telepathicgrunt.the_bumblezone.features.BzFeatures.HONEYCOMB_BUMBLEZONE;
+import static com.telepathicgrunt.the_bumblezone.world.features.BzFeatures.HONEYCOMB_BUMBLEZONE;
 
 public class ResourcefulBeesCompat {
 
