@@ -60,6 +60,15 @@ public class ResourcefulBeesCompat {
             });
         }
 
+        // remove bees that RB blacklisted from any bumblezone biome
+        if (Bumblezone.BzModCompatibilityConfig.useSpawnInWorldConfigFromRB.get()) {
+            tempBeeMap.forEach((b, e) -> {
+                if (!b.getSpawnData().getBiomeBlacklist().contains(Bumblezone.MODID)){
+                    tempBeeMap.remove(b);
+                }
+            });
+        }
+
         // remove bees that bumblezone tag blacklists
         tempBeeMap.forEach((b, e) -> {
             Set<ResourceLocation> blacklistedBees = Arrays.stream(Bumblezone.BzModCompatibilityConfig.RBBlacklistedBees.get().split(",")).map(String::trim).map(ResourceLocation::new).collect(Collectors.toSet());

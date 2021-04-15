@@ -11,6 +11,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
 # | Bumblezone changelog |
          
+
    (V.2.2.15 Changes) (1.16.5 Minecraft)
 
    Major:
@@ -30,6 +31,9 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
    Features:
 - Optimized waterfall feature to use honeycombs_that_features_can_carve block tag.
+
+  Mod Compat:
+- Blacklisting any Bumblezone Biomes with Resourceful Bees's biome blacklist will prevent the bee from spawning at all in Bumblezone's Dimension.
 
 
    (V.2.2.14 Changes) (1.16.5 Minecraft)
