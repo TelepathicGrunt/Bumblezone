@@ -28,6 +28,8 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
    Features:
 - Optimized waterfall feature to use honeycombs_that_features_can_carve block tag.
+  
+- Bee Dungeon and Spider Infested Bee Dungeon code backend is significantly cleaned up and now uses processors to change blocks.
 
 
 

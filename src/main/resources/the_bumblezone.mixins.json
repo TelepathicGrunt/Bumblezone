@@ -34,7 +34,7 @@
     "entities.ProtoChunkAddEntityMixin",
     "blocks.RedstoneDustCanConnectMixin",
     "entities.SpawnRestrictionAccessor",
-    "world.StructureAccessorInvoker",
+    "world.StructureAccessor",
     "items.ThrownEntityImpactMixin",
     "blocks.VineBlockAccessor",
     "blocks.WaterEquivalenceMixin",
