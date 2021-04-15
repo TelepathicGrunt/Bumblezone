@@ -18,7 +18,10 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
    Entities:
 - Using Honey Blocks on vanilla Slime mobs that are size 1 or 2 will turn them into Honey Slime mobs!
-
+  "the_bumblezone:turn_slime_to_honey_slime" item tag controls what item can do the conversion.
+  
+- Honey Slime now gets significant reduced fall damage when they are covered in honey!
+  
    Blocks:
 - Fixed Honey Crystal block so that it rotates and mirrors properly when loaded from nbt files.
 
