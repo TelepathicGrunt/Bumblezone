@@ -26,6 +26,9 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
    Blocks:
 - Fixed Honey Crystal block so that it rotates and mirrors properly when loaded from nbt files.
 
+   Items:
+- Honey Crystal Shield's valid repair items is now controlled by the item tag: "the_bumblezone:honey_crystal_shield_repair_items"
+
    Translations:
 - Removed English that was accidentally left in the Russian translations - by Alepod
 

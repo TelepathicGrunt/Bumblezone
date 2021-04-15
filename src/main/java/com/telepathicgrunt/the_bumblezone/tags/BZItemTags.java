@@ -12,4 +12,5 @@ public class BZItemTags {
     public static void tagInit(){}
 
     public static final ITag.INamedTag<Item> TURN_SLIME_TO_HONEY_SLIME = ItemTags.makeWrapperTag(Bumblezone.MODID+":turn_slime_to_honey_slime");
+    public static final ITag.INamedTag<Item> HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS = ItemTags.makeWrapperTag(Bumblezone.MODID+":honey_crystal_shield_repair_items");
 }
