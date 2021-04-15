@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
+import net.telepathicgrunt.bumblezone.modinit.BzEntities;
 import net.telepathicgrunt.bumblezone.tags.BZItemTags;
 
 public class CreatingHoneySlime {

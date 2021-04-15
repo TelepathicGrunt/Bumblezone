@@ -16,8 +16,9 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import net.telepathicgrunt.bumblezone.modCompat.ModChecker;
-import net.telepathicgrunt.bumblezone.modCompat.PotionOfBeesRedirection;
+import net.telepathicgrunt.bumblezone.modcompat.ModChecker;
+import net.telepathicgrunt.bumblezone.modcompat.PotionOfBeesRedirection;
+import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 
 
 public class EmptyHoneycombBrood extends ProperFacingBlock {

@@ -39,8 +39,8 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
-import net.telepathicgrunt.bumblezone.entities.BzEntities;
+import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import net.telepathicgrunt.bumblezone.modinit.BzEntities;
 import net.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import net.telepathicgrunt.bumblezone.entities.goals.*;
 

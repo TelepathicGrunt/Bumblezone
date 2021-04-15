@@ -7,6 +7,7 @@ import net.minecraft.item.ShieldItem;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.world.World;
+import net.telepathicgrunt.bumblezone.modinit.BzItems;
 import net.telepathicgrunt.bumblezone.tags.BZItemTags;
 
 import java.util.List;

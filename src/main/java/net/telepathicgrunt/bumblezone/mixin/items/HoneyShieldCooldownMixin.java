@@ -4,7 +4,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
-import net.telepathicgrunt.bumblezone.items.BzItems;
+import net.telepathicgrunt.bumblezone.modinit.BzItems;
 import net.telepathicgrunt.bumblezone.items.HoneyCrystalShieldBehavior;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

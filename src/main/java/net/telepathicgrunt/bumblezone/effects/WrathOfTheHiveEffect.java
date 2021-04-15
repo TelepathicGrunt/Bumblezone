@@ -11,6 +11,7 @@ import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.entities.BeeAggression;
+import net.telepathicgrunt.bumblezone.modinit.BzEffects;
 
 import java.util.List;
 

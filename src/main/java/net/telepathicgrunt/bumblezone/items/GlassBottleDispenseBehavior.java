@@ -18,9 +18,10 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
-import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 import net.telepathicgrunt.bumblezone.mixin.blocks.ItemDispenserBehaviorInvoker;
+import net.telepathicgrunt.bumblezone.modinit.BzItems;
 
 
 public class GlassBottleDispenseBehavior extends ItemDispenserBehavior {

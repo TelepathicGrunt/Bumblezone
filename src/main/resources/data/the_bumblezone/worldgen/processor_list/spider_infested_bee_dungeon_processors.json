@@ -1,0 +1,43 @@
+{
+  "processors": [
+    {
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:cave_air"
+          },
+          "input_predicate": {
+            "block": "minecraft:air",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    },
+    {
+      "processor_type": "the_bumblezone:replace_not_air_processor"
+    },
+    {
+      "processor_type": "the_bumblezone:spider_infested_bee_dungeon_processor"
+    },
+    {
+      "spawner_mob_entries": [
+        {
+          "resourcelocation": "minecraft:cave_spider",
+          "weight": 25
+        },
+        {
+          "resourcelocation": "minecraft:spider",
+          "weight": 75
+        }
+      ],
+      "processor_type": "the_bumblezone:spawner_randomizing_processor"
+    },
+    {
+      "processor_type": "the_bumblezone:remove_floating_blocks_processor"
+    }
+  ]
+}

@@ -18,8 +18,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
-import net.telepathicgrunt.bumblezone.items.BzItems;
+import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import net.telepathicgrunt.bumblezone.modinit.BzItems;
 
 import java.util.Random;
 

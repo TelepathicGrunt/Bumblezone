@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Matrix4f;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 
 public class SugarWaterClientOverlay {
     private static final Identifier TEXTURE_UNDERWATER = new Identifier(Bumblezone.MODID + ":textures/misc/sugar_water_underwater.png");

@@ -3,7 +3,7 @@ package net.telepathicgrunt.bumblezone.mixin.blocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.util.math.Direction;
-import net.telepathicgrunt.bumblezone.blocks.BzBlocks;
+import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.StickyHoneyResidue;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

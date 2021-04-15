@@ -24,7 +24,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.effects.BzEffects;
+import net.telepathicgrunt.bumblezone.modinit.BzEffects;
+import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 
 import java.util.Random;
 

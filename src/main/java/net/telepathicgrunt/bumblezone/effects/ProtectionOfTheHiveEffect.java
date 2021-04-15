@@ -9,6 +9,7 @@ import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.modinit.BzEffects;
 
 import java.util.List;
 import java.util.UUID;

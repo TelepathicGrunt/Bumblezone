@@ -9,6 +9,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.fluids.SugarWaterFluid;
+import net.telepathicgrunt.bumblezone.modinit.BzItems;
 
 public class ObtainSugarWaterBottle {
 
