@@ -178,6 +178,26 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    }
 
    @Override
+   public boolean handleFallDamage(float distance, float damageMultiplier) {
+      if (distance > 1.0F) {
+         this.playSound(SoundEvents.BLOCK_SLIME_BLOCK_STEP, 0.4F, 1.0F);
+      }
+
+      int fallDamage = this.computeFallDamage(distance, damageMultiplier);
+      if(this.isInHoney()){
+         fallDamage = (int)((fallDamage * 0.35f) - 3);
+      }
+
+      if (fallDamage <= 0) {
+         return false;
+      } else {
+         this.damage(DamageSource.FALL, (float)fallDamage);
+         this.playBlockFallSound();
+         return true;
+      }
+   }
+
+   @Override
    public ActionResult interactMob(PlayerEntity player, Hand hand) {
       ItemStack itemstack = player.getStackInHand(hand);
       World world = player.getEntityWorld();
