@@ -40,10 +40,11 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
     @Override
     public Template.BlockInfo func_230386_a_(IWorldReader worldView, BlockPos pos, BlockPos blockPos, Template.BlockInfo structureBlockInfoLocal, Template.BlockInfo structureBlockInfoWorld, PlacementSettings structurePlacementData) {
         if (structureBlockInfoWorld.state.getBlock() instanceof SpawnerBlock) {
+            BlockPos worldPos = structureBlockInfoWorld.pos;
             Random random = new SharedSeedRandom();
-            random.setSeed(structureBlockInfoWorld.pos.toLong());
+            random.setSeed(worldPos.toLong() * worldPos.getY());
             return new Template.BlockInfo(
-                    structureBlockInfoWorld.pos,
+                    worldPos,
                     structureBlockInfoWorld.state,
                     SetMobSpawnerEntity(random, structureBlockInfoWorld.nbt));
         }

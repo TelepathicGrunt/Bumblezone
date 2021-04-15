@@ -19,6 +19,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.command.arguments.BlockStateParser;
 import net.minecraft.util.Direction;
+import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.gen.feature.template.IStructureProcessorType;
@@ -42,7 +43,8 @@ public class BeeDungeonProcessor extends StructureProcessor {
     public Template.BlockInfo func_230386_a_(IWorldReader worldView, BlockPos pos, BlockPos blockPos, Template.BlockInfo structureBlockInfoLocal, Template.BlockInfo structureBlockInfoWorld, PlacementSettings structurePlacementData) {
         BlockState blockState = structureBlockInfoWorld.state;
         BlockPos worldPos = structureBlockInfoWorld.pos;
-        Random random = structurePlacementData.getRandom(worldPos);
+        Random random = new SharedSeedRandom();
+        random.setSeed(worldPos.toLong() * worldPos.getY());
 
         // placing altar blocks
         if (blockState.isIn(Blocks.STRUCTURE_BLOCK)) {
@@ -64,7 +66,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
                                     false,
                                     true);
                         }
-                        else if (random.nextFloat() < 0.6f || ModChecker.buzzierBeesPresent) {
+                        else if (ModChecker.buzzierBeesPresent || random.nextFloat() < 0.6f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().getDefaultState();
                         }
                         else {
@@ -81,7 +83,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
                                             false,
                                             true);
                         }
-                        else if (random.nextFloat() < 0.35f || (ModChecker.buzzierBeesPresent && random.nextBoolean())) {
+                        else if (ModChecker.buzzierBeesPresent ? random.nextBoolean() : random.nextFloat() < 0.35f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().getDefaultState();
                         }
                         else {
@@ -97,7 +99,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
                                             false,
                                             true);
                         }
-                        else if (random.nextFloat() < 0.55f) {
+                        else if (random.nextFloat() < 0.45f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().getDefaultState();
                         }
                         else {

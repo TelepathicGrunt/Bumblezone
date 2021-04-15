@@ -13,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.gen.feature.template.IStructureProcessorType;
@@ -34,7 +35,8 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
     public Template.BlockInfo func_230386_a_(IWorldReader worldView, BlockPos pos, BlockPos blockPos, Template.BlockInfo structureBlockInfoLocal, Template.BlockInfo structureBlockInfoWorld, PlacementSettings structurePlacementData) {
         BlockState blockState = structureBlockInfoWorld.state;
         BlockPos worldPos = structureBlockInfoWorld.pos;
-        Random random = structurePlacementData.getRandom(worldPos);
+        Random random = new SharedSeedRandom();
+        random.setSeed(worldPos.toLong() * worldPos.getY());
 
         // placing altar blocks
         if (blockState.isIn(Blocks.STRUCTURE_BLOCK)) {
@@ -56,7 +58,7 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                                     false,
                                     true);
                         }
-                        else if ((!ModChecker.buzzierBeesPresent && random.nextFloat() < 0.6f) || random.nextFloat() < 0.3f) {
+                        else if (ModChecker.buzzierBeesPresent ? random.nextFloat() < 0.3f : random.nextFloat() < 0.6f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().getDefaultState();
                         }
                         else if(ModChecker.buzzierBeesPresent || random.nextFloat() < 0.05f) {
@@ -114,7 +116,7 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                 blockState = Blocks.HONEYCOMB_BLOCK.getDefaultState();
             }
             else {
-                blockState = BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState();
+                blockState = BzBlocks.POROUS_HONEYCOMB.get().getDefaultState();
             }
         }
 
