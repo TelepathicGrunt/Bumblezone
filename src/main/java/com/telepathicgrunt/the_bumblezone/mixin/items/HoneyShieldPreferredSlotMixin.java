@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.items;
 
-import com.telepathicgrunt.the_bumblezone.items.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;

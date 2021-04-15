@@ -2,9 +2,9 @@ package com.telepathicgrunt.the_bumblezone.world.surfacebuilders;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.modCompat.BuzzierBeesRedirection;
-import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modCompat.ResourcefulBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;

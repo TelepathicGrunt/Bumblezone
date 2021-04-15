@@ -2,8 +2,9 @@ package com.telepathicgrunt.the_bumblezone.effects;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.the_bumblezone.modCompat.CarrierBeeRedirection;
-import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.CarrierBeeRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierManager;

@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
-import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

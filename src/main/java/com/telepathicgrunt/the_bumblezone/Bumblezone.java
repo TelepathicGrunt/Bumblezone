@@ -1,30 +1,23 @@
 package com.telepathicgrunt.the_bumblezone;
 
-import com.telepathicgrunt.the_bumblezone.world.biomes.BzBiomes;
-import com.telepathicgrunt.the_bumblezone.blocks.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityEventHandler;
 import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityPlayerPosAndDim;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.configs.*;
-import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
-import com.telepathicgrunt.the_bumblezone.effects.BzEffects;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
 import com.telepathicgrunt.the_bumblezone.entities.EnderpearlImpact;
-import com.telepathicgrunt.the_bumblezone.world.features.BzConfiguredFeatures;
-import com.telepathicgrunt.the_bumblezone.world.features.BzFeatures;
-import com.telepathicgrunt.the_bumblezone.world.features.decorators.BzPlacements;
-import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
-import com.telepathicgrunt.the_bumblezone.items.BzItems;
 import com.telepathicgrunt.the_bumblezone.items.DispenserItemSetup;
-import com.telepathicgrunt.the_bumblezone.modCompat.HoneycombBroodEvents;
-import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modCompat.ModdedBeesBeesSpawning;
-import com.telepathicgrunt.the_bumblezone.modCompat.PotionOfBeesBeeSplashPotionProjectile;
-import com.telepathicgrunt.the_bumblezone.world.surfacebuilders.BzSurfaceBuilders;
+import com.telepathicgrunt.the_bumblezone.modcompat.HoneycombBroodEvents;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
+import com.telepathicgrunt.the_bumblezone.modcompat.PotionOfBeesBeeSplashPotionProjectile;
+import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BZItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper;
+import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
+import com.telepathicgrunt.the_bumblezone.modinit.BzConfiguredFeatures;
+import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -116,6 +109,7 @@ public class Bumblezone{
     {
     	event.enqueueWork(() -> 
 		{
+            BzProcessors.registerProcessors();
 			BzDimension.setupDimension();
 			BzConfiguredFeatures.registerConfiguredFeatures();
 			BzEntities.registerAdditionalEntityInformation();

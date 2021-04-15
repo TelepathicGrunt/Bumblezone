@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;

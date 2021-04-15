@@ -28,7 +28,7 @@
     "items.PlayerDamageShieldInvoker",
     "world.BiomeGenerationSettingsAccessor",
     "world.LayerAccessor",
-    "world.TemplateInvoker"
+    "world.TemplateAccessor"
   ],
   "client": [
     "world.SkyPropertiesAccessor"

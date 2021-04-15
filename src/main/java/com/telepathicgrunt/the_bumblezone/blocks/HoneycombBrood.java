@@ -1,12 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
-import com.telepathicgrunt.the_bumblezone.effects.BzEffects;
-import com.telepathicgrunt.the_bumblezone.entities.BzEntities;
-import com.telepathicgrunt.the_bumblezone.items.BzItems;
-import com.telepathicgrunt.the_bumblezone.modCompat.BuzzierBeesRedirection;
-import com.telepathicgrunt.the_bumblezone.modCompat.ModChecker;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;

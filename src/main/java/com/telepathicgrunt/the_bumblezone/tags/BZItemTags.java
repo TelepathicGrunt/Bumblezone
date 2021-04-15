@@ -1,9 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.tags;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 

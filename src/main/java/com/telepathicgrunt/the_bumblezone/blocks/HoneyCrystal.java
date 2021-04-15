@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.google.common.collect.Maps;
-import com.telepathicgrunt.the_bumblezone.fluids.BzFluids;
-import com.telepathicgrunt.the_bumblezone.items.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
