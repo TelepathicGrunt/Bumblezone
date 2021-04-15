@@ -25,6 +25,7 @@ public class HoneySlimeRendering extends MobEntityRenderer<HoneySlimeEntity, Sli
 
     public void render(HoneySlimeEntity honeySlimeEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         this.shadowRadius = 0.25F * (float)(honeySlimeEntity.isBaby() ? 1 : 2);
+        scale(honeySlimeEntity, matrixStack, f);
         super.render(honeySlimeEntity, f, g, matrixStack, vertexConsumerProvider, i);
     }
 

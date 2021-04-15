@@ -12,6 +12,9 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
    Dependencies:
 - Cloth Config is no longer JIJ (jar-in-jar) into Bumblezone. You will need to download that mod separately.
 
+   Entities:
+- Using Honey Blocks on vanilla Slime mobs that are size 1 or 2 will turn them into Honey Slime mobs!
+
    Blocks:
 - Fixed Honey Crystal block so that it rotates and mirrors properly when loaded from nbt files.
   

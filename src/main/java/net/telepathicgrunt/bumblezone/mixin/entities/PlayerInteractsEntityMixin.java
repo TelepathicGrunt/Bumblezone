@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.telepathicgrunt.bumblezone.entities.BeeInteractivity;
+import net.telepathicgrunt.bumblezone.entities.CreatingHoneySlime;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,5 +19,6 @@ public class PlayerInteractsEntityMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isEmpty()Z", ordinal = 0))
     private void onBeeFeeding(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         BeeInteractivity.beeFeeding(entity.world, ((PlayerEntity)(Object)this), hand, entity);
+        CreatingHoneySlime.createHoneySlime(entity.world, ((PlayerEntity)(Object)this), hand, entity);
     }
 }

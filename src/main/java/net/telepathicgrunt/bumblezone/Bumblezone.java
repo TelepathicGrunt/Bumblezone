@@ -30,6 +30,7 @@ import net.telepathicgrunt.bumblezone.items.BzItems;
 import net.telepathicgrunt.bumblezone.items.DispenserItemSetup;
 import net.telepathicgrunt.bumblezone.modCompat.ModChecker;
 import net.telepathicgrunt.bumblezone.tags.BZBlockTags;
+import net.telepathicgrunt.bumblezone.tags.BZItemTags;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -50,6 +51,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BZ_CONFIG = AutoConfig.getConfigHolder(BzConfig.class).getConfig();
 
         BZBlockTags.initTags();
+        BZItemTags.initTags();
 
         BzBlocks.registerBlocks();
         BzEntities.registerEntities();

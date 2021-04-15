@@ -97,7 +97,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
 
    @Override
    public EntityData initialize(ServerWorldAccess worldIn, LocalDifficulty difficultyIn, SpawnReason reason, EntityData spawnDataIn, CompoundTag dataTag) {
-      this.setSlimeSize(2, true);
+      this.setSlimeSize(this.isBaby() ? 1 : 2, true);
       return super.initialize(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
    }
 
