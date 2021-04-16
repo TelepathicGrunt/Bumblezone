@@ -41,9 +41,29 @@ public class BzModCompatibilityConfigs
 
 		public ConfigValueListener<Boolean> spawnPokecubeBeePokemon;
 
+		public ConfigValueListener<Boolean> allowCCandlesBeeDungeon;
+		public ConfigValueListener<Boolean> allowCCandlesSpiderBeeDungeon;
+
 	    public BzModCompatibilityConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber) {
 
 	        builder.push("Mod Compatibility Options");
+
+					builder.push("Charm Options");
+
+					allowCCandlesBeeDungeon = subscriber.subscribe(builder
+							.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+									+" Spawn Charm Candles in Bee Dungeons.\r\n")
+							.translation("the_bumblezone.config.modcompat.charm.allowccandlesbeedungeon")
+							.define("allowCCandlesBeeDungeon", true));
+
+					allowCCandlesSpiderBeeDungeon = subscriber.subscribe(builder
+							.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+									+" Spawn Charm Candles in Spider Infested Bee Dungeons.\r\n")
+							.translation("the_bumblezone.config.modcompat.charm.allowccandlesspiderbeedungeon")
+							.define("allowCCandlesSpiderBeeDungeon", true));
+
+					builder.pop();
+
 					builder.push("Pokecube Options");
 
 					spawnPokecubeBeePokemon = subscriber.subscribe(builder

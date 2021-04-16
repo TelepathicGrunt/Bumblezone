@@ -7,10 +7,7 @@ import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
-import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesRedirection;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesRedirection;
-import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.*;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
@@ -66,6 +63,11 @@ public class BeeDungeonProcessor extends StructureProcessor {
                                     false,
                                     true);
                         }
+                        else if(ModChecker.charmPresent && !ModChecker.buzzierBeesPresent &&
+                                Bumblezone.BzModCompatibilityConfig.allowCCandlesBeeDungeon.get() && random.nextFloat() < 0.33f)
+                        {
+                            blockState = CharmRedirection.CGetCandle(false, true);
+                        }
                         else if (ModChecker.buzzierBeesPresent || random.nextFloat() < 0.6f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().getDefaultState();
                         }
@@ -83,6 +85,11 @@ public class BeeDungeonProcessor extends StructureProcessor {
                                             false,
                                             true);
                         }
+                        else if(ModChecker.charmPresent && Bumblezone.BzModCompatibilityConfig.allowCCandlesBeeDungeon.get() &&
+                                (ModChecker.buzzierBeesPresent ? random.nextFloat() < 0.05f : random.nextFloat() < 0.25f))
+                        {
+                            blockState = CharmRedirection.CGetCandle(false, true);
+                        }
                         else if (ModChecker.buzzierBeesPresent ? random.nextBoolean() : random.nextFloat() < 0.35f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().getDefaultState();
                         }
@@ -98,6 +105,11 @@ public class BeeDungeonProcessor extends StructureProcessor {
                                             random.nextInt(3)+1,
                                             false,
                                             true);
+                        }
+                        else if(ModChecker.charmPresent && Bumblezone.BzModCompatibilityConfig.allowCCandlesBeeDungeon.get() &&
+                                (ModChecker.buzzierBeesPresent ? random.nextFloat() < 0.1f : random.nextFloat() < 0.2f))
+                        {
+                            blockState = CharmRedirection.CGetCandle(false, true);
                         }
                         else if (random.nextFloat() < 0.45f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().getDefaultState();

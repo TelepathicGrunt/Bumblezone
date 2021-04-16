@@ -44,8 +44,10 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 - Blacklisting any Bumblezone Biomes with Resourceful Bees's biome blacklist will prevent the bee from spawning at all in Bumblezone's Dimension.
 
+- Added Charm support so now their candles spawn in Bee Dungeons and Spider Infested Bee Dungeons!
 
-   (V.2.2.14 Changes) (1.16.5 Minecraft)
+
+ (V.2.2.14 Changes) (1.16.5 Minecraft)
      
    Mod Compat:
 - Fixed Spider Dungeon crash if ResourcefulBees is on and not Productive Bees.

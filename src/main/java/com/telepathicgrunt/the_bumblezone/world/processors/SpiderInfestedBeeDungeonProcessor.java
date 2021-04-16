@@ -4,10 +4,7 @@ import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
-import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesRedirection;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesRedirection;
-import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.*;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
@@ -58,6 +55,11 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                                     false,
                                     true);
                         }
+                        else if(ModChecker.charmPresent && Bumblezone.BzModCompatibilityConfig.allowCCandlesBeeDungeon.get() &&
+                                (ModChecker.buzzierBeesPresent ? random.nextFloat() < 0.1f : random.nextFloat() < 0.33f))
+                        {
+                            blockState = CharmRedirection.CGetCandle(false, false);
+                        }
                         else if (ModChecker.buzzierBeesPresent ? random.nextFloat() < 0.3f : random.nextFloat() < 0.6f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().getDefaultState();
                         }
@@ -84,6 +86,9 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                     case "outer_ring": {
                         if (random.nextFloat() < 0.4f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().getDefaultState();
+                        }
+                        else if(ModChecker.charmPresent && Bumblezone.BzModCompatibilityConfig.allowCCandlesSpiderBeeDungeon.get() && random.nextFloat() < 0.07f) {
+                            blockState = CharmRedirection.CGetCandle(false, false);
                         }
                         else if(random.nextFloat() < 0.07f) {
                             blockState = Blocks.COBWEB.getDefaultState();
