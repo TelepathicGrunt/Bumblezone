@@ -48,7 +48,7 @@ public class CombCutterEnchantment extends Enchantment {
             ItemStack itemStack = playerEntity.getHeldItemMainhand();
             int equipmentLevel = EnchantmentHelper.getMaxEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), playerEntity);
             if (equipmentLevel > 0 && !itemStack.isEmpty()) {
-                breakSpeed += (float)(equipmentLevel * equipmentLevel + 12);
+                breakSpeed += (float)(equipmentLevel * equipmentLevel + 13);
             }
             event.setNewSpeed(breakSpeed);
         }
@@ -63,18 +63,8 @@ public class CombCutterEnchantment extends Enchantment {
     }
 
     @Override
-    public int getMinEnchantability(int level) {
-        return 1 + 20 * (level - 1);
-    }
-
-    @Override
-    public int getMaxEnchantability(int level) {
-        return super.getMinEnchantability(level) + 55;
-    }
-
-    @Override
     public int getMaxLevel() {
-        return 3;
+        return 1;
     }
 
     @Override
