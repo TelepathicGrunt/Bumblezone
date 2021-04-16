@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
 
 /**
  * This class is used so java wont load CharmCompat class and crash if

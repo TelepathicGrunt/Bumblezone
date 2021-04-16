@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityEventHandler;
 import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityPlayerPosAndDim;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.configs.*;
+import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.EnderpearlImpact;
 import com.telepathicgrunt.the_bumblezone.items.DispenserItemSetup;
@@ -16,8 +17,6 @@ import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BZItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
-import com.telepathicgrunt.the_bumblezone.modinit.BzConfiguredFeatures;
-import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -59,6 +58,7 @@ public class Bumblezone{
         forgeBus.addListener(BeeAggression::HoneyPickupEvent);
         forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
         forgeBus.addListener(HoneycombBroodEvents::reviveByPotionOfBees);
+        forgeBus.addListener(CombCutterEnchantment::fasterMiningCombs);
         forgeBus.addListener(EventPriority.HIGH, EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
         forgeBus.addListener(PotionOfBeesBeeSplashPotionProjectile::ProjectileImpactEvent);
         forgeBus.addGenericListener(Entity.class, CapabilityEventHandler::onAttachCapabilitiesToEntities);
@@ -77,6 +77,7 @@ public class Bumblezone{
         BzFeatures.FEATURES.register(modEventBus);
         BzEntities.ENTITIES.register(modEventBus);
         BzPlacements.DECORATORS.register(modEventBus);
+        BzEnchantments.ENCHANTMENTS.register(modEventBus);
         BzSurfaceBuilders.SURFACE_BUILDERS.register(modEventBus);
 
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> BumblezoneClient::subscribeClientEvents);
