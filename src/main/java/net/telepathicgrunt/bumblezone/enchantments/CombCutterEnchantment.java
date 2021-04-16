@@ -42,7 +42,7 @@ public class CombCutterEnchantment extends Enchantment {
         ItemStack itemStack = playerEntity.getMainHandStack();
         int equipmentLevel = EnchantmentHelper.getEquipmentLevel(BzEnchantments.COMB_CUTTER, playerEntity);
         if (equipmentLevel > 0 && !itemStack.isEmpty()) {
-            breakSpeed += (float)(equipmentLevel * equipmentLevel + 12);
+            breakSpeed += (float)(equipmentLevel * equipmentLevel + 13);
         }
         return breakSpeed;
     }
