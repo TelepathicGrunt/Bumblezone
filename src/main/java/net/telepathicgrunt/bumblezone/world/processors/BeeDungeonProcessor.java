@@ -13,6 +13,7 @@ import net.minecraft.world.gen.ChunkRandom;
 import net.telepathicgrunt.bumblezone.blocks.HoneyCrystal;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 import net.telepathicgrunt.bumblezone.modcompat.BeeBetterRedirection;
+import net.telepathicgrunt.bumblezone.modcompat.CharmRedirection;
 import net.telepathicgrunt.bumblezone.modcompat.ModChecker;
 import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import net.telepathicgrunt.bumblezone.modinit.BzProcessors;
@@ -51,7 +52,11 @@ public class BeeDungeonProcessor extends StructureProcessor {
                         if (random.nextFloat() < 0.6f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.getDefaultState();
                         }
-                        else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.6f){
+                        else if(ModChecker.charmPresent && (ModChecker.beeBetterPresent ? random.nextFloat() < 0.1f : random.nextFloat() < 0.6f))
+                        {
+                            blockState = CharmRedirection.CGetCandle(false, true);
+                        }
+                        else if(ModChecker.beeBetterPresent && (ModChecker.charmPresent ? random.nextFloat() < 0.5f : random.nextFloat() < 0.6f)){
                             blockState = BeeBetterRedirection.getCandle(random);
                         }
                         else {
@@ -63,7 +68,11 @@ public class BeeDungeonProcessor extends StructureProcessor {
                         if (random.nextFloat() < 0.35f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.getDefaultState();
                         }
-                        else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.35f){
+                        else if(ModChecker.charmPresent && (ModChecker.beeBetterPresent ? random.nextFloat() < 0.04f : random.nextFloat() < 0.35f))
+                        {
+                            blockState = CharmRedirection.CGetCandle(false, true);
+                        }
+                        else if(ModChecker.beeBetterPresent && (ModChecker.charmPresent ? random.nextFloat() < 0.31f : random.nextFloat() < 0.35f)){
                             blockState = BeeBetterRedirection.getCandle(random);
                         }
                         else {
@@ -75,7 +84,11 @@ public class BeeDungeonProcessor extends StructureProcessor {
                         if (random.nextFloat() < 0.45f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.getDefaultState();
                         }
-                        else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.2f){
+                        else if(ModChecker.charmPresent && (ModChecker.beeBetterPresent ? random.nextFloat() < 0.04f : random.nextFloat() < 0.2f))
+                        {
+                            blockState = CharmRedirection.CGetCandle(false, true);
+                        }
+                        else if(ModChecker.beeBetterPresent && (ModChecker.charmPresent ? random.nextFloat() < 0.16f : random.nextFloat() < 0.2f)){
                             blockState = BeeBetterRedirection.getCandle(random);
                         }
                         else {

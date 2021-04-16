@@ -13,6 +13,7 @@ import net.minecraft.world.gen.ChunkRandom;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 import net.telepathicgrunt.bumblezone.modcompat.BeeBetterRedirection;
+import net.telepathicgrunt.bumblezone.modcompat.CharmRedirection;
 import net.telepathicgrunt.bumblezone.modcompat.ModChecker;
 import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import net.telepathicgrunt.bumblezone.modinit.BzProcessors;
@@ -49,6 +50,13 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                         if (random.nextFloat() < 0.6f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.getDefaultState();
                         }
+                        else if(ModChecker.charmPresent && random.nextFloat() < 0.25f)
+                        {
+                            blockState = CharmRedirection.CGetCandle(false, false);
+                        }
+                        else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.2f){
+                            blockState = BeeBetterRedirection.getCandle(random);
+                        }
                         else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.2f){
                             blockState = BeeBetterRedirection.getCandle(random);
                         }
@@ -75,6 +83,10 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                     case "outer_ring": {
                         if (random.nextFloat() < 0.4f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.getDefaultState();
+                        }
+                        else if(ModChecker.charmPresent && random.nextFloat() < 0.2f)
+                        {
+                            blockState = CharmRedirection.CGetCandle(false, false);
                         }
                         else if(random.nextFloat() < 0.07f) {
                             blockState = Blocks.COBWEB.getDefaultState();
