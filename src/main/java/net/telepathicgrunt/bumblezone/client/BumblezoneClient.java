@@ -7,13 +7,13 @@ import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.util.Identifier;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import net.telepathicgrunt.bumblezone.client.rendering.FluidRender;
 import net.telepathicgrunt.bumblezone.client.rendering.HoneySlimeRendering;
-import net.telepathicgrunt.bumblezone.world.dimension.BzSkyProperty;
+import net.telepathicgrunt.bumblezone.mixin.world.SkyPropertiesAccessor;
+import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import net.telepathicgrunt.bumblezone.modinit.BzEntities;
 import net.telepathicgrunt.bumblezone.modinit.BzItems;
-import net.telepathicgrunt.bumblezone.mixin.world.SkyPropertiesAccessor;
+import net.telepathicgrunt.bumblezone.world.dimension.BzSkyProperty;
 
 @Environment(EnvType.CLIENT)
 public class BumblezoneClient implements ClientModInitializer {

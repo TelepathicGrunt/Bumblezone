@@ -13,8 +13,8 @@ import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
-import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import net.telepathicgrunt.bumblezone.mixin.blocks.ItemDispenserBehaviorInvoker;
+import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import net.telepathicgrunt.bumblezone.modinit.BzItems;
 
 

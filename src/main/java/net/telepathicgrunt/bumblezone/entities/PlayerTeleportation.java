@@ -19,8 +19,8 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.world.dimension.BzPlayerPlacement;
 import net.telepathicgrunt.bumblezone.tags.BZBlockTags;
+import net.telepathicgrunt.bumblezone.world.dimension.BzPlayerPlacement;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;

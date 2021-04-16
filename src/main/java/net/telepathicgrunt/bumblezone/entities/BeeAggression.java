@@ -12,8 +12,8 @@ import net.minecraft.item.Items;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.modinit.BzEffects;
 import net.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
+import net.telepathicgrunt.bumblezone.modinit.BzEffects;
 import org.apache.logging.log4j.Level;
 
 import java.util.HashSet;

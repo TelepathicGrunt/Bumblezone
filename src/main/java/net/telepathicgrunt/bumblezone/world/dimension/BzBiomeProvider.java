@@ -18,10 +18,10 @@ import net.minecraft.world.biome.layer.util.*;
 import net.minecraft.world.biome.source.BiomeLayerSampler;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.mixin.world.BiomeLayerSamplerAccessor;
 import net.telepathicgrunt.bumblezone.world.dimension.layer.BzBiomeLayer;
 import net.telepathicgrunt.bumblezone.world.dimension.layer.BzBiomePillarLayer;
 import net.telepathicgrunt.bumblezone.world.dimension.layer.BzBiomeScalePillarLayer;
-import net.telepathicgrunt.bumblezone.mixin.world.BiomeLayerSamplerAccessor;
 
 import java.util.Map;
 import java.util.function.LongFunction;

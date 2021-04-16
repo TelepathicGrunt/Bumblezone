@@ -20,8 +20,6 @@ import net.telepathicgrunt.bumblezone.modinit.BzProcessors;
 
 import java.util.Random;
 
-import static java.lang.Integer.parseInt;
-
 /**
  * POOL ENTRY MUST BE USING legacy_single_pool_element OR ELSE THE STRUCTURE BLOCK IS REMOVED BEFORE THIS PROCESSOR RUNS.
  */
