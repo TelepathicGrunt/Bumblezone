@@ -18,8 +18,9 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 - Now requires 36.0.42 Forge or newer as I am now using EntityAttributeCreationEvent to register entity attributes.
 
   Enchantments:
-- Added Comb Cutter enchantment for Shears and Swords. This will make mining all blocks with "comb" in the name much faster!
-  It will also increase the number of combs you get when shearing a vanilla Bee Hive / Bee Nest!
+- Added Comb Cutter enchantment for Shears, Swords, and Resourceful Bees's Scrappers. 
+  This enchantment will make mining all blocks with "comb" in the name much faster!
+  It will also increase the number of combs you get when shearing a BeeHive or BeeNest!
 
    Entities:
 - Using Honey Blocks on vanilla Slime mobs that are size 1 or 2 will turn them into Honey Slime mobs!

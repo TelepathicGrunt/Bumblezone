@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
+import com.resourcefulbees.resourcefulbees.registry.ModItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -69,6 +70,6 @@ public class CombCutterEnchantment extends Enchantment {
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ShearsItem || stack.getItem() instanceof SwordItem;
+        return stack.getItem() instanceof ShearsItem || stack.getItem() instanceof SwordItem || stack.getItem().equals(ModItems.SCRAPER.get());
     }
 }
