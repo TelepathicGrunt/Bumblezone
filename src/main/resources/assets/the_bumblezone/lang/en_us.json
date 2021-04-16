@@ -21,6 +21,8 @@
 
   "entity.the_bumblezone.honey_slime" : "Honey Slime" ,
 
+  "enchantment.the_bumblezone.comb_cutter": "Comb Cutter",
+
   "biome.the_bumblezone.sugar_water_floor": "Sugar Water Floor",
   "biome.the_bumblezone.hive_wall": "Hive Wall",
   "biome.the_bumblezone.hive_pillar": "Hive Pillar",

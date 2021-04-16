@@ -18,9 +18,6 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.SpringFeatureConfig;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
-import net.telepathicgrunt.bumblezone.modinit.BzPlacements;
-import net.telepathicgrunt.bumblezone.modinit.BzFeatures;
 import net.telepathicgrunt.bumblezone.world.features.configs.NbtFeatureConfig;
 
 public class BzConfiguredFeatures {

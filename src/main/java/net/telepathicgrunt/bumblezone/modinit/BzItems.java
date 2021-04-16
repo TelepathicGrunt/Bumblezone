@@ -8,8 +8,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.items.HoneyCrystalShield;
-import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
-import net.telepathicgrunt.bumblezone.modinit.BzEntities;
 
 
 public class BzItems {

@@ -16,8 +16,8 @@ import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
+import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 
 
 public class SugarWaterBottleDispenseBehavior extends ItemDispenserBehavior {

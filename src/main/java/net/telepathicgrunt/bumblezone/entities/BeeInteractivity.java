@@ -14,8 +14,8 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.modinit.BzEffects;
 import net.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
+import net.telepathicgrunt.bumblezone.modinit.BzEffects;
 import net.telepathicgrunt.bumblezone.modinit.BzItems;
 
 public class BeeInteractivity {

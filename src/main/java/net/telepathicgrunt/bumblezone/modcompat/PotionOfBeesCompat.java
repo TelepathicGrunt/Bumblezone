@@ -14,9 +14,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 import net.telepathicgrunt.bumblezone.mixin.blocks.DispenserAccessor;
+import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 
 public class PotionOfBeesCompat
 {

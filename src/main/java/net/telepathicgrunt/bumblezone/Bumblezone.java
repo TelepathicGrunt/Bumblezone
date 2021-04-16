@@ -15,17 +15,16 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.DefaultBiomeCreator;
-import net.telepathicgrunt.bumblezone.modinit.*;
 import net.telepathicgrunt.bumblezone.configs.BzConfig;
-import net.telepathicgrunt.bumblezone.world.dimension.BzDimension;
 import net.telepathicgrunt.bumblezone.entities.BeeAggression;
 import net.telepathicgrunt.bumblezone.entities.IPlayerComponent;
 import net.telepathicgrunt.bumblezone.entities.PlayerComponent;
-import net.telepathicgrunt.bumblezone.modinit.BzConfiguredFeatures;
 import net.telepathicgrunt.bumblezone.items.DispenserItemSetup;
 import net.telepathicgrunt.bumblezone.modcompat.ModChecker;
+import net.telepathicgrunt.bumblezone.modinit.*;
 import net.telepathicgrunt.bumblezone.tags.BZBlockTags;
 import net.telepathicgrunt.bumblezone.tags.BZItemTags;
+import net.telepathicgrunt.bumblezone.world.dimension.BzDimension;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -52,6 +51,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzEntities.registerEntities();
         BzItems.registerItems();
         BzEffects.registerEffects();
+        BzEnchantments.registerEnchantment();
 
         BzProcessors.registerProcessors();
         BzPlacements.registerPlacements();

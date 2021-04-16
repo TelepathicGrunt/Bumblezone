@@ -34,10 +34,10 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import net.telepathicgrunt.bumblezone.modinit.BzEffects;
 import net.telepathicgrunt.bumblezone.modinit.BzEntities;
 import net.telepathicgrunt.bumblezone.modinit.BzItems;
-import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 
 import java.util.List;
 import java.util.Random;

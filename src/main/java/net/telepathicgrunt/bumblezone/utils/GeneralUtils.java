@@ -1,8 +1,12 @@
 package net.telepathicgrunt.bumblezone.utils;
 
 import com.mojang.datafixers.util.Pair;
+
 import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
+
+import static java.util.Objects.requireNonNull;
 
 public class GeneralUtils {
 
@@ -23,5 +27,25 @@ public class GeneralUtils {
         }
 
         return rlList.get(index).getFirst();
+    }
+
+    ////////////////
+
+    // Source: https://dzone.com/articles/be-lazy-with-java-8
+    public static final class Lazy<T> {
+
+        private volatile T value;
+
+        public T getOrCompute(Supplier<T> supplier) {
+            final T result = value; // Just one volatile read
+            return result == null ? maybeCompute(supplier) : result;
+        }
+
+        private synchronized T maybeCompute(Supplier<T> supplier) {
+            if (value == null) {
+                value = requireNonNull(supplier.get());
+            }
+            return value;
+        }
     }
 }

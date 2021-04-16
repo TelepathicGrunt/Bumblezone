@@ -19,7 +19,6 @@ public class HoneyCrystalShield extends ShieldItem {
         super(new Item.Settings().maxDamage(20).group(BzItems.BUMBLEZONE_CREATIVE_TAB));
     }
 
-
     /**
      * Specify what item can repair this shield
      */

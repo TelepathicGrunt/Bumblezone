@@ -13,9 +13,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import net.telepathicgrunt.bumblezone.blocks.EmptyHoneycombBrood;
 import net.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
+import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 
 
 
