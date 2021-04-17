@@ -58,6 +58,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
    Mod Compat:
 - Added Charm support so now their candles spawn in Bee Dungeons and Spider Infested Bee Dungeons!
 
+- Several Bumblezone Items are now used in Charm's BeeKeeper's trade offers!
 
 
    (V.2.3.0 Changes) (1.16.5 Minecraft)
