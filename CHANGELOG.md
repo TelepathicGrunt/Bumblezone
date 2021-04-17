@@ -17,15 +17,34 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
    Major:
 - Now requires 36.0.42 Forge or newer as I am now using EntityAttributeCreationEvent to register entity attributes.
 
+  Dimension:
+- The loud Bee buzzing sound was replaced with a much softer beehive buzzing! Easier on the ears!
+
+- Music will play when you are in a Bumblezone Biome! The song that plays is Honey Bee by Rat Faced Boy.
+
+  Effects:
+- Wrath of the Hive now plays music when triggered! The song that plays is a midi version of Flight of the Bumblebee by Rimsky Korsakov.
+
+- Wrath of the Hive's default config value for duration is now 1680 and angry bee's strength config is lowered by one.
+
+- When you have Wrath of the Hive, bees will now spawn in open space a bit away from you but will come chase you down! Grab your Bane of Arthropod sword!
+
+- Bees now cannot get Wrath of the Hive effect to prevent them attacking each other.
+
+- Mobs with Wrath of the Hive will now make Honeycomb Brood Blocks near them grow faster. Stay out of Bee Dungeons when you have the effect!
+  
+- Protection of the Hive's default config value for duration is now 1680.
+
   Enchantments:
 - Added Comb Cutter enchantment for Shears, Swords, and Resourceful Bees's Scrappers. 
   This enchantment will make mining all blocks with "comb" in the name much faster!
+  And it will slightly increase mining speed for Hive, Nests, and Wax based blocks too.
   It will also increase the number of combs you get when shearing a BeeHive or BeeNest!
 
    Entities:
 - Using Honey Blocks on vanilla Slime mobs that are size 1 or 2 will turn them into Honey Slime mobs!
   "the_bumblezone:turn_slime_to_honey_slime" item tag controls what item can do the conversion.
-  
+
 - Honey Slime now gets significant reduced fall damage when they are covered in honey!
   
    Blocks:
@@ -50,6 +69,8 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 - Blacklisting any Bumblezone Biomes with Resourceful Bees's biome blacklist will prevent the bee from spawning at all in Bumblezone's Dimension.
 
 - Added Charm support so now their candles spawn in Bee Dungeons and Spider Infested Bee Dungeons!
+
+- Carrier Bees's bees now cannot get Wrath of the Hive effect and gets properly angered too now when a mob gets the effect.
 
 
  (V.2.2.14 Changes) (1.16.5 Minecraft)

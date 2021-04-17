@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.util.math.BlockPos;
 
 /**
  * This class is used so java wont load CarrierBeeCompat class and crash if
@@ -11,7 +13,11 @@ import net.minecraft.entity.LivingEntity;
  * dependent on the mod.
  */
 public class CarrierBeeRedirection {
-	public static void CBMobSpawn(LivingEntity entity) {
-		CarrierBeesCompat.CBMobSpawn(entity);
+	public static void CBMobSpawn(LivingEntity entity, BlockPos spawnBlockPos) {
+		CarrierBeesCompat.CBMobSpawn(entity, spawnBlockPos);
+	}
+
+	public static Class<? extends MobEntity> CBGetAppleBeeClass() {
+		return CarrierBeesCompat.CBGetAppleBeeClass();
 	}
 }

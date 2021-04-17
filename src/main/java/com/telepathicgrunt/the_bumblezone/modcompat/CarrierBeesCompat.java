@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -131,31 +130,16 @@ public class CarrierBeesCompat {
 	/**
 	 * Spawn Carrier Bees near player who has Wrath of the Hive
 	 */
-	public static void CBMobSpawn(LivingEntity entity) {
+	public static void CBMobSpawn(LivingEntity entity, BlockPos spawnBlockPos) {
 		if(entity.world.isRemote()) return;
 
 		ServerWorld world = (ServerWorld) entity.world;
 		Entity beeEntity = null;
 
-		// Must be very low as this method is fired every tick for
-		// status effects. We don't want to spawn millions of bees
-		if(world.rand.nextFloat() > 0.0125f){
-			return;
-		}
-
 		if (CB_BEE_LIST.size() == 0) {
 			Bumblezone.LOGGER.warn(
 					"Error! List of Carrier Bees is somehow empty! Cannot spawn their bees. " +
 					"Please let TelepathicGrunt (The Bumblezone dev) know about this!");
-			return;
-		}
-
-		// Grab a nearby air materialposition not in the player's field of view
-		BlockPos spawnBlockPos = new BlockPos(
-				entity.getPosX() + (world.rand.nextInt(30) + 10) * (world.rand.nextBoolean() ? 1 : -1),
-				entity.getPosY() + (world.rand.nextInt(30) + 10) * (world.rand.nextBoolean() ? 1 : -1),
-				entity.getPosZ() + (world.rand.nextInt(30) + 10) * (world.rand.nextBoolean() ? 1 : -1));
-		if(world.getBlockState(spawnBlockPos).getMaterial() != Material.AIR){
 			return;
 		}
 
@@ -183,9 +167,9 @@ public class CarrierBeesCompat {
 
 		// try and make CB bee not mad no matter what
 		beeEntity.setLocationAndAngles(
-				spawnBlockPos.getX(),
-				spawnBlockPos.getY(),
-				spawnBlockPos.getZ(),
+				spawnBlockPos.getX() + 0.5D,
+				spawnBlockPos.getY() + 0.5D,
+				spawnBlockPos.getZ() + 0.5D,
 				world.getRandom().nextFloat() * 360.0F,
 				0.0F);
 
@@ -202,5 +186,9 @@ public class CarrierBeesCompat {
 		}
 
 		world.addEntity(beeEntity);
+	}
+
+	public static Class<? extends MobEntity> CBGetAppleBeeClass() {
+		return AppleBeeEntity.class;
 	}
 }

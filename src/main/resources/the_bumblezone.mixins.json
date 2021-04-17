@@ -29,6 +29,7 @@
     "items.PlayerDamageShieldInvoker",
     "world.BiomeGenerationSettingsAccessor",
     "world.LayerAccessor",
+    "world.ServerWorldMixin",
     "world.TemplateAccessor"
   ],
   "client": [

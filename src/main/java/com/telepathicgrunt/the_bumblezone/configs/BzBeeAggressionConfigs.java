@@ -68,7 +68,7 @@ public class BzBeeAggressionConfigs {
                         +" How long bees will keep their effects for (speed, absorption, strength).\r\n"
                         +" Note: This is in ticks. 20 ticks = 1 second. And bee's normal anger will remain.\r\n")
                         .translation("the_bumblezone.config.bees.howlongwrathofthehivelasts")
-                        .defineInRange("howLongWrathOfTheHiveLasts", 350, 1, Integer.MAX_VALUE));
+                        .defineInRange("howLongWrathOfTheHiveLasts", 1680, 1, Integer.MAX_VALUE));
 
 
                     howLongProtectionOfTheHiveLasts = subscriber.subscribe(builder
@@ -76,7 +76,7 @@ public class BzBeeAggressionConfigs {
                         +" How long entities will keep Protection of the Hive effect after feeding bees\r\n"
                         +" or Brood Blocks. Bees will attack anyone that damages someone with the effect.\r\n")
                         .translation("the_bumblezone.config.bees.howLongProtectionOfTheHiveLasts")
-                        .defineInRange("howLongProtectionOfTheHiveLasts", 350, 1, Integer.MAX_VALUE));
+                        .defineInRange("howLongProtectionOfTheHiveLasts", 1680, 1, Integer.MAX_VALUE));
 
 
 
@@ -116,7 +116,7 @@ public class BzBeeAggressionConfigs {
                         +" How strong the bees attacks become. \r\n"
                         +" (5 or higher will instant kill you without armor).\r\n")
                         .translation("the_bumblezone.config.bees.strengthboostlevel")
-                        .defineInRange("strengthBoostLevel", 4, 1, Integer.MAX_VALUE));
+                        .defineInRange("strengthBoostLevel", 2, 1, Integer.MAX_VALUE));
 
                 builder.pop();
             builder.pop();

@@ -26,3 +26,8 @@ run
 # Files from Forge MDK
 forge*changelog.txt
 .factorypath
+
+# songs
+beehive_sounds_compressed.ogg
+flight_of_the_bumblebee_rimsky_korsakov.ogg
+honey_bee_rat_faced_boy.ogg

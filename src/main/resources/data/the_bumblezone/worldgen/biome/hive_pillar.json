@@ -7,10 +7,12 @@
   "depth": 5.5,
   "scale": 0.5,
   "effects": {
-    "ambient_sound": "minecraft:entity.bee.loop",
-    "additions_sound": {
-      "sound": "minecraft:entity.bee.loop_aggressive",
-      "tick_chance": 0.0011
+    "ambient_sound": "the_bumblezone:beehive_ambience",
+    "music": {
+      "sound": "the_bumblezone:biome_music",
+      "min_delay": 6000,
+      "max_delay": 12000,
+      "replace_current_music": false
     },
     "sky_color": 16759808,
     "foliage_color": 7593531,
@@ -46,7 +48,7 @@
     []
   ],
   "starts": [],
-  "creature_spawn_probability": 0.2,
+  "creature_spawn_probability": 0.17,
   "spawners": {
     "monster": [
       {

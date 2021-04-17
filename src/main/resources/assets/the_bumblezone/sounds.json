@@ -1,0 +1,29 @@
+{
+  "beehive_ambience": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:beehive_sounds_compressed",
+        "stream": true,
+        "volume": 0.1
+      }
+    ]
+  },
+  "biome_music": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:honey_bee_rat_faced_boy",
+        "stream": true,
+        "volume": 1
+      }
+    ]
+  },
+  "angered_bees": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:flight_of_the_bumblebee_rimsky_korsakov",
+        "stream": true,
+        "volume": 0.9
+      }
+    ]
+  }
+}

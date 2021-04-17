@@ -1,22 +1,22 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
+import javafx.geometry.BoundingBox;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
@@ -29,9 +29,7 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
@@ -291,15 +289,22 @@ public class HoneycombBrood extends ProperFacingBlock {
         if (!world.isAreaLoaded(position, position))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
 
+        List<Entity> nearbyEntities = world.getEntitiesWithinAABB(
+                LivingEntity.class,
+                new AxisAlignedBB(position).grow(WrathOfTheHiveEffect.NEARBY_WRATH_EFFECT_RADIUS),
+                entity -> ((LivingEntity)entity).isPotionActive(BzEffects.WRATH_OF_THE_HIVE.get()));
+
         int stage = state.get(STAGE);
         if (stage < 3) {
-            if (world.getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID) ? rand.nextInt(10) == 0 : rand.nextInt(22) == 0) {
+            if (!nearbyEntities.isEmpty() || (world.getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID) ? rand.nextInt(10) == 0 : rand.nextInt(22) == 0)) {
                 world.setBlockState(position, state.with(STAGE, stage + 1), 2);
             }
         }
         else if(Bumblezone.BzBlockMechanicsConfig.broodBlocksBeeSpawnCapacity.get() != 0){
-            List<Entity> beeList = world.getEntities(EntityType.BEE, (entity) -> true);
-            if(beeList.size() < Bumblezone.BzBlockMechanicsConfig.broodBlocksBeeSpawnCapacity.get()){
+            if(!nearbyEntities.isEmpty() && GeneralUtils.getEntityCountInBz() < Bumblezone.BzBlockMechanicsConfig.broodBlocksBeeSpawnCapacity.get() * 1.75f){
+                spawnBroodMob(world, state, position, stage);
+            }
+            else if (GeneralUtils.getEntityCountInBz() < Bumblezone.BzBlockMechanicsConfig.broodBlocksBeeSpawnCapacity.get()) {
                 spawnBroodMob(world, state, position, stage);
             }
         }

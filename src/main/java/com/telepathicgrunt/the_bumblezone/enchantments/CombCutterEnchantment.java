@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.enchantments;
 
 import com.resourcefulbees.resourcefulbees.registry.ModItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
+import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -34,6 +35,19 @@ public class CombCutterEnchantment extends Enchantment {
         }
     );
 
+    private static final Lazy<Set<Block>> LESSER_TARGET_BLOCKS = Lazy.of(
+            () -> {
+                Set<Block> validBlocks = new HashSet<>();
+                ForgeRegistries.BLOCKS.getEntries().forEach(entry ->{
+                    String path = entry.getKey().getLocation().getPath();
+                    if(entry.getValue() instanceof BeehiveBlock || path.contains("hive") || path.contains("nest") || (path.contains("wax") && !path.contains("waxed"))){
+                        validBlocks.add(entry.getValue());
+                    }
+                });
+                return validBlocks;
+            }
+    );
+
     public CombCutterEnchantment() {
         super(Enchantment.Rarity.RARE, EnchantmentType.VANISHABLE, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
     }
@@ -42,17 +56,28 @@ public class CombCutterEnchantment extends Enchantment {
         return TARGET_BLOCKS.get();
     }
 
-    public static void fasterMiningCombs(PlayerEvent.BreakSpeed event){
+    public Set<Block> getLesserTargetBlocks(){
+        return LESSER_TARGET_BLOCKS.get();
+    }
+
+    public static void attemptFasterMining(PlayerEvent.BreakSpeed event){
         if(BzEnchantments.COMB_CUTTER.get().getTargetBlocks().contains(event.getState().getBlock())){
-            float breakSpeed = event.getNewSpeed();
-            PlayerEntity playerEntity = event.getPlayer();
-            ItemStack itemStack = playerEntity.getHeldItemMainhand();
-            int equipmentLevel = EnchantmentHelper.getMaxEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), playerEntity);
-            if (equipmentLevel > 0 && !itemStack.isEmpty()) {
-                breakSpeed += (float)(equipmentLevel * equipmentLevel + 13);
-            }
-            event.setNewSpeed(breakSpeed);
+            mineFaster(event, false);
         }
+        else if(BzEnchantments.COMB_CUTTER.get().getLesserTargetBlocks().contains(event.getState().getBlock())){
+            mineFaster(event, true);
+        }
+    }
+
+    private static void mineFaster(PlayerEvent.BreakSpeed event, boolean lesserTarget) {
+        float breakSpeed = event.getNewSpeed();
+        PlayerEntity playerEntity = event.getPlayer();
+        ItemStack itemStack = playerEntity.getHeldItemMainhand();
+        int equipmentLevel = EnchantmentHelper.getMaxEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), playerEntity);
+        if (equipmentLevel > 0 && !itemStack.isEmpty()) {
+            breakSpeed += (float)(equipmentLevel * equipmentLevel + (lesserTarget ? 3 : 13));
+        }
+        event.setNewSpeed(breakSpeed);
     }
 
     public static void increasedCombDrops(PlayerEntity playerEntity, World world, BlockPos pos){

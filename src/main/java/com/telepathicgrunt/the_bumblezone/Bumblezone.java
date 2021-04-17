@@ -58,7 +58,7 @@ public class Bumblezone{
         forgeBus.addListener(BeeAggression::HoneyPickupEvent);
         forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
         forgeBus.addListener(HoneycombBroodEvents::reviveByPotionOfBees);
-        forgeBus.addListener(CombCutterEnchantment::fasterMiningCombs);
+        forgeBus.addListener(CombCutterEnchantment::attemptFasterMining);
         forgeBus.addListener(EventPriority.HIGH, EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
         forgeBus.addListener(PotionOfBeesBeeSplashPotionProjectile::ProjectileImpactEvent);
         forgeBus.addGenericListener(Entity.class, CapabilityEventHandler::onAttachCapabilitiesToEntities);
@@ -76,6 +76,7 @@ public class Bumblezone{
         BzEffects.EFFECTS.register(modEventBus);
         BzFeatures.FEATURES.register(modEventBus);
         BzEntities.ENTITIES.register(modEventBus);
+        BzSounds.SOUND_EVENTS.register(modEventBus);
         BzPlacements.DECORATORS.register(modEventBus);
         BzEnchantments.ENCHANTMENTS.register(modEventBus);
         BzSurfaceBuilders.SURFACE_BUILDERS.register(modEventBus);

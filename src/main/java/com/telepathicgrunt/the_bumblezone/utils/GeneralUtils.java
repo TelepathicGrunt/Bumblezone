@@ -6,10 +6,12 @@ import com.telepathicgrunt.the_bumblezone.mixin.world.BiomeGenerationSettingsAcc
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IDispenseItemBehavior;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,18 @@ import java.util.function.Supplier;
 
 public class GeneralUtils {
 
+    private static int ACTIVE_ENTITIES = 0;
+
+    public static void updateEntityCount(ServerWorld world){
+        List<Entity> entitiesList = world.getEntities(null, (entity) -> true);
+        ACTIVE_ENTITIES = entitiesList.size();
+    }
+
+    public static int getEntityCountInBz(){
+        return ACTIVE_ENTITIES;
+    }
+
+    /////////////////////////////
 
     // Weighted Random from: https://stackoverflow.com/a/6737362
     public static <T> T getRandomEntry(List<Pair<T, Integer>> rlList, Random random) {
