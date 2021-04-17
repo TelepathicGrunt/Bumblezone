@@ -26,7 +26,6 @@
     "items.CookingRecipeSerializerMixin",
     "items.EnderpearlImpactMixin",
     "items.GlassBottleUseMixin",
-    "items.HoneyDrinkMixin",
     "items.HoneyPickupMixin",
     "items.HoneyShieldCooldownMixin",
     "items.HoneyShieldDamageMixin",

@@ -25,6 +25,8 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 - When you have Wrath of the Hive, bees will now spawn in open space a bit away from you but will come chase you down! Grab your Bane of Arthropod sword!
 
 - Bees now cannot get Wrath of the Hive effect to prevent them attacking each other.
+
+- Drinking Honey Bottles no longer trigger Wrath of the Hive effect in Bumblezone's dimension.
   
 - Mobs with Wrath of the Hive will now make Honeycomb Brood Blocks near them grow faster. Stay out of Bee Dungeons when you have the effect!
 
