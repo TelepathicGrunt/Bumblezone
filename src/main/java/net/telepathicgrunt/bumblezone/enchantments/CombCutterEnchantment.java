@@ -1,5 +1,6 @@
 package net.telepathicgrunt.bumblezone.enchantments;
 
+import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -21,6 +22,7 @@ import java.util.Set;
 
 public class CombCutterEnchantment extends Enchantment {
     private static final GeneralUtils.Lazy<Set<Block>> TARGET_BLOCKS = new GeneralUtils.Lazy<>();
+    private static final GeneralUtils.Lazy<Set<Block>> LESSER_TARGET_BLOCKS = new GeneralUtils.Lazy<>();
 
     public CombCutterEnchantment(Rarity weight, EnchantmentTarget type, EquipmentSlot[] slotTypes) {
         super(weight, type, slotTypes);
@@ -38,11 +40,24 @@ public class CombCutterEnchantment extends Enchantment {
         });
     }
 
-    public static float fasterMiningCombs(float breakSpeed, PlayerEntity playerEntity){
+    public Set<Block> getLesserTargetBlocks(){
+        return LESSER_TARGET_BLOCKS.getOrCompute(() -> {
+            Set<Block> validBlocks = new HashSet<>();
+            Registry.BLOCK.getEntries().forEach(entry ->{
+                String path = entry.getKey().getValue().getPath();
+                if(entry.getValue() instanceof BeehiveBlock || path.contains("hive") || path.contains("nest") || (path.contains("wax") && !path.contains("waxed"))){
+                    validBlocks.add(entry.getValue());
+                }
+            });
+            return validBlocks;
+        });
+    }
+
+    public static float attemptFasterMining(float breakSpeed, boolean lesserTarget, PlayerEntity playerEntity){
         ItemStack itemStack = playerEntity.getMainHandStack();
         int equipmentLevel = EnchantmentHelper.getEquipmentLevel(BzEnchantments.COMB_CUTTER, playerEntity);
         if (equipmentLevel > 0 && !itemStack.isEmpty()) {
-            breakSpeed += (float)(equipmentLevel * equipmentLevel + 13);
+            breakSpeed += (float)(equipmentLevel * equipmentLevel + (lesserTarget ? 3 : 13));
         }
         return breakSpeed;
     }

@@ -25,3 +25,6 @@ bin/
 run/
 backup/
 /deps/
+
+# songs
+*.ogg

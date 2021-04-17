@@ -12,6 +12,8 @@ import net.minecraft.item.Items;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.client.BumblezoneClient;
+import net.telepathicgrunt.bumblezone.client.MusicHandler;
 import net.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 import net.telepathicgrunt.bumblezone.modinit.BzEffects;
 import org.apache.logging.log4j.Level;
@@ -235,7 +237,7 @@ public class BeeAggression {
     public static void playerTick(PlayerEntity playerEntity)
     {
         //removes the wrath of the hive if it is disallowed outside dimension
-        if(!playerEntity.world.isClient &&
+        if(!playerEntity.world.isClient() &&
                 playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE) &&
                 !(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone ||
                         playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)))
@@ -245,15 +247,20 @@ public class BeeAggression {
         }
 
         //Makes the fog redder when this effect is active
-        boolean wrathEffect = playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
-        if(!WrathOfTheHiveEffect.ACTIVE_WRATH && wrathEffect)
-        {
-            WrathOfTheHiveEffect.ACTIVE_WRATH = true;
-        }
-        else if(WrathOfTheHiveEffect.ACTIVE_WRATH && !wrathEffect)
-        {
-            WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
-            WrathOfTheHiveEffect.ACTIVE_WRATH = false;
+        if(playerEntity.world.isClient()){
+            boolean wrathEffect = playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
+            if(wrathEffect){
+                MusicHandler.playAngryBeeMusic(playerEntity);
+            }
+
+            if(!WrathOfTheHiveEffect.ACTIVE_WRATH && wrathEffect) {
+                WrathOfTheHiveEffect.ACTIVE_WRATH = true;
+            }
+            else if(WrathOfTheHiveEffect.ACTIVE_WRATH && !wrathEffect) {
+                MusicHandler.stopAngryBeeMusic(playerEntity);
+                WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
+                WrathOfTheHiveEffect.ACTIVE_WRATH = false;
+            }
         }
     }
 }

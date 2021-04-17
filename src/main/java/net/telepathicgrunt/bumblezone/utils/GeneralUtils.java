@@ -1,6 +1,9 @@
 package net.telepathicgrunt.bumblezone.utils;
 
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.entity.Entity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Random;
@@ -9,6 +12,20 @@ import java.util.function.Supplier;
 import static java.util.Objects.requireNonNull;
 
 public class GeneralUtils {
+
+    private static int ACTIVE_ENTITIES = 0;
+
+    public static void updateEntityCount(ServerWorld world){
+        List<Entity> entitiesList = world.getEntitiesByType(null, (entity) -> true);
+        ACTIVE_ENTITIES = entitiesList.size();
+    }
+
+    public static int getEntityCountInBz(){
+        return ACTIVE_ENTITIES;
+    }
+
+
+    /////////////////////////////
 
     // Weighted Random from: https://stackoverflow.com/a/6737362
     public static <T> T getRandomEntry(List<Pair<T, Integer>> rlList, Random random) {

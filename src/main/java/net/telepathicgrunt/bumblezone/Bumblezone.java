@@ -58,8 +58,9 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzFeatures.registerFeatures();
         BzConfiguredFeatures.registerConfiguredFeatures();
         BzDimension.setupDimension();
+        BzSounds.registerSounds();
 
-        ServerWorldEvents.LOAD.register((MinecraftServer minecraftServer, ServerWorld serverWorld)-> BeeAggression.setupBeeHatingList(serverWorld));
+        ServerWorldEvents.LOAD.register((MinecraftServer minecraftServer, ServerWorld serverWorld) -> BeeAggression.setupBeeHatingList(serverWorld));
         DispenserItemSetup.setupDispenserBehaviors();
 
         ModChecker.setupModCompat();

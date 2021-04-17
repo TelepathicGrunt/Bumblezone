@@ -17,7 +17,10 @@ public class PlayerBlockBreakingSpeedMixin {
             at = @At(value = "RETURN"), cancellable = true)
     private void blockBreakingSpeed(BlockState block, CallbackInfoReturnable<Float> cir) {
         if(BzEnchantments.COMB_CUTTER.getTargetBlocks().contains(block.getBlock())){
-            cir.setReturnValue(CombCutterEnchantment.fasterMiningCombs(cir.getReturnValue(), ((PlayerEntity) (Object) this)));
+            cir.setReturnValue(CombCutterEnchantment.attemptFasterMining(cir.getReturnValue(), false, ((PlayerEntity) (Object) this)));
+        }
+        else if(BzEnchantments.COMB_CUTTER.getLesserTargetBlocks().contains(block.getBlock())){
+            cir.setReturnValue(CombCutterEnchantment.attemptFasterMining(cir.getReturnValue(), true, ((PlayerEntity) (Object) this)));
         }
     }
 }

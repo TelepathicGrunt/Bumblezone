@@ -7,6 +7,7 @@ import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
@@ -28,16 +29,19 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import net.telepathicgrunt.bumblezone.modinit.BzEffects;
 import net.telepathicgrunt.bumblezone.modinit.BzEntities;
 import net.telepathicgrunt.bumblezone.modinit.BzItems;
+import net.telepathicgrunt.bumblezone.utils.GeneralUtils;
 
 import java.util.List;
 import java.util.Random;
@@ -189,15 +193,22 @@ public class HoneycombBrood extends ProperFacingBlock {
         if (!world.isRegionLoaded(position, position))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
 
+        List<Entity> nearbyEntities = world.getEntitiesByClass(
+                LivingEntity.class,
+                new Box(position).expand(WrathOfTheHiveEffect.NEARBY_WRATH_EFFECT_RADIUS),
+                entity -> ((LivingEntity)entity).hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE));
+
         int stage = state.get(STAGE);
         if (stage < 3) {
-            if (world.getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ? rand.nextInt(10) == 0 : rand.nextInt(22) == 0) {
+            if (!nearbyEntities.isEmpty() || (world.getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ? rand.nextInt(10) == 0 : rand.nextInt(22) == 0)) {
                 world.setBlockState(position, state.with(STAGE, stage + 1), 2);
             }
         }
         else if(Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity != 0){
-            List<Entity> beeList = world.getEntitiesByType(EntityType.BEE, (entity) -> true);
-            if(beeList.size() < Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity){
+            if(!nearbyEntities.isEmpty() && GeneralUtils.getEntityCountInBz() < Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity * 1.75f){
+                spawnBroodMob(world, state, position, stage);
+            }
+            else if(GeneralUtils.getEntityCountInBz() < Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity){
                 spawnBroodMob(world, state, position, stage);
             }
         }

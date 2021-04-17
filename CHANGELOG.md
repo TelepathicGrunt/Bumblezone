@@ -12,8 +12,28 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
    Dependencies:
 - Cloth Config is no longer JIJ (jar-in-jar) into Bumblezone. You will need to download that mod separately.
 
+  Dimension:
+- The loud Bee buzzing sound was replaced with a much softer beehive buzzing! Easier on the ears!
+
+- Music will play when you are in a Bumblezone Biome! The song that plays is Honey Bee by Rat Faced Boy.
+
+  Effects:
+- Wrath of the Hive now plays music when triggered! The song that plays is a midi version of Flight of the Bumblebee by Rimsky Korsakov.
+
+- Wrath of the Hive's default config value is now a full minute and angry bee's strength config is lowered by two.
+
+- When you have Wrath of the Hive, bees will now spawn in open space a bit away from you but will come chase you down! Grab your Bane of Arthropod sword!
+
+- Bees now cannot get Wrath of the Hive effect to prevent them attacking each other.
+  
+- Mobs with Wrath of the Hive will now make Honeycomb Brood Blocks near them grow faster. Stay out of Bee Dungeons when you have the effect!
+
+- Protection of the Hive's default config value for duration is now 1680.
+
   Enchantments:
-- Added Comb Cutter enchantment for Shears and Swords. This will make mining all blocks with "comb" in the name much faster!
+- Added Comb Cutter enchantment for Shears and Swords. 
+  This will make mining all blocks with "comb" in the name much faster!
+  And it will slightly increase mining speed for Hive, Nests, and Wax based blocks too.
   It will also increase the number of combs you get when shearing a vanilla Bee Hive / Bee Nest!
 
    Entities:

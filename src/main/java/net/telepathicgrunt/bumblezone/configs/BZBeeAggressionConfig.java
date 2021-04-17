@@ -49,7 +49,7 @@ public class BZBeeAggressionConfig implements ConfigData {
             "Note: This is in ticks. 20 ticks = 1 second. And bee's anger will remain.\n" +
             "Only the boosts given to the bees will be gone.")
     @ConfigEntry.BoundedDiscrete(min = 1, max = 10000)
-    public int howLongWrathOfTheHiveLasts = 350;
+    public int howLongWrathOfTheHiveLasts = 1680;
 
     @ConfigEntry.Gui.PrefixText
     @ConfigEntry.Gui.Tooltip(count = 0)
@@ -58,7 +58,7 @@ public class BZBeeAggressionConfig implements ConfigData {
             "\n" +
             "Note: This is in ticks. 20 ticks = 1 second.")
     @ConfigEntry.BoundedDiscrete(min = 1, max = 10000)
-    public int howLongProtectionOfTheHiveLasts = 500;
+    public int howLongProtectionOfTheHiveLasts = 1680;
 
     @ConfigEntry.Gui.PrefixText
     @ConfigEntry.Gui.Tooltip(count = 0)
@@ -89,5 +89,5 @@ public class BZBeeAggressionConfig implements ConfigData {
     @Comment(value = "\nHow strong the bees attacks become.\n" +
             "(6 or higher will instant kill you without armor).")
     @ConfigEntry.BoundedDiscrete(min = 1, max = 100)
-    public int strengthBoostLevel = 3;
+    public int strengthBoostLevel = 2;
 }
