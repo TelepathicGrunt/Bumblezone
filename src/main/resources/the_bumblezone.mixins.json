@@ -19,7 +19,6 @@
     "entities.ProtoChunkAddEntityMixin",
     "entities.WorldChunkAddEntityMixin",
     "items.GlassBottleUseMixin",
-    "items.HoneyDrinkMixin",
     "items.HoneyShieldCooldownMixin",
     "items.HoneyShieldDamageMixin",
     "items.HoneyShieldDisableMixin",

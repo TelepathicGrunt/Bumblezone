@@ -31,11 +31,13 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 - Bees now cannot get Wrath of the Hive effect to prevent them attacking each other.
 
+- Drinking Honey Bottles no longer trigger Wrath of the Hive effect in Bumblezone's dimension.
+
 - Mobs with Wrath of the Hive will now make Honeycomb Brood Blocks near them grow faster. Stay out of Bee Dungeons when you have the effect!
   
 - Protection of the Hive's default config value for duration is now 1680.
 
-  Enchantments:
+Enchantments:
 - Added Comb Cutter enchantment for Shears, Swords, and Resourceful Bees's Scrappers. 
   This enchantment will make mining all blocks with "comb" in the name much faster!
   And it will slightly increase mining speed for Hive, Nests, and Wax based blocks too.

@@ -120,44 +120,6 @@ public class BeeAggression {
         }
     }
 
-
-    //bees attack player that drinks honey.
-    public static void honeyDrinkAnger(ItemStack stack, World world, LivingEntity user)
-    {
-        // Bumblezone.LOGGER.log(Level.INFO, "just drank");
-        if (user instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) user;
-
-            //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
-            //Also checks to make sure we are in dimension and that player isn't in creative or spectator
-            if (!world.isRemote &&
-                    (playerEntity.getEntityWorld().getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                            Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
-                    !playerEntity.isCreative() &&
-                    !playerEntity.isSpectator() &&
-                    Bumblezone.BzBeeAggressionConfig.aggressiveBees.get())
-            {
-
-                //if player drinks honey, bees gets very mad...
-                if (stack.getItem() == Items.HONEY_BOTTLE) {
-                    if(playerEntity.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE.get())){
-                        playerEntity.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
-                    }
-                    else{
-                        playerEntity.addPotionEffect(new EffectInstance(
-                                BzEffects.WRATH_OF_THE_HIVE.get(),
-                                Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
-                                2,
-                                false,
-                                Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(),
-                                true));
-                    }
-                }
-            }
-        }
-    }
-
-
     //Bees hit by a mob or player will inflict Wrath of the Hive onto the attacker.
     public static void beeHitAndAngered(Entity entity, Entity attackerEntity)
     {
