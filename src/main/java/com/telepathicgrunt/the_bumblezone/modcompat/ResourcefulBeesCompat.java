@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
+import com.minecraftabnormals.buzzier_bees.core.registry.BBVillagers;
 import com.mojang.datafixers.util.Pair;
 import com.resourcefulbees.resourcefulbees.api.beedata.CustomBeeData;
 import com.resourcefulbees.resourcefulbees.block.multiblocks.apiary.ApiaryBlock;
@@ -7,14 +8,20 @@ import com.resourcefulbees.resourcefulbees.block.multiblocks.apiary.ApiaryBreede
 import com.resourcefulbees.resourcefulbees.block.multiblocks.apiary.ApiaryStorageBlock;
 import com.resourcefulbees.resourcefulbees.registry.BeeRegistry;
 import com.resourcefulbees.resourcefulbees.registry.ModBlocks;
+import com.resourcefulbees.resourcefulbees.registry.ModVillagerProfessions;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzConfiguredFeatures;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
+import net.minecraft.item.Items;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -28,7 +35,11 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.village.VillagerTradesEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
@@ -130,8 +141,36 @@ public class ResourcefulBeesCompat {
             }
         }
 
+        // fires when server starts up so long after FMLCommonSetupEvent.
+        // Thus it is safe to register this event here.
+        // Need lowest priority to make sure we add trades after the other mod has created their trades.
+        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+        forgeBus.addListener(EventPriority.LOWEST, ResourcefulBeesCompat::setupResourcefulBeesTrades);
+
         // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.resourcefulBeesPresent = true;
+    }
+
+    public static void setupResourcefulBeesTrades(VillagerTradesEvent event) {
+        if (event.getType() == ModVillagerProfessions.BEEKEEPER.get()) {
+            Int2ObjectMap<List<VillagerTrades.ITrade>> trades = event.getTrades();
+
+            List<VillagerTrades.ITrade> tradeList = new ArrayList<>(trades.get(2));
+            tradeList.add(new GeneralUtils.BasicItemTrade(Items.EMERALD, 1, BzItems.STICKY_HONEY_RESIDUE.get(), 2));
+            trades.put(2, tradeList);
+
+            tradeList = new ArrayList<>(trades.get(3));
+            tradeList.add(new GeneralUtils.BasicItemTrade(BzItems.HONEY_CRYSTAL_SHARDS.get(), 3, Items.EMERALD, 1));
+            trades.put(3, tradeList);
+
+            tradeList = new ArrayList<>(trades.get(4));
+            tradeList.add(new GeneralUtils.BasicItemTrade(Items.EMERALD, 2, BzItems.HONEY_CRYSTAL.get(), 1));
+            trades.put(4, tradeList);
+
+            tradeList = new ArrayList<>(trades.get(5));
+            tradeList.add(new GeneralUtils.BasicItemTrade(Items.EMERALD, 20, BzItems.HONEYCOMB_LARVA.get(), 1));
+            trades.put(5, tradeList);
+        }
     }
 
     public static void RBAddWorldgen(List<Biome> bumblezone_biomes) {

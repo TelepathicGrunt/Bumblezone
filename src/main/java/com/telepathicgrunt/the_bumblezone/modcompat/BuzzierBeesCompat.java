@@ -1,15 +1,21 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.minecraftabnormals.buzzier_bees.common.blocks.CandleBlock;
+import com.minecraftabnormals.buzzier_bees.core.BuzzierBees;
 import com.minecraftabnormals.buzzier_bees.core.registry.BBBlocks;
 import com.minecraftabnormals.buzzier_bees.core.registry.BBItems;
+import com.minecraftabnormals.buzzier_bees.core.registry.BBVillagers;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,12 +25,14 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.village.VillagerTradesEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.ForgeRegistries;
+import svenhjol.charm.module.Beekeepers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class BuzzierBeesCompat {
 
@@ -139,8 +147,36 @@ public class BuzzierBeesCompat {
                 BBBlocks.WITHER_ROSE_SCENTED_CANDLE.get()
         ));
 
+        // fires when server starts up so long after FMLCommonSetupEvent.
+        // Thus it is safe to register this event here.
+        // Need lowest priority to make sure we add trades after the other mod has created their trades.
+        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+        forgeBus.addListener(EventPriority.LOWEST, BuzzierBeesCompat::setupBuzzierBeesTrades);
+
         // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.buzzierBeesPresent = true;
+    }
+
+    public static void setupBuzzierBeesTrades(VillagerTradesEvent event) {
+        if (event.getType() == BBVillagers.APIARIST.get()) {
+            Int2ObjectMap<List<VillagerTrades.ITrade>> trades = event.getTrades();
+
+            List<VillagerTrades.ITrade> tradeList = new ArrayList<>(trades.get(2));
+            tradeList.add(new GeneralUtils.BasicItemTrade(Items.EMERALD, 1, BzItems.STICKY_HONEY_RESIDUE.get(), 2));
+            trades.put(2, tradeList);
+
+            tradeList = new ArrayList<>(trades.get(3));
+            tradeList.add(new GeneralUtils.BasicItemTrade(BzItems.HONEY_CRYSTAL_SHARDS.get(), 3, Items.EMERALD, 1));
+            trades.put(3, tradeList);
+
+            tradeList = new ArrayList<>(trades.get(4));
+            tradeList.add(new GeneralUtils.BasicItemTrade(Items.EMERALD, 2, BzItems.HONEY_CRYSTAL.get(), 1));
+            trades.put(4, tradeList);
+
+            tradeList = new ArrayList<>(trades.get(5));
+            tradeList.add(new GeneralUtils.BasicItemTrade(Items.EMERALD, 20, BzItems.HONEYCOMB_LARVA.get(), 1));
+            trades.put(5, tradeList);
+        }
     }
 
     public static BlockState getCrystallizedHoneyBlock() {

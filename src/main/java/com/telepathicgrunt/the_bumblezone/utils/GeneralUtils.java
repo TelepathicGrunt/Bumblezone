@@ -7,7 +7,10 @@ import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IDispenseItemBehavior;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.MerchantOffer;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -86,4 +89,38 @@ public class GeneralUtils {
             return defaultDispenseBehavior.dispense(source, stack);
         }
     }
+
+    //////////////////////////////////////////
+
+    /**
+     * For doing basic trades without forge's implementation.
+     * Very short and barebone to what I want
+     */
+    public static class BasicItemTrade implements VillagerTrades.ITrade {
+        private final Item itemToTrade;
+        private final Item itemToReceive;
+        private final int amountToGive;
+        private final int amountToReceive;
+        protected final int maxUses;
+        protected final int experience;
+        protected final float multiplier;
+
+        public BasicItemTrade(Item itemToTrade, int amountToGive, Item itemToReceive, int amountToReceive){
+            this.itemToTrade = itemToTrade;
+            this.itemToReceive = itemToReceive;
+            this.amountToGive = amountToGive;
+            this.amountToReceive = amountToReceive;
+            this.maxUses = 20;
+            this.experience = 2;
+            this.multiplier = 0.05F;
+        }
+
+        @Override
+        public MerchantOffer getOffer(Entity entity, Random random) {
+            ItemStack in = new ItemStack(this.itemToTrade, this.amountToGive);
+            ItemStack out = new ItemStack(this.itemToReceive, this.amountToReceive);
+            return new MerchantOffer(in, out, this.maxUses, this.experience, this.multiplier);
+        }
+    }
+
 }
