@@ -27,11 +27,15 @@ public class ResourcefulBeesRedirection {
 		return ResourcefulBeesCompat.getRBBeesWaxBlock();
 	}
 
-	public static Pair<BlockState, String> RBGetSpiderHoneycomb(Random random){
+	public static BlockState getRBHoneyBlock(Random random){
+		return ResourcefulBeesCompat.getRBHoneyBlock(random);
+	}
+
+	public static BlockState RBGetSpiderHoneycomb(Random random){
 		return ResourcefulBeesCompat.RBGetSpiderHoneycomb(random);
 	}
 
-	public static Pair<BlockState, String> RBGetRandomHoneycomb(Random random, int lowerBoundBias){
+	public static BlockState RBGetRandomHoneycomb(Random random, int lowerBoundBias){
 		return ResourcefulBeesCompat.RBGetRandomHoneycomb(random, lowerBoundBias);
 	}
 

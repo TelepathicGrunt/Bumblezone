@@ -119,10 +119,10 @@ public class BeeDungeonProcessor extends StructureProcessor {
         // main body and ceiling
         else if(blockState.isIn(Blocks.HONEYCOMB_BLOCK) || blockState.isIn(BzBlocks.FILLED_POROUS_HONEYCOMB.get())){
             if(ModChecker.productiveBeesPresent && random.nextFloat() < Bumblezone.BzModCompatibilityConfig.PBOreHoneycombSpawnRateBeeDungeon.get()) {
-                blockState = ProductiveBeesRedirection.PBGetRandomHoneycomb(random, Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRarityBeeDungeon.get()).getFirst();
+                blockState = ProductiveBeesRedirection.PBGetRandomHoneycomb(random, Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRarityBeeDungeon.get());
             }
             else if(ModChecker.resourcefulBeesPresent && random.nextFloat() < Bumblezone.BzModCompatibilityConfig.RBOreHoneycombSpawnRateBeeDungeon.get()) {
-                blockState = ResourcefulBeesRedirection.RBGetRandomHoneycomb(random, Bumblezone.BzModCompatibilityConfig.RBGreatHoneycombRarityBeeDungeon.get()).getFirst();
+                blockState = ResourcefulBeesRedirection.RBGetRandomHoneycomb(random, Bumblezone.BzModCompatibilityConfig.RBGreatHoneycombRarityBeeDungeon.get());
             }
             else if (random.nextFloat() < 0.4f) {
                 blockState = Blocks.HONEYCOMB_BLOCK.getDefaultState();
@@ -141,6 +141,9 @@ public class BeeDungeonProcessor extends StructureProcessor {
             }
             else if (random.nextFloat() < 0.2f) {
                 blockState = Blocks.HONEY_BLOCK.getDefaultState();
+            }
+            else if(ModChecker.resourcefulBeesPresent && random.nextFloat() < 0.05f) {
+                blockState = ResourcefulBeesRedirection.getRBHoneyBlock(random);
             }
             else {
                 blockState = BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState();

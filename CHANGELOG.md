@@ -68,6 +68,8 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 - Blacklisting any Bumblezone Biomes with Resourceful Bees's biome blacklist will prevent the bee from spawning at all in Bumblezone's Dimension.
 
+- Resourceful Bees's Honey Blocks has a chance of showing up in Bee Dungeons or the holes in the walls of the dimension!
+
 - Added Charm support so now their candles spawn in Bee Dungeons and Spider Infested Bee Dungeons!
   
 - Several Bumblezone Items are now used in Charm's, ReosurcefulBees's, and Buzzier Bee's BeeKeeper/Apiarist trade offers!

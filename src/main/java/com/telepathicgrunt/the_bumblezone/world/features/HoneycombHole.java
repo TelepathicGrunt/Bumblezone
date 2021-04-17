@@ -2,6 +2,8 @@ package com.telepathicgrunt.the_bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import net.minecraft.block.BlockState;
@@ -134,6 +136,9 @@ public class HoneycombHole extends Feature<NoFeatureConfig> {
                         if (random.nextInt(3) == 0) {
                             world.setBlockState(currentPosition, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 2);
                         }
+                        else if(ModChecker.resourcefulBeesPresent && random.nextFloat() < 0.01f) {
+                            world.setBlockState(currentPosition, ResourcefulBeesRedirection.getRBHoneyBlock(random), 2);
+                        }
                         else {
                             world.setBlockState(currentPosition, Blocks.HONEY_BLOCK.getDefaultState(), 2);
                         }
@@ -163,6 +168,9 @@ public class HoneycombHole extends Feature<NoFeatureConfig> {
                         }
                         else if (chance <= 6) {
                             world.setBlockState(currentPosition, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 2);
+                        }
+                        else if(ModChecker.resourcefulBeesPresent && random.nextFloat() < 0.01f) {
+                            world.setBlockState(currentPosition, ResourcefulBeesRedirection.getRBHoneyBlock(random), 2);
                         }
                         else {
                             world.setBlockState(currentPosition, Blocks.HONEY_BLOCK.getDefaultState(), 2);

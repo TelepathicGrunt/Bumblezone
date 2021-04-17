@@ -25,7 +25,7 @@ public class ProductiveBeesRedirection {
 		return ProductiveBeesCompat.PBIsExpandedBeehiveBlock(block);
 	}
 
-	public static Pair<BlockState, String> PBGetRottenedHoneycomb(Random random) {
+	public static BlockState PBGetRottenedHoneycomb(Random random) {
 		return ProductiveBeesCompat.PBGetRottenedHoneycomb(random);
 	}
 
@@ -33,7 +33,7 @@ public class ProductiveBeesRedirection {
 		ProductiveBeesCompat.PBMobSpawnEvent(event, isChild);
 	}
 
-	public static Pair<BlockState, String> PBGetRandomHoneycomb(Random random, int lowerBoundBias) {
+	public static BlockState PBGetRandomHoneycomb(Random random, int lowerBoundBias) {
 		return ProductiveBeesCompat.PBGetRandomHoneycomb(random, lowerBoundBias);
 	}
 }

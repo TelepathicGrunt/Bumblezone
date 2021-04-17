@@ -55,6 +55,7 @@ public class ResourcefulBeesCompat {
     private static final List<Block> ORE_BASED_HONEYCOMB_VARIANTS = new ArrayList<>();
     private static final List<Block> SPIDER_DUNGEON_HONEYCOMBS = new ArrayList<>();
     private static final List<Pair<Block, ConfiguredFeature<?, ?>>> RESOURCEFUL_BEES_CFS = new ArrayList<>();
+    private static final List<Block> HONEY_BLOCKS = new ArrayList<>();
 
     public static void setupResourcefulBees() {
 
@@ -100,8 +101,15 @@ public class ResourcefulBeesCompat {
 
         for (Map.Entry<RegistryKey<Block>, Block> entry : Registry.BLOCK.getEntries()) {
             ResourceLocation rl = entry.getKey().getLocation();
-            if (rl.getNamespace().equals(RESOURCEFUL_BEES_NAMESPACE) && rl.getPath().contains("honeycomb")) {
-                RESOURCEFUL_HONEYCOMBS_MAP.put(entry.getKey().getLocation(), entry.getValue());
+            if(rl.getNamespace().equals(RESOURCEFUL_BEES_NAMESPACE)){
+                if (rl.getPath().contains("honeycomb")) {
+                    RESOURCEFUL_HONEYCOMBS_MAP.put(entry.getKey().getLocation(), entry.getValue());
+                }
+                else if(rl.getPath().contains("honey") && rl.getPath().contains("block") &&
+                        !rl.getPath().contains("comb") && !rl.getPath().contains("fluid"))
+                {
+                    HONEY_BLOCKS.add(entry.getValue());
+                }
             }
         }
 
@@ -140,6 +148,7 @@ public class ResourcefulBeesCompat {
                 addCombToWorldgen(null, remainingCombs.getKey(), 10, 1, 1, 235, false);
             }
         }
+
 
         // fires when server starts up so long after FMLCommonSetupEvent.
         // Thus it is safe to register this event here.
@@ -252,6 +261,14 @@ public class ResourcefulBeesCompat {
     }
 
     /**
+     * get either honey block from resourceful bees block
+     */
+    public static BlockState getRBHoneyBlock(Random random) {
+        return HONEY_BLOCKS.get(random.nextInt(HONEY_BLOCKS.size())).getDefaultState();
+    }
+
+
+    /**
      * 1/15th of bees spawning will also spawn Resourceful Bees' bees
      */
     public static void RBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event, boolean isChild) {
@@ -294,11 +311,11 @@ public class ResourcefulBeesCompat {
      * Safely get Spider dungeon Honeycomb. If Spider dungeon Honeycomb wasn't found, return
      * Vanilla's Honeycomb
      */
-    public static Pair<BlockState, String> RBGetSpiderHoneycomb(Random random) {
+    public static BlockState RBGetSpiderHoneycomb(Random random) {
         if (SPIDER_DUNGEON_HONEYCOMBS.size() == 0) {
-            return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), null);
+            return Blocks.HONEYCOMB_BLOCK.getDefaultState();
         } else {
-            return new Pair<>(SPIDER_DUNGEON_HONEYCOMBS.get(random.nextInt(random.nextInt(SPIDER_DUNGEON_HONEYCOMBS.size()) + 1)).getDefaultState(), null);
+            return SPIDER_DUNGEON_HONEYCOMBS.get(random.nextInt(random.nextInt(SPIDER_DUNGEON_HONEYCOMBS.size()) + 1)).getDefaultState();
         }
     }
 
@@ -306,9 +323,9 @@ public class ResourcefulBeesCompat {
      * Picks a random Productive Bees Honeycomb with lower index of
      * ORE_BASED_HONEYCOMB_VARIANTS list being highly common
      */
-    public static Pair<BlockState, String> RBGetRandomHoneycomb(Random random, int lowerBoundBias) {
+    public static BlockState RBGetRandomHoneycomb(Random random, int lowerBoundBias) {
         if (ORE_BASED_HONEYCOMB_VARIANTS.size() == 0) {
-            return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), null);
+            return Blocks.HONEYCOMB_BLOCK.getDefaultState();
         } else {
             int index = ORE_BASED_HONEYCOMB_VARIANTS.size() - 1;
 
@@ -316,7 +333,7 @@ public class ResourcefulBeesCompat {
                 index = random.nextInt(index + 1);
             }
 
-            return new Pair<>(ORE_BASED_HONEYCOMB_VARIANTS.get(index).getDefaultState(), null);
+            return ORE_BASED_HONEYCOMB_VARIANTS.get(index).getDefaultState();
         }
     }
 }

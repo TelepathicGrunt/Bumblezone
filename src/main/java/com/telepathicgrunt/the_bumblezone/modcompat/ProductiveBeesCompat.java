@@ -264,12 +264,12 @@ public class ProductiveBeesCompat {
 	 * Safely get Rottened Honeycomb. If Rottened Honeycomb wasn't found, return
 	 * Vanilla's Honeycomb
 	 */
-	public static Pair<BlockState, String> PBGetRottenedHoneycomb(Random random) {
+	public static BlockState PBGetRottenedHoneycomb(Random random) {
 		if(SPIDER_DUNGEON_HONEYCOMBS.size() == 0){
-			return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), null);
+			return Blocks.HONEYCOMB_BLOCK.getDefaultState();
 		}
 		else{
-			return new Pair<>(SPIDER_DUNGEON_HONEYCOMBS.get(random.nextInt(random.nextInt(SPIDER_DUNGEON_HONEYCOMBS.size())+1)).getDefaultState(), null);
+			return SPIDER_DUNGEON_HONEYCOMBS.get(random.nextInt(random.nextInt(SPIDER_DUNGEON_HONEYCOMBS.size())+1)).getDefaultState();
 		}
 	}
 
@@ -277,9 +277,9 @@ public class ProductiveBeesCompat {
 	 * Picks a random Productive Bees Honeycomb with lower index of
 	 * ORE_BASED_HONEYCOMB_VARIANTS list being highly common
 	 */
-	public static Pair<BlockState, String> PBGetRandomHoneycomb(Random random, int lowerBoundBias) {
+	public static BlockState PBGetRandomHoneycomb(Random random, int lowerBoundBias) {
 		if (ORE_BASED_HONEYCOMB_VARIANTS.size() == 0) {
-			return new Pair<>(Blocks.HONEYCOMB_BLOCK.getDefaultState(), null);
+			return Blocks.HONEYCOMB_BLOCK.getDefaultState();
 		}
 		else {
 			int index = ORE_BASED_HONEYCOMB_VARIANTS.size() - 1;
@@ -288,7 +288,7 @@ public class ProductiveBeesCompat {
 				index = random.nextInt(index + 1);
 			}
 
-			return new Pair<>(ORE_BASED_HONEYCOMB_VARIANTS.get(index).getDefaultState(), null);
+			return ORE_BASED_HONEYCOMB_VARIANTS.get(index).getDefaultState();
 		}
 	}
 }
