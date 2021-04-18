@@ -5,8 +5,10 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 import net.telepathicgrunt.bumblezone.Bumblezone;
+import net.telepathicgrunt.bumblezone.items.BzMusicDiscs;
 import net.telepathicgrunt.bumblezone.items.HoneyCrystalShield;
 
 
@@ -49,6 +51,9 @@ public class BzItems {
                     .statusEffect(new StatusEffectInstance(StatusEffects.HASTE, 600, 0), 1.0F).build())
             .group(BUMBLEZONE_CREATIVE_TAB).maxCount(16));
 
+    public static final Item MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = new BzMusicDiscs(14, BzSounds.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV, (new Item.Settings()).maxCount(1).group(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.RARE));
+    public static final Item MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = new BzMusicDiscs(15, BzSounds.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY, (new Item.Settings()).maxCount(1).group(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.RARE));
+
     /**
      * registers the item version of the Blocks so they now exist in the registry
      */
@@ -68,5 +73,7 @@ public class BzItems {
         Registry.register(Registry.ITEM, new Identifier(Bumblezone.MODID, "sugar_water_bucket"), SUGAR_WATER_BUCKET);
         Registry.register(Registry.ITEM, new Identifier(Bumblezone.MODID, "sugar_water_bottle"), SUGAR_WATER_BOTTLE);
         Registry.register(Registry.ITEM, new Identifier(Bumblezone.MODID, "honey_slime_spawn_egg"), HONEY_SLIME_SPAWN_EGG);
+        Registry.register(Registry.ITEM, new Identifier(Bumblezone.MODID, "music_disc_flight_of_the_bumblebee_rimsky_korsakov"), MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV);
+        Registry.register(Registry.ITEM, new Identifier(Bumblezone.MODID, "music_disc_honey_bee_rat_faced_boy"), MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY);
     }
 }

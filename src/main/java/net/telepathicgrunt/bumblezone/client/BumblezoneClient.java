@@ -5,12 +5,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.client.sound.Sound;
-import net.minecraft.client.sound.SoundInstance;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 import net.telepathicgrunt.bumblezone.Bumblezone;
 import net.telepathicgrunt.bumblezone.client.rendering.FluidRender;
@@ -19,7 +13,6 @@ import net.telepathicgrunt.bumblezone.mixin.world.SkyPropertiesAccessor;
 import net.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import net.telepathicgrunt.bumblezone.modinit.BzEntities;
 import net.telepathicgrunt.bumblezone.modinit.BzItems;
-import net.telepathicgrunt.bumblezone.modinit.BzSounds;
 import net.telepathicgrunt.bumblezone.world.dimension.BzSkyProperty;
 
 @Environment(EnvType.CLIENT)

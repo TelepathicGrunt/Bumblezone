@@ -16,6 +16,10 @@
   "item.the_bumblezone.sugar_water_bottle": "Zuckerwasserflasche",
   "item.the_bumblezone.honey_crystal_shield": "Honigkristallschild",
   "item.the_bumblezone.honey_crystal_shield.level_tooltip": "Schildlevel",
+  "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov": "Schallplatte",
+  "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov.desc": "Rimsky Korsakov - Flight of the Bumblebee",
+  "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy": "Schallplatte",
+  "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy.desc": "Rat Faced Boy - Honey Bee",
 
   "biome.the_bumblezone.sugar_water_floor": "Zuckerwassergrund",
   "biome.the_bumblezone.hive_wall": "Bienenstockmauer",

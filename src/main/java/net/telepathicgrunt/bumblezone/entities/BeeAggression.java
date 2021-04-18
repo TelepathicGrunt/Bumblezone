@@ -1,18 +1,19 @@
 package net.telepathicgrunt.bumblezone.entities;
 
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityGroup;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.PandaEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.telepathicgrunt.bumblezone.Bumblezone;
-import net.telepathicgrunt.bumblezone.client.BumblezoneClient;
 import net.telepathicgrunt.bumblezone.client.MusicHandler;
 import net.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 import net.telepathicgrunt.bumblezone.modinit.BzEffects;

@@ -221,7 +221,6 @@ public class HoneycombBrood extends ProperFacingBlock {
      */
     @Override
     public void onBreak(World world, BlockPos position, BlockState state, PlayerEntity playerEntity) {
-
         ListTag listOfEnchants = playerEntity.getMainHandStack().getEnchantments();
         if (listOfEnchants.stream().noneMatch(enchant -> enchant.asString().contains("minecraft:silk_touch"))) {
             BlockState blockState = world.getBlockState(position);

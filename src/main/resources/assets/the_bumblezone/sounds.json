@@ -4,7 +4,7 @@
       {
         "name": "the_bumblezone:beehive_sounds_compressed",
         "stream": true,
-        "volume": 0.1
+        "volume": 0.075
       }
     ]
   },
@@ -23,6 +23,24 @@
         "name": "the_bumblezone:flight_of_the_bumblebee_rimsky_korsakov",
         "stream": true,
         "volume": 0.9
+      }
+    ]
+  },
+  "music_disc.honey_bee_rat_faced_boy": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:honey_bee_rat_faced_boy",
+        "stream": true,
+        "volume": 1
+      }
+    ]
+  },
+  "music_disc.flight_of_the_bumblebee_rimsky_korsakov": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:flight_of_the_bumblebee_rimsky_korsakov",
+        "stream": true,
+        "volume": 1
       }
     ]
   }

@@ -19,6 +19,7 @@ import net.telepathicgrunt.bumblezone.configs.BzConfig;
 import net.telepathicgrunt.bumblezone.entities.BeeAggression;
 import net.telepathicgrunt.bumblezone.entities.IPlayerComponent;
 import net.telepathicgrunt.bumblezone.entities.PlayerComponent;
+import net.telepathicgrunt.bumblezone.entities.WanderingTrades;
 import net.telepathicgrunt.bumblezone.items.DispenserItemSetup;
 import net.telepathicgrunt.bumblezone.modcompat.ModChecker;
 import net.telepathicgrunt.bumblezone.modinit.*;
@@ -47,6 +48,9 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BZBlockTags.initTags();
         BZItemTags.initTags();
 
+        // Must be before items so that items like music disc can get sounds
+        BzSounds.registerSounds();
+
         BzBlocks.registerBlocks();
         BzEntities.registerEntities();
         BzItems.registerItems();
@@ -58,7 +62,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzFeatures.registerFeatures();
         BzConfiguredFeatures.registerConfiguredFeatures();
         BzDimension.setupDimension();
-        BzSounds.registerSounds();
+        WanderingTrades.addWanderingTrades();
 
         ServerWorldEvents.LOAD.register((MinecraftServer minecraftServer, ServerWorld serverWorld) -> BeeAggression.setupBeeHatingList(serverWorld));
         DispenserItemSetup.setupDispenserBehaviors();
