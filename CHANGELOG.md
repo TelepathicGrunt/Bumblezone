@@ -55,6 +55,8 @@ Enchantments:
    Items:
 - Honey Crystal Shield's valid repair items is now controlled by the item tag: "the_bumblezone:honey_crystal_shield_repair_items"
 
+- Added new music discs to play the two new music added to this mod! You can obtain the discs from Wandering Traders as a rare trade!
+  
    Translations:
 - Removed English that was accidentally left in the Russian translations - by Alepod
 
