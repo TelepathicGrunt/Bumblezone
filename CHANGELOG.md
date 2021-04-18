@@ -46,6 +46,8 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
    Blocks:
 - Fixed Honey Crystal block so that it rotates and mirrors properly when loaded from nbt files.
+
+- Adjusted Empty Porous Honeycomb, empty Brood block, and non-empty Brood blocks's textures to try and reduce tiling issues a bit.
   
 - Switched to using TagRegistry.block in backend for block tags.
 
