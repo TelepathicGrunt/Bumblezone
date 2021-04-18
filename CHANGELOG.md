@@ -52,6 +52,8 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
    Items:
 - Honey Crystal Shield's valid repair items is now controlled by the item tag: "the_bumblezone:honey_crystal_shield_repair_items"
 
+- Added new music discs to play the two new music added to this mod! You can obtain the discs from Wandering Traders as a rare trade!
+
    Features:
 - Optimized waterfall feature to use honeycombs_that_features_can_carve block tag.
   
