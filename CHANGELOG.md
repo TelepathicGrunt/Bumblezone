@@ -52,6 +52,8 @@ Enchantments:
    Blocks:
 - Fixed Honey Crystal block so that it rotates and mirrors properly when loaded from nbt files.
 
+- Adjusted Empty Porous Honeycomb, empty Brood block, and non-empty Brood blocks's textures to try and reduce tiling issues a bit.
+
    Items:
 - Honey Crystal Shield's valid repair items is now controlled by the item tag: "the_bumblezone:honey_crystal_shield_repair_items"
 
