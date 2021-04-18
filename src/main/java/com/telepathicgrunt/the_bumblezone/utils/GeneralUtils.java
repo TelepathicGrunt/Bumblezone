@@ -106,13 +106,17 @@ public class GeneralUtils {
         protected final float multiplier;
 
         public BasicItemTrade(Item itemToTrade, int amountToGive, Item itemToReceive, int amountToReceive){
+            this(itemToTrade, amountToGive, itemToReceive, amountToReceive, 20, 2, 0.05F);
+        }
+
+        public BasicItemTrade(Item itemToTrade, int amountToGive, Item itemToReceive, int amountToReceive, int maxUses, int experience, float multiplier){
             this.itemToTrade = itemToTrade;
             this.itemToReceive = itemToReceive;
             this.amountToGive = amountToGive;
             this.amountToReceive = amountToReceive;
-            this.maxUses = 20;
-            this.experience = 2;
-            this.multiplier = 0.05F;
+            this.maxUses = maxUses;
+            this.experience = experience;
+            this.multiplier = multiplier;
         }
 
         @Override

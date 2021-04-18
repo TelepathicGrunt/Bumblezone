@@ -18,6 +18,10 @@
   "item.the_bumblezone.honey_crystal_shield": "Honey Crystal Shield",
   "item.the_bumblezone.honey_crystal_shield.level_tooltip": "Shield Level",
   "item.the_bumblezone.honey_slime_spawn_egg": "Honey Slime Spawn Egg",
+  "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov": "Music Disc",
+  "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov.desc": "Rimsky Korsakov - Flight of the Bumblebee",
+  "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy": "Music Disc",
+  "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy.desc": "Rat Faced Boy - Honey Bee",
 
   "entity.the_bumblezone.honey_slime" : "Honey Slime" ,
 

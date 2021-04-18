@@ -4,24 +4,18 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.merchant.villager.VillagerTrades;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.MerchantOffer;
-import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import svenhjol.charm.base.helper.VillagerHelper;
 import svenhjol.charm.block.CandleBlock;
 import svenhjol.charm.module.Beekeepers;
 import svenhjol.charm.module.Candles;
-import svenhjol.charm.village.BeekeeperTradeOffers;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CharmCompat {
 

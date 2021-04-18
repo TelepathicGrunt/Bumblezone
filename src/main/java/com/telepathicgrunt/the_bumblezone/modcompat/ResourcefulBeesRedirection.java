@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.BlockItem;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 
@@ -29,6 +29,10 @@ public class ResourcefulBeesRedirection {
 
 	public static BlockState getRBHoneyBlock(Random random){
 		return ResourcefulBeesCompat.getRBHoneyBlock(random);
+	}
+
+	public static boolean isRBHoneyBlock(BlockItem itemToCheck){
+		return ResourcefulBeesCompat.isRBHoneyBlock(itemToCheck);
 	}
 
 	public static BlockState RBGetSpiderHoneycomb(Random random){

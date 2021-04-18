@@ -71,6 +71,7 @@ Enchantments:
 - Blacklisting any Bumblezone Biomes with Resourceful Bees's biome blacklist will prevent the bee from spawning at all in Bumblezone's Dimension.
 
 - Resourceful Bees's Honey Blocks has a chance of showing up in Bee Dungeons or the holes in the walls of the dimension!
+  Their Honey Blocks will now give Wrath of the Hive to players picking them up when inside The Bumblezone dimension.
 
 - Added Charm support so now their candles spawn in Bee Dungeons and Spider Infested Bee Dungeons!
   

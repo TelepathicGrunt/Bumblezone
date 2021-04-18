@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
-import com.minecraftabnormals.buzzier_bees.core.registry.BBVillagers;
 import com.mojang.datafixers.util.Pair;
 import com.resourcefulbees.resourcefulbees.api.beedata.CustomBeeData;
 import com.resourcefulbees.resourcefulbees.block.multiblocks.apiary.ApiaryBlock;
@@ -21,6 +20,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.merchant.villager.VillagerTrades;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Items;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
@@ -265,6 +265,13 @@ public class ResourcefulBeesCompat {
      */
     public static BlockState getRBHoneyBlock(Random random) {
         return HONEY_BLOCKS.get(random.nextInt(HONEY_BLOCKS.size())).getDefaultState();
+    }
+
+    /**
+     * get either honey block from resourceful bees block
+     */
+    public static boolean isRBHoneyBlock(BlockItem itemToCheck) {
+        return HONEY_BLOCKS.stream().anyMatch(honeyBlock -> itemToCheck.getBlock() == honeyBlock);
     }
 
 

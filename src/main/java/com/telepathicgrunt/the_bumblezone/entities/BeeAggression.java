@@ -1,16 +1,17 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.PandaEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.registry.Registry;
@@ -98,11 +99,17 @@ public class BeeAggression {
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
         if ((player.getEntityWorld().getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID) ||
                 Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                Bumblezone.BzBeeAggressionConfig.aggressiveBees.get() &&
                 !player.isCreative() &&
                 !player.isSpectator()) {
 
             //if player picks up a honey block, bees gets very mad...
-            if (item == Items.HONEY_BLOCK && Bumblezone.BzBeeAggressionConfig.aggressiveBees.get()) {
+            boolean isHoneyBlock = item == Items.HONEY_BLOCK;
+            if(ModChecker.resourcefulBeesPresent && !isHoneyBlock && item instanceof BlockItem) {
+                isHoneyBlock = ResourcefulBeesRedirection.isRBHoneyBlock((BlockItem) item);
+            }
+
+            if (isHoneyBlock) {
                 if(player.isPotionActive(BzEffects.PROTECTION_OF_THE_HIVE.get())){
                     player.removePotionEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                 }

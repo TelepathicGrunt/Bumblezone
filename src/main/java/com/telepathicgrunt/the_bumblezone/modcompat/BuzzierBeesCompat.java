@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.minecraftabnormals.buzzier_bees.common.blocks.CandleBlock;
-import com.minecraftabnormals.buzzier_bees.core.BuzzierBees;
 import com.minecraftabnormals.buzzier_bees.core.registry.BBBlocks;
 import com.minecraftabnormals.buzzier_bees.core.registry.BBItems;
 import com.minecraftabnormals.buzzier_bees.core.registry.BBVillagers;
@@ -30,9 +29,11 @@ import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.ForgeRegistries;
-import svenhjol.charm.module.Beekeepers;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class BuzzierBeesCompat {
 

@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.configs.*;
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.EnderpearlImpact;
+import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.items.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.HoneycombBroodEvents;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
@@ -54,15 +55,15 @@ public class Bumblezone{
         BZItemTags.tagInit();
 
         //Events
-        //forgeBus.addListener(BzDimension::biomeModification);
         forgeBus.addListener(BeeAggression::HoneyPickupEvent);
+        forgeBus.addListener(WanderingTrades::addWanderingTrades);
         forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
         forgeBus.addListener(HoneycombBroodEvents::reviveByPotionOfBees);
         forgeBus.addListener(CombCutterEnchantment::attemptFasterMining);
         forgeBus.addListener(EventPriority.HIGH, EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
+        forgeBus.addGenericListener(Block.class, Bumblezone::missingMappingDimension);
         forgeBus.addListener(PotionOfBeesBeeSplashPotionProjectile::ProjectileImpactEvent);
         forgeBus.addGenericListener(Entity.class, CapabilityEventHandler::onAttachCapabilitiesToEntities);
-        forgeBus.addGenericListener(Block.class, Bumblezone::missingMappingDimension);
 
         //Registration
         modEventBus.addListener(EventPriority.NORMAL, this::setup);
