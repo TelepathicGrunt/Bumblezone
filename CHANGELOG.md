@@ -7,6 +7,13 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
+
+   (V.2.4.1 Changes) (1.16.5 Minecraft)
+
+   Items:
+- Changed how Music Discs are added to Wandering Trader's trades since Fabric API's hook is broken for this.
+
+
    (V.2.4.0 Changes) (1.16.5 Minecraft)
 
    Dependencies:
