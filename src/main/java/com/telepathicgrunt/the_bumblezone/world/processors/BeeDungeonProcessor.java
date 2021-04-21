@@ -142,7 +142,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
             else if (random.nextFloat() < 0.2f) {
                 blockState = Blocks.HONEY_BLOCK.getDefaultState();
             }
-            else if(ModChecker.resourcefulBeesPresent && random.nextFloat() < 0.05f) {
+            else if(ModChecker.resourcefulBeesPresent && random.nextFloat() < 0.1f) {
                 blockState = ResourcefulBeesRedirection.getRBHoneyBlock(random);
             }
             else {

@@ -12,7 +12,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 # | Bumblezone changelog |
          
 
-   (V.2.2.15 Changes) (1.16.5 Minecraft)
+   (V.2.3.0 Changes) (1.16.5 Minecraft)
 
    Major:
 - Now requires 36.0.42 Forge or newer as I am now using EntityAttributeCreationEvent to register entity attributes.
@@ -76,6 +76,8 @@ Enchantments:
 
 - Resourceful Bees's Honey Blocks has a chance of showing up in Bee Dungeons or the holes in the walls of the dimension!
   Their Honey Blocks will now give Wrath of the Hive to players picking them up when inside The Bumblezone dimension.
+  
+- Reduced the spawnrates of many Resourceful Bees and Productive Bees honeycombs in The Bumblezone dimension and gave them new ranges that they can spawn at.
 
 - Added Charm support so now their candles spawn in Bee Dungeons and Spider Infested Bee Dungeons!
   

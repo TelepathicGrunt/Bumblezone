@@ -142,13 +142,15 @@ public class WrathOfTheHiveEffect extends Effect {
                 Math.max((Bumblezone.BzBeeAggressionConfig.absorptionBoostLevel.get() - 1) / 2, 1),
                 Math.max((Bumblezone.BzBeeAggressionConfig.strengthBoostLevel.get() - 1) / 3, 1));
 
-        setAggression(world,
-                livingEntity,
-                CarrierBeeRedirection.CBGetAppleBeeClass(),
-                LINE_OF_SIGHT,
-                Math.max((Bumblezone.BzBeeAggressionConfig.speedBoostLevel.get() - 1), 1),
-                Math.max((Bumblezone.BzBeeAggressionConfig.absorptionBoostLevel.get() - 1) / 2, 1),
-                Math.max((Bumblezone.BzBeeAggressionConfig.strengthBoostLevel.get() - 1) / 3, 1));
+        if(ModChecker.carrierBeesPresent) {
+            setAggression(world,
+                    livingEntity,
+                    CarrierBeeRedirection.CBGetAppleBeeClass(),
+                    LINE_OF_SIGHT,
+                    Math.max((Bumblezone.BzBeeAggressionConfig.speedBoostLevel.get() - 1), 1),
+                    Math.max((Bumblezone.BzBeeAggressionConfig.absorptionBoostLevel.get() - 1) / 2, 1),
+                    Math.max((Bumblezone.BzBeeAggressionConfig.strengthBoostLevel.get() - 1) / 3, 1));
+        }
     }
 
 
@@ -164,13 +166,15 @@ public class WrathOfTheHiveEffect extends Effect {
                 Bumblezone.BzBeeAggressionConfig.absorptionBoostLevel.get() - 1,
                 Bumblezone.BzBeeAggressionConfig.strengthBoostLevel.get() - 1);
 
-        setAggression(world,
-                livingEntity,
-                CarrierBeeRedirection.CBGetAppleBeeClass(),
-                SEE_THROUGH_WALLS,
-                Bumblezone.BzBeeAggressionConfig.speedBoostLevel.get() - 1,
-                Bumblezone.BzBeeAggressionConfig.absorptionBoostLevel.get() - 1,
-                Bumblezone.BzBeeAggressionConfig.strengthBoostLevel.get() - 1);
+        if(ModChecker.carrierBeesPresent) {
+            setAggression(world,
+                    livingEntity,
+                    CarrierBeeRedirection.CBGetAppleBeeClass(),
+                    SEE_THROUGH_WALLS,
+                    Bumblezone.BzBeeAggressionConfig.speedBoostLevel.get() - 1,
+                    Bumblezone.BzBeeAggressionConfig.absorptionBoostLevel.get() - 1,
+                    Bumblezone.BzBeeAggressionConfig.strengthBoostLevel.get() - 1);
+        }
     }
 
     private static void setAggression(World world, LivingEntity livingEntity, Class<? extends MobEntity> entityToFind, EntityPredicate sightMode, int speed, int absorption, int strength) {
@@ -210,10 +214,12 @@ public class WrathOfTheHiveEffect extends Effect {
                 BeeEntity.class,
                 SEE_THROUGH_WALLS);
 
-        clearAggression(world,
-                livingEntity,
-                CarrierBeeRedirection.CBGetAppleBeeClass(),
-                SEE_THROUGH_WALLS);
+        if(ModChecker.carrierBeesPresent){
+            clearAggression(world,
+                    livingEntity,
+                    CarrierBeeRedirection.CBGetAppleBeeClass(),
+                    SEE_THROUGH_WALLS);
+        }
     }
 
     private static void clearAggression(World world, LivingEntity livingEntity, Class<? extends MobEntity> entityToFind, EntityPredicate sightMode) {

@@ -135,17 +135,19 @@ public class ResourcefulBeesCompat {
             addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "rgbee_honeycomb_block"));
 
             addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "gold_honeycomb_block"), 34, 3, 6, 230, true);
-            addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "iron_honeycomb_block"), 26, 2, 30, 210, true);
-            addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "redstone_honeycomb_block"), 22, 1, 30, 210, true);
-            addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "lapis_honeycomb_block"), 22, 1, 6, 30, true);
-            addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "emerald_honeycomb_block"), 5, 1, 6, 244, true);
-            addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "ender_honeycomb_block"), 5, 1, 200, 50, true);
-            addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "diamond_honeycomb_block"), 7, 1, 6, 244, true);
-            addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "rgbee_honeycomb_block"), 7, 1, 6, 244, true);
+            addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "iron_honeycomb_block"), 26, 1, 30, 300, true);
+            addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "redstone_honeycomb_block"), 22, 1, 30, 350, true);
+            addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "lapis_honeycomb_block"), 22, 1, -30, 60, true);
+            addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "emerald_honeycomb_block"), 10, 1, 6, 600, true);
+            addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "ender_honeycomb_block"), 10, 1, 200, 150, true);
+            addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "diamond_honeycomb_block"), 10, 1, 6, 400, true);
+            addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "rgbee_honeycomb_block"), 10, 1, 6, 244, true);
+            addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "dragon_honeycomb_block"), 10, 1, 200, 450, false);
+            addCombToWorldgen(unusedHoneycombs, new ResourceLocation("resourcefulbees", "dragon_honeycomb_block"), 10, 1, -150, 180, false);
 
             // Remaining combs gets a generic spawning rate
             for (Map.Entry<ResourceLocation, Block> remainingCombs : unusedHoneycombs.entrySet()) {
-                addCombToWorldgen(null, remainingCombs.getKey(), 10, 1, 1, 235, false);
+                addCombToWorldgen(null, remainingCombs.getKey(), 10, 1, 1, 1000, false);
             }
         }
 
@@ -264,7 +266,7 @@ public class ResourcefulBeesCompat {
      * get either honey block from resourceful bees block
      */
     public static BlockState getRBHoneyBlock(Random random) {
-        return HONEY_BLOCKS.get(random.nextInt(HONEY_BLOCKS.size())).getDefaultState();
+        return HONEY_BLOCKS.get(random.nextInt(random.nextInt(HONEY_BLOCKS.size()) + 1)).getDefaultState();
     }
 
     /**
