@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
 import com.resourcefulbees.resourcefulbees.registry.ModItems;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
@@ -9,10 +11,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.ShearsItem;
-import net.minecraft.item.SwordItem;
+import net.minecraft.item.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Lazy;
@@ -95,6 +94,7 @@ public class CombCutterEnchantment extends Enchantment {
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack.getItem() instanceof ShearsItem || stack.getItem() instanceof SwordItem || stack.getItem().equals(ModItems.SCRAPER.get());
+        Item item = stack.getItem();
+        return item instanceof ShearsItem || item instanceof SwordItem || (ModChecker.resourcefulBeesPresent && ResourcefulBeesRedirection.isRBComb(item));
     }
 }

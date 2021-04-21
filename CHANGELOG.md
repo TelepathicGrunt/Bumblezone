@@ -10,7 +10,13 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 ------------------------------------------------
 # | Bumblezone changelog |
-         
+
+
+   (V.2.4.1 Changes) (1.16.5 Minecraft)
+
+   Mod compat:
+-  Fixed Comb Cutter crashing when Resourceful Bees is not on.
+
 
    (V.2.4.0 Changes) (1.16.5 Minecraft)
 

@@ -7,6 +7,7 @@ import com.resourcefulbees.resourcefulbees.block.multiblocks.apiary.ApiaryBreede
 import com.resourcefulbees.resourcefulbees.block.multiblocks.apiary.ApiaryStorageBlock;
 import com.resourcefulbees.resourcefulbees.registry.BeeRegistry;
 import com.resourcefulbees.resourcefulbees.registry.ModBlocks;
+import com.resourcefulbees.resourcefulbees.registry.ModItems;
 import com.resourcefulbees.resourcefulbees.registry.ModVillagerProfessions;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzConfiguredFeatures;
@@ -21,6 +22,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
@@ -344,5 +346,9 @@ public class ResourcefulBeesCompat {
 
             return ORE_BASED_HONEYCOMB_VARIANTS.get(index).getDefaultState();
         }
+    }
+
+    public static boolean isRBComb(Item itemToCheck) {
+        return itemToCheck.equals(ModItems.SCRAPER.get());
     }
 }
