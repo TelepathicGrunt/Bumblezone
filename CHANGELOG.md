@@ -7,7 +7,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 ------------------------------------------------
        | The Bumblezone Fabric changelog |
 
-   (V.2.3.1 Changes) (1.16.5 Minecraft)
+   (V.2.4.0 Changes) (1.16.5 Minecraft)
 
    Dependencies:
 - Cloth Config is no longer JIJ (jar-in-jar) into Bumblezone. You will need to download that mod separately.
