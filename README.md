@@ -1,18 +1,13 @@
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.imgur.com/ovPqrFL.png" alt="The banner logo for The Bumblezone with a friendly and hostile bee shown below the mod name." width="999" height="370" /></p>
-<h2 style="text-align: center;"><span style="font-size: 40px; text-align: center; color: #b76a00;"><strong>CURRENTLY FOR 1.16.4 MC</strong></span></h2>
+<h2 style="text-align: center;"><span style="font-size: 40px; text-align: center; color: #b76a00;"><strong>CURRENTLY FOR 1.16.5 MC</strong></span></h2>
 <p style="text-align: center;"><span style="font-size: 14px; text-align: center; color: #b76a00;"><strong>(Play this mod with<span style="text-decoration: underline;"><em> <a href="https://www.curseforge.com/minecraft/mc-mods/lithium">Lithium </a></em></span>for best performance!)</strong></span></p>
-<p style="text-decoration: underline; font-size: 14px; text-align: center;"><strong><a style="font-size: 14px; text-align: center;" href="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-forge">[Click here for the 1.16.4 Forge version of this mod!]</a></strong></p>
+<p style="text-decoration: underline; font-size: 14px; text-align: center;"><strong><a style="font-size: 14px; text-align: center;" href="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-forge">[Click here for the 1.16.5 Forge version of this mod!]</a></strong></p>
 <p style="text-align: center;">&nbsp;</p>
 <p style="text-align: center;">&nbsp;</p>
-<p style="text-align: center;"><em><span style="font-size: 14px; color: #b00000; text-decoration: underline;"><strong>Recent 1.16.4 News:</strong></span><span style="font-size: 14px;"><b><strong>&nbsp;</strong></b></span></em></p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Fixed teleportation mode 2 and 3 not working.&nbsp;</strong></b></span></em></p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Squashed bug that made players take fall damage if they </strong></b></span></em></p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>fall out of The Bumblezone dimension. And now added&nbsp;</strong></b></span></em></p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>broodBlocksBeeSpawnCapacity &amp; onlyOverworldHivesTeleports</strong></b></span></em></p>
-<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>config options that you can edit!</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px; color: #b00000; text-decoration: underline;"><strong>Recent 1.16.5 News:</strong></span><span style="font-size: 14px;"><b><strong>&nbsp;</strong></b></span></em></p>
+<p style="text-align: center;"><em><span style="font-size: 14px;"><b><strong>Added compat with v2.3.2 and older Charm's villagers!<br />Reduced buzzing volume in dimension,<br />adjusted Wrath of the Hive to be longer,<br />added Comb Cutter enchantment for swords/shears,<br />using Honey Blocks on Slime turns them to Honey Slime,<br />and music is added! Check out the Changelog for more info!&nbsp;</strong></b></span></em></p>
 <p style="text-align: center;"><strong style="color: #5467d3; font-size: 18px;"><em>(Also, please report any <span style="text-decoration: line-through;">glitches</span>&nbsp;BUGS you find)</em></strong></p>
-<p style="text-align: center;">&nbsp;&nbsp;</p>
-<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;&nbsp;&nbsp;</p>
 <p style="text-align: center;"><strong><em><br /></em><span style="font-size: 14px; color: #aa3e00;"><span style="font-size: 18px;">GENERAL NOTE:</span> <em><br /></em></span></strong></p>
 <p style="text-align: center;"><span style="font-size: 14px; color: #aa3e00;"><strong><em>Make a copy of your world before putting on&nbsp;</em></strong></span></p>
 <p style="text-align: center;"><span style="font-size: 14px; color: #aa3e00;"><strong><em>The Bumblezone! If you remove any&nbsp;dimension&nbsp;</em></strong></span></p>
@@ -20,13 +15,11 @@
 <p style="text-align: center;"><span style="font-size: 14px; color: #aa3e00;"><strong><em>missing from the game due to a Mojang bug. Also,</em></strong></span></p>
 <p style="text-align: center;"><span style="font-size: 14px; color: #aa3e00;"><strong><em>putting the mod back on will not restore the dimension.</em></strong></span></p>
 <p style="text-align: center;"><span style="font-size: 14px;"><strong><em>&nbsp;<a href="https://bugs.mojang.com/browse/MC-197860">https://bugs.mojang.com/browse/MC-197860</a></em></strong></span>&nbsp;</p>
-<p style="text-align: center;">&nbsp;</p>
-<p style="text-align: center;"><strong><em><br /></em><span style="font-size: 14px; color: #aa3e00;"><span style="font-size: 18px;">SERVER OWNERS NOTE:</span> <em><br />If you make a fresh new world with this&nbsp;mod&nbsp;on&nbsp;</em></span></strong></p>
+<p style="text-align: center;">&nbsp;<strong><em><br /></em><span style="font-size: 14px; color: #aa3e00;"><span style="font-size: 18px;">SERVER OWNERS NOTE:</span> <em><br />If you make a fresh new world with this&nbsp;mod&nbsp;on&nbsp;</em></span></strong></p>
 <p style="text-align: center;"><span style="font-size: 14px; color: #aa3e00;"><strong><em>&nbsp;a server, restart the&nbsp;server after the world&nbsp;is made</em></strong></span></p>
 <p style="text-align: center;"><span style="font-size: 14px; color: #aa3e00;"><strong><em>&nbsp; due to this mojang bug&nbsp;causing json&nbsp;dimensions&nbsp;</em></strong></span></p>
 <p style="text-align: center;"><span style="font-size: 14px; color: #aa3e00;"><strong><em>&nbsp;to not be made upon world&nbsp;creation only on servers.</em></strong></span></p>
 <p style="text-align: center;"><span style="font-size: 14px;"><strong><em>&nbsp;<a href="https://bugs.mojang.com/browse/MC-195468">https://bugs.mojang.com/browse/MC-195468</a></em></strong></span></p>
-<p style="text-align: left;">&nbsp;</p>
 <p style="text-align: left;">&nbsp;</p>
 <p><strong>______________________________________________________________________________</strong></p>
 <p>&nbsp;</p>
@@ -34,7 +27,7 @@
 <p><span style="font-size: 14px;">&nbsp;</span></p>
 <p><span style="font-size: 14px;">&nbsp; &nbsp;The Bumblezone is a dimension filled with Bee mobs, Honey Slime mobs, Honeycomb Blocks, Honey Blocks, and a new Porous Honeycomb Block that can be filled with Honey! The dimension itself looks like it is the inside of a bee nest! You will find giant walls in rows with canals of water between them along with giant columns providing support to the ceiling all over. The walls and columns are riddled with honeycomb holes. By default, traveling a block in this dimension is the same as traveling 10 block in the Overworld. (A movement factor of 10. For reference, the Nether has a movement factor of 8 so traveling a block in the Nether is the same as traveling 8 blocks in Overworld)</span></p>
 <p><span style="font-size: 14px;">&nbsp;</span></p>
-<p><span style="font-size: 14px;">&nbsp; &nbsp;But that isn't all! Within the dimension, bees are extremely protective of their honey. If you pick up a Honey Block, take honey from a Filled Porous Honeycomb block with a Glass Bottle, or you drink a Honey Bottle, all bees around you will get a speed, absorption, and strength potion effect and will become VERY angry at you! You will know you are in DEEP trouble when you get the Wrath of the Hive icon showing you got that effect and the fog in the dimension become more red! The bee will swarm you like crazy and will kill you unless you come very well prepared. A full set of unenchanted Diamond gear will not be enough. (but you can nerf the bees in the config if you find them too strong or buff them if you want to die!) Also, with the&nbsp;Filled Porous Honeycomb block, once you take honey from it, it turns into a Porous Honeycomb block but you can use a Honey Bottle on it to refill it back to being a Filled Porous Honeycomb block!</span></p>
+<p><span style="font-size: 14px;">&nbsp; &nbsp;But that isn't all! Within the dimension, bees are extremely protective of their honey. If you pick up a Honey Block or take honey from a Filled Porous Honeycomb block with a Glass Bottle, all bees around you will get a speed, absorption, and strength potion effect and will become VERY angry at you! You will know you are in DEEP trouble when you get the Wrath of the Hive icon showing you got that effect and the fog in the dimension become more red! The bee will swarm you like crazy and will kill you unless you come very well prepared. A full set of unenchanted Diamond gear will not be enough. (but you can nerf the bees in the config if you find them too strong or buff them if you want to die!) Also, with the&nbsp;Filled Porous Honeycomb block, once you take honey from it, it turns into a Porous Honeycomb block but you can use a Honey Bottle on it to refill it back to being a Filled Porous Honeycomb block! And you may find passive Honey Slime mobs hopping around that can be used as a farmable source of Honey Bottles as well!</span></p>
 <p><span style="font-size: 14px;">&nbsp;</span></p>
 <p><span style="font-size: 14px;"><strong>&nbsp; &nbsp; Also, be sure to check out the images page for several screenshots of what the world looks like! And yes, you can use this mod in a modpack or download and modify the source code. It is all under LGPL (a license) so you can do whatever you want as long as you make your mod's codebase also open sourced.&nbsp;</strong></span></p>
 <p>&nbsp;&nbsp;</p>
@@ -70,7 +63,9 @@
 <p>&nbsp;</p>
 <p>-The Larva grows much faster in The Bumblezone dimension but will still grow outside of it. You can speed up the larva stages by feeding it Honey Bottles which always results in growth or feed it Sugar Water Bottle which sometimes results in growth. You can use a Dispenser with Honey Bottles or Sugar Water Bottles right next to the block to automate the growing and spawning of bees with this block!</p>
 <p>&nbsp;</p>
-<p>-If you use a Glass Bottle on this block, you will get a Honey Bottle, turn this block into an Empty Honeycomb Brood Block, and you will get Wrath of the Hive effect. A Dispenser with a Glass Bottle can also pull honey out of this block and turn it into an&nbsp;Empty Honeycomb Larva Block.</p>
+<p>-If you use a Glass Bottle on this block, you will get a Honey Bottle, turn this block into an Empty Honeycomb Brood Block, and you will get Wrath of the Hive effect. A Dispenser with a Glass Bottle can also pull honey out of this block and turn it into an&nbsp;Empty Honeycomb Brood Block.</p>
+<p>&nbsp;</p>
+<p>-If you are near this block and you have Wrath of the Hive, this block will grow the larva and spawn bees much, much faster! Stay away from these blocks when bees are unleashing their wrath!</p>
 <p>&nbsp;</p>
 <p>-When mined, this block drops&nbsp;Empty Honeycomb Brood Block and a Honeycomb and since you killed the larva, you get Wrath of the Hive effect as well. But if you use a Silk Touch pickaxe, you can get&nbsp;Honeycomb Brood Block instead without angering the bee or getting the effect.</p>
 <p>&nbsp;</p>
@@ -194,6 +189,8 @@
 <p># # #</p>
 <p>&nbsp; &nbsp;#&nbsp;</p>
 <p>&nbsp;</p>
+<p>-The valid items for repairing the shield can be changed with a datapack overriding the "the_bumblezone:honey_crystal_shield_repair_items" item tag.&nbsp;</p>
+<p>&nbsp;</p>
 <p>-Any mob that physically hits your shield when you're blocking will apply a 4 second slowness effect on the mob due to the honey's stickiness!</p>
 <p>&nbsp;</p>
 <p>-This shield can be enchanted with&nbsp;Unbreaking or Curse of the Vanishing. (Mending cannot be applied as that would make the shield way too overpowered at maximum durability)</p>
@@ -213,7 +210,23 @@
 <p>&nbsp;</p>
 <p>-Using a Glass Bottle on Honey Slime will give you a Honey Bottle but make the Honey Slime angry! They will regain their honey state over time but can be sped up by having them move over Honey, Filled Porous Honeycomb, Sticky Honey Residue, Sticky Honey Redstone, or Honeycomb Brood blocks.</p>
 <p>&nbsp;</p>
+<p>-When covered in honey, they can fall from higher heights and take no or reduced damage!</p>
+<p>&nbsp;</p>
 <p>-They can be lured with Sugar and fed it to breed with other Honey Slime mobs.</p>
+<p>&nbsp;</p>
+<p>-Using a Honey Block on vanilla's Slime mob that are small or medium sized will turn them into passive Honey Slimes! Making the Honey Slime available outside the Bumblezone dimension!</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<p><strong>Enchantments&nbsp;</strong>- 1 new enchantment</p>
+<div class="spoiler">
+<p><strong>&nbsp;Comb Cutter</strong></p>
+<div class="spoiler">
+<p>-Can be applied to Swords and Shears</p>
+<p>&nbsp;</p>
+<p>-Only 1 level but will make the tool mine all comb based blocks super fast! It will also mine wax, hive, and nest blocks slightly faster.</p>
+<p>&nbsp;</p>
+<p>-Can be used to double the Honeycomb output from Beehives and Bee Nests.</p>
 </div>
 </div>
 <p>&nbsp;</p>
@@ -221,9 +234,11 @@
 <div class="spoiler">
 <p>-Any arthropod mob without "bee" in the name, any pandas, and any bears will get a weak version of Wrath of the Hive and nearby Bees will attack them in The Bumblezone dimension.</p>
 <p>&nbsp;</p>
-<p>-Any mob damaging a bee in The Bumblezone dimension will get Wrath of the Hive effect and a bunch of angry bees coming after them.</p>
+<p>-Any mob or player damaging a bee in The Bumblezone dimension will get Wrath of the Hive effect and a bunch of angry bees coming after them.</p>
 <p>&nbsp;</p>
-<p>-Picking up Honey Blocks, drinking a Honey Bottle, taking honey from a Filled Porous Honeycomb Block, or taking honey from a Honeycomb Brood Block will give you Wrath of the Hive effect when in the dimension.</p>
+<p>-Picking up Honey Blocks, taking honey from a Filled Porous Honeycomb Block, or taking honey from a Honeycomb Brood Block will give you Wrath of the Hive effect when in the dimension.</p>
+<p>&nbsp;</p>
+<p>-Having Wrath of the Hive will turn the dimension's fog red, play&nbsp;Flight of the Bumblebee by Rimsky Korsakov, make nearby Honeycomb Brood Blocks grow and spawn bees much faster, and the dimension will spawn even more Bees a bit away from you to hunt you down! Grab your Bane of Arthropod sword!</p>
 <p>&nbsp;</p>
 <p>-Feeding angry bees a Sugar Water Bottle has a 7% of removing the Wrath of the Hive effect, heals the bee a bit, and calms nearby bees. Feeding the bee a Honey Bottle instead has a 30% chance of removing the effect and greatly heals the fed bee.</p>
 <p>&nbsp;</p>
@@ -245,13 +260,38 @@
 <p>-Honey Crystal Blocks will be scattered throughout the dimension either underwater or inside the caves. They are most common in Hive Wall biome and lest common in Sugar Water biome.</p>
 </div>
 <p>&nbsp;</p>
-<p><strong>MOD COMPATIBILITY&nbsp;</strong>- Interacts directly with 1 other mods!</p>
+<p><strong>MUSIC&nbsp;</strong>- 2 new songs</p>
 <div class="spoiler">
-<p>Potion of Bees -&nbsp;<a href="https://www.curseforge.com/minecraft/mc-mods/potion-of-bees-fabric">https://www.curseforge.com/minecraft/mc-mods/potion-of-bees-fabric</a></p>
+<p><strong> Honey Bee by Rat Faced Boy (also goes by AcidBurp and Gerald Tenderfly)</strong></p>
+<p><span style="font-size: 1.2rem;">-The music will play occasionally in the dimension. It's pretty cool!&nbsp;</span><span style="font-size: 1.2rem;">You can get a Music Disc of the song from Wandering Traders to play in Jukeboxes! But if you want to download the song, be sure to buy it from BandCamp here to support the </span>musician<span style="font-size: 1.2rem;">!&nbsp;<a href="https://acidburp.bandcamp.com/track/honey-bee">https://acidburp.bandcamp.com/track/honey-bee</a></span></p>
+<p>&nbsp;</p>
+<p><strong>Flight of the Bumblebee by Rimsky Korsakov</strong></p>
+<p>-When you get Wrath of the Hive, a midi version of this song will play! I gotten the public domain sheet music for it, ran it through Anvil Studio, and produced the song that you can hear when you are in DEEP trouble! A Music Disc for this song can also be obtained from Wandering Traders too.&nbsp;</p>
+</div>
+<p>&nbsp;</p>
+<p><strong>MOD COMPATIBILITY&nbsp;</strong>- Interacts directly with 2 other mods!</p>
+<div class="spoiler">
+<p><strong>Potion of Bees</strong> -&nbsp;<a href="https://www.curseforge.com/minecraft/mc-mods/potion-of-bees-fabric">https://www.curseforge.com/minecraft/mc-mods/potion-of-bees-fabric</a></p>
 <div class="spoiler">
 <p>-Their Potion of Bees item can be used to revive a Empty Honeycomb Brood Block into a stage 1, 2, or 3&nbsp;Honeycomb Brood Block by right clicking or using a Dispenser!</p>
 <p>&nbsp;</p>
 <p>-Their Splash Potion of Bees item can be thrown onto a Empty Honeycomb Brood Block to revive the block into a stage 1, 2, or 3&nbsp;Honeycomb Brood Block! If you have the splash potion in a Dispenser facing the block, it'll revive the block without bees going everywhere.</p>
+</div>
+<p>&nbsp;</p>
+<p><strong>Charm</strong> -&nbsp;<a href="https://www.curseforge.com/minecraft/mc-mods/charm">https://www.curseforge.com/minecraft/mc-mods/charm</a></p>
+<div class="spoiler">
+<p>-Bee Dungeons and Spider Infested Bee Dungeons will have Charm candles!</p>
+<p>&nbsp;</p>
+<p>-Many Bumblezone items are added to Charm's BeeKeeper villager too!</p>
+</div>
+<p>&nbsp;</p>
+<p><strong>Bee Better</strong> -&nbsp;<a href="https://www.curseforge.com/minecraft/mc-mods/bee-better">https://www.curseforge.com/minecraft/mc-mods/bee-better</a></p>
+<div class="spoiler">
+<p>-Their Beeswax Block will spawn in patches around sealevel and below in The Bumblezone!</p>
+<p>&nbsp;</p>
+<p>-Both Bee Dungeons and Spider Infested Bee Dungeons may have different colored candles. A great way to collect all the colors!</p>
+<p>&nbsp;</p>
+<p>-Bee Dungeons and Spider Infested Bee Dungeons will now spawn certain building blocks from Bee Better to help make them look less monotone.&nbsp;</p>
 </div>
 </div>
 <p>&nbsp;</p>
@@ -286,6 +326,5 @@
 <p style="color: #b76a00;"><strong>*If you find an issue, glitch, or have a suggestion about my mod, let me know! But if you don't have a GitHub account to report in the Issue tab above, just comment what the problem is below and I'll try and get back to you ASAP! :)&nbsp;</strong></p>
 <p>&nbsp;</p>
 <p><span style="font-size: 24px;"><strong>Discord Link for my channel about my mods! :&nbsp;</strong></span></p>
-<p><span style="font-size: 24px;"><strong><a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" style="font-size: 24px;" tabindex="0" title="https://discord.gg/4eHptfV" role="button" href="https://discord.gg/4eHptfV" target="_blank" rel="noopener noreferrer">https://discord.gg/4eHptfV</a></strong></span></p>
-<p><span style="font-size: 24px; color: #333399;"><strong>&nbsp;</strong></span></p>
-<p><span style="font-size: 24px;"><strong><a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" style="font-size: 24px;" tabindex="0" title="https://discord.gg/4eHptfV" role="button" href="https://discord.gg/4eHptfV" target="_blank" rel="noopener noreferrer"><img src="https://beeimg.com/images/g00282193071.png" alt="discord-logo-png-free-transparent-png-logos-discord-png-logo-300_300 (PNG)  | BeeIMG" width="67" height="67" /></a></strong></span></p>
+<p><span style="font-size: 24px;"><strong><a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" style="font-size: 24px;" tabindex="0" title="https://discord.gg/SM7WBT6FGu" role="button" href="https://discord.gg/SM7WBT6FGu" target="_blank" rel="noopener noreferrer">https://discord.gg/SM7WBT6FGu</a></strong></span></p>
+<p><span style="font-size: 24px;"><strong><a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" style="font-size: 24px;" tabindex="0" title="https://discord.gg/SM7WBT6FGu" role="button" href="https://discord.gg/SM7WBT6FGu" target="_blank" rel="noopener noreferrer"><img src="https://beeimg.com/images/g00282193071.png" alt="discord-logo-png-free-transparent-png-logos-discord-png-logo-300_300 (PNG)  | BeeIMG" width="67" height="67" /></a></strong></span></p>
