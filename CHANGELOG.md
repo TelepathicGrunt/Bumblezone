@@ -12,7 +12,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 # | Bumblezone changelog |
          
 
-   (V.2.3.0 Changes) (1.16.5 Minecraft)
+   (V.2.4.0 Changes) (1.16.5 Minecraft)
 
    Major:
 - Now requires 36.0.42 Forge or newer as I am now using EntityAttributeCreationEvent to register entity attributes.
