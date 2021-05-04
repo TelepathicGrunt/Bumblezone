@@ -26,6 +26,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
@@ -137,16 +138,18 @@ public class PlayerTeleportation {
 
             //check with offset in all direction as the position of exact hit point could barely be outside the hive block
             //even through the pearl hit the block directly.
-            for(double offset = -0.45D; offset <= 0.45D; offset += 0.9D) {
-                for(double offset2 = -0.45D; offset2 <= 0.45D; offset2 += 0.9D) {
-                    for (double offset3 = -0.45D; offset3 <= 0.45D; offset3 += 0.9D) {
-                        BlockPos offsettedHitPos = new BlockPos(hitBlockPos.add(offset, offset2, offset3));
+            for(double offsetX = -0.99D; offsetX <= 0.99D; offsetX += 0.99D) {
+                for(double offsetY = -0.99D; offsetY <= 0.99D; offsetY += 0.99D) {
+                    for (double offsetZ = -0.99D; offsetZ <= 0.99D; offsetZ += 0.99D) {
+                        BlockPos offsettedHitPos = new BlockPos(hitBlockPos.add(offsetX, offsetY, offsetZ));
                         BlockState block = world.getBlockState(offsettedHitPos);
                         if(isValidBeeHive(block)) {
                             hitHive = true;
                             hivePos = offsettedHitPos;
-                            offset = 1;
-                            offset2 = 1;
+
+                            // break out of all 3 loops
+                            offsetX = 1;
+                            offsetY = 1;
                             break;
                         }
                     }
