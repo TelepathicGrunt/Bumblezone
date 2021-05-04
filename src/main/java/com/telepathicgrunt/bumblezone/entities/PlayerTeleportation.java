@@ -123,9 +123,9 @@ public class PlayerTeleportation {
 
             //check with offset in all direction as the position of exact hit point could barely be outside the hive block
             //even through the pearl hit the block directly.
-            for(double offset = -0.45D; offset <= 0.45D; offset += 0.9D) {
-                for(double offset2 = -0.45D; offset2 <= 0.45D; offset2 += 0.9D) {
-                    for (double offset3 = -0.45D; offset3 <= 0.45D; offset3 += 0.9D) {
+            for(double offset = -0.99D; offset <= 0.99D; offset += 0.99D) {
+                for(double offset2 = -0.99D; offset2 <= 0.99D; offset2 += 0.99D) {
+                    for (double offset3 = -0.99D; offset3 <= 0.99D; offset3 += 0.99D) {
                         BlockPos offsettedHitPos = new BlockPos(hitBlockPos.add(offset, offset2, offset3));
                         BlockState block = world.getBlockState(offsettedHitPos);
                         if(isValidBeeHive(block)) {

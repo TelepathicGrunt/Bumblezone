@@ -8,6 +8,12 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
        | The Bumblezone Fabric changelog |
 
 
+   (V.2.4.2 Changes) (1.16.5 Minecraft)
+  
+   Teleportation:
+-  Fixed issue where Enderpearl impacting beehives may not always work due to the impact coordinates being heavily offset from the actual impact.
+
+
    (V.2.4.1 Changes) (1.16.5 Minecraft)
 
    Items:
