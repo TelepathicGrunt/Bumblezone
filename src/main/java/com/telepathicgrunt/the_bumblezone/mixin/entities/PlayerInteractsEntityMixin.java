@@ -19,7 +19,7 @@ public class PlayerInteractsEntityMixin {
     @Inject(method = "interactOn",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isEmpty()Z", ordinal = 1))
     private void onBeeFeeding(Entity entity, Hand hand, CallbackInfoReturnable<ActionResultType> cir) {
-        BeeInteractivity.beeFeeding(entity.world, ((PlayerEntity)(Object)this), hand, entity);
-        CreatingHoneySlime.createHoneySlime(entity.world, ((PlayerEntity)(Object)this), hand, entity);
+        BeeInteractivity.beeFeeding(entity.level, ((PlayerEntity)(Object)this), hand, entity);
+        CreatingHoneySlime.createHoneySlime(entity.level, ((PlayerEntity)(Object)this), hand, entity);
     }
 }

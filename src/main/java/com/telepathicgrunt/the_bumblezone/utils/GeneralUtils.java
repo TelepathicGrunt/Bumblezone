@@ -82,7 +82,7 @@ public class GeneralUtils {
     public static ItemStack dispenseStackProperly(IBlockSource source, ItemStack stack, IDispenseItemBehavior defaultDispenseBehavior) {
 
         if (defaultDispenseBehavior instanceof DefaultDispenseItemBehavior) {
-            return ((DefaultDispenseItemBehaviorInvoker) defaultDispenseBehavior).bz_invokeDispenseStack(source, stack);
+            return ((DefaultDispenseItemBehaviorInvoker) defaultDispenseBehavior).bz_invokeExecute(source, stack);
         }
         else {
             // Fallback to dispense as someone chose to make a custom class without dispenseStack.

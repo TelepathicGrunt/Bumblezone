@@ -20,24 +20,24 @@ public class FluidRender {
 
     public static void sugarWaterOverlay(RenderBlockOverlayEvent event)
     {
-        if (event.getPlayer().world.getBlockState(event.getBlockPos()).getBlock() == BzFluids.SUGAR_WATER_BLOCK.get())
+        if (event.getPlayer().level.getBlockState(event.getBlockPos()).getBlock() == BzFluids.SUGAR_WATER_BLOCK.get())
         {
             Minecraft minecraftIn = Minecraft.getInstance();
-            minecraftIn.getTextureManager().bindTexture(TEXTURE_UNDERWATER);
-            BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
+            minecraftIn.getTextureManager().bind(TEXTURE_UNDERWATER);
+            BufferBuilder bufferbuilder = Tessellator.getInstance().getBuilder();
             float f = event.getPlayer().getBrightness();
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
-            float f7 = -event.getPlayer().rotationYaw / 64.0F;
-            float f8 = event.getPlayer().rotationPitch / 64.0F;
-            Matrix4f matrix4f = event.getMatrixStack().getLast().getMatrix();
+            float f7 = -event.getPlayer().yRot / 64.0F;
+            float f8 = event.getPlayer().xRot / 64.0F;
+            Matrix4f matrix4f = event.getMatrixStack().last().pose();
             bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR_TEX);
-            bufferbuilder.pos(matrix4f, -1.0F, -1.0F, -0.5F).color(f, f, f, 0.42F).tex(4.0F + f7, 4.0F + f8).endVertex();
-            bufferbuilder.pos(matrix4f, 1.0F, -1.0F, -0.5F).color(f, f, f, 0.42F).tex(0.0F + f7, 4.0F + f8).endVertex();
-            bufferbuilder.pos(matrix4f, 1.0F, 1.0F, -0.5F).color(f, f, f, 0.42F).tex(0.0F + f7, 0.0F + f8).endVertex();
-            bufferbuilder.pos(matrix4f, -1.0F, 1.0F, -0.5F).color(f, f, f, 0.42F).tex(4.0F + f7, 0.0F + f8).endVertex();
-            bufferbuilder.finishDrawing();
-            WorldVertexBufferUploader.draw(bufferbuilder);
+            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).color(f, f, f, 0.42F).uv(4.0F + f7, 4.0F + f8).endVertex();
+            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).color(f, f, f, 0.42F).uv(0.0F + f7, 4.0F + f8).endVertex();
+            bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).color(f, f, f, 0.42F).uv(0.0F + f7, 0.0F + f8).endVertex();
+            bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).color(f, f, f, 0.42F).uv(4.0F + f7, 0.0F + f8).endVertex();
+            bufferbuilder.end();
+            WorldVertexBufferUploader.end(bufferbuilder);
             RenderSystem.disableBlend();
             event.setCanceled(true);
         }

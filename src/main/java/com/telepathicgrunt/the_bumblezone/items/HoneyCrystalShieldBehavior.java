@@ -22,19 +22,19 @@ public class HoneyCrystalShieldBehavior {
     public static boolean damageShieldFromExplosionAndFire(DamageSource source, PlayerEntity player) {
 
         // checks for explosion and player
-        if ((source.isExplosion() || source.isFireDamage())) {
-            if (player.getActiveItemStack().getItem() instanceof HoneyCrystalShield) {
+        if ((source.isExplosion() || source.isFire())) {
+            if (player.getUseItem().getItem() instanceof HoneyCrystalShield) {
 
-                if (source.isExplosion() && player.isActiveItemStackBlocking()) {
+                if (source.isExplosion() && player.isBlocking()) {
                     // damage our shield greatly and 1 damage hit player to show shield weakness
-                    player.attackEntityFrom(DamageSource.GENERIC, 1);
-                    ((PlayerDamageShieldInvoker) player).bz_callDamagedShield(Math.max(player.getActiveItemStack().getMaxDamage() / 3, 18));
-                } else if (source.isFireDamage()) {
+                    player.hurt(DamageSource.GENERIC, 1);
+                    ((PlayerDamageShieldInvoker) player).bz_callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 3, 18));
+                } else if (source.isFire()) {
                     if(source.isProjectile()){
-                        ((PlayerDamageShieldInvoker) player).bz_callDamagedShield(Math.max(player.getActiveItemStack().getMaxDamage() / 6, 3));
+                        ((PlayerDamageShieldInvoker) player).bz_callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 6, 3));
                     }
                     else{
-                        ((PlayerDamageShieldInvoker) player).bz_callDamagedShield(Math.max(player.getActiveItemStack().getMaxDamage() / 100, 3));
+                        ((PlayerDamageShieldInvoker) player).bz_callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 100, 3));
                         return false; //continue the damaging
                     }
                 }
@@ -53,45 +53,45 @@ public class HoneyCrystalShieldBehavior {
 
         // checks for living attacker and player victim
         // and also ignores explosions or magic damage
-        if (source.getImmediateSource() instanceof LivingEntity &&
+        if (source.getDirectEntity() instanceof LivingEntity &&
                 !source.isExplosion() &&
-                !source.isMagicDamage()) {
+                !source.isMagic()) {
 
             // checks to see if player is blocking with our shield
-            LivingEntity attacker = (LivingEntity) source.getImmediateSource();
+            LivingEntity attacker = (LivingEntity) source.getDirectEntity();
 
-            if (player.getActiveItemStack().getItem() instanceof HoneyCrystalShield
-                    && player.isActiveItemStackBlocking()) {
+            if (player.getUseItem().getItem() instanceof HoneyCrystalShield
+                    && player.isBlocking()) {
 
                 // apply slowness to attacker
-                attacker.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 80, 0, false, false, false));
+                attacker.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 80, 0, false, false, false));
             }
         }
     }
 
     public static void setShieldCooldown(PlayerEntity playerEntity, MobEntity mob){
-        float f = 0.25F + (float) EnchantmentHelper.getEfficiencyModifier(mob) * 0.05F;
-        if (mob.getRNG().nextFloat() < f) {
-            playerEntity.getCooldownTracker().setCooldown(BzItems.HONEY_CRYSTAL_SHIELD.get(), 100);
-            mob.world.setEntityState(playerEntity, (byte)30);
+        float f = 0.25F + (float) EnchantmentHelper.getBlockEfficiency(mob) * 0.05F;
+        if (mob.getRandom().nextFloat() < f) {
+            playerEntity.getCooldowns().addCooldown(BzItems.HONEY_CRYSTAL_SHIELD.get(), 100);
+            mob.level.broadcastEntityEvent(playerEntity, (byte)30);
         }
     }
 
     public static boolean damageHoneyCrystalShield(PlayerEntity player, float amount){
-        if(player.getActiveItemStack().getItem() == BzItems.HONEY_CRYSTAL_SHIELD.get()){
+        if(player.getUseItem().getItem() == BzItems.HONEY_CRYSTAL_SHIELD.get()){
             if (amount >= 3.0F) {
                 int damageToDo = 1 + MathHelper.floor(amount);
-                Hand hand = player.getActiveHand();
-                player.getActiveItemStack().damageItem(damageToDo, player, (playerEntity) -> playerEntity.sendBreakAnimation(hand));
-                if (player.getActiveItemStack().isEmpty()) {
+                Hand hand = player.getUsedItemHand();
+                player.getUseItem().hurtAndBreak(damageToDo, player, (playerEntity) -> playerEntity.broadcastBreakEvent(hand));
+                if (player.getUseItem().isEmpty()) {
                     if (hand == Hand.MAIN_HAND) {
-                        player.setItemStackToSlot(EquipmentSlotType.MAINHAND, ItemStack.EMPTY);
+                        player.setItemSlot(EquipmentSlotType.MAINHAND, ItemStack.EMPTY);
                     } else {
-                        player.setItemStackToSlot(EquipmentSlotType.OFFHAND, ItemStack.EMPTY);
+                        player.setItemSlot(EquipmentSlotType.OFFHAND, ItemStack.EMPTY);
                     }
 
-                    player.resetActiveHand();
-                    player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + player.world.rand.nextFloat() * 0.4F);
+                    player.stopUsingItem();
+                    player.playSound(SoundEvents.SHIELD_BREAK, 0.8F, 0.8F + player.level.random.nextFloat() * 0.4F);
                 }
             }
 
@@ -121,13 +121,13 @@ public class HoneyCrystalShieldBehavior {
     public static int setDamage(ItemStack stack, int damage) {
         if (stack.hasTag()) {
             int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
-            int damageCaused = stack.getDamage() - damage;
+            int damageCaused = stack.getDamageValue() - damage;
 
             // ignore anvil repairing
             if (damageCaused < 0 && repairLevel != 0) {
 
                 int reducedDamage = Math.min(-1, damageCaused + (repairLevel / 14));
-               return stack.getDamage() + (-reducedDamage);
+               return stack.getDamageValue() + (-reducedDamage);
             }
         }
 

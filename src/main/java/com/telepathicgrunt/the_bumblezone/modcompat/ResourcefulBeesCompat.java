@@ -101,11 +101,11 @@ public class ResourcefulBeesCompat {
 		});
 
 
-        for (Map.Entry<RegistryKey<Block>, Block> entry : Registry.BLOCK.getEntries()) {
-            ResourceLocation rl = entry.getKey().getLocation();
+        for (Map.Entry<RegistryKey<Block>, Block> entry : Registry.BLOCK.entrySet()) {
+            ResourceLocation rl = entry.getKey().location();
             if(rl.getNamespace().equals(RESOURCEFUL_BEES_NAMESPACE)){
                 if (rl.getPath().contains("honeycomb")) {
-                    RESOURCEFUL_HONEYCOMBS_MAP.put(entry.getKey().getLocation(), entry.getValue());
+                    RESOURCEFUL_HONEYCOMBS_MAP.put(entry.getKey().location(), entry.getValue());
                 }
                 else if(rl.getPath().contains("honey") && rl.getPath().contains("block") &&
                         !rl.getPath().contains("comb") && !rl.getPath().contains("fluid"))
@@ -190,13 +190,13 @@ public class ResourcefulBeesCompat {
         for (Biome biome : bumblezone_biomes) {
             // beeswax block
             if (Bumblezone.BzModCompatibilityConfig.RBBeesWaxWorldgen.get()) {
-                biome.getGenerationSettings().getFeatures().get(GenerationStage.Decoration.VEGETAL_DECORATION.ordinal()).add(() -> BzConfiguredFeatures.BZ_BEES_WAX_PILLAR_CONFIGURED_FEATURE);
+                biome.getGenerationSettings().features().get(GenerationStage.Decoration.VEGETAL_DECORATION.ordinal()).add(() -> BzConfiguredFeatures.BZ_BEES_WAX_PILLAR_CONFIGURED_FEATURE);
             }
 
             // add all the comb cfs that are registered
             for (Pair<Block, ConfiguredFeature<?, ?>> cf : RESOURCEFUL_BEES_CFS) {
                 if (!BZBlockTags.BLACKLISTED_RESOURCEFUL_COMBS.contains(cf.getFirst()))
-                    biome.getGenerationSettings().getFeatures().get(GenerationStage.Decoration.UNDERGROUND_ORES.ordinal()).add(cf::getSecond);
+                    biome.getGenerationSettings().features().get(GenerationStage.Decoration.UNDERGROUND_ORES.ordinal()).add(cf::getSecond);
             }
         }
 
@@ -220,10 +220,10 @@ public class ResourcefulBeesCompat {
             idOffset++;
         }
 
-        ConfiguredFeature<?, ?> cf = Feature.ORE.withConfiguration(new OreFeatureConfig(HONEYCOMB_BUMBLEZONE, honeycomb.getDefaultState(), veinSize))
-                .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(bottomOffset, 0, range)))
-                .square()
-                .func_242731_b(count);
+        ConfiguredFeature<?, ?> cf = Feature.ORE.configured(new OreFeatureConfig(HONEYCOMB_BUMBLEZONE, honeycomb.defaultBlockState(), veinSize))
+                .decorated(Placement.RANGE.configured(new TopSolidRangeConfig(bottomOffset, 0, range)))
+                .squared()
+                .count(count);
 
         Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(cfRL + idOffset), cf);
         RESOURCEFUL_BEES_CFS.add(Pair.of(honeycomb, cf));
@@ -252,7 +252,7 @@ public class ResourcefulBeesCompat {
      */
     public static boolean RBIsApairyBlock(BlockState block) {
 
-        return (block.getBlock() instanceof ApiaryBlock && block.get(ApiaryBlock.VALIDATED)) ||
+        return (block.getBlock() instanceof ApiaryBlock && block.getValue(ApiaryBlock.VALIDATED)) ||
                 block.getBlock() instanceof ApiaryBreederBlock ||
                 block.getBlock() instanceof ApiaryStorageBlock; // apairy boxes only count as beenest when they are validated
     }
@@ -261,14 +261,14 @@ public class ResourcefulBeesCompat {
      * get bees wax block
      */
     public static BlockState getRBBeesWaxBlock() {
-        return ModBlocks.WAX_BLOCK.get().getDefaultState();
+        return ModBlocks.WAX_BLOCK.get().defaultBlockState();
     }
 
     /**
      * get either honey block from resourceful bees block
      */
     public static BlockState getRBHoneyBlock(Random random) {
-        return HONEY_BLOCKS.get(random.nextInt(random.nextInt(HONEY_BLOCKS.size()) + 1)).getDefaultState();
+        return HONEY_BLOCKS.get(random.nextInt(random.nextInt(HONEY_BLOCKS.size()) + 1)).defaultBlockState();
     }
 
     /**
@@ -295,26 +295,26 @@ public class ResourcefulBeesCompat {
         IServerWorld world = (IServerWorld) event.getWorld();
 
         // randomly pick a Resourceful bee (the nbt determines the bee)
-        MobEntity resourcefulBeeEntity = (MobEntity) RESOURCEFUL_BEES_LIST.get(world.getRandom().nextInt(RESOURCEFUL_BEES_LIST.size())).create(entity.world);
+        MobEntity resourcefulBeeEntity = (MobEntity) RESOURCEFUL_BEES_LIST.get(world.getRandom().nextInt(RESOURCEFUL_BEES_LIST.size())).create(entity.level);
         if (resourcefulBeeEntity == null) return;
 
-        resourcefulBeeEntity.setChild(isChild);
-        BlockPos.Mutable blockpos = new BlockPos.Mutable().setPos(entity.getPosition());
-        resourcefulBeeEntity.setLocationAndAngles(
+        resourcefulBeeEntity.setBaby(isChild);
+        BlockPos.Mutable blockpos = new BlockPos.Mutable().set(entity.blockPosition());
+        resourcefulBeeEntity.moveTo(
                 blockpos.getX() + 0.5f,
                 blockpos.getY() + 0.5f,
                 blockpos.getZ() + 0.5f,
                 world.getRandom().nextFloat() * 360.0F,
                 0.0F);
 
-        resourcefulBeeEntity.onInitialSpawn(
+        resourcefulBeeEntity.finalizeSpawn(
                 world,
-                world.getDifficultyForLocation(resourcefulBeeEntity.getPosition()),
+                world.getCurrentDifficultyAt(resourcefulBeeEntity.blockPosition()),
                 event.getSpawnReason(),
                 null,
                 null);
 
-        world.addEntity(resourcefulBeeEntity);
+        world.addFreshEntity(resourcefulBeeEntity);
     }
 
 
@@ -324,9 +324,9 @@ public class ResourcefulBeesCompat {
      */
     public static BlockState RBGetSpiderHoneycomb(Random random) {
         if (SPIDER_DUNGEON_HONEYCOMBS.size() == 0) {
-            return Blocks.HONEYCOMB_BLOCK.getDefaultState();
+            return Blocks.HONEYCOMB_BLOCK.defaultBlockState();
         } else {
-            return SPIDER_DUNGEON_HONEYCOMBS.get(random.nextInt(random.nextInt(SPIDER_DUNGEON_HONEYCOMBS.size()) + 1)).getDefaultState();
+            return SPIDER_DUNGEON_HONEYCOMBS.get(random.nextInt(random.nextInt(SPIDER_DUNGEON_HONEYCOMBS.size()) + 1)).defaultBlockState();
         }
     }
 
@@ -336,7 +336,7 @@ public class ResourcefulBeesCompat {
      */
     public static BlockState RBGetRandomHoneycomb(Random random, int lowerBoundBias) {
         if (ORE_BASED_HONEYCOMB_VARIANTS.size() == 0) {
-            return Blocks.HONEYCOMB_BLOCK.getDefaultState();
+            return Blocks.HONEYCOMB_BLOCK.defaultBlockState();
         } else {
             int index = ORE_BASED_HONEYCOMB_VARIANTS.size() - 1;
 
@@ -344,7 +344,7 @@ public class ResourcefulBeesCompat {
                 index = random.nextInt(index + 1);
             }
 
-            return ORE_BASED_HONEYCOMB_VARIANTS.get(index).getDefaultState();
+            return ORE_BASED_HONEYCOMB_VARIANTS.get(index).defaultBlockState();
         }
     }
 

@@ -16,35 +16,35 @@ import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 
 public class BzConfiguredFeatures {
-    private static final LiquidsConfig SUGAR_WATER_SPRING_CONFIG = new LiquidsConfig(BzFluids.SUGAR_WATER_FLUID.get().getDefaultState(), true, 4, 1, ImmutableSet.of(Blocks.HONEY_BLOCK, Blocks.HONEYCOMB_BLOCK));
-    public static final ConfiguredFeature<?, ?> SUGAR_WATERFALL_HIGH = Feature.SPRING_FEATURE.withConfiguration(SUGAR_WATER_SPRING_CONFIG).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(128, 0, 128)).square().func_242731_b(1));
-    public static final ConfiguredFeature<?, ?> SUGAR_WATERFALL_LOW = Feature.SPRING_FEATURE.withConfiguration(SUGAR_WATER_SPRING_CONFIG).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(128, 40, 72)).square().func_242731_b(3));
-    public static final ConfiguredFeature<?, ?> SUGAR_WATERFALL_FULL_RANGE = Feature.SPRING_FEATURE.withConfiguration(SUGAR_WATER_SPRING_CONFIG).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(40, 0, 128)).square().func_242731_b(1));
-    public static final ConfiguredFeature<?, ?> HONEYCOMB_CAVES = BzFeatures.HONEYCOMB_CAVES.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG));
-    public static final ConfiguredFeature<?, ?> HONEYCOMB_HOLE = BzFeatures.HONEYCOMB_HOLE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(BzPlacements.HONEYCOMB_HOLE_PLACER.get().configure(IPlacementConfig.NO_PLACEMENT_CONFIG));
-    public static final ConfiguredFeature<?, ?> HONEY_CRYSTALS_COMMON = BzFeatures.HONEY_CRYSTAL_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.get().configure(new FeatureSpreadConfig(4)));
-    public static final ConfiguredFeature<?, ?> HONEY_CRYSTALS_UNCOMMON = BzFeatures.HONEY_CRYSTAL_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.get().configure(new FeatureSpreadConfig(2)));
-    public static final ConfiguredFeature<?, ?> HONEY_CRYSTALS_RARE = BzFeatures.HONEY_CRYSTAL_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.get().configure(new FeatureSpreadConfig(1)));
-    public static final ConfiguredFeature<?, ?> CAVE_SUGAR_WATERFALL = BzFeatures.CAVE_SUGAR_WATERFALL.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(8, 0, 248)).square().func_242731_b(75));
-    public static ConfiguredFeature<?, ?> BZ_BEES_WAX_PILLAR_CONFIGURED_FEATURE = BzFeatures.BZ_BEES_WAX_PILLAR_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(256).square().func_242731_b(30);
+    private static final LiquidsConfig SUGAR_WATER_SPRING_CONFIG = new LiquidsConfig(BzFluids.SUGAR_WATER_FLUID.get().defaultFluidState(), true, 4, 1, ImmutableSet.of(Blocks.HONEY_BLOCK, Blocks.HONEYCOMB_BLOCK));
+    public static final ConfiguredFeature<?, ?> SUGAR_WATERFALL_HIGH = Feature.SPRING.configured(SUGAR_WATER_SPRING_CONFIG).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(128, 0, 128)).squared().count(1));
+    public static final ConfiguredFeature<?, ?> SUGAR_WATERFALL_LOW = Feature.SPRING.configured(SUGAR_WATER_SPRING_CONFIG).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(128, 40, 72)).squared().count(3));
+    public static final ConfiguredFeature<?, ?> SUGAR_WATERFALL_FULL_RANGE = Feature.SPRING.configured(SUGAR_WATER_SPRING_CONFIG).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(40, 0, 128)).squared().count(1));
+    public static final ConfiguredFeature<?, ?> HONEYCOMB_CAVES = BzFeatures.HONEYCOMB_CAVES.get().configured(IFeatureConfig.NONE).decorated(Placement.NOPE.configured(IPlacementConfig.NONE));
+    public static final ConfiguredFeature<?, ?> HONEYCOMB_HOLE = BzFeatures.HONEYCOMB_HOLE.get().configured(IFeatureConfig.NONE).decorated(BzPlacements.HONEYCOMB_HOLE_PLACER.get().configured(IPlacementConfig.NONE));
+    public static final ConfiguredFeature<?, ?> HONEY_CRYSTALS_COMMON = BzFeatures.HONEY_CRYSTAL_FEATURE.get().configured(IFeatureConfig.NONE).decorated(BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.get().configured(new FeatureSpreadConfig(4)));
+    public static final ConfiguredFeature<?, ?> HONEY_CRYSTALS_UNCOMMON = BzFeatures.HONEY_CRYSTAL_FEATURE.get().configured(IFeatureConfig.NONE).decorated(BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.get().configured(new FeatureSpreadConfig(2)));
+    public static final ConfiguredFeature<?, ?> HONEY_CRYSTALS_RARE = BzFeatures.HONEY_CRYSTAL_FEATURE.get().configured(IFeatureConfig.NONE).decorated(BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.get().configured(new FeatureSpreadConfig(1)));
+    public static final ConfiguredFeature<?, ?> CAVE_SUGAR_WATERFALL = BzFeatures.CAVE_SUGAR_WATERFALL.get().configured(IFeatureConfig.NONE).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(8, 0, 248)).squared().count(75));
+    public static ConfiguredFeature<?, ?> BZ_BEES_WAX_PILLAR_CONFIGURED_FEATURE = BzFeatures.BZ_BEES_WAX_PILLAR_FEATURE.get().configured(IFeatureConfig.NONE).range(256).squared().count(30);
 
-    public static final ConfiguredFeature<?, ?> BEE_DUNGEON = BzFeatures.BEE_DUNGEON.get().withConfiguration(
+    public static final ConfiguredFeature<?, ?> BEE_DUNGEON = BzFeatures.BEE_DUNGEON.get().configured(
             new NbtFeatureConfig(
                     new ResourceLocation(Bumblezone.MODID, "bee_dungeon_processors"),
                     new ResourceLocation("empty"),
                     ImmutableList.of(Pair.of(EntityType.BEE, 1)),
                     ImmutableList.of(Pair.of(new ResourceLocation(Bumblezone.MODID, "bee_dungeon"), 1)),
                     -4
-            )).withPlacement(BzPlacements.BEE_DUNGEON_PLACER.get().configure(IPlacementConfig.NO_PLACEMENT_CONFIG));
+            )).decorated(BzPlacements.BEE_DUNGEON_PLACER.get().configured(IPlacementConfig.NONE));
 
-    public static final ConfiguredFeature<?, ?> SPIDER_INFESTED_BEE_DUNGEON = BzFeatures.SPIDER_INFESTED_BEE_DUNGEON.get().withConfiguration(
+    public static final ConfiguredFeature<?, ?> SPIDER_INFESTED_BEE_DUNGEON = BzFeatures.SPIDER_INFESTED_BEE_DUNGEON.get().configured(
             new NbtFeatureConfig(
                     new ResourceLocation(Bumblezone.MODID, "spider_infested_bee_dungeon_processors"),
                     new ResourceLocation("empty"),
                     ImmutableList.of(Pair.of(EntityType.BEE, 1)),
                     ImmutableList.of(Pair.of(new ResourceLocation(Bumblezone.MODID, "bee_dungeon"), 1)),
                     -4
-            )).withPlacement(BzPlacements.BEE_DUNGEON_PLACER.get().configure(IPlacementConfig.NO_PLACEMENT_CONFIG));
+            )).decorated(BzPlacements.BEE_DUNGEON_PLACER.get().configured(IPlacementConfig.NONE));
 
     public static void registerConfiguredFeatures() {
         Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;

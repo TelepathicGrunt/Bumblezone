@@ -33,14 +33,14 @@ public class ReplaceNotAirProcessor extends StructureProcessor {
     }
 
     @Override
-    public Template.BlockInfo func_230386_a_(IWorldReader worldView, BlockPos pos, BlockPos blockPos, Template.BlockInfo structureBlockInfoLocal, Template.BlockInfo structureBlockInfoWorld, PlacementSettings structurePlacementData) {
+    public Template.BlockInfo processBlock(IWorldReader worldView, BlockPos pos, BlockPos blockPos, Template.BlockInfo structureBlockInfoLocal, Template.BlockInfo structureBlockInfoWorld, PlacementSettings structurePlacementData) {
 
         if(!blocksToAlwaysPlace.contains(structureBlockInfoWorld.state)){
             BlockPos position = structureBlockInfoWorld.pos;
             BlockState worldState = worldView.getBlockState(position);
 
             if (worldState.isAir()&&
-                !structureBlockInfoWorld.state.getBlock().isTileEntityProvider())
+                !structureBlockInfoWorld.state.getBlock().isEntityBlock())
             {
                 structureBlockInfoWorld = new Template.BlockInfo(structureBlockInfoWorld.pos, worldState, null);
             }

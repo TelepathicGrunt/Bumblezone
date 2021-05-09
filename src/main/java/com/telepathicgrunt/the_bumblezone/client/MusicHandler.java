@@ -17,18 +17,18 @@ public class MusicHandler {
     // CLIENT-SIDED
     public static void playAngryBeeMusic(PlayerEntity entity){
         Minecraft minecraftClient = Minecraft.getInstance();
-        if(!entity.isCreative() && entity == minecraftClient.player && !minecraftClient.getSoundHandler().isPlaying(ANGRY_BEE_MUSIC)){
-            ANGRY_BEE_MUSIC = SimpleSound.music(BzSounds.ANGERED_BEES.get());
-            minecraftClient.getSoundHandler().play(ANGRY_BEE_MUSIC);
+        if(!entity.isCreative() && entity == minecraftClient.player && !minecraftClient.getSoundManager().isActive(ANGRY_BEE_MUSIC)){
+            ANGRY_BEE_MUSIC = SimpleSound.forMusic(BzSounds.ANGERED_BEES.get());
+            minecraftClient.getSoundManager().play(ANGRY_BEE_MUSIC);
         }
-        minecraftClient.getSoundHandler().stop(BIOME_MUSIC, SoundCategory.MUSIC);
+        minecraftClient.getSoundManager().stop(BIOME_MUSIC, SoundCategory.MUSIC);
     }
 
     // CLIENT-SIDED
     public static void stopAngryBeeMusic(PlayerEntity entity){
         Minecraft minecraftClient = Minecraft.getInstance();
         if(entity == minecraftClient.player && ANGRY_BEE_MUSIC != null){
-            minecraftClient.getSoundHandler().stop(ANGRY_BEE_MUSIC);
+            minecraftClient.getSoundManager().stop(ANGRY_BEE_MUSIC);
         }
     }
 }

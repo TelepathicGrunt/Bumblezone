@@ -13,6 +13,6 @@ public class HoneyShieldDisableMixin {
     @Inject(method = "disableShield",
             at = @At(value = "HEAD", target = "Lnet/minecraft/entity/player/PlayerEntity;getItemCooldownManager()Lnet/minecraft/entity/player/ItemCooldownManager;"))
     private void isHoneyCrystalShield(boolean sprinting, CallbackInfo ci) {
-        ((PlayerEntity)(Object)this).getCooldownTracker().setCooldown(Items.SHIELD, 100);
+        ((PlayerEntity)(Object)this).getCooldowns().addCooldown(Items.SHIELD, 100);
     }
 }

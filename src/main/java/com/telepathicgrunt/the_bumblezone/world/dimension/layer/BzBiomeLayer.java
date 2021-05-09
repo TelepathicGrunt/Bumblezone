@@ -17,8 +17,8 @@ public enum BzBiomeLayer implements IAreaTransformer0 {
 //	private double min = 100;
 
 
-    public int apply(INoiseRandom noise, int x, int z) {
-        double perlinNoise = perlinGen.noiseAt((double) x * 0.1D, (double) z * 0.0001D, false);
+    public int applyPixel(INoiseRandom noise, int x, int z) {
+        double perlinNoise = perlinGen.getValue((double) x * 0.1D, (double) z * 0.0001D, false);
 //
 //		max = Math.max(max, perlinNoise);
 //		min = Math.min(min, perlinNoise);
@@ -26,11 +26,11 @@ public enum BzBiomeLayer implements IAreaTransformer0 {
 
         if (Math.abs(perlinNoise) % 0.1D < 0.07D) {
             return BzBiomeProvider.LAYERS_BIOME_REGISTRY.getId(
-                    BzBiomeProvider.LAYERS_BIOME_REGISTRY.getOrDefault(BzBiomeProvider.HIVE_WALL));
+                    BzBiomeProvider.LAYERS_BIOME_REGISTRY.get(BzBiomeProvider.HIVE_WALL));
         }
         else {
             return BzBiomeProvider.LAYERS_BIOME_REGISTRY.getId(
-                    BzBiomeProvider.LAYERS_BIOME_REGISTRY.getOrDefault(BzBiomeProvider.SUGAR_WATER_FLOOR));
+                    BzBiomeProvider.LAYERS_BIOME_REGISTRY.get(BzBiomeProvider.SUGAR_WATER_FLOOR));
         }
     }
 

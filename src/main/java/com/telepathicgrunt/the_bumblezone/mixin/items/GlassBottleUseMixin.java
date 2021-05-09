@@ -21,12 +21,12 @@ import java.util.List;
 @Mixin(GlassBottleItem.class)
 public class GlassBottleUseMixin {
     //using glass bottle to get honey could anger bees
-    @Inject(method = "onItemRightClick(Lnet/minecraft/world/World;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;",
+    @Inject(method = "use(Lnet/minecraft/world/World;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;playSound(Lnet/minecraft/entity/player/PlayerEntity;DDDLnet/minecraft/util/SoundEvent;Lnet/minecraft/util/SoundCategory;FF)V", ordinal = 1),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
     private void bottleFluidInteract(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<ActionResult<ItemStack>> cir, List<AreaEffectCloudEntity> list, ItemStack itemStack, RayTraceResult hitResult, BlockPos blockPos) {
         if (ObtainSugarWaterBottle.useBottleOnSugarWater(world, user, hand, blockPos))
-            cir.setReturnValue(ActionResult.resultSuccess(user.getHeldItem(hand)));
+            cir.setReturnValue(ActionResult.success(user.getItemInHand(hand)));
     }
 }

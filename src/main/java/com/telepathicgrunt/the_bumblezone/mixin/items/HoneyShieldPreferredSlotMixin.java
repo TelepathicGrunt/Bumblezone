@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(MobEntity.class)
 public class HoneyShieldPreferredSlotMixin {
 
-    @Inject(method = "getSlotForItemStack",
+    @Inject(method = "getEquipmentSlotForItem",
             at = @At(value = "HEAD"),
             cancellable = true)
     private static void isHoneyCrystalShield(ItemStack stack, CallbackInfoReturnable<EquipmentSlotType> cir) {

@@ -28,9 +28,9 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
 //    private static final BlockState HONEYCOMB_BLOCK = Blocks.HONEYCOMB_BLOCK.getDefaultState();
 
 
-    public void buildSurface(Random random, IChunk chunkIn, Biome biomeIn, int x, int z, int startHeight, double noise, BlockState defaultBlock, BlockState defaultFluid, int seaLevel, long seed, SurfaceBuilderConfig config) {
+    public void apply(Random random, IChunk chunkIn, Biome biomeIn, int x, int z, int startHeight, double noise, BlockState defaultBlock, BlockState defaultFluid, int seaLevel, long seed, SurfaceBuilderConfig config) {
         //creates the default surface normally
-        SurfaceBuilder.DEFAULT.buildSurface(random, chunkIn, biomeIn, x, z, startHeight, noise, defaultBlock, defaultFluid, seaLevel, seed, config);
+        SurfaceBuilder.DEFAULT.apply(random, chunkIn, biomeIn, x, z, startHeight, noise, defaultBlock, defaultFluid, seaLevel, seed, config);
 
         int xpos = x & 15;
         int zpos = z & 15;
@@ -40,7 +40,7 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
 
         // Adds underwater surface blocks and modded surface blocks dynamically that default surface builder cant do.
         for (int ypos = startHeight; ypos >= 0; --ypos) {
-            blockpos$Mutable.setPos(xpos, ypos, zpos);
+            blockpos$Mutable.set(xpos, ypos, zpos);
             BlockState currentBlockState = chunkIn.getBlockState(blockpos$Mutable);
 
             if (currentBlockState.getMaterial() != Material.AIR && currentBlockState.getFluidState().isEmpty()) {
@@ -53,8 +53,8 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
                     {
                         chunkIn.setBlockState(blockpos$Mutable, ResourcefulBeesRedirection.getRBBeesWaxBlock(), false);
                     }
-                    else if (currentBlockState == config.getTop() || currentBlockState == config.getUnder()) {
-                        chunkIn.setBlockState(blockpos$Mutable, config.getUnderWaterMaterial(), false);
+                    else if (currentBlockState == config.getTopMaterial() || currentBlockState == config.getUnderMaterial()) {
+                        chunkIn.setBlockState(blockpos$Mutable, config.getUnderwaterMaterial(), false);
                     }
                 }
                 else if(ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.crystallizedHoneyWorldgen.get() &&

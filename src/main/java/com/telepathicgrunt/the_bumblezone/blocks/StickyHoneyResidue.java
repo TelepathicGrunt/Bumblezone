@@ -37,26 +37,26 @@ import java.util.Map;
 
 public class StickyHoneyResidue extends VineBlock {
     public static final BooleanProperty DOWN = SixWayBlock.DOWN;
-    protected static final VoxelShape DOWN_AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 0.8D, 16.0D);
+    protected static final VoxelShape DOWN_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 0.8D, 16.0D);
     public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP =
-            SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet().stream().collect(Util.toMapCollector());
+            SixWayBlock.PROPERTY_BY_DIRECTION.entrySet().stream().collect(Util.toMap());
 
     public StickyHoneyResidue() {
-        super(Block.Properties.create(BzBlocks.RESIDUE, MaterialColor.ADOBE).doesNotBlockMovement().hardnessAndResistance(6.0f, 0.0f).notSolid());
-        this.setDefaultState(this.stateContainer.getBaseState()
-                .with(UP, false)
-                .with(NORTH, false)
-                .with(EAST, false)
-                .with(SOUTH, false)
-                .with(WEST, false)
-                .with(DOWN, false));
+        super(AbstractBlock.Properties.of(BzBlocks.RESIDUE, MaterialColor.COLOR_ORANGE).noCollission().strength(6.0f, 0.0f).noOcclusion());
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(UP, false)
+                .setValue(NORTH, false)
+                .setValue(EAST, false)
+                .setValue(SOUTH, false)
+                .setValue(WEST, false)
+                .setValue(DOWN, false));
     }
 
     /**
      * Set up properties.
      */
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(UP, NORTH, EAST, SOUTH, WEST, DOWN);
     }
 
@@ -66,27 +66,27 @@ public class StickyHoneyResidue extends VineBlock {
     @Override
     public VoxelShape getShape(BlockState blockstate, IBlockReader world, BlockPos pos, ISelectionContext context) {
         VoxelShape voxelshape = VoxelShapes.empty();
-        if (blockstate.get(UP)) {
+        if (blockstate.getValue(UP)) {
             voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.bz_getUP_SHAPE());
         }
 
-        if (blockstate.get(SOUTH)) {
+        if (blockstate.getValue(SOUTH)) {
             voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.bz_getNORTH_SHAPE());
         }
 
-        if (blockstate.get(WEST)) {
+        if (blockstate.getValue(WEST)) {
             voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.bz_getEAST_SHAPE());
         }
 
-        if (blockstate.get(NORTH)) {
+        if (blockstate.getValue(NORTH)) {
             voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.bz_getSOUTH_SHAPE());
         }
 
-        if (blockstate.get(EAST)) {
+        if (blockstate.getValue(EAST)) {
             voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.bz_getWEST_SHAPE());
         }
 
-        if (blockstate.get(DOWN)) {
+        if (blockstate.getValue(DOWN)) {
             voxelshape = VoxelShapes.or(voxelshape, DOWN_AABB);
         }
 
@@ -99,13 +99,13 @@ public class StickyHoneyResidue extends VineBlock {
      */
     @Deprecated
     @Override
-    public void onEntityCollision(BlockState blockstate, World world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState blockstate, World world, BlockPos pos, Entity entity) {
 
-        AxisAlignedBB axisalignedbb = getShape(blockstate, world, pos, null).getBoundingBox().offset(pos);
-        List<? extends Entity> list = world.getLoadedEntitiesWithinAABB(LivingEntity.class, axisalignedbb);
+        AxisAlignedBB axisalignedbb = getShape(blockstate, world, pos, null).bounds().move(pos);
+        List<? extends Entity> list = world.getLoadedEntitiesOfClass(LivingEntity.class, axisalignedbb);
 
         if (list.contains(entity)) {
-            entity.setMotionMultiplier(blockstate, new Vector3d(0.35D, 0.2F, 0.35D));
+            entity.makeStuckInBlock(blockstate, new Vector3d(0.35D, 0.2F, 0.35D));
         }
     }
 
@@ -113,7 +113,7 @@ public class StickyHoneyResidue extends VineBlock {
      * Is spot valid (has at least 1 face possible).
      */
     @Override
-    public boolean isValidPosition(BlockState blockstate, IWorldReader world, BlockPos pos) {
+    public boolean canSurvive(BlockState blockstate, IWorldReader world, BlockPos pos) {
         return this.hasAtleastOneAttachment(this.setAttachments(blockstate, world, pos));
     }
 
@@ -131,7 +131,7 @@ public class StickyHoneyResidue extends VineBlock {
         int i = 0;
 
         for (BooleanProperty booleanproperty : FACING_TO_PROPERTY_MAP.values()) {
-            if (blockstate.get(booleanproperty)) {
+            if (blockstate.getValue(booleanproperty)) {
                 ++i;
             }
         }
@@ -146,9 +146,9 @@ public class StickyHoneyResidue extends VineBlock {
 
         for (Direction direction : Direction.values()) {
             BooleanProperty booleanproperty = FACING_TO_PROPERTY_MAP.get(direction);
-            if (blockstate.get(booleanproperty)) {
-                boolean flag = canAttachTo(blockReader, pos.offset(direction), direction);
-                blockstate = blockstate.with(booleanproperty, flag);
+            if (blockstate.getValue(booleanproperty)) {
+                boolean flag = isAcceptableNeighbour(blockReader, pos.relative(direction), direction);
+                blockstate = blockstate.setValue(booleanproperty, flag);
             }
         }
 
@@ -160,15 +160,15 @@ public class StickyHoneyResidue extends VineBlock {
      */
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        BlockState currentBlockstate = context.getWorld().getBlockState(context.getPos());
+        BlockState currentBlockstate = context.getLevel().getBlockState(context.getClickedPos());
         boolean isSameBlock = currentBlockstate.getBlock() == this;
-        BlockState newBlockstate = isSameBlock ? currentBlockstate : this.getDefaultState();
+        BlockState newBlockstate = isSameBlock ? currentBlockstate : this.defaultBlockState();
 
         for (Direction direction : context.getNearestLookingDirections()) {
             BooleanProperty booleanproperty = FACING_TO_PROPERTY_MAP.get(direction);
-            boolean faceIsAlreadyTrue = isSameBlock && currentBlockstate.get(booleanproperty);
-            if (!faceIsAlreadyTrue && VineBlock.canAttachTo(context.getWorld(), context.getPos().offset(direction), direction)) {
-                return newBlockstate.with(booleanproperty, true);
+            boolean faceIsAlreadyTrue = isSameBlock && currentBlockstate.getValue(booleanproperty);
+            if (!faceIsAlreadyTrue && VineBlock.isAcceptableNeighbour(context.getLevel(), context.getClickedPos().relative(direction), direction)) {
+                return newBlockstate.setValue(booleanproperty, true);
             }
         }
 
@@ -179,16 +179,16 @@ public class StickyHoneyResidue extends VineBlock {
      * double check to make sure this block has at least one face and can attach.
      */
     @Override
-    public BlockState updatePostPlacement(BlockState blockstate, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState blockstate, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
         BlockState newBlockstate = this.setAttachments(blockstate, world, currentPos);
-        return !this.hasAtleastOneAttachment(newBlockstate) ? Blocks.AIR.getDefaultState() : newBlockstate;
+        return !this.hasAtleastOneAttachment(newBlockstate) ? Blocks.AIR.defaultBlockState() : newBlockstate;
     }
 
     /**
      * Destroyed by pistons.
      */
     @Override
-    public PushReaction getPushReaction(BlockState blockstate) {
+    public PushReaction getPistonPushReaction(BlockState blockstate) {
         return PushReaction.DESTROY;
     }
 
@@ -196,7 +196,7 @@ public class StickyHoneyResidue extends VineBlock {
      * tell redstone that this can be use with comparator
      */
     @Override
-    public boolean hasComparatorInputOverride(BlockState state) {
+    public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
@@ -204,7 +204,7 @@ public class StickyHoneyResidue extends VineBlock {
      * the power fed into comparator (1 - 4)
      */
     @Override
-    public int getComparatorInputOverride(BlockState blockstate, World world, BlockPos pos) {
+    public int getAnalogOutputSignal(BlockState blockstate, World world, BlockPos pos) {
         return numberOfAttachments(blockstate);
     }
 
@@ -213,7 +213,7 @@ public class StickyHoneyResidue extends VineBlock {
      * This block is full of holes and can let light through
      */
     @Override
-    public int getOpacity(BlockState state, IBlockReader world, BlockPos pos) {
+    public int getLightBlock(BlockState state, IBlockReader world, BlockPos pos) {
         return 1;
     }
 
@@ -222,23 +222,23 @@ public class StickyHoneyResidue extends VineBlock {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResultType onBlockActivated(BlockState blockstate, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
-        ItemStack itemstack = playerEntity.getHeldItem(playerHand);
+    public ActionResultType use(BlockState blockstate, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
+        ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
         if ((itemstack.getItem() instanceof BucketItem &&
-                ((BucketItem) itemstack.getItem()).getFluid().isIn(FluidTags.WATER)) ||
+                ((BucketItem) itemstack.getItem()).getFluid().is(FluidTags.WATER)) ||
                 itemstack.getOrCreateTag().getString("Potion").contains("water") ||
                 itemstack.getItem() == Items.WET_SPONGE ||
                 itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
 
             world.destroyBlock(position, false);
 
-            world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(),
-                    SoundEvents.ENTITY_PHANTOM_SWOOP, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
+                    SoundEvents.PHANTOM_SWOOP, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
             if (world instanceof ServerWorld) {
-                if (blockstate.get(UP)) {
-                    ((ServerWorld) world).spawnParticle(
+                if (blockstate.getValue(UP)) {
+                    ((ServerWorld) world).sendParticles(
                             (ServerPlayerEntity) playerEntity,
                             ParticleTypes.FALLING_WATER,
                             true,
@@ -252,8 +252,8 @@ public class StickyHoneyResidue extends VineBlock {
                             1);
                 }
 
-                if (blockstate.get(NORTH)) {
-                    ((ServerWorld) world).spawnParticle(
+                if (blockstate.getValue(NORTH)) {
+                    ((ServerWorld) world).sendParticles(
                             (ServerPlayerEntity) playerEntity,
                             ParticleTypes.FALLING_WATER,
                             true,
@@ -267,8 +267,8 @@ public class StickyHoneyResidue extends VineBlock {
                             1);
                 }
 
-                if (blockstate.get(EAST)) {
-                    ((ServerWorld) world).spawnParticle(
+                if (blockstate.getValue(EAST)) {
+                    ((ServerWorld) world).sendParticles(
                             (ServerPlayerEntity) playerEntity,
                             ParticleTypes.FALLING_WATER,
                             true,
@@ -281,8 +281,8 @@ public class StickyHoneyResidue extends VineBlock {
                             1);
                 }
 
-                if (blockstate.get(SOUTH)) {
-                    ((ServerWorld) world).spawnParticle(
+                if (blockstate.getValue(SOUTH)) {
+                    ((ServerWorld) world).sendParticles(
                             (ServerPlayerEntity) playerEntity,
                             ParticleTypes.FALLING_WATER,
                             true,
@@ -296,8 +296,8 @@ public class StickyHoneyResidue extends VineBlock {
                             1);
                 }
 
-                if (blockstate.get(WEST)) {
-                    ((ServerWorld) world).spawnParticle(
+                if (blockstate.getValue(WEST)) {
+                    ((ServerWorld) world).sendParticles(
                             (ServerPlayerEntity) playerEntity,
                             ParticleTypes.FALLING_WATER,
                             true,
@@ -311,8 +311,8 @@ public class StickyHoneyResidue extends VineBlock {
                             1);
                 }
 
-                if (blockstate.get(DOWN)) {
-                    ((ServerWorld) world).spawnParticle(
+                if (blockstate.getValue(DOWN)) {
+                    ((ServerWorld) world).sendParticles(
                             (ServerPlayerEntity) playerEntity,
                             ParticleTypes.FALLING_WATER,
                             true,
@@ -330,7 +330,7 @@ public class StickyHoneyResidue extends VineBlock {
             return ActionResultType.SUCCESS;
         }
 
-        return super.onBlockActivated(blockstate, world, position, playerEntity, playerHand, raytraceResult);
+        return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);
     }
 
 }

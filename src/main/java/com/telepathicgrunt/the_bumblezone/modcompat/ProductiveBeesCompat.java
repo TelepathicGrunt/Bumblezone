@@ -48,10 +48,10 @@ public class ProductiveBeesCompat {
 	private static final List<Pair<Block, ConfiguredFeature<?,?>>> PRODUCTIVE_BEES_CFS = new ArrayList<>();
 
 	public static void setupProductiveBees() {
-		for(Map.Entry<RegistryKey<Block>, Block> entry : Registry.BLOCK.getEntries()){
-			ResourceLocation rl = entry.getKey().getLocation();
+		for(Map.Entry<RegistryKey<Block>, Block> entry : Registry.BLOCK.entrySet()){
+			ResourceLocation rl = entry.getKey().location();
 			if(rl.getNamespace().equals(PRODUCTIVE_BEES_NAMESPACE) && rl.getPath().contains("comb")){
-				PRODUCTIVE_BEES_HONEYCOMBS_MAP.put(entry.getKey().getLocation(), entry.getValue());
+				PRODUCTIVE_BEES_HONEYCOMBS_MAP.put(entry.getKey().location(), entry.getValue());
 			}
 		}
 		Set<Block> unusedHoneycombs = new HashSet<>(PRODUCTIVE_BEES_HONEYCOMBS_MAP.values());
@@ -197,7 +197,7 @@ public class ProductiveBeesCompat {
 			// We ignore the datapack combs as that's too much work to support tbh.
 			for (Pair<Block, ConfiguredFeature<?, ?>> cf : PRODUCTIVE_BEES_CFS) {
 				if (!BZBlockTags.BLACKLISTED_PRODUCTIVEBEES_COMBS.contains(cf.getFirst()))
-					biome.getGenerationSettings().getFeatures().get(GenerationStage.Decoration.UNDERGROUND_ORES.ordinal()).add(cf::getSecond);
+					biome.getGenerationSettings().features().get(GenerationStage.Decoration.UNDERGROUND_ORES.ordinal()).add(cf::getSecond);
 			}
 		}
 
@@ -229,10 +229,10 @@ public class ProductiveBeesCompat {
 			idOffset++;
 		}
 
-		ConfiguredFeature<?, ?> cf = Feature.ORE.withConfiguration(new OreFeatureConfig(HONEYCOMB_BUMBLEZONE, combBlock.getDefaultState(), veinSize))
-				.withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(bottomOffset, 0, range)))
-				.square()
-				.func_242731_b(count);
+		ConfiguredFeature<?, ?> cf = Feature.ORE.configured(new OreFeatureConfig(HONEYCOMB_BUMBLEZONE, combBlock.defaultBlockState(), veinSize))
+				.decorated(Placement.RANGE.configured(new TopSolidRangeConfig(bottomOffset, 0, range)))
+				.squared()
+				.count(count);
 
 		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(cfRL + idOffset), cf);
 		PRODUCTIVE_BEES_CFS.add(Pair.of(combBlock, cf));
@@ -248,10 +248,10 @@ public class ProductiveBeesCompat {
 	 */
 	public static boolean PBIsExpandedBeehiveBlock(BlockState block) {
 
-		if (block.getBlock() instanceof ExpansionBox && block.get(AdvancedBeehive.EXPANDED) != VerticalHive.NONE) {
+		if (block.getBlock() instanceof ExpansionBox && block.getValue(AdvancedBeehive.EXPANDED) != VerticalHive.NONE) {
 			return true; // expansion boxes only count as beenest when they expand a hive.
 		}
-		else if(BlockTags.getCollection().getTagByID(new ResourceLocation("productivebees:solitary_overworld_nests")).contains(block.getBlock())){
+		else if(BlockTags.getAllTags().getTagOrEmpty(new ResourceLocation("productivebees:solitary_overworld_nests")).contains(block.getBlock())){
 			// Solitary nests are technically AdvancedBeehiveAbstract and will pass the next check.
 			// But this is still done in case they do change that in the future to extend something else or something.
 			return true;
@@ -277,27 +277,27 @@ public class ProductiveBeesCompat {
 		IServerWorld world = (IServerWorld) event.getWorld();
 
 		// randomly pick a productive bee (the nbt determines the bee)
-		ConfigurableBeeEntity productiveBeeEntity = ModEntities.CONFIGURABLE_BEE.get().create(entity.world);
+		ConfigurableBeeEntity productiveBeeEntity = ModEntities.CONFIGURABLE_BEE.get().create(entity.level);
 		if(productiveBeeEntity == null) return;
 
-		BlockPos.Mutable blockpos = new BlockPos.Mutable().setPos(entity.getPosition());
-		productiveBeeEntity.setLocationAndAngles(
+		BlockPos.Mutable blockpos = new BlockPos.Mutable().set(entity.blockPosition());
+		productiveBeeEntity.moveTo(
 				blockpos.getX() + 0.5f,
 				blockpos.getY() + 0.5f,
 				blockpos.getZ() + 0.5f,
 				world.getRandom().nextFloat() * 360.0F,
 				0.0F);
 
-		productiveBeeEntity.onInitialSpawn(
+		productiveBeeEntity.finalizeSpawn(
 				world,
-				world.getDifficultyForLocation(productiveBeeEntity.getPosition()),
+				world.getCurrentDifficultyAt(productiveBeeEntity.blockPosition()),
 				event.getSpawnReason(),
 				null,
 				null);
 
 		productiveBeeEntity.setBeeType(PRODUCTIVE_BEES_LIST.get(world.getRandom().nextInt(PRODUCTIVE_BEES_LIST.size())));
 
-		world.addEntity(productiveBeeEntity);
+		world.addFreshEntity(productiveBeeEntity);
 	}
 
 	/**
@@ -306,10 +306,10 @@ public class ProductiveBeesCompat {
 	 */
 	public static BlockState PBGetRottenedHoneycomb(Random random) {
 		if(SPIDER_DUNGEON_HONEYCOMBS.size() == 0){
-			return Blocks.HONEYCOMB_BLOCK.getDefaultState();
+			return Blocks.HONEYCOMB_BLOCK.defaultBlockState();
 		}
 		else{
-			return SPIDER_DUNGEON_HONEYCOMBS.get(random.nextInt(random.nextInt(SPIDER_DUNGEON_HONEYCOMBS.size())+1)).getDefaultState();
+			return SPIDER_DUNGEON_HONEYCOMBS.get(random.nextInt(random.nextInt(SPIDER_DUNGEON_HONEYCOMBS.size())+1)).defaultBlockState();
 		}
 	}
 
@@ -319,7 +319,7 @@ public class ProductiveBeesCompat {
 	 */
 	public static BlockState PBGetRandomHoneycomb(Random random, int lowerBoundBias) {
 		if (ORE_BASED_HONEYCOMB_VARIANTS.size() == 0) {
-			return Blocks.HONEYCOMB_BLOCK.getDefaultState();
+			return Blocks.HONEYCOMB_BLOCK.defaultBlockState();
 		}
 		else {
 			int index = ORE_BASED_HONEYCOMB_VARIANTS.size() - 1;
@@ -328,7 +328,7 @@ public class ProductiveBeesCompat {
 				index = random.nextInt(index + 1);
 			}
 
-			return ORE_BASED_HONEYCOMB_VARIANTS.get(index).getDefaultState();
+			return ORE_BASED_HONEYCOMB_VARIANTS.get(index).defaultBlockState();
 		}
 	}
 }

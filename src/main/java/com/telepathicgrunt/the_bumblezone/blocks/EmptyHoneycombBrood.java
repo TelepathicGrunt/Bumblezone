@@ -20,22 +20,24 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
 
+import net.minecraft.block.AbstractBlock;
+
 public class EmptyHoneycombBrood extends ProperFacingBlock {
 
     public EmptyHoneycombBrood() {
-        super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).hardnessAndResistance(0.5F, 0.5F).sound(SoundType.CORAL));
-        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.SOUTH));
+        super(AbstractBlock.Properties.of(Material.CLAY, MaterialColor.COLOR_ORANGE).strength(0.5F, 0.5F).sound(SoundType.CORAL_BLOCK));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.SOUTH));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
 
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(FACING, context.getFace().getOpposite());
+        return this.defaultBlockState().setValue(FACING, context.getClickedFace().getOpposite());
     }
 
     /**
@@ -45,24 +47,24 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResultType onBlockActivated(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
+    public ActionResultType use(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
 
-        ItemStack itemstack = playerEntity.getHeldItem(playerHand);
+        ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
         //Buzzier Bees bottled bees compat
         if (ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.allowBottledBeesCompat.get()) {
             // Player is trying to revive the block
             ActionResultType action = BuzzierBeesRedirection.bottledBeeInteract(itemstack, thisBlockState, world, position, playerEntity, playerHand);
             if (action == ActionResultType.SUCCESS) {
-                world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-                world.setBlockState(position, BzBlocks.HONEYCOMB_BROOD.get().getDefaultState()
-                        .with(HoneycombBrood.STAGE, 0)
-                        .with(DirectionalBlock.FACING, thisBlockState.get(DirectionalBlock.FACING)));
+                world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+                world.setBlockAndUpdate(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+                        .setValue(HoneycombBrood.STAGE, 0)
+                        .setValue(DirectionalBlock.FACING, thisBlockState.getValue(DirectionalBlock.FACING)));
 
                 return action;
             }
         }
 
-        return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+        return super.use(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
     }
 }

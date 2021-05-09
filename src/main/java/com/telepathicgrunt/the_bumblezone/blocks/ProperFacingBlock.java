@@ -5,6 +5,8 @@ import net.minecraft.block.DirectionalBlock;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class ProperFacingBlock extends DirectionalBlock {
 
     protected ProperFacingBlock(Properties builder) {
@@ -13,11 +15,11 @@ public class ProperFacingBlock extends DirectionalBlock {
 
     @Override
     public BlockState rotate(BlockState state, Rotation rot) {
-        return state.with(FACING, rot.rotate(state.get(FACING)));
+        return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+        return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
 }

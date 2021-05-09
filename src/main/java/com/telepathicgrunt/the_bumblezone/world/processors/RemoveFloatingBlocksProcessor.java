@@ -22,8 +22,8 @@ public class RemoveFloatingBlocksProcessor extends StructureProcessor {
     private RemoveFloatingBlocksProcessor() { }
 
     @Override
-    public Template.BlockInfo func_230386_a_(IWorldReader worldView, BlockPos pos, BlockPos blockPos, Template.BlockInfo structureBlockInfoLocal, Template.BlockInfo structureBlockInfoWorld, PlacementSettings structurePlacementData) {
-        BlockPos.Mutable mutable = new BlockPos.Mutable().setPos(structureBlockInfoWorld.pos);
+    public Template.BlockInfo processBlock(IWorldReader worldView, BlockPos pos, BlockPos blockPos, Template.BlockInfo structureBlockInfoLocal, Template.BlockInfo structureBlockInfoWorld, PlacementSettings structurePlacementData) {
+        BlockPos.Mutable mutable = new BlockPos.Mutable().set(structureBlockInfoWorld.pos);
         IChunk cachedChunk = worldView.getChunk(mutable);
 
         // attempts to remove invalid floating plants
@@ -34,11 +34,11 @@ public class RemoveFloatingBlocksProcessor extends StructureProcessor {
             BlockState aboveWorldState = worldView.getBlockState(mutable.move(Direction.UP));
 
             // detects the first invalidly placed block before going into a while loop
-            if(!aboveWorldState.isValidPosition(worldView, mutable)){
+            if(!aboveWorldState.canSurvive(worldView, mutable)){
                 cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state, false);
                 aboveWorldState = worldView.getBlockState(mutable.move(Direction.UP));
 
-                while(mutable.getY() < worldView.getHeight() && !aboveWorldState.isValidPosition(worldView, mutable)){
+                while(mutable.getY() < worldView.getMaxBuildHeight() && !aboveWorldState.canSurvive(worldView, mutable)){
                     cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state, false);
                     aboveWorldState = worldView.getBlockState(mutable.move(Direction.UP));
                 }

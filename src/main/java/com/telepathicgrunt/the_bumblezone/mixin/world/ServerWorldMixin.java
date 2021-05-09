@@ -24,7 +24,7 @@ public class ServerWorldMixin {
 	)
 	private void tickAltar(CallbackInfo ci) {
 		ServerWorld world = ((ServerWorld) (Object) this);
-		if(world.getDimensionKey().getLocation().equals(Bumblezone.MOD_DIMENSION_ID)){
+		if(world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)){
 			counter++;
 			if(counter % updateInterval == 0){
 				counter = 0;

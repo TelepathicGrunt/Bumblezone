@@ -27,12 +27,12 @@ public class BeePathfindingMixin {
      * @author TelepathicGrunt
      * @reason Make bees not get stuck on ceiling anymore and lag people as a result. (Only applies in Bumblezone dimension)
      */
-    @Inject(method = "startExecuting()V",
+    @Inject(method = "start()V",
             at = @At(value = "HEAD"),
             cancellable = true)
     private void newWander(CallbackInfo ci){
         // Do our own bee AI in the Bumblezone. Makes bees wander more and should be slightly better performance. Maybe...
-        if(beeEntity.world.getDimensionKey().equals(BzDimension.BZ_WORLD_KEY)){
+        if(beeEntity.level.dimension().equals(BzDimension.BZ_WORLD_KEY)){
             cachedPathHolder = BeeAI.smartBeesTM(beeEntity, cachedPathHolder);
             ci.cancel();
         }

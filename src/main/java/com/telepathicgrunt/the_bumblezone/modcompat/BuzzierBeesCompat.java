@@ -45,12 +45,12 @@ public class BuzzierBeesCompat {
     private static final String BUZZIER_BEES_NAMESPACE = "buzzier_bees";
 
     public static void setupBuzzierBees() {
-        CRYSTALLIZED_HONEY_BLOCK = BBBlocks.CRYSTALLIZED_HONEY_BLOCK.get().getDefaultState();
+        CRYSTALLIZED_HONEY_BLOCK = BBBlocks.CRYSTALLIZED_HONEY_BLOCK.get().defaultBlockState();
         Item BOTTLED_BEES = ForgeRegistries.ITEMS.getValue(new ResourceLocation(BUZZIER_BEES_NAMESPACE, "bee_bottle"));
 
         if (BOTTLED_BEES != null && Bumblezone.BzModCompatibilityConfig.allowPotionOfBeesCompat.get()) {
-            BuzzierBeesBottledBeesDispenseBehavior.DEFAULT_BOTTLED_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).bz_invokeGetBehavior(new ItemStack(BOTTLED_BEES));
-            DispenserBlock.registerDispenseBehavior(BBItems.BOTTLE_OF_BEE.get(), BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); //adds compatibility with bottled bees in dispensers
+            BuzzierBeesBottledBeesDispenseBehavior.DEFAULT_BOTTLED_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).bz_invokeGetDispenseMethod(new ItemStack(BOTTLED_BEES));
+            DispenserBlock.registerBehavior(BBItems.BOTTLE_OF_BEE.get(), BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); //adds compatibility with bottled bees in dispensers
         }
 
         TIER_1_CANDLES_VARIANTS = new ArrayList<>();
@@ -189,7 +189,7 @@ public class BuzzierBeesCompat {
         if (itemstack.getItem() == BBItems.HONEY_WAND.get()) {
             if (!playerEntity.isCrouching()) {
                 if (!playerEntity.isCreative()) {
-                    playerEntity.setHeldItem(playerHand, new ItemStack(BBItems.STICKY_HONEY_WAND.get())); //replaced empty Honey Wand with Sticky Honey Wand in hand
+                    playerEntity.setItemInHand(playerHand, new ItemStack(BBItems.STICKY_HONEY_WAND.get())); //replaced empty Honey Wand with Sticky Honey Wand in hand
                 }
 
                 return ActionResultType.SUCCESS;
@@ -203,7 +203,7 @@ public class BuzzierBeesCompat {
         if (itemstack.getItem() == BBItems.STICKY_HONEY_WAND.get()) {
             if (!playerEntity.isCrouching()) {
                 if (!playerEntity.isCreative()) {
-                    playerEntity.setHeldItem(playerHand, new ItemStack(BBItems.HONEY_WAND.get())); //replaced Sticky Honey Wand with empty Honey Wand in hand
+                    playerEntity.setItemInHand(playerHand, new ItemStack(BBItems.HONEY_WAND.get())); //replaced Sticky Honey Wand with empty Honey Wand in hand
                 }
 
                 return ActionResultType.SUCCESS;
@@ -217,7 +217,7 @@ public class BuzzierBeesCompat {
         if (itemstack.getItem() == BBItems.BOTTLE_OF_BEE.get()) {
             if (!playerEntity.isCrouching()) {
                 if (!playerEntity.isCreative()) {
-                    playerEntity.setHeldItem(playerHand, new ItemStack(Items.GLASS_BOTTLE)); //replaced bottled bee with glass bottle
+                    playerEntity.setItemInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); //replaced bottled bee with glass bottle
                 }
 
                 return ActionResultType.SUCCESS;
@@ -233,10 +233,10 @@ public class BuzzierBeesCompat {
      */
     public static BlockState BBGetRandomTier1Candle(Random random, int numOfCandles, boolean waterlogged, boolean lit) {
         int index = random.nextInt(TIER_1_CANDLES_VARIANTS.size());
-        return TIER_1_CANDLES_VARIANTS.get(index).getDefaultState()
-                .with(CandleBlock.CANDLES, numOfCandles)
-                .with(CandleBlock.WATERLOGGED, waterlogged)
-                .with(CandleBlock.LIT, lit);
+        return TIER_1_CANDLES_VARIANTS.get(index).defaultBlockState()
+                .setValue(CandleBlock.CANDLES, numOfCandles)
+                .setValue(CandleBlock.WATERLOGGED, waterlogged)
+                .setValue(CandleBlock.LIT, lit);
     }
 
     /**
@@ -249,10 +249,10 @@ public class BuzzierBeesCompat {
             index = random.nextInt(index + 1);
         }
 
-        return TIER_2_CANDLES_VARIANTS.get(index).getDefaultState()
-                .with(CandleBlock.CANDLES, numOfCandles)
-                .with(CandleBlock.WATERLOGGED, waterlogged)
-                .with(CandleBlock.LIT, lit);
+        return TIER_2_CANDLES_VARIANTS.get(index).defaultBlockState()
+                .setValue(CandleBlock.CANDLES, numOfCandles)
+                .setValue(CandleBlock.WATERLOGGED, waterlogged)
+                .setValue(CandleBlock.LIT, lit);
     }
 
     /**
@@ -275,9 +275,9 @@ public class BuzzierBeesCompat {
         }
 
 
-        return TIER_3_CANDLES_VARIANTS.get(index).getDefaultState()
-                .with(CandleBlock.CANDLES, numOfCandles)
-                .with(CandleBlock.WATERLOGGED, waterlogged)
-                .with(CandleBlock.LIT, lit);
+        return TIER_3_CANDLES_VARIANTS.get(index).defaultBlockState()
+                .setValue(CandleBlock.CANDLES, numOfCandles)
+                .setValue(CandleBlock.WATERLOGGED, waterlogged)
+                .setValue(CandleBlock.LIT, lit);
     }
 }

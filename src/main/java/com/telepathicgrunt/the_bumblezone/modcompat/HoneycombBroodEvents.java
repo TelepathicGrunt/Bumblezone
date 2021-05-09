@@ -29,21 +29,21 @@ public class HoneycombBroodEvents
 
 		PlayerEntity playerEntity = (PlayerEntity) event.getEntity();
 		Hand playerHand = event.getHand();
-		ItemStack itemstack = playerEntity.getHeldItem(playerHand);
+		ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
 		if (PotionOfBeesRedirection.POBIsPotionOfBeesItem(itemstack.getItem())) {
 			World world = event.getWorld();
 			RayTraceResult raytraceresult = rayTrace(world, playerEntity, RayTraceContext.BlockMode.COLLIDER);
-			BlockPos raytracedPos = ((BlockRayTraceResult) raytraceresult).getPos();
+			BlockPos raytracedPos = ((BlockRayTraceResult) raytraceresult).getBlockPos();
 			BlockState foundBlock = world.getBlockState(raytracedPos);
 
 			if (raytraceresult.getType() == RayTraceResult.Type.BLOCK && foundBlock.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD.get()) {
 
-				playerEntity.swingArm(playerHand);
-				world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-				world.setBlockState(raytracedPos, BzBlocks.HONEYCOMB_BROOD.get().getDefaultState()
-						.with(HoneycombBrood.STAGE, 0)
-						.with(DirectionalBlock.FACING, foundBlock.get(DirectionalBlock.FACING)));
+				playerEntity.swing(playerHand);
+				world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+				world.setBlockAndUpdate(raytracedPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+						.setValue(HoneycombBrood.STAGE, 0)
+						.setValue(DirectionalBlock.FACING, foundBlock.getValue(DirectionalBlock.FACING)));
 
 				if (!playerEntity.isCreative())
 				{
@@ -51,11 +51,11 @@ public class HoneycombBroodEvents
 
 					if (itemstack.isEmpty())
 					{
-						playerEntity.setHeldItem(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places glass bottle in hand
+						playerEntity.setItemInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places glass bottle in hand
 					}
-					else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE))) // places glass bottle in inventory
+					else if (!playerEntity.inventory.add(new ItemStack(Items.GLASS_BOTTLE))) // places glass bottle in inventory
 					{
-						playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false); // drops glass bottle if inventory is full
+						playerEntity.drop(new ItemStack(Items.GLASS_BOTTLE), false); // drops glass bottle if inventory is full
 					}
 				}
 
@@ -67,8 +67,8 @@ public class HoneycombBroodEvents
 
 	// *borrowed* from the Item class lol
 	protected static RayTraceResult rayTrace(World world, PlayerEntity player, RayTraceContext.BlockMode blockMode) {
-		float pitch = player.rotationPitch;
-		float yaw = player.rotationYaw;
+		float pitch = player.xRot;
+		float yaw = player.yRot;
 		Vector3d eyePos = player.getEyePosition(1.0F);
 		float f2 = MathHelper.cos(-yaw * ((float) Math.PI / 180F) - (float) Math.PI);
 		float f3 = MathHelper.sin(-yaw * ((float) Math.PI / 180F) - (float) Math.PI);
@@ -78,6 +78,6 @@ public class HoneycombBroodEvents
 		float zTargetNormalized = f2 * f4;
 		double targetDistance = player.getAttribute(net.minecraftforge.common.ForgeMod.REACH_DISTANCE.get()).getValue();
 		Vector3d targetPos = eyePos.add((double) xTargetNormalized * targetDistance, (double) yTargetNormalized * targetDistance, (double) zTargetNormalized * targetDistance);
-		return world.rayTraceBlocks(new RayTraceContext(eyePos, targetPos, blockMode, RayTraceContext.FluidMode.NONE, player));
+		return world.clip(new RayTraceContext(eyePos, targetPos, blockMode, RayTraceContext.FluidMode.NONE, player));
 	}
 }

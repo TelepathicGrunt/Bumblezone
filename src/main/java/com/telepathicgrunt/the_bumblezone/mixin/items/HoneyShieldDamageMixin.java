@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerEntity.class)
 public class HoneyShieldDamageMixin {
 
-    @Inject(method = "damageShield",
+    @Inject(method = "hurtCurrentlyUsedShield",
             at = @At(value = "HEAD"),
             cancellable = true)
     private void isHoneyCrystalShield(float amount, CallbackInfo ci) {

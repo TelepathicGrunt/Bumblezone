@@ -47,21 +47,21 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
 
     public StickyHoneyRedstone() {
         super();
-        this.setDefaultState(this.stateContainer.getBaseState()
-                .with(UP, false)
-                .with(NORTH, false)
-                .with(EAST, false)
-                .with(SOUTH, false)
-                .with(WEST, false)
-                .with(DOWN, false)
-                .with(POWERED, false));
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(UP, false)
+                .setValue(NORTH, false)
+                .setValue(EAST, false)
+                .setValue(SOUTH, false)
+                .setValue(WEST, false)
+                .setValue(DOWN, false)
+                .setValue(POWERED, false));
     }
 
     /**
      * Set up properties.
      */
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add().add(UP, NORTH, EAST, SOUTH, WEST, DOWN, POWERED);
     }
 
@@ -70,9 +70,9 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      */
     @Deprecated
     @Override
-    public void onEntityCollision(BlockState blockstate, World world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState blockstate, World world, BlockPos pos, Entity entity) {
         updateState(world, pos, blockstate, 0);
-        super.onEntityCollision(blockstate, world, pos, entity);
+        super.entityInside(blockstate, world, pos, entity);
     }
 
     protected int getTickRate() {
@@ -84,7 +84,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      */
     @Override
     public void tick(BlockState blockstate, ServerWorld world, BlockPos pos, Random rand) {
-        this.updateState(world, pos, blockstate, blockstate.get(POWERED) ? 1 : 0);
+        this.updateState(world, pos, blockstate, blockstate.getValue(POWERED) ? 1 : 0);
     }
 
     /**
@@ -94,14 +94,14 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         if (blockstate.getBlock() != BzBlocks.STICKY_HONEY_REDSTONE.get())
             return;
 
-        if (blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
-            world.func_230547_a_(pos, this);
+        if (blockstate.getValue(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
+            world.blockUpdated(pos, this);
         }
 
         for (Direction direction : Direction.values()) {
             BooleanProperty booleanproperty = StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(direction);
-            if (blockstate.get(booleanproperty)) {
-                world.notifyNeighborsOfStateChange(pos.offset(direction), this);
+            if (blockstate.getValue(booleanproperty)) {
+                world.updateNeighborsAt(pos.relative(direction), this);
             }
         }
     }
@@ -114,13 +114,13 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         boolean flag1 = newPower > 0;
         if (oldRedstoneStrength != newPower) {
             BlockState newBlockstate = this.setRedstoneStrength(oldBlockstate, newPower);
-            world.setBlockState(pos, newBlockstate, 2);
+            world.setBlock(pos, newBlockstate, 2);
             this.neighborChangeds(oldBlockstate, world, pos);
             world.onBlockStateChange(pos, oldBlockstate, newBlockstate);
         }
 
         if (flag1) {
-            world.getPendingBlockTicks().scheduleTick(new BlockPos(pos), this, this.getTickRate());
+            world.getBlockTicks().scheduleTick(new BlockPos(pos), this, this.getTickRate());
         }
     }
 
@@ -129,33 +129,33 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      */
     @SuppressWarnings("deprecation")
     @Override
-    public void onReplaced(BlockState blockstate, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState blockstate, World world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!isMoving && blockstate.getBlock() != newState.getBlock()) {
-            if (blockstate.get(POWERED)) {
+            if (blockstate.getValue(POWERED)) {
                 this.updateTarget(world, pos, blockstate);
             }
 
-            super.onReplaced(blockstate, world, pos, newState, false);
+            super.onRemove(blockstate, world, pos, newState, false);
         }
     }
 
-    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean moved) {
+    public void onPlace(BlockState state, World world, BlockPos pos, BlockState oldState, boolean moved) {
         this.updateTarget(world, pos, state);
     }
 
     protected void updateTarget(World world, BlockPos pos, BlockState blockstate) {
         for (Direction direction : Direction.values()) {
-            if (blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(direction))) {
-                BlockPos blockPos = pos.offset(direction);
+            if (blockstate.getValue(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(direction))) {
+                BlockPos blockPos = pos.relative(direction);
                 world.neighborChanged(blockPos, this, pos);
-                world.notifyNeighborsOfStateExcept(blockPos, this, direction);
+                world.updateNeighborsAtExceptFromFacing(blockPos, this, direction);
             }
         }
     }
 
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         if (this.computeRedstoneStrength(state, world, pos) > 0) {
-            world.getPendingBlockTicks().scheduleTick(pos, this, 1);
+            world.getBlockTicks().scheduleTick(pos, this, 1);
         }
 
     }
@@ -168,7 +168,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      * Tells game that this block can generate a Redstone signal
      */
     @Override
-    public boolean canProvidePower(BlockState state) {
+    public boolean isSignalSource(BlockState state) {
         return true;
     }
 
@@ -176,9 +176,9 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      * Powers the block it's attached to. Or powers blocks next to if it's on the floor
      */
     @Override
-    public int getWeakPower(BlockState blockstate, IBlockReader blockAccess, BlockPos pos, Direction side) {
+    public int getSignal(BlockState blockstate, IBlockReader blockAccess, BlockPos pos, Direction side) {
         //power nearby blocks if on floor
-        if (blockstate.get(POWERED) && blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
+        if (blockstate.getValue(POWERED) && blockstate.getValue(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
             for (Direction horizontal : Direction.Plane.HORIZONTAL) {
                 if(horizontal == side) {
                     return 1;
@@ -187,7 +187,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         }
 
         //return power for block it is attached on.
-        return blockstate.get(POWERED) && blockstate.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(side.getOpposite())) ? 1 : 0;
+        return blockstate.getValue(POWERED) && blockstate.getValue(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(side.getOpposite())) ? 1 : 0;
     }
 
     @Override
@@ -195,7 +195,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     {
         boolean canConnect = false;
 
-        if (state.get(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
+        if (state.getValue(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
             for (Direction horizontal : Direction.Plane.HORIZONTAL) {
                 if (horizontal == side) {
                     canConnect = true;
@@ -211,8 +211,8 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      * Powers through the block that it is attached to.
      */
     @Override
-    public int getStrongPower(BlockState blockstate, IBlockReader blockAccess, BlockPos pos, Direction side) {
-        return getWeakPower(blockstate, blockAccess, pos, side);
+    public int getDirectSignal(BlockState blockstate, IBlockReader blockAccess, BlockPos pos, Direction side) {
+        return getSignal(blockstate, blockAccess, pos, side);
     }
 
 
@@ -220,7 +220,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      * Set if block is powered or not
      */
     protected BlockState setRedstoneStrength(BlockState blockstate, int strength) {
-        return blockstate.with(POWERED, strength > 0);
+        return blockstate.setValue(POWERED, strength > 0);
     }
 
     /**
@@ -228,8 +228,8 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      */
     protected int computeRedstoneStrength(BlockState blockstate, World world, BlockPos pos) {
 
-        AxisAlignedBB axisalignedbb = getShape(blockstate, world, pos, null).getBoundingBox().offset(pos);
-        List<? extends Entity> list = world.getLoadedEntitiesWithinAABB(LivingEntity.class, axisalignedbb);
+        AxisAlignedBB axisalignedbb = getShape(blockstate, world, pos, null).bounds().move(pos);
+        List<? extends Entity> list = world.getLoadedEntitiesOfClass(LivingEntity.class, axisalignedbb);
 
         if (!list.isEmpty()) {
             return 1;

@@ -16,7 +16,7 @@ import java.util.UUID;
 
 
 public class ProtectionOfTheHiveEffect extends Effect {
-    private final static EntityPredicate SEE_THROUGH_WALLS = (new EntityPredicate()).setLineOfSiteRequired();
+    private final static EntityPredicate SEE_THROUGH_WALLS = (new EntityPredicate()).allowUnseeable();
 
     public ProtectionOfTheHiveEffect(EffectType type, int potionColor) {
         super(type, potionColor);
@@ -25,46 +25,46 @@ public class ProtectionOfTheHiveEffect extends Effect {
     /**
      * Returns true if the potion has an instant effect instead of a continuous one (eg Harming)
      */
-    public boolean isInstant() {
+    public boolean isInstantenous() {
         return false;
     }
 
     /**
      * checks if Potion effect is ready to be applied this tick.
      */
-    public boolean isReady(int duration, int amplifier) {
+    public boolean isDurationEffectTick(int duration, int amplifier) {
         return duration >= 1;
     }
 
     /**
      * Calm all attacking bees when first applied to the entity
      */
-    public void applyAttributesModifiersToEntity(LivingEntity entity, AttributeModifierManager attributes, int amplifier) {
+    public void addAttributeModifiers(LivingEntity entity, AttributeModifierManager attributes, int amplifier) {
 
-        SEE_THROUGH_WALLS.setDistance(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D);
-        List<BeeEntity> beeList = entity.world.getTargettableEntitiesWithinAABB(BeeEntity.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().grow(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D));
+        SEE_THROUGH_WALLS.range(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D);
+        List<BeeEntity> beeList = entity.level.getNearbyEntities(BeeEntity.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D));
 
         for (BeeEntity bee : beeList)
         {
-            if(bee.getAttackTarget() == entity){
-                bee.setAttackTarget(null);
-                bee.setAngerTarget(null);
-                bee.setAngerTime(0);
+            if(bee.getTarget() == entity){
+                bee.setTarget(null);
+                bee.setPersistentAngerTarget(null);
+                bee.setRemainingPersistentAngerTime(0);
             }
         }
 
-        super.applyAttributesModifiersToEntity(entity, attributes, amplifier);
+        super.addAttributeModifiers(entity, attributes, amplifier);
     }
 
     /**
      * Makes the bees swarm at the attacking entity
      */
-    public void performEffect(LivingEntity entity, int amplifier) {
-       if(entity.hurtTime > 0 && entity.getRevengeTarget() != null){
-           resetBeeAngry(entity.world, entity.getRevengeTarget());
+    public void applyEffectTick(LivingEntity entity, int amplifier) {
+       if(entity.hurtTime > 0 && entity.getLastHurtByMob() != null){
+           resetBeeAngry(entity.level, entity.getLastHurtByMob());
 
-           if(!(entity.getRevengeTarget() instanceof BeeEntity))
-                entity.getRevengeTarget().addPotionEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(), amplifier, true, true, true));
+           if(!(entity.getLastHurtByMob() instanceof BeeEntity))
+                entity.getLastHurtByMob().addEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(), amplifier, true, true, true));
        }
     }
 
@@ -74,10 +74,10 @@ public class ProtectionOfTheHiveEffect extends Effect {
     public static void resetBeeAngry(World world, LivingEntity livingEntity)
     {
         LivingEntity entity = livingEntity;
-        UUID uuid = entity.getUniqueID();
+        UUID uuid = entity.getUUID();
 
-        SEE_THROUGH_WALLS.setDistance(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D);
-        List<BeeEntity> beeList = world.getTargettableEntitiesWithinAABB(BeeEntity.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().grow(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D));
+        SEE_THROUGH_WALLS.range(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D);
+        List<BeeEntity> beeList = world.getNearbyEntities(BeeEntity.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D));
 
         if(livingEntity instanceof BeeEntity){
             entity = null;
@@ -86,10 +86,10 @@ public class ProtectionOfTheHiveEffect extends Effect {
 
         for (BeeEntity bee : beeList)
         {
-            bee.setAttackTarget(entity);
-            bee.setAngerTarget(uuid);
+            bee.setTarget(entity);
+            bee.setPersistentAngerTarget(uuid);
             if(entity == null){
-                bee.setAngerTime(0);
+                bee.setRemainingPersistentAngerTime(0);
             }
         }
     }

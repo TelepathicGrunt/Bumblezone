@@ -22,7 +22,7 @@ public class HoneySlimeRendering extends MobRenderer<HoneySlimeEntity, SlimeMode
     }
 
     public void render(HoneySlimeEntity honeySlimeEntity, float f, float g, MatrixStack matrixStack, IRenderTypeBuffer vertexConsumerProvider, int i) {
-        this.shadowSize = 0.25F * (float)(honeySlimeEntity.isChild() ? 1 : 2);
+        this.shadowRadius = 0.25F * (float)(honeySlimeEntity.isBaby() ? 1 : 2);
         scale(honeySlimeEntity, matrixStack, f);
         super.render(honeySlimeEntity, f, g, matrixStack, vertexConsumerProvider, i);
     }
@@ -30,13 +30,13 @@ public class HoneySlimeRendering extends MobRenderer<HoneySlimeEntity, SlimeMode
     protected void scale(HoneySlimeEntity honeySlimeEntity, MatrixStack matrixStack, float f) {
         matrixStack.scale(0.999F, 0.999F, 0.999F);
         matrixStack.translate(0.0D, 0.0010000000474974513D, 0.0D);
-        float h = (float)(honeySlimeEntity.isChild() ? 1 : 2);
+        float h = (float)(honeySlimeEntity.isBaby() ? 1 : 2);
         float i = MathHelper.lerp(f, honeySlimeEntity.prevSquishFactor, honeySlimeEntity.squishFactor) / (h * 0.5F + 1.0F);
         float j = 1.0F / (i + 1.0F);
         matrixStack.scale(j * h, 1.0F / j * h, j * h);
     }
 
-    public ResourceLocation getEntityTexture(HoneySlimeEntity honeySlimeEntity) {
+    public ResourceLocation getTextureLocation(HoneySlimeEntity honeySlimeEntity) {
         return honeySlimeEntity.isInHoney() ? HONEY_TEXTURE : HONEYLESS_TEXTURE;
     }
 }

@@ -25,7 +25,7 @@ import java.util.List;
 
 
 public class WrathOfTheHiveEffect extends Effect {
-    public final static EntityPredicate SEE_THROUGH_WALLS = (new EntityPredicate()).setLineOfSiteRequired();
+    public final static EntityPredicate SEE_THROUGH_WALLS = (new EntityPredicate()).allowUnseeable();
     public final static EntityPredicate LINE_OF_SIGHT = (new EntityPredicate());
     public static boolean ACTIVE_WRATH = false;
     public static int NEARBY_WRATH_EFFECT_RADIUS = 8;
@@ -37,22 +37,22 @@ public class WrathOfTheHiveEffect extends Effect {
     /**
      * Returns true if the potion has an instant effect instead of a continuous one (eg Harming)
      */
-    public boolean isInstant() {
+    public boolean isInstantenous() {
         return true;
     }
 
     /**
      * checks if Potion effect is ready to be applied this tick.
      */
-    public boolean isReady(int duration, int amplifier) {
+    public boolean isDurationEffectTick(int duration, int amplifier) {
         return duration >= 1;
     }
 
     /**
      * Makes the bees swarm at the entity
      */
-    public void performEffect(LivingEntity entity, int amplifier) {
-        World world = entity.world;
+    public void applyEffectTick(LivingEntity entity, int amplifier) {
+        World world = entity.level;
 
         //Maximum aggression
         if (amplifier >= 2) {
@@ -62,32 +62,32 @@ public class WrathOfTheHiveEffect extends Effect {
                 // Spawn bees when high wrath effect.
                 // Must be very low as this method is fired every tick for status effects.
                 // We don't want to spawn millions of bees
-                if(!world.isRemote() && world.rand.nextFloat() <= 0.0045f){
+                if(!world.isClientSide() && world.random.nextFloat() <= 0.0045f){
                     // Grab a nearby air materialposition not in the player's field of view
                     BlockPos spawnBlockPos = new BlockPos(
-                            entity.getPosX() + (world.rand.nextInt(30) + 10) * (world.rand.nextBoolean() ? 1 : -1),
-                            entity.getPosY() + (world.rand.nextInt(30) + 10) * (world.rand.nextBoolean() ? 1 : -1),
-                            entity.getPosZ() + (world.rand.nextInt(30) + 10) * (world.rand.nextBoolean() ? 1 : -1));
+                            entity.getX() + (world.random.nextInt(30) + 10) * (world.random.nextBoolean() ? 1 : -1),
+                            entity.getY() + (world.random.nextInt(30) + 10) * (world.random.nextBoolean() ? 1 : -1),
+                            entity.getZ() + (world.random.nextInt(30) + 10) * (world.random.nextBoolean() ? 1 : -1));
                     if(world.getBlockState(spawnBlockPos).getMaterial() != Material.AIR){
                         return;
                     }
 
-                    if(ModChecker.carrierBeesPresent && world.rand.nextBoolean()){
+                    if(ModChecker.carrierBeesPresent && world.random.nextBoolean()){
                         CarrierBeeRedirection.CBMobSpawn(entity, spawnBlockPos);
                     }
                     else{
                         BeeEntity bee = EntityType.BEE.create(world);
                         if(bee == null) return;
-                        bee.setLocationAndAngles(
+                        bee.moveTo(
                                 spawnBlockPos.getX() + 0.5D,
                                 spawnBlockPos.getY() + 0.5D,
                                 spawnBlockPos.getZ() + 0.5D,
-                                world.rand.nextFloat() * 360.0F,
+                                world.random.nextFloat() * 360.0F,
                                 0.0F);
 
-                        bee.onInitialSpawn(
+                        bee.finalizeSpawn(
                                 (IServerWorld) world,
-                                world.getDifficultyForLocation(spawnBlockPos),
+                                world.getCurrentDifficultyAt(spawnBlockPos),
                                 SpawnReason.TRIGGERED,
                                 null,
                                 null);
@@ -103,7 +103,7 @@ public class WrathOfTheHiveEffect extends Effect {
                                 null,
                                 SpawnReason.TRIGGERED);
 
-                        world.addEntity(bee);
+                        world.addFreshEntity(bee);
                     }
                 }
             }
@@ -114,17 +114,17 @@ public class WrathOfTheHiveEffect extends Effect {
         }
 
         // makes brood blocks grow faster near wrath of the hive entities.
-        if(!world.isRemote()){
+        if(!world.isClientSide()){
             for(int attempts = 0; attempts < 5; attempts++){
                 int range = NEARBY_WRATH_EFFECT_RADIUS * 2;
                 BlockPos selectedBlockToGrow = new BlockPos(
-                        entity.getPosX() + (world.rand.nextInt(range) - NEARBY_WRATH_EFFECT_RADIUS),
-                        entity.getPosY() + (world.rand.nextInt(range) - NEARBY_WRATH_EFFECT_RADIUS),
-                        entity.getPosZ() + (world.rand.nextInt(range) - NEARBY_WRATH_EFFECT_RADIUS));
+                        entity.getX() + (world.random.nextInt(range) - NEARBY_WRATH_EFFECT_RADIUS),
+                        entity.getY() + (world.random.nextInt(range) - NEARBY_WRATH_EFFECT_RADIUS),
+                        entity.getZ() + (world.random.nextInt(range) - NEARBY_WRATH_EFFECT_RADIUS));
 
                 BlockState state = world.getBlockState(selectedBlockToGrow);
                 if(state.getBlock() instanceof HoneycombBrood){
-                    state.tick((ServerWorld) world, selectedBlockToGrow, world.rand);
+                    state.tick((ServerWorld) world, selectedBlockToGrow, world.random);
                 }
             }
         }
@@ -182,24 +182,24 @@ public class WrathOfTheHiveEffect extends Effect {
             return;
         }
 
-        sightMode.setDistance(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get());
-        List<MobEntity> beeList = world.getTargettableEntitiesWithinAABB(entityToFind, sightMode, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()));
+        sightMode.range(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get());
+        List<MobEntity> beeList = world.getNearbyEntities(entityToFind, sightMode, livingEntity, livingEntity.getBoundingBox().inflate(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()));
 
         for (MobEntity bee : beeList) {
-            bee.setAttackTarget(livingEntity);
+            bee.setTarget(livingEntity);
             if(bee instanceof IAngerable){
-                ((IAngerable)bee).setAngerTime(20);
-                ((IAngerable)bee).setAngerTarget(livingEntity.getUniqueID());
+                ((IAngerable)bee).setRemainingPersistentAngerTime(20);
+                ((IAngerable)bee).setPersistentAngerTarget(livingEntity.getUUID());
             }
 
-            EffectInstance effect = livingEntity.getActivePotionEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+            EffectInstance effect = livingEntity.getEffect(BzEffects.WRATH_OF_THE_HIVE.get());
             if(effect != null) {
                 int leftoverDuration = effect.getDuration();
 
                 // weaker potion effects for when attacking bears
-                bee.addPotionEffect(new EffectInstance(Effects.SPEED, leftoverDuration, speed, false, false));
-                bee.addPotionEffect(new EffectInstance(Effects.ABSORPTION, leftoverDuration, absorption, false, false));
-                bee.addPotionEffect(new EffectInstance(Effects.STRENGTH, leftoverDuration, strength, false, true));
+                bee.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, leftoverDuration, speed, false, false));
+                bee.addEffect(new EffectInstance(Effects.ABSORPTION, leftoverDuration, absorption, false, false));
+                bee.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, leftoverDuration, strength, false, true));
             }
         }
     }
@@ -224,29 +224,29 @@ public class WrathOfTheHiveEffect extends Effect {
 
     private static void clearAggression(World world, LivingEntity livingEntity, Class<? extends MobEntity> entityToFind, EntityPredicate sightMode) {
 
-        sightMode.setDistance(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D);
-        List<MobEntity> beeList = world.getTargettableEntitiesWithinAABB(entityToFind, sightMode, livingEntity, livingEntity.getBoundingBox().grow(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D));
+        sightMode.range(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D);
+        List<MobEntity> beeList = world.getNearbyEntities(entityToFind, sightMode, livingEntity, livingEntity.getBoundingBox().inflate(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D));
         for (MobEntity bee : beeList)
         {
-            if(bee.getAttackTarget() == livingEntity) {
-                bee.setAttackTarget(null);
-                bee.setAggroed(false);
-                bee.removePotionEffect(Effects.STRENGTH);
-                bee.removePotionEffect(Effects.SPEED);
-                bee.removePotionEffect(Effects.ABSORPTION);
+            if(bee.getTarget() == livingEntity) {
+                bee.setTarget(null);
+                bee.setAggressive(false);
+                bee.removeEffect(Effects.DAMAGE_BOOST);
+                bee.removeEffect(Effects.MOVEMENT_SPEED);
+                bee.removeEffect(Effects.ABSORPTION);
 
                 if(bee instanceof BeeEntity){
-                    ((BeeEntity)bee).setAngerTime(0);
+                    ((BeeEntity)bee).setRemainingPersistentAngerTime(0);
                 }
             }
         }
     }
 
     // Don't remove wrath effect from mobs that bees are to always be angry at (bears, non-bee insects)
-    public void removeAttributesModifiersFromEntity(LivingEntity entity, AttributeModifierManager attributes, int amplifier) {
+    public void removeAttributeModifiers(LivingEntity entity, AttributeModifierManager attributes, int amplifier) {
         if(BeeAggression.doesBeesHateEntity(entity)){
             //refresh the bee anger timer
-            entity.addPotionEffect(new EffectInstance(
+            entity.addEffect(new EffectInstance(
                     BzEffects.WRATH_OF_THE_HIVE.get(),
                     Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
                     1,
@@ -255,7 +255,7 @@ public class WrathOfTheHiveEffect extends Effect {
         }
         else{
             // remove the effect like normal
-            super.removeAttributesModifiersFromEntity(entity, attributes, amplifier);
+            super.removeAttributeModifiers(entity, attributes, amplifier);
         }
     }
 }

@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MobEntity.class)
 public class HoneyShieldCooldownMixin {
 
-    @Inject(method = "func_233655_a_",
+    @Inject(method = "maybeDisableShield",
             at = @At(value = "HEAD"),
             cancellable = true)
     private void isHoneyCrystalShield(PlayerEntity playerEntity, ItemStack itemStack, ItemStack itemStack2, CallbackInfo ci) {

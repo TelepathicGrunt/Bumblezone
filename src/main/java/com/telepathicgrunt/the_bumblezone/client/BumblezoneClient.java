@@ -39,21 +39,21 @@ public class BumblezoneClient
 
         //Replaced DeferredWorkQueue.runLater with the method added by the event - andrew
         event.enqueueWork(() -> {
-            RenderTypeLookup.setRenderLayer(BzBlocks.STICKY_HONEY_REDSTONE.get(), RenderType.getCutout());
-            RenderTypeLookup.setRenderLayer(BzBlocks.STICKY_HONEY_RESIDUE.get(), RenderType.getCutout());
-            RenderTypeLookup.setRenderLayer(BzBlocks.HONEY_CRYSTAL.get(), RenderType.getTranslucent());
-            RenderTypeLookup.setRenderLayer(BzFluids.SUGAR_WATER_FLUID.get(), RenderType.getTranslucent());
-            RenderTypeLookup.setRenderLayer(BzFluids.SUGAR_WATER_FLUID_FLOWING.get(), RenderType.getTranslucent());
-            RenderTypeLookup.setRenderLayer(BzFluids.SUGAR_WATER_BLOCK.get(), RenderType.getTranslucent());
+            RenderTypeLookup.setRenderLayer(BzBlocks.STICKY_HONEY_REDSTONE.get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(BzBlocks.STICKY_HONEY_RESIDUE.get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(BzBlocks.HONEY_CRYSTAL.get(), RenderType.translucent());
+            RenderTypeLookup.setRenderLayer(BzFluids.SUGAR_WATER_FLUID.get(), RenderType.translucent());
+            RenderTypeLookup.setRenderLayer(BzFluids.SUGAR_WATER_FLUID_FLOWING.get(), RenderType.translucent());
+            RenderTypeLookup.setRenderLayer(BzFluids.SUGAR_WATER_BLOCK.get(), RenderType.translucent());
 
             // Allows shield to use the blocking json file for offset
-            ItemModelsProperties.registerProperty(
+            ItemModelsProperties.register(
                     BzItems.HONEY_CRYSTAL_SHIELD.get(),
                     new ResourceLocation("blocking"),
                     (itemStack, world, livingEntity) ->
                             livingEntity != null &&
-                                    livingEntity.isHandActive() &&
-                                    livingEntity.getActiveItemStack() == itemStack ? 1.0F : 0.0F
+                                    livingEntity.isUsingItem() &&
+                                    livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
             );
         });
     }

@@ -19,7 +19,7 @@ public class BzBEOreFeature extends Feature<BzBEOreFeatureConfig> {
         super(codec);
     }
 
-    public boolean generate(ISeedReader iSeedReader, ChunkGenerator chunkGenerator, Random random, BlockPos pos, BzBEOreFeatureConfig bzBEOreFeatureConfig) {
+    public boolean place(ISeedReader iSeedReader, ChunkGenerator chunkGenerator, Random random, BlockPos pos, BzBEOreFeatureConfig bzBEOreFeatureConfig) {
         if(bzBEOreFeatureConfig.type == null) return false;
 
         float f = random.nextFloat() * (float) Math.PI;
@@ -40,7 +40,7 @@ public class BzBEOreFeature extends Feature<BzBEOreFeatureConfig> {
         for (int l1 = k; l1 <= k + j1; ++l1) {
             for (int i2 = i1; i2 <= i1 + j1; ++i2) {
                 if (l <= iSeedReader.getHeight(Heightmap.Type.OCEAN_FLOOR_WG, l1, i2)) {
-                    return this.func_207803_a(iSeedReader, random, bzBEOreFeatureConfig, d0, d1, d2, d3, d4, d5, k, l, i1, j1, k1);
+                    return this.doPlace(iSeedReader, random, bzBEOreFeatureConfig, d0, d1, d2, d3, d4, d5, k, l, i1, j1, k1);
                 }
             }
         }
@@ -48,7 +48,7 @@ public class BzBEOreFeature extends Feature<BzBEOreFeatureConfig> {
         return false;
     }
 
-    protected boolean func_207803_a(IWorld world, Random random, BzBEOreFeatureConfig bzBEOreFeatureConfig, double v, double v1, double v2, double v3, double v4, double v5, int i4, int i5, int i6, int i7, int i8) {
+    protected boolean doPlace(IWorld world, Random random, BzBEOreFeatureConfig bzBEOreFeatureConfig, double v, double v1, double v2, double v3, double v4, double v5, int i4, int i5, int i6, int i7, int i8) {
         int i = 0;
         BitSet bitset = new BitSet(i7 * i8 * i7);
         BlockPos.Mutable blockPos = new BlockPos.Mutable();
@@ -114,15 +114,15 @@ public class BzBEOreFeature extends Feature<BzBEOreFeatureConfig> {
                                         int l2 = i2 - i4 + (j2 - i5) * i7 + (k2 - i6) * i7 * i8;
                                         if (!bitset.get(l2)) {
                                             bitset.set(l2);
-                                            blockPos.setPos(i2, j2, k2);
-                                            if (blockPos.getY() < world.func_234938_ad_() && blockPos.getY() > 0 && bzBEOreFeatureConfig.target.test(world.getBlockState(blockPos), random)) {
+                                            blockPos.set(i2, j2, k2);
+                                            if (blockPos.getY() < world.getHeight() && blockPos.getY() > 0 && bzBEOreFeatureConfig.target.test(world.getBlockState(blockPos), random)) {
 
-                                                world.setBlockState(blockPos, bzBEOreFeatureConfig.state, 2);
+                                                world.setBlock(blockPos, bzBEOreFeatureConfig.state, 2);
 
-                                                TileEntity tileentity = world.getTileEntity(blockPos);
+                                                TileEntity tileentity = world.getBlockEntity(blockPos);
                                                 if(tileentity instanceof CombBlockTileEntity){
                                                     ((CombBlockTileEntity) tileentity).setType(bzBEOreFeatureConfig.type);
-                                                    tileentity.markDirty();
+                                                    tileentity.setChanged();
                                                 }
 
                                                 ++i;

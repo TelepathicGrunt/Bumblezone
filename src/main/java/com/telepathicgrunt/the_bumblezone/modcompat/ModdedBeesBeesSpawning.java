@@ -15,30 +15,30 @@ public class ModdedBeesBeesSpawning
 	public static void MobSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
 		if (ModChecker.productiveBeesPresent || ModChecker.resourcefulBeesPresent || ModChecker.pokecubePresent) {
 			MobEntity entity = (MobEntity) event.getEntity();
-			ResourceLocation worldRL = entity.world.getServer().func_244267_aX().func_230520_a_().getKey(entity.world.getDimensionType());
+			ResourceLocation worldRL = entity.level.getServer().registryAccess().dimensionTypes().getKey(entity.level.dimensionType());
 
 			if (worldRL != null && worldRL.equals(Bumblezone.MOD_DIMENSION_ID) &&
 				entity.getType() == EntityType.BEE)
 			{
 				if (ModChecker.productiveBeesPresent &&
 						Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesBeesMob.get() &&
-						entity.world.getRandom().nextInt(15) == 0)
+						entity.level.getRandom().nextInt(15) == 0)
 				{
-					ProductiveBeesRedirection.PBMobSpawnEvent(event, entity.isChild());
+					ProductiveBeesRedirection.PBMobSpawnEvent(event, entity.isBaby());
 				}
 
 				if (ModChecker.resourcefulBeesPresent &&
 						Bumblezone.BzModCompatibilityConfig.spawnResourcefulBeesBeesMob.get() &&
-						entity.world.getRandom().nextInt(15) == 0)
+						entity.level.getRandom().nextInt(15) == 0)
 				{
-					ResourcefulBeesRedirection.RBMobSpawnEvent(event, entity.isChild());
+					ResourcefulBeesRedirection.RBMobSpawnEvent(event, entity.isBaby());
 				}
 
 				if (ModChecker.pokecubePresent &&
 						Bumblezone.BzModCompatibilityConfig.spawnPokecubeBeePokemon.get() &&
-						entity.world.getRandom().nextInt(8) == 0)
+						entity.level.getRandom().nextInt(8) == 0)
 				{
-					PokecubeCompat.PCMobSpawnEvent(event, entity.isChild());
+					PokecubeCompat.PCMobSpawnEvent(event, entity.isBaby());
 				}
 			}
 		}

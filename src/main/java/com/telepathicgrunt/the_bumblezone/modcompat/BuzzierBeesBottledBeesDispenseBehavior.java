@@ -27,14 +27,14 @@ public class BuzzierBeesBottledBeesDispenseBehavior extends DefaultDispenseItemB
 	/**
 	 * Dispense the specified stack, play the dispense sound and spawn particles.
 	 */
-	public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-		World world = source.getWorld();
+	public ItemStack execute(IBlockSource source, ItemStack stack) {
+		World world = source.getLevel();
 		IPosition iposition = DispenserBlock.getDispensePosition(source);
 		BlockPos position = new BlockPos(iposition);
 		BlockState blockstate = world.getBlockState(position);
 
 		if (blockstate.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD.get()) {
-			world.setBlockState(position, BzBlocks.HONEYCOMB_BROOD.get().getDefaultState().with(HoneycombBrood.FACING, blockstate.get(EmptyHoneycombBrood.FACING)).with(HoneycombBrood.STAGE, Integer.valueOf(0)));
+			world.setBlockAndUpdate(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState().setValue(HoneycombBrood.FACING, blockstate.getValue(EmptyHoneycombBrood.FACING)).setValue(HoneycombBrood.STAGE, Integer.valueOf(0)));
 			stack.shrink(1);
 			if(!Bumblezone.BzBlockMechanicsConfig.dispensersDropGlassBottles.get()) {
 				if (!stack.isEmpty())
@@ -57,18 +57,18 @@ public class BuzzierBeesBottledBeesDispenseBehavior extends DefaultDispenseItemB
 	/**
 	 * Play the dispense sound from the specified block.
 	 */
-	protected void playDispenseSound(IBlockSource source) {
-		source.getWorld().playEvent(1002, source.getBlockPos(), 0);
+	protected void playSound(IBlockSource source) {
+		source.getLevel().levelEvent(1002, source.getPos(), 0);
 	}
 
 	/**
 	 * Adds glass bottle to dispenser or if no room, dispense it
 	 */
 	private static void addGlassBottleToDispenser(IBlockSource source) {
-		if (source.getBlockTileEntity() instanceof DispenserTileEntity) {
-			DispenserTileEntity dispenser = source.getBlockTileEntity();
+		if (source.getEntity() instanceof DispenserTileEntity) {
+			DispenserTileEntity dispenser = source.getEntity();
 			ItemStack honeyBottle = new ItemStack(Items.GLASS_BOTTLE);
-			if (!HopperTileEntity.putStackInInventoryAllSlots(null, dispenser, honeyBottle, null).isEmpty()) {
+			if (!HopperTileEntity.addItem(null, dispenser, honeyBottle, null).isEmpty()) {
 				DROP_ITEM_BEHAVIOR.dispense(source, honeyBottle);
 			}
 		}

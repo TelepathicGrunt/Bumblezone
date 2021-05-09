@@ -36,12 +36,12 @@ public class PotionOfBeesCompat
 		SPLASH_POTION_OF_BEES_ENTITY = ForgeRegistries.ENTITIES.getValue(new ResourceLocation("potionofbees:splash_potion_of_bees"));
 
 		if (POTION_OF_BEES != null && Bumblezone.BzModCompatibilityConfig.allowPotionOfBeesCompat.get()) {
-			PotionOfBeesBeePotionDispenseBehavior.DEFAULT_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker)Blocks.DISPENSER).bz_invokeGetBehavior(new ItemStack(POTION_OF_BEES));
-			DispenserBlock.registerDispenseBehavior(POTION_OF_BEES, BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); // adds compatibility with bee potions in dispensers
+			PotionOfBeesBeePotionDispenseBehavior.DEFAULT_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker)Blocks.DISPENSER).bz_invokeGetDispenseMethod(new ItemStack(POTION_OF_BEES));
+			DispenserBlock.registerBehavior(POTION_OF_BEES, BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); // adds compatibility with bee potions in dispensers
 		}
 		if (SPLASH_POTION_OF_BEES != null && Bumblezone.BzModCompatibilityConfig.allowSplashPotionOfBeesCompat.get()) {
-			PotionOfBeesBeePotionDispenseBehavior.DEFAULT_SPLASH_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker)Blocks.DISPENSER).bz_invokeGetBehavior(new ItemStack(SPLASH_POTION_OF_BEES));
-			DispenserBlock.registerDispenseBehavior(SPLASH_POTION_OF_BEES, BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); // adds compatibility with bee splash potion in dispensers
+			PotionOfBeesBeePotionDispenseBehavior.DEFAULT_SPLASH_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker)Blocks.DISPENSER).bz_invokeGetDispenseMethod(new ItemStack(SPLASH_POTION_OF_BEES));
+			DispenserBlock.registerBehavior(SPLASH_POTION_OF_BEES, BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); // adds compatibility with bee splash potion in dispensers
 		}
 
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
@@ -61,17 +61,17 @@ public class PotionOfBeesCompat
 		Entity thrownEntity = event.getEntity(); 
 
 		if(thrownEntity.getType().equals(SPLASH_POTION_OF_BEES_ENTITY)) {
-			World world = thrownEntity.world; // world we threw in
-			Vector3d hitBlockPos = event.getRayTraceResult().getHitVec(); //position of the collision
+			World world = thrownEntity.level; // world we threw in
+			Vector3d hitBlockPos = event.getRayTraceResult().getLocation(); //position of the collision
 			BlockPos originalPosition = new BlockPos(hitBlockPos);
-			BlockPos.Mutable position = new BlockPos.Mutable().setPos(originalPosition);
+			BlockPos.Mutable position = new BlockPos.Mutable().set(originalPosition);
 			BlockState block;
 			
 			//revive nearby larva blocks
 			for(int x = -1; x <= 1; x++) {
 				for(int y = -1; y <= 1; y++) {
 					for(int z = -1; z <= 1; z++) {
-						position.setPos(originalPosition).move(x, y, z);
+						position.set(originalPosition).move(x, y, z);
 						block = world.getBlockState(position);
 						
 						if(block.getBlock().equals(BzBlocks.EMPTY_HONEYCOMB_BROOD.get())) {
@@ -84,9 +84,9 @@ public class PotionOfBeesCompat
 	}
 
 	private static void reviveLarvaBlock(World world, BlockState state, BlockPos position) {
-		world.setBlockState(position, 
-				BzBlocks.HONEYCOMB_BROOD.get().getDefaultState()
-				.with(BlockStateProperties.FACING, state.get(BlockStateProperties.FACING))
-				.with(HoneycombBrood.STAGE, world.rand.nextInt(3)));
+		world.setBlockAndUpdate(position, 
+				BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+				.setValue(BlockStateProperties.FACING, state.getValue(BlockStateProperties.FACING))
+				.setValue(HoneycombBrood.STAGE, world.random.nextInt(3)));
 	}
 }

@@ -18,7 +18,7 @@ public class HoneyCrystalShield extends ShieldItem {
 
     public HoneyCrystalShield() {
         //starts off with 20 durability so it is super weak
-        super(new Item.Properties().maxDamage(20).group(BzItems.BUMBLEZONE_CREATIVE_TAB));
+        super(new Item.Properties().durability(20).tab(BzItems.BUMBLEZONE_CREATIVE_TAB));
     }
 
     /**
@@ -34,7 +34,7 @@ public class HoneyCrystalShield extends ShieldItem {
      * Specify what item can repair this shield
      */
     @Override
-    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
         return BZItemTags.HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS.contains(repair.getItem());
     }
 
@@ -43,10 +43,10 @@ public class HoneyCrystalShield extends ShieldItem {
      */
     // CLIENT-SIDED
     @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (stack.hasTag()) {
             int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
-            tooltip.add(new TranslationTextComponent("item.the_bumblezone.honey_crystal_shield.level_tooltip").appendString(": " + (repairLevel + 1)));
+            tooltip.add(new TranslationTextComponent("item.the_bumblezone.honey_crystal_shield.level_tooltip").append(": " + (repairLevel + 1)));
         }
     }
 
@@ -95,6 +95,6 @@ public class HoneyCrystalShield extends ShieldItem {
         if(enchantment == Enchantments.MENDING)
             return false;
 
-        return enchantment.type.canEnchantItem(stack.getItem());
+        return enchantment.category.canEnchant(stack.getItem());
     }
 }

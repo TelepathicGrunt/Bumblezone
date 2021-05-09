@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(PlayerEntity.class)
 public class PlayerDamagedMixin {
     //bees attacks bear mobs that is in the dimension
-    @Inject(method = "attackEntityFrom",
+    @Inject(method = "hurt",
             at = @At(value = "HEAD"),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)

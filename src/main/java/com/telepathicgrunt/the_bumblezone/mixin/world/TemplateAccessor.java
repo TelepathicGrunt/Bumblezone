@@ -9,6 +9,6 @@ import java.util.List;
 @Mixin(Template.class)
 public interface TemplateAccessor {
 
-    @Accessor("blocks")
+    @Accessor("palettes")
     List<Template.Palette> bz_getBlocks();
 }

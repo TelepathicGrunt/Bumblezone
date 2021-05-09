@@ -26,17 +26,17 @@ public class EmptyBucketDispenseBehavior extends DefaultDispenseItemBehavior {
      * Dispense the specified stack, play the dispense sound and spawn particles.
      */
     @Override
-    public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-        World world = source.getWorld();
+    public ItemStack execute(IBlockSource source, ItemStack stack) {
+        World world = source.getLevel();
         IPosition iposition = DispenserBlock.getDispensePosition(source);
         BlockPos position = new BlockPos(iposition);
         BlockState blockstate = world.getBlockState(position);
 
-        if (blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL.get() && blockstate.get(BlockStateProperties.WATERLOGGED)) {
+        if (blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL.get() && blockstate.getValue(BlockStateProperties.WATERLOGGED)) {
 
-            world.setBlockState(position, BzBlocks.HONEY_CRYSTAL.get().getDefaultState()
-                    .with(BlockStateProperties.FACING, blockstate.get(BlockStateProperties.FACING))
-                    .with(BlockStateProperties.WATERLOGGED, false));
+            world.setBlockAndUpdate(position, BzBlocks.HONEY_CRYSTAL.get().defaultBlockState()
+                    .setValue(BlockStateProperties.FACING, blockstate.getValue(BlockStateProperties.FACING))
+                    .setValue(BlockStateProperties.WATERLOGGED, false));
 
             stack.shrink(1);
 
@@ -56,8 +56,8 @@ public class EmptyBucketDispenseBehavior extends DefaultDispenseItemBehavior {
      * Play the dispense sound from the specified block.
      */
     @Override
-    protected void playDispenseSound(IBlockSource source) {
-        source.getWorld().playEvent(1002, source.getBlockPos(), 0);
+    protected void playSound(IBlockSource source) {
+        source.getLevel().levelEvent(1002, source.getPos(), 0);
     }
 
 
@@ -65,10 +65,10 @@ public class EmptyBucketDispenseBehavior extends DefaultDispenseItemBehavior {
      * Adds honey bottle to dispenser or if no room, dispense it
      */
     private static void addItemToDispenser(IBlockSource source, Item newItem) {
-        if (source.getBlockTileEntity() instanceof DispenserTileEntity) {
-			DispenserTileEntity dispenser = source.getBlockTileEntity();
+        if (source.getEntity() instanceof DispenserTileEntity) {
+			DispenserTileEntity dispenser = source.getEntity();
             ItemStack honeyBottle = new ItemStack(newItem);
-            if (!HopperTileEntity.putStackInInventoryAllSlots(null, dispenser, honeyBottle, null).isEmpty()) {
+            if (!HopperTileEntity.addItem(null, dispenser, honeyBottle, null).isEmpty()) {
                 DROP_ITEM_BEHAVIOR.dispense(source, honeyBottle);
             }
         }

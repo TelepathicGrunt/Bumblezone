@@ -11,18 +11,18 @@ public class BeeAI {
     public static CachedPathHolder smartBeesTM(BeeEntity beeEntity, CachedPathHolder cachedPathHolder){
 
         if(cachedPathHolder == null || cachedPathHolder.pathTimer > 50 || cachedPathHolder.cachedPath == null ||
-                (beeEntity.getMotion().length() <= 0.05d && cachedPathHolder.pathTimer > 5) ||
-                beeEntity.getPosition().manhattanDistance(cachedPathHolder.cachedPath.getTarget()) <= 4)
+                (beeEntity.getDeltaMovement().length() <= 0.05d && cachedPathHolder.pathTimer > 5) ||
+                beeEntity.blockPosition().distManhattan(cachedPathHolder.cachedPath.getTarget()) <= 4)
         {
             BlockPos.Mutable mutable = new BlockPos.Mutable();
-            World world = beeEntity.world;
+            World world = beeEntity.level;
 
-            for(int attempt = 0; attempt < 11 || beeEntity.getPosition().manhattanDistance(mutable) <= 5; attempt++){
+            for(int attempt = 0; attempt < 11 || beeEntity.blockPosition().distManhattan(mutable) <= 5; attempt++){
                 // pick a random place to fly to
-                mutable.setPos(beeEntity.getPosition()).move(
-                        world.rand.nextInt(21) - 10,
-                        world.rand.nextInt(21) - 10,
-                        world.rand.nextInt(21) - 10
+                mutable.set(beeEntity.blockPosition()).move(
+                        world.random.nextInt(21) - 10,
+                        world.random.nextInt(21) - 10,
+                        world.random.nextInt(21) - 10
                 );
 
                 if(world.getBlockState(mutable).isAir()){
@@ -30,8 +30,8 @@ public class BeeAI {
                 }
             }
 
-            Path newPath = beeEntity.getNavigator().getPathToPos(mutable, 1);
-            beeEntity.getNavigator().setPath(newPath, 1);
+            Path newPath = beeEntity.getNavigation().createPath(mutable, 1);
+            beeEntity.getNavigation().moveTo(newPath, 1);
 
             if(cachedPathHolder == null){
                 cachedPathHolder = new CachedPathHolder();
@@ -40,7 +40,7 @@ public class BeeAI {
             cachedPathHolder.pathTimer = 0;
         }
         else{
-            beeEntity.getNavigator().setPath(cachedPathHolder.cachedPath, 1);
+            beeEntity.getNavigation().moveTo(cachedPathHolder.cachedPath, 1);
             cachedPathHolder.pathTimer += 1;
         }
 

@@ -18,21 +18,21 @@ public class SpiderInfestedBeeDungeon extends NbtFeature{
     }
 
     @Override
-    public boolean generate(ISeedReader world, ChunkGenerator generator, Random random, BlockPos position, NbtFeatureConfig config) {
+    public boolean place(ISeedReader world, ChunkGenerator generator, Random random, BlockPos position, NbtFeatureConfig config) {
         //affect rarity
         if (Bumblezone.BzDungeonsConfig.spiderInfestedBeeDungeonRarity.get() >= 1000 ||
             random.nextInt(Bumblezone.BzDungeonsConfig.spiderInfestedBeeDungeonRarity.get()) != 0) return false;
 
         // generate dungeon
-        super.generate(world, generator, random, position, config);
+        super.place(world, generator, random, position, config);
 
         BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable();
         for(int x = -8; x <= 12; x++) {
             for(int y = -6; y <= 10; y++) {
                 for(int z = -8; z <= 12; z++) {
-                    blockpos$Mutable.setPos(position).move(x, y, z);
+                    blockpos$Mutable.set(position).move(x, y, z);
                     if(random.nextFloat() < 0.07f && world.getBlockState(blockpos$Mutable).getBlock() == Blocks.CAVE_AIR) {
-                        world.setBlockState(blockpos$Mutable, Blocks.COBWEB.getDefaultState(), 3);
+                        world.setBlock(blockpos$Mutable, Blocks.COBWEB.defaultBlockState(), 3);
                     }
                 }
             }

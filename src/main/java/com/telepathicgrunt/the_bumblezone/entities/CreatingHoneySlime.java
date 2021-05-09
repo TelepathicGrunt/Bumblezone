@@ -19,32 +19,32 @@ import net.minecraft.world.World;
 public class CreatingHoneySlime {
     // heal bees with sugar water bottle or honey bottle
     public static void createHoneySlime(World world, PlayerEntity playerEntity, Hand hand, Entity target) {
-        ItemStack itemstack = playerEntity.getHeldItem(hand);
-        if (!world.isRemote && target.getType().equals(EntityType.SLIME) && BZItemTags.TURN_SLIME_TO_HONEY_SLIME.contains(itemstack.getItem())) {
+        ItemStack itemstack = playerEntity.getItemInHand(hand);
+        if (!world.isClientSide && target.getType().equals(EntityType.SLIME) && BZItemTags.TURN_SLIME_TO_HONEY_SLIME.contains(itemstack.getItem())) {
 
             SlimeEntity slimeEntity = (SlimeEntity)target;
-            int slimeSize = slimeEntity.getSlimeSize();
+            int slimeSize = slimeEntity.getSize();
             HoneySlimeEntity honeySlimeMob = BzEntities.HONEY_SLIME.get().create(world);
             if(honeySlimeMob == null || slimeSize > 2) return;
 
-            honeySlimeMob.setLocationAndAngles(
-                    target.getPosX(),
-                    target.getPosY(),
-                    target.getPosZ(),
-                    target.rotationYaw,
-                    target.rotationPitch);
+            honeySlimeMob.moveTo(
+                    target.getX(),
+                    target.getY(),
+                    target.getZ(),
+                    target.yRot,
+                    target.xRot);
 
-            honeySlimeMob.setChild(slimeSize == 1);
-            honeySlimeMob.onInitialSpawn((IServerWorld) world, world.getDifficultyForLocation(new BlockPos(honeySlimeMob.getPositionVec())), SpawnReason.TRIGGERED, null, null);
-            world.addEntity(honeySlimeMob);
+            honeySlimeMob.setBaby(slimeSize == 1);
+            honeySlimeMob.finalizeSpawn((IServerWorld) world, world.getCurrentDifficultyAt(new BlockPos(honeySlimeMob.position())), SpawnReason.TRIGGERED, null, null);
+            world.addFreshEntity(honeySlimeMob);
             target.remove();
 
             world.playSound(
                     playerEntity,
-                    playerEntity.getPosX(),
-                    playerEntity.getPosY(),
-                    playerEntity.getPosZ(),
-                    SoundEvents.BLOCK_SLIME_BLOCK_STEP,
+                    playerEntity.getX(),
+                    playerEntity.getY(),
+                    playerEntity.getZ(),
+                    SoundEvents.SLIME_BLOCK_STEP,
                     SoundCategory.NEUTRAL,
                     1.0F,
                     1.0F);

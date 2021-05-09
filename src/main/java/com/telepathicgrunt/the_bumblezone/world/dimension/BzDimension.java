@@ -6,7 +6,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class BzDimension {
-    public static final RegistryKey<World> BZ_WORLD_KEY = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, Bumblezone.MOD_DIMENSION_ID);
+    public static final RegistryKey<World> BZ_WORLD_KEY = RegistryKey.create(Registry.DIMENSION_REGISTRY, Bumblezone.MOD_DIMENSION_ID);
 
     public static void setupDimension() {
         BzChunkGenerator.registerChunkgenerator();

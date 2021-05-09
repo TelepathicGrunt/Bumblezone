@@ -21,20 +21,20 @@ public class BeeDungeonPlacer extends Placement<NoPlacementConfig> {
     @Override
     public Stream<BlockPos> getPositions(WorldDecoratingHelper context, Random random, NoPlacementConfig placementConfig, BlockPos pos) {
         ArrayList<BlockPos> validPositions = new ArrayList<>();
-        BlockPos.Mutable mutable = new BlockPos.Mutable().setPos(pos);
+        BlockPos.Mutable mutable = new BlockPos.Mutable().set(pos);
         boolean validSpot;
 
         for (int currentAttempt = 0; currentAttempt <= 10; currentAttempt++) {
             validSpot = false;
             int x = random.nextInt(4) + pos.getX() + 6;
             int z = random.nextInt(4) + pos.getZ() + 6;
-            int y = random.nextInt(context.func_242891_a() - 10 - context.func_242895_b()) + context.func_242895_b() + 2;
+            int y = random.nextInt(context.getGenDepth() - 10 - context.getSeaLevel()) + context.getSeaLevel() + 2;
 
             //find a cave air spot
             for (Direction face : Direction.Plane.HORIZONTAL) {
-                mutable.setPos(x, y, z).move(face, 3);
+                mutable.set(x, y, z).move(face, 3);
 
-                if (context.func_242894_a(mutable).getBlock() == Blocks.CAVE_AIR)
+                if (context.getBlockState(mutable).getBlock() == Blocks.CAVE_AIR)
                     validSpot = true;
             }
 
@@ -42,17 +42,17 @@ public class BeeDungeonPlacer extends Placement<NoPlacementConfig> {
             for (int xOffset = -6; xOffset <= 6; xOffset += 6) {
                 for (int zOffset = -6; zOffset <= 6; zOffset += 6) {
                     for (int yOffset = -3; yOffset <= 9; yOffset += 3) {
-                        mutable.setPos(x, y, z).move(xOffset, yOffset, zOffset);
+                        mutable.set(x, y, z).move(xOffset, yOffset, zOffset);
 
-                        if (context.func_242894_a(mutable).getBlock() == Blocks.AIR)
+                        if (context.getBlockState(mutable).getBlock() == Blocks.AIR)
                             validSpot = false;
                     }
                 }
             }
 
 
-            mutable.setPos(x, y, z);
-            if (validSpot && context.func_242894_a(mutable).isSolid()) {
+            mutable.set(x, y, z);
+            if (validSpot && context.getBlockState(mutable).canOcclude()) {
                 validPositions.add(mutable);
                 return validPositions.stream();
             }

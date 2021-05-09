@@ -13,7 +13,7 @@ import net.minecraft.pathfinding.GroundPathNavigator;
 import java.util.EnumSet;
 
 public class TemptGoal extends Goal {
-    private static final EntityPredicate ENTITY_PREDICATE = (new EntityPredicate()).setDistance(10.0D).allowInvulnerable().allowFriendlyFire().setSkipAttackChecks().setLineOfSiteRequired();
+    private static final EntityPredicate ENTITY_PREDICATE = (new EntityPredicate()).range(10.0D).allowInvulnerable().allowSameTeam().allowNonAttackable().allowUnseeable();
     protected final HoneySlimeEntity slime;
     private double targetX;
     private double targetY;
@@ -27,8 +27,8 @@ public class TemptGoal extends Goal {
     public TemptGoal(HoneySlimeEntity creatureIn, double speedIn, Ingredient temptItemsIn) {
         this.slime = creatureIn;
         this.temptItem = temptItemsIn;
-        this.setMutexFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE, Goal.Flag.LOOK));
-        if (!(creatureIn.getNavigator() instanceof GroundPathNavigator) && !(creatureIn.getNavigator() instanceof FlyingPathNavigator)) {
+        this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE, Goal.Flag.LOOK));
+        if (!(creatureIn.getNavigation() instanceof GroundPathNavigator) && !(creatureIn.getNavigation() instanceof FlyingPathNavigator)) {
             throw new IllegalArgumentException("Unsupported mob type for TemptGoal");
         }
     }
@@ -36,16 +36,16 @@ public class TemptGoal extends Goal {
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
-    public boolean shouldExecute() {
+    public boolean canUse() {
         if (this.delayTemptCounter > 0) {
             --this.delayTemptCounter;
             return false;
         } else {
-            this.closestPlayer = this.slime.world.getClosestPlayer(ENTITY_PREDICATE, this.slime);
+            this.closestPlayer = this.slime.level.getNearestPlayer(ENTITY_PREDICATE, this.slime);
             if (this.closestPlayer == null) {
                 return false;
             } else {
-                return this.isTempting(this.closestPlayer.getHeldItemMainhand()) || this.isTempting(this.closestPlayer.getHeldItemOffhand());
+                return this.isTempting(this.closestPlayer.getMainHandItem()) || this.isTempting(this.closestPlayer.getOffhandItem());
             }
         }
     }
@@ -57,27 +57,27 @@ public class TemptGoal extends Goal {
     /**
      * Returns whether an in-progress EntityAIBase should continue executing
      */
-    public boolean shouldContinueExecuting() {
+    public boolean canContinueToUse() {
         if (this.isScaredByPlayerMovement()) {
-            if (this.slime.getDistanceSq(this.closestPlayer) < 36.0D) {
-                if (this.closestPlayer.getDistanceSq(this.targetX, this.targetY, this.targetZ) > 0.010000000000000002D) {
+            if (this.slime.distanceToSqr(this.closestPlayer) < 36.0D) {
+                if (this.closestPlayer.distanceToSqr(this.targetX, this.targetY, this.targetZ) > 0.010000000000000002D) {
                     return false;
                 }
 
-                if (Math.abs((double)this.closestPlayer.rotationPitch - this.rotationPitch) > 5.0D || Math.abs((double)this.closestPlayer.rotationYaw - this.rotationYaw) > 5.0D) {
+                if (Math.abs((double)this.closestPlayer.xRot - this.rotationPitch) > 5.0D || Math.abs((double)this.closestPlayer.yRot - this.rotationYaw) > 5.0D) {
                     return false;
                 }
             } else {
-                this.targetX = this.closestPlayer.getPosX();
-                this.targetY = this.closestPlayer.getPosY();
-                this.targetZ = this.closestPlayer.getPosZ();
+                this.targetX = this.closestPlayer.getX();
+                this.targetY = this.closestPlayer.getY();
+                this.targetZ = this.closestPlayer.getZ();
             }
 
-            this.rotationPitch = this.closestPlayer.rotationPitch;
-            this.rotationYaw = this.closestPlayer.rotationYaw;
+            this.rotationPitch = this.closestPlayer.xRot;
+            this.rotationYaw = this.closestPlayer.yRot;
         }
 
-        return this.shouldExecute();
+        return this.canUse();
     }
 
     protected boolean isScaredByPlayerMovement() {
@@ -88,17 +88,17 @@ public class TemptGoal extends Goal {
      * Execute a one shot task or start executing a continuous task
      */
     public void start() {
-        this.targetX = this.closestPlayer.getPosX();
-        this.targetY = this.closestPlayer.getPosY();
-        this.targetZ = this.closestPlayer.getPosZ();
+        this.targetX = this.closestPlayer.getX();
+        this.targetY = this.closestPlayer.getY();
+        this.targetZ = this.closestPlayer.getZ();
     }
 
     /**
      * Reset the task's internal state. Called when this task is interrupted by another one
      */
-    public void resetTask() {
+    public void stop() {
         this.closestPlayer = null;
-        this.slime.getNavigator().clearPath();
+        this.slime.getNavigation().stop();
         this.delayTemptCounter = 100;
     }
 
@@ -106,13 +106,13 @@ public class TemptGoal extends Goal {
      * Keep ticking a continuous task that has already been started
      */
     public void tick() {
-        this.slime.getLookController().setLookPositionWithEntity(this.closestPlayer, (float)(this.slime.getHorizontalFaceSpeed() + 20), (float)this.slime.getVerticalFaceSpeed());
-        if (this.slime.getDistanceSq(this.closestPlayer) < 6.25D) {
-            this.slime.getNavigator().clearPath();
+        this.slime.getLookControl().setLookAt(this.closestPlayer, (float)(this.slime.getMaxHeadYRot() + 20), (float)this.slime.getMaxHeadXRot());
+        if (this.slime.distanceToSqr(this.closestPlayer) < 6.25D) {
+            this.slime.getNavigation().stop();
         } else {
-            this.slime.faceEntity(this.closestPlayer, 10.0F, 10.0F);
-            ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setDirection(this.slime.rotationYaw, true);
-            ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setSpeed(1.0D);
+            this.slime.lookAt(this.closestPlayer, 10.0F, 10.0F);
+            ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.yRot, true);
+            ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setSpeed(1.0D);
         }
 
     }

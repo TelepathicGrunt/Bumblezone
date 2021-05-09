@@ -28,6 +28,9 @@ repositories {
 	flatDir {
 		dirs 'deps'
 	}
+	maven {
+		url "https://nexus.resourcefulbees.com/repository/maven-public/"
+	}
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -45,7 +48,7 @@ archivesBaseName = 'the_bumblezone'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-	mappings channel: "snapshot", version: "${mappings_version}"
+	mappings channel:"official", version:"1.16.5"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
@@ -81,6 +84,7 @@ dependencies {
 	implementation fg.deobf("ignored:abnormals_core-1.16.5:3.1.1")
 	implementation fg.deobf("ignored:pokecube-aio-1.16.5:3.11.4")
 	implementation fg.deobf("ignored:charm-forge-1.16.5:2.3.2")
+	implementation fg.deobf("com.telepathicgrunt:Blame:1.16.5-3.0.0-forge")
 
 	compileOnly fg.deobf("mezz.jei:jei-1.16.3:7.6.0.49:api")
 	runtimeOnly fg.deobf("mezz.jei:jei-1.16.3:7.6.0.49")

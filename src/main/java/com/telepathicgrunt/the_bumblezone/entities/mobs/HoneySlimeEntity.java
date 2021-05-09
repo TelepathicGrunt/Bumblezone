@@ -42,11 +42,11 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
     * Special thanks to Bagel for the Honey Slime code and texture!
     */
 
-   private static final DataParameter<Boolean> IN_HONEY = EntityDataManager.createKey(HoneySlimeEntity.class, DataSerializers.BOOLEAN);
-   private static final DataParameter<Integer> IN_HONEY_GROWTH_TIME = EntityDataManager.createKey(HoneySlimeEntity.class, DataSerializers.VARINT);
-   private static final Ingredient BREEDING_ITEM = Ingredient.fromItems(Items.SUGAR);
-   private static final DataParameter<Integer> ANGRY_TIMER = EntityDataManager.createKey(HoneySlimeEntity.class, DataSerializers.VARINT);
-   private static final RangedInteger MAX_ANGER_DURATION = TickRangeConverter.convertRange(10, 22);
+   private static final DataParameter<Boolean> IN_HONEY = EntityDataManager.defineId(HoneySlimeEntity.class, DataSerializers.BOOLEAN);
+   private static final DataParameter<Integer> IN_HONEY_GROWTH_TIME = EntityDataManager.defineId(HoneySlimeEntity.class, DataSerializers.INT);
+   private static final Ingredient BREEDING_ITEM = Ingredient.of(Items.SUGAR);
+   private static final DataParameter<Integer> ANGRY_TIMER = EntityDataManager.defineId(HoneySlimeEntity.class, DataSerializers.INT);
+   private static final RangedInteger MAX_ANGER_DURATION = TickRangeConverter.rangeOfSeconds(10, 22);
    private UUID target_UUID;
 
 
@@ -69,7 +69,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
 
    public HoneySlimeEntity(EntityType<? extends HoneySlimeEntity> type, World worldIn) {
       super(type, worldIn);
-      this.moveController = new HoneySlimeMoveHelperController(this);
+      this.moveControl = new HoneySlimeMoveHelperController(this);
    }
 
    @Override
@@ -83,61 +83,61 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    }
 
    @Override
-   public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-      this.setSlimeSize(this.isChild() ? 1 : 2, true);
-      return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+   public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+      this.setSlimeSize(this.isBaby() ? 1 : 2, true);
+      return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
    }
 
    @Override
-   protected void registerData() {
-      super.registerData();
-      this.dataManager.register(IN_HONEY, false);
-      this.dataManager.register(IN_HONEY_GROWTH_TIME, 0);
-      this.dataManager.register(ANGRY_TIMER, 0);
+   protected void defineSynchedData() {
+      super.defineSynchedData();
+      this.entityData.define(IN_HONEY, false);
+      this.entityData.define(IN_HONEY_GROWTH_TIME, 0);
+      this.entityData.define(ANGRY_TIMER, 0);
    }
 
    @Override
-   public void notifyDataManagerChange(DataParameter<?> key) {
-      this.recalculateSize();
-      this.rotationYaw = this.rotationYawHead;
-      this.renderYawOffset = this.rotationYawHead;
-      if (this.isInWater() && this.rand.nextInt(20) == 0) {
+   public void onSyncedDataUpdated(DataParameter<?> key) {
+      this.refreshDimensions();
+      this.yRot = this.yHeadRot;
+      this.yBodyRot = this.yHeadRot;
+      if (this.isInWater() && this.random.nextInt(20) == 0) {
          this.doWaterSplashEffect();
       }
-      super.notifyDataManagerChange(key);
+      super.onSyncedDataUpdated(key);
    }
 
    @Override
-   public void writeAdditional(CompoundNBT compound) {
-      super.writeAdditional(compound);
+   public void addAdditionalSaveData(CompoundNBT compound) {
+      super.addAdditionalSaveData(compound);
       compound.putBoolean("inHoney", this.isInHoney());
       compound.putInt("inHoneyGrowthTimer", this.getInHoneyGrowthTime());
       compound.putBoolean("wasOnGround", this.wasOnGround);
    }
 
    @Override
-   public void readAdditional(CompoundNBT compound) {
-      super.readAdditional(compound);
+   public void readAdditionalSaveData(CompoundNBT compound) {
+      super.readAdditionalSaveData(compound);
       this.setInHoney(compound.getBoolean("inHoney"));
       this.setInHoneyGrowthTime(compound.getInt("inHoneyGrowthTimer"));
       this.wasOnGround = compound.getBoolean("wasOnGround");
    }
 
    public static AttributeModifierMap.MutableAttribute getAttributeBuilder() {
-	 return MobEntity.func_233666_p_()
-             .createMutableAttribute(Attributes.MAX_HEALTH, 40.0D)
-             .createMutableAttribute(Attributes.MOVEMENT_SPEED, 2.0D)
-             .createMutableAttribute(Attributes.ATTACK_DAMAGE, 1.0D);
+	 return MobEntity.createMobAttributes()
+             .add(Attributes.MAX_HEALTH, 40.0D)
+             .add(Attributes.MOVEMENT_SPEED, 2.0D)
+             .add(Attributes.ATTACK_DAMAGE, 1.0D);
    }
 
    @Override
-   public boolean canSpawn(IWorld world, SpawnReason spawnReason) {
+   public boolean checkSpawnRules(IWorld world, SpawnReason spawnReason) {
       return true;
    }
 
    protected void setSlimeSize(int size, boolean resetHealth) {
-      this.recenterBoundingBox();
-      this.recalculateSize();
+      this.reapplyPosition();
+      this.refreshDimensions();
       Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(size * size);
       Objects.requireNonNull(this.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue((0.2F + 0.1F * (float)size)*2);
       Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(size);
@@ -145,29 +145,29 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
          this.setHealth(this.getMaxHealth());
       }
 
-      this.experienceValue = size;
+      this.xpReward = size;
    }
 
    public boolean isInHoney() {
-      return this.dataManager.get(IN_HONEY);
+      return this.entityData.get(IN_HONEY);
    }
 
    public void setInHoney(boolean value) {
-      this.dataManager.set(IN_HONEY, value);
+      this.entityData.set(IN_HONEY, value);
    }
 
    public int getInHoneyGrowthTime() {
-      return this.dataManager.get(IN_HONEY_GROWTH_TIME);
+      return this.entityData.get(IN_HONEY_GROWTH_TIME);
    }
 
    public void setInHoneyGrowthTime(int value) {
-      this.dataManager.set(IN_HONEY_GROWTH_TIME, value);
+      this.entityData.set(IN_HONEY_GROWTH_TIME, value);
    }
 
    @Override
-   public boolean onLivingFall(float distance, float damageMultiplier) {
+   public boolean causeFallDamage(float distance, float damageMultiplier) {
       if (distance > 1.0F) {
-         this.playSound(SoundEvents.BLOCK_SLIME_BLOCK_STEP, 0.4F, 1.0F);
+         this.playSound(SoundEvents.SLIME_BLOCK_STEP, 0.4F, 1.0F);
       }
 
       int fallDamage = this.calculateFallDamage(distance, damageMultiplier);
@@ -178,35 +178,35 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
       if (fallDamage <= 0) {
          return false;
       } else {
-         this.attackEntityFrom(DamageSource.FALL, (float)fallDamage);
-         this.playFallSound();
+         this.hurt(DamageSource.FALL, (float)fallDamage);
+         this.playBlockFallSound();
          return true;
       }
    }
 
    @Override
-   public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
-      ItemStack itemstack = player.getHeldItem(hand);
-      World world = player.getEntityWorld();
-      if (!this.isChild() && this.isInHoney()) {
+   public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+      ItemStack itemstack = player.getItemInHand(hand);
+      World world = player.getCommandSenderWorld();
+      if (!this.isBaby() && this.isInHoney()) {
          //Bottling
          if (itemstack.getItem() == Items.GLASS_BOTTLE) {
-            world.playSound(player, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-            if (!player.abilities.isCreativeMode) {
+            world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            if (!player.abilities.instabuild) {
                itemstack.shrink(1);
                if (itemstack.isEmpty()) {
-                  player.setHeldItem(hand, new ItemStack(Items.HONEY_BOTTLE));
-               } else if (!player.inventory.addItemStackToInventory(new ItemStack(Items.HONEY_BOTTLE))) {
-                  player.dropItem(new ItemStack(Items.HONEY_BOTTLE), false);
+                  player.setItemInHand(hand, new ItemStack(Items.HONEY_BOTTLE));
+               } else if (!player.inventory.add(new ItemStack(Items.HONEY_BOTTLE))) {
+                  player.drop(new ItemStack(Items.HONEY_BOTTLE), false);
                }
             }
 
-            this.setRevengeTarget(player);
+            this.setLastHurtByMob(player);
             getHoneyFromSlime(this);
             return ActionResultType.SUCCESS;
          }
       }
-      return super.func_230254_b_(player, hand);
+      return super.mobInteract(player, hand);
    }
 
    private void getHoneyFromSlime(LivingEntity entity) {
@@ -226,14 +226,14 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
 
          if (spawnCustomParticles()) i = 0; // don't spawn particles if it's handled by the implementation itself
          for (int j = 0; j < i * 8; ++j) {
-            float f = this.rand.nextFloat() * ((float) Math.PI * 2F);
-            float f1 = this.rand.nextFloat() * 0.5F + 0.5F;
+            float f = this.random.nextFloat() * ((float) Math.PI * 2F);
+            float f1 = this.random.nextFloat() * 0.5F + 0.5F;
             float f2 = MathHelper.sin(f) * (float) i * 0.5F * f1;
             float f3 = MathHelper.cos(f) * (float) i * 0.5F * f1;
-            this.world.addParticle(new ItemParticleData(ParticleTypes.ITEM, new ItemStack(Blocks.HONEY_BLOCK)), this.getPosX() + (double) f2, this.getPosY(), this.getPosZ() + (double) f3, 0.0D, 0.0D, 0.0D);
+            this.level.addParticle(new ItemParticleData(ParticleTypes.ITEM, new ItemStack(Blocks.HONEY_BLOCK)), this.getX() + (double) f2, this.getY(), this.getZ() + (double) f3, 0.0D, 0.0D, 0.0D);
          }
 
-         this.playSound(this.getSquishSound(), this.getSoundVolume(), ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) / 0.8F);
+         this.playSound(this.getSquishSound(), this.getSoundVolume(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
          this.squishAmount = -0.5F;
       } else if (!this.onGround && this.wasOnGround) {
          this.squishAmount = 1.0F;
@@ -246,14 +246,14 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
 
 
    @Override
-   public void livingTick() {
-      super.livingTick();
+   public void aiStep() {
+      super.aiStep();
       if (this.isAlive()) {
          if (!isInHoney()) {
             setInHoneyGrowthTime(getInHoneyGrowthTime() + 1);
 
-            if(!this.world.isRemote && HONEY_BASED_BLOCKS.contains(this.world.getBlockState(this.getPosition().down()).getBlock())){
-               if(this.rand.nextFloat() < 0.001)
+            if(!this.level.isClientSide && HONEY_BASED_BLOCKS.contains(this.level.getBlockState(this.blockPosition().below()).getBlock())){
+               if(this.random.nextFloat() < 0.001)
                   setInHoneyGrowthTime(0);
             }
          }
@@ -262,19 +262,19 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    }
 
    @Override
-   protected void updateAITasks() {
-      if (!this.world.isRemote) {
-         this.func_241359_a_((ServerWorld)this.world, false);
+   protected void customServerAiStep() {
+      if (!this.level.isClientSide) {
+         this.updatePersistentAnger((ServerWorld)this.level, false);
       }
    }
 
    @Override
-   public boolean isBreedingItem(ItemStack stack) {
+   public boolean isFood(ItemStack stack) {
       return BREEDING_ITEM.test(stack);
    }
 
    @Override
-   public AgeableEntity func_241840_a(ServerWorld worldIn, AgeableEntity ageable) {
+   public AgeableEntity getBreedOffspring(ServerWorld worldIn, AgeableEntity ageable) {
       HoneySlimeEntity childHoneySlimeEntity = BzEntities.HONEY_SLIME.get().create(worldIn);
 
       if (childHoneySlimeEntity != null)
@@ -284,9 +284,9 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    }
 
    @Override
-   protected void onGrowingAdult() {
-      super.onGrowingAdult();
-      if (!this.isChild()) {
+   protected void ageBoundaryReached() {
+      super.ageBoundaryReached();
+      if (!this.isBaby()) {
          this.setSlimeSize(2, true);
       }
    }
@@ -294,20 +294,20 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    protected void dealDamage(LivingEntity entityIn) {
       if (this.isAlive()) {
          int i = 2;
-         if (this.getDistanceSq(entityIn) < 0.6D * (double) i * 0.6D * (double) i && this.canEntityBeSeen(entityIn) && entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), this.getAttackStrength())) {
-            this.playSound(SoundEvents.ENTITY_SLIME_ATTACK, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-            this.applyEnchantments(this, entityIn);
+         if (this.distanceToSqr(entityIn) < 0.6D * (double) i * 0.6D * (double) i && this.canSee(entityIn) && entityIn.hurt(DamageSource.mobAttack(this), this.getAttackStrength())) {
+            this.playSound(SoundEvents.SLIME_ATTACK, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+            this.doEnchantDamageEffects(this, entityIn);
          }
       }
    }
 
    public boolean canDamagePlayer() {
-      return !this.isChild() && this.isServerWorld();
+      return !this.isBaby() && this.isEffectiveAi();
    }
 
    @Override
-   public void onCollideWithPlayer(PlayerEntity entityIn) {
-      if (this.canDamagePlayer() && this.getAttackTarget() == entityIn) {
+   public void playerTouch(PlayerEntity entityIn) {
+      if (this.canDamagePlayer() && this.getTarget() == entityIn) {
          this.dealDamage(entityIn);
       }
    }
@@ -324,17 +324,17 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    }
 
    @Override
-   public void recalculateSize() {
-      double d0 = this.getPosX();
-      double d1 = this.getPosY();
-      double d2 = this.getPosZ();
-      super.recalculateSize();
-      this.setPosition(d0, d1, d2);
+   public void refreshDimensions() {
+      double d0 = this.getX();
+      double d1 = this.getY();
+      double d2 = this.getZ();
+      super.refreshDimensions();
+      this.setPos(d0, d1, d2);
    }
 
    @Override
-   public boolean canBeLeashedTo(PlayerEntity player) {
-      return !this.getLeashed() && this.attackingPlayer != player;
+   public boolean canBeLeashed(PlayerEntity player) {
+      return !this.isLeashed() && this.lastHurtByPlayer != player;
    }
 
    protected void alterSquishAmount() {
@@ -342,7 +342,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    }
 
    public int getJumpDelay() {
-      return this.rand.nextInt(20) + 10;
+      return this.random.nextInt(20) + 10;
    }
 
    protected float getAttackStrength() {
@@ -350,44 +350,44 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    }
 
    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-      return this.isChild() ? SoundEvents.ENTITY_SLIME_HURT_SMALL : SoundEvents.ENTITY_SLIME_HURT;
+      return this.isBaby() ? SoundEvents.SLIME_HURT_SMALL : SoundEvents.SLIME_HURT;
    }
 
    protected SoundEvent getDeathSound() {
-      return this.isChild() ? SoundEvents.ENTITY_SLIME_DEATH_SMALL : SoundEvents.ENTITY_SLIME_DEATH;
+      return this.isBaby() ? SoundEvents.SLIME_DEATH_SMALL : SoundEvents.SLIME_DEATH;
    }
 
    protected SoundEvent getSquishSound() {
-      return this.isChild() ? SoundEvents.ENTITY_SLIME_SQUISH_SMALL : SoundEvents.ENTITY_SLIME_SQUISH;
+      return this.isBaby() ? SoundEvents.SLIME_SQUISH_SMALL : SoundEvents.SLIME_SQUISH;
    }
 
    @Override
-   protected ResourceLocation getLootTable() {
-      return this.isChild() ? this.getType().getLootTable() : LootTables.EMPTY;
+   protected ResourceLocation getDefaultLootTable() {
+      return this.isBaby() ? this.getType().getDefaultLootTable() : LootTables.EMPTY;
    }
 
    @Override
    public float getSoundVolume() {
-      return 0.4F * (float) (isChild() ? 1 : 2);
+      return 0.4F * (float) (isBaby() ? 1 : 2);
    }
 
    @Override
-   public int getVerticalFaceSpeed() {
+   public int getMaxHeadXRot() {
       return 0;
    }
 
    public boolean makesSoundOnJump() {
-      return !this.isChild();
+      return !this.isBaby();
    }
 
-   protected void jump() {
-      Vector3d vec3d = this.getMotion();
-      this.setMotion(vec3d.x, this.getJumpUpwardsMotion(), vec3d.z);
-      this.isAirBorne = true;
+   protected void jumpFromGround() {
+      Vector3d vec3d = this.getDeltaMovement();
+      this.setDeltaMovement(vec3d.x, this.getJumpPower(), vec3d.z);
+      this.hasImpulse = true;
    }
 
    public SoundEvent getJumpSound() {
-      return this.isChild() ? SoundEvents.ENTITY_SLIME_JUMP_SMALL : SoundEvents.ENTITY_SLIME_JUMP;
+      return this.isBaby() ? SoundEvents.SLIME_JUMP_SMALL : SoundEvents.SLIME_JUMP;
    }
 
    protected boolean spawnCustomParticles() {
@@ -395,28 +395,28 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    }
 
    @Override
-   public int getAngerTime() {
-      return this.dataManager.get(ANGRY_TIMER);
+   public int getRemainingPersistentAngerTime() {
+      return this.entityData.get(ANGRY_TIMER);
    }
 
    @Override
-   public void setAngerTime(int ticks) {
-      this.dataManager.set(ANGRY_TIMER, ticks);
+   public void setRemainingPersistentAngerTime(int ticks) {
+      this.entityData.set(ANGRY_TIMER, ticks);
    }
 
    @Override
-   public UUID getAngerTarget() {
+   public UUID getPersistentAngerTarget() {
       return this.target_UUID;
    }
 
    @Override
-   public void setAngerTarget(UUID uuid) {
+   public void setPersistentAngerTarget(UUID uuid) {
       this.target_UUID = uuid;
    }
 
    @Override
-   public void func_230258_H__() {
+   public void startPersistentAngerTimer() {
       if(MAX_ANGER_DURATION != null)
-         this.setAngerTime(MAX_ANGER_DURATION.getRandomWithinRange(this.rand));
+         this.setRemainingPersistentAngerTime(MAX_ANGER_DURATION.randomValue(this.random));
    }
 }

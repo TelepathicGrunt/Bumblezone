@@ -92,9 +92,9 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 
 			if (this.getNonBZPos() != null)
 			{
-			    nbt.putDouble("NonBZ_X", this.getNonBZPos().getX());
-			    nbt.putDouble("NonBZ_Y", this.getNonBZPos().getY());
-			    nbt.putDouble("NonBZ_Z", this.getNonBZPos().getZ());
+			    nbt.putDouble("NonBZ_X", this.getNonBZPos().x());
+			    nbt.putDouble("NonBZ_Y", this.getNonBZPos().y());
+			    nbt.putDouble("NonBZ_Z", this.getNonBZPos().z());
 			}
 			nbt.putFloat("NonBZPitch", nonBZPitch);
 			nbt.putFloat("NonBZYaw", nonBZYaw);

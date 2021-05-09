@@ -14,20 +14,20 @@ import net.minecraft.world.World;
 public class ObtainSugarWaterBottle {
 
     public static boolean useBottleOnSugarWater(World world, PlayerEntity playerEntity, Hand playerHand, BlockPos blockPos) {
-        if (world.getFluidState(blockPos).getFluid() instanceof SugarWaterFluid) {
-            ItemStack itemstack = playerEntity.getHeldItem(playerHand);
+        if (world.getFluidState(blockPos).getType() instanceof SugarWaterFluid) {
+            ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
             if (itemstack.getItem() == Items.GLASS_BOTTLE) {
-                world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+                world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
                 if(!playerEntity.isCreative())
                     itemstack.shrink(1); // remove current honey bottle
 
                 if (itemstack.isEmpty()) {
-                    playerEntity.setHeldItem(playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get())); // places sugar water bottle in hand
-                } else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()))) // places sugar water bottle in inventory
+                    playerEntity.setItemInHand(playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get())); // places sugar water bottle in hand
+                } else if (!playerEntity.inventory.add(new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()))) // places sugar water bottle in inventory
                 {
-                    playerEntity.dropItem(new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()), false); // drops sugar water bottle if inventory is full
+                    playerEntity.drop(new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()), false); // drops sugar water bottle if inventory is full
                 }
 
                 return true;

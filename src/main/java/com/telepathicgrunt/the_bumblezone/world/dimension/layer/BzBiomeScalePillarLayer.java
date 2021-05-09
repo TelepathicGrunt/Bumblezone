@@ -10,7 +10,7 @@ public enum BzBiomeScalePillarLayer implements ICastleTransformer {
 
     public int apply(INoiseRandom context, int n, int e, int s, int w, int center) {
         int hive_pillar_id = BzBiomeProvider.LAYERS_BIOME_REGISTRY.getId(
-                BzBiomeProvider.LAYERS_BIOME_REGISTRY.getOrDefault(BzBiomeProvider.HIVE_PILLAR));
+                BzBiomeProvider.LAYERS_BIOME_REGISTRY.get(BzBiomeProvider.HIVE_PILLAR));
 
         if(center != hive_pillar_id){
             boolean borderingHivePillar = false;

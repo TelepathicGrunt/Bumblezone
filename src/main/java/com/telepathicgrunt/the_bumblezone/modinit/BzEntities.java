@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class BzEntities {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, Bumblezone.MODID);
 
-    public static final EntityType<HoneySlimeEntity> HONEY_SLIME_RAW = EntityType.Builder.<HoneySlimeEntity>create(HoneySlimeEntity::new, EntityClassification.CREATURE).size(0.6F, 1.99F).trackingRange(8).build("honey_slime");
+    public static final EntityType<HoneySlimeEntity> HONEY_SLIME_RAW = EntityType.Builder.<HoneySlimeEntity>of(HoneySlimeEntity::new, EntityClassification.CREATURE).sized(0.6F, 1.99F).clientTrackingRange(8).build("honey_slime");
     public static final RegistryObject<EntityType<HoneySlimeEntity>> HONEY_SLIME = ENTITIES.register("honey_slime", () -> HONEY_SLIME_RAW);
 
     public static void registerAdditionalEntityInformation() {
@@ -23,10 +23,10 @@ public class BzEntities {
     }
 
     private static void registerEntitySpawnRestrictions() {
-        EntitySpawnPlacementRegistry.register(HONEY_SLIME.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::canSpawnOn);
+        EntitySpawnPlacementRegistry.register(HONEY_SLIME.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::checkMobSpawnRules);
     }
 
     public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
-        event.put(HONEY_SLIME.get(), HoneySlimeEntity.getAttributeBuilder().create());
+        event.put(HONEY_SLIME.get(), HoneySlimeEntity.getAttributeBuilder().build());
     }
 }

@@ -10,9 +10,9 @@ public enum BzBiomePillarLayer implements ICastleTransformer {
 
     public int apply(INoiseRandom context, int n, int e, int s, int w, int center) {
 
-        if (context.random(12) == 0 && n == center && e == center && s == center && w == center) {
+        if (context.nextRandom(12) == 0 && n == center && e == center && s == center && w == center) {
             return BzBiomeProvider.LAYERS_BIOME_REGISTRY.getId(
-                    BzBiomeProvider.LAYERS_BIOME_REGISTRY.getOrDefault(BzBiomeProvider.HIVE_PILLAR));
+                    BzBiomeProvider.LAYERS_BIOME_REGISTRY.get(BzBiomeProvider.HIVE_PILLAR));
         }
 
         return center;

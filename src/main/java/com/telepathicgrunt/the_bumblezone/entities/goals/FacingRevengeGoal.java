@@ -13,14 +13,14 @@ public class FacingRevengeGoal extends HurtByTargetGoal {
     public FacingRevengeGoal(HoneySlimeEntity slimeIn) {
         super(slimeIn);
         this.slime = slimeIn;
-        this.setMutexFlags(EnumSet.of(Goal.Flag.LOOK));
+        this.setFlags(EnumSet.of(Goal.Flag.LOOK));
     }
-    public boolean shouldContinueExecuting() {
-        return slime.getAttackTarget() != null && super.shouldContinueExecuting();
+    public boolean canContinueToUse() {
+        return slime.getTarget() != null && super.canContinueToUse();
     }
 
     public void tick() {
-        this.slime.faceEntity(this.slime.getAttackTarget(), 10.0F, 10.0F);
-        ((HoneySlimeMoveHelperController) this.slime.getMoveHelper()).setDirection(this.slime.rotationYaw, this.slime.canDamagePlayer());
+        this.slime.lookAt(this.slime.getTarget(), 10.0F, 10.0F);
+        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.yRot, this.slime.canDamagePlayer());
     }
 }

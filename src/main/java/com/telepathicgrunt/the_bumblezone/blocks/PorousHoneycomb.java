@@ -22,10 +22,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 
 
+import net.minecraft.block.AbstractBlock;
+
 public class PorousHoneycomb extends Block {
 
     public PorousHoneycomb() {
-        super(Block.Properties.create(Material.CLAY, MaterialColor.ADOBE).harvestTool(ToolType.AXE).hardnessAndResistance(0.5F, 0.5F).sound(SoundType.CORAL));
+        super(AbstractBlock.Properties.of(Material.CLAY, MaterialColor.COLOR_ORANGE).harvestTool(ToolType.AXE).strength(0.5F, 0.5F).sound(SoundType.CORAL_BLOCK));
     }
 
 
@@ -34,23 +36,23 @@ public class PorousHoneycomb extends Block {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResultType onBlockActivated(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
-        ItemStack itemstack = playerEntity.getHeldItem(playerHand);
+    public ActionResultType use(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
+        ItemStack itemstack = playerEntity.getItemInHand(playerHand);
         /*
          * Player is adding honey to this block if it is not filled with honey
          */
         if (itemstack.getItem() == Items.HONEY_BOTTLE) {
-            world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 3); // added honey to this block
-            world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            world.setBlock(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3); // added honey to this block
+            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
             if (!playerEntity.isCreative()) {
                 itemstack.shrink(1); // remove current honey bottle
 
                 if (itemstack.isEmpty()) {
-                    playerEntity.setHeldItem(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places empty bottle in hand
-                } else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE))) // places empty bottle in inventory
+                    playerEntity.setItemInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places empty bottle in hand
+                } else if (!playerEntity.inventory.add(new ItemStack(Items.GLASS_BOTTLE))) // places empty bottle in inventory
                 {
-                    playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false); // drops empty bottle if inventory is full
+                    playerEntity.drop(new ItemStack(Items.GLASS_BOTTLE), false); // drops empty bottle if inventory is full
                 }
             }
 
@@ -63,13 +65,13 @@ public class PorousHoneycomb extends Block {
             ActionResultType action = BuzzierBeesRedirection.honeyWandGivingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
             if (action == ActionResultType.SUCCESS)
             {
-                world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 3); // added honey to this block
-                world.playSound(playerEntity, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+                world.setBlock(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3); // added honey to this block
+                world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.HONEY_BLOCK_BREAK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
                 return action;
             }
         }
 
-        return super.onBlockActivated(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+        return super.use(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
     }
 }

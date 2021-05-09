@@ -8,7 +8,7 @@ import net.minecraft.world.gen.feature.template.RuleTest;
 
 public class BzBEOreFeatureConfig implements IFeatureConfig {
     public static final Codec<BzBEOreFeatureConfig> CODEC = RecordCodecBuilder.create((bzBEOreFeatureConfigInstance) -> bzBEOreFeatureConfigInstance.group(
-                    RuleTest.field_237127_c_.fieldOf("target").forGetter((bzBEOreFeatureConfig) -> bzBEOreFeatureConfig.target),
+                    RuleTest.CODEC.fieldOf("target").forGetter((bzBEOreFeatureConfig) -> bzBEOreFeatureConfig.target),
                     BlockState.CODEC.fieldOf("state").forGetter((bzBEOreFeatureConfig) -> bzBEOreFeatureConfig.state),
                     Codec.intRange(0, 64).fieldOf("size").forGetter((bzBEOreFeatureConfig) -> bzBEOreFeatureConfig.size),
                     Codec.STRING.fieldOf("type").forGetter((bzBEOreFeatureConfig) -> bzBEOreFeatureConfig.type))

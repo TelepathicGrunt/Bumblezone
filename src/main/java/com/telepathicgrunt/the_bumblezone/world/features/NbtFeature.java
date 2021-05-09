@@ -25,16 +25,16 @@ public class NbtFeature extends Feature<NbtFeatureConfig>{
     }
 
     @Override
-    public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator, Random random, BlockPos position, NbtFeatureConfig config) {
+    public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random, BlockPos position, NbtFeatureConfig config) {
         ResourceLocation nbtRL = GeneralUtils.getRandomEntry(config.nbtResourcelocationsAndWeights, random);
 
-        TemplateManager structureManager = world.getWorld().getStructureTemplateManager();
-        Template template = structureManager.getTemplate(nbtRL);
+        TemplateManager structureManager = world.getLevel().getStructureManager();
+        Template template = structureManager.get(nbtRL);
         if(template == null){
             Bumblezone.LOGGER.error("Identifier to the specified nbt file was not found! : {}", nbtRL);
             return false;
         }
-        Rotation rotation = Rotation.randomRotation(random);
+        Rotation rotation = Rotation.getRandom(random);
 
         // For proper offsetting the feature so it rotate properly around position parameter.
         BlockPos halfLengths = new BlockPos(
@@ -42,24 +42,24 @@ public class NbtFeature extends Feature<NbtFeatureConfig>{
                 template.getSize().getY() / 2,
                 template.getSize().getZ() / 2);
 
-        BlockPos.Mutable mutable = new BlockPos.Mutable().setPos(position);
+        BlockPos.Mutable mutable = new BlockPos.Mutable().set(position);
 
         // offset the feature's position
-        position = position.up(config.structureYOffset);
+        position = position.above(config.structureYOffset);
 
-        PlacementSettings placementsettings = (new PlacementSettings()).setRotation(rotation).setCenterOffset(halfLengths).setIgnoreEntities(false);
-        Optional<StructureProcessorList> processor = world.getWorld().getServer().func_244267_aX().getRegistry(Registry.STRUCTURE_PROCESSOR_LIST_KEY).getOptional(config.processor);
-        processor.orElse(ProcessorLists.field_244101_a).func_242919_a().forEach(placementsettings::addProcessor); // add all processors
-        template.func_237152_b_(world, mutable.setPos(position).move(-halfLengths.getX(), 0, -halfLengths.getZ()), placementsettings, random);
+        PlacementSettings placementsettings = (new PlacementSettings()).setRotation(rotation).setRotationPivot(halfLengths).setIgnoreEntities(false);
+        Optional<StructureProcessorList> processor = world.getLevel().getServer().registryAccess().registryOrThrow(Registry.PROCESSOR_LIST_REGISTRY).getOptional(config.processor);
+        processor.orElse(ProcessorLists.EMPTY).list().forEach(placementsettings::addProcessor); // add all processors
+        template.placeInWorld(world, mutable.set(position).move(-halfLengths.getX(), 0, -halfLengths.getZ()), placementsettings, random);
 
         // Post-processors
         // For all processors that are sensitive to neighboring blocks such as vines.
         // Post processors will place the blocks themselves so we will not do anything with the return of Structure.process
         placementsettings.clearProcessors();
-        Optional<StructureProcessorList> postProcessor = world.getWorld().getServer().func_244267_aX().getRegistry(Registry.STRUCTURE_PROCESSOR_LIST_KEY).getOptional(config.postProcessor);
-        postProcessor.orElse(ProcessorLists.field_244101_a).func_242919_a().forEach(placementsettings::addProcessor); // add all post processors
-        List<Template.BlockInfo> list = placementsettings.func_237132_a_(((TemplateAccessor)template).bz_getBlocks(), mutable).func_237157_a_();
-        Template.func_237145_a_(world, mutable, mutable, placementsettings, list);
+        Optional<StructureProcessorList> postProcessor = world.getLevel().getServer().registryAccess().registryOrThrow(Registry.PROCESSOR_LIST_REGISTRY).getOptional(config.postProcessor);
+        postProcessor.orElse(ProcessorLists.EMPTY).list().forEach(placementsettings::addProcessor); // add all post processors
+        List<Template.BlockInfo> list = placementsettings.getRandomPalette(((TemplateAccessor)template).bz_getBlocks(), mutable).blocks();
+        Template.processBlockInfos(world, mutable, mutable, placementsettings, list);
 
         return true;
     }

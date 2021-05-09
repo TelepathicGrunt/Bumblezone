@@ -30,12 +30,12 @@ import java.util.stream.Collectors;
 
 public class BzBiomeProvider extends BiomeProvider {
     public static void registerBiomeProvider() {
-        Registry.register(Registry.BIOME_PROVIDER_CODEC, new ResourceLocation(Bumblezone.MODID, "biome_source"), BzBiomeProvider.CODEC);
+        Registry.register(Registry.BIOME_SOURCE, new ResourceLocation(Bumblezone.MODID, "biome_source"), BzBiomeProvider.CODEC);
     }
 
     public static final Codec<BzBiomeProvider> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
-                    RegistryLookupCodec.getLookUpCodec(Registry.BIOME_KEY).forGetter((vanillaLayeredBiomeSource) -> vanillaLayeredBiomeSource.BIOME_REGISTRY))
+                    RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter((vanillaLayeredBiomeSource) -> vanillaLayeredBiomeSource.BIOME_REGISTRY))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
 
     public static ResourceLocation HIVE_WALL = new ResourceLocation(Bumblezone.MODID, "hive_wall");
@@ -51,12 +51,12 @@ public class BzBiomeProvider extends BiomeProvider {
         this(0, biomeRegistry);
     }
     public BzBiomeProvider(long seed, Registry<Biome> biomeRegistry) {
-        super(biomeRegistry.getEntries().stream()
-                .filter(entry -> entry.getKey().getLocation().getNamespace().equals(Bumblezone.MODID))
+        super(biomeRegistry.entrySet().stream()
+                .filter(entry -> entry.getKey().location().getNamespace().equals(Bumblezone.MODID))
                 .map(Map.Entry::getValue)
                 .collect(Collectors.toList()));
 
-        NONSTANDARD_BIOME = this.biomes.stream()
+        NONSTANDARD_BIOME = this.possibleBiomes.stream()
                 .filter(biome -> biomeRegistry.getKey(biome) != HIVE_WALL &&
                                 biomeRegistry.getKey(biome) != HIVE_PILLAR &&
                                 biomeRegistry.getKey(biome) != SUGAR_WATER_FLOOR)
@@ -76,20 +76,20 @@ public class BzBiomeProvider extends BiomeProvider {
 
 
     public static <T extends IArea, C extends IExtendedNoiseRandom<T>> IAreaFactory<T> build(LongFunction<C> contextFactory) {
-        IAreaFactory<T> layer = BzBiomeLayer.INSTANCE.apply(contextFactory.apply(200L));
-        layer = BzBiomePillarLayer.INSTANCE.apply(contextFactory.apply(1008L), layer);
-        layer = BzBiomeScalePillarLayer.INSTANCE.apply(contextFactory.apply(1055L), layer);
-        layer = ZoomLayer.FUZZY.apply(contextFactory.apply(2003L), layer);
-        layer = ZoomLayer.FUZZY.apply(contextFactory.apply(2523L), layer);
+        IAreaFactory<T> layer = BzBiomeLayer.INSTANCE.run(contextFactory.apply(200L));
+        layer = BzBiomePillarLayer.INSTANCE.run(contextFactory.apply(1008L), layer);
+        layer = BzBiomeScalePillarLayer.INSTANCE.run(contextFactory.apply(1055L), layer);
+        layer = ZoomLayer.FUZZY.run(contextFactory.apply(2003L), layer);
+        layer = ZoomLayer.FUZZY.run(contextFactory.apply(2523L), layer);
 
         if(!NONSTANDARD_BIOME.isEmpty()){
-            IAreaFactory<T> layerOverlay = BzBiomeNonstandardLayer.INSTANCE.apply(contextFactory.apply(204L));
-            layerOverlay = ZoomLayer.NORMAL.apply(contextFactory.apply(2423L), layerOverlay);
-            layerOverlay = ZoomLayer.NORMAL.apply(contextFactory.apply(2503L), layerOverlay);
-            layerOverlay = ZoomLayer.NORMAL.apply(contextFactory.apply(2603L), layerOverlay);
-            layerOverlay = ZoomLayer.FUZZY.apply(contextFactory.apply(2853L), layerOverlay);
-            layerOverlay = ZoomLayer.FUZZY.apply(contextFactory.apply(3583L), layerOverlay);
-            layer = BzBiomeMergeLayer.INSTANCE.apply(contextFactory.apply(5583L), layerOverlay, layer);
+            IAreaFactory<T> layerOverlay = BzBiomeNonstandardLayer.INSTANCE.run(contextFactory.apply(204L));
+            layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2423L), layerOverlay);
+            layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2503L), layerOverlay);
+            layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2603L), layerOverlay);
+            layerOverlay = ZoomLayer.FUZZY.run(contextFactory.apply(2853L), layerOverlay);
+            layerOverlay = ZoomLayer.FUZZY.run(contextFactory.apply(3583L), layerOverlay);
+            layer = BzBiomeMergeLayer.INSTANCE.run(contextFactory.apply(5583L), layerOverlay, layer);
         }
 
         return layer;
@@ -101,16 +101,16 @@ public class BzBiomeProvider extends BiomeProvider {
     }
 
     public Biome sample(Registry<Biome> dynamicBiomeRegistry, int x, int z) {
-        int resultBiomeID = ((LayerAccessor)this.BIOME_SAMPLER).bz_getSampler().getValue(x, z);
-        Biome biome = dynamicBiomeRegistry.getByValue(resultBiomeID);
+        int resultBiomeID = ((LayerAccessor)this.BIOME_SAMPLER).bz_getSampler().get(x, z);
+        Biome biome = dynamicBiomeRegistry.byId(resultBiomeID);
         if (biome == null) {
-            if (SharedConstants.developmentMode) {
-                throw Util.pauseDevMode(new IllegalStateException("Unknown biome id: " + resultBiomeID));
+            if (SharedConstants.IS_RUNNING_IN_IDE) {
+                throw Util.pauseInIde(new IllegalStateException("Unknown biome id: " + resultBiomeID));
             } else {
                 // Spawn ocean if we can't resolve the biome from the layers.
-                RegistryKey<Biome> backupBiomeKey = BiomeRegistry.getKeyFromID(0);
-                Bumblezone.LOGGER.warn("Unknown biome id: ${}. Will spawn ${} instead.", resultBiomeID, backupBiomeKey.getLocation());
-                return dynamicBiomeRegistry.getValueForKey(backupBiomeKey);
+                RegistryKey<Biome> backupBiomeKey = BiomeRegistry.byId(0);
+                Bumblezone.LOGGER.warn("Unknown biome id: ${}. Will spawn ${} instead.", resultBiomeID, backupBiomeKey.location());
+                return dynamicBiomeRegistry.get(backupBiomeKey);
             }
         } else {
             return biome;
@@ -118,13 +118,13 @@ public class BzBiomeProvider extends BiomeProvider {
     }
 
     @Override
-    protected Codec<? extends BiomeProvider> getBiomeProviderCodec() {
+    protected Codec<? extends BiomeProvider> codec() {
         return CODEC;
     }
 
     @Override
     // CLIENT-SIDED
-    public BiomeProvider getBiomeProvider(long seed) {
+    public BiomeProvider withSeed(long seed) {
         return new BzBiomeProvider(seed, this.BIOME_REGISTRY);
     }
 }

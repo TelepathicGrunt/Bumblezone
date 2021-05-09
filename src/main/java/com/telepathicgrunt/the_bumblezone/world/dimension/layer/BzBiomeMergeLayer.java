@@ -9,9 +9,9 @@ import net.minecraft.world.gen.layer.traits.IDimOffset0Transformer;
 public enum BzBiomeMergeLayer implements IAreaTransformer2, IDimOffset0Transformer {
     INSTANCE;
 
-    public int apply(INoiseRandom iNoiseRandom, IArea iArea, IArea iArea1, int x, int z) {
-        int biomeID1 = iArea.getValue(this.getOffsetX(x), this.getOffsetZ(z));
-        int biomeID2 = iArea1.getValue(this.getOffsetX(x), this.getOffsetZ(z));
+    public int applyPixel(INoiseRandom iNoiseRandom, IArea iArea, IArea iArea1, int x, int z) {
+        int biomeID1 = iArea.get(this.getParentX(x), this.getParentY(z));
+        int biomeID2 = iArea1.get(this.getParentX(x), this.getParentY(z));
 
         if (biomeID1 == -1) {
             return biomeID2;

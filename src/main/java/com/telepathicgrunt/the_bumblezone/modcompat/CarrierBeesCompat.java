@@ -131,9 +131,9 @@ public class CarrierBeesCompat {
 	 * Spawn Carrier Bees near player who has Wrath of the Hive
 	 */
 	public static void CBMobSpawn(LivingEntity entity, BlockPos spawnBlockPos) {
-		if(entity.world.isRemote()) return;
+		if(entity.level.isClientSide()) return;
 
-		ServerWorld world = (ServerWorld) entity.world;
+		ServerWorld world = (ServerWorld) entity.level;
 		Entity beeEntity = null;
 
 		if (CB_BEE_LIST.size() == 0) {
@@ -144,17 +144,17 @@ public class CarrierBeesCompat {
 		}
 
 		// Increase chance of bomb bee spawn if player are blocking bee attacks
-		if(BOMBLE_BEE != null && entity.isActiveItemStackBlocking() && world.rand.nextFloat() < 0.55f){
+		if(BOMBLE_BEE != null && entity.isBlocking() && world.random.nextFloat() < 0.55f){
 			beeEntity = BOMBLE_BEE.create(world);
 		}
 
 		// Set and spawn the carrier bee with an entity
-		if(beeEntity == null && CARRIER_BEE != null && world.rand.nextFloat() < 0.75f){
+		if(beeEntity == null && CARRIER_BEE != null && world.random.nextFloat() < 0.75f){
 			beeEntity = CARRIER_BEE.create(world);
 			if(beeEntity != null){
 				CarrierBeeEntity carrierBeeEntity = (CarrierBeeEntity) beeEntity;
-				carrierBeeEntity.setHeldItem(Hand.MAIN_HAND, new ItemStack(
-						CARRIER_BEES_ITEMS.get(world.rand.nextInt(world.rand.nextInt(CARRIER_BEES_ITEMS.size()) + 1))
+				carrierBeeEntity.setItemInHand(Hand.MAIN_HAND, new ItemStack(
+						CARRIER_BEES_ITEMS.get(world.random.nextInt(world.random.nextInt(CARRIER_BEES_ITEMS.size()) + 1))
 				));
 			}
 		}
@@ -166,26 +166,26 @@ public class CarrierBeesCompat {
 		}
 
 		// try and make CB bee not mad no matter what
-		beeEntity.setLocationAndAngles(
+		beeEntity.moveTo(
 				spawnBlockPos.getX() + 0.5D,
 				spawnBlockPos.getY() + 0.5D,
 				spawnBlockPos.getZ() + 0.5D,
 				world.getRandom().nextFloat() * 360.0F,
 				0.0F);
 
-		((MobEntity)beeEntity).onInitialSpawn(
+		((MobEntity)beeEntity).finalizeSpawn(
 				world,
-				world.getDifficultyForLocation(beeEntity.getPosition()),
+				world.getCurrentDifficultyAt(beeEntity.blockPosition()),
 				SpawnReason.EVENT,
 				null,
 				null);
 
 		if(beeEntity instanceof AppleBeeEntity){
-			((AppleBeeEntity) beeEntity).setAttackTarget(entity);
-			((AppleBeeEntity) beeEntity).setRevengeTarget(entity);
+			((AppleBeeEntity) beeEntity).setTarget(entity);
+			((AppleBeeEntity) beeEntity).setLastHurtByMob(entity);
 		}
 
-		world.addEntity(beeEntity);
+		world.addFreshEntity(beeEntity);
 	}
 
 	public static Class<? extends MobEntity> CBGetAppleBeeClass() {

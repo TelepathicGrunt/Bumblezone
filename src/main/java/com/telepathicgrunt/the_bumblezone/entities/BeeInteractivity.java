@@ -30,20 +30,20 @@ public class BeeInteractivity {
 
     // heal bees with sugar water bottle or honey bottle
     public static void beeFeeding(World world, PlayerEntity playerEntity, Hand hand, Entity target) {
-        if (!world.isRemote && target instanceof BeeEntity) {
+        if (!world.isClientSide && target instanceof BeeEntity) {
 
             BeeEntity beeEntity = (BeeEntity) target;
-            ItemStack itemstack = playerEntity.getHeldItem(hand);
+            ItemStack itemstack = playerEntity.getItemInHand(hand);
             ResourceLocation itemRL = itemstack.getItem().getRegistryName();
 
             if (itemstack.getItem() == Items.HONEY_BOTTLE || itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
 
                 world.playSound(
                         playerEntity,
-                        playerEntity.getPosX(),
-                        playerEntity.getPosY(),
-                        playerEntity.getPosZ(),
-                        SoundEvents.ITEM_BOTTLE_EMPTY,
+                        playerEntity.getX(),
+                        playerEntity.getY(),
+                        playerEntity.getZ(),
+                        SoundEvents.BOTTLE_EMPTY,
                         SoundCategory.NEUTRAL,
                         1.0F,
                         1.0F);
@@ -51,8 +51,8 @@ public class BeeInteractivity {
                 if (itemstack.getItem() == Items.HONEY_BOTTLE) {
 
                     // Heal bee a lot
-                    beeEntity.addPotionEffect(new EffectInstance(
-                            Effects.INSTANT_HEALTH,
+                    beeEntity.addEffect(new EffectInstance(
+                            Effects.HEAL,
                             1,
                             1,
                             false,
@@ -66,8 +66,8 @@ public class BeeInteractivity {
                 // Sugar water bottle
                 else {
                     // Heal bee slightly but they remain angry
-                    beeEntity.addPotionEffect(new EffectInstance(
-                            Effects.INSTANT_HEALTH,
+                    beeEntity.addEffect(new EffectInstance(
+                            Effects.HEAL,
                             1,
                             0,
                             false,
@@ -85,12 +85,12 @@ public class BeeInteractivity {
 
                     if (itemstack.isEmpty()) {
                         // places empty bottle in hand
-                        playerEntity.setHeldItem(hand, new ItemStack(Items.GLASS_BOTTLE));
+                        playerEntity.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
                     }
                     // places empty bottle in inventory
-                    else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE))) {
+                    else if (!playerEntity.inventory.add(new ItemStack(Items.GLASS_BOTTLE))) {
                         // drops empty bottle if inventory is full
-                        playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false);
+                        playerEntity.drop(new ItemStack(Items.GLASS_BOTTLE), false);
                     }
                 }
 
@@ -101,7 +101,7 @@ public class BeeInteractivity {
             {
 
                 // Heal bee a ton
-                beeEntity.addPotionEffect(new EffectInstance(Effects.INSTANT_HEALTH, 2, 1, false, false, false));
+                beeEntity.addEffect(new EffectInstance(Effects.HEAL, 2, 1, false, false, false));
 
                 // very high chance to remove wrath of the hive from player
                 calmAndSpawnHearts(world, playerEntity, beeEntity, 0.4f, 5);
@@ -114,7 +114,7 @@ public class BeeInteractivity {
             {
 
                 // Heal bee a bit
-                beeEntity.addPotionEffect(new EffectInstance(Effects.INSTANT_HEALTH, 1, 1, false, false, false));
+                beeEntity.addEffect(new EffectInstance(Effects.HEAL, 1, 1, false, false, false));
 
                 // neutral chance to remove wrath of the hive from player
                 calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
@@ -131,14 +131,14 @@ public class BeeInteractivity {
     }
 
     private static void calmAndSpawnHearts(World world, PlayerEntity playerEntity, BeeEntity beeEntity, float calmChance, int hearts) {
-        boolean calmed = world.rand.nextFloat() < calmChance;
+        boolean calmed = world.random.nextFloat() < calmChance;
         if (calmed) {
-            if(playerEntity.isPotionActive(BzEffects.WRATH_OF_THE_HIVE.get())){
-                playerEntity.removePotionEffect(BzEffects.WRATH_OF_THE_HIVE.get());
-                WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
+            if(playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())){
+                playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+                WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
             }
             else{
-                playerEntity.addPotionEffect(new EffectInstance(
+                playerEntity.addEffect(new EffectInstance(
                         BzEffects.PROTECTION_OF_THE_HIVE.get(),
                         Bumblezone.BzBeeAggressionConfig.howLongProtectionOfTheHiveLasts.get(),
                         2,
@@ -148,12 +148,12 @@ public class BeeInteractivity {
             }
         }
 
-        if (!beeEntity.func_233678_J__() || calmed)
-            ((ServerWorld) world).spawnParticle(
+        if (!beeEntity.isAngry() || calmed)
+            ((ServerWorld) world).sendParticles(
                     ParticleTypes.HEART,
-                    beeEntity.getPosX(),
-                    beeEntity.getPosY(),
-                    beeEntity.getPosZ(),
+                    beeEntity.getX(),
+                    beeEntity.getY(),
+                    beeEntity.getZ(),
                     hearts,
                     world.getRandom().nextFloat() * 0.5 - 0.25f,
                     world.getRandom().nextFloat() * 0.2f + 0.2f,
@@ -169,12 +169,12 @@ public class BeeInteractivity {
 
             if (handItemstack.isEmpty()) {
                 // places empty bottle in hand
-                playerEntity.setHeldItem(hand, new ItemStack(replacementItem));
+                playerEntity.setItemInHand(hand, new ItemStack(replacementItem));
             }
             // places empty bottle in inventory
-            else if (!playerEntity.inventory.addItemStackToInventory(new ItemStack(replacementItem))) {
+            else if (!playerEntity.inventory.add(new ItemStack(replacementItem))) {
                 // drops empty bottle if inventory is full
-                playerEntity.dropItem(new ItemStack(replacementItem), false);
+                playerEntity.drop(new ItemStack(replacementItem), false);
             }
         }
         else {

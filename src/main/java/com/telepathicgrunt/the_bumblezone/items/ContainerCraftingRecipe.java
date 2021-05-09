@@ -33,19 +33,19 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
 
     @Override
     public NonNullList<ItemStack> getRemainingItems(CraftingInventory inv) {
-        return NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
+        return NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
     }
 
     public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>>
             implements IRecipeSerializer<ContainerCraftingRecipe> {
-        public ContainerCraftingRecipe read(ResourceLocation recipeId, JsonObject json) {
-            String s = JSONUtils.getString(json, "group", "");
-            NonNullList<Ingredient> nonnulllist = readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
+        public ContainerCraftingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+            String s = JSONUtils.getAsString(json, "group", "");
+            NonNullList<Ingredient> nonnulllist = readIngredients(JSONUtils.getAsJsonArray(json, "ingredients"));
             if (nonnulllist.isEmpty()) {
                 throw new JsonParseException("No ingredients for shapeless recipe");
             }
             else {
-                ItemStack itemstack = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
+                ItemStack itemstack = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
                 return new ContainerCraftingRecipe(recipeId, s, itemstack, nonnulllist);
             }
         }
@@ -54,8 +54,8 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
             NonNullList<Ingredient> nonnulllist = NonNullList.create();
 
             for (int i = 0; i < p_199568_0_.size(); ++i) {
-                Ingredient ingredient = Ingredient.deserialize(p_199568_0_.get(i));
-                if (!ingredient.hasNoMatchingItems()) {
+                Ingredient ingredient = Ingredient.fromJson(p_199568_0_.get(i));
+                if (!ingredient.isEmpty()) {
                     nonnulllist.add(ingredient);
                 }
             }
@@ -63,28 +63,28 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
             return nonnulllist;
         }
 
-        public ContainerCraftingRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-            String s = buffer.readString(32767);
+        public ContainerCraftingRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+            String s = buffer.readUtf(32767);
             int i = buffer.readVarInt();
             NonNullList<Ingredient> nonnulllist = NonNullList.withSize(i, Ingredient.EMPTY);
 
             for (int j = 0; j < nonnulllist.size(); ++j) {
-                nonnulllist.set(j, Ingredient.read(buffer));
+                nonnulllist.set(j, Ingredient.fromNetwork(buffer));
             }
 
-            ItemStack itemstack = buffer.readItemStack();
+            ItemStack itemstack = buffer.readItem();
             return new ContainerCraftingRecipe(recipeId, s, itemstack, nonnulllist);
         }
 
-        public void write(PacketBuffer buffer, ContainerCraftingRecipe recipe) {
-            buffer.writeString(recipe.group);
+        public void toNetwork(PacketBuffer buffer, ContainerCraftingRecipe recipe) {
+            buffer.writeUtf(recipe.group);
             buffer.writeVarInt(recipe.recipeItems.size());
 
             for (Ingredient ingredient : recipe.recipeItems) {
-                ingredient.write(buffer);
+                ingredient.toNetwork(buffer);
             }
 
-            buffer.writeItemStack(recipe.recipeOutput);
+            buffer.writeItem(recipe.recipeOutput);
         }
     }
 }

@@ -21,7 +21,7 @@ public class BzPlacingUtils
 		//if height is inside a non-air block, move down until we reached an air block
 		while (blockpos$Mutable.getY() > minHeight)
 		{
-			if (world.isAirBlock(blockpos$Mutable))
+			if (world.isEmptyBlock(blockpos$Mutable))
 			{
 				break;
 			}
@@ -32,7 +32,7 @@ public class BzPlacingUtils
 		//if height is an air block, move down until we reached a solid block. We are now on the surface of a piece of land
 		while (blockpos$Mutable.getY() > minHeight)
 		{
-			if (!world.isAirBlock(blockpos$Mutable))
+			if (!world.isEmptyBlock(blockpos$Mutable))
 			{
 				break;
 			}
@@ -58,7 +58,7 @@ public class BzPlacingUtils
 		//if height is inside a non-solid block, move down until we reached an air block
 		while (blockpos$Mutable.getY() > minHeight)
 		{
-			if (world.isAirBlock(blockpos$Mutable) || world.getBlockState(blockpos$Mutable).getMaterial() == Material.WATER)
+			if (world.isEmptyBlock(blockpos$Mutable) || world.getBlockState(blockpos$Mutable).getMaterial() == Material.WATER)
 			{
 				break;
 			}
@@ -69,7 +69,7 @@ public class BzPlacingUtils
 		//if height is a non-solid block, move down until we reached a solid block. We are now on the surface of a piece of land even underwater
 		while (blockpos$Mutable.getY() > minHeight)
 		{
-			if (!world.isAirBlock(blockpos$Mutable) && world.getBlockState(blockpos$Mutable).getMaterial() != Material.WATER)
+			if (!world.isEmptyBlock(blockpos$Mutable) && world.getBlockState(blockpos$Mutable).getMaterial() != Material.WATER)
 			{
 				break;
 			}
@@ -94,7 +94,7 @@ public class BzPlacingUtils
 		// if height is inside a non-air block, move up until we reached an air block
 		while (blockpos$Mutable.getY() < 255)
 		{
-			if (world.isAirBlock(blockpos$Mutable))
+			if (world.isEmptyBlock(blockpos$Mutable))
 			{
 				break;
 			}
@@ -106,7 +106,7 @@ public class BzPlacingUtils
 		// on the bottom of a piece of land
 		while (blockpos$Mutable.getY() > 255)
 		{
-			if (!world.isAirBlock(blockpos$Mutable))
+			if (!world.isEmptyBlock(blockpos$Mutable))
 			{
 				break;
 			}
@@ -133,7 +133,7 @@ public class BzPlacingUtils
 		//Treats waterlogged wood as non-waterlogged blocks.
 		while (blockpos$Mutable.getY() > 74)
 		{
-			if (world.isAirBlock(blockpos$Mutable) || (world.getBlockState(blockpos$Mutable).getMaterial() == Material.WATER && world.getBlockState(blockpos$Mutable).getMaterial() != Material.WOOD))
+			if (world.isEmptyBlock(blockpos$Mutable) || (world.getBlockState(blockpos$Mutable).getMaterial() == Material.WATER && world.getBlockState(blockpos$Mutable).getMaterial() != Material.WOOD))
 			{
 				break;
 			}
@@ -144,7 +144,7 @@ public class BzPlacingUtils
 		//if height is an air/waterlogged block, move down until we reached a solid block. We are now on the surface of a piece of land
 		while (blockpos$Mutable.getY() > 74)
 		{
-			if (!world.isAirBlock(blockpos$Mutable) && !(world.getBlockState(blockpos$Mutable).getMaterial() == Material.WATER && world.getBlockState(blockpos$Mutable).getMaterial() != Material.WOOD))
+			if (!world.isEmptyBlock(blockpos$Mutable) && !(world.getBlockState(blockpos$Mutable).getMaterial() == Material.WATER && world.getBlockState(blockpos$Mutable).getMaterial() != Material.WOOD))
 			{
 				break;
 			}

@@ -84,8 +84,8 @@ public class HoneycombHole extends Feature<NoFeatureConfig> {
     }
 
     @Override
-    public boolean generate(ISeedReader world, ChunkGenerator generator, Random random, BlockPos position, NoFeatureConfig config) {
-        BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable().setPos(position);
+    public boolean place(ISeedReader world, ChunkGenerator generator, Random random, BlockPos position, NoFeatureConfig config) {
+        BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable().set(position);
 
         generateSlice(world, generator, mutableBlockPos, endCapLayout, random, true);
         generateSlice(world, generator, mutableBlockPos.move(Direction.EAST), smallHoneyLayout, random, true);
@@ -105,7 +105,7 @@ public class HoneycombHole extends Feature<NoFeatureConfig> {
 
     private void generateSlice(IServerWorld world, ChunkGenerator generator, BlockPos.Mutable centerPos, int[][] slice, Random random, boolean westEnd) {
         //move to the position where the corner of the slice will begin at
-        BlockPos.Mutable currentPosition = new BlockPos.Mutable().setPos(centerPos.add(-5, slice.length / 2, -slice[0].length / 2));
+        BlockPos.Mutable currentPosition = new BlockPos.Mutable().set(centerPos.offset(-5, slice.length / 2, -slice[0].length / 2));
 
         //go through each row and column while replacing each solid block
         for (int[] ints : slice) {
@@ -113,7 +113,7 @@ public class HoneycombHole extends Feature<NoFeatureConfig> {
                 BlockState state = world.getBlockState(currentPosition);
 
                 if(!state.getFluidState().isEmpty() && currentPosition.getY() >= generator.getSeaLevel()){
-                    world.setBlockState(currentPosition, Blocks.CAVE_AIR.getDefaultState(), 2);
+                    world.setBlock(currentPosition, Blocks.CAVE_AIR.defaultBlockState(), 2);
                 }
                 //finds solid block
                 else if (state.getMaterial() != Material.AIR) {
@@ -121,34 +121,34 @@ public class HoneycombHole extends Feature<NoFeatureConfig> {
                     int sliceBlock = ints[z];
                     if (sliceBlock == 1) {
                         //extra check so the ends of the hole exposed will not have this block
-                        if (world.getBlockState(currentPosition.west()).isSolid() && world.getBlockState(currentPosition.east()).isSolid()) {
+                        if (world.getBlockState(currentPosition.west()).canOcclude() && world.getBlockState(currentPosition.east()).canOcclude()) {
                             //reduced FILLED_POROUS_HONEYCOMB spawn rate
                             if (random.nextInt(3) == 0) {
-                                world.setBlockState(currentPosition, Blocks.HONEYCOMB_BLOCK.getDefaultState(), 2);
+                                world.setBlock(currentPosition, Blocks.HONEYCOMB_BLOCK.defaultBlockState(), 2);
                             }
                             else {
-                                world.setBlockState(currentPosition, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 2);
+                                world.setBlock(currentPosition, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 2);
                             }
                         }
                     }
                     else if (sliceBlock == 2) {
                         //reduced HONEY_BLOCK spawn rate
                         if (random.nextInt(3) == 0) {
-                            world.setBlockState(currentPosition, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 2);
+                            world.setBlock(currentPosition, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 2);
                         }
                         else if(ModChecker.resourcefulBeesPresent && random.nextFloat() < 0.01f) {
-                            world.setBlockState(currentPosition, ResourcefulBeesRedirection.getRBHoneyBlock(random), 2);
+                            world.setBlock(currentPosition, ResourcefulBeesRedirection.getRBHoneyBlock(random), 2);
                         }
                         else {
-                            world.setBlockState(currentPosition, Blocks.HONEY_BLOCK.getDefaultState(), 2);
+                            world.setBlock(currentPosition, Blocks.HONEY_BLOCK.defaultBlockState(), 2);
                         }
                     }
                     else if (sliceBlock == 3) {
                         if (currentPosition.getY() >= generator.getSeaLevel()) {
-                            world.setBlockState(currentPosition, Blocks.CAVE_AIR.getDefaultState(), 2);
+                            world.setBlock(currentPosition, Blocks.CAVE_AIR.defaultBlockState(), 2);
                         }
                         else {
-                            world.setBlockState(currentPosition, BzFluids.SUGAR_WATER_BLOCK.get().getDefaultState(), 2);
+                            world.setBlock(currentPosition, BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), 2);
                         }
                     }
                     else if (sliceBlock == 5) {
@@ -162,18 +162,18 @@ public class HoneycombHole extends Feature<NoFeatureConfig> {
                                 facing = Direction.EAST;
 
                             if (random.nextFloat() < 0.8f)
-                                world.setBlockState(currentPosition, BzBlocks.HONEYCOMB_BROOD.get().getDefaultState().with(HoneycombBrood.STAGE, random.nextInt(3)).with(HoneycombBrood.FACING, facing), 2);
+                                world.setBlock(currentPosition, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState().setValue(HoneycombBrood.STAGE, random.nextInt(3)).setValue(HoneycombBrood.FACING, facing), 2);
                             else
-                                world.setBlockState(currentPosition, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().getDefaultState().with(HoneycombBrood.FACING, facing), 2);
+                                world.setBlock(currentPosition, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().defaultBlockState().setValue(HoneycombBrood.FACING, facing), 2);
                         }
                         else if (chance <= 6) {
-                            world.setBlockState(currentPosition, BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState(), 2);
+                            world.setBlock(currentPosition, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 2);
                         }
                         else if(ModChecker.resourcefulBeesPresent && random.nextFloat() < 0.01f) {
-                            world.setBlockState(currentPosition, ResourcefulBeesRedirection.getRBHoneyBlock(random), 2);
+                            world.setBlock(currentPosition, ResourcefulBeesRedirection.getRBHoneyBlock(random), 2);
                         }
                         else {
-                            world.setBlockState(currentPosition, Blocks.HONEY_BLOCK.getDefaultState(), 2);
+                            world.setBlock(currentPosition, Blocks.HONEY_BLOCK.defaultBlockState(), 2);
                         }
                     }
                 }

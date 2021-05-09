@@ -29,20 +29,20 @@ public class BeeDungeonProcessor extends StructureProcessor {
     private BeeDungeonProcessor() { }
 
     @Override
-    public Template.BlockInfo func_230386_a_(IWorldReader worldView, BlockPos pos, BlockPos blockPos, Template.BlockInfo structureBlockInfoLocal, Template.BlockInfo structureBlockInfoWorld, PlacementSettings structurePlacementData) {
+    public Template.BlockInfo processBlock(IWorldReader worldView, BlockPos pos, BlockPos blockPos, Template.BlockInfo structureBlockInfoLocal, Template.BlockInfo structureBlockInfoWorld, PlacementSettings structurePlacementData) {
         BlockState blockState = structureBlockInfoWorld.state;
         BlockPos worldPos = structureBlockInfoWorld.pos;
         Random random = new SharedSeedRandom();
-        random.setSeed(worldPos.toLong() * worldPos.getY());
+        random.setSeed(worldPos.asLong() * worldPos.getY());
 
         // placing altar blocks
-        if (blockState.isIn(Blocks.STRUCTURE_BLOCK)) {
+        if (blockState.is(Blocks.STRUCTURE_BLOCK)) {
             String metadata = structureBlockInfoWorld.nbt.getString("metadata");
             BlockState belowBlock = worldView.getChunk(worldPos).getBlockState(worldPos);
 
             //altar blocks cannot be placed on air
             if(belowBlock.isAir()){
-                blockState = Blocks.CAVE_AIR.getDefaultState();
+                blockState = Blocks.CAVE_AIR.defaultBlockState();
             }
             else{
                 switch (metadata){
@@ -61,10 +61,10 @@ public class BeeDungeonProcessor extends StructureProcessor {
                             blockState = CharmRedirection.CGetCandle(false, true);
                         }
                         else if (ModChecker.buzzierBeesPresent || random.nextFloat() < 0.6f) {
-                            blockState = BzBlocks.HONEY_CRYSTAL.get().getDefaultState();
+                            blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
                         }
                         else {
-                            blockState = Blocks.CAVE_AIR.getDefaultState();
+                            blockState = Blocks.CAVE_AIR.defaultBlockState();
                         }
                     }
                     break;
@@ -83,10 +83,10 @@ public class BeeDungeonProcessor extends StructureProcessor {
                             blockState = CharmRedirection.CGetCandle(false, true);
                         }
                         else if (ModChecker.buzzierBeesPresent ? random.nextBoolean() : random.nextFloat() < 0.35f) {
-                            blockState = BzBlocks.HONEY_CRYSTAL.get().getDefaultState();
+                            blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
                         }
                         else {
-                            blockState = Blocks.CAVE_AIR.getDefaultState();
+                            blockState = Blocks.CAVE_AIR.defaultBlockState();
                         }
                     }
                     break;
@@ -104,10 +104,10 @@ public class BeeDungeonProcessor extends StructureProcessor {
                             blockState = CharmRedirection.CGetCandle(false, true);
                         }
                         else if (random.nextFloat() < 0.45f) {
-                            blockState = BzBlocks.HONEY_CRYSTAL.get().getDefaultState();
+                            blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
                         }
                         else {
-                            blockState = Blocks.CAVE_AIR.getDefaultState();
+                            blockState = Blocks.CAVE_AIR.defaultBlockState();
                         }
                     }
                     break;
@@ -117,7 +117,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
         }
 
         // main body and ceiling
-        else if(blockState.isIn(Blocks.HONEYCOMB_BLOCK) || blockState.isIn(BzBlocks.FILLED_POROUS_HONEYCOMB.get())){
+        else if(blockState.is(Blocks.HONEYCOMB_BLOCK) || blockState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get())){
             if(ModChecker.productiveBeesPresent && random.nextFloat() < Bumblezone.BzModCompatibilityConfig.PBOreHoneycombSpawnRateBeeDungeon.get()) {
                 blockState = ProductiveBeesRedirection.PBGetRandomHoneycomb(random, Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRarityBeeDungeon.get());
             }
@@ -125,35 +125,35 @@ public class BeeDungeonProcessor extends StructureProcessor {
                 blockState = ResourcefulBeesRedirection.RBGetRandomHoneycomb(random, Bumblezone.BzModCompatibilityConfig.RBGreatHoneycombRarityBeeDungeon.get());
             }
             else if (random.nextFloat() < 0.4f) {
-                blockState = Blocks.HONEYCOMB_BLOCK.getDefaultState();
+                blockState = Blocks.HONEYCOMB_BLOCK.defaultBlockState();
             }
             else {
-                blockState = BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState();
+                blockState = BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState();
             }
         }
 
         // walls
-        else if(blockState.isIn(BzBlocks.HONEYCOMB_BROOD.get())){
+        else if(blockState.is(BzBlocks.HONEYCOMB_BROOD.get())){
             if (random.nextFloat() < 0.6f) {
-                blockState = BzBlocks.HONEYCOMB_BROOD.get().getDefaultState()
-                        .with(HoneycombBrood.STAGE, random.nextInt(3))
-                        .with(HoneycombBrood.FACING, blockState.get(HoneycombBrood.FACING));
+                blockState = BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+                        .setValue(HoneycombBrood.STAGE, random.nextInt(3))
+                        .setValue(HoneycombBrood.FACING, blockState.getValue(HoneycombBrood.FACING));
             }
             else if (random.nextFloat() < 0.2f) {
-                blockState = Blocks.HONEY_BLOCK.getDefaultState();
+                blockState = Blocks.HONEY_BLOCK.defaultBlockState();
             }
             else if(ModChecker.resourcefulBeesPresent && random.nextFloat() < 0.1f) {
                 blockState = ResourcefulBeesRedirection.getRBHoneyBlock(random);
             }
             else {
-                blockState = BzBlocks.FILLED_POROUS_HONEYCOMB.get().getDefaultState();
+                blockState = BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState();
             }
         }
 
         // sugar water
-        else if(blockState.isIn(BzFluids.SUGAR_WATER_BLOCK.get())){
+        else if(blockState.is(BzFluids.SUGAR_WATER_BLOCK.get())){
             if(random.nextFloat() < 0.1f){
-                blockState = BzBlocks.HONEY_CRYSTAL.get().getDefaultState().with(HoneyCrystal.WATERLOGGED, true);
+                blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState().setValue(HoneyCrystal.WATERLOGGED, true);
             }
         }
 

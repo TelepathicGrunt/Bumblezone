@@ -42,12 +42,12 @@ public class HoneycombHolePlacer extends Placement<NoPlacementConfig> {
 
                 //Makes sure the place for holes is valid
                 if (isPlaceValid(context, mutableBlockPos)) {
-                    blockPosList.add(mutableBlockPos.toImmutable());
+                    blockPosList.add(mutableBlockPos.immutable());
                 }
             }
 
             //set it back to the top but with an offset for the second layer of holes
-            mutableBlockPos.setPos(pos.getX() + 4, 236, pos.getZ() + 12);
+            mutableBlockPos.set(pos.getX() + 4, 236, pos.getZ() + 12);
         }
 
         return blockPosList.stream();
@@ -88,8 +88,8 @@ public class HoneycombHolePlacer extends Placement<NoPlacementConfig> {
             for (double y = -3.5; y <= 3.5; y++) {
                 distanceSq = z * z + y * y;
                 if (distanceSq > 5 && distanceSq < 18) {
-                    blockState = world.func_242894_a(pos.add(0, y + 1, z));
-                    if (!blockState.isSolid()) {
+                    blockState = world.getBlockState(pos.offset(0, y + 1, z));
+                    if (!blockState.canOcclude()) {
                         //only count Air and not Cave Air so holes aren't placed in caves
                         if (blockState.getBlock() == Blocks.AIR)
                             return SliceState.AIR;

@@ -32,9 +32,9 @@ public class CharmCompat {
     }
 
     public static BlockState CGetCandle(boolean waterlogged, boolean lit) {
-        return Candles.CANDLE.getDefaultState()
-                .with(CandleBlock.LIT, lit)
-                .with(CandleBlock.WATERLOGGED, waterlogged);
+        return Candles.CANDLE.defaultBlockState()
+                .setValue(CandleBlock.LIT, lit)
+                .setValue(CandleBlock.WATERLOGGED, waterlogged);
     }
 
     public static void setupCharmTrades(VillagerTradesEvent event) {

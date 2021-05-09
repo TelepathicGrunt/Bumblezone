@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(PlayerEntity.class)
 public interface PlayerDamageShieldInvoker {
 
-    @Invoker("damageShield")
-    void bz_callDamagedShield(float amount);
+    @Invoker("hurtCurrentlyUsedShield")
+    void bz_callHurtCurrentlyUsedShield(float amount);
 
 }

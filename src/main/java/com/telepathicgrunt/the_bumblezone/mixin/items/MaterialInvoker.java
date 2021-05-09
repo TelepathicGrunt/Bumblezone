@@ -7,10 +7,10 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(Material.Builder.class)
 public interface MaterialInvoker {
 
-    @Invoker("notOpaque")
-    Material.Builder bz_getNotOpaque();
+    @Invoker("notSolidBlocking")
+    Material.Builder bz_getNotSolidBlocking();
 
-    @Invoker("pushDestroys")
-    Material.Builder bz_getPushDestroys();
+    @Invoker("destroyOnPush")
+    Material.Builder bz_getDestroyOnPush();
 
 }

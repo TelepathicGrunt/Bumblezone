@@ -30,22 +30,22 @@ public class DispenserItemSetup {
             /**
              * Dispense the specified stack, play the dispense sound and spawn particles.
              */
-            public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
+            public ItemStack execute(IBlockSource source, ItemStack stack) {
                 BucketItem bucketitem = (BucketItem) stack.getItem();
-                BlockPos blockpos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
-                World world = source.getWorld();
+                BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
+                World world = source.getLevel();
                 BlockState blockstate = world.getBlockState(blockpos);
 
-                if (bucketitem.tryPlaceContainedLiquid(null, world, blockpos, null)) {
+                if (bucketitem.emptyBucket(null, world, blockpos, null)) {
 
-                    bucketitem.onLiquidPlaced(world, stack, blockpos);
+                    bucketitem.checkExtraContent(world, stack, blockpos);
                     return new ItemStack(Items.BUCKET);
                 }
-                else if(blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL.get() && !blockstate.get(BlockStateProperties.WATERLOGGED)) {
+                else if(blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL.get() && !blockstate.getValue(BlockStateProperties.WATERLOGGED)) {
 
-                    world.setBlockState(blockpos, BzBlocks.HONEY_CRYSTAL.get().getDefaultState()
-                            .with(BlockStateProperties.FACING, blockstate.get(BlockStateProperties.FACING))
-                            .with(BlockStateProperties.WATERLOGGED, true));
+                    world.setBlockAndUpdate(blockpos, BzBlocks.HONEY_CRYSTAL.get().defaultBlockState()
+                            .setValue(BlockStateProperties.FACING, blockstate.getValue(BlockStateProperties.FACING))
+                            .setValue(BlockStateProperties.WATERLOGGED, true));
                     return new ItemStack(Items.BUCKET);
                 }
                 else {
@@ -53,8 +53,8 @@ public class DispenserItemSetup {
                 }
             }
         };
-        DispenserBlock.registerDispenseBehavior(BzItems.SUGAR_WATER_BUCKET.get(), genericBucketDispenseBehavior); // adds compatibility with sugar water buckets in dispensers
-        DispenserBlock.registerDispenseBehavior(BzItems.SUGAR_WATER_BOTTLE.get(), new SugarWaterBottleDispenseBehavior()); // adds compatibility with sugar water bottles in dispensers
+        DispenserBlock.registerBehavior(BzItems.SUGAR_WATER_BUCKET.get(), genericBucketDispenseBehavior); // adds compatibility with sugar water buckets in dispensers
+        DispenserBlock.registerBehavior(BzItems.SUGAR_WATER_BOTTLE.get(), new SugarWaterBottleDispenseBehavior()); // adds compatibility with sugar water bottles in dispensers
 
 
 
@@ -65,17 +65,17 @@ public class DispenserItemSetup {
         //grab the original bottle behaviors and set it as a fallback for our custom behavior
         //this is so we don't override another mod's Dispenser behavior that they set to the bottles.
         HoneyBottleDispenseBehavior.DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR =
-                ((DispenserBlockInvoker) Blocks.DISPENSER).bz_invokeGetBehavior(new ItemStack(Items.HONEY_BOTTLE));
+                ((DispenserBlockInvoker) Blocks.DISPENSER).bz_invokeGetDispenseMethod(new ItemStack(Items.HONEY_BOTTLE));
 
         GlassBottleDispenseBehavior.DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR =
-                ((DispenserBlockInvoker) Blocks.DISPENSER).bz_invokeGetBehavior(new ItemStack(Items.GLASS_BOTTLE));
+                ((DispenserBlockInvoker) Blocks.DISPENSER).bz_invokeGetDispenseMethod(new ItemStack(Items.GLASS_BOTTLE));
 
         EmptyBucketDispenseBehavior.DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR =
-                ((DispenserBlockInvoker) Blocks.DISPENSER).bz_invokeGetBehavior(new ItemStack(Items.BUCKET));
+                ((DispenserBlockInvoker) Blocks.DISPENSER).bz_invokeGetDispenseMethod(new ItemStack(Items.BUCKET));
 
 
-        DispenserBlock.registerDispenseBehavior(Items.GLASS_BOTTLE, new GlassBottleDispenseBehavior());
-        DispenserBlock.registerDispenseBehavior(Items.HONEY_BOTTLE, new HoneyBottleDispenseBehavior());
-        DispenserBlock.registerDispenseBehavior(Items.BUCKET, new EmptyBucketDispenseBehavior());
+        DispenserBlock.registerBehavior(Items.GLASS_BOTTLE, new GlassBottleDispenseBehavior());
+        DispenserBlock.registerBehavior(Items.HONEY_BOTTLE, new HoneyBottleDispenseBehavior());
+        DispenserBlock.registerBehavior(Items.BUCKET, new EmptyBucketDispenseBehavior());
     }
 }

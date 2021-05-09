@@ -17,28 +17,28 @@ import java.util.Random;
 
 public class CaveSugarWaterfall extends Feature<NoFeatureConfig> {
 
-    private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
+    private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
 
     public CaveSugarWaterfall(Codec<NoFeatureConfig> configFactory) {
         super(configFactory);
     }
 
     @Override
-    public boolean generate(ISeedReader world, ChunkGenerator generator, Random random, BlockPos position, NoFeatureConfig config) {
+    public boolean place(ISeedReader world, ChunkGenerator generator, Random random, BlockPos position, NoFeatureConfig config) {
         //creates a waterfall
-        BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().setPos(position);
-        BlockState blockstate = world.getBlockState(blockpos$Mutable.up());
+        BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position);
+        BlockState blockstate = world.getBlockState(blockpos$Mutable.above());
 
-        if (!blockstate.isSolid() || blockstate.isIn(BZBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
+        if (!blockstate.canOcclude() || blockstate.is(BZBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
             return false;
         } else {
             //checks if we are in the side of a wall with air exposed on one side
 
             int numberOfSolidSides = 0;
             int neededNumberOfSides;
-            blockstate = world.getBlockState(blockpos$Mutable.down());
+            blockstate = world.getBlockState(blockpos$Mutable.below());
 
-            if (blockstate.isSolid() && blockstate.isIn(BZBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
+            if (blockstate.canOcclude() && blockstate.is(BZBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
                 neededNumberOfSides = 3;
             } else if (blockstate.getBlock() == CAVE_AIR.getBlock()) {
                 neededNumberOfSides = 4;
@@ -48,8 +48,8 @@ public class CaveSugarWaterfall extends Feature<NoFeatureConfig> {
 
 
             for (Direction face : Direction.Plane.HORIZONTAL) {
-                blockstate = world.getBlockState(blockpos$Mutable.offset(face));
-                if (blockstate.isSolid() && blockstate.isIn(BZBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
+                blockstate = world.getBlockState(blockpos$Mutable.relative(face));
+                if (blockstate.canOcclude() && blockstate.is(BZBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
                     ++numberOfSolidSides;
                 } else if (blockstate.getBlock() != CAVE_AIR.getBlock()) {
                     return false;
@@ -58,8 +58,8 @@ public class CaveSugarWaterfall extends Feature<NoFeatureConfig> {
 
             //position valid. begin making waterfall
             if (numberOfSolidSides == neededNumberOfSides) {
-                world.setBlockState(blockpos$Mutable, BzFluids.SUGAR_WATER_BLOCK.get().getDefaultState(), 2);
-                world.getPendingFluidTicks().scheduleTick(blockpos$Mutable, BzFluids.SUGAR_WATER_FLUID.get(), 0);
+                world.setBlock(blockpos$Mutable, BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), 2);
+                world.getLiquidTicks().scheduleTick(blockpos$Mutable, BzFluids.SUGAR_WATER_FLUID.get(), 0);
             }
             return true;
         }

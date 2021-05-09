@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(WaterFluid.class)
 public class WaterEquivalenceMixin {
 
-    @Inject(method = "isEquivalentTo",
+    @Inject(method = "isSame",
             at = @At(value = "TAIL"),
             cancellable = true)
     private void isEquivalentToSugarWater(Fluid fluid, CallbackInfoReturnable<Boolean> cir) {
