@@ -8,6 +8,13 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
        | The Bumblezone Fabric changelog |
 
 
+   (V.2.4.3 Changes) (1.16.5 Minecraft)
+
+   Dependencies:
+-  Updated Cardinal Components that is jar-in-jar in my mod to v2.8.2 so it works with newer Fabric API.
+   Do note, I will stop jar-in-jaring Cardinal Components in Bumblezone's next update so you will have to download that dependency mod separately.
+
+
    (V.2.4.2 Changes) (1.16.5 Minecraft)
   
    Teleportation:
