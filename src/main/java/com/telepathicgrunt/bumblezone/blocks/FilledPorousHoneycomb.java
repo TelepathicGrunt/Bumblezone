@@ -33,24 +33,8 @@ import java.util.Random;
 public class FilledPorousHoneycomb extends Block {
 
     public FilledPorousHoneycomb() {
-        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MaterialColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.9F));
+        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MaterialColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.8F));
     }
-
-
-    /**
-     * Called when the given entity walks on this Block
-     */
-    @Override
-    public void onSteppedOn(World worldIn, BlockPos pos, Entity entityIn) {
-        double yMagnitude = Math.abs(entityIn.getVelocity().y);
-        if (yMagnitude < 0.1D) {
-            double slowFactor = 0.85D;
-            entityIn.setVelocity(entityIn.getVelocity().multiply(slowFactor, 1.0D, slowFactor));
-        }
-
-        super.onSteppedOn(worldIn, pos, entityIn);
-    }
-
 
     /**
      * Allow player to harvest honey and put honey into this block using bottles
