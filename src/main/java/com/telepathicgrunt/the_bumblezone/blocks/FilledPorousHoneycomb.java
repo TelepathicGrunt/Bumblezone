@@ -32,24 +32,8 @@ import net.minecraft.block.AbstractBlock;
 public class FilledPorousHoneycomb extends Block {
 
     public FilledPorousHoneycomb() {
-        super(AbstractBlock.Properties.of(Material.CLAY, MaterialColor.COLOR_ORANGE).strength(0.5F, 0.5F).sound(SoundType.CORAL_BLOCK).speedFactor(0.9f));
+        super(AbstractBlock.Properties.of(Material.CLAY, MaterialColor.COLOR_ORANGE).strength(0.5F, 0.5F).sound(SoundType.CORAL_BLOCK).speedFactor(0.8f));
     }
-
-
-    /**
-     * Called when the given entity walks on this Block
-     */
-    @Override
-    public void stepOn(World worldIn, BlockPos pos, Entity entityIn) {
-        double yMagnitude = Math.abs(entityIn.getDeltaMovement().y);
-        if (yMagnitude < 0.1D) {
-            double slowFactor = 0.85D;
-            entityIn.setDeltaMovement(entityIn.getDeltaMovement().multiply(slowFactor, 1.0D, slowFactor));
-        }
-
-        super.stepOn(worldIn, pos, entityIn);
-    }
-
 
     /**
      * Allow player to harvest honey and put honey into this block using bottles

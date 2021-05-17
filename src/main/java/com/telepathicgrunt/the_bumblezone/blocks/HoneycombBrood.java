@@ -48,7 +48,7 @@ public class HoneycombBrood extends ProperFacingBlock {
     public static final IntegerProperty STAGE = BlockStateProperties.AGE_3;
 
     public HoneycombBrood() {
-        super(AbstractBlock.Properties.of(Material.CLAY, MaterialColor.COLOR_ORANGE).randomTicks().strength(0.5F, 0.5F).sound(SoundType.CORAL_BLOCK).speedFactor(0.9F));
+        super(AbstractBlock.Properties.of(Material.CLAY, MaterialColor.COLOR_ORANGE).randomTicks().strength(0.5F, 0.5F).sound(SoundType.CORAL_BLOCK).speedFactor(0.8F));
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.SOUTH).setValue(STAGE, 0));
     }
 
@@ -63,22 +63,6 @@ public class HoneycombBrood extends ProperFacingBlock {
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         return this.defaultBlockState().setValue(FACING, context.getClickedFace().getOpposite());
     }
-
-
-    /**
-     * Called when the given entity walks on this Block
-     */
-    @Override
-    public void stepOn(World worldIn, BlockPos pos, Entity entityIn) {
-        double yMagnitude = Math.abs(entityIn.getDeltaMovement().y);
-        if (yMagnitude < 0.1D) {
-            double slowFactor = 0.85D;
-            entityIn.setDeltaMovement(entityIn.getDeltaMovement().multiply(slowFactor, 1.0D, slowFactor));
-        }
-
-        super.stepOn(worldIn, pos, entityIn);
-    }
-
 
     /**
      * Allow player to harvest honey and put honey into this block using bottles or wands
