@@ -25,6 +25,9 @@
 
   "entity.the_bumblezone.honey_slime": "Slime de Mel",
 
+  "enchantment.the_bumblezone.comb_cutter": "Cortador de pente",
+  "enchantment.the_bumblezone.comb_cutter.desc": "(Needs translation) Mines combs, hives, nest, and wax blocks faster. Doubles the output of BeeNest and BeeHive blocks including Resourceful Bee's hives.",
+
   "biome.the_bumblezone.sugar_water_floor": "Piso de Água Açúcarada",
   "biome.the_bumblezone.hive_wall": "Parede da Colmeia",
   "biome.the_bumblezone.hive_pillar": "Coluna da Colmeia",

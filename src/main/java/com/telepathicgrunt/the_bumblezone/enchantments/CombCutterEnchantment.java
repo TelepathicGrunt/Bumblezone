@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
-import com.resourcefulbees.resourcefulbees.registry.ModItems;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;

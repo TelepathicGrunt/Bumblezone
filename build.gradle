@@ -31,6 +31,10 @@ repositories {
 	maven {
 		url "https://nexus.resourcefulbees.com/repository/maven-public/"
 	}
+	maven {
+		name = "Jared"
+		url = "https://maven.blamejared.com"
+	}
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -73,16 +77,15 @@ minecraft {
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-	// Remove these if you don't have a deps folder with these mods in it
-	// (some of the jars had to be renamed to make it be imported in dev)
-	implementation fg.deobf("ignored:productivebees-1.16.5:0.6.9.8")
-	implementation fg.deobf("ignored:ResourcefulBees-1.16.5:0.6.7b")
-	implementation fg.deobf("ignored:carrierbees-1.16.4:0.0.4.6")
+	implementation fg.deobf("ignored:productivebees-1.16.5:0.6.9.11")
+	implementation fg.deobf("ignored:ResourcefulBees-1.16.5:0.6.7.2b")
+	implementation fg.deobf("ignored:carrierbees-1.16.4:0.0.4.11-8")
+	//implementation fg.deobf("noobanidus.mods:carrier-bees:1.16.4:0.0.4.11-8")
 	implementation fg.deobf("ignored:potionofbees-1.16.4:1.1.0.2")
-	implementation fg.deobf("ignored:amb-1.16.3:0.1.0")
+	implementation fg.deobf("ignored:amb-1.16.4:0.1.1")
 	implementation fg.deobf("ignored:buzzier_bees-1.16.5:3.0.1")
 	implementation fg.deobf("ignored:abnormals_core-1.16.5:3.1.1")
-	implementation fg.deobf("ignored:pokecube-aio-1.16.5:3.11.4")
+	implementation fg.deobf("ignored:pokecube-aio-1.16.5:3.11.5")
 	implementation fg.deobf("ignored:charm-forge-1.16.5:2.3.2")
 	implementation fg.deobf("com.telepathicgrunt:Blame:1.16.5-3.0.0-forge")
 
