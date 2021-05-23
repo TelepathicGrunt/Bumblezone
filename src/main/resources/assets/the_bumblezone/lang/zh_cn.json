@@ -24,7 +24,10 @@
 	"item.the_bumblezone.music_disc_honey_bee_rat_faced_boy.desc": "Rat Faced Boy - Honey Bee",
 	
 	"entity.the_bumblezone.honey_slime":"蜂蜜史莱姆",
-	
+
+	"enchantment.the_bumblezone.comb_cutter": "梳刀具",
+	"enchantment.the_bumblezone.comb_cutter.desc": "(Needs translation) Mines combs, hives, nest, and wax blocks faster. Doubles the output of BeeNest and BeeHive blocks including Resourceful Bee's hives.",
+
 	"biome.the_bumblezone.sugar_water_floor":"糖水底板",
 	"biome.the_bumblezone.hive_wall":"蜂巢壁",
 	"biome.the_bumblezone.hive_pillar":"蜂巢梁柱",
