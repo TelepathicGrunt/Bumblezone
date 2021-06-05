@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
-    //bees attacks bear mobs that is in the dimension
+    //bees become angrier when hit in bumblezone
     @Inject(method = "applyDamage(Lnet/minecraft/entity/damage/DamageSource;F)V",
             at = @At(value = "HEAD"))
     private void onEntityDamaged(DamageSource source, float amount, CallbackInfo ci) {

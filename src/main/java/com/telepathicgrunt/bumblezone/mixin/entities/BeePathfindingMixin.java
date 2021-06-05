@@ -18,6 +18,8 @@ public class BeePathfindingMixin {
     @Unique
     private BeeAI.CachedPathHolder cachedPathHolder;
 
+    // This target does exist in bytecode and is neccessary for mixin to work
+    // DO NOT REMOVE
     @Inject(method = "<init>(Lnet/minecraft/entity/passive/BeeEntity;)V", at = @At(value = "RETURN"))
     private void init(BeeEntity beeEntity, CallbackInfo ci){
         this.beeEntity = beeEntity;

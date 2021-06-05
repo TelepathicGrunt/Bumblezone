@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(PlayerEntity.class)
 public class PlayerDamagedMixin {
-    //bees attacks bear mobs that is in the dimension
+    //extra effects for honey shield such as slow attackers or melt shield when hit by fire
     @Inject(method = "damage",
             at = @At(value = "HEAD"),
             locals = LocalCapture.CAPTURE_FAILSOFT,
