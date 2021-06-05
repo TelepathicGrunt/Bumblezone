@@ -1,14 +1,24 @@
-plugins {
-	id 'fabric-loom' version '0.7-SNAPSHOT'
-	id 'maven-publish'
+import net.fabricmc.loom.task.RemapJarTask
+
+buildscript {
+	repositories {
+		maven { url "https://plugins.gradle.org/m2/" }
+	}
+	dependencies {
+		classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
+		classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.1.0'
+	}
 }
 
+plugins {
+	id 'fabric-loom' version '0.7-SNAPSHOT'
+}
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.archives_base_name
-version = "${project.minecraft_version}-${project.mod_version}"
+version = "${project.minecraft_version}-${project.mod_version}-fabric"
 group = project.maven_group
 
 minecraft {
@@ -70,41 +80,7 @@ dependencies {
 	modImplementation "com.github.Draylar:bee-better:${project.beeproductive_version}"
 }
 
-import groovy.json.JsonSlurper
-import groovy.json.JsonOutput
-
-processResources {
-	inputs.property "version", project.version
-
-	from(sourceSets.main.resources.srcDirs) {
-		include "fabric.mod.json"
-		expand "version": project.version
-	}
-
-	from(sourceSets.main.resources.srcDirs) {
-		exclude "fabric.mod.json"
-	}
-
-	// Minifies all .json files when building the mod.
-	// Source files are not minified, only the jar copies.
-	doLast {
-
-		def jsonMinifyStart = System.currentTimeMillis()
-		def jsonMinified = 0
-		def jsonBytesSaved = 0
-
-		fileTree(dir: outputs.files.asPath, include: '**/*.json').each {
-
-			File file = it
-			jsonMinified++
-			def oldLength = file.length()
-			file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
-			jsonBytesSaved += oldLength - file.length()
-		}
-
-		println('Minified ' + jsonMinified + ' json files. Saved ' + jsonBytesSaved + ' bytes. Took ' + (System.currentTimeMillis() - jsonMinifyStart) + 'ms.')
-	}
-}
+apply from: 'gradle/processresources.gradle'
 
 // ensure that the encoding is set to UTF-8, no matter what the system default is
 // this fixes some edge cases with special characters not displaying correctly
@@ -124,3 +100,7 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 jar {
 	from "LICENSE"
 }
+
+apply from: 'gradle/maven.gradle'
+apply from: 'gradle/curseforge.gradle'
+apply from: 'gradle/modrinth.gradle'

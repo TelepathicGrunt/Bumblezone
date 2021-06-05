@@ -1,0 +1,29 @@
+apply plugin: "com.matthewprenger.cursegradle"
+
+String fileContents = new File("./", "CHANGELOG.md").text
+//file('CHANGELOG.md')
+
+
+curseforge {
+    project {
+        apiKey = "$System.env.CURSEFORGEKEY"
+        id = "363949"
+        releaseType = "release"
+        changelogType = 'markdown'
+        changelog = fileContents
+        addGameVersion("1.16.5")
+        addGameVersion("Fabric")
+
+        mainArtifact(remapJar) {
+            displayName = "the Bumblezone v${project.mod_version} (${project.minecraft_version} MC)"
+        }
+
+        afterEvaluate {
+            uploadTask.dependsOn("remapJar")
+        }
+    }
+    options {
+        //debug = true
+        forgeGradleIntegration = false
+    }
+}
