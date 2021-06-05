@@ -77,7 +77,7 @@ dependencies {
 	modImplementation "de.siphalor:nbtcrafting-1.16:2+"
 
 	modImplementation "io.github.cottonmc:LibCD:${project.libcd_version}"
-	modImplementation "com.github.Draylar:bee-better:${project.beeproductive_version}"
+	modImplementation "com.github.Draylar:bee-better:${project.beebetter_version}"
 }
 
 apply from: 'gradle/processresources.gradle'
