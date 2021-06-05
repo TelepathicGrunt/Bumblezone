@@ -1,15 +1,53 @@
 buildscript {
 	repositories {
-		maven { url = 'https://files.minecraftforge.net/maven' }
+		maven { url = 'https://maven.minecraftforge.net' }
 		jcenter()
 		mavenCentral()
 		maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+		maven { url "https://plugins.gradle.org/m2/" }
 	}
 	dependencies {
 		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
 		classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+		classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
+		classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.1.0'
 	}
 }
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'maven-publish'
+apply plugin: 'maven'
+apply plugin: 'org.spongepowered.mixin'
+
+version = "${mc_version}-${mod_version}-forge"
+group = "com.telepathicgrunt"
+archivesBaseName = "${modid}"
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
+minecraft {
+	mappings channel:"official", version:"1.16.5"
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+			arg "-mixin.config="+archivesBaseName+".mixins.json"
+			property 'mixin.env.remapRefMap', 'true'
+			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            mods { the_bumblezone { source sourceSets.main } }
+        }
+
+        server {
+            workingDirectory project.file('run')
+			arg "-mixin.config="+archivesBaseName+".mixins.json"
+			property 'mixin.env.remapRefMap', 'true'
+			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            mods { the_bumblezone { source sourceSets.main } }
+        }
+    }
+}
+
 
 repositories {
 	maven {
@@ -37,45 +75,11 @@ repositories {
 	}
 }
 
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
-
-// Required to build correctly on platforms that may default to UTF-8 instead, like most Linux
-// installations.
-compileJava { options.encoding = "iso-8859-1" }
-
-version = "${mc_version}-${mod_version}"
-group = "com.telepathicgrunt.the_bumblezone"
-archivesBaseName = 'the_bumblezone'
-
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-
-minecraft {
-	mappings channel:"official", version:"1.16.5"
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-
-    runs {
-        client {
-            workingDirectory project.file('run')
-			arg "-mixin.config="+archivesBaseName+".mixins.json"
-			property 'mixin.env.remapRefMap', 'true'
-			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            mods { the_bumblezone { source sourceSets.main } }
-        }
-
-        server {
-            workingDirectory project.file('run')
-			arg "-mixin.config="+archivesBaseName+".mixins.json"
-			property 'mixin.env.remapRefMap', 'true'
-			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            mods { the_bumblezone { source sourceSets.main } }
-        }
-    }
-}
-
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
+	if (System.getProperty("idea.sync.active") != "true") {
+		annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
+	}
 
 	implementation fg.deobf("ignored:productivebees-1.16.5:0.6.9.11")
 	implementation fg.deobf("ignored:ResourcefulBees-1.16.5:0.6.7.2b")
@@ -94,58 +98,10 @@ dependencies {
 	//runtimeOnly fg.deobf("ignored:modname-1.15.2:x.x.x")
 }
 
-
-jar {
-    manifest {
-        attributes([
-            "Specification-Title": "the_bumblezone",
-            "Specification-Vendor": "telepathicgrunt",
-            "Specification-Version": "1", // We are version 1 of ourselves
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"telepathicgrunt",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            "MixinConfigs": "the_bumblezone.mixins.json"
-        ])
-    }
-}
-
-
-import groovy.json.JsonSlurper
-import groovy.json.JsonOutput
-processResources {
-	// This will ensure that this task is redone when the versions change.
-	inputs.property 'version', project.version
-
-	// Replace stuff in mods.toml, nothing else
-	from(sourceSets.main.resources.srcDirs) {
-		include 'META-INF/mods.toml'
-
-		// Replace version
-		expand 'version':project.version
-	}
-
-	// Copy everything else except the mods.toml
-	from(sourceSets.main.resources.srcDirs) {
-		exclude 'META-INF/mods.toml'
-	}
-	
-	// Minifies all .json files when building the mod.
-	// Source files are not minified, only the jar copies.
-	doLast {
-		def jsonMinifyStart = System.currentTimeMillis()
-		def jsonMinified = 0
-		def jsonBytesSaved = 0
-		fileTree(dir: outputs.files.asPath, include: '**/*.json').each {
-			File file = it
-			jsonMinified++
-			def oldLength = file.length()
-			file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
-			jsonBytesSaved += oldLength - file.length()
-		}
-		println('Minified ' + jsonMinified + ' json files. Saved ' + jsonBytesSaved + ' bytes. Took ' + (System.currentTimeMillis() - jsonMinifyStart) + 'ms.')
-	}
-}
-
-apply plugin: 'org.spongepowered.mixin'
 mixin { add sourceSets.main, "the_bumblezone.refmap.json" }
+
+apply from: 'gradle/processresources.gradle'
+apply from: 'gradle/manifest.gradle'
+apply from: 'gradle/maven.gradle'
+apply from: 'gradle/curseforge.gradle'
+apply from: 'gradle/modrinth.gradle'

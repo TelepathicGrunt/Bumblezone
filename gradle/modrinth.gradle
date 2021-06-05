@@ -1,0 +1,26 @@
+buildscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.1.0'
+    }
+}
+
+apply plugin: "com.modrinth.minotaur"
+
+import com.modrinth.minotaur.TaskModrinthUpload
+
+String fileContents = new File("./", "CHANGELOG.md").text
+
+// Make sure it runs after build!
+task publishModrinth (type: TaskModrinthUpload){
+    token = "$System.env.MODRINTH"
+    projectId = '38tpSycf'
+    versionName = "The Bumblezone"
+    versionNumber = project.version
+    uploadFile = jar
+    changelog = fileContents
+    addGameVersion('1.16.5')
+    addLoader('forge')
+}
