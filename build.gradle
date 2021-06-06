@@ -1,17 +1,17 @@
 buildscript {
-	repositories {
-		maven { url = 'https://maven.minecraftforge.net' }
-		jcenter()
-		mavenCentral()
-		maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-		maven { url "https://plugins.gradle.org/m2/" }
-	}
-	dependencies {
-		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
-		classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-		classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
-		classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.1.0'
-	}
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+        jcenter()
+        mavenCentral()
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
+        classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.1.0'
+    }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -26,23 +26,23 @@ archivesBaseName = "${modid}"
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-	mappings channel:"official", version:"1.16.5"
+    mappings channel:"official", version:"1.16.5"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
             workingDirectory project.file('run')
-			arg "-mixin.config="+archivesBaseName+".mixins.json"
-			property 'mixin.env.remapRefMap', 'true'
-			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            arg "-mixin.config="+archivesBaseName+".mixins.json"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods { the_bumblezone { source sourceSets.main } }
         }
 
         server {
             workingDirectory project.file('run')
-			arg "-mixin.config="+archivesBaseName+".mixins.json"
-			property 'mixin.env.remapRefMap', 'true'
-			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            arg "-mixin.config="+archivesBaseName+".mixins.json"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods { the_bumblezone { source sourceSets.main } }
         }
     }
@@ -50,57 +50,57 @@ minecraft {
 
 
 repositories {
-	maven {
-		// location of the maven that hosts JEI files
-		name = "Progwml6 maven"
-		url = "https://dvs1.progwml6.com/files/maven/"
-	}
-	maven {
-		// location of a maven mirror for JEI files, as a fallback
-		name = "ModMaven"
-		url = "https://modmaven.k-4u.nl"
-	}
-	maven {
-		// Blame and Resourceful Bees
-		url "https://nexus.resourcefulbees.com/repository/maven-public/"
-	}
-	maven {
-		// Carrier Bees
-		name = "Jared"
-		url = "https://maven.blamejared.com"
-	}
-	maven {
-		// Abnormal Core
-		url = "https://maven.jaackson.me"
-	}
-	maven {
-		// AMB, Potion of Bees, Productive Bees, Buzzier Bees, Pokecube AIO, and Charm Reforged
-		url "https://www.cursemaven.com"
-	}
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl"
+    }
+    maven {
+        // Blame and Resourceful Bees
+        url "https://nexus.resourcefulbees.com/repository/maven-public/"
+    }
+    maven {
+        // Carrier Bees
+        name = "Jared"
+        url = "https://maven.blamejared.com"
+    }
+    maven {
+        // Abnormal Core
+        url = "https://maven.jaackson.me"
+    }
+    maven {
+        // AMB, Potion of Bees, Productive Bees, Buzzier Bees, Pokecube AIO, and Charm Reforged
+        url "https://www.cursemaven.com"
+    }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-	if (System.getProperty("idea.sync.active") != "true") {
-		annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
-	}
+    if (System.getProperty("idea.sync.active") != "true") {
+        annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
+    }
 
-	implementation fg.deobf("com.minecraftabnormals:abnormals-core:${abnormalcore_mc_version}-${abnormalcore_version}")
+    implementation fg.deobf("com.minecraftabnormals:abnormals-core:${abnormalcore_mc_version}-${abnormalcore_version}")
 
-	implementation fg.deobf("curse.maven:buzzier_bees-355458:${buzzierbees_file_id}")
-	implementation fg.deobf("curse.maven:charm_reforged-430988:${charmreforged_file_id}")
+    implementation fg.deobf("curse.maven:buzzier_bees-355458:${buzzierbees_file_id}")
+    implementation fg.deobf("curse.maven:charm_reforged-430988:${charmreforged_file_id}")
 
-	implementation fg.deobf("curse.maven:amb_aurums_more_blocks-361597:${amb_file_id}")
-	implementation fg.deobf("curse.maven:potion_of_bees-355348:${potionofbees_file_id}")
-	implementation fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
-	implementation fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
+    implementation fg.deobf("curse.maven:amb_aurums_more_blocks-361597:${amb_file_id}")
+    implementation fg.deobf("curse.maven:potion_of_bees-355348:${potionofbees_file_id}")
+    implementation fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
+    implementation fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
 
-	implementation fg.deobf("noobanidus.mods.carrierbees:carrierbees:${carrierbees_version}")
-	implementation fg.deobf("com.resourcefulbees:ResourcefulBees:${resourcefulbees_version}")
-	implementation fg.deobf("com.telepathicgrunt:Blame:${blame_version}")
+    implementation fg.deobf("noobanidus.mods.carrierbees:carrierbees:${carrierbees_version}")
+    implementation fg.deobf("com.resourcefulbees:ResourcefulBees:${resourcefulbees_version}")
+    implementation fg.deobf("com.telepathicgrunt:Blame:${blame_version}")
 
-	compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
-	runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
 }
 
 apply from: 'gradle/processresources.gradle'
