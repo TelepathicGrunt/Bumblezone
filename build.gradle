@@ -79,7 +79,7 @@ repositories {
 		url = "https://maven.jaackson.me"
 	}
 	maven {
-		// AMB, Potion of Bees, Productive Bees
+		// AMB, Potion of Bees, Productive Bees, Buzzier Bees, and Charm Reforged
 		url "https://www.cursemaven.com"
 	}
 }
@@ -92,17 +92,16 @@ dependencies {
 
 	implementation fg.deobf("com.minecraftabnormals:abnormals-core:${abnormalcore_mc_version}-${abnormalcore_version}")
 
-	implementation fg.deobf("ignored:buzzier_bees-1.16.5:3.0.1")
-	implementation fg.deobf("ignored:abnormals_core-1.16.5:3.1.1")
-	implementation fg.deobf("ignored:charm-forge-1.16.5:2.3.2")
+	implementation fg.deobf("curse.maven:buzzier_bees-355458:${buzzierbees_file_id}")
+	implementation fg.deobf("curse.maven:charm_reforged-430988:${charmreforged_file_id}")
 
-	implementation fg.deobf("ignored:amb-1.16.4:${amb_file_id}")
-	implementation fg.deobf("curse.maven:potion_of_bees-?:${potionofbees_file_id}")
-	implementation fg.deobf("ignored:productivebees-?:${productivebees_file_id}")
+	implementation fg.deobf("curse.maven:amb_aurums_more_blocks-361597:${amb_file_id}")
+	implementation fg.deobf("curse.maven:potion_of_bees-355348:${potionofbees_file_id}")
+	implementation fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
 
 	implementation "pokecube-aoi:pokecube-aio:${pokecube_aio_version}:deobf"
 
-	implementation fg.deobf("noobanidus.mods:carrierbees:${carrierbees_version}")
+	implementation fg.deobf("noobanidus.mods.carrierbees:carrierbees:${carrierbees_version}")
 	implementation fg.deobf("com.resourcefulbees:ResourcefulBees:${resourcefulbees_version}")
 	implementation fg.deobf("com.telepathicgrunt:Blame:${blame_version}")
 
@@ -110,10 +109,11 @@ dependencies {
 	runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
 }
 
-mixin { add sourceSets.main, "the_bumblezone.refmap.json" }
-
 apply from: 'gradle/processresources.gradle'
 apply from: 'gradle/manifest.gradle'
+
+mixin { add sourceSets.main, "the_bumblezone.refmap.json" }
+
 apply from: 'gradle/maven.gradle'
 apply from: 'gradle/curseforge.gradle'
 apply from: 'gradle/modrinth.gradle'
