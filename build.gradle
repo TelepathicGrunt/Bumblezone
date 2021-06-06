@@ -7,7 +7,7 @@ buildscript {
 		maven { url "https://plugins.gradle.org/m2/" }
 	}
 	dependencies {
-		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
 		classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
 		classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
 		classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.1.0'
@@ -70,16 +70,11 @@ repositories {
 		url = "https://maven.blamejared.com"
 	}
 	maven {
-		// Pokecube AIO
-		name = "CurseForge"
-		url = "https://minecraft.curseforge.com/api/maven/"
-	}
-	maven {
 		// Abnormal Core
 		url = "https://maven.jaackson.me"
 	}
 	maven {
-		// AMB, Potion of Bees, Productive Bees, Buzzier Bees, and Charm Reforged
+		// AMB, Potion of Bees, Productive Bees, Buzzier Bees, Pokecube AIO, and Charm Reforged
 		url "https://www.cursemaven.com"
 	}
 }
@@ -98,8 +93,7 @@ dependencies {
 	implementation fg.deobf("curse.maven:amb_aurums_more_blocks-361597:${amb_file_id}")
 	implementation fg.deobf("curse.maven:potion_of_bees-355348:${potionofbees_file_id}")
 	implementation fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
-
-	implementation "pokecube-aoi:pokecube-aio:${pokecube_aio_version}:deobf"
+	implementation fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
 
 	implementation fg.deobf("noobanidus.mods.carrierbees:carrierbees:${carrierbees_version}")
 	implementation fg.deobf("com.resourcefulbees:ResourcefulBees:${resourcefulbees_version}")
