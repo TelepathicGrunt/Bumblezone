@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "the_bumblezone:cobblestone_smelting_sugar_infused_cobblestone"
+    ]
+  },
+  "criteria": {
+    "has_sugar_infused_cobblestone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "the_bumblezone:sugar_infused_cobblestone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "the_bumblezone:cobblestone_smelting_sugar_infused_cobblestone"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sugar_infused_cobblestone",
+      "has_the_recipe"
+    ]
+  ]
+}

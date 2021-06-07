@@ -32,19 +32,19 @@ public class RecipeGenerators extends RecipeProvider implements IDataProvider {
                 .pattern("sss")
                 .pattern(" s ")
                 .unlockedBy("has_honey_crystal_shards", has(BzItems.HONEY_CRYSTAL_SHARDS.get()))
-                .save(consumer, Bumblezone.MODID + ":honey_crystal_shards");
+                .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(BzItems.STICKY_HONEY_REDSTONE.get())
                 .requires(BzItems.STICKY_HONEY_RESIDUE.get())
                 .requires(Items.REDSTONE)
                 .unlockedBy("has_stick_honey_residue", has(BzItems.STICKY_HONEY_RESIDUE.get()))
-                .save(consumer, Bumblezone.MODID + ":stick_honey_residue");
+                .save(consumer);
 
         BzContainerShapelessRecipeBuilder.shapeless(BzItems.SUGAR_WATER_BUCKET.get())
                 .requires(Items.WATER_BUCKET)
                 .requires(Items.SUGAR)
                 .unlockedBy("has_sugar", has(Items.SUGAR))
-                .save(consumer, Bumblezone.MODID + ":sugar_water_bucket");
+                .save(consumer);
 
         CookingRecipeBuilder.smelting(Ingredient.of(BzItems.SUGAR_INFUSED_STONE.get()), Items.STONE, 0.05f, 50)
                 .unlockedBy("has_sugar_infused_stone", has(BzItems.SUGAR_INFUSED_STONE.get()))

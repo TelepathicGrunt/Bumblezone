@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "the_bumblezone:sticky_honey_redstone"
+    ]
+  },
+  "criteria": {
+    "has_stick_honey_residue": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "the_bumblezone:sticky_honey_residue"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "the_bumblezone:sticky_honey_redstone"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_stick_honey_residue",
+      "has_the_recipe"
+    ]
+  ]
+}

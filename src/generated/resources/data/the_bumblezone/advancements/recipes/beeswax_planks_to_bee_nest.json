@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "the_bumblezone:beeswax_planks_to_bee_nest"
+    ]
+  },
+  "criteria": {
+    "has_bees_wax_planks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "the_bumblezone:beeswax_planks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "the_bumblezone:beeswax_planks_to_bee_nest"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_bees_wax_planks",
+      "has_the_recipe"
+    ]
+  ]
+}

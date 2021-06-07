@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "sss",
+    " s "
+  ],
+  "key": {
+    "s": {
+      "item": "the_bumblezone:honey_crystal_shards"
+    }
+  },
+  "result": {
+    "item": "the_bumblezone:honey_crystal_shield"
+  }
+}
