@@ -12,9 +12,9 @@ import java.util.function.Supplier;
 @Mixin(BiomeGenerationSettings.class)
 public interface BiomeGenerationSettingsAccessor {
     @Accessor("features")
-    List<List<Supplier<ConfiguredFeature<?, ?>>>> bz_getFeatures();
+    List<List<Supplier<ConfiguredFeature<?, ?>>>> thebumblezone_getFeatures();
 
     @Mutable
     @Accessor("features")
-    void bz_setFeatures(List<List<Supplier<ConfiguredFeature<?, ?>>>> features);
+    void thebumblezone_setFeatures(List<List<Supplier<ConfiguredFeature<?, ?>>>> features);
 }

@@ -5,12 +5,12 @@ import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -25,9 +25,6 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
 
 import java.util.Random;
-
-
-import net.minecraft.block.AbstractBlock;
 
 public class FilledPorousHoneycomb extends Block {
 

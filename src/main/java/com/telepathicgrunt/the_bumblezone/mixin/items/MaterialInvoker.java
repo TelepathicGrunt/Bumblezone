@@ -8,9 +8,9 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface MaterialInvoker {
 
     @Invoker("notSolidBlocking")
-    Material.Builder bz_getNotSolidBlocking();
+    Material.Builder thebumblezone_getNotSolidBlocking();
 
     @Invoker("destroyOnPush")
-    Material.Builder bz_getDestroyOnPush();
+    Material.Builder thebumblezone_getDestroyOnPush();
 
 }

@@ -9,8 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.Direction;
 
-import net.minecraft.item.Item.Properties;
-
 public class HoneySlimeSpawnEgg extends SpawnEggItem {
     public HoneySlimeSpawnEgg(EntityType<?> typeIn, int primaryColorIn, int secondaryColorIn, Properties builder) {
         super(typeIn, primaryColorIn, secondaryColorIn, builder);

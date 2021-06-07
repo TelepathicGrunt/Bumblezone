@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface SkyPropertiesAccessor {
 
     @Accessor("EFFECTS")
-    static Object2ObjectMap<ResourceLocation, DimensionRenderInfo> bz_getBY_ResourceLocation() {
+    static Object2ObjectMap<ResourceLocation, DimensionRenderInfo> thebumblezone_getBY_ResourceLocation() {
         throw new UnsupportedOperationException();
     }
 }

@@ -15,7 +15,7 @@ public class HoneyShieldPreferredSlotMixin {
     @Inject(method = "getEquipmentSlotForItem",
             at = @At(value = "HEAD"),
             cancellable = true)
-    private static void isHoneyCrystalShield(ItemStack stack, CallbackInfoReturnable<EquipmentSlotType> cir) {
+    private static void thebumblezone_isHoneyCrystalShield(ItemStack stack, CallbackInfoReturnable<EquipmentSlotType> cir) {
         if(stack.getItem() == BzItems.HONEY_CRYSTAL_SHIELD.get()){
             cir.setReturnValue(EquipmentSlotType.OFFHAND);
         }

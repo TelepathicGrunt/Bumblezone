@@ -10,5 +10,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface DefaultDispenseItemBehaviorInvoker {
 
     @Invoker("execute")
-    ItemStack bz_invokeExecute(IBlockSource p_82487_1_, ItemStack p_82487_2_);
+    ItemStack thebumblezone_invokeExecute(IBlockSource p_82487_1_, ItemStack p_82487_2_);
 }

@@ -46,7 +46,7 @@ public class MinecraftServerMixin {
     //Thanks Mojang
     @Inject(method = "createLevels(Lnet/minecraft/world/chunk/listener/IChunkStatusListener;)V",
             at = @At("RETURN"))
-    private void onWorldCreation(CallbackInfo ci) {
+    private void thebumblezone_onWorldCreation(CallbackInfo ci) {
         BeeAggression.setupBeeHatingList(levels.get(World.OVERWORLD));
     }
 
@@ -54,12 +54,12 @@ public class MinecraftServerMixin {
             method = "<init>(Ljava/lang/Thread;Lnet/minecraft/util/registry/DynamicRegistries$Impl;Lnet/minecraft/world/storage/SaveFormat$LevelSave;Lnet/minecraft/world/storage/IServerConfiguration;Lnet/minecraft/resources/ResourcePackList;Ljava/net/Proxy;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/resources/DataPackRegistries;Lcom/mojang/authlib/minecraft/MinecraftSessionService;Lcom/mojang/authlib/GameProfileRepository;Lnet/minecraft/server/management/PlayerProfileCache;Lnet/minecraft/world/chunk/listener/IChunkStatusListenerFactory;)V",
             at = @At(value = "TAIL")
     )
-    private void modifyBiomeRegistry(Thread thread, DynamicRegistries.Impl impl, SaveFormat.LevelSave session,
-                                     IServerConfiguration saveProperties, ResourcePackList resourcePackManager,
-                                     Proxy proxy, DataFixer dataFixer, DataPackRegistries serverResourceManager,
-                                     MinecraftSessionService minecraftSessionService, GameProfileRepository gameProfileRepository,
-                                     PlayerProfileCache userCache, IChunkStatusListenerFactory worldGenerationProgressListenerFactory,
-                                     CallbackInfo ci)
+    private void thebumblezone_modifyBiomeRegistry(Thread thread, DynamicRegistries.Impl impl, SaveFormat.LevelSave session,
+                                                   IServerConfiguration saveProperties, ResourcePackList resourcePackManager,
+                                                   Proxy proxy, DataFixer dataFixer, DataPackRegistries serverResourceManager,
+                                                   MinecraftSessionService minecraftSessionService, GameProfileRepository gameProfileRepository,
+                                                   PlayerProfileCache userCache, IChunkStatusListenerFactory worldGenerationProgressListenerFactory,
+                                                   CallbackInfo ci)
     {
         // BiomeLoadEvent is too early for our tag blacklist to allow blacklisting features.
         // Please use BiomeLoadEvent for everything else. I'm just doing this because I have an edge case.

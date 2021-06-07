@@ -13,21 +13,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ServerWorldMixin {
 
 	@Unique
-	private static final int updateInterval = 20;
+	private static final int thebumblezone_updateInterval = 20;
 
 	@Unique
-	private static int counter = 0;
+	private static int thebumblezone_counter = 0;
 
 	@Inject(
 			method = "tick(Ljava/util/function/BooleanSupplier;)V",
 			at = @At(value = "HEAD")
 	)
-	private void tickAltar(CallbackInfo ci) {
+	private void thebumblezone_tickAltar(CallbackInfo ci) {
 		ServerWorld world = ((ServerWorld) (Object) this);
 		if(world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)){
-			counter++;
-			if(counter % updateInterval == 0){
-				counter = 0;
+			thebumblezone_counter++;
+			if(thebumblezone_counter % thebumblezone_updateInterval == 0){
+				thebumblezone_counter = 0;
 				GeneralUtils.updateEntityCount(world);
 			}
 		}

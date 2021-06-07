@@ -65,13 +65,13 @@ public class DispenserItemSetup {
         //grab the original bottle behaviors and set it as a fallback for our custom behavior
         //this is so we don't override another mod's Dispenser behavior that they set to the bottles.
         HoneyBottleDispenseBehavior.DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR =
-                ((DispenserBlockInvoker) Blocks.DISPENSER).bz_invokeGetDispenseMethod(new ItemStack(Items.HONEY_BOTTLE));
+                ((DispenserBlockInvoker) Blocks.DISPENSER).thebumblezone_invokeGetDispenseMethod(new ItemStack(Items.HONEY_BOTTLE));
 
         GlassBottleDispenseBehavior.DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR =
-                ((DispenserBlockInvoker) Blocks.DISPENSER).bz_invokeGetDispenseMethod(new ItemStack(Items.GLASS_BOTTLE));
+                ((DispenserBlockInvoker) Blocks.DISPENSER).thebumblezone_invokeGetDispenseMethod(new ItemStack(Items.GLASS_BOTTLE));
 
         EmptyBucketDispenseBehavior.DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR =
-                ((DispenserBlockInvoker) Blocks.DISPENSER).bz_invokeGetDispenseMethod(new ItemStack(Items.BUCKET));
+                ((DispenserBlockInvoker) Blocks.DISPENSER).thebumblezone_invokeGetDispenseMethod(new ItemStack(Items.BUCKET));
 
 
         DispenserBlock.registerBehavior(Items.GLASS_BOTTLE, new GlassBottleDispenseBehavior());

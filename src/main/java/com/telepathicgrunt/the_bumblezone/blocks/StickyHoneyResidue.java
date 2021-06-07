@@ -67,23 +67,23 @@ public class StickyHoneyResidue extends VineBlock {
     public VoxelShape getShape(BlockState blockstate, IBlockReader world, BlockPos pos, ISelectionContext context) {
         VoxelShape voxelshape = VoxelShapes.empty();
         if (blockstate.getValue(UP)) {
-            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.bz_getUP_SHAPE());
+            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.thebumblezone_getUP_SHAPE());
         }
 
         if (blockstate.getValue(SOUTH)) {
-            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.bz_getNORTH_SHAPE());
+            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.thebumblezone_getNORTH_SHAPE());
         }
 
         if (blockstate.getValue(WEST)) {
-            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.bz_getEAST_SHAPE());
+            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.thebumblezone_getEAST_SHAPE());
         }
 
         if (blockstate.getValue(NORTH)) {
-            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.bz_getSOUTH_SHAPE());
+            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.thebumblezone_getSOUTH_SHAPE());
         }
 
         if (blockstate.getValue(EAST)) {
-            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.bz_getWEST_SHAPE());
+            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.thebumblezone_getWEST_SHAPE());
         }
 
         if (blockstate.getValue(DOWN)) {

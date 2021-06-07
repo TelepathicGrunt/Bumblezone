@@ -14,7 +14,7 @@ public class PlayerTickMixin {
     // change player fog color when effect is active
     @Inject(method = "tick",
             at = @At(value = "TAIL"))
-    private void onEntityTick(CallbackInfo ci) {
+    private void thebumblezone_onEntityTick(CallbackInfo ci) {
         PlayerEntity playerEntity = ((PlayerEntity) (Object) this);
 
         BeeAggression.playerTick(playerEntity);

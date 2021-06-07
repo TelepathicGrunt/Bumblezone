@@ -27,9 +27,6 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 import java.util.Random;
 
-
-import net.minecraftforge.fluids.ForgeFlowingFluid.Properties;
-
 public abstract class SugarWaterFluid extends ForgeFlowingFluid {
 
     protected SugarWaterFluid(Properties properties) {

@@ -10,5 +10,5 @@ import java.util.List;
 public interface TemplateAccessor {
 
     @Accessor("palettes")
-    List<Template.Palette> bz_getBlocks();
+    List<Template.Palette> thebumblezone_getBlocks();
 }

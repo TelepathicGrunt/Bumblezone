@@ -1,10 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-
-
-import net.minecraft.block.AbstractBlock;
 
 public class SugarInfusedCobblestone extends Block {
 

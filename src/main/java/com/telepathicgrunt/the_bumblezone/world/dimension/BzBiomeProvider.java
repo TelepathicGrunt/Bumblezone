@@ -101,7 +101,7 @@ public class BzBiomeProvider extends BiomeProvider {
     }
 
     public Biome sample(Registry<Biome> dynamicBiomeRegistry, int x, int z) {
-        int resultBiomeID = ((LayerAccessor)this.BIOME_SAMPLER).bz_getSampler().get(x, z);
+        int resultBiomeID = ((LayerAccessor)this.BIOME_SAMPLER).thebumblezone_getSampler().get(x, z);
         Biome biome = dynamicBiomeRegistry.byId(resultBiomeID);
         if (biome == null) {
             if (SharedConstants.IS_RUNNING_IN_IDE) {

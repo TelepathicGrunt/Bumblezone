@@ -14,7 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class BzBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Bumblezone.MODID);
     public static Material RESIDUE = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.COLOR_ORANGE))
-            .bz_getNotSolidBlocking()).bz_getDestroyOnPush().noCollider().replaceable().nonSolid().build();
+            .thebumblezone_getNotSolidBlocking()).thebumblezone_getDestroyOnPush().noCollider().replaceable().nonSolid().build();
 
     //Blocks
     public static final RegistryObject<Block> POROUS_HONEYCOMB = BLOCKS.register("porous_honeycomb_block", PorousHoneycomb::new);

@@ -58,7 +58,7 @@ public class NbtFeature extends Feature<NbtFeatureConfig>{
         placementsettings.clearProcessors();
         Optional<StructureProcessorList> postProcessor = world.getLevel().getServer().registryAccess().registryOrThrow(Registry.PROCESSOR_LIST_REGISTRY).getOptional(config.postProcessor);
         postProcessor.orElse(ProcessorLists.EMPTY).list().forEach(placementsettings::addProcessor); // add all post processors
-        List<Template.BlockInfo> list = placementsettings.getRandomPalette(((TemplateAccessor)template).bz_getBlocks(), mutable).blocks();
+        List<Template.BlockInfo> list = placementsettings.getRandomPalette(((TemplateAccessor)template).thebumblezone_getBlocks(), mutable).blocks();
         Template.processBlockInfos(world, mutable, mutable, placementsettings, list);
 
         return true;

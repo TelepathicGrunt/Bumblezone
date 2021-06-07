@@ -49,7 +49,7 @@ public class BuzzierBeesCompat {
         Item BOTTLED_BEES = ForgeRegistries.ITEMS.getValue(new ResourceLocation(BUZZIER_BEES_NAMESPACE, "bee_bottle"));
 
         if (BOTTLED_BEES != null && Bumblezone.BzModCompatibilityConfig.allowPotionOfBeesCompat.get()) {
-            BuzzierBeesBottledBeesDispenseBehavior.DEFAULT_BOTTLED_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).bz_invokeGetDispenseMethod(new ItemStack(BOTTLED_BEES));
+            BuzzierBeesBottledBeesDispenseBehavior.DEFAULT_BOTTLED_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).thebumblezone_invokeGetDispenseMethod(new ItemStack(BOTTLED_BEES));
             DispenserBlock.registerBehavior(BBItems.BOTTLE_OF_BEE.get(), BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); //adds compatibility with bottled bees in dispensers
         }
 

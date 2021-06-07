@@ -9,5 +9,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface LayerAccessor {
 
     @Accessor("area")
-    LazyArea bz_getSampler();
+    LazyArea thebumblezone_getSampler();
 }

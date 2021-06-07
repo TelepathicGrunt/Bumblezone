@@ -60,7 +60,7 @@ public class GeneralUtils {
      */
     public static void makeBiomeMutable(Biome biome){
         // Make the structure and features list mutable for modification late
-        List<List<Supplier<ConfiguredFeature<?, ?>>>> tempFeature = ((BiomeGenerationSettingsAccessor)biome.getGenerationSettings()).bz_getFeatures();
+        List<List<Supplier<ConfiguredFeature<?, ?>>>> tempFeature = ((BiomeGenerationSettingsAccessor)biome.getGenerationSettings()).thebumblezone_getFeatures();
         List<List<Supplier<ConfiguredFeature<?, ?>>>> mutableGenerationStages = new ArrayList<>();
 
         // Fill in generation stages so there are at least 10 or else Minecraft crashes.
@@ -74,7 +74,7 @@ public class GeneralUtils {
         }
 
         // Make the Structure and GenerationStages (features) list mutable for modification later
-        ((BiomeGenerationSettingsAccessor)biome.getGenerationSettings()).bz_setFeatures(mutableGenerationStages);
+        ((BiomeGenerationSettingsAccessor)biome.getGenerationSettings()).thebumblezone_setFeatures(mutableGenerationStages);
     }
 
     // If it instanceof DefaultDispenseItemBehavior, call dispenseStack directly to avoid
@@ -82,7 +82,7 @@ public class GeneralUtils {
     public static ItemStack dispenseStackProperly(IBlockSource source, ItemStack stack, IDispenseItemBehavior defaultDispenseBehavior) {
 
         if (defaultDispenseBehavior instanceof DefaultDispenseItemBehavior) {
-            return ((DefaultDispenseItemBehaviorInvoker) defaultDispenseBehavior).bz_invokeExecute(source, stack);
+            return ((DefaultDispenseItemBehaviorInvoker) defaultDispenseBehavior).thebumblezone_invokeExecute(source, stack);
         }
         else {
             // Fallback to dispense as someone chose to make a custom class without dispenseStack.

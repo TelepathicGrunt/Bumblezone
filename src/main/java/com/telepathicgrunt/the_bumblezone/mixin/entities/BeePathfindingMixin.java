@@ -13,16 +13,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class BeePathfindingMixin {
 
     @Unique
-    private BeeEntity beeEntity;
+    private BeeEntity thebumblezone_beeEntity;
 
     @Unique
-    private BeeAI.CachedPathHolder cachedPathHolder;
+    private BeeAI.CachedPathHolder thebumblezone_cachedPathHolder;
 
     // This target does exist in bytecode and is neccessary for mixin to work
     // DO NOT REMOVE
     @Inject(method = "<init>(Lnet/minecraft/entity/passive/BeeEntity;)V", at = @At(value = "RETURN"))
     private void init(BeeEntity beeEntity, CallbackInfo ci){
-        this.beeEntity = beeEntity;
+        this.thebumblezone_beeEntity = beeEntity;
     }
 
     /**
@@ -34,8 +34,8 @@ public class BeePathfindingMixin {
             cancellable = true)
     private void newWander(CallbackInfo ci){
         // Do our own bee AI in the Bumblezone. Makes bees wander more and should be slightly better performance. Maybe...
-        if(beeEntity.level.dimension().equals(BzDimension.BZ_WORLD_KEY)){
-            cachedPathHolder = BeeAI.smartBeesTM(beeEntity, cachedPathHolder);
+        if(thebumblezone_beeEntity.level.dimension().equals(BzDimension.BZ_WORLD_KEY)){
+            thebumblezone_cachedPathHolder = BeeAI.smartBeesTM(thebumblezone_beeEntity, thebumblezone_cachedPathHolder);
             ci.cancel();
         }
     }

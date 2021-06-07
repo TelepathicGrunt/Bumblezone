@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -39,9 +40,6 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
 import java.util.Random;
-
-
-import net.minecraft.block.AbstractBlock;
 
 public class HoneycombBrood extends ProperFacingBlock {
     private static final ResourceLocation HONEY_TREAT = new ResourceLocation("productivebees:honey_treat");

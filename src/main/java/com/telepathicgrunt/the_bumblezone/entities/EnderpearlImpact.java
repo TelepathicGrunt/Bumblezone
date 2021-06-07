@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.eventbus.api.Event;

@@ -14,7 +14,7 @@ public class WaterEquivalenceMixin {
     @Inject(method = "isSame",
             at = @At(value = "TAIL"),
             cancellable = true)
-    private void isEquivalentToSugarWater(Fluid fluid, CallbackInfoReturnable<Boolean> cir) {
+    private void thebumblezone_isEquivalentToSugarWater(Fluid fluid, CallbackInfoReturnable<Boolean> cir) {
         if(fluid == BzFluids.SUGAR_WATER_FLUID.get() || fluid == BzFluids.SUGAR_WATER_FLUID_FLOWING.get())
             cir.setReturnValue(true);
     }

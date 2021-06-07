@@ -85,7 +85,8 @@ dependencies {
         annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
     }
 
-    implementation fg.deobf("com.minecraftabnormals:abnormals-core:${abnormalcore_mc_version}-${abnormalcore_version}")
+    //implementation fg.deobf("com.minecraftabnormals:abnormals-core:${abnormalcore_mc_version}-${abnormalcore_version}")
+    implementation fg.deobf("curse.maven:abnormals_core-382216:3233486")
 
     implementation fg.deobf("curse.maven:buzzier_bees-355458:${buzzierbees_file_id}")
     implementation fg.deobf("curse.maven:charm_reforged-430988:${charmreforged_file_id}")

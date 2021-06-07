@@ -18,7 +18,7 @@ public class PlayerInteractsEntityMixin {
     // Or make honey slime
     @Inject(method = "interactOn",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isEmpty()Z", ordinal = 1))
-    private void onBeeFeeding(Entity entity, Hand hand, CallbackInfoReturnable<ActionResultType> cir) {
+    private void thebumblezone_onBeeFeeding(Entity entity, Hand hand, CallbackInfoReturnable<ActionResultType> cir) {
         BeeInteractivity.beeFeeding(entity.level, ((PlayerEntity)(Object)this), hand, entity);
         CreatingHoneySlime.createHoneySlime(entity.level, ((PlayerEntity)(Object)this), hand, entity);
     }
