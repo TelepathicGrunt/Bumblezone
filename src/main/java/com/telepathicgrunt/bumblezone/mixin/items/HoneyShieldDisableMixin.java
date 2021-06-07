@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class HoneyShieldDisableMixin {
 
     @Inject(method = "disableShield",
-            at = @At(value = "HEAD", target = "Lnet/minecraft/entity/player/PlayerEntity;getItemCooldownManager()Lnet/minecraft/entity/player/ItemCooldownManager;"))
+            at = @At(value = "HEAD"))
     private void thebumblezone_isHoneyCrystalShield(boolean sprinting, CallbackInfo ci) {
         ((PlayerEntity)(Object)this).getItemCooldownManager().set(Items.SHIELD, 100);
     }
