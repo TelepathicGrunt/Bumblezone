@@ -17,7 +17,7 @@ public class HoneyShieldCooldownMixin {
     @Inject(method = "disablePlayerShield",
             at = @At(value = "HEAD"),
             cancellable = true)
-    private void isHoneyCrystalShield(PlayerEntity playerEntity, ItemStack itemStack, ItemStack itemStack2, CallbackInfo ci) {
+    private void thebumblezone_isHoneyCrystalShield(PlayerEntity playerEntity, ItemStack itemStack, ItemStack itemStack2, CallbackInfo ci) {
         if(itemStack2.getItem() == BzItems.HONEY_CRYSTAL_SHIELD && !itemStack.isEmpty() && !itemStack2.isEmpty() && itemStack.getItem() instanceof AxeItem){
             HoneyCrystalShieldBehavior.setShieldCooldown(playerEntity, ((MobEntity)(Object)this));
             ci.cancel();

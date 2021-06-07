@@ -13,7 +13,7 @@ public class WorldChunkAddEntityMixin {
     //bees attacks bear or non-bee insects mobs that is in the dimension
     @Inject(method = "addEntity",
             at = @At(value = "RETURN"))
-    private void onAddedEntity(Entity entity, CallbackInfo ci) {
+    private void thebumblezone_onAddedEntity(Entity entity, CallbackInfo ci) {
         BeeAggression.entityTypeBeeAnger(entity);
     }
 }

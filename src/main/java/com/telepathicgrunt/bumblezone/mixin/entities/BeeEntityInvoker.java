@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface BeeEntityInvoker {
 
     @Invoker("setBeeFlag")
-    void bz_callSetBeeFlag(int bit, boolean value);
+    void thebumblezone_callSetBeeFlag(int bit, boolean value);
 }

@@ -14,7 +14,7 @@ public class HoneyShieldItemstackSetDamageMixin {
     @Inject(method = "setDamage",
             at = @At(value = "HEAD"),
             cancellable = true)
-    private void isHoneyCrystalShield(int damage, CallbackInfo ci) {
+    private void thebumblezone_isHoneyCrystalShield(int damage, CallbackInfo ci) {
         ItemStack stack = (ItemStack)(Object)this;
         if(stack.getItem() == BzItems.HONEY_CRYSTAL_SHIELD) {
             stack.getOrCreateTag().putInt("Damage", Math.max(0, HoneyCrystalShieldBehavior.setDamage(stack, damage)));

@@ -10,5 +10,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface DispenserAccessor {
 
     @Invoker("getBehaviorForItem")
-    DispenserBehavior bz_invokeGetBehaviorForItem(ItemStack stack);
+    DispenserBehavior thebumblezone_invokeGetBehaviorForItem(ItemStack stack);
 }

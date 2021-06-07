@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface SpawnRestrictionAccessor {
 
     @Invoker("register")
-    static <T extends MobEntity> void bz_invokeRegister(EntityType<T> type, SpawnRestriction.Location location, Heightmap.Type heightmapType, SpawnRestriction.SpawnPredicate<T> predicate) {
+    static <T extends MobEntity> void thebumblezone_invokeRegister(EntityType<T> type, SpawnRestriction.Location location, Heightmap.Type heightmapType, SpawnRestriction.SpawnPredicate<T> predicate) {
         throw new UnsupportedOperationException();
     }
 }

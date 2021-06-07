@@ -19,7 +19,7 @@ public class BlockOverlayRendererMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameOverlayRenderer;getInWallBlockState(Lnet/minecraft/entity/player/PlayerEntity;)Lnet/minecraft/block/BlockState;"),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
-    private static void blockOverlay(MinecraftClient minecraftClient, MatrixStack matrixStack, CallbackInfo ci, PlayerEntity playerEntity) {
+    private static void thebumblezone_blockOverlay(MinecraftClient minecraftClient, MatrixStack matrixStack, CallbackInfo ci, PlayerEntity playerEntity) {
         if (SugarWaterClientOverlay.sugarWaterOverlay(playerEntity, new BlockPos(playerEntity.getPos()), matrixStack))
             ci.cancel();
     }

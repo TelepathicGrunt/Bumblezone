@@ -15,7 +15,7 @@ public class EnderpearlImpactMixin {
     @Inject(method = "onCollision",
             at = @At(value = "HEAD"),
             cancellable = true)
-    private void onPearlHit(HitResult hitResult, CallbackInfo ci) {
+    private void thebumblezone_onPearlHit(HitResult hitResult, CallbackInfo ci) {
         if(PlayerTeleportation.runEnderpearlImpact(hitResult, ((EnderPearlEntity) (Object) this))) ci.cancel();
     }
 }

@@ -9,5 +9,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface BucketItemAccessor {
 
     @Accessor("fluid")
-    Fluid bz_getFluid();
+    Fluid thebumblezone_getFluid();
 }

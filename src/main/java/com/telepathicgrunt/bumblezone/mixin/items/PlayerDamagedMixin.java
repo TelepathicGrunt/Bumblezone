@@ -16,10 +16,9 @@ public class PlayerDamagedMixin {
             at = @At(value = "HEAD"),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
-    private void playerAttacked(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    private void thebumblezone_playerAttacked(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         HoneyCrystalShieldBehavior.slowPhysicalAttackers(source, ((PlayerEntity) (Object) this));
         if(HoneyCrystalShieldBehavior.damageShieldFromExplosionAndFire(source, ((PlayerEntity) (Object) this)))
             cir.cancel();
     }
-
 }

@@ -10,5 +10,5 @@ import java.util.List;
 public interface StructureAccessor {
 
     @Accessor("blockInfoLists")
-    List<Structure.PalettedBlockInfoList> bz_getBlocks();
+    List<Structure.PalettedBlockInfoList> thebumblezone_getBlocks();
 }

@@ -14,7 +14,7 @@ public class HoneyShieldItemstackGetMaximumDamageMixin {
     @Inject(method = "getMaxDamage",
             at = @At(value = "HEAD"),
             cancellable = true)
-    private void isHoneyCrystalShield(CallbackInfoReturnable<Integer> cir) {
+    private void thebumblezone_isHoneyCrystalShield(CallbackInfoReturnable<Integer> cir) {
         ItemStack stack = (ItemStack)(Object)this;
         if(stack.getItem() == BzItems.HONEY_CRYSTAL_SHIELD) {
             cir.setReturnValue(HoneyCrystalShieldBehavior.getMaximumDamage(stack));

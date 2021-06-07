@@ -20,14 +20,17 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(CookingRecipeSerializer.class)
 public class CookingRecipeSerializerMixin<T extends AbstractCookingRecipe> {
 
-    @Shadow @Final private int cookingTime;
-    @Shadow @Final private CookingRecipeSerializer.RecipeFactory<T> recipeFactory;
+    @Shadow @Final
+    private int cookingTime;
+
+    @Shadow @Final
+    private CookingRecipeSerializer.RecipeFactory<T> recipeFactory;
 
     @Inject(method = "read(Lnet/minecraft/util/Identifier;Lcom/google/gson/JsonObject;)Lnet/minecraft/recipe/AbstractCookingRecipe;",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/util/JsonHelper;getString(Lcom/google/gson/JsonObject;Ljava/lang/String;)Ljava/lang/String;"),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
-    private void checkForCountSize(Identifier identifier, JsonObject jsonObject, CallbackInfoReturnable<T> cir, String string, JsonElement jsonElement, Ingredient ingredient) {
+    private void thebumblezone_checkForCountSize(Identifier identifier, JsonObject jsonObject, CallbackInfoReturnable<T> cir, String string, JsonElement jsonElement, Ingredient ingredient) {
         if (!jsonObject.has("result")) {
             throw new com.google.gson.JsonSyntaxException("Missing result, expected to find a string or object");
         }
@@ -40,5 +43,4 @@ public class CookingRecipeSerializerMixin<T extends AbstractCookingRecipe> {
             cir.setReturnValue(this.recipeFactory.create(identifier, string, ingredient, itemstack, f, i));
         }
     }
-
 }

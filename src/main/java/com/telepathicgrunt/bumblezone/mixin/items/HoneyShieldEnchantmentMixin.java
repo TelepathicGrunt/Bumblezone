@@ -15,7 +15,7 @@ public class HoneyShieldEnchantmentMixin {
     @Inject(method = "isAcceptableItem",
             at = @At(value = "HEAD"),
             cancellable = true)
-    private void isHoneyCrystalShield(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+    private void thebumblezone_isHoneyCrystalShield(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         if(stack.getItem() == BzItems.HONEY_CRYSTAL_SHIELD && ((Enchantment)(Object)this) instanceof MendingEnchantment)
             cir.setReturnValue(false);
     }

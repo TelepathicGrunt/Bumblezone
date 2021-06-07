@@ -17,7 +17,7 @@ public class MobSpawnLocationMixin {
     @Inject(method = "Lnet/minecraft/world/SpawnHelper;spawnEntitiesInChunk(Lnet/minecraft/entity/SpawnGroup;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/Chunk;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/SpawnHelper$Checker;Lnet/minecraft/world/SpawnHelper$Runner;)V",
             at = @At(value = "HEAD"),
             cancellable = true)
-    private static void spawnEntitiesInChunk(SpawnGroup group, ServerWorld world, Chunk chunk, BlockPos pos, SpawnHelper.Checker checker, SpawnHelper.Runner runner, CallbackInfo ci) {
+    private static void thebumblezone_spawnEntitiesInChunk(SpawnGroup group, ServerWorld world, Chunk chunk, BlockPos pos, SpawnHelper.Checker checker, SpawnHelper.Runner runner, CallbackInfo ci) {
 
         //No mobs allowed to spawn on roof of Bumblezone
         if (pos.getY() > 255 && world.getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)) {

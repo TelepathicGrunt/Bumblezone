@@ -19,7 +19,7 @@ public class ThrownEntityImpactMixin {
                     target = "Lnet/minecraft/entity/projectile/thrown/ThrownEntity;onCollision(Lnet/minecraft/util/hit/HitResult;)V"),
             cancellable = true,
             locals = LocalCapture.CAPTURE_FAILHARD)
-    private void onThrownEntityHit(CallbackInfo ci, HitResult hitResult) {
+    private void thebumblezone_onThrownEntityHit(CallbackInfo ci, HitResult hitResult) {
         if(ModChecker.potionOfBeesPresent) {
             ThrownEntity thrownEntity = (ThrownEntity)(Object)this;
             if(!thrownEntity.getEntityWorld().isClient()){

@@ -13,7 +13,7 @@ public class HoneyShieldDamageMixin {
     @Inject(method = "damageShield",
             at = @At(value = "HEAD"),
             cancellable = true)
-    private void isHoneyCrystalShield(float amount, CallbackInfo ci) {
+    private void thebumblezone_isHoneyCrystalShield(float amount, CallbackInfo ci) {
         if(HoneyCrystalShieldBehavior.damageHoneyCrystalShield(((PlayerEntity)(Object)this), amount))
             ci.cancel();
     }

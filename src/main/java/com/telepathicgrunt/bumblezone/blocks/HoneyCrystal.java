@@ -155,7 +155,7 @@ public class HoneyCrystal extends ProperFacingBlock {
 
         //Player uses bucket with water-tagged fluid and this block is not waterlogged
         if ((itemstack.getItem() instanceof BucketItem &&
-                ((BucketItemAccessor) itemstack.getItem()).bz_getFluid().isIn(FluidTags.WATER)) &&
+                ((BucketItemAccessor) itemstack.getItem()).thebumblezone_getFluid().isIn(FluidTags.WATER)) &&
                 blockstate.getBlock() == this &&
                 !blockstate.get(WATERLOGGED)) {
 

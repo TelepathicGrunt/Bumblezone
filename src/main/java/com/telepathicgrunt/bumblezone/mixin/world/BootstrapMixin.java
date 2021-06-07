@@ -15,7 +15,7 @@ public class BootstrapMixin {
             method = "initialize",
             at = @At(value = "TAIL")
     )
-    private static void earlyRegister(CallbackInfo ci) {
+    private static void thebumblezone_earlyRegister(CallbackInfo ci) {
         Bumblezone.reserveBiomeIDs();
     }
 }

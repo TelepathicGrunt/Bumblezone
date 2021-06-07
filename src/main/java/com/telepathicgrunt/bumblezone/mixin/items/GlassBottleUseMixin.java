@@ -25,7 +25,7 @@ public class GlassBottleUseMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/item/GlassBottleItem;fill(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/ItemStack;", ordinal = 1),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
-    private void bottleFluidInteract(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir, List<AreaEffectCloudEntity> list, ItemStack itemStack, HitResult hitResult, BlockPos blockPos) {
+    private void thebumblezone_bottleFluidInteract(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir, List<AreaEffectCloudEntity> list, ItemStack itemStack, HitResult hitResult, BlockPos blockPos) {
         if (ObtainSugarWaterBottle.useBottleOnSugarWater(world, user, hand, blockPos))
             cir.setReturnValue(TypedActionResult.success(user.getStackInHand(hand)));
     }

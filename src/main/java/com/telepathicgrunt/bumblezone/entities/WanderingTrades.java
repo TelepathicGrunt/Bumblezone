@@ -2,16 +2,8 @@ package com.telepathicgrunt.bumblezone.entities;
 
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.minecraft.item.Items;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.village.TradeOffers;
-import net.minecraft.village.VillagerProfession;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class WanderingTrades {
 

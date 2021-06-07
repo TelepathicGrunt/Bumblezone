@@ -24,7 +24,7 @@ public class BzEntities {
     }
 
     private static void registerEntitySpawnRestrictions(){
-        SpawnRestrictionAccessor.bz_invokeRegister(HONEY_SLIME, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::canMobSpawn);
+        SpawnRestrictionAccessor.thebumblezone_invokeRegister(HONEY_SLIME, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::canMobSpawn);
     }
 
     private static void registerEntityAttributes(){

@@ -13,7 +13,7 @@ public class PlayerDimensionChangeMixin {
     // Handles storing of past non-bumblezone dimension the player is leaving
     @Inject(method = "worldChanged(Lnet/minecraft/server/world/ServerWorld;)V",
             at = @At(value = "HEAD"))
-    private void onDimensionChange(ServerWorld origin, CallbackInfo ci) {
+    private void thebumblezone_onDimensionChange(ServerWorld origin, CallbackInfo ci) {
         PlayerTeleportation.playerLeavingBz(origin.getRegistryKey().getValue(), ((ServerPlayerEntity)(Object)this));
     }
 }
