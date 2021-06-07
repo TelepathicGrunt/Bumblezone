@@ -17,8 +17,8 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-archivesBaseName = project.archives_base_name
 version = "${project.minecraft_version}-${project.mod_version}-fabric"
+archivesBaseName = project.archives_base_name
 group = project.maven_group
 
 minecraft {

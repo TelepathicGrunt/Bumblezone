@@ -23,7 +23,7 @@ dependencies {
 
 ...
 
-&nbsp;&nbsp;&nbsp;&nbsp;modImplementation "com.telepathicgrunt:TheBumblezone-Fabric:1.16.5-<modversion>-fabric"
+&nbsp;&nbsp;&nbsp;&nbsp;modImplementation "com.telepathicgrunt:Bumblezone-Fabric:1.16.5-<modversion>-fabric"
 
 }</blockquote>
 
