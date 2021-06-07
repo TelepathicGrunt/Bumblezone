@@ -1,3 +1,83 @@
+# MAVEN
+
+For developers that want to add RS to their mod's workspace:
+
+<blockquote>repositories {
+
+&nbsp; maven {
+
+&nbsp; &nbsp; url "https://nexus.resourcefulbees.com/repository/maven-public/"
+
+&nbsp; }
+
+}</blockquote>
+
+&nbsp;
+
+Don't forget to change 2.7.0 with the actual latest version of this mod.
+
+<blockquote>dependencies {
+
+
+&nbsp; ...
+
+
+&nbsp; implementation fg.deobf("com.telepathicgrunt:RepurposedStructures:1.16.5-2.7.0-forge")
+
+
+}</blockquote>
+
+&nbsp;
+
+**Add these two properties to both of your run configs in the build.gradle file. These will allow Blame's mixins to work. After you add the properties lines, refresh Gradle and run `genEclipseRuns` or `genIntellijRuns` or `genVSCodeRuns` based on what IDE you are using.**
+
+<blockquote>minecraft {
+
+
+&nbsp; ...
+
+
+&nbsp; runs {
+
+
+&nbsp; &nbsp; client {
+
+
+&nbsp; &nbsp; &nbsp; ...
+
+
+&nbsp; &nbsp; &nbsp; property 'mixin.env.remapRefMap', 'true'
+
+
+&nbsp; &nbsp; &nbsp; property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
+
+&nbsp; &nbsp; }
+
+&nbsp; &nbsp; server {
+
+
+&nbsp; &nbsp; &nbsp; ...
+
+
+&nbsp; &nbsp; &nbsp; property 'mixin.env.remapRefMap', 'true'
+
+
+&nbsp; &nbsp; &nbsp; property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
+
+&nbsp; &nbsp; }
+
+
+&nbsp; }
+
+
+}</blockquote>
+
+**____________________________________________________________________________**
+
+&nbsp;
+
 ![The banner logo for The Bumblezone with a friendly and hostile bee shown below the mod name.](https://i.imgur.com/ovPqrFL.png)
 
 ## **CURRENTLY FOR 1.16.5 MC**
