@@ -15,7 +15,7 @@ curseforge {
         addGameVersion("Fabric")
 
         mainArtifact(remapJar) {
-            displayName = "the Bumblezone v${project.mod_version} (${project.minecraft_version} MC)"
+            displayName = "The Bumblezone v${project.mod_version} (${project.minecraft_version} MC)"
         }
 
         afterEvaluate {
