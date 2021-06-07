@@ -1,3 +1,36 @@
+# MAVEN
+
+For developers that want to add Bumblezone to their mod's workspace:
+
+<blockquote>
+repositories {
+
+&nbsp;&nbsp;&nbsp;maven {
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url "https://nexus.resourcefulbees.com/repository/maven-public/"
+
+&nbsp;&nbsp;&nbsp;}
+
+}
+</blockquote>
+
+&nbsp;
+
+Don't forget to change <modversion> with the actual latest version of this mod like `2.4.4` for example.
+
+<blockquote>
+dependencies {
+
+...
+
+&nbsp;&nbsp;&nbsp;&nbsp;modImplementation "com.telepathicgrunt:TheBumblezone-Fabric:1.16.5-<modversion>-fabric"
+
+}</blockquote>
+
+**____________________________________________________________________________**
+
+&nbsp;
+
 ![The banner logo for The Bumblezone with a friendly and hostile bee shown below the mod name.](https://i.imgur.com/ovPqrFL.png)
 
 ## **CURRENTLY FOR 1.16.5 MC**
