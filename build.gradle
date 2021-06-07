@@ -45,6 +45,14 @@ minecraft {
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods { the_bumblezone { source sourceSets.main } }
         }
+
+        data {
+            workingDirectory project.file('run')
+            args '--mod', ""+archivesBaseName, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            mods { the_bumblezone { source sourceSets.main } }
+        }
     }
 }
 
