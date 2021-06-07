@@ -22,7 +22,7 @@ public class ServerWorldMixin {
 			method = "tick(Ljava/util/function/BooleanSupplier;)V",
 			at = @At(value = "HEAD")
 	)
-	private void thebumblezone_tickAltar(CallbackInfo ci) {
+	private void thebumblezone_countBzDimEntities(CallbackInfo ci) {
 		ServerWorld world = ((ServerWorld) (Object) this);
 		if(world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)){
 			thebumblezone_counter++;
