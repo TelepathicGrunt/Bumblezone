@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
+
     //bees become angrier when hit in bumblezone
     @Inject(method = "actuallyHurt(Lnet/minecraft/util/DamageSource;F)V",
             at = @At(value = "HEAD"))
