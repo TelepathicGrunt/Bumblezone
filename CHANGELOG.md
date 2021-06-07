@@ -1,180 +1,173 @@
-    Made for Minecraft v.1.16.5
-    Created by TelepathicGrunt
+### **(V.2.4.4 Changes) (1.16.5 Minecraft)**
 
-A Fabric pot of an awesome dimension full of bees that becomes REALLY angry if you take their honey! 
-Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going above Y = 256 to below Y = 0.
-
-------------------------------------------------
-       | The Bumblezone Fabric changelog |
-
-   (V.2.4.4 Changes) (1.16.5 Minecraft)
-
-   Mixins:
-- Moved injection point for the GlassBottle to be slightly more mod compat.
+##### Mixins:
+* Moved injection point for the GlassBottle to be slightly more mod compat.
+  
+* Cleaned up many mixins to prevent possible mixin conflicts with other mods.
 
 
-   (V.2.4.3 Changes) (1.16.5 Minecraft)
+### **(V.2.4.3 Changes) (1.16.5 Minecraft)**
 
-   Dependencies:
--  Updated Cardinal Components that is jar-in-jar in my mod to v2.8.2 so it works with newer Fabric API.
+##### Dependencies:
+* Updated Cardinal Components that is jar-in-jar in my mod to v2.8.2 so it works with newer Fabric API.
    Do note, I will stop jar-in-jaring Cardinal Components in Bumblezone's next update so you will have to download that dependency mod separately.
 
 
-   (V.2.4.2 Changes) (1.16.5 Minecraft)
+### **(V.2.4.2 Changes) (1.16.5 Minecraft)**
   
-   Teleportation:
--  Fixed issue where Enderpearl impacting beehives may not always work due to the impact coordinates being heavily offset from the actual impact.
+##### Teleportation:
+* Fixed issue where Enderpearl impacting beehives may not always work due to the impact coordinates being heavily offset from the actual impact.
 
 
-   (V.2.4.1 Changes) (1.16.5 Minecraft)
+### **(V.2.4.1 Changes) (1.16.5 Minecraft)**
 
-   Items:
-- Changed how Music Discs are added to Wandering Trader's trades since Fabric API's hook is broken for this.
+##### Items:
+* Changed how Music Discs are added to Wandering Trader's trades since Fabric API's hook is broken for this.
 
 
-   (V.2.4.0 Changes) (1.16.5 Minecraft)
+### **(V.2.4.0 Changes) (1.16.5 Minecraft)**
 
-   Dependencies:
-- Cloth Config is no longer JIJ (jar-in-jar) into Bumblezone. You will need to download that mod separately.
+##### Dependencies:
+* Cloth Config is no longer JIJ (jar-in-jar) into Bumblezone. You will need to download that mod separately.
 
-  Dimension:
-- The loud Bee buzzing sound was replaced with a much softer beehive buzzing! Easier on the ears!
+##### Dimension:
+* The loud Bee buzzing sound was replaced with a much softer beehive buzzing! Easier on the ears!
 
-- Music will play when you are in a Bumblezone Biome! The song that plays is Honey Bee by Rat Faced Boy.
+* Music will play when you are in a Bumblezone Biome! The song that plays is Honey Bee by Rat Faced Boy.
 
-  Effects:
-- Wrath of the Hive now plays music when triggered! The song that plays is a midi version of Flight of the Bumblebee by Rimsky Korsakov.
+##### Effects:
+* Wrath of the Hive now plays music when triggered! The song that plays is a midi version of Flight of the Bumblebee by Rimsky Korsakov.
 
-- Wrath of the Hive's default config value is now a full minute and angry bee's strength config is lowered by two.
+* Wrath of the Hive's default config value is now a full minute and angry bee's strength config is lowered by two.
 
-- When you have Wrath of the Hive, bees will now spawn in open space a bit away from you but will come chase you down! Grab your Bane of Arthropod sword!
+* When you have Wrath of the Hive, bees will now spawn in open space a bit away from you but will come chase you down! Grab your Bane of Arthropod sword!
 
-- Bees now cannot get Wrath of the Hive effect to prevent them attacking each other.
+* Bees now cannot get Wrath of the Hive effect to prevent them attacking each other.
 
-- Drinking Honey Bottles no longer trigger Wrath of the Hive effect in Bumblezone's dimension.
+* Drinking Honey Bottles no longer trigger Wrath of the Hive effect in Bumblezone's dimension.
   
-- Mobs with Wrath of the Hive will now make Honeycomb Brood Blocks near them grow faster. Stay out of Bee Dungeons when you have the effect!
+* Mobs with Wrath of the Hive will now make Honeycomb Brood Blocks near them grow faster. Stay out of Bee Dungeons when you have the effect!
 
-- Protection of the Hive's default config value for duration is now 1680.
+* Protection of the Hive's default config value for duration is now 1680.
 
-  Enchantments:
-- Added Comb Cutter enchantment for Shears and Swords. 
+##### Enchantments:
+* Added Comb Cutter enchantment for Shears and Swords. 
   This will make mining all blocks with "comb" in the name much faster!
   And it will slightly increase mining speed for Hive, Nests, and Wax based blocks too.
   It will also increase the number of combs you get when shearing a vanilla Bee Hive / Bee Nest!
 
-   Entities:
-- Using Honey Blocks on vanilla Slime mobs that are size 1 or 2 will turn them into Honey Slime mobs!
+##### Entities:
+* Using Honey Blocks on vanilla Slime mobs that are size 1 or 2 will turn them into Honey Slime mobs!
   "the_bumblezone:turn_slime_to_honey_slime" item tag controls what item can do the conversion.
   
-- Honey Slime now gets significant reduced fall damage when they are covered in honey!
+* Honey Slime now gets significant reduced fall damage when they are covered in honey!
 
-   Blocks:
-- Fixed Honey Crystal block so that it rotates and mirrors properly when loaded from nbt files.
+##### Blocks:
+* Fixed Honey Crystal block so that it rotates and mirrors properly when loaded from nbt files.
 
-- Adjusted Empty Porous Honeycomb, empty Brood block, and non-empty Brood blocks's textures to try and reduce tiling issues a bit.
+* Adjusted Empty Porous Honeycomb, empty Brood block, and non-empty Brood blocks's textures to try and reduce tiling issues a bit.
   
-- Switched to using TagRegistry.block in backend for block tags.
+* Switched to using TagRegistry.block in backend for block tags.
 
-   Items:
-- Honey Crystal Shield's valid repair items is now controlled by the item tag: "the_bumblezone:honey_crystal_shield_repair_items"
+##### Items:
+* Honey Crystal Shield's valid repair items is now controlled by the item tag: "the_bumblezone:honey_crystal_shield_repair_items"
 
-- Added new music discs to play the two new music added to this mod! You can obtain the discs from Wandering Traders as a rare trade!
+* Added new music discs to play the two new music added to this mod! You can obtain the discs from Wandering Traders as a rare trade!
 
-   Features:
-- Optimized waterfall feature to use honeycombs_that_features_can_carve block tag.
+##### Features:
+* Optimized waterfall feature to use honeycombs_that_features_can_carve block tag.
   
-- Bee Dungeon and Spider Infested Bee Dungeon code backend is significantly cleaned up and now uses processors to change blocks.
+* Bee Dungeon and Spider Infested Bee Dungeon code backend is significantly cleaned up and now uses processors to change blocks.
 
    Mod Compat:
-- Added Charm support so now their candles spawn in Bee Dungeons and Spider Infested Bee Dungeons!
+* Added Charm support so now their candles spawn in Bee Dungeons and Spider Infested Bee Dungeons!
 
-- Several Bumblezone Items are now used in Charm's BeeKeeper's trade offers!
+* Several Bumblezone Items are now used in Charm's BeeKeeper's trade offers!
 
 
-   (V.2.3.0 Changes) (1.16.5 Minecraft)
+### **(V.2.3.0 Changes) (1.16.5 Minecraft)**
        
    Mod Compat:
 • Added compatibility with Bee Better.
 
-   Blocks:
+##### Blocks:
 • Honeycomb Brood Blocks now spawn child Bees and child Honey Slime mobs.
      
-   Items:
+##### Items:
 • Honey Slime Spawn Eggs now use better code practices in backend. 
 
-   Teleportation:
-- Throwing Enderpearl at Beehives will teleport you to dimension more consistently.
+##### Teleportation:
+* Throwing Enderpearl at Beehives will teleport you to dimension more consistently.
    
 
-   (V.2.2.17 Changes) (1.16.4 Minecraft)
+### **(V.2.2.17 Changes) (1.16.4 Minecraft)**
    
    Mod Compat:
 • Added compat with AnvilFix so that Honey Crystal Shield can still be upgraded again and cost XP for balance.
 
 
-   (V.2.2.16 Changes) (1.16.4 Minecraft) Quickfix
+### **(V.2.2.16 Changes) (1.16.4 Minecraft) Quickfix**
    
-   Config:
+##### Config:
 • Changed broodBlocksBeeSpawnCapacity so that it is not multiplied by 10 anymore for bee limit. 
  If it is set to 50 now, then the Brood blocks will not spawn more bees if 50 bees already exist.
 
 
-   (V.2.2.15 Changes) (1.16.4 Minecraft)
+### **(V.2.2.15 Changes) (1.16.4 Minecraft)**
    
-   Dimension:
+##### Dimension:
 • Vanilla Bees in The Bumblezone now have a new AI that makes them wander better, lag less, and not cluster on the ceiling anymore.
   Bee rates have been lowered a bit as well.
 
-   Mixins:
+##### Mixins:
 • Prefixed all my accessor and invoker mixins due to this bug in mixins that could cause a crash with other mods for same named mixins.
  https://github.com/SpongePowered/Mixin/issues/430
 
 
-   (V.2.2.14 Changes) (1.16.4 Minecraft)
+### **(V.2.2.14 Changes) (1.16.4 Minecraft)**
    
-   Blocks:
+##### Blocks:
 • Added broodBlocksBeeSpawnCapacity config option to allow users to change the automatic bee spawning mechanics of Honeycomb Brood Blocks.
 
-   Teleportation:
+##### Teleportation:
 • Fixed Teleportation mode 2 and 3 being broken and not saving previous pos and dims.
 
-   Dimension:
+##### Dimension:
 • Falling out of Bumblezone dimension to teleport out shouldn't deal fall damage now.
 
 • Added onlyOverworldHivesTeleports config option to allow people to make it only possible to enter The Bumblezone from the Overworld.
 
 
-   (V.2.2.13 Changes) (1.16.4 Minecraft)
+### **(V.2.2.13 Changes) (1.16.4 Minecraft)**
    
-   Tags:
+##### Tags:
 • Fixed tags so that they do not crash on servers.
 
    
-   (V.2.2.12 Changes) (1.16.4 Minecraft)
+### **(V.2.2.12 Changes) (1.16.4 Minecraft)**
    
-   Misc:
+##### Misc:
 • Fixed various serverside crashes.
  
-   Dimension:
+##### Dimension:
 • Fixed Sugar Waterfalls only being placed in a single x/z column instead of spread out.
 
 • Reduced Sugar Waterfall amount.
 
-   Teleportation:
+##### Teleportation:
 • Added blacklisted_teleportable_hive_blocks.json tag file that datapacks can override.
   Add hive blocks to here if you don't want them to allow teleportation to the Bumblezone dimension.
 
-   Config:
+##### Config:
 • Removed the requiredBlockUnderHive config and instead, replaced it with the tag:
   the_bumblezone/tags/blocks/required_blocks_under_hive_to_teleport.json. Override
   this tag file with a datapack to change what blocks are needed under hives to allow
   teleportation.
   
 
-   (V.2.2.11 Changes) (1.16.4 Minecraft)
+### **(V.2.2.11 Changes) (1.16.4 Minecraft)**
    
-   Effects:
+##### Effects:
 • Adjusted Wrath of the Hive to apply effects to bees with the duration equal to
   the remaining Wrath of the Hive time on the target. 
   
@@ -182,76 +175,76 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
   being able to see through walls for players making bees extra angry.
 
 
-   (V.2.2.10 Changes) (1.16.4 Minecraft)
+### **(V.2.2.10 Changes) (1.16.4 Minecraft)**
    
-   Items:
+##### Items:
 • Fixed particles and sounds being played twice for Empty Bucket, 
   Glass Bottle, and Honey Bottle when activated in a Dispenser.
   
-    Backend:
+##### Backend:
 • Some cleaning up the code. Now requires newer Fabric API and Fabric Loader.
 
 • No longer Jar-in-Jar ModMenu. Was a mistake on my part lol.
     
     
-   (V.2.2.9 Changes) (1.16.3 Minecraft)
+### **(V.2.2.9 Changes) (1.16.3 Minecraft)**
    
-    Dimension:
+##### Dimension:
 • Optimized the SurfaceBuilder and the caves a bit!
   The underwater block in the configured surfacebuilder json file
   was changed from the_bumblezone:porous_honeycomb_block to 
-  the_bumblezone:filled_porous_honeycomb_block.
+##### the_bumblezone:filled_porous_honeycomb_block.
   
 • Fixed bug where Honey Crystals could be floating from worldgen.
   
 • Attempted to optimize cave code slightly. Cave shape changed a bit as a result.
  
-    Teleportation:
+##### Teleportation:
 • Fixed Enderpearls not being removed when thrown and Bee Nest and causing people to teleport
   back into The Bumblezone immediately when they leave it.
 
   
-   (V.2.2.8 Changes) (1.16.3 Minecraft)
+### **(V.2.2.8 Changes) (1.16.3 Minecraft)**
    
-    Teleportation:
+##### Teleportation:
 • Fixed bug where exiting The Bumblezone always put you in Overworld
   instead of the actual dimension you came from when entering BZ's dimension.
 
-    Dimension:
+##### Dimension:
 • Cleaned up a tiny bit of code and special thanks to
   Pyrofab for updating Cardinal Component's usage in this mod!
   
 
-   (V.2.2.7 Changes) (1.16.3 Minecraft)
+### **(V.2.2.7 Changes) (1.16.3 Minecraft)**
    
-    Dimension:
+##### Dimension:
 • Cleaned up the json format for the dimension's json file.
 
-    Features:
+##### Features:
 • Adjusted Honey Crystals to make them spawn more often.
 
 
-   (V.2.2.6 Changes) (1.16.3 Minecraft)
+### **(V.2.2.6 Changes) (1.16.3 Minecraft)**
    
-    Teleportation:   
+##### Teleportation:   
 • Fixed coordinate scaling when entering/leaving The Bumblezone dimension.
 
 • Fixed a possible theoretical crash that could occur when messing with 
   adding/removing dimensions and attempting to teleport to/from The Bumblezone.
   
-    Mobs:   
+##### Mobs:   
 • Increased Bee and Honey Slime rates in the dimension as Lithium mod will 
   optimize the bee lag away.
 
 
-   (V.2.2.5 Changes) (1.16.3 Minecraft)
+### **(V.2.2.5 Changes) (1.16.3 Minecraft)**
    
-    Lang:   
+##### Lang:   
 • Added Simplified Chinese translation from Samekichi! Thank you!
 
 • Added missing lang entries for mod compatibility config entries. 
 
-    Config:
+##### Config:
 • Significantly reduced the range of values for bee anger and 
   bee status effect intensity config options to allow the slider
   to actually let you pick good values now.
@@ -264,9 +257,9 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 • Removed empty tooltips after updating autoconfigu library.
 
 
-   (V.2.2.4 Changes) (1.16.2 Minecraft)
+### **(V.2.2.4 Changes) (1.16.2 Minecraft)**
    
-    Lang:
+##### Lang:
 • Added translation for Honey Slime mob name.
 
 • Portuguese translations added by Mikeliro! Thank you!
@@ -274,38 +267,38 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
     Mod Compat:
 • Added Mod Compatibility with Potion of Bees! Their potions can be 
   used to revive Empty Honeycomb blocks by hand or by Dispensers.
-  https://www.curseforge.com/minecraft/mc-mods/potion-of-bees-fabric
+##### https://www.curseforge.com/minecraft/mc-mods/potion-of-bees-fabric
   
 • Moved a mixin that was conflicting with Carpet mod.
   As a result, Bees spawned in the Bumblezone will have a chance
   to be pollinated no matter how they are spawned in the dimension.
      
-    Biomes:
+##### Biomes:
 • Attempted a workaround fix to prevent generated Bumblezone biomes
   from being replaced with the wrong biome due to a rare Mojang bug 
   that happens when removing other datapack biomes.
   
 
-   (V.2.2.3 Changes) (1.16.2 Minecraft)
+### **(V.2.2.3 Changes) (1.16.2 Minecraft)**
    
-    Major:
+##### Major:
 • FIXED A SUPER WEIRD BUG THAT KILLED ALMOST ALL OTHER MODS
   WHEN A CERTAIN NUMBER OF MODS ARE PUT ON NEXT TO THE BUMBLEZONE.
   I'M SORRY!!! OTHER MODDERS, DO NOT CLASSLOAD DYNAMIC REGISTRY 
   IN YOUR MOD'S INITIALIZATION!!!
 
-   (V.2.2.2 Changes) (1.16.2 Minecraft)
+### **(V.2.2.2 Changes) (1.16.2 Minecraft)**
    
-    Major:
+##### Major:
 • Fixed crash on servers.
 
     Mod Compatibility:
 • Fixed crash when paired with another mod that registers unfinished mobs that crashes when created.
  
-    Teleportation:
+##### Teleportation:
 • Fixed message appear about wrong block under Bee Nest when throwing Enderpearls at any non-Bee Nest block.
 
-   (V.2.2.1 Changes) (1.16.2 Minecraft)
+### **(V.2.2.1 Changes) (1.16.2 Minecraft)**
    
 	Config:
 • Adjusted configs text to show description right away instead of in tooltips.
@@ -313,7 +306,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 	Items:
 • Fixed Honey Shield not having blocking animation.
 
-   (V.2.2.0 Changes) (1.16.2 Minecraft)
+### **(V.2.2.0 Changes) (1.16.2 Minecraft)**
 
 	Major:
 • Updated to 1.16.2 minecraft!
@@ -322,7 +315,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 
 • Attempted to improve performance by removing a few mixins into tick methods.
 
-    Blocks:
+##### Blocks:
 • Added Beeswax Planks which can be used to craft Bee Nests blocks by
   crafting with 8 Hive Planks with a Honeycomb in the center.
   
@@ -357,12 +350,12 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 • Protection of the Hive now will be consumed if the player does anything that would 
   have trigger Wrath of the Hive. It acts like a second chance now to prevent angry bees.
 
-   (V.2.1.2 Changes) (1.16.1 Snapshot Minecraft)
+### **(V.2.1.2 Changes) (1.16.1 Snapshot Minecraft)**
 
 	Misc:
 • Fixed reloadable config causing server to not shut down.
 
-   (V.2.1.1 Changes) (1.16.1 Snapshot Minecraft)
+### **(V.2.1.1 Changes) (1.16.1 Snapshot Minecraft)**
 
 	Dimension:
 • Adjusted terrain to try and make it slightly more open.
@@ -376,7 +369,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 • Fixed crash on dedicated servers due to running client sided code in Cave Sugar Waterfall code.
 
 
-   (V.2.1.0 Changes) (1.16.1 Snapshot Minecraft)
+### **(V.2.1.0 Changes) (1.16.1 Snapshot Minecraft)**
 
 	Config:
 • Clarified time units in the duration config for Wrath of the Hive effect.
@@ -392,7 +385,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 	Misc:
 • Attempted reducing file size.
 
-   (V.2.0.1 Changes) (1.16.1 Snapshot Minecraft)
+### **(V.2.0.1 Changes) (1.16.1 Snapshot Minecraft)**
 
 	Backend:
 • Fixed crash on server.
@@ -405,7 +398,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 • Raised cloud height to 1000 to hide clouds.
 
 
-   (V.2.0.0 Changes) (1.16.1 Snapshot Minecraft)
+### **(V.2.0.0 Changes) (1.16.1 Snapshot Minecraft)**
 
 	Backend:
 • Updated to 1.16.1 Snapshot MC
@@ -420,13 +413,13 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
 • Nerfed the default Absorption level that bees get when affected by the Wrath of the Hive status from 2 to 1. This is because absorption 2 made it way too hard to kill bees but at 1, its easier but you may still need Bane of Arthropod enchantments.
 
 
-   (V.1.0.1 Changes) (1.15.2 Minecraft)
+### **(V.1.0.1 Changes) (1.15.2 Minecraft)**
 
 	Backend:
 • Fixed crash due to a mixin not being compatible with Carpet mod.
        
        
-   (V.1.0.0 Changes) (1.15.2 Minecraft)
+### **(V.1.0.0 Changes) (1.15.2 Minecraft)**
     
 	Major:
 • FIRST FABRIC RELEASE OF THIS MOD
@@ -434,7 +427,7 @@ Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going a
  	Mobs:
 • Bees have a 20% of being full of pollen when they spawn nautrally in the Bumblezone dimension.
 
-  Teleportation:
+##### Teleportation:
 • Improved teleportation to make it place you on surface of water in Bumblezone if you were going to teleport underwater.
 • This mod will treat all other non-Nether-like dimension as having a normal coordinate scaling (10:1 ratio of those dimensions's scale to Bumblezone's scale) and all Nether-like dimensions as having the nether scale (10:8 ratio of those Nether-like dimensions to Bumblezone's scale)
 
@@ -448,13 +441,13 @@ And here's what has been done in the Forge version so you know what else this Fa
        | The Bumblezone Forge changelog |
        
        
-   (V.1.0.2 Changes) (1.15.2 Minecraft)
+### **(V.1.0.2 Changes) (1.15.2 Minecraft)**
   
   	Teleportation:
 • Fixed teleportation math and player previous dimension storing to not allow a bug that lets you reach world border in seconds. Big oops. That's a BIG BUG I missed despite lots of testing!
   	
        
-   (V.1.0.1 Changes) (1.15.2 Minecraft)
+### **(V.1.0.1 Changes) (1.15.2 Minecraft)**
   
   	Teleportation:
 • Fixed teleportation not working when trying to enter The Bumblezone from a non-Overworld dimension.
@@ -463,7 +456,7 @@ And here's what has been done in the Forge version so you know what else this Fa
 • Added config option to make exiting The Bumblezone always place you into the Overworld.
 
        
-   (V.1.0.0 Changes) (1.15.2 Minecraft)
+### **(V.1.0.0 Changes) (1.15.2 Minecraft)**
     
 	Major:
 • FIRST RELEASE OF THIS MOD
