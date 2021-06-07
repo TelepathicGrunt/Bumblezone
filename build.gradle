@@ -42,6 +42,9 @@ repositories {
 		name "Siphalor's Maven"
 		url "https://maven.siphalor.de"
 	}
+	maven {
+		url "https://nexus.resourcefulbees.com/repository/maven-public/"
+	}
 }
 
 dependencies {
@@ -78,6 +81,8 @@ dependencies {
 
 	modImplementation "io.github.cottonmc:LibCD:${project.libcd_version}"
 	modImplementation "com.github.Draylar:bee-better:${project.beebetter_version}"
+
+	modImplementation "com.telepathicgrunt:Blame-Fabric:1.16.5-3.2.0-fabric"
 }
 
 apply from: 'gradle/processresources.gradle'
