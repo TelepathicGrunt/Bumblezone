@@ -52,7 +52,7 @@ public class BzConfiguredFeatures {
 
 
     public static void registerConfiguredFeatures(){
-        MutableRegistry<ConfiguredFeature<?, ?>> registry = (MutableRegistry<ConfiguredFeature<?, ?>>) BuiltinRegistries.CONFIGURED_FEATURE;
+        Registry<ConfiguredFeature<?, ?>> registry = BuiltinRegistries.CONFIGURED_FEATURE;
      
         Registry.register(registry, new Identifier(Bumblezone.MODID, "sugar_waterfall_high"), SUGAR_WATERFALL_HIGH);
         Registry.register(registry, new Identifier(Bumblezone.MODID, "sugar_waterfall_low"), SUGAR_WATERFALL_LOW);
