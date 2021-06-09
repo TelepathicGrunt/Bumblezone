@@ -525,7 +525,7 @@ B B B
 
 &nbsp;
 
--Picking up Honey Blocks, taking honey from a Filled Porous Honeycomb Block, or taking honey from a Honeycomb Brood Block will give you Wrath of the Hive effect when in the dimension.
+-Mining Honey Blocks, taking honey from a Filled Porous Honeycomb Block, or taking honey from a Honeycomb Brood Block will give you Wrath of the Hive effect when in the dimension.
 
 &nbsp;
 
