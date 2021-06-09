@@ -1,4 +1,4 @@
 {
   "parent": "block/cube_all",
-  "textures": { "all": "minecraft:block/bee_nest_side" }
+  "textures": { "all": "the_bumblezone:block/beeswax_planks" }
 }

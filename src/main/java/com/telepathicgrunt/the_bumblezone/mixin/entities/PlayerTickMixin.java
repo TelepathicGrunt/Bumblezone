@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.the_bumblezone.entities.PlayerTeleportation;
+import com.telepathicgrunt.the_bumblezone.entities.PlayerTeleportationHookup;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,6 +20,6 @@ public class PlayerTickMixin {
         BeeAggression.playerTick(playerEntity);
 
         if(!playerEntity.level.isClientSide)
-            PlayerTeleportation.playerTick(playerEntity);
+            PlayerTeleportationHookup.playerTick(playerEntity);
     }
 }

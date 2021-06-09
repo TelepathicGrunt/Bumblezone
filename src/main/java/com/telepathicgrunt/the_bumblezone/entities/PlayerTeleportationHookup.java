@@ -3,18 +3,12 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.IPlayerPosAndDim;
 import com.telepathicgrunt.the_bumblezone.capabilities.PlayerPositionAndDimension;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesRedirection;
-import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
-import com.telepathicgrunt.the_bumblezone.world.dimension.BzPlayerPlacement;
-import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
@@ -30,10 +24,13 @@ import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
 
-public class PlayerTeleportation {
+public class PlayerTeleportationHookup {
 
     @CapabilityInject(IPlayerPosAndDim.class)
     public static Capability<IPlayerPosAndDim> PAST_POS_AND_DIM = null;
+
+    ////////////////////////////////////////////////////////////
+    // Methods that setup and call PlayerTeleportationBackend //
 
     //Player ticks
     public static void playerTick(PlayerEntity playerEntity){
@@ -58,7 +55,7 @@ public class PlayerTeleportation {
             if (lazyOptionalCap.isPresent()) {
                 PlayerPositionAndDimension cap = (PlayerPositionAndDimension) lazyOptionalCap.orElseThrow(RuntimeException::new);
                 if (cap.getTeleporting()) {
-                    BzPlayerPlacement.enteringBumblezone(playerEntity);
+                    PlayerTeleportationBackend.enteringBumblezone(playerEntity);
                     cap.setTeleporting(false);
                     reAddStatusEffect(playerEntity);
                 }
@@ -75,48 +72,8 @@ public class PlayerTeleportation {
             if(destination == null){
                 destination = playerEntity.getCommandSenderWorld().getServer().getLevel(World.OVERWORLD);
             }
-            BzPlayerPlacement.exitingBumblezone(playerEntity, destination);
+            PlayerTeleportationBackend.exitingBumblezone(playerEntity, destination);
             reAddStatusEffect(playerEntity);
-        }
-    }
-
-    /**
-     * Temporary fix until Mojang patches the bug that makes potion effect icons disappear when changing dimension.
-     * To fix it ourselves, we remove the effect and re-add it to the player.
-     */
-    private static void reAddStatusEffect(PlayerEntity playerEntity) {
-        //re-adds potion effects so the icon remains instead of disappearing when changing dimensions due to a bug
-        ArrayList<EffectInstance> effectInstanceList = new ArrayList<>(playerEntity.getActiveEffects());
-        for (int i = effectInstanceList.size() - 1; i >= 0; i--) {
-            EffectInstance effectInstance = effectInstanceList.get(i);
-            if (effectInstance != null) {
-                playerEntity.removeEffect(effectInstance.getEffect());
-                playerEntity.addEffect(
-                        new EffectInstance(
-                                effectInstance.getEffect(),
-                                effectInstance.getDuration(),
-                                effectInstance.getAmplifier(),
-                                effectInstance.isAmbient(),
-                                effectInstance.isVisible(),
-                                effectInstance.showIcon()));
-            }
-        }
-    }
-
-    /**
-     * Looks at stored non-bz dimension and changes it to Overworld if it is
-     * BZ dimension or the config forces going to Overworld.
-     */
-    private static void checkAndCorrectStoredDimension(PlayerEntity playerEntity) {
-        //Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone.
-        //Go to Overworld instead as default. Or go to Overworld if config is set.
-        PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-        if (cap.getNonBZDim().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                Bumblezone.BzDimensionConfig.forceExitToOverworld.get())
-        {
-            // go to overworld by default
-            //update stored dimension
-            cap.setNonBZDim(World.OVERWORLD.location());
         }
     }
 
@@ -128,8 +85,8 @@ public class PlayerTeleportation {
         // Make sure we are on server by checking if thrower is ServerPlayerEntity and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (!world.isClientSide && thrower instanceof ServerPlayerEntity &&
-            !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!Bumblezone.BzDimensionConfig.onlyOverworldHivesTeleports.get() || world.dimension().equals(World.OVERWORLD)))
+                !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
+                (!Bumblezone.BzDimensionConfig.onlyOverworldHivesTeleports.get() || world.dimension().equals(World.OVERWORLD)))
         {
             ServerPlayerEntity playerEntity = (ServerPlayerEntity) thrower; // the thrower
             BlockPos hivePos = new BlockPos(0,0,0);
@@ -142,7 +99,7 @@ public class PlayerTeleportation {
                     for (double offsetZ = -0.99D; offsetZ <= 0.99D; offsetZ += 0.99D) {
                         BlockPos offsettedHitPos = new BlockPos(hitBlockPos.add(offsetX, offsetY, offsetZ));
                         BlockState block = world.getBlockState(offsettedHitPos);
-                        if(isValidBeeHive(block)) {
+                        if(PlayerTeleportationBackend.isValidBeeHive(block)) {
                             hitHive = true;
                             hivePos = offsettedHitPos;
 
@@ -184,25 +141,46 @@ public class PlayerTeleportation {
         return false;
     }
 
+    ///////////
+    // Utils //
 
-    private static boolean isValidBeeHive(BlockState block) {
-        if(BZBlockTags.BLACKLISTED_TELEPORTATION_HIVES.contains(block.getBlock())) return false;
-
-        if(BlockTags.BEEHIVES.contains(block.getBlock()) || block.getBlock() instanceof BeehiveBlock) {
-            if(Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get() ||
-                Registry.BLOCK.getKey(block.getBlock()).getNamespace().equals("minecraft")) {
-
-                return true;
+    /**
+     * Temporary fix until Mojang patches the bug that makes potion effect icons disappear when changing dimension.
+     * To fix it ourselves, we remove the effect and re-add it to the player.
+     */
+    private static void reAddStatusEffect(PlayerEntity playerEntity) {
+        //re-adds potion effects so the icon remains instead of disappearing when changing dimensions due to a bug
+        ArrayList<EffectInstance> effectInstanceList = new ArrayList<>(playerEntity.getActiveEffects());
+        for (int i = effectInstanceList.size() - 1; i >= 0; i--) {
+            EffectInstance effectInstance = effectInstanceList.get(i);
+            if (effectInstance != null) {
+                playerEntity.removeEffect(effectInstance.getEffect());
+                playerEntity.addEffect(
+                        new EffectInstance(
+                                effectInstance.getEffect(),
+                                effectInstance.getDuration(),
+                                effectInstance.getAmplifier(),
+                                effectInstance.isAmbient(),
+                                effectInstance.isVisible(),
+                                effectInstance.showIcon()));
             }
         }
+    }
 
-        if(Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get()) {
-            if(ModChecker.productiveBeesPresent && ProductiveBeesRedirection.PBIsExpandedBeehiveBlock(block))
-                return true;
-
-            return ModChecker.resourcefulBeesPresent && ResourcefulBeesRedirection.RBIsApairyBlock(block);
+    /**
+     * Looks at stored non-bz dimension and changes it to Overworld if it is
+     * BZ dimension or the config forces going to Overworld.
+     */
+    private static void checkAndCorrectStoredDimension(PlayerEntity playerEntity) {
+        //Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone.
+        //Go to Overworld instead as default. Or go to Overworld if config is set.
+        PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
+        if (cap.getNonBZDim().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                Bumblezone.BzDimensionConfig.forceExitToOverworld.get())
+        {
+            // go to overworld by default
+            //update stored dimension
+            cap.setNonBZDim(World.OVERWORLD.location());
         }
-
-        return false;
     }
 }

@@ -1,30 +1,46 @@
-package com.telepathicgrunt.the_bumblezone.world.dimension;
+package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.google.common.primitives.Doubles;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.IPlayerPosAndDim;
 import com.telepathicgrunt.the_bumblezone.capabilities.PlayerPositionAndDimension;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
+import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
+import net.minecraft.block.BeehiveBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import org.apache.logging.log4j.Level;
 
-public class BzPlayerPlacement {
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class PlayerTeleportationBackend {
 
     @CapabilityInject(IPlayerPosAndDim.class)
     public static Capability<IPlayerPosAndDim> PAST_POS_AND_DIM = null;
@@ -44,7 +60,7 @@ public class BzPlayerPlacement {
             MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
             ServerWorld bumblezoneWorld = minecraftServer.getLevel(BzDimension.BZ_WORLD_KEY);
 
-        // Prevent crash due to mojang bug that makes mod's json dimensions not exist upload first creation of world on server. A restart fixes this.
+            // Prevent crash due to mojang bug that makes mod's json dimensions not exist upload first creation of world on server. A restart fixes this.
             if(bumblezoneWorld == null){
                 Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: https://bugs.mojang.com/browse/MC-195468. A restart will fix this.");
                 ITextComponent message = new StringTextComponent("Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: §6https://bugs.mojang.com/browse/MC-195468§f. A restart will fix this.");
@@ -100,7 +116,7 @@ public class BzPlayerPlacement {
                     Doubles.constrainToRange(playerEntity.position().z() * coordinateScale, -29999936D, 29999936D));
 
             //Gets valid space in other world
-            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 48, checkingUpward);
+            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 100, checkingUpward);
         }
 
         else if(Bumblezone.BzDimensionConfig.teleportationMode.get() == 2){
@@ -109,7 +125,7 @@ public class BzPlayerPlacement {
             }
         }
 
-        // Teleportaion mode 3
+        // Teleportation mode 3
         else{
             finalSpawnPos = new BlockPos(
                     Doubles.constrainToRange(playerEntity.position().x() * coordinateScale, -29999936D, 29999936D),
@@ -117,7 +133,7 @@ public class BzPlayerPlacement {
                     Doubles.constrainToRange(playerEntity.position().z() * coordinateScale, -29999936D, 29999936D));
 
             //Gets valid space in other world
-            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 48, checkingUpward);
+            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 100, checkingUpward);
 
             if(validBlockPos == null && cap.getNonBZPos() != null) {
                 validBlockPos = new BlockPos(cap.getNonBZPos());
@@ -151,7 +167,6 @@ public class BzPlayerPlacement {
     }
 
     private static Vector3d teleportByPearl(PlayerEntity playerEntity, ServerWorld originalWorld, ServerWorld bumblezoneWorld) {
-
 
         //converts the position to get the corresponding position in bumblezone dimension
         double coordinateScale = 1;
@@ -261,62 +276,67 @@ public class BzPlayerPlacement {
         int maxHeight = 0;
         int halfRange = maximumRange / 2;
         BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable();
+        Set<Chunk> chunksInRange = new HashSet<>();
         for (int x = -halfRange; x < halfRange; x++) {
             for (int z = -halfRange; z < halfRange; z++) {
                 mutableBlockPos.set(position.getX() + x, 0, position.getZ() + z);
-                if (!world.hasChunk(mutableBlockPos.getX() >> 4, mutableBlockPos.getZ() >> 4)) {
-                    //make game generate chunk so we can get max height of blocks in it
-                    world.getChunk(mutableBlockPos);
-                }
+                //make game generate chunk so we can get max height of blocks in it and get the chunk for BEs
+                IChunk chunk = world.getChunk(mutableBlockPos);
+                if(chunk instanceof Chunk) chunksInRange.add((Chunk)chunk);
+                else Bumblezone.LOGGER.error("not Chunk found:" + chunk.getClass().getSimpleName());
                 maxHeight = Math.max(maxHeight, world.getHeight(Heightmap.Type.MOTION_BLOCKING, mutableBlockPos.getX(), mutableBlockPos.getZ()));
             }
         }
         maxHeight = Math.min(maxHeight, world.getMaxBuildHeight() - 1); //cannot place user at roof of other dimension
 
-        //snaps the coordinates to chunk origin and then sets height to minimum or maximum based on search direction
-        mutableBlockPos.set(position.getX(), checkingUpward ? 0 : maxHeight, position.getZ());
+        // two mutable blockpos we can reuse for calculations
+        BlockPos.Mutable mutableTemp1 = new BlockPos.Mutable();
+        BlockPos.Mutable mutableTemp2 = new BlockPos.Mutable();
 
+        // Get all block entities from the chunks
+        Set<TileEntity> tempSet = new HashSet<>();
+        chunksInRange.stream().map(Chunk::getBlockEntities).forEach(map -> tempSet.addAll(map.values()));
+        Stream<TileEntity> allBlockEntitiesInRange = tempSet.stream().filter(be -> {
 
-        //scans range from y = 0 to dimension max height for a bee_nest
-        //Does it by checking each y layer at a time
-        while (mutableBlockPos.getY() >= 0 && mutableBlockPos.getY() <= maxHeight) {
-            if (!Bumblezone.BzDimensionConfig.seaLevelOrHigherExitTeleporting.get() ||
-                    mutableBlockPos.getY() > world.getSeaLevel()) {
-
-                for (int range = 0; range < maximumRange; range++) {
-                    int radius = range * range;
-                    int nextRadius = (range + 1) * (range + 1);
-                    for (int x = 0; x <= range * 2; x++) {
-                        int x2 = x > range ? -(x - range) : x;
-
-                        for (int z = 0; z <= range * 2; z++) {
-                            int z2 = z > range ? -(z - range) : x;
-
-                            //checks within the circular ring and not check the same positions multiple times
-                            if (x2 * x2 + z2 * z2 >= radius && x2 * x2 + z2 * z2 < nextRadius) {
-                                mutableBlockPos.set(position.getX() + x2, mutableBlockPos.getY(), position.getZ() + z2);
-
-                                if (world.getBlockState(mutableBlockPos).getBlock() == Blocks.BEE_NEST) {
-                                    //A Hive was found, try to find a valid spot next to it
-                                    BlockPos validSpot = validPlayerSpawnLocation(world, mutableBlockPos, 4);
-                                    if (validSpot != null) {
-                                        return validSpot;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+            // filter out all block entities that are not valid bee blocks we want
+            if(!isValidBeeHive(be.getBlockState())){
+                return false;
             }
 
-            //move the block pos in the direction it needs to go
-            if (checkingUpward) {
-                mutableBlockPos.move(Direction.UP);
-            } else {
-                mutableBlockPos.move(Direction.DOWN);
+            // Filter out all positions that are below sealevel if we do not want underground spots.
+            if (Bumblezone.BzDimensionConfig.seaLevelOrHigherExitTeleporting.get() && be.getBlockPos().getY() < world.getSeaLevel()) {
+                return false;
+            }
+
+            // Return all block entities that are within the radius we want
+            mutableTemp1.set(be.getBlockPos()).move(-position.getX(), 0, -position.getZ());
+            return mutableTemp1.getX() * mutableTemp1.getX() + mutableTemp1.getZ() + mutableTemp1.getZ() < maximumRange;
+        });
+
+        // Sort the block entities in the order we want to check if we should spawn next to them
+        List<TileEntity> sortedBlockEntities = allBlockEntitiesInRange.sorted((be1, be2) -> {
+            mutableTemp1.set(be1.getBlockPos()).move(-position.getX(), 0, -position.getZ());
+            mutableTemp2.set(be2.getBlockPos()).move(-position.getX(), 0, -position.getZ());
+            int heightDiff = mutableTemp1.getY() - mutableTemp2.getY();
+            int xzDiff = Math.abs(mutableTemp1.getX() - mutableTemp2.getX()) + Math.abs(mutableTemp1.getZ() - mutableTemp2.getZ());
+
+            // Reverse direction if checking upward
+            if(checkingUpward){
+                heightDiff *= -1;
+                xzDiff *= -1;
+            }
+
+            // Creates a cone of block entities to check where we start from the tip and work our way to the base of the cone.
+            return heightDiff - xzDiff;
+        }).collect(Collectors.toList());
+
+        for(TileEntity blockEntity : sortedBlockEntities){
+            //try to find a valid spot next to it
+            BlockPos validSpot = validPlayerSpawnLocation(world, blockEntity.getBlockPos(), 4);
+            if (validSpot != null) {
+                return validSpot;
             }
         }
-
 
         //this mode will not generate a beenest automatically.
         if(Bumblezone.BzDimensionConfig.teleportationMode.get() == 3) return null;
@@ -396,5 +416,27 @@ public class BzPlayerPlacement {
         }
 
         return null;
+    }
+
+
+    public static boolean isValidBeeHive(BlockState block) {
+        if(BZBlockTags.BLACKLISTED_TELEPORTATION_HIVES.contains(block.getBlock())) return false;
+
+        if(BlockTags.BEEHIVES.contains(block.getBlock()) || block.getBlock() instanceof BeehiveBlock) {
+            if(Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get() ||
+                    Registry.BLOCK.getKey(block.getBlock()).getNamespace().equals("minecraft")) {
+
+                return true;
+            }
+        }
+
+        if(Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get()) {
+            if(ModChecker.productiveBeesPresent && ProductiveBeesRedirection.PBIsExpandedBeehiveBlock(block))
+                return true;
+
+            return ModChecker.resourcefulBeesPresent && ResourcefulBeesRedirection.RBIsApairyBlock(block);
+        }
+
+        return false;
     }
 }
