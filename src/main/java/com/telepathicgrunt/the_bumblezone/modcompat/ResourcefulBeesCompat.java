@@ -272,14 +272,6 @@ public class ResourcefulBeesCompat {
     }
 
     /**
-     * get either honey block from resourceful bees block
-     */
-    public static boolean isRBHoneyBlock(BlockItem itemToCheck) {
-        return HONEY_BLOCKS.stream().anyMatch(honeyBlock -> itemToCheck.getBlock() == honeyBlock);
-    }
-
-
-    /**
      * 1/15th of bees spawning will also spawn Resourceful Bees' bees
      */
     public static void RBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event, boolean isChild) {

@@ -32,10 +32,6 @@ public class ResourcefulBeesRedirection {
 		return ResourcefulBeesCompat.getRBHoneyBlock(random);
 	}
 
-	public static boolean isRBHoneyBlock(BlockItem itemToCheck){
-		return ResourcefulBeesCompat.isRBHoneyBlock(itemToCheck);
-	}
-
 	public static boolean isRBComb(Item itemToCheck){
 		return ResourcefulBeesCompat.isRBComb(itemToCheck);
 	}

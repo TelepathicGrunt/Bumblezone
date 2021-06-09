@@ -1,7 +1,9 @@
 ### **(V.2.4.4 Changes) (1.16.5 Minecraft)**
 
 ##### Entities:
-* Cleaned up Bee Feed code a ton and added the_bumblezone:bee_feed_items tag for players to add new items that can be fed to bees to heal them.
+* Cleaned up Bee Feed code a ton and added the_bumblezone:bee_feed_items item tag for players to add new items that can be fed to bees to heal them.
+
+* Added the_bumblezone:wrath_activating_items_when_picked_up item tag so players can add/remove items that should anger bees when picked up.
 
 ##### mod Compat:
 * Honey Apple, Honey bread, and Glazed Porkchops from Buzzier Bees cna be fed to bees now.

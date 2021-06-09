@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.tags.BZItemTags;
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.PandaEntity;
@@ -25,10 +26,10 @@ import java.util.Set;
 public class BeeAggression {
     private static final Set<EntityType<?>> SET_OF_BEE_HATED_ENTITIES = new HashSet<>();
 
-    //bees attack player that picks up honey blocks
-    public static void HoneyPickupEvent(PlayerEvent.ItemPickupEvent event)
+    //bees attack player that picks up tagged blocks
+    public static void AngryPickupEvent(PlayerEvent.ItemPickupEvent event)
     {
-        BeeAggression.honeyPickupAnger(event.getPlayer(), event.getStack().getItem());
+        BeeAggression.pickupItemAnger(event.getPlayer(), event.getStack().getItem());
     }
 
     /*
@@ -90,11 +91,9 @@ public class BeeAggression {
         }
     }
 
-    //bees attack player that picks up honey blocks
-    public static void honeyPickupAnger(PlayerEntity player, Item item)
+    //bees attack player that picks up certain tagged items
+    public static void pickupItemAnger(PlayerEntity player, Item item)
     {
-        //Bumblezone.LOGGER.log(Level.INFO, "started");
-
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
         if ((player.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
@@ -103,13 +102,8 @@ public class BeeAggression {
                 !player.isCreative() &&
                 !player.isSpectator()) {
 
-            //if player picks up a honey block, bees gets very mad...
-            boolean isHoneyBlock = item == Items.HONEY_BLOCK;
-            if(ModChecker.resourcefulBeesPresent && !isHoneyBlock && item instanceof BlockItem) {
-                isHoneyBlock = ResourcefulBeesRedirection.isRBHoneyBlock((BlockItem) item);
-            }
-
-            if (isHoneyBlock) {
+            //if player picks up a tagged angerable item, bees gets very mad...
+            if (BZItemTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP.contains(item)) {
                 if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())){
                     player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                 }

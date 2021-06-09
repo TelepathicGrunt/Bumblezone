@@ -56,7 +56,7 @@ public class Bumblezone{
         BZItemTags.tagInit();
 
         //Events
-        forgeBus.addListener(BeeAggression::HoneyPickupEvent);
+        forgeBus.addListener(BeeAggression::AngryPickupEvent);
         forgeBus.addListener(WanderingTrades::addWanderingTrades);
         forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
         forgeBus.addListener(HoneycombBroodEvents::reviveByPotionOfBees);
