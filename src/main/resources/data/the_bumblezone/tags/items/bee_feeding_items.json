@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:honey_bottle",
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:sugar_water_bottle",
+      "required": true
+    }
+  ]
+}

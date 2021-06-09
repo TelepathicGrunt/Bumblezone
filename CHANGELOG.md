@@ -1,3 +1,9 @@
+### **(V.2.4.5 Changes) (1.16.5 Minecraft)**
+
+##### Entities:
+* Cleaned up Bee Feed code a ton and added the_bumblezone:bee_feed_items tag for players to add new items that can be fed to bees to heal them.
+
+
 ### **(V.2.4.4 Changes) (1.16.5 Minecraft)**
 
 ##### Mixins:
