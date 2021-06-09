@@ -1,6 +1,6 @@
 package com.telepathicgrunt.bumblezone.mixin.items;
 
-import com.telepathicgrunt.bumblezone.entities.PlayerTeleportation;
+import com.telepathicgrunt.bumblezone.entities.PlayerTeleportationHookup;
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.util.hit.HitResult;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,6 +16,6 @@ public class EnderpearlImpactMixin {
             at = @At(value = "HEAD"),
             cancellable = true)
     private void thebumblezone_onPearlHit(HitResult hitResult, CallbackInfo ci) {
-        if(PlayerTeleportation.runEnderpearlImpact(hitResult, ((EnderPearlEntity) (Object) this))) ci.cancel();
+        if(PlayerTeleportationHookup.runEnderpearlImpact(hitResult, ((EnderPearlEntity) (Object) this))) ci.cancel();
     }
 }

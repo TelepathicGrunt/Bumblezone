@@ -1,12 +1,18 @@
 ### **(V.2.4.5 Changes) (1.16.5 Minecraft)**
 
+##### Blocks:
+* Beeswax Planks texture is adjusted to look better when next to other Beeswax Planks.
+
 ##### Entities:
-* Cleaned up Bee Feed code a ton and added the_bumblezone:bee_feed_items tag for players to add new items that can be fed to bees to heal them.
+* Cleaned up Bee Feeding code a ton and added the_bumblezone:bee_feed_items tag for players to add new items that can be fed to bees to heal them.
 
 * Added the_bumblezone:wrath_activating_items_when_picked_up item tag so players can add/remove items that should anger bees when picked up.
 
 * Added the_bumblezone:wrath_activating_blocks_when_mine block tag so players can specify what blocks, when mined, will make bees angry.
   Honey Blocks are now in this tag so they only anger bees when mined. Not when picked up now.
+
+##### Teleportation:
+* Teleporting out of The Bumblezone is now much better optimized and has a bigger search radius for existing bee hive blocks.
 
 
 ### **(V.2.4.4 Changes) (1.16.5 Minecraft)**
