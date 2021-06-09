@@ -10,7 +10,7 @@
 
 * Added the_bumblezone:wrath_activating_items_when_picked_up item tag so players can add/remove items that should anger bees when picked up.
 
-* Added the_bumblezone:wrath_activating_blocks_when_mine block tag so players can specify what blocks, when mined, will make bees angry.
+* Added the_bumblezone:wrath_activating_blocks_when_mined block tag so players can specify what blocks, when mined, will make bees angry.
   Honey Blocks are now in this tag so they only anger bees when mined. Not when picked up now.
 
 ##### Mod Compat:
