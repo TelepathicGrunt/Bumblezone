@@ -20,5 +20,4 @@ public class HoneyPickupMixin {
     private void thebumblezone_onItemPickup(PlayerEntity player, CallbackInfo ci, ItemStack itemStack, Item item, int i) {
         BeeAggression.itemPickupAnger(player, item);
     }
-
 }

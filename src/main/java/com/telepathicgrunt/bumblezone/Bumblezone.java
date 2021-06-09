@@ -64,9 +64,8 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzDimension.setupDimension();
         WanderingTrades.addWanderingTrades();
 
-        ServerWorldEvents.LOAD.register((MinecraftServer minecraftServer, ServerWorld serverWorld) -> BeeAggression.setupBeeHatingList(serverWorld));
+        BeeAggression.setupEvents();
         DispenserItemSetup.setupDispenserBehaviors();
-
         ModChecker.setupModCompat();
     }
 
