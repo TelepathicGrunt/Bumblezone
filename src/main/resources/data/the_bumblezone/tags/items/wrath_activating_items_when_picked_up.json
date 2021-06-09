@@ -1,13 +1,4 @@
 {
   "replace": false,
-  "values": [
-    {
-      "id": "minecraft:honey_block",
-      "required": true
-    },
-    {
-      "id": "resourcefulbees:catnip_honey_block",
-      "required": false
-    }
-  ]
+  "values": []
 }

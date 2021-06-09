@@ -6,7 +6,9 @@ import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BZItemTags;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.PandaEntity;
@@ -17,7 +19,9 @@ import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import org.apache.logging.log4j.Level;
 
 import java.util.HashSet;
@@ -25,12 +29,6 @@ import java.util.Set;
 
 public class BeeAggression {
     private static final Set<EntityType<?>> SET_OF_BEE_HATED_ENTITIES = new HashSet<>();
-
-    //bees attack player that picks up tagged blocks
-    public static void AngryPickupEvent(PlayerEvent.ItemPickupEvent event)
-    {
-        BeeAggression.pickupItemAnger(event.getPlayer(), event.getStack().getItem());
-    }
 
     /*
      * Have to run this code at world startup because the only way to check a CreatureAttribute
@@ -91,32 +89,51 @@ public class BeeAggression {
         }
     }
 
-    //bees attack player that picks up certain tagged items
-    public static void pickupItemAnger(PlayerEntity player, Item item)
+    //if player mines a tagged angerable block, bees gets very mad...
+    public static void minedBlockAnger(BlockEvent.BreakEvent event) {
+        if(event.isCanceled()) return;
+
+        PlayerEntity player = event.getPlayer();
+        BlockState blockState = event.getState();
+
+        if (BZBlockTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED.contains(blockState.getBlock())) {
+            angerBees(player);
+        }
+    }
+
+    //if player picks up a tagged angerable item, bees gets very mad...
+    public static void pickupItemAnger(PlayerEvent.ItemPickupEvent event)
     {
+        PlayerEntity player = event.getPlayer();
+        Item item = event.getStack().getItem();
+
+        if (BZItemTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP.contains(item)) {
+            angerBees(player);
+        }
+    }
+
+    private static void angerBees(PlayerEntity player) {
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
-        if ((player.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+        if (!(player instanceof FakePlayer) &&
+                (player.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
                 Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                 Bumblezone.BzBeeAggressionConfig.aggressiveBees.get() &&
                 !player.isCreative() &&
                 !player.isSpectator()) {
 
-            //if player picks up a tagged angerable item, bees gets very mad...
-            if (BZItemTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP.contains(item)) {
-                if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())){
-                    player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
-                }
-                else {
-                    //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
-                    player.addEffect(new EffectInstance(
-                            BzEffects.WRATH_OF_THE_HIVE.get(),
-                            Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
-                            2,
-                            false,
-                            Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(),
-                            true));
-                }
+            if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())){
+                player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
+            }
+            else {
+                //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
+                player.addEffect(new EffectInstance(
+                        BzEffects.WRATH_OF_THE_HIVE.get(),
+                        Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
+                        2,
+                        false,
+                        Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(),
+                        true));
             }
         }
     }

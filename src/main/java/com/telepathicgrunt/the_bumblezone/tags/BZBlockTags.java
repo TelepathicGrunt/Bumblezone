@@ -2,8 +2,10 @@ package com.telepathicgrunt.the_bumblezone.tags;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
 
 public class BZBlockTags {
     // All tag wrappers need to be made at mod init.
@@ -14,4 +16,5 @@ public class BZBlockTags {
     public static final ITag.INamedTag<Block> BLACKLISTED_RESOURCEFUL_COMBS = BlockTags.bind(Bumblezone.MODID+":blacklisted_resourceful_bees_combs");
     public static final ITag.INamedTag<Block> BLACKLISTED_PRODUCTIVEBEES_COMBS = BlockTags.bind(Bumblezone.MODID+":blacklisted_productive_bees_combs");
     public static final ITag.INamedTag<Block> HONEYCOMBS_THAT_FEATURES_CAN_CARVE = BlockTags.bind(Bumblezone.MODID+":honeycombs_that_features_can_carve");
+    public static final ITag.INamedTag<Block> WRATH_ACTIVATING_BLOCKS_WHEN_MINED = BlockTags.bind(Bumblezone.MODID+":wrath_activating_blocks_when_mined");
 }

@@ -56,7 +56,8 @@ public class Bumblezone{
         BZItemTags.tagInit();
 
         //Events
-        forgeBus.addListener(BeeAggression::AngryPickupEvent);
+        forgeBus.addListener(BeeAggression::pickupItemAnger);
+        forgeBus.addListener(EventPriority.LOWEST, BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
         forgeBus.addListener(WanderingTrades::addWanderingTrades);
         forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
         forgeBus.addListener(HoneycombBroodEvents::reviveByPotionOfBees);
