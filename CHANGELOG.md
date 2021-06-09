@@ -3,6 +3,8 @@
 ##### Blocks:
 * Beeswax Planks texture is adjusted to look better when next to other Beeswax Planks.
 
+* Attached a POI system to Brood Blocks placed and generated from here on out. Will be a stepping stone to optimizing Wrath of the Hive in 1.17.
+
 ##### Entities:
 * Cleaned up Bee Feeding code a ton and added the_bumblezone:bee_feed_items item tag for players to add new items that can be fed to bees to heal them.
 
@@ -13,6 +15,8 @@
 
 ##### Mod Compat:
 * Honey Apple, Honey bread, and Glazed Porkchops from Buzzier Bees cna be fed to bees now.
+
+* Fixed crash with my mod trying to spawn Carrier Bees's Bucket Entity from the Honeycomb Brood blocks.
 
 ##### Teleportation:
 * Switched to the new Ender Pearl Teleport event from the old one as the old event is being removed by Forge in 1.17.

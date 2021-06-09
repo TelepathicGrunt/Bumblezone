@@ -76,6 +76,7 @@ public class Bumblezone{
         BzBlocks.BLOCKS.register(modEventBus);
         BzFluids.FLUIDS.register(modEventBus);
         BzBiomes.BIOMES.register(modEventBus);
+        BzPOI.POI_TYPES.register(modEventBus);
         BzItems.RECIPES.register(modEventBus);
         BzEffects.EFFECTS.register(modEventBus);
         BzFeatures.FEATURES.register(modEventBus);

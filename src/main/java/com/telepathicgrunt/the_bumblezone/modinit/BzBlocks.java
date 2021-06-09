@@ -27,4 +27,5 @@ public class BzBlocks {
     public static final RegistryObject<Block> STICKY_HONEY_RESIDUE = BLOCKS.register("sticky_honey_residue", StickyHoneyResidue::new);
     public static final RegistryObject<Block> STICKY_HONEY_REDSTONE = BLOCKS.register("sticky_honey_redstone", StickyHoneyRedstone::new);
     public static final RegistryObject<Block> BEESWAX_PLANKS = BLOCKS.register("beeswax_planks", BeeswaxPlanks::new);
+
 }

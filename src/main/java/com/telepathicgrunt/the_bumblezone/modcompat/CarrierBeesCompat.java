@@ -106,8 +106,7 @@ public class CarrierBeesCompat {
 			ResourceLocation rl = cb_entity.getRegistryName();
 			if(rl != null &&
 				rl.getNamespace().equals("carrierbees") &&
-				!rl.getPath().contains("comb") &&
-				!rl.getPath().contains("projectile"))
+				rl.getPath().contains("bee"))
 			{
 				if(rl.getPath().equals("bomble_bee")){
 					BOMBLE_BEE = cb_entity;

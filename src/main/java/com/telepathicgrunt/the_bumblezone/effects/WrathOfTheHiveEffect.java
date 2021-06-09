@@ -128,6 +128,31 @@ public class WrathOfTheHiveEffect extends Effect {
                 }
             }
         }
+
+        // TODO: activate in 1.17
+//        // makes brood blocks grow faster near wrath of the hive entities.
+//        if(!world.isClientSide()){
+//            PointOfInterestManager pointofinterestmanager = ((ServerWorld)world).getPoiManager();
+//            List<PointOfInterest> poiInRange = pointofinterestmanager.getInRange(
+//                    (pointOfInterestType) -> pointOfInterestType == BzPOI.BROOD_BLOCK_POI.get(),
+//                    entity.blockPosition(),
+//                    NEARBY_WRATH_EFFECT_RADIUS,
+//                    PointOfInterestManager.Status.ANY)
+//                    .collect(Collectors.toList());
+//
+//            float chanceofGrowth = 0.001f;
+//            if(poiInRange.size() != 0) {
+//                for(int index = poiInRange.size() - 1; index >= 0; index--){
+//                    PointOfInterest poi = poiInRange.remove(index);
+//                    if(world.random.nextFloat() < chanceofGrowth){
+//                        BlockState state = world.getBlockState(poi.getPos());
+//                        if(state.getBlock() instanceof HoneycombBrood){
+//                            state.tick((ServerWorld) world, poi.getPos(), world.random);
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
     /**
