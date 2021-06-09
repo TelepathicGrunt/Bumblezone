@@ -4,6 +4,7 @@ import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.client.MusicHandler;
 import com.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.bumblezone.tags.BZItemTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
@@ -84,20 +85,19 @@ public class BeeAggression {
         }
     }
 
-    //bees attack player that picks up honey blocks
-    public static void honeyPickupAnger(PlayerEntity player, Item item)
+    //bees attack player that picks up certain tagged items
+    public static void itemPickupAnger(PlayerEntity player, Item item)
     {
-        //Bumblezone.LOGGER.log(Level.INFO, "started");
-
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
         if ((player.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
                 Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+                Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees &&
                 !player.isCreative() &&
                 !player.isSpectator()) {
 
-            //if player picks up a honey block, bees gets very mad...
-            if (item == Items.HONEY_BLOCK && Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees) {
+            //if player picks up an angerable tagged item, bees gets very mad...
+            if (BZItemTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP.contains(item)) {
                 if(player.hasStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
                     player.removeStatusEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                 }
