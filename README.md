@@ -84,8 +84,7 @@ Don't forget to change <modversion> with the actual latest version of this mod l
 
 ##### [[Click here for the 1.16.5 Fabric version of this mod!]](https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-fabric)
 
-**Past 1.16.5 News:** Added compat with Buzzier Bees's, Resourceful Bees's, and Charm's Villagers! Pokecube compat is now added too! Reduced buzzing volume in dimension,  
-adjusted Wrath of the Hive to be longer, Comb Cutter enchantment for swords/shears, using Honey Blocks on Slime turns them to Honey Slime, and now music is added!
+**Recent 1.16.5 News:** Some optimizations, more tags for configuring, and some bugfixes!
 
 &nbsp;
 
