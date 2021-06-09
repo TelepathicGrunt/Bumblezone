@@ -14,16 +14,14 @@
   Honey Blocks are now in this tag so they only anger bees when mined. Not when picked up now.
 
 ##### Mod Compat:
-* Honey Apple, Honey bread, and Glazed Porkchops from Buzzier Bees cna be fed to bees now.
+* Honey Apple and Honey bread from Buzzier Bees cna be fed to bees now.
 
 * Fixed crash with my mod trying to spawn Carrier Bees's Bucket Entity from the Honeycomb Brood blocks.
 
 ##### Teleportation:
 * Switched to the new Ender Pearl Teleport event from the old one as the old event is being removed by Forge in 1.17.
 
-##### Teleportation:
 * Teleporting out of The Bumblezone is now much better optimized and has a bigger search radius for existing bee hive blocks.
-
 
 
 ### **(V.2.4.3 Changes) (1.16.5 Minecraft)**

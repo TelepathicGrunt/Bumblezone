@@ -85,13 +85,13 @@ Don't forget to change <modversion> with the actual latest version of this mod l
 ##### [[Click here for the 1.16.5 Fabric version of this mod!]](https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-fabric)
 
 **Past 1.16.5 News:** Added compat with Buzzier Bees's, Resourceful Bees's, and Charm's Villagers! Pokecube compat is now added too! Reduced buzzing volume in dimension,  
-adjusted Wrath of the Hive to be longer, Comb Cutter enchantment for swords/shears, using Honey Blocks on Slime turns them to Honey Slime, and now music is added!
+adjusted Wrath of the Hive to be longer, Comb Cutter enchantment for swords/shears, using Honey Blocks on Slime turns them to Honey Slime, and now music is added!
 
 &nbsp;
 
 **Check out the Changelog for more info!**
 
-**(Also, please report any glitches BUGS you find)**
+**(Also, please report any glitches BUGS you find)**
 
 &nbsp;
 
@@ -105,7 +105,7 @@ The Bumblezone is a dimension filled with Bee mobs, Honey Slime mobs, Honeycomb 
 
 &nbsp;
 
-But that isn't all! Within the dimension, bees are extremely protective of their honey. If you pick up a Honey Block or take honey from a Filled Porous Honeycomb block with a Glass Bottle, all bees around you will get a speed, absorption, and strength potion effect and will become VERY angry at you! You will know you are in DEEP trouble when you get the Wrath of the Hive icon showing you got that effect and the fog in the dimension become more red! The bee will swarm you like crazy and will kill you unless you come very well prepared. A full set of unenchanted Diamond gear will not be enough. (but you can nerf the bees in the config if you find them too strong or buff them if you want to die!) Also, with the Filled Porous Honeycomb block, once you take honey from it, it turns into a Porous Honeycomb block but you can use a Honey Bottle on it to refill it back to being a Filled Porous Honeycomb block! And you may find passive Honey Slime mobs hopping around that can be used as a farmable source of Honey Bottles as well!
+But that isn't all! Within the dimension, bees are extremely protective of their honey. If you mine a Honey Block or take honey from a Filled Porous Honeycomb block with a Glass Bottle, all bees around you will get a speed, absorption, and strength potion effect and will become VERY angry at you! You will know you are in DEEP trouble when you get the Wrath of the Hive icon showing you got that effect and the fog in the dimension become more red! The bee will swarm you like crazy and will kill you unless you come very well prepared. A full set of unenchanted Diamond gear will not be enough. (but you can nerf the bees in the config if you find them too strong or buff them if you want to die!) Also, with the Filled Porous Honeycomb block, once you take honey from it, it turns into a Porous Honeycomb block but you can use a Honey Bottle on it to refill it back to being a Filled Porous Honeycomb block! And you may find passive Honey Slime mobs hopping around that can be used as a farmable source of Honey Bottles as well!
 
 &nbsp;
 
@@ -127,7 +127,7 @@ For more info on all the blocks and what mods Bumblezone has direct support for,
 
 &nbsp;
 
--Use Glass Bottle on this block to obtain a Honey Bottle and turn this block into a Porous Honeycomb Block. However, you will get a Wrath of the Hive effect if you do this. A Dispenser with a Glass Bottle can also pull honey out of this block and turn it into a regular Porous Honeycomb Block.
+-Use Glass Bottle on this block to obtain a Honey Bottle and turn this block into a Porous Honeycomb Block. However, you will get a Wrath of the Hive effect if you do this. A Dispenser with a Glass Bottle can also pull honey out of this block and turn it into a regular Porous Honeycomb Block.
 
 &nbsp;
 
@@ -171,7 +171,7 @@ For more info on all the blocks and what mods Bumblezone has direct support for,
 
 &nbsp;
 
--If you use a Glass Bottle on this block, you will get a Honey Bottle, turn this block into an Empty Honeycomb Brood Block, and you will get Wrath of the Hive effect. A Dispenser with a Glass Bottle can also pull honey out of this block and turn it into an Empty Honeycomb Brood Block.
+-If you use a Glass Bottle on this block, you will get a Honey Bottle, turn this block into an Empty Honeycomb Brood Block, and you will get Wrath of the Hive effect. A Dispenser with a Glass Bottle can also pull honey out of this block and turn it into an Empty Honeycomb Brood Block.
 
 &nbsp;
 
@@ -179,11 +179,11 @@ For more info on all the blocks and what mods Bumblezone has direct support for,
 
 &nbsp;
 
--When mined, this block drops Empty Honeycomb Brood Block and a Honeycomb and since you killed the larva, you get Wrath of the Hive effect as well. But if you use a Silk Touch pickaxe, you can get Honeycomb Brood Block instead without angering the bee or getting the effect.
+-When mined, this block drops Empty Honeycomb Brood Block and a Honeycomb and since you killed the larva, you get Wrath of the Hive effect as well. But if you use a Silk Touch pickaxe, you can get Honeycomb Brood Block instead without angering the bee or getting the effect.
 
 &nbsp;
 
--When feeding the Honeycomb Brood Block and the larva grows a stage, you will get a short duration of Protection of the Hive effect where nearby Bees will attack anyone who attacked you!
+-When feeding the Honeycomb Brood Block and the larva grows a stage, you will get a short duration of Protection of the Hive effect where nearby Bees will attack anyone who attacked you!
 
 &nbsp;
 
@@ -195,7 +195,7 @@ For more info on all the blocks and what mods Bumblezone has direct support for,
 
 
 
--Does nothing by itself. Merely a decorative block unless certain other mods are on. See the Mod Compatibility section below.
+-Does nothing by itself. Merely a decorative block unless certain other mods are on. See the Mod Compatibility section below.
 
 &nbsp;
 
@@ -239,7 +239,7 @@ For more info on all the blocks and what mods Bumblezone has direct support for,
 
 &nbsp;
 
--When the flowing form of this liquid touches Lava, Sugar Infused Cobblestone will be made. If Lava touches the source block of Sugar Water, Sugar Infused Stone will be made instead.
+-When the flowing form of this liquid touches Lava, Sugar Infused Cobblestone will be made. If Lava touches the source block of Sugar Water, Sugar Infused Stone will be made instead.
 
 &nbsp;
 
@@ -257,7 +257,7 @@ For more info on all the blocks and what mods Bumblezone has direct support for,
 
 
 
--A very sticky block that can be placed on multiple solid surfaces at once and is created by smelting the following in a Furnace: Honey Crystal blocks, Honey Crystal Shards items, Honey Crystal Shields, or vanilla's Honey blocks. Breaking this block will drop nothing.
+-A very sticky block that can be placed on multiple solid surfaces at once and is created by smelting the following in a Furnace: Honey Crystal blocks, Honey Crystal Shards items, Honey Crystal Shields, or vanilla's Honey blocks. Breaking this block will drop nothing.
 
 &nbsp;
 
@@ -406,7 +406,7 @@ B B B
 
 `# # #`
 
-`  #  `
+`  #  `
 
 &nbsp;
 
@@ -425,7 +425,7 @@ B B B
 
 `# # #`
 
-`  #  `
+`  #  `
 
 &nbsp;
 
@@ -437,7 +437,7 @@ B B B
 
 &nbsp;
 
--This shield can be enchanted with Unbreaking or Curse of the Vanishing. (Mending cannot be applied as that would make the shield way too overpowered at maximum durability)
+-This shield can be enchanted with Unbreaking or Curse of the Vanishing. (Mending cannot be applied as that would make the shield way too overpowered at maximum durability)
 
 &nbsp;
 
@@ -514,7 +514,7 @@ B B B
 
 
 
-### BEE'S BEHAVIOR - NOT THE BEEEEESSSS!!!
+### BEE'S BEHAVIOR - NOT THE BEEEEESSSS!!!
 
 <details>
 
@@ -530,7 +530,7 @@ B B B
 
 &nbsp;
 
--Having Wrath of the Hive will turn the dimension's fog red, play Flight of the Bumblebee by Rimsky Korsakov, make nearby Honeycomb Brood Blocks grow and spawn bees much faster, and the dimension will spawn even more Bees a bit away from you to hunt you down! Grab your Bane of Arthropod sword!
+-Having Wrath of the Hive will turn the dimension's fog red, play Flight of the Bumblebee by Rimsky Korsakov, make nearby Honeycomb Brood Blocks grow and spawn bees much faster, and the dimension will spawn even more Bees a bit away from you to hunt you down! Grab your Bane of Arthropod sword!
 
 &nbsp;
 
@@ -550,7 +550,7 @@ B B B
 
 <details>
 
--Contains only 3 biomes: Hive Wall Biome, Hive Pillar biome, and Sugar Water Floor Biome. Hive Wall Biome creates the flat walls of the dimension. Hive Pillar biome creates the large support columns that upholds the space. Sugar Water Floor takes up the rest of the space with low land and filled with Sugar Water.
+-Contains only 3 biomes: Hive Wall Biome, Hive Pillar biome, and Sugar Water Floor Biome. Hive Wall Biome creates the flat walls of the dimension. Hive Pillar biome creates the large support columns that upholds the space. Sugar Water Floor takes up the rest of the space with low land and filled with Sugar Water.
 
 &nbsp;
 
@@ -586,7 +586,7 @@ B B B
 
 &nbsp;
 
--The music will play occasionally in the dimension. It's pretty cool! You can get a Music Disc of the song from Wandering Traders to play in Jukeboxes! But if you want to download the song, be sure to buy it from BandCamp here to support the musician! [https://acidburp.bandcamp.com/track/honey-bee](https://acidburp.bandcamp.com/track/honey-bee)
+-The music will play occasionally in the dimension. It's pretty cool! You can get a Music Disc of the song from Wandering Traders to play in Jukeboxes! But if you want to download the song, be sure to buy it from BandCamp here to support the musician! [https://acidburp.bandcamp.com/track/honey-bee](https://acidburp.bandcamp.com/track/honey-bee)
 
 &nbsp;
 
@@ -608,7 +608,7 @@ B B B
 
 <details>
 
-**Buzzier Bees** - [https://www.curseforge.com/minecraft/mc-mods/buzzier-bees](https://www.curseforge.com/minecraft/mc-mods/buzzier-bees)
+**Buzzier Bees** - [https://www.curseforge.com/minecraft/mc-mods/buzzier-bees](https://www.curseforge.com/minecraft/mc-mods/buzzier-bees)
 
 
 &nbsp;
@@ -621,7 +621,7 @@ B B B
 
 &nbsp;
 
--With the Honey Wand, you can take/add honey from Filled Porous Honeycomb Blocks and Porous Honeycomb Blocks without angering bees.
+-With the Honey Wand, you can take/add honey from Filled Porous Honeycomb Blocks and Porous Honeycomb Blocks without angering bees.
 
 &nbsp;
 
@@ -629,11 +629,11 @@ B B B
 
 &nbsp;
 
--You can feed bees with Sticky Honey Wand or Honey Soup and can calm angered bees.
+-You can feed bees with Sticky Honey Wand, Honey Apple, or Honey Bread and can calm angered bees.
 
 &nbsp;
 
--Using a Bottle of Bee item on a Empty Honeycomb Brood Block will revive the block into a stage 1 Honeycomb Brood Block. This can be done by hand or by a Dispenser facing the block.
+-Using a Bottle of Bee item on an Empty Honeycomb Brood Block will revive the block into a stage 1 Honeycomb Brood Block. This can be done by hand or by a Dispenser facing the block.
 
 &nbsp;
 
@@ -641,7 +641,7 @@ B B B
 
 &nbsp;
 
--Many Bumblezone items are added to Buzzier Bees's Apiarist villager now too!
+-Many Bumblezone items are added to Buzzier Bees's Apiarist villager now too!
 
 &nbsp;
 
@@ -655,7 +655,7 @@ B B B
 
 &nbsp;
 
--Productive Bees' will also rarely spawn in The Bumblezone dimension from regular spawning or from Honeycomb Brood Blocks in the dimension. All of their types of bees have equal chances of spawning.
+-Productive Bees' will also rarely spawn in The Bumblezone dimension from regular spawning or from Honeycomb Brood Blocks in the dimension. All of their types of bees have equal chances of spawning.
 
 &nbsp;
 
@@ -677,7 +677,7 @@ B B B
 
 
 
-**Resourceful Bees** - [https://www.curseforge.com/minecraft/mc-mods/resourceful-bees](https://www.curseforge.com/minecraft/mc-mods/resourceful-bees)
+**Resourceful Bees** - [https://www.curseforge.com/minecraft/mc-mods/resourceful-bees](https://www.curseforge.com/minecraft/mc-mods/resourceful-bees)
 
 &nbsp;
 
@@ -685,7 +685,7 @@ B B B
 
 &nbsp;
 
--Resourceful Bees' will also rarely spawn in The Bumblezone dimension from regular spawning or from Honeycomb Brood Blocks in the dimension. All of their types of bees have equal chances of spawning.
+-Resourceful Bees' will also rarely spawn in The Bumblezone dimension from regular spawning or from Honeycomb Brood Blocks in the dimension. All of their types of bees have equal chances of spawning.
 
 &nbsp;
 
@@ -693,11 +693,11 @@ B B B
 
 &nbsp;
 
--Resourceful Bees's many Honeycomb variants will spawn in The Bumblezone dimension! Some honeycomb variants can only spawn in Spider Infested Bee Dungeons as well. Both dungeons can spawn Resourceful Bees Honey Block variants too.
+-Resourceful Bees's many Honeycomb variants will spawn in The Bumblezone dimension! Some honeycomb variants can only spawn in Spider Infested Bee Dungeons as well. Both dungeons can spawn Resourceful Bees Honey Block variants too.
 
 &nbsp;
 
--Bumblezone's Comb Cutter enchantment can be applied to Reosurceful Bee's Scraper tool! Newer versions of Resourceful Bees will allow Comb Cutter tools to be used to double their Beehive/Beenest outputs too.
+-Bumblezone's Comb Cutter enchantment can be applied to Reosurceful Bee's Scraper tool! Newer versions of Resourceful Bees will allow Comb Cutter tools to be used to double their Beehive/Beenest outputs too.
 
 &nbsp;
 
@@ -706,7 +706,7 @@ B B B
 &nbsp;
 
 
-**Charm** - [https://www.curseforge.com/minecraft/mc-mods/charm](https://www.curseforge.com/minecraft/mc-mods/charm)
+**Charm** - [https://www.curseforge.com/minecraft/mc-mods/charm](https://www.curseforge.com/minecraft/mc-mods/charm)
 
 &nbsp;
 
@@ -720,7 +720,7 @@ B B B
 
 
 
-**Pokecube AIO** - [https://www.curseforge.com/minecraft/mc-mods/pokecube-aoi](https://www.curseforge.com/minecraft/mc-mods/pokecube-aoi)
+**Pokecube AIO** - [https://www.curseforge.com/minecraft/mc-mods/pokecube-aoi](https://www.curseforge.com/minecraft/mc-mods/pokecube-aoi)
 
 &nbsp;
 
@@ -734,20 +734,20 @@ B B B
 
 
 
-**Potion of Bees** - [https://www.curseforge.com/minecraft/mc-mods/potion-of-bees](https://www.curseforge.com/minecraft/mc-mods/potion-of-bees)
+**Potion of Bees** - [https://www.curseforge.com/minecraft/mc-mods/potion-of-bees](https://www.curseforge.com/minecraft/mc-mods/potion-of-bees)
 
 &nbsp;
 
--Their Potion of Bees item can be used to revive a Empty Honeycomb Brood Block into a stage 1, 2, or 3 Honeycomb Brood Block by right clicking or using a Dispenser!
+-Their Potion of Bees item can be used to revive a Empty Honeycomb Brood Block into a stage 1, 2, or 3 Honeycomb Brood Block by right clicking or using a Dispenser!
 
 &nbsp;
 
--Their Splash Potion of Bees item can be thrown onto a Empty Honeycomb Brood Block to revive the block into a stage 1, 2, or 3 Honeycomb Brood Block! If you have the splash potion in a Dispenser facing the block, it'll revive the block without bees going everywhere.
+-Their Splash Potion of Bees item can be thrown onto a Empty Honeycomb Brood Block to revive the block into a stage 1, 2, or 3 Honeycomb Brood Block! If you have the splash potion in a Dispenser facing the block, it'll revive the block without bees going everywhere.
 
 &nbsp;
 
 
-**Carrier Bees** - [https://www.curseforge.com/minecraft/mc-mods/carrier-bees](https://www.curseforge.com/minecraft/mc-mods/carrier-bees)
+**Carrier Bees** - [https://www.curseforge.com/minecraft/mc-mods/carrier-bees](https://www.curseforge.com/minecraft/mc-mods/carrier-bees)
 
 &nbsp;
 
@@ -921,7 +921,7 @@ B B B
 
 &nbsp;
 
-**Aurum's More Blocks (AMB)** - [https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks](https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks)
+**Aurum's More Blocks (AMB)** - [https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks](https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks)
 
 
 &nbsp;
@@ -940,7 +940,7 @@ B B B
 
 **Also, be sure to check out the images page for several screenshots of what the world looks like!**
 
-Small video I made about some main parts of my mod! https://www.youtube.com/watch?v=440rpJavHwY
+Small video I made about some main parts of my mod! https://www.youtube.com/watch?v=440rpJavHwY
 
 &nbsp;
 
@@ -962,7 +962,7 @@ To reach **most of this mod's config files**, go into the **serverconfig** folde
 
 &nbsp;
 
-However, some of the customizations for this mod are in JSON so you just need to make a datapack to override those settings. In fact, some block tags used in this mod can be used to blacklist modded combs from being imported into the dimension! Here's the files that a datapack can override: https://github.com/TelepathicGrunt/Bumblezone/tree/master/src/main/resources/data/the_bumblezone  But be sure to look at the config file too as blacklisting modded bees are in there instead.
+However, some of the customizations for this mod are in JSON so you just need to make a datapack to override those settings. In fact, some block tags used in this mod can be used to blacklist modded combs from being imported into the dimension! Or change what blocks and items anger bees! Here's the files that a datapack can override: https://github.com/TelepathicGrunt/Bumblezone/tree/master/src/main/resources/data/the_bumblezone  But be sure to look at the config file too as blacklisting modded bees are in there instead.
 
 &nbsp;
 
@@ -974,7 +974,7 @@ Also, fun fact! If you use a datapack and make a biome under "the_bumblezone" na
 
 &nbsp;
 
-The ID for the dimension is **the_bumblezone:the_bumblezone** if you need it. Also, if you need the ID for any Bumblezone's block, item, or biome to add into other mod's configs files, check out the [en_us.json file here](https://github.com/TelepathicGrunt/Bumblezone/blob/master/src/main/resources/assets/the_bumblezone/lang/en_us.json) as the ID names of all the stuff is on there. For example, **"block.the_bumblezone.porous_honeycomb_block"** would be read as **the_bumblezone:porous_honeycomb_block** for the ID.
+The ID for the dimension is **the_bumblezone:the_bumblezone** if you need it. Also, if you need the ID for any Bumblezone's block, item, or biome to add into other mod's configs files, check out the [en_us.json file here](https://github.com/TelepathicGrunt/Bumblezone/blob/master/src/main/resources/assets/the_bumblezone/lang/en_us.json) as the ID names of all the stuff is on there. For example, **"block.the_bumblezone.porous_honeycomb_block"** would be read as **the_bumblezone:porous_honeycomb_block** for the ID.
 
 &nbsp;
 
@@ -988,7 +988,7 @@ For the list of changes in this mod, click the Source tab and check out README.t
 
 &nbsp;
 
-Special thanks to Bagel (dev of Buzzier Bees) for allowing us to use their Honey Slime mob code and textures!
+Special thanks to Bagel (dev of Buzzier Bees) for allowing us to use their Honey Slime mob code and textures!
 
 &nbsp;
 

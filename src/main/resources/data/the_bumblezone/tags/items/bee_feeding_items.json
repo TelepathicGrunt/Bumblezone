@@ -20,10 +20,6 @@
     {
       "id": "buzzier_bees:honey_bread",
       "required": false
-    },
-    {
-      "id": "buzzier_bees:glazed_porkchop",
-      "required": false
     }
   ]
 }
