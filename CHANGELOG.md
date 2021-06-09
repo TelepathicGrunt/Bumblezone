@@ -2,6 +2,8 @@
 
 ##### Blocks:
 * Beeswax Planks texture is adjusted to look better when next to other Beeswax Planks.
+  
+* Attached a POI system to Brood Blocks placed and generated from here on out. Will be a stepping stone to optimizing Wrath of the Hive in 1.17.
 
 ##### Entities:
 * Cleaned up Bee Feeding code a ton and added the_bumblezone:bee_feed_items tag for players to add new items that can be fed to bees to heal them.

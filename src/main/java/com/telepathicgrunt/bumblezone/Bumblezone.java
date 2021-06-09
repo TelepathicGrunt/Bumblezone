@@ -19,9 +19,6 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import nerdhub.cardinal.components.api.util.RespawnCopyStrategy;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
@@ -57,6 +54,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzEffects.registerEffects();
         BzEnchantments.registerEnchantment();
 
+        BzPOI.registerPOIs();
         BzProcessors.registerProcessors();
         BzPlacements.registerPlacements();
         BzFeatures.registerFeatures();
