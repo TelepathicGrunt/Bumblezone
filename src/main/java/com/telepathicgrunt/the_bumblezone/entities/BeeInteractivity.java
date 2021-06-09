@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.tags.BZItemTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,8 +26,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class BeeInteractivity {
 
     private static final ResourceLocation STICKY_HONEY_WAND = new ResourceLocation("buzzier_bees:sticky_honey_wand");
-    private static final ResourceLocation BEE_SOUP = new ResourceLocation("buzzier_bees:bee_soup");
-    private static final ResourceLocation HONEY_TREAT = new ResourceLocation("productivebees:honey_treat");
 
     // heal bees with sugar water bottle or honey bottle
     public static void beeFeeding(World world, PlayerEntity playerEntity, Hand hand, Entity target) {
@@ -36,96 +35,47 @@ public class BeeInteractivity {
             ItemStack itemstack = playerEntity.getItemInHand(hand);
             ResourceLocation itemRL = itemstack.getItem().getRegistryName();
 
-            if (itemstack.getItem() == Items.HONEY_BOTTLE || itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
+            // Disallow all non-tagged items from being fed to bees
+            if(itemRL == null || !BZItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
+                return;
 
-                world.playSound(
-                        playerEntity,
-                        playerEntity.getX(),
-                        playerEntity.getY(),
-                        playerEntity.getZ(),
-                        SoundEvents.BOTTLE_EMPTY,
-                        SoundCategory.NEUTRAL,
-                        1.0F,
-                        1.0F);
-
-                if (itemstack.getItem() == Items.HONEY_BOTTLE) {
-
-                    // Heal bee a lot
-                    beeEntity.addEffect(new EffectInstance(
-                            Effects.HEAL,
-                            1,
-                            1,
-                            false,
-                            false,
-                            false));
-
-                    // high chance to remove wrath of the hive from player
-                    calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
-
-                }
-                // Sugar water bottle
-                else {
-                    // Heal bee slightly but they remain angry
-                    beeEntity.addEffect(new EffectInstance(
-                            Effects.HEAL,
-                            1,
-                            0,
-                            false,
-                            false,
-                            false));
-
-                    // very low chance to remove wrath of the hive from player
-                    calmAndSpawnHearts(world, playerEntity, beeEntity, 0.07f, 1);
-                }
-
-                if (!playerEntity.isCreative()) {
-
-                    // remove current honey bottle
-                    itemstack.shrink(1);
-
-                    if (itemstack.isEmpty()) {
-                        // places empty bottle in hand
-                        playerEntity.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
-                    }
-                    // places empty bottle in inventory
-                    else if (!playerEntity.inventory.add(new ItemStack(Items.GLASS_BOTTLE))) {
-                        // drops empty bottle if inventory is full
-                        playerEntity.drop(new ItemStack(Items.GLASS_BOTTLE), false);
-                    }
-                }
-
-                playerEntity.swing(hand, true);
-            }
-            else if (ModChecker.productiveBeesPresent && Bumblezone.BzModCompatibilityConfig.allowHoneyTreatCompat.get()
-                    && itemRL != null && itemRL.equals(HONEY_TREAT))
+            // Special case of item feeding
+            if (ModChecker.buzzierBeesPresent &&
+                    itemRL.equals(STICKY_HONEY_WAND) && Bumblezone.BzModCompatibilityConfig.allowHoneyWandCompat.get())
             {
-
-                // Heal bee a ton
-                beeEntity.addEffect(new EffectInstance(Effects.HEAL, 2, 1, false, false, false));
-
-                // very high chance to remove wrath of the hive from player
-                calmAndSpawnHearts(world, playerEntity, beeEntity, 0.4f, 5);
-
-                playerEntity.swing(hand, true);
-            }
-            else if (ModChecker.buzzierBeesPresent && itemRL != null &&
-                    (itemRL.equals(BEE_SOUP) ||
-                    (itemRL.equals(STICKY_HONEY_WAND) && Bumblezone.BzModCompatibilityConfig.allowHoneyWandCompat.get())))
-            {
-
                 // Heal bee a bit
                 beeEntity.addEffect(new EffectInstance(Effects.HEAL, 1, 1, false, false, false));
 
                 // neutral chance to remove wrath of the hive from player
-                calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
-
-
-                if (itemRL.equals(BEE_SOUP)) {
-                    consumeItem(playerEntity, hand, itemstack, Items.BOWL);
+                calmAndSpawnHearts(world, playerEntity, beeEntity, 0.2f, 3);
+                consumeItem(playerEntity, hand, itemstack, ForgeRegistries.ITEMS.getValue(STICKY_HONEY_WAND));
+            }
+            // generalized feeding
+            else {
+                if(itemRL.getPath().contains("honey")){
+                    beeEntity.addEffect(new EffectInstance(Effects.HEAL, 1, 2, false, false, false));
+                    calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
                 }
-                else if (itemRL.equals(STICKY_HONEY_WAND)) {
-                    consumeItem(playerEntity, hand, itemstack, ForgeRegistries.ITEMS.getValue(STICKY_HONEY_WAND));
+                else{
+                    beeEntity.addEffect(new EffectInstance(Effects.HEAL, 1, 1, false, false, false));
+                    calmAndSpawnHearts(world, playerEntity, beeEntity, 0.1f, 3);
                 }
+
+                if (!playerEntity.isCreative()) {
+                    // remove current item
+                    itemstack.shrink(1);
+
+                    if(itemRL.getPath().contains("bowl") && !itemstack.getItem().equals(Items.BOWL)){
+                        givePlayerContainer(playerEntity, hand, itemstack, Items.BOWL);
+                    }
+                    else if(itemRL.getPath().contains("bucket") && !itemstack.getItem().equals(Items.BUCKET)){
+                        givePlayerContainer(playerEntity, hand, itemstack, Items.BOWL);
+                    }
+                    else if(itemRL.getPath().contains("bottle") && !itemstack.getItem().equals(Items.GLASS_BOTTLE)){
+                        givePlayerContainer(playerEntity, hand, itemstack, Items.GLASS_BOTTLE);
+                    }
+                }
+                playerEntity.swing(hand, true);
             }
         }
     }
@@ -167,18 +117,22 @@ public class BeeInteractivity {
             // remove current bee soup
             handItemstack.shrink(1);
 
-            if (handItemstack.isEmpty()) {
-                // places empty bottle in hand
-                playerEntity.setItemInHand(hand, new ItemStack(replacementItem));
-            }
-            // places empty bottle in inventory
-            else if (!playerEntity.inventory.add(new ItemStack(replacementItem))) {
-                // drops empty bottle if inventory is full
-                playerEntity.drop(new ItemStack(replacementItem), false);
-            }
+            givePlayerContainer(playerEntity, hand, handItemstack, replacementItem);
         }
         else {
             playerEntity.swing(hand, true);
+        }
+    }
+
+    private static void givePlayerContainer(PlayerEntity playerEntity, Hand hand, ItemStack itemstack, Item itemToGive) {
+        if (itemstack.isEmpty()) {
+            // places empty bowl in hand
+            playerEntity.setItemInHand(hand, new ItemStack(itemToGive));
+        }
+        // places empty bottle in inventory
+        else if (!playerEntity.inventory.add(new ItemStack(itemToGive))) {
+            // drops empty bottle if inventory is full
+            playerEntity.drop(new ItemStack(itemToGive), false);
         }
     }
 }

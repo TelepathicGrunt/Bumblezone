@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:honey_bottle",
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:sugar_water_bottle",
+      "required": true
+    },
+    {
+      "id": "productivebees:honey_treat",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honey_apple",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honey_bread",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:glazed_porkchop",
+      "required": false
+    }
+  ]
+}

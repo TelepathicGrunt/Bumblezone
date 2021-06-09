@@ -1,7 +1,13 @@
 ### **(V.2.4.4 Changes) (1.16.5 Minecraft)**
 
-##### :
-*
+##### Entities:
+* Cleaned up Bee Feed code a ton and added the_bumblezone:bee_feed_items tag for players to add new items that can be fed to bees to heal them.
+
+##### mod Compat:
+* Honey Apple, Honey bread, and Glazed Porkchops from Buzzier Bees cna be fed to bees now.
+
+##### Teleportation:
+* Switched to the new Ender Pearl Teleport event from the old one as the old event is being removed by Forge in 1.17.
 
 
 ### **(V.2.4.3 Changes) (1.16.5 Minecraft)**
