@@ -40,17 +40,19 @@ public class PlayerTeleportationHookup {
         //Makes it so player does not get killed for falling into the void
         if (playerEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (playerEntity.getY() < -3) {
-                playerEntity.setPosRaw(playerEntity.getX(), -3.01D, playerEntity.getZ());
-                playerEntity.setPos(playerEntity.getX(), -3.01D, playerEntity.getZ());
+                playerEntity.setPosAndOldPos(playerEntity.getX(), -3.01D, playerEntity.getZ());
                 playerEntity.fallDistance = 0;
 
-                teleportOutOfBz(playerEntity);
+                if(!playerEntity.level.isClientSide)
+                    teleportOutOfBz(playerEntity);
             } else if (playerEntity.getY() > 255) {
-                teleportOutOfBz(playerEntity);
+                playerEntity.setPosAndOldPos(playerEntity.getX(), 255.01D, playerEntity.getZ());
+                if(!playerEntity.level.isClientSide)
+                    teleportOutOfBz(playerEntity);
             }
         }
         //teleport to bumblezone
-        else{
+        else if(!playerEntity.level.isClientSide){
             LazyOptional<IPlayerPosAndDim> lazyOptionalCap = playerEntity.getCapability(PAST_POS_AND_DIM);
             if (lazyOptionalCap.isPresent()) {
                 PlayerPositionAndDimension cap = (PlayerPositionAndDimension) lazyOptionalCap.orElseThrow(RuntimeException::new);
