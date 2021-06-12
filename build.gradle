@@ -106,7 +106,7 @@ dependencies {
 
     implementation fg.deobf("noobanidus.mods.carrierbees:carrierbees:${carrierbees_version}")
     implementation fg.deobf("com.resourcefulbees:ResourcefulBees:${resourcefulbees_version}")
-    implementation fg.deobf("com.telepathicgrunt:Blame:${blame_version}")
+    runtimeOnly fg.deobf("com.telepathicgrunt:Blame:${blame_version}")
 
     compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
