@@ -31,17 +31,19 @@ public class PlayerTeleportationHookup {
         //Makes it so player does not get killed for falling into the void
         if (playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (playerEntity.getY() < -3) {
-                playerEntity.setPos(playerEntity.getX(), -3.01D, playerEntity.getZ());
-                playerEntity.updatePosition(playerEntity.getX(), -3.01D, playerEntity.getZ());
+                playerEntity.resetPosition(playerEntity.getX(), -3.01D, playerEntity.getZ());
                 playerEntity.fallDistance = 0;
 
-                teleportOutOfBz(playerEntity);
+                if(!playerEntity.world.isClient)
+                    teleportOutOfBz(playerEntity);
             } else if (playerEntity.getY() > 255) {
-                teleportOutOfBz(playerEntity);
+                playerEntity.resetPosition(playerEntity.getX(), 255.01D, playerEntity.getZ());
+                if(!playerEntity.world.isClient)
+                    teleportOutOfBz(playerEntity);
             }
         }
         //teleport to bumblezone
-        else if (Bumblezone.PLAYER_COMPONENT.get(playerEntity).getIsTeleporting()) {
+        else if (!playerEntity.world.isClient && Bumblezone.PLAYER_COMPONENT.get(playerEntity).getIsTeleporting()) {
             PlayerTeleportationBackend.enteringBumblezone(playerEntity);
             Bumblezone.PLAYER_COMPONENT.get(playerEntity).setIsTeleporting(false);
             reAddStatusEffect(playerEntity);

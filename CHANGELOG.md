@@ -1,3 +1,11 @@
+### **(V.2.4.7 Changes) (1.16.5 Minecraft)**
+
+##### Teleportation:
+* Increased search radius for beehives when leaving Bumblezone.
+
+* Fixed bug where client side visual makes it look like the player continues falling below y = 3 even though they remained at y = 3 on serverside. (Client was in no danger tho)
+
+
 ### **(V.2.4.6 Changes) (1.16.5 Minecraft)**
 
 ##### Blocks:
