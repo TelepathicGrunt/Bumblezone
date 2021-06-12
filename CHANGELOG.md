@@ -1,3 +1,9 @@
+### **(V.2.4.6 Changes) (1.16.5 Minecraft)**
+
+##### Blocks:
+* Fixed crash at startup... oops.
+
+
 ### **(V.2.4.5 Changes) (1.16.5 Minecraft)**
 
 ##### Blocks:

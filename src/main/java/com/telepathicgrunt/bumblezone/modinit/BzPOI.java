@@ -12,6 +12,6 @@ public class BzPOI {
     public static final PointOfInterestType BROOD_BLOCK_POI = PointOfInterestHelper.register(new Identifier(Bumblezone.MODID, "brood_block_poi"), 0, 1, ImmutableSet.copyOf(BzBlocks.HONEYCOMB_BROOD.getStateManager().getStates()));
 
     public static void registerPOIs() {
-        Registry.register(Registry.POINT_OF_INTEREST_TYPE, new Identifier(Bumblezone.MODID, "brood_block_poi"), BROOD_BLOCK_POI);
+        // PointOfInterestHelper.register registers the poi for me. Dumb but ok. Highly unusual compared to all the other helpers...
     }
 }
