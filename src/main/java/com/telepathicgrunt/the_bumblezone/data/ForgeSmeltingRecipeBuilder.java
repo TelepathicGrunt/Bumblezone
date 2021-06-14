@@ -26,7 +26,6 @@ public class ForgeSmeltingRecipeBuilder {
     private final int cookingTime;
     private final int resultCount;
     private String group;
-    private final Advancement.Builder advancement = Advancement.Builder.advancement();
     private final CookingRecipeSerializer<?> serializer;
 
     private ForgeSmeltingRecipeBuilder(Ingredient ingredient, IItemProvider resultItem, int resultCount, float experience, int cookTime) {
@@ -43,7 +42,6 @@ public class ForgeSmeltingRecipeBuilder {
     }
 
     public ForgeSmeltingRecipeBuilder unlockedBy(String p_218628_1_, ICriterionInstance p_218628_2_) {
-        this.advancement.addCriterion(p_218628_1_, p_218628_2_);
         return this;
     }
 
@@ -62,15 +60,7 @@ public class ForgeSmeltingRecipeBuilder {
     }
 
     public void save(Consumer<IFinishedRecipe> consumer, ResourceLocation resourceLocation) {
-        this.ensureValid(resourceLocation);
-        this.advancement.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(resourceLocation)).rewards(AdvancementRewards.Builder.recipe(resourceLocation)).requirements(IRequirementsStrategy.OR);
-        consumer.accept(new ForgeSmeltingRecipeBuilder.Result(resourceLocation, this.group == null ? "" : this.group, this.ingredient, this.result, this.resultCount, this.experience, this.cookingTime, this.advancement, new ResourceLocation(resourceLocation.getNamespace(), "recipes/" + this.result.getItemCategory().getRecipeFolderName() + "/" + resourceLocation.getPath()), this.serializer));
-    }
-
-    private void ensureValid(ResourceLocation resourceLocation) {
-        if (this.advancement.getCriteria().isEmpty()) {
-            throw new IllegalStateException("No way of obtaining recipe " + resourceLocation);
-        }
+        consumer.accept(new ForgeSmeltingRecipeBuilder.Result(resourceLocation, this.group == null ? "" : this.group, this.ingredient, this.result, this.resultCount, this.experience, this.cookingTime, null, null, this.serializer));
     }
 
     public static class Result implements IFinishedRecipe {
@@ -122,7 +112,7 @@ public class ForgeSmeltingRecipeBuilder {
 
         @Nullable
         public JsonObject serializeAdvancement() {
-            return this.advancement.serializeToJson();
+            return null;
         }
 
         @Nullable

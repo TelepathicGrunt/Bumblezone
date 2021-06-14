@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "the_bumblezone:sugar_infused_stone"
-  },
-  "result": "minecraft:stone",
-  "experience": 0.05,
-  "cookingtime": 50
-}

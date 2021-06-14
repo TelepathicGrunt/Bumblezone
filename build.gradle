@@ -50,9 +50,9 @@ minecraft {
         data {
             workingDirectory project.file('run')
             args '--mod', ""+archivesBaseName, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            arg "-mixin.config="+archivesBaseName+".mixins.json"
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            arg "-mixin.config="+archivesBaseName+".mixins.json"
             mods { the_bumblezone { source sourceSets.main } }
         }
     }
@@ -95,21 +95,21 @@ dependencies {
         annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
     }
 
+    // Switch to `implementation` when testing mod compat
     //implementation fg.deobf("com.minecraftabnormals:abnormals-core:${abnormalcore_mc_version}-${abnormalcore_version}")
-    implementation fg.deobf("curse.maven:abnormals_core-382216:3233486")
+    compileOnly fg.deobf("curse.maven:abnormals_core-382216:3233486")
 
-    implementation fg.deobf("curse.maven:buzzier_bees-355458:${buzzierbees_file_id}")
+    compileOnly fg.deobf("curse.maven:buzzier_bees-355458:${buzzierbees_file_id}")
     compileOnly fg.deobf("curse.maven:charm_reforged-430988:${charmreforged_file_id}")
 
-    implementation fg.deobf("curse.maven:amb_aurums_more_blocks-361597:${amb_file_id}")
-    implementation fg.deobf("curse.maven:potion_of_bees-355348:${potionofbees_file_id}")
-    implementation fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
-    implementation fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
+    compileOnly fg.deobf("curse.maven:amb_aurums_more_blocks-361597:${amb_file_id}")
+    compileOnly fg.deobf("curse.maven:potion_of_bees-355348:${potionofbees_file_id}")
+    compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
+    compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
 
-    implementation fg.deobf("noobanidus.mods.carrierbees:carrierbees:${carrierbees_version}")
+    compileOnly fg.deobf("noobanidus.mods.carrierbees:carrierbees:${carrierbees_version}")
     compileOnly fg.deobf("com.resourcefulbees:ResourcefulBees:${resourcefulbees_version}")
     runtimeOnly fg.deobf("com.telepathicgrunt:Blame:${blame_version}")
-
 
     compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")

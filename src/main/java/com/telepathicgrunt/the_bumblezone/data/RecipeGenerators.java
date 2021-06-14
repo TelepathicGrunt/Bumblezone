@@ -1,11 +1,26 @@
 package com.telepathicgrunt.the_bumblezone.data;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonObject;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import net.minecraft.data.*;
+import net.minecraft.data.CookingRecipeBuilder;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.IDataProvider;
+import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.data.RecipeProvider;
+import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.AbstractCookingRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.IItemProvider;
+import net.minecraft.util.ResourceLocation;
 
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class RecipeGenerators extends RecipeProvider implements IDataProvider {
@@ -17,59 +32,181 @@ public class RecipeGenerators extends RecipeProvider implements IDataProvider {
     @Override
     public void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
 
-        ShapedRecipeBuilder.shaped(Items.BEE_NEST)
-                .define('b', BzItems.BEESWAX_PLANKS.get())
-                .define('c', Items.HONEYCOMB)
-                .pattern("bbb")
-                .pattern("bcb")
-                .pattern("bbb")
-                .unlockedBy("has_bees_wax_planks", has(BzItems.BEESWAX_PLANKS.get()))
-                .save(consumer, Bumblezone.MODID + ":beeswax_planks_to_bee_nest");
+        consumer.accept(shapedRecipeResult(
+                Items.BEE_NEST,
+                new ResourceLocation(Bumblezone.MODID, "beeswax_planks_to_bee_nest"),
+                1,
+                ImmutableList.of(
+                        "bbb",
+                        "bcb",
+                        "bbb"),
+                ImmutableMap.<Character,Ingredient>builder()
+                        .put('b', Ingredient.of(BzItems.BEESWAX_PLANKS.get()))
+                        .put('c', Ingredient.of(Items.HONEYCOMB))
+                        .build())
+        );
 
-        ShapedRecipeBuilder.shaped(BzItems.HONEY_CRYSTAL_SHIELD.get())
-                .define('s', BzItems.HONEY_CRYSTAL_SHARDS.get())
-                .pattern("sss")
-                .pattern("sss")
-                .pattern(" s ")
-                .unlockedBy("has_honey_crystal_shards", has(BzItems.HONEY_CRYSTAL_SHARDS.get()))
-                .save(consumer);
+        consumer.accept(shapedRecipeResult(
+                BzItems.HONEY_CRYSTAL_SHIELD.get(),
+                null,
+                1,
+                ImmutableList.of(
+                        "sss",
+                        "sss",
+                        " s "),
+                ImmutableMap.<Character,Ingredient>builder()
+                        .put('s', Ingredient.of(BzItems.HONEY_CRYSTAL_SHARDS.get()))
+                        .build())
+        );
 
-        ShapelessRecipeBuilder.shapeless(BzItems.STICKY_HONEY_REDSTONE.get())
-                .requires(BzItems.STICKY_HONEY_RESIDUE.get())
-                .requires(Items.REDSTONE)
-                .unlockedBy("has_stick_honey_residue", has(BzItems.STICKY_HONEY_RESIDUE.get()))
-                .save(consumer);
+        consumer.accept(shapelessRecipeResult(
+                BzItems.HONEY_CRYSTAL_SHARDS.get(),
+                null,
+                1,
+                ImmutableList.of(
+                        Ingredient.of(BzItems.STICKY_HONEY_RESIDUE.get()),
+                        Ingredient.of(Items.REDSTONE)))
+        );
 
-        BzContainerShapelessRecipeBuilder.shapeless(BzItems.SUGAR_WATER_BUCKET.get())
-                .requires(Items.WATER_BUCKET)
-                .requires(Items.SUGAR)
-                .unlockedBy("has_sugar", has(Items.SUGAR))
-                .save(consumer);
+        consumer.accept(bzContainerShapelessRecipeBuilder(
+                BzItems.SUGAR_WATER_BUCKET.get(),
+                null,
+                1,
+                ImmutableList.of(
+                        Ingredient.of(Items.WATER_BUCKET),
+                        Ingredient.of(Items.SUGAR)))
+        );
 
-        CookingRecipeBuilder.smelting(Ingredient.of(BzItems.SUGAR_INFUSED_STONE.get()), Items.STONE, 0.05f, 50)
-                .unlockedBy("has_sugar_infused_stone", has(BzItems.SUGAR_INFUSED_STONE.get()))
-                .save(consumer, Bumblezone.MODID + ":stone_smelting_sugar_infused_stone");
+        consumer.accept(cookingRecipeBuilderResult(
+                Ingredient.of(BzItems.SUGAR_INFUSED_STONE.get()),
+                Items.STONE,
+                0.05f,
+                50,
+                new ResourceLocation(Bumblezone.MODID, "stone_smelting_sugar_infused_stone"),
+                IRecipeSerializer.SMELTING_RECIPE)
+        );
 
-        CookingRecipeBuilder.smelting(Ingredient.of(BzItems.SUGAR_INFUSED_COBBLESTONE.get()), Items.COBBLESTONE, 0.05f, 50)
-                .unlockedBy("has_sugar_infused_cobblestone", has(BzItems.SUGAR_INFUSED_COBBLESTONE.get()))
-                .save(consumer, Bumblezone.MODID + ":cobblestone_smelting_sugar_infused_cobblestone");
+        consumer.accept(cookingRecipeBuilderResult(
+                Ingredient.of(BzItems.SUGAR_INFUSED_COBBLESTONE.get()),
+                Items.COBBLESTONE,
+                0.05f,
+                50,
+                new ResourceLocation(Bumblezone.MODID, "cobblestone_smelting_sugar_infused_cobblestone"),
+                IRecipeSerializer.SMELTING_RECIPE)
+        );
 
-        ForgeSmeltingRecipeBuilder.smelting(Ingredient.of(Items.HONEY_BLOCK), BzItems.STICKY_HONEY_RESIDUE.get(), 6, 4.0f, 520)
-                .unlockedBy("has_honey_block", has(Items.HONEY_BLOCK))
+        ForgeSmeltingRecipeBuilder.smelting(
+                Ingredient.of(Items.HONEY_BLOCK),
+                BzItems.STICKY_HONEY_RESIDUE.get(),
+                6,
+                4.0f,
+                520)
                 .save(consumer, Bumblezone.MODID + ":sticky_honey_residue_smelting_honey_block");
 
-        ForgeSmeltingRecipeBuilder.smelting(Ingredient.of(BzItems.HONEY_CRYSTAL.get()), BzItems.STICKY_HONEY_RESIDUE.get(), 4, 3.7f, 420)
-                .unlockedBy("has_honey_crystal", has(BzItems.HONEY_CRYSTAL.get()))
+        ForgeSmeltingRecipeBuilder.smelting(
+                Ingredient.of(BzItems.HONEY_CRYSTAL.get()),
+                BzItems.STICKY_HONEY_RESIDUE.get(),
+                4,
+                3.7f,
+                420)
                 .save(consumer, Bumblezone.MODID + ":sticky_honey_residue_smelting_honey_crystal");
 
-        CookingRecipeBuilder.smelting(Ingredient.of(BzItems.HONEY_CRYSTAL_SHARDS.get()), BzItems.STICKY_HONEY_RESIDUE.get(), 0.25f, 125)
-                .unlockedBy("has_honey_crystal_shards", has(BzItems.HONEY_CRYSTAL_SHARDS.get()))
-                .save(consumer, Bumblezone.MODID + ":sticky_honey_residue_smelting_honey_crystal_shards");
+        consumer.accept(cookingRecipeBuilderResult(
+                Ingredient.of(BzItems.HONEY_CRYSTAL_SHARDS.get()),
+                BzItems.STICKY_HONEY_RESIDUE.get(),
+                0.25f,
+                125,
+                new ResourceLocation(Bumblezone.MODID, "sticky_honey_residue_smelting_honey_crystal_shards"),
+                IRecipeSerializer.SMELTING_RECIPE)
+        );
 
-        ForgeSmeltingRecipeBuilder.smelting(Ingredient.of(BzItems.HONEY_CRYSTAL_SHIELD.get()), BzItems.STICKY_HONEY_RESIDUE.get(), 5, 1.50f, 600)
-                .unlockedBy("has_honey_crystal_shield", has(BzItems.HONEY_CRYSTAL_SHIELD.get()))
+        ForgeSmeltingRecipeBuilder.smelting(
+                Ingredient.of(BzItems.HONEY_CRYSTAL_SHIELD.get()),
+                BzItems.STICKY_HONEY_RESIDUE.get(),
+                5,
+                1.50f,
+                600)
                 .save(consumer, Bumblezone.MODID + ":sticky_honey_residue_smelting_honey_crystal_shield");
 
+    }
+
+    public static ShapedRecipeBuilder.Result shapedRecipeResult(IItemProvider iItemProvider, ResourceLocation recipeRL,
+                                                                int outputNum, List<String> recipe,
+                                                                Map<Character, Ingredient> recipeMapKey) {
+        return ShapedRecipeBuilder.shaped(iItemProvider).new Result(
+                recipeRL == null ? iItemProvider.asItem().getRegistryName() : recipeRL,
+                iItemProvider.asItem(),
+                outputNum,
+                Bumblezone.MODID,
+                recipe,
+                recipeMapKey,
+                null,
+                null
+        ) {
+            @Override
+            public JsonObject serializeAdvancement() {
+                return null;
+            }
+        };
+    }
+
+    public static ShapelessRecipeBuilder.Result shapelessRecipeResult(IItemProvider iItemProvider, ResourceLocation recipeRL,
+                                                                int outputNum, List<Ingredient> recipe) {
+        return new ShapelessRecipeBuilder.Result(
+                recipeRL == null ? iItemProvider.asItem().getRegistryName() : recipeRL,
+                iItemProvider.asItem(),
+                outputNum,
+                Bumblezone.MODID,
+                recipe,
+                null,
+                null
+        ) {
+            @Override
+            public JsonObject serializeAdvancement() {
+                return null;
+            }
+        };
+    }
+
+    public static BzContainerShapelessRecipeBuilder.Result bzContainerShapelessRecipeBuilder(IItemProvider iItemProvider, ResourceLocation recipeRL,
+                                                                                             int outputNum, List<Ingredient> recipe) {
+        return new BzContainerShapelessRecipeBuilder.Result(
+                recipeRL == null ? iItemProvider.asItem().getRegistryName() : recipeRL,
+                iItemProvider.asItem(),
+                outputNum,
+                Bumblezone.MODID,
+                recipe,
+                null,
+                null
+        ) {
+            @Override
+            public JsonObject serializeAdvancement() {
+                return null;
+            }
+        };
+    }
+
+
+    public static CookingRecipeBuilder.Result cookingRecipeBuilderResult(Ingredient ingredient, IItemProvider result,
+                                                                         float cookTime, int exp,
+                                                                         ResourceLocation recipeRL,
+                                                                         IRecipeSerializer<? extends AbstractCookingRecipe> serializer) {
+        return new CookingRecipeBuilder.Result(
+                recipeRL == null ? new ResourceLocation(result.asItem().getRegistryName() + "_cooking") : recipeRL,
+                Bumblezone.MODID,
+                ingredient,
+                result.asItem(),
+                cookTime,
+                exp,
+                null,
+                null,
+                serializer
+        ) {
+            @Override
+            public JsonObject serializeAdvancement() {
+                return null;
+            }
+        };
     }
 
     @Override

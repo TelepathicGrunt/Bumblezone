@@ -1,5 +1,8 @@
 ### **(V.2.4.5 Changes) (1.16.5 Minecraft)**
 
+##### Blocks:
+* Fixed Sticky Honey Residue and Sticky Honey Redstone having the wrong hitbox when placed on the sides. 
+
 ##### Teleportation:
 * Increased search radius for beehives when leaving Bumblezone.
 
