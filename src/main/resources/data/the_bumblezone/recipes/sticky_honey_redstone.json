@@ -1,16 +1,15 @@
 {
-    "type": "minecraft:crafting_shapeless",
-	"ingredients": [
-		{
-			"item": "the_bumblezone:sticky_honey_residue"
-		},
-		{
-			"item": "minecraft:redstone"
-		}
-	],
-    "result":
+  "type": "minecraft:crafting_shapeless",
+  "group": "the_bumblezone",
+  "ingredients": [
     {
-        "item": "the_bumblezone:sticky_honey_redstone",
-        "count": 1
+      "item": "the_bumblezone:sticky_honey_residue"
+    },
+    {
+      "item": "minecraft:redstone"
     }
+  ],
+  "result": {
+    "item": "the_bumblezone:sticky_honey_redstone"
+  }
 }

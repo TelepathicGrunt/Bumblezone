@@ -1,16 +1,15 @@
 {
-    "type": "minecraft:crafting_shapeless",
-	"ingredients": [
-		{
-			"item": "minecraft:water_bucket"
-		},
-		{
-			"item": "minecraft:sugar"
-		}
-	],
-    "result":
+  "type": "the_bumblezone:container_shapeless_recipe_bz",
+  "group": "the_bumblezone",
+  "ingredients": [
     {
-        "item": "the_bumblezone:sugar_water_bucket",
-        "count": 1
+      "item": "minecraft:water_bucket"
+    },
+    {
+      "item": "minecraft:sugar"
     }
+  ],
+  "result": {
+    "item": "the_bumblezone:sugar_water_bucket"
+  }
 }
