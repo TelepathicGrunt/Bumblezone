@@ -118,7 +118,7 @@ public class PlayerTeleportationBackend {
                     Doubles.constrainToRange(playerEntity.position().z() * coordinateScale, -29999936D, 29999936D));
 
             //Gets valid space in other world
-            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 100, checkingUpward);
+            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward);
         }
 
         else if(Bumblezone.BzDimensionConfig.teleportationMode.get() == 2){
@@ -135,7 +135,7 @@ public class PlayerTeleportationBackend {
                     Doubles.constrainToRange(playerEntity.position().z() * coordinateScale, -29999936D, 29999936D));
 
             //Gets valid space in other world
-            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 100, checkingUpward);
+            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward);
 
             if(validBlockPos == null && cap.getNonBZPos() != null) {
                 validBlockPos = new BlockPos(cap.getNonBZPos());
@@ -276,11 +276,10 @@ public class PlayerTeleportationBackend {
         // Gets the height of highest block over the area so we aren't checking an
         // excessive amount of area above that doesn't need checking.
         int maxHeight = 0;
-        int halfRange = maximumRange / 2;
         BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable();
         Set<Chunk> chunksInRange = new HashSet<>();
-        for (int x = -halfRange; x < halfRange; x++) {
-            for (int z = -halfRange; z < halfRange; z++) {
+        for (int x = -maximumRange; x < maximumRange; x++) {
+            for (int z = -maximumRange; z < maximumRange; z++) {
                 mutableBlockPos.set(position.getX() + x, 0, position.getZ() + z);
                 //make game generate chunk so we can get max height of blocks in it and get the chunk for BEs
                 IChunk chunk = world.getChunk(mutableBlockPos);

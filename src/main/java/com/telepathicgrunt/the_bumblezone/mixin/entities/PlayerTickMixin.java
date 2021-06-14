@@ -19,7 +19,6 @@ public class PlayerTickMixin {
 
         BeeAggression.playerTick(playerEntity);
 
-        if(!playerEntity.level.isClientSide)
-            PlayerTeleportationHookup.playerTick(playerEntity);
+        PlayerTeleportationHookup.playerTick(playerEntity);
     }
 }
