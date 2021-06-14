@@ -1,0 +1,39 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "residue": "the_bumblezone:block/sticky_honey_redstone_unlit",
+    "particle": "the_bumblezone:block/sticky_honey_redstone_unlit"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0.2,
+        0
+      ],
+      "to": [
+        16,
+        0.2,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#residue"
+        },
+        "up": {
+          "texture": "#residue"
+        },
+        "north": {
+          "texture": "#residue",
+          "cullface": "north"
+        },
+        "west": {
+          "texture": "#residue"
+        },
+        "east": {
+          "texture": "#residue"
+        }
+      }
+    }
+  ]
+}
