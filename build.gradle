@@ -112,6 +112,8 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
 }
 
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
 apply from: 'gradle/processresources.gradle'
 apply from: 'gradle/manifest.gradle'
 
