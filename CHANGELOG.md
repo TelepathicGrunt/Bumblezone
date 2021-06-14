@@ -1,3 +1,11 @@
+### **(V.2.4.8 Changes) (1.16.5 Minecraft)**
+
+##### Items:
+* Fixed Sugar Water Bucket being uncraftable.
+  
+* Crafting Sugar Water Bucket will no longer duplicate the bucket.
+
+
 ### **(V.2.4.7 Changes) (1.16.5 Minecraft)**
 
 ##### Blocks:

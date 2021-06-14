@@ -69,18 +69,18 @@ dependencies {
 
 	modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}"
 
-	modImplementation ("com.github.svenhjol:Charm:2.3.2") {
+	modCompileOnly ("com.github.svenhjol:Charm:2.3.2") {
 		transitive = false
 	}
-	implementation "com.moandjiezana.toml:toml4j:0.7.2"
-	implementation "com.electronwill.night-config:core:3.6.2"
-	implementation "com.electronwill.night-config:toml:3.6.2"
+	modCompileOnly "com.moandjiezana.toml:toml4j:0.7.2"
+	modCompileOnly "com.electronwill.night-config:core:3.6.2"
+	modCompileOnly "com.electronwill.night-config:toml:3.6.2"
 
-	modImplementation "curse.maven:potion_of_bees-356673:3052244"
-	modImplementation "de.siphalor:nbtcrafting-1.16:2+"
+	modCompileOnly "curse.maven:potion_of_bees-356673:3052244"
+	modCompileOnly "de.siphalor:nbtcrafting-1.16:2+"
 
-	modImplementation "io.github.cottonmc:LibCD:${project.libcd_version}"
-	modImplementation "com.github.Draylar:bee-better:${project.beebetter_version}"
+	modCompileOnly "io.github.cottonmc:LibCD:${project.libcd_version}"
+	modCompileOnly "com.github.Draylar:bee-better:${project.beebetter_version}"
 
 	modImplementation "com.telepathicgrunt:Blame-Fabric:1.16.5-3.2.0-fabric"
 }
