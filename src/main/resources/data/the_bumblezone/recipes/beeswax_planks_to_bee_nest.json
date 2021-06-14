@@ -1,25 +1,20 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"pattern":
-	[
-		"bbb",
-		"bcb",
-		"bbb"
-	],
-	"key":
-	{
-		"b":
-		{
-			"item": "the_bumblezone:beeswax_planks"
-		},
-		"c":
-		{
-			"item": "minecraft:honeycomb"
-		}
-	},
-    "result":
-    {
-        "item": "minecraft:bee_nest",
-        "count": 1
+  "type": "minecraft:crafting_shaped",
+  "group": "the_bumblezone",
+  "pattern": [
+    "bbb",
+    "bcb",
+    "bbb"
+  ],
+  "key": {
+    "b": {
+      "item": "the_bumblezone:beeswax_planks"
+    },
+    "c": {
+      "item": "minecraft:honeycomb"
     }
+  },
+  "result": {
+    "item": "minecraft:bee_nest"
+  }
 }

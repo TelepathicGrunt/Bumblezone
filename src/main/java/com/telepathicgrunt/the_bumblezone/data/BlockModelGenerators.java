@@ -108,12 +108,12 @@ public class BlockModelGenerators extends BlockModelProvider {
         getBuilder("sticky_honey_residue").ao(false).texture("residue", modLoc("block/sticky_honey_residue"))
                 .texture("particle", modLoc("block/sticky_honey_residue"))
                 .element().from(0f, 0.2f, 0f).to(16f, 0.2f, 16f)
-                .face(Direction.DOWN).texture("#residue").cullface(Direction.DOWN).end()
-                .face(Direction.UP).texture("#residue").cullface(Direction.UP).end()
-                .face(Direction.NORTH).texture("#residue").cullface(Direction.NORTH).end()
-                .face(Direction.WEST).texture("#residue").cullface(Direction.WEST).end()
-                .face(Direction.EAST).texture("#residue").cullface(Direction.EAST).end()
-                .face(Direction.SOUTH).texture("#residue").cullface(Direction.SOUTH).end()
+                .face(Direction.DOWN).texture("#residue").end()
+                .face(Direction.UP).texture("#residue").end()
+                .face(Direction.NORTH).texture("#residue").end()
+                .face(Direction.WEST).texture("#residue").end()
+                .face(Direction.EAST).texture("#residue").end()
+                .face(Direction.SOUTH).texture("#residue").end()
                 .end();
 
         getBuilder("sticky_honey_redstone_lit").ao(false)

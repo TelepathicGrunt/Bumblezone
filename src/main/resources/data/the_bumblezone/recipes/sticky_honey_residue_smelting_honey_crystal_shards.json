@@ -1,9 +1,10 @@
 {
   "type": "minecraft:smelting",
+  "group": "the_bumblezone",
   "ingredient": {
-	    "item": "the_bumblezone:honey_crystal_shards"
-	},
+    "item": "the_bumblezone:honey_crystal_shards"
+  },
   "result": "the_bumblezone:sticky_honey_residue",
   "experience": 0.25,
-  "cookingtime":  125
+  "cookingtime": 125
 }

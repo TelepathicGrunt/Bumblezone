@@ -60,7 +60,7 @@ public class RecipeGenerators extends RecipeProvider implements IDataProvider {
         );
 
         consumer.accept(shapelessRecipeResult(
-                BzItems.HONEY_CRYSTAL_SHARDS.get(),
+                BzItems.STICKY_HONEY_REDSTONE.get(),
                 null,
                 1,
                 ImmutableList.of(
