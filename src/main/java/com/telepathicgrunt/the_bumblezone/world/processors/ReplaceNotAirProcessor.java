@@ -22,7 +22,7 @@ public class ReplaceNotAirProcessor extends StructureProcessor {
 
     public static final Codec<ReplaceNotAirProcessor> CODEC  = RecordCodecBuilder.create((instance) -> instance.group(
             BlockState.CODEC.listOf()
-                    .xmap(Sets::newHashSet, Lists::newArrayList)
+                    .xmap(a -> Sets.newHashSet(a), a -> Lists.newArrayList(a))
                     .optionalFieldOf("blocks_to_always_place", new HashSet<>())
                     .forGetter((config) -> config.blocksToAlwaysPlace))
             .apply(instance, instance.stable(ReplaceNotAirProcessor::new)));
