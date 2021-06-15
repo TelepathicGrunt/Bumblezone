@@ -11,7 +11,7 @@ curseforge {
         releaseType = "release"
         changelogType = 'markdown'
         changelog = fileContents
-        addGameVersion("1.16.5")
+        addGameVersion("1.17")
         addGameVersion("Fabric")
 
         mainArtifact(remapJar) {
