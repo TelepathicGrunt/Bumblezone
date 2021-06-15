@@ -16,7 +16,7 @@ repositories {
 
 &nbsp;
 
-Don't forget to change <modversion> with the actual latest version of this mod like `2.4.4` for example.
+Don't forget to change <modversion> with the actual latest version of this mod like `3.0.0` for example.
 
 <blockquote>
 dependencies {
@@ -33,7 +33,7 @@ dependencies {
 
 ![The banner logo for The Bumblezone with a friendly and hostile bee shown below the mod name.](https://i.imgur.com/ovPqrFL.png)
 
-## **CURRENTLY FOR 1.16.5 MC**
+## **CURRENTLY FOR 1.17.0 MC**
 
 **(Play this mod with _[Lithium](https://www.curseforge.com/minecraft/mc-mods/lithium)_ for best performance!)**
 ###### [[Click here for the 1.16.5 Forge version of this mod!]](https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-forge)
@@ -531,11 +531,11 @@ B B B
 
 &nbsp;
 
--Bee Dungeons can be found in the caves where they are filled with Honey Crystal Blocks and has lots of Honeycomb brood Blocks.
+-Bee Dungeons can be found in the caves where they are filled with Honey Crystal Blocks and lit Candles! It also has lots of Honeycomb brood Blocks.
 
 &nbsp;
 
--Spider Infested Bee Dungeons can be rarely found in the caves where they are filled with Honey Crystal Blocks, Empty Honeycomb Brood Blocks, Cobwebs, Spider Spawner, and Cave Spider Spawners. These dungeons can make a great XP, Spider Eyes, and String farm!
+-Spider Infested Bee Dungeons can be rarely found in the caves where they are filled with Honey Crystal Blocks, unlit Candles, Empty Honeycomb Brood Blocks, Cobwebs, Spider Spawner, and Cave Spider Spawners. These dungeons can make a great XP, Spider Eyes, and String farm!
 
 &nbsp;
 

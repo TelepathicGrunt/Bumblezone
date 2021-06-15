@@ -2,3 +2,6 @@
 
 ##### Major:
 * Updated to 1.17.0 MC
+
+##### Features:
+* Bee Dungeon and Spider Infested Bee Dungeons now spawns vanilla's candle blocks!
