@@ -13,6 +13,8 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.FeatureConfig;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.Random;
 
@@ -81,8 +83,11 @@ public class HoneycombHole extends Feature<DefaultFeatureConfig> {
     }
 
     @Override
-    public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
-        BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable().set(position);
+    public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
+        ServerWorldAccess world = context.getWorld();
+        ChunkGenerator generator = context.getGenerator();
+        Random random = context.getRandom();
+        BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable().set(context.getOrigin());
 
         generateSlice(world, generator, mutableBlockPos, endCapLayout, random, true);
         generateSlice(world, generator, mutableBlockPos.move(Direction.EAST), smallHoneyLayout, random, true);

@@ -4,7 +4,11 @@ import com.telepathicgrunt.bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.bumblezone.modcompat.PotionOfBeesRedirection;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.FacingBlock;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
@@ -24,7 +28,7 @@ import net.minecraft.world.World;
 public class EmptyHoneycombBrood extends ProperFacingBlock {
 
     public EmptyHoneycombBrood() {
-        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MaterialColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build());
+        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build());
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.SOUTH));
     }
 
@@ -66,7 +70,7 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
                 if (itemstack.isEmpty()) {
                     playerEntity.setStackInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places glass bottle in hand
                 }
-                else if (!playerEntity.inventory.insertStack(new ItemStack(Items.GLASS_BOTTLE))) // places glass bottle in inventory
+                else if (!playerEntity.getInventory().insertStack(new ItemStack(Items.GLASS_BOTTLE))) // places glass bottle in inventory
                 {
                     playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false); // drops glass bottle if inventory is full
                 }

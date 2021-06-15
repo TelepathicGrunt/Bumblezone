@@ -26,7 +26,7 @@ public class Random3DUndergroundChunkPlacement extends Decorator<CountConfig> {
         // finds the origin of the 16x16x16 area we will be picking from
         BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable();
 
-        for (int chunkNum = 0; chunkNum <= placementConfig.getCount().getValue(random); chunkNum++) {
+        for (int chunkNum = 0; chunkNum <= placementConfig.getCount().get(random); chunkNum++) {
 
             // Tries 24 times to find a chunk's center that is in cave air or fluid.
             // Nice quick way to only generate clusters of crystals within a chunk without

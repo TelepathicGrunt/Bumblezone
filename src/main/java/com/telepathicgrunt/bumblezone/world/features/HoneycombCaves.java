@@ -3,6 +3,7 @@ package com.telepathicgrunt.bumblezone.world.features;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.utils.OpenSimplex2F;
+import com.telepathicgrunt.bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -11,6 +12,7 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.Random;
 
@@ -150,14 +152,14 @@ public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
 
 
     @Override
-    public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
-        setSeed(world.getSeed());
-        BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable().set(position);
+    public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
+        setSeed(context.getWorld().getSeed());
+        BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable().set(context.getOrigin());
 
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 for (int y = 15; y < 241; y++) {
-                    mutableBlockPos.set(position).move(x, y, z);
+                    mutableBlockPos.set(context.getOrigin()).move(x, y, z);
 
                     double noise1 = noiseGen.noise3_Classic(mutableBlockPos.getX() * 0.019D,
                             mutableBlockPos.getZ() * 0.019D,
@@ -174,7 +176,7 @@ public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
                     double finalNoise = noise1 * noise1 + noise2 * noise2;
 
                     if (finalNoise < 0.0013f) {
-                        hexagon(world, generator, mutableBlockPos, random, noise1);
+                        hexagon(context.getWorld(), context.getGenerator(), mutableBlockPos, context.getRandom(), noise1);
                     }
                 }
             }

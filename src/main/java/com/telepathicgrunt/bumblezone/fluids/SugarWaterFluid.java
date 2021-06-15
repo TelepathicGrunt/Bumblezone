@@ -2,7 +2,11 @@ package com.telepathicgrunt.bumblezone.fluids;
 
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FluidBlock;
+import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
@@ -121,7 +125,7 @@ public abstract class SugarWaterFluid extends FlowableFluid {
 
     @Override
     protected void beforeBreakingBlock(WorldAccess world, BlockPos pos, BlockState state) {
-        BlockEntity blockEntity = state.getBlock().hasBlockEntity() ? world.getBlockEntity(pos) : null;
+        BlockEntity blockEntity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
         Block.dropStacks(state, world, pos, blockEntity);
     }
 
@@ -147,7 +151,7 @@ public abstract class SugarWaterFluid extends FlowableFluid {
 
     @Override
     public BlockState toBlockState(FluidState state) {
-        return BzBlocks.SUGAR_WATER_BLOCK.getDefaultState().with(FluidBlock.LEVEL, method_15741(state));
+        return BzBlocks.SUGAR_WATER_BLOCK.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
     }
 
     public static class Flowing extends SugarWaterFluid {

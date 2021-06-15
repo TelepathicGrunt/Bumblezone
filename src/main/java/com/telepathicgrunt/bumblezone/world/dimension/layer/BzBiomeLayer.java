@@ -21,7 +21,7 @@ public enum BzBiomeLayer implements InitLayer {
 //	private double max = -100;
 //	private double min = 100;
 
-
+    @Override
     public int sample(LayerRandomnessSource noise, int x, int z) {
         double perlinNoise = perlinGen.sample((double) x * 0.1D, (double) z * 0.0001D, false);
 //

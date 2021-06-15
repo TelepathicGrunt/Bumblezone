@@ -27,13 +27,13 @@ minecraft {
 }
 
 repositories {
-	maven { url 'https://maven.fabricmc.net/io/github/prospector/modmenu/' }
-	maven { url = "https://www.cursemaven.com" }
-	maven { url 'https://jitpack.io' }
+	maven { url "https://maven.terraformersmc.com/releases/" }
+	maven { url "https://www.cursemaven.com" }
+	maven { url "https://jitpack.io" }
 	maven { url "https://maven.shedaniel.me/" }
 	maven {
-		name = "Ladysnake Libs"
-		url = 'https://dl.bintray.com/ladysnake/libs'
+		name = "Ladysnake Mods"
+		url = "https://ladysnake.jfrog.io/artifactory/mods"
 	}
 	maven {
 		url "https://nexus.resourcefulbees.com/repository/maven-public/"
@@ -54,13 +54,10 @@ dependencies {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 
-	modApi "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"
-	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"
+	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"
+	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_version}"
 
-	modApi "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_version}"
-	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_version}"
-
-	modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}"
+	modImplementation "com.terraformersmc:modmenu:${project.mod_menu_version}"
 
 	//modCompileOnly ("com.github.svenhjol:Charm:2.3.2") { transitive = false }
 

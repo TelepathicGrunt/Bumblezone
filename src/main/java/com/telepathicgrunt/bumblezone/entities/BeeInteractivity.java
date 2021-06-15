@@ -97,7 +97,7 @@ public class BeeInteractivity {
             playerEntity.setStackInHand(hand, new ItemStack(itemToGive));
         }
         // places empty bottle in inventory
-        else if (!playerEntity.inventory.insertStack(new ItemStack(itemToGive))) {
+        else if (!playerEntity.getInventory().insertStack(new ItemStack(itemToGive))) {
             // drops empty bottle if inventory is full
             playerEntity.dropItem(new ItemStack(itemToGive), false);
         }

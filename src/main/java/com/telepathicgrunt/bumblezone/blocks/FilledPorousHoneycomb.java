@@ -7,7 +7,7 @@ import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
-import net.minecraft.block.MaterialColor;
+import net.minecraft.block.MapColor;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -32,7 +32,7 @@ import java.util.Random;
 public class FilledPorousHoneycomb extends Block {
 
     public FilledPorousHoneycomb() {
-        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MaterialColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.8F));
+        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.8F));
     }
 
     /**
@@ -55,7 +55,7 @@ public class FilledPorousHoneycomb extends Block {
 
                 if (itemstack.isEmpty()) {
                     playerEntity.setStackInHand(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
-                } else if (!playerEntity.inventory.insertStack(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
+                } else if (!playerEntity.getInventory().insertStack(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
                 {
                     playerEntity.dropItem(new ItemStack(Items.HONEY_BOTTLE), false); // drops honey bottle if inventory is full
                 }

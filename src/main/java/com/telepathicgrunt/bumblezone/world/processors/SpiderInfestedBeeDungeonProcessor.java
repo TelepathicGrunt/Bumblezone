@@ -3,7 +3,6 @@ package com.telepathicgrunt.bumblezone.world.processors;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
-import com.telepathicgrunt.bumblezone.modcompat.BeeBetterRedirection;
 import com.telepathicgrunt.bumblezone.modcompat.CharmRedirection;
 import com.telepathicgrunt.bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
@@ -37,7 +36,7 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
 
         // placing altar blocks
         if (blockState.isOf(Blocks.STRUCTURE_BLOCK)) {
-            String metadata = structureBlockInfoWorld.tag.getString("metadata");
+            String metadata = structureBlockInfoWorld.nbt.getString("metadata");
             BlockState belowBlock = worldView.getChunk(worldPos).getBlockState(worldPos);
 
             //altar blocks cannot be placed on air
@@ -54,12 +53,14 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                         {
                             blockState = CharmRedirection.CGetCandle(false, false);
                         }
+                        /*
                         else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.2f){
                             blockState = BeeBetterRedirection.getCandle(random);
                         }
                         else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.2f){
                             blockState = BeeBetterRedirection.getCandle(random);
                         }
+                         */
                         else if(random.nextFloat() < 0.05f) {
                             blockState = Blocks.COBWEB.getDefaultState();
                         }
@@ -106,9 +107,11 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
            if (random.nextFloat() < 0.15f) {
                blockState = Blocks.HONEYCOMB_BLOCK.getDefaultState();
            }
+           /*
            else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.4f){
                blockState = BeeBetterRedirection.getSpiderDungeonBlock(random);
            }
+           */
            else {
                blockState = BzBlocks.POROUS_HONEYCOMB.getDefaultState();
            }
@@ -120,9 +123,11 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                 blockState = BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState()
                         .with(HoneycombBrood.FACING, blockState.get(HoneycombBrood.FACING));
             }
+            /*
             else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.4f){
                 blockState = BeeBetterRedirection.getSpiderDungeonBlock(random);
             }
+            */
             else if (random.nextDouble() < Bumblezone.BZ_CONFIG.BZDungeonsConfig.spawnerRateSpiderBeeDungeon) {
                 blockState = Blocks.SPAWNER.getDefaultState();
             }
@@ -136,7 +141,7 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
             blockState = Blocks.CAVE_AIR.getDefaultState();
         }
 
-        return new Structure.StructureBlockInfo(worldPos, blockState, structureBlockInfoWorld.tag);
+        return new Structure.StructureBlockInfo(worldPos, blockState, structureBlockInfoWorld.nbt);
     }
 
     @Override

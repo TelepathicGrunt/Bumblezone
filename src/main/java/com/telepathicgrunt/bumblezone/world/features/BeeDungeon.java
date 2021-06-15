@@ -3,11 +3,7 @@ package com.telepathicgrunt.bumblezone.world.features;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.world.features.configs.NbtFeatureConfig;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-
-import java.util.Random;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 
 
 public class BeeDungeon extends NbtFeature{
@@ -17,13 +13,13 @@ public class BeeDungeon extends NbtFeature{
     }
 
     @Override
-    public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, NbtFeatureConfig config) {
+    public boolean generate(FeatureContext<NbtFeatureConfig> context) {
         //affect rarity
         if (Bumblezone.BZ_CONFIG.BZDungeonsConfig.beeDungeonRarity>= 1000 ||
-                random.nextInt(Bumblezone.BZ_CONFIG.BZDungeonsConfig.beeDungeonRarity) != 0) return false;
+                context.getRandom().nextInt(Bumblezone.BZ_CONFIG.BZDungeonsConfig.beeDungeonRarity) != 0) return false;
 
         // generate dungeon
-        super.generate(world, generator, random, position, config);
+        super.generate(context);
 
         return true;
     }

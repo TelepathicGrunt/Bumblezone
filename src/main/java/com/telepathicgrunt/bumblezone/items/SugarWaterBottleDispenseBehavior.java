@@ -13,7 +13,6 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
@@ -47,7 +46,7 @@ public class SugarWaterBottleDispenseBehavior extends ItemDispenserBehavior {
                     if (!world.getBlockState(blockpos).getMaterial().isSolid()) {
                         MobEntity beeEntity = EntityType.BEE.create(world);
                         beeEntity.refreshPositionAndAngles(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, world.getRandom().nextFloat() * 360.0F, 0.0F);
-                        beeEntity.initialize(world, world.getLocalDifficulty(new BlockPos(beeEntity.getPos())), SpawnReason.TRIGGERED, null, (CompoundTag) null);
+                        beeEntity.initialize(world, world.getLocalDifficulty(new BlockPos(beeEntity.getPos())), SpawnReason.TRIGGERED, null, null);
                         world.spawnEntity(beeEntity);
                         world.setBlockState(position, blockstate.with(HoneycombBrood.STAGE, 0));
                     }

@@ -16,7 +16,7 @@ import java.util.UUID;
 
 
 public class ProtectionOfTheHiveEffect extends StatusEffect {
-    private final static TargetPredicate SEE_THROUGH_WALLS = (new TargetPredicate()).includeHidden();
+    private final static TargetPredicate SEE_THROUGH_WALLS = (TargetPredicate.createAttackable()).ignoreVisibility();
 
     public ProtectionOfTheHiveEffect(StatusEffectType type, int potionColor) {
         super(type, potionColor);

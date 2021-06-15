@@ -19,7 +19,7 @@ public class GeneralUtils {
     private static int ACTIVE_ENTITIES = 0;
 
     public static void updateEntityCount(ServerWorld world){
-        List<Entity> entitiesList = world.getEntitiesByType(null, (entity) -> true);
+        List<? extends Entity> entitiesList = world.getEntitiesByType(null, (entity) -> true);
         ACTIVE_ENTITIES = entitiesList.size();
     }
 

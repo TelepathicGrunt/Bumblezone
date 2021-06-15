@@ -211,7 +211,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     protected int computeRedstoneStrength(BlockState blockstate, World world, BlockPos pos) {
 
         Box axisalignedbb = getOutlineShape(blockstate, world, pos, null).getBoundingBox().offset(pos);
-        List<? extends Entity> list = world.getEntitiesIncludingUngeneratedChunks(LivingEntity.class, axisalignedbb);
+        List<? extends Entity> list = world.getNonSpectatingEntities(LivingEntity.class, axisalignedbb);
 
         if (!list.isEmpty()) {
             return 1;

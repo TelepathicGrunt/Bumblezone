@@ -53,13 +53,11 @@ public class HoneyCrystalShieldBehavior {
 
         // checks for living attacker and player victim
         // and also ignores explosions or magic damage
-        if (source.getSource() instanceof LivingEntity &&
+        if (source.getSource() instanceof LivingEntity attacker &&
                 !source.isExplosive() &&
-                !source.getMagic()) {
+                !source.isMagic()) {
 
             // checks to see if player is blocking with our shield
-            LivingEntity attacker = (LivingEntity) source.getSource();
-
             if (player.getActiveItem().getItem() instanceof HoneyCrystalShield
                     && player.isBlocking()) {
 

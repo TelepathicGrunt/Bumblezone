@@ -3,6 +3,7 @@ package com.telepathicgrunt.bumblezone.world.features;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -13,6 +14,7 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.Random;
 
@@ -29,17 +31,17 @@ public class HoneyCrystalFeature extends Feature<DefaultFeatureConfig> {
      * Place crystal block attached to a block if it is buried underground or underwater
      */
     @Override
-    public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, DefaultFeatureConfig config) {
+    public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
 
-        BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position);
-        BlockState originalBlockstate = world.getBlockState(blockpos$Mutable);
+        BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(context.getOrigin());
+        BlockState originalBlockstate = context.getWorld().getBlockState(blockpos$Mutable);
         BlockState blockstate;
 
         if (originalBlockstate.getBlock() == CAVE_AIR || originalBlockstate.getFluidState().isIn(FluidTags.WATER)) {
 
             for (Direction face : Direction.values()) {
-                blockpos$Mutable.set(position);
-                blockstate = world.getBlockState(blockpos$Mutable.move(face, 7));
+                blockpos$Mutable.set(context.getOrigin());
+                blockstate = context.getWorld().getBlockState(blockpos$Mutable.move(face, 7));
 
                 if (blockstate.getBlock() == AIR) {
                     return false; // too close to the outside. Refuse generation
@@ -51,16 +53,16 @@ public class HoneyCrystalFeature extends Feature<DefaultFeatureConfig> {
                     .with(HoneyCrystal.WATERLOGGED, originalBlockstate.getFluidState().isIn(FluidTags.WATER));
 
             //loop through all 6 directions
-            blockpos$Mutable.set(position);
+            blockpos$Mutable.set(context.getOrigin());
             for (Direction facing : Direction.values()) {
 
                 honeyCrystal = honeyCrystal.with(HoneyCrystal.FACING, facing);
 
                 // if the block is solid, place crystal on it
-                if (honeyCrystal.canPlaceAt(world, blockpos$Mutable)) {
+                if (honeyCrystal.canPlaceAt(context.getWorld(), blockpos$Mutable)) {
 
                     //if the spot is invalid, we get air back
-                    BlockState result = HoneyCrystal.postProcessState(honeyCrystal, world, blockpos$Mutable);
+                    BlockState result = HoneyCrystal.postProcessState(honeyCrystal, context.getWorld(), blockpos$Mutable);
                     if (result.getBlock() != AIR) {
                         //avoid placing crystal on block in other chunk as the cave hasn't carved it yet.
                         Direction directionProp = result.get(HoneyCrystal.FACING);
@@ -72,7 +74,7 @@ public class HoneyCrystalFeature extends Feature<DefaultFeatureConfig> {
                             return false;
                         }
 
-                        world.setBlockState(blockpos$Mutable, result, 3);
+                        context.getWorld().setBlockState(blockpos$Mutable, result, 3);
                         return true; //crystal was placed
                     }
                 }

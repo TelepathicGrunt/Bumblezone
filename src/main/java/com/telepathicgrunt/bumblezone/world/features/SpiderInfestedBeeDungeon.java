@@ -7,6 +7,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.Random;
 
@@ -18,21 +19,21 @@ public class SpiderInfestedBeeDungeon extends NbtFeature{
     }
 
     @Override
-    public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos position, NbtFeatureConfig config) {
+    public boolean generate(FeatureContext<NbtFeatureConfig> context) {
         //affect rarity
         if (Bumblezone.BZ_CONFIG.BZDungeonsConfig.spiderInfestedBeeDungeonRarity >= 1000 ||
-            random.nextInt(Bumblezone.BZ_CONFIG.BZDungeonsConfig.spiderInfestedBeeDungeonRarity) != 0) return false;
+                context.getRandom().nextInt(Bumblezone.BZ_CONFIG.BZDungeonsConfig.spiderInfestedBeeDungeonRarity) != 0) return false;
 
         // generate dungeon
-        super.generate(world, generator, random, position, config);
+        super.generate(context);
 
         BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable();
         for(int x = -8; x <= 12; x++) {
             for(int y = -6; y <= 10; y++) {
                 for(int z = -8; z <= 12; z++) {
-                    blockpos$Mutable.set(position).move(x, y, z);
-                    if(random.nextFloat() < 0.07f && world.getBlockState(blockpos$Mutable).getBlock() == Blocks.CAVE_AIR) {
-                        world.setBlockState(blockpos$Mutable, Blocks.COBWEB.getDefaultState(), 3);
+                    blockpos$Mutable.set(context.getOrigin()).move(x, y, z);
+                    if(context.getRandom().nextFloat() < 0.07f && context.getWorld().getBlockState(blockpos$Mutable).getBlock() == Blocks.CAVE_AIR) {
+                        context.getWorld().setBlockState(blockpos$Mutable, Blocks.COBWEB.getDefaultState(), 3);
                     }
                 }
             }

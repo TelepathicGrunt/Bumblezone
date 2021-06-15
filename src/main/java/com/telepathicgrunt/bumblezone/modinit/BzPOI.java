@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableSet;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import net.fabricmc.fabric.api.object.builder.v1.world.poi.PointOfInterestHelper;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.poi.PointOfInterestType;
 
 public class BzPOI {

@@ -4,6 +4,7 @@ import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.bumblezone.modinit.BzPOI;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -22,13 +23,16 @@ import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.poi.PointOfInterest;
+import net.minecraft.world.poi.PointOfInterestStorage;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class WrathOfTheHiveEffect extends StatusEffect {
-    private final static TargetPredicate SEE_THROUGH_WALLS = (new TargetPredicate()).includeHidden();
-    private final static TargetPredicate LINE_OF_SIGHT = (new TargetPredicate());
+    private final static TargetPredicate SEE_THROUGH_WALLS = (TargetPredicate.createAttackable()).ignoreVisibility();
+    private final static TargetPredicate LINE_OF_SIGHT = (TargetPredicate.createAttackable());
     public static boolean ACTIVE_WRATH = false;
     public static int NEARBY_WRATH_EFFECT_RADIUS = 8;
 
@@ -102,44 +106,27 @@ public class WrathOfTheHiveEffect extends StatusEffect {
 
         // makes brood blocks grow faster near wrath of the hive entities.
         if(!world.isClient()){
-            for(int attempts = 0; attempts < 5; attempts++){
-                int range = NEARBY_WRATH_EFFECT_RADIUS * 2;
-                BlockPos selectedBlockToGrow = new BlockPos(
-                        entity.getX() + (world.random.nextInt(range) - NEARBY_WRATH_EFFECT_RADIUS),
-                        entity.getY() + (world.random.nextInt(range) - NEARBY_WRATH_EFFECT_RADIUS),
-                        entity.getZ() + (world.random.nextInt(range) - NEARBY_WRATH_EFFECT_RADIUS));
+            PointOfInterestStorage pointofinterestmanager = ((ServerWorld)world).getPointOfInterestStorage();
+            List<PointOfInterest> poiInRange = pointofinterestmanager.getInSquare(
+                    (pointOfInterestType) -> pointOfInterestType == BzPOI.BROOD_BLOCK_POI,
+                    entity.getBlockPos(),
+                    NEARBY_WRATH_EFFECT_RADIUS,
+                    PointOfInterestStorage.OccupationStatus.ANY)
+                    .collect(Collectors.toList());
 
-                BlockState state = world.getBlockState(selectedBlockToGrow);
-                if(state.getBlock() instanceof HoneycombBrood){
-                    state.scheduledTick((ServerWorld) world, selectedBlockToGrow, world.random);
+            float chanceofGrowth = 0.001f;
+            if(poiInRange.size() != 0) {
+                for(int index = poiInRange.size() - 1; index >= 0; index--){
+                    PointOfInterest poi = poiInRange.remove(index);
+                    if(world.random.nextFloat() < chanceofGrowth){
+                        BlockState state = world.getBlockState(poi.getPos());
+                        if(state.getBlock() instanceof HoneycombBrood){
+                            state.scheduledTick((ServerWorld) world, poi.getPos(), world.random);
+                        }
+                    }
                 }
             }
         }
-
-        // TODO: activate in 1.17
-//        // makes brood blocks grow faster near wrath of the hive entities.
-//        if(!world.isClientSide()){
-//            PointOfInterestManager pointofinterestmanager = ((ServerWorld)world).getPoiManager();
-//            List<PointOfInterest> poiInRange = pointofinterestmanager.getInRange(
-//                    (pointOfInterestType) -> pointOfInterestType == BzPOI.BROOD_BLOCK_POI.get(),
-//                    entity.blockPosition(),
-//                    NEARBY_WRATH_EFFECT_RADIUS,
-//                    PointOfInterestManager.Status.ANY)
-//                    .collect(Collectors.toList());
-//
-//            float chanceofGrowth = 0.001f;
-//            if(poiInRange.size() != 0) {
-//                for(int index = poiInRange.size() - 1; index >= 0; index--){
-//                    PointOfInterest poi = poiInRange.remove(index);
-//                    if(world.random.nextFloat() < chanceofGrowth){
-//                        BlockState state = world.getBlockState(poi.getPos());
-//                        if(state.getBlock() instanceof HoneycombBrood){
-//                            state.tick((ServerWorld) world, poi.getPos(), world.random);
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
 
     /**
@@ -175,7 +162,7 @@ public class WrathOfTheHiveEffect extends StatusEffect {
         }
 
         sightMode.setBaseMaxDistance(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius);
-        List<MobEntity> beeList = world.getTargets(entityToFind, sightMode, livingEntity, livingEntity.getBoundingBox().expand(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius));
+        List<? extends MobEntity> beeList = world.getTargets(entityToFind, sightMode, livingEntity, livingEntity.getBoundingBox().expand(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius));
         for (MobEntity bee : beeList) {
             bee.setTarget(livingEntity);
             if(bee instanceof Angerable){

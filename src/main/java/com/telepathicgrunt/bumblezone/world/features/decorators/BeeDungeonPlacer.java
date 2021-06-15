@@ -26,9 +26,10 @@ public class BeeDungeonPlacer extends Decorator<NopeDecoratorConfig> {
 
         for (int currentAttempt = 0; currentAttempt <= 10; currentAttempt++) {
             validSpot = false;
+            int sealevel = context.getWorld().toServerWorld().getChunkManager().getChunkGenerator().getSeaLevel();
             int x = random.nextInt(8) + pos.getX() + 4;
             int z = random.nextInt(8) + pos.getZ() + 4;
-            int y = random.nextInt(context.getMaxY() - 10 - context.getSeaLevel()) + context.getSeaLevel() + 2;
+            int y = random.nextInt(context.getMaxY() - 10 - sealevel) + sealevel + 2;
 
             //find a cave air spot
             for (Direction face : Direction.Type.HORIZONTAL) {
@@ -54,7 +55,7 @@ public class BeeDungeonPlacer extends Decorator<NopeDecoratorConfig> {
             mutable.set(x, y, z);
             if (validSpot && context.getBlockState(mutable).isOpaque()) {
                 validPositions.add(mutable);
-                return validPositions.stream();
+                break; // Only 1 dungeon max per chunk
             }
         }
 

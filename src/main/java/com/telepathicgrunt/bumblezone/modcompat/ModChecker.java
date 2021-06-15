@@ -27,12 +27,6 @@ public class ModChecker {
         String currentModID = "";
 
         try {
-            currentModID = "potionofbees";
-            loadupModCompat(currentModID, () -> PotionOfBeesCompat.setupPotionOfBees());
-
-            currentModID = "beebetter";
-            loadupModCompat(currentModID, () -> BeeBetterCompat.setupBeeBetter());
-
             currentModID = "charm";
             loadupModCompat(currentModID, () -> CharmCompat.setupCharm());
         }
@@ -61,15 +55,4 @@ public class ModChecker {
         Bumblezone.LOGGER.log(Level.INFO, " ");
         Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
     }
-
-
-    /**
-     * Hack to make Java not load the class beforehand when we don't have the mod installed. Basically:
-     * "java only loads the method body in 2 cases when it runs or when it needs to run the class verifier"
-     * So by double wrapping, we prevent Java from loading a class with calls to a mod that isn't present
-     */
-    public static void runSetupForMod(Callable<Runnable> toRun) throws Exception {
-        toRun.call().run();
-    }
-
 }

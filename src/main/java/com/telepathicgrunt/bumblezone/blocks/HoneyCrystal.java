@@ -5,11 +5,21 @@ import com.telepathicgrunt.bumblezone.mixin.items.BucketItemAccessor;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.Material;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.item.*;
+import net.minecraft.item.BucketItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -51,7 +61,7 @@ public class HoneyCrystal extends ProperFacingBlock {
     private Item item;
 
     public HoneyCrystal() {
-        super(FabricBlockSettings.of(Material.GLASS, MaterialColor.ORANGE).lightLevel(1).strength(0.3F, 0.3f).nonOpaque().build());
+        super(FabricBlockSettings.of(Material.GLASS, MapColor.ORANGE).lightLevel(1).strength(0.3F, 0.3f).nonOpaque().build());
 
         this.setDefaultState(this.stateManager.getDefaultState()
                 .with(FACING, Direction.UP)
@@ -182,7 +192,7 @@ public class HoneyCrystal extends ProperFacingBlock {
             if (itemstack.isEmpty()) {
                 playerEntity.setStackInHand(playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE)); // places sugar water bottle in hand
             }
-            else if (!playerEntity.inventory.insertStack(new ItemStack(BzItems.SUGAR_WATER_BOTTLE))) // places sugar water bottle in inventory
+            else if (!playerEntity.getInventory().insertStack(new ItemStack(BzItems.SUGAR_WATER_BOTTLE))) // places sugar water bottle in inventory
             {
                 playerEntity.dropItem(new ItemStack(BzItems.SUGAR_WATER_BOTTLE), false); // drops sugar water bottle if inventory is full
             }

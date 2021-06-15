@@ -11,6 +11,8 @@ public enum BzBiomePillarLayer implements CrossSamplingLayer {
     INSTANCE;
 
     private static final Identifier HIVE_PILLAR = new Identifier(Bumblezone.MODID, "hive_pillar");
+
+    @Override
     public int sample(LayerRandomnessSource context, int n, int e, int s, int w, int center) {
 
         if (context.nextInt(12) == 0 && n == center && e == center && s == center && w == center) {
@@ -19,5 +21,4 @@ public enum BzBiomePillarLayer implements CrossSamplingLayer {
 
         return center;
     }
-
 }

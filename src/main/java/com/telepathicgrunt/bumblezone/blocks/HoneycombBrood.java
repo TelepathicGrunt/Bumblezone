@@ -11,7 +11,7 @@ import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
-import net.minecraft.block.MaterialColor;
+import net.minecraft.block.MapColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -22,7 +22,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
@@ -51,7 +51,7 @@ public class HoneycombBrood extends ProperFacingBlock {
     public static final IntProperty STAGE = Properties.AGE_3;
 
     public HoneycombBrood() {
-        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MaterialColor.ORANGE).ticksRandomly().strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.8F));
+        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.ORANGE).ticksRandomly().strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.8F));
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.SOUTH).with(STAGE, 0));
     }
 
@@ -93,7 +93,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
                 if (itemstack.isEmpty()) {
                     playerEntity.setStackInHand(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
-                } else if (!playerEntity.inventory.insertStack(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
+                } else if (!playerEntity.getInventory().insertStack(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
                 {
                     playerEntity.dropItem(new ItemStack(Items.HONEY_BOTTLE), false); // drops honey bottle if inventory is full
                 }
@@ -158,7 +158,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
                 if (itemstack.isEmpty()) {
                     playerEntity.setStackInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places empty bottle in hand
-                } else if (!playerEntity.inventory.insertStack(new ItemStack(Items.GLASS_BOTTLE))) // places empty bottle in inventory
+                } else if (!playerEntity.getInventory().insertStack(new ItemStack(Items.GLASS_BOTTLE))) // places empty bottle in inventory
                 {
                     playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false); // drops empty bottle if inventory is full
                 }
@@ -178,10 +178,10 @@ public class HoneycombBrood extends ProperFacingBlock {
         if (!world.isRegionLoaded(position, position))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
 
-        List<Entity> nearbyEntities = world.getEntitiesByClass(
+        List<LivingEntity> nearbyEntities = world.getEntitiesByClass(
                 LivingEntity.class,
                 new Box(position).expand(WrathOfTheHiveEffect.NEARBY_WRATH_EFFECT_RADIUS),
-                entity -> ((LivingEntity)entity).hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE));
+                entity -> entity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE));
 
         int stage = state.get(STAGE);
         if (stage < 3) {
@@ -206,7 +206,7 @@ public class HoneycombBrood extends ProperFacingBlock {
      */
     @Override
     public void onBreak(World world, BlockPos position, BlockState state, PlayerEntity playerEntity) {
-        ListTag listOfEnchants = playerEntity.getMainHandStack().getEnchantments();
+        NbtList listOfEnchants = playerEntity.getMainHandStack().getEnchantments();
         if (listOfEnchants.stream().noneMatch(enchant -> enchant.asString().contains("minecraft:silk_touch"))) {
             BlockState blockState = world.getBlockState(position);
             int stage = blockState.get(STAGE);

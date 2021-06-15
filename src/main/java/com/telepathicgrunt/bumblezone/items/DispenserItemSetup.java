@@ -38,7 +38,7 @@ public class DispenserItemSetup {
 
                 if (bucketitem.placeFluid(null, world, blockpos, null)) {
 
-                    bucketitem.onEmptied(world, stack, blockpos);
+                    bucketitem.onEmptied(null, world, stack, blockpos);
                     return new ItemStack(Items.BUCKET);
                 }
                 else if(blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL && !blockstate.get(Properties.WATERLOGGED)) {

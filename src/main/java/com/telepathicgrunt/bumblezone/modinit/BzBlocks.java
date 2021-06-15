@@ -1,7 +1,17 @@
 package com.telepathicgrunt.bumblezone.modinit;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
-import com.telepathicgrunt.bumblezone.blocks.*;
+import com.telepathicgrunt.bumblezone.blocks.BeeswaxPlanks;
+import com.telepathicgrunt.bumblezone.blocks.EmptyHoneycombBrood;
+import com.telepathicgrunt.bumblezone.blocks.FilledPorousHoneycomb;
+import com.telepathicgrunt.bumblezone.blocks.HoneyCrystal;
+import com.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.bumblezone.blocks.PorousHoneycomb;
+import com.telepathicgrunt.bumblezone.blocks.StickyHoneyRedstone;
+import com.telepathicgrunt.bumblezone.blocks.StickyHoneyResidue;
+import com.telepathicgrunt.bumblezone.blocks.SugarInfusedCobblestone;
+import com.telepathicgrunt.bumblezone.blocks.SugarInfusedStone;
+import com.telepathicgrunt.bumblezone.blocks.SugarWaterBlock;
 import com.telepathicgrunt.bumblezone.fluids.SugarWaterFluid;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -9,7 +19,7 @@ import net.fabricmc.fabric.api.block.FabricMaterialBuilder;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
-import net.minecraft.block.MaterialColor;
+import net.minecraft.block.MapColor;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.util.Identifier;
@@ -17,7 +27,7 @@ import net.minecraft.util.registry.Registry;
 
 
 public class BzBlocks {
-    public static Material RESIDUE = new FabricMaterialBuilder(MaterialColor.ORANGE_TERRACOTTA)
+    public static Material RESIDUE = new FabricMaterialBuilder(MapColor.TERRACOTTA_ORANGE)
             .lightPassesThrough()
             .destroyedByPiston()
             .allowsMovement()

@@ -25,7 +25,7 @@ public class BumblezoneClient implements ClientModInitializer {
         FluidRender.setupFluidRendering(BzBlocks.SUGAR_WATER_FLUID, BzBlocks.SUGAR_WATER_FLUID_FLOWING, FLUID_STILL, FLUID_FLOWING);
         BzBlocks.registerRenderLayers();
 
-        EntityRendererRegistry.INSTANCE.register(BzEntities.HONEY_SLIME, (dispatcher, context) -> new HoneySlimeRendering(dispatcher));
+        EntityRendererRegistry.INSTANCE.register(BzEntities.HONEY_SLIME, HoneySlimeRendering::new);
         SkyPropertiesAccessor.thebumblezone_getBY_IDENTIFIER().put(new Identifier(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
 
 
@@ -34,7 +34,7 @@ public class BumblezoneClient implements ClientModInitializer {
         FabricModelPredicateProviderRegistry.register(
                 BzItems.HONEY_CRYSTAL_SHIELD,
                 new Identifier("blocking"),
-                (itemStack, world, livingEntity) ->
+                (itemStack, world, livingEntity, int1) ->
                         livingEntity != null &&
                                 livingEntity.isUsingItem() &&
                                 livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F

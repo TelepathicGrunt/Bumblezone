@@ -5,7 +5,13 @@ import com.telepathicgrunt.bumblezone.mixin.items.BucketItemAccessor;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ConnectingBlock;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.VineBlock;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -47,7 +53,7 @@ public class StickyHoneyResidue extends VineBlock {
             ConnectingBlock.FACING_PROPERTIES.entrySet().stream().collect(Util.toMap());
 
     public StickyHoneyResidue() {
-        super(FabricBlockSettings.of(BzBlocks.RESIDUE, MaterialColor.ORANGE_TERRACOTTA).noCollision().strength(6.0f, 0.0f).nonOpaque().build());
+        super(FabricBlockSettings.of(BzBlocks.RESIDUE, MapColor.TERRACOTTA_ORANGE).noCollision().strength(6.0f, 0.0f).nonOpaque().build());
         this.setDefaultState(this.stateManager.getDefaultState()
                 .with(UP, false)
                 .with(NORTH, false)
@@ -107,7 +113,7 @@ public class StickyHoneyResidue extends VineBlock {
     public void onEntityCollision(BlockState blockstate, World world, BlockPos pos, Entity entity) {
 
         Box axisalignedbb = getOutlineShape(blockstate, world, pos, null).getBoundingBox().offset(pos);
-        List<? extends Entity> list = world.getEntitiesIncludingUngeneratedChunks(LivingEntity.class, axisalignedbb);
+        List<? extends Entity> list = world.getNonSpectatingEntities(LivingEntity.class, axisalignedbb);
 
         if (list.contains(entity)) {
             entity.slowMovement(blockstate, new Vec3d(0.35D, 0.2F, 0.35D));

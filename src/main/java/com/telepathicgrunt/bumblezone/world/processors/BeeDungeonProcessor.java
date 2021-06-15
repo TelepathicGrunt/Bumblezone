@@ -3,7 +3,6 @@ package com.telepathicgrunt.bumblezone.world.processors;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
-import com.telepathicgrunt.bumblezone.modcompat.BeeBetterRedirection;
 import com.telepathicgrunt.bumblezone.modcompat.CharmRedirection;
 import com.telepathicgrunt.bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
@@ -37,7 +36,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
 
         // placing altar blocks
         if (blockState.isOf(Blocks.STRUCTURE_BLOCK)) {
-            String metadata = structureBlockInfoWorld.tag.getString("metadata");
+            String metadata = structureBlockInfoWorld.nbt.getString("metadata");
             BlockState belowBlock = worldView.getChunk(worldPos).getBlockState(worldPos);
 
             //altar blocks cannot be placed on air
@@ -54,9 +53,11 @@ public class BeeDungeonProcessor extends StructureProcessor {
                         {
                             blockState = CharmRedirection.CGetCandle(false, true);
                         }
+                        /*
                         else if(ModChecker.beeBetterPresent && (ModChecker.charmPresent ? random.nextFloat() < 0.5f : random.nextFloat() < 0.6f)){
                             blockState = BeeBetterRedirection.getCandle(random);
                         }
+                        */
                         else {
                             blockState = Blocks.CAVE_AIR.getDefaultState();
                         }
@@ -70,9 +71,11 @@ public class BeeDungeonProcessor extends StructureProcessor {
                         {
                             blockState = CharmRedirection.CGetCandle(false, true);
                         }
+                        /*
                         else if(ModChecker.beeBetterPresent && (ModChecker.charmPresent ? random.nextFloat() < 0.31f : random.nextFloat() < 0.35f)){
                             blockState = BeeBetterRedirection.getCandle(random);
                         }
+                        */
                         else {
                             blockState = Blocks.CAVE_AIR.getDefaultState();
                         }
@@ -86,9 +89,11 @@ public class BeeDungeonProcessor extends StructureProcessor {
                         {
                             blockState = CharmRedirection.CGetCandle(false, true);
                         }
+                        /*
                         else if(ModChecker.beeBetterPresent && (ModChecker.charmPresent ? random.nextFloat() < 0.16f : random.nextFloat() < 0.2f)){
                             blockState = BeeBetterRedirection.getCandle(random);
                         }
+                         */
                         else {
                             blockState = Blocks.CAVE_AIR.getDefaultState();
                         }
@@ -116,9 +121,11 @@ public class BeeDungeonProcessor extends StructureProcessor {
                         .with(HoneycombBrood.STAGE, random.nextInt(3))
                         .with(HoneycombBrood.FACING, blockState.get(HoneycombBrood.FACING));
             }
+            /*
             else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.3f){
                 blockState = BeeBetterRedirection.getBeeDungeonBlock(random);
             }
+            */
             else if (ModChecker.beeBetterPresent ? random.nextFloat() < 0.1f : random.nextFloat() < 0.2f) {
                 blockState = Blocks.HONEY_BLOCK.getDefaultState();
             }
@@ -134,7 +141,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
             }
         }
 
-        return new Structure.StructureBlockInfo(worldPos, blockState, structureBlockInfoWorld.tag);
+        return new Structure.StructureBlockInfo(worldPos, blockState, structureBlockInfoWorld.nbt);
     }
 
     @Override
