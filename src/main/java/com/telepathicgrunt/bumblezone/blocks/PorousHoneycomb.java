@@ -1,7 +1,7 @@
 package com.telepathicgrunt.bumblezone.blocks;
 
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 public class PorousHoneycomb extends Block {
 
     public PorousHoneycomb() {
-        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build());
+        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL));
     }
 
 

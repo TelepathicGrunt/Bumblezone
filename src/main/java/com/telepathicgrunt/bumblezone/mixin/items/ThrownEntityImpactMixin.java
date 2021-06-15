@@ -1,7 +1,5 @@
 package com.telepathicgrunt.bumblezone.mixin.items;
 
-import com.telepathicgrunt.bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.bumblezone.modcompat.PotionOfBeesRedirection;
 import net.minecraft.entity.projectile.thrown.ThrownEntity;
 import net.minecraft.util.hit.HitResult;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,6 +18,7 @@ public class ThrownEntityImpactMixin {
             cancellable = true,
             locals = LocalCapture.CAPTURE_FAILHARD)
     private void thebumblezone_onThrownEntityHit(CallbackInfo ci, HitResult hitResult) {
+        /*
         if(ModChecker.potionOfBeesPresent) {
             ThrownEntity thrownEntity = (ThrownEntity)(Object)this;
             if(!thrownEntity.getEntityWorld().isClient()){
@@ -29,5 +28,6 @@ public class ThrownEntityImpactMixin {
                 }
             }
         }
+        */
     }
 }

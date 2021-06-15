@@ -1,9 +1,8 @@
 package com.telepathicgrunt.bumblezone.blocks;
 
 import com.telepathicgrunt.bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.bumblezone.modcompat.PotionOfBeesRedirection;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FacingBlock;
@@ -28,7 +27,7 @@ import net.minecraft.world.World;
 public class EmptyHoneycombBrood extends ProperFacingBlock {
 
     public EmptyHoneycombBrood() {
-        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build());
+        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL));
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.SOUTH));
     }
 
@@ -56,6 +55,7 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
         /*
          * Player is harvesting the honey from this block if it is filled with honey
          */
+        /*
         if (ModChecker.potionOfBeesPresent && PotionOfBeesRedirection.POBIsPotionOfBeesItem(itemstack.getItem())) {
 
             playerEntity.swingHand(playerHand);
@@ -78,6 +78,7 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
 
             return ActionResult.SUCCESS;
         }
+        */
 
         return super.onUse(thisBlockState, world, position, playerEntity, playerHand, HitResult);
     }

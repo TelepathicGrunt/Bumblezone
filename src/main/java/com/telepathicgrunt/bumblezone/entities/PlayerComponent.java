@@ -1,7 +1,7 @@
 package com.telepathicgrunt.bumblezone.entities;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -51,12 +51,12 @@ public class PlayerComponent implements IPlayerComponent {
 
 
     @Override
-    public void readFromNbt(CompoundTag tag) {
+    public void readFromNbt(NbtCompound tag) {
         this.teleporting = tag.getBoolean("teleporting");
         this.nonBZDimensionType = new Identifier(tag.getString("non_bz_dimensiontype_namespace"), tag.getString("non_bz_dmensiontype_path"));
     }
     @Override
-    public void writeToNbt(CompoundTag tag) {
+    public void writeToNbt(NbtCompound tag) {
         tag.putBoolean("teleporting", this.teleporting);
         tag.putString("non_bz_dimensiontype_namespace", nonBZDimensionType.getNamespace());
         tag.putString("non_bz_dmensiontype_path", nonBZDimensionType.getPath());

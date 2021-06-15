@@ -69,8 +69,8 @@ public class PlayerTeleportationBackend {
                     destinationPosition.x,
                     destinationPosition.y,
                     destinationPosition.z,
-                    entity.yaw,
-                    entity.pitch
+                    entity.getYaw(),
+                    entity.getPitch()
             );
         }
     }
@@ -88,8 +88,8 @@ public class PlayerTeleportationBackend {
                     destinationPosition.x,
                     destinationPosition.y,
                     destinationPosition.z,
-                    entity.yaw,
-                    entity.pitch
+                    entity.getYaw(),
+                    entity.getPitch()
             );
         }
     }

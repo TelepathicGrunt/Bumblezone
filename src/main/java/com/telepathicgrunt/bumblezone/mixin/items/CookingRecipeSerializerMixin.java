@@ -37,7 +37,7 @@ public class CookingRecipeSerializerMixin<T extends AbstractCookingRecipe> {
         ItemStack itemstack;
         if (jsonObject.get("result").isJsonObject()) {
             JsonObject jsonObj2 = JsonHelper.getObject(jsonObject, "result");
-            itemstack = ShapedRecipe.getItemStack(jsonObj2);
+            itemstack = ShapedRecipe.outputFromJson(jsonObj2);
             float f = JsonHelper.getFloat(jsonObject, "experience", 0.0F);
             int i = JsonHelper.getInt(jsonObject, "cookingtime", this.cookingTime);
             cir.setReturnValue(this.recipeFactory.create(identifier, string, ingredient, itemstack, f, i));

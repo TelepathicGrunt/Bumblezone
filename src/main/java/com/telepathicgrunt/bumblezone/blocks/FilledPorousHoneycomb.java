@@ -1,9 +1,11 @@
 package com.telepathicgrunt.bumblezone.blocks;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
+import com.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -32,7 +34,7 @@ import java.util.Random;
 public class FilledPorousHoneycomb extends Block {
 
     public FilledPorousHoneycomb() {
-        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.8F));
+        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).velocityMultiplier(0.8F));
     }
 
     /**
@@ -48,18 +50,7 @@ public class FilledPorousHoneycomb extends Block {
          */
         if (itemstack.getItem() == Items.GLASS_BOTTLE) {
             world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.getDefaultState(), 3); // removed honey from this block
-            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-
-            if (!playerEntity.isCreative()) {
-                itemstack.decrement(1); // remove current empty bottle
-
-                if (itemstack.isEmpty()) {
-                    playerEntity.setStackInHand(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
-                } else if (!playerEntity.getInventory().insertStack(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
-                {
-                    playerEntity.dropItem(new ItemStack(Items.HONEY_BOTTLE), false); // drops honey bottle if inventory is full
-                }
-            }
+            GeneralUtils.giveHoneyBottle(playerEntity, playerHand, itemstack, world);
 
             if ((playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
                     Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&

@@ -2,11 +2,17 @@ package com.telepathicgrunt.bumblezone.utils;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Hand;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOffers;
+import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Random;
@@ -104,6 +110,23 @@ public class GeneralUtils {
             ItemStack in = new ItemStack(this.itemToTrade, this.amountToGive);
             ItemStack out = new ItemStack(this.itemToReceive, this.amountToReceive);
             return new TradeOffer(in, out, this.maxUses, this.experience, this.multiplier);
+        }
+    }
+
+    ////////////////
+
+    /**
+     * Commonly used method for removing currently held item and giving Honey Bottle instead.
+     */
+    public static void giveHoneyBottle(PlayerEntity player, Hand hand, ItemStack itemstack, World world) {
+        world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+        if (!player.isCreative()) {
+            itemstack.decrement(1);
+            if (itemstack.isEmpty()) {
+                player.setStackInHand(hand, new ItemStack(Items.HONEY_BOTTLE));
+            } else if (!player.getInventory().insertStack(new ItemStack(Items.HONEY_BOTTLE))) {
+                player.dropItem(new ItemStack(Items.HONEY_BOTTLE), false);
+            }
         }
     }
 }

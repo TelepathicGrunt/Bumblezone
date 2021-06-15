@@ -18,7 +18,7 @@ import java.util.EnumSet;
 import java.util.List;
 
 public class BreedGoal extends Goal {
-    private static final TargetPredicate field_220689_d = (new TargetPredicate()).setBaseMaxDistance(8.0D).includeInvulnerable().includeTeammates().includeHidden();
+    private static final TargetPredicate field_220689_d = (TargetPredicate.createAttackable()).setBaseMaxDistance(8.0D).ignoreVisibility();
     protected final HoneySlimeEntity slime;
     private final Class<? extends AnimalEntity> mateClass;
     protected final World world;
@@ -70,7 +70,7 @@ public class BreedGoal extends Goal {
         this.slime.getLookControl().lookAt(this.field_75391_e, 10.0F, (float)this.slime.getLookPitchSpeed());
 
         this.slime.lookAtEntity(this.field_75391_e, 10.0F, 10.0F);
-        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.yaw, true);
+        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.getYaw(), true);
         ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setSpeed(1.0D);
 
         ++this.spawnBabyDelay;
@@ -85,7 +85,7 @@ public class BreedGoal extends Goal {
      * valid mate found.
      */
     private AnimalEntity getNearbyMate() {
-        List<AnimalEntity> list = this.world.getTargets(this.mateClass, field_220689_d, this.slime, this.slime.getBoundingBox().expand(8.0D));
+        List<? extends AnimalEntity> list = this.world.getTargets(this.mateClass, field_220689_d, this.slime, this.slime.getBoundingBox().expand(8.0D));
         double d0 = Double.MAX_VALUE;
         AnimalEntity animalentity = null;
 

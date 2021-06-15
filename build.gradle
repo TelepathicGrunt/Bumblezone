@@ -61,7 +61,7 @@ dependencies {
 
 	//modCompileOnly ("com.github.svenhjol:Charm:2.3.2") { transitive = false }
 
-	modImplementation "com.telepathicgrunt:Blame-Fabric:1.16.5-3.2.0-fabric"
+	modImplementation "com.telepathicgrunt:Blame-Fabric:${project.blame_version}"
 }
 
 apply from: 'gradle/processresources.gradle'

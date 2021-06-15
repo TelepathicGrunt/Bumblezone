@@ -84,11 +84,4 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         //attach component to player
         registry.registerForPlayers(PLAYER_COMPONENT, p -> new PlayerComponent(), RespawnCopyStrategy.INVENTORY);
     }
-
-    public static void reserveBiomeIDs() {
-        //Reserve Bumblezone biome IDs for the json version to replace
-        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "hive_wall"), DefaultBiomeCreator.createTheVoid());
-        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "hive_pillar"), DefaultBiomeCreator.createTheVoid());
-        Registry.register(BuiltinRegistries.BIOME, new Identifier(Bumblezone.MODID, "sugar_water_floor"), DefaultBiomeCreator.createTheVoid());
-    }
 }

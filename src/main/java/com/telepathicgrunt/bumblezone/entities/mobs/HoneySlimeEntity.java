@@ -8,6 +8,7 @@ import com.telepathicgrunt.bumblezone.entities.goals.HopGoal;
 import com.telepathicgrunt.bumblezone.entities.goals.TemptGoal;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;
@@ -34,7 +35,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootTables;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.Ingredient;
@@ -45,9 +46,9 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.IntRange;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -68,7 +69,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    private static final TrackedData<Integer> IN_HONEY_GROWTH_TIME = DataTracker.registerData(HoneySlimeEntity.class, TrackedDataHandlerRegistry.INTEGER);
    private static final Ingredient BREEDING_ITEM = Ingredient.ofItems(Items.SUGAR);
    private static final TrackedData<Integer> ANGRY_TIMER = DataTracker.registerData(BeeEntity.class, TrackedDataHandlerRegistry.INTEGER);
-   private static final IntRange MAX_ANGER_DURATION = Durations.betweenSeconds(10, 22);
+   private static final UniformIntProvider MAX_ANGER_DURATION = Durations.betweenSeconds(10, 22);
    private UUID target_UUID;
 
 
@@ -105,7 +106,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    }
 
    @Override
-   public EntityData initialize(ServerWorldAccess worldIn, LocalDifficulty difficultyIn, SpawnReason reason, EntityData spawnDataIn, CompoundTag dataTag) {
+   public EntityData initialize(ServerWorldAccess worldIn, LocalDifficulty difficultyIn, SpawnReason reason, EntityData spawnDataIn, NbtCompound dataTag) {
       this.setSlimeSize(this.isBaby() ? 1 : 2, true);
       return super.initialize(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
    }
@@ -121,8 +122,8 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    @Override
    public void onTrackedDataSet(TrackedData<?> key) {
       this.calculateDimensions();
-      this.yaw = this.headYaw;
-      this.bodyYaw = this.headYaw;
+      this.setYaw(this.headYaw);
+      this.setBodyYaw(this.headYaw);
       if (this.isTouchingWater() && this.random.nextInt(20) == 0) {
          this.onSwimmingStart();
       }
@@ -130,16 +131,16 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    }
 
    @Override
-   public void writeCustomDataToTag(CompoundTag compound) {
-      super.writeCustomDataToTag(compound);
+   public void writeCustomDataToNbt(NbtCompound compound) {
+      super.writeCustomDataToNbt(compound);
       compound.putBoolean("inHoney", this.isInHoney());
       compound.putInt("inHoneyGrowthTimer", this.getInHoneyGrowthTime());
       compound.putBoolean("wasOnGround", this.wasOnGround);
    }
 
    @Override
-   public void readCustomDataFromTag(CompoundTag compound) {
-      super.readCustomDataFromTag(compound);
+   public void readCustomDataFromNbt(NbtCompound compound) {
+      super.readCustomDataFromNbt(compound);
       this.setInHoney(compound.getBoolean("inHoney"));
       this.setInHoneyGrowthTime(compound.getInt("inHoneyGrowthTimer"));
       this.wasOnGround = compound.getBoolean("wasOnGround");
@@ -187,7 +188,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    }
 
    @Override
-   public boolean handleFallDamage(float distance, float damageMultiplier) {
+   public boolean handleFallDamage(float distance, float damageMultiplier, DamageSource damageSource) {
       if (distance > 1.0F) {
          this.playSound(SoundEvents.BLOCK_SLIME_BLOCK_STEP, 0.4F, 1.0F);
       }
@@ -200,7 +201,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
       if (fallDamage <= 0) {
          return false;
       } else {
-         this.damage(DamageSource.FALL, (float)fallDamage);
+         this.damage(damageSource, (float)fallDamage);
          this.playBlockFallSound();
          return true;
       }
@@ -213,15 +214,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
       if (!this.isBaby() && this.isInHoney()) {
          //Bottling
          if (itemstack.getItem() == Items.GLASS_BOTTLE) {
-            world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-            if (!player.abilities.creativeMode) {
-               itemstack.decrement(1);
-               if (itemstack.isEmpty()) {
-                  player.setStackInHand(hand, new ItemStack(Items.HONEY_BOTTLE));
-               } else if (!player.getInventory().insertStack(new ItemStack(Items.HONEY_BOTTLE))) {
-                  player.dropItem(new ItemStack(Items.HONEY_BOTTLE), false);
-               }
-            }
+            GeneralUtils.giveHoneyBottle(player, hand, itemstack, world);
 
             this.setAttacker(player);
             getHoneyFromSlime(this);
@@ -230,6 +223,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
       }
       return super.interactMob(player, hand);
    }
+
 
    private void getHoneyFromSlime(LivingEntity entity) {
       if (entity instanceof HoneySlimeEntity) {
@@ -318,7 +312,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
          int i = 2;
          if (this.squaredDistanceTo(entityIn) < 0.6D * (double) i * 0.6D * (double) i && this.canSee(entityIn) && entityIn.damage(DamageSource.mob(this), this.getAttackStrength())) {
             this.playSound(SoundEvents.ENTITY_SLIME_ATTACK, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.dealDamage(this, entityIn);
+            this.dealDamage(entityIn);
          }
       }
    }
@@ -439,6 +433,6 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    @Override
    public void chooseRandomAngerTime() {
       if(MAX_ANGER_DURATION != null)
-         this.setAngerTime(MAX_ANGER_DURATION.choose(this.random));
+         this.setAngerTime(MAX_ANGER_DURATION.get(this.random));
    }
 }

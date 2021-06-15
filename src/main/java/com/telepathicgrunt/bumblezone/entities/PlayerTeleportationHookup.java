@@ -3,6 +3,7 @@ package com.telepathicgrunt.bumblezone.entities;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.tags.BZBlockTags;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
@@ -31,13 +32,13 @@ public class PlayerTeleportationHookup {
         //Makes it so player does not get killed for falling into the void
         if (playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (playerEntity.getY() < -3) {
-                playerEntity.resetPosition(playerEntity.getX(), -3.01D, playerEntity.getZ());
+                playerEntity.refreshPositionAfterTeleport(playerEntity.getX(), -3.01D, playerEntity.getZ());
                 playerEntity.fallDistance = 0;
 
                 if(!playerEntity.world.isClient)
                     teleportOutOfBz(playerEntity);
             } else if (playerEntity.getY() > 255) {
-                playerEntity.resetPosition(playerEntity.getX(), 255.01D, playerEntity.getZ());
+                playerEntity.refreshPositionAfterTeleport(playerEntity.getX(), 255.01D, playerEntity.getZ());
                 if(!playerEntity.world.isClient)
                     teleportOutOfBz(playerEntity);
             }
@@ -54,7 +55,7 @@ public class PlayerTeleportationHookup {
         if (!playerEntity.world.isClient) {
             checkAndCorrectStoredDimension(playerEntity);
             MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
-            RegistryKey<World> world_key = RegistryKey.of(Registry.DIMENSION, Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension());
+            RegistryKey<World> world_key = RegistryKey.of(Registry.WORLD_KEY, Bumblezone.PLAYER_COMPONENT.get(playerEntity).getNonBZDimension());
             ServerWorld serverWorld = minecraftServer.getWorld(world_key);
             if(serverWorld == null){
                 serverWorld = minecraftServer.getWorld(World.OVERWORLD);
@@ -120,7 +121,7 @@ public class PlayerTeleportationHookup {
             //if the pearl hit a beehive, begin the teleportation.
             if (hitHive && validBelowBlock) {
                 Bumblezone.PLAYER_COMPONENT.get(playerEntity).setIsTeleporting(true);
-                pearlEntity.remove();
+                pearlEntity.discard();
                 return true;
             }
         }

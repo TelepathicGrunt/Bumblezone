@@ -4,7 +4,7 @@ import com.telepathicgrunt.bumblezone.mixin.blocks.VineBlockAccessor;
 import com.telepathicgrunt.bumblezone.mixin.items.BucketItemAccessor;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -53,7 +53,7 @@ public class StickyHoneyResidue extends VineBlock {
             ConnectingBlock.FACING_PROPERTIES.entrySet().stream().collect(Util.toMap());
 
     public StickyHoneyResidue() {
-        super(FabricBlockSettings.of(BzBlocks.RESIDUE, MapColor.TERRACOTTA_ORANGE).noCollision().strength(6.0f, 0.0f).nonOpaque().build());
+        super(FabricBlockSettings.of(BzBlocks.RESIDUE, MapColor.TERRACOTTA_ORANGE).noCollision().strength(6.0f, 0.0f).nonOpaque());
         this.setDefaultState(this.stateManager.getDefaultState()
                 .with(UP, false)
                 .with(NORTH, false)

@@ -1,7 +1,7 @@
 package com.telepathicgrunt.bumblezone.blocks;
 
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FluidBlock;
@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 public class SugarWaterBlock extends FluidBlock {
 
     public SugarWaterBlock(FlowableFluid baseFluid) {
-        super(baseFluid, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F, 100.0F).dropsNothing().build().velocityMultiplier(0.95F));
+        super(baseFluid, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F, 100.0F).dropsNothing().velocityMultiplier(0.95F));
     }
 
     @Override

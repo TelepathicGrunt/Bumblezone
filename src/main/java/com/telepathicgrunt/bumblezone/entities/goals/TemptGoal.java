@@ -13,7 +13,7 @@ import net.minecraft.recipe.Ingredient;
 import java.util.EnumSet;
 
 public class TemptGoal extends Goal {
-    private static final TargetPredicate ENTITY_PREDICATE = (new TargetPredicate()).setBaseMaxDistance(10.0D).includeInvulnerable().includeTeammates().ignoreEntityTargetRules().includeHidden();
+    private static final TargetPredicate ENTITY_PREDICATE = (TargetPredicate.createAttackable()).setBaseMaxDistance(10.0D).ignoreVisibility();
     protected final HoneySlimeEntity slime;
     private double targetX;
     private double targetY;
@@ -64,7 +64,7 @@ public class TemptGoal extends Goal {
                     return false;
                 }
 
-                if (Math.abs((double)this.closestPlayer.pitch - this.pitch) > 5.0D || Math.abs((double)this.closestPlayer.yaw - this.yaw) > 5.0D) {
+                if (Math.abs((double)this.closestPlayer.getPitch() - this.pitch) > 5.0D || Math.abs((double)this.closestPlayer.getYaw() - this.yaw) > 5.0D) {
                     return false;
                 }
             } else {
@@ -73,8 +73,8 @@ public class TemptGoal extends Goal {
                 this.targetZ = this.closestPlayer.getZ();
             }
 
-            this.pitch = this.closestPlayer.pitch;
-            this.yaw = this.closestPlayer.yaw;
+            this.pitch = this.closestPlayer.getPitch();
+            this.yaw = this.closestPlayer.getYaw();
         }
 
         return this.canStart();
@@ -111,7 +111,7 @@ public class TemptGoal extends Goal {
             this.slime.getNavigation().stop();
         } else {
             this.slime.lookAtEntity(this.closestPlayer, 10.0F, 10.0F);
-            ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.yaw, true);
+            ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.getYaw(), true);
             ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setSpeed(1.0D);
         }
 

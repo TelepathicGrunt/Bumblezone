@@ -21,6 +21,6 @@ public class FacingRevengeGoal extends RevengeGoal {
 
     public void tick() {
         this.slime.lookAtEntity(this.slime.getTarget(), 10.0F, 10.0F);
-        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.yaw, this.slime.canDamagePlayer());
+        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.getYaw(), this.slime.canDamagePlayer());
     }
 }

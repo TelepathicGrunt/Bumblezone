@@ -4,7 +4,7 @@ import com.google.common.collect.Maps;
 import com.telepathicgrunt.bumblezone.mixin.items.BucketItemAccessor;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -61,7 +61,7 @@ public class HoneyCrystal extends ProperFacingBlock {
     private Item item;
 
     public HoneyCrystal() {
-        super(FabricBlockSettings.of(Material.GLASS, MapColor.ORANGE).lightLevel(1).strength(0.3F, 0.3f).nonOpaque().build());
+        super(FabricBlockSettings.of(Material.GLASS, MapColor.ORANGE).lightLevel(1).strength(0.3F, 0.3f).nonOpaque());
 
         this.setDefaultState(this.stateManager.getDefaultState()
                 .with(FACING, Direction.UP)

@@ -2,12 +2,13 @@ package com.telepathicgrunt.bumblezone.blocks;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
+import com.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -51,7 +52,7 @@ public class HoneycombBrood extends ProperFacingBlock {
     public static final IntProperty STAGE = Properties.AGE_3;
 
     public HoneycombBrood() {
-        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.ORANGE).ticksRandomly().strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).build().velocityMultiplier(0.8F));
+        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.ORANGE).ticksRandomly().strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL).velocityMultiplier(0.8F));
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.SOUTH).with(STAGE, 0));
     }
 
@@ -86,18 +87,7 @@ public class HoneycombBrood extends ProperFacingBlock {
             //spawn angry bee if at final stage and front isn't blocked off
             int stage = thisBlockState.get(STAGE);
             spawnBroodMob(world, thisBlockState, position, stage);
-            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-
-            if (!playerEntity.isCreative()) {
-                itemstack.decrement(1); // remove current empty bottle
-
-                if (itemstack.isEmpty()) {
-                    playerEntity.setStackInHand(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
-                } else if (!playerEntity.getInventory().insertStack(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
-                {
-                    playerEntity.dropItem(new ItemStack(Items.HONEY_BOTTLE), false); // drops honey bottle if inventory is full
-                }
-            }
+            GeneralUtils.giveHoneyBottle(playerEntity, playerHand, itemstack, world);
 
             if ((playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
                     Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&

@@ -23,9 +23,8 @@ public class BeeInteractivity {
 
     // heal bees with sugar water bottle or honey bottle
     public static void beeFeeding(World world, PlayerEntity playerEntity, Hand hand, Entity target) {
-        if (!world.isClient && target instanceof BeeEntity) {
+        if (!world.isClient && target instanceof BeeEntity beeEntity) {
 
-            BeeEntity beeEntity = (BeeEntity) target;
             ItemStack itemstack = playerEntity.getStackInHand(hand);
             Identifier itemRL = Registry.ITEM.getId(itemstack.getItem());
 

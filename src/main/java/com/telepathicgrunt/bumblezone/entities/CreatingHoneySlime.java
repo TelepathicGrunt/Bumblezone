@@ -17,7 +17,7 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 
 public class CreatingHoneySlime {
-    // heal bees with sugar water bottle or honey bottle
+    // Spawn honey slime instead of passed in entity
     public static void createHoneySlime(World world, PlayerEntity playerEntity, Hand hand, Entity target) {
         ItemStack itemstack = playerEntity.getStackInHand(hand);
         if (!world.isClient() && target.getType().equals(EntityType.SLIME) && BZItemTags.TURN_SLIME_TO_HONEY_SLIME.contains(itemstack.getItem())) {
@@ -31,13 +31,16 @@ public class CreatingHoneySlime {
                     target.getX(),
                     target.getY(),
                     target.getZ(),
-                    target.yaw,
-                    target.pitch);
+                    target.getYaw(),
+                    target.getPitch());
 
             honeySlimeMob.setBaby(slimeSize == 1);
             honeySlimeMob.initialize((ServerWorldAccess) world, world.getLocalDifficulty(new BlockPos(honeySlimeMob.getPos())), SpawnReason.TRIGGERED, null, null);
+            // spawn honey slime
             world.spawnEntity(honeySlimeMob);
-            target.remove();
+
+            // remove original slime
+            target.discard();
 
             world.playSound(
                     playerEntity,

@@ -38,7 +38,6 @@
     "items.PlayerDamageShieldInvoker",
     "items.ThrownEntityImpactMixin",
     "world.BiomeLayerSamplerAccessor",
-    "world.BootstrapMixin",
     "world.ServerWorldMixin",
     "world.StructureAccessor"
   ],

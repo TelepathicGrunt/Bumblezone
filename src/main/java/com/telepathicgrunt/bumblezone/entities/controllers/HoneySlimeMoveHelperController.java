@@ -17,7 +17,7 @@ public class HoneySlimeMoveHelperController extends MoveControl {
     public HoneySlimeMoveHelperController(HoneySlimeEntity slimeIn) {
         super(slimeIn);
         this.slime = slimeIn;
-        this.targetYaw = 180.0F * slimeIn.yaw / (float) Math.PI;
+        this.targetYaw = 180.0F * slimeIn.getYaw() / (float) Math.PI;
     }
 
     public void setDirection(float yRotIn, boolean aggressive) {
@@ -36,9 +36,9 @@ public class HoneySlimeMoveHelperController extends MoveControl {
     }
 
     public void tick() {
-        this.entity.yaw = this.changeAngle(this.entity.yaw, this.targetYaw, 90.0F);
-        this.entity.headYaw = this.entity.yaw;
-        this.entity.bodyYaw = this.entity.yaw;
+        this.entity.setYaw(this.wrapDegrees(this.entity.getYaw(), this.targetYaw, 90.0F));
+        this.entity.headYaw = this.entity.getYaw();
+        this.entity.bodyYaw = this.entity.getYaw();
         if (this.state != MoveControl.State.MOVE_TO) {
             this.entity.setForwardSpeed(0.0F);
         } else {
