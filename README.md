@@ -38,7 +38,7 @@ dependencies {
 **(Play this mod with _[Lithium](https://www.curseforge.com/minecraft/mc-mods/lithium)_ for best performance!)**
 ###### [[Click here for the 1.16.5 Forge version of this mod!]](https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-forge)
 
-**Recent 1.16.5 News:** Added compat with Charm's villagers! Reduced buzzing volume in dimension, adjusted Wrath of the Hive to be longer, Comb Cutter enchantment for swords/shears, using Honey Blocks on Slime turns them to Honey Slime, and music is added!
+**Recent 1.17.0 News:** Ported to 1.17 MC now!
 
 &nbsp;
 
