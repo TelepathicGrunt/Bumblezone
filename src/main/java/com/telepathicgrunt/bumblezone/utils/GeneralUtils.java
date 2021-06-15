@@ -1,6 +1,9 @@
 package com.telepathicgrunt.bumblezone.utils;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -14,6 +17,7 @@ import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOffers;
 import net.minecraft.world.World;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
@@ -25,8 +29,19 @@ public class GeneralUtils {
     private static int ACTIVE_ENTITIES = 0;
 
     public static void updateEntityCount(ServerWorld world){
-        List<? extends Entity> entitiesList = world.getEntitiesByType(null, (entity) -> true);
-        ACTIVE_ENTITIES = entitiesList.size();
+
+        // If iterable is a collection, just get size directly
+        if (world.iterateEntities() instanceof Collection) {
+            ACTIVE_ENTITIES = ((Collection<?>) world.iterateEntities()).size();
+            return;
+        }
+
+        // If iterable isn't a collection, we have to manually count how many entities there are
+        int counter = 0;
+        for (Object ignored : world.iterateEntities()) {
+            counter++;
+        }
+        ACTIVE_ENTITIES = counter;
     }
 
     public static int getEntityCountInBz(){
@@ -129,4 +144,26 @@ public class GeneralUtils {
             }
         }
     }
+
+    ///////////////////////
+
+    public static final List<BlockState> VANILLA_CANDLES = ImmutableList.of(
+            Blocks.CANDLE.getDefaultState(),
+            Blocks.CYAN_CANDLE.getDefaultState(),
+            Blocks.BLACK_CANDLE.getDefaultState(),
+            Blocks.BLUE_CANDLE.getDefaultState(),
+            Blocks.BROWN_CANDLE.getDefaultState(),
+            Blocks.GRAY_CANDLE.getDefaultState(),
+            Blocks.GREEN_CANDLE.getDefaultState(),
+            Blocks.LIGHT_BLUE_CANDLE.getDefaultState(),
+            Blocks.LIGHT_GRAY_CANDLE.getDefaultState(),
+            Blocks.LIME_CANDLE.getDefaultState(),
+            Blocks.MAGENTA_CANDLE.getDefaultState(),
+            Blocks.ORANGE_CANDLE.getDefaultState(),
+            Blocks.PINK_CANDLE.getDefaultState(),
+            Blocks.PURPLE_CANDLE.getDefaultState(),
+            Blocks.RED_CANDLE.getDefaultState(),
+            Blocks.WHITE_CANDLE.getDefaultState(),
+            Blocks.YELLOW_CANDLE.getDefaultState()
+    );
 }

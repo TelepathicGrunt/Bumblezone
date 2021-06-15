@@ -56,7 +56,8 @@ public class NbtFeature extends Feature<NbtFeatureConfig> {
         StructurePlacementData placementsettings = (new StructurePlacementData()).setRotation(rotation).setPosition(halfLengths).setIgnoreEntities(false);
         Optional<StructureProcessorList> processor = context.getWorld().toServerWorld().getServer().getRegistryManager().get(Registry.STRUCTURE_PROCESSOR_LIST_KEY).getOrEmpty(context.getConfig().processor);
         processor.orElse(StructureProcessorLists.EMPTY).getList().forEach(placementsettings::addProcessor); // add all processors
-        template.place(context.getWorld(), position, mutable.set(position).move(-halfLengths.getX(), 0, -halfLengths.getZ()), placementsettings, context.getRandom(), Block.NO_REDRAW);
+        mutable.set(position).move(-halfLengths.getX(), 0, -halfLengths.getZ()); // pivot
+        template.place(context.getWorld(), position, mutable, placementsettings, context.getRandom(), Block.NO_REDRAW);
 
         // Post-processors
         // For all processors that are sensitive to neighboring blocks such as vines.

@@ -3,12 +3,12 @@ package com.telepathicgrunt.bumblezone.world.processors;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
-import com.telepathicgrunt.bumblezone.modcompat.CharmRedirection;
-import com.telepathicgrunt.bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
+import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.CandleBlock;
 import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.structure.processor.StructureProcessor;
@@ -49,9 +49,11 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                         if (random.nextFloat() < 0.6f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.getDefaultState();
                         }
-                        else if(ModChecker.charmPresent && random.nextFloat() < 0.25f)
+                        else if(random.nextFloat() < 0.25f)
                         {
-                            blockState = CharmRedirection.CGetCandle(false, false);
+                            blockState = GeneralUtils.VANILLA_CANDLES.get(random.nextInt(GeneralUtils.VANILLA_CANDLES.size()));
+                            blockState = blockState.with(CandleBlock.CANDLES, random.nextInt(4) + 1);
+                            blockState = blockState.with(CandleBlock.LIT, false);
                         }
                         /*
                         else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.2f){
@@ -85,9 +87,11 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                         if (random.nextFloat() < 0.4f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.getDefaultState();
                         }
-                        else if(ModChecker.charmPresent && random.nextFloat() < 0.2f)
+                        else if(random.nextFloat() < 0.2f)
                         {
-                            blockState = CharmRedirection.CGetCandle(false, false);
+                            blockState = GeneralUtils.VANILLA_CANDLES.get(random.nextInt(GeneralUtils.VANILLA_CANDLES.size()));
+                            blockState = blockState.with(CandleBlock.CANDLES, random.nextInt(random.nextInt(4) + 1) + 1);
+                            blockState = blockState.with(CandleBlock.LIT, false);
                         }
                         else if(random.nextFloat() < 0.07f) {
                             blockState = Blocks.COBWEB.getDefaultState();
