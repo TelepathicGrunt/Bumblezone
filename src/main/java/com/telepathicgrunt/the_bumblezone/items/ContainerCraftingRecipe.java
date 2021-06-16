@@ -24,7 +24,6 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
         this.group = groupIn;
         this.recipeOutput = recipeOutputIn;
         this.recipeItems = recipeItemsIn;
-        recipeItemsIn.stream().allMatch(Ingredient::isSimple);
     }
 
     public IRecipeSerializer<?> getSerializer() {
