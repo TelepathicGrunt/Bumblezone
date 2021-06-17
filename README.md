@@ -577,6 +577,23 @@ B B B
 
 <details>
 
+#### 1.17.0 MC
+
+<details>
+
+**Charm** - [https://www.curseforge.com/minecraft/mc-mods/charm](https://www.curseforge.com/minecraft/mc-mods/charm)
+
+
+-Many Bumblezone items are added to Charm's BeeKeeper villager too!
+
+&nbsp;
+
+</details>
+
+#### 1.16.5 MC
+
+<details>
+
 **Potion of Bees** - [https://www.curseforge.com/minecraft/mc-mods/potion-of-bees-fabric](https://www.curseforge.com/minecraft/mc-mods/potion-of-bees-fabric)
 
 
@@ -618,6 +635,8 @@ B B B
 &nbsp;
 
 -Bee Dungeons and Spider Infested Bee Dungeons will now spawn certain building blocks from Bee Better to help make them look less monotone.
+
+</details>
 
 </details>
 

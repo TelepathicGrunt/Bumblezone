@@ -1,7 +1,7 @@
 ### **(V.3.0.1 Changes) (1.17.0 Minecraft)**
 
 ##### Blocks:
-* Fixed overlay for Sugar Water Block
+* Removed broken screen overlay for Sugar Water Block
 
 ##### Mod Compat:
 * Added back mod compat with Charm

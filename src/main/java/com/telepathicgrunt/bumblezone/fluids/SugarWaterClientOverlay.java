@@ -20,26 +20,26 @@ public class SugarWaterClientOverlay {
 
     public static boolean sugarWaterOverlay(PlayerEntity player, BlockPos pos, MatrixStack matrixStack) {
 
-        if (player.world.getBlockState(new BlockPos(player.getCameraPosVec(1))).getBlock() == BzBlocks.SUGAR_WATER_BLOCK) {
-            MinecraftClient minecraftIn = MinecraftClient.getInstance();
-            minecraftIn.getTextureManager().bindTexture(TEXTURE_UNDERWATER);
-            BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
-            float f = minecraftIn.player.getBrightnessAtEyes();
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-            float f7 = -minecraftIn.player.getYaw() / 64.0F;
-            float f8 = minecraftIn.player.getPitch() / 64.0F;
-            Matrix4f matrix4f = matrixStack.peek().getModel();
-            bufferbuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
-            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).color(f, f, f, 0.42F).texture(4.0F + f7, 4.0F + f8).next();
-            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).color(f, f, f, 0.42F).texture(0.0F + f7, 4.0F + f8).next();
-            bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).color(f, f, f, 0.42F).texture(0.0F + f7, 0.0F + f8).next();
-            bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).color(f, f, f, 0.42F).texture(4.0F + f7, 0.0F + f8).next();
-            bufferbuilder.end();
-            BufferRenderer.draw(bufferbuilder);
-            RenderSystem.disableBlend();
-            return true;
-        }
+//        if (player.world.getBlockState(new BlockPos(player.getCameraPosVec(1))).getBlock() == BzBlocks.SUGAR_WATER_BLOCK) {
+//            MinecraftClient minecraftIn = MinecraftClient.getInstance();
+//            minecraftIn.getTextureManager().bindTexture(TEXTURE_UNDERWATER);
+//            BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
+//            float f = minecraftIn.player.getBrightnessAtEyes();
+//            RenderSystem.enableBlend();
+//            RenderSystem.defaultBlendFunc();
+//            float f7 = -minecraftIn.player.getYaw() / 64.0F;
+//            float f8 = minecraftIn.player.getPitch() / 64.0F;
+//            Matrix4f matrix4f = matrixStack.peek().getModel();
+//            bufferbuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
+//            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).color(f, f, f, 0.42F).texture(4.0F + f7, 4.0F + f8).next();
+//            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).color(f, f, f, 0.42F).texture(0.0F + f7, 4.0F + f8).next();
+//            bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).color(f, f, f, 0.42F).texture(0.0F + f7, 0.0F + f8).next();
+//            bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).color(f, f, f, 0.42F).texture(4.0F + f7, 0.0F + f8).next();
+//            bufferbuilder.end();
+//            BufferRenderer.draw(bufferbuilder);
+//            RenderSystem.disableBlend();
+//            return true;
+//        }
 
         return false;
     }
