@@ -1,3 +1,9 @@
+### **(V.3.0.2 Changes) (1.17.0 Minecraft)**
+
+##### Blocks:
+* Fixed and added back screen overlay for Sugar Water Block
+
+
 ### **(V.3.0.1 Changes) (1.17.0 Minecraft)**
 
 ##### Blocks:
