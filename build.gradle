@@ -29,7 +29,6 @@ minecraft {
 repositories {
 	maven { url "https://maven.terraformersmc.com/releases/" }
 	maven { url "https://www.cursemaven.com" }
-	maven { url "https://jitpack.io" }
 	maven { url "https://maven.shedaniel.me/" }
 	maven {
 		name = "Ladysnake Mods"
@@ -59,7 +58,7 @@ dependencies {
 
 	modImplementation ("com.terraformersmc:modmenu:${project.mod_menu_version}") { transitive = false }
 
-	//modCompileOnly ("com.github.svenhjol:Charm:2.3.2") { transitive = false }
+	modCompileOnly ("curse.maven:charm-318872:3355096") { transitive = false }
 
 	modImplementation "com.telepathicgrunt:Blame-Fabric:${project.blame_version}"
 }

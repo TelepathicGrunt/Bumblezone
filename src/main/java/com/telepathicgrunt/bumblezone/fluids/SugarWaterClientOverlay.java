@@ -30,7 +30,7 @@ public class SugarWaterClientOverlay {
             float f7 = -minecraftIn.player.getYaw() / 64.0F;
             float f8 = minecraftIn.player.getPitch() / 64.0F;
             Matrix4f matrix4f = matrixStack.peek().getModel();
-            bufferbuilder.begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR_TEXTURE);
+            bufferbuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
             bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).color(f, f, f, 0.42F).texture(4.0F + f7, 4.0F + f8).next();
             bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).color(f, f, f, 0.42F).texture(0.0F + f7, 4.0F + f8).next();
             bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).color(f, f, f, 0.42F).texture(0.0F + f7, 0.0F + f8).next();
