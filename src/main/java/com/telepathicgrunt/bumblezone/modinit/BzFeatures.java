@@ -1,7 +1,13 @@
 package com.telepathicgrunt.bumblezone.modinit;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
-import com.telepathicgrunt.bumblezone.world.features.*;
+import com.telepathicgrunt.bumblezone.world.features.BeeDungeon;
+import com.telepathicgrunt.bumblezone.world.features.CaveSugarWaterfall;
+import com.telepathicgrunt.bumblezone.world.features.HoneyCrystalFeature;
+import com.telepathicgrunt.bumblezone.world.features.HoneycombCaves;
+import com.telepathicgrunt.bumblezone.world.features.HoneycombHole;
+import com.telepathicgrunt.bumblezone.world.features.NbtFeature;
+import com.telepathicgrunt.bumblezone.world.features.SpiderInfestedBeeDungeon;
 import com.telepathicgrunt.bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;

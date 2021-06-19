@@ -1,6 +1,7 @@
 package com.telepathicgrunt.bumblezone.world.processors;
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.bumblezone.modcompat.BeeBetterRedirection;
@@ -50,7 +51,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
                         if (random.nextFloat() < 0.6f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.getDefaultState();
                         }
-                        else if(ModChecker.charmPresent && (ModChecker.beeBetterPresent ? random.nextFloat() < 0.1f : random.nextFloat() < 0.6f))
+                        else if(ModChecker.charmPresent && Bumblezone.BZ_CONFIG.BZModCompatibilityConfig.allowCharmCandleCompat && (ModChecker.beeBetterPresent ? random.nextFloat() < 0.1f : random.nextFloat() < 0.6f))
                         {
                             blockState = CharmRedirection.CGetCandle(false, true);
                         }
@@ -66,7 +67,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
                         if (random.nextFloat() < 0.35f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.getDefaultState();
                         }
-                        else if(ModChecker.charmPresent && (ModChecker.beeBetterPresent ? random.nextFloat() < 0.04f : random.nextFloat() < 0.35f))
+                        else if(ModChecker.charmPresent && Bumblezone.BZ_CONFIG.BZModCompatibilityConfig.allowCharmCandleCompat && (ModChecker.beeBetterPresent ? random.nextFloat() < 0.04f : random.nextFloat() < 0.35f))
                         {
                             blockState = CharmRedirection.CGetCandle(false, true);
                         }
@@ -82,7 +83,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
                         if (random.nextFloat() < 0.45f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.getDefaultState();
                         }
-                        else if(ModChecker.charmPresent && (ModChecker.beeBetterPresent ? random.nextFloat() < 0.04f : random.nextFloat() < 0.2f))
+                        else if(ModChecker.charmPresent && Bumblezone.BZ_CONFIG.BZModCompatibilityConfig.allowCharmCandleCompat && (ModChecker.beeBetterPresent ? random.nextFloat() < 0.04f : random.nextFloat() < 0.2f))
                         {
                             blockState = CharmRedirection.CGetCandle(false, true);
                         }

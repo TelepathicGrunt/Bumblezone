@@ -50,7 +50,7 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                         if (random.nextFloat() < 0.6f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.getDefaultState();
                         }
-                        else if(ModChecker.charmPresent && random.nextFloat() < 0.25f)
+                        else if(ModChecker.charmPresent && Bumblezone.BZ_CONFIG.BZModCompatibilityConfig.allowCharmCandleCompat && random.nextFloat() < 0.25f)
                         {
                             blockState = CharmRedirection.CGetCandle(false, false);
                         }
@@ -84,7 +84,7 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                         if (random.nextFloat() < 0.4f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.getDefaultState();
                         }
-                        else if(ModChecker.charmPresent && random.nextFloat() < 0.2f)
+                        else if(ModChecker.charmPresent && Bumblezone.BZ_CONFIG.BZModCompatibilityConfig.allowCharmCandleCompat && random.nextFloat() < 0.2f)
                         {
                             blockState = CharmRedirection.CGetCandle(false, false);
                         }

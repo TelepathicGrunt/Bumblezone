@@ -10,6 +10,16 @@ public class BZModCompatibilityConfig implements ConfigData {
 
     @ConfigEntry.Gui.PrefixText
     @ConfigEntry.Gui.Tooltip(count = 0)
+    @Comment(value = "\nAllow Charm compat which adds more blocks to Bumblezone's worldgen!")
+    public boolean allowCharmCandleCompat = true;
+
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip(count = 0)
+    @Comment(value = "\nAllow Charm villager trade compat which adds more trades to Charm's Beekeeper!!")
+    public boolean allowCharmTradeCompat = true;
+
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip(count = 0)
     @Comment(value = "\nAllow Bee Better compat which adds more blocks to Bumblezone's worldgen!")
     public boolean allowBeeBetterCompat = true;
 

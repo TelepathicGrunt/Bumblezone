@@ -1,9 +1,7 @@
 package com.telepathicgrunt.bumblezone.modinit;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
-import com.telepathicgrunt.bumblezone.blocks.PorousHoneycomb;
 import com.telepathicgrunt.bumblezone.items.ContainerCraftingRecipe;
-import net.minecraft.block.Block;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;

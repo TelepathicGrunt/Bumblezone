@@ -1,3 +1,11 @@
+### **(V.2.4.9 Changes) (1.16.5 Minecraft)**
+
+##### Mod compat:
+* Fixed crash if a person tries to disable Charm's BeeKeeper villager profession.
+
+* Added two new configs to tailor mod compat with Charm better
+
+
 ### **(V.2.4.8 Changes) (1.16.5 Minecraft)**
 
 ##### Items:

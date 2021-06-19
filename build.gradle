@@ -69,7 +69,7 @@ dependencies {
 
 	modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}"
 
-	modCompileOnly ("com.github.svenhjol:Charm:2.3.2") {
+	modCompileOnly ("com.github.svenhjol:Charm:${charm_version}") {
 		transitive = false
 	}
 	modCompileOnly "com.moandjiezana.toml:toml4j:0.7.2"

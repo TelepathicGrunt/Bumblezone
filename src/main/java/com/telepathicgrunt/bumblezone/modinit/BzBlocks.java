@@ -1,7 +1,17 @@
 package com.telepathicgrunt.bumblezone.modinit;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
-import com.telepathicgrunt.bumblezone.blocks.*;
+import com.telepathicgrunt.bumblezone.blocks.BeeswaxPlanks;
+import com.telepathicgrunt.bumblezone.blocks.EmptyHoneycombBrood;
+import com.telepathicgrunt.bumblezone.blocks.FilledPorousHoneycomb;
+import com.telepathicgrunt.bumblezone.blocks.HoneyCrystal;
+import com.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.bumblezone.blocks.PorousHoneycomb;
+import com.telepathicgrunt.bumblezone.blocks.StickyHoneyRedstone;
+import com.telepathicgrunt.bumblezone.blocks.StickyHoneyResidue;
+import com.telepathicgrunt.bumblezone.blocks.SugarInfusedCobblestone;
+import com.telepathicgrunt.bumblezone.blocks.SugarInfusedStone;
+import com.telepathicgrunt.bumblezone.blocks.SugarWaterBlock;
 import com.telepathicgrunt.bumblezone.fluids.SugarWaterFluid;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

@@ -1,12 +1,21 @@
 package com.telepathicgrunt.bumblezone.entities.mobs;
 
 import com.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
-import com.telepathicgrunt.bumblezone.entities.goals.*;
+import com.telepathicgrunt.bumblezone.entities.goals.FaceRandomGoal;
+import com.telepathicgrunt.bumblezone.entities.goals.FacingRevengeGoal;
+import com.telepathicgrunt.bumblezone.entities.goals.FloatGoal;
+import com.telepathicgrunt.bumblezone.entities.goals.HopGoal;
+import com.telepathicgrunt.bumblezone.entities.goals.TemptGoal;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityPose;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.Durations;
 import net.minecraft.entity.ai.goal.AnimalMateGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;

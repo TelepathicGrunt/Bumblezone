@@ -3,9 +3,11 @@ package com.telepathicgrunt.bumblezone.modcompat;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
+import net.fabricmc.loader.api.SemanticVersion;
+import net.fabricmc.loader.api.Version;
+import net.fabricmc.loader.api.VersionParsingException;
 import org.apache.logging.log4j.Level;
-
-import java.util.concurrent.Callable;
 
 public class ModChecker {
 
@@ -34,7 +36,8 @@ public class ModChecker {
             loadupModCompat(currentModID, () -> BeeBetterCompat.setupBeeBetter());
 
             currentModID = "charm";
-            loadupModCompat(currentModID, () -> CharmCompat.setupCharm());
+            if(isNotOutdated(currentModID, "2.3.2"))
+                loadupModCompat(currentModID, () -> CharmCompat.setupCharm());
         }
         catch (Exception e) {
             printErrorToLogs("classloading " + currentModID + " and so, mod compat done afterwards broke");
@@ -63,13 +66,33 @@ public class ModChecker {
     }
 
 
-    /**
-     * Hack to make Java not load the class beforehand when we don't have the mod installed. Basically:
-     * "java only loads the method body in 2 cases when it runs or when it needs to run the class verifier"
-     * So by double wrapping, we prevent Java from loading a class with calls to a mod that isn't present
-     */
-    public static void runSetupForMod(Callable<Runnable> toRun) throws Exception {
-        toRun.call().run();
-    }
+    private static boolean isNotOutdated(String currentModID, String minVersion) throws VersionParsingException {
+        if(!FabricLoader.getInstance().isModLoaded(currentModID)) return false;
 
+        ModContainer modContainer = FabricLoader.getInstance().getModContainer(currentModID).orElse(null);
+        if(modContainer == null) return false;
+
+        Version modVersion = modContainer.getMetadata().getVersion();
+
+        // some people do 1.16.4-0.5.0.5 and we have to parse the second half instead.
+        // if someone does 0.5.0.5-1.16.4, well, we are screwed lmao. WE HAVE STANDARDS FOR A REASON PEOPLE! lmao
+        boolean validVersion;
+        if(modVersion instanceof SemanticVersion){
+            validVersion = ((SemanticVersion)modVersion).compareTo(SemanticVersion.parse(minVersion)) < 0;
+        }
+        else{
+            validVersion = modVersion.getFriendlyString().split("-")[0].compareTo(minVersion) < 0;
+        }
+
+        if (validVersion) {
+            Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
+            Bumblezone.LOGGER.log(Level.INFO, " ");
+            Bumblezone.LOGGER.log(Level.INFO, "BUMBLEZONE: You're using a version of " + modContainer.getMetadata().getName() + " that is outdated. Please update " + modContainer.getMetadata().getName() + " to the latest version of that mod to enable compat with Bumblezone again.");
+            Bumblezone.LOGGER.log(Level.INFO, " ");
+            Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
+            return false;
+        }
+
+        return true;
+    }
 }
