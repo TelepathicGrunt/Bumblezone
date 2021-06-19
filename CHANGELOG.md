@@ -1,3 +1,11 @@
+### **(V.3.0.3 Changes) (1.17.0 Minecraft)**
+
+##### Mod Compat:
+* Added config option turn off compat with Charm's villager trades.
+  
+* Fixed crash with Charm villager trade compat if charm's villagers is turned off.
+
+
 ### **(V.3.0.2 Changes) (1.17.0 Minecraft)**
 
 ##### Blocks:
