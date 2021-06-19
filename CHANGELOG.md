@@ -1,3 +1,9 @@
+### **(V.2.4.6 Changes) (1.16.5 Minecraft)**
+
+##### Mod Compat:
+* Added config option to turn off trade compat with Charm, Buzzier Bees, and Reosurceful Bees villager trades.
+
+
 ### **(V.2.4.5 Changes) (1.16.5 Minecraft)**
 
 ##### Blocks:

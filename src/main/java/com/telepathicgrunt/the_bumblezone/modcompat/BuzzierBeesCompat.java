@@ -29,6 +29,7 @@ import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.ForgeRegistries;
+import noobanidus.mods.carrierbees.compat.BumbleZone;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -151,8 +152,10 @@ public class BuzzierBeesCompat {
         // fires when server starts up so long after FMLCommonSetupEvent.
         // Thus it is safe to register this event here.
         // Need lowest priority to make sure we add trades after the other mod has created their trades.
-        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
-        forgeBus.addListener(EventPriority.LOWEST, BuzzierBeesCompat::setupBuzzierBeesTrades);
+        if(Bumblezone.BzModCompatibilityConfig.allowBuzzierBeesTradeCompat.get()){
+            IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+            forgeBus.addListener(EventPriority.LOWEST, BuzzierBeesCompat::setupBuzzierBeesTrades);
+        }
 
         // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.buzzierBeesPresent = true;

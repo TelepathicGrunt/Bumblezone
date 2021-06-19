@@ -156,8 +156,10 @@ public class ResourcefulBeesCompat {
         // fires when server starts up so long after FMLCommonSetupEvent.
         // Thus it is safe to register this event here.
         // Need lowest priority to make sure we add trades after the other mod has created their trades.
-        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
-        forgeBus.addListener(EventPriority.LOWEST, ResourcefulBeesCompat::setupResourcefulBeesTrades);
+        if(Bumblezone.BzModCompatibilityConfig.allowResorucefulBeesTradeCompat.get()) {
+            IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+            forgeBus.addListener(EventPriority.LOWEST, ResourcefulBeesCompat::setupResourcefulBeesTrades);
+        }
 
         // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.resourcefulBeesPresent = true;

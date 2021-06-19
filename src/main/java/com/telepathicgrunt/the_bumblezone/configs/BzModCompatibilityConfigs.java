@@ -44,6 +44,10 @@ public class BzModCompatibilityConfigs
 		public ConfigValueListener<Boolean> allowCCandlesBeeDungeon;
 		public ConfigValueListener<Boolean> allowCCandlesSpiderBeeDungeon;
 
+		public ConfigValueListener<Boolean> allowCharmTradeCompat;
+		public ConfigValueListener<Boolean> allowBuzzierBeesTradeCompat;
+		public ConfigValueListener<Boolean> allowResorucefulBeesTradeCompat;
+
 	    public BzModCompatibilityConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber) {
 
 	        builder.push("Mod Compatibility Options");
@@ -61,6 +65,12 @@ public class BzModCompatibilityConfigs
 									+" Spawn Charm Candles in Spider Infested Bee Dungeons.\r\n")
 							.translation("the_bumblezone.config.modcompat.charm.allowccandlesspiderbeedungeon")
 							.define("allowCCandlesSpiderBeeDungeon", true));
+
+					allowCharmTradeCompat = subscriber.subscribe(builder
+							.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+									+" Add new trades to Charm's Beekeeper Villager.\r\n")
+							.translation("the_bumblezone.config.modcompat.charm.allowcharmtradecompat")
+							.define("allowCharmTradeCompat", true));
 
 					builder.pop();
 
@@ -116,14 +126,14 @@ public class BzModCompatibilityConfigs
 								+" Separate each entry with a comma. Example: \"resourcefulbees:iron,resourcefulbees:coal\"\r\n"
 								+" \r\n"
 								+" Note: Blacklisted bees will automatically blacklist their respective combs from worldgen too.")
-						.translation("the_bumblezone.config.resourcefulbees.RBBlacklistedBees")
+						.translation("the_bumblezone.config.resourcefulbees.rbblacklistedbees")
 						.define("RBBlacklistedBees", ""));
 
 					RBOreHoneycombSpawnRateBeeDungeon = subscriber.subscribe(builder
 						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
 								+" How much of Bee Dungeons is made of ore-based honeycombs.\r\n"
 								+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.3D\r\n")
-						.translation("the_bumblezone.config.resourcefulbees.RBorehoneycombspawnratebeedungeon")
+						.translation("the_bumblezone.config.resourcefulbees.rborehoneycombspawnratebeedungeon")
 						.defineInRange("RBOreHoneycombSpawnRateBeeDungeon", 0.3D, 0D, 1D));
 
 					RBGreatHoneycombRarityBeeDungeon = subscriber.subscribe(builder
@@ -131,14 +141,14 @@ public class BzModCompatibilityConfigs
 								+" How rare good ore-based Honeycombs (diamonds, ender, emerald, etc) are \r\n"
 								+" in Bee Dungeons. \r\n"
 								+" Higher numbers means more rare. Default rate is 3.\r\n")
-						.translation("the_bumblezone.config.resourcefulbees.RBgreathoneycombraritybeedungeon")
+						.translation("the_bumblezone.config.resourcefulbees.rbgreathoneycombraritybeedungeon")
 						.defineInRange("RBGreatHoneycombRarityBeeDungeon", 2, 1, 1001));
 
 					RBOreHoneycombSpawnRateSpiderBeeDungeon = subscriber.subscribe(builder
 						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
 								+" How much of Spider Infested Bee Dungeons is made of ore-based honeycombs.\r\n"
 								+" 0 is no or honeycombs, 1 is max ore honeycombs, and default is 0.1D\r\n")
-						.translation("the_bumblezone.config.resourcefulbees.RBorehoneycombspawnratespiderbeedungeon")
+						.translation("the_bumblezone.config.resourcefulbees.rborehoneycombspawnratespiderbeedungeon")
 						.defineInRange("RBOreHoneycombSpawnRateSpiderBeeDungeon", 0.1D, 0D, 1D));
 
 					RBGreatHoneycombRaritySpiderBeeDungeon = subscriber.subscribe(builder
@@ -146,8 +156,14 @@ public class BzModCompatibilityConfigs
 								+" How rare good ore-based Honeycombs (diamonds, ender, emerald, etc) are \r\n"
 								+" in Spider Infested Bee Dungeons. \r\n"
 								+" Higher numbers means more rare. Default rate is 2.\r\n")
-						.translation("the_bumblezone.config.resourcefulbees.RBgreathoneycombrarityspiderbeedungeon")
+						.translation("the_bumblezone.config.resourcefulbees.rbgreathoneycombrarityspiderbeedungeon")
 						.defineInRange("RBGreatHoneycombRaritySpiderBeeDungeon", 2, 1, 1001));
+
+					allowResorucefulBeesTradeCompat = subscriber.subscribe(builder
+							.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+									+" Add new trades to Resourceful Bees's Beekeeper Villager.\r\n")
+							.translation("the_bumblezone.config.modcompat.resourcefulbees.allowresorucefulbeestradecompat")
+							.define("allowResorucefulBeesTradeCompat", true));
 
 				builder.pop();
 
@@ -298,6 +314,12 @@ public class BzModCompatibilityConfigs
 								+" Default rate is 2.\r\n")
 						.translation("the_bumblezone.config.dungeons.powerfulcandlesrarityspiderbeedungeon")
 						.defineInRange("powerfulCandlesRaritySpiderBeeDungeon", 0, 0, 10));
+
+				allowBuzzierBeesTradeCompat = subscriber.subscribe(builder
+						.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+								+" Add new trades to Buzzier Bees's Beekeeper Villager.\r\n")
+						.translation("the_bumblezone.config.modcompat.resourcefulbees.allowbuzzierbeestradecompat")
+						.define("allowBuzzierBeesTradeCompat", true));
 
 			builder.pop();
 

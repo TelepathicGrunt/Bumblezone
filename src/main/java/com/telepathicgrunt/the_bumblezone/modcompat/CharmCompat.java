@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -24,8 +25,10 @@ public class CharmCompat {
         // fires when server starts up so long after FMLCommonSetupEvent.
         // Thus it is safe to register this event here.
         // Need lowest priority to make sure we add trades after the other mod has created their trades.
-        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
-        forgeBus.addListener(EventPriority.LOWEST, CharmCompat::setupCharmTrades);
+        if(Bumblezone.BzModCompatibilityConfig.allowCharmTradeCompat.get()) {
+            IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+            forgeBus.addListener(EventPriority.LOWEST, CharmCompat::setupCharmTrades);
+        }
 
         // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.charmPresent = true;
