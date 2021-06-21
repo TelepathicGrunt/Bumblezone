@@ -1,3 +1,10 @@
+### **(V.2.4.7 Changes) (1.16.5 Minecraft)**
+
+##### Misc:
+* Now I hard depend on v36.1.3 or newer Forge explicitly due to me using a newer Forge event.
+  This should help prevent crashes due to people using a too old Forge version.
+
+
 ### **(V.2.4.6 Changes) (1.16.5 Minecraft)**
 
 ##### Mod Compat:
