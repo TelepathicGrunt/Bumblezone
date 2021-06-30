@@ -6,7 +6,7 @@ buildscript {
 	}
 	dependencies {
 		classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
-		classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.1.0'
+		classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.2.1'
 	}
 }
 
@@ -18,8 +18,8 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_16
 targetCompatibility = JavaVersion.VERSION_16
 
-version = "${project.minecraft_version}-${project.mod_version}-fabric"
-archivesBaseName = project.archives_base_name
+version = "${project.mod_version}+${project.minecraft_version}"
+archivesBaseName = "${project.archives_base_name}_fabric"
 group = project.maven_group
 
 minecraft {
