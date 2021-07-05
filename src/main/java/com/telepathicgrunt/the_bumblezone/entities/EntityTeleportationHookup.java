@@ -49,12 +49,13 @@ public class EntityTeleportationHookup {
                 livingEntity.fallDistance = 0;
 
                 if(!livingEntity.level.isClientSide()){
-                    teleportOutOfBz(livingEntity);
                     LazyOptional<IEntityPosAndDim> lazyOptionalCap = livingEntity.getCapability(PAST_POS_AND_DIM);
                     if (lazyOptionalCap.isPresent()) {
                         EntityPositionAndDimension cap = (EntityPositionAndDimension) lazyOptionalCap.orElseThrow(RuntimeException::new);
                         cap.setTeleporting(false);
                     }
+
+                    teleportOutOfBz(livingEntity);
                 }
             }
             else if (livingEntity.getY() > 255) {
@@ -62,12 +63,13 @@ public class EntityTeleportationHookup {
                 livingEntity.moveTo(livingEntity.getX(), 255.01D, livingEntity.getZ());
 
                 if(!livingEntity.level.isClientSide()){
-                    teleportOutOfBz(livingEntity);
                     LazyOptional<IEntityPosAndDim> lazyOptionalCap = livingEntity.getCapability(PAST_POS_AND_DIM);
                     if (lazyOptionalCap.isPresent()) {
                         EntityPositionAndDimension cap = (EntityPositionAndDimension) lazyOptionalCap.orElseThrow(RuntimeException::new);
                         cap.setTeleporting(false);
                     }
+
+                    teleportOutOfBz(livingEntity);
                 }
             }
         }
@@ -77,8 +79,8 @@ public class EntityTeleportationHookup {
             if (lazyOptionalCap.isPresent()) {
                 EntityPositionAndDimension cap = (EntityPositionAndDimension) lazyOptionalCap.orElseThrow(RuntimeException::new);
                 if (cap.getTeleporting()) {
-                    EntityTeleportationBackend.enteringBumblezone(livingEntity);
                     cap.setTeleporting(false);
+                    EntityTeleportationBackend.enteringBumblezone(livingEntity);
                     reAddStatusEffect(livingEntity);
                 }
             }
@@ -95,9 +97,7 @@ public class EntityTeleportationHookup {
                 destination = livingEntity.getCommandSenderWorld().getServer().getLevel(World.OVERWORLD);
             }
             EntityTeleportationBackend.exitingBumblezone(livingEntity, destination);
-            if(livingEntity instanceof PlayerEntity) {
-                reAddStatusEffect(livingEntity);
-            }
+            reAddStatusEffect(livingEntity);
         }
     }
 
@@ -128,8 +128,8 @@ public class EntityTeleportationHookup {
                             hivePos = offsettedHitPos;
 
                             // break out of all 3 loops
-                            offsetX = 1;
-                            offsetY = 1;
+                            offsetX = 2;
+                            offsetY = 2;
                             break;
                         }
                     }
