@@ -1,3 +1,19 @@
+### **(V.2.4.8 Changes) (1.16.5 Minecraft)**
+
+##### Teleportation:
+* Exiting and entering Bumblezone will show a message to just the teleporting player that they are being teleported
+  
+* Any living entity including players and mobs can enter the Bumblezone by being pushed into a Bee Hive or Bee Nest block by an activated Piston
+
+* Any living entity can now exit the Bumblezone
+
+##### Lang:
+* Added Spanish translation donated by another person
+
+##### Misc:
+* Compressed one of the sound files by a large amount
+
+
 ### **(V.2.4.7 Changes) (1.16.5 Minecraft)**
 
 ##### Misc:

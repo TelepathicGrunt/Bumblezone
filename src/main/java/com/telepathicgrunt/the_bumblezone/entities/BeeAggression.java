@@ -16,6 +16,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import org.apache.logging.log4j.Level;
@@ -216,8 +217,10 @@ public class BeeAggression {
         return false;
     }
 
-    public static void playerTick(PlayerEntity playerEntity)
+    public static void playerTick(TickEvent.PlayerTickEvent event)
     {
+        PlayerEntity playerEntity = event.player;
+
         //removes the wrath of the hive if it is disallowed outside dimension
         if(!playerEntity.level.isClientSide() &&
                 playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get()) &&

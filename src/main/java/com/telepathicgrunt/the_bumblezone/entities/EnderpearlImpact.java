@@ -7,7 +7,7 @@ import net.minecraftforge.eventbus.api.Event;
 public class EnderpearlImpact {
 
     public static void onPearlHit(EntityTeleportEvent.EnderPearl event) {
-        if(PlayerTeleportationHookup.runEnderpearlImpact(new Vector3d(event.getTargetX(), event.getTargetY(), event.getTargetZ()), event.getEntity()))
+        if(EntityTeleportationHookup.runEnderpearlImpact(new Vector3d(event.getTargetX(), event.getTargetY(), event.getTargetZ()), event.getEntity()))
             event.setResult(Event.Result.DENY);
     }
 }

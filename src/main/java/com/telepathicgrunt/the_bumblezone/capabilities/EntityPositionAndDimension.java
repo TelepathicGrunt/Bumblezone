@@ -5,7 +5,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 
 
-public class PlayerPositionAndDimension implements IPlayerPosAndDim
+public class EntityPositionAndDimension implements IEntityPosAndDim
 {
 	private ResourceLocation nonBZDimension = new ResourceLocation("minecraft", "overworld");
 	private boolean isTeleporting = false;
@@ -114,7 +114,7 @@ public class PlayerPositionAndDimension implements IPlayerPosAndDim
 		Vector3d storedPositionNonBZ = null;
 		float storedNonBZPitch;
 		float storedNonBZYaw;
-		//Need check for null so we can let rest for code know the player has not exit the dimension yet for the first time.
+		//Need check for null so we can let rest for code know the entity has not exit the dimension yet for the first time.
 		if (nbtTag.contains("NonBZ_X") && nbtTag.contains("NonBZ_Y") && nbtTag.contains("NonBZ_Z")) {
 		    storedPositionNonBZ = new Vector3d(nbtTag.getFloat("NonBZ_X"), nbtTag.getFloat("NonBZ_Y"), nbtTag.getFloat("NonBZ_Z"));
 		}

@@ -4,7 +4,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 
-public interface IPlayerPosAndDim {
+public interface IEntityPosAndDim {
 
 	//what methods the capability will have and what the capability is
 	

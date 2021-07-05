@@ -2,8 +2,8 @@ package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.google.common.primitives.Doubles;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.capabilities.IPlayerPosAndDim;
-import com.telepathicgrunt.the_bumblezone.capabilities.PlayerPositionAndDimension;
+import com.telepathicgrunt.the_bumblezone.capabilities.IEntityPosAndDim;
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
@@ -15,6 +15,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
@@ -42,55 +44,75 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class PlayerTeleportationBackend {
+public class EntityTeleportationBackend {
 
-    @CapabilityInject(IPlayerPosAndDim.class)
-    public static Capability<IPlayerPosAndDim> PAST_POS_AND_DIM = null;
+    @CapabilityInject(IEntityPosAndDim.class)
+    public static Capability<IEntityPosAndDim> PAST_POS_AND_DIM = null;
 
     public static void enteringBumblezone(Entity entity){
         //Note, the player does not hold the previous dimension oddly enough.
         Vector3d destinationPosition;
 
-        if (entity instanceof ServerPlayerEntity) {
-            ServerPlayerEntity playerEntity = ((ServerPlayerEntity) entity);
-            PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-            cap.setNonBZDim(playerEntity.getCommandSenderWorld().dimension().location());
-            cap.setNonBZYaw(playerEntity.yRot);
-            cap.setNonBZPitch(playerEntity.xRot);
-            cap.setNonBZPos(playerEntity.position());
+        if (!entity.level.isClientSide()) {
+            EntityPositionAndDimension cap = (EntityPositionAndDimension) entity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
+            cap.setNonBZDim(entity.getCommandSenderWorld().dimension().location());
+            cap.setNonBZYaw(entity.yRot);
+            cap.setNonBZPitch(entity.xRot);
+            cap.setNonBZPos(entity.position());
 
-            MinecraftServer minecraftServer = playerEntity.getServer(); // the server itself
+            MinecraftServer minecraftServer = entity.getServer(); // the server itself
             ServerWorld bumblezoneWorld = minecraftServer.getLevel(BzDimension.BZ_WORLD_KEY);
 
             // Prevent crash due to mojang bug that makes mod's json dimensions not exist upload first creation of world on server. A restart fixes this.
             if(bumblezoneWorld == null){
-                Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: https://bugs.mojang.com/browse/MC-195468. A restart will fix this.");
-                ITextComponent message = new StringTextComponent("Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: §6https://bugs.mojang.com/browse/MC-195468§f. A restart will fix this.");
-                playerEntity.displayClientMessage(message, true);
+                if(entity instanceof ServerPlayerEntity){
+                    ServerPlayerEntity playerEntity = ((ServerPlayerEntity) entity);
+                    Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: https://bugs.mojang.com/browse/MC-195468. A restart will fix this.");
+                    ITextComponent message = new StringTextComponent("Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: §6https://bugs.mojang.com/browse/MC-195468§f. A restart will fix this.");
+                    playerEntity.displayClientMessage(message, true);
+                }
                 return;
             }
 
-            destinationPosition = teleportByPearl(playerEntity, playerEntity.getLevel(), bumblezoneWorld);
-            playerEntity.teleportTo(
-                    bumblezoneWorld,
-                    destinationPosition.x,
-                    destinationPosition.y,
-                    destinationPosition.z,
-                    playerEntity.yRot,
-                    playerEntity.xRot
-            );
+            destinationPosition = getBzCoordinate(entity, (ServerWorld)entity.level, bumblezoneWorld);
+            if(entity instanceof ServerPlayerEntity){
+                ServerPlayerEntity playerEntity = ((ServerPlayerEntity) entity);
+                playerEntity.displayClientMessage(new StringTextComponent("Teleporting to Bumblezone..."), true);
+                playerEntity.teleportTo(
+                        bumblezoneWorld,
+                        destinationPosition.x,
+                        destinationPosition.y,
+                        destinationPosition.z,
+                        playerEntity.yRot,
+                        playerEntity.xRot
+                );
+            }
+            else {
+                Entity entity2 = entity.getType().create(bumblezoneWorld);
+                if (entity2 != null) {
+                    entity2.restoreFrom(entity);
+                    entity2.moveTo(new BlockPos(destinationPosition), entity.yRot, entity.xRot);
+                    entity2.setDeltaMovement(entity.getDeltaMovement());
+                    bumblezoneWorld.addFromAnotherDimension(entity2);
+                }
+                entity.remove();
+                entity.level.getProfiler().endTick();
+                ((ServerWorld) entity.level).resetEmptyTime();
+                bumblezoneWorld.resetEmptyTime();
+                entity.level.getProfiler().endTick();
+            }
         }
     }
 
 
-    public static void exitingBumblezone(Entity entity, ServerWorld destination){
+    public static void exitingBumblezone(LivingEntity entity, ServerWorld destination){
         boolean upwardChecking = entity.getY() > 0;
         Vector3d destinationPosition;
+        EntityPositionAndDimension cap = (EntityPositionAndDimension) entity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
 
         if (entity instanceof ServerPlayerEntity) {
-            PlayerPositionAndDimension cap = (PlayerPositionAndDimension) entity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-            destinationPosition = teleportByOutOfBounds((PlayerEntity) entity, destination, upwardChecking);
-
+            destinationPosition = teleportByOutOfBounds(entity, destination, upwardChecking, false);
+            ((ServerPlayerEntity)entity).displayClientMessage(new StringTextComponent("Teleporting out of Bumblezone..."), true);
             ((ServerPlayerEntity)entity).teleportTo(
                     destination,
                     destinationPosition.x,
@@ -100,22 +122,39 @@ public class PlayerTeleportationBackend {
                     cap.getNonBZPitch()
             );
         }
+        else {
+            destinationPosition = teleportByOutOfBounds(entity, destination, upwardChecking, true);
+            if(destinationPosition == null) return;
+
+            Entity entity2 = entity.getType().create(destination);
+            if (entity2 != null) {
+                entity2.restoreFrom(entity);
+                entity2.moveTo(new BlockPos(destinationPosition), entity.yRot, entity.xRot);
+                entity2.setDeltaMovement(entity.getDeltaMovement());
+                destination.addFromAnotherDimension(entity2);
+            }
+            entity.remove();
+            entity.level.getProfiler().endTick();
+            ((ServerWorld) entity.level).resetEmptyTime();
+            destination.resetEmptyTime();
+            entity.level.getProfiler().endTick();
+        }
     }
 
 
-    private static Vector3d teleportByOutOfBounds(PlayerEntity playerEntity, ServerWorld destination, boolean checkingUpward) {
+    private static Vector3d teleportByOutOfBounds(LivingEntity livingEntity, ServerWorld destination, boolean checkingUpward, boolean mustBeNearBeeBlock) {
         //converts the position to get the corresponding position in non-bumblezone dimension
-        double coordinateScale = playerEntity.getCommandSenderWorld().dimensionType().coordinateScale() / destination.dimensionType().coordinateScale();
+        double coordinateScale = livingEntity.getCommandSenderWorld().dimensionType().coordinateScale() / destination.dimensionType().coordinateScale();
         BlockPos finalSpawnPos;
         BlockPos validBlockPos = null;
 
-        PlayerPositionAndDimension cap = (PlayerPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
+        EntityPositionAndDimension cap = (EntityPositionAndDimension) livingEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
 
-        if(Bumblezone.BzDimensionConfig.teleportationMode.get() == 1){
+        if(Bumblezone.BzDimensionConfig.teleportationMode.get() == 1 || mustBeNearBeeBlock){
             finalSpawnPos = new BlockPos(
-                    Doubles.constrainToRange(playerEntity.position().x() * coordinateScale, -29999936D, 29999936D),
-                    playerEntity.position().y(),
-                    Doubles.constrainToRange(playerEntity.position().z() * coordinateScale, -29999936D, 29999936D));
+                    Doubles.constrainToRange(livingEntity.position().x() * coordinateScale, -29999936D, 29999936D),
+                    livingEntity.position().y(),
+                    Doubles.constrainToRange(livingEntity.position().z() * coordinateScale, -29999936D, 29999936D));
 
             //Gets valid space in other world
             validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward);
@@ -130,9 +169,9 @@ public class PlayerTeleportationBackend {
         // Teleportation mode 3
         else{
             finalSpawnPos = new BlockPos(
-                    Doubles.constrainToRange(playerEntity.position().x() * coordinateScale, -29999936D, 29999936D),
-                    playerEntity.position().y(),
-                    Doubles.constrainToRange(playerEntity.position().z() * coordinateScale, -29999936D, 29999936D));
+                    Doubles.constrainToRange(livingEntity.position().x() * coordinateScale, -29999936D, 29999936D),
+                    livingEntity.position().y(),
+                    Doubles.constrainToRange(livingEntity.position().z() * coordinateScale, -29999936D, 29999936D));
 
             //Gets valid space in other world
             validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward);
@@ -142,10 +181,13 @@ public class PlayerTeleportationBackend {
             }
         }
 
-        // If all else fails, fallback to player pos
+        // If all else fails, fallback to player pos if not forced to be near bee block
         finalSpawnPos = validBlockPos;
         if(finalSpawnPos == null) {
-            finalSpawnPos = new BlockPos(playerEntity.position());
+            if(mustBeNearBeeBlock){
+                return null;
+            }
+            finalSpawnPos = new BlockPos(livingEntity.position());
         }
 
         // Make sure spacing is safe if in mode 2 or mode 3 when doing forced teleportation when valid land isn't found.
@@ -168,7 +210,7 @@ public class PlayerTeleportationBackend {
         );
     }
 
-    private static Vector3d teleportByPearl(PlayerEntity playerEntity, ServerWorld originalWorld, ServerWorld bumblezoneWorld) {
+    private static Vector3d getBzCoordinate(Entity entity, ServerWorld originalWorld, ServerWorld bumblezoneWorld) {
 
         //converts the position to get the corresponding position in bumblezone dimension
         double coordinateScale = 1;
@@ -176,9 +218,9 @@ public class PlayerTeleportationBackend {
             coordinateScale = originalWorld.dimensionType().coordinateScale() / bumblezoneWorld.dimensionType().coordinateScale();
         }
         BlockPos blockpos = new BlockPos(
-                Doubles.constrainToRange(playerEntity.position().x() * coordinateScale, -29999936D, 29999936D),
-                playerEntity.position().y(),
-                Doubles.constrainToRange(playerEntity.position().z() * coordinateScale, -29999936D, 29999936D));
+                Doubles.constrainToRange(entity.position().x() * coordinateScale, -29999936D, 29999936D),
+                entity.position().y(),
+                Doubles.constrainToRange(entity.position().z() * coordinateScale, -29999936D, 29999936D));
 
 
         //gets valid space in other world
@@ -244,8 +286,11 @@ public class PlayerTeleportationBackend {
         }
 
         // if player throws pearl at hive and then goes to sleep, they wake up
-        if (playerEntity.isSleeping()) {
-            playerEntity.stopSleeping();
+        if(entity instanceof LivingEntity){
+            LivingEntity livingEntity = (LivingEntity)entity;
+            if (livingEntity.isSleeping()) {
+                livingEntity.stopSleeping();
+            }
         }
 
         // place hive block below player if they would've fallen out of dimension

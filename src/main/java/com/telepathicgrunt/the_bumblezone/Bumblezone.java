@@ -1,13 +1,14 @@
 package com.telepathicgrunt.the_bumblezone;
 
 import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityEventHandler;
-import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityPlayerPosAndDim;
+import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityEntityPosAndDim;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.configs.*;
 import com.telepathicgrunt.the_bumblezone.data.DataGenerators;
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.EnderpearlImpact;
+import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.items.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.HoneycombBroodEvents;
@@ -66,6 +67,8 @@ public class Bumblezone{
         forgeBus.addGenericListener(Block.class, Bumblezone::missingMappingDimension);
         forgeBus.addListener(PotionOfBeesBeeSplashPotionProjectile::ProjectileImpactEvent);
         forgeBus.addGenericListener(Entity.class, CapabilityEventHandler::onAttachCapabilitiesToEntities);
+        forgeBus.addListener(EntityTeleportationHookup::entityTick);
+        forgeBus.addListener(BeeAggression::playerTick);
 
         //Registration
         modEventBus.addListener(DataGenerators::gatherData);
@@ -131,7 +134,7 @@ public class Bumblezone{
 //            }
 //			LOGGER.log(Level.WARN, s.toString());
 		});
-        CapabilityPlayerPosAndDim.register();
+        CapabilityEntityPosAndDim.register();
     }
 
     private void modCompatSetup(final FMLCommonSetupEvent event)
