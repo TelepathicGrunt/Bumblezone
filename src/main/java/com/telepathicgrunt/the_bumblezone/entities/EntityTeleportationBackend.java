@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimensio
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
@@ -124,7 +125,18 @@ public class EntityTeleportationBackend {
         }
         else {
             destinationPosition = teleportByOutOfBounds(entity, destination, upwardChecking, true);
-            if(destinationPosition == null) return;
+            if(destinationPosition == null){
+                // Abort teleporting entity by moving them up and place block below them
+                BlockPos newPos = new BlockPos(entity.blockPosition().getX(), 1, entity.blockPosition().getZ());
+
+                entity.setPosAndOldPos(newPos.getX(), newPos.getY(), newPos.getZ());
+                entity.moveTo(newPos, entity.yRot, entity.xRot);
+                BlockState belowState = entity.level.getBlockState(newPos.below());
+                if(!belowState.isFaceSturdy(entity.level, newPos.below(), Direction.UP)){
+                    entity.level.setBlock(newPos.below(), BzBlocks.BEESWAX_PLANKS.get().defaultBlockState(), 3);
+                }
+                return;
+            }
 
             Entity entity2 = entity.getType().create(destination);
             if (entity2 != null) {
@@ -157,7 +169,7 @@ public class EntityTeleportationBackend {
                     Doubles.constrainToRange(livingEntity.position().z() * coordinateScale, -29999936D, 29999936D));
 
             //Gets valid space in other world
-            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward);
+            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward, mustBeNearBeeBlock);
         }
 
         else if(Bumblezone.BzDimensionConfig.teleportationMode.get() == 2){
@@ -174,7 +186,7 @@ public class EntityTeleportationBackend {
                     Doubles.constrainToRange(livingEntity.position().z() * coordinateScale, -29999936D, 29999936D));
 
             //Gets valid space in other world
-            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward);
+            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward, false);
 
             if(validBlockPos == null && cap.getNonBZPos() != null) {
                 validBlockPos = new BlockPos(cap.getNonBZPos());
@@ -316,7 +328,7 @@ public class EntityTeleportationBackend {
     //Util
 
 
-    private static BlockPos validPlayerSpawnLocationByBeehive(World world, BlockPos position, int maximumRange, boolean checkingUpward) {
+    private static BlockPos validPlayerSpawnLocationByBeehive(World world, BlockPos position, int maximumRange, boolean checkingUpward, boolean mustbeNearBeeBlock) {
 
         // Gets the height of highest block over the area so we aren't checking an
         // excessive amount of area above that doesn't need checking.
@@ -385,7 +397,7 @@ public class EntityTeleportationBackend {
         }
 
         //this mode will not generate a beenest automatically.
-        if(Bumblezone.BzDimensionConfig.teleportationMode.get() == 3) return null;
+        if(Bumblezone.BzDimensionConfig.teleportationMode.get() == 3 || mustbeNearBeeBlock) return null;
 
         //no valid spot was found, generate a hive and spawn us on the highest land
         //This if statement is so we dont get placed on roof of other roofed dimension
