@@ -129,8 +129,8 @@ public class EntityTeleportationBackend {
                 // Abort teleporting entity by moving them up and place block below them
                 BlockPos newPos = new BlockPos(entity.blockPosition().getX(), 1, entity.blockPosition().getZ());
 
-                entity.setPosAndOldPos(newPos.getX(), newPos.getY(), newPos.getZ());
-                entity.moveTo(newPos, entity.yRot, entity.xRot);
+                entity.setPosAndOldPos(newPos.getX() + 0.5f, newPos.getY(), newPos.getZ() + 0.5f);
+                entity.absMoveTo(newPos.getX() + 0.5f, newPos.getY(), newPos.getZ() + 0.5f);
                 BlockState belowState = entity.level.getBlockState(newPos.below());
                 if(!belowState.isFaceSturdy(entity.level, newPos.below(), Direction.UP)){
                     entity.level.setBlock(newPos.below(), BzBlocks.BEESWAX_PLANKS.get().defaultBlockState(), 3);
