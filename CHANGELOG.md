@@ -6,6 +6,8 @@
 * Any living entity including players and mobs can enter the Bumblezone by being pushed into a Bee Hive or Bee Nest block by an activated Piston
 
 * Any living entity can now exit the Bumblezone
+  
+* Fixed player not teleporting to closest bee hive block if the block is at sea level
 
 ##### Lang:
 * Added Spanish translation donated by another person

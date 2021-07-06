@@ -350,7 +350,6 @@ public class EntityTeleportationBackend {
         // two mutable blockpos we can reuse for calculations
         BlockPos.Mutable mutableTemp1 = new BlockPos.Mutable();
         BlockPos.Mutable mutableTemp2 = new BlockPos.Mutable();
-
         // Get all block entities from the chunks
         Set<TileEntity> tempSet = new HashSet<>();
         chunksInRange.stream().map(Chunk::getBlockEntities).forEach(map -> tempSet.addAll(map.values()));
@@ -362,7 +361,7 @@ public class EntityTeleportationBackend {
             }
 
             // Filter out all positions that are below sealevel if we do not want underground spots.
-            if (Bumblezone.BzDimensionConfig.seaLevelOrHigherExitTeleporting.get() && be.getBlockPos().getY() < world.getSeaLevel()) {
+            if (Bumblezone.BzDimensionConfig.seaLevelOrHigherExitTeleporting.get() && be.getBlockPos().getY() < ((ServerWorld)world).getChunkSource().getGenerator().getSeaLevel() - 1) {
                 return false;
             }
 
