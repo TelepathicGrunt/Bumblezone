@@ -328,7 +328,7 @@ public class EntityTeleportationBackend {
     //Util
 
 
-    private static BlockPos validPlayerSpawnLocationByBeehive(World world, BlockPos position, int maximumRange, boolean checkingUpward, boolean mustbeNearBeeBlock) {
+    private static BlockPos validPlayerSpawnLocationByBeehive(World world, BlockPos position, int maximumRange, boolean checkingUpward, boolean mustBeNearBeeBlock) {
 
         // Gets the height of highest block over the area so we aren't checking an
         // excessive amount of area above that doesn't need checking.
@@ -396,7 +396,7 @@ public class EntityTeleportationBackend {
         }
 
         //this mode will not generate a beenest automatically.
-        if(Bumblezone.BzDimensionConfig.teleportationMode.get() == 3 || mustbeNearBeeBlock) return null;
+        if(Bumblezone.BzDimensionConfig.teleportationMode.get() == 3 || mustBeNearBeeBlock) return null;
 
         //no valid spot was found, generate a hive and spawn us on the highest land
         //This if statement is so we dont get placed on roof of other roofed dimension
