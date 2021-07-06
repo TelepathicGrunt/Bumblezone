@@ -4,7 +4,7 @@ import dev.onyxstudios.cca.api.v3.component.Component;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
-public interface IPlayerComponent extends Component {
+public interface IEntityComponent extends Component {
     boolean getIsTeleporting();
     void setIsTeleporting(boolean isTeleporting);
 

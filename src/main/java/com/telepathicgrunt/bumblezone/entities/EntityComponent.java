@@ -7,7 +7,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.Level;
 
-public class PlayerComponent implements IPlayerComponent {
+public class EntityComponent implements IEntityComponent {
     private boolean teleporting = false;
     private Identifier nonBZDimensionType = World.OVERWORLD.getValue();
     public Vec3d nonBZPosition = null;

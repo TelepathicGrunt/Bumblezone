@@ -2,8 +2,8 @@ package com.telepathicgrunt.bumblezone;
 
 import com.telepathicgrunt.bumblezone.configs.BzConfig;
 import com.telepathicgrunt.bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.bumblezone.entities.IPlayerComponent;
-import com.telepathicgrunt.bumblezone.entities.PlayerComponent;
+import com.telepathicgrunt.bumblezone.entities.IEntityComponent;
+import com.telepathicgrunt.bumblezone.entities.EntityComponent;
 import com.telepathicgrunt.bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.bumblezone.items.DispenserItemSetup;
 import com.telepathicgrunt.bumblezone.modcompat.ModChecker;
@@ -30,10 +30,8 @@ import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.DefaultBiomeCreator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,8 +42,10 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
     public static BzConfig BZ_CONFIG;
     public static final Logger LOGGER = LogManager.getLogger(MODID);
-    public static final ComponentKey<IPlayerComponent> PLAYER_COMPONENT =
-            ComponentRegistry.getOrCreate(new Identifier(MODID, "player_component"), IPlayerComponent.class);
+
+    // legacy name to prevent breaking player's data even though this is for entities now
+    public static final ComponentKey<IEntityComponent> ENTITY_COMPONENT =
+            ComponentRegistry.getOrCreate(new Identifier(MODID, "player_component"), IEntityComponent.class);
 
     @Override
     public void onInitialize() {
@@ -81,7 +81,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
-        //attach component to player
-        registry.registerForPlayers(PLAYER_COMPONENT, p -> new PlayerComponent(), RespawnCopyStrategy.INVENTORY);
+        //attach component to living entities
+        registry.registerFor(LivingEntity.class, ENTITY_COMPONENT, p -> new EntityComponent());
     }
 }
