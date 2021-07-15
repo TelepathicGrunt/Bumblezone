@@ -1,3 +1,10 @@
+### **(V.2.4.9 Changes) (1.16.5 Minecraft)**
+
+##### Enchantments:
+* Fixed Comb Cutter enchantment so it appears in enchantment table only for Swords and Books and only if the cost of the enchantment is 13 or less.
+  This help solve the problem of some mods making curses able to show up in enchanting table which caused Comb Cutter to be applied to any tool.
+
+
 ### **(V.2.4.8 Changes) (1.16.5 Minecraft)**
 
 ##### Teleportation:

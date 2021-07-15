@@ -47,7 +47,7 @@ public class CombCutterEnchantment extends Enchantment {
     );
 
     public CombCutterEnchantment() {
-        super(Enchantment.Rarity.RARE, EnchantmentType.VANISHABLE, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
+        super(Enchantment.Rarity.RARE, EnchantmentType.create("comb_cutter", CombCutterEnchantment::canEnchantItem), new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
     }
 
     public Set<Block> getTargetBlocks(){
@@ -87,13 +87,26 @@ public class CombCutterEnchantment extends Enchantment {
     }
 
     @Override
+    public int getMinCost(int level) {
+        return 10 * (level - 1);
+    }
+
+    @Override
+    public int getMaxCost(int level) {
+        return super.getMinCost(level) + 13;
+    }
+
+    @Override
     public int getMaxLevel() {
         return 1;
     }
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        Item item = stack.getItem();
-        return item instanceof ShearsItem || item instanceof SwordItem || (ModChecker.resourcefulBeesPresent && ResourcefulBeesRedirection.isRBComb(item));
+        return canEnchantItem(stack.getItem());
+    }
+
+    public static boolean canEnchantItem(Item item) {
+        return item instanceof ShearsItem || item instanceof SwordItem || item == Items.BOOK || (ModChecker.resourcefulBeesPresent && ResourcefulBeesRedirection.isRBComb(item));
     }
 }
