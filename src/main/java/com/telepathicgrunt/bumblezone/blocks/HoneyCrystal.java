@@ -216,7 +216,7 @@ public class HoneyCrystal extends ProperFacingBlock {
      * Makes this block show up in creative menu to fix the asItem override side-effect
      */
     @Override
-    public void addStacksForDisplay(ItemGroup group, DefaultedList<ItemStack> items) {
+    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> items) {
         items.add(new ItemStack(BzItems.HONEY_CRYSTAL));
     }
 

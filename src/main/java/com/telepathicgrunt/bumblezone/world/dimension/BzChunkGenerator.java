@@ -366,7 +366,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         int l = j << 4;
 
         return CompletableFuture.supplyAsync(() -> {
-            for (StructureFeature<?> feature : StructureFeature.JIGSAW_STRUCTURES) {
+            for (StructureFeature<?> feature : StructureFeature.LAND_MODIFYING_STRUCTURES) {
                 accessor.getStructuresWithChildren(ChunkSectionPos.from(chunkPos, 0), feature).forEach((start) -> {
                     Iterator<StructurePiece> structurePiecesIterator = start.getChildren().iterator();
 

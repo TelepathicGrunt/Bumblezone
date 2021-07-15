@@ -17,7 +17,6 @@ import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.Durations;
 import net.minecraft.entity.ai.goal.AnimalMateGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -40,12 +39,12 @@ import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.TimeHelper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
@@ -69,7 +68,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    private static final TrackedData<Integer> IN_HONEY_GROWTH_TIME = DataTracker.registerData(HoneySlimeEntity.class, TrackedDataHandlerRegistry.INTEGER);
    private static final Ingredient BREEDING_ITEM = Ingredient.ofItems(Items.SUGAR);
    private static final TrackedData<Integer> ANGRY_TIMER = DataTracker.registerData(BeeEntity.class, TrackedDataHandlerRegistry.INTEGER);
-   private static final UniformIntProvider MAX_ANGER_DURATION = Durations.betweenSeconds(10, 22);
+   private static final UniformIntProvider MAX_ANGER_DURATION = TimeHelper.betweenSeconds(10, 22);
    private UUID target_UUID;
 
 

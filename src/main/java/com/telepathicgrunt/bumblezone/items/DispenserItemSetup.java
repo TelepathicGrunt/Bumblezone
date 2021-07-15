@@ -32,7 +32,7 @@ public class DispenserItemSetup {
              */
             public ItemStack dispenseSilently(BlockPointer source, ItemStack stack) {
                 BucketItem bucketitem = (BucketItem) stack.getItem();
-                BlockPos blockpos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
+                BlockPos blockpos = source.getPos().offset(source.getBlockState().get(DispenserBlock.FACING));
                 World world = source.getWorld();
                 BlockState blockstate = world.getBlockState(blockpos);
 

@@ -26,6 +26,7 @@
     "entities.WorldChunkAddEntityMixin",
     "items.BucketItemAccessor",
     "items.CookingRecipeSerializerMixin",
+    "items.EnchantmentHelperMixin",
     "items.EnderpearlImpactMixin",
     "items.GlassBottleUseMixin",
     "items.HoneyPickupMixin",

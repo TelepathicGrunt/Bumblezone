@@ -24,8 +24,8 @@ public class CombCutterEnchantment extends Enchantment {
     private static final GeneralUtils.Lazy<Set<Block>> TARGET_BLOCKS = new GeneralUtils.Lazy<>();
     private static final GeneralUtils.Lazy<Set<Block>> LESSER_TARGET_BLOCKS = new GeneralUtils.Lazy<>();
 
-    public CombCutterEnchantment(Rarity weight, EnchantmentTarget type, EquipmentSlot[] slotTypes) {
-        super(weight, type, slotTypes);
+    public CombCutterEnchantment() {
+        super(Enchantment.Rarity.RARE, EnchantmentTarget.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
     public Set<Block> getTargetBlocks(){
@@ -71,12 +71,21 @@ public class CombCutterEnchantment extends Enchantment {
     }
 
     @Override
+    public int getMinPower(int level) {
+        return 10 * (level - 1);
+    }
+
+    @Override
+    public int getMaxPower(int level) {
+        return super.getMinPower(level) + 13;
+    }
+    @Override
     public int getMaxLevel() {
         return 1;
     }
 
     @Override
     public boolean isAcceptableItem(ItemStack stack) {
-        return stack.getItem() instanceof ShearsItem || stack.getItem() instanceof SwordItem;
+        return stack.getItem() instanceof ShearsItem || stack.getItem() instanceof SwordItem || stack.isOf(Items.BOOK);
     }
 }

@@ -1,4 +1,11 @@
-### **(V.3.0.4 Changes) (1.16.5 Minecraft)**
+### **(V.3.0.5 Changes) (1.17.1 Minecraft)**
+
+##### Enchantments:
+* Fixed Comb Cutter enchantment so it appears in enchantment table only for Swords and Books and only if the cost of the enchantment is 13 or less.
+  This help solve the problem of some mods making curses able to show up in enchanting table which caused Comb Cutter to be applied to any tool.
+
+
+### **(V.3.0.4 Changes) (1.17.0 Minecraft)**
 
 ##### Teleportation:
 * Exiting and entering Bumblezone will show a message to just the teleporting player that they are being teleported

@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class BzEnchantments {
-    public final static CombCutterEnchantment COMB_CUTTER = new CombCutterEnchantment(Enchantment.Rarity.RARE, EnchantmentTarget.VANISHABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+    public final static CombCutterEnchantment COMB_CUTTER = new CombCutterEnchantment();
 
     public static void registerEnchantment() {
         Registry.register(Registry.ENCHANTMENT, new Identifier(Bumblezone.MODID, "comb_cutter"), COMB_CUTTER);

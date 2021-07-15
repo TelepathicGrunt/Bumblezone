@@ -29,7 +29,7 @@ public class BeeDungeonPlacer extends Decorator<NopeDecoratorConfig> {
             int sealevel = context.getWorld().toServerWorld().getChunkManager().getChunkGenerator().getSeaLevel();
             int x = random.nextInt(8) + pos.getX() + 4;
             int z = random.nextInt(8) + pos.getZ() + 4;
-            int y = random.nextInt(context.getMaxY() - 10 - sealevel) + sealevel + 2;
+            int y = random.nextInt(context.getHeight() - 10 - sealevel) + sealevel + 2;
 
             //find a cave air spot
             for (Direction face : Direction.Type.HORIZONTAL) {

@@ -95,7 +95,7 @@ public class HoneyBottleDispenseBehavior extends ItemDispenserBehavior {
      */
     @Override
     protected void playSound(BlockPointer source) {
-        source.getWorld().syncWorldEvent(1002, source.getBlockPos(), 0);
+        source.getWorld().syncWorldEvent(1002, source.getPos(), 0);
     }
 
     /**
