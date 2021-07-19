@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -59,7 +60,8 @@ public class EntityTeleportationHookup {
         }
     }
 
-    private static void teleportOutOfBz(LivingEntity livingEntity) {
+
+    public static void teleportOutOfBz(LivingEntity livingEntity) {
         if (!livingEntity.world.isClient) {
             checkAndCorrectStoredDimension(livingEntity);
             MinecraftServer minecraftServer = livingEntity.getServer(); // the server itself
@@ -74,7 +76,7 @@ public class EntityTeleportationHookup {
     }
 
     // Enderpearl
-    public static boolean runEnderpearlImpact(HitResult hitResult, EnderPearlEntity pearlEntity){
+    public static boolean runEnderpearlImpact(HitResult hitResult, ProjectileEntity pearlEntity){
         World world = pearlEntity.world; // world we threw in
 
         // Make sure we are on server by checking if thrower is ServerPlayerEntity and that we are not in bumblezone.

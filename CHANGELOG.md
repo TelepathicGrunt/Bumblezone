@@ -1,3 +1,10 @@
+### **(V.3.0.6 Changes) (1.17.1 Minecraft)**
+
+##### Mod Compat:
+* Made teleportOutOfBz method public in an API class so Requiem mod can access it without reflection.
+  runEnderpearlImpact and runPistonPushed are also public in BumblezoneAPI class as well if any mod needs them.
+
+
 ### **(V.3.0.5 Changes) (1.17.1 Minecraft)**
 
 ##### Enchantments:
