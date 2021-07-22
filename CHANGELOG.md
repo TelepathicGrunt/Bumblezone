@@ -1,3 +1,9 @@
+### **(V.3.0.7 Changes) (1.17.1 Minecraft)**
+
+##### Lang:
+* Fixed up some lang files and config entries not being translated properly.
+
+
 ### **(V.3.0.6 Changes) (1.17.1 Minecraft)**
 
 ##### Mod Compat:
