@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class BzEntities {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, Bumblezone.MODID);
 
-    public static final EntityType<HoneySlimeEntity> HONEY_SLIME_RAW = EntityType.Builder.<HoneySlimeEntity>of(HoneySlimeEntity::new, EntityClassification.CREATURE).sized(0.6F, 1.99F).clientTrackingRange(8).build("honey_slime");
+    protected static final EntityType<HoneySlimeEntity> HONEY_SLIME_RAW = EntityType.Builder.<HoneySlimeEntity>of(HoneySlimeEntity::new, EntityClassification.CREATURE).sized(0.6F, 1.99F).clientTrackingRange(8).build("honey_slime");
     public static final RegistryObject<EntityType<HoneySlimeEntity>> HONEY_SLIME = ENTITIES.register("honey_slime", () -> HONEY_SLIME_RAW);
 
     public static void registerAdditionalEntityInformation() {
