@@ -66,38 +66,26 @@ public class ResourcefulBeesCompat {
 
         // remove bees that RB will not spawn in the world
         if (Bumblezone.BzModCompatibilityConfig.useSpawnInWorldConfigFromRB.get()) {
-            tempBeeMap.forEach((b, e) -> {
-                if (!b.getSpawnData().canSpawnInWorld()){
-                	tempBeeMap.remove(b);
-				}
-            });
+            tempBeeMap.entrySet().removeIf((b) -> !b.getKey().getSpawnData().canSpawnInWorld());
         }
 
         // remove bees that RB blacklisted from any bumblezone biome
         if (Bumblezone.BzModCompatibilityConfig.useSpawnInWorldConfigFromRB.get()) {
-            tempBeeMap.forEach((b, e) -> {
-                if (!b.getSpawnData().getBiomeBlacklist().contains(Bumblezone.MODID)){
-                    tempBeeMap.remove(b);
-                }
-            });
+            tempBeeMap.entrySet().removeIf((b) -> !b.getKey().getSpawnData().getBiomeBlacklist().contains(Bumblezone.MODID));
         }
 
-        // remove bees that bumblezone tag blacklists
-        tempBeeMap.forEach((b, e) -> {
-            Set<ResourceLocation> blacklistedBees = Arrays.stream(Bumblezone.BzModCompatibilityConfig.RBBlacklistedBees.get().split(",")).map(String::trim).map(ResourceLocation::new).collect(Collectors.toSet());
-            if(blacklistedBees.contains(e.getRegistryName())){
-				tempBeeMap.remove(b);
-			}
-		});
+        // remove bees that bumblezone blacklists
+        Set<ResourceLocation> blacklistedBees = Arrays.stream(Bumblezone.BzModCompatibilityConfig.RBBlacklistedBees.get().split(",")).map(String::trim).map(ResourceLocation::new).collect(Collectors.toSet());
+        tempBeeMap.entrySet().removeIf((b) -> blacklistedBees.contains(b.getValue().getRegistryName()));
 
         // Now create list of bees and honecombs to spawn
-        tempBeeMap.forEach((b, e) -> {
+        tempBeeMap.forEach((key, value) -> {
             // check if comb block exist as oreo bee has an item instead which means getCombBlockRegistryObject is null
-        	if (b.hasHoneycomb() && b.getCombBlockRegistryObject() != null) {
-        		RESOURCEFUL_HONEYCOMBS_MAP.put(b.getCombBlockRegistryObject().getId(), b.getCombBlockRegistryObject().get());
-			}
-        	RESOURCEFUL_BEES_LIST.add(e);
-		});
+            if (key.hasHoneycomb() && key.getCombBlockRegistryObject() != null) {
+                RESOURCEFUL_HONEYCOMBS_MAP.put(key.getCombBlockRegistryObject().getId(), key.getCombBlockRegistryObject().get());
+            }
+            RESOURCEFUL_BEES_LIST.add(value);
+        });
 
 
         for (Map.Entry<RegistryKey<Block>, Block> entry : Registry.BLOCK.entrySet()) {

@@ -1,3 +1,9 @@
+### **(V.2.4.10 Changes) (1.16.5 Minecraft)**
+
+##### Mod Compat:
+* Fixed crash when trying to use the blacklist to stop spawning some Resourceful Bees in Bumblezone
+
+
 ### **(V.2.4.9 Changes) (1.16.5 Minecraft)**
 
 ##### Enchantments:
