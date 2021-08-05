@@ -79,7 +79,7 @@ public class ModChecker
 	}
 
     private static boolean isNotOutdated(String currentModID, String minVersion, boolean checkQualifierInstead) {
-    	if(!ModList.get().getModContainerById(currentModID).isPresent()) return true;
+    	if(!ModList.get().isLoaded(currentModID)) return true;
 
 		IModInfo modInfo = ModList.get().getModContainerById(currentModID).get().getModInfo();
 		ArtifactVersion modVersion = modInfo.getVersion();
