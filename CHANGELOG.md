@@ -1,3 +1,10 @@
+### **(V.3.0.9 Changes) (1.17.1 Minecraft)**
+
+##### Sounds:
+flight_of_the_bumblebee_rimsky_korsakov and honey_bee_rat_faced_boy music is now mono so that the Music Discs work properly in Jukeboxes.
+  Special thanks to a friend who pointed out this issue and helped convert and compress the sound files!
+
+
 ### **(V.3.0.8 Changes) (1.17.1 Minecraft)**
 
 ##### Bee Interactivity:
