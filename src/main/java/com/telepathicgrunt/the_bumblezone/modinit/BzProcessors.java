@@ -1,7 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.world.processors.*;
+import com.telepathicgrunt.the_bumblezone.world.processors.BeeDungeonProcessor;
+import com.telepathicgrunt.the_bumblezone.world.processors.RemoveFloatingBlocksProcessor;
+import com.telepathicgrunt.the_bumblezone.world.processors.ReplaceNotAirProcessor;
+import com.telepathicgrunt.the_bumblezone.world.processors.SpawnerRandomizingProcessor;
+import com.telepathicgrunt.the_bumblezone.world.processors.SpiderInfestedBeeDungeonProcessor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.template.IStructureProcessorType;

@@ -102,6 +102,7 @@ dependencies {
     compileOnly fg.deobf("curse.maven:buzzier_bees-355458:${buzzierbees_file_id}")
     compileOnly fg.deobf("curse.maven:charm_reforged-430988:${charmreforged_file_id}")
 
+    compileOnly fg.deobf("curse.maven:better_beekeeping-503676:${better_beekeeping_file_id}")
     compileOnly fg.deobf("curse.maven:amb_aurums_more_blocks-361597:${amb_file_id}")
     compileOnly fg.deobf("curse.maven:potion_of_bees-355348:${potionofbees_file_id}")
     compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
@@ -125,3 +126,6 @@ mixin { add sourceSets.main, "the_bumblezone.refmap.json" }
 apply from: 'gradle/maven.gradle'
 apply from: 'gradle/curseforge.gradle'
 apply from: 'gradle/modrinth.gradle'
+
+task buildAndRelease{}
+tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish, tasks.curseforge, tasks.publishModrinth)

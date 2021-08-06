@@ -29,7 +29,6 @@ import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.ForgeRegistries;
-import noobanidus.mods.carrierbees.compat.BumbleZone;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -920,6 +920,16 @@ B B B
 
 &nbsp;
 
+**Better Beekeeping** - [https://www.curseforge.com/minecraft/mc-mods/better-beekeeping](https://www.curseforge.com/minecraft/mc-mods/better-beekeeping)
+
+&nbsp;
+
+-Their new Beehive block variants can be used to teleport to Bumblezone dimension!
+
+-Feeding their honey bottle variants to bees can heal bees and could grant Protection of the Hive.
+
+&nbsp;
+
 **Aurum's More Blocks (AMB)** - [https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks](https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks)
 
 

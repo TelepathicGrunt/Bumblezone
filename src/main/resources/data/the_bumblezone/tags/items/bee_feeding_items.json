@@ -20,6 +20,30 @@
     {
       "id": "buzzier_bees:honey_bread",
       "required": false
+    },
+    {
+      "id": "betterbeekeeping:spicy_honey_bottle",
+      "required": false
+    },
+    {
+      "id": "betterbeekeeping:warm_honey_bottle",
+      "required": false
+    },
+    {
+      "id": "betterbeekeeping:bright_honey_bottle",
+      "required": false
+    },
+    {
+      "id": "betterbeekeeping:lively_honey_bottle",
+      "required": false
+    },
+    {
+      "id": "betterbeekeeping:cool_honey_bottle",
+      "required": false
+    },
+    {
+      "id": "betterbeekeeping:strange_honey_bottle",
+      "required": false
     }
   ]
 }

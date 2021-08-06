@@ -1,7 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.blocks.*;
+import com.telepathicgrunt.the_bumblezone.blocks.BeeswaxPlanks;
+import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.blocks.FilledPorousHoneycomb;
+import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
+import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.blocks.PorousHoneycomb;
+import com.telepathicgrunt.the_bumblezone.blocks.StickyHoneyRedstone;
+import com.telepathicgrunt.the_bumblezone.blocks.StickyHoneyResidue;
+import com.telepathicgrunt.the_bumblezone.blocks.SugarInfusedCobblestone;
+import com.telepathicgrunt.the_bumblezone.blocks.SugarInfusedStone;
 import com.telepathicgrunt.the_bumblezone.mixin.items.MaterialInvoker;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

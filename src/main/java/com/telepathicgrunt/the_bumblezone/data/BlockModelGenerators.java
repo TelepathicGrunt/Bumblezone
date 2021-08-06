@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.data;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.Direction;
 import net.minecraftforge.client.model.generators.BlockModelProvider;

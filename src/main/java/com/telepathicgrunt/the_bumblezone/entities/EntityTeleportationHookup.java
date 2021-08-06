@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.capabilities.IEntityPosAndDim;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
+import com.telepathicgrunt.the_bumblezone.capabilities.IEntityPosAndDim;
 import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
