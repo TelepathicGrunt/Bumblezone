@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.modcompat.CarrierBeeRedirection;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -17,11 +18,14 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.village.PointOfInterest;
+import net.minecraft.village.PointOfInterestManager;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class WrathOfTheHiveEffect extends Effect {
@@ -115,44 +119,27 @@ public class WrathOfTheHiveEffect extends Effect {
 
         // makes brood blocks grow faster near wrath of the hive entities.
         if(!world.isClientSide()){
-            for(int attempts = 0; attempts < 5; attempts++){
-                int range = NEARBY_WRATH_EFFECT_RADIUS * 2;
-                BlockPos selectedBlockToGrow = new BlockPos(
-                        entity.getX() + (world.random.nextInt(range) - NEARBY_WRATH_EFFECT_RADIUS),
-                        entity.getY() + (world.random.nextInt(range) - NEARBY_WRATH_EFFECT_RADIUS),
-                        entity.getZ() + (world.random.nextInt(range) - NEARBY_WRATH_EFFECT_RADIUS));
+            PointOfInterestManager pointofinterestmanager = ((ServerWorld)world).getPoiManager();
+            List<PointOfInterest> poiInRange = pointofinterestmanager.getInRange(
+                    (pointOfInterestType) -> pointOfInterestType == BzPOI.BROOD_BLOCK_POI.get(),
+                    entity.blockPosition(),
+                    NEARBY_WRATH_EFFECT_RADIUS,
+                    PointOfInterestManager.Status.ANY)
+                    .collect(Collectors.toList());
 
-                BlockState state = world.getBlockState(selectedBlockToGrow);
-                if(state.getBlock() instanceof HoneycombBrood){
-                    state.tick((ServerWorld) world, selectedBlockToGrow, world.random);
+            float chanceofGrowth = 0.001f;
+            if(poiInRange.size() != 0) {
+                for(int index = poiInRange.size() - 1; index >= 0; index--){
+                    PointOfInterest poi = poiInRange.remove(index);
+                    if(world.random.nextFloat() < chanceofGrowth){
+                        BlockState state = world.getBlockState(poi.getPos());
+                        if(state.getBlock() instanceof HoneycombBrood){
+                            state.tick((ServerWorld) world, poi.getPos(), world.random);
+                        }
+                    }
                 }
             }
         }
-
-        // TODO: activate in 1.17
-//        // makes brood blocks grow faster near wrath of the hive entities.
-//        if(!world.isClientSide()){
-//            PointOfInterestManager pointofinterestmanager = ((ServerWorld)world).getPoiManager();
-//            List<PointOfInterest> poiInRange = pointofinterestmanager.getInRange(
-//                    (pointOfInterestType) -> pointOfInterestType == BzPOI.BROOD_BLOCK_POI.get(),
-//                    entity.blockPosition(),
-//                    NEARBY_WRATH_EFFECT_RADIUS,
-//                    PointOfInterestManager.Status.ANY)
-//                    .collect(Collectors.toList());
-//
-//            float chanceofGrowth = 0.001f;
-//            if(poiInRange.size() != 0) {
-//                for(int index = poiInRange.size() - 1; index >= 0; index--){
-//                    PointOfInterest poi = poiInRange.remove(index);
-//                    if(world.random.nextFloat() < chanceofGrowth){
-//                        BlockState state = world.getBlockState(poi.getPos());
-//                        if(state.getBlock() instanceof HoneycombBrood){
-//                            state.tick((ServerWorld) world, poi.getPos(), world.random);
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
 
     /**
