@@ -18,12 +18,9 @@ Don't forget to change <modversion> with the actual latest version of this mod l
 
 <blockquote>dependencies {
 
-
 &nbsp; ...
 
-
 &nbsp; implementation fg.deobf("com.telepathicgrunt:Bumblezone:1.16.5-<modversion>-forge")
-
 
 }</blockquote>
 
@@ -33,48 +30,35 @@ Don't forget to change <modversion> with the actual latest version of this mod l
 
 <blockquote>minecraft {
 
-
 &nbsp; ...
-
 
 &nbsp; runs {
 
-
 &nbsp; &nbsp; client {
-
 
 &nbsp; &nbsp; &nbsp; ...
 
-
 &nbsp; &nbsp; &nbsp; property 'mixin.env.remapRefMap', 'true'
 
-
 &nbsp; &nbsp; &nbsp; property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
 
 &nbsp; &nbsp; }
 
 &nbsp; &nbsp; server {
 
-
 &nbsp; &nbsp; &nbsp; ...
-
 
 &nbsp; &nbsp; &nbsp; property 'mixin.env.remapRefMap', 'true'
 
-
 &nbsp; &nbsp; &nbsp; property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
 
 &nbsp; &nbsp; }
 
-
 &nbsp; }
-
 
 }</blockquote>
 
-**____________________________________________________________________________**
+**************************************\_\_\_\_**************************************
 
 &nbsp;
 
@@ -94,7 +78,7 @@ Don't forget to change <modversion> with the actual latest version of this mod l
 
 &nbsp;
 
-**____________________________________________________________________________**
+**************************************\_\_\_\_**************************************
 
 ## **WHAT IS THE BUMBLEZONE?**
 
@@ -112,7 +96,7 @@ For more info on all the blocks and what mods Bumblezone has direct support for,
 
 &nbsp;
 
-**____________________________________________________________________________**
+**************************************\_\_\_\_**************************************
 
 ## WHAT DOES THIS MOD ADD?
 
@@ -142,11 +126,7 @@ For more info on all the blocks and what mods Bumblezone has direct support for,
 
 &nbsp;
 
-
-
 **Porous Honeycomb Block**
-
-
 
 -Use a Honey Bottle on this block to turn this block into a Filled Porous Honeycomb Block.
 
@@ -156,11 +136,7 @@ For more info on all the blocks and what mods Bumblezone has direct support for,
 
 &nbsp;
 
-
-
 **Honeycomb Brood Block**
-
-
 
 -Watch the larva inside grow through 4 stages over time! When at the 4th stage and this block gets ticked, it will spawn a Bee only if the hole in front isn't blocked off and there is less than 10 bees within 50 blocks of the block. After the bee is spawned, the block then resets back to having a stage 1 of the larva. Sometime, a Honey Slime will spawn too with the Bee!
 
@@ -188,21 +164,13 @@ For more info on all the blocks and what mods Bumblezone has direct support for,
 
 -Attaching a Comparator to this block will output Redstone power based on what stage the larva is in the block (1 to 4 power).
 
-
-
 **Empty Honeycomb Brood Block**
-
-
 
 -Does nothing by itself. Merely a decorative block unless certain other mods are on. See the Mod Compatibility section below.
 
 &nbsp;
 
-
-
 **Honey Crystal**
-
-
 
 -A pretty translucent crystallized honey block that can face any direction and can only be placed on solid sides of blocks.
 
@@ -220,11 +188,7 @@ For more info on all the blocks and what mods Bumblezone has direct support for,
 
 &nbsp;
 
-
-
 **Sugar Water**
-
-
 
 -Looks like a lighter/cloudier version of regular water and spawns at sealevel for The Bumblezone dimension.
 
@@ -250,11 +214,7 @@ For more info on all the blocks and what mods Bumblezone has direct support for,
 
 &nbsp;
 
-
-
 **Sticky Honey Residue**
-
-
 
 -A very sticky block that can be placed on multiple solid surfaces at once and is created by smelting the following in a Furnace: Honey Crystal blocks, Honey Crystal Shards items, Honey Crystal Shields, or vanilla's Honey blocks. Breaking this block will drop nothing.
 
@@ -272,11 +232,7 @@ For more info on all the blocks and what mods Bumblezone has direct support for,
 
 &nbsp;
 
-
-
 **Sticky Honey Redstone**
-
-
 
 -This block does everything Sticky Honey Residue can do and can be created by crafting 1 Sticky Honey Residue with 1 Redstone.
 
@@ -290,11 +246,7 @@ For more info on all the blocks and what mods Bumblezone has direct support for,
 
 &nbsp;
 
-
-
 **Sugar Infused Stone**
-
-
 
 -If placed in a Furnace, the sugar can be quickly burned off for some quick cheap XP.
 
@@ -303,13 +255,9 @@ For more info on all the blocks and what mods Bumblezone has direct support for,
 -When mined with a Silk Touch pickaxe, this block drops itself. Otherwise, this block drops Sugar and Cobblestone.
 
 &nbsp;
-
-
 
 **Sugar Infused Cobblestone**
 
-
-
 -If placed in a Furnace, the sugar can be quickly burned off for some quick cheap XP.
 
 &nbsp;
@@ -318,11 +266,7 @@ For more info on all the blocks and what mods Bumblezone has direct support for,
 
 &nbsp;
 
-
-
 **Beeswax Planks Block**
-
-
 
 -Merely a decorative block that can be found forming the ceiling and floor boundaries of The Bumblezone Dimension.
 
@@ -339,14 +283,11 @@ B B B
 
 &nbsp;
 
-
 ### ITEMS - 4 new items
 
 <details>
 
 **Sugar Water Bottle**
-
-
 
 -Obtainable by using a Glass Bottle on a Sugar Water source block.
 
@@ -368,11 +309,7 @@ B B B
 
 &nbsp;
 
-
-
 **Sugar Water Bucket**
-
-
 
 -Obtained by using a Bucket on Sugar Water source block or crafting Water Bucket with Sugar. Can be used to move the water around.
 
@@ -382,11 +319,7 @@ B B B
 
 &nbsp;
 
-
-
 **Honey Crystal Shards**
-
-
 
 -Obtained by mining or breaking Honey Crystal blocks.
 
@@ -405,15 +338,11 @@ B B B
 
 `# # #`
 
-`  #  `
+` # `
 
 &nbsp;
 
-
-
 **Honey Crystal Shield**
-
-
 
 -A shield that starts off super weak but becomes much stronger the more you repair it to the point it has about double the durability of vanilla's Shield! But beware, trying to block fire damage and explosive damage with the shield will destroy the shield very quickly! Yes, Fireballs and Fireworks will also greatly damage the shield so be careful!
 
@@ -424,7 +353,7 @@ B B B
 
 `# # #`
 
-`  #  `
+` # `
 
 &nbsp;
 
@@ -446,14 +375,11 @@ B B B
 
 &nbsp;
 
-
 ### MOBS - 1 new mob
 
 <details>
 
 **Honey Slime**
-
-
 
 -Donated to The Bumblezone from the folks who made Buzzier Bees! Their texture and code has been ported to this mod. Thank you Bagel!
 
@@ -485,15 +411,11 @@ B B B
 
 &nbsp;
 
-
 ### Enchantments - 1 new enchantment
 
 <details>
 
-
 **Comb Cutter**
-
-
 
 -Can be applied to Swords and Shears
 
@@ -508,10 +430,6 @@ B B B
 </details>
 
 &nbsp;
-
-
-
-
 
 ### BEE'S BEHAVIOR - NOT THE BEEEEESSSS!!!
 
@@ -543,8 +461,6 @@ B B B
 
 &nbsp;
 
-
-
 ### DIMENSION - It's like the insides of a Bee Hive!
 
 <details>
@@ -575,8 +491,6 @@ B B B
 
 &nbsp;
 
-
-
 ### MUSIC - 2 new songs
 
 <details>
@@ -601,14 +515,11 @@ B B B
 
 &nbsp;
 
-
-
 ### MOD COMPATIBILITY - Interacts directly with 8 other mods!
 
 <details>
 
 **Buzzier Bees** - [https://www.curseforge.com/minecraft/mc-mods/buzzier-bees](https://www.curseforge.com/minecraft/mc-mods/buzzier-bees)
-
 
 &nbsp;
 
@@ -644,8 +555,6 @@ B B B
 
 &nbsp;
 
-
-
 **Productive Bees** - [https://www.curseforge.com/minecraft/mc-mods/productivebees](https://www.curseforge.com/minecraft/mc-mods/productivebees)
 
 &nbsp;
@@ -673,8 +582,6 @@ B B B
 -Some honeycomb variants can only spawn in Spider Infested Bee Dungeons.
 
 &nbsp;
-
-
 
 **Resourceful Bees** - [https://www.curseforge.com/minecraft/mc-mods/resourceful-bees](https://www.curseforge.com/minecraft/mc-mods/resourceful-bees)
 
@@ -704,7 +611,6 @@ B B B
 
 &nbsp;
 
-
 **Charm** - [https://www.curseforge.com/minecraft/mc-mods/charm](https://www.curseforge.com/minecraft/mc-mods/charm)
 
 &nbsp;
@@ -716,8 +622,6 @@ B B B
 -Many Bumblezone items are added to Charm's BeeKeeper villager too!
 
 &nbsp;
-
-
 
 **Pokecube AIO** - [https://www.curseforge.com/minecraft/mc-mods/pokecube-aoi](https://www.curseforge.com/minecraft/mc-mods/pokecube-aoi)
 
@@ -731,8 +635,6 @@ B B B
 
 &nbsp;
 
-
-
 **Potion of Bees** - [https://www.curseforge.com/minecraft/mc-mods/potion-of-bees](https://www.curseforge.com/minecraft/mc-mods/potion-of-bees)
 
 &nbsp;
@@ -744,7 +646,6 @@ B B B
 -Their Splash Potion of Bees item can be thrown onto a Empty Honeycomb Brood Block to revive the block into a stage 1, 2, or 3 Honeycomb Brood Block! If you have the splash potion in a Dispenser facing the block, it'll revive the block without bees going everywhere.
 
 &nbsp;
-
 
 **Carrier Bees** - [https://www.curseforge.com/minecraft/mc-mods/carrier-bees](https://www.curseforge.com/minecraft/mc-mods/carrier-bees)
 
@@ -932,7 +833,6 @@ B B B
 
 **Aurum's More Blocks (AMB)** - [https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks](https://www.curseforge.com/minecraft/mc-mods/amb-aurums-more-blocks)
 
-
 &nbsp;
 
 -Sugar Infused Cobblestone and Sugar Infused Stone will get a slab, stairs, walls, pressure plate, and button form!
@@ -945,15 +845,13 @@ B B B
 
 &nbsp;
 
-
-
 **Also, be sure to check out the images page for several screenshots of what the world looks like!**
 
 Small video I made about some main parts of my mod! https://www.youtube.com/watch?v=440rpJavHwY
 
 &nbsp;
 
-**____________________________________________________________________________**
+**************************************\_\_\_\_**************************************
 
 ## HOW DO I ENTER THIS WORLD?
 
@@ -963,7 +861,7 @@ Entering the dimension is super easy! Just throw an Enderpearl at a Bee Nest to 
 
 &nbsp;
 
-**____________________________________________________________________________**
+**************************************\_\_\_\_**************************************
 
 ## HOW CAN I CONFIGURE THIS MOD?
 
@@ -971,7 +869,7 @@ To reach **most of this mod's config files**, go into the **serverconfig** folde
 
 &nbsp;
 
-However, some of the customizations for this mod are in JSON so you just need to make a datapack to override those settings. In fact, some block tags used in this mod can be used to blacklist modded combs from being imported into the dimension! Or change what blocks and items anger bees! Here's the files that a datapack can override: https://github.com/TelepathicGrunt/Bumblezone/tree/master/src/main/resources/data/the_bumblezone  But be sure to look at the config file too as blacklisting modded bees are in there instead.
+However, some of the customizations for this mod are in JSON so you just need to make a datapack to override those settings. In fact, some block tags used in this mod can be used to blacklist modded combs from being imported into the dimension! Or change what blocks and items anger bees! Here's the files that a datapack can override: https://github.com/TelepathicGrunt/Bumblezone/tree/master/src/main/resources/data/the_bumblezone But be sure to look at the config file too as blacklisting modded bees are in there instead.
 
 &nbsp;
 
@@ -991,7 +889,7 @@ The ID for the dimension is **the_bumblezone:the_bumblezone** if you need it. Al
 
 &nbsp;
 
-**______________________________________________________________________________**
+****************************************\_\_****************************************
 
 For the list of changes in this mod, click the Source tab and check out README.txt file. This helps me keep track of what I had done so far.
 
@@ -1010,5 +908,3 @@ Special thanks to Bagel (dev of Buzzier Bees) for allowing us to use their Honey
 **[https://discord.gg/SM7WBT6FGu](https://discord.gg/SM7WBT6FGu "https://discord.gg/SM7WBT6FGu")**
 
 <a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" style="font-size: 24px;" tabindex="0" title="https://discord.gg/SM7WBT6FGu" role="button" href="https://discord.gg/SM7WBT6FGu" target="_blank" rel="noopener noreferrer"><img src="https://www.freepnglogos.com/uploads/discord-logo-png/concours-discord-cartes-voeux-fortnite-france-6.png" alt="discord-logo-png-free-transparent-png-logos-discord-png-logo-300_300 (PNG)  | BeeIMG" width="112" height="112" /></a>
-
-
