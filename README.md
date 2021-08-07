@@ -1,6 +1,6 @@
 # MAVEN
 
-For developers that want to add RS to their mod's workspace:
+For developers that want to add Bumblezone to their mod's workspace:
 
 <blockquote>repositories {
 
