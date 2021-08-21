@@ -1,3 +1,9 @@
+### **(V.2.4.11 Changes) (1.16.5 Minecraft)**
+
+##### Bee Interactivity:
+* Bees now can be fed what is in BEE_FEEDING_ITEMS tag and not be fed everything that isn't in that tag.
+
+
 ### **(V.2.4.10 Changes) (1.16.5 Minecraft)**
 
 ##### Music/Sounds:

@@ -30,7 +30,7 @@ public class BeeInteractivity {
             Identifier itemRL = Registry.ITEM.getId(itemstack.getItem());
 
             // Disallow all non-tagged items from being fed to bees
-            if(BZItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
+            if(!BZItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
                 return;
 
             if(itemRL.getPath().contains("honey")){
