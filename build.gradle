@@ -107,6 +107,7 @@ dependencies {
     compileOnly fg.deobf("curse.maven:potion_of_bees-355348:${potionofbees_file_id}")
     compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
     compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
+    compileOnly fg.deobf("curse.maven:buzzy_drones-460283:${buzzy_drones_file_id}")
 
     compileOnly fg.deobf("noobanidus.mods.carrierbees:carrierbees:${carrierbees_version}")
     compileOnly fg.deobf("com.resourcefulbees:ResourcefulBees:${resourcefulbees_version}")
