@@ -1,3 +1,9 @@
+### **(V.3.0.10 Changes) (1.17.1 Minecraft)**
+
+##### Translations:
+Special thanks to mcBegins2Snow for helping to clean up some zh_cn.json translations!
+
+
 ### **(V.3.0.9 Changes) (1.17.1 Minecraft)**
 
 ##### Sounds:

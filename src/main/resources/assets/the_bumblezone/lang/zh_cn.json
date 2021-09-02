@@ -1,57 +1,60 @@
 {
 	"itemGroup.the_bumblezone.main_tab":"黄蜂领域 §6(The Bumblezone)",
-	
+
 	"block.the_bumblezone.porous_honeycomb_block":"多孔蜜脾块",
 	"block.the_bumblezone.filled_porous_honeycomb_block":"被填满的多孔蜜脾块",
-	"block.the_bumblezone.dead_honeycomb_larva_block":"空巢脾育苗块",
-	"block.the_bumblezone.honeycomb_larva_block":"巢脾育苗块",
+	"block.the_bumblezone.dead_honeycomb_larva_block":"空蜜脾育幼块",
+	"block.the_bumblezone.honeycomb_larva_block":"蜜脾育幼块",
 	"block.the_bumblezone.sugar_infused_cobblestone":"被糖浸渍的圆石",
 	"block.the_bumblezone.sugar_infused_stone":"被糖浸渍的石头",
-	"block.the_bumblezone.sticky_honey_residue":"粘性蜂蜜残渣",
-	"block.the_bumblezone.sticky_honey_redstone":"粘性蜂蜜红石粉",
+	"block.the_bumblezone.sticky_honey_residue":"黏性蜂蜜残渣",
+	"block.the_bumblezone.sticky_honey_redstone":"黏性蜂蜜红石残渣",
 	"block.the_bumblezone.honey_crystal":"蜂蜜结晶",
 	"block.the_bumblezone.beeswax_planks":"蜂蜡板",
-	
+
+	"fluid.the_bumblezone.sugar_water_still":"糖水",
+	"fluid.the_bumblezone.sugar_water_flowing":"糖水",
+
 	"item.the_bumblezone.honey_crystal_shards":"蜂蜜结晶碎片",
 	"item.the_bumblezone.sugar_water_bucket":"糖水桶",
 	"item.the_bumblezone.sugar_water_bottle":"糖水瓶",
 	"item.the_bumblezone.honey_crystal_shield":"§6蜂蜜结晶盾牌",
 	"item.the_bumblezone.honey_crystal_shield.level_tooltip":"盾牌等级",
 	"item.the_bumblezone.honey_slime_spawn_egg":"蜂蜜史莱姆刷怪蛋",
-	"item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov": "音乐唱片",
-	"item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov.desc": "Rimsky Korsakov - Flight of the Bumblebee",
-	"item.the_bumblezone.music_disc_honey_bee_rat_faced_boy": "音乐唱片",
-	"item.the_bumblezone.music_disc_honey_bee_rat_faced_boy.desc": "Rat Faced Boy - Honey Bee",
-	
+	"item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov":"音乐唱片",
+	"item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov.desc":"Rimsky Korsakov - Flight of the Bumblebee",
+	"item.the_bumblezone.music_disc_honey_bee_rat_faced_boy":"音乐唱片",
+	"item.the_bumblezone.music_disc_honey_bee_rat_faced_boy.desc":"Rat Faced Boy - Honey Bee",
+
 	"entity.the_bumblezone.honey_slime":"蜂蜜史莱姆",
 
-	"enchantment.the_bumblezone.comb_cutter": "梳刀具",
-	"enchantment.the_bumblezone.comb_cutter.desc": "(Needs translation) Mines combs, hives, nest, and wax blocks faster. Doubles the output of BeeNest and BeeHive blocks including Resourceful Bee's hives.",
+	"enchantment.the_bumblezone.comb_cutter":"蜜脾割具",
+	"enchantment.the_bumblezone.comb_cutter.desc":"能够更快地挖掘蜜脾、蜂巢、蜂房以及蜂蜡方块。能够双倍化蜂巢和蜂房的产物，对缤纷蜜蜂的蜂房同样生效。",
 
 	"biome.the_bumblezone.sugar_water_floor":"糖水底板",
 	"biome.the_bumblezone.hive_wall":"蜂巢壁",
 	"biome.the_bumblezone.hive_pillar":"蜂巢梁柱",
-	
+
 	"feature.the_bumblezone.honeycomb_hole":"蜜脾孔洞",
 	"feature.the_bumblezone.honeycomb_caves":"蜜脾洞穴",
 	"feature.the_bumblezone.cave_sugar_waterfall":"洞穴糖水瀑布",
-	
+
 	"effect.the_bumblezone.wrath_of_the_hive":"蜂群之怒",
 	"effect.the_bumblezone.protection_of_the_hive":"蜂群之护",
-	
+
 	"text.autoconfig.the_bumblezone-main.title":"黄蜂领域配置 §6(The Bumblezone)",
 	"text.autoconfig.the_bumblezone-main.category.dungeons":"地牢",
 	"text.autoconfig.the_bumblezone-main.category.bee_aggression":"蜜蜂行为",
 	"text.autoconfig.the_bumblezone-main.category.dimension":"维度",
 	"text.autoconfig.the_bumblezone-main.category.block_mechanics":"方块机制",
 	"text.autoconfig.the_bumblezone-main.category.mod_compatibility":"模组兼容",
-	
+
 	"text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.beeDungeonRarity":"蜜蜂地牢稀有度",
 	"text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spiderInfestedBeeDungeonRarity":"蛛满为患的蜜蜂地牢稀有度",
 	"text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spawnerRateSpiderBeeDungeon":"蜘蛛刷怪笼生成率",
-	
+
 	"text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.dispensersDropGlassBottles":"发射器掉落玻璃瓶",
-	
+
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone":"维度外的§6黄蜂领域§r状态效果",
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.showWrathOfTheHiveParticles":"可见的状态效果粒子",
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.aggressiveBees":"极具攻击性的蜜蜂",
@@ -61,7 +64,7 @@
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.speedBoostLevel":"极具攻击性的蜜蜂的§f速度提升§r幅度",
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.absorptionBoostLevel":"极具攻击性的蜜蜂的§f伤害吸收§r幅度",
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.strengthBoostLevel":"极具攻击性的蜜蜂的§f力量提升§r幅度",
-	
+
 	"text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.fogBrightnessPercentage":"迷雾亮度",
 	"text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.forceExitToOverworld":"离开§6黄蜂领域§r后总是回到主世界",
 	"text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.seaLevelOrHigherExitTeleporting":"离开§6黄蜂领域§r后总是回到海平面以上",
@@ -69,7 +72,7 @@
 	"text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive":"蜂巢下方的方块错误时提示",
 	"text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.generateBeenest":"离开§6黄蜂领域§r后生成蜂巢",
 	"text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.teleportationMode":"传送模式",
-	
+
 	"text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowPotionOfBeesCompat":"兼容蜜蜂药水",
 	"text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat":"兼容喷溅型蜜蜂药水",
 	"text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowCharmBeekeeperTradesCompat.@PrefixText": "\n将大黄蜂区的物品添加到魅力养蜂人的交易中",
@@ -84,7 +87,7 @@
 	"text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive.@PrefixText":"如果你在上方填写了传送时蜂巢/蜂箱下需要放置的方块, 而且将其所属的选项设定为了§a是§r, 那么在你尝试向下方放置了错误方块的蜂巢/蜂箱投掷末影珍珠时, 你会收到一条包含了正确方块名称的提示。",
 	"text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.generateBeenest.@PrefixText":"在离开§6黄蜂领域§r后, 如果没有在目标地点附近找到蜂巢, 是否会新生成一个蜂巢? \n§c仅适用于传送模式 1",
 	"text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.teleportationMode.@PrefixText":"传送模式:  在离开§6黄蜂领域§r时使用的传送模式。\n\n§l模式 1 §r: 玩家坐标会根据目标维度的坐标缩放比例被转化, 且游戏会尝试在目标地点附近寻找一个蜂巢/蜂箱, 使你在其上方生成。如果没能找到蜂巢/蜂箱, 玩家仍会被传送到目标地点。\n\n§l模式 2 §r: 总是将玩家生成在进入§6黄蜂领域§r时投掷末影珍珠的位置。\n\n§l模式 3 §r: 首先尝试使用§l模式 1 §r的传送机制。如果没能在目标地点附近找到蜂巢/蜂箱, 才会使用§l模式 2§r 的传送机制。",
-	
+
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.@PrefixText":"决定了§e蜂群之怒§r是否可以被施加到在§6黄蜂领域§r外捡起蜂蜜块、从被填满的多孔蜜脾块中收取蜂蜜、或者饮用蜂蜜瓶的玩家身上。",
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.showWrathOfTheHiveParticles.@PrefixText":"在生物激怒了§6黄蜂领域§r中的蜜蜂并被施加§e蜂群之怒§r时, 显示橙色的粒子效果。",
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.aggressiveBees.@PrefixText":"开启/关闭特定行为下激怒蜜蜂以及被施加§e蜂群之怒§r的能力。\n§e蜂群之怒§r: 蜜蜂可以透过墙体追踪到你, 并且它们会获得速度提升、伤害吸收和力量提升效果。\n\n注: 该选项也会影响蜜蜂对维度中其它生物的进攻性; 和平模式总会覆盖有关激怒蜜蜂的设定。",
@@ -94,11 +97,11 @@
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.speedBoostLevel.@PrefixText":"蜜蜂在向地面移动时 (而非飞行时) 的速度。\n(蜜蜂将要攻击时总是趋向于接近地面, 而速度提升会让它们接近地面的动作更接近俯冲, 因此提高该选项的数值会让蜜蜂以更快的速度进行俯冲攻击。)",
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.absorptionBoostLevel.@PrefixText":"蜜蜂对每个受到的伤害的吸收量 (表现为蜜蜂不间断地瞬时获得§e额外生命§r)。\n这意味着如果你想对蜜蜂造成实质性的伤害 (减少蜜蜂§c本身的生命§r而非§e额外生命§r, 因为后者会不断再生), 那么你每次造成的伤害都必须大于该选项中设定的伤害吸收等级所对应的§e额外生命§r。\n§l例如: §r伤害吸收 1 会令蜜蜂获得不断再生的 4 点§e额外生命§r (2 颗§e黄心§r) , 因此你的每次攻击都要造成超过 4 点伤害 (2 颗心) 以减少蜜蜂§c本身的生命§r。\n由此可见, 如果你将伤害吸收等级设为了 5 (对应 4*5=20 点§e额外生命§r), 那么你§l通常§r需要一把附有节肢杀手 V 的下界合金剑 (完全冷却后对节肢生物造成 5*2.5+8=20.5 点伤害), 才能实质性地伤害并杀死蜜蜂; 如果你将该选项的数值设置得特别高, 蜜蜂在原版体系中可能会近乎于无敌, 那样就不用玩了! ",
 	"text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.strengthBoostLevel.@PrefixText":"蜜蜂攻击伤害的提升幅度。\n( 5 或更高的数值可以秒杀没有防御点数或额外生命的玩家)",
-	
+
 	"text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.beeDungeonRarity.@PrefixText":"蜜蜂地牢的稀有度。\n(更高的数值意味着更高的罕见程度, 而设为 1000 会直接禁用蜜蜂地牢的生成)",
 	"text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spiderInfestedBeeDungeonRarity.@PrefixText":"蛛满为患的蜜蜂地牢的稀有度。\n(更高的数值意味着更高的罕见程度, 而设为 1000 会直接禁用蛛满为患的蜜蜂地牢的生成)",
 	"text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spawnerRateSpiderBeeDungeon.@PrefixText":"在蛛满为患的蜜蜂地牢中, 蜘蛛/洞穴蜘蛛刷怪笼的满度。\n( 0 表示不生成刷怪笼, 1 表示生成最大数量的刷怪笼; 默认值为 0.2 )",
-	
+
 	"text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowPotionOfBeesCompat.@PrefixText":"允许对着空巢脾育苗块使用来自 Potion of Bees 模组的蜜蜂药水, 以将其转化为带有一只蜜蜂幼虫的巢脾育苗块。(同样适用于发射器)",
 	"text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat.@PrefixText":"允许在空巢脾育苗块附近投掷来自 Potion of Bees 模组的喷溅型蜜蜂药水, 以将其转化为带有一只蜜蜂幼虫的巢脾育苗块。(同样适用于发射器)"
 }

@@ -12,6 +12,9 @@
   "block.the_bumblezone.honey_crystal": "Honey Crystal",
   "block.the_bumblezone.beeswax_planks": "Beeswax Planks",
 
+  "fluid.the_bumblezone.sugar_water_still":"Sugar Water",
+  "fluid.the_bumblezone.sugar_water_flowing":"Sugar Water",
+
   "item.the_bumblezone.honey_crystal_shards": "Honey Crystal Shards",
   "item.the_bumblezone.sugar_water_bucket": "Sugar Water Bucket",
   "item.the_bumblezone.sugar_water_bottle": "Sugar Water Bottle",
