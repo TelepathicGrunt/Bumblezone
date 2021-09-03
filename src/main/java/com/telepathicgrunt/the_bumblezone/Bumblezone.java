@@ -29,6 +29,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFeatures;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
+import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -103,6 +104,7 @@ public class Bumblezone{
         BzEntities.ENTITIES.register(modEventBus);
         BzSounds.SOUND_EVENTS.register(modEventBus);
         BzPlacements.DECORATORS.register(modEventBus);
+        BzParticles.PARTICLE_TYPES.register(modEventBus);
         BzEnchantments.ENCHANTMENTS.register(modEventBus);
         BzSurfaceBuilders.SURFACE_BUILDERS.register(modEventBus);
 

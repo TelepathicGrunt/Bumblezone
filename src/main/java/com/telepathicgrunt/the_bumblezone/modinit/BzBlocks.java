@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.FilledPorousHoneycomb;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.blocks.PorousHoneycomb;
 import com.telepathicgrunt.the_bumblezone.blocks.StickyHoneyRedstone;
 import com.telepathicgrunt.the_bumblezone.blocks.StickyHoneyResidue;
@@ -22,7 +23,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class BzBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Bumblezone.MODID);
-    public static Material RESIDUE = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.COLOR_ORANGE))
+    public static Material ORANGE_NOT_SOLID = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.COLOR_ORANGE))
             .thebumblezone_getNotSolidBlocking()).thebumblezone_getDestroyOnPush().noCollider().replaceable().nonSolid().build();
 
     //Blocks
@@ -36,5 +37,6 @@ public class BzBlocks {
     public static final RegistryObject<Block> STICKY_HONEY_RESIDUE = BLOCKS.register("sticky_honey_residue", StickyHoneyResidue::new);
     public static final RegistryObject<Block> STICKY_HONEY_REDSTONE = BLOCKS.register("sticky_honey_redstone", StickyHoneyRedstone::new);
     public static final RegistryObject<Block> BEESWAX_PLANKS = BLOCKS.register("beeswax_planks", BeeswaxPlanks::new);
+    public static final RegistryObject<Block> PILE_OF_POLLEN = BLOCKS.register("pile_of_pollen", PileOfPollen::new);
 
 }

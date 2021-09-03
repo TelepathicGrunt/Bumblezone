@@ -20,7 +20,7 @@ public class FluidRender {
 
     public static void sugarWaterOverlay(RenderBlockOverlayEvent event)
     {
-        if (event.getPlayer().level.getBlockState(event.getBlockPos()).getBlock() == BzFluids.SUGAR_WATER_BLOCK.get())
+        if (event.getPlayer().level.getBlockState(event.getBlockPos()).is(BzFluids.SUGAR_WATER_BLOCK.get()))
         {
             Minecraft minecraftIn = Minecraft.getInstance();
             minecraftIn.getTextureManager().bind(TEXTURE_UNDERWATER);

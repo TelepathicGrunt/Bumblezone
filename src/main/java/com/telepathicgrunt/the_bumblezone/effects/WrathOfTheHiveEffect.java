@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.modcompat.CarrierBeeRedirection;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -138,7 +139,7 @@ public class WrathOfTheHiveEffect extends Effect {
                     PointOfInterest poi = poiInRange.remove(index);
                     if(world.random.nextFloat() < chanceofGrowth){
                         BlockState state = world.getBlockState(poi.getPos());
-                        if(state.getBlock() instanceof HoneycombBrood){
+                        if(state.is(BzBlocks.HONEYCOMB_BROOD.get())){
                             state.tick((ServerWorld) world, poi.getPos(), world.random);
                         }
                     }

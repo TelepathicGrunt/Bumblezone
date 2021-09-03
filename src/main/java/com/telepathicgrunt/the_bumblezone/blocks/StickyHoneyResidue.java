@@ -52,7 +52,7 @@ public class StickyHoneyResidue extends VineBlock {
             SixWayBlock.PROPERTY_BY_DIRECTION.entrySet().stream().collect(Util.toMap());
 
     public StickyHoneyResidue() {
-        super(AbstractBlock.Properties.of(BzBlocks.RESIDUE, MaterialColor.COLOR_ORANGE).noCollission().strength(6.0f, 0.0f).noOcclusion());
+        super(AbstractBlock.Properties.of(BzBlocks.ORANGE_NOT_SOLID, MaterialColor.COLOR_ORANGE).noCollission().strength(6.0f, 0.0f).noOcclusion());
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(UP, false)
                 .setValue(NORTH, false)
