@@ -44,7 +44,7 @@ public class PileOfPollenRenderer {
                         if((x*x) + (y*y) + (z*z) <= 2) continue;
 
                         double eyePosX = playerEntity.getX() + x * playerEntity.getBbWidth() * 0.155F;
-                        double eyePosY = playerEntity.getEyeY() + y * 0.1F;
+                        double eyePosY = playerEntity.getEyeY() + y * 0.245F;
                         double eyePosZ = playerEntity.getZ() + z * playerEntity.getBbWidth() * 0.155F;
                         Vector3d eyePosition = new Vector3d(eyePosX, eyePosY, eyePosZ);
                         BlockPos eyeBlockPos = new BlockPos(eyePosition);

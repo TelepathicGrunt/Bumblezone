@@ -60,9 +60,8 @@ public class PileOfPollen extends FallingBlock {
 
     public PileOfPollen() {
         super(AbstractBlock.Properties.of(BzBlocks.ORANGE_NOT_SOLID)
-                .isViewBlocking((blockState, world, blockPos) -> {
-                    return true;
-                })
+                .isViewBlocking((blockState, world, blockPos) -> true)
+                .noOcclusion()
                 .strength(0.1F)
                 .harvestTool(ToolType.SHOVEL)
                 .sound(SoundType.SNOW));
@@ -293,7 +292,7 @@ public class PileOfPollen extends FallingBlock {
         if(initialLayerValue < 8){
             int layerToMax = (8 - initialLayerValue);
             lastSetState = blockState.setValue(LAYERS, initialLayerValue + Math.min(layerToMax, layersToAdd));
-            world.setBlock(blockPos, lastSetState, 3);
+            if(!world.isClientSide()) world.setBlock(blockPos, lastSetState, 3);
             layersToAdd -= layerToMax;
         }
 
@@ -305,7 +304,7 @@ public class PileOfPollen extends FallingBlock {
             // Stack on top of this pile
             if(layersToAdd > 0 && aboveState.isAir()) {
                 lastSetState = blockState.setValue(LAYERS, layersToAdd);
-                world.setBlock(blockPos.above(), blockState.setValue(LAYERS, layersToAdd), 3);
+                if(!world.isClientSide()) world.setBlock(blockPos.above(), blockState.setValue(LAYERS, layersToAdd), 3);
             }
 
             // Particles!

@@ -13,6 +13,7 @@ import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.network.IPacket;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -92,15 +93,16 @@ public class PollenPuffEntity extends ProjectileItemEntity {
 
         BlockState blockstate = this.level.getBlockState(blockRayTraceResult.getBlockPos());
         blockstate.onProjectileHit(this.level, blockstate, blockRayTraceResult, this);
-
-        if(blockstate.is(Blocks.HONEY_BLOCK) || blockstate.is(Blocks.SOUL_SAND) || blockstate.isFaceSturdy(this.level, blockRayTraceResult.getBlockPos(), blockRayTraceResult.getDirection())){
+        if(blockstate.is(Blocks.HONEY_BLOCK) || blockstate.is(Blocks.SOUL_SAND) || blockRayTraceResult.getDirection() == Direction.UP || blockstate.isFaceSturdy(this.level, blockRayTraceResult.getBlockPos(), blockRayTraceResult.getDirection())){
             BlockPos impactSide = blockRayTraceResult.getBlockPos().relative(blockRayTraceResult.getDirection());
             BlockState sideState = this.level.getBlockState(impactSide);
+            BlockState pileOfPollen = BzBlocks.PILE_OF_POLLEN.get().defaultBlockState();
+
             if(sideState.isAir()) {
                 this.level.setBlock(impactSide, BzBlocks.PILE_OF_POLLEN.get().defaultBlockState(), 3);
                 consumed = true;
             }
-            else if(sideState.is(BzBlocks.PILE_OF_POLLEN.get())) {
+            else if(sideState.is(pileOfPollen.getBlock()) && pileOfPollen.canSurvive(this.level, impactSide)) {
                 PileOfPollen.stackPollen(sideState, this.level, impactSide, BzBlocks.PILE_OF_POLLEN.get().defaultBlockState());
                 consumed = true;
             }

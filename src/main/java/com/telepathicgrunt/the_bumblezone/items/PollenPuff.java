@@ -52,7 +52,7 @@ public class PollenPuff extends Item {
         // right clicking on pollinated bee with pollen puff with room, gets pollen puff into hand.
         // else, if done with pollen puff without room, drops pollen puff in world
         if(beeEntity.hasNectar() && itemstack.getItem().equals(BzItems.POLLEN_PUFF.get())) {
-            Block.popResource(entity.level, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
+            Block.popResource(entity.level, beeEntity.blockPosition(), BzItems.POLLEN_PUFF.get().getDefaultInstance());
             playerEntity.swing(hand, true);
             beeEntity.dropOffNectar();
             return ActionResultType.SUCCESS;
@@ -64,17 +64,18 @@ public class PollenPuff extends Item {
     @Override
     public ActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
-        world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
-        if (!world.isClientSide) {
-            PollenPuffEntity pollenPuffEntity = new PollenPuffEntity(world, playerEntity);
-            pollenPuffEntity.setItem(itemstack);
-            pollenPuffEntity.shootFromRotation(playerEntity, playerEntity.xRot, playerEntity.yRot, 0.0F, 1.5F, 1.0F);
-            world.addFreshEntity(pollenPuffEntity);
-        }
 
-        playerEntity.awardStat(Stats.ITEM_USED.get(this));
-        if (!playerEntity.abilities.instabuild) {
-            itemstack.shrink(1);
+        if (!world.isClientSide) {
+            world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+                PollenPuffEntity pollenPuffEntity = new PollenPuffEntity(world, playerEntity);
+                pollenPuffEntity.setItem(itemstack);
+                pollenPuffEntity.shootFromRotation(playerEntity, playerEntity.xRot, playerEntity.yRot, 0.0F, 1.5F, 1.0F);
+                world.addFreshEntity(pollenPuffEntity);
+
+            playerEntity.awardStat(Stats.ITEM_USED.get(this));
+            if (!playerEntity.abilities.instabuild) {
+                itemstack.shrink(1);
+            }
         }
 
         return ActionResult.sidedSuccess(itemstack, world.isClientSide());
