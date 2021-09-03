@@ -44,6 +44,7 @@ public class PollenPuff extends Item {
 
     @Override
     public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity playerEntity, LivingEntity entity, Hand hand) {
+        // No clientside exit early because if we return early, the use method runs on server and thus, throws pollen puff and depollinates bee at same time.
         if (!(entity instanceof BeeEntity)) return ActionResultType.PASS;
 
         BeeEntity beeEntity = (BeeEntity)entity;
@@ -52,7 +53,9 @@ public class PollenPuff extends Item {
         // right clicking on pollinated bee with pollen puff with room, gets pollen puff into hand.
         // else, if done with pollen puff without room, drops pollen puff in world
         if(beeEntity.hasNectar() && itemstack.getItem().equals(BzItems.POLLEN_PUFF.get())) {
-            Block.popResource(entity.level, beeEntity.blockPosition(), BzItems.POLLEN_PUFF.get().getDefaultInstance());
+            if(!entity.level.isClientSide())
+                Block.popResource(entity.level, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
+
             playerEntity.swing(hand, true);
             beeEntity.dropOffNectar();
             return ActionResultType.SUCCESS;

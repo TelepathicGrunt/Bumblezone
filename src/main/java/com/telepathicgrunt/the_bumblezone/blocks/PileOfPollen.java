@@ -17,6 +17,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.FallingBlockEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.BeeEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.DirectionalPlaceContext;
 import net.minecraft.item.Item;
@@ -240,7 +241,7 @@ public class PileOfPollen extends FallingBlock {
         // slows the entity and spawns particles
         else {
             int layerValueMinusOne = blockState.getValue(LAYERS) - 1;
-            double speedReduction = 1 - layerValueMinusOne * 0.1D;
+            double speedReduction = (entity instanceof ProjectileEntity) ? 0.85f : 1 - layerValueMinusOne * 0.1D;
             double chance = 0.22f + layerValueMinusOne * 0.09f;
 
             Vector3d deltaMovement = entity.getDeltaMovement();
@@ -260,7 +261,7 @@ public class PileOfPollen extends FallingBlock {
                     spawnParticles(
                             world,
                             entity.position()
-                                    .add(entity.getDeltaMovement().multiply(4D, 4D, 4D))
+                                    .add(entity.getDeltaMovement().multiply(2D, 2D, 2D))
                                     .add(0, 0.75D, 0),
                             world.random,
                             0.006D * particleStrength,
