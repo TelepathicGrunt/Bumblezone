@@ -5,7 +5,9 @@ import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -68,7 +70,7 @@ public class BeeInteractivity {
                         givePlayerContainer(playerEntity, hand, itemstack, Items.BOWL);
                     }
                     else if(itemRL.getPath().contains("bucket") && !itemstack.getItem().equals(Items.BUCKET)){
-                        givePlayerContainer(playerEntity, hand, itemstack, Items.BOWL);
+                        givePlayerContainer(playerEntity, hand, itemstack, Items.BUCKET);
                     }
                     else if(itemRL.getPath().contains("bottle") && !itemstack.getItem().equals(Items.GLASS_BOTTLE)){
                         givePlayerContainer(playerEntity, hand, itemstack, Items.GLASS_BOTTLE);
@@ -80,7 +82,7 @@ public class BeeInteractivity {
     }
 
     public static ActionResultType beeUnpollinating(World world, PlayerEntity playerEntity, Hand hand, BeeEntity beeEntity) {
-        if (!world.isClientSide) {
+        if (!world.isClientSide && beeEntity.getType().is(BzEntityTags.POLLEN_PUFF_CAN_POLLINATE)) {
             ItemStack itemstack = playerEntity.getItemInHand(hand);
             Item item = itemstack.getItem();
 
@@ -88,11 +90,11 @@ public class BeeInteractivity {
             // else, if done with watery items or pollen puff without room, drops pollen puff in world
             if(beeEntity.hasNectar()) {
                  if(itemstack.isEmpty() ||
-                            (itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water")) ||
-                            item == Items.WET_SPONGE ||
-                            item == BzItems.SUGAR_WATER_BOTTLE.get() ||
-                            (item instanceof BucketItem && ((BucketItem) item).getFluid().is(FluidTags.WATER))) {
-                     PollenPuff.spawnItemstackEntity(world, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
+                        (itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water")) ||
+                        item == Items.WET_SPONGE ||
+                        item == BzItems.SUGAR_WATER_BOTTLE.get() ||
+                        (item instanceof BucketItem && ((BucketItem) item).getFluid().is(FluidTags.WATER))) {
+                    PollenPuff.spawnItemstackEntity(world, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
                     playerEntity.swing(hand, true);
                     beeEntity.dropOffNectar();
                     return ActionResultType.SUCCESS;

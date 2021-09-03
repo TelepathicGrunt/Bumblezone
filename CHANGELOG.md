@@ -23,6 +23,10 @@ Added Pollen Puff item!
  If it hits an unpollinated bee, it will pollinate them (modded bees can be added to the the_bumblezone:pollen_puff_can_pollinate tag that controls what bee can be pollinated)
  If it hits a flower, the flower may reproduce! (see the block tags for thw two tags that control what flowers can be reproduced by Pollen Puff)
 
+##### Entities:
+Fixed feeding bees a bucket items gives you a bowl back instead.
+
+
 ### **(V.2.4.11 Changes) (1.16.5 Minecraft)**
 
 ##### Sounds:
