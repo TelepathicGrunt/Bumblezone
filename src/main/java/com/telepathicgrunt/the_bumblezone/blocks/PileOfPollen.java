@@ -15,6 +15,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.FallingBlockEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.DirectionalPlaceContext;
@@ -58,7 +59,13 @@ public class PileOfPollen extends FallingBlock {
     private Item item;
 
     public PileOfPollen() {
-        super(AbstractBlock.Properties.of(BzBlocks.ORANGE_NOT_SOLID).strength(0.1F).harvestTool(ToolType.SHOVEL).sound(SoundType.SNOW));
+        super(AbstractBlock.Properties.of(BzBlocks.ORANGE_NOT_SOLID)
+                .isViewBlocking((blockState, world, blockPos) -> {
+                    return true;
+                })
+                .strength(0.1F)
+                .harvestTool(ToolType.SHOVEL)
+                .sound(SoundType.SNOW));
     }
 
     @Override
@@ -246,9 +253,10 @@ public class PileOfPollen extends FallingBlock {
             double entitySpeed = entity.getDeltaMovement().length();
 
             if(world.isClientSide() && entitySpeed != 0 && world.random.nextFloat() < chance){
-                int particleStrength = (int) (entitySpeed / 0.0045D);
-                for(int i = 0; i < particleStrength; i++) {
-                    if(particleStrength > 5) spawnParticles(blockState, world, blockPos, world.random, true);
+                int particleNumber = (int) (entitySpeed / 0.0045D);
+                int particleStrength = Math.min(20, particleNumber);
+                for(int i = 0; i < particleNumber; i++) {
+                    if(particleNumber > 5) spawnParticles(blockState, world, blockPos, world.random, true);
 
                     spawnParticles(
                             world,
@@ -257,7 +265,7 @@ public class PileOfPollen extends FallingBlock {
                                     .add(0, 0.75D, 0),
                             world.random,
                             0.006D * particleStrength,
-                            0.00075D * particleStrength,
+                             0.00075D * particleStrength,
                             0.006D * particleStrength);
                 }
             }

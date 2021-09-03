@@ -1,19 +1,29 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import net.minecraft.block.Block;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.ProjectileDispenseBehavior;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class PollenPuff extends Item {
@@ -30,6 +40,25 @@ public class PollenPuff extends Item {
                         (pollenPuffEntity) -> pollenPuffEntity.setItem(itemStack));
             }
         });
+    }
+
+    @Override
+    public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity playerEntity, LivingEntity entity, Hand hand) {
+        if (!(entity instanceof BeeEntity)) return ActionResultType.PASS;
+
+        BeeEntity beeEntity = (BeeEntity)entity;
+        ItemStack itemstack = playerEntity.getItemInHand(hand);
+
+        // right clicking on pollinated bee with pollen puff with room, gets pollen puff into hand.
+        // else, if done with pollen puff without room, drops pollen puff in world
+        if(beeEntity.hasNectar() && itemstack.getItem().equals(BzItems.POLLEN_PUFF.get())) {
+            Block.popResource(entity.level, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
+            playerEntity.swing(hand, true);
+            beeEntity.dropOffNectar();
+            return ActionResultType.SUCCESS;
+        }
+
+        return ActionResultType.PASS;
     }
 
     @Override

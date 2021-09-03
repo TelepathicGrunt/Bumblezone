@@ -85,32 +85,21 @@ public class BeeInteractivity {
     public static ActionResultType beeUnpollinating(World world, PlayerEntity playerEntity, Hand hand, BeeEntity beeEntity) {
         if (!world.isClientSide) {
             ItemStack itemstack = playerEntity.getItemInHand(hand);
+            Item item = itemstack.getItem();
 
             // right clicking on pollinated bee with empty hand or pollen puff with room, gets pollen puff into hand.
             // else, if done with watery items or pollen puff without room, drops pollen puff in world
             if(beeEntity.hasNectar()) {
-                if(itemstack.isEmpty()) {
-                    playerEntity.setItemInHand(hand, new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
-                    playerEntity.swing(hand, true);
-                    beeEntity.dropOffNectar();
-                    return ActionResultType.SUCCESS;
-                }
-                else if(itemstack.getItem().equals(BzItems.POLLEN_PUFF.get()) && itemstack.getCount() < itemstack.getMaxStackSize()) {
-                    itemstack.grow(1);
-                    playerEntity.swing(hand, true);
-                    beeEntity.dropOffNectar();
-                    return ActionResultType.SUCCESS;
-                }
-                else if((((BucketItem) itemstack.getItem()).getFluid().is(FluidTags.WATER)) ||
+                 if(itemstack.isEmpty() ||
                         itemstack.getOrCreateTag().getString("Potion").contains("water") ||
-                        itemstack.getItem() == Items.WET_SPONGE ||
-                        itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get() ||
-                        itemstack.getItem().equals(BzItems.POLLEN_PUFF.get())) {
+                        item == Items.WET_SPONGE ||
+                        item == BzItems.SUGAR_WATER_BOTTLE.get() ||
+                        (item instanceof BucketItem && ((BucketItem) item).getFluid().is(FluidTags.WATER))) {
                     Block.popResource(world, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
                     playerEntity.swing(hand, true);
                     beeEntity.dropOffNectar();
                     return ActionResultType.SUCCESS;
-                }
+                 }
             }
         }
 

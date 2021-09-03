@@ -74,7 +74,7 @@ public class PollenPuffEntity extends ProjectileItemEntity {
 
     @Override
     protected void onHitEntity(EntityRayTraceResult entityRayTraceResult) {
-        if(consumed) return; // do not run this code if a block already was set.
+        if(this.level.isClientSide() || consumed) return; // do not run this code if a block already was set.
 
         super.onHitEntity(entityRayTraceResult);
         Entity entity = entityRayTraceResult.getEntity();
@@ -88,7 +88,7 @@ public class PollenPuffEntity extends ProjectileItemEntity {
 
     @Override
     protected void onHitBlock(BlockRayTraceResult blockRayTraceResult) {
-        if(consumed) return; // do not run this code if a block already was set.
+        if(this.level.isClientSide() || consumed) return; // do not run this code if a block already was set.
 
         BlockState blockstate = this.level.getBlockState(blockRayTraceResult.getBlockPos());
         blockstate.onProjectileHit(this.level, blockstate, blockRayTraceResult, this);
