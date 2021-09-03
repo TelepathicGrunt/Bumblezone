@@ -17,4 +17,6 @@ public class BzBlockTags {
     public static final ITag.INamedTag<Block> WRATH_ACTIVATING_BLOCKS_WHEN_MINED = BlockTags.bind(Bumblezone.MODID+":wrath_activating_blocks_when_mined");
     public static final ITag.INamedTag<Block> FLOWERS_ALLOWED_BY_POLLEN_PUFF = BlockTags.bind(Bumblezone.MODID+":flowers_allowed_by_pollen_puff");
     public static final ITag.INamedTag<Block> FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF = BlockTags.bind(Bumblezone.MODID+":flowers_blacklisted_from_pollen_puff");
+
+    public static final ITag.INamedTag<Block> FORGE_STORAGE_BLOCK_WAX = BlockTags.bind("forge:storage_blocks/wax");
 }

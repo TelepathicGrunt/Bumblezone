@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import net.minecraft.block.AbstractBlock;
@@ -129,7 +130,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         /*
          * Player is feeding larva
          */
-        else if (itemstack.getItem() == Items.HONEY_BOTTLE || itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
+        else if (itemstack.getItem().is(BzItemTags.BEE_FEEDING_ITEMS)) {
             if (!world.isClientSide) {
                 boolean successfulGrowth = false;
 

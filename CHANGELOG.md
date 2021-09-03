@@ -1,8 +1,27 @@
-### **(V.2.4.12 Changes) (1.16.5 Minecraft)**
+### **(V.2.5.0 Changes) (1.16.5 Minecraft)**
 
 ##### Translations:
 Special thanks to mcBegins2Snow for helping to clean up some zh_cn.json translations!
 
+##### Blocks:
+Added Pile of Pollen block! 
+ Gives off pollen particles when any entity walks through it and slows down the entity based on how high the pile is.
+ Is a falling block that can be used to blind players or to hide (players cannot see through the block when inside).
+ Unpollinated bees will become polinated when they touch the block (decreases the pile by 1 layer) (modded bees can be added to the the_bumblezone:pollen_puff_can_pollinate tag that controls what bee can be pollinated).
+ Pandas in the block will sneeze significantly more often.
+ Breaking the block gives a little bit of Pollen Puff item but Fortune increases the drops. Shovels is the best tool for this block.
+
+Honeycomb Brood blocks can be feed items from the the_bumblezone:bee_feeding_item tag.
+
+Adjusted texture a bit for Sticky Honey Residue and Sticky Honey Redstone.
+
+##### Items:
+Added Pollen Puff item!
+ Can be thrown like a snowball but will not deal any damage or pushback.
+ When it hits a block, it will try to spawn a Pile of Pollen block (if in midair, it'll turn into a falling block)
+ Will make pandas sneeze if thrown at them.
+ If it hits an unpollinated bee, it will pollinate them (modded bees can be added to the the_bumblezone:pollen_puff_can_pollinate tag that controls what bee can be pollinated)
+ If it hits a flower, the flower may reproduce! (see the block tags for thw two tags that control what flowers can be reproduced by Pollen Puff)
 
 ### **(V.2.4.11 Changes) (1.16.5 Minecraft)**
 

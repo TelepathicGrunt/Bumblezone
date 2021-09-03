@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.enchantments;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
+import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -15,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.ShearsItem;
 import net.minecraft.item.SwordItem;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Lazy;
@@ -42,7 +44,7 @@ public class CombCutterEnchantment extends Enchantment {
                 Set<Block> validBlocks = new HashSet<>();
                 ForgeRegistries.BLOCKS.getEntries().forEach(entry ->{
                     String path = entry.getKey().location().getPath();
-                    if(entry.getValue() instanceof BeehiveBlock || path.contains("hive") || path.contains("nest") || (path.contains("wax") && !path.contains("waxed"))){
+                    if(entry.getValue() instanceof BeehiveBlock || path.contains("hive") || path.contains("nest") || (path.contains("wax") && !path.contains("waxed")) || entry.getValue().is(BzBlockTags.FORGE_STORAGE_BLOCK_WAX)){
                         validBlocks.add(entry.getValue());
                     }
                 });
