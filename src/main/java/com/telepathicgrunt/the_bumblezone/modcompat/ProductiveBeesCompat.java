@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
+import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehive;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehiveAbstract;
 import cy.jdkdigital.productivebees.common.block.ExpansionBox;
@@ -203,13 +203,13 @@ public class ProductiveBeesCompat {
 			// Add all the comb cfs that are registered.
 			// We ignore the datapack combs as that's too much work to support tbh.
 			for (Pair<Block, ConfiguredFeature<?, ?>> cf : PRODUCTIVE_BEES_CFS) {
-				if (!BZBlockTags.BLACKLISTED_PRODUCTIVEBEES_COMBS.contains(cf.getFirst()))
+				if (!BzBlockTags.BLACKLISTED_PRODUCTIVEBEES_COMBS.contains(cf.getFirst()))
 					biome.getGenerationSettings().features().get(GenerationStage.Decoration.UNDERGROUND_ORES.ordinal()).add(cf::getSecond);
 			}
 		}
 
-		SPIDER_DUNGEON_HONEYCOMBS.removeIf(BZBlockTags.BLACKLISTED_PRODUCTIVEBEES_COMBS::contains);
-		ORE_BASED_HONEYCOMB_VARIANTS.removeIf(BZBlockTags.BLACKLISTED_PRODUCTIVEBEES_COMBS::contains);
+		SPIDER_DUNGEON_HONEYCOMBS.removeIf(BzBlockTags.BLACKLISTED_PRODUCTIVEBEES_COMBS::contains);
+		ORE_BASED_HONEYCOMB_VARIANTS.removeIf(BzBlockTags.BLACKLISTED_PRODUCTIVEBEES_COMBS::contains);
 	}
 
 	/**

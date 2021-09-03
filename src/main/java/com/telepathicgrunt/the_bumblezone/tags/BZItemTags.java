@@ -5,7 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 
-public class BZItemTags {
+public class BzItemTags {
     // All tag wrappers need to be made at mod init.
     public static void tagInit(){}
 

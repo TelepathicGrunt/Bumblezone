@@ -8,7 +8,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
+import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import net.minecraft.block.BeehiveBlock;
@@ -475,7 +475,7 @@ public class EntityTeleportationBackend {
 
 
     public static boolean isValidBeeHive(BlockState block) {
-        if(BZBlockTags.BLACKLISTED_TELEPORTATION_HIVES.contains(block.getBlock())) return false;
+        if(BzBlockTags.BLACKLISTED_TELEPORTATION_HIVES.contains(block.getBlock())) return false;
 
         if(BlockTags.BEEHIVES.contains(block.getBlock()) || block.getBlock() instanceof BeehiveBlock) {
             if(Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get() ||

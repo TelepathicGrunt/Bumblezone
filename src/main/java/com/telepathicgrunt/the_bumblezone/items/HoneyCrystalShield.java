@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.tags.BZItemTags;
+import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -35,7 +35,7 @@ public class HoneyCrystalShield extends ShieldItem {
      */
     @Override
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return BZItemTags.HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS.contains(repair.getItem());
+        return BzItemTags.HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS.contains(repair.getItem());
     }
 
     /**

@@ -2,9 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
-import com.telepathicgrunt.the_bumblezone.tags.BZItemTags;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
+import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,7 +18,7 @@ public class CreatingHoneySlime {
     // heal bees with sugar water bottle or honey bottle
     public static void createHoneySlime(World world, PlayerEntity playerEntity, Hand hand, SlimeEntity slimeEntity) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
-        if (!world.isClientSide && BZItemTags.TURN_SLIME_TO_HONEY_SLIME.contains(itemstack.getItem())) {
+        if (!world.isClientSide && BzItemTags.TURN_SLIME_TO_HONEY_SLIME.contains(itemstack.getItem())) {
 
             int slimeSize = slimeEntity.getSize();
             HoneySlimeEntity honeySlimeMob = BzEntities.HONEY_SLIME.get().create(world);

@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone;
 
+import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityEntityPosAndDim;
 import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityEventHandler;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
@@ -34,8 +35,9 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSurfaceBuilders;
-import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
-import com.telepathicgrunt.the_bumblezone.tags.BZItemTags;
+import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
+import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
+import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import net.minecraft.block.Block;
@@ -71,8 +73,9 @@ public class Bumblezone{
     public Bumblezone() {
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        BZBlockTags.tagInit(); // Done extra early as some features needs the tag wrapper.
-        BZItemTags.tagInit();
+        BzBlockTags.tagInit(); // Done extra early as some features needs the tag wrapper.
+        BzItemTags.tagInit();
+        BzEntityTags.tagInit();
 
         //Events
         forgeBus.addListener(BeeAggression::pickupItemAnger);
@@ -86,6 +89,7 @@ public class Bumblezone{
         forgeBus.addListener(PotionOfBeesBeeSplashPotionProjectile::ProjectileImpactEvent);
         forgeBus.addGenericListener(Entity.class, CapabilityEventHandler::onAttachCapabilitiesToEntities);
         forgeBus.addListener(EntityTeleportationHookup::entityTick);
+        forgeBus.addListener(PileOfPollen::pandaSneezing);
         forgeBus.addListener(BeeAggression::playerTick);
 
         //Registration

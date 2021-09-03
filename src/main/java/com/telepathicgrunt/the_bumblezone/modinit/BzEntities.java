@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
+import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;

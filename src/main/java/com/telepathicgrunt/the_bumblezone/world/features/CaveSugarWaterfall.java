@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
-import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
+import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.Direction;
@@ -29,7 +29,7 @@ public class CaveSugarWaterfall extends Feature<NoFeatureConfig> {
         BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position);
         BlockState blockstate = world.getBlockState(blockpos$Mutable.above());
 
-        if (!blockstate.canOcclude() || blockstate.is(BZBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
+        if (!blockstate.canOcclude() || blockstate.is(BzBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
             return false;
         } else {
             //checks if we are in the side of a wall with air exposed on one side
@@ -38,7 +38,7 @@ public class CaveSugarWaterfall extends Feature<NoFeatureConfig> {
             int neededNumberOfSides;
             blockstate = world.getBlockState(blockpos$Mutable.below());
 
-            if (blockstate.canOcclude() && blockstate.is(BZBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
+            if (blockstate.canOcclude() && blockstate.is(BzBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
                 neededNumberOfSides = 3;
             } else if (blockstate.getBlock() == CAVE_AIR.getBlock()) {
                 neededNumberOfSides = 4;
@@ -49,7 +49,7 @@ public class CaveSugarWaterfall extends Feature<NoFeatureConfig> {
 
             for (Direction face : Direction.Plane.HORIZONTAL) {
                 blockstate = world.getBlockState(blockpos$Mutable.relative(face));
-                if (blockstate.canOcclude() && blockstate.is(BZBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
+                if (blockstate.canOcclude() && blockstate.is(BzBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
                     ++numberOfSolidSides;
                 } else if (blockstate.getBlock() != CAVE_AIR.getBlock()) {
                     return false;

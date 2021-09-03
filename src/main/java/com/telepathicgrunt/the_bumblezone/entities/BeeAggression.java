@@ -4,8 +4,8 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
-import com.telepathicgrunt.the_bumblezone.tags.BZItemTags;
+import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
+import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
@@ -97,7 +97,7 @@ public class BeeAggression {
         PlayerEntity player = event.getPlayer();
         BlockState blockState = event.getState();
 
-        if (BZBlockTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED.contains(blockState.getBlock())) {
+        if (BzBlockTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED.contains(blockState.getBlock())) {
             angerBees(player);
         }
     }
@@ -108,7 +108,7 @@ public class BeeAggression {
         PlayerEntity player = event.getPlayer();
         Item item = event.getStack().getItem();
 
-        if (BZItemTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP.contains(item)) {
+        if (BzItemTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP.contains(item)) {
             angerBees(player);
         }
     }

@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.capabilities.IEntityPosAndDim;
-import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
+import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -138,8 +138,8 @@ public class EntityTeleportationHookup {
 
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = false;
-            if(!BZBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.getValues().isEmpty()) {
-                if(BZBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.below()).getBlock())) {
+            if(!BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.getValues().isEmpty()) {
+                if(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.below()).getBlock())) {
                     validBelowBlock = true;
                 }
                 else if(Bumblezone.BzDimensionConfig.warnPlayersOfWrongBlockUnderHive.get()) {
@@ -188,8 +188,8 @@ public class EntityTeleportationHookup {
             {
                 //checks if block under hive is correct if config needs one
                 boolean validBelowBlock = false;
-                if(!BZBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.getValues().isEmpty()) {
-                    if(BZBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.below()).getBlock())) {
+                if(!BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.getValues().isEmpty()) {
+                    if(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.below()).getBlock())) {
                         validBelowBlock = true;
                     }
                     else if(Bumblezone.BzDimensionConfig.warnPlayersOfWrongBlockUnderHive.get()) {

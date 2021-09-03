@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.mixin.entities;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.CreatingHoneySlime;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;

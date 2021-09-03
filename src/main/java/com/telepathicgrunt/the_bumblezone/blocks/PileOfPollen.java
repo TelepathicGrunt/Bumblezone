@@ -6,17 +6,19 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.FallingBlockEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.BeeEntity;
+import net.minecraft.entity.passive.PandaEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -41,6 +43,8 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -289,7 +293,7 @@ public class PileOfPollen extends FallingBlock {
             }
 
             // reduce pile of pollen to pollinate bee
-            if(entity instanceof BeeEntity && !((BeeEntity)entity).hasNectar()) {
+            if(entity instanceof BeeEntity && !((BeeEntity)entity).hasNectar() && BzEntityTags.POLLEN_PUFF_CAN_POLLINATE.contains(entity.getType())) {
                 ((BeeEntity)entity).setFlag(8, true);
                 ((BeeEntity)entity).resetTicksWithoutNectarSinceExitingHive();
                 if(layerValueMinusOne == 0) {
@@ -331,6 +335,15 @@ public class PileOfPollen extends FallingBlock {
                 for(int i = 0; i < 40; i++) {
                     spawnParticles(lastSetState, world, blockPos, world.random, true);
                 }
+            }
+        }
+    }
+
+    public static void pandaSneezing(LivingEvent.LivingUpdateEvent event) {
+        LivingEntity livingEntity = event.getEntityLiving();
+        if(!livingEntity.level.isClientSide() && livingEntity instanceof PandaEntity) {
+            if(livingEntity.level.random.nextFloat() < 0.005f && livingEntity.level.getBlockState(livingEntity.blockPosition()).is(BzBlocks.PILE_OF_POLLEN.get())) {
+                ((PandaEntity)livingEntity).sneeze(true);
             }
         }
     }

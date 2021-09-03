@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
+import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.world.features.BeeDungeon;
 import com.telepathicgrunt.the_bumblezone.world.features.BzBeesWaxPillarFeature;
 import com.telepathicgrunt.the_bumblezone.world.features.CaveSugarWaterfall;
@@ -22,7 +22,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class BzFeatures {
     // For making ore features replace combs
     // Init at mod startup when adding FEATURES to event bus
-    public static final RuleTest HONEYCOMB_BUMBLEZONE = new TagMatchRuleTest(BZBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE);
+    public static final RuleTest HONEYCOMB_BUMBLEZONE = new TagMatchRuleTest(BzBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE);
 
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Bumblezone.MODID);
 

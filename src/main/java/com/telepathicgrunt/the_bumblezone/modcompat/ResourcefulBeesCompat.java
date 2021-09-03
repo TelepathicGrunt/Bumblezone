@@ -12,7 +12,7 @@ import com.resourcefulbees.resourcefulbees.registry.ModVillagerProfessions;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzConfiguredFeatures;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.tags.BZBlockTags;
+import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
@@ -190,13 +190,13 @@ public class ResourcefulBeesCompat {
 
             // add all the comb cfs that are registered
             for (Pair<Block, ConfiguredFeature<?, ?>> cf : RESOURCEFUL_BEES_CFS) {
-                if (!BZBlockTags.BLACKLISTED_RESOURCEFUL_COMBS.contains(cf.getFirst()))
+                if (!BzBlockTags.BLACKLISTED_RESOURCEFUL_COMBS.contains(cf.getFirst()))
                     biome.getGenerationSettings().features().get(GenerationStage.Decoration.UNDERGROUND_ORES.ordinal()).add(cf::getSecond);
             }
         }
 
-        ORE_BASED_HONEYCOMB_VARIANTS.removeIf(BZBlockTags.BLACKLISTED_RESOURCEFUL_COMBS::contains);
-        SPIDER_DUNGEON_HONEYCOMBS.removeIf(BZBlockTags.BLACKLISTED_RESOURCEFUL_COMBS::contains);
+        ORE_BASED_HONEYCOMB_VARIANTS.removeIf(BzBlockTags.BLACKLISTED_RESOURCEFUL_COMBS::contains);
+        SPIDER_DUNGEON_HONEYCOMBS.removeIf(BzBlockTags.BLACKLISTED_RESOURCEFUL_COMBS::contains);
     }
 
 

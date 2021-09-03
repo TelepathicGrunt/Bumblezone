@@ -6,10 +6,7 @@ import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.tags.BZItemTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
+import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BucketItem;
@@ -20,7 +17,6 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
@@ -39,7 +35,7 @@ public class BeeInteractivity {
             ResourceLocation itemRL = itemstack.getItem().getRegistryName();
 
             // Disallow all non-tagged items from being fed to bees
-            if(itemRL == null || !BZItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
+            if(itemRL == null || !BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
                 return;
 
             // Special case of item feeding
