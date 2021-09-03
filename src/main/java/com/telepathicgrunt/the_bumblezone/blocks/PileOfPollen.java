@@ -215,9 +215,22 @@ public class PileOfPollen extends FallingBlock {
                     deltaMovement.y * 0.95f,
                     deltaMovement.z * speedReduction));
 
-            if(world.isClientSide() && entity.getDeltaMovement().length() != 0 && world.random.nextFloat() < chance){
-                for(int i = 0; i < 10; i++) {
-                    spawnParticles(blockState, world, blockPos, world.random, true);
+            double entitySpeed = entity.getDeltaMovement().length();
+
+            if(world.isClientSide() && entitySpeed != 0 && world.random.nextFloat() < chance){
+                int particleStrength = (int) (entitySpeed / 0.0045D);
+                for(int i = 0; i < particleStrength; i++) {
+                    if(particleStrength > 5) spawnParticles(blockState, world, blockPos, world.random, true);
+
+                    spawnParticles(
+                            world,
+                            entity.position()
+                                    .add(entity.getDeltaMovement().multiply(4D, 4D, 4D))
+                                    .add(0, 0.75D, 0),
+                            world.random,
+                            0.006D * particleStrength,
+                            0.00075D * particleStrength,
+                            0.006D * particleStrength);
                 }
             }
 
