@@ -249,10 +249,19 @@ public class PileOfPollen extends FallingBlock {
             double speedReduction = (entity instanceof ProjectileEntity) ? 0.85f : 1 - layerValueMinusOne * 0.1D;
             double chance = 0.22f + layerValueMinusOne * 0.09f;
 
+
             Vector3d deltaMovement = entity.getDeltaMovement();
+            double newYDelta = deltaMovement.y;
+            if(deltaMovement.y > 0) {
+                newYDelta *= (1f - layerValueMinusOne * 0.01f);
+            }
+            else {
+                newYDelta *= (0.84f - layerValueMinusOne * 0.03f);
+            }
+
             entity.setDeltaMovement(new Vector3d(
                     deltaMovement.x * speedReduction,
-                    deltaMovement.y * 0.95f,
+                    newYDelta,
                     deltaMovement.z * speedReduction));
 
             double entitySpeed = entity.getDeltaMovement().length();
@@ -260,7 +269,7 @@ public class PileOfPollen extends FallingBlock {
             // Need to multiply speed to avoid issues where tiny movement is seen as zero.
             if(entitySpeed > 0.00001D && world.random.nextFloat() < chance){
                 int particleNumber = (int) (entitySpeed / 0.0045D);
-                int particleStrength = Math.min(20, particleNumber);
+                int particleStrength = (entity instanceof ItemEntity) ? Math.min(10, particleNumber / 3) : Math.min(20, particleNumber);
 
                 if(world.isClientSide()) {
                     for(int i = 0; i < particleNumber; i++) {
