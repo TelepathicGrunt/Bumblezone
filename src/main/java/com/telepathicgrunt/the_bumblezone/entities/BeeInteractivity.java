@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
+import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -95,7 +96,7 @@ public class BeeInteractivity {
                         item == Items.WET_SPONGE ||
                         item == BzItems.SUGAR_WATER_BOTTLE.get() ||
                         (item instanceof BucketItem && ((BucketItem) item).getFluid().is(FluidTags.WATER))) {
-                    Block.popResource(world, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
+                     PollenPuff.spawnItemstackEntity(world, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
                     playerEntity.swing(hand, true);
                     beeEntity.dropOffNectar();
                     return ActionResultType.SUCCESS;

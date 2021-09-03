@@ -8,6 +8,7 @@ import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.ProjectileDispenseBehavior;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -24,6 +25,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 
 public class PollenPuff extends Item {
@@ -53,9 +55,7 @@ public class PollenPuff extends Item {
         // right clicking on pollinated bee with pollen puff with room, gets pollen puff into hand.
         // else, if done with pollen puff without room, drops pollen puff in world
         if(beeEntity.hasNectar() && itemstack.getItem().equals(BzItems.POLLEN_PUFF.get())) {
-            if(!entity.level.isClientSide())
-                Block.popResource(entity.level, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
-
+            PollenPuff.spawnItemstackEntity(entity.level, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
             playerEntity.swing(hand, true);
             beeEntity.dropOffNectar();
             return ActionResultType.SUCCESS;
@@ -82,5 +82,17 @@ public class PollenPuff extends Item {
         }
 
         return ActionResult.sidedSuccess(itemstack, world.isClientSide());
+    }
+
+
+    public static void spawnItemstackEntity(World world, BlockPos blockPos, ItemStack itemStack) {
+        if (!world.isClientSide && !itemStack.isEmpty()) {
+            double x = (double)(world.random.nextFloat() * 0.5F) + 0.25D;
+            double y = (double)(world.random.nextFloat() * 0.5F) + 0.25D;
+            double z = (double)(world.random.nextFloat() * 0.5F) + 0.25D;
+            ItemEntity itemEntity = new ItemEntity(world, (double)blockPos.getX() + x, (double)blockPos.getY() + y, (double)blockPos.getZ() + z, itemStack);
+            itemEntity.setDefaultPickUpDelay();
+            world.addFreshEntity(itemEntity);
+        }
     }
 }
