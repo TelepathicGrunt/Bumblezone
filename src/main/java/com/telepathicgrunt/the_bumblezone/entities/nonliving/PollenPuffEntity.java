@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.entities;
+package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;

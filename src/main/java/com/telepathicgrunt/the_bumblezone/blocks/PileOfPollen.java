@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import com.telepathicgrunt.the_bumblezone.entities.PollenPuffEntity;
+import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
@@ -12,11 +12,13 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.FallingBlockEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.DirectionalPlaceContext;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.IntegerProperty;
@@ -35,6 +37,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -52,9 +55,10 @@ public class PileOfPollen extends FallingBlock {
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D),
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)
     };
+    private Item item;
 
     public PileOfPollen() {
-        super(AbstractBlock.Properties.of(BzBlocks.ORANGE_NOT_SOLID).strength(0.1F).requiresCorrectToolForDrops().sound(SoundType.SNOW));
+        super(AbstractBlock.Properties.of(BzBlocks.ORANGE_NOT_SOLID).strength(0.1F).harvestTool(ToolType.SHOVEL).sound(SoundType.SNOW));
     }
 
     @Override
@@ -65,6 +69,18 @@ public class PileOfPollen extends FallingBlock {
     @Override
     public ItemStack getCloneItemStack(IBlockReader p_185473_1_, BlockPos p_185473_2_, BlockState p_185473_3_) {
         return new ItemStack(BzItems.POLLEN_PUFF.get());
+    }
+
+    /**
+     * Makes this block spawn Pollen Puff when broken by piston or falling block breaks
+     */
+    @Override
+    public Item asItem() {
+        if (this.item == null) {
+            this.item = BzItems.POLLEN_PUFF.get();
+        }
+
+        return this.item;
     }
 
     @Override
@@ -103,11 +119,11 @@ public class PileOfPollen extends FallingBlock {
         if(blockstate.is(Blocks.ICE) || blockstate.is(Blocks.PACKED_ICE) || blockstate.is(Blocks.BARRIER) || !world.getBlockState(blockPos).getFluidState().isEmpty()) {
             return false;
         }
-        else if(blockstate.is(Blocks.HONEY_BLOCK) || blockstate.is(Blocks.SOUL_SAND) || blockstate.isAir()) {
+        else if(blockstate.isAir() || blockstate.is(BzBlocks.PILE_OF_POLLEN.get()) || blockstate.is(Blocks.HONEY_BLOCK) || blockstate.is(Blocks.SOUL_SAND)) {
             return true;
         }
         else {
-            return Block.isFaceFull(blockstate.getCollisionShape(world, blockPos.below()), Direction.UP) || blockstate.getBlock() == this && blockstate.getValue(LAYERS) == 8;
+            return Block.isFaceFull(blockstate.getCollisionShape(world, blockPos.below()), Direction.UP);
         }
     }
 
@@ -148,15 +164,27 @@ public class PileOfPollen extends FallingBlock {
     @Override
     public void tick(BlockState blockState, ServerWorld serverWorld, BlockPos blockPos, Random random) {
         BlockState stateBelow = serverWorld.getBlockState(blockPos.below());
-        if(stateBelow.is(BzBlocks.PILE_OF_POLLEN.get()) && stateBelow.getValue(LAYERS) == 8) return;
+        if(stateBelow.is(BzBlocks.PILE_OF_POLLEN.get())) {
+            if(stateBelow.getValue(LAYERS) == 8) {
+                return;
+            }
+            else {
+                serverWorld.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 2);
+                stackPollen(stateBelow, serverWorld, blockPos.below(), blockState);
+            }
+        }
 
         super.tick(blockState, serverWorld, blockPos, random);
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
-    public int getDustColor(BlockState blockState, IBlockReader blockReader, BlockPos blockPos) {
-        return 16755200;
+    public void destroy(IWorld world, BlockPos blockPos, BlockState blockState) {
+        if(world.isClientSide()) {
+            for(int i = 0; i < 50; i++) {
+                spawnParticles(blockState, world, blockPos, world.getRandom(), true);
+                spawnParticles(world, Vector3d.atCenterOf(blockPos), world.getRandom(), 0.055D, 0.0075D, 0);
+            }
+        }
     }
 
     /**
@@ -234,9 +262,16 @@ public class PileOfPollen extends FallingBlock {
                 }
             }
 
+            // reduce pile of pollen to pollinate bee
             if(entity instanceof BeeEntity && !((BeeEntity)entity).hasNectar()) {
                 ((BeeEntity)entity).setFlag(8, true);
                 ((BeeEntity)entity).resetTicksWithoutNectarSinceExitingHive();
+                if(layerValueMinusOne == 0) {
+                    world.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
+                }
+                else {
+                    world.setBlock(blockPos, blockState.setValue(LAYERS, layerValueMinusOne), 3);
+                }
             }
         }
     }
@@ -282,7 +317,13 @@ public class PileOfPollen extends FallingBlock {
         if(random.nextFloat() < chance) spawnParticles(blockState, world, blockPos, random, false);
     }
 
-    public static void spawnParticles(BlockState blockState, World world, BlockPos blockPos, Random random, boolean disturbed) {
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public int getDustColor(BlockState blockState, IBlockReader blockReader, BlockPos blockPos) {
+        return 16755200;
+    }
+
+    public static void spawnParticles(BlockState blockState, IWorld world, BlockPos blockPos, Random random, boolean disturbed) {
         for(Direction direction : Direction.values()) {
             BlockPos blockpos = blockPos.relative(direction);
             if (!world.getBlockState(blockpos).isSolidRender(world, blockpos)) {
@@ -310,7 +351,7 @@ public class PileOfPollen extends FallingBlock {
         }
     }
 
-    public static void spawnParticles(World world, Vector3d location, Random random, double speedXZModifier, double speedYModifier, double initYSpeed) {
+    public static void spawnParticles(IWorld world, Vector3d location, Random random, double speedXZModifier, double speedYModifier, double initYSpeed) {
         double xOffset = (random.nextFloat() * 0.3) - 0.15;
         double yOffset = (random.nextFloat() * 0.3) - 0.15;
         double zOffset = (random.nextFloat() * 0.3) - 0.15;

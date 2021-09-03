@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
-import com.telepathicgrunt.the_bumblezone.entities.PollenPuffEntity;
+import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.ProjectileDispenseBehavior;

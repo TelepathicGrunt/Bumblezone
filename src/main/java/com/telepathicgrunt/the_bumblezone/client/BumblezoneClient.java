@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuff;
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HoneySlimeRendering;
+import com.telepathicgrunt.the_bumblezone.client.rendering.PileOfPollenRenderer;
 import com.telepathicgrunt.the_bumblezone.mixin.world.SkyPropertiesAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
@@ -34,6 +35,7 @@ public class BumblezoneClient
         modEventBus.addListener(BumblezoneClient::onClientSetup);
         modEventBus.addListener(BumblezoneClient::onParticleSetup);
         forgeBus.addListener(FluidRender::sugarWaterOverlay);
+        forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
     }
 
     //Deferred because I have been told RenderTypeLookup is not thread safe

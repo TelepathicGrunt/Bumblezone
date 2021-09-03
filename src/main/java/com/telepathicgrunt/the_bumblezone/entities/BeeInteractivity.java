@@ -19,6 +19,8 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -80,7 +82,7 @@ public class BeeInteractivity {
         }
     }
 
-    public static void beeUnpollinating(World world, PlayerEntity playerEntity, Hand hand, BeeEntity beeEntity) {
+    public static ActionResultType beeUnpollinating(World world, PlayerEntity playerEntity, Hand hand, BeeEntity beeEntity) {
         if (!world.isClientSide) {
             ItemStack itemstack = playerEntity.getItemInHand(hand);
 
@@ -91,11 +93,13 @@ public class BeeInteractivity {
                     playerEntity.setItemInHand(hand, new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
                     playerEntity.swing(hand, true);
                     beeEntity.dropOffNectar();
+                    return ActionResultType.SUCCESS;
                 }
                 else if(itemstack.getItem().equals(BzItems.POLLEN_PUFF.get()) && itemstack.getCount() < itemstack.getMaxStackSize()) {
                     itemstack.grow(1);
                     playerEntity.swing(hand, true);
                     beeEntity.dropOffNectar();
+                    return ActionResultType.SUCCESS;
                 }
                 else if((((BucketItem) itemstack.getItem()).getFluid().is(FluidTags.WATER)) ||
                         itemstack.getOrCreateTag().getString("Potion").contains("water") ||
@@ -105,9 +109,12 @@ public class BeeInteractivity {
                     Block.popResource(world, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
                     playerEntity.swing(hand, true);
                     beeEntity.dropOffNectar();
+                    return ActionResultType.SUCCESS;
                 }
             }
         }
+
+        return ActionResultType.PASS;
     }
 
     private static void calmAndSpawnHearts(World world, PlayerEntity playerEntity, BeeEntity beeEntity, float calmChance, int hearts) {
