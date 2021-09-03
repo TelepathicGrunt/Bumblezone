@@ -17,6 +17,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.FallingBlockEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.BeeEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.DirectionalPlaceContext;
@@ -252,21 +253,38 @@ public class PileOfPollen extends FallingBlock {
 
             double entitySpeed = entity.getDeltaMovement().length();
 
-            if(world.isClientSide() && entitySpeed != 0 && world.random.nextFloat() < chance){
+            // Need to multiply speed to avoid issues where tiny movement is seen as zero.
+            if(entitySpeed > 0.00001D && world.random.nextFloat() < chance){
                 int particleNumber = (int) (entitySpeed / 0.0045D);
                 int particleStrength = Math.min(20, particleNumber);
-                for(int i = 0; i < particleNumber; i++) {
-                    if(particleNumber > 5) spawnParticles(blockState, world, blockPos, world.random, true);
 
-                    spawnParticles(
+                if(world.isClientSide()) {
+                    for(int i = 0; i < particleNumber; i++) {
+                        if(particleNumber > 5) spawnParticles(blockState, world, blockPos, world.random, true);
+
+                        spawnParticles(
+                                world,
+                                entity.position()
+                                        .add(entity.getDeltaMovement().multiply(2D, 2D, 2D))
+                                        .add(0, 0.75D, 0),
+                                world.random,
+                                0.006D * particleStrength,
+                                0.00075D * particleStrength,
+                                0.006D * particleStrength);
+                    }
+                }
+                // Player and item entity runs this method on client side already so do not run it on server to reduce particle packet spam
+                else if (!(entity instanceof PlayerEntity || entity instanceof ItemEntity)){
+                    spawnParticlesServer(
                             world,
                             entity.position()
                                     .add(entity.getDeltaMovement().multiply(2D, 2D, 2D))
                                     .add(0, 0.75D, 0),
                             world.random,
                             0.006D * particleStrength,
-                             0.00075D * particleStrength,
-                            0.006D * particleStrength);
+                            0.00075D * particleStrength,
+                            0.006D * particleStrength,
+                            particleNumber);
                 }
             }
 
@@ -372,5 +390,25 @@ public class PileOfPollen extends FallingBlock {
                 random.nextGaussian() * speedXZModifier,
                 (random.nextGaussian() * speedYModifier) + initYSpeed,
                 random.nextGaussian() * speedXZModifier);
+    }
+
+    public static void spawnParticlesServer(IWorld world, Vector3d location, Random random, double speedXZModifier, double speedYModifier, double initYSpeed, int numberOfParticles) {
+        if(world.isClientSide()) return;
+
+        double xOffset = (random.nextFloat() * 0.3) - 0.15;
+        double yOffset = (random.nextFloat() * 0.3) - 0.15;
+        double zOffset = (random.nextFloat() * 0.3) - 0.15;
+
+        ((ServerWorld)world).sendParticles(
+                BzParticles.POLLEN.get(),
+                location.x() + xOffset,
+                location.y() + yOffset,
+                location.z() + zOffset,
+                numberOfParticles,
+                random.nextGaussian() * speedXZModifier,
+                (random.nextGaussian() * speedYModifier) + initYSpeed,
+                random.nextGaussian() * speedXZModifier,
+                0.02f
+        );
     }
 }

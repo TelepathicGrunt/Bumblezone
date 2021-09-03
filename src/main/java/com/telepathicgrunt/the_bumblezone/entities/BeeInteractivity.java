@@ -92,10 +92,10 @@ public class BeeInteractivity {
             // else, if done with watery items or pollen puff without room, drops pollen puff in world
             if(beeEntity.hasNectar()) {
                  if(itemstack.isEmpty() ||
-                        itemstack.getOrCreateTag().getString("Potion").contains("water") ||
-                        item == Items.WET_SPONGE ||
-                        item == BzItems.SUGAR_WATER_BOTTLE.get() ||
-                        (item instanceof BucketItem && ((BucketItem) item).getFluid().is(FluidTags.WATER))) {
+                            (itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water")) ||
+                            item == Items.WET_SPONGE ||
+                            item == BzItems.SUGAR_WATER_BOTTLE.get() ||
+                            (item instanceof BucketItem && ((BucketItem) item).getFluid().is(FluidTags.WATER))) {
                      PollenPuff.spawnItemstackEntity(world, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
                     playerEntity.swing(hand, true);
                     beeEntity.dropOffNectar();
