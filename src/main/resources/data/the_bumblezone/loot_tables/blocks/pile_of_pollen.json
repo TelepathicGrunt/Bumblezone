@@ -2,306 +2,338 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:alternatives",
           "children": [
             {
-              "type": "minecraft:alternatives",
+              "type": "minecraft:item",
               "conditions": [
                 {
-                  "condition": "minecraft:inverted",
-                  "term": {
-                    "condition": "minecraft:match_tool",
-                    "predicate": {
-                      "enchantments": [
-                        {
-                          "enchantment": "minecraft:silk_touch",
-                          "levels": {
-                            "min": 1
-                          }
-                        }
-                      ]
-                    }
+                  "condition": "minecraft:survives_explosion"
+                },
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "the_bumblezone:pile_of_pollen",
+                  "properties": {
+                    "layers": "1"
                   }
                 }
               ],
-              "children": [
+              "functions": [
                 {
-                  "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "the_bumblezone:pile_of_pollen",
-                      "properties": {
-                        "layers": "1"
-                      }
-                    }
-                  ],
-                  "name": "the_bumblezone:pollen_puff"
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 0.0,
+                    "max": 1.0,
+                    "type": "minecraft:uniform"
+                  }
                 },
                 {
-                  "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "the_bumblezone:pile_of_pollen",
-                      "properties": {
-                        "layers": "2"
-                      }
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 2
-                    }
-                  ],
-                  "name": "the_bumblezone:pollen_puff"
+                  "function": "minecraft:apply_bonus",
+                  "enchantment": "minecraft:fortune",
+                  "formula": "minecraft:uniform_bonus_count",
+                  "parameters": {
+                    "bonusMultiplier": 1
+                  }
                 },
                 {
-                  "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "the_bumblezone:pile_of_pollen",
-                      "properties": {
-                        "layers": "3"
-                      }
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 3
-                    }
-                  ],
-                  "name": "the_bumblezone:pollen_puff"
-                },
-                {
-                  "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "the_bumblezone:pile_of_pollen",
-                      "properties": {
-                        "layers": "4"
-                      }
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 4
-                    }
-                  ],
-                  "name": "the_bumblezone:pollen_puff"
-                },
-                {
-                  "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "the_bumblezone:pile_of_pollen",
-                      "properties": {
-                        "layers": "5"
-                      }
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 5
-                    }
-                  ],
-                  "name": "the_bumblezone:pollen_puff"
-                },
-                {
-                  "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "the_bumblezone:pile_of_pollen",
-                      "properties": {
-                        "layers": "6"
-                      }
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 6
-                    }
-                  ],
-                  "name": "the_bumblezone:pollen_puff"
-                },
-                {
-                  "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "the_bumblezone:pile_of_pollen",
-                      "properties": {
-                        "layers": "7"
-                      }
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 7
-                    }
-                  ],
-                  "name": "the_bumblezone:pollen_puff"
-                },
-                {
-                  "type": "minecraft:item",
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 8
-                    }
-                  ],
-                  "name": "the_bumblezone:pollen_puff"
+                  "function": "minecraft:limit_count",
+                  "limit": {
+                    "max": 1,
+                    "min": 0
+                  }
                 }
-              ]
+              ],
+              "name": "the_bumblezone:pollen_puff"
             },
             {
-              "type": "minecraft:alternatives",
-              "children": [
+              "type": "minecraft:item",
+              "conditions": [
                 {
-                  "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "the_bumblezone:pile_of_pollen",
-                      "properties": {
-                        "layers": "1"
-                      }
-                    }
-                  ],
-                  "name": "the_bumblezone:pollen_puff"
+                  "condition": "minecraft:survives_explosion"
                 },
                 {
-                  "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "the_bumblezone:pile_of_pollen",
-                      "properties": {
-                        "layers": "2"
-                      }
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 2
-                    }
-                  ],
-                  "name": "the_bumblezone:pollen_puff"
-                },
-                {
-                  "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "the_bumblezone:pile_of_pollen",
-                      "properties": {
-                        "layers": "3"
-                      }
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 3
-                    }
-                  ],
-                  "name": "the_bumblezone:pollen_puff"
-                },
-                {
-                  "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "the_bumblezone:pile_of_pollen",
-                      "properties": {
-                        "layers": "4"
-                      }
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 4
-                    }
-                  ],
-                  "name": "the_bumblezone:pollen_puff"
-                },
-                {
-                  "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "the_bumblezone:pile_of_pollen",
-                      "properties": {
-                        "layers": "5"
-                      }
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 5
-                    }
-                  ],
-                  "name": "the_bumblezone:pollen_puff"
-                },
-                {
-                  "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "the_bumblezone:pile_of_pollen",
-                      "properties": {
-                        "layers": "6"
-                      }
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 6
-                    }
-                  ],
-                  "name": "the_bumblezone:pollen_puff"
-                },
-                {
-                  "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "the_bumblezone:pile_of_pollen",
-                      "properties": {
-                        "layers": "7"
-                      }
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 7
-                    }
-                  ],
-                  "name": "the_bumblezone:pollen_puff"
-                },
-                {
-                  "type": "minecraft:item",
-                  "name": "the_bumblezone:pollen_puff"
+                  "condition": "minecraft:block_state_property",
+                  "block": "the_bumblezone:pile_of_pollen",
+                  "properties": {
+                    "layers": "2"
+                  }
                 }
-              ]
+              ],
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 0.0,
+                    "max": 2.0,
+                    "type": "minecraft:uniform"
+                  }
+                },
+                {
+                  "function": "minecraft:apply_bonus",
+                  "enchantment": "minecraft:fortune",
+                  "formula": "minecraft:uniform_bonus_count",
+                  "parameters": {
+                    "bonusMultiplier": 1
+                  }
+                },
+                {
+                  "function": "minecraft:limit_count",
+                  "limit": {
+                    "max": 2,
+                    "min": 0
+                  }
+                }
+              ],
+              "name": "the_bumblezone:pollen_puff"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:survives_explosion"
+                },
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "the_bumblezone:pile_of_pollen",
+                  "properties": {
+                    "layers": "3"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 0.0,
+                    "max": 2.0,
+                    "type": "minecraft:uniform"
+                  }
+                },
+                {
+                  "function": "minecraft:apply_bonus",
+                  "enchantment": "minecraft:fortune",
+                  "formula": "minecraft:uniform_bonus_count",
+                  "parameters": {
+                    "bonusMultiplier": 1
+                  }
+                },
+                {
+                  "function": "minecraft:limit_count",
+                  "limit": {
+                    "max": 3,
+                    "min": 0
+                  }
+                }
+              ],
+              "name": "the_bumblezone:pollen_puff"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:survives_explosion"
+                },
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "the_bumblezone:pile_of_pollen",
+                  "properties": {
+                    "layers": "4"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 0.0,
+                    "max": 2.0,
+                    "type": "minecraft:uniform"
+                  }
+                },
+                {
+                  "function": "minecraft:apply_bonus",
+                  "enchantment": "minecraft:fortune",
+                  "formula": "minecraft:uniform_bonus_count",
+                  "parameters": {
+                    "bonusMultiplier": 1
+                  }
+                },
+                {
+                  "function": "minecraft:limit_count",
+                  "limit": {
+                    "max": 4,
+                    "min": 0
+                  }
+                }
+              ],
+              "name": "the_bumblezone:pollen_puff"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:survives_explosion"
+                },
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "the_bumblezone:pile_of_pollen",
+                  "properties": {
+                    "layers": "5"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1.0,
+                    "max": 2.0,
+                    "type": "minecraft:uniform"
+                  }
+                },
+                {
+                  "function": "minecraft:apply_bonus",
+                  "enchantment": "minecraft:fortune",
+                  "formula": "minecraft:uniform_bonus_count",
+                  "parameters": {
+                    "bonusMultiplier": 1
+                  }
+                },
+                {
+                  "function": "minecraft:limit_count",
+                  "limit": {
+                    "max": 5,
+                    "min": 1
+                  }
+                }
+              ],
+              "name": "the_bumblezone:pollen_puff"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:survives_explosion"
+                },
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "the_bumblezone:pile_of_pollen",
+                  "properties": {
+                    "layers": "6"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 2.0,
+                    "max": 3.0,
+                    "type": "minecraft:uniform"
+                  }
+                },
+                {
+                  "function": "minecraft:apply_bonus",
+                  "enchantment": "minecraft:fortune",
+                  "formula": "minecraft:uniform_bonus_count",
+                  "parameters": {
+                    "bonusMultiplier": 1
+                  }
+                },
+                {
+                  "function": "minecraft:limit_count",
+                  "limit": {
+                    "max": 6,
+                    "min": 2
+                  }
+                }
+              ],
+              "name": "the_bumblezone:pollen_puff"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:survives_explosion"
+                },
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "the_bumblezone:pile_of_pollen",
+                  "properties": {
+                    "layers": "7"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 3.0,
+                    "max": 4.0,
+                    "type": "minecraft:uniform"
+                  }
+                },
+                {
+                  "function": "minecraft:apply_bonus",
+                  "enchantment": "minecraft:fortune",
+                  "formula": "minecraft:uniform_bonus_count",
+                  "parameters": {
+                    "bonusMultiplier": 1
+                  }
+                },
+                {
+                  "function": "minecraft:limit_count",
+                  "limit": {
+                    "max": 7,
+                    "min": 3
+                  }
+                }
+              ],
+              "name": "the_bumblezone:pollen_puff"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:survives_explosion"
+                },
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "the_bumblezone:pile_of_pollen",
+                  "properties": {
+                    "layers": "8"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 4.0,
+                    "max": 5.0,
+                    "type": "minecraft:uniform"
+                  }
+                },
+                {
+                  "function": "minecraft:apply_bonus",
+                  "enchantment": "minecraft:fortune",
+                  "formula": "minecraft:uniform_bonus_count",
+                  "parameters": {
+                    "bonusMultiplier": 1
+                  }
+                },
+                {
+                  "function": "minecraft:limit_count",
+                  "limit": {
+                    "max": 8,
+                    "min": 4
+                  }
+                }
+              ],
+              "name": "the_bumblezone:pollen_puff"
             }
           ]
         }

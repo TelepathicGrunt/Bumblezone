@@ -4,16 +4,21 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.tags.BZItemTags;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -25,10 +30,8 @@ public class BeeInteractivity {
     private static final ResourceLocation STICKY_HONEY_WAND = new ResourceLocation("buzzier_bees:sticky_honey_wand");
 
     // heal bees with sugar water bottle or honey bottle
-    public static void beeFeeding(World world, PlayerEntity playerEntity, Hand hand, Entity target) {
-        if (!world.isClientSide && target instanceof BeeEntity) {
-
-            BeeEntity beeEntity = (BeeEntity) target;
+    public static void beeFeeding(World world, PlayerEntity playerEntity, Hand hand, BeeEntity beeEntity) {
+        if (!world.isClientSide) {
             ItemStack itemstack = playerEntity.getItemInHand(hand);
             ResourceLocation itemRL = itemstack.getItem().getRegistryName();
 
@@ -73,6 +76,36 @@ public class BeeInteractivity {
                     }
                 }
                 playerEntity.swing(hand, true);
+            }
+        }
+    }
+
+    public static void beeUnpollinating(World world, PlayerEntity playerEntity, Hand hand, BeeEntity beeEntity) {
+        if (!world.isClientSide) {
+            ItemStack itemstack = playerEntity.getItemInHand(hand);
+
+            // right clicking on pollinated bee with empty hand or pollen puff with room, gets pollen puff into hand.
+            // else, if done with watery items or pollen puff without room, drops pollen puff in world
+            if(beeEntity.hasNectar()) {
+                if(itemstack.isEmpty()) {
+                    playerEntity.setItemInHand(hand, new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
+                    playerEntity.swing(hand, true);
+                    beeEntity.dropOffNectar();
+                }
+                else if(itemstack.getItem().equals(BzItems.POLLEN_PUFF.get()) && itemstack.getCount() < itemstack.getMaxStackSize()) {
+                    itemstack.grow(1);
+                    playerEntity.swing(hand, true);
+                    beeEntity.dropOffNectar();
+                }
+                else if((((BucketItem) itemstack.getItem()).getFluid().is(FluidTags.WATER)) ||
+                        itemstack.getOrCreateTag().getString("Potion").contains("water") ||
+                        itemstack.getItem() == Items.WET_SPONGE ||
+                        itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get() ||
+                        itemstack.getItem().equals(BzItems.POLLEN_PUFF.get())) {
+                    Block.popResource(world, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
+                    playerEntity.swing(hand, true);
+                    beeEntity.dropOffNectar();
+                }
             }
         }
     }
