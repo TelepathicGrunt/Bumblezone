@@ -18,6 +18,7 @@ public class BzBiomes {
         createBiome("hive_wall", BiomeMaker::theVoidBiome);
         createBiome("hive_pillar", BiomeMaker::theVoidBiome);
         createBiome("sugar_water_floor", BiomeMaker::theVoidBiome);
+        createBiome("pollinated_fields", BiomeMaker::theVoidBiome);
     }
 
     public static RegistryObject<Biome> createBiome(String name, Supplier<Biome> biome) {

@@ -109,7 +109,7 @@ public class HoneycombHoleProcessor extends StructureProcessor {
                 return null;
             }
 
-            if (random.nextInt(50) != 0) {
+            if (random.nextInt(80) != 0) {
                 return new Template.BlockInfo(worldPos, Blocks.CAVE_AIR.defaultBlockState(), null);
             }
             else {
