@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.mixin.world.TemplateAccessor;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;

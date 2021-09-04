@@ -35,7 +35,7 @@ public class HoneycombBroodEvents
 		Hand playerHand = event.getHand();
 		ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
-		if (PotionOfBeesRedirection.POBIsPotionOfBeesItem(itemstack.getItem())) {
+		if (PotionOfBeesCompat.POBIsPotionOfBeesItem(itemstack.getItem())) {
 			World world = event.getWorld();
 			RayTraceResult raytraceresult = rayTrace(world, playerEntity, RayTraceContext.BlockMode.COLLIDER);
 			BlockPos raytracedPos = ((BlockRayTraceResult) raytraceresult).getBlockPos();

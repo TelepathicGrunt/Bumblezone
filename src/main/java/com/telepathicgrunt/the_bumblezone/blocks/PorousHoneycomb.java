@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.block.AbstractBlock;
@@ -60,7 +60,7 @@ public class PorousHoneycomb extends Block {
         //allow compat with honey wand use
         else if (ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.allowHoneyWandCompat.get())
         {
-            ActionResultType action = BuzzierBeesRedirection.honeyWandGivingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+            ActionResultType action = BuzzierBeesCompat.honeyWandGivingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
             if (action == ActionResultType.SUCCESS)
             {
                 world.setBlock(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3); // added honey to this block

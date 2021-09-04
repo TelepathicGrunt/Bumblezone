@@ -24,14 +24,14 @@ public class ModdedBeesBeesSpawning
 						Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesBeesMob.get() &&
 						entity.level.getRandom().nextInt(15) == 0)
 				{
-					ProductiveBeesRedirection.PBMobSpawnEvent(event, entity.isBaby());
+					ProductiveBeesCompat.PBMobSpawnEvent(event, entity.isBaby());
 				}
 
 				if (ModChecker.resourcefulBeesPresent &&
 						Bumblezone.BzModCompatibilityConfig.spawnResourcefulBeesBeesMob.get() &&
 						entity.level.getRandom().nextInt(15) == 0)
 				{
-					ResourcefulBeesRedirection.RBMobSpawnEvent(event, entity.isBaby());
+					ResourcefulBeesCompat.RBMobSpawnEvent(event, entity.isBaby());
 				}
 
 				if (ModChecker.pokecubePresent &&

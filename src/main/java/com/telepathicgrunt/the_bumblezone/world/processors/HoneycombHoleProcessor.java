@@ -7,11 +7,11 @@ import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
-import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesRedirection;
-import com.telepathicgrunt.the_bumblezone.modcompat.CharmRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.CharmCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesRedirection;
-import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
@@ -81,7 +81,7 @@ public class HoneycombHoleProcessor extends StructureProcessor {
                 return new Template.BlockInfo(worldPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), null);
             }
             else if(ModChecker.resourcefulBeesPresent && random.nextFloat() < 0.01f) {
-                return new Template.BlockInfo(worldPos, ResourcefulBeesRedirection.getRBHoneyBlock(random), null);
+                return new Template.BlockInfo(worldPos, ResourcefulBeesCompat.getRBHoneyBlock(random), null);
             }
             else {
                 return new Template.BlockInfo(worldPos, Blocks.HONEY_BLOCK.defaultBlockState(), null);
@@ -94,7 +94,7 @@ public class HoneycombHoleProcessor extends StructureProcessor {
                 return new Template.BlockInfo(worldPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), null);
             }
             else if(ModChecker.resourcefulBeesPresent && random.nextFloat() < 0.01f) {
-                return new Template.BlockInfo(worldPos, ResourcefulBeesRedirection.getRBHoneyBlock(random), null);
+                return new Template.BlockInfo(worldPos, ResourcefulBeesCompat.getRBHoneyBlock(random), null);
             }
             else {
                 return new Template.BlockInfo(worldPos, Blocks.HONEY_BLOCK.defaultBlockState(), null);

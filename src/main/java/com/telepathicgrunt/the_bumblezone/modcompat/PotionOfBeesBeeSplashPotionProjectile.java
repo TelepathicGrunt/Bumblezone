@@ -11,7 +11,7 @@ public class PotionOfBeesBeeSplashPotionProjectile
 	{
 		if(ModChecker.potionOfBeesPresent && Bumblezone.BzModCompatibilityConfig.allowPotionOfBeesCompat.get())
 		{
-			PotionOfBeesRedirection.POBReviveLarvaBlockEvent(event);
+			PotionOfBeesCompat.POBReviveLarvaBlockEvent(event);
 		}
 	}
 }

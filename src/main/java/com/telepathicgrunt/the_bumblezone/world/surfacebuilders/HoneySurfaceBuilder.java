@@ -2,9 +2,9 @@ package com.telepathicgrunt.the_bumblezone.world.surfacebuilders;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
@@ -51,7 +51,7 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
                         Bumblezone.BzModCompatibilityConfig.RBBeesWaxWorldgen.get() &&
                         noise + random.nextInt(2) < -1)
                     {
-                        chunkIn.setBlockState(blockpos$Mutable, ResourcefulBeesRedirection.getRBBeesWaxBlock(), false);
+                        chunkIn.setBlockState(blockpos$Mutable, ResourcefulBeesCompat.getRBBeesWaxBlock(), false);
                     }
                     else if (currentBlockState == config.getTopMaterial() || currentBlockState == config.getUnderMaterial()) {
                         chunkIn.setBlockState(blockpos$Mutable, config.getUnderwaterMaterial(), false);
@@ -63,7 +63,7 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
                     if(depth > 0 && depth < 1 + Math.abs(noise - 1) + random.nextInt(2) &&
                         blockpos$Mutable.getY() > (seaLevel + 24) + (noise * 1.5d) + random.nextInt(5))
                     {
-                        chunkIn.setBlockState(blockpos$Mutable, BuzzierBeesRedirection.getCrystallizedHoneyBlock(), false);
+                        chunkIn.setBlockState(blockpos$Mutable, BuzzierBeesCompat.getCrystallizedHoneyBlock(), false);
                     }
                     else if(depth < 7 && blockpos$Mutable.getY() > (seaLevel + 19)){
                         chunkIn.setBlockState(blockpos$Mutable, defaultBlock, false);

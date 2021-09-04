@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -82,7 +82,7 @@ public class FilledPorousHoneycomb extends Block {
         //allow compat with honey wand use
         else if (ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.allowHoneyWandCompat.get())
         {
-            ActionResultType action = BuzzierBeesRedirection.honeyWandTakingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+            ActionResultType action = BuzzierBeesCompat.honeyWandTakingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
             if (action == ActionResultType.SUCCESS)
             {
                 world.setBlock(position, BzBlocks.POROUS_HONEYCOMB.get().defaultBlockState(), 3); // remove honey from this block

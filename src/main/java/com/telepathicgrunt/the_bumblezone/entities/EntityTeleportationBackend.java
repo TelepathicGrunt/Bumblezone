@@ -5,8 +5,8 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.capabilities.IEntityPosAndDim;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesRedirection;
-import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
@@ -486,10 +486,10 @@ public class EntityTeleportationBackend {
         }
 
         if(Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get()) {
-            if(ModChecker.productiveBeesPresent && ProductiveBeesRedirection.PBIsExpandedBeehiveBlock(block))
+            if(ModChecker.productiveBeesPresent && ProductiveBeesCompat.PBIsExpandedBeehiveBlock(block))
                 return true;
 
-            return ModChecker.resourcefulBeesPresent && ResourcefulBeesRedirection.RBIsApairyBlock(block);
+            return ModChecker.resourcefulBeesPresent && ResourcefulBeesCompat.RBIsApairyBlock(block);
         }
 
         return false;

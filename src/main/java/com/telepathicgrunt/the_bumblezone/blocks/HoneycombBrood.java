@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
-import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -214,7 +214,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         else if (ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.allowHoneyWandCompat.get()) {
 
             // Player is taking honey and killing larva/
-            ActionResultType action = BuzzierBeesRedirection.honeyWandTakingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+            ActionResultType action = BuzzierBeesCompat.honeyWandTakingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
             if (action == ActionResultType.SUCCESS) {
 
                 // removed honey from this block
@@ -250,7 +250,7 @@ public class HoneycombBrood extends ProperFacingBlock {
             }
 
             // Player is feeding larva
-            action = BuzzierBeesRedirection.honeyWandGivingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+            action = BuzzierBeesCompat.honeyWandGivingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
             if (action == ActionResultType.SUCCESS) {
                 world.playSound(
                         playerEntity,

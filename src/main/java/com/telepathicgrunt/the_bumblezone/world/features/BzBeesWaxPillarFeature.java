@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
-import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -41,12 +41,12 @@ public class BzBeesWaxPillarFeature extends Feature<NoFeatureConfig> {
       boolean flag2 = true;
       boolean flag3 = true;
 
-      while(!world.getBlockState(blockpos$mutable).canOcclude() || world.getBlockState(blockpos$mutable).getBlock() == ResourcefulBeesRedirection.getRBBeesWaxBlock().getBlock()) {
+      while(!world.getBlockState(blockpos$mutable).canOcclude() || world.getBlockState(blockpos$mutable).getBlock() == ResourcefulBeesCompat.getRBBeesWaxBlock().getBlock()) {
          if (World.isOutsideBuildHeight(blockpos$mutable)) {
             return;
          }
 
-         world.setBlock(blockpos$mutable, ResourcefulBeesRedirection.getRBBeesWaxBlock(), 2);
+         world.setBlock(blockpos$mutable, ResourcefulBeesCompat.getRBBeesWaxBlock(), 2);
          flag = flag && this.stopOrPlaceWax(world, random, blockpos$mutable1.setWithOffset(blockpos$mutable, Direction.NORTH));
          flag1 = flag1 && this.stopOrPlaceWax(world, random, blockpos$mutable1.setWithOffset(blockpos$mutable, Direction.SOUTH));
          flag2 = flag2 && this.stopOrPlaceWax(world, random, blockpos$mutable1.setWithOffset(blockpos$mutable, Direction.WEST));
@@ -78,7 +78,7 @@ public class BzBeesWaxPillarFeature extends Feature<NoFeatureConfig> {
                }
 
                if (world.getBlockState(blockpos$mutable1.setWithOffset(blockpos$mutable2, direction)).canOcclude()) {
-                  world.setBlock(blockpos$mutable2, ResourcefulBeesRedirection.getRBBeesWaxBlock(), 2);
+                  world.setBlock(blockpos$mutable2, ResourcefulBeesCompat.getRBBeesWaxBlock(), 2);
                }
             }
          }
@@ -87,14 +87,14 @@ public class BzBeesWaxPillarFeature extends Feature<NoFeatureConfig> {
 
    private void tryPlaceWax(IWorld world, Random random, BlockPos pos) {
       if (random.nextBoolean()) {
-         world.setBlock(pos, ResourcefulBeesRedirection.getRBBeesWaxBlock(), 2);
+         world.setBlock(pos, ResourcefulBeesCompat.getRBBeesWaxBlock(), 2);
       }
 
    }
 
    private boolean stopOrPlaceWax(IWorld world, Random random, BlockPos pos) {
       if (random.nextInt(6) != 0) {
-         world.setBlock(pos, ResourcefulBeesRedirection.getRBBeesWaxBlock(), 2);
+         world.setBlock(pos, ResourcefulBeesCompat.getRBBeesWaxBlock(), 2);
          return true;
       } else {
          return false;

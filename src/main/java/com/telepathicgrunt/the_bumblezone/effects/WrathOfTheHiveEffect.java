@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.effects;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.the_bumblezone.modcompat.CarrierBeeRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.CarrierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -82,7 +82,7 @@ public class WrathOfTheHiveEffect extends Effect {
                     }
 
                     if(ModChecker.carrierBeesPresent && world.random.nextBoolean()){
-                        CarrierBeeRedirection.CBMobSpawn(entity, spawnBlockPos);
+                        CarrierBeesCompat.CBMobSpawn(entity, spawnBlockPos);
                     }
                     else{
                         BeeEntity bee = EntityType.BEE.create(world);
@@ -162,7 +162,7 @@ public class WrathOfTheHiveEffect extends Effect {
         if(ModChecker.carrierBeesPresent) {
             setAggression(world,
                     livingEntity,
-                    CarrierBeeRedirection.CBGetAppleBeeClass(),
+                    CarrierBeesCompat.CBGetAppleBeeClass(),
                     LINE_OF_SIGHT,
                     Math.max((Bumblezone.BzBeeAggressionConfig.speedBoostLevel.get() - 1), 1),
                     Math.max((Bumblezone.BzBeeAggressionConfig.absorptionBoostLevel.get() - 1) / 2, 1),
@@ -186,7 +186,7 @@ public class WrathOfTheHiveEffect extends Effect {
         if(ModChecker.carrierBeesPresent) {
             setAggression(world,
                     livingEntity,
-                    CarrierBeeRedirection.CBGetAppleBeeClass(),
+                    CarrierBeesCompat.CBGetAppleBeeClass(),
                     SEE_THROUGH_WALLS,
                     Bumblezone.BzBeeAggressionConfig.speedBoostLevel.get() - 1,
                     Bumblezone.BzBeeAggressionConfig.absorptionBoostLevel.get() - 1,
@@ -195,7 +195,7 @@ public class WrathOfTheHiveEffect extends Effect {
     }
 
     private static void setAggression(World world, LivingEntity livingEntity, Class<? extends MobEntity> entityToFind, EntityPredicate sightMode, int speed, int absorption, int strength) {
-        if(livingEntity instanceof BeeEntity || (ModChecker.carrierBeesPresent && CarrierBeeRedirection.CBGetAppleBeeClass().isInstance(livingEntity))) {
+        if(livingEntity instanceof BeeEntity || (ModChecker.carrierBeesPresent && CarrierBeesCompat.CBGetAppleBeeClass().isInstance(livingEntity))) {
             return;
         }
 
@@ -234,7 +234,7 @@ public class WrathOfTheHiveEffect extends Effect {
         if(ModChecker.carrierBeesPresent){
             clearAggression(world,
                     livingEntity,
-                    CarrierBeeRedirection.CBGetAppleBeeClass(),
+                    CarrierBeesCompat.CBGetAppleBeeClass(),
                     SEE_THROUGH_WALLS);
         }
     }

@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.block.AbstractBlock;
@@ -56,7 +56,7 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
         //Buzzier Bees bottled bees compat
         if (ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.allowBottledBeesCompat.get()) {
             // Player is trying to revive the block
-            ActionResultType action = BuzzierBeesRedirection.bottledBeeInteract(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+            ActionResultType action = BuzzierBeesCompat.bottledBeeInteract(itemstack, thisBlockState, world, position, playerEntity, playerHand);
             if (action == ActionResultType.SUCCESS) {
                 world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
                 world.setBlockAndUpdate(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()

@@ -6,8 +6,8 @@ import com.mojang.datafixers.DataFixer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesRedirection;
-import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.resources.DataPackRegistries;
 import net.minecraft.resources.ResourcePackList;
@@ -76,11 +76,11 @@ public class MinecraftServerMixin {
             bumblezone_biomes.forEach(GeneralUtils::makeBiomeMutable);
 
             if(ModChecker.resourcefulBeesPresent){
-                ResourcefulBeesRedirection.RBAddWorldgen(bumblezone_biomes);
+                ResourcefulBeesCompat.RBAddWorldgen(bumblezone_biomes);
             }
 
             if(ModChecker.productiveBeesPresent){
-                ProductiveBeesRedirection.PBAddWorldgen(bumblezone_biomes);
+                ProductiveBeesCompat.PBAddWorldgen(bumblezone_biomes);
             }
         }
     }

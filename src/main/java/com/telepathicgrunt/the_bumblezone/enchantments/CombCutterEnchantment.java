@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesRedirection;
+import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import net.minecraft.block.BeehiveBlock;
@@ -113,6 +113,6 @@ public class CombCutterEnchantment extends Enchantment {
     }
 
     public static boolean canEnchantItem(Item item) {
-        return item instanceof ShearsItem || item instanceof SwordItem || item == Items.BOOK || (ModChecker.resourcefulBeesPresent && ResourcefulBeesRedirection.isRBComb(item));
+        return item instanceof ShearsItem || item instanceof SwordItem || item == Items.BOOK || (ModChecker.resourcefulBeesPresent && ResourcefulBeesCompat.isRBComb(item));
     }
 }

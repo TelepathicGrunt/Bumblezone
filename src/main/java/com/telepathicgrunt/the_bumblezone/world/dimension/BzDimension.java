@@ -19,10 +19,10 @@ public class BzDimension {
 //            //Add our features to the bumblezone biomes
 //
 //            if (ModChecker.productiveBeesPresent)
-//                ProductiveBeesRedirection.PBAddWorldgen(event);
+//                ProductiveBeesCompat.PBAddWorldgen(event);
 //
 //            if (ModChecker.resourcefulBeesPresent)
-//                ResourcefulBeesRedirection.RBAddWorldgen(event);
+//                ResourcefulBeesCompat.RBAddWorldgen(event);
 //        }
 //    }
 }
