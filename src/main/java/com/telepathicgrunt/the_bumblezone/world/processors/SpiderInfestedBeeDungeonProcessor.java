@@ -23,9 +23,6 @@ import net.minecraft.world.gen.feature.template.Template;
 
 import java.util.Random;
 
-/**
- * POOL ENTRY MUST BE USING legacy_single_pool_element OR ELSE THE STRUCTURE BLOCK IS REMOVED BEFORE THIS PROCESSOR RUNS.
- */
 public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
 
     public static final Codec<SpiderInfestedBeeDungeonProcessor> CODEC = Codec.unit(SpiderInfestedBeeDungeonProcessor::new);

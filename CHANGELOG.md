@@ -26,6 +26,10 @@ Added Pollen Puff item!
 ##### Entities:
 Fixed feeding bees a bucket items gives you a bowl back instead.
 
+##### Worldgen:
+Converted the Honeycomb Hole feature in the walls of the dimension to be now an nbt feature.
+  You can change the shape and blocks of those holes with a datapack that replaces its nbt file or its processors!
+
 
 ### **(V.2.4.11 Changes) (1.16.5 Minecraft)**
 

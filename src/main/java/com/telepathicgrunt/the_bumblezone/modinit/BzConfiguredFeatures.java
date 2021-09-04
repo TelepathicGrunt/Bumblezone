@@ -25,18 +25,25 @@ public class BzConfiguredFeatures {
     public static final ConfiguredFeature<?, ?> SUGAR_WATERFALL_LOW = Feature.SPRING.configured(SUGAR_WATER_SPRING_CONFIG).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(128, 40, 72)).squared().count(3));
     public static final ConfiguredFeature<?, ?> SUGAR_WATERFALL_FULL_RANGE = Feature.SPRING.configured(SUGAR_WATER_SPRING_CONFIG).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(40, 0, 128)).squared().count(1));
     public static final ConfiguredFeature<?, ?> HONEYCOMB_CAVES = BzFeatures.HONEYCOMB_CAVES.get().configured(IFeatureConfig.NONE).decorated(Placement.NOPE.configured(IPlacementConfig.NONE));
-    public static final ConfiguredFeature<?, ?> HONEYCOMB_HOLE = BzFeatures.HONEYCOMB_HOLE.get().configured(IFeatureConfig.NONE).decorated(BzPlacements.HONEYCOMB_HOLE_PLACER.get().configured(IPlacementConfig.NONE));
     public static final ConfiguredFeature<?, ?> HONEY_CRYSTALS_COMMON = BzFeatures.HONEY_CRYSTAL_FEATURE.get().configured(IFeatureConfig.NONE).decorated(BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.get().configured(new FeatureSpreadConfig(4)));
     public static final ConfiguredFeature<?, ?> HONEY_CRYSTALS_UNCOMMON = BzFeatures.HONEY_CRYSTAL_FEATURE.get().configured(IFeatureConfig.NONE).decorated(BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.get().configured(new FeatureSpreadConfig(2)));
     public static final ConfiguredFeature<?, ?> HONEY_CRYSTALS_RARE = BzFeatures.HONEY_CRYSTAL_FEATURE.get().configured(IFeatureConfig.NONE).decorated(BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.get().configured(new FeatureSpreadConfig(1)));
     public static final ConfiguredFeature<?, ?> CAVE_SUGAR_WATERFALL = BzFeatures.CAVE_SUGAR_WATERFALL.get().configured(IFeatureConfig.NONE).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(8, 0, 248)).squared().count(75));
     public static ConfiguredFeature<?, ?> BZ_BEES_WAX_PILLAR_CONFIGURED_FEATURE = BzFeatures.BZ_BEES_WAX_PILLAR_FEATURE.get().configured(IFeatureConfig.NONE).range(256).squared().count(30);
 
+    public static final ConfiguredFeature<?, ?> HONEYCOMB_HOLE = BzFeatures.HONEYCOMB_HOLE.get().configured(
+            new NbtFeatureConfig(
+                    new ResourceLocation(Bumblezone.MODID, "honeycomb_hole_processors"),
+                    new ResourceLocation("empty"),
+                    ImmutableList.of(Pair.of(new ResourceLocation(Bumblezone.MODID, "honeycomb_hole"), 1)),
+                    0
+            )).decorated(BzPlacements.HONEYCOMB_HOLE_PLACER.get().configured(IPlacementConfig.NONE));
+
+
     public static final ConfiguredFeature<?, ?> BEE_DUNGEON = BzFeatures.BEE_DUNGEON.get().configured(
             new NbtFeatureConfig(
                     new ResourceLocation(Bumblezone.MODID, "bee_dungeon_processors"),
                     new ResourceLocation("empty"),
-                    ImmutableList.of(Pair.of(EntityType.BEE, 1)),
                     ImmutableList.of(Pair.of(new ResourceLocation(Bumblezone.MODID, "bee_dungeon"), 1)),
                     -4
             )).decorated(BzPlacements.BEE_DUNGEON_PLACER.get().configured(IPlacementConfig.NONE));
@@ -45,7 +52,6 @@ public class BzConfiguredFeatures {
             new NbtFeatureConfig(
                     new ResourceLocation(Bumblezone.MODID, "spider_infested_bee_dungeon_processors"),
                     new ResourceLocation("empty"),
-                    ImmutableList.of(Pair.of(EntityType.BEE, 1)),
                     ImmutableList.of(Pair.of(new ResourceLocation(Bumblezone.MODID, "bee_dungeon"), 1)),
                     -4
             )).decorated(BzPlacements.BEE_DUNGEON_PLACER.get().configured(IPlacementConfig.NONE));

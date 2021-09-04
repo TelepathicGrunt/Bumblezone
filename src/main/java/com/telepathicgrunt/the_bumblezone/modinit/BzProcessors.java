@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.world.processors.BeeDungeonProcessor;
+import com.telepathicgrunt.the_bumblezone.world.processors.HoneycombHoleProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.RemoveFloatingBlocksProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.ReplaceNotAirProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.SpawnerRandomizingProcessor;
@@ -17,6 +18,7 @@ public class BzProcessors {
     public static IStructureProcessorType<ReplaceNotAirProcessor> REPLACE_NOT_AIR_PROCESSOR = () -> ReplaceNotAirProcessor.CODEC;
     public static IStructureProcessorType<RemoveFloatingBlocksProcessor> REMOVE_FLOATING_BLOCKS_PROCESSOR = () -> RemoveFloatingBlocksProcessor.CODEC;
     public static IStructureProcessorType<SpawnerRandomizingProcessor> SPAWNER_RANDOMIZING_PROCESSOR = () -> SpawnerRandomizingProcessor.CODEC;
+    public static IStructureProcessorType<HoneycombHoleProcessor> HONEYCOMB_HOLE_PROCESSOR = () -> HoneycombHoleProcessor.CODEC;
 
     public static void registerProcessors() {
         Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "bee_dungeon_processor"), BEE_DUNGEON_PROCESSOR);
@@ -24,5 +26,6 @@ public class BzProcessors {
         Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "replace_not_air_processor"), REPLACE_NOT_AIR_PROCESSOR);
         Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "remove_floating_blocks_processor"), REMOVE_FLOATING_BLOCKS_PROCESSOR);
         Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "spawner_randomizing_processor"), SPAWNER_RANDOMIZING_PROCESSOR);
+        Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "honeycomb_hole_processor"), HONEYCOMB_HOLE_PROCESSOR);
     }
 }
