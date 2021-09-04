@@ -10,6 +10,7 @@ Added Pile of Pollen block!
  Unpollinated bees will become polinated when they touch the block (decreases the pile by 1 layer) (modded bees can be added to the the_bumblezone:pollen_puff_can_pollinate tag that controls what bee can be pollinated).
  Pandas in the block will sneeze significantly more often.
  Breaking the block gives a little bit of Pollen Puff item but Fortune increases the drops. Shovels is the best tool for this block.
+ Redstone Comparators can measure the amount of layers this block has for contraptions.
 
 Honeycomb Brood blocks can be feed items from the the_bumblezone:bee_feeding_item tag.
 

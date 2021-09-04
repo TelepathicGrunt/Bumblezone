@@ -173,6 +173,22 @@ public class PileOfPollen extends FallingBlock {
         }
     }
 
+    /**
+     * tell redstone that this can be use with comparator
+     */
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    /**
+     * the power fed into comparator (1 - 8)
+     */
+    @Override
+    public int getAnalogOutputSignal(BlockState blockState, World worldIn, BlockPos pos) {
+        return blockState.getValue(LAYERS);
+    }
+
     @Override
     public void tick(BlockState blockState, ServerWorld serverWorld, BlockPos blockPos, Random random) {
         BlockState stateBelow = serverWorld.getBlockState(blockPos.below());
