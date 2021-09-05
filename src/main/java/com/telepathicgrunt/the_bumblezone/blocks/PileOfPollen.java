@@ -345,7 +345,7 @@ public class PileOfPollen extends FallingBlock {
         }
 
         BlockState aboveState = world.getBlockState(blockPos.above());
-        if(aboveState.is(BzBlocks.PILE_OF_POLLEN.get())) {
+        if(layersToAdd > 0 && aboveState.is(BzBlocks.PILE_OF_POLLEN.get())) {
             stackPollen(aboveState, world, blockPos.above(), blockState.setValue(LAYERS, layersToAdd));
         }
         else {
