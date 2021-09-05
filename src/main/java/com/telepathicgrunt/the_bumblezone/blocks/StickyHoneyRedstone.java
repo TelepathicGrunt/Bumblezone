@@ -1,8 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -46,7 +48,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     }
 
     public StickyHoneyRedstone() {
-        super();
+        super(AbstractBlock.Properties.of(BzBlocks.ORANGE_NOT_SOLID, MaterialColor.COLOR_ORANGE).lightLevel((blockState) -> blockState.getValue(POWERED) ? 1 : 0).noCollission().strength(6.0f, 0.0f).noOcclusion());
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(UP, false)
                 .setValue(NORTH, false)

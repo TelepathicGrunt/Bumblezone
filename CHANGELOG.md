@@ -14,7 +14,9 @@ Added Pile of Pollen block!
 
 Honeycomb Brood blocks can be feed items from the the_bumblezone:bee_feeding_item tag.
 
-Adjusted texture a bit for Sticky Honey Residue and Sticky Honey Redstone.
+Adjusted texture for Sticky Honey Residue and Sticky Honey Redstone.
+
+Sticky Honey Redstone now gives off a light level of 1 when activated.
 
 ##### Items:
 Added Pollen Puff item!
