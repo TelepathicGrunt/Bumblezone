@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.world.features.HoneyCrystalFeature;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneycombCaves;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneycombHole;
 import com.telepathicgrunt.the_bumblezone.world.features.NbtFeature;
+import com.telepathicgrunt.the_bumblezone.world.features.PollinatedCaves;
 import com.telepathicgrunt.the_bumblezone.world.features.SpiderInfestedBeeDungeon;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
@@ -28,6 +29,7 @@ public class BzFeatures {
 
     public static final RegistryObject<Feature<NbtFeatureConfig>> HONEYCOMB_HOLE = FEATURES.register("honeycomb_holes", () -> new HoneycombHole(NbtFeatureConfig.CODEC));
     public static final RegistryObject<Feature<NoFeatureConfig>> HONEYCOMB_CAVES = FEATURES.register("honeycomb_caves", () -> new HoneycombCaves(NoFeatureConfig.CODEC));
+    public static final RegistryObject<Feature<NoFeatureConfig>> POLLINATED_CAVES = FEATURES.register("pollinated_caves", () -> new PollinatedCaves(NoFeatureConfig.CODEC));
     public static final RegistryObject<Feature<NoFeatureConfig>> CAVE_SUGAR_WATERFALL = FEATURES.register("cave_sugar_waterfall", () -> new CaveSugarWaterfall(NoFeatureConfig.CODEC));
     public static final RegistryObject<Feature<NoFeatureConfig>> HONEY_CRYSTAL_FEATURE = FEATURES.register("honey_crystal_feature", () -> new HoneyCrystalFeature(NoFeatureConfig.CODEC));
     public static final RegistryObject<Feature<NoFeatureConfig>> BZ_BEES_WAX_PILLAR_FEATURE = FEATURES.register("bz_bees_wax_pillar_feature", () -> new BzBeesWaxPillarFeature(NoFeatureConfig.CODEC));

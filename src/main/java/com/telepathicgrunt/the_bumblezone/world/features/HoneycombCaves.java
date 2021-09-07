@@ -159,7 +159,7 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
         double finalNoise;
 
         for (int x = 0; x < 16; x++) {
-            for (int y = 15; y < 241; y++) {
+            for (int y = 15; y < generator.getGenDepth() - 14; y++) {
                 for (int z = 0; z < 16; z++) {
                     mutableBlockPos.set(position).move(x, y, z);
 

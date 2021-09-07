@@ -25,6 +25,7 @@ public class BzConfiguredFeatures {
     public static final ConfiguredFeature<?, ?> SUGAR_WATERFALL_LOW = Feature.SPRING.configured(SUGAR_WATER_SPRING_CONFIG).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(128, 40, 72)).squared().count(3));
     public static final ConfiguredFeature<?, ?> SUGAR_WATERFALL_FULL_RANGE = Feature.SPRING.configured(SUGAR_WATER_SPRING_CONFIG).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(40, 0, 128)).squared().count(1));
     public static final ConfiguredFeature<?, ?> HONEYCOMB_CAVES = BzFeatures.HONEYCOMB_CAVES.get().configured(IFeatureConfig.NONE).decorated(Placement.NOPE.configured(IPlacementConfig.NONE));
+    public static final ConfiguredFeature<?, ?> POLLINATED_CAVES = BzFeatures.POLLINATED_CAVES.get().configured(IFeatureConfig.NONE).decorated(Placement.NOPE.configured(IPlacementConfig.NONE));
     public static final ConfiguredFeature<?, ?> HONEY_CRYSTALS_COMMON = BzFeatures.HONEY_CRYSTAL_FEATURE.get().configured(IFeatureConfig.NONE).decorated(BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.get().configured(new FeatureSpreadConfig(4)));
     public static final ConfiguredFeature<?, ?> HONEY_CRYSTALS_UNCOMMON = BzFeatures.HONEY_CRYSTAL_FEATURE.get().configured(IFeatureConfig.NONE).decorated(BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.get().configured(new FeatureSpreadConfig(2)));
     public static final ConfiguredFeature<?, ?> HONEY_CRYSTALS_RARE = BzFeatures.HONEY_CRYSTAL_FEATURE.get().configured(IFeatureConfig.NONE).decorated(BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.get().configured(new FeatureSpreadConfig(1)));
@@ -63,6 +64,7 @@ public class BzConfiguredFeatures {
         Registry.register(registry, new ResourceLocation(Bumblezone.MODID, "sugar_waterfall_low"), SUGAR_WATERFALL_LOW);
         Registry.register(registry, new ResourceLocation(Bumblezone.MODID, "sugar_waterfall_full_range"), SUGAR_WATERFALL_FULL_RANGE);
         Registry.register(registry, new ResourceLocation(Bumblezone.MODID, "honeycomb_caves"), HONEYCOMB_CAVES);
+        Registry.register(registry, new ResourceLocation(Bumblezone.MODID, "pollinated_caves"), POLLINATED_CAVES);
         Registry.register(registry, new ResourceLocation(Bumblezone.MODID, "honeycomb_holes"), HONEYCOMB_HOLE);
         Registry.register(registry, new ResourceLocation(Bumblezone.MODID, "bee_dungeon"), BEE_DUNGEON);
         Registry.register(registry, new ResourceLocation(Bumblezone.MODID, "spider_infested_bee_dungeon"), SPIDER_INFESTED_BEE_DUNGEON);
