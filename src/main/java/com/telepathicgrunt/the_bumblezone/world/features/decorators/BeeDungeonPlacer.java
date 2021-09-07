@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.world.features.decorators;
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -34,7 +36,8 @@ public class BeeDungeonPlacer extends Placement<NoPlacementConfig> {
             for (Direction face : Direction.Plane.HORIZONTAL) {
                 mutable.set(x, y, z).move(face, 3);
 
-                if (context.getBlockState(mutable).getBlock() == Blocks.CAVE_AIR)
+                BlockState state = context.getBlockState(mutable);
+                if (state.is(Blocks.CAVE_AIR) || state.is(BzBlocks.PILE_OF_POLLEN.get()))
                     validSpot = true;
             }
 
@@ -44,7 +47,7 @@ public class BeeDungeonPlacer extends Placement<NoPlacementConfig> {
                     for (int yOffset = -3; yOffset <= 9; yOffset += 3) {
                         mutable.set(x, y, z).move(xOffset, yOffset, zOffset);
 
-                        if (context.getBlockState(mutable).getBlock() == Blocks.AIR)
+                        if (context.getBlockState(mutable).is(Blocks.AIR))
                             validSpot = false;
                     }
                 }
