@@ -80,10 +80,18 @@ public class PollenPilingProcessor extends StructureProcessor {
                 chunk.getBlockTicks().scheduleTick(belowPos, structureState.getBlock(), 0);
             }
 
+            BlockPos.Mutable sidePos = new BlockPos.Mutable();
+            for(Direction direction : Direction.values()) {
+                sidePos.set(worldPos).move(direction);
+                if(worldView.getBlockState(sidePos).getFluidState().isSource()) {
+                    return new Template.BlockInfo(worldPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), null);
+                }
+            }
+
             double noiseVal = noiseGenerator.noise3_Classic(worldPos.getX() * xzScale, worldPos.getY() * yScale, worldPos.getZ() * xzScale);
             int layerHeight = Math.max(0, (int) (((noiseVal / 2D) + 0.5D) * 2.5D));
             layerHeight = Math.min(8, layerHeight + structureState.getValue(PileOfPollen.LAYERS));
-            structureBlockInfoToReturn = new Template.BlockInfo(structureBlockInfoToReturn.pos, structureState.setValue(PileOfPollen.LAYERS, layerHeight), structureBlockInfoToReturn.nbt);
+            structureBlockInfoToReturn = new Template.BlockInfo(worldPos, structureState.setValue(PileOfPollen.LAYERS, layerHeight), structureBlockInfoToReturn.nbt);
         }
 
         if(!structureState.canOcclude()) {
