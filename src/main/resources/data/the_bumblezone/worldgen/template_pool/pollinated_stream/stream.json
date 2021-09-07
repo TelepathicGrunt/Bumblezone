@@ -1,0 +1,123 @@
+{
+  "name": "the_bumblezone:pollinated_stream/stream",
+  "fallback": "the_bumblezone:pollinated_stream/end_pool",
+  "elements": [
+    {
+      "weight": 7,
+      "element": {
+        "location": "the_bumblezone:pollinated_stream/stream_straight",
+        "processors": "the_bumblezone:pollinated_stream_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "location": "the_bumblezone:pollinated_stream/stream_turn",
+        "processors": "the_bumblezone:pollinated_stream_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "location": "the_bumblezone:pollinated_stream/stream_wave",
+        "processors": "the_bumblezone:pollinated_stream_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "location": "the_bumblezone:pollinated_stream/stream_wave2",
+        "processors": "the_bumblezone:pollinated_stream_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "location": "the_bumblezone:pollinated_stream/stream_3way",
+        "processors": "the_bumblezone:pollinated_stream_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "the_bumblezone:pollinated_stream/stream_3way_offset1",
+        "processors": "the_bumblezone:pollinated_stream_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "the_bumblezone:pollinated_stream/stream_3way_offset2",
+        "processors": "the_bumblezone:pollinated_stream_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:pollinated_stream/stream_4way",
+        "processors": "the_bumblezone:pollinated_stream_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:pollinated_stream/stream_4way_offset1",
+        "processors": "the_bumblezone:pollinated_stream_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:pollinated_stream/stream_4way_offset2",
+        "processors": "the_bumblezone:pollinated_stream_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:pollinated_stream/stream_4way_offset3",
+        "processors": "the_bumblezone:pollinated_stream_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "the_bumblezone:pollinated_stream/stream_pond",
+        "processors": "the_bumblezone:pollinated_stream_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:pollinated_stream/cave_spider_den",
+        "processors": "the_bumblezone:pollinated_stream_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

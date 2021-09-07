@@ -33,6 +33,10 @@ Fixed feeding bees a bucket items gives you a bowl back instead.
 Converted the Honeycomb Hole feature in the walls of the dimension to be now an nbt feature.
   You can change the shape and blocks of those holes with a datapack that replaces its nbt file or its processors!
 
+Added Pollinated Fields and Pollinated Pillar biomes with lots of piles of pollen!
+
+Added Pollinated Stream structure to Pollinated Fields and Pollinated Pillar biomes as a fun small tunnel to explore.
+
 
 ### **(V.2.4.11 Changes) (1.16.5 Minecraft)**
 

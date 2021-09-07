@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin;
+package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.FallingBlockEntity;

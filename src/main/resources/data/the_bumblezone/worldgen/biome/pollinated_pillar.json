@@ -4,8 +4,8 @@
   "temperature": 1.85,
   "downfall": 0.5,
   "category": "none",
-  "depth": -0.15,
-  "scale": 0.1,
+  "depth": 5.5,
+  "scale": 0.5,
   "effects": {
     "ambient_sound": "the_bumblezone:beehive_ambience",
     "music": {
@@ -21,18 +21,13 @@
     "water_color": 14402413,
     "water_fog_color": 11700268
   },
-  "surface_builder": "the_bumblezone:pollen_surface_builder",
+  "surface_builder": "the_bumblezone:pollen_deep_surface_builder",
   "carvers": {},
   "features": [
-    [
-      "the_bumblezone:honeycomb_caves"
-    ],
     [],
     [],
-    [
-      "the_bumblezone:bee_dungeon",
-      "the_bumblezone:spider_infested_bee_dungeon"
-    ],
+    [],
+    [],
     [],
     [],
     [
@@ -49,7 +44,7 @@
   "starts": [
     "the_bumblezone:pollinated_stream"
   ],
-  "creature_spawn_probability": 0.13,
+  "creature_spawn_probability": 0.17,
   "spawners": {
     "monster": [
       {
@@ -59,8 +54,14 @@
         "maxCount": 1
       },
       {
-        "type": "minecraft:endermen",
-        "weight": 2,
+        "type": "minecraft:spider",
+        "weight": 10,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "minecraft:cave_spider",
+        "weight": 8,
         "minCount": 1,
         "maxCount": 1
       },
@@ -97,13 +98,17 @@
     "misc": []
   },
   "spawn_costs": {
-    "minecraft:endermen": {
-      "energy_budget": 0.02,
-      "charge": 3.0
+    "minecraft:spider": {
+      "energy_budget": 0.05,
+      "charge": 3.5
+    },
+    "minecraft:cave_spider": {
+      "energy_budget": 0.08,
+      "charge": 3.5
     },
     "minecraft:phantom": {
-      "energy_budget": 0.015,
-      "charge": 2.0
+      "energy_budget": 0.01,
+      "charge": 2.5
     }
   }
 }

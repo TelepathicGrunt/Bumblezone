@@ -9,7 +9,7 @@ public enum BzBiomeNonstandardLayer implements IAreaTransformer0 {
     INSTANCE;
 
     public int applyPixel(INoiseRandom noise, int x, int z) {
-        if(noise.nextRandom(10) == 0){
+        if(!BzBiomeProvider.NONSTANDARD_BIOME.isEmpty() && noise.nextRandom(10) == 0){
             return BzBiomeProvider.LAYERS_BIOME_REGISTRY.getId(
                         BzBiomeProvider.NONSTANDARD_BIOME.get(
                             noise.nextRandom(BzBiomeProvider.NONSTANDARD_BIOME.size())));

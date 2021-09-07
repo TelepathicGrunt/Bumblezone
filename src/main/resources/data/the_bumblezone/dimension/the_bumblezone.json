@@ -7,6 +7,11 @@
     "type": "the_bumblezone:chunk_generator",
     "structures": {
       "structures": {
+        "the_bumblezone:pollinated_stream": {
+          "spacing": 6,
+          "separation": 4,
+          "salt": 938497222
+        }
       }
     }
   }

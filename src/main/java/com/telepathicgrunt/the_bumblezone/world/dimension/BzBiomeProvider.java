@@ -8,7 +8,9 @@ import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeMergeLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeNonstandardLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomePillarLayer;
-import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeScalePillarLayer;
+import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomePollinatedPillarLayer;
+import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomePollinatedFieldsLayer;
+import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeScaleLayer;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedConstants;
@@ -45,6 +47,8 @@ public class BzBiomeProvider extends BiomeProvider {
     public static ResourceLocation HIVE_WALL = new ResourceLocation(Bumblezone.MODID, "hive_wall");
     public static ResourceLocation HIVE_PILLAR = new ResourceLocation(Bumblezone.MODID, "hive_pillar");
     public static ResourceLocation SUGAR_WATER_FLOOR = new ResourceLocation(Bumblezone.MODID, "sugar_water_floor");
+    public static ResourceLocation POLLINATED_FIELDS = new ResourceLocation(Bumblezone.MODID, "pollinated_fields");
+    public static ResourceLocation POLLINATED_PILLAR = new ResourceLocation(Bumblezone.MODID, "pollinated_pillar");
 
     private final Layer BIOME_SAMPLER;
     private final Registry<Biome> BIOME_REGISTRY;
@@ -63,7 +67,9 @@ public class BzBiomeProvider extends BiomeProvider {
         NONSTANDARD_BIOME = this.possibleBiomes.stream()
                 .filter(biome -> biomeRegistry.getKey(biome) != HIVE_WALL &&
                                 biomeRegistry.getKey(biome) != HIVE_PILLAR &&
-                                biomeRegistry.getKey(biome) != SUGAR_WATER_FLOOR)
+                                biomeRegistry.getKey(biome) != SUGAR_WATER_FLOOR &&
+                                biomeRegistry.getKey(biome) != POLLINATED_FIELDS &&
+                                biomeRegistry.getKey(biome) != POLLINATED_PILLAR)
                 .collect(Collectors.toList());
 
         BzBiomeLayer.setSeed(seed);
@@ -82,19 +88,21 @@ public class BzBiomeProvider extends BiomeProvider {
     public static <T extends IArea, C extends IExtendedNoiseRandom<T>> IAreaFactory<T> build(LongFunction<C> contextFactory) {
         IAreaFactory<T> layer = BzBiomeLayer.INSTANCE.run(contextFactory.apply(200L));
         layer = BzBiomePillarLayer.INSTANCE.run(contextFactory.apply(1008L), layer);
-        layer = BzBiomeScalePillarLayer.INSTANCE.run(contextFactory.apply(1055L), layer);
+        layer = new BzBiomeScaleLayer(HIVE_PILLAR).run(contextFactory.apply(1055L), layer);
         layer = ZoomLayer.FUZZY.run(contextFactory.apply(2003L), layer);
         layer = ZoomLayer.FUZZY.run(contextFactory.apply(2523L), layer);
 
-        if(!NONSTANDARD_BIOME.isEmpty()){
-            IAreaFactory<T> layerOverlay = BzBiomeNonstandardLayer.INSTANCE.run(contextFactory.apply(204L));
-            layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2423L), layerOverlay);
-            layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2503L), layerOverlay);
-            layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2603L), layerOverlay);
-            layerOverlay = ZoomLayer.FUZZY.run(contextFactory.apply(2853L), layerOverlay);
-            layerOverlay = ZoomLayer.FUZZY.run(contextFactory.apply(3583L), layerOverlay);
-            layer = BzBiomeMergeLayer.INSTANCE.run(contextFactory.apply(5583L), layerOverlay, layer);
-        }
+        IAreaFactory<T> layerOverlay = BzBiomeNonstandardLayer.INSTANCE.run(contextFactory.apply(204L));
+        layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2423L), layerOverlay);
+        layerOverlay = BzBiomePollinatedPillarLayer.INSTANCE.run(contextFactory.apply(3008L), layerOverlay);
+        layerOverlay = new BzBiomeScaleLayer(POLLINATED_PILLAR).run(contextFactory.apply(4455L), layerOverlay);
+        layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2503L), layerOverlay);
+        layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2603L), layerOverlay);
+        layerOverlay = BzBiomePollinatedFieldsLayer.INSTANCE.run(contextFactory.apply(3578L), layerOverlay);
+        layerOverlay = new BzBiomeScaleLayer(POLLINATED_FIELDS).run(contextFactory.apply(4055L), layerOverlay);
+        layerOverlay = ZoomLayer.FUZZY.run(contextFactory.apply(2853L), layerOverlay);
+        layerOverlay = ZoomLayer.FUZZY.run(contextFactory.apply(3583L), layerOverlay);
+        layer = BzBiomeMergeLayer.INSTANCE.run(contextFactory.apply(5583L), layerOverlay, layer);
 
         return layer;
     }

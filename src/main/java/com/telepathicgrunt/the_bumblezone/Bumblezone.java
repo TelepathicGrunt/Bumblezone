@@ -34,6 +34,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSurfaceBuilders;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
@@ -107,6 +108,7 @@ public class Bumblezone{
         BzFeatures.FEATURES.register(modEventBus);
         BzEntities.ENTITIES.register(modEventBus);
         BzSounds.SOUND_EVENTS.register(modEventBus);
+        BzStructures.STRUCTURES.register(modEventBus);
         BzPlacements.DECORATORS.register(modEventBus);
         BzParticles.PARTICLE_TYPES.register(modEventBus);
         BzEnchantments.ENCHANTMENTS.register(modEventBus);
@@ -146,6 +148,7 @@ public class Bumblezone{
 			BzDimension.setupDimension();
 			BzConfiguredFeatures.registerConfiguredFeatures();
 			BzEntities.registerAdditionalEntityInformation();
+			BzStructures.setupStructures();
 
 			// Generates the tag data I want so I can update honeycombs_that_features_can_carve.json lol
 //			StringBuilder s = new StringBuilder("\n\n\n");
