@@ -8,8 +8,8 @@
     "structures": {
       "structures": {
         "the_bumblezone:pollinated_stream": {
-          "spacing": 6,
-          "separation": 4,
+          "spacing": 8,
+          "separation": 6,
           "salt": 938497222
         }
       }

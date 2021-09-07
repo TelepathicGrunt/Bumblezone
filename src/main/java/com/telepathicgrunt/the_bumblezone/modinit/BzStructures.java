@@ -23,8 +23,8 @@ public class BzStructures {
     public static void setupStructures() {
         setupMapSpacingAndLand(
                 POLLINATED_STREAM.get(),
-                new StructureSeparationSettings(8,
-                        2,
+                new StructureSeparationSettings(12,
+                        8,
                         938497222),
                 false);
     }
