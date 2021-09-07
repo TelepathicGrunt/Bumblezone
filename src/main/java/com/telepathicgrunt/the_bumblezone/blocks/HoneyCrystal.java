@@ -43,10 +43,9 @@ import net.minecraft.world.World;
 
 import java.util.Map;
 
-public class HoneyCrystal extends Block {
+public class HoneyCrystal extends ProperFacingBlock {
     private static final ResourceLocation EMPTY_FLUID_RL = new ResourceLocation("minecraft:empty");
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    public static final DirectionProperty FACING = DirectionalBlock.FACING;
     protected static final VoxelShape DOWN_AABB = Block.box(0.0D, 1.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     protected static final VoxelShape UP_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
     protected static final VoxelShape WEST_AABB = Block.box(1.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
