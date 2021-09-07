@@ -9,6 +9,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
@@ -34,6 +35,7 @@ public class HoneyCrystalFeature extends Feature<NoFeatureConfig> {
         BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position);
         BlockState originalBlockstate = world.getBlockState(blockpos$Mutable);
         BlockState blockstate;
+        ChunkPos currentChunkPos = new ChunkPos(blockpos$Mutable);
 
         if (originalBlockstate.getBlock() == CAVE_AIR || originalBlockstate.getFluidState().is(FluidTags.WATER)) {
 
@@ -65,14 +67,11 @@ public class HoneyCrystalFeature extends Feature<NoFeatureConfig> {
 
                         //avoid placing crystal on block in other chunk as the cave hasn't carved it yet.
                         Direction directionProp = result.getValue(HoneyCrystal.FACING);
-                        if( (directionProp == Direction.NORTH && blockpos$Mutable.getZ() % 16 == 15) ||
-                            (directionProp == Direction.SOUTH && blockpos$Mutable.getZ() % 16 == 0) ||
-                            (directionProp == Direction.WEST && blockpos$Mutable.getX() % 16 == 15) ||
-                            (directionProp == Direction.EAST && blockpos$Mutable.getX() % 16 == 0))
-                        {
-                            return false;
+                        blockpos$Mutable.move(directionProp.getOpposite());
+                        if (blockpos$Mutable.getX() >> 4 != currentChunkPos.x || blockpos$Mutable.getZ() >> 4 != currentChunkPos.z) {
+                            return false; // facing side chunk. cancel spawn
                         }
-
+                        blockpos$Mutable.move(directionProp); // move back
                         world.setBlock(blockpos$Mutable, result, 3);
                         return true; //crystal was placed
                     }
