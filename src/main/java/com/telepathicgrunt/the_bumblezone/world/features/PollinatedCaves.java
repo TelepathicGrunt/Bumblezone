@@ -75,7 +75,7 @@ public class PollinatedCaves extends Feature<NoFeatureConfig> {
 
     private static void carve(ISeedReader world, BlockPos.Mutable position, double finalNoise, double noise) {
         BlockState currentState = world.getBlockState(position);
-        if(!currentState.isAir() && currentState.getFluidState().isEmpty()) {
+        if(!currentState.isAir() && currentState.getFluidState().isEmpty() && !currentState.is(BzBlocks.PILE_OF_POLLEN.get())) {
             // varies the surface of the cave surface
             if(finalNoise > 0.009f) {
                 if((noise * 3) % 2 < 0.35D){
@@ -105,6 +105,13 @@ public class PollinatedCaves extends Feature<NoFeatureConfig> {
                 int carveHeight = Math.abs((int) ((noise * 1000) % 0.8D)) * 2 + 1;
                 for(int i = 0; i < carveHeight; i++){
                     position.move(Direction.UP);
+                    // cannot carve next to fluids
+                    for(Direction direction : Direction.values()) {
+                        sidePos.set(position).move(direction);
+                        if(!world.getBlockState(sidePos).getFluidState().isEmpty()) {
+                            return;
+                        }
+                    }
                     world.setBlock(position, Blocks.CAVE_AIR.defaultBlockState(), 3);
                 }
                 position.move(Direction.DOWN, carveHeight);
