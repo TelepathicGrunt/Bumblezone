@@ -2,6 +2,8 @@ package com.telepathicgrunt.the_bumblezone.fluids;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -51,22 +53,11 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
 
     @Override
     public void animateTick(World worldIn, BlockPos pos, FluidState state, Random random) {
-        if (!state.isSource() && !state.getValue(FALLING)) {
-            if (random.nextInt(64) == 0) {
-                worldIn.playLocalSound(
-                        (double) pos.getX() + 0.5D,
-                        (double) pos.getY() + 0.5D,
-                        (double) pos.getZ() + 0.5D,
-                        SoundEvents.WATER_AMBIENT,
-                        SoundCategory.BLOCKS,
-                        random.nextFloat() * 0.25F + 0.75F,
-                        random.nextFloat() + 0.5F, false);
-            }
-        } else if (random.nextInt(10) == 0) {
-            worldIn.addParticle(ParticleTypes.UNDERWATER,
-                    (double) pos.getX() + (double) random.nextFloat(),
-                    (double) pos.getY() + (double) random.nextFloat(),
-                    (double) pos.getZ() + (double) random.nextFloat(),
+        if (random.nextInt(82) == 0) {
+            worldIn.addParticle(BzParticles.HONEY_PARTICLE.get(),
+                    pos.getX() + random.nextFloat(),
+                    pos.getY() + random.nextFloat(),
+                    pos.getZ() + random.nextFloat(),
                     0.0D,
                     0.0D,
                     0.0D);
@@ -75,12 +66,12 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
 
     @Override
     public IParticleData getDripParticle() {
-        return ParticleTypes.DRIPPING_HONEY;
+        return BzParticles.HONEY_PARTICLE.get();
     }
 
     @Override
     protected float getExplosionResistance() {
-        return 100.0F;
+        return 120.0F;
     }
 
     @Override
@@ -101,7 +92,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
 
     @Override
     public boolean isSame(Fluid fluid) {
-        return fluid.is(FluidTags.WATER);
+        return fluid.is(BzFluidTags.HONEY_FLUID);
     }
 
     @Override

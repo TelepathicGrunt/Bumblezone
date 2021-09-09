@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
@@ -20,11 +21,8 @@ import net.minecraft.world.World;
 
 public class HoneyFluidBlock extends FlowingFluidBlock {
 
-    public static final IntegerProperty BOTTOM_LEVEL = BlockStateProperties.LEVEL;
-
     public HoneyFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier) {
-        super(supplier, Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noDrops().speedFactor(0.3F));
-        this.registerDefaultState(this.stateDefinition.any().setValue(LEVEL, 0).setValue(BOTTOM_LEVEL, 0));
+        super(supplier, Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noDrops().speedFactor(0.15F));
     }
 
     @Override
@@ -35,16 +33,20 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
     }
 
     private boolean receiveNeighborFluids(World world, BlockPos pos, BlockState state)  {
-        boolean flag = false;
+        boolean lavaflag = false;
 
         for (Direction direction : Direction.values()) {
-            if (direction != Direction.DOWN && world.getFluidState(pos.relative(direction)).is(FluidTags.LAVA)) {
-                flag = true;
+            FluidState fluidState = world.getFluidState(pos.relative(direction));
+            if (fluidState.is(FluidTags.LAVA)) {
+                lavaflag = true;
                 break;
+            }
+            else if(!fluidState.getType().equals(BzFluids.SUGAR_WATER_FLUID.get()) && fluidState.is(FluidTags.WATER) && fluidState.isSource()) {
+                world.setBlock(pos.relative(direction), BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), 3);
             }
         }
 
-        if (flag) {
+        if (lavaflag) {
             FluidState ifluidstate = world.getFluidState(pos);
             if (ifluidstate.isSource()) {
                 world.setBlockAndUpdate(pos, BzBlocks.SUGAR_INFUSED_STONE.get().defaultBlockState());
@@ -73,7 +75,7 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
             BeeEntity beeEntity = ((BeeEntity) entity);
             if(beeEntity.hasNectar() && !state.getFluidState().isSource()) {
                 ((BeeEntity)entity).setFlag(8, false);
-                world.setBlock(position, state.setValue(LEVEL, 15).setValue(BOTTOM_LEVEL, 15), 3);
+                world.setBlock(position, state.setValue(LEVEL, 15), 3);
             }
 
             if (beeEntity.getHealth() < beeEntity.getMaxHealth()) {

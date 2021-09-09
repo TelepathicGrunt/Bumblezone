@@ -38,6 +38,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSurfaceBuilders;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
+import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
@@ -77,6 +78,7 @@ public class Bumblezone{
         BzBlockTags.tagInit(); // Done extra early as some features needs the tag wrapper.
         BzItemTags.tagInit();
         BzEntityTags.tagInit();
+        BzFluidTags.tagInit();
 
         //Events
         forgeBus.addListener(BeeAggression::pickupItemAnger);

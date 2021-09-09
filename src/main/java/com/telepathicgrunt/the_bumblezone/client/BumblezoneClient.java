@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.client;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuff;
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HoneySlimeRendering;
@@ -35,6 +36,7 @@ public class BumblezoneClient
         modEventBus.addListener(BumblezoneClient::onClientSetup);
         modEventBus.addListener(BumblezoneClient::onParticleSetup);
         forgeBus.addListener(FluidRender::sugarWaterOverlay);
+        forgeBus.addListener(FluidRender::renderHoneyFog);
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
     }
 
@@ -57,6 +59,9 @@ public class BumblezoneClient
             RenderTypeLookup.setRenderLayer(BzFluids.SUGAR_WATER_FLUID.get(), RenderType.translucent());
             RenderTypeLookup.setRenderLayer(BzFluids.SUGAR_WATER_FLUID_FLOWING.get(), RenderType.translucent());
             RenderTypeLookup.setRenderLayer(BzFluids.SUGAR_WATER_BLOCK.get(), RenderType.translucent());
+            RenderTypeLookup.setRenderLayer(BzFluids.HONEY_FLUID.get(), RenderType.translucent());
+            RenderTypeLookup.setRenderLayer(BzFluids.HONEY_FLUID_FLOWING.get(), RenderType.translucent());
+            RenderTypeLookup.setRenderLayer(BzFluids.HONEY_FLUID_BLOCK.get(), RenderType.translucent());
 
             // Allows shield to use the blocking json file for offset
             ItemModelsProperties.register(
@@ -74,5 +79,6 @@ public class BumblezoneClient
     public static void onParticleSetup(ParticleFactoryRegisterEvent event)
     {
         Minecraft.getInstance().particleEngine.register(BzParticles.POLLEN.get(), PollenPuff.Factory::new);
+        Minecraft.getInstance().particleEngine.register(BzParticles.HONEY_PARTICLE.get(), HoneyParticle.Factory::new);
     }
 }

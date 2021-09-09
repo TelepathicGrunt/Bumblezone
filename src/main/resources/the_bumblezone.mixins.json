@@ -4,8 +4,6 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "the_bumblezone.refmap.json",
   "mixins": [
-    "world.DimensionStructuresSettingsAccessor",
-    "world.StructureAccessor",
     "blocks.BeeHiveDropsMixin",
     "blocks.DefaultDispenseItemBehaviorInvoker",
     "blocks.DispenserBlockInvoker",
@@ -30,11 +28,15 @@
     "items.PlayerDamagedMixin",
     "items.PlayerDamageShieldInvoker",
     "world.BiomeGenerationSettingsAccessor",
+    "world.DimensionStructuresSettingsAccessor",
     "world.LayerAccessor",
     "world.ServerWorldMixin",
+    "world.StructureAccessor",
     "world.TemplateAccessor"
   ],
   "client": [
+    "client.FogRendererClient",
+    "client.OverlayRendererClient",
     "world.SkyPropertiesAccessor"
   ],
   "injectors": {
