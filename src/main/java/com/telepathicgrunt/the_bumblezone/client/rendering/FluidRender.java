@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
+import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -77,7 +78,7 @@ public class FluidRender {
     public static void renderHoneyFog(EntityViewRenderEvent.RenderFogEvent event)
     {
         FluidState fluidstate = event.getInfo().getFluidInCamera();
-        if(fluidstate.getType().equals(BzFluids.HONEY_FLUID.get()) || fluidstate.getType().equals(BzFluids.HONEY_FLUID_FLOWING.get())) {
+        if(fluidstate.is(BzFluidTags.BZ_HONEY_FLUID)) {
             RenderSystem.fogStart(0.35f);
             RenderSystem.fogEnd(4);
             RenderSystem.fogMode(GlStateManager.FogMode.LINEAR);

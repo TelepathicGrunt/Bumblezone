@@ -13,6 +13,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
@@ -21,8 +22,16 @@ import net.minecraft.world.World;
 
 public class HoneyFluidBlock extends FlowingFluidBlock {
 
+    public static final IntegerProperty BOTTOM_LEVEL = IntegerProperty.create("bottom_level", 0, 8);
+
     public HoneyFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier) {
         super(supplier, Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noDrops().speedFactor(0.15F));
+        this.registerDefaultState(this.stateDefinition.any().setValue(LEVEL, 0).setValue(BOTTOM_LEVEL, 0));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> stateBuilder) {
+        stateBuilder.add(LEVEL).add(BOTTOM_LEVEL);
     }
 
     @Override
@@ -64,6 +73,22 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
         return true;
     }
 
+    @Override
+    public FluidState getFluidState(BlockState blockState) {
+        int fluidLevel = blockState.getValue(LEVEL);
+        int bottomFluidLevel = blockState.getValue(BOTTOM_LEVEL);
+        FluidState fluidState;
+        if(fluidLevel == 0) {
+            fluidState = getFluid().getSource(false);
+        }
+        else if(fluidLevel == 8) {
+            fluidState = getFluid().getFlowing(fluidLevel, true).setValue(BOTTOM_LEVEL, bottomFluidLevel);
+        }
+        else {
+            fluidState = getFluid().getFlowing(fluidLevel, false).setValue(BOTTOM_LEVEL, bottomFluidLevel);
+        }
+        return fluidState;
+    }
 
     /**
      * Heal bees if they are damaged or create honey source if pollinated
@@ -75,7 +100,7 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
             BeeEntity beeEntity = ((BeeEntity) entity);
             if(beeEntity.hasNectar() && !state.getFluidState().isSource()) {
                 ((BeeEntity)entity).setFlag(8, false);
-                world.setBlock(position, state.setValue(LEVEL, 15), 3);
+                world.setBlock(position, state.setValue(LEVEL, 8).setValue(BOTTOM_LEVEL, 0), 3);
             }
 
             if (beeEntity.getHealth() < beeEntity.getMaxHealth()) {

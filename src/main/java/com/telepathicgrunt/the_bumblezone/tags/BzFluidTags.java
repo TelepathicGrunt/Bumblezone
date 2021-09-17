@@ -12,5 +12,6 @@ public class BzFluidTags {
     public static void tagInit(){}
 
     public static final ITag.INamedTag<Fluid> HONEY_FLUID = FluidTags.bind("forge:honey");
+    public static final ITag.INamedTag<Fluid> BZ_HONEY_FLUID = FluidTags.bind(Bumblezone.MODID+":honey");
 
 }

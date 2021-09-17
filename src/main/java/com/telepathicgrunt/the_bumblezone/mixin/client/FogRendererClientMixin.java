@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.client;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
+import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.world.ClientWorld;
@@ -13,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(FogRenderer.class)
-public class FogRendererClient {
+public class FogRendererClientMixin {
 
     @Shadow
     private static float fogRed;
@@ -32,7 +33,7 @@ public class FogRendererClient {
             at = @At(value = "INVOKE", target = "net/minecraft/client/world/ClientWorld$ClientWorldInfo.getClearColorScale()D"))
     private static void thebumblezone_setupHoneyFogColor(ActiveRenderInfo activeRenderInfo, float j, ClientWorld clientWorld, int l, float i1, CallbackInfo ci) {
         FluidState fluidstate = activeRenderInfo.getFluidInCamera();
-        if(fluidstate.getType().equals(BzFluids.HONEY_FLUID.get()) || fluidstate.getType().equals(BzFluids.HONEY_FLUID_FLOWING.get())) {
+        if(fluidstate.is(BzFluidTags.BZ_HONEY_FLUID)) {
             fogRed = 0.6F;
             fogGreen = 0.4F;
             fogBlue = 0.0F;
