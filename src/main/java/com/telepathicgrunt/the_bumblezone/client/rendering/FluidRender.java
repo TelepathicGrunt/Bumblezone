@@ -65,10 +65,10 @@ public class FluidRender {
             float f8 = minecraft.player.xRot / 64.0F;
             Matrix4f matrix4f = matrixStack.last().pose();
             bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR_TEX);
-            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).color(f, f, f, 0.85F).uv(4.0F + f7, 4.0F + f8).endVertex();
-            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).color(f, f, f, 0.85F).uv(0.0F + f7, 4.0F + f8).endVertex();
-            bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).color(f, f, f, 0.85F).uv(0.0F + f7, 0.0F + f8).endVertex();
-            bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).color(f, f, f, 0.85F).uv(4.0F + f7, 0.0F + f8).endVertex();
+            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).color(f, f, f, 0.95F).uv(4.0F + f7, 4.0F + f8).endVertex();
+            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).color(f, f, f, 0.95F).uv(0.0F + f7, 4.0F + f8).endVertex();
+            bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).color(f, f, f, 0.95F).uv(0.0F + f7, 0.0F + f8).endVertex();
+            bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).color(f, f, f, 0.95F).uv(4.0F + f7, 0.0F + f8).endVertex();
             bufferbuilder.end();
             WorldVertexBufferUploader.end(bufferbuilder);
             RenderSystem.disableBlend();

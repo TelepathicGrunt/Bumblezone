@@ -12,6 +12,7 @@ import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -22,16 +23,19 @@ import net.minecraft.world.World;
 
 public class HoneyFluidBlock extends FlowingFluidBlock {
 
-    public static final IntegerProperty BOTTOM_LEVEL = IntegerProperty.create("bottom_level", 0, 8);
+    public static final int maxBottomLayer = 8;
+    public static final IntegerProperty BOTTOM_LEVEL = IntegerProperty.create("bottom_level", 0, maxBottomLayer);
+    public static final BooleanProperty FALLING = BlockStateProperties.FALLING;
+    public static final BooleanProperty ABOVE_FLUID = BooleanProperty.create("above_support");
 
     public HoneyFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier) {
         super(supplier, Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noDrops().speedFactor(0.15F));
-        this.registerDefaultState(this.stateDefinition.any().setValue(LEVEL, 0).setValue(BOTTOM_LEVEL, 0));
+        this.registerDefaultState(this.stateDefinition.any().setValue(LEVEL, 0).setValue(BOTTOM_LEVEL, 0).setValue(FALLING, false).setValue(ABOVE_FLUID, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> stateBuilder) {
-        stateBuilder.add(LEVEL).add(BOTTOM_LEVEL);
+        stateBuilder.add(LEVEL).add(BOTTOM_LEVEL).add(FALLING).add(ABOVE_FLUID);
     }
 
     @Override
@@ -77,17 +81,15 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
     public FluidState getFluidState(BlockState blockState) {
         int fluidLevel = blockState.getValue(LEVEL);
         int bottomFluidLevel = blockState.getValue(BOTTOM_LEVEL);
+        boolean isFalling = blockState.getValue(FALLING);
         FluidState fluidState;
         if(fluidLevel == 0) {
             fluidState = getFluid().getSource(false);
         }
-        else if(fluidLevel == 8) {
-            fluidState = getFluid().getFlowing(fluidLevel, true).setValue(BOTTOM_LEVEL, bottomFluidLevel);
-        }
         else {
-            fluidState = getFluid().getFlowing(fluidLevel, false).setValue(BOTTOM_LEVEL, bottomFluidLevel);
+            fluidState = getFluid().getFlowing(fluidLevel, isFalling).setValue(BOTTOM_LEVEL, bottomFluidLevel);
         }
-        return fluidState;
+        return fluidState.setValue(ABOVE_FLUID, blockState.getValue(ABOVE_FLUID));
     }
 
     /**

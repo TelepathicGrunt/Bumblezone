@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
 import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
 import net.minecraft.client.renderer.FluidBlockRenderer;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
@@ -40,8 +41,17 @@ public class FluidBlockRendererMixin {
     @Inject(method = "isNeighborSameFluid(Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/Direction;Lnet/minecraft/fluid/FluidState;)Z",
             at = @At(value = "HEAD"), cancellable = true)
     private static void thebumblezone_honeyFluidCulling(IBlockReader iBlockReader, BlockPos blockPos, Direction direction, FluidState fluidState, CallbackInfoReturnable<Boolean> cir) {
-        if(fluidState.getType().is(BzFluidTags.BZ_HONEY_FLUID) && direction.getAxis() == Direction.Axis.Y && fluidState.isSource()){
-            cir.setReturnValue(false);
+//        if(fluidState.getType().is(BzFluidTags.BZ_HONEY_FLUID) && fluidState.isSource()){
+//            cir.setReturnValue(HoneyFluid.shouldCullSide(direction));
+//        }
+    }
+
+    // make honey fluid have correct height when falling
+    @Inject(method = "getWaterHeight(Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/fluid/Fluid;)F",
+            at = @At(value = "HEAD"), cancellable = true)
+    private void thebumblezone_honeyFluidHeight(IBlockReader world, BlockPos blockPos, Fluid fluid, CallbackInfoReturnable<Float> cir) {
+        if(fluid.is(BzFluidTags.BZ_HONEY_FLUID)){
+            cir.setReturnValue(HoneyFluid.getHoneyFluidHeight(world, blockPos, fluid));
         }
     }
 }
