@@ -108,7 +108,12 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
             }
 
             if (beeEntity.getHealth() < beeEntity.getMaxHealth()) {
-                beeEntity.heal(1);
+                float diff = beeEntity.getMaxHealth() - beeEntity.getHealth();
+                beeEntity.heal(diff);
+                BlockState currentState = world.getBlockState(position);
+                if(currentState.is(BzFluids.HONEY_FLUID_BLOCK.get())) {
+                    world.setBlock(position, currentState.setValue(HoneyFluidBlock.LEVEL, Math.max(currentState.getValue(HoneyFluidBlock.LEVEL) - (int)Math.ceil(diff), 1)), 3);
+                }
             }
         }
 

@@ -220,14 +220,6 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
             }
         }
 
-        if (neighboringFluidSource >= 2) {
-            BlockState belowBlockState = worldReader.getBlockState(blockPos.below());
-            FluidState belowFluidState = belowBlockState.getFluidState();
-            if (belowBlockState.getMaterial().isSolid() || (belowFluidState.getType().isSame(this) && belowFluidState.isSource())) {
-                return this.getSource(false);
-            }
-        }
-
         BlockPos aboveBlockPos = blockPos.above();
         BlockState aboveBlockState = worldReader.getBlockState(aboveBlockPos);
         FluidState aboveFluidState = aboveBlockState.getFluidState();
