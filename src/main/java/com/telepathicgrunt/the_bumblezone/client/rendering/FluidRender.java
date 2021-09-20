@@ -58,17 +58,17 @@ public class FluidRender {
         if (state.is(BzFluids.HONEY_FLUID_BLOCK.get())) {
             minecraft.getTextureManager().bind(HONEY_TEXTURE_UNDERWATER);
             BufferBuilder bufferbuilder = Tessellator.getInstance().getBuilder();
-            float f = minecraft.player.getBrightness();
+            float f = (float) Math.min(Math.pow(minecraft.player.getBrightness(), 2D), 1D);
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
-            float f7 = -minecraft.player.yRot / 64.0F;
-            float f8 = minecraft.player.xRot / 64.0F;
+            float f7 = -minecraft.player.yRot / (64.0F * 8F);
+            float f8 = minecraft.player.xRot / (64.0F * 8F);
             Matrix4f matrix4f = matrixStack.last().pose();
             bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR_TEX);
-            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).color(f, f, f, 0.95F).uv(4.0F + f7, 4.0F + f8).endVertex();
-            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).color(f, f, f, 0.95F).uv(0.0F + f7, 4.0F + f8).endVertex();
-            bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).color(f, f, f, 0.95F).uv(0.0F + f7, 0.0F + f8).endVertex();
-            bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).color(f, f, f, 0.95F).uv(4.0F + f7, 0.0F + f8).endVertex();
+            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).color(f, f, f, 0.95F).uv(1.0F + f7, 1.0F + f8).endVertex();
+            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).color(f, f, f, 0.95F).uv(0.0F + f7, 2.0F + f8).endVertex();
+            bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).color(f, f, f, 0.95F).uv(1.0F + f7, 1.0F + f8).endVertex();
+            bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).color(f, f, f, 0.95F).uv(2.0F + f7, 0.0F + f8).endVertex();
             bufferbuilder.end();
             WorldVertexBufferUploader.end(bufferbuilder);
             RenderSystem.disableBlend();
