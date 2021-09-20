@@ -20,6 +20,8 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import org.apache.logging.log4j.core.jmx.Server;
 
 public class HoneyFluidBlock extends FlowingFluidBlock {
 
@@ -102,7 +104,7 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
             BeeEntity beeEntity = ((BeeEntity) entity);
             if(beeEntity.hasNectar() && !state.getFluidState().isSource()) {
                 ((BeeEntity)entity).setFlag(8, false);
-                world.setBlock(position, state.setValue(LEVEL, 8).setValue(BOTTOM_LEVEL, 0), 3);
+                world.setBlock(position, BzFluids.HONEY_FLUID.get().defaultFluidState().createLegacyBlock(), 3);
             }
 
             if (beeEntity.getHealth() < beeEntity.getMaxHealth()) {

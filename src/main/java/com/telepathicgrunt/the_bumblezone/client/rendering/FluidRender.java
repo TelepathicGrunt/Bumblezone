@@ -58,7 +58,7 @@ public class FluidRender {
         if (state.is(BzFluids.HONEY_FLUID_BLOCK.get())) {
             minecraft.getTextureManager().bind(HONEY_TEXTURE_UNDERWATER);
             BufferBuilder bufferbuilder = Tessellator.getInstance().getBuilder();
-            float f = (float) Math.min(Math.pow(minecraft.player.getBrightness(), 2D), 1D);
+            float f = (float) Math.pow(minecraft.player.getBrightness(), 2D);
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
             float f7 = -minecraft.player.yRot / (64.0F * 8F);
