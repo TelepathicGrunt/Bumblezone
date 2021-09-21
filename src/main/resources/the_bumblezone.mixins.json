@@ -13,6 +13,7 @@
     "blocks.VineBlockAccessor",
     "blocks.WaterEquivalenceMixin",
     "entities.BeePathfindingMixin",
+    "entities.EntityMixin",
     "entities.LivingEntityMixin",
     "entities.MinecraftServerMixin",
     "entities.MobSpawnLocationMixin",

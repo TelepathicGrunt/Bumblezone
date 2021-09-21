@@ -12,20 +12,27 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.ILiquidContainer;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.particles.IParticleData;
+import net.minecraft.potion.EffectUtils;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
@@ -250,6 +257,15 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
                         .setValue(ABOVE_FLUID, aboveFluidIsThisFluid && aboveFluidState.getValue(BOTTOM_LEVEL) == 0);
     }
 
+    @Override
+    public float getHeight(FluidState fluidState, IBlockReader world, BlockPos blockPos) {
+        BlockPos aboveBlockPos = blockPos.above();
+        BlockState aboveBlockState = world.getBlockState(aboveBlockPos);
+        FluidState aboveFluidState = aboveBlockState.getFluidState();
+        boolean aboveFluidIsThisFluid = !aboveFluidState.isEmpty() && aboveFluidState.getType().isSame(this) && aboveFluidState.getValue(BOTTOM_LEVEL) == 0;
+        return fluidState.getValue(ABOVE_FLUID) || aboveFluidIsThisFluid ? 1.0f : fluidState.getOwnHeight();
+    }
+
     public static float getHoneyFluidHeight(IBlockReader world, BlockPos blockPos, Fluid fluid) {
         float totalHeight = 0.0F;
         int checkedSides = 0;
@@ -302,17 +318,46 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
         return totalHeight / (float)checkedSides;
     }
 
-    @Override
-    public float getHeight(FluidState fluidState, IBlockReader world, BlockPos blockPos) {
-        BlockPos aboveBlockPos = blockPos.above();
-        BlockState aboveBlockState = world.getBlockState(aboveBlockPos);
-        FluidState aboveFluidState = aboveBlockState.getFluidState();
-        boolean aboveFluidIsThisFluid = !aboveFluidState.isEmpty() && aboveFluidState.getType().isSame(this) && aboveFluidState.getValue(BOTTOM_LEVEL) == 0;
-        return fluidState.getValue(ABOVE_FLUID) || aboveFluidIsThisFluid ? 1.0f : fluidState.getOwnHeight();
-    }
-
     public static boolean shouldCullSide(Direction direction) {
         return !(direction.getAxis() == Direction.Axis.Y);
+    }
+
+    public static void breathing(LivingEntity thisEntity) {
+        boolean invulnerable = thisEntity instanceof PlayerEntity && ((PlayerEntity)thisEntity).abilities.invulnerable;
+        if (thisEntity.isAlive()) {
+            if (thisEntity.isEyeInFluid(BzFluidTags.BZ_HONEY_FLUID)) {
+                if (!thisEntity.canBreatheUnderwater() && !EffectUtils.hasWaterBreathing(thisEntity) && !invulnerable) {
+                    thisEntity.setAirSupply(
+                        decreaseAirSupply(
+                            thisEntity.getAirSupply() - 4, // -4 to counteract the +4 for rebreathing as vanilla thinks the honey fluid is air
+                            thisEntity,
+                            thisEntity.level.random)
+                    );
+                    if (thisEntity.getAirSupply() == -20) {
+                        thisEntity.setAirSupply(0);
+                        Vector3d vector3d = thisEntity.getDeltaMovement();
+
+                        for(int i = 0; i < 8; ++i) {
+                            double d2 = thisEntity.level.random.nextDouble() - thisEntity.level.random.nextDouble();
+                            double d3 = thisEntity.level.random.nextDouble() - thisEntity.level.random.nextDouble();
+                            double d4 = thisEntity.level.random.nextDouble() - thisEntity.level.random.nextDouble();
+                            thisEntity.level.addParticle(BzParticles.HONEY_PARTICLE.get(), thisEntity.getX() + d2, thisEntity.getY() + d3, thisEntity.getZ() + d4, vector3d.x, vector3d.y, vector3d.z);
+                        }
+
+                        thisEntity.hurt(DamageSource.DROWN, 2.0F);
+                    }
+                }
+
+                if (!thisEntity.level.isClientSide && thisEntity.isPassenger() && thisEntity.getVehicle() != null && !thisEntity.getVehicle().canBeRiddenInWater(thisEntity)) {
+                    thisEntity.stopRiding();
+                }
+            }
+        }
+    }
+
+    protected static int decreaseAirSupply(int airSupply, LivingEntity entity, Random random) {
+        int respiration = EnchantmentHelper.getRespiration(entity);
+        return respiration > 0 && random.nextInt(respiration + 1) > 0 ? airSupply : airSupply - 1;
     }
 
     public static class Flowing extends HoneyFluid {
