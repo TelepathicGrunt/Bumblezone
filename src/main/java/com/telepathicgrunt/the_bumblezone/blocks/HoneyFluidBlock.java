@@ -10,8 +10,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
@@ -21,8 +19,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import org.apache.logging.log4j.core.jmx.Server;
 
 public class HoneyFluidBlock extends FlowingFluidBlock {
 
@@ -43,12 +39,19 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
 
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-        if (this.receiveNeighborFluids(world, pos, state)) {
+        if (this.neighboringFluidInteractions(world, pos, state)) {
             world.getLiquidTicks().scheduleTick(pos, state.getFluidState().getType(), this.getFluid().getTickDelay(world));
         }
     }
 
-    private boolean receiveNeighborFluids(World world, BlockPos pos, BlockState state)  {
+    @Override
+    public void onPlace(BlockState blockState, World world, BlockPos blockPos, BlockState previousBlockState, boolean notify) {
+        if (this.neighboringFluidInteractions(world, blockPos, blockState)) {
+            world.getLiquidTicks().scheduleTick(blockPos, blockState.getFluidState().getType(), this.getFluid().getTickDelay(world));
+        }
+    }
+
+    private boolean neighboringFluidInteractions(World world, BlockPos pos, BlockState state)  {
         boolean lavaflag = false;
 
         for (Direction direction : Direction.values()) {
