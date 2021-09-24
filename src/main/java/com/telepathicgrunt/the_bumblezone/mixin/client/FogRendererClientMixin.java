@@ -34,8 +34,9 @@ public class FogRendererClientMixin {
     private static void thebumblezone_setupHoneyFogColor(ActiveRenderInfo activeRenderInfo, float j, ClientWorld clientWorld, int l, float i1, CallbackInfo ci) {
         FluidState fluidstate = activeRenderInfo.getFluidInCamera();
         if(fluidstate.is(BzFluidTags.BZ_HONEY_FLUID)) {
-            fogRed = 0.6F;
-            fogGreen = 0.4F;
+            float brightness = (float) Math.pow(activeRenderInfo.getEntity().getBrightness(), 2D);
+            fogRed = 0.6F * brightness;
+            fogGreen = 0.3F * brightness;
             fogBlue = 0.0F;
             biomeChangedTime = -1L;
         }

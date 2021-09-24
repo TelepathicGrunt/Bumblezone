@@ -17,6 +17,7 @@
     "entities.LivingEntityMixin",
     "entities.MinecraftServerMixin",
     "entities.MobSpawnLocationMixin",
+    "entities.PlayerEntityMixin",
     "entities.PlayerInteractsEntityMixin",
     "entities.PollenatedBeeSpawnMixin",
     "entities.ProtoChunkAddEntityMixin",
