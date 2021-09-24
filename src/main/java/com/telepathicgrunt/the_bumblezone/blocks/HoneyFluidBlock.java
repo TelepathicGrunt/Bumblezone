@@ -19,6 +19,7 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import org.apache.logging.log4j.core.jmx.Server;
@@ -100,6 +101,7 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
     @Deprecated
     @Override
     public void entityInside(BlockState state, World world, BlockPos position, Entity entity) {
+        double verticalSpeedDeltaLimit = 0.01D;
         if (entity instanceof BeeEntity) {
             BeeEntity beeEntity = ((BeeEntity) entity);
             if(beeEntity.hasNectar() && !state.getFluidState().isSource()) {
@@ -115,6 +117,10 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
                     world.setBlock(position, currentState.setValue(HoneyFluidBlock.LEVEL, Math.max(currentState.getValue(HoneyFluidBlock.LEVEL) - (int)Math.ceil(diff), 1)), 3);
                 }
             }
+        }
+        else if(Math.abs(entity.getDeltaMovement().y()) > verticalSpeedDeltaLimit && entity.fallDistance <= 0.2D){
+            Vector3d vector3d = entity.getDeltaMovement();
+            entity.setDeltaMovement(new Vector3d(vector3d.x, Math.copySign(verticalSpeedDeltaLimit, vector3d.y), vector3d.z));
         }
 
         super.entityInside(state, world, position, entity);
