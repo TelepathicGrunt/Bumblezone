@@ -136,7 +136,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
                 world.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
             }
             else if (!newFluidState.equals(fluidState)) {
-                if(fluidState.getValue(BOTTOM_LEVEL) != 0 && newFluidState.getValue(BOTTOM_LEVEL) == 0)
+                if(fluidState.getValue(BOTTOM_LEVEL) != 0 && (newFluidState.isSource() || newFluidState.getValue(BOTTOM_LEVEL) == 0))
                     justFilledBottom = true;
 
                 fluidState = newFluidState;
@@ -151,7 +151,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
         // Is basically the spread method but with justFilledBottom boolean
         // used so new fluid is not made in same tick as when fluid just reached bottom layer = 0.
         if (!fluidState.isEmpty()) {
-            int bottomFluidLevel = fluidState.getValue(BOTTOM_LEVEL);
+            int bottomFluidLevel = fluidState.isSource() ? 0 : fluidState.getValue(BOTTOM_LEVEL);
             if(bottomFluidLevel == 0) {
                 BlockState blockState = world.getBlockState(blockPos);
                 BlockPos belowBlockPos = blockPos.below();
@@ -222,7 +222,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
 
                 highestNeighboringFluidLevel = Math.max(highestNeighboringFluidLevel, sideFluidState.getAmount());
                 if(sideFluidState.getType() instanceof HoneyFluid){
-                    lowestNeighboringFluidLevel = Math.min(lowestNeighboringFluidLevel, sideFluidState.getValue(BOTTOM_LEVEL));
+                    lowestNeighboringFluidLevel = Math.min(lowestNeighboringFluidLevel, sideFluidState.isSource() ? 0 : sideFluidState.getValue(BOTTOM_LEVEL));
                 }
             }
         }
@@ -240,7 +240,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
         }
 
         if (aboveFluidIsThisFluid && ((FlowingFluidAccessor)this).thebumblezone_callCanPassThroughWall(Direction.UP, worldReader, blockPos, blockState, aboveBlockPos, aboveBlockState)) {
-            if(aboveFluidState.getValue(BOTTOM_LEVEL) != 0) {
+            if(!aboveFluidState.isSource() && aboveFluidState.getValue(BOTTOM_LEVEL) != 0) {
                 newFluidLevel = highestNeighboringFluidLevel - dropOffValue;
             }
         }
@@ -254,7 +254,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
                 Fluids.EMPTY.defaultFluidState() :
                 this.getFlowing(newFluidLevel, isFalling)
                         .setValue(BOTTOM_LEVEL, newBottomFluidLevel)
-                        .setValue(ABOVE_FLUID, aboveFluidIsThisFluid && aboveFluidState.getValue(BOTTOM_LEVEL) == 0);
+                        .setValue(ABOVE_FLUID, aboveFluidIsThisFluid && (aboveFluidState.isSource() || aboveFluidState.getValue(BOTTOM_LEVEL) == 0));
     }
 
     @Override
@@ -262,7 +262,11 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
         BlockPos aboveBlockPos = blockPos.above();
         BlockState aboveBlockState = world.getBlockState(aboveBlockPos);
         FluidState aboveFluidState = aboveBlockState.getFluidState();
-        boolean aboveFluidIsThisFluid = !aboveFluidState.isEmpty() && aboveFluidState.getType().isSame(this) && aboveFluidState.getValue(BOTTOM_LEVEL) == 0;
+        boolean aboveFluidIsThisFluid =
+                    !aboveFluidState.isEmpty() &&
+                    aboveFluidState.getType().isSame(this) &&
+                    (aboveFluidState.isSource() || aboveFluidState.getValue(BOTTOM_LEVEL) == 0);
+
         return fluidState.getValue(ABOVE_FLUID) || aboveFluidIsThisFluid ? 1.0f : fluidState.getOwnHeight();
     }
 
@@ -285,7 +289,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
                 }
 
                 FluidState aboveFluidState = world.getFluidState(currentBlockPos.above());
-                if (aboveFluidState.getType().isSame(fluid) && aboveFluidState.getValue(BOTTOM_LEVEL) == 0) {
+                if (aboveFluidState.getType().isSame(fluid) && (aboveFluidState.isSource() || aboveFluidState.getValue(BOTTOM_LEVEL) == 0)) {
                     return 1.0F;
                 }
 
@@ -318,8 +322,19 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
         return totalHeight / (float)checkedSides;
     }
 
-    public static boolean shouldCullSide(Direction direction) {
-        return !(direction.getAxis() == Direction.Axis.Y);
+    public static boolean shouldNotCullSide(IBlockReader world, BlockPos blockPos, Direction direction, FluidState currentFluidState) {
+        if(direction == Direction.UP) {
+            BlockState aboveState = world.getBlockState(blockPos.above());
+            return aboveState.getFluidState().is(BzFluidTags.BZ_HONEY_FLUID) && !aboveState.getFluidState().isSource() &&
+                    (aboveState.getValue(BOTTOM_LEVEL) != 0 || currentFluidState.getAmount() != 8);
+        }
+        else if(direction == Direction.DOWN) {
+            BlockState belowState = world.getBlockState(blockPos.below());
+            return belowState.getFluidState().is(BzFluidTags.BZ_HONEY_FLUID) && !currentFluidState.isSource() &&
+                    (belowState.getFluidState().getAmount() != 8 || currentFluidState.getValue(BOTTOM_LEVEL) != 0);
+        }
+
+        return false;
     }
 
     public static void breathing(LivingEntity thisEntity) {
@@ -364,7 +379,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
         public Flowing(Properties properties) {
             super(properties);
             registerDefaultState(getStateDefinition().any()
-                    .setValue(LEVEL, 7)
+                    .setValue(LEVEL, 8)
                     .setValue(BOTTOM_LEVEL, 0)
                     .setValue(ABOVE_FLUID, false)
             );
@@ -397,17 +412,11 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
 
         public Source(Properties properties) {
             super(properties);
-            registerDefaultState(getStateDefinition().any()
-                    .setValue(LEVEL, 7)
-                    .setValue(BOTTOM_LEVEL, 0)
-                    .setValue(ABOVE_FLUID, false)
-            );
+            registerDefaultState(getStateDefinition().any().setValue(ABOVE_FLUID, false));
         }
 
         protected void createFluidStateDefinition(StateContainer.Builder<Fluid, FluidState> builder) {
             super.createFluidStateDefinition(builder);
-            builder.add(LEVEL);
-            builder.add(BOTTOM_LEVEL);
             builder.add(ABOVE_FLUID);
         }
 
@@ -418,7 +427,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
 
         @Override
         public boolean isSource(FluidState state) {
-            return state.getValue(BOTTOM_LEVEL) == 0;
+            return true;
         }
 
         @Override
