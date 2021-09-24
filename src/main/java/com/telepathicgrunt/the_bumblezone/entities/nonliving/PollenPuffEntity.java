@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
 import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -65,7 +66,7 @@ public class PollenPuffEntity extends ProjectileItemEntity {
     @Override
     public void tick() {
         super.tick();
-        if(this.level.isClientSide()) {
+        if(this.level.isClientSide() && (!this.isInWater() || this.random.nextFloat() < 0.06f)) {
             for(int i = 0; i < 10; ++i) {
                 PileOfPollen.spawnParticles(this.level, this.position(), this.random, 0.015D, 0.015D, -0.001D);
             }
@@ -74,9 +75,9 @@ public class PollenPuffEntity extends ProjectileItemEntity {
         // make pollen puff be able to hit flowers
         BlockRayTraceResult raytraceresult = this.level.clip(new RayTraceContext(
                 this.position(),
-                this.position().add(this.getDeltaMovement().multiply(10, 10, 10)),
+                this.position().add(this.getDeltaMovement().multiply(1, 1, 1)),
                 RayTraceContext.BlockMode.OUTLINE,
-                RayTraceContext.FluidMode.NONE,
+                RayTraceContext.FluidMode.ANY,
                 this));
 
         if (raytraceresult.getType() == RayTraceResult.Type.BLOCK) {
@@ -84,6 +85,9 @@ public class PollenPuffEntity extends ProjectileItemEntity {
             BlockState blockstate = this.level.getBlockState(blockpos);
             if (blockstate.is(BzBlockTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzBlockTags.FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF)) {
                 this.handleInsidePortal(blockpos);
+                this.onHit(raytraceresult);
+            }
+            else if(blockstate.getFluidState().is(FluidTags.WATER)) {
                 this.onHit(raytraceresult);
             }
         }
@@ -144,7 +148,7 @@ public class PollenPuffEntity extends ProjectileItemEntity {
                 }
             }
         }
-        else if(blockstate.is(Blocks.HONEY_BLOCK) || blockstate.is(Blocks.SOUL_SAND) || blockRayTraceResult.getDirection() == Direction.UP || blockstate.isFaceSturdy(this.level, blockRayTraceResult.getBlockPos(), blockRayTraceResult.getDirection())){
+        else if(blockstate.is(Blocks.HONEY_BLOCK) || blockstate.is(Blocks.SOUL_SAND) || (blockRayTraceResult.getDirection() == Direction.UP && !blockstate.getFluidState().is(FluidTags.WATER)) || blockstate.isFaceSturdy(this.level, blockRayTraceResult.getBlockPos(), blockRayTraceResult.getDirection())){
             BlockPos impactSide = blockRayTraceResult.getBlockPos().relative(blockRayTraceResult.getDirection());
             BlockState sideState = this.level.getBlockState(impactSide);
             BlockState pileOfPollen = BzBlocks.PILE_OF_POLLEN.get().defaultBlockState();
