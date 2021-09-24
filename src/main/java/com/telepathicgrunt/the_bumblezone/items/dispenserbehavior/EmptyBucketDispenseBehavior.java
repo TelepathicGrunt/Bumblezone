@@ -1,9 +1,11 @@
-package com.telepathicgrunt.the_bumblezone.items;
+package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.IBlockSource;
@@ -33,7 +35,6 @@ public class EmptyBucketDispenseBehavior extends DefaultDispenseItemBehavior {
         BlockState blockstate = world.getBlockState(position);
 
         if (blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL.get() && blockstate.getValue(BlockStateProperties.WATERLOGGED)) {
-
             world.setBlockAndUpdate(position, BzBlocks.HONEY_CRYSTAL.get().defaultBlockState()
                     .setValue(BlockStateProperties.FACING, blockstate.getValue(BlockStateProperties.FACING))
                     .setValue(BlockStateProperties.WATERLOGGED, false));
@@ -44,7 +45,16 @@ public class EmptyBucketDispenseBehavior extends DefaultDispenseItemBehavior {
                 addItemToDispenser(source, BzItems.SUGAR_WATER_BUCKET.get());
             else
                 stack = new ItemStack(BzItems.SUGAR_WATER_BUCKET.get());
-        } else {
+        }
+        else if (blockstate.getBlock() == BzFluids.HONEY_FLUID_BLOCK.get() && blockstate.getFluidState().isSource()) {
+            world.setBlockAndUpdate(position, Blocks.AIR.defaultBlockState());
+            stack.shrink(1);
+            if (!stack.isEmpty())
+                addItemToDispenser(source, BzItems.HONEY_BUCKET.get());
+            else
+                stack = new ItemStack(BzItems.HONEY_BUCKET.get());
+        }
+        else {
             return GeneralUtils.dispenseStackProperly(source, stack, DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR);
         }
 

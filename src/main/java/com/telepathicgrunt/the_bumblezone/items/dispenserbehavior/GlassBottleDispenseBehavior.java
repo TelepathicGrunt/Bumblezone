@@ -1,5 +1,6 @@
-package com.telepathicgrunt.the_bumblezone.items;
+package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 
+import com.telepathicgrunt.the_bumblezone.blocks.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -84,6 +85,16 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
                 addHoneyBottleToDispenser(source, BzItems.SUGAR_WATER_BOTTLE.get());
             else
                 stack = new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get());
+        }
+        //pick up honey fluid
+        else if (blockstate.getBlock() == BzFluids.HONEY_FLUID_BLOCK.get() && blockstate.getFluidState().isSource()) {
+            world.setBlockAndUpdate(position, BzBlocks.POROUS_HONEYCOMB.get().defaultBlockState());
+            world.setBlockAndUpdate(position, BzFluids.HONEY_FLUID_FLOWING.get().defaultFluidState().createLegacyBlock().setValue(HoneyFluidBlock.LEVEL, 5));
+            stack.shrink(1);
+            if(!stack.isEmpty())
+                addHoneyBottleToDispenser(source, Items.HONEY_BOTTLE);
+            else
+                stack = new ItemStack(Items.HONEY_BOTTLE);
         }
         else {
             return GeneralUtils.dispenseStackProperly(source, stack, DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR);

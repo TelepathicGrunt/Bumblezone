@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.items;
+package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
@@ -76,7 +76,8 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior {
                 else
                     stack = new ItemStack(Items.GLASS_BOTTLE);
             }
-        } else {
+        }
+        else {
             return GeneralUtils.dispenseStackProperly(source, stack, DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR);
         }
 
