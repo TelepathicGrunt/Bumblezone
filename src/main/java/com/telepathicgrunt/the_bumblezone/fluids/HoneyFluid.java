@@ -277,11 +277,11 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
         FluidState currentMatchingFluidState = null;
 
         // Checks in a square. One spot will be the current fluid
-        for(int xOffset = -1; xOffset <= 1; xOffset++) {
-            for(int zOffset = -1; zOffset <= 1; zOffset++) {
+        for(int xOffset = -2; xOffset <= 1; xOffset++) {
+            for(int zOffset = -2; zOffset <= 1; zOffset++) {
                 BlockPos currentBlockPos = blockPos.offset(xOffset, 0, zOffset);
 
-                if(xOffset == 1 || zOffset == 1) {
+                if(xOffset == -2 || zOffset == -2 || xOffset == 1 || zOffset == 1) {
                     if (world.getFluidState(currentBlockPos).getType().isSame(fluid)) {
                         fluidSides++;
                     }
@@ -324,14 +324,22 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
 
     public static boolean shouldNotCullSide(IBlockReader world, BlockPos blockPos, Direction direction, FluidState currentFluidState) {
         if(direction == Direction.UP) {
-            BlockState aboveState = world.getBlockState(blockPos.above());
-            return aboveState.getFluidState().is(BzFluidTags.BZ_HONEY_FLUID) && !aboveState.getFluidState().isSource() &&
-                    (aboveState.getValue(BOTTOM_LEVEL) != 0 || currentFluidState.getAmount() != 8);
+            FluidState aboveFluidState = world.getBlockState(blockPos.above()).getFluidState();
+            return aboveFluidState.is(BzFluidTags.BZ_HONEY_FLUID) && !aboveFluidState.isSource() &&
+                    (aboveFluidState.getValue(BOTTOM_LEVEL) != 0 || currentFluidState.getAmount() != 8);
         }
         else if(direction == Direction.DOWN) {
-            BlockState belowState = world.getBlockState(blockPos.below());
-            return belowState.getFluidState().is(BzFluidTags.BZ_HONEY_FLUID) && !currentFluidState.isSource() &&
-                    (belowState.getFluidState().getAmount() != 8 || currentFluidState.getValue(BOTTOM_LEVEL) != 0);
+            FluidState belowFluidState = world.getBlockState(blockPos.below()).getFluidState();
+            return belowFluidState.is(BzFluidTags.BZ_HONEY_FLUID) && !currentFluidState.isSource() &&
+                    (belowFluidState.getAmount() != 8 || currentFluidState.getValue(BOTTOM_LEVEL) != 0);
+        }
+        else {
+            FluidState sideFluidState = world.getBlockState(blockPos.relative(direction)).getFluidState();
+            if(sideFluidState.is(BzFluidTags.BZ_HONEY_FLUID)) {
+                int bottomLayerCurrent = currentFluidState.isSource() ? 0 : currentFluidState.getValue(BOTTOM_LEVEL);
+                int bottomLayerSide = sideFluidState.isSource() ? 0 : sideFluidState.getValue(BOTTOM_LEVEL);
+                return bottomLayerCurrent < bottomLayerSide;
+            }
         }
 
         return false;
