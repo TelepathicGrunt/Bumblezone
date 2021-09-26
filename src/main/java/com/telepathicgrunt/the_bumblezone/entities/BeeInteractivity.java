@@ -29,15 +29,14 @@ public class BeeInteractivity {
 
     private static final ResourceLocation STICKY_HONEY_WAND = new ResourceLocation("buzzier_bees:sticky_honey_wand");
 
-    // heal bees with sugar water bottle or honey bottle
-    public static void beeFeeding(World world, PlayerEntity playerEntity, Hand hand, BeeEntity beeEntity) {
-        if (!world.isClientSide) {
+    // heal bees with sugar water bottle or honey bottle or honey bucket
+    public static ActionResultType beeFeeding(World world, PlayerEntity playerEntity, Hand hand, BeeEntity beeEntity) {
             ItemStack itemstack = playerEntity.getItemInHand(hand);
             ResourceLocation itemRL = itemstack.getItem().getRegistryName();
 
             // Disallow all non-tagged items from being fed to bees
             if(itemRL == null || !BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
-                return;
+                return ActionResultType.PASS;
 
             // Special case of item feeding
             if (ModChecker.buzzierBeesPresent &&
@@ -52,7 +51,21 @@ public class BeeInteractivity {
             }
             // generalized feeding
             else {
-                if(itemRL.getPath().contains("honey")){
+                if(itemstack.getItem() == BzItems.HONEY_BUCKET.get()) {
+                    beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
+                    calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);
+                    if(beeEntity.isBaby()) {
+                        if(world.getRandom().nextBoolean()) {
+                            beeEntity.setBaby(false);
+                        }
+                    }
+                    else {
+                        for(BeeEntity nearbyBee : world.getEntitiesOfClass(BeeEntity.class, beeEntity.getBoundingBox().inflate(4), beeEntity1 -> true)) {
+                            nearbyBee.setInLove(playerEntity);
+                        }
+                    }
+                }
+                else if(itemRL.getPath().contains("honey")){
                     beeEntity.addEffect(new EffectInstance(Effects.HEAL, 1, 2, false, false, false));
                     calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
                 }
@@ -76,8 +89,9 @@ public class BeeInteractivity {
                     }
                 }
                 playerEntity.swing(hand, true);
+                return ActionResultType.SUCCESS;
             }
-        }
+        return ActionResultType.PASS;
     }
 
     public static ActionResultType beeUnpollinating(World world, PlayerEntity playerEntity, Hand hand, BeeEntity beeEntity) {
@@ -122,7 +136,7 @@ public class BeeInteractivity {
             }
         }
 
-        if (!beeEntity.isAngry() || calmed)
+        if (!world.isClientSide() && (!beeEntity.isAngry() || calmed))
             ((ServerWorld) world).sendParticles(
                     ParticleTypes.HEART,
                     beeEntity.getX(),

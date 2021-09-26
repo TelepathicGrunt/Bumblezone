@@ -23,10 +23,10 @@ public class PlayerInteractsEntityMixin {
             cancellable = true)
     private void thebumblezone_onBeeFeeding(Entity entity, Hand hand, CallbackInfoReturnable<ActionResultType> cir) {
         if(entity instanceof BeeEntity) {
-            BeeInteractivity.beeFeeding(entity.level, ((PlayerEntity)(Object)this), hand, (BeeEntity)entity);
-            if(BeeInteractivity.beeUnpollinating(entity.level, ((PlayerEntity)(Object)this), hand, (BeeEntity)entity) == ActionResultType.SUCCESS) {
+            if(BeeInteractivity.beeFeeding(entity.level, ((PlayerEntity)(Object)this), hand, (BeeEntity)entity) == ActionResultType.SUCCESS)
                 cir.setReturnValue(ActionResultType.SUCCESS);
-            }
+            else if(BeeInteractivity.beeUnpollinating(entity.level, ((PlayerEntity)(Object)this), hand, (BeeEntity)entity) == ActionResultType.SUCCESS)
+                cir.setReturnValue(ActionResultType.SUCCESS);
         }
         else if (entity instanceof SlimeEntity) {
             CreatingHoneySlime.createHoneySlime(entity.level, ((PlayerEntity)(Object)this), hand, (SlimeEntity)entity);
