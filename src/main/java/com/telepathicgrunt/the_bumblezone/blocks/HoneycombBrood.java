@@ -44,6 +44,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -138,7 +139,8 @@ public class HoneycombBrood extends ProperFacingBlock {
                 if (itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
                     if (world.random.nextFloat() < 0.30F)
                         successfulGrowth = true;
-                } else {
+                }
+                else {
                     successfulGrowth = true;
                 }
 
@@ -154,8 +156,32 @@ public class HoneycombBrood extends ProperFacingBlock {
                     int stage = thisBlockState.getValue(STAGE);
                     if (stage == 3) {
                         spawnBroodMob(world, thisBlockState, position, stage);
-                    } else {
-                        world.setBlockAndUpdate(position, thisBlockState.setValue(STAGE, stage + 1));
+                    }
+                    else {
+                        int newStage = stage + 1;
+                        if (itemstack.getItem() == BzItems.HONEY_BUCKET.get()) {
+                            newStage = 3;
+                            if (!world.isClientSide()) {
+                                Direction facing = thisBlockState.getValue(FACING).getOpposite();
+                                Vector3d centerFacePos = new Vector3d(
+                                        position.getX() + Math.max(-0.2D, facing.getStepX() == 0 ? 0.5D : facing.getStepX() * 1.2D),
+                                        position.getY() + Math.max(-0.2D, facing.getStepY() == 0 ? 0.5D : facing.getStepY() * 1.2D),
+                                        position.getZ() + Math.max(-0.2D, facing.getStepZ() == 0 ? 0.5D : facing.getStepZ() * 1.2D)
+                                );
+                                
+                                ((ServerWorld) world).sendParticles(
+                                        ParticleTypes.HEART,
+                                        centerFacePos.x(),
+                                        centerFacePos.y(),
+                                        centerFacePos.z(),
+                                        3,
+                                        world.getRandom().nextFloat() * 0.5 - 0.25f,
+                                        world.getRandom().nextFloat() * 0.2f + 0.2f,
+                                        world.getRandom().nextFloat() * 0.5 - 0.25f,
+                                        world.getRandom().nextFloat() * 0.4 + 0.2f);
+                            }
+                        }
+                        world.setBlockAndUpdate(position, thisBlockState.setValue(STAGE, newStage));
                     }
                 }
             }
