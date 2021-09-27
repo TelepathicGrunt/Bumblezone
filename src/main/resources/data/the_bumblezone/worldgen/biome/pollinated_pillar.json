@@ -47,7 +47,8 @@
     []
   ],
   "starts": [
-    "the_bumblezone:pollinated_stream"
+    "the_bumblezone:pollinated_stream",
+    "the_bumblezone:honey_cave_room"
   ],
   "creature_spawn_probability": 0.17,
   "spawners": {

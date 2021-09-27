@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "the_bumblezone",
+  "ingredients": [
+    {
+      "item": "the_bumblezone:honey_bucket"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "result": {
+    "item": "minecraft:honey_bottle",
+    "count": 3
+  }
+}

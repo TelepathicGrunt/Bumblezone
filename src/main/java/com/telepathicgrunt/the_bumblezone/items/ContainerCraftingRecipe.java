@@ -6,6 +6,7 @@ import com.google.gson.JsonParseException;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipe;
@@ -14,6 +15,8 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ContainerCraftingRecipe extends ShapelessRecipe {
     private final String group;
@@ -32,7 +35,25 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
 
     @Override
     public NonNullList<ItemStack> getRemainingItems(CraftingInventory inv) {
-        return NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
+        NonNullList<ItemStack> remainingInv = NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
+        int containerOutput = recipeOutput.hasContainerItem() ? recipeOutput.getCount() : 0;
+
+        for(int i = 0; i < remainingInv.size(); ++i) {
+            ItemStack item = inv.getItem(i);
+            if (item.hasContainerItem()) {
+                if(containerOutput > 0 &&
+                    (recipeOutput.getItem() == item.getContainerItem().getItem() ||
+                     recipeOutput.getContainerItem().getItem() == item.getItem()))
+                {
+                    containerOutput--;
+                }
+                else {
+                    remainingInv.set(i, item.getContainerItem());
+                }
+            }
+        }
+
+        return remainingInv;
     }
 
     public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>>
@@ -49,11 +70,11 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
             }
         }
 
-        private static NonNullList<Ingredient> readIngredients(JsonArray p_199568_0_) {
+        private static NonNullList<Ingredient> readIngredients(JsonArray jsonElements) {
             NonNullList<Ingredient> nonnulllist = NonNullList.create();
 
-            for (int i = 0; i < p_199568_0_.size(); ++i) {
-                Ingredient ingredient = Ingredient.fromJson(p_199568_0_.get(i));
+            for (int i = 0; i < jsonElements.size(); ++i) {
+                Ingredient ingredient = Ingredient.fromJson(jsonElements.get(i));
                 if (!ingredient.isEmpty()) {
                     nonnulllist.add(ingredient);
                 }

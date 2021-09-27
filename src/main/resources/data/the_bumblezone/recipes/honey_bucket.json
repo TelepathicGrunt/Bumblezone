@@ -1,0 +1,21 @@
+{
+  "type": "the_bumblezone:container_shapeless_recipe_bz",
+  "group": "the_bumblezone",
+  "ingredients": [
+    {
+      "item": "minecraft:bucket"
+    },
+    {
+      "item": "minecraft:honey_bottle"
+    },
+    {
+      "item": "minecraft:honey_bottle"
+    },
+    {
+      "item": "minecraft:honey_bottle"
+    }
+  ],
+  "result": {
+    "item": "the_bumblezone:honey_bucket"
+  }
+}

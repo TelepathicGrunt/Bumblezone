@@ -1,0 +1,15 @@
+{
+  "name": "the_bumblezone:honey_cave_room",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 3,
+      "element": {
+        "location": "the_bumblezone:honey_cave_room",
+        "processors": "the_bumblezone:honey_cave_room_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

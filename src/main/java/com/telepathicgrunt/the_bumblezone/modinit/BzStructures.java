@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.mixin.world.DimensionStructuresSettingsAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.StructureAccessor;
+import com.telepathicgrunt.the_bumblezone.world.structures.HoneyCaveRoomStructure;
 import com.telepathicgrunt.the_bumblezone.world.structures.PollinatedStreamStructure;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.structure.Structure;
@@ -19,6 +20,7 @@ public class BzStructures {
     public static final DeferredRegister<Structure<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Bumblezone.MODID);
 
     public static final RegistryObject<Structure<NoFeatureConfig>> POLLINATED_STREAM = STRUCTURES.register("pollinated_stream", () -> (new PollinatedStreamStructure(NoFeatureConfig.CODEC)));
+    public static final RegistryObject<Structure<NoFeatureConfig>> HONEY_CAVE_ROOM = STRUCTURES.register("honey_cave_room", () -> (new HoneyCaveRoomStructure(NoFeatureConfig.CODEC)));
 
     public static void setupStructures() {
         setupMapSpacingAndLand(
@@ -26,6 +28,13 @@ public class BzStructures {
                 new StructureSeparationSettings(12,
                         8,
                         938497222),
+                false);
+
+        setupMapSpacingAndLand(
+                HONEY_CAVE_ROOM.get(),
+                new StructureSeparationSettings(12,
+                        4,
+                        722299384),
                 false);
     }
 

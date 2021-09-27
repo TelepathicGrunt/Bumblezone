@@ -168,7 +168,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                                         position.getY() + Math.max(-0.2D, facing.getStepY() == 0 ? 0.5D : facing.getStepY() * 1.2D),
                                         position.getZ() + Math.max(-0.2D, facing.getStepZ() == 0 ? 0.5D : facing.getStepZ() * 1.2D)
                                 );
-                                
+
                                 ((ServerWorld) world).sendParticles(
                                         ParticleTypes.HEART,
                                         centerFacePos.x(),
