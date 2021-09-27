@@ -118,6 +118,7 @@ public class PollinatedStreamStructure extends Structure<NoFeatureConfig> {
                 // centers the whole structure to structureCenter
                 structurePiece.move(xOffset, 0, zOffset);
             }
+            this.pieces.removeIf(piece -> piece.getBoundingBox().y0 <= 5);
 
             // Sets the bounds of the structure once you are finished.
             this.calculateBoundingBox();

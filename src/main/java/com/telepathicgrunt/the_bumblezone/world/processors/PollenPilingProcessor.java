@@ -58,6 +58,9 @@ public class PollenPilingProcessor extends StructureProcessor {
             }
 
             BlockPos belowPos = worldPos.below();
+            if(belowPos.getY() <= 0 || belowPos.getY() >= worldView.getMaxBuildHeight())
+                return null;
+            
             IChunk chunk = worldView.getChunk(belowPos);
             BlockState belowState = chunk.getBlockState(belowPos);
             if(!belowState.canOcclude()) {

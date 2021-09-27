@@ -63,7 +63,7 @@ public class PollinatedCaves extends Feature<NoFeatureConfig> {
                     double heightPressure = Math.max((30f - y) / 90f, 0);
                     finalNoise = (noise1 * noise1) + (noise2 * noise2) + heightPressure;
 
-                    if (finalNoise < 0.012f) {
+                    if (finalNoise < 0.01305f) {
                         carve(world, mutableBlockPos, finalNoise, noise1);
                     }
                 }
@@ -77,7 +77,7 @@ public class PollinatedCaves extends Feature<NoFeatureConfig> {
         BlockState currentState = world.getBlockState(position);
         if(!currentState.isAir() && currentState.getFluidState().isEmpty() && !currentState.is(BzBlocks.PILE_OF_POLLEN.get())) {
             // varies the surface of the cave surface
-            if(finalNoise > 0.009f) {
+            if(finalNoise > 0.0105f) {
                 if((noise * 3) % 2 < 0.35D){
                     world.setBlock(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3);
                 }
