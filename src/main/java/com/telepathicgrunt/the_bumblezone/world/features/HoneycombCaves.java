@@ -213,14 +213,13 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
 
     private static void carveAtBlock(ISeedReader world, ChunkGenerator generator, Random random, BlockPos.Mutable position,
                                      BlockPos.Mutable position2, BlockState blockState, int posResult) {
-        if (blockState.canOcclude())
-        {
-            boolean isNextToAir = shouldCloseOff(world, generator, position, position2, true);
+        if (blockState.canOcclude()) {
+            boolean isNextToAir = shouldCloseOff(world, position, position2, true);
             if(position.getY() >= generator.getSeaLevel() && isNextToAir) return;
 
             if (posResult == 2) {
                 if (position.getY() < generator.getSeaLevel()) {
-                    boolean isNextToDrySpace = shouldCloseOff(world, generator, position, position2,false);
+                    boolean isNextToDrySpace = shouldCloseOff(world, position, position2, false);
                     if(isNextToAir || isNextToDrySpace)
                         world.setBlock(position, FILLED_POROUS_HONEYCOMB, 3);
                     else
@@ -241,17 +240,13 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
         }
     }
 
-    private static boolean shouldCloseOff(ISeedReader world, ChunkGenerator generator,
-                                          BlockPos.Mutable position, BlockPos.Mutable position2,
-                                          boolean checkAbove) {
+    private static boolean shouldCloseOff(ISeedReader world, BlockPos.Mutable position,
+                                          BlockPos.Mutable position2, boolean checkAbove) {
         BlockState blockState;
         for (Direction direction : Direction.values()) {
             if(!checkAbove && direction == Direction.UP) continue;
             blockState = world.getBlockState(position2.set(position).move(direction));
-            if (checkAbove ?
-                    blockState.is(Blocks.AIR) :
-                    (!blockState.canOcclude() && blockState.getFluidState().isEmpty()))
-            {
+            if (checkAbove ? blockState.is(Blocks.AIR) : (!blockState.canOcclude() && blockState.getFluidState().isEmpty())) {
                 return true;
             }
         }
