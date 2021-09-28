@@ -65,11 +65,14 @@ public class BzBiomeProvider extends BiomeProvider {
                 .collect(Collectors.toList()));
 
         NONSTANDARD_BIOME = this.possibleBiomes.stream()
-                .filter(biome -> biomeRegistry.getKey(biome) != HIVE_WALL &&
-                                biomeRegistry.getKey(biome) != HIVE_PILLAR &&
-                                biomeRegistry.getKey(biome) != SUGAR_WATER_FLOOR &&
-                                biomeRegistry.getKey(biome) != POLLINATED_FIELDS &&
-                                biomeRegistry.getKey(biome) != POLLINATED_PILLAR)
+                .filter(biome ->  {
+                    ResourceLocation rlKey = biomeRegistry.getKey(biome);
+                    return rlKey != HIVE_WALL &&
+                        rlKey != HIVE_PILLAR &&
+                        rlKey != SUGAR_WATER_FLOOR &&
+                        rlKey != POLLINATED_FIELDS &&
+                        rlKey != POLLINATED_PILLAR;
+                })
                 .collect(Collectors.toList());
 
         BzBiomeLayer.setSeed(seed);
