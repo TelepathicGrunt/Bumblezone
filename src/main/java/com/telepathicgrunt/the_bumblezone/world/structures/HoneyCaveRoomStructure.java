@@ -59,7 +59,9 @@ public class HoneyCaveRoomStructure extends Structure<NoFeatureConfig> {
                 BlockState state = columnOfBlocks.getBlockState(mutable);
                 moveMutable(mutable, Direction.UP, 15, centerPos);
                 BlockState aboveState = columnOfBlocks.getBlockState(mutable);
-                if(state.isAir() || aboveState.isAir()) {
+                if(state.isAir() || !state.getFluidState().isEmpty() ||
+                    aboveState.isAir() || !aboveState.getFluidState().isEmpty())
+                {
                     return false;
                 }
             }
