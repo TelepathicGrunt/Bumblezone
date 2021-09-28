@@ -40,8 +40,8 @@ public class PollinatedStreamStructure extends Structure<NoFeatureConfig> {
 
     @Override
     public boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeProvider biomeProvider, long seed, SharedSeedRandom random, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoFeatureConfig config) {
-        int x = chunkX * 16;
-        int z = chunkZ * 16;
+        int x = chunkX << 4;
+        int z = chunkZ << 4;
         BlockPos centerPos = new BlockPos(x, 0, z);
 
         int height = chunkGenerator.getBaseHeight(centerPos.getX(), centerPos.getZ(), Heightmap.Type.MOTION_BLOCKING);
@@ -92,8 +92,8 @@ public class PollinatedStreamStructure extends Structure<NoFeatureConfig> {
 
         @Override
         public void generatePieces(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
-            int x = chunkX * 16;
-            int z = chunkZ * 16;
+            int x = chunkX << 4;
+            int z = chunkZ << 4;
 
             int height = chunkGenerator.getBaseHeight(x, z, Heightmap.Type.MOTION_BLOCKING);
             BlockPos centerPos = new BlockPos(x, biomeIn.getDepth() > 0 ? random.nextInt(45) + 10 : height - 3, z);
