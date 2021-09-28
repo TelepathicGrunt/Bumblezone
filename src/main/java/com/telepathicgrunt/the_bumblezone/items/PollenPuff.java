@@ -70,7 +70,7 @@ public class PollenPuff extends Item {
                 world.addFreshEntity(pollenPuffEntity);
 
             playerEntity.awardStat(Stats.ITEM_USED.get(this));
-            if (!playerEntity.abilities.instabuild) {
+            if (!playerEntity.isCreative()) {
                 itemstack.shrink(1);
             }
         }

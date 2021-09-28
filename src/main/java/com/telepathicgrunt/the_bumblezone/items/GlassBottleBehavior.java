@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterFluid;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
@@ -23,14 +24,9 @@ public class GlassBottleBehavior {
             if (itemstack.getItem() == Items.GLASS_BOTTLE) {
                 world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
-                if(!playerEntity.isCreative())
-                    itemstack.shrink(1); // remove current honey bottle
-
-                if (itemstack.isEmpty()) {
-                    playerEntity.setItemInHand(playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get())); // places sugar water bottle in hand
-                } else if (!playerEntity.inventory.add(new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()))) // places sugar water bottle in inventory
-                {
-                    playerEntity.drop(new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()), false); // drops sugar water bottle if inventory is full
+                if(!playerEntity.isCreative()) {
+                    itemstack.shrink(1);
+                    GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()), false);
                 }
 
                 return true;
@@ -47,14 +43,9 @@ public class GlassBottleBehavior {
             world.setBlock(blockPos, currentFluidState.createLegacyBlock().setValue(HoneyFluidBlock.LEVEL, 5), 3); // reduce honey
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
-            if (!playerEntity.isCreative())
-                itemstack.shrink(1); // remove current empty bottle
-
-            if (itemstack.isEmpty()) {
-                playerEntity.setItemInHand(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
-            } else if (!playerEntity.inventory.add(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
-            {
-                playerEntity.drop(new ItemStack(Items.HONEY_BOTTLE), false); // drops honey bottle if inventory is full
+            if(!playerEntity.isCreative()) {
+                itemstack.shrink(1);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false);
             }
 
 //            if ((playerEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||

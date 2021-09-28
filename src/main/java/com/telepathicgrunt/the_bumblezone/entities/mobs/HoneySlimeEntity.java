@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BreedGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.FaceRandomGoal;
@@ -7,8 +8,11 @@ import com.telepathicgrunt.the_bumblezone.entities.goals.FacingRevengeGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.FloatGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HopGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.TemptGoal;
+import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
@@ -213,20 +217,28 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
          //Bottling
          if (itemstack.getItem() == Items.GLASS_BOTTLE) {
             world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-            if (!player.abilities.instabuild) {
+            if (!player.isCreative()) {
                itemstack.shrink(1);
-               if (itemstack.isEmpty()) {
-                  player.setItemInHand(hand, new ItemStack(Items.HONEY_BOTTLE));
-               } else if (!player.inventory.add(new ItemStack(Items.HONEY_BOTTLE))) {
-                  player.drop(new ItemStack(Items.HONEY_BOTTLE), false);
-               }
+               GeneralUtils.givePlayerItem(player, hand, itemstack, true);
             }
 
             this.setLastHurtByMob(player);
             getHoneyFromSlime(this);
             return ActionResultType.SUCCESS;
          }
+         else if (ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.allowHoneyWandCompat.get())
+         {
+            ActionResultType action = BuzzierBeesCompat.honeyWandGivingHoney(itemstack, player, hand);
+            if (action == ActionResultType.SUCCESS)
+            {
+               world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+               this.setLastHurtByMob(player);
+               getHoneyFromSlime(this);
+               return action;
+            }
+         }
       }
+
       return super.mobInteract(player, hand);
    }
 

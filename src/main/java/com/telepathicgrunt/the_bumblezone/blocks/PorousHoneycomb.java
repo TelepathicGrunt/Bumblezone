@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -51,13 +52,7 @@ public class PorousHoneycomb extends Block {
 
             if (!playerEntity.isCreative()) {
                 itemstack.shrink(1); // remove current honey bottle
-
-                if (itemstack.isEmpty()) {
-                    playerEntity.setItemInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places empty bottle in hand
-                } else if (!playerEntity.inventory.add(new ItemStack(Items.GLASS_BOTTLE))) // places empty bottle in inventory
-                {
-                    playerEntity.drop(new ItemStack(Items.GLASS_BOTTLE), false); // drops empty bottle if inventory is full
-                }
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true);
             }
 
             return ActionResultType.SUCCESS;
@@ -84,14 +79,8 @@ public class PorousHoneycomb extends Block {
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BUCKET_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
             if (!playerEntity.isCreative()) {
-                itemstack.shrink(1); // remove current honey bottle
-
-                if (itemstack.isEmpty()) {
-                    playerEntity.setItemInHand(playerHand, new ItemStack(Items.BUCKET)); // places bucket in hand
-                } else if (!playerEntity.inventory.add(new ItemStack(Items.BUCKET))) // places bucket in inventory
-                {
-                    playerEntity.drop(new ItemStack(Items.BUCKET), false); // drops bucket if inventory is full
-                }
+                itemstack.shrink(1); // remove current honey bucket
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true);
             }
 
             return ActionResultType.SUCCESS;
@@ -100,7 +89,7 @@ public class PorousHoneycomb extends Block {
         //allow compat with honey wand use
         else if (ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.allowHoneyWandCompat.get())
         {
-            ActionResultType action = BuzzierBeesCompat.honeyWandGivingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+            ActionResultType action = BuzzierBeesCompat.honeyWandGivingHoney(itemstack, playerEntity, playerHand);
             if (action == ActionResultType.SUCCESS)
             {
                 world.setBlock(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3); // added honey to this block

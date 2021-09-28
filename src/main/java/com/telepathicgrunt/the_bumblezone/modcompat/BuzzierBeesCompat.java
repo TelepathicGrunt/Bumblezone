@@ -187,11 +187,13 @@ public class BuzzierBeesCompat {
     }
 
 
-    public static ActionResultType honeyWandTakingHoney(ItemStack itemstack, BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand) {
+    public static ActionResultType honeyWandTakingHoney(ItemStack itemstack, PlayerEntity playerEntity, Hand playerHand) {
         if (itemstack.getItem() == BBItems.HONEY_WAND.get()) {
             if (!playerEntity.isCrouching()) {
                 if (!playerEntity.isCreative()) {
-                    playerEntity.setItemInHand(playerHand, new ItemStack(BBItems.STICKY_HONEY_WAND.get())); //replaced empty Honey Wand with Sticky Honey Wand in hand
+                    //replaced empty Honey Wand with Sticky Honey Wand in hand
+                    itemstack.shrink(1);
+                    GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BBItems.STICKY_HONEY_WAND.get()), false);
                 }
 
                 return ActionResultType.SUCCESS;
@@ -201,11 +203,13 @@ public class BuzzierBeesCompat {
         return ActionResultType.FAIL;
     }
 
-    public static ActionResultType honeyWandGivingHoney(ItemStack itemstack, BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand) {
+    public static ActionResultType honeyWandGivingHoney(ItemStack itemstack, PlayerEntity playerEntity, Hand playerHand) {
         if (itemstack.getItem() == BBItems.STICKY_HONEY_WAND.get()) {
             if (!playerEntity.isCrouching()) {
                 if (!playerEntity.isCreative()) {
-                    playerEntity.setItemInHand(playerHand, new ItemStack(BBItems.HONEY_WAND.get())); //replaced Sticky Honey Wand with empty Honey Wand in hand
+                    //replaced Honey Wand with empty Sticky Honey Wand in hand
+                    itemstack.shrink(1);
+                    GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BBItems.HONEY_WAND.get()), false);
                 }
 
                 return ActionResultType.SUCCESS;

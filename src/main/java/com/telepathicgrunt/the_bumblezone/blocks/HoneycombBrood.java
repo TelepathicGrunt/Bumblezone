@@ -95,13 +95,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
             if (!playerEntity.isCreative()) {
                 itemstack.shrink(1); // remove current empty bottle
-
-                if (itemstack.isEmpty()) {
-                    playerEntity.setItemInHand(playerHand, new ItemStack(Items.HONEY_BOTTLE)); // places honey bottle in hand
-                } else if (!playerEntity.inventory.add(new ItemStack(Items.HONEY_BOTTLE))) // places honey bottle in inventory
-                {
-                    playerEntity.drop(new ItemStack(Items.HONEY_BOTTLE), false); // drops honey bottle if inventory is full
-                }
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false);
             }
 
             if ((playerEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
@@ -192,17 +186,7 @@ public class HoneycombBrood extends ProperFacingBlock {
             //removes used item
             if (!playerEntity.isCreative()) {
                 itemstack.shrink(1); // remove current honey bottle
-
-                if(itemstack.getItem().hasContainerItem(itemstack)) {
-                    ItemStack containerItem = itemstack.getContainerItem();
-                    if (itemstack.isEmpty()) {
-                        playerEntity.setItemInHand(playerHand, containerItem); // places empty item in hand
-                    }
-                    // places empty item in inventory
-                    else if (!playerEntity.inventory.add(containerItem)) {
-                        playerEntity.drop(containerItem, false); // drops empty item if inventory is full
-                    }
-                }
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true);
             }
 
             return ActionResultType.SUCCESS;
@@ -237,6 +221,7 @@ public class HoneycombBrood extends ProperFacingBlock {
             // removes used item
             if (!playerEntity.isCreative()) {
                 itemstack.shrink(1); // item was consumed
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true);
             }
         }
 
@@ -244,7 +229,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         else if (ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.allowHoneyWandCompat.get()) {
 
             // Player is taking honey and killing larva/
-            ActionResultType action = BuzzierBeesCompat.honeyWandTakingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+            ActionResultType action = BuzzierBeesCompat.honeyWandTakingHoney(itemstack, playerEntity, playerHand);
             if (action == ActionResultType.SUCCESS) {
 
                 // removed honey from this block
@@ -280,7 +265,7 @@ public class HoneycombBrood extends ProperFacingBlock {
             }
 
             // Player is feeding larva
-            action = BuzzierBeesCompat.honeyWandGivingHoney(itemstack, thisBlockState, world, position, playerEntity, playerHand);
+            action = BuzzierBeesCompat.honeyWandGivingHoney(itemstack, playerEntity, playerHand);
             if (action == ActionResultType.SUCCESS) {
                 world.playSound(
                         playerEntity,

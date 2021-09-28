@@ -26,6 +26,10 @@
       "required": false
     },
     {
+      "id": "buzzier_bees:sticky_honey_wand",
+      "required": false
+    },
+    {
       "id": "betterbeekeeping:spicy_honey_bottle",
       "required": false
     },

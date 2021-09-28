@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BucketItem;
@@ -27,71 +28,45 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class BeeInteractivity {
 
-    private static final ResourceLocation STICKY_HONEY_WAND = new ResourceLocation("buzzier_bees:sticky_honey_wand");
-
     // heal bees with sugar water bottle or honey bottle or honey bucket
     public static ActionResultType beeFeeding(World world, PlayerEntity playerEntity, Hand hand, BeeEntity beeEntity) {
-            ItemStack itemstack = playerEntity.getItemInHand(hand);
-            ResourceLocation itemRL = itemstack.getItem().getRegistryName();
+        ItemStack itemstack = playerEntity.getItemInHand(hand);
+        ResourceLocation itemRL = itemstack.getItem().getRegistryName();
 
-            // Disallow all non-tagged items from being fed to bees
-            if(itemRL == null || !BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
-                return ActionResultType.PASS;
+        // Disallow all non-tagged items from being fed to bees
+        if (itemRL == null || !BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
+            return ActionResultType.PASS;
 
-            // Special case of item feeding
-            if (ModChecker.buzzierBeesPresent &&
-                    itemRL.equals(STICKY_HONEY_WAND) && Bumblezone.BzModCompatibilityConfig.allowHoneyWandCompat.get())
-            {
-                // Heal bee a bit
-                beeEntity.addEffect(new EffectInstance(Effects.HEAL, 1, 1, false, false, false));
-
-                // neutral chance to remove wrath of the hive from player
-                calmAndSpawnHearts(world, playerEntity, beeEntity, 0.2f, 3);
-                consumeItem(playerEntity, hand, itemstack, ForgeRegistries.ITEMS.getValue(STICKY_HONEY_WAND));
+        if (itemstack.getItem() == BzItems.HONEY_BUCKET.get()) {
+            beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
+            calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);
+            if (beeEntity.isBaby()) {
+                if (world.getRandom().nextBoolean()) {
+                    beeEntity.setBaby(false);
+                }
+            } else {
+                for (BeeEntity nearbyBee : world.getEntitiesOfClass(BeeEntity.class, beeEntity.getBoundingBox().inflate(4), beeEntity1 -> true)) {
+                    nearbyBee.setInLove(playerEntity);
+                }
             }
-            // generalized feeding
-            else {
-                if(itemstack.getItem() == BzItems.HONEY_BUCKET.get()) {
-                    beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
-                    calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);
-                    if(beeEntity.isBaby()) {
-                        if(world.getRandom().nextBoolean()) {
-                            beeEntity.setBaby(false);
-                        }
-                    }
-                    else {
-                        for(BeeEntity nearbyBee : world.getEntitiesOfClass(BeeEntity.class, beeEntity.getBoundingBox().inflate(4), beeEntity1 -> true)) {
-                            nearbyBee.setInLove(playerEntity);
-                        }
-                    }
-                }
-                else if(itemRL.getPath().contains("honey")){
-                    beeEntity.addEffect(new EffectInstance(Effects.HEAL, 1, 2, false, false, false));
-                    calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
-                }
-                else{
-                    beeEntity.addEffect(new EffectInstance(Effects.HEAL, 1, 1, false, false, false));
-                    calmAndSpawnHearts(world, playerEntity, beeEntity, 0.1f, 3);
-                }
+        }
+        else if (itemRL.getPath().contains("honey")) {
+            beeEntity.addEffect(new EffectInstance(Effects.HEAL, 1, 2, false, false, false));
+            calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
+        }
+        else {
+            beeEntity.addEffect(new EffectInstance(Effects.HEAL, 1, 1, false, false, false));
+            calmAndSpawnHearts(world, playerEntity, beeEntity, 0.1f, 3);
+        }
 
-                if (!playerEntity.isCreative()) {
-                    // remove current item
-                    itemstack.shrink(1);
+        if (!playerEntity.isCreative()) {
+            // remove current item
+            itemstack.shrink(1);
+            GeneralUtils.givePlayerItem(playerEntity, hand, itemstack, true);
+        }
 
-                    if(itemRL.getPath().contains("bowl") && !itemstack.getItem().equals(Items.BOWL)){
-                        givePlayerContainer(playerEntity, hand, itemstack, Items.BOWL);
-                    }
-                    else if(itemRL.getPath().contains("bucket") && !itemstack.getItem().equals(Items.BUCKET)){
-                        givePlayerContainer(playerEntity, hand, itemstack, Items.BUCKET);
-                    }
-                    else if(itemRL.getPath().contains("bottle") && !itemstack.getItem().equals(Items.GLASS_BOTTLE)){
-                        givePlayerContainer(playerEntity, hand, itemstack, Items.GLASS_BOTTLE);
-                    }
-                }
-                playerEntity.swing(hand, true);
-                return ActionResultType.SUCCESS;
-            }
-        return ActionResultType.PASS;
+        playerEntity.swing(hand, true);
+        return ActionResultType.SUCCESS;
     }
 
     public static ActionResultType beeUnpollinating(World world, PlayerEntity playerEntity, Hand hand, BeeEntity beeEntity) {
@@ -151,26 +126,12 @@ public class BeeInteractivity {
 
     private static void consumeItem(PlayerEntity playerEntity, Hand hand, ItemStack handItemstack, Item replacementItem) {
         if (!playerEntity.isCreative()) {
-
             // remove current bee soup
             handItemstack.shrink(1);
-
-            givePlayerContainer(playerEntity, hand, handItemstack, replacementItem);
+            GeneralUtils.givePlayerItem(playerEntity, hand, replacementItem.getDefaultInstance(), false);
         }
         else {
             playerEntity.swing(hand, true);
-        }
-    }
-
-    private static void givePlayerContainer(PlayerEntity playerEntity, Hand hand, ItemStack itemstack, Item itemToGive) {
-        if (itemstack.isEmpty()) {
-            // places empty bowl in hand
-            playerEntity.setItemInHand(hand, new ItemStack(itemToGive));
-        }
-        // places empty bottle in inventory
-        else if (!playerEntity.inventory.add(new ItemStack(itemToGive))) {
-            // drops empty bottle if inventory is full
-            playerEntity.drop(new ItemStack(itemToGive), false);
         }
     }
 }

@@ -50,7 +50,9 @@ Added Honey Fluid!
  Source blocks can be picked up by bucket or turned into a non-source block by using a glass bottle on it.
 
 ##### Entities:
-Fixed feeding bees a bucket items gives you a bowl back instead.
+Fixed feeding bees bucket items gives you a bowl back instead.
+
+Buzzier Bees Honey Wand now should be able to take honey from Honey Slimes.
 
 ##### Worldgen:
 Converted the Honeycomb Hole feature in the walls of the dimension to be now an nbt feature.

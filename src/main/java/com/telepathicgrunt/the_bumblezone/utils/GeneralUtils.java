@@ -8,9 +8,11 @@ import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IDispenseItemBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.merchant.villager.VillagerTrades;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.MerchantOffer;
+import net.minecraft.util.Hand;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -127,4 +129,23 @@ public class GeneralUtils {
         }
     }
 
+    //////////////////////////////////////////////
+
+    /**
+     * For giving the player an item properly into their inventory
+     */
+    public static void givePlayerItem(PlayerEntity playerEntity, Hand hand, ItemStack itemstack, boolean giveContainerItem) {
+        if(!giveContainerItem && !itemstack.hasContainerItem()) return;
+
+        ItemStack itemToGive = giveContainerItem ? itemstack.getContainerItem() : itemstack;
+        if (itemstack.isEmpty()) {
+            // places result item in hand
+            playerEntity.setItemInHand(hand, itemToGive);
+        }
+        // places result item in inventory
+        else if (!playerEntity.inventory.add(itemToGive)) {
+            // drops result item if inventory is full
+            playerEntity.drop(itemToGive, false);
+        }
+    }
 }

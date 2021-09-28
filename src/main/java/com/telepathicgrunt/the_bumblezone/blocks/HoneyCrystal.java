@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.google.common.collect.Maps;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -186,7 +187,8 @@ public class HoneyCrystal extends ProperFacingBlock {
 
                 //set player bucket to be empty if not in creative
                 if (!playerEntity.isCreative()) {
-                    playerEntity.setItemInHand(playerHand, new ItemStack(Items.BUCKET));
+                    itemstack.shrink(1);
+                    GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.BUCKET), false);
                 }
 
                 return ActionResultType.SUCCESS;
@@ -208,7 +210,8 @@ public class HoneyCrystal extends ProperFacingBlock {
 
                 //set player bucket to be full of sugar water if not in creative
                 if (!playerEntity.isCreative()) {
-                    playerEntity.setItemInHand(playerHand, new ItemStack(BzItems.SUGAR_WATER_BUCKET.get()));
+                    itemstack.shrink(1);
+                    GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.SUGAR_WATER_BUCKET.get()), false);
                 }
 
                 return ActionResultType.SUCCESS;
@@ -219,16 +222,8 @@ public class HoneyCrystal extends ProperFacingBlock {
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
                     SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
-            itemstack.shrink(1); // remove current honey bottle
-
-            if (itemstack.isEmpty()) {
-                playerEntity.setItemInHand(playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get())); // places sugar water bottle in hand
-            }
-            else if (!playerEntity.inventory.add(new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()))) // places sugar water bottle in inventory
-            {
-                playerEntity.drop(new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()), false); // drops sugar water bottle if inventory is full
-            }
-
+            itemstack.shrink(1);
+            GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()), false);
             return ActionResultType.SUCCESS;
         }
 

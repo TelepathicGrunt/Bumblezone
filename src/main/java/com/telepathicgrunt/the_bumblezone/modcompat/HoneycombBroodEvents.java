@@ -3,6 +3,8 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DirectionalBlock;
 import net.minecraft.entity.player.PlayerEntity;
@@ -52,15 +54,7 @@ public class HoneycombBroodEvents
 				if (!playerEntity.isCreative())
 				{
 					itemstack.shrink(1); // remove current bee bottle
-
-					if (itemstack.isEmpty())
-					{
-						playerEntity.setItemInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places glass bottle in hand
-					}
-					else if (!playerEntity.inventory.add(new ItemStack(Items.GLASS_BOTTLE))) // places glass bottle in inventory
-					{
-						playerEntity.drop(new ItemStack(Items.GLASS_BOTTLE), false); // drops glass bottle if inventory is full
-					}
+					GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true);
 				}
 
 				event.setCanceled(true);
