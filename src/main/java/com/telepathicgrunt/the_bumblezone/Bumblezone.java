@@ -59,6 +59,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Mod(Bumblezone.MODID)
 public class Bumblezone{
 
@@ -127,17 +130,17 @@ public class Bumblezone{
     }
 
 
-    private static final ResourceLocation old1 = new ResourceLocation(MODID, "dead_honeycomb_larva_block");
-    private static final ResourceLocation new1 = new ResourceLocation(MODID, "empty_honeycomb_brood_block");
-    private static final ResourceLocation old2 = new ResourceLocation(MODID, "honeycomb_larva_block");
-    private static final ResourceLocation new2 = new ResourceLocation(MODID, "honeycomb_brood_block");
+    private static final Map<ResourceLocation, ResourceLocation> RL_REMAP_MAP = new HashMap<ResourceLocation, ResourceLocation>() {{
+        put(new ResourceLocation(MODID, "dead_honeycomb_larva_block"), new ResourceLocation(MODID, "empty_honeycomb_brood_block"));
+        put(new ResourceLocation(MODID, "honeycomb_larva_block"), new ResourceLocation(MODID, "honeycomb_brood_block"));
+        put(new ResourceLocation(MODID, "beeswax_planks"), new ResourceLocation(MODID, "beehive_beeswax"));
+    }};
+
     public static void missingMappingDimension(RegistryEvent.MissingMappings<Block> event) {
         for (RegistryEvent.MissingMappings.Mapping<Block> entry : event.getMappings(Bumblezone.MODID)) {
-            if (entry.key.equals(old1)) {
-                entry.remap(ForgeRegistries.BLOCKS.getValue(new1));
-            }
-            else if (entry.key.equals(old2)) {
-                entry.remap(ForgeRegistries.BLOCKS.getValue(new2));
+            ResourceLocation newRL = RL_REMAP_MAP.get(entry.key);
+            if(newRL != null) {
+                entry.remap(ForgeRegistries.BLOCKS.getValue(newRL));
             }
         }
     }

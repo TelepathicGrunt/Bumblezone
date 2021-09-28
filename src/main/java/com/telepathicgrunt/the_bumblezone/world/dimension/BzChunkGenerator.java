@@ -667,13 +667,13 @@ public class BzChunkGenerator extends ChunkGenerator {
             //fills in gap between top of terrain gen and y = 255 with solid blocks
             for (int ceilingY = 255; ceilingY >= roofHeight - random.nextInt(2); --ceilingY)
             {
-                chunk.setBlockState(blockpos$Mutable.set(blockpos.getX(), ceilingY, blockpos.getZ()), BzBlocks.BEESWAX_PLANKS.get().defaultBlockState(), false);
+                chunk.setBlockState(blockpos$Mutable.set(blockpos.getX(), ceilingY, blockpos.getZ()), BzBlocks.BEEHIVE_BEESWAX.get().defaultBlockState(), false);
             }
 
             //single layer of solid blocks
             for (int floorY = 0; floorY <= floorHeight + random.nextInt(2); ++floorY)
             {
-                chunk.setBlockState(blockpos$Mutable.set(blockpos.getX(), floorY, blockpos.getZ()), BzBlocks.BEESWAX_PLANKS.get().defaultBlockState(), false);
+                chunk.setBlockState(blockpos$Mutable.set(blockpos.getX(), floorY, blockpos.getZ()), BzBlocks.BEEHIVE_BEESWAX.get().defaultBlockState(), false);
             }
         }
     }

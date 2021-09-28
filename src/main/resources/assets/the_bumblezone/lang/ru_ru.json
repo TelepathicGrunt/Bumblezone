@@ -9,8 +9,15 @@
  "block.the_bumblezone.sugar_infused_stone": "Засахарённый камень",
  "block.the_bumblezone.sticky_honey_residue": "Липкий засахарённый мёд",
  "block.the_bumblezone.sticky_honey_redstone": "Липкий медовый редстоун",
- "block.the_bumblezone.beeswax_planks": "Вощёные доски",
+ "block.the_bumblezone.beehive_beeswax": "Вощёные доски",
  "block.the_bumblezone.honey_crystal": "Медовый кристалл",
+ "block.the_bumblezone.pile_of_pollen": "Pile of Pollen",
+
+ "fluid.the_bumblezone.sugar_water_still": "Sugar Water",
+ "fluid.the_bumblezone.sugar_water_flowing": "Sugar Water",
+ "fluid.the_bumblezone.honey_fluid_still": "Honey Fluid",
+ "fluid.the_bumblezone.honey_fluid_flowing": "Honey Fluid",
+
  "item.the_bumblezone.honey_crystal_shards": "Осколки медового кристалла",
  "item.the_bumblezone.sugar_water_bucket": "Ведро сахарной воды",
  "item.the_bumblezone.sugar_water_bottle": "Бутылочка сахарной воды",
@@ -21,6 +28,8 @@
  "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov.desc": "Rimsky Korsakov - Flight of the Bumblebee",
  "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy": "пластинка",
  "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy.desc": "Rat Faced Boy - Honey Bee",
+ "item.the_bumblezone.pollen_puff": "Pollen Puff",
+ "item.the_bumblezone.honey_bucket": "Honey Bucket",
 
  "entity.the_bumblezone.honey_slime": "Медовый слизень",
 
@@ -30,10 +39,8 @@
  "biome.the_bumblezone.sugar_water_floor": "Пол сахарной воды",
  "biome.the_bumblezone.hive_wall": "Стена улья",
  "biome.the_bumblezone.hive_pillar": "Колонна улья",
-
- "feature.the_bumblezone.honeycomb_hole": "Отверстие соты",
- "feature.the_bumblezone.honeycomb_caves": "Медовая пещера",
- "feature.the_bumblezone.cave_sugar_waterfall": "Сахарный водопад",
+ "biome.the_bumblezone.pollinated_fields": "Pollinated Fields",
+ "biome.the_bumblezone.pollinated_pillar": "Pollinated Pillar",
 
  "effect.the_bumblezone.wrath_of_the_hive": "Гнев улья",
  "effect.the_bumblezone.protection_of_the_hive": "Защита улья",
@@ -46,12 +53,15 @@
  "the_bumblezone.sugar_infused_stone.jei_description": " Декоративный блок, образованный при контакте лавы и источника сахарной воды. При добыче даёт булыжник и сахар, если только не используется шёлковое касание. Можно выжечь сахар из блока в печи и получить немного опыта.",
  "the_bumblezone.sticky_honey_residue.jei_description": " Невероятно липкий остаток после сжигания медовых кристаллов, осколков медовых кристаллов и медовых блоков в печи. \n\nЭтот блок замедляет любого мода при соприкосновении и может быть использован для карабканья на стены. \n Добывается медленно и не даёт ничего. Чтобы быстрее избавиться от блока, используйте на нём бутылочку с водой, ведро с водой, мокрую губку, бутылочку с сахарной водой или ведро с сахарной водой, смывая его. Этот блок блок также будет немедленно уничтожен любой жидкостью или поршнем.",
  "the_bumblezone.sticky_honey_redstone.jei_description": " Очень удобный механический редстуновый блок, созданный при соединении липкого засахарённого мёда с редстоуном. Имеет все свойства липкого засахарённого мёда, но также выдаёт сигнал силы 1, когда на блок попадает существо. \n\nЗапитан будет также блок, к которому прикреплён этот блок и сквозь него, равно как и всё, что присоединено к бокам, если блок установлен на полу.",
- "the_bumblezone.beeswax_planks.jei_description": " Декоративный блок, формирующий верхние и нижние границы пчелиного мира и позволяющий производить ульи.",
+ "the_bumblezone.beehive_beeswax.jei_description": " Декоративный блок, формирующий верхние и нижние границы пчелиного мира и позволяющий производить ульи.",
  "the_bumblezone.honey_crystal.jei_description": " Невозобновляемый декоративный блок, распостранённый в пещерах и под водой в пчелином мире. Может быть расположен на любой твёрдой поверхности, в том числе сбоку и снизу. Может быть затоплен, при этом жидкость в нём превращается в сахарную воду. \n\nПри добыче без шёлкового касания даёт осколки медовых кристаллов (удача влияет на количество).",
  "the_bumblezone.honey_crystal_shards.jei_description": " Осколок медового кристалла, может быть употреблен для утоления лёгкого голода, растоплен в печи для получения липкого засахарённого мёда либо же использован для создания и ремонта щита из медовых кристаллов.",
  "the_bumblezone.sugar_water_bucket.jei_description": " Ведро, наполненное сахарной водой. Можно получить добавив сахар в ведро воды или заполнив пустое ведро сахарной водой. Можно использовать в раздатчике.",
  "the_bumblezone.sugar_water_bottle.jei_description": " Бутылочка, наполненная сахарной водой. Можно получить наполнив бутылочку сахарной водой. \n\nРаспитие слегка утолит голод, однако наделит спешкой на небольшое время. \n\nМожно подкормить личинку в блоке расплода с вероятностью вырастить личинку на одну стадию. Можно также подкормить пчёл, чтобы исцелить их и одновременно получить вероятность избавиться от гнева улья.",
  "the_bumblezone.honey_crystal_shield.jei_description": " Созданный из осколков , этот щит изначально весьма хлипок, но становится всё прочнее с каждым ремонтом при помощи осколков медовых кристаллов на наковальне. На максимальном уровне примерно вдвое прочнее обычного щита. \n\nОднако этот щит всегда получает сильный ущерб при блокировании взрывного и огненного урона. \n\n Щит также слегка замедляет любого врага, наносящего физический урон по щиту, и более того, может быть зачарован на нерушимость, проклятие несъёмности и проклятие утраты.",
  "the_bumblezone.honey_slime_spawn_egg.jei_description": " Яйцо, призывающе медовых слизней, которых можно разводить и использовать для производства мёда, применяя на них стеклянные пузырьки. Сие существо добавлено благодаря Bagel, создателю Buzzier bees. Специальная благодарность для него!",
- "the_bumblezone.sugar_water_still.jei_description": " Жидкость, раствор сахара в воде. Любые существа в ней замедляются чуть сильнее, чем в обычной воде. Может быть обнаружена в пчелином мире, создана при помощи ведра с водой и сахара или получена из затопленного блока медовых кристаллов. \n В целом, сахарная вода имеет свойства обычной воды, так как имеет тег воды. Соответственно, она может увлажнять грядки или поддерживать жизнь кораллов. \n\n\n Эта жидкость также лечит всякую пчелу прикасающуюся пчелу, если та не получает урона. Более того, с ней сахарный тростник будет расти гораздо быстрее (может быть использовано с 4 сторон). \n\n Если соприкасается с любой жидкостью с тегом лавы, превратится в засахарённый булыжник либо засахарённый камень."
+ "the_bumblezone.sugar_water_still.jei_description": " Жидкость, раствор сахара в воде. Любые существа в ней замедляются чуть сильнее, чем в обычной воде. Может быть обнаружена в пчелином мире, создана при помощи ведра с водой и сахара или получена из затопленного блока медовых кристаллов. \n В целом, сахарная вода имеет свойства обычной воды, так как имеет тег воды. Соответственно, она может увлажнять грядки или поддерживать жизнь кораллов. \n\n\n Эта жидкость также лечит всякую пчелу прикасающуюся пчелу, если та не получает урона. Более того, с ней сахарный тростник будет расти гораздо быстрее (может быть использовано с 4 сторон). \n\n Если соприкасается с любой жидкостью с тегом лавы, превратится в засахарённый булыжник либо засахарённый камень.",
+ "the_bumblezone.pollen_puff.jei_description": " A soft ball of clumped pollen! It can be thrown to create a Pile of Pollen block where-ever it hits. If it hits an unpollinated bee, the bee becomes pollinated. But if it hits an allowed flower, it may cause the flower to reproduce! \n\n A Pile of Pollen block slows mobs in it and gives off a ton of pollen particles. It will also pollinate any unpollinated bee that flies into the Pile of Pollen.",
+ "the_bumblezone.honey_fluid_still.jei_description": " A delicious fluid of honey! It flows very slowly and will slow mobs in it significantly. Non-player mobs and boats tends to sink into the Honey Fluid as if it is a sticky trap! \n\n Can be picked up with a Bucket or Glass Bottle and it will heal any hurt bee that flies into the fluid. \n\n When this fluid comes in contact with any other fluid that has a lava tag, this fluid will turn into either Sugar Infused Cobblestone or Sugar Infused Stone blocks.",
+ "the_bumblezone.honey_bucket.jei_description": " Bucket holding Honey fluid. Can be obtained by crafting buckets with Honey Bottles and can be reverse crafted back to Honey Bottles too. \n\n If used on bees, it will fully heal them. if used on an adult bee, it puts it and nearby bees into love mode! if used on a child bee, it has a chance of growing them into an adult. Can be used in Dispensers too!"
 }

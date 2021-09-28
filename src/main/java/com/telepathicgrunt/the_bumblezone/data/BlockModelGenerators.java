@@ -18,8 +18,8 @@ public class BlockModelGenerators extends BlockModelProvider {
 
         // Simple shaped blocks
 
-        cubeAll("beeswax_planks", modLoc("block/beeswax_planks"))
-                .texture("all", modLoc("block/beeswax_planks"));
+        cubeAll("beehive_beeswax", modLoc("block/beehive_beeswax"))
+                .texture("all", modLoc("block/beehive_beeswax"));
 
         cubeAll("filled_porous_honeycomb_block", modLoc("block/filled_porous_honeycomb_block"))
                 .texture("all", modLoc("block/filled_porous_honeycomb_block"));

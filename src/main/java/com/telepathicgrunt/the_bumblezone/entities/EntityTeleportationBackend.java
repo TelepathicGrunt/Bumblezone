@@ -131,7 +131,7 @@ public class EntityTeleportationBackend {
                 entity.absMoveTo(newPos.getX() + 0.5f, newPos.getY(), newPos.getZ() + 0.5f);
                 BlockState belowState = entity.level.getBlockState(newPos.below());
                 if(!belowState.isFaceSturdy(entity.level, newPos.below(), Direction.UP)){
-                    entity.level.setBlock(newPos.below(), BzBlocks.BEESWAX_PLANKS.get().defaultBlockState(), 3);
+                    entity.level.setBlock(newPos.below(), BzBlocks.BEEHIVE_BEESWAX.get().defaultBlockState(), 3);
                 }
                 return;
             }

@@ -34,14 +34,14 @@ public class RecipeGenerators extends RecipeProvider implements IDataProvider {
 
         consumer.accept(shapedRecipeResult(
                 Items.BEE_NEST,
-                new ResourceLocation(Bumblezone.MODID, "beeswax_planks_to_bee_nest"),
+                new ResourceLocation(Bumblezone.MODID, "beehive_beeswax_to_bee_nest"),
                 1,
                 ImmutableList.of(
                         "bbb",
                         "bcb",
                         "bbb"),
                 ImmutableMap.<Character,Ingredient>builder()
-                        .put('b', Ingredient.of(BzItems.BEESWAX_PLANKS.get()))
+                        .put('b', Ingredient.of(BzItems.BEEHIVE_BEESWAX.get()))
                         .put('c', Ingredient.of(Items.HONEYCOMB))
                         .build())
         );
