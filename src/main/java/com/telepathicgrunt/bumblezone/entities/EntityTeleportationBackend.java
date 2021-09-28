@@ -3,7 +3,7 @@ package com.telepathicgrunt.bumblezone.entities;
 import com.google.common.primitives.Doubles;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.bumblezone.tags.BZBlockTags;
+import com.telepathicgrunt.bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.bumblezone.utils.BzPlacingUtils;
 import com.telepathicgrunt.bumblezone.world.dimension.BzDimension;
 import net.minecraft.block.BeehiveBlock;
@@ -13,7 +13,6 @@ import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -464,7 +463,7 @@ public class EntityTeleportationBackend {
     }
 
     public static boolean isValidBeeHive(BlockState block) {
-        if(BZBlockTags.BLACKLISTED_TELEPORTATION_HIVES.contains(block.getBlock())) return false;
+        if(BzBlockTags.BLACKLISTED_TELEPORTATION_HIVES.contains(block.getBlock())) return false;
 
         if(BlockTags.BEEHIVES.contains(block.getBlock()) || block.getBlock() instanceof BeehiveBlock) {
             return true;

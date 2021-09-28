@@ -3,7 +3,7 @@ package com.telepathicgrunt.bumblezone.entities;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
-import com.telepathicgrunt.bumblezone.tags.BZItemTags;
+import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -29,7 +29,7 @@ public class BeeInteractivity {
             Identifier itemRL = Registry.ITEM.getId(itemstack.getItem());
 
             // Disallow all non-tagged items from being fed to bees
-            if(!BZItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
+            if(!BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
                 return;
 
             if(itemRL.getPath().contains("honey")){

@@ -1,0 +1,24 @@
+{
+  "name": "the_bumblezone:pollinated_stream/end_pool",
+  "fallback": "the_bumblezone:pollinated_stream/end_pool",
+  "elements": [
+    {
+      "weight": 3,
+      "element": {
+        "location": "the_bumblezone:pollinated_stream/stream_pond_end",
+        "processors": "the_bumblezone:pollinated_stream_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:pollinated_stream/stream_end",
+        "processors": "the_bumblezone:pollinated_stream_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

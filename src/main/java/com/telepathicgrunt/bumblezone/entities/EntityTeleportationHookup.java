@@ -1,13 +1,12 @@
 package com.telepathicgrunt.bumblezone.entities;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
-import com.telepathicgrunt.bumblezone.tags.BZBlockTags;
+import com.telepathicgrunt.bumblezone.tags.BzBlockTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -110,8 +109,8 @@ public class EntityTeleportationHookup {
 
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = false;
-            if(!BZBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.values().isEmpty()) {
-                if(BZBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.down()).getBlock())) {
+            if(!BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.values().isEmpty()) {
+                if(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.down()).getBlock())) {
                     validBelowBlock = true;
                 }
                 else if(Bumblezone.BZ_CONFIG.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive)
@@ -160,8 +159,8 @@ public class EntityTeleportationHookup {
             {
                 //checks if block under hive is correct if config needs one
                 boolean validBelowBlock = false;
-                if(!BZBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.values().isEmpty()) {
-                    if(BZBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.down()).getBlock())) {
+                if(!BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.values().isEmpty()) {
+                    if(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.down()).getBlock())) {
                         validBelowBlock = true;
                     }
                     else if(Bumblezone.BZ_CONFIG.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive) {

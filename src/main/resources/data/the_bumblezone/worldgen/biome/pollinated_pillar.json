@@ -1,0 +1,120 @@
+{
+  "player_spawn_friendly": false,
+  "precipitation": "none",
+  "temperature": 1.85,
+  "downfall": 0.5,
+  "category": "none",
+  "depth": 5.5,
+  "scale": 0.5,
+  "effects": {
+    "ambient_sound": "the_bumblezone:beehive_ambience",
+    "music": {
+      "sound": "the_bumblezone:biome_music",
+      "min_delay": 6000,
+      "max_delay": 12000,
+      "replace_current_music": false
+    },
+    "sky_color": 16759808,
+    "foliage_color": 7593531,
+    "grass_color": 7600187,
+    "fog_color": 12638463,
+    "water_color": 14402413,
+    "water_fog_color": 11700268
+  },
+  "surface_builder": "the_bumblezone:pollen_deep_surface_builder",
+  "carvers": {},
+  "features": [
+    [
+      "the_bumblezone:pollinated_caves"
+    ],
+    [],
+    [],
+    [
+      "the_bumblezone:bee_dungeon",
+      "the_bumblezone:spider_infested_bee_dungeon"
+    ],
+    [],
+    [],
+    [
+      "the_bumblezone:honey_crystals_rare"
+    ],
+    [],
+    [
+      "the_bumblezone:cave_sugar_waterfall",
+      "the_bumblezone:sugar_waterfall_full_range",
+      "the_bumblezone:sugar_waterfall_low"
+    ],
+    []
+  ],
+  "starts": [
+    "the_bumblezone:pollinated_stream",
+    "the_bumblezone:honey_cave_room"
+  ],
+  "creature_spawn_probability": 0.17,
+  "spawners": {
+    "monster": [
+      {
+        "type": "minecraft:slime",
+        "weight": 40,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "minecraft:spider",
+        "weight": 10,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "minecraft:cave_spider",
+        "weight": 8,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "minecraft:phantom",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "minecraft:snowball",
+        "weight": 3000,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "creature": [
+      {
+        "type": "minecraft:bee",
+        "weight": 100,
+        "minCount": 4,
+        "maxCount": 8
+      },
+      {
+        "type": "the_bumblezome:honey_slime",
+        "weight": 40,
+        "minCount": 1,
+        "maxCount": 3
+      }
+    ],
+    "ambient": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {
+    "minecraft:spider": {
+      "energy_budget": 0.05,
+      "charge": 3.5
+    },
+    "minecraft:cave_spider": {
+      "energy_budget": 0.08,
+      "charge": 3.5
+    },
+    "minecraft:phantom": {
+      "energy_budget": 0.01,
+      "charge": 2.5
+    }
+  }
+}

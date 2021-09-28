@@ -6,7 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
-public class BZBlockTags {
+public class BzBlockTags {
     // Sole purpose is to initalize the tag wrappers at mod startup
     public static void initTags(){}
 

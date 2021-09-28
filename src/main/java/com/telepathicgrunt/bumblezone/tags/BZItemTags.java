@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
-public class BZItemTags {
+public class BzItemTags {
     // Sole purpose is to initalize the tag wrappers at mod startup
     public static void initTags(){}
 

@@ -1,0 +1,15 @@
+{
+  "name": "the_bumblezone:pollinated_stream/stream4way",
+  "fallback": "the_bumblezone:pollinated_stream/end_pool",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:pollinated_stream/stream_4way",
+        "processors": "the_bumblezone:pollinated_stream_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

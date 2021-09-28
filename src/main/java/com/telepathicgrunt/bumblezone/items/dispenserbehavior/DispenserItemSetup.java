@@ -1,4 +1,4 @@
-package com.telepathicgrunt.bumblezone.items;
+package com.telepathicgrunt.bumblezone.items.dispenserbehavior;
 
 import com.telepathicgrunt.bumblezone.mixin.blocks.DispenserAccessor;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
@@ -23,37 +23,7 @@ public class DispenserItemSetup {
     public static void setupDispenserBehaviors() {
 
         // Behavior for custom items
-
-        DispenserBehavior genericBucketDispenseBehavior = new ItemDispenserBehavior() {
-        	private final ItemDispenserBehavior dispenserBehavior = new ItemDispenserBehavior();
-
-            /**
-             * Dispense the specified stack, play the dispense sound and spawn particles.
-             */
-            public ItemStack dispenseSilently(BlockPointer source, ItemStack stack) {
-                BucketItem bucketitem = (BucketItem) stack.getItem();
-                BlockPos blockpos = source.getPos().offset(source.getBlockState().get(DispenserBlock.FACING));
-                World world = source.getWorld();
-                BlockState blockstate = world.getBlockState(blockpos);
-
-                if (bucketitem.placeFluid(null, world, blockpos, null)) {
-
-                    bucketitem.onEmptied(null, world, stack, blockpos);
-                    return new ItemStack(Items.BUCKET);
-                }
-                else if(blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL && !blockstate.get(Properties.WATERLOGGED)) {
-
-                    world.setBlockState(blockpos, BzBlocks.HONEY_CRYSTAL.getDefaultState()
-                            .with(Properties.FACING, blockstate.get(Properties.FACING))
-                            .with(Properties.WATERLOGGED, true));
-                    return new ItemStack(Items.BUCKET);
-                }
-                else {
-                    return this.dispenserBehavior.dispense(source, stack);
-                }
-            }
-        };
-        DispenserBlock.registerBehavior(BzItems.SUGAR_WATER_BUCKET, genericBucketDispenseBehavior); // adds compatibility with sugar water buckets in dispensers
+        DispenserBlock.registerBehavior(BzItems.SUGAR_WATER_BUCKET, new SugarWaterBucketDispenseBehavior()); // adds compatibility with sugar water buckets in dispensers
         DispenserBlock.registerBehavior(BzItems.SUGAR_WATER_BOTTLE, new SugarWaterBottleDispenseBehavior()); // adds compatibility with sugar water bottles in dispensers
 
 

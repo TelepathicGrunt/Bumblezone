@@ -1,4 +1,4 @@
-package com.telepathicgrunt.bumblezone.items;
+package com.telepathicgrunt.bumblezone.items.dispenserbehavior;
 
 import com.telepathicgrunt.bumblezone.mixin.blocks.ItemDispenserBehaviorInvoker;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;

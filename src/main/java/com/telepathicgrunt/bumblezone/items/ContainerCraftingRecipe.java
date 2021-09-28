@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.telepathicgrunt.bumblezone.modinit.BzRecipes;
 import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
@@ -35,6 +36,30 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
     public DefaultedList<Ingredient> getIngredients() {
         return recipeItems;
     }
+
+    @Override
+    public DefaultedList<ItemStack> getRemainder(CraftingInventory inv) {
+        DefaultedList<ItemStack> remainingInv = DefaultedList.ofSize(inv.size(), ItemStack.EMPTY);
+        int containerOutput = recipeOutput.getItem().hasRecipeRemainder() ? recipeOutput.getCount() : 0;
+
+        for(int i = 0; i < remainingInv.size(); ++i) {
+            ItemStack item = inv.getStack(i);
+            if (item.getItem().hasRecipeRemainder()) {
+                if(containerOutput > 0 &&
+                    (recipeOutput.getItem() == item.getItem().getRecipeRemainder() ||
+                    recipeOutput.getItem().getRecipeRemainder() == item.getItem()))
+                {
+                    containerOutput--;
+                }
+                else {
+                    remainingInv.set(i, item.getItem().getRecipeRemainder().getDefaultStack());
+                }
+            }
+        }
+
+        return remainingInv;
+    }
+
 
     public static class Serializer implements RecipeSerializer<ContainerCraftingRecipe> {
         @Override

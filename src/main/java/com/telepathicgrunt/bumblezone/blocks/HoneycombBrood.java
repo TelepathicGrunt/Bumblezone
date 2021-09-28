@@ -7,6 +7,7 @@ import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
+import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -109,7 +110,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         /*
          * Player is feeding larva
          */
-        else if (itemstack.getItem() == Items.HONEY_BOTTLE || itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {
+        else if (itemstack.isIn(BzItemTags.BEE_FEEDING_ITEMS)) {
             if (!world.isClient) {
                 boolean successfulGrowth = false;
 
@@ -144,13 +145,17 @@ public class HoneycombBrood extends ProperFacingBlock {
 
             //removes used item
             if (!playerEntity.isCreative()) {
-                itemstack.decrement(1); // remove current honey bottle
+                itemstack.decrement(1); // remove current honey item
 
-                if (itemstack.isEmpty()) {
-                    playerEntity.setStackInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places empty bottle in hand
-                } else if (!playerEntity.getInventory().insertStack(new ItemStack(Items.GLASS_BOTTLE))) // places empty bottle in inventory
-                {
-                    playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false); // drops empty bottle if inventory is full
+                if(itemstack.getItem().hasRecipeRemainder()) {
+                    ItemStack containerItemStack = itemstack.getItem().getRecipeRemainder().getDefaultStack();
+                    if (itemstack.isEmpty()) {
+                        playerEntity.setStackInHand(playerHand, containerItemStack); // places empty item in hand
+                    }
+                    // places empty item in inventory
+                    else if (!playerEntity.getInventory().insertStack(containerItemStack)) {
+                        playerEntity.dropItem(containerItemStack, false); // drops empty item if inventory is full
+                    }
                 }
             }
 

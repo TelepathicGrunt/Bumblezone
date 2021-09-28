@@ -5,7 +5,7 @@ import com.telepathicgrunt.bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.bumblezone.entities.IEntityComponent;
 import com.telepathicgrunt.bumblezone.entities.EntityComponent;
 import com.telepathicgrunt.bumblezone.entities.WanderingTrades;
-import com.telepathicgrunt.bumblezone.items.DispenserItemSetup;
+import com.telepathicgrunt.bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzConfiguredFeatures;
@@ -19,14 +19,13 @@ import com.telepathicgrunt.bumblezone.modinit.BzPlacements;
 import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.bumblezone.modinit.BzRecipes;
 import com.telepathicgrunt.bumblezone.modinit.BzSounds;
-import com.telepathicgrunt.bumblezone.tags.BZBlockTags;
-import com.telepathicgrunt.bumblezone.tags.BZItemTags;
+import com.telepathicgrunt.bumblezone.tags.BzBlockTags;
+import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.bumblezone.world.dimension.BzDimension;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
-import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
@@ -53,8 +52,8 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         AutoConfig.register(BzConfig.class, JanksonConfigSerializer::new);
         BZ_CONFIG = AutoConfig.getConfigHolder(BzConfig.class).getConfig();
 
-        BZBlockTags.initTags();
-        BZItemTags.initTags();
+        BzBlockTags.initTags();
+        BzItemTags.initTags();
 
         // Must be before items so that items like music disc can get sounds
         BzSounds.registerSounds();

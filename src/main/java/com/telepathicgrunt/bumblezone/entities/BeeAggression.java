@@ -4,8 +4,8 @@ import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.client.MusicHandler;
 import com.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
-import com.telepathicgrunt.bumblezone.tags.BZBlockTags;
-import com.telepathicgrunt.bumblezone.tags.BZItemTags;
+import com.telepathicgrunt.bumblezone.tags.BzBlockTags;
+import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.Block;
@@ -103,7 +103,7 @@ public class BeeAggression {
     //if player mines an angerable tagged block, bees gets very mad...
     public static void blockBreakAnger(PlayerEntity player, Block block)
     {
-        if (BZBlockTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED.contains(block)) {
+        if (BzBlockTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED.contains(block)) {
             angerBees(player);
         }
     }
@@ -111,7 +111,7 @@ public class BeeAggression {
     //if player picks up an angerable tagged item, bees gets very mad...
     public static void itemPickupAnger(PlayerEntity player, Item item)
     {
-        if (BZItemTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP.contains(item)) {
+        if (BzItemTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP.contains(item)) {
             angerBees(player);
         }
     }

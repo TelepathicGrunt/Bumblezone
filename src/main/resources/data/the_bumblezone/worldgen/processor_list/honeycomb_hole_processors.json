@@ -1,0 +1,11 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:honeycomb_hole_processor",
+      "flood_level": 32
+    },
+    {
+      "processor_type": "the_bumblezone:remove_floating_blocks_processor"
+    }
+  ]
+}
