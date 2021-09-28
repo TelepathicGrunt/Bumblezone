@@ -1,8 +1,10 @@
 package com.telepathicgrunt.bumblezone.blocks;
 
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.MapColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -45,7 +47,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     }
 
     public StickyHoneyRedstone() {
-        super();
+        super(FabricBlockSettings.of(BzBlocks.RESIDUE, MapColor.TERRACOTTA_ORANGE).luminance(blockState -> blockState.get(POWERED) ? 1 : 0).noCollision().strength(6.0f, 0.0f).nonOpaque());
         this.setDefaultState(this.stateManager.getDefaultState()
                 .with(UP, false)
                 .with(NORTH, false)

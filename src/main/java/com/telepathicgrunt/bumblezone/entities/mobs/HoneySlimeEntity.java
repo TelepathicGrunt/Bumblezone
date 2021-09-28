@@ -39,6 +39,7 @@ import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
@@ -209,11 +210,14 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
    @Override
    public ActionResult interactMob(PlayerEntity player, Hand hand) {
       ItemStack itemstack = player.getStackInHand(hand);
-      World world = player.getEntityWorld();
       if (!this.isBaby() && this.isInHoney()) {
          //Bottling
          if (itemstack.getItem() == Items.GLASS_BOTTLE) {
-            GeneralUtils.giveHoneyBottle(player, hand, itemstack, world);
+            world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            if (!player.isCreative()) {
+               itemstack.decrement(1);
+               GeneralUtils.givePlayerItem(player, hand, itemstack, true);
+            }
 
             this.setAttacker(player);
             getHoneyFromSlime(this);

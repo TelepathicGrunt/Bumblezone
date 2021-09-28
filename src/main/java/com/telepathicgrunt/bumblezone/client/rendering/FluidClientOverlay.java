@@ -1,8 +1,9 @@
-package com.telepathicgrunt.bumblezone.fluids;
+package com.telepathicgrunt.bumblezone.client.rendering;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.BufferBuilder;
@@ -18,12 +19,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.world.biome.Biome;
 
-public class SugarWaterClientOverlay {
+public class FluidClientOverlay {
     private static final Identifier TEXTURE_UNDERWATER = new Identifier(Bumblezone.MODID, "textures/misc/sugar_water_underwater.png");
 
-    public static boolean sugarWaterOverlay(PlayerEntity player, BlockPos pos, MatrixStack matrixStack) {
-
-        if (player instanceof ClientPlayerEntity clientPlayerEntity && player.world.getBlockState(new BlockPos(player.getCameraPosVec(1))).getBlock() == BzBlocks.SUGAR_WATER_BLOCK) {
+    public static boolean fluidOverlay(PlayerEntity player, BlockPos pos, MatrixStack matrixStack) {
+        if(!(player instanceof ClientPlayerEntity clientPlayerEntity)) return false;
+        BlockState state = player.world.getBlockState(new BlockPos(player.getCameraPosVec(0)));
+        if (state.isOf(BzBlocks.SUGAR_WATER_BLOCK)) {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.enableTexture();
             RenderSystem.setShaderTexture(0, TEXTURE_UNDERWATER);

@@ -1,6 +1,7 @@
 package com.telepathicgrunt.bumblezone.blocks;
 
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -42,13 +43,7 @@ public class PorousHoneycomb extends Block {
 
             if (!playerEntity.isCreative()) {
                 itemstack.decrement(1); // remove current honey bottle
-
-                if (itemstack.isEmpty()) {
-                    playerEntity.setStackInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places empty bottle in hand
-                } else if (!playerEntity.getInventory().insertStack(new ItemStack(Items.GLASS_BOTTLE))) // places empty bottle in inventory
-                {
-                    playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false); // drops empty bottle if inventory is full
-                }
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true);
             }
 
             return ActionResult.SUCCESS;

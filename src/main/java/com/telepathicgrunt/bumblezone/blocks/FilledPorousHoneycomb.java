@@ -50,7 +50,7 @@ public class FilledPorousHoneycomb extends Block {
          */
         if (itemstack.getItem() == Items.GLASS_BOTTLE) {
             world.setBlockState(position, BzBlocks.POROUS_HONEYCOMB.getDefaultState(), 3); // removed honey from this block
-            GeneralUtils.giveHoneyBottle(playerEntity, playerHand, itemstack, world);
+            GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false);
 
             if ((playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
                     Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&

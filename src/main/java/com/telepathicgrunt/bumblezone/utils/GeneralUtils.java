@@ -128,23 +128,6 @@ public class GeneralUtils {
         }
     }
 
-    ////////////////
-
-    /**
-     * Commonly used method for removing currently held item and giving Honey Bottle instead.
-     */
-    public static void giveHoneyBottle(PlayerEntity player, Hand hand, ItemStack itemstack, World world) {
-        world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-        if (!player.isCreative()) {
-            itemstack.decrement(1);
-            if (itemstack.isEmpty()) {
-                player.setStackInHand(hand, new ItemStack(Items.HONEY_BOTTLE));
-            } else if (!player.getInventory().insertStack(new ItemStack(Items.HONEY_BOTTLE))) {
-                player.dropItem(new ItemStack(Items.HONEY_BOTTLE), false);
-            }
-        }
-    }
-
     ///////////////////////
 
     public static final List<BlockState> VANILLA_CANDLES = ImmutableList.of(
@@ -166,4 +149,24 @@ public class GeneralUtils {
             Blocks.WHITE_CANDLE.getDefaultState(),
             Blocks.YELLOW_CANDLE.getDefaultState()
     );
+
+    //////////////////////////////////////////////
+
+    /**
+     * For giving the player an item properly into their inventory
+     */
+    public static void givePlayerItem(PlayerEntity playerEntity, Hand hand, ItemStack itemstack, boolean giveContainerItem) {
+        if(!giveContainerItem && !itemstack.getItem().hasRecipeRemainder()) return;
+
+        ItemStack itemToGive = giveContainerItem ? itemstack.getItem().getRecipeRemainder().getDefaultStack() : itemstack;
+        if (itemstack.isEmpty()) {
+            // places result item in hand
+            playerEntity.setStackInHand(hand, itemToGive);
+        }
+        // places result item in inventory
+        else if (!playerEntity.getInventory().insertStack(itemToGive)) {
+            // drops result item if inventory is full
+            playerEntity.dropItem(itemToGive, false);
+        }
+    }
 }

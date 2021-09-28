@@ -4,6 +4,7 @@ import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.bumblezone.tags.BzItemTags;
+import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -44,16 +45,7 @@ public class BeeInteractivity {
             if (!playerEntity.isCreative()) {
                 // remove current item
                 itemstack.decrement(1);
-
-                if(itemRL.getPath().contains("bowl") && !itemstack.getItem().equals(Items.BOWL)){
-                    givePlayerContainer(playerEntity, hand, itemstack, Items.BOWL);
-                }
-                else if(itemRL.getPath().contains("bucket") && !itemstack.getItem().equals(Items.BUCKET)){
-                    givePlayerContainer(playerEntity, hand, itemstack, Items.BOWL);
-                }
-                else if(itemRL.getPath().contains("bottle") && !itemstack.getItem().equals(Items.GLASS_BOTTLE)){
-                    givePlayerContainer(playerEntity, hand, itemstack, Items.GLASS_BOTTLE);
-                }
+                GeneralUtils.givePlayerItem(playerEntity, hand, itemstack, true);
             }
             playerEntity.swingHand(hand, true);
         }
@@ -88,17 +80,5 @@ public class BeeInteractivity {
                     world.getRandom().nextFloat() * 0.2f + 0.2f,
                     world.getRandom().nextFloat() * 0.5 - 0.25f,
                     world.getRandom().nextFloat() * 0.4 + 0.2f);
-    }
-
-    private static void givePlayerContainer(PlayerEntity playerEntity, Hand hand, ItemStack itemstack, Item itemToGive) {
-        if (itemstack.isEmpty()) {
-            // places empty bowl in hand
-            playerEntity.setStackInHand(hand, new ItemStack(itemToGive));
-        }
-        // places empty bottle in inventory
-        else if (!playerEntity.getInventory().insertStack(new ItemStack(itemToGive))) {
-            // drops empty bottle if inventory is full
-            playerEntity.dropItem(new ItemStack(itemToGive), false);
-        }
     }
 }

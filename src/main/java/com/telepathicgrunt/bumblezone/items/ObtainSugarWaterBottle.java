@@ -2,6 +2,7 @@ package com.telepathicgrunt.bumblezone.items;
 
 import com.telepathicgrunt.bumblezone.fluids.SugarWaterFluid;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
+import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -20,16 +21,10 @@ public class ObtainSugarWaterBottle {
             if (itemstack.getItem() == Items.GLASS_BOTTLE) {
                 world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
-                if(!playerEntity.isCreative())
-                    itemstack.decrement(1); // remove current honey bottle
-
-                if (itemstack.isEmpty()) {
-                    playerEntity.setStackInHand(playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE)); // places sugar water bottle in hand
-                } else if (!playerEntity.getInventory().insertStack(new ItemStack(BzItems.SUGAR_WATER_BOTTLE))) // places sugar water bottle in inventory
-                {
-                    playerEntity.dropItem(new ItemStack(BzItems.SUGAR_WATER_BOTTLE), false); // drops sugar water bottle if inventory is full
+                if(!playerEntity.isCreative()) {
+                    itemstack.decrement(1);
+                    GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE), false);
                 }
-
                 return true;
             }
         }

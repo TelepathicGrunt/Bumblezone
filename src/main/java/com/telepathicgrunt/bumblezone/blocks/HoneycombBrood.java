@@ -88,7 +88,7 @@ public class HoneycombBrood extends ProperFacingBlock {
             //spawn angry bee if at final stage and front isn't blocked off
             int stage = thisBlockState.get(STAGE);
             spawnBroodMob(world, thisBlockState, position, stage);
-            GeneralUtils.giveHoneyBottle(playerEntity, playerHand, itemstack, world);
+            GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false);
 
             if ((playerEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) ||
                     Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
@@ -146,17 +146,7 @@ public class HoneycombBrood extends ProperFacingBlock {
             //removes used item
             if (!playerEntity.isCreative()) {
                 itemstack.decrement(1); // remove current honey item
-
-                if(itemstack.getItem().hasRecipeRemainder()) {
-                    ItemStack containerItemStack = itemstack.getItem().getRecipeRemainder().getDefaultStack();
-                    if (itemstack.isEmpty()) {
-                        playerEntity.setStackInHand(playerHand, containerItemStack); // places empty item in hand
-                    }
-                    // places empty item in inventory
-                    else if (!playerEntity.getInventory().insertStack(containerItemStack)) {
-                        playerEntity.dropItem(containerItemStack, false); // drops empty item if inventory is full
-                    }
-                }
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true);
             }
 
             return ActionResult.SUCCESS;

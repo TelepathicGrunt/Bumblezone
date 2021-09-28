@@ -1,6 +1,6 @@
 package com.telepathicgrunt.bumblezone.mixin.blocks;
 
-import com.telepathicgrunt.bumblezone.fluids.SugarWaterClientOverlay;
+import com.telepathicgrunt.bumblezone.client.rendering.FluidClientOverlay;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameOverlayRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -20,7 +20,7 @@ public class BlockOverlayRendererMixin {
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
     private static void thebumblezone_blockOverlay(MinecraftClient minecraftClient, MatrixStack matrixStack, CallbackInfo ci, PlayerEntity playerEntity) {
-        if (SugarWaterClientOverlay.sugarWaterOverlay(playerEntity, new BlockPos(playerEntity.getPos()), matrixStack))
+        if (FluidClientOverlay.fluidOverlay(playerEntity, new BlockPos(playerEntity.getPos()), matrixStack))
             ci.cancel();
     }
 }

@@ -5,6 +5,7 @@ import com.telepathicgrunt.bumblezone.mixin.items.BucketItemAccessor;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -54,6 +55,17 @@ public class StickyHoneyResidue extends VineBlock {
 
     public StickyHoneyResidue() {
         super(FabricBlockSettings.of(BzBlocks.RESIDUE, MapColor.TERRACOTTA_ORANGE).noCollision().strength(6.0f, 0.0f).nonOpaque());
+        this.setDefaultState(this.stateManager.getDefaultState()
+                .with(UP, false)
+                .with(NORTH, false)
+                .with(EAST, false)
+                .with(SOUTH, false)
+                .with(WEST, false)
+                .with(DOWN, false));
+    }
+
+    public StickyHoneyResidue(AbstractBlock.Settings settings) {
+        super(settings);
         this.setDefaultState(this.stateManager.getDefaultState()
                 .with(UP, false)
                 .with(NORTH, false)

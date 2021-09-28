@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.telepathicgrunt.bumblezone.mixin.items.BucketItemAccessor;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
+import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -177,7 +178,8 @@ public class HoneyCrystal extends ProperFacingBlock {
 
             //set player bucket to be empty if not in creative
             if (!playerEntity.isCreative()) {
-                playerEntity.setStackInHand(playerHand, new ItemStack(Items.BUCKET));
+                itemstack.decrement(1);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.BUCKET), false);
             }
 
             return ActionResult.SUCCESS;
@@ -187,16 +189,8 @@ public class HoneyCrystal extends ProperFacingBlock {
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
                     SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
-            itemstack.decrement(1); // remove current honey bottle
-
-            if (itemstack.isEmpty()) {
-                playerEntity.setStackInHand(playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE)); // places sugar water bottle in hand
-            }
-            else if (!playerEntity.getInventory().insertStack(new ItemStack(BzItems.SUGAR_WATER_BOTTLE))) // places sugar water bottle in inventory
-            {
-                playerEntity.dropItem(new ItemStack(BzItems.SUGAR_WATER_BOTTLE), false); // drops sugar water bottle if inventory is full
-            }
-
+            itemstack.decrement(1);
+            GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE), false);
             return ActionResult.SUCCESS;
         }
 
