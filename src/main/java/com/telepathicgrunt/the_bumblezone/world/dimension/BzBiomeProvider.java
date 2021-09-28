@@ -67,11 +67,11 @@ public class BzBiomeProvider extends BiomeProvider {
         NONSTANDARD_BIOME = this.possibleBiomes.stream()
                 .filter(biome ->  {
                     ResourceLocation rlKey = biomeRegistry.getKey(biome);
-                    return rlKey != HIVE_WALL &&
-                        rlKey != HIVE_PILLAR &&
-                        rlKey != SUGAR_WATER_FLOOR &&
-                        rlKey != POLLINATED_FIELDS &&
-                        rlKey != POLLINATED_PILLAR;
+                    return !rlKey.equals(HIVE_WALL) &&
+                        !rlKey.equals(HIVE_PILLAR) &&
+                        !rlKey.equals(SUGAR_WATER_FLOOR) &&
+                        !rlKey.equals(POLLINATED_FIELDS) &&
+                        !rlKey.equals(POLLINATED_PILLAR);
                 })
                 .collect(Collectors.toList());
 
