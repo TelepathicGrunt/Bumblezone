@@ -40,7 +40,6 @@ public class BumblezoneClient
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
     }
 
-    //Deferred because I have been told RenderTypeLookup is not thread safe
     // CLIENT-SIDED
     public static void onClientSetup(FMLClientSetupEvent event)
     {
@@ -51,7 +50,7 @@ public class BumblezoneClient
         RenderingRegistry.registerEntityRenderingHandler(BzEntities.HONEY_SLIME.get(), HoneySlimeRendering::new);
         RenderingRegistry.registerEntityRenderingHandler(BzEntities.POLLEN_PUFF_ENTITY.get(), (entityRendererManager) -> new SpriteRenderer<>(entityRendererManager, minecraftClient.getItemRenderer()));
 
-        //Replaced DeferredWorkQueue.runLater with the method added by the event - andrew
+        //enqueueWork because I have been told RenderTypeLookup is not thread safe
         event.enqueueWork(() -> {
             RenderTypeLookup.setRenderLayer(BzBlocks.STICKY_HONEY_REDSTONE.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(BzBlocks.STICKY_HONEY_RESIDUE.get(), RenderType.cutout());
