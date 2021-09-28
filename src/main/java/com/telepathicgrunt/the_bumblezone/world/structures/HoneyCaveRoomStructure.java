@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.world.structures;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedSeedRandom;
@@ -18,7 +17,6 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.jigsaw.JigsawManager;
 import net.minecraft.world.gen.feature.structure.AbstractVillagePiece;
@@ -41,8 +39,8 @@ public class HoneyCaveRoomStructure extends Structure<NoFeatureConfig> {
 
     @Override
     public boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeProvider biomeProvider, long seed, SharedSeedRandom random, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoFeatureConfig config) {
-        int x = chunkX * 16;
-        int z = chunkZ * 16;
+        int x = chunkX << 4;
+        int z = chunkZ << 4;
         BlockPos centerPos = new BlockPos(x, 0, z);
 
         SharedSeedRandom positionedRandom = new SharedSeedRandom(seed + (chunkX * (chunkZ * 17L)));
@@ -53,22 +51,38 @@ public class HoneyCaveRoomStructure extends Structure<NoFeatureConfig> {
 
     private static boolean validSpot(ChunkGenerator chunkGenerator, BlockPos centerPos) {
         BlockPos.Mutable mutable = new BlockPos.Mutable();
-        mutable.set(centerPos);
-        IBlockReader columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ());
-        BlockState aboveState = columnOfBlocks.getBlockState(mutable.move(Direction.UP, 8));
-        if(aboveState.is(Blocks.AIR)) return false;
-
-        for(Direction direction : Direction.Plane.HORIZONTAL) {
-            mutable.set(centerPos).move(direction, 24);
-            columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ());
-            BlockState state = columnOfBlocks.getBlockState(mutable.move(Direction.DOWN, 2));
-            aboveState = columnOfBlocks.getBlockState(mutable.move(Direction.UP, 12));
-            if(state.is(Blocks.AIR) || aboveState.is(Blocks.AIR)) {
-                return false;
+        int radius = 24;
+        for(int x = -radius; x <= radius; x += radius) {
+            for(int z = -radius; z <= radius; z += radius) {
+                mutable.set(centerPos).move(x, 0, z);
+                IBlockReader columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ());
+                BlockState state = columnOfBlocks.getBlockState(mutable);
+                moveMutable(mutable, Direction.UP, 15, centerPos);
+                BlockState aboveState = columnOfBlocks.getBlockState(mutable);
+                if(state.isAir() || aboveState.isAir()) {
+                    return false;
+                }
             }
         }
 
         return true;
+    }
+
+    // Takes into account how bumblezone's terrain is bottom half reflected across top half.
+    // chunkGenerator.getBaseColumn returns column of blocks as if the terrain wasn't mirrored.
+    private static void moveMutable(BlockPos.Mutable mutable, Direction direction, int amount, BlockPos originalPos) {
+        if(originalPos.getY() > 128) {
+            mutable.move(direction.getOpposite(), amount);
+            if(mutable.getY() > 128) {
+                mutable.move(direction, mutable.getY() - 128);
+            }
+        }
+        else {
+            mutable.move(direction, amount);
+            if(mutable.getY() > 128) {
+                mutable.move(direction.getOpposite(), mutable.getY() - 128);
+            }
+        }
     }
 
     @Override
@@ -90,8 +104,8 @@ public class HoneyCaveRoomStructure extends Structure<NoFeatureConfig> {
 
         @Override
         public void generatePieces(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
-            int x = chunkX * 16;
-            int z = chunkZ * 16;
+            int x = chunkX << 4;
+            int z = chunkZ << 4;
 
             SharedSeedRandom positionedRandom = new SharedSeedRandom(seed + (chunkX * (chunkZ * 17L)));
             int height = chunkGenerator.getSeaLevel() + positionedRandom.nextInt(Math.max(chunkGenerator.getGenDepth() - (chunkGenerator.getSeaLevel() + 50), 1));
