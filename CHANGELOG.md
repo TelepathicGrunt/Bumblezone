@@ -3,6 +3,8 @@
 ##### Translations:
 Special thanks to mcBegins2Snow for helping to clean up some zh_cn.json translations!
 
+Note, I need people to help add translations for the new Blocks, Fluids, and Items added in this update for The Bumblezone. Contact me if you're interest!
+
 ##### Blocks:
 Added Pile of Pollen block! 
  Gives off pollen particles when any entity walks through it and slows down the entity based on how high the pile is.
