@@ -3,7 +3,7 @@
 ##### Translations:
 Special thanks to mcBegins2Snow for helping to clean up some zh_cn.json translations!
 
-Note, I need people to help add translations for the new Blocks, Fluids, and Items added in this update for The Bumblezone. Contact me if you're interest!
+Note, I need people to help add translations for the new Blocks, Fluids, and Items added in this update for The Bumblezone. Contact me if you're interest!red
 
 ##### Blocks:
 Added Pile of Pollen block! 

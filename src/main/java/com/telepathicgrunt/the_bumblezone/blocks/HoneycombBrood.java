@@ -193,11 +193,15 @@ public class HoneycombBrood extends ProperFacingBlock {
             if (!playerEntity.isCreative()) {
                 itemstack.shrink(1); // remove current honey bottle
 
-                if (itemstack.isEmpty()) {
-                    playerEntity.setItemInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places empty bottle in hand
-                } else if (!playerEntity.inventory.add(new ItemStack(Items.GLASS_BOTTLE))) // places empty bottle in inventory
-                {
-                    playerEntity.drop(new ItemStack(Items.GLASS_BOTTLE), false); // drops empty bottle if inventory is full
+                if(itemstack.getItem().hasContainerItem(itemstack)) {
+                    ItemStack containerItem = itemstack.getContainerItem();
+                    if (itemstack.isEmpty()) {
+                        playerEntity.setItemInHand(playerHand, containerItem); // places empty item in hand
+                    }
+                    // places empty item in inventory
+                    else if (!playerEntity.inventory.add(containerItem)) {
+                        playerEntity.drop(containerItem, false); // drops empty item if inventory is full
+                    }
                 }
             }
 

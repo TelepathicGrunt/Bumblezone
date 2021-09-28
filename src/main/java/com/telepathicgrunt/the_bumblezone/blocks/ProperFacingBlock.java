@@ -6,7 +6,6 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 
 public class ProperFacingBlock extends DirectionalBlock {
-
     protected ProperFacingBlock(Properties builder) {
         super(builder);
     }
