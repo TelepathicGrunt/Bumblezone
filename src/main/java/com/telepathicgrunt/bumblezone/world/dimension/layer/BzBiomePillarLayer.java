@@ -16,7 +16,7 @@ public enum BzBiomePillarLayer implements CrossSamplingLayer {
     public int sample(LayerRandomnessSource context, int n, int e, int s, int w, int center) {
 
         if (context.nextInt(12) == 0 && n == center && e == center && s == center && w == center) {
-            return BzBiomeProvider.layersBiomeRegistry.getRawId(BzBiomeProvider.layersBiomeRegistry.get(HIVE_PILLAR));
+            return BzBiomeProvider.LAYERS_BIOME_REGISTRY.getRawId(BzBiomeProvider.LAYERS_BIOME_REGISTRY.get(HIVE_PILLAR));
         }
 
         return center;

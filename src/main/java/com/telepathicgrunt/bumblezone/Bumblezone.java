@@ -20,6 +20,8 @@ import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.bumblezone.modinit.BzRecipes;
 import com.telepathicgrunt.bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.bumblezone.tags.BzBlockTags;
+import com.telepathicgrunt.bumblezone.tags.BzEntityTags;
+import com.telepathicgrunt.bumblezone.tags.BzFluidTags;
 import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.bumblezone.world.dimension.BzDimension;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
@@ -54,6 +56,8 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
         BzBlockTags.initTags();
         BzItemTags.initTags();
+        BzFluidTags.tagInit();
+        BzEntityTags.tagInit();
 
         // Must be before items so that items like music disc can get sounds
         BzSounds.registerSounds();

@@ -7,24 +7,28 @@ import net.minecraft.world.biome.layer.type.CrossSamplingLayer;
 import net.minecraft.world.biome.layer.util.LayerRandomnessSource;
 
 
-public enum BzBiomeScalePillarLayer implements CrossSamplingLayer {
-    INSTANCE;
+public class BzBiomeScaleLayer implements CrossSamplingLayer {
+    private final Identifier biomeToExpand;
 
-    private static final Identifier HIVE_PILLAR = new Identifier(Bumblezone.MODID, "hive_pillar");
+    public BzBiomeScaleLayer(Identifier biomeToExpand) {
+        this.biomeToExpand = biomeToExpand;
+    }
 
     @Override
     public int sample(LayerRandomnessSource context, int n, int e, int s, int w, int center) {
-        int hive_pillar_id = BzBiomeProvider.layersBiomeRegistry.getRawId(BzBiomeProvider.layersBiomeRegistry.get(HIVE_PILLAR));
-        if(center != hive_pillar_id){
+        int hivePillarId = BzBiomeProvider.LAYERS_BIOME_REGISTRY.getRawId(
+                BzBiomeProvider.LAYERS_BIOME_REGISTRY.get(this.biomeToExpand));
+
+        if(center != hivePillarId){
             boolean borderingHivePillar = false;
 
-            if((n == hive_pillar_id || e == hive_pillar_id) ||
-                (w == hive_pillar_id || s == hive_pillar_id)) {
+            if((n == hivePillarId || e == hivePillarId) ||
+                    (w == hivePillarId || s == hivePillarId)) {
                 borderingHivePillar = true;
             }
 
             if (borderingHivePillar) {
-                return hive_pillar_id;
+                return hivePillarId;
             }
         }
         return center;

@@ -1,185 +1,73 @@
 package com.telepathicgrunt.bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
-import com.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
-import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
+import com.telepathicgrunt.bumblezone.Bumblezone;
+import com.telepathicgrunt.bumblezone.mixin.world.StructureAccessor;
+import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
+import com.telepathicgrunt.bumblezone.world.features.configs.NbtFeatureConfig;
+import net.minecraft.block.Block;
+import net.minecraft.data.client.model.VariantSettings;
+import net.minecraft.structure.Structure;
+import net.minecraft.structure.StructureManager;
+import net.minecraft.structure.StructurePlacementData;
+import net.minecraft.structure.processor.StructureProcessorList;
+import net.minecraft.structure.processor.StructureProcessorLists;
+import net.minecraft.util.BlockRotation;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 
-public class HoneycombHole extends Feature<DefaultFeatureConfig> {
-    
+public class HoneycombHole extends Feature<NbtFeatureConfig> {
 
-    private static final int[][] bodyLayout =
-            {
-                    {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 1, 3, 3, 3, 3, 1, 0, 0, 0},
-                    {0, 0, 1, 3, 3, 3, 3, 3, 3, 1, 0, 0},
-                    {0, 1, 3, 3, 3, 3, 3, 3, 3, 3, 1, 0},
-                    {1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1},
-                    {1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1},
-                    {0, 1, 3, 3, 3, 3, 3, 3, 3, 3, 1, 0},
-                    {0, 0, 1, 3, 3, 3, 3, 3, 3, 1, 0, 0},
-                    {0, 0, 0, 1, 3, 3, 3, 3, 1, 0, 0, 0},
-                    {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0}
-            };
-
-    private static final int[][] largeHoneyLayout =
-            {
-                    {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 1, 1, 2, 2, 1, 1, 0, 0, 0},
-                    {0, 0, 1, 1, 2, 2, 2, 2, 1, 1, 0, 0},
-                    {0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0},
-                    {1, 1, 2, 2, 3, 3, 3, 3, 2, 2, 1, 1},
-                    {1, 1, 2, 2, 3, 3, 3, 3, 2, 2, 1, 1},
-                    {0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0},
-                    {0, 0, 1, 1, 2, 2, 2, 2, 1, 1, 0, 0},
-                    {0, 0, 0, 1, 1, 2, 2, 1, 1, 0, 0, 0},
-                    {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0}
-            };
-
-    private static final int[][] smallHoneyLayout =
-            {
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0},
-                    {0, 0, 0, 1, 1, 2, 2, 1, 1, 0, 0, 0},
-                    {0, 0, 1, 1, 2, 5, 5, 2, 1, 1, 0, 0},
-                    {0, 0, 1, 1, 2, 5, 5, 2, 1, 1, 0, 0},
-                    {0, 0, 0, 1, 1, 2, 2, 1, 1, 0, 0, 0},
-                    {0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0},
-                    {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-            };
-
-    private static final int[][] endCapLayout =
-            {
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-            };
-    
-    public HoneycombHole(Codec<DefaultFeatureConfig> configFactory) {
+    public HoneycombHole(Codec<NbtFeatureConfig> configFactory) {
         super(configFactory);
     }
 
     @Override
-    public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
-        ServerWorldAccess world = context.getWorld();
-        ChunkGenerator generator = context.getGenerator();
-        Random random = context.getRandom();
-        BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable().set(context.getOrigin());
+    public boolean generate(FeatureContext<NbtFeatureConfig> context) {
+        Identifier nbtRL = GeneralUtils.getRandomEntry(context.getConfig().nbtResourcelocationsAndWeights, context.getRandom());
 
-        generateSlice(world, generator, mutableBlockPos, endCapLayout, random, true);
-        generateSlice(world, generator, mutableBlockPos.move(Direction.EAST), smallHoneyLayout, random, true);
-        generateSlice(world, generator, mutableBlockPos.move(Direction.EAST), largeHoneyLayout, random, true);
-        generateSlice(world, generator, mutableBlockPos.move(Direction.EAST), bodyLayout, random, true);
-        generateSlice(world, generator, mutableBlockPos.move(Direction.EAST), bodyLayout, random, true);
-        generateSlice(world, generator, mutableBlockPos.move(Direction.EAST), bodyLayout, random, false);
-        generateSlice(world, generator, mutableBlockPos.move(Direction.EAST), bodyLayout, random, false);
-        generateSlice(world, generator, mutableBlockPos.move(Direction.EAST), bodyLayout, random, false);
-        generateSlice(world, generator, mutableBlockPos.move(Direction.EAST), largeHoneyLayout, random, false);
-        generateSlice(world, generator, mutableBlockPos.move(Direction.EAST), smallHoneyLayout, random, false);
-        generateSlice(world, generator, mutableBlockPos.move(Direction.EAST), endCapLayout, random, false);
+        StructureManager structureManager = context.getWorld().toServerWorld().getStructureManager();
+        Structure template = structureManager.getStructure(nbtRL).orElseThrow(() -> {
+            String errorMsg = "Identifier to the specified nbt file was not found! : " + nbtRL;
+            Bumblezone.LOGGER.error(errorMsg);
+            return new RuntimeException(errorMsg);
+        });
 
+        // For proper offsetting the feature.
+        BlockPos halfLengths = new BlockPos(
+                template.getSize().getX() / 2,
+                template.getSize().getY() / 2,
+                template.getSize().getZ() / 2);
+
+        BlockPos.Mutable mutable = new BlockPos.Mutable().set(context.getOrigin());
+
+        // offset the feature's position
+        BlockPos position = context.getOrigin().up(context.getConfig().structureYOffset);
+
+        StructurePlacementData structurePlacementData = (new StructurePlacementData()).setRotation(BlockRotation.NONE).setPosition(halfLengths).setIgnoreEntities(false);
+        Optional<StructureProcessorList> processor = context.getWorld().toServerWorld().getServer().getRegistryManager().get(Registry.STRUCTURE_PROCESSOR_LIST_KEY).getOrEmpty(context.getConfig().processor);
+        processor.orElse(StructureProcessorLists.EMPTY).getList().forEach(structurePlacementData::addProcessor); // add all processors
+        mutable.set(position).move(-halfLengths.getX(), 0, -halfLengths.getZ());
+        template.place(context.getWorld(), mutable, mutable, structurePlacementData, context.getRandom(), Block.NO_REDRAW);
+        // Post-processors
+        // For all processors that are sensitive to neighboring blocks such as vines.
+        // Post processors will place the blocks themselves so we will not do anything with the return of Structure.process
+        structurePlacementData.clearProcessors();
+        Optional<StructureProcessorList> postProcessor = context.getWorld().toServerWorld().getServer().getRegistryManager().get(Registry.STRUCTURE_PROCESSOR_LIST_KEY).getOrEmpty(context.getConfig().postProcessor);
+        postProcessor.orElse(StructureProcessorLists.EMPTY).getList().forEach(structurePlacementData::addProcessor); // add all post processors
+        List<Structure.StructureBlockInfo> list = structurePlacementData.getRandomBlockInfos(((StructureAccessor)template).thebumblezone_getBlocks(), mutable).getAll();
+        Structure.process(context.getWorld(), mutable, mutable, structurePlacementData, list);
 
         return true;
-    }
-
-    private void generateSlice(ServerWorldAccess world, ChunkGenerator generator, BlockPos.Mutable centerPos, int[][] slice, Random random, boolean westEnd) {
-        //move to the position where the corner of the slice will begin at
-        BlockPos.Mutable currentPosition = new BlockPos.Mutable().set(centerPos.add(-5, slice.length / 2, -slice[0].length / 2));
-        BlockState blockState;
-
-        //go through each row and column while replacing each solid block
-        for (int[] ints : slice) {
-            for (int z = 0; z < slice[0].length; z++) {
-                //finds solid block
-                blockState = world.getBlockState(currentPosition);
-                if(!blockState.getFluidState().isEmpty() && currentPosition.getY() >= generator.getSeaLevel()){
-                    world.setBlockState(currentPosition, Blocks.CAVE_AIR.getDefaultState(), 2);
-                }
-                else if (world.getBlockState(currentPosition).getMaterial() != Material.AIR && blockState.getFluidState().isEmpty()) {
-                    //replace solid block with the slice's blocks
-                    int sliceBlock = ints[z];
-                    if (sliceBlock == 1) {
-                        //extra check so the ends of the hole exposed will not have this block
-                        if (world.getBlockState(currentPosition.west()).isOpaque() && world.getBlockState(currentPosition.east()).isOpaque()) {
-                            //reduced FILLED_POROUS_HONEYCOMB spawn rate
-                            if (random.nextInt(3) == 0) {
-                                world.setBlockState(currentPosition, Blocks.HONEYCOMB_BLOCK.getDefaultState(), 2);
-                            }
-                            else {
-                                world.setBlockState(currentPosition, BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), 2);
-                            }
-                        }
-                    }
-                    else if (sliceBlock == 2) {
-                        //reduced HONEY_BLOCK spawn rate
-                        if (random.nextInt(3) == 0) {
-                            world.setBlockState(currentPosition, BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), 2);
-                        }
-                        else {
-                            world.setBlockState(currentPosition, Blocks.HONEY_BLOCK.getDefaultState(), 2);
-                        }
-                    }
-                    else if (sliceBlock == 3) {
-                        if (currentPosition.getY() >= generator.getSeaLevel()) {
-                            world.setBlockState(currentPosition, Blocks.CAVE_AIR.getDefaultState(), 2);
-                        }
-                        else {
-                            world.setBlockState(currentPosition, BzBlocks.SUGAR_WATER_BLOCK.getDefaultState(), 2);
-                        }
-                    }
-                    else if (sliceBlock == 5) {
-                        //reduced HONEY_BLOCK spawn rate
-                        int chance = random.nextInt(10);
-                        if (chance <= 3) {
-                            Direction facing;
-                            if (westEnd)
-                                facing = Direction.WEST;
-                            else
-                                facing = Direction.EAST;
-
-                            if (random.nextFloat() < 0.8f)
-                                world.setBlockState(currentPosition, BzBlocks.HONEYCOMB_BROOD.getDefaultState().with(HoneycombBrood.STAGE, random.nextInt(3)).with(HoneycombBrood.FACING, facing), 2);
-                            else
-                                world.setBlockState(currentPosition, BzBlocks.EMPTY_HONEYCOMB_BROOD.getDefaultState().with(HoneycombBrood.FACING, facing), 2);
-                        }
-                        else if (chance <= 6) {
-                            world.setBlockState(currentPosition, BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), 2);
-                        }
-                        else {
-                            world.setBlockState(currentPosition, Blocks.HONEY_BLOCK.getDefaultState(), 2);
-                        }
-                    }
-                }
-
-                //move down the row
-                currentPosition.move(Direction.SOUTH);
-            }
-
-            //move back to start of row and down 1 column
-            currentPosition.move(0, -1, -slice[0].length);
-        }
     }
 }

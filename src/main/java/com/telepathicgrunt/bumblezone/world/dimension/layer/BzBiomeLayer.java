@@ -30,10 +30,10 @@ public enum BzBiomeLayer implements InitLayer {
 //		Bumblezone.LOGGER.log(Level.INFO, "Max: " + max +", Min: "+min + ", perlin: "+perlinNoise);
 
         if (Math.abs(perlinNoise) % 0.1D < 0.07D) {
-            return BzBiomeProvider.layersBiomeRegistry.getRawId(BzBiomeProvider.layersBiomeRegistry.get(HIVE_WALL));
+            return BzBiomeProvider.LAYERS_BIOME_REGISTRY.getRawId(BzBiomeProvider.LAYERS_BIOME_REGISTRY.get(HIVE_WALL));
         }
         else {
-            return BzBiomeProvider.layersBiomeRegistry.getRawId(BzBiomeProvider.layersBiomeRegistry.get(SUGAR_WATER));
+            return BzBiomeProvider.LAYERS_BIOME_REGISTRY.getRawId(BzBiomeProvider.LAYERS_BIOME_REGISTRY.get(SUGAR_WATER));
         }
     }
 

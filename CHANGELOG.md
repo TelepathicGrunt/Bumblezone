@@ -62,6 +62,8 @@ Added Pollinated Stream structure to Pollinated Fields and Pollinated Pillar bio
 
 Added Honey Cave Room structure to Pollinated Pillar biomes as a big cool room to find naturally spawned Honey Fluid!
 
+Upgraded the biome layout code so now any datapack biome that starts with "the_bumblezone" will automatically spawn in the Bumblezone dimension.
+
 
 ### **(V.3.0.9 Changes) (1.17.1 Minecraft)**
 

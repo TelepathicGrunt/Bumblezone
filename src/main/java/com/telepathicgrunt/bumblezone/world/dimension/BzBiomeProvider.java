@@ -5,8 +5,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.mixin.world.BiomeLayerSamplerAccessor;
 import com.telepathicgrunt.bumblezone.world.dimension.layer.BzBiomeLayer;
+import com.telepathicgrunt.bumblezone.world.dimension.layer.BzBiomeMergeLayer;
+import com.telepathicgrunt.bumblezone.world.dimension.layer.BzBiomeNonstandardLayer;
 import com.telepathicgrunt.bumblezone.world.dimension.layer.BzBiomePillarLayer;
-import com.telepathicgrunt.bumblezone.world.dimension.layer.BzBiomeScalePillarLayer;
+import com.telepathicgrunt.bumblezone.world.dimension.layer.BzBiomePollinatedFieldsLayer;
+import com.telepathicgrunt.bumblezone.world.dimension.layer.BzBiomePollinatedPillarLayer;
+import com.telepathicgrunt.bumblezone.world.dimension.layer.BzBiomeScaleLayer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.SharedConstants;
@@ -27,6 +31,8 @@ import net.minecraft.world.biome.layer.util.LayerSampler;
 import net.minecraft.world.biome.source.BiomeLayerSampler;
 import net.minecraft.world.biome.source.BiomeSource;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.function.LongFunction;
 import java.util.stream.Collectors;
@@ -41,9 +47,17 @@ public class BzBiomeProvider extends BiomeSource {
                     RegistryLookupCodec.of(Registry.BIOME_KEY).forGetter((biomeSource) -> biomeSource.BIOME_REGISTRY))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
 
+
+    public static Identifier HIVE_WALL = new Identifier(Bumblezone.MODID, "hive_wall");
+    public static Identifier HIVE_PILLAR = new Identifier(Bumblezone.MODID, "hive_pillar");
+    public static Identifier SUGAR_WATER_FLOOR = new Identifier(Bumblezone.MODID, "sugar_water_floor");
+    public static Identifier POLLINATED_FIELDS = new Identifier(Bumblezone.MODID, "pollinated_fields");
+    public static Identifier POLLINATED_PILLAR = new Identifier(Bumblezone.MODID, "pollinated_pillar");
+
     private final BiomeLayerSampler BIOME_SAMPLER;
     private final Registry<Biome> BIOME_REGISTRY;
-    public static Registry<Biome> layersBiomeRegistry;
+    public static Registry<Biome> LAYERS_BIOME_REGISTRY;
+    public static List<Biome> NONSTANDARD_BIOME = new ArrayList<>();
 
     public BzBiomeProvider(Registry<Biome> biomeRegistry) {
         // Need world seed passed here
@@ -56,9 +70,20 @@ public class BzBiomeProvider extends BiomeSource {
                 .map(Map.Entry::getValue)
                 .collect(Collectors.toList()));
 
+        NONSTANDARD_BIOME = this.biomes.stream()
+                .filter(biome ->  {
+                    Identifier rlKey = biomeRegistry.getId(biome);
+                    return !rlKey.equals(HIVE_WALL) &&
+                            !rlKey.equals(HIVE_PILLAR) &&
+                            !rlKey.equals(SUGAR_WATER_FLOOR) &&
+                            !rlKey.equals(POLLINATED_FIELDS) &&
+                            !rlKey.equals(POLLINATED_PILLAR);
+                })
+                .collect(Collectors.toList());
+
         BzBiomeLayer.setSeed(seed);
         this.BIOME_REGISTRY = biomeRegistry;
-        BzBiomeProvider.layersBiomeRegistry = biomeRegistry;
+        BzBiomeProvider.LAYERS_BIOME_REGISTRY = biomeRegistry;
         this.BIOME_SAMPLER = buildWorldProcedure(seed);
     }
 
@@ -85,9 +110,22 @@ public class BzBiomeProvider extends BiomeSource {
     public static <T extends LayerSampler, C extends LayerSampleContext<T>> LayerFactory<T> build(LongFunction<C> contextFactory) {
         LayerFactory<T> layer = BzBiomeLayer.INSTANCE.create(contextFactory.apply(200L));
         layer = BzBiomePillarLayer.INSTANCE.create(contextFactory.apply(1008L), layer);
-        layer = BzBiomeScalePillarLayer.INSTANCE.create(contextFactory.apply(1055L), layer);
+        layer = new BzBiomeScaleLayer(HIVE_PILLAR).create(contextFactory.apply(1055L), layer);
         layer = ScaleLayer.FUZZY.create(contextFactory.apply(2003L), layer);
         layer = ScaleLayer.FUZZY.create(contextFactory.apply(2523L), layer);
+
+        LayerFactory<T> layerOverlay = BzBiomeNonstandardLayer.INSTANCE.create(contextFactory.apply(204L));
+        layerOverlay = ScaleLayer.NORMAL.create(contextFactory.apply(2423L), layerOverlay);
+        layerOverlay = BzBiomePollinatedPillarLayer.INSTANCE.create(contextFactory.apply(3008L), layerOverlay);
+        layerOverlay = new BzBiomeScaleLayer(POLLINATED_PILLAR).create(contextFactory.apply(4455L), layerOverlay);
+        layerOverlay = ScaleLayer.NORMAL.create(contextFactory.apply(2503L), layerOverlay);
+        layerOverlay = ScaleLayer.NORMAL.create(contextFactory.apply(2603L), layerOverlay);
+        layerOverlay = BzBiomePollinatedFieldsLayer.INSTANCE.create(contextFactory.apply(3578L), layerOverlay);
+        layerOverlay = new BzBiomeScaleLayer(POLLINATED_FIELDS).create(contextFactory.apply(4055L), layerOverlay);
+        layerOverlay = ScaleLayer.FUZZY.create(contextFactory.apply(2853L), layerOverlay);
+        layerOverlay = ScaleLayer.FUZZY.create(contextFactory.apply(3583L), layerOverlay);
+        layer = BzBiomeMergeLayer.INSTANCE.create(contextFactory.apply(5583L), layerOverlay, layer);
+
         return layer;
     }
 

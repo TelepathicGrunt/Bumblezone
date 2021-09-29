@@ -14,25 +14,21 @@ public class NbtFeatureConfig implements FeatureConfig {
     public static final Codec<NbtFeatureConfig> CODEC = RecordCodecBuilder.create((configInstance) -> configInstance.group(
             Identifier.CODEC.fieldOf("processors").forGetter(nbtFeatureConfig -> nbtFeatureConfig.processor),
             Identifier.CODEC.fieldOf("post_processors").orElse(new Identifier("minecraft:empty")).forGetter(nbtFeatureConfig -> nbtFeatureConfig.postProcessor),
-            Codec.mapPair(Registry.ENTITY_TYPE.fieldOf("resourcelocation"), Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight")).codec().listOf().fieldOf("spawner_mob_entries").forGetter(nbtFeatureConfig -> nbtFeatureConfig.spawnerResourcelocationsAndWeights),
             Codec.mapPair(Identifier.CODEC.fieldOf("resourcelocation"), Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight")).codec().listOf().fieldOf("dungeon_nbt_entries").forGetter(nbtFeatureConfig -> nbtFeatureConfig.nbtResourcelocationsAndWeights),
             Codec.INT.fieldOf("structure_y_offset").orElse(0).forGetter(nbtFeatureConfig -> nbtFeatureConfig.structureYOffset)
     ).apply(configInstance, NbtFeatureConfig::new));
 
     public final List<Pair<Identifier, Integer>> nbtResourcelocationsAndWeights;
-    public final List<Pair<EntityType<?>, Integer>> spawnerResourcelocationsAndWeights;
     public final Identifier processor;
     public final Identifier postProcessor;
     public final int structureYOffset;
 
     public NbtFeatureConfig(Identifier processor,
                             Identifier postProcessor,
-                            List<Pair<EntityType<?>, Integer>> spawnerResourcelocationsAndWeights,
                             List<Pair<Identifier, Integer>> nbtIdentifiersAndWeights,
                             int structureYOffset)
     {
         this.nbtResourcelocationsAndWeights = nbtIdentifiersAndWeights;
-        this.spawnerResourcelocationsAndWeights = spawnerResourcelocationsAndWeights;
         this.processor = processor;
         this.postProcessor = postProcessor;
         this.structureYOffset = structureYOffset;
