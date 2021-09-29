@@ -95,6 +95,6 @@ public class PollenPilingProcessor extends StructureProcessor {
 
     @Override
     protected IStructureProcessorType<?> getType() {
-        return BzProcessors.BEE_DUNGEON_PROCESSOR;
+        return BzProcessors.POLLEN_PILING_PROCESSOR;
     }
 }
