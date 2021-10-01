@@ -29,7 +29,8 @@ public class PlayerInteractsEntityMixin {
                 cir.setReturnValue(ActionResultType.SUCCESS);
         }
         else if (entity instanceof SlimeEntity) {
-            CreatingHoneySlime.createHoneySlime(entity.level, ((PlayerEntity)(Object)this), hand, (SlimeEntity)entity);
+            if(CreatingHoneySlime.createHoneySlime(entity.level, ((PlayerEntity)(Object)this), hand, (SlimeEntity)entity) == ActionResultType.SUCCESS)
+                cir.setReturnValue(ActionResultType.SUCCESS);
         }
     }
 }
