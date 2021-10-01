@@ -95,7 +95,6 @@ public class Bumblezone{
         forgeBus.addListener(PotionOfBeesBeeSplashPotionProjectile::ProjectileImpactEvent);
         forgeBus.addGenericListener(Entity.class, CapabilityEventHandler::onAttachCapabilitiesToEntities);
         forgeBus.addListener(EntityTeleportationHookup::entityTick);
-        forgeBus.addListener(PileOfPollen::pandaSneezing);
         forgeBus.addListener(BeeAggression::playerTick);
 
         //Registration

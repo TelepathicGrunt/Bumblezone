@@ -37,11 +37,9 @@ public class PollenPuff extends SpriteTexturedParticle {
         if (!this.removed) {
             this.yd -= this.gravity;
             this.move(this.xd, this.yd, this.zd);
-            if (!this.removed) {
-                this.xd *= 0.98F;
-                this.yd *= 0.98F;
-                this.zd *= 0.98F;
-            }
+            this.xd *= 0.98F;
+            this.yd *= 0.98F;
+            this.zd *= 0.98F;
         }
     }
 

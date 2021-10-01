@@ -78,7 +78,7 @@ public class PileOfPollen extends FallingBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(IBlockReader p_185473_1_, BlockPos p_185473_2_, BlockState p_185473_3_) {
+    public ItemStack getCloneItemStack(IBlockReader world, BlockPos blockPos, BlockState blockState) {
         return new ItemStack(BzItems.POLLEN_PUFF.get());
     }
 
@@ -328,6 +328,10 @@ public class PileOfPollen extends FallingBlock {
                 }
             }
         }
+
+        if(entity instanceof PandaEntity) {
+            pandaSneezing((PandaEntity)entity);
+        }
     }
 
     public static void stackPollen(BlockState blockState, World world, BlockPos blockPos, BlockState pollonToStack) {
@@ -363,11 +367,10 @@ public class PileOfPollen extends FallingBlock {
         }
     }
 
-    public static void pandaSneezing(LivingEvent.LivingUpdateEvent event) {
-        LivingEntity livingEntity = event.getEntityLiving();
-        if(!livingEntity.level.isClientSide() && livingEntity instanceof PandaEntity) {
-            if(livingEntity.level.random.nextFloat() < 0.005f && livingEntity.level.getBlockState(livingEntity.blockPosition()).is(BzBlocks.PILE_OF_POLLEN.get())) {
-                ((PandaEntity)livingEntity).sneeze(true);
+    public static void pandaSneezing(PandaEntity pandaEntity) {
+        if(!pandaEntity.level.isClientSide()) {
+            if(pandaEntity.level.random.nextFloat() < 0.005f && pandaEntity.level.getBlockState(pandaEntity.blockPosition()).is(BzBlocks.PILE_OF_POLLEN.get())) {
+                pandaEntity.sneeze(true);
             }
         }
     }
