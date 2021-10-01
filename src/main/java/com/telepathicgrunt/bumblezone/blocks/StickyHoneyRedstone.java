@@ -47,7 +47,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     }
 
     public StickyHoneyRedstone() {
-        super(FabricBlockSettings.of(BzBlocks.RESIDUE, MapColor.TERRACOTTA_ORANGE).luminance(blockState -> blockState.get(POWERED) ? 1 : 0).noCollision().strength(6.0f, 0.0f).nonOpaque());
+        super(FabricBlockSettings.of(BzBlocks.ORANGE_NOT_SOLID, MapColor.TERRACOTTA_ORANGE).luminance(blockState -> blockState.get(POWERED) ? 1 : 0).noCollision().strength(6.0f, 0.0f).nonOpaque());
         this.setDefaultState(this.stateManager.getDefaultState()
                 .with(UP, false)
                 .with(NORTH, false)

@@ -39,10 +39,10 @@ public class FluidClientOverlay {
             float modifiedPitch = clientPlayerEntity.getPitch() / 64.0F;
             Matrix4f matrix4f = matrixStack.peek().getModel();
             bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
-            bufferBuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).color(brightnessAtEyes, brightnessAtEyes, brightnessAtEyes, textureAlpha).texture(4.0F + modifiedYaw, 4.0F + modifiedPitch).next();
-            bufferBuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).color(brightnessAtEyes, brightnessAtEyes, brightnessAtEyes, textureAlpha).texture(0.0F + modifiedYaw, 4.0F + modifiedPitch).next();
-            bufferBuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).color(brightnessAtEyes, brightnessAtEyes, brightnessAtEyes, textureAlpha).texture(0.0F + modifiedYaw, 0.0F + modifiedPitch).next();
-            bufferBuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).color(brightnessAtEyes, brightnessAtEyes, brightnessAtEyes, textureAlpha).texture(4.0F + modifiedYaw, 0.0F + modifiedPitch).next();
+            bufferBuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).texture(4.0F + modifiedYaw, 4.0F + modifiedPitch).next();
+            bufferBuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).texture(0.0F + modifiedYaw, 4.0F + modifiedPitch).next();
+            bufferBuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).texture(0.0F + modifiedYaw, 0.0F + modifiedPitch).next();
+            bufferBuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).texture(4.0F + modifiedYaw, 0.0F + modifiedPitch).next();
             bufferBuilder.end();
             BufferRenderer.draw(bufferBuilder);
             RenderSystem.disableBlend();

@@ -2,6 +2,7 @@ package com.telepathicgrunt.bumblezone.world.processors;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.telepathicgrunt.bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.bumblezone.utils.OpenSimplex2F;
@@ -84,7 +85,7 @@ public class PollenPilingProcessor extends StructureProcessor {
             BlockPos abovePos = worldPos.up();
             Chunk chunk = worldView.getChunk(abovePos);
             BlockState aboveState = chunk.getBlockState(abovePos);
-            if(aboveState.isOf(BzBlocks.PILE_OF_POLLEN.get())) {
+            if(aboveState.isOf(BzBlocks.PILE_OF_POLLEN)) {
                 chunk.getBlockTickScheduler().schedule(abovePos, aboveState.getBlock(), 0);
             }
         }

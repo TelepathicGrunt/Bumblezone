@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
@@ -44,7 +45,7 @@ public class HoneycombHoleProcessor extends StructureProcessor {
         if(checkedState.isAir() || !checkedState.getFluidState().isEmpty()) {
             if (placingState.isAir() || placingState.isOf(BzBlocks.PILE_OF_POLLEN)) {
                 if(!checkedState.getFluidState().isEmpty() || structureBlockInfoWorld.pos.getY() <= floodLevel){
-                    chunk.setBlockState(structureBlockInfoWorld.pos, BzFluids.SUGAR_WATER_BLOCK.getDefaultState(), false);
+                    //chunk.setBlockState(structureBlockInfoWorld.pos, BzFluids.SUGAR_WATER_BLOCK.getDefaultState(), false);
                     return null;
                 }
             }

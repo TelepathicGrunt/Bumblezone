@@ -21,7 +21,7 @@ public class PollenedBeeSpawnMixin {
 
             //20% chance of being full of pollen
             if (world.random.nextFloat() < 0.2f) {
-                ((BeeEntityInvoker) beeEntity).thebumblezone_callSetBeeFlag(8, true);
+                ((BeeEntityInvoker) beeEntity).thebumblezone_callSetHasNectar(true);
             }
         }
     }

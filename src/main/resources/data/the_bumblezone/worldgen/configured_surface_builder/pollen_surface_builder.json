@@ -1,0 +1,17 @@
+{
+  "config": {
+    "top_material": {
+      "Name": "the_bumblezone:pile_of_pollen",
+      "Properties": {
+        "layers": "1"
+      }
+    },
+    "under_material": {
+      "Name": "the_bumblezone:filled_porous_honeycomb_block"
+    },
+    "underwater_material": {
+      "Name": "minecraft:honeycomb_block"
+    }
+  },
+  "type": "the_bumblezone:pollen_surface_builder"
+}

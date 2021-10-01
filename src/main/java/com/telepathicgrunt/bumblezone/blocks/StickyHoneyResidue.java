@@ -54,7 +54,7 @@ public class StickyHoneyResidue extends VineBlock {
             ConnectingBlock.FACING_PROPERTIES.entrySet().stream().collect(Util.toMap());
 
     public StickyHoneyResidue() {
-        super(FabricBlockSettings.of(BzBlocks.RESIDUE, MapColor.TERRACOTTA_ORANGE).noCollision().strength(6.0f, 0.0f).nonOpaque());
+        super(FabricBlockSettings.of(BzBlocks.ORANGE_NOT_SOLID, MapColor.TERRACOTTA_ORANGE).noCollision().strength(6.0f, 0.0f).nonOpaque());
         this.setDefaultState(this.stateManager.getDefaultState()
                 .with(UP, false)
                 .with(NORTH, false)

@@ -1,3 +1,4 @@
 accessWidener v1 named
 accessible class net/minecraft/recipe/CookingRecipeSerializer$RecipeFactory
 accessible class net/minecraft/entity/passive/BeeEntity$BeeWanderAroundGoal
+accessible method net/minecraft/client/particle/WaterSuspendParticle <init> (Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/client/particle/SpriteProvider;DDD)V

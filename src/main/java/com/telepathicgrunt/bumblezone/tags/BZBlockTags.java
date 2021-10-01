@@ -3,6 +3,7 @@ package com.telepathicgrunt.bumblezone.tags;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
@@ -14,4 +15,6 @@ public class BzBlockTags {
     public static final Tag<Block> BLACKLISTED_TELEPORTATION_HIVES = TagRegistry.block(new Identifier(Bumblezone.MODID, "blacklisted_teleportable_hive_blocks"));
     public static final Tag<Block> HONEYCOMBS_THAT_FEATURES_CAN_CARVE = TagRegistry.block(new Identifier(Bumblezone.MODID, "honeycombs_that_features_can_carve"));
     public static final Tag<Block> WRATH_ACTIVATING_BLOCKS_WHEN_MINED = TagRegistry.block(new Identifier(Bumblezone.MODID, "wrath_activating_blocks_when_mined"));
+    public static final Tag<Block> FLOWERS_ALLOWED_BY_POLLEN_PUFF =  TagRegistry.block(new Identifier(Bumblezone.MODID+":flowers_allowed_by_pollen_puff"));
+    public static final Tag<Block> FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF =  TagRegistry.block(new Identifier(Bumblezone.MODID+":flowers_blacklisted_from_pollen_puff"));
 }

@@ -1,6 +1,7 @@
 package com.telepathicgrunt.bumblezone.world.surfacebuilders;
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.utils.OpenSimplex2F;
 import net.minecraft.block.BlockState;

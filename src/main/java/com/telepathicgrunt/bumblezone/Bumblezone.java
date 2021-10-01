@@ -19,6 +19,7 @@ import com.telepathicgrunt.bumblezone.modinit.BzPlacements;
 import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.bumblezone.modinit.BzRecipes;
 import com.telepathicgrunt.bumblezone.modinit.BzSounds;
+import com.telepathicgrunt.bumblezone.modinit.BzStructures;
 import com.telepathicgrunt.bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.bumblezone.tags.BzEntityTags;
 import com.telepathicgrunt.bumblezone.tags.BzFluidTags;
@@ -74,6 +75,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzPlacements.registerPlacements();
         BzFeatures.registerFeatures();
         BzConfiguredFeatures.registerConfiguredFeatures();
+        BzStructures.registerStructures();
         BzDimension.setupDimension();
         WanderingTrades.addWanderingTrades();
 
