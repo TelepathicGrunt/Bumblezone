@@ -4,6 +4,10 @@
     {
       "id": "minecraft:honey_block",
       "required": true
+    },
+    {
+      "id": "the_bumblezone:honey_bucket",
+      "required": true
     }
   ]
 }

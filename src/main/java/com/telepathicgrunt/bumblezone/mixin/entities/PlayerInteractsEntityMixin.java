@@ -3,6 +3,8 @@ package com.telepathicgrunt.bumblezone.mixin.entities;
 import com.telepathicgrunt.bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.bumblezone.entities.CreatingHoneySlime;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.mob.SlimeEntity;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -18,7 +20,15 @@ public class PlayerInteractsEntityMixin {
     @Inject(method = "interact",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isEmpty()Z", ordinal = 0))
     private void thebumblezone_onBeeFeeding(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        BeeInteractivity.beeFeeding(entity.world, ((PlayerEntity)(Object)this), hand, entity);
-        CreatingHoneySlime.createHoneySlime(entity.world, ((PlayerEntity)(Object)this), hand, entity);
+        if(entity instanceof BeeEntity beeEntity) {
+            if(BeeInteractivity.beeFeeding(entity.world, ((PlayerEntity)(Object)this), hand, beeEntity) == ActionResult.SUCCESS)
+                cir.setReturnValue(ActionResult.SUCCESS);
+            else if(BeeInteractivity.beeUnpollinating(entity.world, ((PlayerEntity)(Object)this), hand, beeEntity) == ActionResult.SUCCESS)
+                cir.setReturnValue(ActionResult.SUCCESS);
+        }
+        else if (entity instanceof SlimeEntity slimeEntity) {
+            if(CreatingHoneySlime.createHoneySlime(entity.world, ((PlayerEntity)(Object)this), hand, slimeEntity) == ActionResult.SUCCESS)
+                cir.setReturnValue(ActionResult.SUCCESS);
+        }
     }
 }
