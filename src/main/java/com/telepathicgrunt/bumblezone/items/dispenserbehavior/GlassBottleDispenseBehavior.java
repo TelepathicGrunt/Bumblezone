@@ -1,8 +1,10 @@
 package com.telepathicgrunt.bumblezone.items.dispenserbehavior;
 
+import com.telepathicgrunt.bumblezone.blocks.HoneyFluidBlock;
 import com.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.bumblezone.mixin.blocks.ItemDispenserBehaviorInvoker;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
@@ -76,13 +78,22 @@ public class GlassBottleDispenseBehavior extends ItemDispenserBehavior {
                 stack = new ItemStack(Items.HONEY_BOTTLE);
         }
         //pick up sugar water
-        else if (blockstate.getBlock() == BzBlocks.SUGAR_WATER_BLOCK ||
+        else if (blockstate.getBlock() == BzFluids.SUGAR_WATER_BLOCK ||
                 (blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL && blockstate.get(Properties.WATERLOGGED))) {
             stack.decrement(1);
             if(!stack.isEmpty())
                 addHoneyBottleToDispenser(source, BzItems.SUGAR_WATER_BOTTLE);
             else
                 stack = new ItemStack(BzItems.SUGAR_WATER_BOTTLE);
+        }
+        //pick up honey fluid
+        else if (blockstate.getBlock() == BzFluids.HONEY_FLUID_BLOCK && blockstate.getFluidState().isStill()) {
+            world.setBlockState(position, BzFluids.HONEY_FLUID_FLOWING.getDefaultState().getBlockState().with(HoneyFluidBlock.LEVEL, 5));
+            stack.decrement(1);
+            if(!stack.isEmpty())
+                addHoneyBottleToDispenser(source, Items.HONEY_BOTTLE);
+            else
+                stack = new ItemStack(Items.HONEY_BOTTLE);
         }
         else {
             // If it instanceof DefaultDispenseItemBehavior, call dispenseStack directly to avoid

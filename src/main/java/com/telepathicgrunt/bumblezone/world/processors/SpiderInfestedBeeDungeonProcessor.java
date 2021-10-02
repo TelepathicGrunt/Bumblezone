@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.minecraft.block.BlockState;
@@ -141,7 +142,7 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
         }
 
         // sugar water
-        else if(blockState.isOf(BzBlocks.SUGAR_WATER_BLOCK)){
+        else if(blockState.isOf(BzFluids.SUGAR_WATER_BLOCK)){
             blockState = Blocks.CAVE_AIR.getDefaultState();
         }
 

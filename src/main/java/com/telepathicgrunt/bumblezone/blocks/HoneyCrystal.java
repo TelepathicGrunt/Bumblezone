@@ -2,7 +2,7 @@ package com.telepathicgrunt.bumblezone.blocks;
 
 import com.google.common.collect.Maps;
 import com.telepathicgrunt.bumblezone.mixin.items.BucketItemAccessor;
-import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -83,7 +83,7 @@ public class HoneyCrystal extends ProperFacingBlock {
     @SuppressWarnings("deprecation")
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? BzBlocks.SUGAR_WATER_FLUID.getStill(false) : super.getFluidState(state);
+        return state.get(WATERLOGGED) ? BzFluids.SUGAR_WATER_FLUID.getStill(false) : super.getFluidState(state);
     }
 
     /**
@@ -118,7 +118,7 @@ public class HoneyCrystal extends ProperFacingBlock {
             return Blocks.AIR.getDefaultState();
         } else {
             if (blockstate.get(WATERLOGGED)) {
-                world.getFluidTickScheduler().schedule(currentPos, BzBlocks.SUGAR_WATER_FLUID, BzBlocks.SUGAR_WATER_FLUID.getTickRate(world));
+                world.getFluidTickScheduler().schedule(currentPos, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickRate(world));
             }
 
             return super.getStateForNeighborUpdate(blockstate, facing, facingState, world, currentPos, facingPos);
@@ -172,7 +172,7 @@ public class HoneyCrystal extends ProperFacingBlock {
 
             //make block waterlogged
             world.setBlockState(position, blockstate.with(WATERLOGGED, true));
-            world.getFluidTickScheduler().schedule(position, BzBlocks.SUGAR_WATER_FLUID, BzBlocks.SUGAR_WATER_FLUID.getTickRate(world));
+            world.getFluidTickScheduler().schedule(position, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickRate(world));
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
                     SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 

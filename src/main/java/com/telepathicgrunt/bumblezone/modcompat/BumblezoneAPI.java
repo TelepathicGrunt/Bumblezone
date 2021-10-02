@@ -3,7 +3,6 @@ package com.telepathicgrunt.bumblezone.modcompat;
 import com.telepathicgrunt.bumblezone.entities.EntityTeleportationHookup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Direction;
 

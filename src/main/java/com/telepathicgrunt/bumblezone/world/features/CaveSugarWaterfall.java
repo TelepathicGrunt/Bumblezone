@@ -1,7 +1,7 @@
 package com.telepathicgrunt.bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
-import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.tags.BzBlockTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -55,8 +55,8 @@ public class CaveSugarWaterfall extends Feature<DefaultFeatureConfig> {
 
             //position valid. begin making waterfall
             if (numberOfSolidSides == neededNumberOfSides) {
-                context.getWorld().setBlockState(blockpos$Mutable, BzBlocks.SUGAR_WATER_BLOCK.getDefaultState(), 2);
-                context.getWorld().getFluidTickScheduler().schedule(blockpos$Mutable, BzBlocks.SUGAR_WATER_FLUID, 0);
+                context.getWorld().setBlockState(blockpos$Mutable, BzFluids.SUGAR_WATER_BLOCK.getDefaultState(), 2);
+                context.getWorld().getFluidTickScheduler().schedule(blockpos$Mutable, BzFluids.SUGAR_WATER_FLUID, 0);
             }
             return true;
         }

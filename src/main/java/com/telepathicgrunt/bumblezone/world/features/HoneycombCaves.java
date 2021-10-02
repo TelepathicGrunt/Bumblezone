@@ -2,8 +2,8 @@ package com.telepathicgrunt.bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.utils.OpenSimplex2F;
-import com.telepathicgrunt.bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -23,7 +23,7 @@ public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
     private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
     private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState();
     private static final BlockState HONEYCOMB_BLOCK = Blocks.HONEYCOMB_BLOCK.getDefaultState();
-    private static final BlockState SUGAR_WATER = BzBlocks.SUGAR_WATER_BLOCK.getDefaultState();
+    private static final BlockState SUGAR_WATER = BzFluids.SUGAR_WATER_BLOCK.getDefaultState();
 
 
     protected long seed;

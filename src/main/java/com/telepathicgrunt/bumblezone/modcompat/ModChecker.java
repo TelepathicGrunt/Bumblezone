@@ -5,8 +5,6 @@ import com.telepathicgrunt.bumblezone.Bumblezone;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.Level;
 
-import java.util.concurrent.Callable;
-
 public class ModChecker {
 
     public static boolean potionOfBeesPresent = false;

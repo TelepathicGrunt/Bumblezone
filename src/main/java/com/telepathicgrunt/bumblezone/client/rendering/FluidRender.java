@@ -24,7 +24,6 @@ import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 public class FluidRender {
-
     public static void setupFluidRendering(final Fluid still, final Fluid flowing, final Identifier stillTextureFluidId, final Identifier flowTextureFluidId)
     {
         // If they're not already present, add the sprites to the block atlas

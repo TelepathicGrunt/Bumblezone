@@ -1,6 +1,6 @@
 package com.telepathicgrunt.bumblezone.mixin.items;
 
-import com.telepathicgrunt.bumblezone.items.ObtainSugarWaterBottle;
+import com.telepathicgrunt.bumblezone.items.GlassBottleBehavior;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.GlassBottleItem;
@@ -26,7 +26,9 @@ public class GlassBottleUseMixin {
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
     private void thebumblezone_bottleFluidInteract(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir, List<AreaEffectCloudEntity> list, ItemStack itemStack, HitResult hitResult, BlockPos blockPos) {
-        if (ObtainSugarWaterBottle.useBottleOnSugarWater(world, user, hand, blockPos))
+        if (GlassBottleBehavior.useBottleOnSugarWater(world, user, hand, blockPos))
+            cir.setReturnValue(TypedActionResult.success(user.getStackInHand(hand)));
+        else if (GlassBottleBehavior.useBottleOnHoneyFluid(world, user, hand, blockPos))
             cir.setReturnValue(TypedActionResult.success(user.getStackInHand(hand)));
     }
 }

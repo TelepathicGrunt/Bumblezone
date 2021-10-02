@@ -1,6 +1,5 @@
 package com.telepathicgrunt.bumblezone.world.dimension.layer;
 
-import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.world.dimension.BzBiomeProvider;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.layer.type.CrossSamplingLayer;

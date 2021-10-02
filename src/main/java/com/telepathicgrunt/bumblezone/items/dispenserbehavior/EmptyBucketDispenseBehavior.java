@@ -2,8 +2,10 @@ package com.telepathicgrunt.bumblezone.items.dispenserbehavior;
 
 import com.telepathicgrunt.bumblezone.mixin.blocks.ItemDispenserBehaviorInvoker;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
@@ -44,7 +46,16 @@ public class EmptyBucketDispenseBehavior extends ItemDispenserBehavior {
                 addItemToDispenser(source, BzItems.SUGAR_WATER_BUCKET);
             else
                 stack = new ItemStack(BzItems.SUGAR_WATER_BUCKET);
-        } else {
+        }
+        else if (blockstate.getBlock() == BzFluids.HONEY_FLUID_BLOCK && blockstate.getFluidState().isStill()) {
+            world.setBlockState(position, Blocks.AIR.getDefaultState());
+            stack.decrement(1);
+            if (!stack.isEmpty())
+                addItemToDispenser(source, BzItems.HONEY_BUCKET);
+            else
+                stack = new ItemStack(BzItems.HONEY_BUCKET);
+        }
+        else {
             // If it instanceof DefaultDispenseItemBehavior, call dispenseStack directly to avoid
             // playing particles and sound twice due to dispense method having that by default.
             if(DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR instanceof ItemDispenserBehavior) {

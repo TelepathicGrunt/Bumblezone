@@ -1,6 +1,6 @@
 package com.telepathicgrunt.bumblezone.fluids;
 
-import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -34,12 +34,12 @@ public abstract class SugarWaterFluid extends FlowableFluid {
 
     @Override
     public Fluid getFlowing() {
-        return BzBlocks.SUGAR_WATER_FLUID_FLOWING;
+        return BzFluids.SUGAR_WATER_FLUID_FLOWING;
     }
 
     @Override
     public Fluid getStill() {
-        return BzBlocks.SUGAR_WATER_FLUID;
+        return BzFluids.SUGAR_WATER_FLUID;
     }
 
     @Override
@@ -151,7 +151,7 @@ public abstract class SugarWaterFluid extends FlowableFluid {
 
     @Override
     public BlockState toBlockState(FluidState state) {
-        return BzBlocks.SUGAR_WATER_BLOCK.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
+        return BzFluids.SUGAR_WATER_BLOCK.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
     }
 
     public static class Flowing extends SugarWaterFluid {

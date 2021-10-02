@@ -1,11 +1,11 @@
 package com.telepathicgrunt.bumblezone.world.processors;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.minecraft.block.BlockState;
@@ -19,7 +19,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.gen.ChunkRandom;
 
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -145,7 +144,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
         }
 
         // sugar water
-        else if (blockState.isOf(BzBlocks.SUGAR_WATER_BLOCK)) {
+        else if (blockState.isOf(BzFluids.SUGAR_WATER_BLOCK)) {
             if (random.nextFloat() < 0.1f) {
                 blockState = BzBlocks.HONEY_CRYSTAL.getDefaultState().with(HoneyCrystal.WATERLOGGED, true);
             }

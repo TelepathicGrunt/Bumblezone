@@ -1,19 +1,16 @@
 package com.telepathicgrunt.bumblezone.items.dispenserbehavior;
 
-import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 
-public class SugarWaterBucketDispenseBehavior extends ItemDispenserBehavior {
+public class HoneyFluidBucketDispenseBehavior extends ItemDispenserBehavior {
     private final ItemDispenserBehavior dispenserBehavior = new ItemDispenserBehavior();
 
     /**
@@ -23,18 +20,10 @@ public class SugarWaterBucketDispenseBehavior extends ItemDispenserBehavior {
         BucketItem bucketitem = (BucketItem) stack.getItem();
         BlockPos blockpos = source.getPos().offset(source.getBlockState().get(DispenserBlock.FACING));
         World world = source.getWorld();
-        BlockState blockstate = world.getBlockState(blockpos);
 
         if (bucketitem.placeFluid(null, world, blockpos, null)) {
 
             bucketitem.onEmptied(null, world, stack, blockpos);
-            return new ItemStack(Items.BUCKET);
-        }
-        else if(blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL && !blockstate.get(Properties.WATERLOGGED)) {
-
-            world.setBlockState(blockpos, BzBlocks.HONEY_CRYSTAL.getDefaultState()
-                    .with(Properties.FACING, blockstate.get(Properties.FACING))
-                    .with(Properties.WATERLOGGED, true));
             return new ItemStack(Items.BUCKET);
         }
         else {

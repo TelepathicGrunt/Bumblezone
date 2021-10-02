@@ -2,8 +2,8 @@ package com.telepathicgrunt.bumblezone.blocks;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
-import net.minecraft.block.Material;
 import net.minecraft.block.MapColor;
+import net.minecraft.block.Material;
 
 
 public class SugarInfusedStone extends Block {

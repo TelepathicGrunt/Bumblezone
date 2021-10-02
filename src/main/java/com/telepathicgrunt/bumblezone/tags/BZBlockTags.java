@@ -3,7 +3,6 @@ package com.telepathicgrunt.bumblezone.tags;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 

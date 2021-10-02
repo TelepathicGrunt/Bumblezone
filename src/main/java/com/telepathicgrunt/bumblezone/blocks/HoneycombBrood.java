@@ -2,7 +2,6 @@ package com.telepathicgrunt.bumblezone.blocks;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
-import com.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;
@@ -12,9 +11,9 @@ import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
 import net.minecraft.block.MapColor;
-import net.minecraft.entity.Entity;
+import net.minecraft.block.Material;
+import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
@@ -41,6 +40,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -134,8 +134,32 @@ public class HoneycombBrood extends ProperFacingBlock {
                     int stage = thisBlockState.get(STAGE);
                     if (stage == 3) {
                         spawnBroodMob(world, thisBlockState, position, stage);
-                    } else {
-                        world.setBlockState(position, thisBlockState.with(STAGE, stage + 1));
+                    }
+                    else {
+                        int newStage = stage + 1;
+                        if (itemstack.getItem() == BzItems.HONEY_BUCKET) {
+                            newStage = 3;
+                            if (!world.isClient()) {
+                                Direction facing = thisBlockState.get(FACING).getOpposite();
+                                Vec3d centerFacePos = new Vec3d(
+                                        position.getX() + Math.max(-0.2D, facing.getOffsetX() == 0 ? 0.5D : facing.getOffsetX() * 1.2D),
+                                        position.getY() + Math.max(-0.2D, facing.getOffsetY() == 0 ? 0.5D : facing.getOffsetY() * 1.2D),
+                                        position.getZ() + Math.max(-0.2D, facing.getOffsetZ() == 0 ? 0.5D : facing.getOffsetZ() * 1.2D)
+                                );
+
+                                ((ServerWorld) world).spawnParticles(
+                                        ParticleTypes.HEART,
+                                        centerFacePos.getX(),
+                                        centerFacePos.getY(),
+                                        centerFacePos.getZ(),
+                                        3,
+                                        world.getRandom().nextFloat() * 0.5 - 0.25f,
+                                        world.getRandom().nextFloat() * 0.2f + 0.2f,
+                                        world.getRandom().nextFloat() * 0.5 - 0.25f,
+                                        world.getRandom().nextFloat() * 0.4 + 0.2f);
+                            }
+                        }
+                        world.setBlockState(position, thisBlockState.with(STAGE, newStage));
                     }
                 }
             }

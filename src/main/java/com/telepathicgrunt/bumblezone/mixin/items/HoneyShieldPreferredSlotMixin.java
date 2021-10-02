@@ -3,7 +3,6 @@ package com.telepathicgrunt.bumblezone.mixin.items;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

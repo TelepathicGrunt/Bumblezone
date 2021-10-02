@@ -30,7 +30,7 @@ public class HoneyParticle extends WaterSuspendParticle {
         }
         else {
             FluidState fluidState = this.world.getFluidState(new BlockPos(this.x, this.y, this.z));
-            if (fluidState.isIn(BzFluidTags.HONEY_FLUID)) {
+            if (fluidState.isIn(BzFluidTags.BZ_HONEY_FLUID)) {
                 if(fluidState.isStill()) {
                     this.move(this.velocityX, this.velocityY + 0.001D, this.velocityZ);
                 }

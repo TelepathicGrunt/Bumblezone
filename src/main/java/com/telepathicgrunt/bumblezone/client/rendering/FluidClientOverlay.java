@@ -2,7 +2,7 @@ package com.telepathicgrunt.bumblezone.client.rendering;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.telepathicgrunt.bumblezone.Bumblezone;
-import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -17,15 +17,15 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Matrix4f;
-import net.minecraft.world.biome.Biome;
 
 public class FluidClientOverlay {
     private static final Identifier TEXTURE_UNDERWATER = new Identifier(Bumblezone.MODID, "textures/misc/sugar_water_underwater.png");
+    private static final Identifier HONEY_TEXTURE_UNDERWATER = new Identifier(Bumblezone.MODID + ":textures/misc/honey_fluid_underwater.png");
 
     public static boolean fluidOverlay(PlayerEntity player, BlockPos pos, MatrixStack matrixStack) {
         if(!(player instanceof ClientPlayerEntity clientPlayerEntity)) return false;
         BlockState state = player.world.getBlockState(new BlockPos(player.getCameraPosVec(0)));
-        if (state.isOf(BzBlocks.SUGAR_WATER_BLOCK)) {
+        if (state.isOf(BzFluids.SUGAR_WATER_BLOCK)) {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.enableTexture();
             RenderSystem.setShaderTexture(0, TEXTURE_UNDERWATER);
@@ -50,5 +50,34 @@ public class FluidClientOverlay {
         }
 
         return false;
+    }
+
+    public static void renderHoneyOverlay(MinecraftClient minecraft, MatrixStack matrixStack) {
+        BlockState state = minecraft.player.world.getBlockState(new BlockPos(minecraft.player.getCameraPosVec(1)));
+        if (state.isOf(BzFluids.HONEY_FLUID_BLOCK)) {
+            minecraft.getTextureManager().bindTexture(HONEY_TEXTURE_UNDERWATER);
+            BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
+            float f = (float) Math.pow(minecraft.player.getBrightnessAtEyes(), 2D);
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+            float f7 = -minecraft.player.getYaw() / (64.0F * 8F);
+            float f8 = minecraft.player.getPitch() / (64.0F * 8F);
+            Matrix4f matrix4f = matrixStack.peek().getModel();
+            RenderSystem.setShaderColor(f, f, f, 0.95F);
+            bufferbuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).texture(1.0F + f7, 1.0F + f8).next();
+            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).texture(0.0F + f7, 2.0F + f8).next();
+            bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).texture(1.0F + f7, 1.0F + f8).next();
+            bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).texture(2.0F + f7, 0.0F + f8).next();
+            bufferbuilder.end();
+            BufferRenderer.draw(bufferbuilder);
+            RenderSystem.disableBlend();
+        }
+    }
+
+    public static void renderHoneyFog()
+    {
+        RenderSystem.setShaderFogStart(0.35f);
+        RenderSystem.setShaderFogEnd(4);
     }
 }

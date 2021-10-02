@@ -12,17 +12,10 @@ import com.telepathicgrunt.bumblezone.blocks.StickyHoneyRedstone;
 import com.telepathicgrunt.bumblezone.blocks.StickyHoneyResidue;
 import com.telepathicgrunt.bumblezone.blocks.SugarInfusedCobblestone;
 import com.telepathicgrunt.bumblezone.blocks.SugarInfusedStone;
-import com.telepathicgrunt.bumblezone.blocks.SugarWaterBlock;
-import com.telepathicgrunt.bumblezone.fluids.SugarWaterFluid;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.block.FabricMaterialBuilder;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.block.Block;
-import net.minecraft.block.Material;
 import net.minecraft.block.MapColor;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.fluid.FlowableFluid;
+import net.minecraft.block.Material;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -48,10 +41,6 @@ public class BzBlocks {
     public static final Block BEESWAX_PLANKS = new BeeswaxPlanks();
     public static final Block PILE_OF_POLLEN = new PileOfPollen();
 
-    public static final FlowableFluid SUGAR_WATER_FLUID = new SugarWaterFluid.Source();
-    public static final FlowableFluid SUGAR_WATER_FLUID_FLOWING = new SugarWaterFluid.Flowing();
-    public static final Block SUGAR_WATER_BLOCK = new SugarWaterBlock(SUGAR_WATER_FLUID);
-
     /**
      * registers the Blocks so they now exist in the registry
      */
@@ -67,18 +56,5 @@ public class BzBlocks {
         Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "sticky_honey_redstone"), STICKY_HONEY_REDSTONE);
         Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "beeswax_planks"), BEESWAX_PLANKS);
         Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "pile_of_pollen"), PILE_OF_POLLEN);
-        Registry.register(Registry.FLUID, new Identifier(Bumblezone.MODID, "sugar_water_still"), SUGAR_WATER_FLUID);
-        Registry.register(Registry.FLUID, new Identifier(Bumblezone.MODID, "sugar_water_flowing"), SUGAR_WATER_FLUID_FLOWING);
-        Registry.register(Registry.BLOCK, new Identifier(Bumblezone.MODID, "sugar_water_block"), SUGAR_WATER_BLOCK);
-    }
-
-    @Environment(EnvType.CLIENT)
-    public static void registerRenderLayers() {
-        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STICKY_HONEY_REDSTONE, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STICKY_HONEY_RESIDUE, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.HONEY_CRYSTAL, RenderLayer.getTranslucent());
-        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.SUGAR_WATER_BLOCK, RenderLayer.getTranslucent());
-        BlockRenderLayerMap.INSTANCE.putFluid(BzBlocks.SUGAR_WATER_FLUID, RenderLayer.getTranslucent());
-        BlockRenderLayerMap.INSTANCE.putFluid(BzBlocks.SUGAR_WATER_FLUID_FLOWING, RenderLayer.getTranslucent());
     }
 }

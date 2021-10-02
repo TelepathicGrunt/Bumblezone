@@ -2,8 +2,8 @@ package com.telepathicgrunt.bumblezone;
 
 import com.telepathicgrunt.bumblezone.configs.BzConfig;
 import com.telepathicgrunt.bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.bumblezone.entities.IEntityComponent;
 import com.telepathicgrunt.bumblezone.entities.EntityComponent;
+import com.telepathicgrunt.bumblezone.entities.IEntityComponent;
 import com.telepathicgrunt.bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.bumblezone.modcompat.ModChecker;
@@ -13,6 +13,7 @@ import com.telepathicgrunt.bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.bumblezone.modinit.BzFeatures;
+import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.modinit.BzPOI;
 import com.telepathicgrunt.bumblezone.modinit.BzPlacements;
@@ -64,6 +65,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzSounds.registerSounds();
 
         BzBlocks.registerBlocks();
+        BzFluids.registerFluids();
         BzEntities.registerEntities();
         BzItems.registerItems();
         BzRecipes.registerRecipes();

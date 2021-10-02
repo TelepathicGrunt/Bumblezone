@@ -41,7 +41,21 @@ public class BeeInteractivity {
             if(!BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
                 return ActionResult.PASS;
 
-            if(itemRL.getPath().contains("honey")){
+            if (itemstack.getItem() == BzItems.HONEY_BUCKET) {
+                beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
+                calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);
+                if (beeEntity.isBaby()) {
+                    if (world.getRandom().nextBoolean()) {
+                        beeEntity.setBaby(false);
+                    }
+                }
+                else {
+                    for (BeeEntity nearbyBee : world.getEntitiesByClass(BeeEntity.class, beeEntity.getBoundingBox().expand(4), beeEntity1 -> true)) {
+                        nearbyBee.lovePlayer(playerEntity);
+                    }
+                }
+            }
+            else if(itemRL.getPath().contains("honey")){
                 beeEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_HEALTH, 1, 2, false, false, false));
                 calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
             }
