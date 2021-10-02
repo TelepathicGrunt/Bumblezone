@@ -24,7 +24,7 @@ import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 public class FluidRender {
-    public static void setupFluidRendering(final Fluid still, final Fluid flowing, final Identifier stillTextureFluidId, final Identifier flowTextureFluidId)
+    public static void setupFluidRendering(final Fluid still, final Fluid flowing, final Identifier stillTextureFluidId, final Identifier flowTextureFluidId, boolean waterColored)
     {
         // If they're not already present, add the sprites to the block atlas
         ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) ->
@@ -70,7 +70,7 @@ public class FluidRender {
             @Override
             public int getFluidColor(BlockRenderView view, BlockPos pos, FluidState state)
             {
-                return view != null && pos != null ? BiomeColors.getWaterColor(view, pos) : -1;
+                return waterColored && view != null && pos != null ? BiomeColors.getWaterColor(view, pos) : -1;
             }
         };
 

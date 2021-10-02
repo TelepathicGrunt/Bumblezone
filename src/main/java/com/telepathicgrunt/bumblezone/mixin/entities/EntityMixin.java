@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -25,6 +26,24 @@ public abstract class EntityMixin {
 
     @Shadow
     public abstract boolean isSubmergedIn(Tag<Fluid> fluidITag);
+
+    @Shadow
+    public abstract boolean isSwimming();
+
+    @Shadow
+    public abstract boolean isSprinting();
+
+    @Shadow
+    public abstract boolean isSubmergedInWater();
+
+    @Shadow
+    public abstract boolean hasVehicle();
+
+    @Shadow
+    public abstract BlockPos getBlockPos();
+
+    @Shadow
+    public abstract void setSwimming(boolean isSwimming);
 
     @Shadow
     public abstract void extinguish();
@@ -96,6 +115,16 @@ public abstract class EntityMixin {
                 this.submergedFluidTag = BzFluidTags.BZ_HONEY_FLUID;
                 ci.cancel();
             }
+        }
+    }
+
+    // let honey fluid push entity
+    @Inject(method = "updateSwimming()V",
+            at = @At(value = "INVOKE", target = "net/minecraft/entity/Entity.setSwimming(Z)V", ordinal = 1, shift = At.Shift.AFTER))
+    private void thebumblezone_setSwimming(CallbackInfo ci) {
+        // check if we were not set to swimming in water. If not, then check if we are swimming in honey fluid instead
+        if(!this.isSwimming() && this.isSprinting() && this.isSubmergedInWater() && !this.hasVehicle()){
+            this.setSwimming(this.world.getFluidState(this.getBlockPos()).isIn(BzFluidTags.BZ_HONEY_FLUID));
         }
     }
 }

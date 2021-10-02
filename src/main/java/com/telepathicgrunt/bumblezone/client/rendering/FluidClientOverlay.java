@@ -9,15 +9,21 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.BufferRenderer;
+import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Matrix4f;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 public class FluidClientOverlay {
     private static final Identifier TEXTURE_UNDERWATER = new Identifier(Bumblezone.MODID, "textures/misc/sugar_water_underwater.png");
@@ -53,7 +59,7 @@ public class FluidClientOverlay {
         return false;
     }
 
-    public static boolean renderHoneyOverlay(PlayerEntity player, MinecraftClient minecraft, MatrixStack matrixStack) {
+    public static boolean renderHoneyOverlay(PlayerEntity player, MatrixStack matrixStack) {
         if(!player.isSubmergedIn(BzFluidTags.BZ_HONEY_FLUID) || !(player instanceof ClientPlayerEntity clientPlayerEntity))
             return false;
 
@@ -84,9 +90,36 @@ public class FluidClientOverlay {
         return false;
     }
 
-    public static void renderHoneyFog()
-    {
-        RenderSystem.setShaderFogStart(0.35f);
-        RenderSystem.setShaderFogEnd(4);
+    public static void renderHoneyFog(Camera camera) {
+        FluidState fluidstate = getNearbyHoneyFluid(camera);
+        if(fluidstate.isIn(BzFluidTags.BZ_HONEY_FLUID)) {
+            RenderSystem.setShaderFogStart(0.35f);
+            RenderSystem.setShaderFogEnd(4);
+        }
+    }
+
+    public static FluidState getNearbyHoneyFluid(Camera camera){
+        Entity entity = camera.getFocusedEntity();
+        World world = entity.world;
+        FluidState fluidstate = world.getFluidState(camera.getBlockPos());
+
+        Vec3d currentPos = camera.getPos();
+        BlockPos.Mutable mutable = new BlockPos.Mutable();
+        double offsetDistanceCheck = 0.075D;
+
+        for(Direction direction : Direction.values()) {
+            double x = currentPos.getX() + direction.getOffsetX() * offsetDistanceCheck;
+            double y = currentPos.getY() + direction.getOffsetY() * offsetDistanceCheck;
+            double z = currentPos.getZ() + direction.getOffsetZ() * offsetDistanceCheck;
+            mutable.set(x, y, z);
+            if(!mutable.equals(camera.getBlockPos())) {
+                FluidState neighboringFluidstate = world.getFluidState(mutable);
+                if(neighboringFluidstate.isIn(BzFluidTags.BZ_HONEY_FLUID)) {
+                    fluidstate = neighboringFluidstate;
+                }
+            }
+        }
+
+        return fluidstate;
     }
 }
