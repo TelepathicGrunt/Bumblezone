@@ -240,7 +240,7 @@ public class HoneycombCaves extends Feature<NoFeatureConfig> {
         }
     }
 
-    private static boolean shouldCloseOff(ISeedReader world, BlockPos.Mutable position,
+    private static boolean shouldCloseOff(ISeedReader world, BlockPos position,
                                           BlockPos.Mutable position2, boolean checkAbove) {
         BlockState blockState;
         for (Direction direction : Direction.values()) {
