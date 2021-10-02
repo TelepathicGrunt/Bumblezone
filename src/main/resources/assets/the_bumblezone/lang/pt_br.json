@@ -32,6 +32,7 @@
   "item.the_bumblezone.honey_bucket": "Honey Bucket",
 
   "entity.the_bumblezone.honey_slime": "Slime de Mel",
+  "entity.the_bumblezone.pollen_puff" : "Pollen Puff",
 
   "enchantment.the_bumblezone.comb_cutter": "Cortador de pente",
   "enchantment.the_bumblezone.comb_cutter.desc": "(Needs translation) Mines combs, hives, nest, and wax blocks faster. Doubles the output of BeeNest and BeeHive blocks including Resourceful Bee's hives.",
