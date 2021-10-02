@@ -191,6 +191,7 @@ public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
         BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable().set(position);
         BlockState blockState;
         int index = (int) (((noise * 0.5D) + 0.5D) * 7);
+        BlockPos.Mutable tempMutable = new BlockPos.Mutable();
 
         for (int x = 0; x < 14; x++) {
             for (int z = 0; z < 11; z++) {
@@ -198,24 +199,33 @@ public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
 
                 if (posResult != 0) {
                     blockState = world.getBlockState(mutableBlockPos.set(position).move(x - 7, 0, z - 5));
-                    carveAtBlock(world, generator, random, mutableBlockPos, blockState, posResult);
+                    carveAtBlock(world, generator, random, mutableBlockPos, tempMutable, blockState, posResult);
 
                     blockState = world.getBlockState(mutableBlockPos.set(position).move(0, x - 7, z - 5));
-                    carveAtBlock(world, generator, random, mutableBlockPos, blockState, posResult);
+                    carveAtBlock(world, generator, random, mutableBlockPos, tempMutable, blockState, posResult);
 
                     blockState = world.getBlockState(mutableBlockPos.set(position).move(z - 5, x - 7, 0));
-                    carveAtBlock(world, generator, random, mutableBlockPos, blockState, posResult);
+                    carveAtBlock(world, generator, random, mutableBlockPos, tempMutable, blockState, posResult);
                 }
             }
         }
     }
 
-    private static void carveAtBlock(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos blockPos, BlockState blockState, int posResult) {
-        if (blockState.isOpaque() && (blockPos.getY() < generator.getSeaLevel() || !isNextToLiquidOrAir(world, generator, blockPos))) {
+    private static void carveAtBlock(StructureWorldAccess world, ChunkGenerator generator, Random random,
+                                     BlockPos blockPos, BlockPos.Mutable mutable, BlockState blockState, int posResult) {
+        if (blockState.isOpaque()) {
+            boolean isNextToAir = shouldCloseOff(world, blockPos, mutable, true);
+            if(blockPos.getY() >= generator.getSeaLevel() && isNextToAir) return;
+
             if (posResult == 2) {
                 if (blockPos.getY() < generator.getSeaLevel()) {
-                    world.setBlockState(blockPos, SUGAR_WATER, 3);
-                } else {
+                    boolean isNextToDrySpace = shouldCloseOff(world, blockPos, mutable, false);
+                    if(isNextToAir || isNextToDrySpace)
+                        world.setBlockState(blockPos, FILLED_POROUS_HONEYCOMB, 3);
+                    else
+                        world.setBlockState(blockPos, SUGAR_WATER, 3);
+                }
+                else {
                     world.setBlockState(blockPos, CAVE_AIR, 3);
                 }
             } else if (posResult == 1) {
@@ -228,15 +238,16 @@ public class HoneycombCaves extends Feature<DefaultFeatureConfig> {
         }
     }
 
-    private static boolean isNextToLiquidOrAir(StructureWorldAccess world, ChunkGenerator generator, BlockPos pos) {
+    private static boolean shouldCloseOff(StructureWorldAccess world, BlockPos position,
+                                          BlockPos.Mutable position2, boolean checkAbove) {
         BlockState blockState;
         for (Direction direction : Direction.values()) {
-            blockState = world.getBlockState(pos.offset(direction));
-            if (pos.offset(direction).getY() >= generator.getSeaLevel() && blockState == Blocks.AIR.getDefaultState()) {
+            if(!checkAbove && direction == Direction.UP) continue;
+            blockState = world.getBlockState(position2.set(position).move(direction));
+            if (checkAbove ? blockState.isOf(Blocks.AIR) : (!blockState.isOpaque() && blockState.getFluidState().isEmpty())) {
                 return true;
             }
         }
         return false;
     }
-
 }
