@@ -50,7 +50,7 @@ Added Honey Fluid!
  Source blocks can be picked up by bucket or turned into a non-source block by using a glass bottle on it.
 
 ##### Entities:
-Right clicking a pollinated bee while holding a water bottle, wet sponge, water bucket, or nothing in your hand will unpollinate the bee and drop a Pollen Puff item!
+Right clicking a pollinated bee while holding a water bottle, wet sponge, or water bucket in your hand will unpollinate the bee and drop a Pollen Puff item!
 
 Fixed feeding bees bucket items gives you a bowl back instead.
 

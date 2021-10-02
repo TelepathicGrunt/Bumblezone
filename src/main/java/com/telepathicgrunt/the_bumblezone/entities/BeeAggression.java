@@ -144,7 +144,7 @@ public class BeeAggression {
     {
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that if it is a player, that they aren't in creative or spectator
-        if (!entity.level.isClientSide &&
+        if (!entity.level.isClientSide() &&
                 (entity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
                         Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                 Bumblezone.BzBeeAggressionConfig.aggressiveBees.get() &&
@@ -207,7 +207,7 @@ public class BeeAggression {
     public static boolean doesBeesHateEntity(Entity entity){
 
         //Also checks to make sure we are in the dimension.
-        if (!entity.level.isClientSide &&
+        if (!entity.level.isClientSide() &&
                 entity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
                 Bumblezone.BzBeeAggressionConfig.aggressiveBees.get() &&
                 entity instanceof MobEntity)

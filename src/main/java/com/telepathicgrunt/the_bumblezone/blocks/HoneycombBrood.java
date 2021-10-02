@@ -126,7 +126,7 @@ public class HoneycombBrood extends ProperFacingBlock {
          * Player is feeding larva
          */
         else if (itemstack.getItem().is(BzItemTags.BEE_FEEDING_ITEMS)) {
-            if (!world.isClientSide) {
+            if (!world.isClientSide()) {
                 boolean successfulGrowth = false;
 
                 //chance of growing the larva
@@ -196,7 +196,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         else if (ModChecker.productiveBeesPresent && Bumblezone.BzModCompatibilityConfig.allowHoneyTreatCompat.get()
                 && itemstack.getItem().getRegistryName().equals(HONEY_TREAT))
         {
-            if (!world.isClientSide) {
+            if (!world.isClientSide()) {
                 // spawn bee if at final stage and front isn't blocked off
                 int stage = thisBlockState.getValue(STAGE);
                 if (stage == 3) {
@@ -377,7 +377,7 @@ public class HoneycombBrood extends ProperFacingBlock {
     }
 
     private static void spawnMob(World world, BlockPos.Mutable blockpos, MobEntity beeMob, MobEntity entity) {
-        if(entity == null || world.isClientSide) return;
+        if(entity == null || world.isClientSide()) return;
         entity.moveTo(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, world.getRandom().nextFloat() * 360.0F, 0.0F);
 
         if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(

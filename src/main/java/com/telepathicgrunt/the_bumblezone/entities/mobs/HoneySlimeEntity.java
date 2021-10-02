@@ -285,7 +285,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
          if (!isInHoney()) {
             setInHoneyGrowthTime(getInHoneyGrowthTime() + 1);
 
-            if(!this.level.isClientSide && HONEY_BASED_BLOCKS.contains(this.level.getBlockState(this.blockPosition().below()).getBlock())){
+            if(!this.level.isClientSide() && HONEY_BASED_BLOCKS.contains(this.level.getBlockState(this.blockPosition().below()).getBlock())){
                if(this.random.nextFloat() < 0.001)
                   setInHoneyGrowthTime(0);
             }
@@ -296,7 +296,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
 
    @Override
    protected void customServerAiStep() {
-      if (!this.level.isClientSide) {
+      if (!this.level.isClientSide()) {
          this.updatePersistentAnger((ServerWorld)this.level, false);
       }
    }

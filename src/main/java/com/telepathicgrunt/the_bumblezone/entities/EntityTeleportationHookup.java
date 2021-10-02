@@ -88,7 +88,7 @@ public class EntityTeleportationHookup {
     }
 
     private static void teleportOutOfBz(LivingEntity livingEntity) {
-        if (!livingEntity.getCommandSenderWorld().isClientSide) {
+        if (!livingEntity.getCommandSenderWorld().isClientSide()) {
             checkAndCorrectStoredDimension(livingEntity);
             EntityPositionAndDimension cap = (EntityPositionAndDimension) livingEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
             RegistryKey<World> world_key = RegistryKey.create(Registry.DIMENSION_REGISTRY, cap.getNonBZDim());
@@ -108,7 +108,7 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if thrower is ServerPlayerEntity and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (!world.isClientSide && thrower instanceof ServerPlayerEntity &&
+        if (!world.isClientSide() && thrower instanceof ServerPlayerEntity &&
                 !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
                 (!Bumblezone.BzDimensionConfig.onlyOverworldHivesTeleports.get() || world.dimension().equals(World.OVERWORLD)))
         {

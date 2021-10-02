@@ -20,7 +20,7 @@ public class CreatingHoneySlime {
     // heal bees with sugar water bottle or honey bottle
     public static ActionResultType createHoneySlime(World world, PlayerEntity playerEntity, Hand hand, SlimeEntity slimeEntity) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
-        if (!world.isClientSide && BzItemTags.TURN_SLIME_TO_HONEY_SLIME.contains(itemstack.getItem())) {
+        if (!world.isClientSide() && BzItemTags.TURN_SLIME_TO_HONEY_SLIME.contains(itemstack.getItem())) {
 
             int slimeSize = slimeEntity.getSize();
             HoneySlimeEntity honeySlimeMob = BzEntities.HONEY_SLIME.get().create(world);

@@ -62,7 +62,7 @@ public class PollenPuff extends Item {
     public ActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
 
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
                 PollenPuffEntity pollenPuffEntity = new PollenPuffEntity(world, playerEntity);
                 pollenPuffEntity.setItem(itemstack);
@@ -80,7 +80,7 @@ public class PollenPuff extends Item {
 
 
     public static void spawnItemstackEntity(World world, BlockPos blockPos, ItemStack itemStack) {
-        if (!world.isClientSide && !itemStack.isEmpty()) {
+        if (!world.isClientSide() && !itemStack.isEmpty()) {
             double x = (double)(world.random.nextFloat() * 0.5F) + 0.25D;
             double y = (double)(world.random.nextFloat() * 0.5F) + 0.25D;
             double z = (double)(world.random.nextFloat() * 0.5F) + 0.25D;

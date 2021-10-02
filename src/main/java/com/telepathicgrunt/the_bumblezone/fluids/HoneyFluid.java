@@ -366,7 +366,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
                     }
                 }
 
-                if (!thisEntity.level.isClientSide && thisEntity.isPassenger() && thisEntity.getVehicle() != null && !thisEntity.getVehicle().canBeRiddenInWater(thisEntity)) {
+                if (!thisEntity.level.isClientSide() && thisEntity.isPassenger() && thisEntity.getVehicle() != null && !thisEntity.getVehicle().canBeRiddenInWater(thisEntity)) {
                     thisEntity.stopRiding();
                 }
             }

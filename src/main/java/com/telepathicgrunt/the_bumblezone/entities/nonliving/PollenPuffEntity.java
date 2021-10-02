@@ -93,7 +93,7 @@ public class PollenPuffEntity extends ProjectileItemEntity {
     protected void onHit(RayTraceResult rayTraceResult) {
         super.onHit(rayTraceResult);
 
-        if (!this.level.isClientSide) {
+        if (!this.level.isClientSide()) {
             this.remove();
         }
         else {
