@@ -8,6 +8,10 @@
     {
       "id": "the_bumblezone:sugar_water_bottle",
       "required": true
+    },
+    {
+      "id": "#c:items/buckets/honey",
+      "required": true
     }
   ]
 }

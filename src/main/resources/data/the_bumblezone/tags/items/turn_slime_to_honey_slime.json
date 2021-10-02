@@ -6,7 +6,7 @@
       "required": true
     },
     {
-      "id": "the_bumblezone:honey_bucket",
+      "id": "#c:items/buckets/honey",
       "required": true
     }
   ]
