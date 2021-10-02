@@ -10,6 +10,13 @@
   "block.the_bumblezone.sticky_honey_residue": "Klebriger Honigrest",
   "block.the_bumblezone.sticky_honey_redstone": "Klebriger Honigredstone",
   "block.the_bumblezone.honey_crystal": "Honigkristall",
+  "block.the_bumblezone.beeswax_planks": "Beehive Beeswax",
+  "block.the_bumblezone.pile_of_pollen": "Pile of Pollen",
+
+  "fluid.the_bumblezone.sugar_water_still":"Sugar Water",
+  "fluid.the_bumblezone.sugar_water_flowing":"Sugar Water",
+  "fluid.the_bumblezone.honey_fluid_still": "Honey Fluid",
+  "fluid.the_bumblezone.honey_fluid_flowing": "Honey Fluid",
 
   "item.the_bumblezone.honey_crystal_shards": "Honigkristallsplitter",
   "item.the_bumblezone.sugar_water_bucket": "Zuckerwassereimer",
@@ -20,8 +27,11 @@
   "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov.desc": "Rimsky Korsakov - Flight of the Bumblebee",
   "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy": "Schallplatte",
   "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy.desc": "Rat Faced Boy - Honey Bee",
+  "item.the_bumblezone.pollen_puff": "Pollen Puff",
+  "item.the_bumblezone.honey_bucket": "Honey Bucket",
 
-  "entity.the_bumblezone.honey_slime" : "Honigschleim" ,
+  "entity.the_bumblezone.honey_slime" : "Honigschleim",
+  "entity.the_bumblezone.pollen_puff" : "Pollen Puff",
 
   "enchantment.the_bumblezone.comb_cutter": "Kammschneider",
   "enchantment.the_bumblezone.comb_cutter.desc": "(Needs translation) Mines combs, hives, nest, and wax blocks faster. Doubles the output of BeeNest and BeeHive blocks including Resourceful Bee's hives.",
@@ -29,10 +39,8 @@
   "biome.the_bumblezone.sugar_water_floor": "Zuckerwassergrund",
   "biome.the_bumblezone.hive_wall": "Bienenstockmauer",
   "biome.the_bumblezone.hive_pillar": "Bienenstocks\u00e4ule",
-
-  "feature.the_bumblezone.honeycomb_hole": "Honigwabenloch",
-  "feature.the_bumblezone.honeycomb_caves": "Honigwabenh\u00f6hle",
-  "feature.the_bumblezone.cave_sugar_waterfall": "H\u00f6hlenzuckerwasserfall",
+  "biome.the_bumblezone.pollinated_fields": "Pollinated Fields",
+  "biome.the_bumblezone.pollinated_pillar": "Pollinated Pillar",
 
   "effect.the_bumblezone.wrath_of_the_hive": "Bienenzorn",
   "effect.the_bumblezone.protection_of_the_hive": "Bienenschutz",
