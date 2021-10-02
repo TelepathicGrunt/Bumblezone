@@ -28,8 +28,8 @@ public abstract class BeeEntityMixin extends Entity {
     @Inject(method = "mobTick()V",
             at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/passive/BeeEntity;isInsideWaterOrBubbleColumn()Z", shift = At.Shift.AFTER))
     private void thebumblezone_honeyFluidNotDrown(CallbackInfo ci){
-        if(this.ticksInsideWater >= 19 && this.fluidHeight.get(BzFluidTags.BZ_HONEY_FLUID) > 0){
-            this.ticksInsideWater = 2;
+        if(this.ticksInsideWater >= 10 && this.fluidHeight.get(BzFluidTags.BZ_HONEY_FLUID) > 0){
+            this.ticksInsideWater = 9;
         }
     }
 }
