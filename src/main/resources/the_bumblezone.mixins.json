@@ -14,6 +14,7 @@
     "blocks.VineBlockAccessor",
     "blocks.WaterEquivalenceMixin",
     "entities.BeeEntityInvoker",
+    "entities.BeeEntityMixin",
     "entities.BeePathfindingMixin",
     "entities.EntityMixin",
     "entities.FishingBobberEntityMixin",
@@ -47,9 +48,9 @@
     "world.StructureAccessor"
   ],
   "client": [
+    "blocks.BlockOverlayRendererMixin",
     "client.BackgroundRendererMixin",
     "client.FluidRendererMixin",
-    "blocks.BlockOverlayRendererMixin",
     "world.SkyPropertiesAccessor"
   ],
   "injectors": {
