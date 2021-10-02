@@ -6,7 +6,6 @@ import net.minecraft.client.render.BackgroundRenderer;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,7 +33,11 @@ public class BackgroundRendererMixin {
     private static void thebumblezone_setupHoneyFogColor(Camera camera, float j, ClientWorld clientWorld, int l, float i1, CallbackInfo ci) {
         FluidState fluidstate = FluidClientOverlay.getNearbyHoneyFluid(camera);
         if(fluidstate.isIn(BzFluidTags.BZ_HONEY_FLUID)) {
-            float brightness = (float) Math.pow(camera.getFocusedEntity().getBrightnessAtEyes(), 2D);
+            // Scale the brightness of fog but make sure it is never darker than the dimension's min brightness.
+            float brightness = (float) Math.max(
+                    Math.pow(FluidClientOverlay.getDimensionBrightnessAtEyes(camera.getFocusedEntity()), 2D),
+                    camera.getFocusedEntity().world.getDimension().getBrightness(0)
+            );
             red = 0.6F * brightness;
             green = 0.3F * brightness;
             blue = 0.0F;

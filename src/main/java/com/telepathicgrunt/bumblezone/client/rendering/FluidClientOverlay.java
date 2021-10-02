@@ -5,7 +5,6 @@ import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.tags.BzFluidTags;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.BufferRenderer;
@@ -69,10 +68,14 @@ public class FluidClientOverlay {
             RenderSystem.enableTexture();
             RenderSystem.setShaderTexture(0, HONEY_TEXTURE_UNDERWATER);
             BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
-            float f = (float) Math.pow(clientPlayerEntity.getBrightnessAtEyes(), 2D);
+            // Scale the brightness of fog but make sure it is never darker than the dimension's min brightness.
+            float brightness = (float) Math.max(
+                    Math.pow(FluidClientOverlay.getDimensionBrightnessAtEyes(clientPlayerEntity), 2D),
+                    clientPlayerEntity.world.getDimension().getBrightness(0)
+            );
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
-            RenderSystem.setShaderColor(f, f, f, 0.95F);
+            RenderSystem.setShaderColor(brightness, brightness, brightness, 0.95F);
             float modifiedYaw = -clientPlayerEntity.getYaw() / (64.0F * 8F);
             float modifiedPitch = clientPlayerEntity.getPitch() / (64.0F * 8F);
             Matrix4f matrix4f = matrixStack.peek().getModel();
@@ -96,6 +99,11 @@ public class FluidClientOverlay {
             RenderSystem.setShaderFogStart(0.35f);
             RenderSystem.setShaderFogEnd(4);
         }
+    }
+
+    public static float getDimensionBrightnessAtEyes(Entity entity){
+        float lightLevelAtEyes = entity.world.getBaseLightLevel(new BlockPos(entity.getCameraPosVec(1)), 0);
+        return lightLevelAtEyes / 15f;
     }
 
     public static FluidState getNearbyHoneyFluid(Camera camera){
