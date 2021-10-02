@@ -18,6 +18,6 @@ public class BzStructures {
 
     public static void registerStructures() {
         FabricStructureBuilder.create(new Identifier(Bumblezone.MODID, "pollinated_stream"), POLLINATED_STREAM).step(GenerationStep.Feature.UNDERGROUND_STRUCTURES).defaultConfig(new StructureConfig(12, 8, 938497222)).superflatFeature(POLLINATED_STREAM.configure(FeatureConfig.DEFAULT)).register();
-        FabricStructureBuilder.create(new Identifier(Bumblezone.MODID, "honey_cave_room"), HONEY_CAVE_ROOM).step(GenerationStep.Feature.UNDERGROUND_STRUCTURES).defaultConfig(new StructureConfig(12, 4, 722299384)).superflatFeature(HONEY_CAVE_ROOM.configure(FeatureConfig.DEFAULT)).register();
+        FabricStructureBuilder.create(new Identifier(Bumblezone.MODID, "honey_cave_room"), HONEY_CAVE_ROOM).step(GenerationStep.Feature.UNDERGROUND_STRUCTURES).defaultConfig(new StructureConfig(6, 3, 722299384)).superflatFeature(HONEY_CAVE_ROOM.configure(FeatureConfig.DEFAULT)).register();
     }
 }

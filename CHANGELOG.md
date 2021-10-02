@@ -22,6 +22,8 @@ Sticky Honey Redstone now gives off a light level of 1 when activated.
 
 Fixed sideways Honey Crystal not rotating properly when spawned by rotated nbt builds.
 
+Fixed Honey Crystals sometimes are placed floating during worldgen.
+
 ##### Items:
 Added Pollen Puff item!
 Can be thrown like a snowball but will not deal any damage or pushback.

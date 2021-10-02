@@ -130,11 +130,6 @@ public class BeeDungeonProcessor extends StructureProcessor {
                         .with(HoneycombBrood.STAGE, random.nextInt(3))
                         .with(HoneycombBrood.FACING, blockState.get(HoneycombBrood.FACING));
             }
-            /*
-            else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.3f){
-                blockState = BeeBetterRedirection.getBeeDungeonBlock(random);
-            }
-            */
             else if (ModChecker.beeBetterPresent ? random.nextFloat() < 0.1f : random.nextFloat() < 0.2f) {
                 blockState = Blocks.HONEY_BLOCK.getDefaultState();
             }

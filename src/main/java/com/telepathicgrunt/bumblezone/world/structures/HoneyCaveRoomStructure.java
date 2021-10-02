@@ -54,6 +54,7 @@ public class HoneyCaveRoomStructure extends StructureFeature<DefaultFeatureConfi
             for(int z = -radius; z <= radius; z += radius) {
                 mutable.set(centerPos).move(x, 0, z);
                 VerticalBlockSample columnOfBlocks = chunkGenerator.getColumnSample(mutable.getX(), mutable.getZ(), heightLimitView);
+                moveMutable(mutable, Direction.UP, 0, centerPos);
                 BlockState state = columnOfBlocks.getState(mutable);
                 moveMutable(mutable, Direction.UP, 15, centerPos);
                 BlockState aboveState = columnOfBlocks.getState(mutable);
@@ -69,13 +70,13 @@ public class HoneyCaveRoomStructure extends StructureFeature<DefaultFeatureConfi
     }
 
     // Takes into account how bumblezone's terrain is bottom half reflected across top half.
-    // chunkGenerator.getBaseColumn returns column of blocks as if the terrain wasn't mirrored.
+    // chunkGenerator.getColumnSample returns column of blocks as if the terrain wasn't mirrored.
     private static void moveMutable(BlockPos.Mutable mutable, Direction direction, int amount, BlockPos originalPos) {
         if(originalPos.getY() > 128) {
-            mutable.move(direction.getOpposite(), amount);
             if(mutable.getY() > 128) {
-                mutable.move(direction, mutable.getY() - 128);
+                mutable.move(Direction.DOWN, (mutable.getY() - 128) * 2);
             }
+            mutable.move(direction.getOpposite(), amount);
         }
         else {
             mutable.move(direction, amount);
