@@ -111,7 +111,7 @@ public class HoneycombBrood extends ProperFacingBlock {
          * Player is feeding larva
          */
         else if (itemstack.isIn(BzItemTags.BEE_FEEDING_ITEMS)) {
-            if (!world.isClient) {
+            if (!world.isClient()) {
                 boolean successfulGrowth = false;
 
                 //chance of growing the larva
@@ -267,7 +267,7 @@ public class HoneycombBrood extends ProperFacingBlock {
     }
 
     private static void spawnMob(World world, BlockPos.Mutable blockpos, MobEntity beeMob, MobEntity entity) {
-        if(entity == null || world.isClient) return;
+        if(entity == null || world.isClient()) return;
         entity.refreshPositionAndAngles(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, world.getRandom().nextFloat() * 360.0F, 0.0F);
         entity.initialize((ServerWorldAccess) world, world.getLocalDifficulty(new BlockPos(beeMob.getPos())), SpawnReason.TRIGGERED, null, null);
         world.spawnEntity(entity);

@@ -32,7 +32,7 @@ public class BeeInteractivity {
 
     // heal bees with sugar water bottle or honey bottle
     public static ActionResult beeFeeding(World world, PlayerEntity playerEntity, Hand hand, Entity target) {
-        if (!world.isClient && target instanceof BeeEntity beeEntity) {
+        if (!world.isClient() && target instanceof BeeEntity beeEntity) {
 
             ItemStack itemstack = playerEntity.getStackInHand(hand);
             Identifier itemRL = Registry.ITEM.getId(itemstack.getItem());
@@ -84,8 +84,7 @@ public class BeeInteractivity {
             // right clicking on pollinated bee with empty hand or pollen puff with room, gets pollen puff into hand.
             // else, if done with watery items or pollen puff without room, drops pollen puff in world
             if(beeEntity.hasNectar()) {
-                if(itemstack.isEmpty() ||
-                        (itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water")) ||
+                if((itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water")) ||
                         item == Items.WET_SPONGE ||
                         item == BzItems.SUGAR_WATER_BOTTLE ||
                         (item instanceof BucketItem && ((BucketItemAccessor) item).thebumblezone_getFluid().isIn(FluidTags.WATER))) {

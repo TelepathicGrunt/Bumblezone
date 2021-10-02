@@ -37,7 +37,7 @@ public class EntityTeleportationHookup {
                 livingEntity.updatePosition(livingEntity.getX(), -3.01D, livingEntity.getZ());
                 livingEntity.fallDistance = 0;
 
-                if(!livingEntity.world.isClient){
+                if(!livingEntity.world.isClient()){
                     Bumblezone.ENTITY_COMPONENT.get(livingEntity).setIsTeleporting(false);
                     teleportOutOfBz(livingEntity);
                 }
@@ -45,14 +45,14 @@ public class EntityTeleportationHookup {
                 livingEntity.refreshPositionAfterTeleport(livingEntity.getX(), 255.01D, livingEntity.getZ());
                 livingEntity.updatePosition(livingEntity.getX(), 255.01D, livingEntity.getZ());
 
-                if(!livingEntity.world.isClient){
+                if(!livingEntity.world.isClient()){
                     Bumblezone.ENTITY_COMPONENT.get(livingEntity).setIsTeleporting(false);
                     teleportOutOfBz(livingEntity);
                 }
             }
         }
         //teleport to bumblezone
-        else if (!livingEntity.world.isClient && Bumblezone.ENTITY_COMPONENT.get(livingEntity).getIsTeleporting()) {
+        else if (!livingEntity.world.isClient() && Bumblezone.ENTITY_COMPONENT.get(livingEntity).getIsTeleporting()) {
             Bumblezone.ENTITY_COMPONENT.get(livingEntity).setIsTeleporting(false);
             EntityTeleportationBackend.enteringBumblezone(livingEntity);
             reAddStatusEffect(livingEntity);
@@ -61,7 +61,7 @@ public class EntityTeleportationHookup {
 
 
     public static void teleportOutOfBz(LivingEntity livingEntity) {
-        if (!livingEntity.world.isClient) {
+        if (!livingEntity.world.isClient()) {
             checkAndCorrectStoredDimension(livingEntity);
             MinecraftServer minecraftServer = livingEntity.getServer(); // the server itself
             RegistryKey<World> world_key = RegistryKey.of(Registry.WORLD_KEY, Bumblezone.ENTITY_COMPONENT.get(livingEntity).getNonBZDimension());
@@ -80,7 +80,7 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if thrower is ServerPlayerEntity and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (!world.isClient && pearlEntity.getOwner() instanceof ServerPlayerEntity &&
+        if (!world.isClient() && pearlEntity.getOwner() instanceof ServerPlayerEntity &&
             !world.getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) &&
             (!Bumblezone.BZ_CONFIG.BZDimensionConfig.onlyOverworldHivesTeleports || world.getRegistryKey().equals(World.OVERWORLD)))
         {

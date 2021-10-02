@@ -271,7 +271,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
          if (!isInHoney()) {
             setInHoneyGrowthTime(getInHoneyGrowthTime() + 1);
 
-            if(!this.world.isClient && HONEY_BASED_BLOCKS.contains(this.world.getBlockState(this.getBlockPos().down()).getBlock())){
+            if(!this.world.isClient() && HONEY_BASED_BLOCKS.contains(this.world.getBlockState(this.getBlockPos().down()).getBlock())){
                if(this.random.nextFloat() < 0.001)
                   setInHoneyGrowthTime(0);
             }
@@ -282,7 +282,7 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
 
    @Override
    protected void mobTick() {
-      if (!this.world.isClient) {
+      if (!this.world.isClient()) {
          this.tickAngerLogic((ServerWorld)this.world, false);
       }
    }
