@@ -56,6 +56,7 @@ public class HoneyCaveRoomStructure extends Structure<NoFeatureConfig> {
             for(int z = -radius; z <= radius; z += radius) {
                 mutable.set(centerPos).move(x, 0, z);
                 IBlockReader columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ());
+                moveMutable(mutable, Direction.UP, 0, centerPos);
                 BlockState state = columnOfBlocks.getBlockState(mutable);
                 moveMutable(mutable, Direction.UP, 15, centerPos);
                 BlockState aboveState = columnOfBlocks.getBlockState(mutable);
@@ -74,10 +75,10 @@ public class HoneyCaveRoomStructure extends Structure<NoFeatureConfig> {
     // chunkGenerator.getBaseColumn returns column of blocks as if the terrain wasn't mirrored.
     private static void moveMutable(BlockPos.Mutable mutable, Direction direction, int amount, BlockPos originalPos) {
         if(originalPos.getY() > 128) {
-            mutable.move(direction.getOpposite(), amount);
             if(mutable.getY() > 128) {
-                mutable.move(direction, mutable.getY() - 128);
+                mutable.move(Direction.DOWN, (mutable.getY() - 128) * 2);
             }
+            mutable.move(direction.getOpposite(), amount);
         }
         else {
             mutable.move(direction, amount);
