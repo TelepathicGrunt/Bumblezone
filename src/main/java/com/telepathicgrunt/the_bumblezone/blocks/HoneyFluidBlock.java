@@ -29,12 +29,16 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
 
     public HoneyFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier) {
         super(supplier, Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noDrops().speedFactor(0.15F));
-        this.registerDefaultState(this.stateDefinition.any().setValue(LEVEL, 0).setValue(BOTTOM_LEVEL, 0).setValue(FALLING, false).setValue(ABOVE_FLUID, false));
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(LEVEL, 0)
+                .setValue(BOTTOM_LEVEL, 0)
+                .setValue(FALLING, false)
+                .setValue(ABOVE_FLUID, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> stateBuilder) {
-        stateBuilder.add(LEVEL).add(BOTTOM_LEVEL).add(FALLING).add(ABOVE_FLUID);
+        stateBuilder.add(LEVEL, BOTTOM_LEVEL, FALLING, ABOVE_FLUID);
     }
 
     @Override
