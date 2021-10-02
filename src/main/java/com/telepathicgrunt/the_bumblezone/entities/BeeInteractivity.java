@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
@@ -24,7 +23,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class BeeInteractivity {
 
@@ -44,7 +42,8 @@ public class BeeInteractivity {
                 if (world.getRandom().nextBoolean()) {
                     beeEntity.setBaby(false);
                 }
-            } else {
+            }
+            else {
                 for (BeeEntity nearbyBee : world.getEntitiesOfClass(BeeEntity.class, beeEntity.getBoundingBox().inflate(4), beeEntity1 -> true)) {
                     nearbyBee.setInLove(playerEntity);
                 }

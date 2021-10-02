@@ -29,7 +29,7 @@ public class HoneyParticle extends UnderwaterParticle {
             this.remove();
         } else {
             FluidState fluidState = this.level.getFluidState(new BlockPos(this.x, this.y, this.z));
-            if (fluidState.is(BzFluidTags.HONEY_FLUID)) {
+            if (fluidState.is(BzFluidTags.BZ_HONEY_FLUID)) {
                 if(fluidState.isSource()) {
                     this.move(this.xd, this.yd + 0.001D, this.zd);
                 }

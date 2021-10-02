@@ -88,7 +88,6 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
         }
         //pick up honey fluid
         else if (blockstate.getBlock() == BzFluids.HONEY_FLUID_BLOCK.get() && blockstate.getFluidState().isSource()) {
-            world.setBlockAndUpdate(position, BzBlocks.POROUS_HONEYCOMB.get().defaultBlockState());
             world.setBlockAndUpdate(position, BzFluids.HONEY_FLUID_FLOWING.get().defaultFluidState().createLegacyBlock().setValue(HoneyFluidBlock.LEVEL, 5));
             stack.shrink(1);
             if(!stack.isEmpty())
