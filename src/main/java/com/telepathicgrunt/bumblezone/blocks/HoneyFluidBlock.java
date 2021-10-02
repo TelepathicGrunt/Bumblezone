@@ -31,12 +31,16 @@ public class HoneyFluidBlock extends FluidBlock {
 
     public HoneyFluidBlock(FlowableFluid fluid) {
         super(fluid, AbstractBlock.Settings.of(Material.WATER).noCollision().strength(100.0F, 100.0F).dropsNothing().velocityMultiplier(0.15F));
-        this.setDefaultState(this.stateManager.getDefaultState().with(LEVEL, 0).with(BOTTOM_LEVEL, 0).with(FALLING, false).with(ABOVE_FLUID, false));
+        this.setDefaultState(this.stateManager.getDefaultState()
+                .with(LEVEL, 0)
+                .with(BOTTOM_LEVEL, 0)
+                .with(FALLING, false)
+                .with(ABOVE_FLUID, false));
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> stateBuilder) {
-        stateBuilder.add(LEVEL).add(BOTTOM_LEVEL).add(FALLING).add(ABOVE_FLUID);
+        stateBuilder.add(LEVEL, BOTTOM_LEVEL, FALLING, ABOVE_FLUID);
     }
 
     @Override

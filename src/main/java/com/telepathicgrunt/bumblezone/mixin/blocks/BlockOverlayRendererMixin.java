@@ -2,6 +2,7 @@ package com.telepathicgrunt.bumblezone.mixin.blocks;
 
 import com.telepathicgrunt.bumblezone.client.rendering.FluidClientOverlay;
 import com.telepathicgrunt.bumblezone.client.rendering.PileOfPollenRenderer;
+import com.telepathicgrunt.bumblezone.tags.BzFluidTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameOverlayRenderer;
@@ -18,20 +19,24 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class BlockOverlayRendererMixin {
 
     @Inject(method = "renderOverlays",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameOverlayRenderer;getInWallBlockState(Lnet/minecraft/entity/player/PlayerEntity;)Lnet/minecraft/block/BlockState;"),
-            locals = LocalCapture.CAPTURE_FAILSOFT,
-            cancellable = true)
-    private static void thebumblezone_blockOverlay(MinecraftClient minecraftClient, MatrixStack matrixStack, CallbackInfo ci, PlayerEntity playerEntity) {
-        if (FluidClientOverlay.fluidOverlay(playerEntity, new BlockPos(playerEntity.getPos()), matrixStack))
-            ci.cancel();
-    }
-
-    @Inject(method = "renderOverlays",
             at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/gui/hud/InGameOverlayRenderer;getInWallBlockState(Lnet/minecraft/entity/player/PlayerEntity;)Lnet/minecraft/block/BlockState;"),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
-    private static void thebumblezone_blockOverlay2(MinecraftClient minecraftClient, MatrixStack matrixStack, CallbackInfo ci, PlayerEntity playerEntity, BlockState blockState) {
-        if (PileOfPollenRenderer.pileOfPollenOverlay(playerEntity, new BlockPos(playerEntity.getPos()), matrixStack, blockState))
+    private static void thebumblezone_blockOverlay(MinecraftClient minecraftClient, MatrixStack matrixStack, CallbackInfo ci, PlayerEntity playerEntity, BlockState blockState) {
+        if (FluidClientOverlay.sugarWaterFluidOverlay(playerEntity, matrixStack))
             ci.cancel();
+        else if (PileOfPollenRenderer.pileOfPollenOverlay(playerEntity, matrixStack, blockState))
+            ci.cancel();
+    }
+
+    // make honey fluid have overlay
+    @Inject(method = "renderOverlays(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/util/math/MatrixStack;)V",
+            at = @At(value = "INVOKE", target = "net/minecraft/client/network/ClientPlayerEntity.isSubmergedIn(Lnet/minecraft/tag/Tag;)Z"),
+            locals = LocalCapture.CAPTURE_FAILSOFT,
+            cancellable = true)
+    private static void thebumblezone_renderHoneyOverlay(MinecraftClient minecraft, MatrixStack matrixStack, CallbackInfo ci) {
+        if(FluidClientOverlay.renderHoneyOverlay(minecraft.player, minecraft, matrixStack)) {
+            ci.cancel();
+        }
     }
 }

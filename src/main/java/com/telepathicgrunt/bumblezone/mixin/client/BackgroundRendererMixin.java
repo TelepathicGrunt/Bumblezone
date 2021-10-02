@@ -42,7 +42,7 @@ public class BackgroundRendererMixin {
     }
 
     @Inject(method = "applyFog(Lnet/minecraft/client/render/Camera;Lnet/minecraft/client/render/BackgroundRenderer$FogType;FZ)V",
-            at = @At(value = "INVOKE_ASSIGN", target = "com/mojang/blaze3d/systems/RenderSystem.setShaderFogEnd (F)V"))
+            at = @At(value = "INVOKE", target = "com/mojang/blaze3d/systems/RenderSystem.setShaderFogEnd(F)V", ordinal = 1, shift = At.Shift.AFTER))
     private static void thebumblezone_renderHoneyFog(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog, CallbackInfo ci) {
         FluidState fluidstate = camera.getFocusedEntity().world.getFluidState(camera.getBlockPos());
         if(fluidstate.isIn(BzFluidTags.BZ_HONEY_FLUID)) {

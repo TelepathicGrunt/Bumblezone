@@ -30,6 +30,12 @@ public abstract class EntityMixin {
     public abstract void extinguish();
 
     @Shadow
+    public abstract double getX();
+
+    @Shadow
+    public abstract double getZ();
+
+    @Shadow
     protected boolean touchingWater;
 
     @Shadow
@@ -80,9 +86,12 @@ public abstract class EntityMixin {
                     shift = At.Shift.AFTER),
             locals = LocalCapture.CAPTURE_FAILHARD,
             cancellable = true)
-    private void thebumblezone_markEyesInFluid2(CallbackInfo ci, double eyeHeight, Entity entity, BlockPos blockpos, FluidState fluidstate) {
-        if (fluidstate.isIn(BzFluidTags.BZ_HONEY_FLUID)) {
-            double fluidHeight = (float)blockpos.getY() + fluidstate.getHeight(this.world, blockpos);
+    private void thebumblezone_markEyesInFluid2(CallbackInfo ci, double eyeHeight) {
+        // Have to get the fluid myself as the local capture here is uh broken. Dies on the vehicle entity variable
+        BlockPos blockPos = new BlockPos(this.getX(), eyeHeight, this.getZ());
+        FluidState fluidState = this.world.getFluidState(blockPos);
+        if (fluidState.isIn(BzFluidTags.BZ_HONEY_FLUID)) {
+            double fluidHeight = (float)blockPos.getY() + fluidState.getHeight(this.world, blockPos);
             if (fluidHeight > eyeHeight) {
                 this.submergedFluidTag = BzFluidTags.BZ_HONEY_FLUID;
                 ci.cancel();

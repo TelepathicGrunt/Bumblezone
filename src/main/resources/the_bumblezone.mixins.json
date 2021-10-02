@@ -13,9 +13,6 @@
     "blocks.RedstoneDustCanConnectMixin",
     "blocks.VineBlockAccessor",
     "blocks.WaterEquivalenceMixin",
-    "client.BackgroundRendererMixin",
-    "client.FluidRendererMixin",
-    "client.InGameOverlayRendererMixin",
     "entities.BeeEntityInvoker",
     "entities.BeePathfindingMixin",
     "entities.EntityMixin",
@@ -50,6 +47,8 @@
     "world.StructureAccessor"
   ],
   "client": [
+    "client.BackgroundRendererMixin",
+    "client.FluidRendererMixin",
     "blocks.BlockOverlayRendererMixin",
     "world.SkyPropertiesAccessor"
   ],

@@ -25,7 +25,7 @@ public class PileOfPollenRenderer {
 
     private static final Identifier TEXTURE_POLLEN = new Identifier(Bumblezone.MODID + ":textures/block/pile_of_pollen.png");
 
-    public static boolean pileOfPollenOverlay(PlayerEntity playerEntity, BlockPos blockPos, MatrixStack matrixStack, BlockState blockState)
+    public static boolean pileOfPollenOverlay(PlayerEntity playerEntity, MatrixStack matrixStack, BlockState blockState)
     {
         if (blockState != null && blockState.isOf(BzBlocks.PILE_OF_POLLEN))
         {

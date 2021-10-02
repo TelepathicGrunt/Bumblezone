@@ -3,6 +3,7 @@ package com.telepathicgrunt.bumblezone.client.rendering;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.modinit.BzFluids;
+import com.telepathicgrunt.bumblezone.tags.BzFluidTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -22,7 +23,7 @@ public class FluidClientOverlay {
     private static final Identifier TEXTURE_UNDERWATER = new Identifier(Bumblezone.MODID, "textures/misc/sugar_water_underwater.png");
     private static final Identifier HONEY_TEXTURE_UNDERWATER = new Identifier(Bumblezone.MODID + ":textures/misc/honey_fluid_underwater.png");
 
-    public static boolean fluidOverlay(PlayerEntity player, BlockPos pos, MatrixStack matrixStack) {
+    public static boolean sugarWaterFluidOverlay(PlayerEntity player, MatrixStack matrixStack) {
         if(!(player instanceof ClientPlayerEntity clientPlayerEntity)) return false;
         BlockState state = player.world.getBlockState(new BlockPos(player.getCameraPosVec(0)));
         if (state.isOf(BzFluids.SUGAR_WATER_BLOCK)) {
@@ -52,27 +53,35 @@ public class FluidClientOverlay {
         return false;
     }
 
-    public static void renderHoneyOverlay(MinecraftClient minecraft, MatrixStack matrixStack) {
-        BlockState state = minecraft.player.world.getBlockState(new BlockPos(minecraft.player.getCameraPosVec(1)));
+    public static boolean renderHoneyOverlay(PlayerEntity player, MinecraftClient minecraft, MatrixStack matrixStack) {
+        if(!player.isSubmergedIn(BzFluidTags.BZ_HONEY_FLUID) || !(player instanceof ClientPlayerEntity clientPlayerEntity))
+            return false;
+
+        BlockState state = clientPlayerEntity.world.getBlockState(new BlockPos(clientPlayerEntity.getCameraPosVec(1)));
         if (state.isOf(BzFluids.HONEY_FLUID_BLOCK)) {
-            minecraft.getTextureManager().bindTexture(HONEY_TEXTURE_UNDERWATER);
+            RenderSystem.setShader(GameRenderer::getPositionTexShader);
+            RenderSystem.enableTexture();
+            RenderSystem.setShaderTexture(0, HONEY_TEXTURE_UNDERWATER);
             BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
-            float f = (float) Math.pow(minecraft.player.getBrightnessAtEyes(), 2D);
+            float f = (float) Math.pow(clientPlayerEntity.getBrightnessAtEyes(), 2D);
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
-            float f7 = -minecraft.player.getYaw() / (64.0F * 8F);
-            float f8 = minecraft.player.getPitch() / (64.0F * 8F);
-            Matrix4f matrix4f = matrixStack.peek().getModel();
             RenderSystem.setShaderColor(f, f, f, 0.95F);
+            float modifiedYaw = -clientPlayerEntity.getYaw() / (64.0F * 8F);
+            float modifiedPitch = clientPlayerEntity.getPitch() / (64.0F * 8F);
+            Matrix4f matrix4f = matrixStack.peek().getModel();
             bufferbuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
-            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).texture(1.0F + f7, 1.0F + f8).next();
-            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).texture(0.0F + f7, 2.0F + f8).next();
-            bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).texture(1.0F + f7, 1.0F + f8).next();
-            bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).texture(2.0F + f7, 0.0F + f8).next();
+            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).texture(1.0F + modifiedYaw, 1.0F + modifiedPitch).next();
+            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).texture(0.0F + modifiedYaw, 2.0F + modifiedPitch).next();
+            bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).texture(1.0F + modifiedYaw, 1.0F + modifiedPitch).next();
+            bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).texture(2.0F + modifiedYaw, 0.0F + modifiedPitch).next();
             bufferbuilder.end();
             BufferRenderer.draw(bufferbuilder);
             RenderSystem.disableBlend();
+            return true;
         }
+
+        return false;
     }
 
     public static void renderHoneyFog()

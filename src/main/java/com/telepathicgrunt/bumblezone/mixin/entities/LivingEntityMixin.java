@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
@@ -56,9 +57,13 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     // make jumping in honey weaker
-    @ModifyVariable(method = "tickMovement()V",
-            at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/entity/LivingEntity.getFluidHeight(Lnet/minecraft/tag/Tag;)D", ordinal = 1), ordinal = 3)
-    private double thebumblezone_honeyFluidJump1(double fluidHeight) {
+    @ModifyVariable(method = "tickMovement()V", ordinal = 0,
+            at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/entity/LivingEntity.getFluidHeight(Lnet/minecraft/tag/Tag;)D", ordinal = 1),
+            slice = @Slice(
+                    from = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/entity/LivingEntity.shouldSwimInFluids()Z"),
+                    to = @At(value = "INVOKE", target = "net/minecraft/entity/LivingEntity.isTouchingWater()Z")
+            ))
+    private double thebumblezone_honeyFluidJump(double fluidHeight) {
         if(fluidHeight == 0) {
             return this.getFluidHeight(BzFluidTags.BZ_HONEY_FLUID);
         }

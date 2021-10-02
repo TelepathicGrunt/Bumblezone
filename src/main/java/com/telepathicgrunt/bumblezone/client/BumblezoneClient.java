@@ -22,12 +22,15 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class BumblezoneClient implements ClientModInitializer {
-    public static final Identifier FLUID_STILL = new Identifier(Bumblezone.MODID + ":block/sugar_water_still");
-    public static final Identifier FLUID_FLOWING = new Identifier(Bumblezone.MODID + ":block/sugar_water_flow");
+    public static final Identifier SUGAR_WATER_FLUID_STILL = new Identifier(Bumblezone.MODID + ":block/sugar_water_still");
+    public static final Identifier SUGAR_WATER_FLUID_FLOWING = new Identifier(Bumblezone.MODID + ":block/sugar_water_flow");
+    public static final Identifier HONEY_FLUID_STILL = new Identifier(Bumblezone.MODID + ":block/honey_fluid_still");
+    public static final Identifier HONEY_FLUID_FLOWING = new Identifier(Bumblezone.MODID + ":block/honey_fluid_flow");
 
     @Override
     public void onInitializeClient() {
-        FluidRender.setupFluidRendering(BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID_FLOWING, FLUID_STILL, FLUID_FLOWING);
+        FluidRender.setupFluidRendering(BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID_FLOWING, SUGAR_WATER_FLUID_STILL, SUGAR_WATER_FLUID_FLOWING);
+        FluidRender.setupFluidRendering(BzFluids.HONEY_FLUID, BzFluids.HONEY_FLUID_FLOWING, HONEY_FLUID_STILL, HONEY_FLUID_FLOWING);
         registerRenderLayers();
         BzParticles.registerParticles();
 

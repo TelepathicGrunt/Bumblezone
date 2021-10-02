@@ -9,6 +9,7 @@ import com.telepathicgrunt.bumblezone.tags.BzFluidTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FluidBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -113,7 +114,7 @@ public abstract class HoneyFluid extends FlowableFluid {
     @Override
     public BlockState toBlockState(FluidState state) {
         return BzFluids.HONEY_FLUID_BLOCK.getDefaultState()
-                .with(FlowableFluid.LEVEL, state.isStill() ? 0 : state.getLevel())
+                .with(FluidBlock.LEVEL, state.isStill() ? 0 : state.getLevel())
                 .with(BOTTOM_LEVEL, state.isStill() ? 0 : state.get(BOTTOM_LEVEL))
                 .with(FALLING, !state.isStill() && state.get(FALLING))
                 .with(ABOVE_FLUID, state.get(ABOVE_FLUID));
