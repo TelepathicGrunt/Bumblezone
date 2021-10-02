@@ -23,10 +23,8 @@ public class FluidBlockRendererMixin {
 
     // make honey fluid flow downward slower
     @ModifyVariable(method = "tesselate(Lnet/minecraft/world/IBlockDisplayReader;Lnet/minecraft/util/math/BlockPos;Lcom/mojang/blaze3d/vertex/IVertexBuilder;Lnet/minecraft/fluid/FluidState;)Z",
-            slice = @Slice(from = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/client/renderer/FluidBlockRenderer.getWaterHeight(Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/fluid/Fluid;)F",
-                    ordinal = 3, shift = At.Shift.AFTER)),
-            at = @At(value = "INVOKE", target = "net/minecraft/client/renderer/FluidBlockRenderer.isFaceOccludedByNeighbor(Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/Direction;F)Z",
-                    ordinal = 0, shift = At.Shift.BY, by = -14),
+            at = @At(value = "INVOKE", target = "net/minecraft/client/renderer/texture/TextureAtlasSprite.getU0 ()F",
+                    ordinal = 1, shift = At.Shift.BY, by = -6),
             ordinal = 13)
     private float thebumblezone_changeFluidHeight(float fluidBottomHeight, IBlockDisplayReader blockDisplayReader, BlockPos blockPos, IVertexBuilder vertexBuilder, FluidState fluidState) {
         if(fluidState.is(BzFluidTags.BZ_HONEY_FLUID)) {
