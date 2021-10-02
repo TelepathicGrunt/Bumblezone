@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.client;
 
+import com.telepathicgrunt.the_bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.FogRenderer;
@@ -30,9 +31,13 @@ public class FogRendererClientMixin {
     @Inject(method = "setupColor(Lnet/minecraft/client/renderer/ActiveRenderInfo;FLnet/minecraft/client/world/ClientWorld;IF)V",
             at = @At(value = "INVOKE", target = "net/minecraft/client/world/ClientWorld$ClientWorldInfo.getClearColorScale()D"))
     private static void thebumblezone_setupHoneyFogColor(ActiveRenderInfo activeRenderInfo, float j, ClientWorld clientWorld, int l, float i1, CallbackInfo ci) {
-        FluidState fluidstate = activeRenderInfo.getFluidInCamera();
+        FluidState fluidstate = FluidRender.getNearbyHoneyFluid(activeRenderInfo);
         if(fluidstate.is(BzFluidTags.BZ_HONEY_FLUID)) {
-            float brightness = (float) Math.pow(activeRenderInfo.getEntity().getBrightness(), 2D);
+            // Scale the brightness of fog but make sure it is never darker than the dimension's min brightness.
+            float brightness = (float) Math.max(
+                    Math.pow(FluidRender.getDimensionBrightnessAtEyes(activeRenderInfo.getEntity()), 2D),
+                    activeRenderInfo.getEntity().level.dimensionType().brightness(0)
+            );
             fogRed = 0.6F * brightness;
             fogGreen = 0.3F * brightness;
             fogBlue = 0.0F;
