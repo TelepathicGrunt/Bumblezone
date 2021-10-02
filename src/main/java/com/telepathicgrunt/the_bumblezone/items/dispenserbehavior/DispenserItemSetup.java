@@ -18,9 +18,7 @@ public class DispenserItemSetup {
         DispenserBlock.registerBehavior(BzItems.SUGAR_WATER_BOTTLE.get(), new SugarWaterBottleDispenseBehavior()); // adds compatibility with sugar water bottles in dispensers
         DispenserBlock.registerBehavior(BzItems.HONEY_BUCKET.get(), new HoneyFluidBucketDispenseBehavior()); // adds compatibility with honey fluid buckets in dispensers
 
-
         // Behavior chaining with vanilla items
-
 
         //grab the original bottle behaviors and set it as a fallback for our custom behavior
         //this is so we don't override another mod's Dispenser behavior that they set to the bottles.

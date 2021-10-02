@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyFluidBlock;
-import com.telepathicgrunt.the_bumblezone.mixin.FlowingFluidAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.blocks.FlowingFluidAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;

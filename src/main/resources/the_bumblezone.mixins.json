@@ -4,7 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "the_bumblezone.refmap.json",
   "mixins": [
-    "FlowingFluidAccessor",
+    "blocks.FlowingFluidAccessor",
     "blocks.BeeHiveDropsMixin",
     "blocks.DefaultDispenseItemBehaviorInvoker",
     "blocks.DispenserBlockInvoker",

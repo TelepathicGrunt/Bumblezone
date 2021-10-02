@@ -23,7 +23,7 @@ import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 // CLIENT-SIDED
 public class FluidRender {
 
-    private static final ResourceLocation TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID + ":textures/misc/sugar_water_underwater.png");
+    private static final ResourceLocation SUGAR_WATER_TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID + ":textures/misc/sugar_water_underwater.png");
     private static final ResourceLocation HONEY_TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID + ":textures/misc/honey_fluid_underwater.png");
 
     public static void sugarWaterOverlay(RenderBlockOverlayEvent event)
@@ -32,7 +32,7 @@ public class FluidRender {
         if (state.is(BzFluids.SUGAR_WATER_BLOCK.get()))
         {
             Minecraft minecraftIn = Minecraft.getInstance();
-            minecraftIn.getTextureManager().bind(TEXTURE_UNDERWATER);
+            minecraftIn.getTextureManager().bind(SUGAR_WATER_TEXTURE_UNDERWATER);
             BufferBuilder bufferbuilder = Tessellator.getInstance().getBuilder();
             float f = event.getPlayer().getBrightness();
             RenderSystem.enableBlend();

@@ -39,19 +39,19 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
 
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-        if (this.neighboringFluidInteractions(world, pos, state)) {
+        if (this.neighboringFluidInteractions(world, pos)) {
             world.getLiquidTicks().scheduleTick(pos, state.getFluidState().getType(), this.getFluid().getTickDelay(world));
         }
     }
 
     @Override
     public void onPlace(BlockState blockState, World world, BlockPos blockPos, BlockState previousBlockState, boolean notify) {
-        if (this.neighboringFluidInteractions(world, blockPos, blockState)) {
+        if (this.neighboringFluidInteractions(world, blockPos)) {
             world.getLiquidTicks().scheduleTick(blockPos, blockState.getFluidState().getType(), this.getFluid().getTickDelay(world));
         }
     }
 
-    private boolean neighboringFluidInteractions(World world, BlockPos pos, BlockState state)  {
+    private boolean neighboringFluidInteractions(World world, BlockPos pos)  {
         boolean lavaflag = false;
 
         for (Direction direction : Direction.values()) {
@@ -101,7 +101,6 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
     /**
      * Heal bees if they are damaged or create honey source if pollinated
      */
-    @Deprecated
     @Override
     public void entityInside(BlockState state, World world, BlockPos position, Entity entity) {
         double verticalSpeedDeltaLimit = 0.01D;

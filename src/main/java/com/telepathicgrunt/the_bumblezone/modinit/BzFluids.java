@@ -43,5 +43,5 @@ public class BzFluids {
 
     public static final ForgeFlowingFluid.Properties HONEY_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(HONEY_FLUID, HONEY_FLUID_FLOWING,
             FluidAttributes.builder(HONEY_FLUID_STILL_TEXTURE, HONEY_FLUID_FLOWING_TEXTURE).overlay(HONEY_FLUID_OVERLAY_TEXTURE).viscosity(5000))
-            .bucket(BzItems.HONEY_BUCKET).canMultiply().block(HONEY_FLUID_BLOCK).tickRate(30);
+            .bucket(BzItems.HONEY_BUCKET).block(HONEY_FLUID_BLOCK).tickRate(30);
 }
