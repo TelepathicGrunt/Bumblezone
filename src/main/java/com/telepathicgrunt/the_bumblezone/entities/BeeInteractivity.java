@@ -34,7 +34,7 @@ public class BeeInteractivity {
         if (itemRL == null || !BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
             return ActionResultType.PASS;
 
-        if (itemstack.getItem() == BzItems.HONEY_BUCKET.get()) {
+        if (itemstack.getItem().is(BzItemTags.HONEY_BUCKETS)) {
             beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
             calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);
             if (beeEntity.isBaby()) {

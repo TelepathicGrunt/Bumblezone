@@ -22,6 +22,8 @@ Sticky Honey Redstone now gives off a light level of 1 when activated.
 
 Fixed sideways Honey Crystal not rotating properly when spawned by rotated nbt builds.
 
+Dispensers now only allow Honey Bottle, Sugar Water Bottle, and Honey Bucket to feed Honeycomb Brood Blocks if those items are in the the_bumblezone:bee_feeding_item tag.
+
 ##### Items:
 Added Pollen Puff item!
  Can be thrown like a snowball but will not deal any damage or pushback.

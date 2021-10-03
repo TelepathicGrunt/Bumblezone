@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
@@ -20,7 +21,7 @@ import net.minecraft.world.server.ServerWorld;
 
 
 public class SugarWaterBottleDispenseBehavior extends DefaultDispenseItemBehavior {
-    public static DefaultDispenseItemBehavior DROP_ITEM_BEHAVIOR = new DefaultDispenseItemBehavior();
+    private static final DefaultDispenseItemBehavior DROP_ITEM_BEHAVIOR = new DefaultDispenseItemBehavior();
 
     /**
      * Dispense the specified stack, play the dispense sound and spawn particles.
@@ -32,7 +33,7 @@ public class SugarWaterBottleDispenseBehavior extends DefaultDispenseItemBehavio
         BlockPos position = new BlockPos(iposition);
         BlockState blockstate = world.getBlockState(position);
 
-        if (blockstate.getBlock() == BzBlocks.HONEYCOMB_BROOD.get()) {
+        if (blockstate.is(BzBlocks.HONEYCOMB_BROOD.get()) && BzItemTags.BEE_FEEDING_ITEMS.contains(stack.getItem())) {
             float chance = world.random.nextFloat();
             if (chance <= 0.3F) {
                 // spawn bee if at final stage and front isn't blocked off
@@ -50,7 +51,8 @@ public class SugarWaterBottleDispenseBehavior extends DefaultDispenseItemBehavio
                         world.addFreshEntity(beeEntity);
                         world.setBlockAndUpdate(position, blockstate.setValue(HoneycombBrood.STAGE, 0));
                     }
-                } else {
+                }
+                else {
                     world.setBlockAndUpdate(position, blockstate.setValue(HoneycombBrood.STAGE, stage + 1));
                 }
             }
@@ -62,10 +64,12 @@ public class SugarWaterBottleDispenseBehavior extends DefaultDispenseItemBehavio
                     addGlassBottleToDispenser(source);
                 else
                     stack = new ItemStack(Items.GLASS_BOTTLE);
-            } else {
+            }
+            else {
                 DROP_ITEM_BEHAVIOR.dispense(source, new ItemStack(Items.GLASS_BOTTLE));
             }
-        } else {
+        }
+        else {
             return super.execute(source, stack);
         }
 
