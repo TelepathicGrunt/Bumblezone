@@ -3,6 +3,7 @@ package com.telepathicgrunt.bumblezone.items.dispenserbehavior;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
@@ -20,7 +21,7 @@ import net.minecraft.util.math.Position;
 
 
 public class SugarWaterBottleDispenseBehavior extends ItemDispenserBehavior {
-    public static ItemDispenserBehavior DROP_ITEM_BEHAVIOR = new ItemDispenserBehavior();
+    private static final ItemDispenserBehavior DROP_ITEM_BEHAVIOR = new ItemDispenserBehavior();
 
     /**
      * Dispense the specified stack, play the dispense sound and spawn particles.
@@ -32,7 +33,7 @@ public class SugarWaterBottleDispenseBehavior extends ItemDispenserBehavior {
         BlockPos position = new BlockPos(iposition);
         BlockState blockstate = world.getBlockState(position);
 
-        if (blockstate.getBlock() == BzBlocks.HONEYCOMB_BROOD) {
+        if (blockstate.isOf(BzBlocks.HONEYCOMB_BROOD) && BzItemTags.BEE_FEEDING_ITEMS.contains(stack.getItem())) {
             float chance = world.random.nextFloat();
             if (chance <= 0.3F) {
                 // spawn bee if at final stage and front isn't blocked off
@@ -65,7 +66,8 @@ public class SugarWaterBottleDispenseBehavior extends ItemDispenserBehavior {
             } else {
                 DROP_ITEM_BEHAVIOR.dispense(source, new ItemStack(Items.GLASS_BOTTLE));
             }
-        } else {
+        }
+        else {
             return super.dispenseSilently(source, stack);
         }
 

@@ -14,4 +14,6 @@ public class BzItemTags {
     public static final Tag<Item> HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS = TagRegistry.item(new Identifier(Bumblezone.MODID, "honey_crystal_shield_repair_items"));
     public static final Tag<Item> BEE_FEEDING_ITEMS = TagRegistry.item(new Identifier(Bumblezone.MODID, "bee_feeding_items"));
     public static final Tag<Item> WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP = TagRegistry.item(new Identifier(Bumblezone.MODID, "wrath_activating_items_when_picked_up"));
+
+    public static final Tag<Item> HONEY_BUCKETS = TagRegistry.item(new Identifier("c:buckets/honey"));
 }

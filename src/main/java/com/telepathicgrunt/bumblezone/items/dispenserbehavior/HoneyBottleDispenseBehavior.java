@@ -4,6 +4,7 @@ import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.bumblezone.mixin.blocks.ItemDispenserBehaviorInvoker;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
@@ -35,7 +36,7 @@ public class HoneyBottleDispenseBehavior extends ItemDispenserBehavior {
         BlockPos position = new BlockPos(iposition);
         BlockState blockstate = world.getBlockState(position);
 
-        if (blockstate.getBlock() == BzBlocks.HONEYCOMB_BROOD) {
+        if (blockstate.isOf(BzBlocks.HONEYCOMB_BROOD) && BzItemTags.BEE_FEEDING_ITEMS.contains(stack.getItem())) {
             // spawn bee if at final stage and front isn't blocked off
             int stage = blockstate.get(HoneycombBrood.STAGE);
             if (stage == 3) {
@@ -52,7 +53,8 @@ public class HoneyBottleDispenseBehavior extends ItemDispenserBehavior {
                 }
 
                 world.setBlockState(position, blockstate.with(HoneycombBrood.STAGE, 0));
-            } else {
+            }
+            else {
                 world.setBlockState(position, blockstate.with(HoneycombBrood.STAGE, stage + 1));
             }
 
@@ -62,10 +64,12 @@ public class HoneyBottleDispenseBehavior extends ItemDispenserBehavior {
                     addGlassBottleToDispenser(source);
                 else
                     stack = new ItemStack(Items.GLASS_BOTTLE);
-            } else {
+            }
+            else {
                 DROP_ITEM_BEHAVIOR.dispense(source, new ItemStack(Items.GLASS_BOTTLE));
             }
-        } else if (blockstate.getBlock() == BzBlocks.POROUS_HONEYCOMB) {
+        }
+        else if (blockstate.getBlock() == BzBlocks.POROUS_HONEYCOMB) {
             world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState());
             stack.decrement(1);
             if (!Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.dispensersDropGlassBottles) {
@@ -74,7 +78,8 @@ public class HoneyBottleDispenseBehavior extends ItemDispenserBehavior {
                 else
                     stack = new ItemStack(Items.GLASS_BOTTLE);
             }
-        } else {
+        }
+        else {
             // If it instanceof DefaultDispenseItemBehavior, call dispenseStack directly to avoid
             // playing particles and sound twice due to dispense method having that by default.
             if(DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR instanceof ItemDispenserBehavior) {
