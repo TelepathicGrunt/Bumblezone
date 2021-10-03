@@ -6,7 +6,7 @@
       "required": true
     },
     {
-      "id": "#c:items/buckets/honey",
+      "id": "#c:buckets/honey",
       "required": true
     }
   ]
