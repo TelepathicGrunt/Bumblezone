@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     {
+      "id": "minecraft:wither_rose",
+      "required": true
+    },
+    {
       "id": "#botania:mystical_flowers",
       "required": false
     },

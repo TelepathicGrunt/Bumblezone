@@ -9,7 +9,7 @@ Note, I need people to help add translations for the new Blocks, Fluids, and Ite
 Added Pile of Pollen block! 
  Gives off pollen particles when any entity walks through it and slows down the entity based on how high the pile is.
  Is a falling block that can be used to blind players or to hide (players cannot see through the block when inside).
- Unpollinated bees will become polinated when they touch the block (decreases the pile by 1 layer) (modded bees can be added to the the_bumblezone:pollen_puff_can_pollinate tag that controls what bee can be pollinated).
+ Unpollinated bees will become pollinated when they touch the block (decreases the pile by 1 layer) (modded bees can be added to the the_bumblezone:pollen_puff_can_pollinate tag that controls what bee can be pollinated).
  Pandas in the block will sneeze significantly more often.
  Breaking the block gives a little bit of Pollen Puff item but Fortune increases the drops. Shovels is the best tool for this block.
  Redstone Comparators can measure the amount of layers this block has for contraptions.
@@ -34,7 +34,7 @@ Added Honey Fluid Bucket!
  Can be crafted from 1 Bucket + 3 Honey Bottles and when doing 1 Honey Bucket + 3 Glass Bottles, it can be crafted back into 3 Honey Bottles.
  Can place Honey Fluid anywhere and can be obtained by using a Bucket on a Honey Fluid source block.
  If used on an adult bee, it will fully heal the bee and set it and all bees within 10 blocks into love mode.
- If used on a child beed, it fully heals the bee and has a chance of growing the child bee into an adult.
+ If used on a child bee, it fully heals the bee and has a chance of growing the child bee into an adult.
  Using Honey Bucket on Porous Honeycomb block will turn it and 2 neighboring Porous Honeycomb blocks into Filled Porous Honeycomb blocks.
  Using Honey Bucket on Honeycomb Brood block will fully grow the larva straight to its final stage.
  Works with Dispensers too!
