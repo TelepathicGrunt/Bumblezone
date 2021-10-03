@@ -1,17 +1,9 @@
 package com.telepathicgrunt.bumblezone.items.dispenserbehavior;
 
-import com.telepathicgrunt.bumblezone.Bumblezone;
-import com.telepathicgrunt.bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
-import net.minecraft.block.entity.DispenserBlockEntity;
-import net.minecraft.block.entity.HopperBlockEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

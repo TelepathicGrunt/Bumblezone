@@ -1,7 +1,6 @@
 package com.telepathicgrunt.bumblezone.blocks;
 
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;

@@ -16,7 +16,7 @@ repositories {
 
 &nbsp;
 
-Don't forget to change <modversion> with the actual latest version of this mod like `3.0.9` for example.
+Don't forget to change <modversion> with the actual latest version of this mod like `3.1.0` for example.
 
 <blockquote>
 dependencies {
