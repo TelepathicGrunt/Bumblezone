@@ -20,9 +20,9 @@ apply plugin: 'maven'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 
-version = "${mc_version}-${mod_version}-forge"
+version = "${mod_version}+${mc_version}"
 group = "com.telepathicgrunt"
-archivesBaseName = "${modid}"
+archivesBaseName = "${modid}_forge"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 

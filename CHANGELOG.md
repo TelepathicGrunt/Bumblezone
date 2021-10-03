@@ -1,5 +1,9 @@
 ### **(V.2.5.0 Changes) (1.16.5 Minecraft)**
 
+##### Developers:
+Mod jar name was changed so to download bumblezone from the nexus.resourcefulbees maven, you would use this new format instead:
+ implementation fg.deobf("com.telepathicgrunt:Bumblezone:<modversion>+1.16.5")
+
 ##### Translations:
 Special thanks to mcBegins2Snow for helping to clean up some zh_cn.json translations!
 
