@@ -6,8 +6,8 @@
       "required": true
     },
     {
-      "id": "#forge:items/buckets/honey",
-      "required": true
+      "id": "#forge:buckets/honey",
+      "required": false
     }
   ]
 }
