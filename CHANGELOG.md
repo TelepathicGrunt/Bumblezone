@@ -1,4 +1,4 @@
-### **(V.2.5.0 Changes) (1.16.5 Minecraft)**
+### **(V.3.1.0 Changes) (1.17.1 Minecraft)**
 
 ##### Translations:
 Special thanks to mcBegins2Snow for helping to clean up some zh_cn.json translations!
