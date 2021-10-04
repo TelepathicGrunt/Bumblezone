@@ -89,8 +89,8 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
 
     @Override
     public FluidState getFluidState(BlockState blockState) {
-        int fluidLevel = blockState.getValue(LEVEL);
-        int bottomFluidLevel = blockState.getValue(BOTTOM_LEVEL);
+        int fluidLevel = Math.min(Math.max(blockState.getValue(LEVEL), 0), 8);
+        int bottomFluidLevel = Math.min(Math.max(blockState.getValue(BOTTOM_LEVEL), 0), maxBottomLayer);
         boolean isFalling = blockState.getValue(FALLING);
         FluidState fluidState;
         if(fluidLevel == 0) {

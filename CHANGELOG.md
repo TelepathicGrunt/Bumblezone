@@ -1,3 +1,9 @@
+### **(V.2.5.1 Changes) (1.16.5 Minecraft)**
+
+##### Fluids:
+Restrict values on properties for Honey Fluid to try and prevent a crash if a mod or the game tries to get a level 9 fluid when Honey Fluid only goes up to 8.
+
+
 ### **(V.2.5.0 Changes) (1.16.5 Minecraft)**
 
 ##### Developers:
