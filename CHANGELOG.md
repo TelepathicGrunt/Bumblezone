@@ -9,6 +9,12 @@ Special thanks to mc-kaishixiaxue for helping to update the zh_cn.json translati
 Fixed several usages where I was not giving the right item to the player's inventory such as using a water bucket on
  a Honey Crystal was not giving players an empty bucket afterwards. Now it will.
 
+##### Blocks:
+Fixed Honey Crystal block to properly implement IWaterLoggable so it interacts with other mods better for fluid adding/extracting.
+ Honey Crystal block can no longer be filled with fluid while in the Nether now and when placing the block in creative mode,
+ the block can only be waterlogged if placed in a water-tagged fluid source block. Otherwise, you need water-tagged buckets to 
+ waterlog the block by hand or dispenser or by other mod's machines and stuff.
+
 
 ### **(V.2.5.1 Changes) (1.16.5 Minecraft)**
 

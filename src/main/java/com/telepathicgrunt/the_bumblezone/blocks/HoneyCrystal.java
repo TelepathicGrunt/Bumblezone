@@ -8,11 +8,15 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ILiquidContainer;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
@@ -42,8 +46,7 @@ import net.minecraft.world.World;
 
 import java.util.Map;
 
-public class HoneyCrystal extends ProperFacingBlock {
-    private static final ResourceLocation EMPTY_FLUID_RL = new ResourceLocation("minecraft:empty");
+public class HoneyCrystal extends ProperFacingBlock implements IWaterLoggable {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected static final VoxelShape DOWN_AABB = Block.box(0.0D, 1.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     protected static final VoxelShape UP_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
@@ -116,7 +119,8 @@ public class HoneyCrystal extends ProperFacingBlock {
 
         if (facing.getOpposite() == blockstate.getValue(FACING) && !blockstate.canSurvive(world, currentPos)) {
             return Blocks.AIR.defaultBlockState();
-        } else {
+        }
+        else {
             if (blockstate.getValue(WATERLOGGED)) {
                 world.getLiquidTicks().scheduleTick(currentPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(world));
             }
@@ -146,7 +150,7 @@ public class HoneyCrystal extends ProperFacingBlock {
         for (Direction direction : context.getNearestLookingDirections()) {
             blockstate = blockstate.setValue(FACING, direction.getOpposite());
             if (blockstate.canSurvive(worldReader, blockpos)) {
-                return blockstate.setValue(WATERLOGGED, fluidstate.getType().is(FluidTags.WATER));
+                return blockstate.setValue(WATERLOGGED, fluidstate.getType().is(FluidTags.WATER) && fluidstate.isSource());
             }
         }
 
@@ -166,59 +170,7 @@ public class HoneyCrystal extends ProperFacingBlock {
             return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);
 
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
-
-        //Player uses bucket with water-tagged fluid and this block is not waterlogged
-        if (itemstack.getItem() instanceof BucketItem) {
-            if(((BucketItem) itemstack.getItem()).getFluid().is(FluidTags.WATER) &&
-                 !blockstate.getValue(WATERLOGGED)){
-
-                //make block waterlogged
-                world.setBlockAndUpdate(position, blockstate.setValue(WATERLOGGED, true));
-                world.getLiquidTicks().scheduleTick(position, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(world));
-                world.playSound(
-                        playerEntity,
-                        playerEntity.getX(),
-                        playerEntity.getY(),
-                        playerEntity.getZ(),
-                        SoundEvents.AMBIENT_UNDERWATER_ENTER,
-                        SoundCategory.NEUTRAL,
-                        1.0F,
-                        1.0F);
-
-                //set player bucket to be empty if not in creative
-                if (!playerEntity.isCreative()) {
-                    Item item = itemstack.getItem();
-                    itemstack.shrink(1);
-                    GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(item), true);
-                }
-
-                return ActionResultType.SUCCESS;
-            }
-            else if (((BucketItem) itemstack.getItem()).getFluid().getRegistryName().equals(EMPTY_FLUID_RL) &&
-                    blockstate.getValue(WATERLOGGED)) {
-
-                //make block waterlogged
-                world.setBlockAndUpdate(position, blockstate.setValue(WATERLOGGED, false));
-                world.playSound(
-                        playerEntity,
-                        playerEntity.getX(),
-                        playerEntity.getY(),
-                        playerEntity.getZ(),
-                        SoundEvents.AMBIENT_UNDERWATER_ENTER,
-                        SoundCategory.NEUTRAL,
-                        1.0F,
-                        1.0F);
-
-                //set player bucket to be full of sugar water if not in creative
-                if (!playerEntity.isCreative()) {
-                    itemstack.shrink(1);
-                    GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.SUGAR_WATER_BUCKET.get()), false);
-                }
-
-                return ActionResultType.SUCCESS;
-            }
-        }
-        else if (itemstack.getItem() == Items.GLASS_BOTTLE) {
+        if (itemstack.getItem() == Items.GLASS_BOTTLE) {
 
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
                     SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
@@ -268,4 +220,33 @@ public class HoneyCrystal extends ProperFacingBlock {
         return 1;
     }
 
- }
+    @Override
+    public boolean canPlaceLiquid(IBlockReader world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
+        return !blockState.getValue(WATERLOGGED) && fluid.is(FluidTags.WATER) && fluid.defaultFluidState().isSource();
+    }
+
+    @Override
+    public boolean placeLiquid(IWorld world, BlockPos blockPos, BlockState blockState, FluidState fluidState) {
+        if (!blockState.getValue(WATERLOGGED) && fluidState.getType().is(FluidTags.WATER) && fluidState.isSource()) {
+            if (!world.isClientSide()) {
+                world.setBlock(blockPos, blockState.setValue(WATERLOGGED, true), 3);
+                world.getLiquidTicks().scheduleTick(blockPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(world));
+            }
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public Fluid takeLiquid(IWorld world, BlockPos blockPos, BlockState blockState) {
+        if (blockState.getValue(WATERLOGGED)) {
+            world.setBlock(blockPos, blockState.setValue(WATERLOGGED, false), 3);
+            return BzFluids.SUGAR_WATER_FLUID.get();
+        }
+        else {
+            return Fluids.EMPTY;
+        }
+    }
+}
