@@ -66,8 +66,9 @@ public class BeeInteractivity {
 
             if (!playerEntity.isCreative()) {
                 // remove current item
+                Item item = itemstack.getItem();
                 itemstack.decrement(1);
-                GeneralUtils.givePlayerItem(playerEntity, hand, itemstack, true);
+                GeneralUtils.givePlayerItem(playerEntity, hand, new ItemStack(item), true);
             }
             playerEntity.swingHand(hand, true);
             return ActionResult.SUCCESS;

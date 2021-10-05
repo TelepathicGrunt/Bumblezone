@@ -178,8 +178,9 @@ public class HoneyCrystal extends ProperFacingBlock {
 
             //set player bucket to be empty if not in creative
             if (!playerEntity.isCreative()) {
+                Item item = itemstack.getItem();
                 itemstack.decrement(1);
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.BUCKET), false);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(item), true);
             }
 
             return ActionResult.SUCCESS;

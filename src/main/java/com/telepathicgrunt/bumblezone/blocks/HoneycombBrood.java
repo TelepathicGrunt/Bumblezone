@@ -19,6 +19,7 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -168,8 +169,9 @@ public class HoneycombBrood extends ProperFacingBlock {
 
             //removes used item
             if (!playerEntity.isCreative()) {
+                Item item = itemstack.getItem();
                 itemstack.decrement(1); // remove current honey item
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(item), true);
             }
 
             return ActionResult.SUCCESS;

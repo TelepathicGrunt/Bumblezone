@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -57,8 +58,9 @@ public class CreatingHoneySlime {
 
             if (!playerEntity.isCreative()) {
                 // remove current honey item
+                Item item = itemstack.getItem();
                 itemstack.decrement(1);
-                GeneralUtils.givePlayerItem(playerEntity, hand, itemstack, true);
+                GeneralUtils.givePlayerItem(playerEntity, hand, new ItemStack(item), true);
             }
 
             playerEntity.swingHand(hand, true);
