@@ -1,25 +1,25 @@
 {
-	"type":"minecraft:block",
+	"type": "minecraft:block",
 	"pools":
 	[
 	{
-		"name":"pool1",
+		"name": "pool1",
 		"rolls":1,
 		"entries":
 		[
 		{
-			"type":"minecraft:alternatives",
+			"type": "minecraft:alternatives",
 			"children":[
 				{
-					"type":"minecraft:item",
+					"type": "minecraft:item",
 					"conditions":[
 						{
-							"condition":"minecraft:match_tool",
+							"condition": "minecraft:match_tool",
 							"predicate":
 							{
 								"enchantments":[
 									{
-										"enchantment":"minecraft:silk_touch",
+										"enchantment": "minecraft:silk_touch",
 										"levels":{
 											"min":1
 										}
@@ -28,21 +28,21 @@
 							}
 						}
 					],
-					"name":"the_bumblezone:filled_porous_honeycomb_block"
+					"name": "the_bumblezone:filled_porous_honeycomb_block"
 				},
 				{
-					"type":"minecraft:item",
+					"type": "minecraft:item",
 					"functions":[
 						{
-							"function":"minecraft:apply_bonus",
-							"enchantment":"minecraft:fortune",
-							"formula":"minecraft:ore_drops"
+							"function": "minecraft:apply_bonus",
+							"enchantment": "minecraft:fortune",
+							"formula": "minecraft:ore_drops"
 						},
 						{
-							"function":"minecraft:explosion_decay"
+							"function": "minecraft:explosion_decay"
 						}
 					],
-					"name":"minecraft:honeycomb"
+					"name": "minecraft:honeycomb"
 				}
 			]
 		}
@@ -50,28 +50,28 @@
 		"conditions":
 		[
 			{
-				"condition":"minecraft:survives_explosion"
+				"condition": "minecraft:survives_explosion"
 			}
 		]
 	},
 	{
-		"name":"pool2",
+		"name": "pool2",
 		"rolls":1,
 		"entries":
 		[
 		{
-			"type":"minecraft:alternatives",
+			"type": "minecraft:alternatives",
 			"children":[
 				{
-					"type":"minecraft:item",
+					"type": "minecraft:item",
 					"conditions":[
 						{
-							"condition":"minecraft:match_tool",
+							"condition": "minecraft:match_tool",
 							"predicate":
 							{
 								"enchantments":[
 									{
-										"enchantment":"minecraft:silk_touch",
+										"enchantment": "minecraft:silk_touch",
 										"levels":{
 											"min":1
 										}
@@ -90,11 +90,11 @@
 			              }
 			           }
           			],
-					"name":"minecraft:stone"
+					"name": "minecraft:stone"
 				},
 				{
-					"type":"minecraft:item",
-					"name":"the_bumblezone:porous_honeycomb_block"
+					"type": "minecraft:item",
+					"name": "the_bumblezone:porous_honeycomb_block"
 				}
 			]
 		}
@@ -102,7 +102,7 @@
 		"conditions":
 		[
 			{
-				"condition":"minecraft:survives_explosion"
+				"condition": "minecraft:survives_explosion"
 			}
 		]
 	}
