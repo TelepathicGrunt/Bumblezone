@@ -11,12 +11,12 @@
  "block.the_bumblezone.sticky_honey_redstone": "Липкий медовый редстоун",
  "block.the_bumblezone.beehive_beeswax": "Вощёные доски",
  "block.the_bumblezone.honey_crystal": "Медовый кристалл",
- "block.the_bumblezone.pile_of_pollen": "Pile of Pollen",
+ "block.the_bumblezone.pile_of_pollen": "Куча пыльцы",
 
- "fluid.the_bumblezone.sugar_water_still": "Sugar Water",
- "fluid.the_bumblezone.sugar_water_flowing": "Sugar Water",
- "fluid.the_bumblezone.honey_fluid_still": "Honey Fluid",
- "fluid.the_bumblezone.honey_fluid_flowing": "Honey Fluid",
+ "fluid.the_bumblezone.sugar_water_still": "Сахарная вода",
+ "fluid.the_bumblezone.sugar_water_flowing": "Сахарная вода",
+ "fluid.the_bumblezone.honey_fluid_still": "Жидкий мёд",
+ "fluid.the_bumblezone.honey_fluid_flowing": "Жидкий мёд",
 
  "item.the_bumblezone.honey_crystal_shards": "Осколки медового кристалла",
  "item.the_bumblezone.sugar_water_bucket": "Ведро сахарной воды",
@@ -28,14 +28,14 @@
  "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov.desc": "Rimsky Korsakov - Flight of the Bumblebee",
  "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy": "пластинка",
  "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy.desc": "Rat Faced Boy - Honey Bee",
- "item.the_bumblezone.pollen_puff": "Pollen Puff",
- "item.the_bumblezone.honey_bucket": "Honey Bucket",
+ "item.the_bumblezone.pollen_puff": "Пыльца",
+ "item.the_bumblezone.honey_bucket": "Ведро мёда",
 
  "entity.the_bumblezone.honey_slime": "Медовый слизень",
- "entity.the_bumblezone.pollen_puff" : "Pollen Puff",
+ "entity.the_bumblezone.pollen_puff" : "Пыльца",
 
  "enchantment.the_bumblezone.comb_cutter": "Расческа для резки",
- "enchantment.the_bumblezone.comb_cutter.desc": "(Needs translation) Mines combs, hives, nest, and wax blocks faster. Doubles the output of BeeNest and BeeHive blocks including Resourceful Bee's hives.",
+ "enchantment.the_bumblezone.comb_cutter.desc": "Позволяет быстрее добывать соты, улья, гнезда и восковые блоки. Удваивает получаемые ресурсы при использовании на пчелиных ульях и гнёздах.",
 
  "biome.the_bumblezone.sugar_water_floor": "Пол сахарной воды",
  "biome.the_bumblezone.hive_wall": "Стена улья",
@@ -62,7 +62,7 @@
  "the_bumblezone.honey_crystal_shield.jei_description": " Созданный из осколков , этот щит изначально весьма хлипок, но становится всё прочнее с каждым ремонтом при помощи осколков медовых кристаллов на наковальне. На максимальном уровне примерно вдвое прочнее обычного щита. \n\nОднако этот щит всегда получает сильный ущерб при блокировании взрывного и огненного урона. \n\n Щит также слегка замедляет любого врага, наносящего физический урон по щиту, и более того, может быть зачарован на нерушимость, проклятие несъёмности и проклятие утраты.",
  "the_bumblezone.honey_slime_spawn_egg.jei_description": " Яйцо, призывающе медовых слизней, которых можно разводить и использовать для производства мёда, применяя на них стеклянные пузырьки. Сие существо добавлено благодаря Bagel, создателю Buzzier bees. Специальная благодарность для него!",
  "the_bumblezone.sugar_water_still.jei_description": " Жидкость, раствор сахара в воде. Любые существа в ней замедляются чуть сильнее, чем в обычной воде. Может быть обнаружена в пчелином мире, создана при помощи ведра с водой и сахара или получена из затопленного блока медовых кристаллов. \n В целом, сахарная вода имеет свойства обычной воды, так как имеет тег воды. Соответственно, она может увлажнять грядки или поддерживать жизнь кораллов. \n\n\n Эта жидкость также лечит всякую пчелу прикасающуюся пчелу, если та не получает урона. Более того, с ней сахарный тростник будет расти гораздо быстрее (может быть использовано с 4 сторон). \n\n Если соприкасается с любой жидкостью с тегом лавы, превратится в засахарённый булыжник либо засахарённый камень.",
- "the_bumblezone.pollen_puff.jei_description": " A soft ball of clumped pollen! Found when mining Pile of Pollen or unpollinating a bee by right clicking it with wet sponge, water bottle, or water bucket. \n\n It can be thrown to create a Pile of Pollen block where-ever it hits. If it hits an unpollinated bee, the bee becomes pollinated. If it hits a panda, it will sneeze. But if it hits an allowed flower, it may cause the flower to reproduce! \n\n A Pile of Pollen block slows mobs in it and gives off a ton of pollen particles. It will also pollinate any unpollinated bee that flies into the Pile of Pollen or make Pandas sneeze. It also can be measured by a Redstone Comparator.",
- "the_bumblezone.honey_fluid_still.jei_description": " A delicious fluid of honey! It flows very slowly and will slow mobs in it significantly. Non-player mobs and boats tends to sink into the Honey Fluid as if it is a sticky trap! \n\n Can be picked up with a Bucket or Glass Bottle and it will heal any hurt bee that flies into the fluid. \n\n When this fluid comes in contact with any other fluid that has a lava tag, this fluid will turn into either Sugar Infused Cobblestone or Sugar Infused Stone blocks.",
- "the_bumblezone.honey_bucket.jei_description": " Bucket holding Honey fluid. Can be obtained by crafting buckets with Honey Bottles and can be reverse crafted back to Honey Bottles too. \n\n If used on bees, it will fully heal them. if used on an adult bee, it puts it and nearby bees into love mode! if used on a child bee, it has a chance of growing them into an adult. Can be used in Dispensers too!"
+ "the_bumblezone.pollen_puff.jei_description": " Мягкий клубок слипшейся пыльцы! Получаеться при добыче кучи пыльцы или из пчёл с пыльцой, щелкнув по ним правой кнопкой мыши влажной губкой, а так же бутылкой с водой или ведром с водой. \n\n Его можно бросить, чтобы создать слой кучи пыльцы, куда бы он ни попадал. Если он попадает в неопыленную пчелу, пчела опыляется. Если попасть им в панду, она чихнет. Но если он попадает в ростущий цветок, это может привести к размножению цветка! \n\n Блоки пыльцы замедляют мобов и выделяет много частиц при физическом контакте. Он также будет опылять любую неопылённую пчелу, которая влетает в кучу пыльцы или заставлять чихать панд. Его также можно измерить с помощью редстоуного компаратора.",
+ "the_bumblezone.honey_fluid_still.jei_description": " Вкусный жидкий мёд! Он течёт очень медленно и значительно замедлит любых существ. Мобы и лодки, имеют тенденцию тонуть в жидком мёде, как если бы это была липкая ловушка! \n\n Можно собрать ведром или стеклянной бутылкой, а так же он вылечит любую раненую пчелу, которая попадёт в него. \n\n Когда эта жидкость вступает в контакт с любой другой жидкостью, имеющей свойства лавы, эта жидкость превращается либо в засахаренный булыжник или в засахаренный камень.",
+ "the_bumblezone.honey_bucket.jei_description": " Ведро с жидким мёдом.\n\n Использование на пчёлах полностью их излечит.. Если использовать на взрослой пчеле, он и соседние пчелы переходят в режим любви! при использовании на детской пчеле есть шанс вырастить из неё взрослую. Может использоваться и в раздатчиках!"
 }

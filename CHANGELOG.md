@@ -1,3 +1,11 @@
+### **(V.2.5.2 Changes) (1.16.5 Minecraft)**
+
+##### Lang:
+Special thanks to Tkhakiro for helping to update the ru_ru.json translations!
+
+Special thanks to mc-kaishixiaxue for helping to update the zh_cn.json translations!
+
+
 ### **(V.2.5.1 Changes) (1.16.5 Minecraft)**
 
 ##### Fluids:
