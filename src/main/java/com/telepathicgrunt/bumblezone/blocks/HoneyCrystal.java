@@ -1,7 +1,6 @@
 package com.telepathicgrunt.bumblezone.blocks;
 
 import com.google.common.collect.Maps;
-import com.telepathicgrunt.bumblezone.mixin.items.BucketItemAccessor;
 import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
@@ -12,10 +11,11 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemPlacementContext;
@@ -43,7 +43,7 @@ import net.minecraft.world.WorldView;
 import java.util.Map;
 
 
-public class HoneyCrystal extends ProperFacingBlock {
+public class HoneyCrystal extends ProperFacingBlock implements Waterloggable {
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     protected static final VoxelShape DOWN_AABB = Block.createCuboidShape(0.0D, 1.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     protected static final VoxelShape UP_AABB = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
@@ -146,7 +146,7 @@ public class HoneyCrystal extends ProperFacingBlock {
         for (Direction direction : context.getPlacementDirections()) {
             blockstate = blockstate.with(FACING, direction.getOpposite());
             if (blockstate.canPlaceAt(worldReader, blockpos)) {
-                return blockstate.with(WATERLOGGED, fluidstate.getFluid().isIn(FluidTags.WATER));
+                return blockstate.with(WATERLOGGED, fluidstate.getFluid().isIn(FluidTags.WATER) && fluidstate.isStill());
             }
         }
 
@@ -164,28 +164,7 @@ public class HoneyCrystal extends ProperFacingBlock {
 
         ItemStack itemstack = playerEntity.getStackInHand(playerHand);
 
-        //Player uses bucket with water-tagged fluid and this block is not waterlogged
-        if ((itemstack.getItem() instanceof BucketItem &&
-                ((BucketItemAccessor) itemstack.getItem()).thebumblezone_getFluid().isIn(FluidTags.WATER)) &&
-                blockstate.getBlock() == this &&
-                !blockstate.get(WATERLOGGED)) {
-
-            //make block waterlogged
-            world.setBlockState(position, blockstate.with(WATERLOGGED, true));
-            world.getFluidTickScheduler().schedule(position, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickRate(world));
-            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
-                    SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-
-            //set player bucket to be empty if not in creative
-            if (!playerEntity.isCreative()) {
-                Item item = itemstack.getItem();
-                itemstack.decrement(1);
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(item), true);
-            }
-
-            return ActionResult.SUCCESS;
-        }
-        else if (itemstack.getItem() == Items.GLASS_BOTTLE) {
+        if (itemstack.getItem() == Items.GLASS_BOTTLE) {
 
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
                     SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
@@ -233,5 +212,35 @@ public class HoneyCrystal extends ProperFacingBlock {
     @Override
     public int getOpacity(BlockState state, BlockView worldIn, BlockPos pos) {
         return 1;
+    }
+
+    @Override
+    public boolean canFillWithFluid(BlockView world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
+        return !blockState.get(WATERLOGGED) && fluid.isIn(FluidTags.WATER) && fluid.getDefaultState().isStill();
+    }
+
+    @Override
+    public boolean tryFillWithFluid(WorldAccess world, BlockPos blockPos, BlockState blockState, FluidState fluidState) {
+        if (!blockState.get(WATERLOGGED) && fluidState.getFluid().isIn(FluidTags.WATER) && fluidState.isStill()) {
+            if (!world.isClient()) {
+                world.setBlockState(blockPos, blockState.with(WATERLOGGED, true), 3);
+                world.getFluidTickScheduler().schedule(blockPos, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickRate(world));
+            }
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public ItemStack tryDrainFluid(WorldAccess world, BlockPos blockPos, BlockState blockState) {
+        if (blockState.get(WATERLOGGED)) {
+            world.setBlockState(blockPos, blockState.with(WATERLOGGED, false), 3);
+            return new ItemStack(BzItems.SUGAR_WATER_BUCKET);
+        }
+        else {
+            return ItemStack.EMPTY;
+        }
     }
 }
