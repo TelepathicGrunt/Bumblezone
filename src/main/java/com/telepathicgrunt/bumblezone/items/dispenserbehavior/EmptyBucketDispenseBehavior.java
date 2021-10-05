@@ -1,7 +1,6 @@
 package com.telepathicgrunt.bumblezone.items.dispenserbehavior;
 
 import com.telepathicgrunt.bumblezone.mixin.blocks.ItemDispenserBehaviorInvoker;
-import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import net.minecraft.block.BlockState;
@@ -13,7 +12,6 @@ import net.minecraft.block.entity.DispenserBlockEntity;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
@@ -34,20 +32,7 @@ public class EmptyBucketDispenseBehavior extends ItemDispenserBehavior {
         BlockPos position = new BlockPos(iposition);
         BlockState blockstate = world.getBlockState(position);
 
-        if (blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL && blockstate.get(Properties.WATERLOGGED)) {
-
-            world.setBlockState(position, BzBlocks.HONEY_CRYSTAL.getDefaultState()
-                    .with(Properties.FACING, blockstate.get(Properties.FACING))
-                    .with(Properties.WATERLOGGED, false));
-
-            stack.decrement(1);
-
-            if (!stack.isEmpty())
-                addItemToDispenser(source, BzItems.SUGAR_WATER_BUCKET);
-            else
-                stack = new ItemStack(BzItems.SUGAR_WATER_BUCKET);
-        }
-        else if (blockstate.getBlock() == BzFluids.HONEY_FLUID_BLOCK && blockstate.getFluidState().isStill()) {
+        if (blockstate.getBlock() == BzFluids.HONEY_FLUID_BLOCK && blockstate.getFluidState().isStill()) {
             world.setBlockState(position, Blocks.AIR.getDefaultState());
             stack.decrement(1);
             if (!stack.isEmpty())

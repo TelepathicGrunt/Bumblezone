@@ -2,6 +2,7 @@ package com.telepathicgrunt.bumblezone.modinit;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.items.BzMusicDiscs;
+import com.telepathicgrunt.bumblezone.items.BzSmartBucket;
 import com.telepathicgrunt.bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.bumblezone.items.PollenPuff;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -51,7 +52,7 @@ public class BzItems {
     public static final Item HONEY_SLIME_SPAWN_EGG = new SpawnEggItem(
             BzEntities.HONEY_SLIME, 16763904,16558080, (new Item.Settings()).group(BUMBLEZONE_CREATIVE_TAB));
 
-    public static final Item SUGAR_WATER_BUCKET = new BucketItem(BzFluids.SUGAR_WATER_FLUID, new Item.Settings()
+    public static final Item SUGAR_WATER_BUCKET = new BzSmartBucket(BzFluids.SUGAR_WATER_FLUID, new Item.Settings()
             .recipeRemainder(Items.BUCKET).maxCount(1).group(BUMBLEZONE_CREATIVE_TAB));
 
     public static final Item SUGAR_WATER_BOTTLE = new HoneyBottleItem((new Item.Settings()).recipeRemainder(Items.GLASS_BOTTLE)

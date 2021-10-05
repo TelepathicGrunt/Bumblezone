@@ -1,6 +1,5 @@
 package com.telepathicgrunt.bumblezone.items.dispenserbehavior;
 
-import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
@@ -8,7 +7,6 @@ import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
@@ -30,13 +28,6 @@ public class SugarWaterBucketDispenseBehavior extends ItemDispenserBehavior {
         if (bucketitem.placeFluid(null, world, position, null)) {
 
             bucketitem.onEmptied(null, world, stack, position);
-            return new ItemStack(Items.BUCKET);
-        }
-        else if(blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL && !blockstate.get(Properties.WATERLOGGED)) {
-
-            world.setBlockState(position, BzBlocks.HONEY_CRYSTAL.getDefaultState()
-                    .with(Properties.FACING, blockstate.get(Properties.FACING))
-                    .with(Properties.WATERLOGGED, true));
             return new ItemStack(Items.BUCKET);
         }
         else {

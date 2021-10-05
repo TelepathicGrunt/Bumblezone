@@ -31,6 +31,7 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootTables;
@@ -215,8 +216,9 @@ public class HoneySlimeEntity extends AnimalEntity implements Angerable, Monster
          if (itemstack.getItem() == Items.GLASS_BOTTLE) {
             world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
             if (!player.isCreative()) {
+               Item item = itemstack.getItem();
                itemstack.decrement(1);
-               GeneralUtils.givePlayerItem(player, hand, itemstack, true);
+               GeneralUtils.givePlayerItem(player, hand, new ItemStack(item), true);
             }
 
             this.setAttacker(player);
