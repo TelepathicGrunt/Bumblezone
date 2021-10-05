@@ -24,6 +24,7 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.ListNBT;
@@ -185,8 +186,9 @@ public class HoneycombBrood extends ProperFacingBlock {
 
             //removes used item
             if (!playerEntity.isCreative()) {
-                itemstack.shrink(1); // remove current honey bottle
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true);
+                Item item = itemstack.getItem();
+                itemstack.shrink(1);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(item), true);
             }
 
             return ActionResultType.SUCCESS;
@@ -220,8 +222,9 @@ public class HoneycombBrood extends ProperFacingBlock {
 
             // removes used item
             if (!playerEntity.isCreative()) {
-                itemstack.shrink(1); // item was consumed
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true);
+                Item item = itemstack.getItem();
+                itemstack.shrink(1);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(item), true);
             }
         }
 

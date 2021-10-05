@@ -135,7 +135,7 @@ public class GeneralUtils {
      * For giving the player an item properly into their inventory
      */
     public static void givePlayerItem(PlayerEntity playerEntity, Hand hand, ItemStack itemstack, boolean giveContainerItem) {
-        if(!giveContainerItem && !itemstack.hasContainerItem()) return;
+        if(giveContainerItem && !itemstack.hasContainerItem()) return;
 
         ItemStack itemToGive = giveContainerItem ? itemstack.getContainerItem() : itemstack;
         if (itemstack.isEmpty()) {

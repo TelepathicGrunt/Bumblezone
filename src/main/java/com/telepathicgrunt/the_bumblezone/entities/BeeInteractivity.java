@@ -59,8 +59,9 @@ public class BeeInteractivity {
 
         if (!playerEntity.isCreative()) {
             // remove current item
+            Item item = itemstack.getItem();
             itemstack.shrink(1);
-            GeneralUtils.givePlayerItem(playerEntity, hand, itemstack, true);
+            GeneralUtils.givePlayerItem(playerEntity, hand, new ItemStack(item), true);
         }
 
         playerEntity.swing(hand, true);
@@ -119,16 +120,5 @@ public class BeeInteractivity {
                     world.getRandom().nextFloat() * 0.2f + 0.2f,
                     world.getRandom().nextFloat() * 0.5 - 0.25f,
                     world.getRandom().nextFloat() * 0.4 + 0.2f);
-    }
-
-    private static void consumeItem(PlayerEntity playerEntity, Hand hand, ItemStack handItemstack, Item replacementItem) {
-        if (!playerEntity.isCreative()) {
-            // remove current bee soup
-            handItemstack.shrink(1);
-            GeneralUtils.givePlayerItem(playerEntity, hand, replacementItem.getDefaultInstance(), false);
-        }
-        else {
-            playerEntity.swing(hand, true);
-        }
     }
 }

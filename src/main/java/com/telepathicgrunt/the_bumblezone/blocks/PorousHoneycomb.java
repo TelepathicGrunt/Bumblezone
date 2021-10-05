@@ -13,6 +13,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ActionResultType;
@@ -51,8 +52,9 @@ public class PorousHoneycomb extends Block {
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
             if (!playerEntity.isCreative()) {
-                itemstack.shrink(1); // remove current honey bottle
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true);
+                Item item = itemstack.getItem();
+                itemstack.shrink(1);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(item), true);
             }
 
             return ActionResultType.SUCCESS;
@@ -79,8 +81,9 @@ public class PorousHoneycomb extends Block {
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BUCKET_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
             if (!playerEntity.isCreative()) {
-                itemstack.shrink(1); // remove current honey bucket
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true);
+                Item item = itemstack.getItem();
+                itemstack.shrink(1);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(item), true);
             }
 
             return ActionResultType.SUCCESS;

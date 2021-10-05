@@ -5,6 +5,10 @@ Special thanks to Tkhakiro for helping to update the ru_ru.json translations!
 
 Special thanks to mc-kaishixiaxue for helping to update the zh_cn.json translations!
 
+##### Items:
+Fixed several usages where I was not giving the right item to the player's inventory such as using a water bucket on
+ a Honey Crystal was not giving players an empty bucket afterwards. Now it will.
+
 
 ### **(V.2.5.1 Changes) (1.16.5 Minecraft)**
 

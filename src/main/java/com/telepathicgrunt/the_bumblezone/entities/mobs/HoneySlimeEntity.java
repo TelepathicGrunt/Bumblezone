@@ -29,6 +29,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
@@ -218,8 +219,9 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
          if (itemstack.getItem() == Items.GLASS_BOTTLE) {
             world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
             if (!player.isCreative()) {
+               Item item = itemstack.getItem();
                itemstack.shrink(1);
-               GeneralUtils.givePlayerItem(player, hand, itemstack, true);
+               GeneralUtils.givePlayerItem(player, hand, new ItemStack(item), true);
             }
 
             this.setLastHurtByMob(player);

@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -50,8 +51,9 @@ public class CreatingHoneySlime {
 
             if (!playerEntity.isCreative()) {
                 // remove current honey item
+                Item item = itemstack.getItem();
                 itemstack.shrink(1);
-                GeneralUtils.givePlayerItem(playerEntity, hand, itemstack, true);
+                GeneralUtils.givePlayerItem(playerEntity, hand, new ItemStack(item), true);
             }
 
             playerEntity.swing(hand, true);

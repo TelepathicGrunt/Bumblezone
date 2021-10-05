@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DirectionalBlock;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
@@ -51,8 +52,9 @@ public class HoneycombBroodEvents
 
 				if (!playerEntity.isCreative())
 				{
-					itemstack.shrink(1); // remove current bee bottle
-					GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true);
+					Item item = itemstack.getItem();
+					itemstack.shrink(1);
+					GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(item), true);
 				}
 
 				event.setCanceled(true);
