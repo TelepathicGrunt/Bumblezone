@@ -2,28 +2,27 @@ package com.telepathicgrunt.bumblezone.items;
 
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.tags.BzItemTags;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShieldItem;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.world.World;
-
 import java.util.List;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 
 public class HoneyCrystalShield extends ShieldItem {
 
     public HoneyCrystalShield() {
         //starts off with 20 durability so it is super weak
-        super(new Item.Settings().maxDamage(20).group(BzItems.BUMBLEZONE_CREATIVE_TAB));
+        super(new Item.Properties().durability(20).tab(BzItems.BUMBLEZONE_CREATIVE_TAB));
     }
 
     /**
      * Specify what item can repair this shield
      */
     @Override
-    public boolean canRepair(ItemStack toRepair, ItemStack repair) {
+    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
         return BzItemTags.HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS.contains(repair.getItem());
     }
 
@@ -31,10 +30,10 @@ public class HoneyCrystalShield extends ShieldItem {
      * Display the shield level (repair cost)
      */
     @Override
-    public void appendTooltip(ItemStack stack, World worldIn, List<Text> tooltip, TooltipContext flagIn) {
+    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         if (stack.hasTag()) {
             int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
-            tooltip.add(new TranslatableText("item.the_bumblezone.honey_crystal_shield.level_tooltip").append(": " + (repairLevel + 1)));
+            tooltip.add(new TranslatableComponent("item.the_bumblezone.honey_crystal_shield.level_tooltip").append(": " + (repairLevel + 1)));
         }
     }
 }

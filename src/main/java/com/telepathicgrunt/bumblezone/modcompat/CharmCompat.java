@@ -4,8 +4,8 @@ import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.minecraft.item.Items;
-import net.minecraft.village.TradeOffers;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.item.Items;
 import svenhjol.charm.helper.VillagerHelper;
 import svenhjol.charm.module.beekeepers.Beekeepers;
 
@@ -21,7 +21,7 @@ public class CharmCompat {
     }
 
     public static void setupCharmTrades(){
-        if(TradeOffers.PROFESSION_TO_LEVELED_TRADE.containsKey(Beekeepers.BEEKEEPER)){
+        if(VillagerTrades.TRADES.containsKey(Beekeepers.BEEKEEPER)){
             VillagerHelper.addTrade(Beekeepers.BEEKEEPER, 2, new GeneralUtils.BasicItemTrade(Items.EMERALD, 1, BzItems.STICKY_HONEY_RESIDUE, 2));
             VillagerHelper.addTrade(Beekeepers.BEEKEEPER, 3, new GeneralUtils.BasicItemTrade(BzItems.HONEY_CRYSTAL_SHARDS, 3, Items.EMERALD, 1));
             VillagerHelper.addTrade(Beekeepers.BEEKEEPER, 4, new GeneralUtils.BasicItemTrade(Items.EMERALD, 2, BzItems.HONEY_CRYSTAL, 1));

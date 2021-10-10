@@ -33,22 +33,22 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
     public static final String MODID = "the_bumblezone";
-    public static final Identifier MOD_DIMENSION_ID = new Identifier(Bumblezone.MODID, Bumblezone.MODID);
+    public static final ResourceLocation MOD_DIMENSION_ID = new ResourceLocation(Bumblezone.MODID, Bumblezone.MODID);
 
     public static BzConfig BZ_CONFIG;
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     // legacy name to prevent breaking player's data even though this is for entities now
     public static final ComponentKey<IEntityComponent> ENTITY_COMPONENT =
-            ComponentRegistry.getOrCreate(new Identifier(MODID, "player_component"), IEntityComponent.class);
+            ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "player_component"), IEntityComponent.class);
 
     @Override
     public void onInitialize() {

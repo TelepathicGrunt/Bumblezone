@@ -6,16 +6,16 @@ import com.telepathicgrunt.bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.bumblezone.utils.OpenSimplex2F;
-import net.minecraft.block.BlockState;
-import net.minecraft.structure.Structure;
-import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.structure.processor.StructureProcessor;
-import net.minecraft.structure.processor.StructureProcessorType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.ChunkRegion;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.chunk.Chunk;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 public class PollenPilingProcessor extends StructureProcessor {
 
@@ -45,48 +45,48 @@ public class PollenPilingProcessor extends StructureProcessor {
     }
 
     @Override
-    public Structure.StructureBlockInfo process(WorldView worldView, BlockPos pos, BlockPos blockPos, Structure.StructureBlockInfo structureBlockInfoLocal, Structure.StructureBlockInfo structureBlockInfoWorld, StructurePlacementData structurePlacementData) {
-        setSeed(worldView instanceof ChunkRegion ? ((ChunkRegion) worldView).getSeed() : 0);
-        Structure.StructureBlockInfo structureBlockInfoToReturn = structureBlockInfoWorld;
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
+        setSeed(worldView instanceof WorldGenRegion ? ((WorldGenRegion) worldView).getSeed() : 0);
+        StructureTemplate.StructureBlockInfo structureBlockInfoToReturn = structureBlockInfoWorld;
         BlockState structureState = structureBlockInfoToReturn.state;
         BlockPos worldPos = structureBlockInfoToReturn.pos;
 
 
-        if(structureState.isOf(BzBlocks.PILE_OF_POLLEN)) {
+        if(structureState.is(BzBlocks.PILE_OF_POLLEN)) {
             if(!pollenReplaceSolids && !worldView.getBlockState(worldPos).isAir()) {
                 return null;
             }
 
-            BlockPos belowPos = worldPos.down();
-            if(belowPos.getY() <= worldView.getBottomY() || belowPos.getY() >= worldView.getTopY())
+            BlockPos belowPos = worldPos.below();
+            if(belowPos.getY() <= worldView.getMinBuildHeight() || belowPos.getY() >= worldView.getMaxBuildHeight())
                 return null;
             
-            Chunk chunk = worldView.getChunk(belowPos);
+            ChunkAccess chunk = worldView.getChunk(belowPos);
             BlockState belowState = chunk.getBlockState(belowPos);
-            if(!belowState.isOpaque()) {
-                chunk.getBlockTickScheduler().schedule(belowPos, structureState.getBlock(), 0);
+            if(!belowState.canOcclude()) {
+                chunk.getBlockTicks().scheduleTick(belowPos, structureState.getBlock(), 0);
             }
 
-            BlockPos.Mutable sidePos = new BlockPos.Mutable();
+            BlockPos.MutableBlockPos sidePos = new BlockPos.MutableBlockPos();
             for(Direction direction : Direction.values()) {
                 sidePos.set(worldPos).move(direction);
-                if(worldView.getBlockState(sidePos).getFluidState().isStill()) {
-                    return new Structure.StructureBlockInfo(worldPos, BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), null);
+                if(worldView.getBlockState(sidePos).getFluidState().isSource()) {
+                    return new StructureTemplate.StructureBlockInfo(worldPos, BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(), null);
                 }
             }
 
             double noiseVal = noiseGenerator.noise3_Classic(worldPos.getX() * xzScale, worldPos.getY() * yScale, worldPos.getZ() * xzScale);
             int layerHeight = Math.max(0, (int) (((noiseVal / 2D) + 0.5D) * 2.5D));
-            layerHeight = Math.min(8, layerHeight + structureState.get(PileOfPollen.LAYERS));
-            structureBlockInfoToReturn = new Structure.StructureBlockInfo(worldPos, structureState.with(PileOfPollen.LAYERS, layerHeight), structureBlockInfoToReturn.nbt);
+            layerHeight = Math.min(8, layerHeight + structureState.getValue(PileOfPollen.LAYERS));
+            structureBlockInfoToReturn = new StructureTemplate.StructureBlockInfo(worldPos, structureState.setValue(PileOfPollen.LAYERS, layerHeight), structureBlockInfoToReturn.nbt);
         }
 
-        if(!structureState.isOpaque()) {
-            BlockPos abovePos = worldPos.up();
-            Chunk chunk = worldView.getChunk(abovePos);
+        if(!structureState.canOcclude()) {
+            BlockPos abovePos = worldPos.above();
+            ChunkAccess chunk = worldView.getChunk(abovePos);
             BlockState aboveState = chunk.getBlockState(abovePos);
-            if(aboveState.isOf(BzBlocks.PILE_OF_POLLEN)) {
-                chunk.getBlockTickScheduler().schedule(abovePos, aboveState.getBlock(), 0);
+            if(aboveState.is(BzBlocks.PILE_OF_POLLEN)) {
+                chunk.getBlockTicks().scheduleTick(abovePos, aboveState.getBlock(), 0);
             }
         }
 

@@ -1,40 +1,40 @@
 package com.telepathicgrunt.bumblezone.items.dispenserbehavior;
 
-import com.telepathicgrunt.bumblezone.mixin.blocks.ItemDispenserBehaviorInvoker;
+import com.telepathicgrunt.bumblezone.mixin.blocks.DefaultDispenseItemBehaviorInvoker;
 import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.dispenser.DispenserBehavior;
-import net.minecraft.block.dispenser.ItemDispenserBehavior;
-import net.minecraft.block.entity.DispenserBlockEntity;
-import net.minecraft.block.entity.HopperBlockEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPointer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Position;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockSource;
+import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.dispenser.DispenseItemBehavior;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.entity.DispenserBlockEntity;
+import net.minecraft.world.level.block.entity.HopperBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 
-public class EmptyBucketDispenseBehavior extends ItemDispenserBehavior {
-    public static DispenserBehavior DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR;
-    public static ItemDispenserBehavior DROP_ITEM_BEHAVIOR = new ItemDispenserBehavior();
+public class EmptyBucketDispenseBehavior extends DefaultDispenseItemBehavior {
+    public static DispenseItemBehavior DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR;
+    public static DefaultDispenseItemBehavior DROP_ITEM_BEHAVIOR = new DefaultDispenseItemBehavior();
 
     /**
      * Dispense the specified stack, play the dispense sound and spawn particles.
      */
     @Override
-    public ItemStack dispenseSilently(BlockPointer source, ItemStack stack) {
-        World world = source.getWorld();
-        Position iposition = DispenserBlock.getOutputLocation(source);
+    public ItemStack execute(BlockSource source, ItemStack stack) {
+        Level world = source.getLevel();
+        Position iposition = DispenserBlock.getDispensePosition(source);
         BlockPos position = new BlockPos(iposition);
         BlockState blockstate = world.getBlockState(position);
 
-        if (blockstate.getBlock() == BzFluids.HONEY_FLUID_BLOCK && blockstate.getFluidState().isStill()) {
-            world.setBlockState(position, Blocks.AIR.getDefaultState());
-            stack.decrement(1);
+        if (blockstate.getBlock() == BzFluids.HONEY_FLUID_BLOCK && blockstate.getFluidState().isSource()) {
+            world.setBlockAndUpdate(position, Blocks.AIR.defaultBlockState());
+            stack.shrink(1);
             if (!stack.isEmpty())
                 addItemToDispenser(source, BzItems.HONEY_BUCKET);
             else
@@ -43,8 +43,8 @@ public class EmptyBucketDispenseBehavior extends ItemDispenserBehavior {
         else {
             // If it instanceof DefaultDispenseItemBehavior, call dispenseStack directly to avoid
             // playing particles and sound twice due to dispense method having that by default.
-            if(DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR instanceof ItemDispenserBehavior) {
-                return ((ItemDispenserBehaviorInvoker)DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR).thebumblezone_invokeDispenseSilently(source, stack);
+            if(DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR instanceof DefaultDispenseItemBehavior) {
+                return ((DefaultDispenseItemBehaviorInvoker)DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR).thebumblezone_invokeDispenseSilently(source, stack);
             }
             else {
                 // Fallback to dispense as someone chose to make a custom class without dispenseStack.
@@ -60,19 +60,19 @@ public class EmptyBucketDispenseBehavior extends ItemDispenserBehavior {
      * Play the dispense sound from the specified block.
      */
     @Override
-    protected void playSound(BlockPointer source) {
-        source.getWorld().syncWorldEvent(1002, source.getPos(), 0);
+    protected void playSound(BlockSource source) {
+        source.getLevel().levelEvent(1002, source.getPos(), 0);
     }
 
 
     /**
      * Adds honey bottle to dispenser or if no room, dispense it
      */
-    private static void addItemToDispenser(BlockPointer source, Item newItem) {
-        if (source.getBlockEntity() instanceof DispenserBlockEntity) {
-			DispenserBlockEntity dispenser = source.getBlockEntity();
+    private static void addItemToDispenser(BlockSource source, Item newItem) {
+        if (source.getEntity() instanceof DispenserBlockEntity) {
+			DispenserBlockEntity dispenser = source.getEntity();
             ItemStack honeyBottle = new ItemStack(newItem);
-            if (!HopperBlockEntity.transfer(null, dispenser, honeyBottle, null).isEmpty()) {
+            if (!HopperBlockEntity.addItem(null, dispenser, honeyBottle, null).isEmpty()) {
                 DROP_ITEM_BEHAVIOR.dispense(source, honeyBottle);
             }
         }

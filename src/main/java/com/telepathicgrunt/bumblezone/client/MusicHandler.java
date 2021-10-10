@@ -4,30 +4,30 @@ import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.modinit.BzSounds;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.client.sound.SoundInstance;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
 
 @Environment(EnvType.CLIENT)
 public class MusicHandler {
 
     private static SoundInstance ANGRY_BEE_MUSIC = null;
-    private static final Identifier BIOME_MUSIC = new Identifier(Bumblezone.MODID, "biome_music");
+    private static final ResourceLocation BIOME_MUSIC = new ResourceLocation(Bumblezone.MODID, "biome_music");
 
-    public static void playAngryBeeMusic(PlayerEntity entity){
-        MinecraftClient minecraftClient = MinecraftClient.getInstance();
-        if(!entity.isCreative() && entity == minecraftClient.player && !minecraftClient.getSoundManager().isPlaying(ANGRY_BEE_MUSIC)){
-            ANGRY_BEE_MUSIC = PositionedSoundInstance.music(BzSounds.ANGERED_BEES);
+    public static void playAngryBeeMusic(Player entity){
+        Minecraft minecraftClient = Minecraft.getInstance();
+        if(!entity.isCreative() && entity == minecraftClient.player && !minecraftClient.getSoundManager().isActive(ANGRY_BEE_MUSIC)){
+            ANGRY_BEE_MUSIC = SimpleSoundInstance.forMusic(BzSounds.ANGERED_BEES);
             minecraftClient.getSoundManager().play(ANGRY_BEE_MUSIC);
         }
-        minecraftClient.getSoundManager().stopSounds(BIOME_MUSIC, SoundCategory.MUSIC);
+        minecraftClient.getSoundManager().stop(BIOME_MUSIC, SoundSource.MUSIC);
     }
 
-    public static void stopAngryBeeMusic(PlayerEntity entity){
-        MinecraftClient minecraftClient = MinecraftClient.getInstance();
+    public static void stopAngryBeeMusic(Player entity){
+        Minecraft minecraftClient = Minecraft.getInstance();
         if(entity == minecraftClient.player && ANGRY_BEE_MUSIC != null){
             minecraftClient.getSoundManager().stop(ANGRY_BEE_MUSIC);
         }

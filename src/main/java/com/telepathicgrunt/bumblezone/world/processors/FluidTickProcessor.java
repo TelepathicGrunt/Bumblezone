@@ -2,14 +2,14 @@ package com.telepathicgrunt.bumblezone.world.processors;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
-import net.minecraft.block.BlockState;
-import net.minecraft.structure.Structure;
-import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.structure.processor.StructureProcessor;
-import net.minecraft.structure.processor.StructureProcessorType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.chunk.Chunk;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 public class FluidTickProcessor extends StructureProcessor {
 
@@ -19,11 +19,11 @@ public class FluidTickProcessor extends StructureProcessor {
 
 
     @Override
-    public Structure.StructureBlockInfo process(WorldView worldView, BlockPos pos, BlockPos blockPos, Structure.StructureBlockInfo structureBlockInfoLocal, Structure.StructureBlockInfo structureBlockInfoWorld, StructurePlacementData structurePlacementData) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
         BlockState structureState = structureBlockInfoWorld.state;
-        if(!structureState.getFluidState().isEmpty() && structureBlockInfoWorld.pos.getY() > worldView.getBottomY() && structureBlockInfoWorld.pos.getY() < worldView.getTopY()) {
-            Chunk chunk = worldView.getChunk(structureBlockInfoWorld.pos);
-            chunk.getFluidTickScheduler().schedule(structureBlockInfoWorld.pos, structureState.getFluidState().getFluid(), 0);
+        if(!structureState.getFluidState().isEmpty() && structureBlockInfoWorld.pos.getY() > worldView.getMinBuildHeight() && structureBlockInfoWorld.pos.getY() < worldView.getMaxBuildHeight()) {
+            ChunkAccess chunk = worldView.getChunk(structureBlockInfoWorld.pos);
+            chunk.getLiquidTicks().scheduleTick(structureBlockInfoWorld.pos, structureState.getFluidState().getType(), 0);
         }
         return structureBlockInfoWorld;
     }

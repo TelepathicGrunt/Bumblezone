@@ -1,25 +1,25 @@
 package com.telepathicgrunt.bumblezone.entities;
 
-import net.minecraft.entity.ai.pathing.Path;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.pathfinder.Path;
 
 public class BeeAI {
 
     // Make bees not get stuck on ceiling anymore and lag people as a result.
-    public static CachedPathHolder smartBeesTM(BeeEntity beeEntity, CachedPathHolder cachedPathHolder){
+    public static CachedPathHolder smartBeesTM(Bee beeEntity, CachedPathHolder cachedPathHolder){
 
         if(cachedPathHolder == null || cachedPathHolder.pathTimer > 50 || cachedPathHolder.cachedPath == null ||
-            (beeEntity.getVelocity().length() <= 0.05d && cachedPathHolder.pathTimer > 5) ||
-            beeEntity.getBlockPos().getManhattanDistance(cachedPathHolder.cachedPath.getTarget()) <= 4)
+            (beeEntity.getDeltaMovement().length() <= 0.05d && cachedPathHolder.pathTimer > 5) ||
+            beeEntity.blockPosition().distManhattan(cachedPathHolder.cachedPath.getTarget()) <= 4)
         {
-            BlockPos.Mutable mutable = new BlockPos.Mutable().set(beeEntity.getBlockPos());
-            World world = beeEntity.world;
+            BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(beeEntity.blockPosition());
+            Level world = beeEntity.level;
 
-            for(int attempt = 0; attempt < 11 || beeEntity.getBlockPos().getManhattanDistance(mutable) <= 5; attempt++){
+            for(int attempt = 0; attempt < 11 || beeEntity.blockPosition().distManhattan(mutable) <= 5; attempt++){
                 // pick a random place to fly to
-                mutable.set(beeEntity.getBlockPos()).move(
+                mutable.set(beeEntity.blockPosition()).move(
                         world.random.nextInt(21) - 10,
                         world.random.nextInt(21) - 10,
                         world.random.nextInt(21) - 10
@@ -30,8 +30,8 @@ public class BeeAI {
                 }
             }
 
-            Path newPath = beeEntity.getNavigation().findPathTo(mutable, 1);
-            beeEntity.getNavigation().startMovingAlong(newPath, 1);
+            Path newPath = beeEntity.getNavigation().createPath(mutable, 1);
+            beeEntity.getNavigation().moveTo(newPath, 1);
 
             if(cachedPathHolder == null){
                 cachedPathHolder = new CachedPathHolder();
@@ -40,7 +40,7 @@ public class BeeAI {
             cachedPathHolder.pathTimer = 0;
         }
         else{
-            beeEntity.getNavigation().startMovingAlong(cachedPathHolder.cachedPath, 1);
+            beeEntity.getNavigation().moveTo(cachedPathHolder.cachedPath, 1);
             cachedPathHolder.pathTimer += 1;
         }
 

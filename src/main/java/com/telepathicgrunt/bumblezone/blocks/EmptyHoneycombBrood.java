@@ -1,39 +1,39 @@
 package com.telepathicgrunt.bumblezone.blocks;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.state.StateManager;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.BlockHitResult;
 
 
 public class EmptyHoneycombBrood extends ProperFacingBlock {
 
     public EmptyHoneycombBrood() {
-        super(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.ORANGE).strength(0.5F, 0.5F).sounds(BlockSoundGroup.CORAL));
-        this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.SOUTH));
+        super(FabricBlockSettings.of(Material.CLAY, MaterialColor.COLOR_ORANGE).strength(0.5F, 0.5F).sound(SoundType.CORAL_BLOCK));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.SOUTH));
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
 
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext context) {
-        return this.getDefaultState().with(FACING, context.getSide().getOpposite());
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(FACING, context.getClickedFace().getOpposite());
     }
 
 
@@ -43,8 +43,8 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResult onUse(BlockState thisBlockState, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockHitResult HitResult) {
-        ItemStack itemstack = playerEntity.getStackInHand(playerHand);
+    public InteractionResult use(BlockState thisBlockState, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult HitResult) {
+        ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
         /*
          * Player is harvesting the honey from this block if it is filled with honey
@@ -54,7 +54,7 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
 
             playerEntity.swingHand(playerHand);
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-            world.setBlockState(position, BzBlocks.HONEYCOMB_BROOD.getDefaultState()
+            world.setBlockState(position, BzBlocks.HONEYCOMB_BROOD.defaultBlockState()
                     .with(HoneycombBrood.STAGE, 0)
                     .with(FacingBlock.FACING, thisBlockState.get(FacingBlock.FACING)));
 
@@ -74,6 +74,6 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
         }
         */
 
-        return super.onUse(thisBlockState, world, position, playerEntity, playerHand, HitResult);
+        return super.use(thisBlockState, world, position, playerEntity, playerHand, HitResult);
     }
 }

@@ -5,15 +5,14 @@ import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
-import net.minecraft.block.BlockState;
-import net.minecraft.structure.Structure;
-import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.structure.processor.StructureProcessor;
-import net.minecraft.structure.processor.StructureProcessorType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldView;
-
 import java.util.HashSet;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 /**
  * For mimicking the dungeon look where they cannot replace air.
@@ -33,7 +32,7 @@ public class ReplaceNotAirProcessor extends StructureProcessor {
     }
 
     @Override
-    public Structure.StructureBlockInfo process(WorldView worldView, BlockPos pos, BlockPos blockPos, Structure.StructureBlockInfo structureBlockInfoLocal, Structure.StructureBlockInfo structureBlockInfoWorld, StructurePlacementData structurePlacementData) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
 
         if(!blocksToAlwaysPlace.contains(structureBlockInfoWorld.state)){
             BlockPos position = structureBlockInfoWorld.pos;
@@ -42,7 +41,7 @@ public class ReplaceNotAirProcessor extends StructureProcessor {
             if (worldState.isAir() &&
                 !structureBlockInfoWorld.state.hasBlockEntity())
             {
-                structureBlockInfoWorld = new Structure.StructureBlockInfo(structureBlockInfoWorld.pos, worldState, null);
+                structureBlockInfoWorld = new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos, worldState, null);
             }
         }
         return structureBlockInfoWorld;

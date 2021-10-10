@@ -2,10 +2,9 @@ package com.telepathicgrunt.bumblezone.entities.goals;
 
 import com.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.effect.StatusEffects;
-
 import java.util.EnumSet;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.ai.goal.Goal;
 
 public class FaceRandomGoal extends Goal {
     private final HoneySlimeEntity slime;
@@ -14,14 +13,14 @@ public class FaceRandomGoal extends Goal {
 
     public FaceRandomGoal(HoneySlimeEntity slimeIn) {
         this.slime = slimeIn;
-        this.setControls(EnumSet.of(Goal.Control.LOOK));
+        this.setFlags(EnumSet.of(Goal.Flag.LOOK));
     }
 
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
-    public boolean canStart() {
-        return this.slime.getTarget() == null && (this.slime.isOnGround() || this.slime.isTouchingWater() || this.slime.isInLava() || this.slime.hasStatusEffect(StatusEffects.LEVITATION)) && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
+    public boolean canUse() {
+        return this.slime.getTarget() == null && (this.slime.isOnGround() || this.slime.isInWater() || this.slime.isInLava() || this.slime.hasEffect(MobEffects.LEVITATION)) && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
     }
 
     /**

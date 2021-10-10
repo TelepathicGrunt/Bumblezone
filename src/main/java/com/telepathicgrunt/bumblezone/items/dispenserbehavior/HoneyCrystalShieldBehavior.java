@@ -3,39 +3,39 @@ package com.telepathicgrunt.bumblezone.items.dispenserbehavior;
 import com.telepathicgrunt.bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.bumblezone.mixin.items.PlayerDamageShieldInvoker;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 public class HoneyCrystalShieldBehavior {
     /**
      * Deals massive damage to shield when blocking explosion or getting fire damage with Honey Crystal Shield
      */
-    public static boolean damageShieldFromExplosionAndFire(DamageSource source, PlayerEntity player) {
+    public static boolean damageShieldFromExplosionAndFire(DamageSource source, Player player) {
 
         // checks for explosion and player
-        if ((source.isExplosive() || source.isFire())) {
-            if (player.getActiveItem().getItem() instanceof HoneyCrystalShield) {
+        if ((source.isExplosion() || source.isFire())) {
+            if (player.getUseItem().getItem() instanceof HoneyCrystalShield) {
 
-                if (source.isExplosive() && player.isBlocking()) {
+                if (source.isExplosion() && player.isBlocking()) {
                     // damage our shield greatly and 1 damage hit player to show shield weakness
-                    player.damage(DamageSource.GENERIC, 1);
-                    ((PlayerDamageShieldInvoker) player).thebumblezone_callDamagedShield(Math.max(player.getActiveItem().getMaxDamage() / 3, 18));
+                    player.hurt(DamageSource.GENERIC, 1);
+                    ((PlayerDamageShieldInvoker) player).thebumblezone_callDamagedShield(Math.max(player.getUseItem().getMaxDamage() / 3, 18));
                 } else if (source.isFire()) {
                     if(source.isProjectile()){
-                        ((PlayerDamageShieldInvoker) player).thebumblezone_callDamagedShield(Math.max(player.getActiveItem().getMaxDamage() / 6, 3));
+                        ((PlayerDamageShieldInvoker) player).thebumblezone_callDamagedShield(Math.max(player.getUseItem().getMaxDamage() / 6, 3));
                     }
                     else{
-                        ((PlayerDamageShieldInvoker) player).thebumblezone_callDamagedShield(Math.max(player.getActiveItem().getMaxDamage() / 100, 3));
+                        ((PlayerDamageShieldInvoker) player).thebumblezone_callDamagedShield(Math.max(player.getUseItem().getMaxDamage() / 100, 3));
                         return false; //continue the damaging
                     }
                 }
@@ -50,47 +50,47 @@ public class HoneyCrystalShieldBehavior {
     /**
      * Applies slowness to physical attackers when blocking with Honey Crystal Shield
      */
-    public static void slowPhysicalAttackers(DamageSource source, PlayerEntity player) {
+    public static void slowPhysicalAttackers(DamageSource source, Player player) {
 
         // checks for living attacker and player victim
         // and also ignores explosions or magic damage
-        if (source.getSource() instanceof LivingEntity attacker &&
-                !source.isExplosive() &&
+        if (source.getDirectEntity() instanceof LivingEntity attacker &&
+                !source.isExplosion() &&
                 !source.isMagic()) {
 
             // checks to see if player is blocking with our shield
-            if (player.getActiveItem().getItem() instanceof HoneyCrystalShield
+            if (player.getUseItem().getItem() instanceof HoneyCrystalShield
                     && player.isBlocking()) {
 
                 // apply slowness to attacker
-                attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 80, 0, false, false, false));
+                attacker.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 0, false, false, false));
             }
         }
     }
 
-    public static void setShieldCooldown(PlayerEntity playerEntity, MobEntity mob){
-        float f = 0.25F + (float) EnchantmentHelper.getEfficiency(mob) * 0.05F;
+    public static void setShieldCooldown(Player playerEntity, Mob mob){
+        float f = 0.25F + (float) EnchantmentHelper.getBlockEfficiency(mob) * 0.05F;
         if (mob.getRandom().nextFloat() < f) {
-            playerEntity.getItemCooldownManager().set(BzItems.HONEY_CRYSTAL_SHIELD, 100);
-            mob.world.sendEntityStatus(playerEntity, (byte)30);
+            playerEntity.getCooldowns().addCooldown(BzItems.HONEY_CRYSTAL_SHIELD, 100);
+            mob.level.broadcastEntityEvent(playerEntity, (byte)30);
         }
     }
 
-    public static boolean damageHoneyCrystalShield(PlayerEntity player, float amount){
-        if(player.getActiveItem().getItem() == BzItems.HONEY_CRYSTAL_SHIELD){
+    public static boolean damageHoneyCrystalShield(Player player, float amount){
+        if(player.getUseItem().getItem() == BzItems.HONEY_CRYSTAL_SHIELD){
             if (amount >= 3.0F) {
-                int damageToDo = 1 + MathHelper.floor(amount);
-                Hand hand = player.getActiveHand();
-                player.getActiveItem().damage(damageToDo, player, (playerEntity) -> playerEntity.sendToolBreakStatus(hand));
-                if (player.getActiveItem().isEmpty()) {
-                    if (hand == Hand.MAIN_HAND) {
-                        player.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+                int damageToDo = 1 + Mth.floor(amount);
+                InteractionHand hand = player.getUsedItemHand();
+                player.getUseItem().hurtAndBreak(damageToDo, player, (playerEntity) -> playerEntity.broadcastBreakEvent(hand));
+                if (player.getUseItem().isEmpty()) {
+                    if (hand == InteractionHand.MAIN_HAND) {
+                        player.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
                     } else {
-                        player.equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
+                        player.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
                     }
 
-                    player.clearActiveItem();
-                    player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + player.world.random.nextFloat() * 0.4F);
+                    player.stopUsingItem();
+                    player.playSound(SoundEvents.SHIELD_BREAK, 0.8F, 0.8F + player.level.random.nextFloat() * 0.4F);
                 }
             }
 
@@ -120,13 +120,13 @@ public class HoneyCrystalShieldBehavior {
     public static int setDamage(ItemStack stack, int damage) {
         if (stack.hasTag()) {
             int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
-            int damageCaused = stack.getDamage() - damage;
+            int damageCaused = stack.getDamageValue() - damage;
 
             // ignore anvil repairing
             if (damageCaused < 0 && repairLevel != 0) {
 
                 int reducedDamage = Math.min(-1, damageCaused + (repairLevel / 14));
-               return stack.getDamage() + (-reducedDamage);
+               return stack.getDamageValue() + (-reducedDamage);
             }
         }
 

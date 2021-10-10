@@ -2,43 +2,42 @@ package com.telepathicgrunt.bumblezone.world.features.decorators;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.gen.decorator.Decorator;
-import net.minecraft.world.gen.decorator.DecoratorContext;
-import net.minecraft.world.gen.decorator.NopeDecoratorConfig;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.stream.Stream;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneDecoratorConfiguration;
+import net.minecraft.world.level.levelgen.placement.DecorationContext;
+import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 
 
-public class BeeDungeonPlacer extends Decorator<NopeDecoratorConfig> {
-    public BeeDungeonPlacer(Codec<NopeDecoratorConfig> codec) {
+public class BeeDungeonPlacer extends FeatureDecorator<NoneDecoratorConfiguration> {
+    public BeeDungeonPlacer(Codec<NoneDecoratorConfiguration> codec) {
         super(codec);
     }
 
     @Override
-    public Stream<BlockPos> getPositions(DecoratorContext context, Random random, NopeDecoratorConfig placementConfig, BlockPos pos) {
+    public Stream<BlockPos> getPositions(DecorationContext context, Random random, NoneDecoratorConfiguration placementConfig, BlockPos pos) {
         ArrayList<BlockPos> validPositions = new ArrayList<>();
-        BlockPos.Mutable mutable = new BlockPos.Mutable().set(pos);
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(pos);
         boolean validSpot;
 
         for (int currentAttempt = 0; currentAttempt <= 10; currentAttempt++) {
             validSpot = false;
-            int sealevel = context.getWorld().toServerWorld().getChunkManager().getChunkGenerator().getSeaLevel();
+            int sealevel = context.getLevel().getLevel().getChunkSource().getGenerator().getSeaLevel();
             int x = random.nextInt(8) + pos.getX() + 4;
             int z = random.nextInt(8) + pos.getZ() + 4;
-            int y = random.nextInt(context.getHeight() - 10 - sealevel) + sealevel + 2;
+            int y = random.nextInt(context.getGenDepth() - 10 - sealevel) + sealevel + 2;
 
             //find a cave air spot
-            for (Direction face : Direction.Type.HORIZONTAL) {
+            for (Direction face : Direction.Plane.HORIZONTAL) {
                 mutable.set(x, y, z).move(face, 3);
 
                 BlockState state = context.getBlockState(mutable);
-                if (state.isOf(Blocks.CAVE_AIR) || state.isOf(BzBlocks.PILE_OF_POLLEN))
+                if (state.is(Blocks.CAVE_AIR) || state.is(BzBlocks.PILE_OF_POLLEN))
                     validSpot = true;
             }
 
@@ -48,7 +47,7 @@ public class BeeDungeonPlacer extends Decorator<NopeDecoratorConfig> {
                     for (int yOffset = -3; yOffset <= 9; yOffset += 3) {
                         mutable.set(x, y, z).move(xOffset, yOffset, zOffset);
 
-                        if (context.getBlockState(mutable).isOf(Blocks.AIR))
+                        if (context.getBlockState(mutable).is(Blocks.AIR))
                             validSpot = false;
                     }
                 }
@@ -56,7 +55,7 @@ public class BeeDungeonPlacer extends Decorator<NopeDecoratorConfig> {
 
 
             mutable.set(x, y, z);
-            if (validSpot && context.getBlockState(mutable).isOpaque()) {
+            if (validSpot && context.getBlockState(mutable).canOcclude()) {
                 validPositions.add(mutable);
                 break; // Only 1 dungeon max per chunk
             }

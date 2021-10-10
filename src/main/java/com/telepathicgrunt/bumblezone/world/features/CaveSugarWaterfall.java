@@ -3,39 +3,39 @@ package com.telepathicgrunt.bumblezone.world.features;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.tags.BzBlockTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 
-public class CaveSugarWaterfall extends Feature<DefaultFeatureConfig> {
+public class CaveSugarWaterfall extends Feature<NoneFeatureConfiguration> {
 
-    private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
+    private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
 
-    public CaveSugarWaterfall(Codec<DefaultFeatureConfig> configFactory) {
+    public CaveSugarWaterfall(Codec<NoneFeatureConfiguration> configFactory) {
         super(configFactory);
     }
 
     @Override
-    public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         //creates a waterfall
-        BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(context.getOrigin());
-        BlockState blockstate = context.getWorld().getBlockState(blockpos$Mutable.up());
+        BlockPos.MutableBlockPos blockpos$Mutable = new BlockPos.MutableBlockPos().set(context.origin());
+        BlockState blockstate = context.level().getBlockState(blockpos$Mutable.above());
 
-        if (!blockstate.isOpaque() || blockstate.isIn(BzBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
+        if (!blockstate.canOcclude() || blockstate.is(BzBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
             return false;
         } else {
             //checks if we are in the side of a wall with air exposed on one side
 
             int numberOfSolidSides = 0;
             int neededNumberOfSides;
-            blockstate = context.getWorld().getBlockState(blockpos$Mutable.down());
+            blockstate = context.level().getBlockState(blockpos$Mutable.below());
 
-            if (blockstate.isOpaque() && blockstate.isIn(BzBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
+            if (blockstate.canOcclude() && blockstate.is(BzBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
                 neededNumberOfSides = 3;
             } else if (blockstate.getBlock() == CAVE_AIR.getBlock()) {
                 neededNumberOfSides = 4;
@@ -44,9 +44,9 @@ public class CaveSugarWaterfall extends Feature<DefaultFeatureConfig> {
             }
 
 
-            for (Direction face : Direction.Type.HORIZONTAL) {
-                blockstate = context.getWorld().getBlockState(blockpos$Mutable.offset(face));
-                if (blockstate.isOpaque() && blockstate.isIn(BzBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
+            for (Direction face : Direction.Plane.HORIZONTAL) {
+                blockstate = context.level().getBlockState(blockpos$Mutable.relative(face));
+                if (blockstate.canOcclude() && blockstate.is(BzBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
                     ++numberOfSolidSides;
                 } else if (blockstate.getBlock() != CAVE_AIR.getBlock()) {
                     return false;
@@ -55,8 +55,8 @@ public class CaveSugarWaterfall extends Feature<DefaultFeatureConfig> {
 
             //position valid. begin making waterfall
             if (numberOfSolidSides == neededNumberOfSides) {
-                context.getWorld().setBlockState(blockpos$Mutable, BzFluids.SUGAR_WATER_BLOCK.getDefaultState(), 2);
-                context.getWorld().getFluidTickScheduler().schedule(blockpos$Mutable, BzFluids.SUGAR_WATER_FLUID, 0);
+                context.level().setBlock(blockpos$Mutable, BzFluids.SUGAR_WATER_BLOCK.defaultBlockState(), 2);
+                context.level().getLiquidTicks().scheduleTick(blockpos$Mutable, BzFluids.SUGAR_WATER_FLUID, 0);
             }
             return true;
         }

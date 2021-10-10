@@ -1,32 +1,31 @@
 package com.telepathicgrunt.bumblezone.world.features.decorators;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.Blocks;
-import net.minecraft.tag.FluidTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.CountConfig;
-import net.minecraft.world.gen.decorator.Decorator;
-import net.minecraft.world.gen.decorator.DecoratorContext;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.stream.Stream;
+import net.minecraft.core.BlockPos;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.feature.configurations.CountConfiguration;
+import net.minecraft.world.level.levelgen.placement.DecorationContext;
+import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 
-public class Random3DUndergroundChunkPlacement extends Decorator<CountConfig> {
+public class Random3DUndergroundChunkPlacement extends FeatureDecorator<CountConfiguration> {
 
-    public Random3DUndergroundChunkPlacement(Codec<CountConfig> codec) {
+    public Random3DUndergroundChunkPlacement(Codec<CountConfiguration> codec) {
         super(codec);
     }
 
     @Override
-    public Stream<BlockPos> getPositions(DecoratorContext context, Random random, CountConfig placementConfig, BlockPos pos) {
+    public Stream<BlockPos> getPositions(DecorationContext context, Random random, CountConfiguration placementConfig, BlockPos pos) {
 
         ArrayList<BlockPos> blockPosList = new ArrayList<BlockPos>();
 
         // finds the origin of the 16x16x16 area we will be picking from
-        BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable();
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
 
-        for (int chunkNum = 0; chunkNum <= placementConfig.getCount().get(random); chunkNum++) {
+        for (int chunkNum = 0; chunkNum <= placementConfig.count().sample(random); chunkNum++) {
 
             // Tries 24 times to find a chunk's center that is in cave air or fluid.
             // Nice quick way to only generate clusters of crystals within a chunk without
@@ -39,7 +38,7 @@ public class Random3DUndergroundChunkPlacement extends Decorator<CountConfig> {
                                 random.nextInt(4) + 8);
 
                 if ((context.getBlockState(mutableBlockPos).getBlock() == Blocks.CAVE_AIR
-                        || context.getBlockState(mutableBlockPos).getFluidState().isIn(FluidTags.WATER))) {
+                        || context.getBlockState(mutableBlockPos).getFluidState().is(FluidTags.WATER))) {
                     mutableBlockPos.set(pos.getX(), mutableBlockPos.getY(), pos.getZ());
                     break;
                 }
@@ -54,7 +53,7 @@ public class Random3DUndergroundChunkPlacement extends Decorator<CountConfig> {
                 int x = random.nextInt(16);
                 int z = random.nextInt(16);
                 int y = random.nextInt(16);
-                blockPosList.add(mutableBlockPos.add(x, y, z));
+                blockPosList.add(mutableBlockPos.offset(x, y, z));
             }
 
         }

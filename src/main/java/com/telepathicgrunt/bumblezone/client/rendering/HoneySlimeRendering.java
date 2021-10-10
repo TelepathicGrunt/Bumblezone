@@ -1,45 +1,48 @@
 package com.telepathicgrunt.bumblezone.client.rendering;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.entity.feature.SlimeOverlayFeatureRenderer;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.render.entity.model.SlimeEntityModel;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.model.SlimeModel;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.SlimeOuterLayer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 @Environment(EnvType.CLIENT)
-public class HoneySlimeRendering extends MobEntityRenderer<HoneySlimeEntity, SlimeEntityModel<HoneySlimeEntity>> {
-    private static final Identifier HONEY_TEXTURE = new Identifier(Bumblezone.MODID, "textures/entity/honey_slime.png");
-    private static final Identifier HONEYLESS_TEXTURE = new Identifier(Bumblezone.MODID, "textures/entity/honey_slime_naked.png");
+public class HoneySlimeRendering extends MobRenderer<HoneySlimeEntity, SlimeModel<HoneySlimeEntity>> {
+    private static final ResourceLocation HONEY_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/entity/honey_slime.png");
+    private static final ResourceLocation HONEYLESS_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/entity/honey_slime_naked.png");
 
-    public HoneySlimeRendering(EntityRendererFactory.Context context) {
-        super(context, new SlimeEntityModel<>(context.getPart(EntityModelLayers.SLIME)), 0.25F);
-        this.addFeature(new SlimeOverlayFeatureRenderer<>(this, context.getModelLoader()));
+    public HoneySlimeRendering(EntityRendererProvider.Context context) {
+        super(context, new SlimeModel<>(context.bakeLayer(ModelLayers.SLIME)), 0.25F);
+        this.addLayer(new SlimeOuterLayer<>(this, context.getModelSet()));
     }
 
-    public void render(HoneySlimeEntity honeySlimeEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
+    @Override
+    public void render(HoneySlimeEntity honeySlimeEntity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i) {
         this.shadowRadius = 0.25F * (float)(honeySlimeEntity.isBaby() ? 1 : 2);
         super.render(honeySlimeEntity, f, g, matrixStack, vertexConsumerProvider, i);
     }
 
     // unused. Dont ask how the scaling even works automatically
-    protected void scale(HoneySlimeEntity honeySlimeEntity, MatrixStack matrixStack, float f) {
+    @Override
+    protected void scale(HoneySlimeEntity honeySlimeEntity, PoseStack matrixStack, float f) {
         matrixStack.scale(0.999F, 0.999F, 0.999F);
         matrixStack.translate(0.0D, 0.0010000000474974513D, 0.0D);
         float h = (float)(honeySlimeEntity.isBaby() ? 1 : 2);
-        float i = MathHelper.lerp(f, honeySlimeEntity.prevSquishFactor, honeySlimeEntity.squishFactor) / (h * 0.5F + 1.0F);
+        float i = Mth.lerp(f, honeySlimeEntity.prevSquishFactor, honeySlimeEntity.squishFactor) / (h * 0.5F + 1.0F);
         float j = 1.0F / (i + 1.0F);
         matrixStack.scale(j * h, 1.0F / j * h, j * h);
     }
 
-    public Identifier getTexture(HoneySlimeEntity honeySlimeEntity) {
+    @Override
+    public ResourceLocation getTextureLocation(HoneySlimeEntity honeySlimeEntity) {
         return honeySlimeEntity.isInHoney() ? HONEY_TEXTURE : HONEYLESS_TEXTURE;
     }
 }

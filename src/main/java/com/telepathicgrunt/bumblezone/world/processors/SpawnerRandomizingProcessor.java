@@ -6,21 +6,20 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
-import net.minecraft.block.SpawnerBlock;
-import net.minecraft.entity.EntityType;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.structure.Structure;
-import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.structure.processor.StructureProcessor;
-import net.minecraft.structure.processor.StructureProcessorType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.gen.ChunkRandom;
-
 import java.util.List;
 import java.util.Random;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.SpawnerBlock;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 public class SpawnerRandomizingProcessor extends StructureProcessor {
 
@@ -35,12 +34,12 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
     }
 
     @Override
-    public Structure.StructureBlockInfo process(WorldView worldView, BlockPos pos, BlockPos blockPos, Structure.StructureBlockInfo structureBlockInfoLocal, Structure.StructureBlockInfo structureBlockInfoWorld, StructurePlacementData structurePlacementData) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
         if (structureBlockInfoWorld.state.getBlock() instanceof SpawnerBlock) {
             BlockPos worldPos = structureBlockInfoWorld.pos;
-            Random random = new ChunkRandom();
+            Random random = new WorldgenRandom();
             random.setSeed(worldPos.asLong() * worldPos.getY());
-            return new Structure.StructureBlockInfo(
+            return new StructureTemplate.StructureBlockInfo(
                     worldPos,
                     structureBlockInfoWorld.state,
                     SetMobSpawnerEntity(random, structureBlockInfoWorld.nbt));
@@ -51,10 +50,10 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
     /**
      * Makes the given block entity now have the correct spawner mob
      */
-    private NbtCompound SetMobSpawnerEntity(Random random, NbtCompound nbt) {
+    private CompoundTag SetMobSpawnerEntity(Random random, CompoundTag nbt) {
         EntityType<?> entity = GeneralUtils.getRandomEntry(spawnerRandomizingProcessor, random);
         if (entity != null) {
-            NbtCompound compound = new NbtCompound();
+            CompoundTag compound = new CompoundTag();
             compound.putShort("Delay", (short) 20);
             compound.putShort("MinSpawnDelay", (short) 200);
             compound.putShort("MaxSpawnDelay", (short) 800);
@@ -63,18 +62,18 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
             compound.putShort("RequiredPlayerRange", (short) 16);
             compound.putShort("SpawnRange", (short) 4);
 
-            NbtCompound spawnData = new NbtCompound();
-            spawnData.putString("id", Registry.ENTITY_TYPE.getId(entity).toString());
+            CompoundTag spawnData = new CompoundTag();
+            spawnData.putString("id", Registry.ENTITY_TYPE.getKey(entity).toString());
             compound.put("SpawnData", spawnData);
 
-            NbtCompound entityData = new NbtCompound();
-            entityData.putString("id", Registry.ENTITY_TYPE.getId(entity).toString());
+            CompoundTag entityData = new CompoundTag();
+            entityData.putString("id", Registry.ENTITY_TYPE.getKey(entity).toString());
 
-            NbtCompound listEntry = new NbtCompound();
+            CompoundTag listEntry = new CompoundTag();
             listEntry.put("Entity", entityData);
             listEntry.putInt("Weight", 1);
 
-            NbtList listnbt = new NbtList();
+            ListTag listnbt = new ListTag();
             listnbt.add(listEntry);
 
             compound.put("SpawnPotentials", listnbt);

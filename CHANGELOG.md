@@ -1,4 +1,10 @@
-### **(V.2.5.2 Changes) (1.16.5 Minecraft)**
+### **(V.3.2.0 Changes) (1.17.1 Minecraft)**
+
+##### Misc:
+Codebase is now remapped to use Mojmap instead of Yarn.
+
+
+### **(V.3.1.2 Changes) (1.17.1 Minecraft)**
 
 ##### Lang:
 Special thanks to Tkhakiro for helping to update the ru_ru.json translations!

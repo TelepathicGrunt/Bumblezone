@@ -1,10 +1,10 @@
 package com.telepathicgrunt.bumblezone.modcompat;
 
 import com.telepathicgrunt.bumblezone.entities.EntityTeleportationHookup;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.phys.HitResult;
 
 /**
  * For mods that want to use Bumblezone methods but would like to make sure it doesn't get changed over time and break the dependent mods.
@@ -29,7 +29,7 @@ public class BumblezoneAPI {
      * Please only call this for throwables that teleport the entity like Enderpearls.
      * @return - Whether the projectile hit a beehive or bee nest.
      */
-    public static boolean runEnderpearlImpact(HitResult hitResult, ProjectileEntity pearlEntity){
+    public static boolean runEnderpearlImpact(HitResult hitResult, Projectile pearlEntity){
         return EntityTeleportationHookup.runEnderpearlImpact(hitResult, pearlEntity);
     }
 

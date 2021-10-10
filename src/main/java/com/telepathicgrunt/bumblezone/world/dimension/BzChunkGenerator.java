@@ -12,46 +12,33 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.structure.JigsawJunction;
-import net.minecraft.structure.PoolStructurePiece;
-import net.minecraft.structure.StructurePiece;
-import net.minecraft.structure.pool.StructurePool;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
-import net.minecraft.util.collection.Pool;
-import net.minecraft.util.math.BlockBox;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.ChunkSectionPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.noise.NoiseSampler;
-import net.minecraft.util.math.noise.OctavePerlinNoiseSampler;
-import net.minecraft.util.math.noise.OctaveSimplexNoiseSampler;
-import net.minecraft.util.math.noise.PerlinNoiseSampler;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.ChunkRegion;
-import net.minecraft.world.HeightLimitView;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.SpawnSettings;
-import net.minecraft.world.biome.source.BiomeSource;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.ChunkSection;
-import net.minecraft.world.chunk.ProtoChunk;
-import net.minecraft.world.gen.ChunkRandom;
-import net.minecraft.world.gen.StructureAccessor;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.chunk.StructuresConfig;
-import net.minecraft.world.gen.chunk.VerticalBlockSample;
-import net.minecraft.world.gen.feature.StructureFeature;
-
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.util.Mth;
+import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.LevelHeightAccessor;
+import net.minecraft.world.level.NoiseColumn;
+import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSource;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.StructureSettings;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.synth.ImprovedNoise;
+import net.minecraft.world.level.levelgen.synth.PerlinNoise;
+import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
+import net.minecraft.world.level.levelgen.synth.SurfaceNoise;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
@@ -62,13 +49,13 @@ import java.util.stream.IntStream;
 
 public class BzChunkGenerator extends ChunkGenerator {
     public static void registerChunkgenerator() {
-        Registry.register(Registry.CHUNK_GENERATOR, new Identifier(Bumblezone.MODID, "chunk_generator"), BzChunkGenerator.CODEC);
+        Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Bumblezone.MODID, "chunk_generator"), BzChunkGenerator.CODEC);
     }
 
     public static final Codec<BzChunkGenerator> CODEC = RecordCodecBuilder.create(
             (instance) -> instance.group(
-                    BiomeSource.CODEC.fieldOf("biome_source").forGetter((surfaceChunkGenerator) -> surfaceChunkGenerator.biomeSource),
-                    StructuresConfig.CODEC.fieldOf("structures").forGetter((ChunkGenerator::getStructuresConfig))
+                    BiomeSource.CODEC.fieldOf("biome_source").forGetter((surfaceChunkGenerator) -> surfaceChunkGenerator.runtimeBiomeSource),
+                    StructureSettings.CODEC.fieldOf("structures").forGetter((ChunkGenerator::getSettings))
                 ).apply(instance, instance.stable(BzChunkGenerator::new)));
 
     private static final float[] field_16649 = Util.make(new float[13824], (array) -> {
@@ -86,15 +73,15 @@ public class BzChunkGenerator extends ChunkGenerator {
     private static final float[] HEIGHT_LERP = Util.make(new float[(LERP_RANGE * 2 + 1) * (LERP_RANGE * 2  + 1)], (fs) -> {
         for(int i = -LERP_RANGE; i <= LERP_RANGE; ++i) {
             for(int j = -LERP_RANGE; j <= LERP_RANGE; ++j) {
-                float f = 1.0F / MathHelper.sqrt((float)(i * i + j * j) + 0.2F);
+                float f = 1.0F / Mth.sqrt((float)(i * i + j * j) + 0.2F);
                 fs[i + LERP_RANGE + (j + LERP_RANGE) * (LERP_RANGE * 2 + 1)] = f;
             }
         }
     });
 
-    private static final SpawnSettings.SpawnEntry INITIAL_HONEY_SLIME_ENTRY = new SpawnSettings.SpawnEntry(BzEntities.HONEY_SLIME, 1, 1, 3);
-    private static final SpawnSettings.SpawnEntry INITIAL_BEE_ENTRY = new SpawnSettings.SpawnEntry(EntityType.BEE, 1, 1, 4);
-    private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
+    private static final MobSpawnSettings.SpawnerData INITIAL_HONEY_SLIME_ENTRY = new MobSpawnSettings.SpawnerData(BzEntities.HONEY_SLIME, 1, 1, 3);
+    private static final MobSpawnSettings.SpawnerData INITIAL_BEE_ENTRY = new MobSpawnSettings.SpawnerData(EntityType.BEE, 1, 1, 4);
+    private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
     protected final BlockState defaultBlock;
     protected final BlockState defaultFluid;
     private final int verticalNoiseResolution;
@@ -102,51 +89,51 @@ public class BzChunkGenerator extends ChunkGenerator {
     private final int noiseSizeX;
     private final int noiseSizeY;
     private final int noiseSizeZ;
-    protected final ChunkRandom random;
-    private final OctavePerlinNoiseSampler lowerInterpolatedNoise;
-    private final OctavePerlinNoiseSampler upperInterpolatedNoise;
-    private final OctavePerlinNoiseSampler interpolationNoise;
-    private final NoiseSampler surfaceDepthNoise;
-    private final OctavePerlinNoiseSampler field_24776;
-    private final StructuresConfig structureConfig;
+    protected final WorldgenRandom random;
+    private final PerlinNoise lowerInterpolatedNoise;
+    private final PerlinNoise upperInterpolatedNoise;
+    private final PerlinNoise interpolationNoise;
+    private final SurfaceNoise surfaceDepthNoise;
+    private final PerlinNoise field_24776;
+    private final StructureSettings structureConfig;
     private final int height;
 
-    public BzChunkGenerator(BiomeSource biomeSource, StructuresConfig structureConfig) {
+    public BzChunkGenerator(BiomeSource biomeSource, StructureSettings structureConfig) {
         this(biomeSource, biomeSource, structureConfig);
     }
 
-    private BzChunkGenerator(BiomeSource biomeSource, BiomeSource biomeSource2, StructuresConfig structureConfig) {
+    private BzChunkGenerator(BiomeSource biomeSource, BiomeSource biomeSource2, StructureSettings structureConfig) {
         super(biomeSource, biomeSource2, structureConfig, 0);
 
         // We need to get world seed here
-        this.random = new ChunkRandom(0);
+        this.random = new WorldgenRandom(0);
 
         this.structureConfig = structureConfig;
         this.height = 256;
         this.verticalNoiseResolution = 8;
         this.horizontalNoiseResolution = 4;
-        this.defaultBlock = Blocks.HONEYCOMB_BLOCK.getDefaultState();
-        this.defaultFluid = BzFluids.SUGAR_WATER_BLOCK.getDefaultState();
+        this.defaultBlock = Blocks.HONEYCOMB_BLOCK.defaultBlockState();
+        this.defaultFluid = BzFluids.SUGAR_WATER_BLOCK.defaultBlockState();
         this.noiseSizeX = 16 / this.horizontalNoiseResolution;
         this.noiseSizeY = this.height / this.verticalNoiseResolution;
         this.noiseSizeZ = 16 / this.horizontalNoiseResolution;
-        this.lowerInterpolatedNoise = new OctavePerlinNoiseSampler(this.random, IntStream.rangeClosed(-15, 0));
-        this.upperInterpolatedNoise = new OctavePerlinNoiseSampler(this.random, IntStream.rangeClosed(-15, 0));
-        this.interpolationNoise = new OctavePerlinNoiseSampler(this.random, IntStream.rangeClosed(-7, 0));
-        this.surfaceDepthNoise = new OctaveSimplexNoiseSampler(this.random, IntStream.rangeClosed(-3, 0));
+        this.lowerInterpolatedNoise = new PerlinNoise(this.random, IntStream.rangeClosed(-15, 0));
+        this.upperInterpolatedNoise = new PerlinNoise(this.random, IntStream.rangeClosed(-15, 0));
+        this.interpolationNoise = new PerlinNoise(this.random, IntStream.rangeClosed(-7, 0));
+        this.surfaceDepthNoise = new PerlinSimplexNoise(this.random, IntStream.rangeClosed(-3, 0));
         this.random.next(2620);
-        this.field_24776 = new OctavePerlinNoiseSampler(this.random, IntStream.rangeClosed(-15, 0));
+        this.field_24776 = new PerlinNoise(this.random, IntStream.rangeClosed(-15, 0));
     }
 
     @Override
-    protected Codec<? extends ChunkGenerator> getCodec() {
+    protected Codec<? extends ChunkGenerator> codec() {
         return CODEC;
     }
 
     @Override
     @Environment(EnvType.CLIENT)
     public ChunkGenerator withSeed(long seed) {
-        return new BzChunkGenerator(this.biomeSource.withSeed(seed), this.structureConfig);
+        return new BzChunkGenerator(this.runtimeBiomeSource.withSeed(seed), this.structureConfig);
     }
 
     private double sampleNoise(int x, int y, int z, double horizontalScaleX, double verticalScale, double horizontalScaleZ, double horizontalStretch, double verticalStretch) {
@@ -156,31 +143,31 @@ public class BzChunkGenerator extends ChunkGenerator {
         double g = 1.0D;
 
         for(int i = 0; i < 16; ++i) {
-            double h = OctavePerlinNoiseSampler.maintainPrecision((double)x * horizontalScaleX * g);
-            double j = OctavePerlinNoiseSampler.maintainPrecision((double)y * verticalScale * g);
-            double k = OctavePerlinNoiseSampler.maintainPrecision((double)z * horizontalScaleZ * g);
+            double h = PerlinNoise.wrap((double)x * horizontalScaleX * g);
+            double j = PerlinNoise.wrap((double)y * verticalScale * g);
+            double k = PerlinNoise.wrap((double)z * horizontalScaleZ * g);
             double l = verticalScale * g;
-            PerlinNoiseSampler perlinNoiseSampler = this.lowerInterpolatedNoise.getOctave(i);
+            ImprovedNoise perlinNoiseSampler = this.lowerInterpolatedNoise.getOctaveNoise(i);
             if (perlinNoiseSampler != null) {
-                d += perlinNoiseSampler.sample(h, j, k, l, (double)y * l) / g;
+                d += perlinNoiseSampler.noise(h, j, k, l, (double)y * l) / g;
             }
 
-            PerlinNoiseSampler perlinNoiseSampler2 = this.upperInterpolatedNoise.getOctave(i);
+            ImprovedNoise perlinNoiseSampler2 = this.upperInterpolatedNoise.getOctaveNoise(i);
             if (perlinNoiseSampler2 != null) {
-                e += perlinNoiseSampler2.sample(h, j, k, l, (double)y * l) / g;
+                e += perlinNoiseSampler2.noise(h, j, k, l, (double)y * l) / g;
             }
 
             if (i < 8) {
-                PerlinNoiseSampler perlinNoiseSampler3 = this.interpolationNoise.getOctave(i);
+                ImprovedNoise perlinNoiseSampler3 = this.interpolationNoise.getOctaveNoise(i);
                 if (perlinNoiseSampler3 != null) {
-                    f += perlinNoiseSampler3.sample(OctavePerlinNoiseSampler.maintainPrecision((double)x * horizontalStretch * g), OctavePerlinNoiseSampler.maintainPrecision((double)y * verticalStretch * g), OctavePerlinNoiseSampler.maintainPrecision((double)z * horizontalStretch * g), verticalStretch * g, (double)y * verticalStretch * g) / g;
+                    f += perlinNoiseSampler3.noise(PerlinNoise.wrap((double)x * horizontalStretch * g), PerlinNoise.wrap((double)y * verticalStretch * g), PerlinNoise.wrap((double)z * horizontalStretch * g), verticalStretch * g, (double)y * verticalStretch * g) / g;
                 }
             }
 
             g /= 2.0D;
         }
 
-        return MathHelper.clampedLerp(d / 512.0D, e / 512.0D, (f / 10.0D + 1.0D) / 2.0D);
+        return Mth.clampedLerp(d / 512.0D, e / 512.0D, (f / 10.0D + 1.0D) / 2.0D);
     }
 
     private double[] sampleNoiseColumn(int x, int z) {
@@ -198,11 +185,11 @@ public class BzChunkGenerator extends ChunkGenerator {
         float h = 0.0F;
         float i = 0.0F;
         int k = this.getSeaLevel();
-        float l = this.biomeSource.getBiomeForNoiseGen(x, k, z).getDepth();
+        float l = this.runtimeBiomeSource.getNoiseBiome(x, k, z).getDepth();
 
         for(int m = -LERP_RANGE; m <= LERP_RANGE; ++m) {
             for(int n = -LERP_RANGE; n <= LERP_RANGE; ++n) {
-                Biome biome = this.biomeSource.getBiomeForNoiseGen(x + m, k, z + n);
+                Biome biome = this.runtimeBiomeSource.getNoiseBiome(x + m, k, z + n);
                 float o = biome.getDepth();
                 float p = biome.getScale();
 
@@ -246,14 +233,14 @@ public class BzChunkGenerator extends ChunkGenerator {
 
             double ax;
             ax = ((double)(this.noiseSizeY - y) - topSlideOffset) / topSlideSize;
-            as = MathHelper.clampedLerp(topSlideTarget, as, ax);
+            as = Mth.clampedLerp(topSlideTarget, as, ax);
             buffer[y] = as;
         }
 
     }
 
     private double method_28553(int i, int j) {
-        double d = this.field_24776.sample(i * 200, 10.0D, j * 200, 1.0D, 0.0D, true);
+        double d = this.field_24776.getValue(i * 200, 10.0D, j * 200, 1.0D, 0.0D, true);
         double f;
         if (d < 0.0D) {
             f = -d * 0.3D;
@@ -266,15 +253,15 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public int getHeight(int x, int z, Heightmap.Type heightmapType, HeightLimitView world) {
-        return this.sampleHeightmap(x, z, null, heightmapType.getBlockPredicate());
+    public int getBaseHeight(int x, int z, Heightmap.Types heightmapType, LevelHeightAccessor world) {
+        return this.sampleHeightmap(x, z, null, heightmapType.isOpaque());
     }
 
     @Override
-    public VerticalBlockSample getColumnSample(int x, int z, HeightLimitView world) {
+    public NoiseColumn getBaseColumn(int x, int z, LevelHeightAccessor world) {
         BlockState[] blockStates = new BlockState[this.noiseSizeY * this.verticalNoiseResolution];
         this.sampleHeightmap(x, z, blockStates, null);
-        return new VerticalBlockSample(0, blockStates);
+        return new NoiseColumn(0, blockStates);
     }
 
     private int sampleHeightmap(int x, int z, BlockState[] states, Predicate<BlockState> predicate) {
@@ -298,7 +285,7 @@ public class BzChunkGenerator extends ChunkGenerator {
 
             for(int s = this.verticalNoiseResolution - 1; s >= 0; --s) {
                 double t = (double)s / (double)this.verticalNoiseResolution;
-                double u = MathHelper.lerp3(t, d, e, f, o, h, q, g, p, n, r);
+                double u = Mth.lerp3(t, d, e, f, o, h, q, g, p, n, r);
                 int v = m * this.verticalNoiseResolution + s;
                 BlockState blockState = this.getBlockState(u, v);
                 if (states != null) {
@@ -328,24 +315,24 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public void buildSurface(ChunkRegion region, Chunk chunk) {
+    public void buildSurfaceAndBedrock(WorldGenRegion region, ChunkAccess chunk) {
         ChunkPos chunkPos = chunk.getPos();
         int i = chunkPos.x;
         int j = chunkPos.z;
-        ChunkRandom chunkRandom = new ChunkRandom();
-        chunkRandom.setTerrainSeed(i, j);
+        WorldgenRandom chunkRandom = new WorldgenRandom();
+        chunkRandom.setBaseChunkSeed(i, j);
         ChunkPos chunkPos2 = chunk.getPos();
-        int k = chunkPos2.getStartX();
-        int l = chunkPos2.getStartZ();
-        BlockPos.Mutable mutable = new BlockPos.Mutable();
+        int k = chunkPos2.getMinBlockX();
+        int l = chunkPos2.getMinBlockZ();
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
 
         for(int m = 0; m < 16; ++m) {
             for(int n = 0; n < 16; ++n) {
                 int o = k + m;
                 int p = l + n;
-                int q = chunk.sampleHeightmap(Heightmap.Type.WORLD_SURFACE_WG, m, n) + 1;
-                double e = this.surfaceDepthNoise.sample((double)o * 0.0625D, (double)p * 0.0625D, 0.0625D, (double)m * 0.0625D) * 15.0D;
-                region.getBiome(mutable.set(k + m, q, l + n)).buildSurface(chunkRandom, chunk, o, p, q, e, this.defaultBlock, this.defaultFluid, this.getSeaLevel(), 0, region.getSeed());
+                int q = chunk.getHeight(Heightmap.Types.WORLD_SURFACE_WG, m, n) + 1;
+                double e = this.surfaceDepthNoise.getSurfaceNoiseValue((double)o * 0.0625D, (double)p * 0.0625D, 0.0625D, (double)m * 0.0625D) * 15.0D;
+                region.getBiome(mutable.set(k + m, q, l + n)).buildSurfaceAt(chunkRandom, chunk, o, p, q, e, this.defaultBlock, this.defaultFluid, this.getSeaLevel(), 0, region.getSeed());
             }
         }
 
@@ -353,7 +340,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public CompletableFuture<Chunk> populateNoise(Executor executor, StructureAccessor accessor, Chunk chunk) {
+    public CompletableFuture<ChunkAccess> fillFromNoise(Executor executor, StructureFeatureManager accessor, ChunkAccess chunk) {
         ObjectList<StructurePiece> objectList = new ObjectArrayList<>(10);
         ObjectList<JigsawJunction> objectList2 = new ObjectArrayList<>(32);
         ChunkPos chunkPos = chunk.getPos();
@@ -571,12 +558,12 @@ public class BzChunkGenerator extends ChunkGenerator {
         double e = (double)j + 0.5D;
         double f = e * e;
         double g = Math.pow(2.718281828459045D, -(f / 16.0D + d / 16.0D));
-        double h = -e * MathHelper.fastInverseSqrt(f / 2.0D + d / 2.0D) / 2.0D;
+        double h = -e * Mth.fastInvSqrt(f / 2.0D + d / 2.0D) / 2.0D;
         return h * g;
     }
 
     @Override
-    public int getWorldHeight() {
+    public int getGenDepth() {
         return this.height;
     }
 
@@ -585,8 +572,8 @@ public class BzChunkGenerator extends ChunkGenerator {
      * For spawning specific mobs in certain places like structures.
      */
     @Override
-    public Pool<SpawnSettings.SpawnEntry> getEntitySpawnList(Biome biome, StructureAccessor accessor, SpawnGroup group, BlockPos pos) {
-        return super.getEntitySpawnList(biome, accessor, group, pos);
+    public WeightedRandomList<MobSpawnSettings.SpawnerData> getMobsAt(Biome biome, StructureFeatureManager accessor, MobCategory group, BlockPos pos) {
+        return super.getMobsAt(biome, accessor, group, pos);
     }
 
     /**
@@ -602,7 +589,7 @@ public class BzChunkGenerator extends ChunkGenerator {
      * dimension as well.
      */
     @Override
-    public void populateEntities(ChunkRegion region) {
+    public void spawnOriginalMobs(WorldGenRegion region) {
         ChunkPos chunkPos = region.getCenterPos();
         Biome biome = region.getBiome(chunkPos.getStartPos());
         ChunkRandom sharedseedrandom = new ChunkRandom();
@@ -642,25 +629,25 @@ public class BzChunkGenerator extends ChunkGenerator {
      * <p>
      * We use honeycomb blocks instead of Bedrock.
      */
-    protected void makeCeilingAndFloor(Chunk chunk, Random random) {
-        BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable();
-        int xStart = chunk.getPos().getStartX();
-        int zStart = chunk.getPos().getStartZ();
+    protected void makeCeilingAndFloor(ChunkAccess chunk, Random random) {
+        BlockPos.MutableBlockPos blockpos$Mutable = new BlockPos.MutableBlockPos();
+        int xStart = chunk.getPos().getMinBlockX();
+        int zStart = chunk.getPos().getMinBlockZ();
         int roofHeight = 250;
         int floorHeight = 2;
 
-        for (BlockPos blockpos : BlockPos.iterate(xStart, 0, zStart, xStart + 15, 0, zStart + 15))
+        for (BlockPos blockpos : BlockPos.betweenClosed(xStart, 0, zStart, xStart + 15, 0, zStart + 15))
         {
             //fills in gap between top of terrain gen and y = 255 with solid blocks
             for (int ceilingY = 255; ceilingY >= roofHeight - random.nextInt(2); --ceilingY)
             {
-                chunk.setBlockState(blockpos$Mutable.set(blockpos.getX(), ceilingY, blockpos.getZ()), BzBlocks.BEESWAX_PLANKS.getDefaultState(), false);
+                chunk.setBlockState(blockpos$Mutable.set(blockpos.getX(), ceilingY, blockpos.getZ()), BzBlocks.BEESWAX_PLANKS.defaultBlockState(), false);
             }
 
             //single layer of solid blocks
             for (int floorY = 0; floorY <= floorHeight + random.nextInt(2); ++floorY)
             {
-                chunk.setBlockState(blockpos$Mutable.set(blockpos.getX(), floorY, blockpos.getZ()), BzBlocks.BEESWAX_PLANKS.getDefaultState(), false);
+                chunk.setBlockState(blockpos$Mutable.set(blockpos.getX(), floorY, blockpos.getZ()), BzBlocks.BEESWAX_PLANKS.defaultBlockState(), false);
             }
         }
     }

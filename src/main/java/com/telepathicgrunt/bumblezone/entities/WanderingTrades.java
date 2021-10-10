@@ -2,8 +2,8 @@ package com.telepathicgrunt.bumblezone.entities;
 
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
-import net.minecraft.item.Items;
-import net.minecraft.village.TradeOffers;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.item.Items;
 
 public class WanderingTrades {
 
@@ -32,13 +32,13 @@ public class WanderingTrades {
         ));
     }
 
-    public static void addRareTrade(int tier, TradeOffers.Factory trade) {
-        int newSize = TradeOffers.WANDERING_TRADER_TRADES.get(tier).length + 1;
-        TradeOffers.Factory[] factory = new TradeOffers.Factory[newSize];
-        for(int index = 0; index < TradeOffers.WANDERING_TRADER_TRADES.get(tier).length; index++){
-            factory[index] = TradeOffers.WANDERING_TRADER_TRADES.get(tier)[index];
+    public static void addRareTrade(int tier, VillagerTrades.ItemListing trade) {
+        int newSize = VillagerTrades.WANDERING_TRADER_TRADES.get(tier).length + 1;
+        VillagerTrades.ItemListing[] factory = new VillagerTrades.ItemListing[newSize];
+        for(int index = 0; index < VillagerTrades.WANDERING_TRADER_TRADES.get(tier).length; index++){
+            factory[index] = VillagerTrades.WANDERING_TRADER_TRADES.get(tier)[index];
         }
         factory[newSize - 1] = trade;
-        TradeOffers.WANDERING_TRADER_TRADES.put(tier, factory);
+        VillagerTrades.WANDERING_TRADER_TRADES.put(tier, factory);
     }
 }

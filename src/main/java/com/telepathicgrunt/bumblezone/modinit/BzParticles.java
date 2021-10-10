@@ -5,17 +5,17 @@ import com.telepathicgrunt.bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.bumblezone.client.particles.PollenPuff;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.impl.client.particle.ParticleFactoryRegistryImpl;
-import net.minecraft.particle.DefaultParticleType;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.resources.ResourceLocation;
 
 public class BzParticles {
-    public static DefaultParticleType POLLEN = FabricParticleTypes.simple();
-    public static DefaultParticleType HONEY_PARTICLE = FabricParticleTypes.simple();
+    public static SimpleParticleType POLLEN = FabricParticleTypes.simple();
+    public static SimpleParticleType HONEY_PARTICLE = FabricParticleTypes.simple();
 
     public static void registerParticles() {
-        Registry.register(Registry.PARTICLE_TYPE, new Identifier(Bumblezone.MODID, "pollen_puff"), POLLEN);
-        Registry.register(Registry.PARTICLE_TYPE, new Identifier(Bumblezone.MODID, "honey_particle"), HONEY_PARTICLE);
+        Registry.register(Registry.PARTICLE_TYPE, new ResourceLocation(Bumblezone.MODID, "pollen_puff"), POLLEN);
+        Registry.register(Registry.PARTICLE_TYPE, new ResourceLocation(Bumblezone.MODID, "honey_particle"), HONEY_PARTICLE);
         ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.POLLEN, PollenPuff.Factory::new);
         ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.HONEY_PARTICLE, HoneyParticle.Factory::new);
     }

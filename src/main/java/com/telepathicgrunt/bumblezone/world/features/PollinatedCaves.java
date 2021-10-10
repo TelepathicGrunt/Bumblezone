@@ -4,17 +4,17 @@ import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.utils.OpenSimplex2F;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 
-public class PollinatedCaves extends Feature<DefaultFeatureConfig> {
+public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
     //https://github.com/Deadrik/TFC2
 
     protected long seed;
@@ -29,22 +29,22 @@ public class PollinatedCaves extends Feature<DefaultFeatureConfig> {
         }
     }
 
-    public PollinatedCaves(Codec<DefaultFeatureConfig> configFactory) {
+    public PollinatedCaves(Codec<NoneFeatureConfiguration> configFactory) {
         super(configFactory);
     }
 
     @Override
-    public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
-        setSeed(context.getWorld().getSeed());
-        BlockPos.Mutable mutableBlockPos = context.getOrigin().mutableCopy();
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        setSeed(context.level().getSeed());
+        BlockPos.MutableBlockPos mutableBlockPos = context.origin().mutable();
         double noise1;
         double noise2;
         double finalNoise;
 
         for (int x = 0; x < 16; x++) {
-            for (int y = 15; y < context.getGenerator().getWorldHeight() - 14; y++) {
+            for (int y = 15; y < context.chunkGenerator().getGenDepth() - 14; y++) {
                 for (int z = 0; z < 16; z++) {
-                    mutableBlockPos.set(context.getOrigin()).move(x, y, z);
+                    mutableBlockPos.set(context.origin()).move(x, y, z);
 
                     noise1 = noiseGen.noise3_Classic(mutableBlockPos.getX() * 0.019D,
                             mutableBlockPos.getZ() * 0.019D,
@@ -62,7 +62,7 @@ public class PollinatedCaves extends Feature<DefaultFeatureConfig> {
                     finalNoise = (noise1 * noise1) + (noise2 * noise2) + heightPressure;
 
                     if (finalNoise < 0.01305f) {
-                        carve(context.getWorld(), mutableBlockPos, finalNoise, noise1);
+                        carve(context.level(), mutableBlockPos, finalNoise, noise1);
                     }
                 }
             }
@@ -71,19 +71,19 @@ public class PollinatedCaves extends Feature<DefaultFeatureConfig> {
         return true;
     }
 
-    private static void carve(StructureWorldAccess world, BlockPos.Mutable position, double finalNoise, double noise) {
+    private static void carve(WorldGenLevel world, BlockPos.MutableBlockPos position, double finalNoise, double noise) {
         BlockState currentState = world.getBlockState(position);
-        if(!currentState.isAir() && currentState.getFluidState().isEmpty() && !currentState.isOf(BzBlocks.PILE_OF_POLLEN)) {
+        if(!currentState.isAir() && currentState.getFluidState().isEmpty() && !currentState.is(BzBlocks.PILE_OF_POLLEN)) {
             // varies the surface of the cave surface
             if(finalNoise > 0.0105f) {
                 if((noise * 3) % 2 < 0.35D){
-                    world.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.getDefaultState(), 3);
+                    world.setBlock(position, BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(), 3);
                 }
                 return;
             }
 
             // cannot carve next to fluids
-            BlockPos.Mutable sidePos = new BlockPos.Mutable();
+            BlockPos.MutableBlockPos sidePos = new BlockPos.MutableBlockPos();
             for(Direction direction : Direction.values()) {
                 sidePos.set(position).move(direction);
                 if(!world.getBlockState(sidePos).getFluidState().isEmpty()) {
@@ -96,9 +96,9 @@ public class PollinatedCaves extends Feature<DefaultFeatureConfig> {
             BlockState belowState = world.getBlockState(position);
             position.move(Direction.UP);
 
-            if(!belowState.isAir() && belowState.getFluidState().isEmpty() && belowState.getMaterial().blocksMovement()) {
-                world.setBlockState(position, BzBlocks.PILE_OF_POLLEN.getDefaultState().with(PileOfPollen.LAYERS, (int)Math.max(Math.min((noise + 1D) * 3D, 8), 1)), 3);
-                world.getBlockTickScheduler().schedule(position, BzBlocks.PILE_OF_POLLEN, 0);
+            if(!belowState.isAir() && belowState.getFluidState().isEmpty() && belowState.getMaterial().blocksMotion()) {
+                world.setBlock(position, BzBlocks.PILE_OF_POLLEN.defaultBlockState().setValue(PileOfPollen.LAYERS, (int)Math.max(Math.min((noise + 1D) * 3D, 8), 1)), 3);
+                world.getBlockTicks().scheduleTick(position, BzBlocks.PILE_OF_POLLEN, 0);
 
                 int carveHeight = Math.abs((int) ((noise * 1000) % 0.8D)) * 2 + 1;
                 for(int i = 0; i < carveHeight; i++){
@@ -110,12 +110,12 @@ public class PollinatedCaves extends Feature<DefaultFeatureConfig> {
                             return;
                         }
                     }
-                    world.setBlockState(position, Blocks.CAVE_AIR.getDefaultState(), 3);
+                    world.setBlock(position, Blocks.CAVE_AIR.defaultBlockState(), 3);
                 }
                 position.move(Direction.DOWN, carveHeight);
             }
             else {
-                world.setBlockState(position, Blocks.CAVE_AIR.getDefaultState(), 3);
+                world.setBlock(position, Blocks.CAVE_AIR.defaultBlockState(), 3);
             }
         }
     }
