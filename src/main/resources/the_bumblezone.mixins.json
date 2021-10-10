@@ -21,7 +21,7 @@
     "entities.MobSpawnLocationMixin",
     "entities.PlayerEntityMixin",
     "entities.PlayerInteractsEntityMixin",
-    "entities.PollenatedBeeSpawnMixin",
+    "entities.BeePollenatedSpawnMixin",
     "entities.ProtoChunkAddEntityMixin",
     "entities.WorldChunkAddEntityMixin",
     "items.GlassBottleUseMixin",

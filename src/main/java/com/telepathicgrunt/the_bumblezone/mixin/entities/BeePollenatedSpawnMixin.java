@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BeeEntity.class)
-public class PollenatedBeeSpawnMixin {
+public class BeePollenatedSpawnMixin {
 
     //spawns bees with chance to bee full of pollen
     @Inject(method = "<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V",
