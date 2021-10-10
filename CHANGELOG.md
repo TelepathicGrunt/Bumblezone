@@ -1,3 +1,13 @@
+### **(V.2.6.0 Changes) (1.16.5 Minecraft)**
+
+##### Entities:
+Added Beehemoth from CarrierBees. Special thanks to the developers for allowing the new mob to have a home in The Bumblezone!
+ The devs who made Beehemoth originally are: Aranaira, Alexthe666, and Nooby!
+
+##### Items:
+Texture for Honey Slime Spawn Egg is changed to be easier to identify. Especially for colorblind folks.
+
+
 ### **(V.2.5.2 Changes) (1.16.5 Minecraft)**
 
 ##### Lang:

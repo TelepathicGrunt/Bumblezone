@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.client;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuff;
+import com.telepathicgrunt.the_bumblezone.client.rendering.BeehemothRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HoneySlimeRendering;
 import com.telepathicgrunt.the_bumblezone.client.rendering.PileOfPollenRenderer;
@@ -48,6 +49,7 @@ public class BumblezoneClient
         SkyPropertiesAccessor.thebumblezone_getBY_ResourceLocation().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
 
         RenderingRegistry.registerEntityRenderingHandler(BzEntities.HONEY_SLIME.get(), HoneySlimeRendering::new);
+        RenderingRegistry.registerEntityRenderingHandler(BzEntities.BEEHEMOTH.get(), BeehemothRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(BzEntities.POLLEN_PUFF_ENTITY.get(), (entityRendererManager) -> new SpriteRenderer<>(entityRendererManager, minecraftClient.getItemRenderer()));
 
         //enqueueWork because I have been told RenderTypeLookup is not thread safe
