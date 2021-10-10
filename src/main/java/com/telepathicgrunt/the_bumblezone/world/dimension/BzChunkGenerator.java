@@ -90,6 +90,7 @@ public class BzChunkGenerator extends ChunkGenerator {
 
     private static final MobSpawnInfo.Spawners INITIAL_HONEY_SLIME_ENTRY = new MobSpawnInfo.Spawners(BzEntities.HONEY_SLIME.get(), 1, 1, 3);
     private static final MobSpawnInfo.Spawners INITIAL_BEE_ENTRY = new MobSpawnInfo.Spawners(EntityType.BEE, 1, 2, 4);
+    private static final MobSpawnInfo.Spawners INITIAL_BEEHEMOTH_ENTRY = new MobSpawnInfo.Spawners(BzEntities.BEEHEMOTH.get(), 1, 1, 1);
     private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
     protected final BlockState defaultBlock;
     protected final BlockState defaultFluid;
@@ -605,7 +606,17 @@ public class BzChunkGenerator extends ChunkGenerator {
         sharedseedrandom.setDecorationSeed(region.getSeed(), xCord, zCord);
         while (sharedseedrandom.nextFloat() < biome.getMobSettings().getCreatureProbability() * 0.75f) {
             //25% of time, spawn honey slime. Otherwise, spawn bees.
-            MobSpawnInfo.Spawners biome$spawnlistentry = sharedseedrandom.nextFloat() < 0.25f ? INITIAL_HONEY_SLIME_ENTRY : INITIAL_BEE_ENTRY;
+            MobSpawnInfo.Spawners biome$spawnlistentry;
+            float threshold = sharedseedrandom.nextFloat();
+            if(threshold < 0.25f) {
+                biome$spawnlistentry = INITIAL_HONEY_SLIME_ENTRY;
+            }
+            else if (threshold < 0.98f) {
+                biome$spawnlistentry = INITIAL_BEE_ENTRY;
+            }
+            else {
+                biome$spawnlistentry = INITIAL_BEEHEMOTH_ENTRY;
+            }
 
             int startingX = xCord + sharedseedrandom.nextInt(16);
             int startingZ = zCord + sharedseedrandom.nextInt(16);
