@@ -35,7 +35,8 @@ public class BeehemothAIRide extends Goal {
 
     @Override
     public void tick() {
-        float speedModifier = beehemothEntity.isQueen() ? 1.25f : 1.0f;
+        float speedModifier = beehemothEntity.isQueen() ? 3f : 1.0f;
+        speedModifier += (beehemothEntity.getFriendship() / 500f);
         beehemothEntity.getNavigation().stop();
         beehemothEntity.setTarget(null);
         double x = beehemothEntity.getX();

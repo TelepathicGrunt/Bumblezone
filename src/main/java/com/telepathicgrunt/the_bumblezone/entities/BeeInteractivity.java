@@ -7,6 +7,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.entity.IAngerable;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BucketItem;
@@ -91,7 +93,7 @@ public class BeeInteractivity {
         return ActionResultType.PASS;
     }
 
-    private static void calmAndSpawnHearts(World world, PlayerEntity playerEntity, BeeEntity beeEntity, float calmChance, int hearts) {
+    public static void calmAndSpawnHearts(World world, PlayerEntity playerEntity, LivingEntity beeEntity, float calmChance, int hearts) {
         boolean calmed = world.random.nextFloat() < calmChance;
         if (calmed) {
             if(playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())){
@@ -109,7 +111,11 @@ public class BeeInteractivity {
             }
         }
 
-        if (!world.isClientSide() && (!beeEntity.isAngry() || calmed))
+        if (!world.isClientSide() &&
+                (beeEntity instanceof IAngerable ?
+                        !((IAngerable)beeEntity).isAngry() || calmed :
+                        calmed))
+        {
             ((ServerWorld) world).sendParticles(
                     ParticleTypes.HEART,
                     beeEntity.getX(),
@@ -120,5 +126,6 @@ public class BeeInteractivity {
                     world.getRandom().nextFloat() * 0.2f + 0.2f,
                     world.getRandom().nextFloat() * 0.5 - 0.25f,
                     world.getRandom().nextFloat() * 0.4 + 0.2f);
+        }
     }
 }
