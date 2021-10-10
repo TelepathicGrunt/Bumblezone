@@ -24,6 +24,7 @@
  "item.the_bumblezone.honey_crystal_shield": "Щит из медовых кристаллов",
  "item.the_bumblezone.honey_crystal_shield.level_tooltip": "Уровень щита",
  "item.the_bumblezone.honey_slime_spawn_egg": "Яйцо призыва медовый слизень",
+ "item.the_bumblezone.beehemoth_spawn_egg": "Beehemoth Spawn Egg",
  "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov": "пластинка",
  "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov.desc": "Rimsky Korsakov - Flight of the Bumblebee",
  "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy": "пластинка",
@@ -32,6 +33,8 @@
  "item.the_bumblezone.honey_bucket": "Ведро мёда",
 
  "entity.the_bumblezone.honey_slime": "Медовый слизень",
+ "entity.the_bumblezone.beehemoth" : "Beehemoth",
+ "entity.the_bumblezone.beehemoth_queen" : "Queen Beehemoth",
  "entity.the_bumblezone.pollen_puff" : "Пыльца",
 
  "enchantment.the_bumblezone.comb_cutter": "Расческа для резки",
@@ -45,6 +48,9 @@
 
  "effect.the_bumblezone.wrath_of_the_hive": "Гнев улья",
  "effect.the_bumblezone.protection_of_the_hive": "Защита улья",
+
+ "subtitles.the_bumblezone.behemoth.hurt": "Beehemoth hurt",
+ "subtitles.the_bumblezone.behemoth.dies": "Beehemoth died",
 
  "the_bumblezone.porous_honeycomb_block.jei_description": " Блок покрытых отверстиями сот. Можно наполнить мёдом из бутылочек.",
  "the_bumblezone.filled_porous_honeycomb_block.jei_description": " Блок сот, плотно наполненный мёдом. Из него можно заполнить бутылочки с мёдом. Однако это может разозлить ближайших пчёл. \n\n При добыче даёт пористый блок сот и немного пчелиных сот. На добычу влияет удача, можно также использовать шёлковое касание. \n\n Даёт редстоуновский сигнал силы 1, когда к блоку обращён компаратор.",
@@ -62,6 +68,7 @@
  "the_bumblezone.honey_crystal_shield.jei_description": " Созданный из осколков , этот щит изначально весьма хлипок, но становится всё прочнее с каждым ремонтом при помощи осколков медовых кристаллов на наковальне. На максимальном уровне примерно вдвое прочнее обычного щита. \n\nОднако этот щит всегда получает сильный ущерб при блокировании взрывного и огненного урона. \n\n Щит также слегка замедляет любого врага, наносящего физический урон по щиту, и более того, может быть зачарован на нерушимость, проклятие несъёмности и проклятие утраты.",
  "the_bumblezone.honey_slime_spawn_egg.jei_description": " Яйцо, призывающе медовых слизней, которых можно разводить и использовать для производства мёда, применяя на них стеклянные пузырьки. Сие существо добавлено благодаря Bagel, создателю Buzzier bees. Специальная благодарность для него!",
  "the_bumblezone.sugar_water_still.jei_description": " Жидкость, раствор сахара в воде. Любые существа в ней замедляются чуть сильнее, чем в обычной воде. Может быть обнаружена в пчелином мире, создана при помощи ведра с водой и сахара или получена из затопленного блока медовых кристаллов. \n В целом, сахарная вода имеет свойства обычной воды, так как имеет тег воды. Соответственно, она может увлажнять грядки или поддерживать жизнь кораллов. \n\n\n Эта жидкость также лечит всякую пчелу прикасающуюся пчелу, если та не получает урона. Более того, с ней сахарный тростник будет расти гораздо быстрее (может быть использовано с 4 сторон). \n\n Если соприкасается с любой жидкостью с тегом лавы, превратится в засахарённый булыжник либо засахарённый камень.",
+ "the_bumblezone.beehemoth_spawn_egg.jei_description": " An egg that spawns a Beehemoth, a giant Bee! Beehemoth can be tamed with bee feeding items such as Honey Buckets or Honey Bottles and other honey stuff. However, they will only follow you if you hold Honey Buckets. If you feed them, you can eventually tame them, put on a saddle, and ride them! The more you feed and ride them, the more friendship they get which makes them move faster! When friendship is finally maxed out, Beehemoth becomes a Queen Beehemoth and can fly at maximum speed! However, friendship will decrease if Beehemoth takes damage from any source and if they lose all friendship, they will become untamed and unhappy. :(  This mob was donated to The Bumblezone by Aranaira, Alexthe666, and Nooby from the Carrier Bees mod! Special thanks to them!",
  "the_bumblezone.pollen_puff.jei_description": " Мягкий клубок слипшейся пыльцы! Получаеться при добыче кучи пыльцы или из пчёл с пыльцой, щелкнув по ним правой кнопкой мыши влажной губкой, а так же бутылкой с водой или ведром с водой. \n\n Его можно бросить, чтобы создать слой кучи пыльцы, куда бы он ни попадал. Если он попадает в неопыленную пчелу, пчела опыляется. Если попасть им в панду, она чихнет. Но если он попадает в ростущий цветок, это может привести к размножению цветка! \n\n Блоки пыльцы замедляют мобов и выделяет много частиц при физическом контакте. Он также будет опылять любую неопылённую пчелу, которая влетает в кучу пыльцы или заставлять чихать панд. Его также можно измерить с помощью редстоуного компаратора.",
  "the_bumblezone.honey_fluid_still.jei_description": " Вкусный жидкий мёд! Он течёт очень медленно и значительно замедлит любых существ. Мобы и лодки, имеют тенденцию тонуть в жидком мёде, как если бы это была липкая ловушка! \n\n Можно собрать ведром или стеклянной бутылкой, а так же он вылечит любую раненую пчелу, которая попадёт в него. \n\n Когда эта жидкость вступает в контакт с любой другой жидкостью, имеющей свойства лавы, эта жидкость превращается либо в засахаренный булыжник или в засахаренный камень.",
  "the_bumblezone.honey_bucket.jei_description": " Ведро с жидким мёдом.\n\n Использование на пчёлах полностью их излечит.. Если использовать на взрослой пчеле, он и соседние пчелы переходят в режим любви! при использовании на детской пчеле есть шанс вырастить из неё взрослую. Может использоваться и в раздатчиках!"

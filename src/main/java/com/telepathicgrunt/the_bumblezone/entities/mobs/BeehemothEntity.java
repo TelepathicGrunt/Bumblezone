@@ -76,7 +76,7 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         this.offset6 = (this.random.nextFloat() - 0.5f);
     }
 
-    private static TranslationTextComponent QUEEN_NAME = new TranslationTextComponent("entity.carrierbees.beehemoth_queen");
+    private static final TranslationTextComponent QUEEN_NAME = new TranslationTextComponent("entity.the_bumblezone.beehemoth_queen");
 
     @Override
     protected ITextComponent getTypeName() {

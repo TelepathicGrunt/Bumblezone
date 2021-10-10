@@ -24,6 +24,7 @@
   "item.the_bumblezone.honey_crystal_shield": "Escudo de mel cristalizado",
   "item.the_bumblezone.honey_crystal_shield.level_tooltip": "Nível de escudo",
   "item.the_bumblezone.honey_slime_spawn_egg": "Ovo gerador de slime de mel",
+  "item.the_bumblezone.beehemoth_spawn_egg": "Beehemoth Spawn Egg",
   "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov": "Disco musical",
   "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov.desc": "Rimsky Korsakov - Flight of the Bumblebee",
   "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy": "Disco musical",
@@ -32,6 +33,8 @@
   "item.the_bumblezone.honey_bucket": "Balde de mel",
 
   "entity.the_bumblezone.honey_slime": "Slime de mel",
+  "entity.the_bumblezone.beehemoth" : "Beehemoth",
+  "entity.the_bumblezone.beehemoth_queen" : "Queen Beehemoth",
   "entity.the_bumblezone.pollen_puff" : "Tufo de pólen",
 
   "enchantment.the_bumblezone.comb_cutter": "Cortador de pente",
@@ -45,6 +48,9 @@
 
   "effect.the_bumblezone.wrath_of_the_hive": "Ira da colmeia",
   "effect.the_bumblezone.protection_of_the_hive": "Proteção da colmeia",
+
+  "subtitles.the_bumblezone.behemoth.hurt": "Beehemoth hurt",
+  "subtitles.the_bumblezone.behemoth.dies": "Beehemoth died",
 
   "the_bumblezone.porous_honeycomb_block.jei_description": " Um bloco de favo de mel cheio de buracos! Você pode armazenar mel neste bloco com frascos de mel.",
   "the_bumblezone.filled_porous_honeycomb_block.jei_description": " Um bloco de favo de mel cheio até a borda com mel! Você pode tirar o mel deste bloco com um frasco vasio. No entanto, isso pode irritar as abelhas próximas. \n\n Quando extraído, este bloco solta bloco de favo de mel poroso e alguns favos de mel. A queda é afetada por fortuna ou você pode usar toque suave para manter o bloco intacto. \n\n Este bloco também emite um sinal Redstone de 1 quando um comparador está voltado para este bloco.",
@@ -61,6 +67,7 @@
   "the_bumblezone.sugar_water_bottle.jei_description": " Um frasco com água açúcarada. Isso pode ser obtido usando um frasco em água açúcarada. \n\n Beber este item restaurará muito pouca fome, mas lhe dará pressa por um breve período de tempo. \n\n Pode ser alimento para o bloco de favo de mel de ninhada para  fazer a larva crescer. Também pode ser usado como alimento para abelhas para curá-las junto com uma chance de remover o efeito 'Ira da colmeia' de você.",
   "the_bumblezone.honey_crystal_shield.jei_description": " Criado com fragmentos de mel cristalizado, este escudo começa muito fraco, mas se torna mais forte quanto mais você o conserta com fragmentos de mel cristalizado em uma bigorna. No nível máximo, este escudo tem cerca do dobro da durabilidade do escudo de vanilla. \n\n No entanto, este escudo sempre sofrerá danos massivos ao bloquear danos explosivos ou de fogo. \n\n Este escudo irá desacelerar brevemente qualquer multidão que cause dano físico ao escudo e, além disso, este escudo pode ser encantado com durabilidade e maldição do desaparecimento (Sem rememndo para ajudar a mantê-lo equilibrado).",
   "the_bumblezone.honey_slime_spawn_egg.jei_description": " Um ovo que gera slimes de mel, que pode ser criado e usado para cultivar frascos de mel quando uma frasco vasio é usada neles. Este mob foi doado para The Bumblezone por Bagel, o criador das Buzzier Bees! Agradecimentos especiais a eles!",
+  "the_bumblezone.beehemoth_spawn_egg.jei_description": " An egg that spawns a Beehemoth, a giant Bee! Beehemoth can be tamed with bee feeding items such as Honey Buckets or Honey Bottles and other honey stuff. However, they will only follow you if you hold Honey Buckets. If you feed them, you can eventually tame them, put on a saddle, and ride them! The more you feed and ride them, the more friendship they get which makes them move faster! When friendship is finally maxed out, Beehemoth becomes a Queen Beehemoth and can fly at maximum speed! However, friendship will decrease if Beehemoth takes damage from any source and if they lose all friendship, they will become untamed and unhappy. :(  This mob was donated to The Bumblezone by Aranaira, Alexthe666, and Nooby from the Carrier Bees mod! Special thanks to them!",
   "the_bumblezone.sugar_water_still.jei_description": " Um fluido que é água açúcarada. Qualquer mobs nele é ligeiramente mais lento do que a água normal. Este fluido pode ser encontrado na Bumblezone, criado por balde de água açúcarada, ou obtido do alagamento de blocos de mel cristalizado. \n No geral, água açúcarada terá muito do mesmo comportamento que a água normal porque este fluido tem uma tag de água. Isso significa que você pode hidratar terras agrícolas ou manter os corais vivos com este fluido. \n\n\n Este fluido irá curar qualquer abelha que o toque, se a abelha não estiver sofrendo danos. Além disso, este fluido fará crescer a cana-de-açúcar muito mais rápido se colocado próximo à planta (este efeito pode ser acumulado até 4 vezes). \n\n Quando este fluido entra em contato com qualquer outro fluido que tenha uma tag de lava, esse fluido se transforma em blocos de pedregulho açúcarado ou de pedra açúcarada.",
   "the_bumblezone.pollen_puff.jei_description": " Uma bola fofa de pólen! Encontrado minerando pilhas de pólen ou ao despolinizar abelhas ao clicar com o botão direito nelas com uma esponga úmida, frasco de água ou balde de água. \n\n Pode ser atirado para criat um bloco de pilha de pólen em qualquer lugar que cair. Se acertar uma abelha polinizada, a abelha é polinizada. Se acertar um panda, ele espirra. Entretanto, se certar um das flores permitidas, ela pode se reproduzir! \n\n Um bloco de pilha de pólen desacelera multidões e emite muitas partículas de pólen. Ele também irá polinizar qualquer abelha desponilizada que voar nele ou fazer pandas espirrarem. Também pode ser medido por um comparador de redstone.",
   "the_bumblezone.honey_fluid_still.jei_description": " Um delicioso mel! Flui vagarosamente e irá desacelera multidões nele consideravelmente. Multidões que não são do jogador e barcos tendem a afundar no mel como se fosse um armadilha grudenta! \n\n Pode ser pego por um balde ou um frasco e ele irá curar qulquer abelha . \n\n Quando esse fluido entrar em contato com qualquer fluido com a tag de lava, ele irá se tornar em pedregulho açucarado ou pedra açucarada.",

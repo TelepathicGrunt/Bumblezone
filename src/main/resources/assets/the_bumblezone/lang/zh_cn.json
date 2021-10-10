@@ -24,6 +24,7 @@
 	"item.the_bumblezone.honey_crystal_shield": "§6蜂蜜结晶盾牌",
 	"item.the_bumblezone.honey_crystal_shield.level_tooltip": "盾牌等级",
 	"item.the_bumblezone.honey_slime_spawn_egg": "蜂蜜史莱姆刷怪蛋",
+	"item.the_bumblezone.beehemoth_spawn_egg": "Beehemoth Spawn Egg",
 	"item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov": "音乐唱片",
 	"item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov.desc": "Rimsky Korsakov - Flight of the Bumblebee",
 	"item.the_bumblezone.music_disc_honey_bee_rat_faced_boy": "音乐唱片",
@@ -32,6 +33,8 @@
 	"item.the_bumblezone.honey_bucket": "蜂蜜桶",
 
 	"entity.the_bumblezone.honey_slime": "蜂蜜史莱姆",
+	"entity.the_bumblezone.beehemoth" : "Beehemoth",
+	"entity.the_bumblezone.beehemoth_queen" : "Queen Beehemoth",
 	"entity.the_bumblezone.pollen_puff" : "花粉球",
 
 	"enchantment.the_bumblezone.comb_cutter": "蜜脾割具",
@@ -45,6 +48,9 @@
 
 	"effect.the_bumblezone.wrath_of_the_hive": "蜂群之怒",
 	"effect.the_bumblezone.protection_of_the_hive": "蜂群之护",
+
+	"subtitles.the_bumblezone.behemoth.hurt": "Beehemoth hurt",
+	"subtitles.the_bumblezone.behemoth.dies": "Beehemoth died",
 
 	"the_bumblezone.porous_honeycomb_block.jei_description": "一个充满孔洞的蜜脾块！你可以用蜂蜜瓶把蜂蜜储存到这个方块中。",
 	"the_bumblezone.filled_porous_honeycomb_block.jei_description": "一个装满了蜂蜜的蜜脾块！你可以用玻璃瓶从这个方块中取出蜂蜜。但是，这可能会激怒附近的蜜蜂。\n\n挖掘时，这个方块会掉落多孔蜜脾块和一些蜜脾。掉落物会受到时运的影响，或者你可以用精准采集来保持方块的完整。\n\n当红石比较器对着这个方块时，也会输出强度为1的红石信号。",
@@ -61,6 +67,7 @@
 	"the_bumblezone.sugar_water_bottle.jei_description": "一个装有糖水的瓶子，这可通过在糖水上使用瓶子来获得。\n\n喝下这个东西可以恢复很少的饥饿值，但会让你在短暂的时间内获得急迫效果。\n\n可以喂给蜜脾育幼块，使幼虫长大一个阶段。也可以喂给蜜蜂来治疗它们，并有机会消除蜂群之怒对你的影响。",
 	"the_bumblezone.honey_crystal_shield.jei_description": "这个盾牌由蜂蜜结晶碎片制成，开始时非常脆弱，但当你用蜂蜜结晶碎片在铁砧中修复它时就会变得更强。在最高等级时，这个盾牌的耐久度大约是原版盾牌的两倍。\n\n然而，在阻挡爆炸或火焰伤害时，这个盾牌总是会受到大量损耗。\n\n 这个盾牌会让任何对盾牌造成物理伤害的生物短暂减速，此外，这个盾牌可以被耐久、绑定诅咒和消失诅咒附魔（禁用经验修补来帮助保持平衡）。",
 	"the_bumblezone.honey_slime_spawn_egg.jei_description": "一个能生成蜂蜜史莱姆的刷怪蛋，当对着蜂蜜史莱姆使用玻璃瓶时，它们可以被繁殖并用于生产蜂蜜瓶。这个生物是由Bagel，Buzzier bees的创造者捐赠给Bumblezone的。特别感谢他们！",
+	"the_bumblezone.beehemoth_spawn_egg.jei_description": " An egg that spawns a Beehemoth, a giant Bee! Beehemoth can be tamed with bee feeding items such as Honey Buckets or Honey Bottles and other honey stuff. However, they will only follow you if you hold Honey Buckets. If you feed them, you can eventually tame them, put on a saddle, and ride them! The more you feed and ride them, the more friendship they get which makes them move faster! When friendship is finally maxed out, Beehemoth becomes a Queen Beehemoth and can fly at maximum speed! However, friendship will decrease if Beehemoth takes damage from any source and if they lose all friendship, they will become untamed and unhappy. :(  This mob was donated to The Bumblezone by Aranaira, Alexthe666, and Nooby from the Carrier Bees mod! Special thanks to them!",
 	"the_bumblezone.sugar_water_still.jei_description": "一种由糖浸渍在水里的流体。任何在其中的生物都会比普通的水慢一点。这种流体可以在蜜蜂领域维度中找到，由加了糖的水桶合成，或者从含水的蜂蜜结晶方块中获得。\n总的来说，糖水将具有与普通水相同的行为，因为这种流体有一个水标签。这意味着你可以用这种流体给农田补充水分或保持珊瑚的活性。\n\n\n如果蜜蜂目前没有受到伤害，这种流体可以治疗任何接触到它的蜜蜂。此外，如果放在植物旁边，这种流体会使甘蔗生长得更快（这种效果最多可以叠加4次）。\n\n当这种流体与任何其他有熔岩标签的流体接触时，这种流体会变成被糖浸渍的圆石或被糖浸渍的石头。",
 	"the_bumblezone.pollen_puff.jei_description": "一团软绵绵的花粉球！通过挖掘花粉堆或用湿海绵、水瓶或水桶右击已授粉的蜜蜂获得。\n\n它可以被扔出去，在任何地方形成花粉堆方块。如果它击中了一只未授粉的蜜蜂，这只蜜蜂就会成为授粉者。如果它击中了熊猫，它就会打喷嚏。但是，如果它击中了一朵允许的花，它可能会导致花的繁殖！\n\n花粉堆方块可以减缓其中的生物，并释放出大量的花粉颗粒。它还会给任何飞入花粉堆的未授粉蜜蜂授粉，或者让熊猫打喷嚏。它也可以通过红石比较器进行测量。",
 	"the_bumblezone.honey_fluid_still.jei_description": "一种美味的蜂蜜流体！它的流动速度非常慢，而且会使其中的生物明显减速。非玩家生物和船只往往会沉入液态蜂蜜中，就像粘稠的陷阱一样。\n\n可以用水桶或玻璃瓶拾取，它可以治疗任何飞入流体的受伤蜜蜂。\n\n当这种流体与任何其他有熔岩标签的液体接触时，这种流体会变成被糖浸渍的圆石或被糖浸渍的石头。",
