@@ -1,3 +1,15 @@
+### **(V.3.2.1 Changes) (1.17.1 Minecraft)**
+
+##### Lang:
+Forgot to add lang translations for every new entries
+
+##### Entities:
+Increased spawnrate of Beehemoth
+
+##### Structures:
+Increased spawnrate of HoneyCave Room structure.
+
+
 ### **(V.3.2.0 Changes) (1.17.1 Minecraft)**
 
 ##### Misc:
@@ -12,6 +24,7 @@ The devs who made Beehemoth originally are: Aranaira, Alexthe666, and Nooby!
  The more you feed and ride them, the more friendship they get which makes them move faster.
  When friendship is finally maxed out, Beehemoth becomes a Queen Beehemoth and can fly at maximum speed!
  However, friendship will decrease if Beehemoth takes damage from any source and if they lose all friendship, they will become untamed and unhappy. :(
+ They spawn in the Bumblezone rarely but Honey Cave Rooms have 2 always.
 
 ##### Items:
 Texture for Honey Slime Spawn Egg is changed to be easier to identify. Especially for colorblind folks.

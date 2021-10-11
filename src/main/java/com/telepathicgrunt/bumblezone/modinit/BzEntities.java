@@ -31,7 +31,7 @@ public class BzEntities {
 
     private static void registerEntitySpawnRestrictions(){
         SpawnPlacementsAccessor.thebumblezone_invokeRegister(HONEY_SLIME, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
-        SpawnPlacementsAccessor.thebumblezone_invokeRegister(BEEHEMOTH, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
+        SpawnPlacementsAccessor.thebumblezone_invokeRegister(BEEHEMOTH, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BeehemothEntity::checkMobSpawnRules);
     }
 
     private static void registerEntityAttributes(){

@@ -28,6 +28,7 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -48,11 +49,15 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
+import java.util.Random;
 
 public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     private static final EntityDataAccessor<Boolean> SADDLED = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
@@ -178,6 +183,21 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     @Override
     protected PathNavigation createNavigation(Level pLevel) {
         return new DirectPathNavigator(this, pLevel);
+    }
+
+    public static boolean checkMobSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor iWorld, MobSpawnType spawnReason, BlockPos blockPos, Random random) {
+        return true;
+    }
+
+    @Override
+    public boolean checkSpawnRules(LevelAccessor world, MobSpawnType spawnReason) {
+        return true;
+    }
+
+    @Override
+    public boolean checkSpawnObstruction(LevelReader worldReader) {
+        AABB box = this.getBoundingBox();
+        return !worldReader.containsAnyLiquid(box) && worldReader.getBlockStates(box).noneMatch(state -> state.getMaterial().blocksMotion()) && worldReader.isUnobstructed(this);
     }
 
     @Override
