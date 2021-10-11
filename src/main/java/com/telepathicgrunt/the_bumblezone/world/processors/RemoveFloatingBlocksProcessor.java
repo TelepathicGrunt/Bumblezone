@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.world.processors;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
@@ -27,22 +27,20 @@ public class RemoveFloatingBlocksProcessor extends StructureProcessor {
         IChunk cachedChunk = worldView.getChunk(mutable);
 
         // attempts to remove invalid floating plants
-        if(structureBlockInfoWorld.state.isAir() || structureBlockInfoWorld.state.getBlock() instanceof FlowingFluidBlock){
+        if(structureBlockInfoWorld.state.isAir() || structureBlockInfoWorld.state.getMaterial().isLiquid()) {
 
-            // set the block in the world so that canPlaceAt's result changes
+            // set the block in the world so that canSurvive's result changes
             cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state, false);
             BlockState aboveWorldState = worldView.getBlockState(mutable.move(Direction.UP));
 
-            // detects the first invalidly placed block before going into a while loop
-            if(!aboveWorldState.canSurvive(worldView, mutable)){
+            // detects the invalidly placed blocks
+            while(mutable.getY() < worldView.getMaxBuildHeight() && !aboveWorldState.canSurvive(worldView, mutable)) {
                 cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state, false);
                 aboveWorldState = worldView.getBlockState(mutable.move(Direction.UP));
-
-                while(mutable.getY() < worldView.getMaxBuildHeight() && !aboveWorldState.canSurvive(worldView, mutable)){
-                    cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state, false);
-                    aboveWorldState = worldView.getBlockState(mutable.move(Direction.UP));
-                }
             }
+        }
+        else if(!structureBlockInfoWorld.state.canSurvive(worldView, mutable)) {
+            return new Template.BlockInfo(structureBlockInfoWorld.pos, Blocks.CAVE_AIR.defaultBlockState(), null);
         }
 
         return structureBlockInfoWorld;

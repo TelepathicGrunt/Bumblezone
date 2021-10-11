@@ -1,7 +1,7 @@
 ### **(V.2.6.0 Changes) (1.16.5 Minecraft)**
 
 ##### Entities:
-Added Beehemoth,a giant ridable bee, from CarrierBees mod. Special thanks to the developers for allowing the new mob to have a home in The Bumblezone!
+Added Beehemoth, a giant ridable bee, from CarrierBees mod. Special thanks to the developers for allowing the new mob to have a home in The Bumblezone!
  The devs who made Beehemoth originally are: Aranaira, Alexthe666, and Nooby!
  Beehemoth can be tamed with bee feeding items such as Honey Buckets or Honey Bottles and other honey stuff. 
  However, they will only follow you if you hold Honey Buckets. 
@@ -12,6 +12,12 @@ Added Beehemoth,a giant ridable bee, from CarrierBees mod. Special thanks to the
 
 ##### Items:
 Texture for Honey Slime Spawn Egg is changed to be easier to identify. Especially for colorblind folks.
+
+##### Worldgen:
+Fixed some cases where candles in Bee Dungeons and Spider Infested Bee Dungeons can be floating.
+
+##### Mod Compat:
+Caves and Cliffs Backport's candles can now be found in Bee Dungeons and Spider Infested Bee Dungeons. 
 
 
 ### **(V.2.5.2 Changes) (1.16.5 Minecraft)**

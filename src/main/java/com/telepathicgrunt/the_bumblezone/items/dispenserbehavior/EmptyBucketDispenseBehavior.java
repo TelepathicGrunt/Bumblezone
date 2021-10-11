@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 
-import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -13,7 +12,6 @@ import net.minecraft.dispenser.IDispenseItemBehavior;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.DispenserTileEntity;
 import net.minecraft.tileentity.HopperTileEntity;
 import net.minecraft.util.math.BlockPos;

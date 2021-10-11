@@ -16,6 +16,7 @@ public class ModChecker
 	public static boolean buzzierBeesPresent = false;
 	public static boolean pokecubePresent = false;
 	public static boolean charmPresent = false;
+	public static boolean cavesAndCliffsPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -51,6 +52,9 @@ public class ModChecker
 
 			modid = "charm";
 			loadupModCompat(modid, () -> CharmCompat.setupCharm());
+
+			modid = "cavesandcliffs";
+			loadupModCompat(modid, () -> CavesAndCliffsBackportCompat.setupCavesAndCliffs());
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

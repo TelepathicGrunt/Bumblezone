@@ -44,6 +44,9 @@ public class BzModCompatibilityConfigs
 		public ConfigValueListener<Boolean> allowCCandlesBeeDungeon;
 		public ConfigValueListener<Boolean> allowCCandlesSpiderBeeDungeon;
 
+		public ConfigValueListener<Boolean> allowCACCandlesBeeDungeon;
+		public ConfigValueListener<Boolean> allowCACCandlesSpiderBeeDungeon;
+
 		public ConfigValueListener<Boolean> allowCharmTradeCompat;
 		public ConfigValueListener<Boolean> allowBuzzierBeesTradeCompat;
 		public ConfigValueListener<Boolean> allowResorucefulBeesTradeCompat;
@@ -51,6 +54,22 @@ public class BzModCompatibilityConfigs
 	    public BzModCompatibilityConfigValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber) {
 
 	        builder.push("Mod Compatibility Options");
+
+					builder.push("Caves and Cliffs Backport Options");
+
+					allowCACCandlesBeeDungeon = subscriber.subscribe(builder
+							.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+									+" Spawn Caves and Cliffs Backport Candles in Bee Dungeons.\r\n")
+							.translation("the_bumblezone.config.modcompat.cavesandcliffs.allowcaccandlesbeedungeon")
+							.define("allowCACCandlesBeeDungeon", true));
+
+					allowCACCandlesSpiderBeeDungeon = subscriber.subscribe(builder
+							.comment(" \r\n-----------------------------------------------------\r\n\r\n"
+									+" Spawn Caves and Cliffs Backport Candles in Spider Infested Bee Dungeons.\r\n")
+							.translation("the_bumblezone.config.modcompat.cavesandcliffs.allowcaccandlesspiderbeedungeon")
+							.define("allowCACCandlesSpiderBeeDungeon", true));
+
+					builder.pop();
 
 					builder.push("Charm Options");
 
