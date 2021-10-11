@@ -13,8 +13,8 @@
           "salt": 938497222
         },
         "the_bumblezone:honey_cave_room": {
-          "spacing": 6,
-          "separation": 3,
+          "spacing": 3,
+          "separation": 1,
           "salt": 722299384
         }
       }

@@ -29,7 +29,7 @@ public class BzEntities {
 
     private static void registerEntitySpawnRestrictions() {
         EntitySpawnPlacementRegistry.register(HONEY_SLIME.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::checkMobSpawnRules);
-        EntitySpawnPlacementRegistry.register(BEEHEMOTH.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::checkMobSpawnRules);
+        EntitySpawnPlacementRegistry.register(BEEHEMOTH.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, BeehemothEntity::checkMobSpawnRules);
     }
 
     public static void registerEntityAttributes(EntityAttributeCreationEvent event) {

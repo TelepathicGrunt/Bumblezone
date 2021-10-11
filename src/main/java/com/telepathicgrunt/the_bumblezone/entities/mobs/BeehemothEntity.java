@@ -11,6 +11,7 @@ import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
@@ -41,6 +42,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
@@ -48,10 +50,13 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.EnumSet;
+import java.util.Random;
 
 public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     private static final DataParameter<Boolean> SADDLED = EntityDataManager.defineId(BeehemothEntity.class, DataSerializers.BOOLEAN);
@@ -176,6 +181,21 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     @Override
     protected PathNavigator createNavigation(World pLevel) {
         return new DirectPathNavigator(this, pLevel);
+    }
+
+    public static boolean checkMobSpawnRules(EntityType<? extends MobEntity> entityType, IWorld iWorld, SpawnReason spawnReason, BlockPos blockPos, Random random) {
+        return true;
+    }
+
+    @Override
+    public boolean checkSpawnRules(IWorld world, SpawnReason spawnReason) {
+        return true;
+    }
+
+    @Override
+    public boolean checkSpawnObstruction(IWorldReader worldReader) {
+        AxisAlignedBB box = this.getBoundingBox();
+        return !worldReader.containsAnyLiquid(box) && worldReader.getBlockStates(box).noneMatch(state -> state.getMaterial().blocksMotion()) && worldReader.isUnobstructed(this);
     }
 
     @Override

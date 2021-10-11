@@ -1,3 +1,12 @@
+### **(V.2.6.1 Changes) (1.16.5 Minecraft)**
+
+##### Entities:
+Fixed Beehemoth not spawning naturally in Bumblezone biomes outside Honey Cave Room structures.
+
+##### Structures:
+Increased spawnrate of HoneyCave Room structure.
+
+
 ### **(V.2.6.0 Changes) (1.16.5 Minecraft)**
 
 ##### Entities:
@@ -9,6 +18,7 @@ Added Beehemoth, a giant ridable bee, from CarrierBees mod. Special thanks to th
  The more you feed and ride them, the more friendship they get which makes them move faster.
  When friendship is finally maxed out, Beehemoth becomes a Queen Beehemoth and can fly at maximum speed!
  However, friendship will decrease if Beehemoth takes damage from any source and if they lose all friendship, they will become untamed and unhappy. :(
+ They spawn in the Bumblezone rarely but Honey Cave Rooms have 2 always.
 
 ##### Items:
 Texture for Honey Slime Spawn Egg is changed to be easier to identify. Especially for colorblind folks.

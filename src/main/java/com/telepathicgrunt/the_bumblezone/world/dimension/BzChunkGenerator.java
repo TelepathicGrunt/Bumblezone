@@ -611,7 +611,7 @@ public class BzChunkGenerator extends ChunkGenerator {
             if(threshold < 0.25f) {
                 biome$spawnlistentry = INITIAL_HONEY_SLIME_ENTRY;
             }
-            else if (threshold < 0.98f) {
+            else if (threshold < 0.95f) {
                 biome$spawnlistentry = INITIAL_BEE_ENTRY;
             }
             else {
