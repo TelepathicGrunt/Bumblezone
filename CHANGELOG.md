@@ -6,6 +6,11 @@ Updated ru_ru.json translations. Thank you Tkhakiro!
 ##### Entities:
 Beehemoth now follows players when they hold any item that is in forge:items/buckets/honey tag.
 
+##### Mod Compat:
+Added Cyclic's honey bucket to forge:items/buckets/honey tag within Bumblezone. 
+
+Also, be sure to update Productive Bees to their latest version so that their honey bucket is also placed into forge:items/buckets/honey tag.
+
 
 ### **(V.2.6.2 Changes) (1.16.5 Minecraft)**
 

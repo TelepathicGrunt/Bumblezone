@@ -108,9 +108,9 @@ dependencies {
     compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
     compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
     compileOnly fg.deobf("curse.maven:buzzy_drones-460283:${buzzy_drones_file_id}")
-
     compileOnly fg.deobf("curse.maven:caves_and_cliffs_backport-417430:${caves_and_cliffs_backport_file_id}")
     compileOnly fg.deobf("curse.maven:caves_api-441706:${caves_api_file_id}")
+    //runtimeOnly fg.deobf("curse.maven:cyclic-239286:3484473")
 
     compileOnly fg.deobf("noobanidus.mods.carrierbees:carrierbees:${carrierbees_version}")
     compileOnly fg.deobf("com.resourcefulbees:ResourcefulBees:${resourcefulbees_version}")

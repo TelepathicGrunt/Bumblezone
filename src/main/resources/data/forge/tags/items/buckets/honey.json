@@ -8,6 +8,10 @@
     {
       "id": "create:honey_bucket",
       "required": false
+    },
+    {
+      "id": "cyclic:honey_bucket",
+      "required": false
     }
   ]
 }
