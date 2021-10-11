@@ -3,7 +3,6 @@ package com.telepathicgrunt.bumblezone.entities.nonliving;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.bumblezone.mixin.entities.BeeEntityInvoker;
-import com.telepathicgrunt.bumblezone.mixin.entities.PandaEntityInvoker;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
@@ -118,8 +117,8 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             ((BeeEntityInvoker)entity).thebumblezone_callSetHasNectar(true);
             ((Bee)entity).resetTicksWithoutNectarSinceExitingHive();
         }
-        else if(entity instanceof Panda) {
-            ((PandaEntityInvoker)entity).thebumblezone_callSneeze();
+        else if(entity instanceof Panda panda) {
+            panda.sneeze(true);
         }
     }
 

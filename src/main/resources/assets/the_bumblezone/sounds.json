@@ -43,5 +43,63 @@
         "volume": 1
       }
     ]
+  },
+  "entity.beehemoth.hurt": {
+    "sounds": [
+      {
+        "attenuation_distance": 16,
+        "name": "minecraft:mob/bee/hurt1",
+        "volume": 1,
+        "pitch": 0.2
+      },
+      {
+        "attenuation_distance": 16,
+        "name": "minecraft:mob/bee/hurt2",
+        "volume": 1,
+        "pitch": 0.2
+      },
+      {
+        "attenuation_distance": 16,
+        "name": "minecraft:mob/bee/hurt3",
+        "volume": 1,
+        "pitch": 0.2
+      },
+      {
+        "attenuation_distance": 16,
+        "name": "minecraft:mob/bee/hurt1",
+        "volume": 1,
+        "pitch": 0.3
+      },
+      {
+        "attenuation_distance": 16,
+        "name": "minecraft:mob/bee/hurt2",
+        "volume": 1,
+        "pitch": 0.3
+      },
+      {
+        "attenuation_distance": 16,
+        "name": "minecraft:mob/bee/hurt3",
+        "volume": 1,
+        "pitch": 0.3
+      }
+    ],
+    "subtitle": "subtitles.the_bumblezone.behemoth.hurt"
+  },
+  "entity.beehemoth.death": {
+    "sounds": [
+      {
+        "attenuation_distance": 16,
+        "name": "minecraft:mob/bee/death1",
+        "volume": 1,
+        "pitch": 0.2
+      },
+      {
+        "attenuation_distance": 16,
+        "name": "minecraft:mob/bee/death2",
+        "volume": 1,
+        "pitch": 0.2
+      }
+    ],
+    "subtitle": "subtitles.the_bumblezone.behemoth.dies"
   }
 }

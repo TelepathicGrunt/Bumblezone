@@ -21,6 +21,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
@@ -101,7 +102,7 @@ public class BeeInteractivity {
         return InteractionResult.PASS;
     }
 
-    private static void calmAndSpawnHearts(Level world, Player playerEntity, Bee beeEntity, float calmChance, int hearts) {
+    public static void calmAndSpawnHearts(Level world, Player playerEntity, LivingEntity beeEntity, float calmChance, int hearts) {
         boolean calmed = world.random.nextFloat() < calmChance;
         if (calmed) {
             if(playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE)){
@@ -119,7 +120,10 @@ public class BeeInteractivity {
             }
         }
 
-        if (!beeEntity.isAngry() || calmed)
+        if (beeEntity instanceof Bee ?
+                (!((Bee)beeEntity).isAngry() || calmed) :
+                calmed)
+        {
             ((ServerLevel) world).sendParticles(
                     ParticleTypes.HEART,
                     beeEntity.getX(),
@@ -130,5 +134,6 @@ public class BeeInteractivity {
                     world.getRandom().nextFloat() * 0.2f + 0.2f,
                     world.getRandom().nextFloat() * 0.5 - 0.25f,
                     world.getRandom().nextFloat() * 0.4 + 0.2f);
+        }
     }
 }

@@ -15,12 +15,16 @@ import net.fabricmc.api.Environment;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.SectionPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
@@ -32,9 +36,17 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.chunk.LevelChunkSection;
+import net.minecraft.world.level.chunk.ProtoChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.StructureSettings;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.structures.JigsawJunction;
+import net.minecraft.world.level.levelgen.feature.structures.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.synth.ImprovedNoise;
 import net.minecraft.world.level.levelgen.synth.PerlinNoise;
 import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
@@ -81,6 +93,7 @@ public class BzChunkGenerator extends ChunkGenerator {
 
     private static final MobSpawnSettings.SpawnerData INITIAL_HONEY_SLIME_ENTRY = new MobSpawnSettings.SpawnerData(BzEntities.HONEY_SLIME, 1, 1, 3);
     private static final MobSpawnSettings.SpawnerData INITIAL_BEE_ENTRY = new MobSpawnSettings.SpawnerData(EntityType.BEE, 1, 1, 4);
+    private static final MobSpawnSettings.SpawnerData INITIAL_BEEHEMOTH_ENTRY = new MobSpawnSettings.SpawnerData(BzEntities.BEEHEMOTH, 1, 1, 1);
     private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
     protected final BlockState defaultBlock;
     protected final BlockState defaultFluid;
@@ -350,9 +363,9 @@ public class BzChunkGenerator extends ChunkGenerator {
         int l = j << 4;
 
         return CompletableFuture.supplyAsync(() -> {
-            for (StructureFeature<?> feature : StructureFeature.LAND_MODIFYING_STRUCTURES) {
-                accessor.getStructuresWithChildren(ChunkSectionPos.from(chunkPos, 0), feature).forEach((start) -> {
-                    Iterator<StructurePiece> structurePiecesIterator = start.getChildren().iterator();
+            for (StructureFeature<?> feature : StructureFeature.NOISE_AFFECTING_FEATURES) {
+                accessor.startsForFeature(SectionPos.of(chunkPos, 0), feature).forEach((start) -> {
+                    Iterator<StructurePiece> structurePiecesIterator = start.getPieces().iterator();
 
                     while (true) {
                         StructurePiece structurePiece;
@@ -362,11 +375,11 @@ public class BzChunkGenerator extends ChunkGenerator {
                             }
 
                             structurePiece = structurePiecesIterator.next();
-                        } while (!structurePiece.intersectsChunk(chunkPos, 12));
+                        } while (!structurePiece.isCloseToChunk(chunkPos, 12));
 
-                        if (structurePiece instanceof PoolStructurePiece poolStructurePiece) {
-                            StructurePool.Projection projection = poolStructurePiece.getPoolElement().getProjection();
-                            if (projection == StructurePool.Projection.RIGID) {
+                        if (structurePiece instanceof PoolElementStructurePiece poolStructurePiece) {
+                            StructureTemplatePool.Projection projection = poolStructurePiece.getElement().getProjection();
+                            if (projection == StructureTemplatePool.Projection.RIGID) {
                                 objectList.add(poolStructurePiece);
                             }
 
@@ -394,9 +407,9 @@ public class BzChunkGenerator extends ChunkGenerator {
             }
 
             ProtoChunk protoChunk = (ProtoChunk) chunk;
-            Heightmap heightmap = protoChunk.getHeightmap(Heightmap.Type.OCEAN_FLOOR_WG);
-            Heightmap heightmap2 = protoChunk.getHeightmap(Heightmap.Type.WORLD_SURFACE_WG);
-            BlockPos.Mutable mutable = new BlockPos.Mutable();
+            Heightmap heightmap = protoChunk.getOrCreateHeightmapUnprimed(Heightmap.Types.OCEAN_FLOOR_WG);
+            Heightmap heightmap2 = protoChunk.getOrCreateHeightmapUnprimed(Heightmap.Types.WORLD_SURFACE_WG);
+            BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
             ObjectListIterator<StructurePiece> objectListIterator = objectList.iterator();
             ObjectListIterator<JigsawJunction> objectListIterator2 = objectList2.iterator();
 
@@ -416,8 +429,8 @@ public class BzChunkGenerator extends ChunkGenerator {
                 }
 
                 for (p = 0; p < this.noiseSizeZ; ++p) {
-                    ChunkSection chunkSection = protoChunk.getSection(15);
-                    chunkSection.lock();
+                    LevelChunkSection chunkSection = protoChunk.getOrCreateSection(15);
+                    chunkSection.acquire();
 
                     for (int ySection = this.noiseSizeY - 1; ySection >= 0; --ySection) {
 
@@ -462,41 +475,41 @@ public class BzChunkGenerator extends ChunkGenerator {
                             int currentY = ySection * this.verticalNoiseResolution + yInChunk;
                             int yPosInChunkSection = currentY & 15;
                             int yChunkSection = currentY >> 4;
-                            if (chunkSection.getYOffset() >> 4 != yChunkSection) {
-                                chunkSection.unlock();
-                                chunkSection = protoChunk.getSection(yChunkSection);
-                                chunkSection.lock();
+                            if (chunkSection.bottomBlockY() >> 4 != yChunkSection) {
+                                chunkSection.release();
+                                chunkSection = protoChunk.getOrCreateSection(yChunkSection);
+                                chunkSection.acquire();
                             }
 
                             double y = (double) yInChunk / (double) this.verticalNoiseResolution;
-                            double z = MathHelper.lerp(y, d, h);
-                            double aa = MathHelper.lerp(y, f, s);
-                            double ab = MathHelper.lerp(y, e, r);
-                            double ac = MathHelper.lerp(y, g, t);
+                            double z = Mth.lerp(y, d, h);
+                            double aa = Mth.lerp(y, f, s);
+                            double ab = Mth.lerp(y, e, r);
+                            double ac = Mth.lerp(y, g, t);
 
                             for (int ad = 0; ad < this.horizontalNoiseResolution; ++ad) {
                                 int ae = k + n * this.horizontalNoiseResolution + ad;
                                 int af = ae & 15;
                                 double ag = (double) ad / (double) this.horizontalNoiseResolution;
-                                double ah = MathHelper.lerp(ag, z, aa);
-                                double ai = MathHelper.lerp(ag, ab, ac);
+                                double ah = Mth.lerp(ag, z, aa);
+                                double ai = Mth.lerp(ag, ab, ac);
 
                                 for (int aj = 0; aj < this.horizontalNoiseResolution; ++aj) {
                                     int ak = l + p * this.horizontalNoiseResolution + aj;
                                     int al = ak & 15;
                                     double am = (double) aj / (double) this.horizontalNoiseResolution;
-                                    double an = MathHelper.lerp(am, ah, ai);
-                                    double ao = MathHelper.clamp(an / 200.0D, -1.0D, 1.0D);
+                                    double an = Mth.lerp(am, ah, ai);
+                                    double ao = Mth.clamp(an / 200.0D, -1.0D, 1.0D);
 
                                     int at;
                                     int au;
                                     int ar;
                                     for (ao = ao / 2.0D - ao * ao * ao / 24.0D; objectListIterator.hasNext(); ao += method_16572(at, au, ar) * 0.8D) {
                                         StructurePiece structurePiece = objectListIterator.next();
-                                        BlockBox blockBox = structurePiece.getBoundingBox();
-                                        at = Math.max(0, Math.max(blockBox.getMinX() - ae, ae - blockBox.getMaxX()));
-                                        au = currentY - (blockBox.getMinY() + (structurePiece instanceof PoolStructurePiece ? ((PoolStructurePiece) structurePiece).getGroundLevelDelta() : 0));
-                                        ar = Math.max(0, Math.max(blockBox.getMinZ() - ak, ak - blockBox.getMaxZ()));
+                                        BoundingBox blockBox = structurePiece.getBoundingBox();
+                                        at = Math.max(0, Math.max(blockBox.minX() - ae, ae - blockBox.maxX()));
+                                        au = currentY - (blockBox.minY() + (structurePiece instanceof PoolElementStructurePiece ? ((PoolElementStructurePiece) structurePiece).getGroundLevelDelta() : 0));
+                                        ar = Math.max(0, Math.max(blockBox.minZ() - ak, ak - blockBox.maxZ()));
                                     }
 
                                     objectListIterator.back(objectList.size());
@@ -512,21 +525,21 @@ public class BzChunkGenerator extends ChunkGenerator {
                                     objectListIterator2.back(objectList2.size());
                                     BlockState blockState = this.getBlockState(ao, currentY);
                                     if (blockState != CAVE_AIR) {
-                                        if (blockState.getLuminance() != 0) {
+                                        if (blockState.getLightEmission() != 0) {
                                             mutable.set(ae, currentY, ak);
-                                            protoChunk.addLightSource(mutable);
+                                            protoChunk.addLight(mutable);
                                         }
 
                                         chunkSection.setBlockState(af, yPosInChunkSection, al, blockState, false);
-                                        heightmap.trackUpdate(af, currentY, al, blockState);
-                                        heightmap2.trackUpdate(af, currentY, al, blockState);
+                                        heightmap.update(af, currentY, al, blockState);
+                                        heightmap2.update(af, currentY, al, blockState);
                                     }
                                 }
                             }
                         }
                     }
 
-                    chunkSection.unlock();
+                    chunkSection.release();
                 }
 
                 double[][] es = ds[0];
@@ -535,7 +548,7 @@ public class BzChunkGenerator extends ChunkGenerator {
             }
 
             return protoChunk;
-        }, Util.getMainWorkerExecutor());
+        }, Util.backgroundExecutor());
     }
 
     private static double method_16572(int i, int j, int k) {
@@ -590,34 +603,44 @@ public class BzChunkGenerator extends ChunkGenerator {
      */
     @Override
     public void spawnOriginalMobs(WorldGenRegion region) {
-        ChunkPos chunkPos = region.getCenterPos();
-        Biome biome = region.getBiome(chunkPos.getStartPos());
-        ChunkRandom sharedseedrandom = new ChunkRandom();
-        sharedseedrandom.setPopulationSeed(region.getSeed(), chunkPos.getStartX(), chunkPos.getStartZ());
-        while (sharedseedrandom.nextFloat() < biome.getSpawnSettings().getCreatureSpawnProbability() * 0.75f) {
+        ChunkPos chunkPos = region.getCenter();
+        Biome biome = region.getBiome(chunkPos.getWorldPosition());
+        WorldgenRandom sharedseedrandom = new WorldgenRandom();
+        sharedseedrandom.setDecorationSeed(region.getSeed(), chunkPos.getMinBlockX(), chunkPos.getMinBlockZ());
+        while (sharedseedrandom.nextFloat() < biome.getMobSettings().getCreatureProbability() * 0.75f) {
             //20% of time, spawn honey slime. Otherwise, spawn bees.
-            SpawnSettings.SpawnEntry biome$spawnlistentry = sharedseedrandom.nextFloat() < 0.25f ? INITIAL_HONEY_SLIME_ENTRY : INITIAL_BEE_ENTRY;
+            MobSpawnSettings.SpawnerData biome$spawnlistentry;
+            float threshold = sharedseedrandom.nextFloat();
+            if(threshold < 0.25f) {
+                biome$spawnlistentry = INITIAL_HONEY_SLIME_ENTRY;
+            }
+            else if (threshold < 0.98f) {
+                biome$spawnlistentry = INITIAL_BEE_ENTRY;
+            }
+            else {
+                biome$spawnlistentry = INITIAL_BEEHEMOTH_ENTRY;
+            }
 
-            int startingX = chunkPos.getStartX() + sharedseedrandom.nextInt(16);
-            int startingZ = chunkPos.getStartZ() + sharedseedrandom.nextInt(16);
+            int startingX = chunkPos.getMinBlockX() + sharedseedrandom.nextInt(16);
+            int startingZ = chunkPos.getMinBlockZ() + sharedseedrandom.nextInt(16);
 
-            BlockPos.Mutable blockpos = new BlockPos.Mutable(startingX, 0, startingZ);
+            BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos(startingX, 0, startingZ);
             int height = BzPlacingUtils.topOfSurfaceBelowHeight(region, sharedseedrandom.nextInt(255), -1, blockpos) + 1;
 
-            if (biome$spawnlistentry.type.isSummonable() && height > 0 && height < 255) {
+            if (biome$spawnlistentry.type.canSummon() && height > 0 && height < 255) {
                 float width = biome$spawnlistentry.type.getWidth();
-                double xLength = MathHelper.clamp(startingX, (double) chunkPos.getStartX() + (double) width, (double) chunkPos.getStartX() + 16.0D - (double) width);
-                double zLength = MathHelper.clamp(startingZ, (double) chunkPos.getStartZ() + (double) width, (double) chunkPos.getStartZ() + 16.0D - (double) width);
+                double xLength = Mth.clamp(startingX, (double) chunkPos.getMinBlockX() + (double) width, (double) chunkPos.getMinBlockX() + 16.0D - (double) width);
+                double zLength = Mth.clamp(startingZ, (double) chunkPos.getMinBlockZ() + (double) width, (double) chunkPos.getMinBlockZ() + 16.0D - (double) width);
 
-                Entity entity = biome$spawnlistentry.type.create(region.toServerWorld());
+                Entity entity = biome$spawnlistentry.type.create(region.getLevel());
                 if(entity == null)
                     continue;
 
-                entity.refreshPositionAndAngles(xLength, height, zLength, sharedseedrandom.nextFloat() * 360.0F, 0.0F);
-                if (entity instanceof MobEntity mobentity) {
-                    if (mobentity.canSpawn(region, SpawnReason.CHUNK_GENERATION) && mobentity.canSpawn(region)) {
-                        mobentity.initialize(region, region.getLocalDifficulty(new BlockPos(mobentity.getPos())), SpawnReason.CHUNK_GENERATION, null, null);
-                        region.spawnEntity(mobentity);
+                entity.moveTo(xLength, height, zLength, sharedseedrandom.nextFloat() * 360.0F, 0.0F);
+                if (entity instanceof Mob mobentity) {
+                    if (mobentity.checkSpawnRules(region, MobSpawnType.CHUNK_GENERATION) && mobentity.checkSpawnObstruction(region)) {
+                        mobentity.finalizeSpawn(region, region.getCurrentDifficultyAt(new BlockPos(mobentity.position())), MobSpawnType.CHUNK_GENERATION, null, null);
+                        region.addFreshEntity(mobentity);
                     }
                 }
             }

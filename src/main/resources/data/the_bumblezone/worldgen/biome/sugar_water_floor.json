@@ -88,6 +88,12 @@
         "weight": 20,
         "minCount": 1,
         "maxCount": 3
+      },
+      {
+        "type": "the_bumblezome:beehemoth",
+        "weight": 5,
+        "minCount": 1,
+        "maxCount": 1
       }
     ],
     "ambient": [],
