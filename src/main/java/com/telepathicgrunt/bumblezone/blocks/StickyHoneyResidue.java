@@ -94,19 +94,19 @@ public class StickyHoneyResidue extends VineBlock {
         }
 
         if (blockstate.getValue(SOUTH)) {
-            voxelshape = Shapes.or(voxelshape, VineBlockAccessor.thebumblezone_getNORTH_SHAPE());
-        }
-
-        if (blockstate.getValue(WEST)) {
-            voxelshape = Shapes.or(voxelshape, VineBlockAccessor.thebumblezone_getEAST_SHAPE());
-        }
-
-        if (blockstate.getValue(NORTH)) {
             voxelshape = Shapes.or(voxelshape, VineBlockAccessor.thebumblezone_getSOUTH_SHAPE());
         }
 
-        if (blockstate.getValue(EAST)) {
+        if (blockstate.getValue(WEST)) {
             voxelshape = Shapes.or(voxelshape, VineBlockAccessor.thebumblezone_getWEST_SHAPE());
+        }
+
+        if (blockstate.getValue(NORTH)) {
+            voxelshape = Shapes.or(voxelshape, VineBlockAccessor.thebumblezone_getNORTH_SHAPE());
+        }
+
+        if (blockstate.getValue(EAST)) {
+            voxelshape = Shapes.or(voxelshape, VineBlockAccessor.thebumblezone_getEAST_SHAPE());
         }
 
         if (blockstate.getValue(DOWN)) {
