@@ -171,7 +171,7 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new BeehemothAIRide(this, 0.85D));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.5D, Ingredient.of(BzItems.HONEY_BUCKET.get()), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.5D, Ingredient.of(BzItemTags.HONEY_BUCKETS), false));
         this.goalSelector.addGoal(4, new RandomFlyGoal(this));
         this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 60));
         this.goalSelector.addGoal(5, new LookRandomlyGoal(this));

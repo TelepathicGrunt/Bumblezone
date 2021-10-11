@@ -3,6 +3,9 @@
 ##### Lang:
 Updated ru_ru.json translations. Thank you Tkhakiro!
 
+##### Entities:
+Beehemoth now follows players when they hold any item that is in forge:items/buckets/honey tag.
+
 
 ### **(V.2.6.2 Changes) (1.16.5 Minecraft)**
 
