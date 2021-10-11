@@ -1,3 +1,15 @@
+### **(V.2.6.3 Changes) (1.16.5 Minecraft)**
+
+##### Lang:
+Updated ru_ru.json translations. Thank you Tkhakiro!
+
+
+### **(V.2.6.2 Changes) (1.16.5 Minecraft)**
+
+##### Blocks:
+Fixed Beehive Beeswax block not dropping anything. Sorry about that. I forgot to rename loot table when i renamed the block.
+
+
 ### **(V.2.6.1 Changes) (1.16.5 Minecraft)**
 
 ##### Entities:
