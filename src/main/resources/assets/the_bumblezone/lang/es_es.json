@@ -23,6 +23,7 @@
   "item.the_bumblezone.honey_crystal_shield": "Escudo de cristal de miel",
   "item.the_bumblezone.honey_crystal_shield.level_tooltip": "Nivel de escudo",
   "item.the_bumblezone.honey_slime_spawn_egg": "Generar slime de miel",
+  "item.the_bumblezone.beehemoth_spawn_egg": "Ovo gerador de Beehemoth",
   "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov": "Music Disc",
   "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov.desc": "Rimsky Korsakov - Flight of the Bumblebee",
   "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy": "Music Disc",
@@ -31,6 +32,8 @@
   "item.the_bumblezone.honey_bucket": "Honey Bucket",
 
   "entity.the_bumblezone.honey_slime": "Slime de miel",
+  "entity.the_bumblezone.beehemoth" : "Beehemoth",
+  "entity.the_bumblezone.beehemoth_queen" : "Rainha Beehemoth",
   "entity.the_bumblezone.pollen_puff" : "Pollen Puff",
 
   "enchantment.the_bumblezone.comb_cutter": "Cortador de peine",
@@ -44,6 +47,9 @@
 
   "effect.the_bumblezone.wrath_of_the_hive": "Ira de la colmena",
   "effect.the_bumblezone.protection_of_the_hive": "Protección de la colmena",
+
+  "subtitles.the_bumblezone.behemoth.hurt": "Beehemoth ferida",
+  "subtitles.the_bumblezone.behemoth.dies": "Beehemoth morreu",
 
   "text.autoconfig.the_bumblezone-main.title": "The Bumblezone Configs",
   "text.autoconfig.the_bumblezone-main.category.dungeons": "Dungeons",
