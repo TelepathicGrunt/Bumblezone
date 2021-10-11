@@ -1,16 +1,15 @@
 package com.telepathicgrunt.bumblezone.entities;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.Level;
 
 public class EntityComponent implements IEntityComponent {
     private boolean teleporting = false;
-    private Identifier nonBZDimensionType = World.OVERWORLD.getValue();
-    public Vec3d nonBZPosition = null;
+    private ResourceLocation nonBZDimensionType = net.minecraft.world.level.Level.OVERWORLD.location();
+    public Vec3 nonBZPosition = null;
 
     @Override
     public boolean getIsTeleporting() {
@@ -23,25 +22,25 @@ public class EntityComponent implements IEntityComponent {
 
 
     @Override
-    public void setNonBZPos(Vec3d incomingPos)
+    public void setNonBZPos(Vec3 incomingPos)
     {
         nonBZPosition = incomingPos;
     }
     @Override
-    public Vec3d getNonBZPos()
+    public Vec3 getNonBZPos()
     {
         return nonBZPosition;
     }
 
 
     @Override
-    public Identifier getNonBZDimension() {
+    public ResourceLocation getNonBZDimension() {
         return this.nonBZDimensionType;
     }
     @Override
-    public void setNonBZDimension(Identifier nonBZDimension) {
+    public void setNonBZDimension(ResourceLocation nonBZDimension) {
         if (nonBZDimension.equals(Bumblezone.MOD_DIMENSION_ID)) {
-            this.nonBZDimensionType = World.OVERWORLD.getValue();
+            this.nonBZDimensionType = net.minecraft.world.level.Level.OVERWORLD.location();
             Bumblezone.LOGGER.log(Level.ERROR, "Error: The non-bz dimension passed in to be stored was bz dimension. Please contact mod creator to let them know of this issue.");
         } else {
             this.nonBZDimensionType = nonBZDimension;
@@ -51,12 +50,12 @@ public class EntityComponent implements IEntityComponent {
 
 
     @Override
-    public void readFromNbt(NbtCompound tag) {
+    public void readFromNbt(CompoundTag tag) {
         this.teleporting = tag.getBoolean("teleporting");
-        this.nonBZDimensionType = new Identifier(tag.getString("non_bz_dimensiontype_namespace"), tag.getString("non_bz_dmensiontype_path"));
+        this.nonBZDimensionType = new ResourceLocation(tag.getString("non_bz_dimensiontype_namespace"), tag.getString("non_bz_dmensiontype_path"));
     }
     @Override
-    public void writeToNbt(NbtCompound tag) {
+    public void writeToNbt(CompoundTag tag) {
         tag.putBoolean("teleporting", this.teleporting);
         tag.putString("non_bz_dimensiontype_namespace", nonBZDimensionType.getNamespace());
         tag.putString("non_bz_dmensiontype_path", nonBZDimensionType.getPath());

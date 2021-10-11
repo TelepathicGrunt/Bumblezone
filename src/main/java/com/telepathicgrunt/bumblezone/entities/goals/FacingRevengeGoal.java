@@ -2,25 +2,25 @@ package com.telepathicgrunt.bumblezone.entities.goals;
 
 import com.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.RevengeGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 
 import java.util.EnumSet;
 
-public class FacingRevengeGoal extends RevengeGoal {
+public class FacingRevengeGoal extends HurtByTargetGoal {
     private final HoneySlimeEntity slime;
 
     public FacingRevengeGoal(HoneySlimeEntity slimeIn) {
         super(slimeIn);
         this.slime = slimeIn;
-        this.setControls(EnumSet.of(Goal.Control.LOOK));
+        this.setFlags(EnumSet.of(Goal.Flag.LOOK));
     }
-    public boolean shouldContinue() {
-        return slime.getTarget() != null && super.shouldContinue();
+    public boolean canContinueToUse() {
+        return slime.getTarget() != null && super.canContinueToUse();
     }
 
     public void tick() {
-        this.slime.lookAtEntity(this.slime.getTarget(), 10.0F, 10.0F);
-        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.getYaw(), this.slime.canDamagePlayer());
+        this.slime.lookAt(this.slime.getTarget(), 10.0F, 10.0F);
+        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.getYRot(), this.slime.canDamagePlayer());
     }
 }

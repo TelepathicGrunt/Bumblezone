@@ -1,8 +1,8 @@
 package com.telepathicgrunt.bumblezone.entities.controllers;
 
 import com.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
-import net.minecraft.entity.ai.control.MoveControl;
-import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
 
 public class HoneySlimeMoveHelperController extends MoveControl {
     /**
@@ -17,7 +17,7 @@ public class HoneySlimeMoveHelperController extends MoveControl {
     public HoneySlimeMoveHelperController(HoneySlimeEntity slimeIn) {
         super(slimeIn);
         this.slime = slimeIn;
-        this.targetYaw = 180.0F * slimeIn.getYaw() / (float) Math.PI;
+        this.targetYaw = 180.0F * slimeIn.getYRot() / (float) Math.PI;
     }
 
     public void setDirection(float yRotIn, boolean aggressive) {
@@ -31,37 +31,37 @@ public class HoneySlimeMoveHelperController extends MoveControl {
     }
 
     public void setSpeed(double speedIn) {
-        this.speed = speedIn;
-        this.state = MoveControl.State.MOVE_TO;
+        this.speedModifier = speedIn;
+        this.operation = MoveControl.Operation.MOVE_TO;
     }
 
     public void tick() {
-        this.entity.setYaw(this.wrapDegrees(this.entity.getYaw(), this.targetYaw, 90.0F));
-        this.entity.headYaw = this.entity.getYaw();
-        this.entity.bodyYaw = this.entity.getYaw();
-        if (this.state != MoveControl.State.MOVE_TO) {
-            this.entity.setForwardSpeed(0.0F);
+        this.mob.setYRot(this.rotlerp(this.mob.getYRot(), this.targetYaw, 90.0F));
+        this.mob.yHeadRot = this.mob.getYRot();
+        this.mob.yBodyRot = this.mob.getYRot();
+        if (this.operation != MoveControl.Operation.MOVE_TO) {
+            this.mob.setZza(0.0F);
         } else {
-            this.state = MoveControl.State.WAIT;
-            if (this.entity.isOnGround()) {
-                this.entity.setMovementSpeed((float) (this.speed * this.entity.getAttributeInstance(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE).getValue()));
+            this.operation = MoveControl.Operation.WAIT;
+            if (this.mob.isOnGround()) {
+                this.mob.setSpeed((float) (this.speedModifier * this.mob.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue()));
                 if (this.jumpDelay-- <= 0) {
                     this.jumpDelay = this.slime.getJumpDelay();
                     if (this.isAggressive) {
                         this.jumpDelay /= 3;
                     }
 
-                    this.slime.getJumpControl().setActive();
+                    this.slime.getJumpControl().jump();
                     if (this.slime.makesSoundOnJump()) {
                         this.slime.playSound(this.slime.getJumpSound(), this.slime.getSoundVolume(), ((this.slime.getRandom().nextFloat() - this.slime.getRandom().nextFloat()) * 0.2F + 1.0F) * 0.8F);
                     }
                 } else {
-                    this.slime.sidewaysSpeed = 0.0F;
-                    this.slime.forwardSpeed = 0.0F;
-                    this.entity.setMovementSpeed(0.0F);
+                    this.slime.xxa = 0.0F;
+                    this.slime.zza = 0.0F;
+                    this.mob.setSpeed(0.0F);
                 }
             } else {
-                this.entity.setMovementSpeed((float) (this.speed * this.entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).getValue()));
+                this.mob.setSpeed((float) (this.speedModifier * this.mob.getAttribute(Attributes.MOVEMENT_SPEED).getValue()));
             }
         }
     }

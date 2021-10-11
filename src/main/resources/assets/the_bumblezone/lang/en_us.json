@@ -24,6 +24,7 @@
   "item.the_bumblezone.honey_crystal_shield": "Honey Crystal Shield",
   "item.the_bumblezone.honey_crystal_shield.level_tooltip": "Shield Level",
   "item.the_bumblezone.honey_slime_spawn_egg": "Honey Slime Spawn Egg",
+  "item.the_bumblezone.beehemoth_spawn_egg": "Beehemoth Spawn Egg",
   "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov": "Music Disc",
   "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov.desc": "Rimsky Korsakov - Flight of the Bumblebee",
   "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy": "Music Disc",
@@ -32,6 +33,8 @@
   "item.the_bumblezone.honey_bucket": "Honey Bucket",
 
   "entity.the_bumblezone.honey_slime" : "Honey Slime",
+  "entity.the_bumblezone.beehemoth" : "Beehemoth",
+  "entity.the_bumblezone.beehemoth_queen" : "Queen Beehemoth",
   "entity.the_bumblezone.pollen_puff" : "Pollen Puff",
 
   "enchantment.the_bumblezone.comb_cutter": "Comb Cutter",
@@ -45,6 +48,9 @@
 
   "effect.the_bumblezone.wrath_of_the_hive": "Wrath of the Hive",
   "effect.the_bumblezone.protection_of_the_hive": "Protection of the Hive",
+
+  "subtitles.the_bumblezone.behemoth.hurt": "Beehemoth hurt",
+  "subtitles.the_bumblezone.behemoth.dies": "Beehemoth died",
 
   "text.autoconfig.the_bumblezone-main.title": "The Bumblezone Configs",
   "text.autoconfig.the_bumblezone-main.category.dungeons": "Dungeons",

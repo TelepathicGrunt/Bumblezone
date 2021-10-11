@@ -4,22 +4,22 @@ import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.SkyProperties;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.renderer.DimensionSpecialEffects;
+import net.minecraft.world.phys.Vec3;
 
 @Environment(EnvType.CLIENT)
-public class BzSkyProperty extends SkyProperties {
+public class BzSkyProperty extends DimensionSpecialEffects {
     public BzSkyProperty() {
         super(1000, true, SkyType.NONE, false, false);
     }
 
     @Override
-    public Vec3d adjustFogColor(Vec3d color, float sunHeight) {
-        return getFogColor().multiply(0.003921568627451); // Divide by 255 to amke values between 0 and 1
+    public Vec3 getBrightnessDependentFogColor(Vec3 color, float sunHeight) {
+        return getFogColor().scale(0.003921568627451); // Divide by 255 to amke values between 0 and 1
     }
 
     @Override
-    public boolean useThickFog(int camX, int camY) {
+    public boolean isFoggyAt(int camX, int camY) {
         return true;
     }
 
@@ -34,7 +34,7 @@ public class BzSkyProperty extends SkyProperties {
      * calculateVanillaSkyPositioning returns a value which is between 0 and 1 for day/night and fogChangeSpeed is the range
      * that the fog color will cycle between.
      */
-    public Vec3d getFogColor() {
+    public Vec3 getFogColor() {
         float colorFactor = 1;
         /*
          * The sky will be turned to midnight when brightness is below 50. This lets us get the
@@ -52,7 +52,7 @@ public class BzSkyProperty extends SkyProperties {
             REDDISH_FOG_TINT -= 0.00001f;
         }
 
-        return new Vec3d((int)(Math.min(Math.min(0.56f * colorFactor, 0.65f + REDDISH_FOG_TINT)*255, 255)),
+        return new Vec3((int)(Math.min(Math.min(0.56f * colorFactor, 0.65f + REDDISH_FOG_TINT)*255, 255)),
                         ((int)(Math.min(Math.max(Math.min(0.34f * colorFactor, 0.87f) - REDDISH_FOG_TINT * 0.6f, 0)*255, 255))),
                         ((int)(Math.min(Math.max(Math.min((0.001f * colorFactor) * (colorFactor * colorFactor), 0.9f) - REDDISH_FOG_TINT * 1.9f, 0)*255, 255))));
     }

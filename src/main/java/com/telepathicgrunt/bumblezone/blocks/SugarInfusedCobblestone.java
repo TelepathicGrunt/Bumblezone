@@ -1,8 +1,8 @@
 package com.telepathicgrunt.bumblezone.blocks;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.Material;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Material;
 
 
 public class SugarInfusedCobblestone extends Block {

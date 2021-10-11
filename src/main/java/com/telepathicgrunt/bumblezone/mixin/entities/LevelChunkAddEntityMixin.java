@@ -1,15 +1,15 @@
 package com.telepathicgrunt.bumblezone.mixin.entities;
 
 import com.telepathicgrunt.bumblezone.entities.BeeAggression;
-import net.minecraft.entity.Entity;
-import net.minecraft.world.chunk.WorldChunk;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.chunk.LevelChunk;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(WorldChunk.class)
-public class WorldChunkAddEntityMixin {
+@Mixin(LevelChunk.class)
+public class LevelChunkAddEntityMixin {
     //bees attacks bear or non-bee insects mobs that is in the dimension
     @Inject(method = "addEntity",
             at = @At(value = "RETURN"))

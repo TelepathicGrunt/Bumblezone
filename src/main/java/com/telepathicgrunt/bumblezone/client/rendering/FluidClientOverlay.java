@@ -1,56 +1,56 @@
 package com.telepathicgrunt.bumblezone.client.rendering;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferUploader;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.math.Matrix4f;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.tags.BzFluidTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.BufferRenderer;
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.client.Camera;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.Vec3;
 
 public class FluidClientOverlay {
-    private static final Identifier TEXTURE_UNDERWATER = new Identifier(Bumblezone.MODID, "textures/misc/sugar_water_underwater.png");
-    private static final Identifier HONEY_TEXTURE_UNDERWATER = new Identifier(Bumblezone.MODID + ":textures/misc/honey_fluid_underwater.png");
+    private static final ResourceLocation TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID, "textures/misc/sugar_water_underwater.png");
+    private static final ResourceLocation HONEY_TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID + ":textures/misc/honey_fluid_underwater.png");
 
-    public static boolean sugarWaterFluidOverlay(PlayerEntity player, MatrixStack matrixStack) {
-        if(!(player instanceof ClientPlayerEntity clientPlayerEntity)) return false;
-        BlockState state = player.world.getBlockState(new BlockPos(player.getCameraPosVec(0)));
-        if (state.isOf(BzFluids.SUGAR_WATER_BLOCK)) {
+    public static boolean sugarWaterFluidOverlay(Player player, PoseStack matrixStack) {
+        if(!(player instanceof LocalPlayer clientPlayerEntity)) return false;
+        BlockState state = player.level.getBlockState(new BlockPos(player.getEyePosition(0)));
+        if (state.is(BzFluids.SUGAR_WATER_BLOCK)) {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.enableTexture();
             RenderSystem.setShaderTexture(0, TEXTURE_UNDERWATER);
-            BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
-            float brightnessAtEyes = clientPlayerEntity.getBrightnessAtEyes();
+            BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
+            float brightnessAtEyes = clientPlayerEntity.getBrightness();
             float textureAlpha = 0.42F;
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
             RenderSystem.setShaderColor(brightnessAtEyes, brightnessAtEyes, brightnessAtEyes, textureAlpha);
-            float modifiedYaw = -clientPlayerEntity.getYaw() / 64.0F;
-            float modifiedPitch = clientPlayerEntity.getPitch() / 64.0F;
-            Matrix4f matrix4f = matrixStack.peek().getModel();
-            bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
-            bufferBuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).texture(4.0F + modifiedYaw, 4.0F + modifiedPitch).next();
-            bufferBuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).texture(0.0F + modifiedYaw, 4.0F + modifiedPitch).next();
-            bufferBuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).texture(0.0F + modifiedYaw, 0.0F + modifiedPitch).next();
-            bufferBuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).texture(4.0F + modifiedYaw, 0.0F + modifiedPitch).next();
+            float modifiedYaw = -clientPlayerEntity.getYRot() / 64.0F;
+            float modifiedPitch = clientPlayerEntity.getXRot() / 64.0F;
+            Matrix4f matrix4f = matrixStack.last().pose();
+            bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+            bufferBuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).uv(4.0F + modifiedYaw, 4.0F + modifiedPitch).endVertex();
+            bufferBuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).uv(0.0F + modifiedYaw, 4.0F + modifiedPitch).endVertex();
+            bufferBuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).uv(0.0F + modifiedYaw, 0.0F + modifiedPitch).endVertex();
+            bufferBuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).uv(4.0F + modifiedYaw, 0.0F + modifiedPitch).endVertex();
             bufferBuilder.end();
-            BufferRenderer.draw(bufferBuilder);
+            BufferUploader.end(bufferBuilder);
             RenderSystem.disableBlend();
             return true;
         }
@@ -58,34 +58,35 @@ public class FluidClientOverlay {
         return false;
     }
 
-    public static boolean renderHoneyOverlay(PlayerEntity player, MatrixStack matrixStack) {
-        if(!player.isSubmergedIn(BzFluidTags.BZ_HONEY_FLUID) || !(player instanceof ClientPlayerEntity clientPlayerEntity))
+    public static boolean renderHoneyOverlay(LocalPlayer clientPlayerEntity, PoseStack matrixStack) {
+        if(!clientPlayerEntity.isEyeInFluid(BzFluidTags.BZ_HONEY_FLUID)) {
             return false;
+        }
 
-        BlockState state = clientPlayerEntity.world.getBlockState(new BlockPos(clientPlayerEntity.getCameraPosVec(1)));
-        if (state.isOf(BzFluids.HONEY_FLUID_BLOCK)) {
+        BlockState state = clientPlayerEntity.level.getBlockState(new BlockPos(clientPlayerEntity.getEyePosition(1)));
+        if (state.is(BzFluids.HONEY_FLUID_BLOCK)) {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.enableTexture();
             RenderSystem.setShaderTexture(0, HONEY_TEXTURE_UNDERWATER);
-            BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
+            BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
             // Scale the brightness of fog but make sure it is never darker than the dimension's min brightness.
             float brightness = (float) Math.max(
                     Math.pow(FluidClientOverlay.getDimensionBrightnessAtEyes(clientPlayerEntity), 2D),
-                    clientPlayerEntity.world.getDimension().getBrightness(0)
+                    clientPlayerEntity.level.dimensionType().brightness(0)
             );
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
             RenderSystem.setShaderColor(brightness, brightness, brightness, 0.95F);
-            float modifiedYaw = -clientPlayerEntity.getYaw() / (64.0F * 8F);
-            float modifiedPitch = clientPlayerEntity.getPitch() / (64.0F * 8F);
-            Matrix4f matrix4f = matrixStack.peek().getModel();
-            bufferbuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
-            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).texture(1.0F + modifiedYaw, 1.0F + modifiedPitch).next();
-            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).texture(0.0F + modifiedYaw, 2.0F + modifiedPitch).next();
-            bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).texture(1.0F + modifiedYaw, 1.0F + modifiedPitch).next();
-            bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).texture(2.0F + modifiedYaw, 0.0F + modifiedPitch).next();
-            bufferbuilder.end();
-            BufferRenderer.draw(bufferbuilder);
+            float modifiedYaw = -clientPlayerEntity.getYRot() / (64.0F * 8F);
+            float modifiedPitch = clientPlayerEntity.getXRot() / (64.0F * 8F);
+            Matrix4f matrix4f = matrixStack.last().pose();
+            bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+            bufferBuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).uv(1.0F + modifiedYaw, 1.0F + modifiedPitch).endVertex();
+            bufferBuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).uv(0.0F + modifiedYaw, 2.0F + modifiedPitch).endVertex();
+            bufferBuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).uv(1.0F + modifiedYaw, 1.0F + modifiedPitch).endVertex();
+            bufferBuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).uv(2.0F + modifiedYaw, 0.0F + modifiedPitch).endVertex();
+            bufferBuilder.end();
+            BufferUploader.end(bufferBuilder);
             RenderSystem.disableBlend();
             return true;
         }
@@ -95,34 +96,34 @@ public class FluidClientOverlay {
 
     public static void renderHoneyFog(Camera camera) {
         FluidState fluidstate = getNearbyHoneyFluid(camera);
-        if(fluidstate.isIn(BzFluidTags.BZ_HONEY_FLUID)) {
+        if(fluidstate.is(BzFluidTags.BZ_HONEY_FLUID)) {
             RenderSystem.setShaderFogStart(0.35f);
             RenderSystem.setShaderFogEnd(4);
         }
     }
 
     public static float getDimensionBrightnessAtEyes(Entity entity){
-        float lightLevelAtEyes = entity.world.getBaseLightLevel(new BlockPos(entity.getCameraPosVec(1)), 0);
+        float lightLevelAtEyes = entity.level.getRawBrightness(new BlockPos(entity.getEyePosition(1)), 0);
         return lightLevelAtEyes / 15f;
     }
 
     public static FluidState getNearbyHoneyFluid(Camera camera){
-        Entity entity = camera.getFocusedEntity();
-        World world = entity.world;
-        FluidState fluidstate = world.getFluidState(camera.getBlockPos());
+        Entity entity = camera.getEntity();
+        Level world = entity.level;
+        FluidState fluidstate = world.getFluidState(camera.getBlockPosition());
 
-        Vec3d currentPos = camera.getPos();
-        BlockPos.Mutable mutable = new BlockPos.Mutable();
+        Vec3 currentPos = camera.getPosition();
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         double offsetDistanceCheck = 0.075D;
 
         for(Direction direction : Direction.values()) {
-            double x = currentPos.getX() + direction.getOffsetX() * offsetDistanceCheck;
-            double y = currentPos.getY() + direction.getOffsetY() * offsetDistanceCheck;
-            double z = currentPos.getZ() + direction.getOffsetZ() * offsetDistanceCheck;
+            double x = currentPos.x() + direction.getStepX() * offsetDistanceCheck;
+            double y = currentPos.y() + direction.getStepY() * offsetDistanceCheck;
+            double z = currentPos.z() + direction.getStepZ() * offsetDistanceCheck;
             mutable.set(x, y, z);
-            if(!mutable.equals(camera.getBlockPos())) {
+            if(!mutable.equals(camera.getBlockPosition())) {
                 FluidState neighboringFluidstate = world.getFluidState(mutable);
-                if(neighboringFluidstate.isIn(BzFluidTags.BZ_HONEY_FLUID)) {
+                if(neighboringFluidstate.is(BzFluidTags.BZ_HONEY_FLUID)) {
                     fluidstate = neighboringFluidstate;
                 }
             }

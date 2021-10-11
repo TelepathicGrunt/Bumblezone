@@ -1,16 +1,16 @@
 package com.telepathicgrunt.bumblezone.entities;
 
 import dev.onyxstudios.cca.api.v3.component.Component;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec3;
 
 public interface IEntityComponent extends Component {
     boolean getIsTeleporting();
     void setIsTeleporting(boolean isTeleporting);
 
-    Identifier getNonBZDimension();
-    void setNonBZDimension(Identifier nonBZDimension);
+    ResourceLocation getNonBZDimension();
+    void setNonBZDimension(ResourceLocation nonBZDimension);
 
-    void setNonBZPos(Vec3d incomingPos);
-    Vec3d getNonBZPos();
+    void setNonBZPos(Vec3 incomingPos);
+    Vec3 getNonBZPos();
 }

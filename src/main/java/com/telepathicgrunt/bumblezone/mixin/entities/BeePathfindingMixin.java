@@ -2,7 +2,7 @@ package com.telepathicgrunt.bumblezone.mixin.entities;
 
 import com.telepathicgrunt.bumblezone.entities.BeeAI;
 import com.telepathicgrunt.bumblezone.world.dimension.BzDimension;
-import net.minecraft.entity.passive.BeeEntity;
+import net.minecraft.world.entity.animal.Bee;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -11,12 +11,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(BeeEntity.BeeWanderAroundGoal.class)
+@Mixin(Bee.BeeWanderGoal.class)
 public class BeePathfindingMixin {
 
     @Final
     @Shadow(aliases = "field_20380")
-    private BeeEntity field_20380;
+    private Bee field_20380;
 
     @Unique
     private BeeAI.CachedPathHolder thebumblezone_cachedPathHolder;
@@ -30,7 +30,7 @@ public class BeePathfindingMixin {
             cancellable = true)
     private void thebumblezone_newWander(CallbackInfo ci){
         // Do our own bee AI in the Bumblezone. Makes bees wander more and should be slightly better performance. Maybe...
-        if(field_20380.world.getRegistryKey().equals(BzDimension.BZ_WORLD_KEY)){
+        if(field_20380.level.dimension().equals(BzDimension.BZ_WORLD_KEY)){
             thebumblezone_cachedPathHolder = BeeAI.smartBeesTM(field_20380, thebumblezone_cachedPathHolder);
             ci.cancel();
         }

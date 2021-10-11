@@ -1,33 +1,33 @@
 package com.telepathicgrunt.bumblezone.items.dispenserbehavior;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.dispenser.ItemDispenserBehavior;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPointer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Position;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockSource;
+import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.state.BlockState;
 
 
-public class SugarWaterBucketDispenseBehavior extends ItemDispenserBehavior {
-    private static final ItemDispenserBehavior DROP_ITEM_BEHAVIOR = new ItemDispenserBehavior();
+public class SugarWaterBucketDispenseBehavior extends DefaultDispenseItemBehavior {
+    private static final DefaultDispenseItemBehavior DROP_ITEM_BEHAVIOR = new DefaultDispenseItemBehavior();
 
     /**
      * Dispense the specified stack, play the dispense sound and spawn particles.
      */
-    public ItemStack dispenseSilently(BlockPointer source, ItemStack stack) {
+    public ItemStack execute(BlockSource source, ItemStack stack) {
         BucketItem bucketitem = (BucketItem) stack.getItem();
-        Position iposition = DispenserBlock.getOutputLocation(source);
+        Position iposition = DispenserBlock.getDispensePosition(source);
         BlockPos position = new BlockPos(iposition);
-        ServerWorld world = source.getWorld();
+        ServerLevel world = source.getLevel();
         BlockState blockstate = world.getBlockState(position);
 
-        if (bucketitem.placeFluid(null, world, position, null)) {
+        if (bucketitem.emptyContents(null, world, position, null)) {
 
-            bucketitem.onEmptied(null, world, stack, position);
+            bucketitem.checkExtraContent(null, world, stack, position);
             return new ItemStack(Items.BUCKET);
         }
         else {

@@ -2,16 +2,16 @@ package com.telepathicgrunt.bumblezone.utils;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Hand;
-import net.minecraft.village.TradeOffer;
-import net.minecraft.village.TradeOffers;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,17 +24,17 @@ public class GeneralUtils {
 
     private static int ACTIVE_ENTITIES = 0;
 
-    public static void updateEntityCount(ServerWorld world){
+    public static void updateEntityCount(ServerLevel world){
 
         // If iterable is a collection, just get size directly
-        if (world.iterateEntities() instanceof Collection) {
-            ACTIVE_ENTITIES = ((Collection<?>) world.iterateEntities()).size();
+        if (world.getAllEntities() instanceof Collection) {
+            ACTIVE_ENTITIES = ((Collection<?>) world.getAllEntities()).size();
             return;
         }
 
         // If iterable isn't a collection, we have to manually count how many entities there are
         int counter = 0;
-        for (Object ignored : world.iterateEntities()) {
+        for (Object ignored : world.getAllEntities()) {
             counter++;
         }
         ACTIVE_ENTITIES = counter;
@@ -93,7 +93,7 @@ public class GeneralUtils {
      * For doing basic trades.
      * Very short and barebone to what I want
      */
-    public static class BasicItemTrade implements TradeOffers.Factory  {
+    public static class BasicItemTrade implements VillagerTrades.ItemListing  {
         private final Item itemToTrade;
         private final Item itemToReceive;
         private final int amountToGive;
@@ -117,33 +117,33 @@ public class GeneralUtils {
         }
 
         @Override
-        public TradeOffer create(Entity entity, Random random) {
+        public MerchantOffer getOffer(Entity entity, Random random) {
             ItemStack in = new ItemStack(this.itemToTrade, this.amountToGive);
             ItemStack out = new ItemStack(this.itemToReceive, this.amountToReceive);
-            return new TradeOffer(in, out, this.maxUses, this.experience, this.multiplier);
+            return new MerchantOffer(in, out, this.maxUses, this.experience, this.multiplier);
         }
     }
 
     ///////////////////////
 
     public static final List<BlockState> VANILLA_CANDLES = ImmutableList.of(
-            Blocks.CANDLE.getDefaultState(),
-            Blocks.CYAN_CANDLE.getDefaultState(),
-            Blocks.BLACK_CANDLE.getDefaultState(),
-            Blocks.BLUE_CANDLE.getDefaultState(),
-            Blocks.BROWN_CANDLE.getDefaultState(),
-            Blocks.GRAY_CANDLE.getDefaultState(),
-            Blocks.GREEN_CANDLE.getDefaultState(),
-            Blocks.LIGHT_BLUE_CANDLE.getDefaultState(),
-            Blocks.LIGHT_GRAY_CANDLE.getDefaultState(),
-            Blocks.LIME_CANDLE.getDefaultState(),
-            Blocks.MAGENTA_CANDLE.getDefaultState(),
-            Blocks.ORANGE_CANDLE.getDefaultState(),
-            Blocks.PINK_CANDLE.getDefaultState(),
-            Blocks.PURPLE_CANDLE.getDefaultState(),
-            Blocks.RED_CANDLE.getDefaultState(),
-            Blocks.WHITE_CANDLE.getDefaultState(),
-            Blocks.YELLOW_CANDLE.getDefaultState()
+            Blocks.CANDLE.defaultBlockState(),
+            Blocks.CYAN_CANDLE.defaultBlockState(),
+            Blocks.BLACK_CANDLE.defaultBlockState(),
+            Blocks.BLUE_CANDLE.defaultBlockState(),
+            Blocks.BROWN_CANDLE.defaultBlockState(),
+            Blocks.GRAY_CANDLE.defaultBlockState(),
+            Blocks.GREEN_CANDLE.defaultBlockState(),
+            Blocks.LIGHT_BLUE_CANDLE.defaultBlockState(),
+            Blocks.LIGHT_GRAY_CANDLE.defaultBlockState(),
+            Blocks.LIME_CANDLE.defaultBlockState(),
+            Blocks.MAGENTA_CANDLE.defaultBlockState(),
+            Blocks.ORANGE_CANDLE.defaultBlockState(),
+            Blocks.PINK_CANDLE.defaultBlockState(),
+            Blocks.PURPLE_CANDLE.defaultBlockState(),
+            Blocks.RED_CANDLE.defaultBlockState(),
+            Blocks.WHITE_CANDLE.defaultBlockState(),
+            Blocks.YELLOW_CANDLE.defaultBlockState()
     );
 
     //////////////////////////////////////////////
@@ -151,18 +151,18 @@ public class GeneralUtils {
     /**
      * For giving the player an item properly into their inventory
      */
-    public static void givePlayerItem(PlayerEntity playerEntity, Hand hand, ItemStack itemstack, boolean giveContainerItem) {
-        if(giveContainerItem && !itemstack.getItem().hasRecipeRemainder()) return;
+    public static void givePlayerItem(Player playerEntity, InteractionHand hand, ItemStack itemstack, boolean giveContainerItem) {
+        if(giveContainerItem && !itemstack.getItem().hasCraftingRemainingItem()) return;
 
-        ItemStack itemToGive = giveContainerItem ? itemstack.getItem().getRecipeRemainder().getDefaultStack() : itemstack;
+        ItemStack itemToGive = giveContainerItem ? itemstack.getItem().getCraftingRemainingItem().getDefaultInstance() : itemstack;
         if (itemstack.isEmpty()) {
             // places result item in hand
-            playerEntity.setStackInHand(hand, itemToGive);
+            playerEntity.setItemInHand(hand, itemToGive);
         }
         // places result item in inventory
-        else if (!playerEntity.getInventory().insertStack(itemToGive)) {
+        else if (!playerEntity.getInventory().add(itemToGive)) {
             // drops result item if inventory is full
-            playerEntity.dropItem(itemToGive, false);
+            playerEntity.drop(itemToGive, false);
         }
     }
 }

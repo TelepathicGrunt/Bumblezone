@@ -5,52 +5,52 @@ import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.Material;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.Waterloggable;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.tag.FluidTags;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Util;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Map;
 
 
-public class HoneyCrystal extends ProperFacingBlock implements Waterloggable {
-    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-    protected static final VoxelShape DOWN_AABB = Block.createCuboidShape(0.0D, 1.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-    protected static final VoxelShape UP_AABB = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
-    protected static final VoxelShape WEST_AABB = Block.createCuboidShape(1.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-    protected static final VoxelShape EAST_AABB = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 15.0D, 16.0D, 16.0D);
-    protected static final VoxelShape NORTH_AABB = Block.createCuboidShape(0.0D, 0.0D, 1.0D, 16.0D, 16.0D, 16.0D);
-    protected static final VoxelShape SOUTH_AABB = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 15.0D);
+public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterloggedBlock {
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    protected static final VoxelShape DOWN_AABB = Block.box(0.0D, 1.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+    protected static final VoxelShape UP_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
+    protected static final VoxelShape WEST_AABB = Block.box(1.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+    protected static final VoxelShape EAST_AABB = Block.box(0.0D, 0.0D, 0.0D, 15.0D, 16.0D, 16.0D);
+    protected static final VoxelShape NORTH_AABB = Block.box(0.0D, 0.0D, 1.0D, 16.0D, 16.0D, 16.0D);
+    protected static final VoxelShape SOUTH_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 15.0D);
     public static final Map<Direction, VoxelShape> FACING_TO_SHAPE_MAP = Util.make(Maps.newEnumMap(Direction.class), (map) -> {
         map.put(Direction.NORTH, NORTH_AABB);
         map.put(Direction.EAST, EAST_AABB);
@@ -62,18 +62,18 @@ public class HoneyCrystal extends ProperFacingBlock implements Waterloggable {
     private Item item;
 
     public HoneyCrystal() {
-        super(FabricBlockSettings.of(Material.GLASS, MapColor.ORANGE).lightLevel(1).strength(0.3F, 0.3f).nonOpaque());
+        super(FabricBlockSettings.of(Material.GLASS, MaterialColor.COLOR_ORANGE).lightLevel(1).strength(0.3F, 0.3f).noOcclusion());
 
-        this.setDefaultState(this.stateManager.getDefaultState()
-                .with(FACING, Direction.UP)
-                .with(WATERLOGGED, Boolean.FALSE));
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, Direction.UP)
+                .setValue(WATERLOGGED, Boolean.FALSE));
     }
 
     /**
      * Setup properties
      */
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(WATERLOGGED, FACING);
     }
 
@@ -83,26 +83,26 @@ public class HoneyCrystal extends ProperFacingBlock implements Waterloggable {
     @SuppressWarnings("deprecation")
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? BzFluids.SUGAR_WATER_FLUID.getStill(false) : super.getFluidState(state);
+        return state.getValue(WATERLOGGED) ? BzFluids.SUGAR_WATER_FLUID.getSource(false) : super.getFluidState(state);
     }
 
     /**
      * Custom shape of this block based on direction
      */
     @Override
-    public VoxelShape getOutlineShape(BlockState blockstate, BlockView worldIn, BlockPos pos, ShapeContext context) {
-        return FACING_TO_SHAPE_MAP.get(blockstate.get(FACING));
+    public VoxelShape getShape(BlockState blockstate, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        return FACING_TO_SHAPE_MAP.get(blockstate.getValue(FACING));
     }
 
     /**
      * Checks if block the crystal is on has a solid side facing it.
      */
     @Override
-    public boolean canPlaceAt(BlockState blockstate, WorldView world, BlockPos pos) {
+    public boolean canSurvive(BlockState blockstate, LevelReader world, BlockPos pos) {
 
-        Direction direction = blockstate.get(FACING);
-        BlockState attachedBlockstate = world.getBlockState(pos.offset(direction.getOpposite()));
-        return attachedBlockstate.isSideSolidFullSquare(world, pos.offset(direction.getOpposite()), direction);
+        Direction direction = blockstate.getValue(FACING);
+        BlockState attachedBlockstate = world.getBlockState(pos.relative(direction.getOpposite()));
+        return attachedBlockstate.isFaceSturdy(world, pos.relative(direction.getOpposite()), direction);
     }
 
     /**
@@ -110,18 +110,18 @@ public class HoneyCrystal extends ProperFacingBlock implements Waterloggable {
      */
     @SuppressWarnings("deprecation")
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState blockstate, Direction facing,
-                                                BlockState facingState, WorldAccess world,
+    public BlockState updateShape(BlockState blockstate, Direction facing,
+                                                BlockState facingState, LevelAccessor world,
                                                 BlockPos currentPos, BlockPos facingPos) {
 
-        if (facing.getOpposite() == blockstate.get(FACING) && !blockstate.canPlaceAt(world, currentPos)) {
-            return Blocks.AIR.getDefaultState();
+        if (facing.getOpposite() == blockstate.getValue(FACING) && !blockstate.canSurvive(world, currentPos)) {
+            return Blocks.AIR.defaultBlockState();
         } else {
-            if (blockstate.get(WATERLOGGED)) {
-                world.getFluidTickScheduler().schedule(currentPos, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickRate(world));
+            if (blockstate.getValue(WATERLOGGED)) {
+                world.getLiquidTicks().scheduleTick(currentPos, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickDelay(world));
             }
 
-            return super.getStateForNeighborUpdate(blockstate, facing, facingState, world, currentPos, facingPos);
+            return super.updateShape(blockstate, facing, facingState, world, currentPos, facingPos);
         }
     }
 
@@ -129,24 +129,24 @@ public class HoneyCrystal extends ProperFacingBlock implements Waterloggable {
      * checks if crystal can be placed on block and sets waterlogging as well if replacing water
      */
     @Override
-    public BlockState getPlacementState(ItemPlacementContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
 
-        if (!context.canReplaceExisting()) {
-            BlockState attachedBlockstate = context.getWorld().getBlockState(context.getBlockPos().offset(context.getSide().getOpposite()));
-            if (attachedBlockstate.getBlock() == this && attachedBlockstate.get(FACING) == context.getSide()) {
+        if (!context.replacingClickedOnBlock()) {
+            BlockState attachedBlockstate = context.getLevel().getBlockState(context.getClickedPos().relative(context.getClickedFace().getOpposite()));
+            if (attachedBlockstate.getBlock() == this && attachedBlockstate.getValue(FACING) == context.getClickedFace()) {
                 return null;
             }
         }
 
-        BlockState blockstate = this.getDefaultState();
-        WorldView worldReader = context.getWorld();
-        BlockPos blockpos = context.getBlockPos();
-        FluidState fluidstate = context.getWorld().getFluidState(context.getBlockPos());
+        BlockState blockstate = this.defaultBlockState();
+        LevelReader worldReader = context.getLevel();
+        BlockPos blockpos = context.getClickedPos();
+        FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
 
-        for (Direction direction : context.getPlacementDirections()) {
-            blockstate = blockstate.with(FACING, direction.getOpposite());
-            if (blockstate.canPlaceAt(worldReader, blockpos)) {
-                return blockstate.with(WATERLOGGED, fluidstate.getFluid().isIn(FluidTags.WATER) && fluidstate.isStill());
+        for (Direction direction : context.getNearestLookingDirections()) {
+            blockstate = blockstate.setValue(FACING, direction.getOpposite());
+            if (blockstate.canSurvive(worldReader, blockpos)) {
+                return blockstate.setValue(WATERLOGGED, fluidstate.getType().is(FluidTags.WATER) && fluidstate.isSource());
             }
         }
 
@@ -158,31 +158,31 @@ public class HoneyCrystal extends ProperFacingBlock implements Waterloggable {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResult onUse(BlockState blockstate, World world,
-                              BlockPos position, PlayerEntity playerEntity,
-                              Hand playerHand, BlockHitResult raytraceResult) {
+    public InteractionResult use(BlockState blockstate, Level world,
+                              BlockPos position, Player playerEntity,
+                              InteractionHand playerHand, BlockHitResult raytraceResult) {
 
-        ItemStack itemstack = playerEntity.getStackInHand(playerHand);
+        ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
         if (itemstack.getItem() == Items.GLASS_BOTTLE) {
 
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
-                    SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+                    SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
-            itemstack.decrement(1);
+            itemstack.shrink(1);
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE), false);
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
-        return super.onUse(blockstate, world, position, playerEntity, playerHand, raytraceResult);
+        return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);
     }
 
     /**
      * Breaks by pistons
      */
     @Override
-    public PistonBehavior getPistonBehavior(BlockState state) {
-        return PistonBehavior.DESTROY;
+    public PushReaction getPistonPushReaction(BlockState state) {
+        return PushReaction.DESTROY;
     }
 
 
@@ -190,7 +190,7 @@ public class HoneyCrystal extends ProperFacingBlock implements Waterloggable {
      * Makes this block show up in creative menu to fix the asItem override side-effect
      */
     @Override
-    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> items) {
+    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
         items.add(new ItemStack(BzItems.HONEY_CRYSTAL));
     }
 
@@ -210,21 +210,21 @@ public class HoneyCrystal extends ProperFacingBlock implements Waterloggable {
      * This block is translucent and can let some light through
      */
     @Override
-    public int getOpacity(BlockState state, BlockView worldIn, BlockPos pos) {
+    public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
         return 1;
     }
 
     @Override
-    public boolean canFillWithFluid(BlockView world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
-        return !blockState.get(WATERLOGGED) && fluid.isIn(FluidTags.WATER) && fluid.getDefaultState().isStill();
+    public boolean canPlaceLiquid(BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
+        return !blockState.getValue(WATERLOGGED) && fluid.is(FluidTags.WATER) && fluid.defaultFluidState().isSource();
     }
 
     @Override
-    public boolean tryFillWithFluid(WorldAccess world, BlockPos blockPos, BlockState blockState, FluidState fluidState) {
-        if (!blockState.get(WATERLOGGED) && fluidState.getFluid().isIn(FluidTags.WATER) && fluidState.isStill()) {
-            if (!world.isClient()) {
-                world.setBlockState(blockPos, blockState.with(WATERLOGGED, true), 3);
-                world.getFluidTickScheduler().schedule(blockPos, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickRate(world));
+    public boolean placeLiquid(LevelAccessor world, BlockPos blockPos, BlockState blockState, FluidState fluidState) {
+        if (!blockState.getValue(WATERLOGGED) && fluidState.getType().is(FluidTags.WATER) && fluidState.isSource()) {
+            if (!world.isClientSide()) {
+                world.setBlock(blockPos, blockState.setValue(WATERLOGGED, true), 3);
+                world.getLiquidTicks().scheduleTick(blockPos, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickDelay(world));
             }
             return true;
         }
@@ -234,9 +234,9 @@ public class HoneyCrystal extends ProperFacingBlock implements Waterloggable {
     }
 
     @Override
-    public ItemStack tryDrainFluid(WorldAccess world, BlockPos blockPos, BlockState blockState) {
-        if (blockState.get(WATERLOGGED)) {
-            world.setBlockState(blockPos, blockState.with(WATERLOGGED, false), 3);
+    public ItemStack pickupBlock(LevelAccessor world, BlockPos blockPos, BlockState blockState) {
+        if (blockState.getValue(WATERLOGGED)) {
+            world.setBlock(blockPos, blockState.setValue(WATERLOGGED, false), 3);
             return new ItemStack(BzItems.SUGAR_WATER_BUCKET);
         }
         else {

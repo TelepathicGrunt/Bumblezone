@@ -2,21 +2,21 @@ package com.telepathicgrunt.bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.Bumblezone;
-import com.telepathicgrunt.bumblezone.mixin.world.StructureAccessor;
+import com.telepathicgrunt.bumblezone.mixin.world.StructureTemplateAccessor;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.bumblezone.world.features.configs.NbtFeatureConfig;
-import net.minecraft.block.Block;
-import net.minecraft.structure.Structure;
-import net.minecraft.structure.StructureManager;
-import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.structure.processor.StructureProcessorList;
-import net.minecraft.structure.processor.StructureProcessorLists;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.data.worldgen.ProcessorLists;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,11 +29,11 @@ public class HoneycombHole extends Feature<NbtFeatureConfig> {
     }
 
     @Override
-    public boolean generate(FeatureContext<NbtFeatureConfig> context) {
-        Identifier nbtRL = GeneralUtils.getRandomEntry(context.getConfig().nbtResourcelocationsAndWeights, context.getRandom());
+    public boolean place(FeaturePlaceContext<NbtFeatureConfig> context) {
+        ResourceLocation nbtRL = GeneralUtils.getRandomEntry(context.config().nbtResourcelocationsAndWeights, context.random());
 
-        StructureManager structureManager = context.getWorld().toServerWorld().getStructureManager();
-        Structure template = structureManager.getStructure(nbtRL).orElseThrow(() -> {
+        StructureManager structureManager = context.level().getLevel().getStructureManager();
+        StructureTemplate template = structureManager.get(nbtRL).orElseThrow(() -> {
             String errorMsg = "Identifier to the specified nbt file was not found! : " + nbtRL;
             Bumblezone.LOGGER.error(errorMsg);
             return new RuntimeException(errorMsg);
@@ -45,24 +45,24 @@ public class HoneycombHole extends Feature<NbtFeatureConfig> {
                 template.getSize().getY() / 2,
                 template.getSize().getZ() / 2);
 
-        BlockPos.Mutable mutable = new BlockPos.Mutable().set(context.getOrigin());
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(context.origin());
 
         // offset the feature's position
-        BlockPos position = context.getOrigin().up(context.getConfig().structureYOffset);
+        BlockPos position = context.origin().above(context.config().structureYOffset);
 
-        StructurePlacementData structurePlacementData = (new StructurePlacementData()).setRotation(BlockRotation.NONE).setPosition(halfLengths).setIgnoreEntities(false);
-        Optional<StructureProcessorList> processor = context.getWorld().toServerWorld().getServer().getRegistryManager().get(Registry.STRUCTURE_PROCESSOR_LIST_KEY).getOrEmpty(context.getConfig().processor);
-        processor.orElse(StructureProcessorLists.EMPTY).getList().forEach(structurePlacementData::addProcessor); // add all processors
+        StructurePlaceSettings structurePlacementData = (new StructurePlaceSettings()).setRotation(Rotation.NONE).setRotationPivot(halfLengths).setIgnoreEntities(false);
+        Optional<StructureProcessorList> processor = context.level().getLevel().getServer().registryAccess().registryOrThrow(Registry.PROCESSOR_LIST_REGISTRY).getOptional(context.config().processor);
+        processor.orElse(ProcessorLists.EMPTY).list().forEach(structurePlacementData::addProcessor); // add all processors
         mutable.set(position).move(-halfLengths.getX(), 0, -halfLengths.getZ());
-        template.place(context.getWorld(), mutable, mutable, structurePlacementData, context.getRandom(), Block.NO_REDRAW);
+        template.placeInWorld(context.level(), mutable, mutable, structurePlacementData, context.random(), Block.UPDATE_INVISIBLE);
         // Post-processors
         // For all processors that are sensitive to neighboring blocks such as vines.
         // Post processors will place the blocks themselves so we will not do anything with the return of Structure.process
         structurePlacementData.clearProcessors();
-        Optional<StructureProcessorList> postProcessor = context.getWorld().toServerWorld().getServer().getRegistryManager().get(Registry.STRUCTURE_PROCESSOR_LIST_KEY).getOrEmpty(context.getConfig().postProcessor);
-        postProcessor.orElse(StructureProcessorLists.EMPTY).getList().forEach(structurePlacementData::addProcessor); // add all post processors
-        List<Structure.StructureBlockInfo> list = structurePlacementData.getRandomBlockInfos(((StructureAccessor)template).thebumblezone_getBlocks(), mutable).getAll();
-        Structure.process(context.getWorld(), mutable, mutable, structurePlacementData, list);
+        Optional<StructureProcessorList> postProcessor = context.level().getLevel().getServer().registryAccess().registryOrThrow(Registry.PROCESSOR_LIST_REGISTRY).getOptional(context.config().postProcessor);
+        postProcessor.orElse(ProcessorLists.EMPTY).list().forEach(structurePlacementData::addProcessor); // add all post processors
+        List<StructureTemplate.StructureBlockInfo> list = structurePlacementData.getRandomPalette(((StructureTemplateAccessor)template).thebumblezone_getBlocks(), mutable).blocks();
+        StructureTemplate.processBlockInfos(context.level(), mutable, mutable, structurePlacementData, list);
 
         return true;
     }

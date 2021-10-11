@@ -2,24 +2,23 @@ package com.telepathicgrunt.bumblezone.entities;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.tags.BzBlockTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.Text;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.World;
-import org.apache.logging.log4j.Level;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 
@@ -31,28 +30,28 @@ public class EntityTeleportationHookup {
     //Living Entity ticks
     public static void entityTick(LivingEntity livingEntity){
         //Makes it so player does not get killed for falling into the void
-        if (livingEntity.getEntityWorld().getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID)) {
+        if (livingEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (livingEntity.getY() < -3) {
-                livingEntity.refreshPositionAfterTeleport(livingEntity.getX(), -3.01D, livingEntity.getZ());
-                livingEntity.updatePosition(livingEntity.getX(), -3.01D, livingEntity.getZ());
+                livingEntity.moveTo(livingEntity.getX(), -3.01D, livingEntity.getZ());
+                livingEntity.absMoveTo(livingEntity.getX(), -3.01D, livingEntity.getZ());
                 livingEntity.fallDistance = 0;
 
-                if(!livingEntity.world.isClient()){
+                if(!livingEntity.level.isClientSide()){
                     Bumblezone.ENTITY_COMPONENT.get(livingEntity).setIsTeleporting(false);
                     teleportOutOfBz(livingEntity);
                 }
             } else if (livingEntity.getY() > 255) {
-                livingEntity.refreshPositionAfterTeleport(livingEntity.getX(), 255.01D, livingEntity.getZ());
-                livingEntity.updatePosition(livingEntity.getX(), 255.01D, livingEntity.getZ());
+                livingEntity.moveTo(livingEntity.getX(), 255.01D, livingEntity.getZ());
+                livingEntity.absMoveTo(livingEntity.getX(), 255.01D, livingEntity.getZ());
 
-                if(!livingEntity.world.isClient()){
+                if(!livingEntity.level.isClientSide()){
                     Bumblezone.ENTITY_COMPONENT.get(livingEntity).setIsTeleporting(false);
                     teleportOutOfBz(livingEntity);
                 }
             }
         }
         //teleport to bumblezone
-        else if (!livingEntity.world.isClient() && Bumblezone.ENTITY_COMPONENT.get(livingEntity).getIsTeleporting()) {
+        else if (!livingEntity.level.isClientSide() && Bumblezone.ENTITY_COMPONENT.get(livingEntity).getIsTeleporting()) {
             Bumblezone.ENTITY_COMPONENT.get(livingEntity).setIsTeleporting(false);
             EntityTeleportationBackend.enteringBumblezone(livingEntity);
             reAddStatusEffect(livingEntity);
@@ -61,13 +60,13 @@ public class EntityTeleportationHookup {
 
 
     public static void teleportOutOfBz(LivingEntity livingEntity) {
-        if (!livingEntity.world.isClient()) {
+        if (!livingEntity.level.isClientSide()) {
             checkAndCorrectStoredDimension(livingEntity);
             MinecraftServer minecraftServer = livingEntity.getServer(); // the server itself
-            RegistryKey<World> world_key = RegistryKey.of(Registry.WORLD_KEY, Bumblezone.ENTITY_COMPONENT.get(livingEntity).getNonBZDimension());
-            ServerWorld serverWorld = minecraftServer.getWorld(world_key);
+            ResourceKey<net.minecraft.world.level.Level> world_key = ResourceKey.create(Registry.DIMENSION_REGISTRY, Bumblezone.ENTITY_COMPONENT.get(livingEntity).getNonBZDimension());
+            ServerLevel serverWorld = minecraftServer.getLevel(world_key);
             if(serverWorld == null){
-                serverWorld = minecraftServer.getWorld(World.OVERWORLD);
+                serverWorld = minecraftServer.getLevel(net.minecraft.world.level.Level.OVERWORLD);
             }
             EntityTeleportationBackend.exitingBumblezone(livingEntity, serverWorld);
             reAddStatusEffect(livingEntity);
@@ -75,17 +74,17 @@ public class EntityTeleportationHookup {
     }
 
     // Enderpearl
-    public static boolean runEnderpearlImpact(HitResult hitResult, ProjectileEntity pearlEntity){
-        World world = pearlEntity.world; // world we threw in
+    public static boolean runEnderpearlImpact(HitResult hitResult, Projectile pearlEntity){
+        net.minecraft.world.level.Level world = pearlEntity.level; // world we threw in
 
         // Make sure we are on server by checking if thrower is ServerPlayerEntity and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (!world.isClient() && pearlEntity.getOwner() instanceof ServerPlayerEntity &&
-            !world.getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!Bumblezone.BZ_CONFIG.BZDimensionConfig.onlyOverworldHivesTeleports || world.getRegistryKey().equals(World.OVERWORLD)))
+        if (!world.isClientSide() && pearlEntity.getOwner() instanceof ServerPlayer &&
+            !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
+            (!Bumblezone.BZ_CONFIG.BZDimensionConfig.onlyOverworldHivesTeleports || world.dimension().equals(Level.OVERWORLD)))
         {
-            ServerPlayerEntity playerEntity = (ServerPlayerEntity) pearlEntity.getOwner(); // the thrower
-            Vec3d hitBlockPos = hitResult.getPos(); //position of the collision
+            ServerPlayer playerEntity = (ServerPlayer) pearlEntity.getOwner(); // the thrower
+            Vec3 hitBlockPos = hitResult.getLocation(); //position of the collision
             BlockPos hivePos = new BlockPos(0,0,0);
             boolean hitHive = false;
 
@@ -109,16 +108,16 @@ public class EntityTeleportationHookup {
 
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = false;
-            if(!BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.values().isEmpty()) {
-                if(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.down()).getBlock())) {
+            if(!BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.getValues().isEmpty()) {
+                if(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.below()).getBlock())) {
                     validBelowBlock = true;
                 }
                 else if(Bumblezone.BZ_CONFIG.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive)
                 {
                     //failed. Block below isn't the required block
-                    Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
-                    Text message = new LiteralText("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
-                    playerEntity.sendMessage(message, true);
+                    Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
+                    Component message = new TextComponent("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
+                    playerEntity.displayClientMessage(message, true);
                     return false;
                 }
             }
@@ -139,17 +138,17 @@ public class EntityTeleportationHookup {
 
 
     public static void runPistonPushed(Direction direction, LivingEntity livingEntity) {
-        ServerWorld world = (ServerWorld) livingEntity.world;
+        ServerLevel world = (ServerLevel) livingEntity.level;
 
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (!world.getRegistryKey().getValue().equals(Bumblezone.MOD_DIMENSION_ID) &&
-                (!Bumblezone.BZ_CONFIG.BZDimensionConfig.onlyOverworldHivesTeleports || world.getRegistryKey().equals(World.OVERWORLD)))
+        if (!world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
+                (!Bumblezone.BZ_CONFIG.BZDimensionConfig.onlyOverworldHivesTeleports || world.dimension().equals(net.minecraft.world.level.Level.OVERWORLD)))
         {
             // Skip checks if entity is teleporting already to Bz.
             if(Bumblezone.ENTITY_COMPONENT.get(livingEntity).getIsTeleporting()) return;
 
             BlockPos hivePos = new BlockPos(0,0,0);
-            BlockPos.Mutable entityPos = new BlockPos.Mutable().set(livingEntity.getBlockPos());
+            BlockPos.MutableBlockPos entityPos = new BlockPos.MutableBlockPos().set(livingEntity.blockPosition());
 
             // Checks if entity is pushed into hive block (the mutable is moved for each check and enters early if any is true)
             if (EntityTeleportationBackend.isValidBeeHive(world.getBlockState(entityPos)) ||
@@ -159,16 +158,16 @@ public class EntityTeleportationHookup {
             {
                 //checks if block under hive is correct if config needs one
                 boolean validBelowBlock = false;
-                if(!BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.values().isEmpty()) {
-                    if(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.down()).getBlock())) {
+                if(!BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.getValues().isEmpty()) {
+                    if(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.below()).getBlock())) {
                         validBelowBlock = true;
                     }
                     else if(Bumblezone.BZ_CONFIG.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive) {
-                        if(livingEntity instanceof PlayerEntity playerEntity){
+                        if(livingEntity instanceof Player playerEntity){
                             //failed. Block below isn't the required block
-                            Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
-                            Text message = new LiteralText("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
-                            playerEntity.sendMessage(message, true);
+                            Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
+                            Component message = new TextComponent("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
+                            playerEntity.displayClientMessage(message, true);
                         }
                         return;
                     }
@@ -194,19 +193,19 @@ public class EntityTeleportationHookup {
      */
     private static void reAddStatusEffect(LivingEntity livingEntity) {
         //re-adds potion effects so the icon remains instead of disappearing when changing dimensions due to a bug
-        ArrayList<StatusEffectInstance> effectInstanceList = new ArrayList<StatusEffectInstance>(livingEntity.getStatusEffects());
+        ArrayList<MobEffectInstance> effectInstanceList = new ArrayList<MobEffectInstance>(livingEntity.getActiveEffects());
         for (int i = effectInstanceList.size() - 1; i >= 0; i--) {
-            StatusEffectInstance effectInstance = effectInstanceList.get(i);
+            MobEffectInstance effectInstance = effectInstanceList.get(i);
             if (effectInstance != null) {
-                livingEntity.removeStatusEffect(effectInstance.getEffectType());
-                livingEntity.addStatusEffect(
-                        new StatusEffectInstance(
-                                effectInstance.getEffectType(),
+                livingEntity.removeEffect(effectInstance.getEffect());
+                livingEntity.addEffect(
+                        new MobEffectInstance(
+                                effectInstance.getEffect(),
                                 effectInstance.getDuration(),
                                 effectInstance.getAmplifier(),
                                 effectInstance.isAmbient(),
-                                effectInstance.shouldShowParticles(),
-                                effectInstance.shouldShowIcon()));
+                                effectInstance.isVisible(),
+                                effectInstance.showIcon()));
             }
         }
     }
@@ -223,7 +222,7 @@ public class EntityTeleportationHookup {
         {
             // go to overworld by default
             //update stored dimension
-            Bumblezone.ENTITY_COMPONENT.get(livingEntity).setNonBZDimension(World.OVERWORLD.getValue());
+            Bumblezone.ENTITY_COMPONENT.get(livingEntity).setNonBZDimension(net.minecraft.world.level.Level.OVERWORLD.location());
         }
     }
 }

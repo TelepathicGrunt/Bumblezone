@@ -1,29 +1,29 @@
 package com.telepathicgrunt.bumblezone.world.features.decorators;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.decorator.Decorator;
-import net.minecraft.world.gen.decorator.DecoratorContext;
-import net.minecraft.world.gen.decorator.NopeDecoratorConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneDecoratorConfiguration;
+import net.minecraft.world.level.levelgen.placement.DecorationContext;
+import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
-public class HoneycombHolePlacer extends Decorator<NopeDecoratorConfig> {
+public class HoneycombHolePlacer extends FeatureDecorator<NoneDecoratorConfiguration> {
     private enum SliceState {NEITHER, AIR, SOLID}
 
-    public HoneycombHolePlacer(Codec<NopeDecoratorConfig> codec) {
+    public HoneycombHolePlacer(Codec<NoneDecoratorConfiguration> codec) {
         super(codec);
     }
 
     @Override
-    public Stream<BlockPos> getPositions(DecoratorContext context, Random random, NopeDecoratorConfig placementConfig, BlockPos pos) {
+    public Stream<BlockPos> getPositions(DecorationContext context, Random random, NoneDecoratorConfiguration placementConfig, BlockPos pos) {
         //Start at top
-        BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable(pos.getX() - 4, 236, pos.getZ() + 4);
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(pos.getX() - 4, 236, pos.getZ() + 4);
         List<BlockPos> blockPosList = new ArrayList<>();
         boolean alternate = false;
 
@@ -42,7 +42,7 @@ public class HoneycombHolePlacer extends Decorator<NopeDecoratorConfig> {
 
                 //Makes sure the place for holes is valid
                 if (isPlaceValid(context, mutableBlockPos)) {
-                    blockPosList.add(mutableBlockPos.toImmutable());
+                    blockPosList.add(mutableBlockPos.immutable());
                 }
             }
 
@@ -61,7 +61,7 @@ public class HoneycombHolePlacer extends Decorator<NopeDecoratorConfig> {
      * It also needs one slide to be invalid so that the hole is not
      * placed inside the terrain and cutoff from the outside.
      */
-    private boolean isPlaceValid(DecoratorContext world, BlockPos pos) {
+    private boolean isPlaceValid(DecorationContext world, BlockPos pos) {
         boolean completelySolidSlice = false;
         boolean airInSlice = false;
 
@@ -80,7 +80,7 @@ public class HoneycombHolePlacer extends Decorator<NopeDecoratorConfig> {
     /**
      * Checks if the circular slice here is entirely solid land.
      */
-    private SliceState StateOfThisSlice(DecoratorContext world, BlockPos pos) {
+    private SliceState StateOfThisSlice(DecorationContext world, BlockPos pos) {
         BlockState blockState;
         double distanceSq;
 
@@ -88,8 +88,8 @@ public class HoneycombHolePlacer extends Decorator<NopeDecoratorConfig> {
             for (double y = -3.5; y <= 3.5; y++) {
                 distanceSq = z * z + y * y;
                 if (distanceSq > 5 && distanceSq < 18) {
-                    blockState = world.getBlockState(pos.add(0, y + 1, z));
-                    if (!blockState.isOpaque()) {
+                    blockState = world.getBlockState(pos.offset(0, y + 1, z));
+                    if (!blockState.canOcclude()) {
                         //only count Air and not Cave Air so holes aren't placed in caves
                         if (blockState.getBlock() == Blocks.AIR)
                             return SliceState.AIR;
@@ -98,7 +98,7 @@ public class HoneycombHolePlacer extends Decorator<NopeDecoratorConfig> {
                     }
 
                     //Visual debugging
-                    //world.setBlockState(pos.add(0, y+1, z), Blocks.REDSTONE_BLOCK.getDefaultState(), 2);
+                    //world.setBlockState(pos.add(0, y+1, z), Blocks.REDSTONE_BLOCK.defaultBlockState(), 2);
                 }
             }
         }

@@ -10,38 +10,39 @@ import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.tags.BzEntityTags;
 import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.tag.FluidTags;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 
 public class BeeInteractivity {
 
     // heal bees with sugar water bottle or honey bottle
-    public static ActionResult beeFeeding(World world, PlayerEntity playerEntity, Hand hand, Entity target) {
-        if (!world.isClient() && target instanceof BeeEntity beeEntity) {
+    public static InteractionResult beeFeeding(Level world, Player playerEntity, InteractionHand hand, Entity target) {
+        if (!world.isClientSide() && target instanceof Bee beeEntity) {
 
-            ItemStack itemstack = playerEntity.getStackInHand(hand);
-            Identifier itemRL = Registry.ITEM.getId(itemstack.getItem());
+            ItemStack itemstack = playerEntity.getItemInHand(hand);
+            ResourceLocation itemRL = Registry.ITEM.getKey(itemstack.getItem());
 
             // Disallow all non-tagged items from being fed to bees
             if(!BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
-                return ActionResult.PASS;
+                return InteractionResult.PASS;
 
-            if (itemstack.isIn(BzItemTags.HONEY_BUCKETS)) {
+            if (itemstack.is(BzItemTags.HONEY_BUCKETS)) {
                 beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
                 calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);
                 if (beeEntity.isBaby()) {
@@ -50,36 +51,36 @@ public class BeeInteractivity {
                     }
                 }
                 else {
-                    for (BeeEntity nearbyBee : world.getEntitiesByClass(BeeEntity.class, beeEntity.getBoundingBox().expand(4), beeEntity1 -> true)) {
-                        nearbyBee.lovePlayer(playerEntity);
+                    for (Bee nearbyBee : world.getEntitiesOfClass(Bee.class, beeEntity.getBoundingBox().inflate(4), beeEntity1 -> true)) {
+                        nearbyBee.setInLove(playerEntity);
                     }
                 }
             }
             else if(itemRL.getPath().contains("honey")){
-                beeEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_HEALTH, 1, 2, false, false, false));
+                beeEntity.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 2, false, false, false));
                 calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
             }
             else{
-                beeEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_HEALTH, 1, 1, false, false, false));
+                beeEntity.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 1, false, false, false));
                 calmAndSpawnHearts(world, playerEntity, beeEntity, 0.1f, 3);
             }
 
             if (!playerEntity.isCreative()) {
                 // remove current item
                 Item item = itemstack.getItem();
-                itemstack.decrement(1);
+                itemstack.shrink(1);
                 GeneralUtils.givePlayerItem(playerEntity, hand, new ItemStack(item), true);
             }
-            playerEntity.swingHand(hand, true);
-            return ActionResult.SUCCESS;
+            playerEntity.swing(hand, true);
+            return InteractionResult.SUCCESS;
         }
-        return ActionResult.PASS;
+        return InteractionResult.PASS;
     }
 
 
-    public static ActionResult beeUnpollinating(World world, PlayerEntity playerEntity, Hand hand, BeeEntity beeEntity) {
-        if (!world.isClient() && beeEntity.getType().isIn(BzEntityTags.POLLEN_PUFF_CAN_POLLINATE)) {
-            ItemStack itemstack = playerEntity.getStackInHand(hand);
+    public static InteractionResult beeUnpollinating(Level world, Player playerEntity, InteractionHand hand, Bee beeEntity) {
+        if (!world.isClientSide() && beeEntity.getType().is(BzEntityTags.POLLEN_PUFF_CAN_POLLINATE)) {
+            ItemStack itemstack = playerEntity.getItemInHand(hand);
             Item item = itemstack.getItem();
 
             // right clicking on pollinated bee with empty hand or pollen puff with room, gets pollen puff into hand.
@@ -88,27 +89,27 @@ public class BeeInteractivity {
                 if((itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water")) ||
                         item == Items.WET_SPONGE ||
                         item == BzItems.SUGAR_WATER_BOTTLE ||
-                        (item instanceof BucketItem && ((BucketItemAccessor) item).thebumblezone_getFluid().isIn(FluidTags.WATER))) {
-                    PollenPuff.spawnItemstackEntity(world, beeEntity.getBlockPos(), new ItemStack(BzItems.POLLEN_PUFF, 1));
-                    playerEntity.swingHand(hand, true);
+                        (item instanceof BucketItem && ((BucketItemAccessor) item).thebumblezone_getFluid().is(FluidTags.WATER))) {
+                    PollenPuff.spawnItemstackEntity(world, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF, 1));
+                    playerEntity.swing(hand, true);
                     ((BeeEntityInvoker)beeEntity).thebumblezone_callSetHasNectar(false);
-                    return ActionResult.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 }
             }
         }
 
-        return ActionResult.PASS;
+        return InteractionResult.PASS;
     }
 
-    private static void calmAndSpawnHearts(World world, PlayerEntity playerEntity, BeeEntity beeEntity, float calmChance, int hearts) {
+    public static void calmAndSpawnHearts(Level world, Player playerEntity, LivingEntity beeEntity, float calmChance, int hearts) {
         boolean calmed = world.random.nextFloat() < calmChance;
         if (calmed) {
-            if(playerEntity.hasStatusEffect(BzEffects.WRATH_OF_THE_HIVE)){
-                playerEntity.removeStatusEffect(BzEffects.WRATH_OF_THE_HIVE);
-                WrathOfTheHiveEffect.calmTheBees(playerEntity.world, playerEntity);
+            if(playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE)){
+                playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE);
+                WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
             }
             else{
-                playerEntity.addStatusEffect(new StatusEffectInstance(
+                playerEntity.addEffect(new MobEffectInstance(
                         BzEffects.PROTECTION_OF_THE_HIVE,
                         Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts,
                         2,
@@ -118,8 +119,11 @@ public class BeeInteractivity {
             }
         }
 
-        if (!beeEntity.hasAngerTime() || calmed)
-            ((ServerWorld) world).spawnParticles(
+        if (beeEntity instanceof Bee ?
+                (!((Bee)beeEntity).isAngry() || calmed) :
+                calmed)
+        {
+            ((ServerLevel) world).sendParticles(
                     ParticleTypes.HEART,
                     beeEntity.getX(),
                     beeEntity.getY(),
@@ -129,5 +133,6 @@ public class BeeInteractivity {
                     world.getRandom().nextFloat() * 0.2f + 0.2f,
                     world.getRandom().nextFloat() * 0.5 - 0.25f,
                     world.getRandom().nextFloat() * 0.4 + 0.2f);
+        }
     }
 }

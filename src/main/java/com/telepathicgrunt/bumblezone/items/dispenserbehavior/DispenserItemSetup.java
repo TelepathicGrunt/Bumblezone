@@ -1,11 +1,11 @@
 package com.telepathicgrunt.bumblezone.items.dispenserbehavior;
 
-import com.telepathicgrunt.bumblezone.mixin.blocks.DispenserAccessor;
+import com.telepathicgrunt.bumblezone.mixin.blocks.DispenserBlockAccessor;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DispenserBlock;
 
 public class DispenserItemSetup {
     /**
@@ -23,13 +23,13 @@ public class DispenserItemSetup {
         //grab the original bottle behaviors and set it as a fallback for our custom behavior
         //this is so we don't override another mod's Dispenser behavior that they set to the bottles.
         HoneyBottleDispenseBehavior.DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR =
-                ((DispenserAccessor) Blocks.DISPENSER).thebumblezone_invokeGetBehaviorForItem(new ItemStack(Items.HONEY_BOTTLE));
+                ((DispenserBlockAccessor) Blocks.DISPENSER).thebumblezone_invokeGetBehaviorForItem(new ItemStack(Items.HONEY_BOTTLE));
 
         GlassBottleDispenseBehavior.DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR =
-                ((DispenserAccessor) Blocks.DISPENSER).thebumblezone_invokeGetBehaviorForItem(new ItemStack(Items.GLASS_BOTTLE));
+                ((DispenserBlockAccessor) Blocks.DISPENSER).thebumblezone_invokeGetBehaviorForItem(new ItemStack(Items.GLASS_BOTTLE));
 
         EmptyBucketDispenseBehavior.DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR =
-                ((DispenserAccessor) Blocks.DISPENSER).thebumblezone_invokeGetBehaviorForItem(new ItemStack(Items.BUCKET));
+                ((DispenserBlockAccessor) Blocks.DISPENSER).thebumblezone_invokeGetBehaviorForItem(new ItemStack(Items.BUCKET));
 
 
         DispenserBlock.registerBehavior(Items.GLASS_BOTTLE, new GlassBottleDispenseBehavior());

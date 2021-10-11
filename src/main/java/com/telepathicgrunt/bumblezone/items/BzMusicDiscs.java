@@ -1,11 +1,11 @@
 package com.telepathicgrunt.bumblezone.items;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.MusicDiscItem;
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.RecordItem;
 
-public class BzMusicDiscs extends MusicDiscItem {
-    public BzMusicDiscs(int comparatorOutput, SoundEvent sound, Item.Settings settings) {
+public class BzMusicDiscs extends RecordItem {
+    public BzMusicDiscs(int comparatorOutput, SoundEvent sound, Item.Properties settings) {
         super(comparatorOutput, sound, settings);
     }
 }

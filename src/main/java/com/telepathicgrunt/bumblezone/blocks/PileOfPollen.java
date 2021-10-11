@@ -3,77 +3,76 @@ package com.telepathicgrunt.bumblezone.blocks;
 import com.telepathicgrunt.bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.bumblezone.mixin.entities.BeeEntityInvoker;
-import com.telepathicgrunt.bumblezone.mixin.entities.PandaEntityInvoker;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.bumblezone.tags.BzEntityTags;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FallingBlock;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.FallingBlockEntity;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.ai.pathing.NavigationType;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.passive.PandaEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.AutomaticItemPlacementContext;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Panda;
+import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.DirectionalPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Random;
 
 public class PileOfPollen extends FallingBlock {
-    public static final IntProperty LAYERS = Properties.LAYERS;
+    public static final IntegerProperty LAYERS = BlockStateProperties.LAYERS;
     protected static final VoxelShape[] SHAPE_BY_LAYER = new VoxelShape[]{
-            VoxelShapes.empty(),
-            Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D),
-            Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D),
-            Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D),
-            Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D),
-            Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D),
-            Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D),
-            Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D),
-            Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)
+            Shapes.empty(),
+            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D),
+            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D),
+            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D),
+            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D),
+            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D),
+            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D),
+            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D),
+            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)
     };
     private Item item;
 
     public PileOfPollen() {
-        super(AbstractBlock.Settings.of(BzBlocks.ORANGE_NOT_SOLID)
-                .blockVision((blockState, world, blockPos) -> true)
-                .nonOpaque()
+        super(BlockBehaviour.Properties.of(BzBlocks.ORANGE_NOT_SOLID)
+                .isViewBlocking((blockState, world, blockPos) -> true)
+                .noOcclusion()
                 .strength(0.1F)
-                .sounds(BlockSoundGroup.SNOW));
+                .sound(SoundType.SNOW));
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> blockStateBuilder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> blockStateBuilder) {
         blockStateBuilder.add(LAYERS);
     }
 
     @Override
-    public ItemStack getPickStack(BlockView world, BlockPos blockPos, BlockState blockState) {
+    public ItemStack getCloneItemStack(BlockGetter world, BlockPos blockPos, BlockState blockState) {
         return new ItemStack(BzItems.POLLEN_PUFF);
     }
 
@@ -90,61 +89,61 @@ public class PileOfPollen extends FallingBlock {
     }
 
     @Override
-    public boolean canPathfindThrough(BlockState blockState, BlockView world, BlockPos blockPos, NavigationType pathType) {
+    public boolean isPathfindable(BlockState blockState, BlockGetter world, BlockPos blockPos, PathComputationType pathType) {
         return true;
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState blockState, BlockView world, BlockPos blockPos, ShapeContext selectionContext) {
-        return SHAPE_BY_LAYER[blockState.get(LAYERS)];
+    public VoxelShape getShape(BlockState blockState, BlockGetter world, BlockPos blockPos, CollisionContext selectionContext) {
+        return SHAPE_BY_LAYER[blockState.getValue(LAYERS)];
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState blockState, BlockView world, BlockPos blockPos, ShapeContext selectionContext) {
-        return VoxelShapes.empty();
+    public VoxelShape getCollisionShape(BlockState blockState, BlockGetter world, BlockPos blockPos, CollisionContext selectionContext) {
+        return Shapes.empty();
     }
 
     @Override
-    public VoxelShape getSidesShape(BlockState blockState, BlockView world, BlockPos blockPos) {
-        return SHAPE_BY_LAYER[blockState.get(LAYERS)];
+    public VoxelShape getBlockSupportShape(BlockState blockState, BlockGetter world, BlockPos blockPos) {
+        return SHAPE_BY_LAYER[blockState.getValue(LAYERS)];
     }
 
     @Override
-    public VoxelShape getCameraCollisionShape(BlockState blockState, BlockView world, BlockPos blockPos, ShapeContext selectionContext) {
-        return SHAPE_BY_LAYER[blockState.get(LAYERS)];
+    public VoxelShape getVisualShape(BlockState blockState, BlockGetter world, BlockPos blockPos, CollisionContext selectionContext) {
+        return SHAPE_BY_LAYER[blockState.getValue(LAYERS)];
     }
 
     @Override
-    public boolean hasSidedTransparency(BlockState blockState) {
+    public boolean useShapeForLightOcclusion(BlockState blockState) {
         return true;
     }
 
     @Override
-    public boolean canPlaceAt(BlockState blockState, WorldView world, BlockPos blockPos) {
-        BlockState blockstate = world.getBlockState(blockPos.down());
-        if(blockstate.isOf(Blocks.ICE) || blockstate.isOf(Blocks.PACKED_ICE) || blockstate.isOf(Blocks.BARRIER) || !world.getBlockState(blockPos).getFluidState().isEmpty()) {
+    public boolean canSurvive(BlockState blockState, LevelReader world, BlockPos blockPos) {
+        BlockState blockstate = world.getBlockState(blockPos.below());
+        if(blockstate.is(Blocks.ICE) || blockstate.is(Blocks.PACKED_ICE) || blockstate.is(Blocks.BARRIER) || !world.getBlockState(blockPos).getFluidState().isEmpty()) {
             return false;
         }
-        else if(blockstate.isAir() || blockstate.isOf(BzBlocks.PILE_OF_POLLEN) || blockstate.isOf(Blocks.HONEY_BLOCK) || blockstate.isOf(Blocks.SOUL_SAND)) {
+        else if(blockstate.isAir() || blockstate.is(BzBlocks.PILE_OF_POLLEN) || blockstate.is(Blocks.HONEY_BLOCK) || blockstate.is(Blocks.SOUL_SAND)) {
             return true;
         }
         else {
-            return Block.isFaceFullSquare(blockstate.getCollisionShape(world, blockPos.down()), Direction.UP);
+            return Block.isFaceFull(blockstate.getCollisionShape(world, blockPos.below()), Direction.UP);
         }
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState oldBlockState, Direction direction, BlockState newBlockState, WorldAccess world, BlockPos blockPos, BlockPos blockPos1) {
-        return !oldBlockState.canPlaceAt(world, blockPos) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(oldBlockState, direction, newBlockState, world, blockPos, blockPos1);
+    public BlockState updateShape(BlockState oldBlockState, Direction direction, BlockState newBlockState, LevelAccessor world, BlockPos blockPos, BlockPos blockPos1) {
+        return !oldBlockState.canSurvive(world, blockPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(oldBlockState, direction, newBlockState, world, blockPos, blockPos1);
     }
 
     @Override
-    public boolean canReplace(BlockState blockState, ItemPlacementContext itemPlacementContext) {
-        int layerValue = blockState.get(LAYERS);
-        if (itemPlacementContext.getStack().getItem() == this.asItem() && layerValue < 8) {
+    public boolean canBeReplaced(BlockState blockState, BlockPlaceContext itemPlacementContext) {
+        int layerValue = blockState.getValue(LAYERS);
+        if (itemPlacementContext.getItemInHand().getItem() == this.asItem() && layerValue < 8) {
             // Need check for AutomaticItemPlacementContext as otherwise, stack overflow as replacingClickedOnBlock for AutomaticItemPlacementContext will call this method again
-            if (!(itemPlacementContext instanceof AutomaticItemPlacementContext) && itemPlacementContext.canReplaceExisting()) {
-                return itemPlacementContext.getSide() == Direction.UP;
+            if (!(itemPlacementContext instanceof DirectionalPlaceContext) && itemPlacementContext.replacingClickedOnBlock()) {
+                return itemPlacementContext.getClickedFace() == Direction.UP;
             }
             else {
                 return true;
@@ -156,13 +155,13 @@ public class PileOfPollen extends FallingBlock {
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext itemPlacementContext) {
-        BlockState blockState = itemPlacementContext.getWorld().getBlockState(itemPlacementContext.getBlockPos());
-        if (blockState.isOf(this)) {
-            int layerValue = blockState.get(LAYERS);
-            return blockState.with(LAYERS, Math.min(8, layerValue + 1));
+    public BlockState getStateForPlacement(BlockPlaceContext itemPlacementContext) {
+        BlockState blockState = itemPlacementContext.getLevel().getBlockState(itemPlacementContext.getClickedPos());
+        if (blockState.is(this)) {
+            int layerValue = blockState.getValue(LAYERS);
+            return blockState.setValue(LAYERS, Math.min(8, layerValue + 1));
         } else {
-            return super.getPlacementState(itemPlacementContext);
+            return super.getStateForPlacement(itemPlacementContext);
         }
     }
 
@@ -170,7 +169,7 @@ public class PileOfPollen extends FallingBlock {
      * tell redstone that this can be use with comparator
      */
     @Override
-    public boolean hasComparatorOutput(BlockState state) {
+    public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
@@ -178,32 +177,32 @@ public class PileOfPollen extends FallingBlock {
      * the power fed into comparator (1 - 8)
      */
     @Override
-    public int getComparatorOutput(BlockState blockState, World worldIn, BlockPos pos) {
-        return blockState.get(LAYERS);
+    public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
+        return blockState.getValue(LAYERS);
     }
 
     @Override
-    public void scheduledTick(BlockState blockState, ServerWorld serverWorld, BlockPos blockPos, Random random) {
-        BlockState stateBelow = serverWorld.getBlockState(blockPos.down());
-        if(stateBelow.isOf(BzBlocks.PILE_OF_POLLEN)) {
-            if(stateBelow.get(LAYERS) == 8) {
+    public void tick(BlockState blockState, ServerLevel serverWorld, BlockPos blockPos, Random random) {
+        BlockState stateBelow = serverWorld.getBlockState(blockPos.below());
+        if(stateBelow.is(BzBlocks.PILE_OF_POLLEN)) {
+            if(stateBelow.getValue(LAYERS) == 8) {
                 return;
             }
             else {
-                serverWorld.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 2);
-                stackPollen(stateBelow, serverWorld, blockPos.down(), blockState);
+                serverWorld.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 2);
+                stackPollen(stateBelow, serverWorld, blockPos.below(), blockState);
             }
         }
 
-        super.scheduledTick(blockState, serverWorld, blockPos, random);
+        super.tick(blockState, serverWorld, blockPos, random);
     }
 
     @Override
-    public void onBroken(WorldAccess world, BlockPos blockPos, BlockState blockState) {
-        if(world.isClient()) {
+    public void destroy(LevelAccessor world, BlockPos blockPos, BlockState blockState) {
+        if(world.isClientSide()) {
             for(int i = 0; i < 50; i++) {
                 spawnParticles(blockState, world, blockPos, world.getRandom(), true);
-                spawnParticles(world, Vec3d.ofCenter(blockPos), world.getRandom(), 0.055D, 0.0075D, 0);
+                spawnParticles(world, Vec3.atCenterOf(blockPos), world.getRandom(), 0.055D, 0.0075D, 0);
             }
         }
     }
@@ -212,25 +211,25 @@ public class PileOfPollen extends FallingBlock {
      * Slows all entities inside the block.
      */
     @Override
-    public void onEntityCollision(BlockState blockState, World world, BlockPos blockPos, Entity entity) {
+    public void entityInside(BlockState blockState, Level world, BlockPos blockPos, Entity entity) {
 
         // make falling block of this block stack the pollen or else destroy it
         if(entity instanceof FallingBlockEntity) {
             if(((FallingBlockEntity) entity).getBlockState().isAir())
                 return;
 
-            if(((FallingBlockEntity)entity).getBlockState().isOf(BzBlocks.PILE_OF_POLLEN)) {
+            if(((FallingBlockEntity)entity).getBlockState().is(BzBlocks.PILE_OF_POLLEN)) {
                 stackPollen(blockState, world, blockPos, ((FallingBlockEntity)entity).getBlockState());
                 entity.remove(Entity.RemovalReason.DISCARDED);
 
                 // Prevents the FallingBlock's checkInsideBlocks from triggering this
                 // method again for the pollen block we just set above our collision block.
-                ((FallingBlockEntityAccessor) entity).thebumblezone_setBlock(Blocks.AIR.getDefaultState());
+                ((FallingBlockEntityAccessor) entity).thebumblezone_setBlock(Blocks.AIR.defaultBlockState());
             }
             else {
-                world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 3);
-                if(world.isClient()) {
-                    for(int i = 0; i < blockState.get(LAYERS) * 30; i++){
+                world.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
+                if(world.isClientSide()) {
+                    for(int i = 0; i < blockState.getValue(LAYERS) * 30; i++){
                         spawnParticles(blockState, world, blockPos, world.random, true);
                     }
                 }
@@ -241,25 +240,25 @@ public class PileOfPollen extends FallingBlock {
         else if(entity.getType().equals(BzEntities.POLLEN_PUFF_ENTITY)){
             if(((PollenPuffEntity)entity).isConsumed()) return; // do not run this code if a block already was set.
 
-            stackPollen(blockState, world, blockPos, BzBlocks.PILE_OF_POLLEN.getDefaultState());
+            stackPollen(blockState, world, blockPos, BzBlocks.PILE_OF_POLLEN.defaultBlockState());
             entity.remove(Entity.RemovalReason.DISCARDED);
             ((PollenPuffEntity)entity).consumed();
 
-            if(world.isClient()){
+            if(world.isClientSide()){
                 for(int i = 0; i < 50; i++){
-                    spawnParticles(world, entity.getPos(), world.random, 0.055D, 0.0075D, 0);
+                    spawnParticles(world, entity.position(), world.random, 0.055D, 0.0075D, 0);
                 }
             }
         }
 
         // slows the entity and spawns particles
         else {
-            int layerValueMinusOne = blockState.get(LAYERS) - 1;
-            double speedReduction = (entity instanceof ProjectileEntity) ? 0.85f : 1 - layerValueMinusOne * 0.1D;
+            int layerValueMinusOne = blockState.getValue(LAYERS) - 1;
+            double speedReduction = (entity instanceof Projectile) ? 0.85f : 1 - layerValueMinusOne * 0.1D;
             double chance = 0.22f + layerValueMinusOne * 0.09f;
 
 
-            Vec3d deltaMovement = entity.getVelocity();
+            Vec3 deltaMovement = entity.getDeltaMovement();
             double newYDelta = deltaMovement.y;
             if(deltaMovement.y > 0) {
                 newYDelta *= (1f - layerValueMinusOne * 0.01f);
@@ -268,26 +267,26 @@ public class PileOfPollen extends FallingBlock {
                 newYDelta *= (0.84f - layerValueMinusOne * 0.03f);
             }
 
-            entity.setVelocity(new Vec3d(
+            entity.setDeltaMovement(new Vec3(
                     deltaMovement.x * speedReduction,
                     newYDelta,
                     deltaMovement.z * speedReduction));
 
-            double entitySpeed = entity.getVelocity().length();
+            double entitySpeed = entity.getDeltaMovement().length();
 
             // Need to multiply speed to avoid issues where tiny movement is seen as zero.
             if(entitySpeed > 0.00001D && world.random.nextFloat() < chance){
                 int particleNumber = (int) (entitySpeed / 0.0045D);
                 int particleStrength = (entity instanceof ItemEntity) ? Math.min(10, particleNumber / 3) : Math.min(20, particleNumber);
 
-                if(world.isClient()) {
+                if(world.isClientSide()) {
                     for(int i = 0; i < particleNumber; i++) {
                         if(particleNumber > 5) spawnParticles(blockState, world, blockPos, world.random, true);
 
                         spawnParticles(
                                 world,
-                                entity.getPos()
-                                        .add(entity.getVelocity().multiply(2D, 2D, 2D))
+                                entity.position()
+                                        .add(entity.getDeltaMovement().multiply(2D, 2D, 2D))
                                         .add(0, 0.75D, 0),
                                 world.random,
                                 0.006D * particleStrength,
@@ -296,11 +295,11 @@ public class PileOfPollen extends FallingBlock {
                     }
                 }
                 // Player and item entity runs this method on client side already so do not run it on server to reduce particle packet spam
-                else if (!(entity instanceof PlayerEntity || entity instanceof ItemEntity)){
+                else if (!(entity instanceof Player || entity instanceof ItemEntity)){
                     spawnParticlesServer(
                             world,
-                            entity.getPos()
-                                    .add(entity.getVelocity().multiply(2D, 2D, 2D))
+                            entity.position()
+                                    .add(entity.getDeltaMovement().multiply(2D, 2D, 2D))
                                     .add(0, 0.75D, 0),
                             world.random,
                             0.006D * particleStrength,
@@ -311,49 +310,49 @@ public class PileOfPollen extends FallingBlock {
             }
 
             // reduce pile of pollen to pollinate bee
-            if(entity instanceof BeeEntity && !((BeeEntity)entity).hasNectar() && BzEntityTags.POLLEN_PUFF_CAN_POLLINATE.contains(entity.getType())) {
+            if(entity instanceof Bee && !((Bee)entity).hasNectar() && BzEntityTags.POLLEN_PUFF_CAN_POLLINATE.contains(entity.getType())) {
                 ((BeeEntityInvoker)entity).thebumblezone_callSetHasNectar(true);
-                ((BeeEntity)entity).resetPollinationTicks();
+                ((Bee)entity).resetTicksWithoutNectarSinceExitingHive();
                 if(layerValueMinusOne == 0) {
-                    world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 3);
+                    world.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
                 }
                 else {
-                    world.setBlockState(blockPos, blockState.with(LAYERS, layerValueMinusOne), 3);
+                    world.setBlock(blockPos, blockState.setValue(LAYERS, layerValueMinusOne), 3);
                 }
             }
         }
 
-        if(entity instanceof PandaEntity pandaEntity) {
+        if(entity instanceof Panda pandaEntity) {
             pandaSneezing(pandaEntity);
         }
     }
 
-    public static void stackPollen(BlockState blockState, World world, BlockPos blockPos, BlockState pollonToStack) {
+    public static void stackPollen(BlockState blockState, Level world, BlockPos blockPos, BlockState pollonToStack) {
         BlockState lastSetState = null;
-        int initialLayerValue = blockState.get(LAYERS);
-        int layersToAdd = pollonToStack.get(LAYERS);
+        int initialLayerValue = blockState.getValue(LAYERS);
+        int layersToAdd = pollonToStack.getValue(LAYERS);
 
         // Fill up current pile
         if(initialLayerValue < 8){
             int layerToMax = (8 - initialLayerValue);
-            lastSetState = blockState.with(LAYERS, initialLayerValue + Math.min(layerToMax, layersToAdd));
-            if(!world.isClient()) world.setBlockState(blockPos, lastSetState, 3);
+            lastSetState = blockState.setValue(LAYERS, initialLayerValue + Math.min(layerToMax, layersToAdd));
+            if(!world.isClientSide()) world.setBlock(blockPos, lastSetState, 3);
             layersToAdd -= layerToMax;
         }
 
-        BlockState aboveState = world.getBlockState(blockPos.up());
-        if(layersToAdd > 0 && aboveState.isOf(BzBlocks.PILE_OF_POLLEN)) {
-            stackPollen(aboveState, world, blockPos.up(), blockState.with(LAYERS, layersToAdd));
+        BlockState aboveState = world.getBlockState(blockPos.above());
+        if(layersToAdd > 0 && aboveState.is(BzBlocks.PILE_OF_POLLEN)) {
+            stackPollen(aboveState, world, blockPos.above(), blockState.setValue(LAYERS, layersToAdd));
         }
         else {
             // Stack on top of this pile
             if(layersToAdd > 0 && aboveState.isAir()) {
-                lastSetState = blockState.with(LAYERS, layersToAdd);
-                if(!world.isClient()) world.setBlockState(blockPos.up(), blockState.with(LAYERS, layersToAdd), 3);
+                lastSetState = blockState.setValue(LAYERS, layersToAdd);
+                if(!world.isClientSide()) world.setBlock(blockPos.above(), blockState.setValue(LAYERS, layersToAdd), 3);
             }
 
             // Particles!
-            if(world.isClient() && lastSetState != null) {
+            if(world.isClientSide() && lastSetState != null) {
                 for(int i = 0; i < 40; i++) {
                     spawnParticles(lastSetState, world, blockPos, world.random, true);
                 }
@@ -361,39 +360,39 @@ public class PileOfPollen extends FallingBlock {
         }
     }
 
-    public static void pandaSneezing(PandaEntity pandaEntity) {
-        if(!pandaEntity.world.isClient()) {
-            if(pandaEntity.getRandom().nextFloat() < 0.005f && pandaEntity.world.getBlockState(pandaEntity.getBlockPos()).isOf(BzBlocks.PILE_OF_POLLEN)) {
-                ((PandaEntityInvoker)pandaEntity).thebumblezone_callSneeze();
+    public static void pandaSneezing(Panda pandaEntity) {
+        if(!pandaEntity.level.isClientSide()) {
+            if(pandaEntity.getRandom().nextFloat() < 0.005f && pandaEntity.level.getBlockState(pandaEntity.blockPosition()).is(BzBlocks.PILE_OF_POLLEN)) {
+                pandaEntity.sneeze(true);
             }
         }
     }
 
     // Rarely spawn particle on its own
-    public void randomDisplayTick(BlockState blockState, World world, BlockPos blockPos, Random random) {
-        int layerValue = blockState.get(LAYERS);
+    public void animateTick(BlockState blockState, Level world, BlockPos blockPos, Random random) {
+        int layerValue = blockState.getValue(LAYERS);
         double chance = 0.015f + layerValue * 0.008f;
         if(random.nextFloat() < chance) spawnParticles(blockState, world, blockPos, random, false);
     }
 
     @Override
-    public int getColor(BlockState blockState, BlockView blockReader, BlockPos blockPos) {
+    public int getDustColor(BlockState blockState, BlockGetter blockReader, BlockPos blockPos) {
         return 16755200;
     }
 
-    public static void spawnParticles(BlockState blockState, WorldAccess world, BlockPos blockPos, Random random, boolean disturbed) {
+    public static void spawnParticles(BlockState blockState, LevelAccessor world, BlockPos blockPos, Random random, boolean disturbed) {
         for(Direction direction : Direction.values()) {
-            BlockPos blockpos = blockPos.offset(direction);
-            if (!world.getBlockState(blockpos).isOpaqueFullCube(world, blockpos)) {
+            BlockPos blockpos = blockPos.relative(direction);
+            if (!world.getBlockState(blockpos).isSolidRender(world, blockpos)) {
                 double speedYModifier = disturbed ? 0.05D : 0.005D;
                 double speedXZModifier = disturbed ? 0.03D : 0.005D;
-                VoxelShape currentShape = SHAPE_BY_LAYER[blockState.get(LAYERS)];
-                double yHeight = currentShape.getMax(Direction.Axis.Y) - currentShape.getMin(Direction.Axis.Y);
+                VoxelShape currentShape = SHAPE_BY_LAYER[blockState.getValue(LAYERS)];
+                double yHeight = currentShape.max(Direction.Axis.Y) - currentShape.min(Direction.Axis.Y);
 
                 Direction.Axis directionAxis = direction.getAxis();
-                double xOffset = directionAxis == Direction.Axis.X ? 0.5D + 0.5625D * (double)direction.getOffsetX() : (double)random.nextFloat();
-                double yOffset = directionAxis == Direction.Axis.Y ? yHeight * (double)direction.getOffsetY() : (double)random.nextFloat() * yHeight;
-                double zOffset = directionAxis == Direction.Axis.Z ? 0.5D + 0.5625D * (double)direction.getOffsetZ() : (double)random.nextFloat();
+                double xOffset = directionAxis == Direction.Axis.X ? 0.5D + 0.5625D * (double)direction.getStepX() : (double)random.nextFloat();
+                double yOffset = directionAxis == Direction.Axis.Y ? yHeight * (double)direction.getStepY() : (double)random.nextFloat() * yHeight;
+                double zOffset = directionAxis == Direction.Axis.Z ? 0.5D + 0.5625D * (double)direction.getStepZ() : (double)random.nextFloat();
 
                 world.addParticle(
                         BzParticles.POLLEN,
@@ -409,33 +408,33 @@ public class PileOfPollen extends FallingBlock {
         }
     }
 
-    public static void spawnParticles(WorldAccess world, Vec3d location, Random random, double speedXZModifier, double speedYModifier, double initYSpeed) {
+    public static void spawnParticles(LevelAccessor world, Vec3 location, Random random, double speedXZModifier, double speedYModifier, double initYSpeed) {
         double xOffset = (random.nextFloat() * 0.3) - 0.15;
         double yOffset = (random.nextFloat() * 0.3) - 0.15;
         double zOffset = (random.nextFloat() * 0.3) - 0.15;
 
         world.addParticle(
                 BzParticles.POLLEN,
-                location.getX() + xOffset,
-                location.getY() + yOffset,
-                location.getZ() + zOffset,
+                location.x() + xOffset,
+                location.y() + yOffset,
+                location.z() + zOffset,
                 random.nextGaussian() * speedXZModifier,
                 (random.nextGaussian() * speedYModifier) + initYSpeed,
                 random.nextGaussian() * speedXZModifier);
     }
 
-    public static void spawnParticlesServer(WorldAccess world, Vec3d location, Random random, double speedXZModifier, double speedYModifier, double initYSpeed, int numberOfParticles) {
-        if(world.isClient()) return;
+    public static void spawnParticlesServer(LevelAccessor world, Vec3 location, Random random, double speedXZModifier, double speedYModifier, double initYSpeed, int numberOfParticles) {
+        if(world.isClientSide()) return;
 
         double xOffset = (random.nextFloat() * 0.3) - 0.15;
         double yOffset = (random.nextFloat() * 0.3) - 0.15;
         double zOffset = (random.nextFloat() * 0.3) - 0.15;
 
-        ((ServerWorld)world).spawnParticles(
+        ((ServerLevel)world).sendParticles(
                 BzParticles.POLLEN,
-                location.getX() + xOffset,
-                location.getY() + yOffset,
-                location.getZ() + zOffset,
+                location.x() + xOffset,
+                location.y() + yOffset,
+                location.z() + zOffset,
                 numberOfParticles,
                 random.nextGaussian() * speedXZModifier,
                 (random.nextGaussian() * speedYModifier) + initYSpeed,

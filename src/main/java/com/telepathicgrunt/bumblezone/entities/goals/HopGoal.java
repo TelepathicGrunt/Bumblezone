@@ -2,7 +2,7 @@ package com.telepathicgrunt.bumblezone.entities.goals;
 
 import com.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
-import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
 
@@ -11,14 +11,14 @@ public class HopGoal extends Goal {
 
     public HopGoal(HoneySlimeEntity slimeIn) {
         this.slime = slimeIn;
-        this.setControls(EnumSet.of(Goal.Control.JUMP, Goal.Control.MOVE));
+        this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
     }
 
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
-    public boolean canStart() {
-        return !this.slime.hasVehicle() && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
+    public boolean canUse() {
+        return !this.slime.isPassenger() && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
     }
 
     /**

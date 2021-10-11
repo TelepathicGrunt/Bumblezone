@@ -2,62 +2,62 @@ package com.telepathicgrunt.bumblezone.world.structures;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.Bumblezone;
-import net.minecraft.block.BlockState;
-import net.minecraft.structure.MarginedStructureStart;
-import net.minecraft.structure.PoolStructurePiece;
-import net.minecraft.structure.StructureManager;
-import net.minecraft.structure.StructurePiece;
-import net.minecraft.structure.pool.StructurePoolBasedGenerator;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3i;
-import net.minecraft.util.registry.DynamicRegistryManager;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.HeightLimitView;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.source.BiomeSource;
-import net.minecraft.world.gen.ChunkRandom;
-import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.chunk.VerticalBlockSample;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.StructureFeature;
-import net.minecraft.world.gen.feature.StructurePoolFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.Vec3i;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.LevelHeightAccessor;
+import net.minecraft.world.level.NoiseColumn;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSource;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.structures.JigsawPlacement;
+import net.minecraft.world.level.levelgen.structure.NoiseAffectingStructureStart;
+import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
-public class HoneyCaveRoomStructure extends StructureFeature<DefaultFeatureConfig> {
+public class HoneyCaveRoomStructure extends StructureFeature<NoneFeatureConfiguration> {
 
-    public HoneyCaveRoomStructure(Codec<DefaultFeatureConfig> codec) {
+    public HoneyCaveRoomStructure(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
     }
 
     @Override
-    public StructureStartFactory<DefaultFeatureConfig> getStructureStartFactory() {
+    public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
         return Start::new;
     }
 
     @Override
-    public boolean shouldStartAt(ChunkGenerator chunkGenerator, BiomeSource biomeProvider, long seed, ChunkRandom random, ChunkPos chunkPos1, Biome biome, ChunkPos chunkPos2, DefaultFeatureConfig config, HeightLimitView heightLimitView) {
+    public boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeProvider, long seed, WorldgenRandom random, ChunkPos chunkPos1, Biome biome, ChunkPos chunkPos2, NoneFeatureConfiguration config, LevelHeightAccessor heightLimitView) {
         BlockPos centerPos = new BlockPos(chunkPos1.x, 0, chunkPos1.z);
 
-        ChunkRandom positionedRandom = new ChunkRandom(seed + (chunkPos1.x * (chunkPos1.z * 17L)));
-        int height = chunkGenerator.getSeaLevel() + positionedRandom.nextInt(Math.max(chunkGenerator.getWorldHeight() - (chunkGenerator.getSeaLevel() + 50), 1));
-        centerPos = centerPos.up(height);
+        WorldgenRandom positionedRandom = new WorldgenRandom(seed + (chunkPos1.x * (chunkPos1.z * 17L)));
+        int height = chunkGenerator.getSeaLevel() + positionedRandom.nextInt(Math.max(chunkGenerator.getGenDepth() - (chunkGenerator.getSeaLevel() + 50), 1));
+        centerPos = centerPos.above(height);
         return validSpot(chunkGenerator, centerPos, heightLimitView);
     }
 
-    private static boolean validSpot(ChunkGenerator chunkGenerator, BlockPos centerPos, HeightLimitView heightLimitView) {
-        BlockPos.Mutable mutable = new BlockPos.Mutable();
+    private static boolean validSpot(ChunkGenerator chunkGenerator, BlockPos centerPos, LevelHeightAccessor heightLimitView) {
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         int radius = 24;
         for(int x = -radius; x <= radius; x += radius) {
             for(int z = -radius; z <= radius; z += radius) {
                 mutable.set(centerPos).move(x, 0, z);
-                VerticalBlockSample columnOfBlocks = chunkGenerator.getColumnSample(mutable.getX(), mutable.getZ(), heightLimitView);
+                NoiseColumn columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView);
                 moveMutable(mutable, Direction.UP, 0, centerPos);
-                BlockState state = columnOfBlocks.getState(mutable);
+                BlockState state = columnOfBlocks.getBlockState(mutable);
                 moveMutable(mutable, Direction.UP, 15, centerPos);
-                BlockState aboveState = columnOfBlocks.getState(mutable);
+                BlockState aboveState = columnOfBlocks.getBlockState(mutable);
                 if(state.isAir() || !state.getFluidState().isEmpty() ||
                     aboveState.isAir() || !aboveState.getFluidState().isEmpty())
                 {
@@ -71,7 +71,7 @@ public class HoneyCaveRoomStructure extends StructureFeature<DefaultFeatureConfi
 
     // Takes into account how bumblezone's terrain is bottom half reflected across top half.
     // chunkGenerator.getColumnSample returns column of blocks as if the terrain wasn't mirrored.
-    private static void moveMutable(BlockPos.Mutable mutable, Direction direction, int amount, BlockPos originalPos) {
+    private static void moveMutable(BlockPos.MutableBlockPos mutable, Direction direction, int amount, BlockPos originalPos) {
         if(originalPos.getY() > 128) {
             if(mutable.getY() > 128) {
                 mutable.move(Direction.DOWN, (mutable.getY() - 128) * 2);
@@ -87,33 +87,33 @@ public class HoneyCaveRoomStructure extends StructureFeature<DefaultFeatureConfi
     }
 
     @Override
-    public GenerationStep.Feature getGenerationStep() {
-        return GenerationStep.Feature.LOCAL_MODIFICATIONS;
+    public GenerationStep.Decoration step() {
+        return GenerationStep.Decoration.LOCAL_MODIFICATIONS;
     }
 
     /**
      * Handles calling up the structure's pieces class and height that structure will spawn at.
      */
-    public static class Start extends MarginedStructureStart<DefaultFeatureConfig> {
+    public static class Start extends NoiseAffectingStructureStart<NoneFeatureConfiguration> {
 
         private final long seed;
 
-        public Start(StructureFeature<DefaultFeatureConfig> structureIn, ChunkPos pos, int referenceIn, long seedIn) {
+        public Start(StructureFeature<NoneFeatureConfiguration> structureIn, ChunkPos pos, int referenceIn, long seedIn) {
             super(structureIn, pos, referenceIn, seedIn);
             seed = seedIn;
         }
 
         @Override
-        public void init(DynamicRegistryManager dynamicRegistryManager, ChunkGenerator chunkGenerator, StructureManager templateManagerIn, ChunkPos pos, Biome biomeIn, DefaultFeatureConfig config, HeightLimitView heightLimitView) {
+        public void generatePieces(RegistryAccess dynamicRegistryManager, ChunkGenerator chunkGenerator, StructureManager templateManagerIn, ChunkPos pos, Biome biomeIn, NoneFeatureConfiguration config, LevelHeightAccessor heightLimitView) {
 
-            ChunkRandom positionedRandom = new ChunkRandom(seed + (pos.x * (pos.z * 17L)));
-            int height = chunkGenerator.getSeaLevel() + positionedRandom.nextInt(Math.max(chunkGenerator.getWorldHeight() - (chunkGenerator.getSeaLevel() + 50), 1));
-            BlockPos centerPos = new BlockPos(pos.getStartX(), height, pos.getStartZ());
+            WorldgenRandom positionedRandom = new WorldgenRandom(seed + (pos.x * (pos.z * 17L)));
+            int height = chunkGenerator.getSeaLevel() + positionedRandom.nextInt(Math.max(chunkGenerator.getGenDepth() - (chunkGenerator.getSeaLevel() + 50), 1));
+            BlockPos centerPos = new BlockPos(pos.getMinBlockX(), height, pos.getMinBlockZ());
 
-            StructurePoolBasedGenerator.generate(
+            JigsawPlacement.addPieces(
                     dynamicRegistryManager,
-                    new StructurePoolFeatureConfig(() -> dynamicRegistryManager.get(Registry.STRUCTURE_POOL_KEY).get(new Identifier(Bumblezone.MODID, "honey_cave_room")), 12),
-                    PoolStructurePiece::new,
+                    new JigsawConfiguration(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(new ResourceLocation(Bumblezone.MODID, "honey_cave_room")), 12),
+                    PoolElementStructurePiece::new,
                     chunkGenerator,
                     templateManagerIn,
                     centerPos,
@@ -124,16 +124,16 @@ public class HoneyCaveRoomStructure extends StructureFeature<DefaultFeatureConfi
                     heightLimitView);
 
 
-            Vec3i structureCenter = this.children.get(0).getBoundingBox().getCenter();
+            Vec3i structureCenter = this.pieces.get(0).getBoundingBox().getCenter();
             int xOffset = centerPos.getX() - structureCenter.getX();
             int zOffset = centerPos.getZ() - structureCenter.getZ();
-            for(StructurePiece structurePiece : this.children){
+            for(StructurePiece structurePiece : this.pieces){
                 // centers the whole structure to structureCenter
-                structurePiece.translate(xOffset, 0, zOffset);
+                structurePiece.move(xOffset, 0, zOffset);
             }
 
             // Sets the bounds of the structure once you are finished.
-            this.calculateBoundingBox();
+            this.createBoundingBox();
         }
 
     }
