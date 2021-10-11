@@ -1,19 +1,16 @@
 package com.telepathicgrunt.bumblezone.entities.mobs;
 
-import com.mojang.math.Vector3d;
 import com.telepathicgrunt.bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.bumblezone.entities.goals.BeehemothAIRide;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
-import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -442,18 +439,18 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     }
 
     static class MoveHelperController extends MoveControl {
-        private final BeehemothEntity parentEntity;
+        private final BeehemothEntity beehemothEntity;
 
-        public MoveHelperController(BeehemothEntity sunbird) {
-            super(sunbird);
-            this.parentEntity = sunbird;
+        public MoveHelperController(BeehemothEntity beehemothEntity) {
+            super(beehemothEntity);
+            this.beehemothEntity = beehemothEntity;
         }
 
         public void tick() {
             if (this.operation == Operation.STRAFE) {
-                Vec3 vector3d = new Vec3(this.wantedX - parentEntity.getX(), this.wantedY - parentEntity.getY(), this.wantedZ - parentEntity.getZ());
+                Vec3 vector3d = new Vec3(this.wantedX - beehemothEntity.getX(), this.wantedY - beehemothEntity.getY(), this.wantedZ - beehemothEntity.getZ());
                 double d0 = vector3d.length();
-                parentEntity.setDeltaMovement(parentEntity.getDeltaMovement().add(0, vector3d.scale(this.speedModifier * 0.05D / d0).y(), 0));
+                beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().add(0, vector3d.scale(this.speedModifier * 0.05D / d0).y(), 0));
                 float f = (float) this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED);
                 float f1 = (float) this.speedModifier * f;
                 this.strafeForwards = 1.0F;
@@ -464,26 +461,27 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                 this.mob.setXxa(this.strafeRight);
                 this.operation = MoveControl.Operation.WAIT;
             } else if (this.operation == MoveControl.Operation.MOVE_TO) {
-                Vec3 vector3d = new Vec3(this.wantedX - parentEntity.getX(), this.wantedY - parentEntity.getY(), this.wantedZ - parentEntity.getZ());
+                Vec3 vector3d = new Vec3(this.wantedX - beehemothEntity.getX(), this.wantedY - beehemothEntity.getY(), this.wantedZ - beehemothEntity.getZ());
                 double d0 = vector3d.length();
-                if (d0 < parentEntity.getBoundingBox().getSize()) {
+                if (d0 < beehemothEntity.getBoundingBox().getSize()) {
                     this.operation = MoveControl.Operation.WAIT;
-                    parentEntity.setDeltaMovement(parentEntity.getDeltaMovement().scale(0.5D));
+                    beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().scale(0.5D));
                 } else {
                     double localSpeed = this.speedModifier;
-                    if (parentEntity.isVehicle()) {
+                    if (beehemothEntity.isVehicle()) {
                         localSpeed *= 1.5D;
                     }
-                    parentEntity.setDeltaMovement(parentEntity.getDeltaMovement().add(vector3d.scale(localSpeed * 0.005D / d0)));
-                    if (parentEntity.getTarget() == null) {
-                        Vec3 vector3d1 = parentEntity.getDeltaMovement();
-                        parentEntity.setYRot(parentEntity.getYRot() - ((float) Mth.atan2(vector3d1.x, vector3d1.z)) * (180F / (float) Math.PI));
-                        parentEntity.yBodyRot = parentEntity.getYRot();
+                    beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().add(vector3d.scale(localSpeed * 0.005D / d0)));
+                    if (beehemothEntity.getTarget() == null) {
+                        double d2 = this.wantedX - beehemothEntity.getX();
+                        double d1 = this.wantedZ - beehemothEntity.getZ();
+                        float newRot = (float)(-Mth.atan2(d2, d1) * (180F / (float) Math.PI));
+                        beehemothEntity.setYRot(this.rotlerp(beehemothEntity.getYRot(), newRot, 10.0F));
                     } else {
-                        double d2 = parentEntity.getTarget().getX() - parentEntity.getX();
-                        double d1 = parentEntity.getTarget().getZ() - parentEntity.getZ();
-                        parentEntity.setYRot(parentEntity.getYRot() - ((float) Mth.atan2(d2, d1)) * (180F / (float) Math.PI));
-                        parentEntity.yBodyRot = parentEntity.getYRot();
+                        double d2 = beehemothEntity.getTarget().getX() - beehemothEntity.getX();
+                        double d1 = beehemothEntity.getTarget().getZ() - beehemothEntity.getZ();
+                        float newRot = (float)(-Mth.atan2(d1, d2) * (180F / (float) Math.PI));
+                        beehemothEntity.setYRot(this.rotlerp(beehemothEntity.getYRot(), newRot, 10.0F));
                     }
                 }
 

@@ -36,7 +36,7 @@ public class PlayerEntityInteractionMixin {
     }
 
     // makes Comb Cutter cut all blocks that have "comb" in the name faster.
-    @Inject(method = "getBlockBreakingSpeed(Lnet/minecraft/block/BlockState;)F",
+    @Inject(method = "getDestroySpeed(Lnet/minecraft/world/level/block/state/BlockState;)F",
             at = @At(value = "RETURN"), cancellable = true)
     private void thebumblezone_blockBreakingSpeed(BlockState block, CallbackInfoReturnable<Float> cir) {
         if(BzEnchantments.COMB_CUTTER.getTargetBlocks().contains(block.getBlock())){

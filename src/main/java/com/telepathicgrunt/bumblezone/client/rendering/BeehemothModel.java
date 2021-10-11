@@ -51,27 +51,27 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
 
     public BeehemothModel(ModelPart modelPart) {
         this.ROOT = modelPart.getChild("ROOT");
-        this.FACE = modelPart.getChild("FACE");
-        this.CROWN = modelPart.getChild("CROWN");
-        this.ANTENNA_LEFT = modelPart.getChild("ANTENNA_LEFT");
-        this.ANTENNA_RIGHT = modelPart.getChild("ANTENNA_RIGHT");
-        this.THORAX = modelPart.getChild("THORAX");
-        this.LEG_FRONTLEFT = modelPart.getChild("LEG_FRONTLEFT");
-        this.KneeFrontLeftCube_r1 = modelPart.getChild("KneeFrontLeftCube_r1");
-        this.LEG_MIDLEFT = modelPart.getChild("LEG_MIDLEFT");
-        this.KneeMidLeftCube_r1 = modelPart.getChild("KneeMidLeftCube_r1");
-        this.LEG_REARLEFT = modelPart.getChild("LEG_REARLEFT");
-        this.KneeRearLeftCube_r1 = modelPart.getChild("KneeRearLeftCube_r1");
-        this.LEG_FRONTRIGHT = modelPart.getChild("LEG_FRONTRIGHT");
-        this.KneeFrontRightCube_r1 = modelPart.getChild("KneeFrontRightCube_r1");
-        this.LEG_MIDRIGHT = modelPart.getChild("LEG_MIDRIGHT");
-        this.KneeMidRightCube_r1 = modelPart.getChild("KneeMidRightCube_r1");
-        this.LEG_REARRIGHT = modelPart.getChild("LEG_REARRIGHT");
-        this.KneeRearRightCube_r1 = modelPart.getChild("KneeRearRightCube_r1");
-        this.WING_LEFT = modelPart.getChild("WING_LEFT");
-        this.WING_RIGHT = modelPart.getChild("WING_RIGHT");
-        this.ABDOMEN = modelPart.getChild("ABDOMEN");
-        this.SADDLE = modelPart.getChild("SADDLE");
+        this.FACE = this.ROOT.getChild("FACE");
+        this.CROWN = this.FACE.getChild("CROWN");
+        this.ANTENNA_LEFT = this.FACE.getChild("ANTENNA_LEFT");
+        this.ANTENNA_RIGHT = this.FACE.getChild("ANTENNA_RIGHT");
+        this.THORAX = this.ROOT.getChild("THORAX");
+        this.LEG_FRONTLEFT = this.THORAX.getChild("LEG_FRONTLEFT");
+        this.KneeFrontLeftCube_r1 = this.LEG_FRONTLEFT.getChild("KNEE_FRONTLEFT").getChild("KneeFrontLeftCube_r1");
+        this.LEG_MIDLEFT = this.THORAX.getChild("LEG_MIDLEFT");
+        this.KneeMidLeftCube_r1 = this.LEG_MIDLEFT.getChild("KNEE_MIDLEFT").getChild("KneeMidLeftCube_r1");
+        this.LEG_REARLEFT = this.THORAX.getChild("LEG_REARLEFT");
+        this.KneeRearLeftCube_r1 = this.LEG_REARLEFT.getChild("KNEE_REARLEFT").getChild("KneeRearLeftCube_r1");
+        this.LEG_FRONTRIGHT = this.THORAX.getChild("LEG_FRONTRIGHT");
+        this.KneeFrontRightCube_r1 = this.LEG_FRONTRIGHT.getChild("KNEE_FRONTRIGHT").getChild("KneeFrontRightCube_r1");
+        this.LEG_MIDRIGHT = this.THORAX.getChild("LEG_MIDRIGHT");
+        this.KneeMidRightCube_r1 = this.LEG_MIDRIGHT.getChild("KNEE_MIDRIGHT").getChild("KneeMidRightCube_r1");
+        this.LEG_REARRIGHT = this.THORAX.getChild("LEG_REARRIGHT");
+        this.KneeRearRightCube_r1 = this.LEG_REARRIGHT.getChild("KNEE_REARRIGHT").getChild("KneeRearRightCube_r1");
+        this.WING_LEFT = this.THORAX.getChild("WING_LEFT");
+        this.WING_RIGHT = this.THORAX.getChild("WING_RIGHT");
+        this.ABDOMEN = this.ROOT.getChild("ABDOMEN");
+        this.SADDLE = this.ROOT.getChild("SADDLE");
     }
 
     public static LayerDefinition createBodyLayer() {
