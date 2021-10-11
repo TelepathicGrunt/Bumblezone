@@ -8,7 +8,6 @@ import com.telepathicgrunt.bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
-import java.util.Random;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
@@ -19,6 +18,8 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+
+import java.util.Random;
 
 public class HoneycombHoleProcessor extends StructureProcessor {
 

@@ -1,6 +1,5 @@
 package com.telepathicgrunt.bumblezone.entities.goals;
 
-import com.mojang.math.Vector3d;
 import com.telepathicgrunt.bumblezone.entities.mobs.BeehemothEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;

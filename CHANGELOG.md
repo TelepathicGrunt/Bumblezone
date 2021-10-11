@@ -3,6 +3,22 @@
 ##### Misc:
 Codebase is now remapped to use Mojmap instead of Yarn.
 
+##### Entities:
+Added Beehemoth, a giant ridable bee, from CarrierBees mod. Special thanks to the developers for allowing the new mob to have a home in The Bumblezone!
+The devs who made Beehemoth originally are: Aranaira, Alexthe666, and Nooby!
+ Beehemoth can be tamed with bee feeding items such as Honey Buckets or Honey Bottles and other honey stuff.
+ However, they will only follow you if you hold Honey Buckets.
+ If you feed them, you can eventually tame them, put on a saddle, and ride them!
+ The more you feed and ride them, the more friendship they get which makes them move faster.
+ When friendship is finally maxed out, Beehemoth becomes a Queen Beehemoth and can fly at maximum speed!
+ However, friendship will decrease if Beehemoth takes damage from any source and if they lose all friendship, they will become untamed and unhappy. :(
+
+##### Items:
+Texture for Honey Slime Spawn Egg is changed to be easier to identify. Especially for colorblind folks.
+
+##### Worldgen:
+Fixed some cases where candles in Bee Dungeons and Spider Infested Bee Dungeons can be floating.
+
 
 ### **(V.3.1.2 Changes) (1.17.1 Minecraft)**
 

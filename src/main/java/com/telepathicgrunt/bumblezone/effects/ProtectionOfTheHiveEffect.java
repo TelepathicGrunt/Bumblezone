@@ -2,8 +2,6 @@ package com.telepathicgrunt.bumblezone.effects;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
-import java.util.List;
-import java.util.UUID;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -12,6 +10,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
+
+import java.util.List;
+import java.util.UUID;
 
 
 public class ProtectionOfTheHiveEffect extends MobEffect {

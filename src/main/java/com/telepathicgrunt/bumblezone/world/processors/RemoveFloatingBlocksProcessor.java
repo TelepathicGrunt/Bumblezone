@@ -5,6 +5,7 @@ import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -33,16 +34,14 @@ public class RemoveFloatingBlocksProcessor extends StructureProcessor {
             cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state, false);
             BlockState aboveWorldState = worldView.getBlockState(mutable.move(Direction.UP));
 
-            // detects the first invalidly placed block before going into a while loop
-            if(!aboveWorldState.canSurvive(worldView, mutable)){
+            // detects the invalidly placed blocks
+            while(mutable.getY() < worldView.getHeight() && !aboveWorldState.canSurvive(worldView, mutable)){
                 cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state, false);
                 aboveWorldState = worldView.getBlockState(mutable.move(Direction.UP));
-
-                while(mutable.getY() < worldView.getHeight() && !aboveWorldState.canSurvive(worldView, mutable)){
-                    cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state, false);
-                    aboveWorldState = worldView.getBlockState(mutable.move(Direction.UP));
-                }
             }
+        }
+        else if(!structureBlockInfoWorld.state.canSurvive(worldView, mutable)) {
+            return new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos, Blocks.CAVE_AIR.defaultBlockState(), null);
         }
 
         return structureBlockInfoWorld;

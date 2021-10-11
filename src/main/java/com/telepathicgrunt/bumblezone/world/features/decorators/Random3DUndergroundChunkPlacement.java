@@ -1,15 +1,16 @@
 package com.telepathicgrunt.bumblezone.world.features.decorators;
 
 import com.mojang.serialization.Codec;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.stream.Stream;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.configurations.CountConfiguration;
 import net.minecraft.world.level.levelgen.placement.DecorationContext;
 import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
+
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.stream.Stream;
 
 public class Random3DUndergroundChunkPlacement extends FeatureDecorator<CountConfiguration> {
 

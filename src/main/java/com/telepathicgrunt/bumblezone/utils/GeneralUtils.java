@@ -2,10 +2,6 @@ package com.telepathicgrunt.bumblezone.utils;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
-import java.util.function.Supplier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -16,6 +12,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
+import java.util.function.Supplier;
 
 import static java.util.Objects.requireNonNull;
 

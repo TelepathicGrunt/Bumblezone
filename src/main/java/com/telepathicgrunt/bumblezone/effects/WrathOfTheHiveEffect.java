@@ -6,8 +6,6 @@ import com.telepathicgrunt.bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.bumblezone.modinit.BzPOI;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
-import java.util.List;
-import java.util.stream.Collectors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
@@ -27,6 +25,9 @@ import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class WrathOfTheHiveEffect extends MobEffect {

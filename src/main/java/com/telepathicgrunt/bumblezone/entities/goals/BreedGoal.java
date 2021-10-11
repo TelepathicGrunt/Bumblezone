@@ -2,8 +2,6 @@ package com.telepathicgrunt.bumblezone.entities.goals;
 
 import com.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
-import java.util.EnumSet;
-import java.util.List;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,6 +13,9 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+
+import java.util.EnumSet;
+import java.util.List;
 
 public class BreedGoal extends Goal {
     private static final TargetingConditions field_220689_d = (TargetingConditions.forCombat()).range(8.0D).ignoreLineOfSight();

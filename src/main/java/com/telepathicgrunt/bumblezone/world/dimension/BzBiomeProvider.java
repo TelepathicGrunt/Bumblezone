@@ -30,6 +30,7 @@ import net.minecraft.world.level.newbiome.context.LazyAreaContext;
 import net.minecraft.world.level.newbiome.layer.Layer;
 import net.minecraft.world.level.newbiome.layer.ZoomLayer;
 import net.minecraft.world.level.newbiome.layer.traits.AreaTransformer1;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

@@ -2,7 +2,6 @@ package com.telepathicgrunt.bumblezone.entities.goals;
 
 import com.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
-import java.util.EnumSet;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
@@ -10,6 +9,8 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+
+import java.util.EnumSet;
 
 public class TemptGoal extends Goal {
     private static final TargetingConditions ENTITY_PREDICATE = (TargetingConditions.forCombat()).range(10.0D).ignoreLineOfSight();

@@ -2,12 +2,13 @@ package com.telepathicgrunt.bumblezone.world.dimension.layer;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.world.dimension.BzBiomeProvider;
-import java.util.stream.IntStream;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
 import net.minecraft.world.level.newbiome.context.Context;
 import net.minecraft.world.level.newbiome.layer.traits.AreaTransformer0;
+
+import java.util.stream.IntStream;
 
 
 public enum BzBiomeLayer implements AreaTransformer0 {

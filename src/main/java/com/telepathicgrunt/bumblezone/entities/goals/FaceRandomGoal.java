@@ -2,9 +2,10 @@ package com.telepathicgrunt.bumblezone.entities.goals;
 
 import com.telepathicgrunt.bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
-import java.util.EnumSet;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.goal.Goal;
+
+import java.util.EnumSet;
 
 public class FaceRandomGoal extends Goal {
     private final HoneySlimeEntity slime;

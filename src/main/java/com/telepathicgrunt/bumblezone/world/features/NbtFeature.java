@@ -5,8 +5,6 @@ import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.mixin.world.StructureTemplateAccessor;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.bumblezone.world.features.configs.NbtFeatureConfig;
-import java.util.List;
-import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.ProcessorLists;
@@ -19,6 +17,9 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureMana
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+
+import java.util.List;
+import java.util.Optional;
 
 public class NbtFeature extends Feature<NbtFeatureConfig> {
 

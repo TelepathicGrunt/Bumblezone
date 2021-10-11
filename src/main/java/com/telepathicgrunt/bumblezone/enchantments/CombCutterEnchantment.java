@@ -2,8 +2,6 @@ package com.telepathicgrunt.bumblezone.enchantments;
 
 import com.telepathicgrunt.bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
-import java.util.HashSet;
-import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -18,6 +16,9 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.Block;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class CombCutterEnchantment extends Enchantment {
     private static final GeneralUtils.Lazy<Set<Block>> TARGET_BLOCKS = new GeneralUtils.Lazy<>();
