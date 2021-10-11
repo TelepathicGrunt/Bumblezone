@@ -1,3 +1,10 @@
+### **(V.3.2.2 Changes) (1.17.1 Minecraft)**
+
+##### Blocks:
+Fixed collision on Sticky Honey Residue and Sticky Honey Redstone being backwards.
+ Was an error I missed from when I switched this project to Mojmap.
+
+
 ### **(V.3.2.1 Changes) (1.17.1 Minecraft)**
 
 ##### Lang:
