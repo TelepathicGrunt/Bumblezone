@@ -1,3 +1,9 @@
+### **(V.3.2.3 Changes) (1.17.1 Minecraft)**
+
+##### Lang:
+Updated ru_ru.json translations. Thank you Tkhakiro!
+
+
 ### **(V.3.2.2 Changes) (1.17.1 Minecraft)**
 
 ##### Blocks:
