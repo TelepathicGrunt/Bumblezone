@@ -23,8 +23,8 @@
  "item.the_bumblezone.sugar_water_bottle": "Бутылочка сахарной воды",
  "item.the_bumblezone.honey_crystal_shield": "Щит из медовых кристаллов",
  "item.the_bumblezone.honey_crystal_shield.level_tooltip": "Уровень щита",
- "item.the_bumblezone.honey_slime_spawn_egg": "Яйцо призыва медовый слизень",
- "item.the_bumblezone.beehemoth_spawn_egg": "Beehemoth Spawn Egg",
+ "item.the_bumblezone.honey_slime_spawn_egg": "Яйцо призыва медового слизня",
+ "item.the_bumblezone.beehemoth_spawn_egg": "Яйцо призыва Гиганской пчелы",
  "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov": "пластинка",
  "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov.desc": "Rimsky Korsakov - Flight of the Bumblebee",
  "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy": "пластинка",
@@ -33,8 +33,8 @@
  "item.the_bumblezone.honey_bucket": "Ведро мёда",
 
  "entity.the_bumblezone.honey_slime": "Медовый слизень",
- "entity.the_bumblezone.beehemoth" : "Beehemoth",
- "entity.the_bumblezone.beehemoth_queen" : "Queen Beehemoth",
+ "entity.the_bumblezone.beehemoth": "Гиганская пчела",
+ "entity.the_bumblezone.beehemoth_queen": "Королевская гиганская пчела",
  "entity.the_bumblezone.pollen_puff" : "Пыльца",
 
  "enchantment.the_bumblezone.comb_cutter": "Расческа для резки",
@@ -49,8 +49,8 @@
  "effect.the_bumblezone.wrath_of_the_hive": "Гнев улья",
  "effect.the_bumblezone.protection_of_the_hive": "Защита улья",
 
- "subtitles.the_bumblezone.behemoth.hurt": "Beehemoth hurt",
- "subtitles.the_bumblezone.behemoth.dies": "Beehemoth died",
+ "subtitles.the_bumblezone.behemoth.hurt": "Гиганской пчеле больно",
+ "subtitles.the_bumblezone.behemoth.dies": "Гиганская пчела умерла",
 
  "text.autoconfig.the_bumblezone-main.title": "The Bumblezone Configs",
  "text.autoconfig.the_bumblezone-main.category.dungeons": "Dungeons",
