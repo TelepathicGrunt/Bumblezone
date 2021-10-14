@@ -2,6 +2,7 @@
 
 ##### Entities:
 Beehemoth speed can not be changed by config in the world's serverconfig folder in the_bumblezone-general.toml
+ Base speed for Beehemoth was slightly buffed.
 
 Holding down Space (jump button) while riding Beehemoth will make the bee fly upward. 
 

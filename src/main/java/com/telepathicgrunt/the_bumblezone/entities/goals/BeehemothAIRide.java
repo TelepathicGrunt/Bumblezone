@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.LivingEntityAccessor;
 import net.minecraft.entity.LivingEntity;
@@ -12,12 +13,10 @@ import java.util.EnumSet;
 public class BeehemothAIRide extends Goal {
     private final BeehemothEntity beehemothEntity;
     private LivingEntity player;
-    private final double speed;
     private double currentSpeed;
 
-    public BeehemothAIRide(BeehemothEntity beehemothEntity, double speed) {
+    public BeehemothAIRide(BeehemothEntity beehemothEntity) {
         this.beehemothEntity = beehemothEntity;
-        this.speed = speed;
         this.setFlags(EnumSet.of(Flag.MOVE));
     }
 
@@ -38,7 +37,7 @@ public class BeehemothAIRide extends Goal {
     @Override
     public void tick() {
         float speedModifier = beehemothEntity.isQueen() ? 3f : 1.0f;
-        speedModifier += (beehemothEntity.getFriendship() / 385f);
+        speedModifier += (beehemothEntity.getFriendship() / 400f);
         double x = beehemothEntity.getX();
         double y = beehemothEntity.getY();
         double z = beehemothEntity.getZ();
@@ -55,13 +54,15 @@ public class BeehemothAIRide extends Goal {
         if(((LivingEntityAccessor)player).isJumping()) {
             y += 8;
             if(player.zza == 0) {
-                x = beehemothEntity.getX();
-                z = beehemothEntity.getZ();
+                x = beehemothEntity.getX() + lookVec.x * 0.00001D;
+                z = beehemothEntity.getZ() + lookVec.z * 0.00001D;
             }
         }
 
         if (player.zza != 0 || ((LivingEntityAccessor)player).isJumping()) {
-            currentSpeed = Math.min(speed * speedModifier, currentSpeed + 0.3f);
+            currentSpeed = Math.min(
+                    Bumblezone.BzGeneralConfig.beeheemothSpeed.get() * speedModifier,
+                    currentSpeed + 0.3f);
         }
         else {
             currentSpeed = Math.max(0, currentSpeed - 0.25f);
