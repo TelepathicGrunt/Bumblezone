@@ -1,9 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothAIRide;
-import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.entities.goals.RandomFlyGoal;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -16,7 +15,6 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -56,7 +54,6 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-import java.util.EnumSet;
 import java.util.Random;
 
 public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
@@ -65,8 +62,6 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     private static final DataParameter<Integer> FRIENDSHIP = EntityDataManager.defineId(BeehemothEntity.class, DataSerializers.INT);
 
     private boolean stopWandering = false;
-    private final boolean hasItemTarget = false;
-
     public float offset1, offset2, offset3, offset4, offset5, offset6;
 
     public BeehemothEntity(EntityType<? extends BeehemothEntity> type, World world) {
@@ -112,6 +107,10 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
 
     public void setQueen(boolean queen) {
         this.entityData.set(QUEEN, queen);
+    }
+
+    public boolean isStopWandering() {
+        return stopWandering;
     }
 
     public int getFriendship() {
@@ -213,7 +212,8 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         if (this.level.isClientSide) {
             if (this.isTame() && this.isOwnedBy(player)) {
                 return ActionResultType.SUCCESS;
-            } else {
+            }
+            else {
                 return !(this.getHealth() < this.getMaxHealth()) && this.isTame() ? ActionResultType.PASS : ActionResultType.SUCCESS;
             }
         }
@@ -338,8 +338,7 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     }
 
     private void spawnMadParticles() {
-        if (!this.level.isClientSide())
-        {
+        if (!this.level.isClientSide()) {
             ((ServerWorld) this.level).sendParticles(
                     ParticleTypes.ANGRY_VILLAGER,
                     this.getX(),
@@ -430,16 +429,6 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         }
     }
 
-    private BlockPos getGroundPosition(BlockPos radialPos) {
-        while (radialPos.getY() > 1 && level.isEmptyBlock(radialPos)) {
-            radialPos = radialPos.below();
-        }
-        if (radialPos.getY() <= 1) {
-            return new BlockPos(radialPos.getX(), level.getSeaLevel(), radialPos.getZ());
-        }
-        return radialPos;
-    }
-
     @Override
     public AgeableEntity getBreedOffspring(ServerWorld serverWorld, AgeableEntity ageableEntity) {
         return null;
@@ -473,13 +462,15 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
                 this.mob.setZza(this.strafeForwards);
                 this.mob.setXxa(this.strafeRight);
                 this.operation = MovementController.Action.WAIT;
-            } else if (this.operation == MovementController.Action.MOVE_TO) {
+            }
+            else if (this.operation == MovementController.Action.MOVE_TO) {
                 Vector3d vector3d = new Vector3d(this.wantedX - beehemothEntity.getX(), this.wantedY - beehemothEntity.getY(), this.wantedZ - beehemothEntity.getZ());
                 double d0 = vector3d.length();
                 if (d0 < beehemothEntity.getBoundingBox().getSize()) {
                     this.operation = MovementController.Action.WAIT;
                     beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().scale(0.5D));
-                } else {
+                }
+                else {
                     double localSpeed = this.speedModifier;
                     if (beehemothEntity.isVehicle()) {
                         localSpeed *= 1.5D;
@@ -491,7 +482,8 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
                         float newRot = (float)(-MathHelper.atan2(d2, d1) * (180F / (float) Math.PI));
                         beehemothEntity.yRot = this.rotlerp(beehemothEntity.yRot, newRot, 10.0F);
                         beehemothEntity.yBodyRot = beehemothEntity.yRot;
-                    } else {
+                    }
+                    else {
                         double d2 = beehemothEntity.getTarget().getX() - beehemothEntity.getX();
                         double d1 = beehemothEntity.getTarget().getZ() - beehemothEntity.getZ();
                         float newRot = (float)(-MathHelper.atan2(d1, d2) * (180F / (float) Math.PI));
@@ -509,7 +501,7 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         return this.level.clip(new RayTraceContext(Vector3d, target, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this)).getType() != RayTraceResult.Type.MISS;
     }
 
-    public class DirectPathNavigator extends GroundPathNavigator {
+    public static class DirectPathNavigator extends GroundPathNavigator {
 
         private final MobEntity mob;
 
@@ -530,68 +522,6 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         public boolean moveTo(Entity entityIn, double speedIn) {
             mob.getMoveControl().setWantedPosition(entityIn.getX(), entityIn.getY(), entityIn.getZ(), speedIn);
             return true;
-        }
-    }
-
-
-    static class RandomFlyGoal extends Goal {
-        private final BeehemothEntity parentEntity;
-        private BlockPos target = null;
-
-        public RandomFlyGoal(BeehemothEntity mosquito) {
-            this.parentEntity = mosquito;
-            this.setFlags(EnumSet.of(Goal.Flag.MOVE));
-        }
-
-        public boolean canUse() {
-            MovementController movementcontroller = this.parentEntity.getMoveControl();
-            if (parentEntity.stopWandering || parentEntity.hasItemTarget) {
-                return false;
-            }
-            if (!movementcontroller.hasWanted() || target == null) {
-                target = getBlockInViewBeehemoth();
-                if (target != null) {
-                    this.parentEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, 1.0D);
-                }
-                return true;
-            }
-            return false;
-        }
-
-        public boolean canContinueToUse() {
-            return target != null && !parentEntity.stopWandering && !parentEntity.hasItemTarget && parentEntity.distanceToSqr(Vector3d.atCenterOf(target)) > 2.4D && parentEntity.getMoveControl().hasWanted() && !parentEntity.horizontalCollision;
-        }
-
-        public void stop() {
-            target = null;
-        }
-
-        public void tick() {
-            if (target == null) {
-                target = getBlockInViewBeehemoth();
-            }
-            if (target != null) {
-                this.parentEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, 1.0D);
-                if (parentEntity.distanceToSqr(Vector3d.atCenterOf(target)) < 2.5F) {
-                    target = null;
-                }
-            }
-        }
-
-        public BlockPos getBlockInViewBeehemoth() {
-            float radius = 1 + parentEntity.getRandom().nextInt(5);
-            float neg = parentEntity.getRandom().nextBoolean() ? 1 : -1;
-            float renderYawOffset = parentEntity.yBodyRot;
-            float angle = (0.01745329251F * renderYawOffset) + 3.15F + (parentEntity.getRandom().nextFloat() * neg);
-            double extraX = radius * MathHelper.sin((float) (Math.PI + angle));
-            double extraZ = radius * MathHelper.cos(angle);
-            BlockPos radialPos = new BlockPos(parentEntity.getX() + extraX, parentEntity.getY() + 2, parentEntity.getZ() + extraZ);
-            BlockPos ground = parentEntity.getGroundPosition(radialPos);
-            BlockPos newPos = ground.above(1 + parentEntity.getRandom().nextInt(6));
-            if (!parentEntity.isTargetBlocked(Vector3d.atCenterOf(newPos)) && parentEntity.distanceToSqr(Vector3d.atCenterOf(newPos)) > 6) {
-                return newPos;
-            }
-            return null;
         }
     }
 }
