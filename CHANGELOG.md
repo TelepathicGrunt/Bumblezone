@@ -6,6 +6,8 @@ Beehemoth speed can not be changed by config in the world's serverconfig folder 
 
 Holding down Space (jump button) while riding Beehemoth will make the bee fly upward. 
 
+Fixed bug where you could feed Beehemoth to surpass the 1000 point limit on friendship.
+
 
 ### **(V.2.6.3 Changes) (1.16.5 Minecraft)**
 

@@ -124,7 +124,7 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     }
 
     public void addFriendship(Integer deltaFriendship) {
-        this.entityData.set(FRIENDSHIP, getFriendship() + deltaFriendship);
+        this.entityData.set(FRIENDSHIP, Math.min(1000, getFriendship() + deltaFriendship));
     }
 
     @Override
