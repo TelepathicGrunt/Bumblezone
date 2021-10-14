@@ -122,11 +122,11 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     }
 
     public void setFriendship(Integer newFriendship) {
-        this.entityData.set(FRIENDSHIP, Math.min(newFriendship, 1000));
+        this.entityData.set(FRIENDSHIP, Math.min(Math.max(newFriendship, -100), 1000));
     }
 
     public void addFriendship(Integer deltaFriendship) {
-        this.entityData.set(FRIENDSHIP, Math.min(1000, getFriendship() + deltaFriendship));
+        this.entityData.set(FRIENDSHIP, Math.min(Math.max(getFriendship() + deltaFriendship, -100), 1000));
     }
 
     @Override
