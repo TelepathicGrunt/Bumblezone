@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
+import com.telepathicgrunt.the_bumblezone.mixin.LivingEntityAccessor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.player.PlayerEntity;
@@ -46,11 +47,20 @@ public class BeehemothAIRide extends Goal {
         if (player.zza < 0) {
             lookVec = lookVec.yRot((float) Math.PI);
         }
+
         x += lookVec.x * 10;
         y += lookVec.y * 5;
         z += lookVec.z * 10;
 
-        if (player.zza != 0) {
+        if(((LivingEntityAccessor)player).isJumping()) {
+            y += 8;
+            if(player.zza == 0) {
+                x = beehemothEntity.getX();
+                z = beehemothEntity.getZ();
+            }
+        }
+
+        if (player.zza != 0 || ((LivingEntityAccessor)player).isJumping()) {
             currentSpeed = Math.min(speed * speedModifier, currentSpeed + 0.3f);
         }
         else {

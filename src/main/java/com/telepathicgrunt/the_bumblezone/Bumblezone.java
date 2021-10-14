@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzBlockMechanicsConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzDungeonsConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.data.DataGenerators;
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
@@ -68,6 +69,7 @@ public class Bumblezone{
     public static final ResourceLocation MOD_DIMENSION_ID = new ResourceLocation(Bumblezone.MODID, Bumblezone.MODID);
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
+    public static BzGeneralConfigs.BzGeneralConfigsValues BzGeneralConfig = null;
     public static BzBeeAggressionConfigs.BzBeeAggressionConfigValues BzBeeAggressionConfig = null;
     public static BzBlockMechanicsConfigs.BzBlockMechanicsConfigValues BzBlockMechanicsConfig = null;
     public static BzDimensionConfigs.BzDimensionConfigValues BzDimensionConfig = null;
@@ -122,6 +124,7 @@ public class Bumblezone{
         // generates/handles config
         BzModCompatibilityConfig = ConfigHelper.register(ModConfig.Type.COMMON, BzModCompatibilityConfigs.BzModCompatibilityConfigValues::new, "the_bumblezone-mod_compatibility.toml");
         BzBlockMechanicsConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzBlockMechanicsConfigs.BzBlockMechanicsConfigValues::new, "the_bumblezone-block_mechanics.toml");
+        BzGeneralConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzGeneralConfigs.BzGeneralConfigsValues::new, "the_bumblezone-general.toml");
         BzBeeAggressionConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzBeeAggressionConfigs.BzBeeAggressionConfigValues::new, "the_bumblezone-bee_aggression.toml");
         BzDimensionConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzDimensionConfigs.BzDimensionConfigValues::new, "the_bumblezone-dimension.toml");
         BzDungeonsConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzDungeonsConfigs.BzDungeonsConfigValues::new, "the_bumblezone-dungeons.toml");

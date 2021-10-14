@@ -1,3 +1,11 @@
+### **(V.2.6.4 Changes) (1.16.5 Minecraft)**
+
+##### Entities:
+Beehemoth speed can not be changed by config in the world's serverconfig folder in the_bumblezone-general.toml
+
+Holding down Space (jump button) while riding Beehemoth will make the bee fly upward. 
+
+
 ### **(V.2.6.3 Changes) (1.16.5 Minecraft)**
 
 ##### Lang:
