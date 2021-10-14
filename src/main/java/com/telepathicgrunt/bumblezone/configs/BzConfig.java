@@ -7,6 +7,10 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 @Config(name = "the_bumblezone-main")
 public class BzConfig implements ConfigData {
 
+    @ConfigEntry.Category("general")
+    @ConfigEntry.Gui.TransitiveObject
+    public BZGeneralConfig BZGeneralConfig = new BZGeneralConfig();
+
     @ConfigEntry.Category("dungeons")
     @ConfigEntry.Gui.TransitiveObject
     public BZDungeonsConfig BZDungeonsConfig = new BZDungeonsConfig();

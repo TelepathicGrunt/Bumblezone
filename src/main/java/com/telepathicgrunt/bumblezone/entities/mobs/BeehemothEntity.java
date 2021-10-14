@@ -1,5 +1,6 @@
 package com.telepathicgrunt.bumblezone.entities.mobs;
 
+import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.bumblezone.entities.goals.BeehemothAIRide;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
@@ -172,7 +173,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new BeehemothAIRide(this, 0.85D));
+        this.goalSelector.addGoal(0, new BeehemothAIRide(this));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.5D, Ingredient.of(BzItemTags.HONEY_BUCKETS), false));
         this.goalSelector.addGoal(4, new RandomFlyGoal(this));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 60));

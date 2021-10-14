@@ -1,6 +1,8 @@
 package com.telepathicgrunt.bumblezone.entities.goals;
 
+import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.entities.mobs.BeehemothEntity;
+import com.telepathicgrunt.bumblezone.mixin.LivingEntityAccessor;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
@@ -11,12 +13,10 @@ import java.util.EnumSet;
 public class BeehemothAIRide extends Goal {
     private final BeehemothEntity beehemothEntity;
     private LivingEntity player;
-    private final double speed;
     private double currentSpeed;
 
-    public BeehemothAIRide(BeehemothEntity beehemothEntity, double speed) {
+    public BeehemothAIRide(BeehemothEntity beehemothEntity) {
         this.beehemothEntity = beehemothEntity;
-        this.speed = speed;
         this.setFlags(EnumSet.of(Flag.MOVE));
     }
 
@@ -37,7 +37,7 @@ public class BeehemothAIRide extends Goal {
     @Override
     public void tick() {
         float speedModifier = beehemothEntity.isQueen() ? 3f : 1.0f;
-        speedModifier += (beehemothEntity.getFriendship() / 385f);
+        speedModifier += (beehemothEntity.getFriendship() / 400f);
         double x = beehemothEntity.getX();
         double y = beehemothEntity.getY();
         double z = beehemothEntity.getZ();
@@ -46,12 +46,23 @@ public class BeehemothAIRide extends Goal {
         if (player.zza < 0) {
             lookVec = lookVec.yRot((float) Math.PI);
         }
+
         x += lookVec.x * 10;
         y += lookVec.y * 5;
         z += lookVec.z * 10;
 
-        if (player.zza != 0) {
-            currentSpeed = Math.min(speed * speedModifier, currentSpeed + 0.3f);
+        if(((LivingEntityAccessor)player).isJumping()) {
+            y += 8;
+            if(player.zza == 0) {
+                x = beehemothEntity.getX() + lookVec.x * 0.00001D;
+                z = beehemothEntity.getZ() + lookVec.z * 0.00001D;
+            }
+        }
+
+        if (player.zza != 0 || ((LivingEntityAccessor)player).isJumping()) {
+            currentSpeed = Math.min(
+                    Bumblezone.BZ_CONFIG.BZGeneralConfig.beehemothSpeed * speedModifier,
+                    currentSpeed + 0.3f);
         }
         else {
             currentSpeed = Math.max(0, currentSpeed - 0.25f);
