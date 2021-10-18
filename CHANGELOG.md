@@ -1,3 +1,9 @@
+### **(V.2.6.5 Changes) (1.16.5 Minecraft)**
+
+##### BMod Compat:
+Productive Bee's Honey Treat now should work properly with their gene stuff while also giving The Bumblezone's Protection of the Hive.
+
+
 ### **(V.2.6.4 Changes) (1.16.5 Minecraft)**
 
 ##### Entities:

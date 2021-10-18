@@ -27,6 +27,8 @@ import net.minecraft.world.server.ServerWorld;
 
 public class BeeInteractivity {
 
+    private static ResourceLocation PRODUCTIVE_BEES_HONEY_TREAT = new ResourceLocation("productivebees", "honey_treat");
+
     // heal bees with sugar water bottle or honey bottle or honey bucket
     public static ActionResultType beeFeeding(World world, PlayerEntity playerEntity, Hand hand, BeeEntity beeEntity) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
@@ -35,6 +37,13 @@ public class BeeInteractivity {
         // Disallow all non-tagged items from being fed to bees
         if (itemRL == null || !BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
             return ActionResultType.PASS;
+
+        // Let the honey treat behavior continue on so their gene stuff is not lost.
+        if (itemRL.equals(PRODUCTIVE_BEES_HONEY_TREAT)) {
+            calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
+            playerEntity.swing(hand, true);
+            return ActionResultType.PASS;
+        }
 
         if (itemstack.getItem().is(BzItemTags.HONEY_BUCKETS)) {
             beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
