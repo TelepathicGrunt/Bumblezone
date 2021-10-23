@@ -33,7 +33,7 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-            arg "-mixin.config="+archivesBaseName+".mixins.json"
+            arg "-mixin.config=the_bumblezone.mixins.json"
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods { the_bumblezone { source sourceSets.main } }
@@ -41,7 +41,7 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
-            arg "-mixin.config="+archivesBaseName+".mixins.json"
+            arg "-mixin.config=the_bumblezone.mixins.json"
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods { the_bumblezone { source sourceSets.main } }
@@ -49,8 +49,8 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
-            args '--mod', ""+archivesBaseName, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-            arg "-mixin.config="+archivesBaseName+".mixins.json"
+            args '--mod', "the_bumblezone", '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            arg "-mixin.config=the_bumblezone.mixins.json"
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods { the_bumblezone { source sourceSets.main } }
