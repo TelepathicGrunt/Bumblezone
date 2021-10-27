@@ -12,10 +12,6 @@ public interface IEntityPosAndDim {
 	ResourceLocation getNonBZDim();
 	void setNonBZPos(Vector3d incomingPos);
 	Vector3d getNonBZPos();
-	void setNonBZPitch(float incomingPitch);
-	float getNonBZPitch();
-	void setNonBZYaw(float incomingYaw);
-	float getNonBZYaw();
 
 	CompoundNBT saveNBTData();
 	void loadNBTData(CompoundNBT nbtTag);

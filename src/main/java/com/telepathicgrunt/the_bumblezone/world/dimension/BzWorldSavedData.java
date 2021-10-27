@@ -111,8 +111,6 @@ public class BzWorldSavedData extends WorldSavedData {
         if (!entity.level.isClientSide()) {
             EntityPositionAndDimension cap = (EntityPositionAndDimension) entity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
             cap.setNonBZDim(entity.getCommandSenderWorld().dimension().location());
-            cap.setNonBZYaw(entity.yRot);
-            cap.setNonBZPitch(entity.xRot);
             cap.setNonBZPos(entity.position());
 
             MinecraftServer minecraftServer = entity.getServer(); // the server itself
@@ -155,7 +153,6 @@ public class BzWorldSavedData extends WorldSavedData {
         net.minecraft.entity.Entity teleportedEntity;
         List<net.minecraft.entity.Entity> passengers = entity.getPassengers();
 
-        EntityPositionAndDimension cap = (EntityPositionAndDimension) entity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
         if (entity instanceof ServerPlayerEntity) {
             if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
                 ((ServerPlayerEntity) entity).displayClientMessage(new StringTextComponent("Teleporting into the Bumblezone..."), true);
@@ -167,7 +164,7 @@ public class BzWorldSavedData extends WorldSavedData {
             if (((ServerPlayerEntity)entity).isSleeping()) {
                 ((ServerPlayerEntity) entity).stopSleepInBed(true, true);
             }
-            ((ServerPlayerEntity) entity).teleportTo(destination, destinationPosition.x, destinationPosition.y, destinationPosition.z, cap.getNonBZYaw(), cap.getNonBZPitch());
+            ((ServerPlayerEntity) entity).teleportTo(destination, destinationPosition.x, destinationPosition.y, destinationPosition.z, entity.yRot, entity.xRot);
             teleportedEntity = destination.getPlayerByUUID(entity.getUUID());
         }
         else {
@@ -178,7 +175,7 @@ public class BzWorldSavedData extends WorldSavedData {
             }
 
             newEntity.restoreFrom(entity);
-            newEntity.moveTo(destinationPosition.x, destinationPosition.y, destinationPosition.z, cap.getNonBZYaw(), cap.getNonBZPitch());
+            newEntity.moveTo(destinationPosition.x, destinationPosition.y, destinationPosition.z, entity.yRot, entity.xRot);
             destination.addFromAnotherDimension(newEntity);
             teleportedEntity = newEntity;
             entity.remove();
