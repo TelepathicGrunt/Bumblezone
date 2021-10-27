@@ -157,7 +157,12 @@ public class BzWorldSavedData extends WorldSavedData {
 
         EntityPositionAndDimension cap = (EntityPositionAndDimension) entity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
         if (entity instanceof ServerPlayerEntity) {
-            ((ServerPlayerEntity) entity).displayClientMessage(new StringTextComponent("Teleporting out of Bumblezone..."), true);
+            if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
+                ((ServerPlayerEntity) entity).displayClientMessage(new StringTextComponent("Teleporting into the Bumblezone..."), true);
+            }
+            else {
+                ((ServerPlayerEntity) entity).displayClientMessage(new StringTextComponent("Teleporting out of Bumblezone..."), true);
+            }
 
             if (((ServerPlayerEntity)entity).isSleeping()) {
                 ((ServerPlayerEntity) entity).stopSleepInBed(true, true);

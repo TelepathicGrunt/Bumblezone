@@ -46,8 +46,10 @@ public class EntityTeleportationHookup {
         //Makes it so player does not get killed for falling into the void
         if (livingEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (livingEntity.getY() < -2) {
-                livingEntity.setPosAndOldPos(livingEntity.getX(), Math.max(livingEntity.getY(), -4), livingEntity.getZ());
-                livingEntity.moveTo(livingEntity.getX(), Math.max(livingEntity.getY(), -4), livingEntity.getZ());
+                if (livingEntity.getY() < -4) {
+                    livingEntity.setPosAndOldPos(livingEntity.getX(), -4, livingEntity.getZ());
+                    livingEntity.moveTo(livingEntity.getX(), -4, livingEntity.getZ());
+                }
                 livingEntity.fallDistance = 0;
 
                 if(!livingEntity.level.isClientSide()){
@@ -55,8 +57,10 @@ public class EntityTeleportationHookup {
                 }
             }
             else if (livingEntity.getY() > 255) {
-                livingEntity.setPosAndOldPos(livingEntity.getX(), Math.min(livingEntity.getY(), 257D), livingEntity.getZ());
-                livingEntity.moveTo(livingEntity.getX(), Math.min(livingEntity.getY(), 257D), livingEntity.getZ());
+                if (livingEntity.getY() > 257) {
+                    livingEntity.setPosAndOldPos(livingEntity.getX(), 257, livingEntity.getZ());
+                    livingEntity.moveTo(livingEntity.getX(), 257, livingEntity.getZ());
+                }
 
                 if(!livingEntity.level.isClientSide()){
                     teleportOutOfBz(livingEntity);
