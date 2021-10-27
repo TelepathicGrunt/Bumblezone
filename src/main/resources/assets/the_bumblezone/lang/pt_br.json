@@ -118,5 +118,11 @@
   "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spawnerRateSpiderBeeDungeon.@PrefixText": "How rare are Spider/Cave Spider Spawners in Spider Infested Bee Dungeons. \n0 is no spawners, 1 is maximum spawners, and default is 0.2f",
 
   "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowPotionOfBeesCompat.@PrefixText": "Allow Potion of Bees item to turn Empty Honeycomb Brood blocks back into Honeycomb Brood Blocks with a larva in it. (affects Dispenser too)",
-  "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat.@PrefixText": "Allow Splash Potion of Bees item to turn Empty Honeycomb Brood blocks back into Honeycomb Brood Blocks with a larva in it when the potion is thrown and splashed near the block. (affects Dispenser too)"
+  "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat.@PrefixText": "Allow Splash Potion of Bees item to turn Empty Honeycomb Brood blocks back into Honeycomb Brood Blocks with a larva in it when the potion is thrown and splashed near the block. (affects Dispenser too)",
+
+  "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.beehemothSpeed": "Beehemoth Speed",
+  "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.beehemothSpeed.@PrefixText": "Base speed for the Beehemoth when being rode by a player.",
+
+  "text.autoconfig.the_bumblezone-main.option.BZClientConfig.lgbtBeeRate": "LGBT+ Bee Skin Rate",
+  "text.autoconfig.the_bumblezone-main.option.BZClientConfig.lgbtBeeRate.@PrefixText": "Rate for how often a bee will have an LGBT+ coat!"
 }

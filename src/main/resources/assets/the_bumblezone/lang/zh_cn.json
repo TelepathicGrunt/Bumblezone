@@ -117,5 +117,11 @@
 	"text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity": "Brood Blocks Bee Spawn Capacity",
 	"text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.onlyOverworldHivesTeleports": "Only Overworld Hives Teleports",
 	"text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity.@PrefixText": "Brood Blocks will automatically spawn bees until the number of active bees is the value below. Set this higher to allow Brood Blocks to spawn more bees in a smaller area or set it to 0 to turn off automatic Brood Block bee spawning.",
-	"text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.onlyOverworldHivesTeleports.@PrefixText": "Makes throwing Enderpearls at Bee Nests or Hives only work in the Overworld. What this means setting this to true makes it only possible to enter The Bumblezone dimension from the Overworld"
+	"text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.onlyOverworldHivesTeleports.@PrefixText": "Makes throwing Enderpearls at Bee Nests or Hives only work in the Overworld. What this means setting this to true makes it only possible to enter The Bumblezone dimension from the Overworld",
+
+	"text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.beehemothSpeed": "Beehemoth Speed",
+	"text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.beehemothSpeed.@PrefixText": "Base speed for the Beehemoth when being rode by a player.",
+
+	"text.autoconfig.the_bumblezone-main.option.BZClientConfig.lgbtBeeRate": "LGBT+ Bee Skin Rate",
+	"text.autoconfig.the_bumblezone-main.option.BZClientConfig.lgbtBeeRate.@PrefixText": "Rate for how often a bee will have an LGBT+ coat!"
 }

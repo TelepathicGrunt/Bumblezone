@@ -8,6 +8,9 @@ Redid a bunch of teleportation code so now riding any mob or vehicle will still 
 Shy's transbee texture is now applied to 5.6% of vanilla bees! 
  Her resourcepack can be downloaded separated here if you want transbees without Bumblezone on: https://www.curseforge.com/minecraft/texture-packs/shy-trans-bee
 
+##### Config:
+Added missing lang entry for the Beehemoth Speed config.
+
 
 ### **(V.3.2.4 Changes) (1.17.1 Minecraft)**
 
