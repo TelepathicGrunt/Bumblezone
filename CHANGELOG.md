@@ -4,6 +4,10 @@
 Redid a bunch of teleportation code so now riding any mob or vehicle will still allow teleportation out of the Bumblezone.
  And you can teleport into the Bumblezone while riding a vehicle if you use the piston pushing into beehive method.
 
+##### Entities:
+Shy's transbee texture is now applied to 5.6% of vanilla bees! 
+ Her resourcepack can be downloaded separated here if you want transbees without Bumblezone on: https://www.curseforge.com/minecraft/texture-packs/shy-trans-bee
+
 
 ### **(V.3.2.4 Changes) (1.17.1 Minecraft)**
 

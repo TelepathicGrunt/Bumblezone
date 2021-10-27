@@ -1,7 +1,6 @@
 package com.telepathicgrunt.bumblezone.world.dimension;
 
 import com.mojang.datafixers.util.Pair;
-import com.mojang.math.Vector3d;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.entities.EntityTeleportationBackend;
 import net.minecraft.core.BlockPos;

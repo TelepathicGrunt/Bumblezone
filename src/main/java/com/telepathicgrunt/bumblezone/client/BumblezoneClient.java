@@ -1,6 +1,7 @@
 package com.telepathicgrunt.bumblezone.client;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
+import com.telepathicgrunt.bumblezone.client.rendering.BeeVariantRenderer;
 import com.telepathicgrunt.bumblezone.client.rendering.BeehemothModel;
 import com.telepathicgrunt.bumblezone.client.rendering.BeehemothRenderer;
 import com.telepathicgrunt.bumblezone.client.rendering.FluidRender;
@@ -19,9 +20,11 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 
 @Environment(EnvType.CLIENT)
 public class BumblezoneClient implements ClientModInitializer {
@@ -52,6 +55,10 @@ public class BumblezoneClient implements ClientModInitializer {
                                 livingEntity.isUsingItem() &&
                                 livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
         );
+
+        if(!FabricLoader.getInstance().isModLoaded("quark")) {
+            EntityRendererRegistry.INSTANCE.register(EntityType.BEE, BeeVariantRenderer::new);
+        }
     }
     
     public static void registerRenderLayers() {
