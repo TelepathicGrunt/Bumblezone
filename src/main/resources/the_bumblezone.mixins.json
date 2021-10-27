@@ -4,7 +4,6 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "the_bumblezone.refmap.json",
   "mixins": [
-    "LivingEntityAccessor",
     "blocks.BeeHiveDropsMixin",
     "blocks.DefaultDispenseItemBehaviorInvoker",
     "blocks.DispenserBlockInvoker",
@@ -18,6 +17,7 @@
     "entities.BeePollenatedSpawnMixin",
     "entities.EntityMixin",
     "entities.FishingBobberEntityMixin",
+    "entities.LivingEntityAccessor",
     "entities.LivingEntityMixin",
     "entities.MinecraftServerMixin",
     "entities.MobSpawnLocationMixin",

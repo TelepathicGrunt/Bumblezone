@@ -42,6 +42,7 @@ import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
+import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -97,6 +98,7 @@ public class Bumblezone{
         forgeBus.addGenericListener(Entity.class, CapabilityEventHandler::onAttachCapabilitiesToEntities);
         forgeBus.addListener(EntityTeleportationHookup::entityTick);
         forgeBus.addListener(BeeAggression::playerTick);
+        forgeBus.addListener(BzWorldSavedData::worldTick);
 
         //Registration
         modEventBus.addListener(DataGenerators::gatherData);

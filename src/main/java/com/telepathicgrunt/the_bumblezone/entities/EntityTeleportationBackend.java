@@ -7,10 +7,10 @@ import com.telepathicgrunt.the_bumblezone.capabilities.IEntityPosAndDim;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
-import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
+import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -48,111 +48,7 @@ public class EntityTeleportationBackend {
     @CapabilityInject(IEntityPosAndDim.class)
     public static Capability<IEntityPosAndDim> PAST_POS_AND_DIM = null;
 
-    public static void enteringBumblezone(Entity entity){
-        //Note, the player does not hold the previous dimension oddly enough.
-        Vector3d destinationPosition;
-
-        if (!entity.level.isClientSide()) {
-            EntityPositionAndDimension cap = (EntityPositionAndDimension) entity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-            cap.setNonBZDim(entity.getCommandSenderWorld().dimension().location());
-            cap.setNonBZYaw(entity.yRot);
-            cap.setNonBZPitch(entity.xRot);
-            cap.setNonBZPos(entity.position());
-
-            MinecraftServer minecraftServer = entity.getServer(); // the server itself
-            ServerWorld bumblezoneWorld = minecraftServer.getLevel(BzDimension.BZ_WORLD_KEY);
-
-            // Prevent crash due to mojang bug that makes mod's json dimensions not exist upload first creation of world on server. A restart fixes this.
-            if(bumblezoneWorld == null){
-                if(entity instanceof ServerPlayerEntity){
-                    ServerPlayerEntity playerEntity = ((ServerPlayerEntity) entity);
-                    Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: https://bugs.mojang.com/browse/MC-195468. A restart will fix this.");
-                    ITextComponent message = new StringTextComponent("Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: §6https://bugs.mojang.com/browse/MC-195468§f. A restart will fix this.");
-                    playerEntity.displayClientMessage(message, true);
-                }
-                return;
-            }
-
-            destinationPosition = getBzCoordinate(entity, (ServerWorld)entity.level, bumblezoneWorld);
-            if(entity instanceof ServerPlayerEntity){
-                ServerPlayerEntity playerEntity = ((ServerPlayerEntity) entity);
-                playerEntity.displayClientMessage(new StringTextComponent("Teleporting to Bumblezone..."), true);
-                playerEntity.teleportTo(
-                        bumblezoneWorld,
-                        destinationPosition.x,
-                        destinationPosition.y,
-                        destinationPosition.z,
-                        playerEntity.yRot,
-                        playerEntity.xRot
-                );
-            }
-            else {
-                Entity entity2 = entity.getType().create(bumblezoneWorld);
-                if (entity2 != null) {
-                    entity2.restoreFrom(entity);
-                    entity2.moveTo(new BlockPos(destinationPosition), entity.yRot, entity.xRot);
-                    entity2.setDeltaMovement(entity.getDeltaMovement());
-                    bumblezoneWorld.addFromAnotherDimension(entity2);
-                }
-                entity.remove();
-                entity.level.getProfiler().endTick();
-                ((ServerWorld) entity.level).resetEmptyTime();
-                bumblezoneWorld.resetEmptyTime();
-                entity.level.getProfiler().endTick();
-            }
-        }
-    }
-
-
-    public static void exitingBumblezone(LivingEntity entity, ServerWorld destination){
-        boolean upwardChecking = entity.getY() > 0;
-        Vector3d destinationPosition;
-        EntityPositionAndDimension cap = (EntityPositionAndDimension) entity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-
-        if (entity instanceof ServerPlayerEntity) {
-            destinationPosition = teleportByOutOfBounds(entity, destination, upwardChecking, false);
-            ((ServerPlayerEntity)entity).displayClientMessage(new StringTextComponent("Teleporting out of Bumblezone..."), true);
-            ((ServerPlayerEntity)entity).teleportTo(
-                    destination,
-                    destinationPosition.x,
-                    destinationPosition.y,
-                    destinationPosition.z,
-                    cap.getNonBZYaw(),
-                    cap.getNonBZPitch()
-            );
-        }
-        else {
-            destinationPosition = teleportByOutOfBounds(entity, destination, upwardChecking, true);
-            if(destinationPosition == null){
-                // Abort teleporting entity by moving them up and place block below them
-                BlockPos newPos = new BlockPos(entity.blockPosition().getX(), 1, entity.blockPosition().getZ());
-
-                entity.setPosAndOldPos(newPos.getX() + 0.5f, newPos.getY(), newPos.getZ() + 0.5f);
-                entity.absMoveTo(newPos.getX() + 0.5f, newPos.getY(), newPos.getZ() + 0.5f);
-                BlockState belowState = entity.level.getBlockState(newPos.below());
-                if(!belowState.isFaceSturdy(entity.level, newPos.below(), Direction.UP)){
-                    entity.level.setBlock(newPos.below(), BzBlocks.BEEHIVE_BEESWAX.get().defaultBlockState(), 3);
-                }
-                return;
-            }
-
-            Entity entity2 = entity.getType().create(destination);
-            if (entity2 != null) {
-                entity2.restoreFrom(entity);
-                entity2.moveTo(new BlockPos(destinationPosition), entity.yRot, entity.xRot);
-                entity2.setDeltaMovement(entity.getDeltaMovement());
-                destination.addFromAnotherDimension(entity2);
-            }
-            entity.remove();
-            entity.level.getProfiler().endTick();
-            ((ServerWorld) entity.level).resetEmptyTime();
-            destination.resetEmptyTime();
-            entity.level.getProfiler().endTick();
-        }
-    }
-
-
-    private static Vector3d teleportByOutOfBounds(LivingEntity livingEntity, ServerWorld destination, boolean checkingUpward, boolean mustBeNearBeeBlock) {
+    public static Vector3d destPostFromOutOfBoundsTeleport(Entity livingEntity, ServerWorld destination, boolean checkingUpward, boolean mustBeNearBeeBlock) {
         //converts the position to get the corresponding position in non-bumblezone dimension
         double coordinateScale = livingEntity.getCommandSenderWorld().dimensionType().coordinateScale() / destination.dimensionType().coordinateScale();
         BlockPos finalSpawnPos;
@@ -220,7 +116,7 @@ public class EntityTeleportationBackend {
         );
     }
 
-    private static Vector3d getBzCoordinate(Entity entity, ServerWorld originalWorld, ServerWorld bumblezoneWorld) {
+    public static Vector3d getBzCoordinate(Entity entity, ServerWorld originalWorld, ServerWorld bumblezoneWorld) {
 
         //converts the position to get the corresponding position in bumblezone dimension
         double coordinateScale = 1;

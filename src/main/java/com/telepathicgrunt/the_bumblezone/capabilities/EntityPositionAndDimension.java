@@ -8,7 +8,6 @@ import net.minecraft.util.math.vector.Vector3d;
 public class EntityPositionAndDimension implements IEntityPosAndDim
 {
 	private ResourceLocation nonBZDimension = new ResourceLocation("minecraft", "overworld");
-	private boolean isTeleporting = false;
 	private Vector3d nonBZPosition = null;
 	private float nonBZPitch = 0;
 	private float nonBZYaw = 0;
@@ -66,20 +65,6 @@ public class EntityPositionAndDimension implements IEntityPosAndDim
 	}
 
 
-	
-	@Override
-	public void setTeleporting(boolean teleporting)
-	{
-		this.isTeleporting = teleporting;
-	}
-
-	@Override
-	public boolean getTeleporting()
-	{
-		return this.isTeleporting;
-	}
-
-
 	@Override
 	public CompoundNBT saveNBTData()
 	{
@@ -99,8 +84,6 @@ public class EntityPositionAndDimension implements IEntityPosAndDim
 			nbt.putFloat("NonBZPitch", nonBZPitch);
 			nbt.putFloat("NonBZYaw", nonBZYaw);
 		}
-
-		nbt.putBoolean("isTeleporting", this.getTeleporting());
 
 		return nbt;
 	}
@@ -127,6 +110,5 @@ public class EntityPositionAndDimension implements IEntityPosAndDim
 		this.setNonBZPitch(storedNonBZPitch);
 		this.setNonBZYaw(storedNonBZYaw);
 		this.setNonBZPos(storedPositionNonBZ);
-		this.setTeleporting(isteleporting);
 	}
 }

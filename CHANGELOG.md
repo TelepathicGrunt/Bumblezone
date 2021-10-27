@@ -1,6 +1,13 @@
+### **(V.2.6.6 Changes) (1.16.5 Minecraft)**
+
+##### Teleportation:
+Redid a bunch of teleportation code so now riding any mob or vehicle will still allow teleportation out of the Bumblezone.
+ And you can teleport into the Bumblezone while riding a vehicle if you use the piston pushing into beehive method.
+
+
 ### **(V.2.6.5 Changes) (1.16.5 Minecraft)**
 
-##### BMod Compat:
+##### Mod Compat:
 Productive Bee's Honey Treat now should work properly with their gene stuff while also giving The Bumblezone's Protection of the Hive.
 
 
