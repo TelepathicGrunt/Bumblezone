@@ -1,3 +1,10 @@
+### **(V.3.2.5 Changes) (1.17.1 Minecraft)**
+
+##### Teleportation:
+Redid a bunch of teleportation code so now riding any mob or vehicle will still allow teleportation out of the Bumblezone.
+ And you can teleport into the Bumblezone while riding a vehicle if you use the piston pushing into beehive method.
+
+
 ### **(V.3.2.4 Changes) (1.17.1 Minecraft)**
 
 ##### Entities:

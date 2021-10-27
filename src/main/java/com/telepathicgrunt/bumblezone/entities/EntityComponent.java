@@ -12,16 +12,6 @@ public class EntityComponent implements IEntityComponent {
     public Vec3 nonBZPosition = null;
 
     @Override
-    public boolean getIsTeleporting() {
-        return this.teleporting;
-    }
-    @Override
-    public void setIsTeleporting(boolean isTeleporting) {
-        this.teleporting = isTeleporting;
-    }
-
-
-    @Override
     public void setNonBZPos(Vec3 incomingPos)
     {
         nonBZPosition = incomingPos;

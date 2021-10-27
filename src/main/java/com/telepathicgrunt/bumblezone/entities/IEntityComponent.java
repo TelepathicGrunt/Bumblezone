@@ -5,8 +5,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 
 public interface IEntityComponent extends Component {
-    boolean getIsTeleporting();
-    void setIsTeleporting(boolean isTeleporting);
 
     ResourceLocation getNonBZDimension();
     void setNonBZDimension(ResourceLocation nonBZDimension);

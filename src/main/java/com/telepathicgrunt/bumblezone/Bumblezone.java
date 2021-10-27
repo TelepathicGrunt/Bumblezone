@@ -26,6 +26,7 @@ import com.telepathicgrunt.bumblezone.tags.BzEntityTags;
 import com.telepathicgrunt.bumblezone.tags.BzFluidTags;
 import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.bumblezone.world.dimension.BzDimension;
+import com.telepathicgrunt.bumblezone.world.dimension.BzWorldSavedData;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
@@ -33,6 +34,7 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import org.apache.logging.log4j.LogManager;
@@ -80,6 +82,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzStructures.registerStructures();
         BzDimension.setupDimension();
         WanderingTrades.addWanderingTrades();
+        ServerTickEvents.END_WORLD_TICK.register(BzWorldSavedData::tick);
 
         BeeAggression.setupEvents();
         DispenserItemSetup.setupDispenserBehaviors();
