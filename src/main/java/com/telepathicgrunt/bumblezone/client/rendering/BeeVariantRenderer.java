@@ -27,8 +27,7 @@ public class BeeVariantRenderer extends BeeRenderer {
         UUID id = entity.getUUID();
         long most = id.getMostSignificantBits();
 
-        // From https://news.gallup.com/poll/329708/lgbt-identification-rises-latest-estimate.aspx
-        final double lgbtChance = 0.056;
+        final double lgbtChance = Bumblezone.BZ_CONFIG.BZClientConfig.lgbtBeeRate;
         boolean lgbt = (new Random(most)).nextDouble() < lgbtChance;
 
         if(entity.hasCustomName() || lgbt) {

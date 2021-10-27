@@ -9,25 +9,29 @@ public class BzConfig implements ConfigData {
 
     @ConfigEntry.Category("general")
     @ConfigEntry.Gui.TransitiveObject
-    public BZGeneralConfig BZGeneralConfig = new BZGeneralConfig();
+    public BzGeneralConfig BZGeneralConfig = new BzGeneralConfig();
+
+    @ConfigEntry.Category("client")
+    @ConfigEntry.Gui.TransitiveObject
+    public BzClientConfig BZClientConfig = new BzClientConfig();
 
     @ConfigEntry.Category("dungeons")
     @ConfigEntry.Gui.TransitiveObject
-    public BZDungeonsConfig BZDungeonsConfig = new BZDungeonsConfig();
+    public BzDungeonsConfig BZDungeonsConfig = new BzDungeonsConfig();
 
     @ConfigEntry.Category("bee_aggression")
     @ConfigEntry.Gui.TransitiveObject
-    public BZBeeAggressionConfig BZBeeAggressionConfig = new BZBeeAggressionConfig();
+    public BzBeeAggressionConfig BZBeeAggressionConfig = new BzBeeAggressionConfig();
 
     @ConfigEntry.Category("dimension")
     @ConfigEntry.Gui.TransitiveObject
-    public BZDimensionConfig BZDimensionConfig = new BZDimensionConfig();
+    public BzDimensionConfig BZDimensionConfig = new BzDimensionConfig();
 
     @ConfigEntry.Category("block_mechanics")
     @ConfigEntry.Gui.TransitiveObject
-    public BZBlockMechanicsConfig BZBlockMechanicsConfig = new BZBlockMechanicsConfig();
+    public BzBlockMechanicsConfig BZBlockMechanicsConfig = new BzBlockMechanicsConfig();
 
     @ConfigEntry.Category("mod_compatibility")
     @ConfigEntry.Gui.TransitiveObject
-    public BZModCompatibilityConfig BZModCompatibilityConfig = new BZModCompatibilityConfig();
+    public BzModCompatibilityConfig BZModCompatibilityConfig = new BzModCompatibilityConfig();
 }
