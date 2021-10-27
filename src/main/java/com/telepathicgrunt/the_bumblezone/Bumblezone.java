@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityEventHandler;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzBlockMechanicsConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzDungeonsConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
@@ -76,6 +77,7 @@ public class Bumblezone{
     public static BzDimensionConfigs.BzDimensionConfigValues BzDimensionConfig = null;
     public static BzDungeonsConfigs.BzDungeonsConfigValues BzDungeonsConfig = null;
     public static BzModCompatibilityConfigs.BzModCompatibilityConfigValues BzModCompatibilityConfig = null;
+    public static BzClientConfigs.BzClientConfigsValues BzClientConfig = null;
 
     public Bumblezone() {
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
@@ -130,6 +132,7 @@ public class Bumblezone{
         BzBeeAggressionConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzBeeAggressionConfigs.BzBeeAggressionConfigValues::new, "the_bumblezone-bee_aggression.toml");
         BzDimensionConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzDimensionConfigs.BzDimensionConfigValues::new, "the_bumblezone-dimension.toml");
         BzDungeonsConfig = ConfigHelper.register(ModConfig.Type.SERVER, BzDungeonsConfigs.BzDungeonsConfigValues::new, "the_bumblezone-dungeons.toml");
+        BzClientConfig = ConfigHelper.register(ModConfig.Type.CLIENT, BzClientConfigs.BzClientConfigsValues::new, "the_bumblezone-client.toml");
     }
 
 
