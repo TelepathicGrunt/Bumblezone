@@ -34,7 +34,7 @@ public class EntityTeleportationHookup {
         //Makes it so player does not get killed for falling into the void
         if (livingEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (livingEntity.getY() < -2) {
-                if (livingEntity.getY() > -4) {
+                if (livingEntity.getY() < -4) {
                     livingEntity.moveTo(livingEntity.getX(), -4, livingEntity.getZ());
                     livingEntity.absMoveTo(livingEntity.getX(), -4, livingEntity.getZ());
                 }
