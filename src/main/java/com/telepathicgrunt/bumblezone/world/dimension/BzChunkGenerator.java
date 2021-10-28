@@ -109,7 +109,6 @@ public class BzChunkGenerator extends ChunkGenerator {
     private final PerlinNoise interpolationNoise;
     private final SurfaceNoise surfaceDepthNoise;
     private final PerlinNoise field_24776;
-    private final StructureSettings structureConfig;
     private final int height;
 
     public BzChunkGenerator(BiomeSource biomeSource, StructureSettings structureConfig) {
@@ -121,8 +120,6 @@ public class BzChunkGenerator extends ChunkGenerator {
 
         // We need to get world seed here
         this.random = new WorldgenRandom(0);
-
-        this.structureConfig = structureConfig;
         this.height = 256;
         this.verticalNoiseResolution = 8;
         this.horizontalNoiseResolution = 4;
@@ -147,7 +144,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     @Override
     @Environment(EnvType.CLIENT)
     public ChunkGenerator withSeed(long seed) {
-        return new BzChunkGenerator(this.runtimeBiomeSource.withSeed(seed), this.structureConfig);
+        return new BzChunkGenerator(this.runtimeBiomeSource.withSeed(seed), this.getSettings());
     }
 
     private double sampleNoise(int x, int y, int z, double horizontalScaleX, double verticalScale, double horizontalScaleZ, double horizontalStretch, double verticalStretch) {
