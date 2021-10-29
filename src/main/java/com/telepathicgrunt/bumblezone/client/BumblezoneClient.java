@@ -56,9 +56,7 @@ public class BumblezoneClient implements ClientModInitializer {
                                 livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
         );
 
-        if(!FabricLoader.getInstance().isModLoaded("quark")) {
-            EntityRendererRegistry.INSTANCE.register(EntityType.BEE, BeeVariantRenderer::new);
-        }
+        EntityRendererRegistry.INSTANCE.register(EntityType.BEE, BeeVariantRenderer::new);
     }
     
     public static void registerRenderLayers() {
