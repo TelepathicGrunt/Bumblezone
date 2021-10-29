@@ -14,7 +14,7 @@ public class BzClientConfig implements ConfigData {
     @Comment(value = """
 
             Rate for how often a bee will have an LGBT+ coat!""")
-    public double lgbtBeeRate = 0.01;
+    public double lgbtBeeRate = 0.02;
 
 
     @ConfigEntry.Gui.PrefixText
