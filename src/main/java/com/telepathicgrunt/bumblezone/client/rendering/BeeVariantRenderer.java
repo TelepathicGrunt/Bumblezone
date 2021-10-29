@@ -18,8 +18,8 @@ public class BeeVariantRenderer extends BeeRenderer {
     // https://github.com/VazkiiMods/Quark/blob/master/src/main/java/vazkii/quark/content/client/render/variant/VariantBeeRenderer.java
 
     private static final List<String> VARIANTS = ImmutableList.of("transbee", "asexualbee");
-    public static EntityRendererProvider<Bee> OLD_BEE_RENDER_FACTORY = null;
-    private EntityRenderer<Bee> OLD_BEE_RENDER = null;
+    public static EntityRendererProvider<? super Bee> OLD_BEE_RENDER_FACTORY = null;
+    private EntityRenderer<? super Bee> OLD_BEE_RENDER = null;
 
     public BeeVariantRenderer(EntityRendererProvider.Context context) {
         super(context);
