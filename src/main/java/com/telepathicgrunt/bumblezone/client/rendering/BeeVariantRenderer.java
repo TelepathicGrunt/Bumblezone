@@ -3,6 +3,7 @@ package com.telepathicgrunt.bumblezone.client.rendering;
 import com.google.common.collect.ImmutableList;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import net.minecraft.client.renderer.entity.BeeRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.Bee;
@@ -17,9 +18,14 @@ public class BeeVariantRenderer extends BeeRenderer {
     // https://github.com/VazkiiMods/Quark/blob/master/src/main/java/vazkii/quark/content/client/render/variant/VariantBeeRenderer.java
 
     private static final List<String> VARIANTS = ImmutableList.of("transbee", "asexualbee");
+    public static EntityRendererProvider<Bee> OLD_BEE_RENDER_FACTORY = null;
+    private EntityRenderer<Bee> OLD_BEE_RENDER = null;
 
     public BeeVariantRenderer(EntityRendererProvider.Context context) {
         super(context);
+        if(OLD_BEE_RENDER_FACTORY != null) {
+            OLD_BEE_RENDER = OLD_BEE_RENDER_FACTORY.create(context);
+        }
     }
 
     @Override
@@ -51,6 +57,10 @@ public class BeeVariantRenderer extends BeeRenderer {
                 String path = String.format("textures/entity/bee_variants/%s/%s%s.png", name, name, type);
                 return new ResourceLocation(Bumblezone.MODID, path);
             }
+        }
+
+        if(OLD_BEE_RENDER != null) {
+            return OLD_BEE_RENDER.getTextureLocation(entity);
         }
 
         return super.getTextureLocation(entity);

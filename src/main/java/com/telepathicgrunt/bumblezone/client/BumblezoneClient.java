@@ -6,6 +6,7 @@ import com.telepathicgrunt.bumblezone.client.rendering.BeehemothModel;
 import com.telepathicgrunt.bumblezone.client.rendering.BeehemothRenderer;
 import com.telepathicgrunt.bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.bumblezone.client.rendering.HoneySlimeRendering;
+import com.telepathicgrunt.bumblezone.mixin.EntityRendererRegistryImplAccessor;
 import com.telepathicgrunt.bumblezone.mixin.world.DimensionSpecialEffectsAccessor;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;
@@ -20,11 +21,14 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
+import net.fabricmc.fabric.impl.client.renderer.registry.EntityRendererRegistryImpl;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Bee;
 
 @Environment(EnvType.CLIENT)
 public class BumblezoneClient implements ClientModInitializer {
@@ -34,6 +38,7 @@ public class BumblezoneClient implements ClientModInitializer {
     public static final ResourceLocation HONEY_FLUID_FLOWING = new ResourceLocation(Bumblezone.MODID + ":block/honey_fluid_flow");
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onInitializeClient() {
         FluidRender.setupFluidRendering(BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID_FLOWING, SUGAR_WATER_FLUID_STILL, SUGAR_WATER_FLUID_FLOWING, true);
         FluidRender.setupFluidRendering(BzFluids.HONEY_FLUID, BzFluids.HONEY_FLUID_FLOWING, HONEY_FLUID_STILL, HONEY_FLUID_FLOWING, false);
@@ -45,6 +50,7 @@ public class BumblezoneClient implements ClientModInitializer {
         EntityRendererRegistry.INSTANCE.register(BzEntities.BEEHEMOTH, BeehemothRenderer::new);
 
         if(Bumblezone.BZ_CONFIG.BZClientConfig.enableLgbtBeeRenderer) {
+            BeeVariantRenderer.OLD_BEE_RENDER_FACTORY = (EntityRendererProvider<Bee>)EntityRendererRegistryImplAccessor.getMap().get(EntityType.BEE);
             EntityRendererRegistry.INSTANCE.register(EntityType.BEE, BeeVariantRenderer::new);
         }
 
