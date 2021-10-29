@@ -11,6 +11,9 @@ Shy's transbee texture and other LGBT+ textures are now applied to 2% of vanilla
 ##### Config:
 Added missing lang entry for the Beehemoth Speed config.
 
+##### Lang:
+Updated ru_ru.json translations. Thank you Bytegm!
+
 
 ### **(V.3.2.4 Changes) (1.17.1 Minecraft)**
 
