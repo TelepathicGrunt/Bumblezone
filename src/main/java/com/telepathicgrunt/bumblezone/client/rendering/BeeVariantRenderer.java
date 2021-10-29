@@ -28,7 +28,7 @@ public class BeeVariantRenderer extends BeeRenderer {
         long most = id.getMostSignificantBits();
 
         final double lgbtChance = Bumblezone.BZ_CONFIG.BZClientConfig.lgbtBeeRate;
-        boolean lgbt = (new Random(most)).nextDouble() < lgbtChance;
+        boolean lgbt = (new Random(most + 1001)).nextDouble() < lgbtChance; // + 1001 so it doesn't align exactly with quark.
 
         if(entity.hasCustomName() || lgbt) {
             String custName = entity.hasCustomName() ? entity.getCustomName().getString().trim() : "";

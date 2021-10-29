@@ -15,4 +15,12 @@ public class BzClientConfig implements ConfigData {
 
             Rate for how often a bee will have an LGBT+ coat!""")
     public double lgbtBeeRate = 0.01;
+
+
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip(count = 0)
+    @Comment(value = """
+            Enable replacing the bee renderer for LGBT+ skins.
+            Set this to false if the render is messing with other mod's bee renderers.""")
+    public boolean enableLgbtBeeRenderer = true;
 }

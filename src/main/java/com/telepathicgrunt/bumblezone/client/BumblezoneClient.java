@@ -43,6 +43,11 @@ public class BumblezoneClient implements ClientModInitializer {
         EntityRendererRegistry.INSTANCE.register(BzEntities.POLLEN_PUFF_ENTITY, ThrownItemRenderer::new);
         EntityRendererRegistry.INSTANCE.register(BzEntities.HONEY_SLIME, HoneySlimeRendering::new);
         EntityRendererRegistry.INSTANCE.register(BzEntities.BEEHEMOTH, BeehemothRenderer::new);
+
+        if(Bumblezone.BZ_CONFIG.BZClientConfig.enableLgbtBeeRenderer) {
+            EntityRendererRegistry.INSTANCE.register(EntityType.BEE, BeeVariantRenderer::new);
+        }
+
         EntityModelLayerRegistry.registerModelLayer(BeehemothModel.LAYER_LOCATION, BeehemothModel::createBodyLayer);
         DimensionSpecialEffectsAccessor.thebumblezone_getBY_IDENTIFIER().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
 
@@ -55,8 +60,6 @@ public class BumblezoneClient implements ClientModInitializer {
                                 livingEntity.isUsingItem() &&
                                 livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
         );
-
-        EntityRendererRegistry.INSTANCE.register(EntityType.BEE, BeeVariantRenderer::new);
     }
     
     public static void registerRenderLayers() {
