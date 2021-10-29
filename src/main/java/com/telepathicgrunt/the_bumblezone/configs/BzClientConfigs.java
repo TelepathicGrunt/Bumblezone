@@ -15,7 +15,7 @@ public class BzClientConfigs {
                     .comment(" \n-----------------------------------------------------\n",
                             " Rate for how often a bee will have an LGBT+ coat!\n")
                     .translation("the_bumblezone.config.lgbtBeeRate")
-                    .define("lgbt+ bee rates", 0.01D));
+                    .define("lgbt+ bee rates", 0.02D));
 
             enableLgbtBeeRenderer = subscriber.subscribe(builder
                     .comment(" \n-----------------------------------------------------\n",
