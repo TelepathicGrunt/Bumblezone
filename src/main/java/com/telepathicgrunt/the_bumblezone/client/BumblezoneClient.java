@@ -43,9 +43,7 @@ public class BumblezoneClient
         forgeBus.addListener(FluidRender::renderHoneyFog);
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
 
-        if(!ModList.get().isLoaded("quark")) {
-            RenderingRegistry.registerEntityRenderingHandler(EntityType.BEE, BeeVariantRenderer::new);
-        }
+        RenderingRegistry.registerEntityRenderingHandler(EntityType.BEE, BeeVariantRenderer::new);
     }
 
     // CLIENT-SIDED
