@@ -22,7 +22,7 @@ public class BzClientConfigs {
                             " Enable replacing the bee renderer for LGBT+ skins.",
                             " Set this to false if the render is messing with other mod's bee renderers.\n")
                     .translation("the_bumblezone.config.enableLgbtBeeRenderer")
-                    .define("Enable lgbt+ bee renderer", false));
+                    .define("Enable lgbt+ bee renderer", true));
         }
     }
 }
