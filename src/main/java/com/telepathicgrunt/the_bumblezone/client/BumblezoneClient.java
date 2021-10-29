@@ -45,7 +45,6 @@ public class BumblezoneClient {
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
     }
 
-    @SuppressWarnings("unchecked")
     public static void onClientSetup(FMLClientSetupEvent event) {
         Minecraft minecraftClient = event.getMinecraftSupplier().get();
 
@@ -56,6 +55,7 @@ public class BumblezoneClient {
         RenderingRegistry.registerEntityRenderingHandler(BzEntities.POLLEN_PUFF_ENTITY.get(), (entityRendererManager) -> new SpriteRenderer<>(entityRendererManager, minecraftClient.getItemRenderer()));
 
         if(Bumblezone.BzClientConfig.enableLgbtBeeRenderer.get()) {
+            //noinspection unchecked cast
             BeeVariantRenderer.OLD_BEE_RENDER_FACTORY = (IRenderFactory<BeeEntity>) ((RenderingRegistryAccessor) RenderingRegistryAccessor.getINSTANCE()).getEntityRenderers().get(EntityType.BEE);
             RenderingRegistry.registerEntityRenderingHandler(EntityType.BEE, BeeVariantRenderer::new);
         }
