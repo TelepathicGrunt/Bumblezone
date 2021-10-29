@@ -8,6 +8,9 @@ Redid a bunch of teleportation code so now riding any mob or vehicle will still 
 Shy's transbee texture and other LGBT+ textures are now applied to 2% of vanilla bees!
  Her resourcepack can be downloaded separate here if you want transbees without Bumblezone on: https://www.curseforge.com/minecraft/texture-packs/shy-trans-bee
 
+##### Lang:
+Updated ru_ru.json translations. Thank you Bytegm!
+
 
 ### **(V.2.6.5 Changes) (1.16.5 Minecraft)**
 
