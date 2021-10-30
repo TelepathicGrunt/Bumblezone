@@ -28,7 +28,7 @@ public class BzBeeAggressionConfigs {
                        " Determines if Wrath of the Hive can be applied to players outside",
                        " the Bumblezone dimension when they pick up Honey blocks, take honey",
                        " from Filled Porous Honey blocks, or drink Honey Bottles.\n")
-                        .translation("the_bumblezone.config.bees.allowwrathofthehiveoutsidebumblezone")
+                        .translation("the_bumblezone.config.allowwrathofthehiveoutsidebumblezone")
                         .define("allowWrathOfTheHiveOutsideBumblezone", false));
 
 
@@ -36,7 +36,7 @@ public class BzBeeAggressionConfigs {
                         .comment(" \n-----------------------------------------------------\n",
                        " Show the orangish particles when you get Wrath of the Hive",
                        " after you angered the bees in the Bumblezone dimension.\n")
-                        .translation("the_bumblezone.config.bees.showwrathofthehiveparticles")
+                        .translation("the_bumblezone.config.showwrathofthehiveparticles")
                         .define("showWrathOfTheHiveParticles", true));
 
 
@@ -49,7 +49,7 @@ public class BzBeeAggressionConfigs {
                        " ",
                        " Will also affect the bee's aggression toward other mobs in the dimension.",
                        " Note: Peaceful mode will always override the bee aggressive setting.\n")
-                        .translation("the_bumblezone.config.bees.aggressivebees")
+                        .translation("the_bumblezone.config.aggressivebees")
                         .define("aggressiveBees", true));
 
 
@@ -59,7 +59,7 @@ public class BzBeeAggressionConfigs {
                         +" you get Wrath of the Hive effect in the Bumblezone dimension.",
                        " ",
                        " Will also affect the bee's aggression range toward other mobs in the dimension.\n")
-                        .translation("the_bumblezone.config.bees.aggressiontriggerradius")
+                        .translation("the_bumblezone.config.aggressiontriggerradius")
                         .defineInRange("aggressionTriggerRadius", 64, 1, 200));
 
 
@@ -67,7 +67,7 @@ public class BzBeeAggressionConfigs {
                         .comment(" \n-----------------------------------------------------\n",
                        " How long bees will keep their effects for (speed, absorption, strength).",
                        " Note: This is in ticks. 20 ticks = 1 second. And bee's normal anger will remain.\n")
-                        .translation("the_bumblezone.config.bees.howlongwrathofthehivelasts")
+                        .translation("the_bumblezone.config.howlongwrathofthehivelasts")
                         .defineInRange("howLongWrathOfTheHiveLasts", 1680, 1, Integer.MAX_VALUE));
 
 
@@ -75,7 +75,7 @@ public class BzBeeAggressionConfigs {
                         .comment(" \n-----------------------------------------------------\n",
                        " How long entities will keep Protection of the Hive effect after feeding bees",
                        " or Brood Blocks. Bees will attack anyone that damages someone with the effect.\n")
-                        .translation("the_bumblezone.config.bees.howLongProtectionOfTheHiveLasts")
+                        .translation("the_bumblezone.config.howLongProtectionOfTheHiveLasts")
                         .defineInRange("howLongProtectionOfTheHiveLasts", 1680, 1, Integer.MAX_VALUE));
 
 
@@ -92,7 +92,7 @@ public class BzBeeAggressionConfigs {
                        " you, they tend to touch the floor and the speed boost",
                        " makes them dash forward at you. Set this to higher for",
                        " faster dash attacks from bees.\n")
-                        .translation("the_bumblezone.config.bees.speedboostlevel")
+                        .translation("the_bumblezone.config.speedboostlevel")
                         .defineInRange("speedBoostLevel", 2, 1, Integer.MAX_VALUE));
 
 
@@ -107,7 +107,7 @@ public class BzBeeAggressionConfigs {
                        " kill the bee. This means using Bane of Arthropod 5 is needed to kill bees",
                        " if you set the absorption to a higher value like 2 or 3.",
                        " If you set this to like 5 or something, bees may be invicible! Game over.\n")
-                        .translation("the_bumblezone.config.bees.absorptionboostlevel")
+                        .translation("the_bumblezone.config.absorptionboostlevel")
                         .defineInRange("absorptionBoostLevel", 1, 1, Integer.MAX_VALUE));
 
 
@@ -115,7 +115,7 @@ public class BzBeeAggressionConfigs {
                         .comment(" \n-----------------------------------------------------\n",
                        " How strong the bees attacks become. ",
                        " (5 or higher will instant kill you without armor).\n")
-                        .translation("the_bumblezone.config.bees.strengthboostlevel")
+                        .translation("the_bumblezone.config.strengthboostlevel")
                         .defineInRange("strengthBoostLevel", 2, 1, Integer.MAX_VALUE));
 
                 builder.pop();

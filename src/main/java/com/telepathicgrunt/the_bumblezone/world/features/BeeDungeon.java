@@ -19,8 +19,8 @@ public class BeeDungeon extends NbtFeature{
     @Override
     public boolean place(ISeedReader world, ChunkGenerator generator, Random random, BlockPos position, NbtFeatureConfig config) {
         //affect rarity
-        if (Bumblezone.BzDungeonsConfig.beeDungeonRarity.get() >= 1000 ||
-                random.nextInt(Bumblezone.BzDungeonsConfig.beeDungeonRarity.get()) != 0) return false;
+        if (Bumblezone.BzWorldgenConfig.beeDungeonRarity.get() >= 1000 ||
+                random.nextInt(Bumblezone.BzWorldgenConfig.beeDungeonRarity.get()) != 0) return false;
 
         // generate dungeon
         super.place(world, generator, random, position, config);

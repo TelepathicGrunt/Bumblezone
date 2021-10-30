@@ -59,7 +59,7 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior {
             }
 
             stack.shrink(1);
-            if (!Bumblezone.BzBlockMechanicsConfig.dispensersDropGlassBottles.get()) {
+            if (!Bumblezone.BzGeneralConfig.dispensersDropGlassBottles.get()) {
                 if (!stack.isEmpty())
                     addGlassBottleToDispenser(source);
                 else
@@ -72,7 +72,7 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior {
         else if (blockstate.getBlock() == BzBlocks.POROUS_HONEYCOMB.get()) {
             world.setBlockAndUpdate(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState());
             stack.shrink(1);
-            if (!Bumblezone.BzBlockMechanicsConfig.dispensersDropGlassBottles.get()) {
+            if (!Bumblezone.BzGeneralConfig.dispensersDropGlassBottles.get()) {
                 if (!stack.isEmpty())
                     addGlassBottleToDispenser(source);
                 else

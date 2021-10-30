@@ -36,7 +36,7 @@ public class BuzzierBeesBottledBeesDispenseBehavior extends DefaultDispenseItemB
 		if (blockstate.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD.get()) {
 			world.setBlockAndUpdate(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState().setValue(HoneycombBrood.FACING, blockstate.getValue(EmptyHoneycombBrood.FACING)).setValue(HoneycombBrood.STAGE, Integer.valueOf(0)));
 			stack.shrink(1);
-			if(!Bumblezone.BzBlockMechanicsConfig.dispensersDropGlassBottles.get()) {
+			if(!Bumblezone.BzGeneralConfig.dispensersDropGlassBottles.get()) {
 				if (!stack.isEmpty())
 					addGlassBottleToDispenser(source);
 				else

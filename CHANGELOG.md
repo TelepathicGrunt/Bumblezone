@@ -1,4 +1,10 @@
-### **(V.2.6.6 Changes) (1.16.5 Minecraft)**
+### **(V.2.7.0 Changes) (1.16.5 Minecraft)**
+
+##### Configs:
+NOTE: all configs have been renamed and moved from the world's config folder to a 'the_bumblezone' folder in the main config folder above the mods folder.
+ This is to help prevent confusion and make it easier for beginners to find the config files. 
+ If you have edited the config files in the world save's config folder, you'll have to move your changes over to the new config file location.
+ Sorry about that but it is for the best for ease of finding and organization instead of having configs scattered all over.
 
 ##### Teleportation:
 Redid a bunch of teleportation code so now riding any mob or vehicle will still allow teleportation out of the Bumblezone.
