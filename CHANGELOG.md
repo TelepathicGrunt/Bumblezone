@@ -1,4 +1,4 @@
-### **(V.2.7.0 Changes) (1.16.5 Minecraft)**
+### **(V.3.0.0 Changes) (1.16.5 Minecraft)**
 
 ##### Configs:
 NOTE: all configs have been renamed and moved from the world's config folder to a 'the_bumblezone' folder in the main config folder above the mods folder.
