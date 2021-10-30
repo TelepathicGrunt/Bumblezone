@@ -56,6 +56,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.fml.loading.FileUtils;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -124,6 +126,7 @@ public class Bumblezone{
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> BumblezoneClient::subscribeClientEvents);
 
         // generates/handles config
+        FileUtils.getOrCreateDirectory(FMLPaths.CONFIGDIR.get().resolve("the_bumblezone"), "the_bumblezone");
         BzClientConfig = ConfigHelper.register(ModConfig.Type.CLIENT, BzClientConfigs.BzClientConfigsValues::new, "the_bumblezone/client.toml");
         BzGeneralConfig = ConfigHelper.register(ModConfig.Type.COMMON, BzGeneralConfigs.BzGeneralConfigsValues::new, "the_bumblezone/general.toml");
         BzWorldgenConfig = ConfigHelper.register(ModConfig.Type.COMMON, BzWorldgenConfigs.BzWorldgenConfigValues::new, "the_bumblezone/worldgen.toml");
