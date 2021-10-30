@@ -314,11 +314,11 @@ public class HoneycombBrood extends ProperFacingBlock {
                 world.setBlock(position, state.setValue(STAGE, stage + 1), 2);
             }
         }
-        else if(Bumblezone.BzBlockMechanicsConfig.broodBlocksBeeSpawnCapacity.get() != 0){
-            if(!nearbyEntities.isEmpty() && GeneralUtils.getEntityCountInBz() < Bumblezone.BzBlockMechanicsConfig.broodBlocksBeeSpawnCapacity.get() * 1.75f){
+        else if(Bumblezone.BzGeneralConfig.broodBlocksBeeSpawnCapacity.get() != 0){
+            if(!nearbyEntities.isEmpty() && GeneralUtils.getEntityCountInBz() < Bumblezone.BzGeneralConfig.broodBlocksBeeSpawnCapacity.get() * 1.75f){
                 spawnBroodMob(world, state, position, stage);
             }
-            else if (GeneralUtils.getEntityCountInBz() < Bumblezone.BzBlockMechanicsConfig.broodBlocksBeeSpawnCapacity.get()) {
+            else if (GeneralUtils.getEntityCountInBz() < Bumblezone.BzGeneralConfig.broodBlocksBeeSpawnCapacity.get()) {
                 spawnBroodMob(world, state, position, stage);
             }
         }

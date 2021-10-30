@@ -105,7 +105,6 @@ public class BzChunkGenerator extends ChunkGenerator {
     private final OctavesNoiseGenerator interpolationNoise;
     private final INoiseGenerator surfaceDepthNoise;
     private final OctavesNoiseGenerator field_24776;
-    private final DimensionStructuresSettings dimensionStructuresSettings;
     private final int height;
 
     public BzChunkGenerator(BiomeProvider biomeSource, DimensionStructuresSettings dimensionStructuresSettings) {
@@ -118,7 +117,6 @@ public class BzChunkGenerator extends ChunkGenerator {
         // we need the seed passed into here
         this.random = new SharedSeedRandom(0);
 
-        this.dimensionStructuresSettings = dimensionStructuresSettings;
         this.height = 256;
         this.verticalNoiseResolution = 8;
         this.horizontalNoiseResolution = 4;
@@ -143,7 +141,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     @Override
     // CLIENT-SIDED
     public ChunkGenerator withSeed(long seed) {
-        return new BzChunkGenerator(this.biomeSource.withSeed(seed), dimensionStructuresSettings);
+        return new BzChunkGenerator(this.biomeSource.withSeed(seed), this.getSettings());
     }
 
     private double sampleNoise(int x, int y, int z, double horizontalScaleX, double verticalScale, double horizontalScaleZ, double horizontalStretch, double verticalStretch) {

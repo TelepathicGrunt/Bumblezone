@@ -59,7 +59,7 @@ public class SugarWaterBottleDispenseBehavior extends DefaultDispenseItemBehavio
 
             stack.shrink(1);
 
-            if (!Bumblezone.BzBlockMechanicsConfig.dispensersDropGlassBottles.get()) {
+            if (!Bumblezone.BzGeneralConfig.dispensersDropGlassBottles.get()) {
                 if (!stack.isEmpty())
                     addGlassBottleToDispenser(source);
                 else

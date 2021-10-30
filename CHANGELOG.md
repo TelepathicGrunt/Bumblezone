@@ -1,6 +1,26 @@
+### **(V.3.0.0 Changes) (1.16.5 Minecraft)**
+
+##### Configs:
+NOTE: all configs have been renamed and moved from the world's config folder to a 'the_bumblezone' folder in the main config folder above the mods folder.
+ This is to help prevent confusion and make it easier for beginners to find the config files. 
+ If you have edited the config files in the world save's config folder, you'll have to move your changes over to the new config file location.
+ Sorry about that but it is for the best for ease of finding and organization instead of having configs scattered all over.
+
+##### Teleportation:
+Redid a bunch of teleportation code so now riding any mob or vehicle will still allow teleportation out of the Bumblezone.
+ And you can teleport into the Bumblezone while riding a vehicle if you use the piston pushing into beehive method.
+
+##### Entities:
+Shy's transbee texture and other LGBT+ textures are now applied to 2% of vanilla bees!
+ Her resourcepack can be downloaded separate here if you want transbees without Bumblezone on: https://www.curseforge.com/minecraft/texture-packs/shy-trans-bee
+
+##### Lang:
+Updated ru_ru.json translations. Thank you Bytegm!
+
+
 ### **(V.2.6.5 Changes) (1.16.5 Minecraft)**
 
-##### BMod Compat:
+##### Mod Compat:
 Productive Bee's Honey Treat now should work properly with their gene stuff while also giving The Bumblezone's Protection of the Hive.
 
 

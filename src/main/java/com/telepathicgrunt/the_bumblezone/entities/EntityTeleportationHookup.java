@@ -4,12 +4,13 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.capabilities.IEntityPosAndDim;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
+import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
+import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.Direction;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
@@ -21,11 +22,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import org.apache.logging.log4j.Level;
-
-import java.util.ArrayList;
 
 public class EntityTeleportationHookup {
 
@@ -43,45 +41,25 @@ public class EntityTeleportationHookup {
 
         //Makes it so player does not get killed for falling into the void
         if (livingEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
-            if (livingEntity.getY() < -3) {
-                livingEntity.setPosAndOldPos(livingEntity.getX(), -3.01D, livingEntity.getZ());
-                livingEntity.moveTo(livingEntity.getX(), -3.01D, livingEntity.getZ());
+            if (livingEntity.getY() < -2) {
+                if (livingEntity.getY() < -4) {
+                    livingEntity.setPosAndOldPos(livingEntity.getX(), -4, livingEntity.getZ());
+                    livingEntity.moveTo(livingEntity.getX(), -4, livingEntity.getZ());
+                }
                 livingEntity.fallDistance = 0;
 
                 if(!livingEntity.level.isClientSide()){
-                    LazyOptional<IEntityPosAndDim> lazyOptionalCap = livingEntity.getCapability(PAST_POS_AND_DIM);
-                    if (lazyOptionalCap.isPresent()) {
-                        EntityPositionAndDimension cap = (EntityPositionAndDimension) lazyOptionalCap.orElseThrow(RuntimeException::new);
-                        cap.setTeleporting(false);
-                    }
-
                     teleportOutOfBz(livingEntity);
                 }
             }
             else if (livingEntity.getY() > 255) {
-                livingEntity.setPosAndOldPos(livingEntity.getX(), 255.01D, livingEntity.getZ());
-                livingEntity.moveTo(livingEntity.getX(), 255.01D, livingEntity.getZ());
+                if (livingEntity.getY() > 257) {
+                    livingEntity.setPosAndOldPos(livingEntity.getX(), 257, livingEntity.getZ());
+                    livingEntity.moveTo(livingEntity.getX(), 257, livingEntity.getZ());
+                }
 
                 if(!livingEntity.level.isClientSide()){
-                    LazyOptional<IEntityPosAndDim> lazyOptionalCap = livingEntity.getCapability(PAST_POS_AND_DIM);
-                    if (lazyOptionalCap.isPresent()) {
-                        EntityPositionAndDimension cap = (EntityPositionAndDimension) lazyOptionalCap.orElseThrow(RuntimeException::new);
-                        cap.setTeleporting(false);
-                    }
-
                     teleportOutOfBz(livingEntity);
-                }
-            }
-        }
-        //teleport to bumblezone
-        else if(!livingEntity.level.isClientSide()){
-            LazyOptional<IEntityPosAndDim> lazyOptionalCap = livingEntity.getCapability(PAST_POS_AND_DIM);
-            if (lazyOptionalCap.isPresent()) {
-                EntityPositionAndDimension cap = (EntityPositionAndDimension) lazyOptionalCap.orElseThrow(RuntimeException::new);
-                if (cap.getTeleporting()) {
-                    cap.setTeleporting(false);
-                    EntityTeleportationBackend.enteringBumblezone(livingEntity);
-                    reAddStatusEffect(livingEntity);
                 }
             }
         }
@@ -91,13 +69,12 @@ public class EntityTeleportationHookup {
         if (!livingEntity.getCommandSenderWorld().isClientSide()) {
             checkAndCorrectStoredDimension(livingEntity);
             EntityPositionAndDimension cap = (EntityPositionAndDimension) livingEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-            RegistryKey<World> world_key = RegistryKey.create(Registry.DIMENSION_REGISTRY, cap.getNonBZDim());
-            ServerWorld destination = livingEntity.getCommandSenderWorld().getServer().getLevel(world_key);
+            RegistryKey<World> worldKey = RegistryKey.create(Registry.DIMENSION_REGISTRY, cap.getNonBZDim());
+            ServerWorld destination = livingEntity.getCommandSenderWorld().getServer().getLevel(worldKey);
             if(destination == null){
                 destination = livingEntity.getCommandSenderWorld().getServer().getLevel(World.OVERWORLD);
             }
-            EntityTeleportationBackend.exitingBumblezone(livingEntity, destination);
-            reAddStatusEffect(livingEntity);
+            BzWorldSavedData.queueEntityToTeleport(livingEntity, destination.dimension());
         }
     }
 
@@ -157,8 +134,7 @@ public class EntityTeleportationHookup {
 
             //if the pearl hit a beehive, begin the teleportation.
             if (hitHive && validBelowBlock) {
-                EntityPositionAndDimension cap = (EntityPositionAndDimension) playerEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-                cap.setTeleporting(true);
+                BzWorldSavedData.queueEntityToTeleport(playerEntity, BzDimension.BZ_WORLD_KEY);
                 return true;
             }
         }
@@ -174,8 +150,7 @@ public class EntityTeleportationHookup {
         if (!world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
                 (!Bumblezone.BzDimensionConfig.onlyOverworldHivesTeleports.get() || world.dimension().equals(World.OVERWORLD)))
         {
-            EntityPositionAndDimension cap = (EntityPositionAndDimension) pushedEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
-            if(cap.getTeleporting()) return; // Skip checks if entity is teleporting already to Bz.
+            if(BzWorldSavedData.isEntityQueuedToTeleportAlready(pushedEntity)) return; // Skip checks if entity is teleporting already to Bz.
 
             BlockPos hivePos = new BlockPos(0,0,0);
             BlockPos.Mutable entityPos = new BlockPos.Mutable().set(pushedEntity.blockPosition());
@@ -208,34 +183,8 @@ public class EntityTeleportationHookup {
 
                 //if the entity was pushed into a beehive, begin the teleportation.
                 if (validBelowBlock) {
-                    cap.setTeleporting(true);
+                    BzWorldSavedData.queueEntityToTeleport(pushedEntity, BzDimension.BZ_WORLD_KEY);
                 }
-            }
-        }
-    }
-
-    ///////////
-    // Utils //
-
-    /**
-     * Temporary fix until Mojang patches the bug that makes potion effect icons disappear when changing dimension.
-     * To fix it ourselves, we remove the effect and re-add it to the player.
-     */
-    private static void reAddStatusEffect(LivingEntity livingEntity) {
-        //re-adds potion effects so the icon remains instead of disappearing when changing dimensions due to a bug
-        ArrayList<EffectInstance> effectInstanceList = new ArrayList<>(livingEntity.getActiveEffects());
-        for (int i = effectInstanceList.size() - 1; i >= 0; i--) {
-            EffectInstance effectInstance = effectInstanceList.get(i);
-            if (effectInstance != null) {
-                livingEntity.removeEffect(effectInstance.getEffect());
-                livingEntity.addEffect(
-                        new EffectInstance(
-                                effectInstance.getEffect(),
-                                effectInstance.getDuration(),
-                                effectInstance.getAmplifier(),
-                                effectInstance.isAmbient(),
-                                effectInstance.isVisible(),
-                                effectInstance.showIcon()));
             }
         }
     }

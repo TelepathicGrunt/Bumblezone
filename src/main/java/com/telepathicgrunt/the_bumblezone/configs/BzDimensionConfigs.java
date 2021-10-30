@@ -34,13 +34,12 @@ public class BzDimensionConfigs{
                            " so 0 will be pitch black, 50 will be half",
                            " as bright, 100 will be normal orange brightness,",
                            " and 100000 will be white.\n")
-                    .translation("the_bumblezone.config.dimension.fogbrightnesspercentage")
+                    .translation("the_bumblezone.config.fogbrightnesspercentage")
                     .defineInRange("fogBrightnessPercentage", 100D, 0D, 100000D));
 
-
             builder.pop();
-            builder.push("The Bumblezone Teleportation Options");
 
+            builder.push("The Bumblezone Teleportation Options");
 
                 teleportationMode = subscriber.subscribe(builder
                     .comment(" \n-----------------------------------------------------\n",
@@ -59,7 +58,7 @@ public class BzDimensionConfigs{
                            "Mode 3: Will use mode 1's teleportation method if Bee Nest/Beehive",
                            "is near the spot when exiting the dimension. If none is found,",
                            "then mode 2's teleportation method is used instead.\n")
-                    .translation("the_bumblezone.config.dimension.teleportationmode")
+                    .translation("the_bumblezone.config.teleportationmode")
                     .defineInRange("teleportationMode", 1, 1, 3));
 
                 generateBeenest = subscriber.subscribe(builder
@@ -68,7 +67,7 @@ public class BzDimensionConfigs{
                            " found when leaving The Bumblezone dimension.",
                            " ",
                            " ONLY FOR TELEPORTATION MODE 1.\n")
-                    .translation("the_bumblezone.config.dimension.generatebeenest")
+                    .translation("the_bumblezone.config.generatebeenest")
                     .define("generateBeenest", true));
 
                 forceExitToOverworld = subscriber.subscribe(builder
@@ -78,7 +77,7 @@ public class BzDimensionConfigs{
                            " came from. Use this option if this dimension becomes locked in  ",
                            " with another dimension so you are stuck teleporting between the ",
                            " two and cannot get back to the Overworld.\n")
-                    .translation("the_bumblezone.config.dimension.forceexittooverworld")
+                    .translation("the_bumblezone.config.forceexittooverworld")
                     .define("forceExitToOverworld", false));
 
             onlyOverworldHivesTeleports = subscriber.subscribe(builder
@@ -86,7 +85,7 @@ public class BzDimensionConfigs{
                            " Makes throwing Enderpearls at Bee Nests or Hives only\n "
                             +" work in the Overworld. What this means setting this to true makes it ",
                            " only possible to enter The Bumblezone dimension from the Overworld")
-                    .translation("the_bumblezone.config.dimension.onlyoverworldhivesteleports")
+                    .translation("the_bumblezone.config.onlyoverworldhivesteleports")
                     .define("onlyOverworldHivesTeleports", false));
 
 
@@ -97,7 +96,7 @@ public class BzDimensionConfigs{
                            " for beehives above sealevel as well when placing you)"
                             +" ",
                            " ONLY FOR TELEPORTATION MODE 1 AND 3.\n")
-                    .translation("the_bumblezone.config.dimension.sealevelorhigherexitteleporting")
+                    .translation("the_bumblezone.config.sealevelorhigherexitteleporting")
                     .define("seaLevelOrHigherExitTeleporting", true));
 
                 warnPlayersOfWrongBlockUnderHive = subscriber.subscribe(builder
@@ -107,7 +106,7 @@ public class BzDimensionConfigs{
                            " throw an Enderpearl at a Bee Nest/Beehive but the block under it is ",
                            " not the correct required block. It will also tell the player what ",
                            " block is needed under the Bee Nest/Beehive to teleport to the dimension.\n")
-                    .translation("the_bumblezone.config.dimension.warnplayersofwrongblockunderhive")
+                    .translation("the_bumblezone.config.warnplayersofwrongblockunderhive")
                     .define("warnPlayersOfWrongBlockUnderHive", true));
 
 
@@ -115,7 +114,7 @@ public class BzDimensionConfigs{
                     .comment(" \n-----------------------------------------------------\n",
                            " Should teleporting to and from The Bumblezone work ",
                            " with modded Bee Nests and modded Beehives as well. \n")
-                    .translation("the_bumblezone.config.dimension.allowteleportationwithmoddedbeehives")
+                    .translation("the_bumblezone.config.allowteleportationwithmoddedbeehives")
                     .define("allowTeleportationWithModdedBeehives", true));
 
             builder.pop();

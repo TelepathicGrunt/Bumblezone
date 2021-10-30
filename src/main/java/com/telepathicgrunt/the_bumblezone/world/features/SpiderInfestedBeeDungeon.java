@@ -20,8 +20,8 @@ public class SpiderInfestedBeeDungeon extends NbtFeature{
     @Override
     public boolean place(ISeedReader world, ChunkGenerator generator, Random random, BlockPos position, NbtFeatureConfig config) {
         //affect rarity
-        if (Bumblezone.BzDungeonsConfig.spiderInfestedBeeDungeonRarity.get() >= 1000 ||
-            random.nextInt(Bumblezone.BzDungeonsConfig.spiderInfestedBeeDungeonRarity.get()) != 0) return false;
+        if (Bumblezone.BzWorldgenConfig.spiderInfestedBeeDungeonRarity.get() >= 1000 ||
+            random.nextInt(Bumblezone.BzWorldgenConfig.spiderInfestedBeeDungeonRarity.get()) != 0) return false;
 
         // generate dungeon
         super.place(world, generator, random, position, config);

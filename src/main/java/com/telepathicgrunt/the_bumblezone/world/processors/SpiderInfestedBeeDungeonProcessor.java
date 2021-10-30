@@ -141,7 +141,7 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                 blockState = BzBlocks.EMPTY_HONEYCOMB_BROOD.get().defaultBlockState()
                         .setValue(HoneycombBrood.FACING, blockState.getValue(HoneycombBrood.FACING));
             }
-            else if (random.nextDouble() < Bumblezone.BzDungeonsConfig.spawnerRateSpiderBeeDungeon.get()) {
+            else if (random.nextDouble() < Bumblezone.BzWorldgenConfig.spawnerRateSpiderBeeDungeon.get()) {
                 blockState = Blocks.SPAWNER.defaultBlockState();
             }
             else if(ModChecker.productiveBeesPresent && random.nextFloat() < 0.5f && Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get()) {

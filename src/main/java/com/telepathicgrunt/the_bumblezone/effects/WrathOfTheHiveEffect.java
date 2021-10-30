@@ -67,7 +67,7 @@ public class WrathOfTheHiveEffect extends Effect {
         if (amplifier >= 2) {
             unBEElievablyHighAggression(world, entity);
 
-            if(GeneralUtils.getEntityCountInBz() < Bumblezone.BzBlockMechanicsConfig.broodBlocksBeeSpawnCapacity.get() * 3.0f){
+            if(GeneralUtils.getEntityCountInBz() < Bumblezone.BzGeneralConfig.broodBlocksBeeSpawnCapacity.get() * 3.0f){
                 // Spawn bees when high wrath effect.
                 // Must be very low as this method is fired every tick for status effects.
                 // We don't want to spawn millions of bees
