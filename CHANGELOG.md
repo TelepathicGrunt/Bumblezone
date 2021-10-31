@@ -1,3 +1,9 @@
+### **(V.3.2.6 Changes) (1.17.1 Minecraft)**
+
+##### Misc:
+Fixed crash caused by a bad mixin on my end. Sorry. Now requires Fabric API 0.41.0 or newer.
+
+
 ### **(V.3.2.5 Changes) (1.17.1 Minecraft)**
 
 ##### Teleportation:

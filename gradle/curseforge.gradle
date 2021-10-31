@@ -16,7 +16,7 @@ curseforge {
         addGameVersion("Fabric")
 
         relations {
-            requiredDependency 'cloth-api'
+            requiredDependency 'cloth-config'
             requiredDependency 'cardinal-components'
             requiredDependency 'fabric-api'
         }

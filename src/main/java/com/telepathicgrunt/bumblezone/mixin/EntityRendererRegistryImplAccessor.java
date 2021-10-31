@@ -1,6 +1,6 @@
 package com.telepathicgrunt.bumblezone.mixin;
 
-import net.fabricmc.fabric.impl.client.renderer.registry.EntityRendererRegistryImpl;
+import net.fabricmc.fabric.impl.client.rendering.EntityRendererRegistryImpl;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.world.entity.EntityType;
 import org.spongepowered.asm.mixin.Mixin;
