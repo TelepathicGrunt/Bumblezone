@@ -1,0 +1,36 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/root",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:beehemoth_spawn_egg"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.tamed_beehemoth.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.tamed_beehemoth.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "criteria": {
+    "tamed_beehemoth": {
+      "trigger": "minecraft:tame_animal",
+      "conditions": {
+        "entity": {
+          "type": "the_bumblezone:beehemoth"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "tamed_beehemoth"
+    ]
+  ]
+}

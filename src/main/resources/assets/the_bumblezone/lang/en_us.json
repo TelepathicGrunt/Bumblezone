@@ -52,6 +52,13 @@
   "subtitles.the_bumblezone.behemoth.hurt": "Beehemoth hurt",
   "subtitles.the_bumblezone.behemoth.dies": "Beehemoth died",
 
+  "advancements.the_bumblezone.root.title": "The Buzzing Bumbling Bumblezone!",
+  "advancements.the_bumblezone.root.description": "Enter The Bumblezone dimension by any means",
+  "advancements.the_bumblezone.tamed_beehemoth.title": "Bee Movie But It's 300% Larger",
+  "advancements.the_bumblezone.tamed_beehemoth.description": "Tame a Beehemoth with buckets of honey!",
+  "advancements.the_bumblezone.queen_beehemoth.title": "Regal Friends Till The Very End!",
+  "advancements.the_bumblezone.queen_beehemoth.description": "Befriend a Beehemoth to maximum friendship!",
+
   "the_bumblezone.porous_honeycomb_block.jei_description": " A honeycomb block filled with holes! You can store honey into this block with Honey Bottles or Honey Buckets.",
   "the_bumblezone.filled_porous_honeycomb_block.jei_description": " A honeycomb block filled to the brim with honey! You can take honey out of this block with a Glass Bottle. However, this may anger nearby bees. \n\n When mined, this block drops Porous Honeycomb Block and some Honeycombs. The drop is affect by Fortune or you can use Silk Touch to keep the block intact. \n\n This block also give off a Redstone signal of 1 when a Comparator is facing this block.",
   "the_bumblezone.empty_honeycomb_brood_block.jei_description": " A honeycomb block with a large hole that has nothing inside. Can be revived with Buzzier Bee's Bottled bee item or with Potion of Bee's bee potions!",

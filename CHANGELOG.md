@@ -1,4 +1,8 @@
-### **(V.3.0.1 Changes) (1.16.5 Minecraft)**
+### **(V.3.1.0 Changes) (1.16.5 Minecraft)**
+
+##### Advancements:
+Added new advancements for this mod to add some progression and high xp rewards! 
+ Note: Progress or conditions met before this update will not contribute towards the new advancements.
 
 ##### Configs:
 Significantly cleaned up the config system backend code for my mod. Let me know if any config no longer works but it should be ok!
