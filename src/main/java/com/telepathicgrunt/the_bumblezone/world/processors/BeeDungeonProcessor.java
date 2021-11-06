@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.world.processors;
 
 import com.mojang.serialization.Codec;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.CavesAndCliffsBackportCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.CharmCompat;
@@ -49,21 +49,21 @@ public class BeeDungeonProcessor extends StructureProcessor {
             else{
                 switch (metadata){
                     case "center": {
-                        if(ModChecker.buzzierBeesPresent && random.nextFloat() < 0.8f && Bumblezone.BzModCompatibilityConfig.allowScentedCandlesBeeDungeon.get()) {
+                        if(ModChecker.buzzierBeesPresent && random.nextFloat() < 0.8f && BzModCompatibilityConfigs.allowScentedCandlesBeeDungeon.get()) {
                             blockState = BuzzierBeesCompat.BBGetRandomTier3Candle(
                                     random,
-                                    Bumblezone.BzModCompatibilityConfig.powerfulCandlesRarityBeeDungeon.get()+1,
+                                    BzModCompatibilityConfigs.powerfulCandlesRarityBeeDungeon.get()+1,
                                     random.nextInt(random.nextInt(random.nextInt(3)+1)+1)+1,
                                     false,
                                     true);
                         }
                         else if(ModChecker.cavesAndCliffsPresent && !ModChecker.buzzierBeesPresent &&
-                                Bumblezone.BzModCompatibilityConfig.allowCACCandlesBeeDungeon.get() && random.nextFloat() < 0.33f)
+                                BzModCompatibilityConfigs.allowCACCandlesBeeDungeon.get() && random.nextFloat() < 0.33f)
                         {
                             blockState = CavesAndCliffsBackportCompat.CACGetRandomCandle(random, random.nextInt(random.nextInt(random.nextInt(3)+1)+1)+1, false, true);
                         }
                         else if(ModChecker.charmPresent && !ModChecker.buzzierBeesPresent &&
-                                Bumblezone.BzModCompatibilityConfig.allowCCandlesBeeDungeon.get() && random.nextFloat() < 0.33f)
+                                BzModCompatibilityConfigs.allowCCandlesBeeDungeon.get() && random.nextFloat() < 0.33f)
                         {
                             blockState = CharmCompat.CGetCandle(false, true);
                         }
@@ -76,20 +76,20 @@ public class BeeDungeonProcessor extends StructureProcessor {
                     }
                     break;
                     case "inner_ring": {
-                        if(ModChecker.buzzierBeesPresent && random.nextFloat() < 0.4f && Bumblezone.BzModCompatibilityConfig.allowScentedCandlesBeeDungeon.get()) {
+                        if(ModChecker.buzzierBeesPresent && random.nextFloat() < 0.4f && BzModCompatibilityConfigs.allowScentedCandlesBeeDungeon.get()) {
                             blockState = BuzzierBeesCompat.BBGetRandomTier2Candle(
                                             random,
-                                            Bumblezone.BzModCompatibilityConfig.powerfulCandlesRarityBeeDungeon.get(),
+                                            BzModCompatibilityConfigs.powerfulCandlesRarityBeeDungeon.get(),
                                             random.nextInt(random.nextInt(3)+1)+1,
                                             false,
                                             true);
                         }
-                        else if(ModChecker.cavesAndCliffsPresent && Bumblezone.BzModCompatibilityConfig.allowCACCandlesBeeDungeon.get() &&
+                        else if(ModChecker.cavesAndCliffsPresent && BzModCompatibilityConfigs.allowCACCandlesBeeDungeon.get() &&
                                 (ModChecker.buzzierBeesPresent ? random.nextFloat() < 0.05f : random.nextFloat() < 0.99))
                         {
                             blockState = CavesAndCliffsBackportCompat.CACGetRandomCandle(random, random.nextInt(random.nextInt(3)+1)+1, false, true);
                         }
-                        else if(ModChecker.charmPresent && Bumblezone.BzModCompatibilityConfig.allowCCandlesBeeDungeon.get() &&
+                        else if(ModChecker.charmPresent && BzModCompatibilityConfigs.allowCCandlesBeeDungeon.get() &&
                                 (ModChecker.buzzierBeesPresent ? random.nextFloat() < 0.05f : random.nextFloat() < 0.25f))
                         {
                             blockState = CharmCompat.CGetCandle(false, true);
@@ -103,19 +103,19 @@ public class BeeDungeonProcessor extends StructureProcessor {
                     }
                     break;
                     case "outer_ring": {
-                        if(ModChecker.buzzierBeesPresent && random.nextFloat() < 0.25f && Bumblezone.BzModCompatibilityConfig.allowScentedCandlesBeeDungeon.get()) {
+                        if(ModChecker.buzzierBeesPresent && random.nextFloat() < 0.25f && BzModCompatibilityConfigs.allowScentedCandlesBeeDungeon.get()) {
                             blockState = BuzzierBeesCompat.BBGetRandomTier1Candle(
                                             random,
                                             random.nextInt(3)+1,
                                             false,
                                             true);
                         }
-                        else if(ModChecker.cavesAndCliffsPresent && Bumblezone.BzModCompatibilityConfig.allowCACCandlesBeeDungeon.get() &&
+                        else if(ModChecker.cavesAndCliffsPresent && BzModCompatibilityConfigs.allowCACCandlesBeeDungeon.get() &&
                                 (ModChecker.buzzierBeesPresent ? random.nextFloat() < 0.1f : random.nextFloat() < 0.99f))
                         {
                             blockState = CavesAndCliffsBackportCompat.CACGetRandomCandle(random, random.nextInt(3)+1, false, true);
                         }
-                        else if(ModChecker.charmPresent && Bumblezone.BzModCompatibilityConfig.allowCCandlesBeeDungeon.get() &&
+                        else if(ModChecker.charmPresent && BzModCompatibilityConfigs.allowCCandlesBeeDungeon.get() &&
                                 (ModChecker.buzzierBeesPresent ? random.nextFloat() < 0.1f : random.nextFloat() < 0.2f))
                         {
                             blockState = CharmCompat.CGetCandle(false, true);
@@ -135,11 +135,11 @@ public class BeeDungeonProcessor extends StructureProcessor {
 
         // main body and ceiling
         else if(blockState.is(Blocks.HONEYCOMB_BLOCK) || blockState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get())){
-            if(ModChecker.productiveBeesPresent && random.nextFloat() < Bumblezone.BzModCompatibilityConfig.PBOreHoneycombSpawnRateBeeDungeon.get()) {
-                blockState = ProductiveBeesCompat.PBGetRandomHoneycomb(random, Bumblezone.BzModCompatibilityConfig.PBGreatHoneycombRarityBeeDungeon.get());
+            if(ModChecker.productiveBeesPresent && random.nextFloat() < BzModCompatibilityConfigs.PBOreHoneycombSpawnRateBeeDungeon.get()) {
+                blockState = ProductiveBeesCompat.PBGetRandomHoneycomb(random, BzModCompatibilityConfigs.PBGreatHoneycombRarityBeeDungeon.get());
             }
-            else if(ModChecker.resourcefulBeesPresent && random.nextFloat() < Bumblezone.BzModCompatibilityConfig.RBOreHoneycombSpawnRateBeeDungeon.get()) {
-                blockState = ResourcefulBeesCompat.RBGetRandomHoneycomb(random, Bumblezone.BzModCompatibilityConfig.RBGreatHoneycombRarityBeeDungeon.get());
+            else if(ModChecker.resourcefulBeesPresent && random.nextFloat() < BzModCompatibilityConfigs.RBOreHoneycombSpawnRateBeeDungeon.get()) {
+                blockState = ResourcefulBeesCompat.RBGetRandomHoneycomb(random, BzModCompatibilityConfigs.RBGreatHoneycombRarityBeeDungeon.get());
             }
             else if (random.nextFloat() < 0.4f) {
                 blockState = Blocks.HONEYCOMB_BLOCK.defaultBlockState();

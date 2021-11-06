@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BreedGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.FaceRandomGoal;
@@ -228,7 +228,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
             getHoneyFromSlime(this);
             return ActionResultType.SUCCESS;
          }
-         else if (ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.allowHoneyWandCompat.get())
+         else if (ModChecker.buzzierBeesPresent && BzModCompatibilityConfigs.allowHoneyWandCompat.get())
          {
             ActionResultType action = BuzzierBeesCompat.honeyWandGivingHoney(itemstack, player, hand);
             if (action == ActionResultType.SUCCESS)

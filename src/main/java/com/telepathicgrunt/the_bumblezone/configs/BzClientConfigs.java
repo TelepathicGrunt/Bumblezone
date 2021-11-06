@@ -1,28 +1,31 @@
 package com.telepathicgrunt.the_bumblezone.configs;
 
-import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class BzClientConfigs {
+    public static final ForgeConfigSpec GENERAL_SPEC;
 
-    public static class BzClientConfigsValues {
-        public ConfigHelper.ConfigValueListener<Double> lgbtBeeRate;
-        public ConfigHelper.ConfigValueListener<Boolean> enableLgbtBeeRenderer;
+    public static ForgeConfigSpec.DoubleValue lgbtBeeRate;
+    public static ForgeConfigSpec.BooleanValue enableLgbtBeeRenderer;
 
-        public BzClientConfigsValues(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber) {
+    static {
+        ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
+        setupConfig(configBuilder);
+        GENERAL_SPEC = configBuilder.build();
+    }
 
-            lgbtBeeRate = subscriber.subscribe(builder
-                    .comment(" \n-----------------------------------------------------\n",
-                            " Rate for how often a bee will have an LGBT+ coat!\n")
-                    .translation("the_bumblezone.config.lgbtBeeRate")
-                    .define("lgbt+ bee rates", 0.02D));
+    private static void setupConfig(ForgeConfigSpec.Builder builder) {
+        lgbtBeeRate = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Rate for how often a bee will have an LGBT+ coat!\n")
+                .translation("the_bumblezone.config.lgbtBeeRate")
+                .defineInRange("lgbt+ bee rates", 0.02D, 0D, 1D);
 
-            enableLgbtBeeRenderer = subscriber.subscribe(builder
-                    .comment(" \n-----------------------------------------------------\n",
-                            " Enable replacing the bee renderer for LGBT+ skins.",
-                            " Set this to false if the render is messing with other mod's bee renderers.\n")
-                    .translation("the_bumblezone.config.enableLgbtBeeRenderer")
-                    .define("Enable lgbt+ bee renderer", true));
-        }
+        enableLgbtBeeRenderer = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Enable replacing the bee renderer for LGBT+ skins.",
+                        " Set this to false if the render is messing with other mod's bee renderers.\n")
+                .translation("the_bumblezone.config.enableLgbtBeeRenderer")
+                .define("Enable lgbt+ bee renderer", true);
     }
 }

@@ -49,17 +49,17 @@ public class GlassBottleBehavior {
             }
 
 //            if ((playerEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-//                    Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+//                    BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
 //                    !playerEntity.isCreative() &&
 //                    !playerEntity.isSpectator() &&
-//                    Bumblezone.BzBeeAggressionConfig.aggressiveBees.get())
+//                    BzBeeAggressionConfigs.aggressiveBees.get())
 //            {
 //                if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())){
 //                    playerEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
 //                }
 //                else{
 //                    //Now all bees nearby in Bumblezone will get VERY angry!!!
-//                    playerEntity.addEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(), true));
+//                    playerEntity.addEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
 //                }
 //            }
 

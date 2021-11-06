@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import net.minecraft.entity.LivingEntity;
@@ -49,7 +49,7 @@ public class BeehemothAIRide extends Goal {
 
         if (player.zza != 0 || ((LivingEntityAccessor)player).isJumping()) {
             currentSpeed = Math.min(
-                    Bumblezone.BzGeneralConfig.beeheemothSpeed.get() * speedModifier,
+                    BzGeneralConfigs.beeheemothSpeed.get() * speedModifier,
                     currentSpeed + 0.3D);
         }
         else {

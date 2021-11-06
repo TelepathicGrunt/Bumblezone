@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
@@ -19,8 +19,8 @@ public class BeeDungeon extends NbtFeature{
     @Override
     public boolean place(ISeedReader world, ChunkGenerator generator, Random random, BlockPos position, NbtFeatureConfig config) {
         //affect rarity
-        if (Bumblezone.BzWorldgenConfig.beeDungeonRarity.get() >= 1000 ||
-                random.nextInt(Bumblezone.BzWorldgenConfig.beeDungeonRarity.get()) != 0) return false;
+        if (BzWorldgenConfigs.beeDungeonRarity.get() >= 1000 ||
+                random.nextInt(BzWorldgenConfigs.beeDungeonRarity.get()) != 0) return false;
 
         // generate dungeon
         super.place(world, generator, random, position, config);

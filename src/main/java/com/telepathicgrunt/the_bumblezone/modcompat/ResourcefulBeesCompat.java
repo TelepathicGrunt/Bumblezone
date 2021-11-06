@@ -10,6 +10,7 @@ import com.resourcefulbees.resourcefulbees.registry.ModBlocks;
 import com.resourcefulbees.resourcefulbees.registry.ModItems;
 import com.resourcefulbees.resourcefulbees.registry.ModVillagerProfessions;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzConfiguredFeatures;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
@@ -71,17 +72,17 @@ public class ResourcefulBeesCompat {
         BeeRegistry.getRegistry().getBees().forEach((s, b) -> tempBeeMap.put(b, ForgeRegistries.ENTITIES.getValue(b.getEntityTypeRegistryID())));
 
         // remove bees that RB will not spawn in the world
-        if (Bumblezone.BzModCompatibilityConfig.useSpawnInWorldConfigFromRB.get()) {
+        if (BzModCompatibilityConfigs.useSpawnInWorldConfigFromRB.get()) {
             tempBeeMap.entrySet().removeIf((b) -> !b.getKey().getSpawnData().canSpawnInWorld());
         }
 
         // remove bees that RB blacklisted from any bumblezone biome
-        if (Bumblezone.BzModCompatibilityConfig.useSpawnInWorldConfigFromRB.get()) {
+        if (BzModCompatibilityConfigs.useSpawnInWorldConfigFromRB.get()) {
             tempBeeMap.entrySet().removeIf((b) -> !b.getKey().getSpawnData().getBiomeBlacklist().contains(Bumblezone.MODID));
         }
 
         // remove bees that bumblezone blacklists
-        Set<ResourceLocation> blacklistedBees = Arrays.stream(Bumblezone.BzModCompatibilityConfig.RBBlacklistedBees.get().split(",")).map(String::trim).map(ResourceLocation::new).collect(Collectors.toSet());
+        Set<ResourceLocation> blacklistedBees = Arrays.stream(BzModCompatibilityConfigs.RBBlacklistedBees.get().split(",")).map(String::trim).map(ResourceLocation::new).collect(Collectors.toSet());
         tempBeeMap.entrySet().removeIf((b) -> blacklistedBees.contains(b.getValue().getRegistryName()));
 
         // Now create list of bees and honecombs to spawn
@@ -110,7 +111,7 @@ public class ResourcefulBeesCompat {
 
         //Set up lists/maps for adding the worldgen compat stuff to bee dungeons and biomes
         Map<ResourceLocation, Block> unusedHoneycombs = new HashMap<>(RESOURCEFUL_HONEYCOMBS_MAP);
-        if (Bumblezone.BzModCompatibilityConfig.spawnResourcefulBeesHoneycombVariants.get()) {
+        if (BzModCompatibilityConfigs.spawnResourcefulBeesHoneycombVariants.get()) {
             // Multiple entries influences changes of them being picked. Those in back of list is rarest to be picked
             addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "coal_honeycomb_block"));
             addToSpiderDungeonList(unusedHoneycombs, new ResourceLocation("resourcefulbees", "coal_honeycomb_block"));
@@ -150,7 +151,7 @@ public class ResourcefulBeesCompat {
         // fires when server starts up so long after FMLCommonSetupEvent.
         // Thus it is safe to register this event here.
         // Need lowest priority to make sure we add trades after the other mod has created their trades.
-        if(Bumblezone.BzModCompatibilityConfig.allowResorucefulBeesTradeCompat.get()) {
+        if(BzModCompatibilityConfigs.allowResorucefulBeesTradeCompat.get()) {
             IEventBus forgeBus = MinecraftForge.EVENT_BUS;
             forgeBus.addListener(EventPriority.LOWEST, ResourcefulBeesCompat::setupResourcefulBeesTrades);
         }
@@ -184,7 +185,7 @@ public class ResourcefulBeesCompat {
     public static void RBAddWorldgen(List<Biome> bumblezone_biomes) {
         for (Biome biome : bumblezone_biomes) {
             // beeswax block
-            if (Bumblezone.BzModCompatibilityConfig.RBBeesWaxWorldgen.get()) {
+            if (BzModCompatibilityConfigs.RBBeesWaxWorldgen.get()) {
                 biome.getGenerationSettings().features().get(GenerationStage.Decoration.VEGETAL_DECORATION.ordinal()).add(() -> BzConfiguredFeatures.BZ_BEES_WAX_PILLAR_CONFIGURED_FEATURE);
             }
 

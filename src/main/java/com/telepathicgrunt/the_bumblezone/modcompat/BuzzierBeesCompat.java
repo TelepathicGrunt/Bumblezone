@@ -4,7 +4,7 @@ import com.minecraftabnormals.buzzier_bees.common.blocks.CandleBlock;
 import com.minecraftabnormals.buzzier_bees.core.registry.BBBlocks;
 import com.minecraftabnormals.buzzier_bees.core.registry.BBItems;
 import com.minecraftabnormals.buzzier_bees.core.registry.BBVillagers;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -48,7 +48,7 @@ public class BuzzierBeesCompat {
         CRYSTALLIZED_HONEY_BLOCK = BBBlocks.CRYSTALLIZED_HONEY_BLOCK.get().defaultBlockState();
         Item BOTTLED_BEES = ForgeRegistries.ITEMS.getValue(new ResourceLocation(BUZZIER_BEES_NAMESPACE, "bee_bottle"));
 
-        if (BOTTLED_BEES != null && Bumblezone.BzModCompatibilityConfig.allowPotionOfBeesCompat.get()) {
+        if (BOTTLED_BEES != null && BzModCompatibilityConfigs.allowPotionOfBeesCompat.get()) {
             BuzzierBeesBottledBeesDispenseBehavior.DEFAULT_BOTTLED_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).thebumblezone_invokeGetDispenseMethod(new ItemStack(BOTTLED_BEES));
             DispenserBlock.registerBehavior(BBItems.BOTTLE_OF_BEE.get(), BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); //adds compatibility with bottled bees in dispensers
         }
@@ -151,7 +151,7 @@ public class BuzzierBeesCompat {
         // fires when server starts up so long after FMLCommonSetupEvent.
         // Thus it is safe to register this event here.
         // Need lowest priority to make sure we add trades after the other mod has created their trades.
-        if(Bumblezone.BzModCompatibilityConfig.allowBuzzierBeesTradeCompat.get()){
+        if(BzModCompatibilityConfigs.allowBuzzierBeesTradeCompat.get()){
             IEventBus forgeBus = MinecraftForge.EVENT_BUS;
             forgeBus.addListener(EventPriority.LOWEST, BuzzierBeesCompat::setupBuzzierBeesTrades);
         }

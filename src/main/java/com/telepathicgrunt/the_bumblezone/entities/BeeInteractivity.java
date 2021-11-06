@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -112,7 +112,7 @@ public class BeeInteractivity {
             else{
                 playerEntity.addEffect(new EffectInstance(
                         BzEffects.PROTECTION_OF_THE_HIVE.get(),
-                        Bumblezone.BzBeeAggressionConfig.howLongProtectionOfTheHiveLasts.get(),
+                        BzBeeAggressionConfigs.howLongProtectionOfTheHiveLasts.get(),
                         2,
                         false,
                         false,

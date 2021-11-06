@@ -1,6 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
@@ -100,10 +103,10 @@ public class HoneycombBrood extends ProperFacingBlock {
             }
 
             if ((playerEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                    Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                    BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&
-                    Bumblezone.BzBeeAggressionConfig.aggressiveBees.get())
+                    BzBeeAggressionConfigs.aggressiveBees.get())
             {
                 if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())){
                     playerEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
@@ -112,10 +115,10 @@ public class HoneycombBrood extends ProperFacingBlock {
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
                     playerEntity.addEffect(new EffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE.get(),
-                            Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
+                            BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),
                             2,
                             false,
-                            Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(),
+                            BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(),
                             true));
                 }
             }
@@ -141,7 +144,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
                 if (successfulGrowth && world.random.nextFloat() < 0.30F) {
                     if(!playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())){
-                        playerEntity.addEffect(new EffectInstance(BzEffects.PROTECTION_OF_THE_HIVE.get(), (int) (Bumblezone.BzBeeAggressionConfig.howLongProtectionOfTheHiveLasts.get() * 0.75f), 1, false, false,  true));
+                        playerEntity.addEffect(new EffectInstance(BzEffects.PROTECTION_OF_THE_HIVE.get(), (int) (BzBeeAggressionConfigs.howLongProtectionOfTheHiveLasts.get() * 0.75f), 1, false, false,  true));
                     }
                 }
 
@@ -195,7 +198,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         }
 
         // makes honey treat have a slight chance of growing the larva 2 stages instead of 1
-        else if (ModChecker.productiveBeesPresent && Bumblezone.BzModCompatibilityConfig.allowHoneyTreatCompat.get()
+        else if (ModChecker.productiveBeesPresent && BzModCompatibilityConfigs.allowHoneyTreatCompat.get()
                 && itemstack.getItem().getRegistryName().equals(HONEY_TREAT))
         {
             if (!world.isClientSide()) {
@@ -229,7 +232,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         }
 
         // Buzzier Bees honey wand compat
-        else if (ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.allowHoneyWandCompat.get()) {
+        else if (ModChecker.buzzierBeesPresent && BzModCompatibilityConfigs.allowHoneyWandCompat.get()) {
 
             // Player is taking honey and killing larva/
             ActionResultType action = BuzzierBeesCompat.honeyWandTakingHoney(itemstack, playerEntity, playerHand);
@@ -253,15 +256,15 @@ public class HoneycombBrood extends ProperFacingBlock {
                         1.0F);
 
                 if ((world.dimension().equals(BzDimension.BZ_WORLD_KEY) ||
-                        Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                         !playerEntity.isCreative() &&
                         !playerEntity.isSpectator() &&
-                        Bumblezone.BzBeeAggressionConfig.aggressiveBees.get()) {
+                        BzBeeAggressionConfigs.aggressiveBees.get()) {
 
                     // Now all bees nearby in Bumblezone will get VERY angry!!!
                     playerEntity.addEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(),
-                            Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(), 2, false,
-                            Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(), true));
+                            BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 2, false,
+                            BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
                 }
 
                 return action;
@@ -314,11 +317,11 @@ public class HoneycombBrood extends ProperFacingBlock {
                 world.setBlock(position, state.setValue(STAGE, stage + 1), 2);
             }
         }
-        else if(Bumblezone.BzGeneralConfig.broodBlocksBeeSpawnCapacity.get() != 0){
-            if(!nearbyEntities.isEmpty() && GeneralUtils.getEntityCountInBz() < Bumblezone.BzGeneralConfig.broodBlocksBeeSpawnCapacity.get() * 1.75f){
+        else if(BzGeneralConfigs.broodBlocksBeeSpawnCapacity.get() != 0){
+            if(!nearbyEntities.isEmpty() && GeneralUtils.getEntityCountInBz() < BzGeneralConfigs.broodBlocksBeeSpawnCapacity.get() * 1.75f){
                 spawnBroodMob(world, state, position, stage);
             }
-            else if (GeneralUtils.getEntityCountInBz() < Bumblezone.BzGeneralConfig.broodBlocksBeeSpawnCapacity.get()) {
+            else if (GeneralUtils.getEntityCountInBz() < BzGeneralConfigs.broodBlocksBeeSpawnCapacity.get()) {
                 spawnBroodMob(world, state, position, stage);
             }
         }
@@ -341,16 +344,16 @@ public class HoneycombBrood extends ProperFacingBlock {
             }
 
             if ((playerEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                    Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                    BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&
-                    Bumblezone.BzBeeAggressionConfig.aggressiveBees.get()) {
+                    BzBeeAggressionConfigs.aggressiveBees.get()) {
                 if (playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
                     playerEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                 }
                 else {
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
-                    playerEntity.addEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(), 2, false, Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(), true));
+                    playerEntity.addEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
                 }
             }
         }

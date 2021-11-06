@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.effects;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.modcompat.CarrierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
@@ -67,7 +68,7 @@ public class WrathOfTheHiveEffect extends Effect {
         if (amplifier >= 2) {
             unBEElievablyHighAggression(world, entity);
 
-            if(GeneralUtils.getEntityCountInBz() < Bumblezone.BzGeneralConfig.broodBlocksBeeSpawnCapacity.get() * 3.0f){
+            if(GeneralUtils.getEntityCountInBz() < BzGeneralConfigs.broodBlocksBeeSpawnCapacity.get() * 3.0f){
                 // Spawn bees when high wrath effect.
                 // Must be very low as this method is fired every tick for status effects.
                 // We don't want to spawn millions of bees
@@ -155,18 +156,18 @@ public class WrathOfTheHiveEffect extends Effect {
                 livingEntity,
                 BeeEntity.class,
                 LINE_OF_SIGHT,
-                Math.max((Bumblezone.BzBeeAggressionConfig.speedBoostLevel.get() - 1), 1),
-                Math.max((Bumblezone.BzBeeAggressionConfig.absorptionBoostLevel.get() - 1) / 2, 1),
-                Math.max((Bumblezone.BzBeeAggressionConfig.strengthBoostLevel.get() - 1) / 3, 1));
+                Math.max((BzBeeAggressionConfigs.speedBoostLevel.get() - 1), 1),
+                Math.max((BzBeeAggressionConfigs.absorptionBoostLevel.get() - 1) / 2, 1),
+                Math.max((BzBeeAggressionConfigs.strengthBoostLevel.get() - 1) / 3, 1));
 
         if(ModChecker.carrierBeesPresent) {
             setAggression(world,
                     livingEntity,
                     CarrierBeesCompat.CBGetAppleBeeClass(),
                     LINE_OF_SIGHT,
-                    Math.max((Bumblezone.BzBeeAggressionConfig.speedBoostLevel.get() - 1), 1),
-                    Math.max((Bumblezone.BzBeeAggressionConfig.absorptionBoostLevel.get() - 1) / 2, 1),
-                    Math.max((Bumblezone.BzBeeAggressionConfig.strengthBoostLevel.get() - 1) / 3, 1));
+                    Math.max((BzBeeAggressionConfigs.speedBoostLevel.get() - 1), 1),
+                    Math.max((BzBeeAggressionConfigs.absorptionBoostLevel.get() - 1) / 2, 1),
+                    Math.max((BzBeeAggressionConfigs.strengthBoostLevel.get() - 1) / 3, 1));
         }
     }
 
@@ -179,18 +180,18 @@ public class WrathOfTheHiveEffect extends Effect {
                 livingEntity,
                 BeeEntity.class,
                 SEE_THROUGH_WALLS,
-                Bumblezone.BzBeeAggressionConfig.speedBoostLevel.get() - 1,
-                Bumblezone.BzBeeAggressionConfig.absorptionBoostLevel.get() - 1,
-                Bumblezone.BzBeeAggressionConfig.strengthBoostLevel.get() - 1);
+                BzBeeAggressionConfigs.speedBoostLevel.get() - 1,
+                BzBeeAggressionConfigs.absorptionBoostLevel.get() - 1,
+                BzBeeAggressionConfigs.strengthBoostLevel.get() - 1);
 
         if(ModChecker.carrierBeesPresent) {
             setAggression(world,
                     livingEntity,
                     CarrierBeesCompat.CBGetAppleBeeClass(),
                     SEE_THROUGH_WALLS,
-                    Bumblezone.BzBeeAggressionConfig.speedBoostLevel.get() - 1,
-                    Bumblezone.BzBeeAggressionConfig.absorptionBoostLevel.get() - 1,
-                    Bumblezone.BzBeeAggressionConfig.strengthBoostLevel.get() - 1);
+                    BzBeeAggressionConfigs.speedBoostLevel.get() - 1,
+                    BzBeeAggressionConfigs.absorptionBoostLevel.get() - 1,
+                    BzBeeAggressionConfigs.strengthBoostLevel.get() - 1);
         }
     }
 
@@ -199,8 +200,8 @@ public class WrathOfTheHiveEffect extends Effect {
             return;
         }
 
-        sightMode.range(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get());
-        List<MobEntity> beeList = world.getNearbyEntities(entityToFind, sightMode, livingEntity, livingEntity.getBoundingBox().inflate(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()));
+        sightMode.range(BzBeeAggressionConfigs.aggressionTriggerRadius.get());
+        List<MobEntity> beeList = world.getNearbyEntities(entityToFind, sightMode, livingEntity, livingEntity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius.get()));
 
         for (MobEntity bee : beeList) {
             bee.setTarget(livingEntity);
@@ -241,8 +242,8 @@ public class WrathOfTheHiveEffect extends Effect {
 
     private static void clearAggression(World world, LivingEntity livingEntity, Class<? extends MobEntity> entityToFind, EntityPredicate sightMode) {
 
-        sightMode.range(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D);
-        List<MobEntity> beeList = world.getNearbyEntities(entityToFind, sightMode, livingEntity, livingEntity.getBoundingBox().inflate(Bumblezone.BzBeeAggressionConfig.aggressionTriggerRadius.get()*0.5D));
+        sightMode.range(BzBeeAggressionConfigs.aggressionTriggerRadius.get()*0.5D);
+        List<MobEntity> beeList = world.getNearbyEntities(entityToFind, sightMode, livingEntity, livingEntity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius.get()*0.5D));
         for (MobEntity bee : beeList)
         {
             if(bee.getTarget() == livingEntity) {
@@ -265,7 +266,7 @@ public class WrathOfTheHiveEffect extends Effect {
             //refresh the bee anger timer
             entity.addEffect(new EffectInstance(
                     BzEffects.WRATH_OF_THE_HIVE.get(),
-                    Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
+                    BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),
                     1,
                     false,
                     true));

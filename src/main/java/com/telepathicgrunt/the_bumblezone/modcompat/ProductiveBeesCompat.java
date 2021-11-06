@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehive;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehiveAbstract;
@@ -63,7 +64,7 @@ public class ProductiveBeesCompat {
 		}
 		Set<Block> unusedHoneycombs = new HashSet<>(PRODUCTIVE_BEES_HONEYCOMBS_MAP.values());
 
-		if (Bumblezone.BzModCompatibilityConfig.spawnProductiveBeesHoneycombVariants.get()) {
+		if (BzModCompatibilityConfigs.spawnProductiveBeesHoneycombVariants.get()) {
 			// Multiple entries influences changes of them being picked. Those in back of list is rarest to be picked
 			addToSpiderDungeonList(unusedHoneycombs, ModBlocks.COMB_ROTTEN.get());
 			addToSpiderDungeonList(unusedHoneycombs, ModBlocks.COMB_BAUXITE.get());
@@ -196,7 +197,7 @@ public class ProductiveBeesCompat {
 	public static void PBAddWorldgen(List<Biome> bumblezoneBiomes) {
 		HashMap<String, CompoundNBT> PB_DATA = new HashMap<>(BeeReloadListener.INSTANCE.getData());
 		PRODUCTIVE_BEES_LIST = new ArrayList<>(PB_DATA.keySet());
-		Set<String> blacklistedBees = Arrays.stream(Bumblezone.BzModCompatibilityConfig.PBBlacklistedBees.get().split(",")).map(String::trim).collect(Collectors.toSet());
+		Set<String> blacklistedBees = Arrays.stream(BzModCompatibilityConfigs.PBBlacklistedBees.get().split(",")).map(String::trim).collect(Collectors.toSet());
 		PRODUCTIVE_BEES_LIST.removeIf(blacklistedBees::contains);
 
 		for(Biome biome : bumblezoneBiomes) {

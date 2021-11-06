@@ -4,11 +4,11 @@ import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityEntityPosAndDim
 import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityEventHandler;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
-import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
-import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
 import com.telepathicgrunt.the_bumblezone.data.DataGenerators;
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
@@ -40,7 +40,6 @@ import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
-import com.telepathicgrunt.the_bumblezone.utils.ConfigHelper;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.block.Block;
@@ -52,6 +51,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -71,13 +71,6 @@ public class Bumblezone{
     public static final String MODID = "the_bumblezone";
     public static final ResourceLocation MOD_DIMENSION_ID = new ResourceLocation(Bumblezone.MODID, Bumblezone.MODID);
     public static final Logger LOGGER = LogManager.getLogger(MODID);
-
-    public static BzClientConfigs.BzClientConfigsValues BzClientConfig = null;
-    public static BzGeneralConfigs.BzGeneralConfigsValues BzGeneralConfig = null;
-    public static BzWorldgenConfigs.BzWorldgenConfigValues BzWorldgenConfig = null;
-    public static BzDimensionConfigs.BzDimensionConfigValues BzDimensionConfig = null;
-    public static BzBeeAggressionConfigs.BzBeeAggressionConfigValues BzBeeAggressionConfig = null;
-    public static BzModCompatibilityConfigs.BzModCompatibilityConfigValues BzModCompatibilityConfig = null;
 
     public Bumblezone() {
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
@@ -127,12 +120,12 @@ public class Bumblezone{
 
         // generates/handles config
         FileUtils.getOrCreateDirectory(FMLPaths.CONFIGDIR.get().resolve("the_bumblezone"), "the_bumblezone");
-        BzClientConfig = ConfigHelper.register(ModConfig.Type.CLIENT, BzClientConfigs.BzClientConfigsValues::new, "the_bumblezone/client.toml");
-        BzGeneralConfig = ConfigHelper.register(ModConfig.Type.COMMON, BzGeneralConfigs.BzGeneralConfigsValues::new, "the_bumblezone/general.toml");
-        BzWorldgenConfig = ConfigHelper.register(ModConfig.Type.COMMON, BzWorldgenConfigs.BzWorldgenConfigValues::new, "the_bumblezone/worldgen.toml");
-        BzDimensionConfig = ConfigHelper.register(ModConfig.Type.COMMON, BzDimensionConfigs.BzDimensionConfigValues::new, "the_bumblezone/dimension.toml");
-        BzBeeAggressionConfig = ConfigHelper.register(ModConfig.Type.COMMON, BzBeeAggressionConfigs.BzBeeAggressionConfigValues::new, "the_bumblezone/bee_aggression.toml");
-        BzModCompatibilityConfig = ConfigHelper.register(ModConfig.Type.COMMON, BzModCompatibilityConfigs.BzModCompatibilityConfigValues::new, "the_bumblezone/mod_compatibility.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, BzClientConfigs.GENERAL_SPEC, "the_bumblezone/client.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzGeneralConfigs.GENERAL_SPEC, "the_bumblezone/general.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzWorldgenConfigs.GENERAL_SPEC, "the_bumblezone/worldgen.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzDimensionConfigs.GENERAL_SPEC, "the_bumblezone/dimension.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzBeeAggressionConfigs.GENERAL_SPEC, "the_bumblezone/bee_aggression.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzModCompatibilityConfigs.GENERAL_SPEC, "the_bumblezone/mod_compatibility.toml");
     }
 
 

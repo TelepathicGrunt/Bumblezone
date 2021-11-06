@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -20,8 +20,8 @@ public class SpiderInfestedBeeDungeon extends NbtFeature{
     @Override
     public boolean place(ISeedReader world, ChunkGenerator generator, Random random, BlockPos position, NbtFeatureConfig config) {
         //affect rarity
-        if (Bumblezone.BzWorldgenConfig.spiderInfestedBeeDungeonRarity.get() >= 1000 ||
-            random.nextInt(Bumblezone.BzWorldgenConfig.spiderInfestedBeeDungeonRarity.get()) != 0) return false;
+        if (BzWorldgenConfigs.spiderInfestedBeeDungeonRarity.get() >= 1000 ||
+            random.nextInt(BzWorldgenConfigs.spiderInfestedBeeDungeonRarity.get()) != 0) return false;
 
         // generate dungeon
         super.place(world, generator, random, position, config);

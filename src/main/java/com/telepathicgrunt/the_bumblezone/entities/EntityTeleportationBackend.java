@@ -4,6 +4,7 @@ import com.google.common.primitives.Doubles;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.capabilities.IEntityPosAndDim;
+import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
@@ -49,7 +50,7 @@ public class EntityTeleportationBackend {
 
         EntityPositionAndDimension cap = (EntityPositionAndDimension) livingEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
 
-        if(Bumblezone.BzDimensionConfig.teleportationMode.get() == 1 || mustBeNearBeeBlock){
+        if(BzDimensionConfigs.teleportationMode.get() == 1 || mustBeNearBeeBlock){
             finalSpawnPos = new BlockPos(
                     Doubles.constrainToRange(livingEntity.position().x() * coordinateScale, -29999936D, 29999936D),
                     livingEntity.position().y(),
@@ -59,7 +60,7 @@ public class EntityTeleportationBackend {
             validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward, mustBeNearBeeBlock);
         }
 
-        else if(Bumblezone.BzDimensionConfig.teleportationMode.get() == 2){
+        else if(BzDimensionConfigs.teleportationMode.get() == 2){
             if(cap.getNonBZPos() != null){
                 validBlockPos = new BlockPos(cap.getNonBZPos());
             }
@@ -90,8 +91,8 @@ public class EntityTeleportationBackend {
         }
 
         // Make sure spacing is safe if in mode 2 or mode 3 when doing forced teleportation when valid land isn't found.
-        if (Bumblezone.BzDimensionConfig.teleportationMode.get() == 2 ||
-            (Bumblezone.BzDimensionConfig.teleportationMode.get() == 3 && validBlockPos == null))
+        if (BzDimensionConfigs.teleportationMode.get() == 2 ||
+            (BzDimensionConfigs.teleportationMode.get() == 3 && validBlockPos == null))
         {
 
             if (destination.getBlockState(finalSpawnPos.above()).canOcclude()) {
@@ -113,7 +114,7 @@ public class EntityTeleportationBackend {
 
         //converts the position to get the corresponding position in bumblezone dimension
         double coordinateScale = 1;
-        if (Bumblezone.BzDimensionConfig.teleportationMode.get() != 2) {
+        if (BzDimensionConfigs.teleportationMode.get() != 2) {
             coordinateScale = originalWorld.dimensionType().coordinateScale() / bumblezoneWorld.dimensionType().coordinateScale();
         }
         BlockPos blockpos = new BlockPos(
@@ -248,7 +249,7 @@ public class EntityTeleportationBackend {
             }
 
             // Filter out all positions that are below sealevel if we do not want underground spots.
-            if (Bumblezone.BzDimensionConfig.seaLevelOrHigherExitTeleporting.get() && be.getBlockPos().getY() < ((ServerWorld)world).getChunkSource().getGenerator().getSeaLevel() - 1) {
+            if (BzDimensionConfigs.seaLevelOrHigherExitTeleporting.get() && be.getBlockPos().getY() < ((ServerWorld)world).getChunkSource().getGenerator().getSeaLevel() - 1) {
                 return false;
             }
 
@@ -283,7 +284,7 @@ public class EntityTeleportationBackend {
         }
 
         //this mode will not generate a beenest automatically.
-        if(Bumblezone.BzDimensionConfig.teleportationMode.get() == 3 || mustBeNearBeeBlock) return null;
+        if(BzDimensionConfigs.teleportationMode.get() == 3 || mustBeNearBeeBlock) return null;
 
         //no valid spot was found, generate a hive and spawn us on the highest land
         //This if statement is so we dont get placed on roof of other roofed dimension
@@ -309,7 +310,7 @@ public class EntityTeleportationBackend {
     }
 
     private static void createSpaceForPlayer(World world, BlockPos.Mutable mutableBlockPos) {
-        if(Bumblezone.BzDimensionConfig.generateBeenest.get())
+        if(BzDimensionConfigs.generateBeenest.get())
             world.setBlockAndUpdate(mutableBlockPos, Blocks.BEE_NEST.defaultBlockState());
         else if(world.getBlockState(mutableBlockPos).getMaterial() == Material.AIR ||
                 (!world.getBlockState(mutableBlockPos).getFluidState().isEmpty() &&
@@ -367,14 +368,14 @@ public class EntityTeleportationBackend {
         if(BzBlockTags.BLACKLISTED_TELEPORTATION_HIVES.contains(block.getBlock())) return false;
 
         if(BlockTags.BEEHIVES.contains(block.getBlock()) || block.getBlock() instanceof BeehiveBlock) {
-            if(Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get() ||
+            if(BzDimensionConfigs.allowTeleportationWithModdedBeehives.get() ||
                     Registry.BLOCK.getKey(block.getBlock()).getNamespace().equals("minecraft")) {
 
                 return true;
             }
         }
 
-        if(Bumblezone.BzDimensionConfig.allowTeleportationWithModdedBeehives.get()) {
+        if(BzDimensionConfigs.allowTeleportationWithModdedBeehives.get()) {
             if(ModChecker.productiveBeesPresent && ProductiveBeesCompat.PBIsExpandedBeehiveBlock(block))
                 return true;
 

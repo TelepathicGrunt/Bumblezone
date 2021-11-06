@@ -2,10 +2,10 @@ package com.telepathicgrunt.the_bumblezone.client.rendering;
 
 import com.google.common.collect.ImmutableList;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import net.minecraft.client.renderer.entity.BeeRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
@@ -35,7 +35,7 @@ public class BeeVariantRenderer extends BeeRenderer {
         UUID id = entity.getUUID();
         long most = id.getMostSignificantBits();
 
-        final double lgbtChance = Bumblezone.BzClientConfig.lgbtBeeRate.get();
+        final double lgbtChance = BzClientConfigs.lgbtBeeRate.get();
         boolean lgbt = (new Random(most + 1001)).nextDouble() < lgbtChance; // + 1001 so it doesn't align exactly with quark.
 
         if(entity.hasCustomName() || lgbt) {

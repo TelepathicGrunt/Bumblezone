@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.world.dimension;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import net.minecraft.client.world.DimensionRenderInfo;
 import net.minecraft.util.math.vector.Vector3d;
@@ -37,11 +37,11 @@ public class BzSkyProperty extends DimensionRenderInfo {
          * The sky will be turned to midnight when brightness is below 50. This lets us get the
          * full range of brightness by utilizing the default brightness that the current celestial time gives.
          */
-        if (Bumblezone.BzDimensionConfig.fogBrightnessPercentage.get() <= 50) {
-            colorFactor *= (Bumblezone.BzDimensionConfig.fogBrightnessPercentage.get() / 50);
+        if (BzDimensionConfigs.fogBrightnessPercentage.get() <= 50) {
+            colorFactor *= (BzDimensionConfigs.fogBrightnessPercentage.get() / 50);
         }
         else {
-            colorFactor *= (Bumblezone.BzDimensionConfig.fogBrightnessPercentage.get() / 100);
+            colorFactor *= (BzDimensionConfigs.fogBrightnessPercentage.get() / 100);
         }
 
         if (WrathOfTheHiveEffect.ACTIVE_WRATH && REDDISH_FOG_TINT < 0.38f) {

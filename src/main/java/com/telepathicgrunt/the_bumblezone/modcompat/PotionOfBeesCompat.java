@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.block.BlockState;
@@ -35,11 +35,11 @@ public class PotionOfBeesCompat
 		SPLASH_POTION_OF_BEES = ForgeRegistries.ITEMS.getValue(new ResourceLocation("potionofbees:splash_potion_of_bees"));
 		SPLASH_POTION_OF_BEES_ENTITY = ForgeRegistries.ENTITIES.getValue(new ResourceLocation("potionofbees:splash_potion_of_bees"));
 
-		if (POTION_OF_BEES != null && Bumblezone.BzModCompatibilityConfig.allowPotionOfBeesCompat.get()) {
+		if (POTION_OF_BEES != null && BzModCompatibilityConfigs.allowPotionOfBeesCompat.get()) {
 			PotionOfBeesBeePotionDispenseBehavior.DEFAULT_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker)Blocks.DISPENSER).thebumblezone_invokeGetDispenseMethod(new ItemStack(POTION_OF_BEES));
 			DispenserBlock.registerBehavior(POTION_OF_BEES, BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); // adds compatibility with bee potions in dispensers
 		}
-		if (SPLASH_POTION_OF_BEES != null && Bumblezone.BzModCompatibilityConfig.allowSplashPotionOfBeesCompat.get()) {
+		if (SPLASH_POTION_OF_BEES != null && BzModCompatibilityConfigs.allowSplashPotionOfBeesCompat.get()) {
 			PotionOfBeesBeePotionDispenseBehavior.DEFAULT_SPLASH_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker)Blocks.DISPENSER).thebumblezone_invokeGetDispenseMethod(new ItemStack(SPLASH_POTION_OF_BEES));
 			DispenserBlock.registerBehavior(SPLASH_POTION_OF_BEES, BEHAVIOUR_BOTTLED_BEE_DISPENSE_ITEM); // adds compatibility with bee splash potion in dispensers
 		}

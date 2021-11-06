@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.world.surfacebuilders;
 
 import com.mojang.serialization.Codec;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
@@ -41,7 +41,7 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
                 if (ypos <= seaLevel + 2 + Math.max(noise, 0) + random.nextInt(2)) {
                     if (depth == 0 &&
                         ModChecker.resourcefulBeesPresent &&
-                        Bumblezone.BzModCompatibilityConfig.RBBeesWaxWorldgen.get() &&
+                        BzModCompatibilityConfigs.RBBeesWaxWorldgen.get() &&
                         noise + random.nextInt(2) < -1)
                     {
                         chunkIn.setBlockState(blockpos$Mutable, ResourcefulBeesCompat.getRBBeesWaxBlock(), false);
@@ -50,7 +50,7 @@ public class HoneySurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
                         chunkIn.setBlockState(blockpos$Mutable, config.getUnderwaterMaterial(), false);
                     }
                 }
-                else if(ModChecker.buzzierBeesPresent && Bumblezone.BzModCompatibilityConfig.crystallizedHoneyWorldgen.get() &&
+                else if(ModChecker.buzzierBeesPresent && BzModCompatibilityConfigs.crystallizedHoneyWorldgen.get() &&
                         !prevBlockState.isAir() && prevBlockState.getFluidState().isEmpty())
                 {
                     if(depth > 0 && depth < 1 + Math.abs(noise - 1) + random.nextInt(2) &&

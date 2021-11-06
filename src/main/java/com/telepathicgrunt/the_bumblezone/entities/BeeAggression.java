@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
+import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
@@ -118,8 +119,8 @@ public class BeeAggression {
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
         if (!(player instanceof FakePlayer) &&
                 (player.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
-                Bumblezone.BzBeeAggressionConfig.aggressiveBees.get() &&
+                BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                BzBeeAggressionConfigs.aggressiveBees.get() &&
                 !player.isCreative() &&
                 !player.isSpectator()) {
 
@@ -130,10 +131,10 @@ public class BeeAggression {
                 //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
                 player.addEffect(new EffectInstance(
                         BzEffects.WRATH_OF_THE_HIVE.get(),
-                        Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
+                        BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),
                         2,
                         false,
-                        Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(),
+                        BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(),
                         true));
             }
         }
@@ -146,8 +147,8 @@ public class BeeAggression {
         //Also checks to make sure we are in dimension and that if it is a player, that they aren't in creative or spectator
         if (!entity.level.isClientSide() &&
                 (entity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                        Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
-                Bumblezone.BzBeeAggressionConfig.aggressiveBees.get() &&
+                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                BzBeeAggressionConfigs.aggressiveBees.get() &&
                 entity instanceof BeeEntity &&
                 attackerEntity != null)
         {
@@ -163,10 +164,10 @@ public class BeeAggression {
                 else {
                     player.addEffect(new EffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE.get(),
-                            Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
+                            BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),
                             2,
                             false,
-                            Bumblezone.BzBeeAggressionConfig.showWrathOfTheHiveParticles.get(),
+                            BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(),
                             true));
                 }
             }
@@ -180,7 +181,7 @@ public class BeeAggression {
                 else {
                     mob.addEffect(new EffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE.get(),
-                            Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
+                            BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),
                             2,
                             false,
                             true));
@@ -196,7 +197,7 @@ public class BeeAggression {
         if(doesBeesHateEntity(entity)) {
             ((MobEntity) entity).addEffect(new EffectInstance(
                     BzEffects.WRATH_OF_THE_HIVE.get(),
-                    Bumblezone.BzBeeAggressionConfig.howLongWrathOfTheHiveLasts.get(),
+                    BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),
                     1,
                     false,
                     true));
@@ -209,7 +210,7 @@ public class BeeAggression {
         //Also checks to make sure we are in the dimension.
         if (!entity.level.isClientSide() &&
                 entity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-                Bumblezone.BzBeeAggressionConfig.aggressiveBees.get() &&
+                BzBeeAggressionConfigs.aggressiveBees.get() &&
                 entity instanceof MobEntity)
         {
             MobEntity mobEntity = (MobEntity)entity;
@@ -228,7 +229,7 @@ public class BeeAggression {
         //removes the wrath of the hive if it is disallowed outside dimension
         if(!playerEntity.level.isClientSide() &&
                 playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get()) &&
-                !(Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get() ||
+                !(BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get() ||
                         playerEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)))
         {
             playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());

@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.capabilities.IEntityPosAndDim;
+import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
@@ -87,7 +88,7 @@ public class EntityTeleportationHookup {
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (!world.isClientSide() && thrower instanceof ServerPlayerEntity &&
                 !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-                (!Bumblezone.BzDimensionConfig.onlyOverworldHivesTeleports.get() || world.dimension().equals(World.OVERWORLD)))
+                (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(World.OVERWORLD)))
         {
             ServerPlayerEntity playerEntity = (ServerPlayerEntity) thrower; // the thrower
             BlockPos hivePos = new BlockPos(0,0,0);
@@ -119,7 +120,7 @@ public class EntityTeleportationHookup {
                 if(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.below()).getBlock())) {
                     validBelowBlock = true;
                 }
-                else if(Bumblezone.BzDimensionConfig.warnPlayersOfWrongBlockUnderHive.get()) {
+                else if(BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive.get()) {
                     //failed. Block below isn't the required block
                     Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
                     ITextComponent message = new StringTextComponent("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
@@ -148,7 +149,7 @@ public class EntityTeleportationHookup {
 
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (!world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-                (!Bumblezone.BzDimensionConfig.onlyOverworldHivesTeleports.get() || world.dimension().equals(World.OVERWORLD)))
+                (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(World.OVERWORLD)))
         {
             if(BzWorldSavedData.isEntityQueuedToTeleportAlready(pushedEntity)) return; // Skip checks if entity is teleporting already to Bz.
 
@@ -167,7 +168,7 @@ public class EntityTeleportationHookup {
                     if(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.below()).getBlock())) {
                         validBelowBlock = true;
                     }
-                    else if(Bumblezone.BzDimensionConfig.warnPlayersOfWrongBlockUnderHive.get()) {
+                    else if(BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive.get()) {
                         if(pushedEntity instanceof PlayerEntity){
                             //failed. Block below isn't the required block
                             Bumblezone.LOGGER.log(Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
@@ -198,7 +199,7 @@ public class EntityTeleportationHookup {
         //Go to Overworld instead as default. Or go to Overworld if config is set.
         EntityPositionAndDimension cap = (EntityPositionAndDimension) livingEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
         if (cap.getNonBZDim().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                Bumblezone.BzDimensionConfig.forceExitToOverworld.get())
+                BzDimensionConfigs.forceExitToOverworld.get())
         {
             // go to overworld by default
             //update stored dimension

@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.block.BlockState;
@@ -28,7 +28,7 @@ public class HoneycombBroodEvents
 	 */
 	public static void reviveByPotionOfBees(PlayerInteractEvent.RightClickItem event)
 	{
-		if(!ModChecker.potionOfBeesPresent && Bumblezone.BzModCompatibilityConfig.allowPotionOfBeesCompat.get()) {
+		if(!ModChecker.potionOfBeesPresent && BzModCompatibilityConfigs.allowPotionOfBeesCompat.get()) {
 			return;
 		}
 

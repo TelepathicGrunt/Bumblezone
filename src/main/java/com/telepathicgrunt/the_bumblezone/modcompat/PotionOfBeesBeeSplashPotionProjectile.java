@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 
 public class PotionOfBeesBeeSplashPotionProjectile
 {
@@ -9,7 +9,7 @@ public class PotionOfBeesBeeSplashPotionProjectile
 	 */
 	public static void ProjectileImpactEvent(net.minecraftforge.event.entity.ProjectileImpactEvent.Throwable event)
 	{
-		if(ModChecker.potionOfBeesPresent && Bumblezone.BzModCompatibilityConfig.allowPotionOfBeesCompat.get())
+		if(ModChecker.potionOfBeesPresent && BzModCompatibilityConfigs.allowPotionOfBeesCompat.get())
 		{
 			PotionOfBeesCompat.POBReviveLarvaBlockEvent(event);
 		}

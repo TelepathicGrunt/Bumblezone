@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.BeehemothRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HoneySlimeRendering;
 import com.telepathicgrunt.the_bumblezone.client.rendering.PileOfPollenRenderer;
+import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.RenderingRegistryAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.SkyPropertiesAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -54,7 +55,7 @@ public class BumblezoneClient {
         RenderingRegistry.registerEntityRenderingHandler(BzEntities.BEEHEMOTH.get(), BeehemothRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(BzEntities.POLLEN_PUFF_ENTITY.get(), (entityRendererManager) -> new SpriteRenderer<>(entityRendererManager, minecraftClient.getItemRenderer()));
 
-        if(Bumblezone.BzClientConfig.enableLgbtBeeRenderer.get()) {
+        if(BzClientConfigs.enableLgbtBeeRenderer.get()) {
             //noinspection unchecked cast
             BeeVariantRenderer.OLD_BEE_RENDER_FACTORY = (IRenderFactory<BeeEntity>) ((RenderingRegistryAccessor) RenderingRegistryAccessor.getINSTANCE()).getEntityRenderers().get(EntityType.BEE);
             RenderingRegistry.registerEntityRenderingHandler(EntityType.BEE, BeeVariantRenderer::new);
