@@ -13,7 +13,7 @@
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": true,
-    "background": "the_bumblezone:textures/block/filled_porous_honeycomb_block.png"
+    "background": "the_bumblezone:textures/advancements/background.png"
   },
   "rewards": {
     "experience": 10

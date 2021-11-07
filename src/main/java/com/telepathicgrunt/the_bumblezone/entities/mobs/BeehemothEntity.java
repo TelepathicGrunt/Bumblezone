@@ -421,8 +421,8 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         // Become queen if friendship is maxed out.
         if(!isQueen() && getFriendship() >= 1000) {
             setQueen(true);
-            if(!this.level.isClientSide() && this.getOwner() instanceof ServerPlayerEntity) {
-                BzCriterias.QUEEN_BEEHEMOTH.trigger((ServerPlayerEntity) this.getOwner());
+            if(this.getOwner() instanceof ServerPlayerEntity) {
+                BzCriterias.QUEEN_BEEHEMOTH_TRIGGER.trigger((ServerPlayerEntity) this.getOwner());
             }
         }
         // Become untamed if bee is no longer a friend

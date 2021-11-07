@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/pollen_puff_pollinate_tall_flower",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:pollen_puff"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.pollen_puff_panda.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.pollen_puff_panda.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "pollen_puff_panda": {
+      "trigger": "the_bumblezone:pollen_puff_panda",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "pollen_puff_panda"
+    ]
+  ]
+}

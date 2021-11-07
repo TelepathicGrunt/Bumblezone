@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
@@ -19,6 +20,7 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.PandaEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.DirectionalPlaceContext;
@@ -258,6 +260,7 @@ public class PileOfPollen extends FallingBlock {
 
         // slows the entity and spawns particles
         else {
+
             int layerValueMinusOne = blockState.getValue(LAYERS) - 1;
             double speedReduction = (entity instanceof ProjectileEntity) ? 0.85f : 1 - layerValueMinusOne * 0.1D;
             double chance = 0.22f + layerValueMinusOne * 0.09f;
@@ -265,6 +268,11 @@ public class PileOfPollen extends FallingBlock {
 
             Vector3d deltaMovement = entity.getDeltaMovement();
             double newYDelta = deltaMovement.y;
+
+            if(entity instanceof ServerPlayerEntity && entity.fallDistance > 18 && newYDelta < -0.9D && blockState.getValue(LAYERS) >= 7) {
+                BzCriterias.FALLING_ON_POLLEN_BLOCK_TRIGGER.trigger((ServerPlayerEntity) entity);
+            }
+
             if(deltaMovement.y > 0) {
                 newYDelta *= (1f - layerValueMinusOne * 0.01f);
             }
