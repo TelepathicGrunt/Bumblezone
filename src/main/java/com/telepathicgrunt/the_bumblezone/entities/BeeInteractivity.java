@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
@@ -11,6 +12,7 @@ import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -87,15 +89,19 @@ public class BeeInteractivity {
             // right clicking on pollinated bee with empty hand or pollen puff with room, gets pollen puff into hand.
             // else, if done with watery items or pollen puff without room, drops pollen puff in world
             if(beeEntity.hasNectar()) {
-                 if((itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water")) ||
-                        item == Items.WET_SPONGE ||
-                        item == BzItems.SUGAR_WATER_BOTTLE.get() ||
-                        (item instanceof BucketItem && ((BucketItem) item).getFluid().is(FluidTags.WATER))) {
+                if((itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water")) ||
+                    item == Items.WET_SPONGE ||
+                    item == BzItems.SUGAR_WATER_BOTTLE.get() ||
+                    (item instanceof BucketItem && ((BucketItem) item).getFluid().is(FluidTags.WATER)))
+                {
                     PollenPuff.spawnItemstackEntity(world, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
                     playerEntity.swing(hand, true);
                     beeEntity.dropOffNectar();
+                    if(playerEntity instanceof ServerPlayerEntity) {
+                        BzCriterias.BEE_DROP_POLLEN_PUFF_TRIGGER.trigger((ServerPlayerEntity) playerEntity, itemstack);
+                    }
                     return ActionResultType.SUCCESS;
-                 }
+                }
             }
         }
 

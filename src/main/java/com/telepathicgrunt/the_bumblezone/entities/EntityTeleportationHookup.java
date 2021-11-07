@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.capabilities.IEntityPosAndDim;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
@@ -43,6 +44,10 @@ public class EntityTeleportationHookup {
         //Makes it so player does not get killed for falling into the void
         if (livingEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (livingEntity.getY() < -2) {
+                if(livingEntity instanceof ServerPlayerEntity && livingEntity.fallDistance > 100 && livingEntity.getDeltaMovement().y() < -1) {
+                    BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER.trigger((ServerPlayerEntity) livingEntity);
+                }
+
                 if (livingEntity.getY() < -4) {
                     livingEntity.setPosAndOldPos(livingEntity.getX(), -4, livingEntity.getZ());
                     livingEntity.moveTo(livingEntity.getX(), -4, livingEntity.getZ());
@@ -135,6 +140,7 @@ public class EntityTeleportationHookup {
 
             //if the pearl hit a beehive, begin the teleportation.
             if (hitHive && validBelowBlock) {
+                BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(playerEntity);
                 BzWorldSavedData.queueEntityToTeleport(playerEntity, BzDimension.BZ_WORLD_KEY);
                 return true;
             }
@@ -184,6 +190,9 @@ public class EntityTeleportationHookup {
 
                 //if the entity was pushed into a beehive, begin the teleportation.
                 if (validBelowBlock) {
+                    if(pushedEntity instanceof ServerPlayerEntity) {
+                        BzCriterias.TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER.trigger((ServerPlayerEntity) pushedEntity);
+                    }
                     BzWorldSavedData.queueEntityToTeleport(pushedEntity, BzDimension.BZ_WORLD_KEY);
                 }
             }

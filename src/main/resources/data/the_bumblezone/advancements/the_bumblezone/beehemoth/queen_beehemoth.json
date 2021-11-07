@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/tamed_beehemoth",
+  "parent": "the_bumblezone:the_bumblezone/beehemoth/tamed_beehemoth",
   "display": {
     "icon": {
       "item": "the_bumblezone:beehemoth_spawn_egg"
@@ -10,7 +10,7 @@
     "description": {
       "translate": "advancements.the_bumblezone.queen_beehemoth.description"
     },
-    "frame": "task",
+    "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false

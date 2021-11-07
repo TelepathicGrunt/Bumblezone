@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/pollen_puff_pollinate_bee",
+  "parent": "the_bumblezone:the_bumblezone/pollen_puff/pollen_puff_pollinate_bee",
   "display": {
     "icon": {
       "item": "the_bumblezone:pollen_puff"

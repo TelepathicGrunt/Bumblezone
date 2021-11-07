@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/walk_into_pollen_pile",
+  "parent": "the_bumblezone:the_bumblezone/pollen_pile/walk_into_pollen_pile",
   "display": {
     "icon": {
       "item": "the_bumblezone:pile_of_pollen"
