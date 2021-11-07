@@ -78,6 +78,10 @@
   "advancements.the_bumblezone.teleport_out_of_bumblezone_fall.description": "Leave the Bumblezone at extreme falling speeds!",
   "advancements.the_bumblezone.teleport_to_bumblezone_piston.title": "Shoved It In Hard!",
   "advancements.the_bumblezone.teleport_to_bumblezone_piston.description": "Enter the Bumblezone dimension by being forced into a Beehive/Bee Nest by a Piston.",
+  "advancements.the_bumblezone.obtain_honey_bucket.title": "MOAR HONEEEEY!!!",
+  "advancements.the_bumblezone.obtain_honey_bucket.description": "Get a Bucket of Honey!",
+  "advancements.the_bumblezone.obtain_all_music_discs.title": "Gotta Hive a Dance!",
+  "advancements.the_bumblezone.obtain_all_music_discs.description": "Bargain with a Wandering Trader for all Bee-themed music discs!",
 
   "the_bumblezone.porous_honeycomb_block.jei_description": " A honeycomb block filled with holes! You can store honey into this block with Honey Bottles or Honey Buckets.",
   "the_bumblezone.filled_porous_honeycomb_block.jei_description": " A honeycomb block filled to the brim with honey! You can take honey out of this block with a Glass Bottle. However, this may anger nearby bees. \n\n When mined, this block drops Porous Honeycomb Block and some Honeycombs. The drop is affect by Fortune or you can use Silk Touch to keep the block intact. \n\n This block also give off a Redstone signal of 1 when a Comparator is facing this block.",
