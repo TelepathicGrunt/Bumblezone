@@ -1,11 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.advancements.BeeDropPollenPuffTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.CleanupStickyHoneyResidueTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.FallingOnPollenPileTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.HoneyBucketBeeGrowTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.HoneyBucketBeeLoveTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.HoneyBucketBroodTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.HoneyBucketPorousHoneycombTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.HoneyCrystalShieldBlockIneffectivelyTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.HoneySlimeCreationTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.HoneySlimeHarvestTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.PollenPuffFireballTrigger;
@@ -36,6 +38,8 @@ public class BzCriterias {
     public static final HoneyBucketBeeGrowTrigger HONEY_BUCKET_BEE_GROW_TRIGGER = new HoneyBucketBeeGrowTrigger();
     public static final HoneyBucketPorousHoneycombTrigger HONEY_BUCKET_POROUS_HONEYCOMB_TRIGGER = new HoneyBucketPorousHoneycombTrigger();
     public static final HoneyBucketBroodTrigger HONEY_BUCKET_BROOD_TRIGGER = new HoneyBucketBroodTrigger();
+    public static final HoneyCrystalShieldBlockIneffectivelyTrigger HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER = new HoneyCrystalShieldBlockIneffectivelyTrigger();
+    public static final CleanupStickyHoneyResidueTrigger CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER = new CleanupStickyHoneyResidueTrigger();
 
     public static void init() {
         CriteriaTriggers.register(QUEEN_BEEHEMOTH_TRIGGER);
@@ -54,5 +58,7 @@ public class BzCriterias {
         CriteriaTriggers.register(HONEY_BUCKET_BEE_GROW_TRIGGER);
         CriteriaTriggers.register(HONEY_BUCKET_POROUS_HONEYCOMB_TRIGGER);
         CriteriaTriggers.register(HONEY_BUCKET_BROOD_TRIGGER);
+        CriteriaTriggers.register(HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER);
+        CriteriaTriggers.register(CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER);
     }
 }

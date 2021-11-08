@@ -55,8 +55,7 @@ public class HoneyCrystalShield extends ShieldItem {
      */
     @SuppressWarnings("deprecation")
     @Override
-    public int getMaxDamage(ItemStack stack)
-    {
+    public int getMaxDamage(ItemStack stack) {
         if(stack.hasTag()) {
             int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
             if (repairLevel != 0) {
@@ -77,12 +76,10 @@ public class HoneyCrystalShield extends ShieldItem {
 
             // ignore anvil repairing
             if (damageCaused < 0 && repairLevel != 0) {
-
                 int reducedDamage = Math.min(-1, damageCaused + (repairLevel / 14));
                 stack.getOrCreateTag().putInt("Damage", Math.max(0, this.getDamage(stack) + reducedDamage));
             }
         }
-
         stack.getOrCreateTag().putInt("Damage", Math.max(0, damage));
     }
 
@@ -90,8 +87,7 @@ public class HoneyCrystalShield extends ShieldItem {
      * blacklisted mending enchantment
      */
     @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, net.minecraft.enchantment.Enchantment enchantment)
-    {
+    public boolean canApplyAtEnchantingTable(ItemStack stack, net.minecraft.enchantment.Enchantment enchantment) {
         if(enchantment == Enchantments.MENDING)
             return false;
 

@@ -2,11 +2,13 @@ package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.mixin.items.PlayerDamageShieldInvoker;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
@@ -25,12 +27,16 @@ public class HoneyCrystalShieldBehavior {
         // checks for explosion and player
         if ((source.isExplosion() || source.isFire())) {
             if (player.getUseItem().getItem() instanceof HoneyCrystalShield) {
+                if(player instanceof ServerPlayerEntity) {
+                    BzCriterias.HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER.trigger((ServerPlayerEntity) player);
+                }
 
                 if (source.isExplosion() && player.isBlocking()) {
                     // damage our shield greatly and 1 damage hit player to show shield weakness
                     player.hurt(DamageSource.GENERIC, 1);
                     ((PlayerDamageShieldInvoker) player).thebumblezone_callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 3, 18));
-                } else if (source.isFire()) {
+                }
+                else if (source.isFire()) {
                     if(source.isProjectile()){
                         ((PlayerDamageShieldInvoker) player).thebumblezone_callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 6, 3));
                     }
