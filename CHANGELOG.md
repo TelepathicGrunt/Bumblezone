@@ -14,6 +14,11 @@ Fixed Honey Slime scaling for adult to not be massive.
 
 Fixed Honey Slime not giving Honey Bottle when harvested with Glass Bottle.
 
+Honey Slimes have a bit more health, a bit more attack power, and will jump faster and higher when angry as well as stay angry longer.
+
+Killing adult Honey Slimes with looting enchantment may drop Sugar and/or Slime Balls. 
+ Before, it was the child that had this feature instead of the adult by mistake.
+
 ##### Effects:
 Protection of the Hive on the player will now be removed if you hurt a Bee outside The Bumblezone dimension.
 

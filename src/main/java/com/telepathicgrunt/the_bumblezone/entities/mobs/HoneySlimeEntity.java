@@ -42,6 +42,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
@@ -74,7 +75,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    private static final DataParameter<Integer> IN_HONEY_GROWTH_TIME = EntityDataManager.defineId(HoneySlimeEntity.class, DataSerializers.INT);
    private static final Ingredient BREEDING_ITEM = Ingredient.of(Items.SUGAR);
    private static final DataParameter<Integer> ANGRY_TIMER = EntityDataManager.defineId(HoneySlimeEntity.class, DataSerializers.INT);
-   private static final RangedInteger MAX_ANGER_DURATION = TickRangeConverter.rangeOfSeconds(10, 22);
+   private static final RangedInteger MAX_ANGER_DURATION = TickRangeConverter.rangeOfSeconds(22, 36);
    private UUID target_UUID;
 
 
@@ -112,7 +113,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
 
    @Override
    public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-      this.setSlimeSize(this.isBaby() ? 1 : 2, true);
+      this.setSlimeSize(this.isBaby(), true);
       return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
    }
 
@@ -153,7 +154,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
 
    public static AttributeModifierMap.MutableAttribute getAttributeBuilder() {
 	 return MobEntity.createMobAttributes()
-             .add(Attributes.MAX_HEALTH, 40.0D)
+             .add(Attributes.MAX_HEALTH, 8.0D)
              .add(Attributes.MOVEMENT_SPEED, 2.0D)
              .add(Attributes.ATTACK_DAMAGE, 1.0D);
    }
@@ -163,17 +164,17 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
       return true;
    }
 
-   protected void setSlimeSize(int size, boolean resetHealth) {
+   protected void setSlimeSize(boolean isBaby, boolean resetHealth) {
       this.reapplyPosition();
       this.refreshDimensions();
-      Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(size * size);
-      Objects.requireNonNull(this.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue((0.2F + 0.1F * (float)size)*2);
-      Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(size);
+      Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(isBaby ? 2 : 8);
+      Objects.requireNonNull(this.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue((0.2F + 0.1F * (float)(isBaby ? 1 : 2)) * 2);
+      Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(isBaby ? 1 : 3);
       if (resetHealth) {
          this.setHealth(this.getMaxHealth());
       }
 
-      this.xpReward = size;
+      this.xpReward = isBaby ? 1 : 2;
    }
 
    public boolean isInHoney() {
@@ -320,7 +321,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
       HoneySlimeEntity childHoneySlimeEntity = BzEntities.HONEY_SLIME.get().create(worldIn);
 
       if (childHoneySlimeEntity != null)
-         childHoneySlimeEntity.setSlimeSize(1, true);
+         childHoneySlimeEntity.setSlimeSize(true, true);
 
       return childHoneySlimeEntity;
    }
@@ -329,7 +330,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
    protected void ageBoundaryReached() {
       super.ageBoundaryReached();
       if (!this.isBaby()) {
-         this.setSlimeSize(2, true);
+         this.setSlimeSize(false, true);
       }
    }
 
@@ -405,7 +406,7 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
 
    @Override
    protected ResourceLocation getDefaultLootTable() {
-      return this.isBaby() ? this.getType().getDefaultLootTable() : LootTables.EMPTY;
+      return !this.isBaby() ? this.getType().getDefaultLootTable() : LootTables.EMPTY;
    }
 
    @Override
@@ -424,7 +425,12 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
 
    protected void jumpFromGround() {
       Vector3d vec3d = this.getDeltaMovement();
-      this.setDeltaMovement(vec3d.x, this.getJumpPower(), vec3d.z);
+      if(this.isAngry()) {
+         this.setDeltaMovement(vec3d.x * 5, this.getJumpPower() * 1.3f, vec3d.z * 5);
+      }
+      else  {
+         this.setDeltaMovement(vec3d.x, this.getJumpPower(), vec3d.z);
+      }
       this.hasImpulse = true;
    }
 
@@ -458,7 +464,9 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
 
    @Override
    public void startPersistentAngerTimer() {
-      if(MAX_ANGER_DURATION != null)
+      if(MAX_ANGER_DURATION != null) {
          this.setRemainingPersistentAngerTime(MAX_ANGER_DURATION.randomValue(this.random));
+      }
    }
+
 }
