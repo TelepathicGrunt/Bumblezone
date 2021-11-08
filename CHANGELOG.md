@@ -10,6 +10,8 @@ Significantly cleaned up the config system backend code for my mod. Let me know 
 ##### Entities:
 Fixed Honey Buckets not able to convert Slime into Honey Slime. (Was an issue with the tag that controls what blocks can convert Slime)
 
+Fixed Honey Slime scaling for adult to not be massive.
+
 
 ### **(V.3.0.0 Changes) (1.16.5 Minecraft)**
 
