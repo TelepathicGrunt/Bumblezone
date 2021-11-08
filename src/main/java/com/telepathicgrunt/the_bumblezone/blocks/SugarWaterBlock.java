@@ -30,7 +30,7 @@ public class SugarWaterBlock extends FlowingFluidBlock {
         }
     }
 
-    private boolean receiveNeighborFluids(World world, BlockPos pos, BlockState state)  {
+    private boolean receiveNeighborFluids(World world, BlockPos pos, BlockState state) {
         boolean flag = false;
 
         for (Direction direction : Direction.values()) {

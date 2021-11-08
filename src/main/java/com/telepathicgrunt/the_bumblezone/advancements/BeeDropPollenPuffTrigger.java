@@ -3,21 +3,13 @@ package com.telepathicgrunt.the_bumblezone.advancements;
 import com.google.gson.JsonObject;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
-import net.minecraft.advancements.criterion.ConsumeItemTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EnchantmentPredicate;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.MinMaxBounds;
-import net.minecraft.advancements.criterion.NBTPredicate;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.ConditionArrayParser;
 import net.minecraft.loot.ConditionArraySerializer;
-import net.minecraft.potion.Potion;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 
 public class BeeDropPollenPuffTrigger extends AbstractCriterionTrigger<BeeDropPollenPuffTrigger.Instance> {

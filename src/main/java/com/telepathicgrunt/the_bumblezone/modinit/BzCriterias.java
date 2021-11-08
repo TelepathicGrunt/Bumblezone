@@ -25,6 +25,8 @@ public class BzCriterias {
     public static final CleanupStickyHoneyResidueTrigger CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER = new CleanupStickyHoneyResidueTrigger();
     public static final CombCutterExtraDropsTrigger COMB_CUTTER_EXTRA_DROPS_TRIGGER = new CombCutterExtraDropsTrigger();
     public static final RecipeDiscoveredTrigger RECIPE_DISCOVERED_TRIGGER = new RecipeDiscoveredTrigger();
+    public static final SugarWaterNextToSugarCaneTrigger SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER = new SugarWaterNextToSugarCaneTrigger();
+    public static final HoneyCrystalInWaterTrigger HONEY_CRYSTAL_IN_WATER_TRIGGER = new HoneyCrystalInWaterTrigger();
 
     public static void init() {
         CriteriaTriggers.register(QUEEN_BEEHEMOTH_TRIGGER);
@@ -47,5 +49,7 @@ public class BzCriterias {
         CriteriaTriggers.register(CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER);
         CriteriaTriggers.register(COMB_CUTTER_EXTRA_DROPS_TRIGGER);
         CriteriaTriggers.register(RECIPE_DISCOVERED_TRIGGER);
+        CriteriaTriggers.register(SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER);
+        CriteriaTriggers.register(HONEY_CRYSTAL_IN_WATER_TRIGGER);
     }
 }

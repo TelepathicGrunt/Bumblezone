@@ -99,7 +99,6 @@ public class HoneyCrystal extends ProperFacingBlock implements IWaterLoggable {
      */
     @Override
     public boolean canSurvive(BlockState blockstate, IWorldReader world, BlockPos pos) {
-
         Direction direction = blockstate.getValue(FACING);
         BlockState attachedBlockstate = world.getBlockState(pos.relative(direction.getOpposite()));
         return attachedBlockstate.isFaceSturdy(world, pos.relative(direction.getOpposite()), direction);

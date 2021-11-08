@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/sugar_water/obtain_sugar_infused_stones",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:honey_crystal"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.honey_crystal_in_water.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.honey_crystal_in_water.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "honey_crystal_in_water": {
+      "trigger": "the_bumblezone:honey_crystal_in_water",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "honey_crystal_in_water"
+    ]
+  ]
+}
