@@ -142,7 +142,6 @@ public class BeeAggression {
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that if it is a player, that they aren't in creative or spectator
         if (!entity.level.isClientSide() &&
-                BzBeeAggressionConfigs.aggressiveBees.get() &&
                 entity instanceof BeeEntity &&
                 attackerEntity != null)
         {
@@ -155,8 +154,9 @@ public class BeeAggression {
                     player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                     WrathOfTheHiveEffect.calmTheBees(player.level, player); // prevent bees from being naturally angry at nearby mobs
                 }
-                else if(entity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) {
+                else if(BzBeeAggressionConfigs.aggressiveBees.get() &&
+                        (entity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get())) {
                     if(player instanceof ServerPlayerEntity && player.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
                         BzCriterias.EXTENDED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayerEntity) player, attackerEntity);
                     }
@@ -176,8 +176,9 @@ public class BeeAggression {
                     mob.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                     WrathOfTheHiveEffect.calmTheBees(mob.level, mob); // prevent bees from being naturally angry at nearby mobs
                 }
-                else if(entity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) {
+                else if(BzBeeAggressionConfigs.aggressiveBees.get() &&
+                        (entity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get())) {
                     mob.addEffect(new EffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE.get(),
                             BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),

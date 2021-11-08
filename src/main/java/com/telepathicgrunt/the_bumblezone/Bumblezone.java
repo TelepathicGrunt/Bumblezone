@@ -116,7 +116,6 @@ public class Bumblezone{
         BzParticles.PARTICLE_TYPES.register(modEventBus);
         BzEnchantments.ENCHANTMENTS.register(modEventBus);
         BzSurfaceBuilders.SURFACE_BUILDERS.register(modEventBus);
-        BzCriterias.init();
 
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> BumblezoneClient::subscribeClientEvents);
 
@@ -150,6 +149,7 @@ public class Bumblezone{
     {
     	event.enqueueWork(() -> 
 		{
+            BzCriterias.registerCriteriaTriggers();
             BzProcessors.registerProcessors();
 			BzDimension.setupDimension();
 			BzConfiguredFeatures.registerConfiguredFeatures();
