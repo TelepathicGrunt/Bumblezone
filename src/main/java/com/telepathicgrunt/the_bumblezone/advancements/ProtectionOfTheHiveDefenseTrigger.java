@@ -6,12 +6,10 @@ import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.loot.ConditionArrayParser;
 import net.minecraft.loot.ConditionArraySerializer;
 import net.minecraft.loot.LootContext;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 
 public class ProtectionOfTheHiveDefenseTrigger extends AbstractCriterionTrigger<ProtectionOfTheHiveDefenseTrigger.Instance> {
