@@ -10,6 +10,12 @@ Honey Slimes have a bit more health, a bit more attack power, and will jump fast
 Killing adult Honey Slimes with looting enchantment may drop Sugar and/or Slime Balls.
  Before, it was the child that had this feature instead of the adult by mistake.
 
+##### Effects:
+Protection of the Hive on the player will now be removed if you hurt a Bee outside The Bumblezone dimension.
+
+##### Recipes:
+Renamed the_bumblezone:beeswax_planks_to_bee_nests recipe json to the_bumblezone:beehive_beeswax_to_bee_nest.
+
 
 ### **(V.3.2.6 Changes) (1.17.1 Minecraft)**
 
