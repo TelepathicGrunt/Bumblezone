@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
@@ -16,6 +17,7 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.PandaEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.registry.Registry;
@@ -42,13 +44,11 @@ public class BeeAggression {
      *  But yeah, this sets up the list of entitytype of mobs for bees to always attack. Making
      *  the list can be expensive which is why we make it at start of world rather than every tick.
      */
-    public static void setupBeeHatingList(World world)
-    {
+    public static void setupBeeHatingList(World world) {
         // Build list only once
         if(SET_OF_BEE_HATED_ENTITIES.size() != 0) return;
 
-        for(EntityType<?> entityType : Registry.ENTITY_TYPE)
-        {
+        for(EntityType<?> entityType : Registry.ENTITY_TYPE) {
             if(entityType.getCategory() == EntityClassification.MONSTER ||
                     entityType.getCategory() == EntityClassification.CREATURE ||
                     entityType.getCategory() == EntityClassification.AMBIENT )
@@ -67,15 +67,13 @@ public class BeeAggression {
                             "Will check if mob is a bear or wasp in its name instead. Error message is: " + e.getMessage());
 
                     String mobName = Registry.ENTITY_TYPE.getKey(entityType).toString();
-                    if(mobName.contains("bear") || mobName.contains("wasp"))
-                    {
+                    if(mobName.contains("bear") || mobName.contains("wasp")) {
                         SET_OF_BEE_HATED_ENTITIES.add(entityType);
                     }
                     continue;
                 }
 
-                if(entity instanceof MobEntity)
-                {
+                if(entity instanceof MobEntity) {
                     String mobName = Registry.ENTITY_TYPE.getKey(entityType).toString();
                     MobEntity mobEntity = (MobEntity) entity;
 
@@ -104,8 +102,7 @@ public class BeeAggression {
     }
 
     //if player picks up a tagged angerable item, bees gets very mad...
-    public static void pickupItemAnger(PlayerEvent.ItemPickupEvent event)
-    {
+    public static void pickupItemAnger(PlayerEvent.ItemPickupEvent event) {
         PlayerEntity player = event.getPlayer();
         Item item = event.getStack().getItem();
 
@@ -141,13 +138,10 @@ public class BeeAggression {
     }
 
     //Bees hit by a mob or player will inflict Wrath of the Hive onto the attacker.
-    public static void beeHitAndAngered(Entity entity, Entity attackerEntity)
-    {
+    public static void beeHitAndAngered(Entity entity, Entity attackerEntity) {
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that if it is a player, that they aren't in creative or spectator
         if (!entity.level.isClientSide() &&
-                (entity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                 BzBeeAggressionConfigs.aggressiveBees.get() &&
                 entity instanceof BeeEntity &&
                 attackerEntity != null)
@@ -159,9 +153,14 @@ public class BeeAggression {
                 PlayerEntity player = ((PlayerEntity) attackerEntity);
                 if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())){
                     player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
-                    WrathOfTheHiveEffect.calmTheBees(player.level, player); // prevent bees from be naturally angry
+                    WrathOfTheHiveEffect.calmTheBees(player.level, player); // prevent bees from being naturally angry at nearby mobs
                 }
-                else {
+                else if(entity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) {
+                    if(player instanceof ServerPlayerEntity && player.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
+                        BzCriterias.EXTENDED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayerEntity) player, attackerEntity);
+                    }
+
                     player.addEffect(new EffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE.get(),
                             BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),
@@ -171,14 +170,14 @@ public class BeeAggression {
                             true));
                 }
             }
-            else if(attackerEntity instanceof MobEntity)
-            {
+            else if(attackerEntity instanceof MobEntity) {
                 MobEntity mob = ((MobEntity) attackerEntity);
                 if(mob.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())){
                     mob.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
-                    WrathOfTheHiveEffect.calmTheBees(mob.level, mob); // prevent bees from be naturally angry
+                    WrathOfTheHiveEffect.calmTheBees(mob.level, mob); // prevent bees from being naturally angry at nearby mobs
                 }
-                else {
+                else if(entity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) {
                     mob.addEffect(new EffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE.get(),
                             BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),
@@ -192,8 +191,7 @@ public class BeeAggression {
 
 
     //bees attacks bear and insect mobs that are in the dimension
-    public static void entityTypeBeeAnger(Entity entity)
-    {
+    public static void entityTypeBeeAnger(Entity entity) {
         if(doesBeesHateEntity(entity)) {
             ((MobEntity) entity).addEffect(new EffectInstance(
                     BzEffects.WRATH_OF_THE_HIVE.get(),
@@ -222,8 +220,7 @@ public class BeeAggression {
         return false;
     }
 
-    public static void playerTick(TickEvent.PlayerTickEvent event)
-    {
+    public static void playerTick(TickEvent.PlayerTickEvent event) {
         PlayerEntity playerEntity = event.player;
 
         //removes the wrath of the hive if it is disallowed outside dimension

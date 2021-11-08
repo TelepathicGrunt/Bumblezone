@@ -27,6 +27,9 @@ public class BzCriterias {
     public static final RecipeDiscoveredTrigger RECIPE_DISCOVERED_TRIGGER = new RecipeDiscoveredTrigger();
     public static final SugarWaterNextToSugarCaneTrigger SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER = new SugarWaterNextToSugarCaneTrigger();
     public static final HoneyCrystalInWaterTrigger HONEY_CRYSTAL_IN_WATER_TRIGGER = new HoneyCrystalInWaterTrigger();
+    public static final ProtectionOfTheHiveDefenseTrigger PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER = new ProtectionOfTheHiveDefenseTrigger();
+    public static final ExtendedWrathOfTheHiveTrigger EXTENDED_WRATH_OF_THE_HIVE_TRIGGER = new ExtendedWrathOfTheHiveTrigger();
+    public static final FoodRemovedWrathOfTheHiveTrigger FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER = new FoodRemovedWrathOfTheHiveTrigger();
 
     public static void init() {
         CriteriaTriggers.register(QUEEN_BEEHEMOTH_TRIGGER);
@@ -51,5 +54,8 @@ public class BzCriterias {
         CriteriaTriggers.register(RECIPE_DISCOVERED_TRIGGER);
         CriteriaTriggers.register(SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER);
         CriteriaTriggers.register(HONEY_CRYSTAL_IN_WATER_TRIGGER);
+        CriteriaTriggers.register(PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER);
+        CriteriaTriggers.register(EXTENDED_WRATH_OF_THE_HIVE_TRIGGER);
+        CriteriaTriggers.register(FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER);
     }
 }

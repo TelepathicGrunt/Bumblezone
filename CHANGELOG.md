@@ -12,6 +12,9 @@ Fixed Honey Buckets not able to convert Slime into Honey Slime. (Was an issue wi
 
 Fixed Honey Slime scaling for adult to not be massive.
 
+##### Effects:
+Protection of the Hive on the player will now be removed if you hurt a Bee outside The Bumblezone dimension.
+
 ##### Recipes:
 Renamed the_bumblezone:beeswax_planks_to_bee_nests recipe json to the_bumblezone:beehive_beeswax_to_bee_nest.
 

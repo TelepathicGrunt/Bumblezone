@@ -29,7 +29,7 @@ import net.minecraft.world.server.ServerWorld;
 
 public class BeeInteractivity {
 
-    private static ResourceLocation PRODUCTIVE_BEES_HONEY_TREAT = new ResourceLocation("productivebees", "honey_treat");
+    private static final ResourceLocation PRODUCTIVE_BEES_HONEY_TREAT = new ResourceLocation("productivebees", "honey_treat");
 
     // heal bees with sugar water bottle or honey bottle or honey bucket
     public static ActionResultType beeFeeding(World world, PlayerEntity playerEntity, Hand hand, BeeEntity beeEntity) {
@@ -40,16 +40,24 @@ public class BeeInteractivity {
         if (itemRL == null || !BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
             return ActionResultType.PASS;
 
+        boolean removedWrath;
+        ItemStack itemstackOriginal = itemstack.copy();
+
         // Let the honey treat behavior continue on so their gene stuff is not lost.
         if (itemRL.equals(PRODUCTIVE_BEES_HONEY_TREAT)) {
-            calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
+            removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
+
+            if(removedWrath && playerEntity instanceof ServerPlayerEntity ) {
+                BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayerEntity) playerEntity, itemstackOriginal);
+            }
+
             playerEntity.swing(hand, true);
             return ActionResultType.PASS;
         }
 
         if (itemstack.getItem().is(BzItemTags.HONEY_BUCKETS)) {
             beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
-            calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);
+            removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);
             if (beeEntity.isBaby()) {
                 if (world.getRandom().nextBoolean()) {
                     beeEntity.setBaby(false);
@@ -72,11 +80,11 @@ public class BeeInteractivity {
         }
         else if (itemRL.getPath().contains("honey")) {
             beeEntity.addEffect(new EffectInstance(Effects.HEAL, 1, 2, false, false, false));
-            calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
+            removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
         }
         else {
             beeEntity.addEffect(new EffectInstance(Effects.HEAL, 1, 1, false, false, false));
-            calmAndSpawnHearts(world, playerEntity, beeEntity, 0.1f, 3);
+            removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.1f, 3);
         }
 
         if (!playerEntity.isCreative()) {
@@ -84,6 +92,10 @@ public class BeeInteractivity {
             Item item = itemstack.getItem();
             itemstack.shrink(1);
             GeneralUtils.givePlayerItem(playerEntity, hand, new ItemStack(item), true);
+        }
+
+        if(removedWrath && playerEntity instanceof ServerPlayerEntity ) {
+            BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayerEntity) playerEntity, itemstackOriginal);
         }
 
         playerEntity.swing(hand, true);
@@ -117,12 +129,14 @@ public class BeeInteractivity {
         return ActionResultType.PASS;
     }
 
-    public static void calmAndSpawnHearts(World world, PlayerEntity playerEntity, LivingEntity beeEntity, float calmChance, int hearts) {
+    public static boolean calmAndSpawnHearts(World world, PlayerEntity playerEntity, LivingEntity beeEntity, float calmChance, int hearts) {
         boolean calmed = world.random.nextFloat() < calmChance;
+        boolean removedWrath = false;
         if (calmed) {
             if(playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())){
                 playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
                 WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
+                removedWrath = true;
             }
             else{
                 playerEntity.addEffect(new EffectInstance(
@@ -151,5 +165,7 @@ public class BeeInteractivity {
                     world.getRandom().nextFloat() * 0.5 - 0.25f,
                     world.getRandom().nextFloat() * 0.4 + 0.2f);
         }
+
+        return removedWrath;
     }
 }

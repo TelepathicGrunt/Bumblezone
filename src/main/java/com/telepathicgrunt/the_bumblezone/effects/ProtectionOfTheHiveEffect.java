@@ -1,11 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.effects;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.passive.BeeEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
@@ -60,12 +62,16 @@ public class ProtectionOfTheHiveEffect extends Effect {
      * Makes the bees swarm at the attacking entity
      */
     public void applyEffectTick(LivingEntity entity, int amplifier) {
-       if(entity.hurtTime > 0 && entity.getLastHurtByMob() != null){
+       if(entity.hurtTime > 0 && entity.getLastHurtByMob() != null) {
            resetBeeAngry(entity.level, entity.getLastHurtByMob());
 
-           if(!(entity.getLastHurtByMob() instanceof BeeEntity))
-                entity.getLastHurtByMob().addEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), amplifier, true, true, true));
-       }
+           if(!(entity.getLastHurtByMob() instanceof BeeEntity)) {
+               if(entity instanceof ServerPlayerEntity) {
+                   entity.getLastHurtByMob().addEffect(new EffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), amplifier, true, true, true));
+                   BzCriterias.PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER.trigger((ServerPlayerEntity) entity, entity.getLastHurtByMob());
+               }
+           }
+        }
     }
 
     /**
