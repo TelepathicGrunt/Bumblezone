@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -26,6 +27,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -177,6 +179,10 @@ public class HoneycombBrood extends ProperFacingBlock {
                                         world.getRandom().nextFloat() * 0.2f + 0.2f,
                                         world.getRandom().nextFloat() * 0.5 - 0.25f,
                                         world.getRandom().nextFloat() * 0.4 + 0.2f);
+                            }
+
+                            if(playerEntity instanceof ServerPlayerEntity) {
+                                BzCriterias.HONEY_BUCKET_BROOD_TRIGGER.trigger((ServerPlayerEntity) playerEntity);
                             }
                         }
                         world.setBlockAndUpdate(position, thisBlockState.setValue(STAGE, newStage));

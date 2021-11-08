@@ -53,11 +53,20 @@ public class BeeInteractivity {
             if (beeEntity.isBaby()) {
                 if (world.getRandom().nextBoolean()) {
                     beeEntity.setBaby(false);
+                    if(playerEntity instanceof ServerPlayerEntity) {
+                        BzCriterias.HONEY_BUCKET_BEE_GROW_TRIGGER.trigger((ServerPlayerEntity) playerEntity);
+                    }
                 }
             }
             else {
+                int nearbyAdultBees = 0;
                 for (BeeEntity nearbyBee : world.getEntitiesOfClass(BeeEntity.class, beeEntity.getBoundingBox().inflate(4), beeEntity1 -> true)) {
                     nearbyBee.setInLove(playerEntity);
+                    if(!nearbyBee.isBaby()) nearbyAdultBees++;
+                }
+
+                if(nearbyAdultBees >= 2 && playerEntity instanceof ServerPlayerEntity) {
+                    BzCriterias.HONEY_BUCKET_BEE_LOVE_TRIGGER.trigger((ServerPlayerEntity) playerEntity);
                 }
             }
         }

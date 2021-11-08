@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.block.AbstractBlock;
@@ -13,6 +14,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -74,6 +76,11 @@ public class PorousHoneycomb extends Block {
                         world.setBlock(position.relative(direction), BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3);
                         filledNeighbors++;
                     }
+
+                    if(filledNeighbors == 1 && playerEntity instanceof ServerPlayerEntity) {
+                        BzCriterias.HONEY_BUCKET_POROUS_HONEYCOMB_TRIGGER.trigger((ServerPlayerEntity) playerEntity);
+                    }
+
                     if(filledNeighbors == 2) break;
                 }
             }

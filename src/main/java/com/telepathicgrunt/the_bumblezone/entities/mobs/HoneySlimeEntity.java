@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.entities.goals.TemptGoal;
 import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.block.Block;
@@ -29,6 +30,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -226,6 +228,9 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
 
             this.setLastHurtByMob(player);
             getHoneyFromSlime(this);
+            if(player instanceof ServerPlayerEntity) {
+               BzCriterias.HONEY_SLIME_HARVEST_TRIGGER.trigger((ServerPlayerEntity) player);
+            }
             return ActionResultType.SUCCESS;
          }
          else if (ModChecker.buzzierBeesPresent && BzModCompatibilityConfigs.allowHoneyWandCompat.get())
@@ -236,6 +241,9 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
                world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
                this.setLastHurtByMob(player);
                getHoneyFromSlime(this);
+               if(player instanceof ServerPlayerEntity) {
+                  BzCriterias.HONEY_SLIME_HARVEST_TRIGGER.trigger((ServerPlayerEntity) player);
+               }
                return action;
             }
          }

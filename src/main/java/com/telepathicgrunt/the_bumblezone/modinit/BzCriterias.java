@@ -2,6 +2,12 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.advancements.BeeDropPollenPuffTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.FallingOnPollenPileTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.HoneyBucketBeeGrowTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.HoneyBucketBeeLoveTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.HoneyBucketBroodTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.HoneyBucketPorousHoneycombTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.HoneySlimeCreationTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.HoneySlimeHarvestTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.PollenPuffFireballTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.PollenPuffPandaTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.PollenPuffPollinateBeeTrigger;
@@ -24,6 +30,12 @@ public class BzCriterias {
     public static final TeleportToBumblezoneByPearlTrigger TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER = new TeleportToBumblezoneByPearlTrigger();
     public static final TeleportOutOfBumblezoneFallTrigger TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER = new TeleportOutOfBumblezoneFallTrigger();
     public static final TeleportToBumblezoneByPistonTrigger TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER = new TeleportToBumblezoneByPistonTrigger();
+    public static final HoneySlimeCreationTrigger HONEY_SLIME_CREATION_TRIGGER = new HoneySlimeCreationTrigger();
+    public static final HoneySlimeHarvestTrigger HONEY_SLIME_HARVEST_TRIGGER = new HoneySlimeHarvestTrigger();
+    public static final HoneyBucketBeeLoveTrigger HONEY_BUCKET_BEE_LOVE_TRIGGER = new HoneyBucketBeeLoveTrigger();
+    public static final HoneyBucketBeeGrowTrigger HONEY_BUCKET_BEE_GROW_TRIGGER = new HoneyBucketBeeGrowTrigger();
+    public static final HoneyBucketPorousHoneycombTrigger HONEY_BUCKET_POROUS_HONEYCOMB_TRIGGER = new HoneyBucketPorousHoneycombTrigger();
+    public static final HoneyBucketBroodTrigger HONEY_BUCKET_BROOD_TRIGGER = new HoneyBucketBroodTrigger();
 
     public static void init() {
         CriteriaTriggers.register(QUEEN_BEEHEMOTH_TRIGGER);
@@ -36,5 +48,11 @@ public class BzCriterias {
         CriteriaTriggers.register(TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER);
         CriteriaTriggers.register(TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER);
         CriteriaTriggers.register(TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER);
+        CriteriaTriggers.register(HONEY_SLIME_CREATION_TRIGGER);
+        CriteriaTriggers.register(HONEY_SLIME_HARVEST_TRIGGER);
+        CriteriaTriggers.register(HONEY_BUCKET_BEE_LOVE_TRIGGER);
+        CriteriaTriggers.register(HONEY_BUCKET_BEE_GROW_TRIGGER);
+        CriteriaTriggers.register(HONEY_BUCKET_POROUS_HONEYCOMB_TRIGGER);
+        CriteriaTriggers.register(HONEY_BUCKET_BROOD_TRIGGER);
     }
 }
