@@ -7,6 +7,9 @@ Added new advancements for this mod to add some progression and high xp rewards!
 ##### Configs:
 Significantly cleaned up the config system backend code for my mod. Let me know if any config no longer works but it should be ok!
 
+##### Entities:
+Fixed Honey Buckets not able to convert Slime into Honey Slime. (Was an issue with the tag that controls what blocks can convert Slime)
+
 
 ### **(V.3.0.0 Changes) (1.16.5 Minecraft)**
 

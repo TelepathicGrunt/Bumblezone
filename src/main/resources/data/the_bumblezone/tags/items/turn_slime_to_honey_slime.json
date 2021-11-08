@@ -7,7 +7,7 @@
     },
     {
       "id": "#forge:buckets/honey",
-      "required": false
+      "required": true
     }
   ]
 }
