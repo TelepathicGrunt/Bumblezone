@@ -17,6 +17,9 @@ Fixed issue where trying to remove Pollen Puff from bees causes some logspam.
 Fixed using items on Bees/Honey Slime may cause the item's use to continue pass the entity. 
  Such as feeding bees a Honey Bucket will place honey behind the entity at well.
 
+##### Items:
+Fixed durability bar on Honey Crystal Shield to correctly show how much durability is really left.
+
 ##### Effects:
 Protection of the Hive on the player will now be removed if you hurt a Bee outside The Bumblezone dimension.
 

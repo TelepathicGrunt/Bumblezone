@@ -109,8 +109,7 @@ public class HoneyCrystalShieldBehavior {
     /**
      * Increases the durability of the shield by 10 for every shield level (repair cost)
      */
-    public static int getMaximumDamage(ItemStack stack)
-    {
+    public static int getMaximumDamage(ItemStack stack) {
         if(stack.hasTag()) {
             int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
             if (repairLevel != 0) {

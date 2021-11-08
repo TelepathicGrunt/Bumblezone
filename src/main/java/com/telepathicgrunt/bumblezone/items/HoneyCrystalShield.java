@@ -4,6 +4,7 @@ import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
@@ -36,5 +37,16 @@ public class HoneyCrystalShield extends ShieldItem {
             int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
             tooltip.add(new TranslatableComponent("item.the_bumblezone.honey_crystal_shield.level_tooltip").append(": " + (repairLevel + 1)));
         }
+    }
+
+    @Override
+    public int getBarWidth(ItemStack itemStack) {
+        return Math.round(13.0F - (float)itemStack.getDamageValue() * 13.0F / (float)itemStack.getMaxDamage());
+    }
+
+    @Override
+    public int getBarColor(ItemStack itemStack) {
+        float f = Math.max(0.0F, ((float)itemStack.getMaxDamage() - (float)itemStack.getDamageValue()) / (float)itemStack.getMaxDamage());
+        return Mth.hsvToRgb(f / 3.0F, 1.0F, 1.0F);
     }
 }
