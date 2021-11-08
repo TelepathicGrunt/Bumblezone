@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/pollen_pile/walk_into_pollen_pile",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:pile_of_pollen"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.fall_onto_pollen_pile.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.fall_onto_pollen_pile.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "fall_onto_pollen_pile": {
+      "trigger": "the_bumblezone:fall_onto_pollen_pile",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "fall_onto_pollen_pile"
+    ]
+  ]
+}

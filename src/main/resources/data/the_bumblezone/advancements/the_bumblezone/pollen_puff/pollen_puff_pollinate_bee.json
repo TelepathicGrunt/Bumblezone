@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/pollen_pile/fall_onto_pollen_pile",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:pollen_puff"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.pollen_puff_pollinate_bee.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.pollen_puff_pollinate_bee.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "pollen_puff_pollinate_bee": {
+      "trigger": "the_bumblezone:pollen_puff_pollinate_bee",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "pollen_puff_pollinate_bee"
+    ]
+  ]
+}

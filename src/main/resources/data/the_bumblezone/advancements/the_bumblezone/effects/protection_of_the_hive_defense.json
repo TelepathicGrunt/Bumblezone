@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/root",
+  "display": {
+    "icon": {
+      "item": "minecraft:bee_spawn_egg"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.protection_of_the_hive_defense.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.protection_of_the_hive_defense.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "protection_of_the_hive_defense": {
+      "trigger": "the_bumblezone:protection_of_the_hive_defense",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "protection_of_the_hive_defense"
+    ]
+  ]
+}

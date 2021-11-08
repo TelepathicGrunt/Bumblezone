@@ -1,0 +1,38 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/root",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:honey_bucket"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.obtain_honey_bucket.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.obtain_honey_bucket.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 2
+  },
+  "criteria": {
+    "obtain_honey_bucket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:buckets/honey"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_honey_bucket"
+    ]
+  ]
+}

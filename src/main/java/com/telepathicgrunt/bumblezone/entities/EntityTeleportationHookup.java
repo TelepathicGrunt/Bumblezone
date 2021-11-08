@@ -72,7 +72,7 @@ public class EntityTeleportationHookup {
     public static boolean runEnderpearlImpact(HitResult hitResult, Projectile pearlEntity){
         Level world = pearlEntity.level; // world we threw in
 
-        // Make sure we are on server by checking if thrower is ServerPlayerEntity and that we are not in bumblezone.
+        // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (!world.isClientSide() && pearlEntity.getOwner() instanceof ServerPlayer playerEntity &&
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&

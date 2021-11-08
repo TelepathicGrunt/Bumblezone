@@ -9,6 +9,7 @@ import com.telepathicgrunt.bumblezone.items.dispenserbehavior.DispenserItemSetup
 import com.telepathicgrunt.bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzConfiguredFeatures;
+import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;
@@ -73,6 +74,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzRecipes.registerRecipes();
         BzEffects.registerEffects();
         BzEnchantments.registerEnchantment();
+        BzCriterias.registerCriteriaTriggers();
 
         BzPOI.registerPOIs();
         BzProcessors.registerProcessors();

@@ -105,14 +105,14 @@ public class BreedGoal extends Goal {
     protected void spawnBaby() {
         AgeableMob childEntity = this.slime.getBreedOffspring((ServerLevel)this.world, this.field_75391_e);
         if (childEntity != null) {
-            ServerPlayer serverplayerentity = this.slime.getLoveCause();
-            if (serverplayerentity == null && this.field_75391_e.getLoveCause() != null) {
-                serverplayerentity = this.field_75391_e.getLoveCause();
+            ServerPlayer serverPlayer = this.slime.getLoveCause();
+            if (serverPlayer == null && this.field_75391_e.getLoveCause() != null) {
+                serverPlayer = this.field_75391_e.getLoveCause();
             }
 
-            if (serverplayerentity != null) {
-                serverplayerentity.awardStat(Stats.ANIMALS_BRED);
-                CriteriaTriggers.BRED_ANIMALS.trigger(serverplayerentity, this.slime, this.field_75391_e, childEntity);
+            if (serverPlayer != null) {
+                serverPlayer.awardStat(Stats.ANIMALS_BRED);
+                CriteriaTriggers.BRED_ANIMALS.trigger(serverPlayer, this.slime, this.field_75391_e, childEntity);
             }
 
             this.slime.setAge(6000);

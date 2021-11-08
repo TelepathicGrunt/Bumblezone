@@ -1,0 +1,53 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/root",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:music_disc_honey_bee_rat_faced_boy"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.obtain_all_music_discs.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.obtain_all_music_discs.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 200
+  },
+  "criteria": {
+    "obtain_music_disc_honey_bee_rat_faced_boy": {
+      "trigger": "minecraft:villager_trade",
+      "conditions": {
+        "item": {
+          "item": "the_bumblezone:music_disc_honey_bee_rat_faced_boy"
+        },
+        "villager": {
+          "type": "minecraft:wandering_trader"
+        }
+      }
+    },
+    "obtain_music_disc_flight_of_the_bumblebee_rimsky_korsakov": {
+      "trigger": "minecraft:villager_trade",
+      "conditions": {
+        "item": {
+          "item": "the_bumblezone:music_disc_flight_of_the_bumblebee_rimsky_korsakov"
+        },
+        "villager": {
+          "type": "minecraft:wandering_trader"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_music_disc_honey_bee_rat_faced_boy"
+    ],
+    [
+      "obtain_music_disc_flight_of_the_bumblebee_rimsky_korsakov"
+    ]
+  ]
+}

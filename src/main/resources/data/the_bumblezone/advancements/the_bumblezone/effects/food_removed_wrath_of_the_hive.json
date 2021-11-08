@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/effects/extended_wrath_of_the_hive",
+  "display": {
+    "icon": {
+      "item": "minecraft:bee_spawn_egg"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.food_removed_wrath_of_the_hive.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.food_removed_wrath_of_the_hive.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 12
+  },
+  "criteria": {
+    "food_removed_wrath_of_the_hive": {
+      "trigger": "the_bumblezone:food_removed_wrath_of_the_hive",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "food_removed_wrath_of_the_hive"
+    ]
+  ]
+}
