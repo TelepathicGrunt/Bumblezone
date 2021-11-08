@@ -25,7 +25,7 @@
         "items": [
           {
             "items": [ "the_bumblezone:honey_crystal_shield" ],
-            "durability": { "min": 600 }
+            "nbt": "{\"RepairCost\":63}"
           }
         ]
       }
