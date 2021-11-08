@@ -130,13 +130,11 @@ public class HoneyCrystalShieldBehavior {
 
             // ignore anvil repairing
             if (damageCaused < 0 && repairLevel != 0) {
-
                 int reducedDamage = Math.min(-1, damageCaused + (repairLevel / 14));
-               return stack.getDamageValue() + (-reducedDamage);
+                return stack.getDamageValue() + (-reducedDamage);
             }
         }
 
         return damage;
     }
-
 }

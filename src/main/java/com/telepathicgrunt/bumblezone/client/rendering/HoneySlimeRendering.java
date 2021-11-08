@@ -26,7 +26,7 @@ public class HoneySlimeRendering extends MobRenderer<HoneySlimeEntity, SlimeMode
 
     @Override
     public void render(HoneySlimeEntity honeySlimeEntity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i) {
-        this.shadowRadius = 0.25F * (honeySlimeEntity.isBaby() ? 1f : 1.5f);
+        this.shadowRadius = 0.25F * (honeySlimeEntity.isBaby() ? 1f : 2f);
         super.render(honeySlimeEntity, f, g, matrixStack, vertexConsumerProvider, i);
     }
 
@@ -35,7 +35,7 @@ public class HoneySlimeRendering extends MobRenderer<HoneySlimeEntity, SlimeMode
     protected void scale(HoneySlimeEntity honeySlimeEntity, PoseStack matrixStack, float f) {
         matrixStack.scale(0.999F, 0.999F, 0.999F);
         matrixStack.translate(0.0D, 0.001D, 0.0D);
-        float mainScale = honeySlimeEntity.isBaby() ? 1f : 1.5f;
+        float mainScale = honeySlimeEntity.isBaby() ? 1f : 2f;
         float currentSquish = Mth.lerp(f, honeySlimeEntity.prevSquishFactor, honeySlimeEntity.squishFactor) / (mainScale * 0.5F + 1.0F);
         float scaledSquish = 1.0F / (currentSquish + 1.0F);
         matrixStack.scale(scaledSquish * mainScale, 1.0F / scaledSquish * mainScale, scaledSquish * mainScale);

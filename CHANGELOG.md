@@ -5,8 +5,6 @@ Added new advancements for this mod to add some progression and high xp rewards!
  Note: Progress or conditions met before this update will not contribute towards the new advancements.
 
 ##### Entities:
-Fixed Honey Slime scaling for adult to not be massive.
-
 Fixed Honey Slime not giving Honey Bottle when harvested with Glass Bottle.
 
 Honey Slimes have a bit more health, a bit more attack power, and will jump faster and higher when angry as well as stay angry longer.
@@ -15,6 +13,9 @@ Killing adult Honey Slimes with looting enchantment may drop Sugar and/or Slime 
  Before, it was the child that had this feature instead of the adult by mistake.
 
 Fixed issue where trying to remove Pollen Puff from bees causes some logspam.
+
+Fixed using items on Bees/Honey Slime may cause the item's use to continue pass the entity. 
+ Such as feeding bees a Honey Bucket will place honey behind the entity at well.
 
 ##### Effects:
 Protection of the Hive on the player will now be removed if you hurt a Bee outside The Bumblezone dimension.

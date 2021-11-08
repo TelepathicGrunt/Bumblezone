@@ -35,7 +35,7 @@ public class BeeInteractivity {
 
     // heal bees with sugar water bottle or honey bottle
     public static InteractionResult beeFeeding(Level world, Player playerEntity, InteractionHand hand, Entity target) {
-        if (!world.isClientSide() && target instanceof Bee beeEntity) {
+        if (target instanceof Bee beeEntity) {
 
             ItemStack itemstack = playerEntity.getItemInHand(hand);
             ResourceLocation itemRL = Registry.ITEM.getKey(itemstack.getItem());
@@ -43,6 +43,8 @@ public class BeeInteractivity {
             // Disallow all non-tagged items from being fed to bees
             if(!BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
                 return InteractionResult.PASS;
+            if(world.isClientSide())
+                return InteractionResult.SUCCESS;
 
             boolean removedWrath;
             ItemStack itemstackOriginal = itemstack.copy();
@@ -98,7 +100,7 @@ public class BeeInteractivity {
 
 
     public static InteractionResult beeUnpollinating(Level world, Player playerEntity, InteractionHand hand, Bee beeEntity) {
-        if (!world.isClientSide() && beeEntity.getType().is(BzEntityTags.POLLEN_PUFF_CAN_POLLINATE)) {
+        if (beeEntity.getType().is(BzEntityTags.POLLEN_PUFF_CAN_POLLINATE)) {
             ItemStack itemstack = playerEntity.getItemInHand(hand);
             Item item = itemstack.getItem();
 
@@ -109,6 +111,10 @@ public class BeeInteractivity {
                         item == Items.WET_SPONGE ||
                         item == BzItems.SUGAR_WATER_BOTTLE ||
                         (item instanceof BucketItem && ((BucketItemAccessor) item).thebumblezone_getFluid().is(FluidTags.WATER))) {
+
+                    if(world.isClientSide())
+                        return InteractionResult.SUCCESS;
+
                     PollenPuff.spawnItemstackEntity(world, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF, 1));
                     playerEntity.swing(hand, true);
                     ((BeeEntityInvoker)beeEntity).thebumblezone_callSetHasNectar(false);
