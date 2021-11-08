@@ -48,7 +48,7 @@ public class HoneySlimeMoveHelperController extends MoveControl {
                 if (this.jumpDelay-- <= 0) {
                     this.jumpDelay = this.slime.getJumpDelay();
                     if (this.isAggressive) {
-                        this.jumpDelay /= 3;
+                        this.jumpDelay /= 4;
                     }
 
                     this.slime.getJumpControl().jump();

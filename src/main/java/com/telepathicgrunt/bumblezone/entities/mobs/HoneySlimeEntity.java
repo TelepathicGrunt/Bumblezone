@@ -70,7 +70,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
    private static final EntityDataAccessor<Integer> IN_HONEY_GROWTH_TIME = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.INT);
    private static final Ingredient BREEDING_ITEM = Ingredient.of(Items.SUGAR);
    private static final EntityDataAccessor<Integer> ANGRY_TIMER = SynchedEntityData.defineId(Bee.class, EntityDataSerializers.INT);
-   private static final UniformInt MAX_ANGER_DURATION = TimeUtil.rangeOfSeconds(10, 22);
+   private static final UniformInt MAX_ANGER_DURATION = TimeUtil.rangeOfSeconds(22, 36);
    private UUID target_UUID;
 
 
@@ -108,7 +108,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
 
    @Override
    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn, CompoundTag dataTag) {
-      this.setSlimeSize(this.isBaby() ? 1 : 2, true);
+      this.setupHoneySlime(this.isBaby(), true);
       return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
    }
 
@@ -149,7 +149,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
 
    public static AttributeSupplier.Builder getAttributeBuilder() {
 	 return Mob.createMobAttributes()
-             .add(Attributes.MAX_HEALTH, 40.0D)
+             .add(Attributes.MAX_HEALTH, 8.0D)
              .add(Attributes.MOVEMENT_SPEED, 2.0D)
              .add(Attributes.ATTACK_DAMAGE, 1.0D);
    }
@@ -159,17 +159,17 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
       return true;
    }
 
-   protected void setSlimeSize(int size, boolean resetHealth) {
+   protected void setupHoneySlime(boolean isBaby, boolean resetHealth) {
       this.reapplyPosition();
       this.refreshDimensions();
-      Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(size * size);
-      Objects.requireNonNull(this.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue((0.2F + 0.1F * (float)size)*2);
-      Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(size);
+      Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(isBaby ? 2 : 8);
+      Objects.requireNonNull(this.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue((0.2F + 0.1F * (float)(isBaby ? 1 : 2))*2);
+      Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(isBaby ? 1 : 3);
       if (resetHealth) {
          this.setHealth(this.getMaxHealth());
       }
 
-      this.xpReward = size;
+      this.xpReward = isBaby ? 1 : 2;
    }
 
    public boolean isInHoney() {
@@ -216,9 +216,8 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
          if (itemstack.getItem() == Items.GLASS_BOTTLE) {
             level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
             if (!player.isCreative()) {
-               Item item = itemstack.getItem();
                itemstack.shrink(1);
-               GeneralUtils.givePlayerItem(player, hand, new ItemStack(item), true);
+               GeneralUtils.givePlayerItem(player, hand, new ItemStack(Items.HONEY_BOTTLE), false);
             }
 
             this.setLastHurtByMob(player);
@@ -299,7 +298,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
       HoneySlimeEntity childHoneySlimeEntity = BzEntities.HONEY_SLIME.create(worldIn);
 
       if (childHoneySlimeEntity != null)
-         childHoneySlimeEntity.setSlimeSize(1, true);
+         childHoneySlimeEntity.setupHoneySlime(true, true);
 
       return childHoneySlimeEntity;
    }
@@ -308,7 +307,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
    protected void ageBoundaryReached() {
       super.ageBoundaryReached();
       if (!this.isBaby()) {
-         this.setSlimeSize(2, true);
+         this.setupHoneySlime(false, true);
       }
    }
 
@@ -384,7 +383,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
 
    @Override
    protected ResourceLocation getDefaultLootTable() {
-      return this.isBaby() ? this.getType().getDefaultLootTable() : BuiltInLootTables.EMPTY;
+      return this.isBaby() ? BuiltInLootTables.EMPTY : this.getType().getDefaultLootTable();
    }
 
    @Override
@@ -403,7 +402,12 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
 
    protected void jumpFromGround() {
       Vec3 vec3d = this.getDeltaMovement();
-      this.setDeltaMovement(vec3d.x, this.getJumpPower(), vec3d.z);
+      if(this.isAngry()) {
+         this.setDeltaMovement(vec3d.x * 5, this.getJumpPower() * 1.3f, vec3d.z * 5);
+      }
+      else  {
+         this.setDeltaMovement(vec3d.x, this.getJumpPower(), vec3d.z);
+      }
       this.hasImpulse = true;
    }
 
@@ -437,7 +441,6 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
 
    @Override
    public void startPersistentAngerTimer() {
-      if(MAX_ANGER_DURATION != null)
-         this.setRemainingPersistentAngerTime(MAX_ANGER_DURATION.sample(this.random));
+      this.setRemainingPersistentAngerTime(MAX_ANGER_DURATION.sample(this.random));
    }
 }
