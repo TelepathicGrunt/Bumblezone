@@ -221,9 +221,8 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
          if (itemstack.getItem() == Items.GLASS_BOTTLE) {
             world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
             if (!player.isCreative()) {
-               Item item = itemstack.getItem();
                itemstack.shrink(1);
-               GeneralUtils.givePlayerItem(player, hand, new ItemStack(item), true);
+               GeneralUtils.givePlayerItem(player, hand, new ItemStack(Items.HONEY_BOTTLE), false);
             }
 
             this.setLastHurtByMob(player);

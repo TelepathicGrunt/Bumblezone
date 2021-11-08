@@ -12,6 +12,8 @@ Fixed Honey Buckets not able to convert Slime into Honey Slime. (Was an issue wi
 
 Fixed Honey Slime scaling for adult to not be massive.
 
+Fixed Honey Slime not giving Honey Bottle when harvested with Glass Bottle.
+
 ##### Effects:
 Protection of the Hive on the player will now be removed if you hurt a Bee outside The Bumblezone dimension.
 
