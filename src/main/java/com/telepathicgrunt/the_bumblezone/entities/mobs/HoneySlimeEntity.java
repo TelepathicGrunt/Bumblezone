@@ -231,11 +231,9 @@ public class HoneySlimeEntity extends AnimalEntity implements IAngerable, IMob {
             }
             return ActionResultType.SUCCESS;
          }
-         else if (ModChecker.buzzierBeesPresent && BzModCompatibilityConfigs.allowHoneyWandCompat.get())
-         {
+         else if (ModChecker.buzzierBeesPresent && BzModCompatibilityConfigs.allowHoneyWandCompat.get()) {
             ActionResultType action = BuzzierBeesCompat.honeyWandGivingHoney(itemstack, player, hand);
-            if (action == ActionResultType.SUCCESS)
-            {
+            if (action == ActionResultType.SUCCESS) {
                world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
                this.setLastHurtByMob(player);
                getHoneyFromSlime(this);

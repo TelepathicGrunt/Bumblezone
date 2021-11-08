@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin;
+package com.telepathicgrunt.the_bumblezone.mixin.client;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

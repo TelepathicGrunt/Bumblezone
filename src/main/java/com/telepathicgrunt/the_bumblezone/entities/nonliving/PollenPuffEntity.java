@@ -132,7 +132,7 @@ public class PollenPuffEntity extends ProjectileItemEntity {
         }
         else if(entity instanceof FireballEntity && ((FireballEntity)entity).getOwner() instanceof GhastEntity) {
             if(this.getOwner() instanceof ServerPlayerEntity)
-                BzCriterias.POLLEN_PUFF_ARROW_TRIGGER.trigger((ServerPlayerEntity) this.getOwner());
+                BzCriterias.POLLEN_PUFF_FIREBALL_TRIGGER.trigger((ServerPlayerEntity) this.getOwner());
         }
     }
 

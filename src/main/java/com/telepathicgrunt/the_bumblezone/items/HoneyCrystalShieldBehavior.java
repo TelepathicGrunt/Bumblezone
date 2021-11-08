@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
+package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.mixin.items.PlayerDamageShieldInvoker;

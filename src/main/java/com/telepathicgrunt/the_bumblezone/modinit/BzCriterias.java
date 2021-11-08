@@ -19,7 +19,7 @@ public class BzCriterias {
     public static final HoneyCrystalShieldBlockIneffectivelyTrigger HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER = new HoneyCrystalShieldBlockIneffectivelyTrigger();
     public static final HoneySlimeCreationTrigger HONEY_SLIME_CREATION_TRIGGER = new HoneySlimeCreationTrigger();
     public static final HoneySlimeHarvestTrigger HONEY_SLIME_HARVEST_TRIGGER = new HoneySlimeHarvestTrigger();
-    public static final PollenPuffFireballTrigger POLLEN_PUFF_ARROW_TRIGGER = new PollenPuffFireballTrigger();
+    public static final PollenPuffFireballTrigger POLLEN_PUFF_FIREBALL_TRIGGER = new PollenPuffFireballTrigger();
     public static final PollenPuffPandaTrigger POLLEN_PUFF_PANDA_TRIGGER = new PollenPuffPandaTrigger();
     public static final PollenPuffPollinateBeeTrigger POLLEN_PUFF_POLLINATED_BEE_TRIGGER = new PollenPuffPollinateBeeTrigger();
     public static final PollenPuffPollinateTallFlowerTrigger POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER = new PollenPuffPollinateTallFlowerTrigger();
@@ -31,7 +31,7 @@ public class BzCriterias {
     public static final TeleportToBumblezoneByPearlTrigger TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER = new TeleportToBumblezoneByPearlTrigger();
     public static final TeleportToBumblezoneByPistonTrigger TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER = new TeleportToBumblezoneByPistonTrigger();
 
-    public static void registerCriteriaTriggers() {
+    public static void init() {
         CriteriaTriggers.register(BEE_DROP_POLLEN_PUFF_TRIGGER);
         CriteriaTriggers.register(CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER);
         CriteriaTriggers.register(COMB_CUTTER_EXTRA_DROPS_TRIGGER);
@@ -46,7 +46,7 @@ public class BzCriterias {
         CriteriaTriggers.register(HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER);
         CriteriaTriggers.register(HONEY_SLIME_CREATION_TRIGGER);
         CriteriaTriggers.register(HONEY_SLIME_HARVEST_TRIGGER);
-        CriteriaTriggers.register(POLLEN_PUFF_ARROW_TRIGGER);
+        CriteriaTriggers.register(POLLEN_PUFF_FIREBALL_TRIGGER);
         CriteriaTriggers.register(POLLEN_PUFF_PANDA_TRIGGER);
         CriteriaTriggers.register(POLLEN_PUFF_POLLINATED_BEE_TRIGGER);
         CriteriaTriggers.register(POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER);

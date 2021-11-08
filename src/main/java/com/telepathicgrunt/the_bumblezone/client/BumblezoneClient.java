@@ -9,7 +9,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HoneySlimeRendering;
 import com.telepathicgrunt.the_bumblezone.client.rendering.PileOfPollenRenderer;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
-import com.telepathicgrunt.the_bumblezone.mixin.RenderingRegistryAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.client.RenderingRegistryAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.SkyPropertiesAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;

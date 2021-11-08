@@ -94,7 +94,7 @@ public class BeeInteractivity {
             GeneralUtils.givePlayerItem(playerEntity, hand, new ItemStack(item), true);
         }
 
-        if(removedWrath && playerEntity instanceof ServerPlayerEntity ) {
+        if(removedWrath && playerEntity instanceof ServerPlayerEntity) {
             BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayerEntity) playerEntity, itemstackOriginal);
         }
 
