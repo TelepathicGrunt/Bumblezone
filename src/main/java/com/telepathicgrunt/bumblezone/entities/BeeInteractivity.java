@@ -112,6 +112,10 @@ public class BeeInteractivity {
                     PollenPuff.spawnItemstackEntity(world, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF, 1));
                     playerEntity.swing(hand, true);
                     ((BeeEntityInvoker)beeEntity).thebumblezone_callSetHasNectar(false);
+
+                    if(playerEntity instanceof ServerPlayer) {
+                        BzCriterias.BEE_DROP_POLLEN_PUFF_TRIGGER.trigger((ServerPlayer) playerEntity, itemstack);
+                    }
                     return InteractionResult.SUCCESS;
                 }
             }

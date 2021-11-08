@@ -24,7 +24,7 @@
       "conditions": {
         "items": [
           {
-            "item": "the_bumblezone:honey_crystal"
+            "items": [ "the_bumblezone:honey_crystal" ]
           }
         ]
       }

@@ -23,7 +23,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "item": "the_bumblezone:honey_crystal_shards"
+          "items": [ "the_bumblezone:honey_crystal_shards" ]
         }
       }
     }

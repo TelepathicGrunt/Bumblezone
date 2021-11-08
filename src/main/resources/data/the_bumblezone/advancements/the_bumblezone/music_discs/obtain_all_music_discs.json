@@ -23,7 +23,7 @@
       "trigger": "minecraft:villager_trade",
       "conditions": {
         "item": {
-          "item": "the_bumblezone:music_disc_honey_bee_rat_faced_boy"
+          "items": [ "the_bumblezone:music_disc_honey_bee_rat_faced_boy" ]
         },
         "villager": {
           "type": "minecraft:wandering_trader"
@@ -34,7 +34,7 @@
       "trigger": "minecraft:villager_trade",
       "conditions": {
         "item": {
-          "item": "the_bumblezone:music_disc_flight_of_the_bumblebee_rimsky_korsakov"
+          "items": [ "the_bumblezone:music_disc_flight_of_the_bumblebee_rimsky_korsakov" ]
         },
         "villager": {
           "type": "minecraft:wandering_trader"

@@ -23,7 +23,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "item": "the_bumblezone:sugar_water_bottle"
+          "items": [ "the_bumblezone:sugar_water_bottle" ]
         }
       }
     }
