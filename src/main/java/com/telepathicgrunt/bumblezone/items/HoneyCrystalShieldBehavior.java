@@ -1,6 +1,5 @@
 package com.telepathicgrunt.bumblezone.items;
 
-import com.telepathicgrunt.bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.bumblezone.mixin.items.PlayerDamageShieldInvoker;
 import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
