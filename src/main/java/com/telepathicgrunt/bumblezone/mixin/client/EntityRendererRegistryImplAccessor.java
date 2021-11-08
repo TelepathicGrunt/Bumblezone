@@ -1,4 +1,4 @@
-package com.telepathicgrunt.bumblezone.mixin;
+package com.telepathicgrunt.bumblezone.mixin.client;
 
 import net.fabricmc.fabric.impl.client.rendering.EntityRendererRegistryImpl;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

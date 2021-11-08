@@ -7,6 +7,7 @@ import com.telepathicgrunt.bumblezone.entities.goals.FloatGoal;
 import com.telepathicgrunt.bumblezone.entities.goals.HopGoal;
 import com.telepathicgrunt.bumblezone.entities.goals.TemptGoal;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -17,6 +18,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -222,6 +224,9 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
 
             this.setLastHurtByMob(player);
             getHoneyFromSlime(this);
+            if(player instanceof ServerPlayer) {
+               BzCriterias.HONEY_SLIME_HARVEST_TRIGGER.trigger((ServerPlayer) player);
+            }
             return InteractionResult.SUCCESS;
          }
       }

@@ -1,9 +1,11 @@
 package com.telepathicgrunt.bumblezone.enchantments;
 
+import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -67,6 +69,9 @@ public class CombCutterEnchantment extends Enchantment {
         int equipmentLevel = EnchantmentHelper.getEnchantmentLevel(BzEnchantments.COMB_CUTTER, playerEntity);
         if (equipmentLevel > 0 && !itemStack.isEmpty()) {
             Block.popResource(world, pos, new ItemStack(Items.HONEYCOMB, equipmentLevel * 3));
+            if(playerEntity instanceof ServerPlayer) {
+                BzCriterias.COMB_CUTTER_EXTRA_DROPS_TRIGGER.trigger((ServerPlayer) playerEntity);
+            }
         }
     }
 

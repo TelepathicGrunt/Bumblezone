@@ -1,6 +1,6 @@
 package com.telepathicgrunt.bumblezone.mixin.items;
 
-import com.telepathicgrunt.bumblezone.items.dispenserbehavior.HoneyCrystalShieldBehavior;
+import com.telepathicgrunt.bumblezone.items.HoneyCrystalShieldBehavior;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;

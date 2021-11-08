@@ -1,6 +1,6 @@
 package com.telepathicgrunt.bumblezone.mixin.items;
 
-import com.telepathicgrunt.bumblezone.items.dispenserbehavior.HoneyCrystalShieldBehavior;
+import com.telepathicgrunt.bumblezone.items.HoneyCrystalShieldBehavior;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;

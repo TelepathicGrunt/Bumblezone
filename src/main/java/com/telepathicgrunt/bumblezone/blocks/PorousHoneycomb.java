@@ -1,11 +1,13 @@
 package com.telepathicgrunt.bumblezone.blocks;
 
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -69,6 +71,11 @@ public class PorousHoneycomb extends Block {
                         world.setBlock(position.relative(direction), BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(), 3);
                         filledNeighbors++;
                     }
+
+                    if(filledNeighbors == 1 && playerEntity instanceof ServerPlayer) {
+                        BzCriterias.HONEY_BUCKET_POROUS_HONEYCOMB_TRIGGER.trigger((ServerPlayer) playerEntity);
+                    }
+
                     if(filledNeighbors == 2) break;
                 }
             }

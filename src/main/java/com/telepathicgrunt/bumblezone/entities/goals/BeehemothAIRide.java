@@ -2,7 +2,7 @@ package com.telepathicgrunt.bumblezone.entities.goals;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.entities.mobs.BeehemothEntity;
-import com.telepathicgrunt.bumblezone.mixin.LivingEntityAccessor;
+import com.telepathicgrunt.bumblezone.mixin.entities.LivingEntityAccessor;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;

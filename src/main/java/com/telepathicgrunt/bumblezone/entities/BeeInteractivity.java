@@ -5,6 +5,7 @@ import com.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.bumblezone.items.PollenPuff;
 import com.telepathicgrunt.bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.bumblezone.mixin.items.BucketItemAccessor;
+import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.tags.BzEntityTags;
@@ -14,6 +15,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -42,27 +44,39 @@ public class BeeInteractivity {
             if(!BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
                 return InteractionResult.PASS;
 
+            boolean removedWrath;
+            ItemStack itemstackOriginal = itemstack.copy();
+
             if (itemstack.is(BzItemTags.HONEY_BUCKETS)) {
                 beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
-                calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);
+                removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);
                 if (beeEntity.isBaby()) {
                     if (world.getRandom().nextBoolean()) {
                         beeEntity.setBaby(false);
+                        if(playerEntity instanceof ServerPlayer) {
+                            BzCriterias.HONEY_BUCKET_BEE_GROW_TRIGGER.trigger((ServerPlayer) playerEntity);
+                        }
                     }
                 }
                 else {
+                    int nearbyAdultBees = 0;
                     for (Bee nearbyBee : world.getEntitiesOfClass(Bee.class, beeEntity.getBoundingBox().inflate(4), beeEntity1 -> true)) {
                         nearbyBee.setInLove(playerEntity);
+                        if(!nearbyBee.isBaby()) nearbyAdultBees++;
+                    }
+
+                    if(nearbyAdultBees >= 2 && playerEntity instanceof ServerPlayer) {
+                        BzCriterias.HONEY_BUCKET_BEE_LOVE_TRIGGER.trigger((ServerPlayer) playerEntity);
                     }
                 }
             }
             else if(itemRL.getPath().contains("honey")){
                 beeEntity.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 2, false, false, false));
-                calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
+                removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
             }
             else{
                 beeEntity.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 1, false, false, false));
-                calmAndSpawnHearts(world, playerEntity, beeEntity, 0.1f, 3);
+                removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.1f, 3);
             }
 
             if (!playerEntity.isCreative()) {
@@ -71,6 +85,11 @@ public class BeeInteractivity {
                 itemstack.shrink(1);
                 GeneralUtils.givePlayerItem(playerEntity, hand, new ItemStack(item), true);
             }
+
+            if(removedWrath && playerEntity instanceof ServerPlayer) {
+                BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayer) playerEntity, itemstackOriginal);
+            }
+
             playerEntity.swing(hand, true);
             return InteractionResult.SUCCESS;
         }
@@ -101,12 +120,14 @@ public class BeeInteractivity {
         return InteractionResult.PASS;
     }
 
-    public static void calmAndSpawnHearts(Level world, Player playerEntity, LivingEntity beeEntity, float calmChance, int hearts) {
+    public static boolean calmAndSpawnHearts(Level world, Player playerEntity, LivingEntity beeEntity, float calmChance, int hearts) {
         boolean calmed = world.random.nextFloat() < calmChance;
+        boolean removedWrath = false;
         if (calmed) {
             if(playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE)){
                 playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE);
                 WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
+                removedWrath = true;
             }
             else{
                 playerEntity.addEffect(new MobEffectInstance(
@@ -134,5 +155,7 @@ public class BeeInteractivity {
                     world.getRandom().nextFloat() * 0.5 - 0.25f,
                     world.getRandom().nextFloat() * 0.4 + 0.2f);
         }
+
+        return removedWrath;
     }
 }

@@ -1,5 +1,7 @@
 package com.telepathicgrunt.bumblezone.items;
 
+import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.bumblezone.modinit.BzFluids;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,6 +12,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
@@ -18,6 +21,7 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,6 +32,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class BzSmartBucket extends BucketItem {
@@ -39,7 +44,40 @@ public class BzSmartBucket extends BucketItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand hand) {
+        InteractionResultHolder<ItemStack> actionResult = performItemUse(world, playerEntity, hand);
+
+        if(fluid == BzFluids.SUGAR_WATER_FLUID && actionResult.getResult() == InteractionResult.CONSUME && playerEntity instanceof ServerPlayer) {
+            BlockHitResult raytraceresult = getPlayerPOVHitResult(world, playerEntity, ClipContext.Fluid.NONE);
+            if(raytraceresult.getType() == HitResult.Type.BLOCK) {
+                BlockPos blockpos = raytraceresult.getBlockPos();
+                Direction direction = raytraceresult.getDirection();
+                BlockPos blockpos1 = blockpos.relative(direction);
+                BlockState blockstate = world.getBlockState(blockpos);
+                BlockPos blockpos2 = blockstate.getBlock() instanceof LiquidBlockContainer && this.fluid.is(FluidTags.WATER) ? blockpos : blockpos1;
+
+                boolean isNextToSugarCane = false;
+                BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+                for(Direction directionOffset : Direction.Plane.HORIZONTAL) {
+                    mutable.set(blockpos2).move(directionOffset).move(Direction.UP);
+                    BlockState state = world.getBlockState(mutable);
+                    if(state.is(Blocks.SUGAR_CANE)) {
+                        isNextToSugarCane = true;
+                        break;
+                    }
+                }
+
+                if(isNextToSugarCane) {
+                    BzCriterias.SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER.trigger((ServerPlayer) playerEntity);
+                }
+            }
+        }
+
+        return actionResult;
+    }
+
+    @NotNull
+    private InteractionResultHolder<ItemStack> performItemUse(Level world, Player user, InteractionHand hand) {
         ItemStack itemStack = user.getItemInHand(hand);
         BlockHitResult blockHitResult = getPlayerPOVHitResult(world, user, this.fluid == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
         if (blockHitResult.getType() == HitResult.Type.MISS) {
@@ -60,13 +98,11 @@ public class BzSmartBucket extends BucketItem {
                         ItemStack itemStack2 = fluidDrainable.pickupBlock(world, blockPos, blockState);
                         if (!itemStack2.isEmpty()) {
                             user.awardStat(Stats.ITEM_USED.get(this));
-                            fluidDrainable.getPickupSound().ifPresent((sound) -> {
-                                user.playSound(sound, 1.0F, 1.0F);
-                            });
+                            fluidDrainable.getPickupSound().ifPresent((sound) -> user.playSound(sound, 1.0F, 1.0F));
                             world.gameEvent(user, GameEvent.FLUID_PICKUP, blockPos);
                             ItemStack itemStack3 = ItemUtils.createFilledResult(itemStack, user, itemStack2);
                             if (!world.isClientSide()) {
-                                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)user, itemStack2);
+                                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) user, itemStack2);
                             }
 
                             return InteractionResultHolder.sidedSuccess(itemStack3, world.isClientSide());
@@ -81,7 +117,7 @@ public class BzSmartBucket extends BucketItem {
                     if (this.emptyContents(user, world, blockPos3, blockHitResult)) {
                         this.checkExtraContent(user, world, itemStack, blockPos3);
                         if (user instanceof ServerPlayer) {
-                            CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer)user, blockPos3, itemStack);
+                            CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) user, blockPos3, itemStack);
                         }
 
                         user.awardStat(Stats.ITEM_USED.get(this));

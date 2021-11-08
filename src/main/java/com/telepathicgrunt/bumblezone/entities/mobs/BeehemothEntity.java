@@ -3,6 +3,7 @@ package com.telepathicgrunt.bumblezone.entities.mobs;
 import com.telepathicgrunt.bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.bumblezone.entities.goals.BeehemothAIRide;
 import com.telepathicgrunt.bumblezone.entities.goals.RandomFlyGoal;
+import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
@@ -17,6 +18,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -422,6 +424,9 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
         // Become queen if friendship is maxed out.
         if(!isQueen() && getFriendship() >= 1000) {
             setQueen(true);
+            if(this.getOwner() instanceof ServerPlayer) {
+                BzCriterias.QUEEN_BEEHEMOTH_TRIGGER.trigger((ServerPlayer) this.getOwner());
+            }
         }
         // Become untamed if bee is no longer a friend
         else if(getFriendship() < 0 && isTame()) {

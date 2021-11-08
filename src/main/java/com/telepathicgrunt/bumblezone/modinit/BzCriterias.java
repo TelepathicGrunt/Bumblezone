@@ -19,7 +19,7 @@ public class BzCriterias {
     public static final HoneyCrystalShieldBlockIneffectivelyTrigger HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER = new HoneyCrystalShieldBlockIneffectivelyTrigger();
     public static final HoneySlimeCreationTrigger HONEY_SLIME_CREATION_TRIGGER = new HoneySlimeCreationTrigger();
     public static final HoneySlimeHarvestTrigger HONEY_SLIME_HARVEST_TRIGGER = new HoneySlimeHarvestTrigger();
-    public static final PollenPuffFireballTrigger POLLEN_PUFF_ARROW_TRIGGER = new PollenPuffFireballTrigger();
+    public static final PollenPuffFireballTrigger POLLEN_PUFF_FIREBALL_TRIGGER = new PollenPuffFireballTrigger();
     public static final PollenPuffPandaTrigger POLLEN_PUFF_PANDA_TRIGGER = new PollenPuffPandaTrigger();
     public static final PollenPuffPollinateBeeTrigger POLLEN_PUFF_POLLINATED_BEE_TRIGGER = new PollenPuffPollinateBeeTrigger();
     public static final PollenPuffPollinateTallFlowerTrigger POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER = new PollenPuffPollinateTallFlowerTrigger();
@@ -46,7 +46,7 @@ public class BzCriterias {
         CriterionRegistry.register(HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER);
         CriterionRegistry.register(HONEY_SLIME_CREATION_TRIGGER);
         CriterionRegistry.register(HONEY_SLIME_HARVEST_TRIGGER);
-        CriterionRegistry.register(POLLEN_PUFF_ARROW_TRIGGER);
+        CriterionRegistry.register(POLLEN_PUFF_FIREBALL_TRIGGER);
         CriterionRegistry.register(POLLEN_PUFF_PANDA_TRIGGER);
         CriterionRegistry.register(POLLEN_PUFF_POLLINATED_BEE_TRIGGER);
         CriterionRegistry.register(POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER);

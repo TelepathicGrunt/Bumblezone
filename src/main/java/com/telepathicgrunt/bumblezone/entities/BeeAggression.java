@@ -3,6 +3,7 @@ package com.telepathicgrunt.bumblezone.entities;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.client.MusicHandler;
 import com.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
+import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.bumblezone.tags.BzItemTags;
@@ -11,6 +12,7 @@ import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -153,6 +155,10 @@ public class BeeAggression {
                         Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
                         Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
                 {
+                    if(player instanceof ServerPlayer && player.hasEffect(BzEffects.WRATH_OF_THE_HIVE)) {
+                        BzCriterias.EXTENDED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayer) player, attackerEntity);
+                    }
+
                     player.addEffect(new MobEffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE,
                             Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,

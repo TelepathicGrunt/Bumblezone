@@ -6,7 +6,7 @@ import com.telepathicgrunt.bumblezone.client.rendering.BeehemothModel;
 import com.telepathicgrunt.bumblezone.client.rendering.BeehemothRenderer;
 import com.telepathicgrunt.bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.bumblezone.client.rendering.HoneySlimeRendering;
-import com.telepathicgrunt.bumblezone.mixin.EntityRendererRegistryImplAccessor;
+import com.telepathicgrunt.bumblezone.mixin.client.EntityRendererRegistryImplAccessor;
 import com.telepathicgrunt.bumblezone.mixin.world.DimensionSpecialEffectsAccessor;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;

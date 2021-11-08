@@ -3,6 +3,7 @@ package com.telepathicgrunt.bumblezone.blocks;
 import com.telepathicgrunt.bumblezone.mixin.blocks.VineBlockAccessor;
 import com.telepathicgrunt.bumblezone.mixin.items.BucketItemAccessor;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.Util;
@@ -253,6 +254,10 @@ public class StickyHoneyResidue extends VineBlock {
                 itemstack.getOrCreateTag().getString("Potion").contains("water") ||
                 itemstack.getItem() == Items.WET_SPONGE ||
                 itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {
+
+            if(itemstack.getItem() == Items.WET_SPONGE && playerEntity instanceof ServerPlayer) {
+                BzCriterias.CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER.trigger((ServerPlayer) playerEntity);
+            }
 
             world.destroyBlock(position, false);
 

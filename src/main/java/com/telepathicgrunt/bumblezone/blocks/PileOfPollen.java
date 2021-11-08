@@ -4,6 +4,7 @@ import com.telepathicgrunt.bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.modinit.BzParticles;
@@ -11,6 +12,7 @@ import com.telepathicgrunt.bumblezone.tags.BzEntityTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Panda;
@@ -260,6 +262,11 @@ public class PileOfPollen extends FallingBlock {
 
             Vec3 deltaMovement = entity.getDeltaMovement();
             double newYDelta = deltaMovement.y;
+
+            if(entity instanceof ServerPlayer && entity.fallDistance > 18 && newYDelta < -0.9D && blockState.getValue(LAYERS) >= 7) {
+                BzCriterias.FALLING_ON_POLLEN_BLOCK_TRIGGER.trigger((ServerPlayer) entity);
+            }
+
             if(deltaMovement.y > 0) {
                 newYDelta *= (1f - layerValueMinusOne * 0.01f);
             }

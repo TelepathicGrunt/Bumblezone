@@ -3,6 +3,7 @@ package com.telepathicgrunt.bumblezone.blocks;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.bumblezone.modinit.BzItems;
@@ -14,6 +15,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -159,6 +161,11 @@ public class HoneycombBrood extends ProperFacingBlock {
                                         world.getRandom().nextFloat() * 0.4 + 0.2f);
                             }
                         }
+
+                        if(playerEntity instanceof ServerPlayer) {
+                            BzCriterias.HONEY_BUCKET_BROOD_TRIGGER.trigger((ServerPlayer) playerEntity);
+                        }
+
                         world.setBlockAndUpdate(position, thisBlockState.setValue(STAGE, newStage));
                     }
                 }

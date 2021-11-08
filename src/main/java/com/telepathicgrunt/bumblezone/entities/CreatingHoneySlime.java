@@ -1,10 +1,12 @@
 package com.telepathicgrunt.bumblezone.entities;
 
 import com.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
+import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -64,6 +66,9 @@ public class CreatingHoneySlime {
             }
 
             playerEntity.swing(hand, true);
+            if(playerEntity instanceof ServerPlayer) {
+                BzCriterias.HONEY_SLIME_CREATION_TRIGGER.trigger((ServerPlayer) playerEntity);
+            }
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;

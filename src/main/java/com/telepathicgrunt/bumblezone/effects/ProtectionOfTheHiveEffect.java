@@ -1,7 +1,9 @@
 package com.telepathicgrunt.bumblezone.effects;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
+import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -63,8 +65,12 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
        if(entity.hurtTime > 0 && entity.getLastHurtByMob() != null){
            resetBeeAngry(entity.level, entity.getLastHurtByMob());
 
-           if(!(entity.getLastHurtByMob() instanceof Bee))
-                entity.getLastHurtByMob().addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, amplifier, true, true, true));
+           if(!(entity.getLastHurtByMob() instanceof Bee)) {
+               entity.getLastHurtByMob().addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, amplifier, true, true, true));
+               if (entity instanceof ServerPlayer) {
+                   BzCriterias.PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER.trigger((ServerPlayer) entity, entity.getLastHurtByMob());
+               }
+           }
        }
     }
 
