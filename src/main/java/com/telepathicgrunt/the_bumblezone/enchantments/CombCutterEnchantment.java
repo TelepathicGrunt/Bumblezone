@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.enchantments;
 
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import net.minecraft.block.BeehiveBlock;
@@ -10,6 +11,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -88,6 +90,9 @@ public class CombCutterEnchantment extends Enchantment {
         int equipmentLevel = EnchantmentHelper.getEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), playerEntity);
         if (equipmentLevel > 0 && !itemStack.isEmpty()) {
             Block.popResource(world, pos, new ItemStack(Items.HONEYCOMB, equipmentLevel * 3));
+            if(playerEntity instanceof ServerPlayerEntity) {
+                BzCriterias.COMB_CUTTER_EXTRA_DROPS_TRIGGER.trigger((ServerPlayerEntity) playerEntity);
+            }
         }
     }
 

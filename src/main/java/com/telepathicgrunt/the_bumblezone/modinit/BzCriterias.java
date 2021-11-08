@@ -1,23 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
-import com.telepathicgrunt.the_bumblezone.advancements.BeeDropPollenPuffTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.CleanupStickyHoneyResidueTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.FallingOnPollenPileTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.HoneyBucketBeeGrowTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.HoneyBucketBeeLoveTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.HoneyBucketBroodTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.HoneyBucketPorousHoneycombTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.HoneyCrystalShieldBlockIneffectivelyTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.HoneySlimeCreationTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.HoneySlimeHarvestTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.PollenPuffFireballTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.PollenPuffPandaTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.PollenPuffPollinateBeeTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.PollenPuffPollinateTallFlowerTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.QueenBeehemothTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.TeleportOutOfBumblezoneFallTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.TeleportToBumblezoneByPearlTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.TeleportToBumblezoneByPistonTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.*;
 import net.minecraft.advancements.CriteriaTriggers;
 
 public class BzCriterias {
@@ -40,6 +23,8 @@ public class BzCriterias {
     public static final HoneyBucketBroodTrigger HONEY_BUCKET_BROOD_TRIGGER = new HoneyBucketBroodTrigger();
     public static final HoneyCrystalShieldBlockIneffectivelyTrigger HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER = new HoneyCrystalShieldBlockIneffectivelyTrigger();
     public static final CleanupStickyHoneyResidueTrigger CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER = new CleanupStickyHoneyResidueTrigger();
+    public static final CombCutterExtraDropsTrigger COMB_CUTTER_EXTRA_DROPS_TRIGGER = new CombCutterExtraDropsTrigger();
+    public static final RecipeDiscoveredTrigger RECIPE_DISCOVERED_TRIGGER = new RecipeDiscoveredTrigger();
 
     public static void init() {
         CriteriaTriggers.register(QUEEN_BEEHEMOTH_TRIGGER);
@@ -60,5 +45,7 @@ public class BzCriterias {
         CriteriaTriggers.register(HONEY_BUCKET_BROOD_TRIGGER);
         CriteriaTriggers.register(HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER);
         CriteriaTriggers.register(CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER);
+        CriteriaTriggers.register(COMB_CUTTER_EXTRA_DROPS_TRIGGER);
+        CriteriaTriggers.register(RECIPE_DISCOVERED_TRIGGER);
     }
 }

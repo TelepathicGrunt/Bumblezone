@@ -13,6 +13,7 @@
     "blocks.PistonTileEntityMixin",
     "blocks.VineBlockAccessor",
     "blocks.WaterEquivalenceMixin",
+    "containers.WorkbenchContainerMixin",
     "entities.BeeEntityMixin",
     "entities.BeePathfindingMixin",
     "entities.BeePollenatedSpawnMixin",

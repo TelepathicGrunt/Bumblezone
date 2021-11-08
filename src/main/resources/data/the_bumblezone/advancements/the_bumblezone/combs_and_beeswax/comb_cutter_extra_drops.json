@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/combs_and_beeswax/beeswax_to_beehive",
+  "display": {
+    "icon": {
+      "item": "minecraft:shears"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.comb_cutter_extra_drops.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.comb_cutter_extra_drops.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "comb_cutter_extra_drops": {
+      "trigger": "the_bumblezone:comb_cutter_extra_drops",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "comb_cutter_extra_drops"
+    ]
+  ]
+}

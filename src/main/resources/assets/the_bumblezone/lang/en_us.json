@@ -110,6 +110,12 @@
   "advancements.the_bumblezone.honey_crystal_shield_block_ineffectively.description": "Find one of the weaknesses of Honey Crystal Shields other than Axes.",
   "advancements.the_bumblezone.obtain_maxed_honey_crystal_shield.title": "Grand Hive Defender",
   "advancements.the_bumblezone.obtain_maxed_honey_crystal_shield.description": "Forge the strongest Honey Crystal Shield possible at an Anvil!",
+  "advancements.the_bumblezone.comb_cutter_tool.title": "Beeswax Ninja",
+  "advancements.the_bumblezone.comb_cutter_tool.description": "Get a tool with Comb Cutter enchantment to carve through wax quickly!",
+  "advancements.the_bumblezone.beeswax_to_beehive.title": "Beehive Housing Crisis Averted!",
+  "advancements.the_bumblezone.beeswax_to_beehive.description": "Discover the recipe for making a Bee Nest from Beehive Beeswax",
+  "advancements.the_bumblezone.comb_cutter_extra_drops.title": "Rent Increase For Bees",
+  "advancements.the_bumblezone.comb_cutter_extra_drops.description": "Collect extra drops from Beehive/Bee Nests with a Comb Cutter tool",
 
   "the_bumblezone.porous_honeycomb_block.jei_description": " A honeycomb block filled with holes! You can store honey into this block with Honey Bottles or Honey Buckets.",
   "the_bumblezone.filled_porous_honeycomb_block.jei_description": " A honeycomb block filled to the brim with honey! You can take honey out of this block with a Glass Bottle. However, this may anger nearby bees. \n\n When mined, this block drops Porous Honeycomb Block and some Honeycombs. The drop is affect by Fortune or you can use Silk Touch to keep the block intact. \n\n This block also give off a Redstone signal of 1 when a Comparator is facing this block.",

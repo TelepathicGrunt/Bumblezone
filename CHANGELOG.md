@@ -12,6 +12,9 @@ Fixed Honey Buckets not able to convert Slime into Honey Slime. (Was an issue wi
 
 Fixed Honey Slime scaling for adult to not be massive.
 
+##### Recipes:
+Renamed the_bumblezone:beeswax_planks_to_bee_nests recipe json to the_bumblezone:beehive_beeswax_to_bee_nest.
+
 
 ### **(V.3.0.0 Changes) (1.16.5 Minecraft)**
 
