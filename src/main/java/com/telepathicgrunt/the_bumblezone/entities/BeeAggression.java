@@ -26,6 +26,7 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.Level;
 
 import java.util.HashSet;
@@ -48,7 +49,7 @@ public class BeeAggression {
         // Build list only once
         if(SET_OF_BEE_HATED_ENTITIES.size() != 0) return;
 
-        for(EntityType<?> entityType : Registry.ENTITY_TYPE) {
+        for(EntityType<?> entityType : ForgeRegistries.ENTITIES) {
             if(entityType.getCategory() == EntityClassification.MONSTER ||
                     entityType.getCategory() == EntityClassification.CREATURE ||
                     entityType.getCategory() == EntityClassification.AMBIENT )
@@ -62,11 +63,11 @@ public class BeeAggression {
                     entity = entityType.create(world);
                 }
                 catch(Exception e){
-                    Bumblezone.LOGGER.log(Level.WARN, "Failed to temporary create " + Registry.ENTITY_TYPE.getKey(entityType) +
+                    Bumblezone.LOGGER.log(Level.WARN, "Failed to temporary create " + ForgeRegistries.ENTITIES.getKey(entityType) +
                             " mob in order to check if it is an arthropod that bees should be naturally angry at. " +
                             "Will check if mob is a bear or wasp in its name instead. Error message is: " + e.getMessage());
 
-                    String mobName = Registry.ENTITY_TYPE.getKey(entityType).toString();
+                    String mobName = ForgeRegistries.ENTITIES.getKey(entityType).toString();
                     if(mobName.contains("bear") || mobName.contains("wasp")) {
                         SET_OF_BEE_HATED_ENTITIES.add(entityType);
                     }
@@ -74,7 +75,7 @@ public class BeeAggression {
                 }
 
                 if(entity instanceof MobEntity) {
-                    String mobName = Registry.ENTITY_TYPE.getKey(entityType).toString();
+                    String mobName = ForgeRegistries.ENTITIES.getKey(entityType).toString();
                     MobEntity mobEntity = (MobEntity) entity;
 
                     if((mobEntity.getMobType() == CreatureAttribute.ARTHROPOD && !mobName.contains("bee")) ||

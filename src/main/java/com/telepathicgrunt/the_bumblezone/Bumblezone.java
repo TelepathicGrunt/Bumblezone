@@ -145,10 +145,8 @@ public class Bumblezone{
         }
     }
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
-    	event.enqueueWork(() -> 
-		{
+    private void setup(final FMLCommonSetupEvent event) {
+    	event.enqueueWork(() -> {
             BzCriterias.registerCriteriaTriggers();
             BzProcessors.registerProcessors();
 			BzDimension.setupDimension();
@@ -169,10 +167,8 @@ public class Bumblezone{
         CapabilityEntityPosAndDim.register();
     }
 
-    private void modCompatSetup(final FMLCommonSetupEvent event)
-    {
-        event.enqueueWork(() ->
-        {
+    private void modCompatSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
             // Dispenser isn't synchronized. Needs to be enqueueWork to prevent crash if
             // another mod registers to it at the same exact time.
             DispenserItemSetup.setupDispenserBehaviors();
