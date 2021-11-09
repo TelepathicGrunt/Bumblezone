@@ -54,7 +54,14 @@ public class ModChecker
 			loadupModCompat(modid, () -> CharmCompat.setupCharm());
 
 			modid = "cavesandcliffs";
-			loadupModCompat(modid, () -> CavesAndCliffsBackportCompat.setupCavesAndCliffs());
+			if(ModList.get().isLoaded(modid)) {
+				if(ModList.get().getModContainerById(modid).get().getModInfo().getVersion().toString().equals("1.16.5-7.1.1")) {
+					Bumblezone.LOGGER.log(Level.INFO, "BUMBLEZONE: You're using version 1.16.5-7.1.1 of " + modid + " that is known to not work with Bumblezone. Please update " + modid + " to the latest version or downgrade it to enable compat with Bumblezone again.");
+				}
+				else {
+					loadupModCompat(modid, () -> CavesAndCliffsBackportCompat.setupCavesAndCliffs());
+				}
+			}
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

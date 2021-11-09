@@ -24,3 +24,7 @@ Protection of the Hive on the player will now be removed if you hurt a Bee outsi
 
 ##### Recipes:
 Renamed the_bumblezone:beeswax_planks_to_bee_nests recipe json to the_bumblezone:beehive_beeswax_to_bee_nest.
+
+##### Mod Compat
+Added code to skip compat with v1.16.5-7.1.1 Caves and Cliffs Backport mod because that version crashes Bumblezone. 
+ Please use and older or newer version of that mod to enable compat with their candles again.
