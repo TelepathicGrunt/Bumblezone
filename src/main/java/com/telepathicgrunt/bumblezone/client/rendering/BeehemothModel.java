@@ -155,7 +155,8 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
         ROOT.xRot = 0.0f;
         ROOT.y = 19.0f;
         boolean onGround = entity.isOnGround() && entity.getDeltaMovement().lengthSqr() < 1.0E-7D;
-        if (onGround) {
+        boolean isSitting = entity.isInSittingPose();
+        if (onGround && !isSitting) {
             WING_RIGHT.yRot = -0.2618f;
             WING_RIGHT.zRot = 0.0f;
             WING_LEFT.xRot = 0.0f;
@@ -170,7 +171,8 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
         } 
         else {
             WING_RIGHT.yRot = 0.0f;
-            WING_LEFT.zRot = ((float) (Mth.cos((limbSwing + ageInTicks) * 2.1f) * Math.PI * 0.15f));
+            float wingSpeed = isSitting ? 0.75f : 1f;
+            WING_LEFT.zRot = ((float) (Mth.cos((limbSwing + ageInTicks) * 2.1f * wingSpeed) * Math.PI * 0.15f));
             WING_LEFT.xRot = WING_RIGHT.xRot;
             WING_LEFT.yRot = WING_RIGHT.yRot;
             WING_RIGHT.zRot = -WING_LEFT.zRot;
@@ -199,11 +201,27 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
         ROOT.xRot = 0.0F;
         ROOT.yRot = 0.0F;
         ROOT.zRot = 0.0F;
+
+        float swayingMotion = Mth.sin(ageInTicks * 0.18F);
+        if(isSitting) {
+            ANTENNA_LEFT.xRot = swayingMotion * (float) Math.PI * 0.002F;
+            ANTENNA_RIGHT.xRot = swayingMotion * (float) Math.PI * 0.002F;
+            ANTENNA_LEFT.z = 7.2F;
+            ANTENNA_RIGHT.z = 7.2F;
+            ANTENNA_LEFT.y = 5.5F;
+            ANTENNA_RIGHT.y = 5.5F;
+            ANTENNA_LEFT.xRot += 0.2F;
+            ANTENNA_RIGHT.xRot += 0.2F;
+        }
+        else {
+            ANTENNA_LEFT.xRot = swayingMotion * (float) Math.PI * 0.005F;
+            ANTENNA_RIGHT.xRot = swayingMotion * (float) Math.PI * 0.005F;
+            ANTENNA_LEFT.y = 6.2F;
+            ANTENNA_RIGHT.y = 6.2F;
+        }
+
         if (!onGround) {
-            float f1 = Mth.cos(ageInTicks * 0.18F);
-            ROOT.xRot = 0.1F + f1 * (float) Math.PI * 0.015F;
-            ANTENNA_LEFT.xRot = f1 * (float) Math.PI * 0.01F;
-            ANTENNA_RIGHT.xRot = f1 * (float) Math.PI * 0.01F;
+            ROOT.xRot = 0.1F + swayingMotion * (float) Math.PI * 0.015F;
             ROOT.y = 19.0F - Mth.cos(ageInTicks * 0.18F) * 0.9F;
         }
 

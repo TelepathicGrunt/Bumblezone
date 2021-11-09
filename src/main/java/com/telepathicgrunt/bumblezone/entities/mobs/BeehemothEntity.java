@@ -2,6 +2,7 @@ package com.telepathicgrunt.bumblezone.entities.mobs;
 
 import com.telepathicgrunt.bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.bumblezone.entities.goals.BeehemothAIRide;
+import com.telepathicgrunt.bumblezone.entities.goals.FlyingStillGoal;
 import com.telepathicgrunt.bumblezone.entities.goals.RandomFlyGoal;
 import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.modinit.BzSounds;
@@ -153,15 +154,23 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source.getEntity() != null && source.getEntity().getUUID().equals(getOwnerUUID())) {
-            addFriendship((int) (-3 * amount));
+        if (this.isInvulnerableTo(source)) {
+            return false;
         }
         else {
-            addFriendship((int) -amount);
-        }
+            Entity entity = source.getEntity();
 
-        spawnMadParticles();
-        return super.hurt(source, amount);
+            if (entity != null && entity.getUUID().equals(getOwnerUUID())) {
+                addFriendship((int) (-3 * amount));
+            }
+            else {
+                addFriendship((int) -amount);
+            }
+
+            spawnMadParticles();
+            this.setOrderedToSit(false);
+            return super.hurt(source, amount);
+        }
     }
 
     public static AttributeSupplier.Builder getAttributeBuilder() {
@@ -175,11 +184,12 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new BeehemothAIRide(this));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.5D, Ingredient.of(BzItemTags.HONEY_BUCKETS), false));
-        this.goalSelector.addGoal(4, new RandomFlyGoal(this));
-        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 60));
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(9, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new FlyingStillGoal(this));
+        this.goalSelector.addGoal(2, new TemptGoal(this, 1.5D, Ingredient.of(BzItemTags.HONEY_BUCKETS), false));
+        this.goalSelector.addGoal(3, new RandomFlyGoal(this));
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 60));
+        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(5, new FloatGoal(this));
     }
 
     @Override
@@ -225,7 +235,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
             // Healing and befriending Beehemoth
             if (this.isTame()) {
                 if (this.isOwnedBy(player)) {
-                    if (BzItemTags.BEE_FEEDING_ITEMS.contains(item)) {
+                    if (BzItemTags.BEE_FEEDING_ITEMS.contains(item) && !player.isShiftKeyDown()) {
                         if (BzItemTags.HONEY_BUCKETS.contains(item)) {
                             this.heal(this.getMaxHealth() - this.getHealth());
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
@@ -258,18 +268,27 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                         return InteractionResult.CONSUME;
                     }
 
-                    if (stack.isEmpty() && isSaddled() && player.isShiftKeyDown()) {
-                        setSaddled(false);
-                        ItemStack saddle = new ItemStack(Items.SADDLE);
-                        if (player.addItem(saddle)) {
-                            ItemEntity entity = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), saddle);
-                            player.level.addFreshEntity(entity);
+                    if(isSaddled() && player.isShiftKeyDown()) {
+                        if (this.isInSittingPose() && stack.isEmpty()) {
+                            setSaddled(false);
+                            ItemStack saddle = new ItemStack(Items.SADDLE);
+                            if (player.addItem(saddle)) {
+                                ItemEntity entity = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), saddle);
+                                player.level.addFreshEntity(entity);
+                            }
+                        }
+                        else {
+                            this.setOrderedToSit(!this.isOrderedToSit());
+                            this.navigation.stop();
+                            this.setTarget(null);
+                            return InteractionResult.SUCCESS;
                         }
                     }
 
                     if (stack.isEmpty() && !this.isVehicle() && !player.isSecondaryUseActive()) {
                         if (!this.level.isClientSide) {
                             player.startRiding(this);
+                            this.setOrderedToSit(false);
                         }
 
                         return InteractionResult.sidedSuccess(this.level.isClientSide);
