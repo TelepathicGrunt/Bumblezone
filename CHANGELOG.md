@@ -1,3 +1,14 @@
+### **(V.3.1.1 Changes) (1.16.5 Minecraft)**
+
+##### Entities:
+Beehemoth will now stay still when crouch right-clicked like how you make dogs and cats sit. 
+ If it is sitting, shift right click with empty hand to remove saddle. Shift right click while holding any item to make it unsit (or ride it to unsit)
+ To feed Beehemoth, just right click while holding any honey feeding item. No crouching needed.
+
+##### Lang:
+Added english translations for advancements to the other language files so the translation keys don't show.
+
+
 ### **(V.3.1.0 Changes) (1.16.5 Minecraft)**
 
 ##### Advancements:

@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothAIRide;
+import com.telepathicgrunt.the_bumblezone.entities.goals.FlyingStillGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.RandomFlyGoal;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -11,6 +12,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -18,6 +20,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.SitGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.item.ItemEntity;
@@ -25,6 +28,7 @@ import net.minecraft.entity.passive.IFlyingAnimal;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -150,15 +154,23 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source.getEntity() != null && source.getEntity().getUUID().equals(getOwnerUUID())) {
-            addFriendship((int) (-3 * amount));
+        if (this.isInvulnerableTo(source)) {
+            return false;
         }
         else {
-            addFriendship((int) -amount);
-        }
+            Entity entity = source.getEntity();
 
-        spawnMadParticles();
-        return super.hurt(source, amount);
+            if (entity != null && entity.getUUID().equals(getOwnerUUID())) {
+                addFriendship((int) (-3 * amount));
+            }
+            else {
+                addFriendship((int) -amount);
+            }
+
+            spawnMadParticles();
+            this.setOrderedToSit(false);
+            return super.hurt(source, amount);
+        }
     }
 
     public static AttributeModifierMap.MutableAttribute getAttributeBuilder() {
@@ -172,11 +184,12 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new BeehemothAIRide(this));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.5D, Ingredient.of(BzItemTags.HONEY_BUCKETS), false));
-        this.goalSelector.addGoal(4, new RandomFlyGoal(this));
-        this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 60));
-        this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
-        this.goalSelector.addGoal(9, new SwimGoal(this));
+        this.goalSelector.addGoal(1, new FlyingStillGoal(this));
+        this.goalSelector.addGoal(2, new TemptGoal(this, 1.5D, Ingredient.of(BzItemTags.HONEY_BUCKETS), false));
+        this.goalSelector.addGoal(3, new RandomFlyGoal(this));
+        this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 60));
+        this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
+        this.goalSelector.addGoal(5, new SwimGoal(this));
     }
 
     @Override
@@ -223,7 +236,7 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
             // Healing and befriending Beehemoth
             if (this.isTame()) {
                 if (this.isOwnedBy(player)) {
-                    if (BzItemTags.BEE_FEEDING_ITEMS.contains(item)) {
+                    if (BzItemTags.BEE_FEEDING_ITEMS.contains(item) && !player.isShiftKeyDown()) {
                         if (item.is(BzItemTags.HONEY_BUCKETS)) {
                             this.heal(this.getMaxHealth() - this.getHealth());
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
@@ -256,17 +269,26 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
                         return ActionResultType.CONSUME;
                     }
 
-                    if (stack.isEmpty() && isSaddled() && player.isShiftKeyDown()) {
-                        setSaddled(false);
-                        ItemStack saddle = new ItemStack(Items.SADDLE);
-                        if (player.addItem(saddle)) {
-                            ItemEntity entity = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), saddle);
-                            player.level.addFreshEntity(entity);
+                    if(isSaddled() && player.isShiftKeyDown()) {
+                        if (this.isInSittingPose() && stack.isEmpty()) {
+                            setSaddled(false);
+                            ItemStack saddle = new ItemStack(Items.SADDLE);
+                            if (player.addItem(saddle)) {
+                                ItemEntity entity = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), saddle);
+                                player.level.addFreshEntity(entity);
+                            }
+                        }
+                        else {
+                            this.setOrderedToSit(!this.isOrderedToSit());
+                            this.navigation.stop();
+                            this.setTarget(null);
+                            return ActionResultType.SUCCESS;
                         }
                     }
 
                     if (stack.isEmpty() && !this.isVehicle() && !player.isSecondaryUseActive()) {
                         if (!this.level.isClientSide) {
+                            this.setOrderedToSit(false);
                             player.startRiding(this);
                         }
 
