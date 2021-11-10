@@ -269,8 +269,8 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
                         return ActionResultType.CONSUME;
                     }
 
-                    if(isSaddled() && player.isShiftKeyDown()) {
-                        if (this.isInSittingPose() && stack.isEmpty()) {
+                    if(player.isShiftKeyDown()) {
+                        if (isSaddled() && this.isInSittingPose() && stack.isEmpty()) {
                             setSaddled(false);
                             ItemStack saddle = new ItemStack(Items.SADDLE);
                             if (player.addItem(saddle)) {
@@ -282,11 +282,11 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
                             this.setOrderedToSit(!this.isOrderedToSit());
                             this.navigation.stop();
                             this.setTarget(null);
-                            return ActionResultType.SUCCESS;
                         }
+                        return ActionResultType.SUCCESS;
                     }
 
-                    if (stack.isEmpty() && !this.isVehicle() && !player.isSecondaryUseActive()) {
+                    if (!this.isVehicle() && !player.isSecondaryUseActive()) {
                         if (!this.level.isClientSide) {
                             this.setOrderedToSit(false);
                             player.startRiding(this);
