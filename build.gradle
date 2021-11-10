@@ -89,7 +89,9 @@ java {
 }
 
 jar {
-	from "LICENSE"
+	from("LICENSE") {
+		rename { "${it}_${project.archivesBaseName}"}
+	}
 }
 
 apply from: 'gradle/maven.gradle'

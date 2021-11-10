@@ -5,6 +5,8 @@ Beehemoth will now stay still when crouch right-clicked like how you make dogs a
 If it is sitting, shift right click with empty hand to remove saddle. Shift right click while holding any item to make it unsit (or ride it to unsit)
 To feed Beehemoth, just right click while holding any honey feeding item. No crouching needed.
 
+Right clicking Beehemoth without crouching will always make you ride the mob. No longer need an empty hand.
+
 ##### Lang:
 Added english translations for advancements to the other language files so the translation keys don't show.
 

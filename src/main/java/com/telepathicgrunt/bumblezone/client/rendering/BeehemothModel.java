@@ -206,18 +206,20 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
         if(isSitting) {
             ANTENNA_LEFT.xRot = swayingMotion * (float) Math.PI * 0.002F;
             ANTENNA_RIGHT.xRot = swayingMotion * (float) Math.PI * 0.002F;
-            ANTENNA_LEFT.z = 7.2F;
-            ANTENNA_RIGHT.z = 7.2F;
-            ANTENNA_LEFT.y = 5.5F;
-            ANTENNA_RIGHT.y = 5.5F;
+            ANTENNA_LEFT.z = -0.3F;
+            ANTENNA_RIGHT.z = -0.3F;
+            ANTENNA_LEFT.y = -1.1F;
+            ANTENNA_RIGHT.y = -1.1F;
             ANTENNA_LEFT.xRot += 0.2F;
             ANTENNA_RIGHT.xRot += 0.2F;
         }
         else {
             ANTENNA_LEFT.xRot = swayingMotion * (float) Math.PI * 0.005F;
             ANTENNA_RIGHT.xRot = swayingMotion * (float) Math.PI * 0.005F;
-            ANTENNA_LEFT.y = 6.2F;
-            ANTENNA_RIGHT.y = 6.2F;
+            ANTENNA_LEFT.z = 0.1F;
+            ANTENNA_RIGHT.z = 0.1F;
+            ANTENNA_LEFT.y = -1F;
+            ANTENNA_RIGHT.y = -1F;
         }
 
         if (!onGround) {
