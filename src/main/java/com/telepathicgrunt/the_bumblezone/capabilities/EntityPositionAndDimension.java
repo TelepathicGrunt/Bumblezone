@@ -5,49 +5,40 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 
 
-public class EntityPositionAndDimension implements IEntityPosAndDim
-{
+public class EntityPositionAndDimension implements IEntityPosAndDim {
 	private ResourceLocation nonBZDimension = new ResourceLocation("minecraft", "overworld");
 	private Vector3d nonBZPosition = null;
 
-
 	@Override
-	public void setNonBZDim(ResourceLocation incomingDim)
-	{
+	public void setNonBZDim(ResourceLocation incomingDim) {
 		nonBZDimension = incomingDim;
 	}
 
 	@Override
-	public ResourceLocation getNonBZDim()
-	{
+	public ResourceLocation getNonBZDim() {
 		return nonBZDimension;
 	}
 	
 	@Override
-	public void setNonBZPos(Vector3d incomingPos)
-	{
+	public void setNonBZPos(Vector3d incomingPos) {
 		nonBZPosition = incomingPos;
 	}
 
 	@Override
-	public Vector3d getNonBZPos()
-	{
+	public Vector3d getNonBZPos() {
 		return nonBZPosition;
 	}
 
 
 	@Override
-	public CompoundNBT saveNBTData()
-	{
+	public CompoundNBT saveNBTData() {
 		CompoundNBT nbt = new CompoundNBT();
 
-		if (this.getNonBZDim() != null)
-		{
+		if (this.getNonBZDim() != null) {
 			nbt.putString("PreviousDimensionNamespace", this.getNonBZDim().getNamespace());
 			nbt.putString("PreviousDimensionPath", this.getNonBZDim().getPath());
 
-			if (this.getNonBZPos() != null)
-			{
+			if (this.getNonBZPos() != null) {
 			    nbt.putDouble("NonBZ_X", this.getNonBZPos().x());
 			    nbt.putDouble("NonBZ_Y", this.getNonBZPos().y());
 			    nbt.putDouble("NonBZ_Z", this.getNonBZPos().z());
@@ -59,8 +50,7 @@ public class EntityPositionAndDimension implements IEntityPosAndDim
 
 
 	@Override
-	public void loadNBTData(CompoundNBT nbtTag)
-	{
+	public void loadNBTData(CompoundNBT nbtTag) {
 		//grabs past dimension resource location and tries to get that dimension from the registry
 		ResourceLocation storedDimension = new ResourceLocation(nbtTag.getString("PreviousDimensionNamespace"), nbtTag.getString("PreviousDimensionPath"));
 		Vector3d storedPositionNonBZ = null;

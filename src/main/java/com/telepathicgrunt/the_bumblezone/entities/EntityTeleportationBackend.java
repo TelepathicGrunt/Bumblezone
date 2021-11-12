@@ -16,6 +16,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tileentity.TileEntity;
@@ -44,9 +45,11 @@ public class EntityTeleportationBackend {
 
     public static Vector3d destPostFromOutOfBoundsTeleport(Entity livingEntity, ServerWorld destination, boolean checkingUpward, boolean mustBeNearBeeBlock) {
         //converts the position to get the corresponding position in non-bumblezone dimension
+        Entity player = livingEntity.getPassengers().stream().filter(e -> e instanceof PlayerEntity).findFirst().orElse(null);
+        if(player != null) livingEntity = player;
         double coordinateScale = livingEntity.getCommandSenderWorld().dimensionType().coordinateScale() / destination.dimensionType().coordinateScale();
         BlockPos finalSpawnPos;
-        BlockPos validBlockPos = null;
+        BlockPos validBlockPos;
 
         EntityPositionAndDimension cap = (EntityPositionAndDimension) livingEntity.getCapability(PAST_POS_AND_DIM).orElseThrow(RuntimeException::new);
 
@@ -64,10 +67,18 @@ public class EntityTeleportationBackend {
             if(cap.getNonBZPos() != null){
                 validBlockPos = new BlockPos(cap.getNonBZPos());
             }
+            else {
+                finalSpawnPos = new BlockPos(
+                        Doubles.constrainToRange(livingEntity.position().x() * coordinateScale, -29999936D, 29999936D),
+                        livingEntity.position().y(),
+                        Doubles.constrainToRange(livingEntity.position().z() * coordinateScale, -29999936D, 29999936D));
+
+                validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward, mustBeNearBeeBlock);
+            }
         }
 
         // Teleportation mode 3
-        else{
+        else {
             finalSpawnPos = new BlockPos(
                     Doubles.constrainToRange(livingEntity.position().x() * coordinateScale, -29999936D, 29999936D),
                     livingEntity.position().y(),

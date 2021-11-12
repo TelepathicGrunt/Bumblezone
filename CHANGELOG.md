@@ -1,3 +1,9 @@
+### **(V.3.1.2 Changes) (1.16.5 Minecraft)**
+
+##### Teleportation:
+Fixed bug where setting Teleportation Mode to 2 or 3 and trying to exit Bumblezone on an entity that originated from Bumblezone would spawn player under Bedrock in Overworld.
+
+
 ### **(V.3.1.1 Changes) (1.16.5 Minecraft)**
 
 ##### Entities:

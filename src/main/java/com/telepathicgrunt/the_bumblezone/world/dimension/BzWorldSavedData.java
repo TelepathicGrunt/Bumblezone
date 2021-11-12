@@ -95,7 +95,8 @@ public class BzWorldSavedData extends WorldSavedData {
             // Also updates teleportedEntities to keep track of which entity was teleported.
             if (destinationKey.equals(BzDimension.BZ_WORLD_KEY)) {
                 enteringBumblezone(entity, teleportedEntities);
-            } else {
+            }
+            else {
                 exitingBumblezone(entity, destination, teleportedEntities);
             }
         }
