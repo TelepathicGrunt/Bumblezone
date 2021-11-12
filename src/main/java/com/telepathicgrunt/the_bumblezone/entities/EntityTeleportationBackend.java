@@ -234,8 +234,8 @@ public class EntityTeleportationBackend {
         int maxHeight = 0;
         BlockPos.Mutable mutableBlockPos = new BlockPos.Mutable();
         Set<Chunk> chunksInRange = new HashSet<>();
-        for (int x = -maximumRange; x < maximumRange; x++) {
-            for (int z = -maximumRange; z < maximumRange; z++) {
+        for (int x = -maximumRange; x < maximumRange; x += 16) {
+            for (int z = -maximumRange; z < maximumRange; z += 16) {
                 mutableBlockPos.set(position.getX() + x, 0, position.getZ() + z);
                 //make game generate chunk so we can get max height of blocks in it and get the chunk for BEs
                 IChunk chunk = world.getChunk(mutableBlockPos);

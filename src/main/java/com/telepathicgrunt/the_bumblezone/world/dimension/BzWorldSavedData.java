@@ -153,6 +153,7 @@ public class BzWorldSavedData extends WorldSavedData {
     private static void teleportEntityAndAssignToVehicle(Entity entity, Entity vehicle, ServerWorld destination, Vector3d destinationPosition, Set<Entity> teleportedEntities) {
         net.minecraft.entity.Entity teleportedEntity;
         List<net.minecraft.entity.Entity> passengers = entity.getPassengers();
+        entity.ejectPassengers();
 
         if (entity instanceof ServerPlayerEntity) {
             if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
@@ -175,6 +176,7 @@ public class BzWorldSavedData extends WorldSavedData {
                 return;
             }
 
+            entity.moveTo(destinationPosition.x, destinationPosition.y, destinationPosition.z, entity.yRot, entity.xRot);
             newEntity.restoreFrom(entity);
             newEntity.moveTo(destinationPosition.x, destinationPosition.y, destinationPosition.z, entity.yRot, entity.xRot);
             destination.addFromAnotherDimension(newEntity);

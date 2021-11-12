@@ -1,3 +1,11 @@
+### **(V.3.1.3 Changes) (1.16.5 Minecraft)**
+
+##### Teleportation:
+Sped up an edge case with teleporting.
+
+Took an extra precaution against riding entities when exiting bumblezone could cause issues/
+
+
 ### **(V.3.1.2 Changes) (1.16.5 Minecraft)**
 
 ##### Teleportation:
