@@ -132,6 +132,7 @@ public class BzWorldSavedData extends SavedData
 	private static void teleportEntityAndAssignToVehicle(Entity entity, Entity vehicle, ServerLevel destination, Vec3 destinationPosition, Set<Entity> teleportedEntities) {
 		Entity teleportedEntity;
 		List<Entity> passengers = entity.getPassengers();
+		entity.ejectPassengers();
 
 		if (entity instanceof ServerPlayer) {
 			if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
@@ -141,7 +142,7 @@ public class BzWorldSavedData extends SavedData
 				((ServerPlayer) entity).displayClientMessage(new TextComponent("Teleporting out of Bumblezone..."), true);
 			}
 
-			if (((ServerPlayer)entity).isSleeping()) {
+			if (((ServerPlayer) entity).isSleeping()) {
 				((ServerPlayer) entity).stopSleepInBed(true, true);
 			}
 			((ServerPlayer) entity).teleportTo(destination, destinationPosition.x, destinationPosition.y, destinationPosition.z, entity.getYRot(), entity.getXRot());
@@ -153,7 +154,7 @@ public class BzWorldSavedData extends SavedData
 			if (newEntity == null) {
 				return;
 			}
-
+			entity.moveTo(destinationPosition.x, destinationPosition.y, destinationPosition.z, entity.getYRot(), entity.getXRot());
 			newEntity.restoreFrom(entity);
 			newEntity.moveTo(destinationPosition.x, destinationPosition.y, destinationPosition.z, entity.getYRot(), entity.getXRot());
 			destination.addDuringTeleport(newEntity);

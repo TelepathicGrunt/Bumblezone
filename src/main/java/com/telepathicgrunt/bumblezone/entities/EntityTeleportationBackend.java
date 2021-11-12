@@ -12,6 +12,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -32,11 +33,13 @@ public class EntityTeleportationBackend {
 
     public static Vec3 destPostFromOutOfBoundsTeleport(Entity entity, ServerLevel destination, boolean checkingUpward, boolean mustBeNearBeeBlock) {
         //converts the position to get the corresponding position in non-bumblezone dimension
+        Entity player = entity.getPassengers().stream().filter(e -> e instanceof Player).findFirst().orElse(null);
+        if(player != null) entity = player;
         double coordinateScale = entity.getCommandSenderWorld().dimensionType().coordinateScale() / destination.dimensionType().coordinateScale();
         BlockPos finalSpawnPos;
-        BlockPos validBlockPos = null;
+        BlockPos validBlockPos;
 
-        if(Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 1 || mustBeNearBeeBlock){
+        if(Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 1 || mustBeNearBeeBlock) {
             finalSpawnPos = new BlockPos(
                     Doubles.constrainToRange(entity.position().x() * coordinateScale, -29999936D, 29999936D),
                     entity.position().y(),
@@ -46,15 +49,23 @@ public class EntityTeleportationBackend {
             validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward, mustBeNearBeeBlock);
         }
 
-        else if(Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 2){
+        else if(Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 2) {
             Vec3 playerPos = Bumblezone.ENTITY_COMPONENT.get(entity).getNonBZPos();
-            if(playerPos != null){
+            if(playerPos != null) {
                 validBlockPos = new BlockPos(playerPos);
+            }
+            else {
+                finalSpawnPos = new BlockPos(
+                        Doubles.constrainToRange(entity.position().x() * coordinateScale, -29999936D, 29999936D),
+                        entity.position().y(),
+                        Doubles.constrainToRange(entity.position().z() * coordinateScale, -29999936D, 29999936D));
+
+                validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward, mustBeNearBeeBlock);
             }
         }
 
-        // Teleportaion mode 3
-        else{
+        // Teleportation mode 3
+        else {
             finalSpawnPos = new BlockPos(
                     Doubles.constrainToRange(entity.position().x() * coordinateScale, -29999936D, 29999936D),
                     entity.position().y(),
@@ -72,7 +83,7 @@ public class EntityTeleportationBackend {
         // If all else fails, fallback to player pos
         finalSpawnPos = validBlockPos;
         if(finalSpawnPos == null) {
-            if(mustBeNearBeeBlock){
+            if(mustBeNearBeeBlock) {
                 return null;
             }
             finalSpawnPos = new BlockPos(entity.position());
@@ -207,8 +218,8 @@ public class EntityTeleportationBackend {
         int maxHeight = 0;
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
         Set<LevelChunk> chunksInRange = new HashSet<>();
-        for (int x = -maximumRange; x < maximumRange; x++) {
-            for (int z = -maximumRange; z < maximumRange; z++) {
+        for (int x = -maximumRange; x < maximumRange; x += 16) {
+            for (int z = -maximumRange; z < maximumRange; z += 16) {
                 mutableBlockPos.set(position.getX() + x, 0, position.getZ() + z);
                 ChunkAccess chunk = world.getChunk(mutableBlockPos);
                 if(chunk instanceof LevelChunk) chunksInRange.add((LevelChunk)chunk);
