@@ -1,3 +1,10 @@
+### **(V.3.3.3 Changes) (1.17.1 Minecraft)**
+
+#### Mod Compat:
+Added support for Notify - https://www.curseforge.com/minecraft/mc-mods/notify
+ Notify will let you know if a new update for this mod is out on the Mod Menu screen.
+
+
 ### **(V.3.3.2 Changes) (1.17.1 Minecraft)**
 
 ##### Teleportation:
@@ -8,8 +15,8 @@ Fixed bug where setting Teleportation Mode to 2 or 3 and trying to exit Bumblezo
 
 ##### Entities:
 Beehemoth will now stay still when crouch right-clicked like how you make dogs and cats sit.
-If it is sitting, shift right click with empty hand to remove saddle. Shift right click while holding any item to make it unsit (or ride it to unsit)
-To feed Beehemoth, just right click while holding any honey feeding item. No crouching needed.
+ If it is sitting, shift right click with empty hand to remove saddle. Shift right click while holding any item to make it unsit (or ride it to unsit)
+ To feed Beehemoth, just right click while holding any honey feeding item. No crouching needed.
 
 Right clicking Beehemoth without crouching will always make you ride the mob. No longer need an empty hand.
 

@@ -35,11 +35,6 @@
   "mixins": [
     "the_bumblezone.mixins.json"
   ],
-  "custom": {
-    "cardinal-components": [
-      "the_bumblezone:player_component"
-    ]
-  },
 
   "accessWidener" : "the_bumblezone.accesswidener",
 
@@ -50,5 +45,12 @@
     "cardinal-components-base": "*",
     "cardinal-components-entity": "*",
     "cloth-config2": ">=5.0.0"
+  },
+  "custom": {
+    "cardinal-components": [
+      "the_bumblezone:player_component"
+    ],
+    "notify_gradle_properties_url": "https://raw.githubusercontent.com/TelepathicGrunt/Bumblezone-Fabric/latest-released/gradle.properties",
+    "notify_gradle_properties_key": "mod_version"
   }
 }
