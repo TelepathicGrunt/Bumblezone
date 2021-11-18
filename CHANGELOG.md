@@ -7,6 +7,9 @@ Added Bee Bread which can be crafted from pollen puff and honey bottles (or 3 po
  When player eats the item, it acts as a better food source than honey bottle but does not cure player of poison.
  Player will get Beenergized effect as well but only to level 1 and nausea for a few seconds.
 
+##### Blocks:
+Honeycomb Brood Blocks has a chance of dropping Bee Bread when broken.
+
 ##### Entities:
 Beehemoth is now immune to block suffocation damage for a bit after teleporting to and from the bumblezone.
 (Uses portal cooldown to know when to be invincible to block suffocation)

@@ -41,6 +41,7 @@ public class JEIIntegration implements IModPlugin
 		addInfo(registration, BzItems.BEEHEMOTH_SPAWN_EGG.get());
 		addInfo(registration, BzFluids.SUGAR_WATER_FLUID.get());
 		addInfo(registration, BzItems.POLLEN_PUFF.get());
+		addInfo(registration, BzItems.BEE_BREAD.get());
 		addInfo(registration, BzFluids.HONEY_FLUID.get());
 		addInfo(registration, BzItems.HONEY_BUCKET.get());
     }
