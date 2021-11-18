@@ -482,7 +482,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
         // Become untamed if bee is no longer a friend
         else if(getFriendship() < 0 && isTame()) {
             ejectPassengers();
-            spawnMadParticles();
+            if(level.random.nextFloat() < 0.01f) spawnMadParticles();
         }
     }
 

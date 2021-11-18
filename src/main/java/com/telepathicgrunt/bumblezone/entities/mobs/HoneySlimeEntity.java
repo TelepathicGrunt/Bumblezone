@@ -259,7 +259,8 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
 
          this.playSound(this.getSquishSound(), this.getSoundVolume(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
          this.squishAmount = -0.5F;
-      } else if (!this.onGround && this.wasOnGround) {
+      }
+      else if (!this.onGround && this.wasOnGround) {
          this.squishAmount = 1.0F;
       }
 
