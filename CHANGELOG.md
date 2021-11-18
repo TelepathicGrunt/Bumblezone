@@ -1,4 +1,4 @@
-### **(V.3.1.4 Changes) (1.16.5 Minecraft)**
+### **(V.3.2.0 Changes) (1.16.5 Minecraft)**
 
 ##### Entities:
 Beehemoth is now immune to block suffocation damage for a bit after teleporting to and from the bumblezone.
