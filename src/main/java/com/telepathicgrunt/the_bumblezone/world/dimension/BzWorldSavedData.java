@@ -154,6 +154,7 @@ public class BzWorldSavedData extends WorldSavedData {
         net.minecraft.entity.Entity teleportedEntity;
         List<net.minecraft.entity.Entity> passengers = entity.getPassengers();
         entity.ejectPassengers();
+        entity.setPortalCooldown();
 
         if (entity instanceof ServerPlayerEntity) {
             if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
