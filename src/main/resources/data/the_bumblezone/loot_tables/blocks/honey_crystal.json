@@ -1,58 +1,54 @@
 {
-	"type": "minecraft:block",
-	"pools":
-	[
-	{
-		"name": "pool1",
-		"rolls":1,
-		"entries":
-		[
-		{
-			"type": "minecraft:alternatives",
-			"children":[
-				{
-					"type": "minecraft:item",
-					"conditions":[
-						{
-							"condition": "minecraft:match_tool",
-							"predicate":
-							{
-								"enchantments":[
-									{
-										"enchantment": "minecraft:silk_touch",
-										"levels":{
-											"min":1
-										}
-									}
-								]
-							}
-						}
-					],
-					"name": "the_bumblezone:honey_crystal"
-				},
-				{
-					"type": "minecraft:item",
-					"functions":[
-						{
-							"function": "minecraft:apply_bonus",
-							"enchantment": "minecraft:fortune",
-							"formula": "minecraft:ore_drops"
-						},
-						{
-							"function": "minecraft:explosion_decay"
-						}
-					],
-					"name": "the_bumblezone:honey_crystal_shards"
-				}
-			]
-		}
-		],
-		"conditions":
-		[
-			{
-				"condition": "minecraft:survives_explosion"
-			}
-		]
-	}
-	]
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "name": "pool1",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "name": "the_bumblezone:honey_crystal"
+            },
+            {
+              "type": "minecraft:item",
+              "functions": [
+                {
+                  "function": "minecraft:apply_bonus",
+                  "enchantment": "minecraft:fortune",
+                  "formula": "minecraft:ore_drops"
+                },
+                {
+                  "function": "minecraft:explosion_decay"
+                }
+              ],
+              "name": "the_bumblezone:honey_crystal_shards"
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ]
 }

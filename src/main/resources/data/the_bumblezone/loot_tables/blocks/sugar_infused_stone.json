@@ -40,7 +40,6 @@
       ]
     },
     {
-    
       "rolls": 1,
       "entries": [
         {
@@ -72,7 +71,7 @@
                   "condition": "minecraft:survives_explosion"
                 }
               ],
-      		  "name": "minecraft:sugar"
+              "name": "minecraft:sugar"
             }
           ]
         }
