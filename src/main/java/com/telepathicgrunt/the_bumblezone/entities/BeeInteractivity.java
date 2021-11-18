@@ -47,7 +47,7 @@ public class BeeInteractivity {
         if (itemstackOriginal.getItem() == BzItems.BEE_BREAD.get() || itemRL.equals(PRODUCTIVE_BEES_HONEY_TREAT)) {
             removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
 
-            if(removedWrath && playerEntity instanceof ServerPlayerEntity ) {
+            if(removedWrath && playerEntity instanceof ServerPlayerEntity) {
                 BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayerEntity) playerEntity, itemstackOriginal);
             }
 

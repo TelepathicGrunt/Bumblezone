@@ -433,11 +433,11 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     }
 
     @Override
-    protected void checkFallDamage(double pY, boolean pOnGround, BlockState pState, BlockPos pPos) {
+    protected void checkFallDamage(double y, boolean onGround, BlockState blockState, BlockPos blockPos) {
     }
 
     @Override
-    public boolean causeFallDamage(float p_225503_1_, float p_225503_2_) {
+    public boolean causeFallDamage(float fallDistance, float damageModifier) {
         return false;
     }
 
@@ -446,7 +446,7 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     }
 
     @Override
-    protected void playStepSound(BlockPos pPos, BlockState pBlock) {
+    protected void playStepSound(BlockPos pos, BlockState blockState) {
     }
 
     @Override
@@ -488,8 +488,8 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     }
 
     @Override
-    public void setLeashedTo(Entity pEntity, boolean pSendAttachNotification) {
-        super.setLeashedTo(pEntity, pSendAttachNotification);
+    public void setLeashedTo(Entity entity, boolean sendAttachNotification) {
+        super.setLeashedTo(entity, sendAttachNotification);
         stopWandering = true;
     }
 
