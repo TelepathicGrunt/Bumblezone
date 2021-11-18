@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.math.BlockPos;
@@ -20,14 +21,14 @@ public class RandomFlyGoal extends Goal {
     }
 
     public boolean canUse() {
-        MovementController movementcontroller = this.beehemothEntity.getMoveControl();
+        MovementController movementcontroller = beehemothEntity.getMoveControl();
         if (beehemothEntity.isStopWandering()) {
             return false;
         }
         if (!movementcontroller.hasWanted() || target == null) {
             target = getBlockInViewBeehemoth();
             if (target != null) {
-                this.beehemothEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, 1.0D);
+                beehemothEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, beehemothEntity.getFinalFlyingSpeed());
             }
             return true;
         }
@@ -47,12 +48,13 @@ public class RandomFlyGoal extends Goal {
             target = getBlockInViewBeehemoth();
         }
         if (target != null) {
-            this.beehemothEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, 1.0D);
+            beehemothEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, beehemothEntity.getFinalFlyingSpeed());
             if (beehemothEntity.distanceToSqr(Vector3d.atCenterOf(target)) < 2.5F) {
                 target = null;
             }
         }
     }
+
 
     public BlockPos getBlockInViewBeehemoth() {
         float radius = 1 + beehemothEntity.getRandom().nextInt(5);

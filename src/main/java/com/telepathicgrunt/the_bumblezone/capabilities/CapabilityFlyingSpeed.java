@@ -8,35 +8,34 @@ import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 
 import javax.annotation.Nullable;
 
-public class CapabilityEntityPosAndDim {
+public class CapabilityFlyingSpeed {
 	//legacy capability name to prevent breaking player's data when updating
-	public static final ResourceLocation ENTITY_PAST_POS_AND_DIM = new ResourceLocation(Bumblezone.MODID, "player_past_pos_and_dim");
+	public static final ResourceLocation ORIGINAL_FLYING_SPEED = new ResourceLocation(Bumblezone.MODID, "original_flying_speed");
 
 	//registers the capability and defines how it will read/write data from nbt
 	public static void register() {
-		CapabilityManager.INSTANCE.register(IEntityPosAndDim.class, new Capability.IStorage<IEntityPosAndDim>() {
+		CapabilityManager.INSTANCE.register(IFlyingSpeed.class, new Capability.IStorage<IFlyingSpeed>() {
 			@Override
 			@Nullable
-			public INBT writeNBT(Capability<IEntityPosAndDim> capability, IEntityPosAndDim instance, Direction side) {
+			public INBT writeNBT(Capability<IFlyingSpeed> capability, IFlyingSpeed instance, Direction side) {
 				return instance.saveNBTData();
 			}
 			@Override
-			public void readNBT(Capability<IEntityPosAndDim> capability, IEntityPosAndDim instance, Direction side, INBT nbt) {
+			public void readNBT(Capability<IFlyingSpeed> capability, IFlyingSpeed instance, Direction side, INBT nbt) {
 				instance.loadNBTData((CompoundNBT) nbt);
 			}
-		}, EntityPositionAndDimension::new);
+		}, EntityFlyingSpeed::new);
 	}
 
 	public static void onAttachCapabilitiesToEntities(AttachCapabilitiesEvent<Entity> e) {
 		Entity ent = e.getObject();
 		if (ent instanceof LivingEntity) {
-			e.addCapability(ENTITY_PAST_POS_AND_DIM, new PastPosAndDimProvider());
+			e.addCapability(ORIGINAL_FLYING_SPEED, new FlyingSpeedProvider());
 		}
 	}
 }

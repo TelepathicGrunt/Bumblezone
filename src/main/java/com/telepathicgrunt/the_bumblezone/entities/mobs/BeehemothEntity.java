@@ -202,6 +202,21 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         return new DirectPathNavigator(this, pLevel);
     }
 
+    // If our flyingSpeed is manually modified by something (like Beenergized effect),
+    // calculate the % of change done and use that for speed change.
+    // Otherwise, use the flying speed attribute.
+    // Have to do this way as flyingSpeed doesn't use the attribute for many mobs so mods may change the field instead of attribute.
+    public float getFinalFlyingSpeed() {
+        float finalFlyingSpeed = this.flyingSpeed;
+        if (finalFlyingSpeed == 0.02f) {
+            finalFlyingSpeed = (float) this.getAttributeValue(Attributes.FLYING_SPEED) / 0.6f;
+        }
+        else {
+            finalFlyingSpeed = finalFlyingSpeed / 0.02f;
+        }
+        return finalFlyingSpeed;
+    }
+
     public static boolean checkMobSpawnRules(EntityType<? extends MobEntity> entityType, IWorld iWorld, SpawnReason spawnReason, BlockPos blockPos, Random random) {
         return true;
     }

@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone;
 
 import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityEntityPosAndDim;
-import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityEventHandler;
+import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityFlyingSpeed;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
@@ -45,6 +45,7 @@ import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -91,7 +92,8 @@ public class Bumblezone{
         forgeBus.addListener(EventPriority.HIGH, EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
         forgeBus.addGenericListener(Block.class, Bumblezone::missingMappingDimension);
         forgeBus.addListener(PotionOfBeesBeeSplashPotionProjectile::ProjectileImpactEvent);
-        forgeBus.addGenericListener(Entity.class, CapabilityEventHandler::onAttachCapabilitiesToEntities);
+        forgeBus.addGenericListener(Entity.class, CapabilityEntityPosAndDim::onAttachCapabilitiesToEntities);
+        forgeBus.addGenericListener(Entity.class, CapabilityFlyingSpeed::onAttachCapabilitiesToEntities);
         forgeBus.addListener(EntityTeleportationHookup::entityTick);
         forgeBus.addListener(BeeAggression::playerTick);
         forgeBus.addListener(BzWorldSavedData::worldTick);
@@ -165,6 +167,7 @@ public class Bumblezone{
 //			LOGGER.log(Level.WARN, s.toString());
 		});
         CapabilityEntityPosAndDim.register();
+        CapabilityFlyingSpeed.register();
     }
 
     private void modCompatSetup(final FMLCommonSetupEvent event) {

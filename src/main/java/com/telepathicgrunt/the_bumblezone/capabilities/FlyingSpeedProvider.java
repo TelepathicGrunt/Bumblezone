@@ -8,22 +8,20 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class PastPosAndDimProvider implements ICapabilityProvider, ICapabilitySerializable<CompoundNBT> {
+public class FlyingSpeedProvider implements ICapabilityProvider, ICapabilitySerializable<CompoundNBT> {
 
 	//the capability itself
-	@CapabilityInject(IEntityPosAndDim.class)
-	public static Capability<IEntityPosAndDim> PAST_POS_AND_DIM = null;
-	
-	//The instance of the capability? I think?
-	private EntityPositionAndDimension instance = (EntityPositionAndDimension) PAST_POS_AND_DIM.getDefaultInstance();
+	@CapabilityInject(IFlyingSpeed.class)
+	public static Capability<IFlyingSpeed> ORIGINAL_FLYING_SPEED = null;
 
+	private EntityFlyingSpeed instance = (EntityFlyingSpeed) ORIGINAL_FLYING_SPEED.getDefaultInstance();
 
-	//returns the capability attached to player
+	//returns the capability attached to the entity
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == PAST_POS_AND_DIM) {
+		if (cap == ORIGINAL_FLYING_SPEED) {
 			if(instance == null) {
-				instance = new EntityPositionAndDimension();
+				instance = new EntityFlyingSpeed();
 			}
 			
 			return LazyOptional.of(() -> instance).cast();

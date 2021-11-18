@@ -4,6 +4,12 @@
 Beehemoth is now immune to block suffocation damage for a bit after teleporting to and from the bumblezone.
   (Uses portal cooldown to know when to be invincible to block suffocation)
 
+Beehemoth now reads both Flying Speed attribute and flyingSpeed field when riding the mob or it is randomly flying around. 
+ (changes to flyingSpeed field overrides Flying Speed attribute changes)
+
+##### Effects:
+Beenergized effect is now added! This will increase the flying speed of any mob it is affecting.
+
 
 ### **(V.3.1.3 Changes) (1.16.5 Minecraft)**
 
