@@ -49,6 +49,18 @@ public class BeeInteractivity {
             boolean removedWrath;
             ItemStack itemstackOriginal = itemstack.copy();
 
+            // Special cased items so the ActionResultType continues and make the item's behavior not lost.
+            if (itemstackOriginal.getItem() == BzItems.BEE_BREAD) {
+                removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
+
+                if(removedWrath && playerEntity instanceof ServerPlayer) {
+                    BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayer) playerEntity, itemstackOriginal);
+                }
+
+                playerEntity.swing(hand, true);
+                return InteractionResult.PASS;
+            }
+
             if (itemstack.is(BzItemTags.HONEY_BUCKETS)) {
                 beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
                 removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);

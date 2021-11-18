@@ -1,9 +1,11 @@
 package com.telepathicgrunt.bumblezone;
 
+import com.telepathicgrunt.bumblezone.components.FlyingSpeedComponent;
+import com.telepathicgrunt.bumblezone.components.IFlyingSpeedComponent;
 import com.telepathicgrunt.bumblezone.configs.BzConfig;
 import com.telepathicgrunt.bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.bumblezone.entities.EntityComponent;
-import com.telepathicgrunt.bumblezone.entities.IEntityComponent;
+import com.telepathicgrunt.bumblezone.components.EntityComponent;
+import com.telepathicgrunt.bumblezone.components.IEntityComponent;
 import com.telepathicgrunt.bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.bumblezone.modcompat.ModChecker;
@@ -52,6 +54,8 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
     // legacy name to prevent breaking player's data even though this is for entities now
     public static final ComponentKey<IEntityComponent> ENTITY_COMPONENT =
             ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "player_component"), IEntityComponent.class);
+    public static final ComponentKey<IFlyingSpeedComponent> FLYING_SPEED_COMPONENT =
+            ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "original_flying_speed"), IFlyingSpeedComponent.class);
 
     @Override
     public void onInitialize() {
@@ -95,5 +99,6 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         //attach component to living entities
         registry.registerFor(LivingEntity.class, ENTITY_COMPONENT, p -> new EntityComponent());
+        registry.registerFor(LivingEntity.class, FLYING_SPEED_COMPONENT, p -> new FlyingSpeedComponent());
     }
 }

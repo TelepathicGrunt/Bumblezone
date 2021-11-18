@@ -1,8 +1,28 @@
-### **(V.3.3.3 Changes) (1.17.1 Minecraft)**
+### **(V.3.4.0 Changes) (1.17.1 Minecraft)**
+
+##### Items:
+Added Bee Bread which can be crafted from pollen puff and honey bottles (or 3 pollen puff + honey bucket)
+ When fed to bees or Beehemoth, it will grant Beenergized effect and make them go faster for 5 minutes!
+ Feed them multiple times to increase the flying speed boost up to level 3 where bees goes zoom!
+ When player eats the item, it acts as a better food source than honey bottle but does not cure player of poison.
+ Player will get Beenergized effect as well but only to level 1 and nausea for a few seconds.
+
+##### Blocks:
+Honeycomb Brood Blocks has a chance of dropping Bee Bread when broken.
 
 ##### Entities:
 Beehemoth is now immune to block suffocation damage for a bit after teleporting to and from the bumblezone.
  (Uses portal cooldown to know when to be invincible to block suffocation)
+
+Beehemoth now reads both Flying Speed attribute and flyingSpeed field when riding the mob or it is randomly flying around.
+ (changes to flyingSpeed field overrides Flying Speed attribute changes)
+
+Beehemoth will no longer become untamed when friendship reached 0 or below. Instead, it'll retain its owner but still
+prevent any riding until it is feed to bring its friendship above 0.
+
+##### Effects:
+Beenergized effect is now added! This will increase the flying speed of any mob it is affecting.
+If on player, it does not have any effect it seems.
 
 #### Mod Compat:
 Added support for Notify - https://www.curseforge.com/minecraft/mc-mods/notify

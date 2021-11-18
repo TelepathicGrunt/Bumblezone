@@ -5,9 +5,11 @@ import com.telepathicgrunt.bumblezone.entities.goals.BeehemothAIRide;
 import com.telepathicgrunt.bumblezone.entities.goals.FlyingStillGoal;
 import com.telepathicgrunt.bumblezone.entities.goals.RandomFlyGoal;
 import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
+import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
@@ -202,6 +204,21 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
         return new DirectPathNavigator(this, pLevel);
     }
 
+    // If our flyingSpeed is manually modified by something (like Beenergized effect),
+    // calculate the % of change done and use that for speed change.
+    // Otherwise, use the flying speed attribute.
+    // Have to do this way as flyingSpeed doesn't use the attribute for many mobs so mods may change the field instead of attribute.
+    public float getFinalFlyingSpeed() {
+        float finalFlyingSpeed = this.flyingSpeed;
+        if (finalFlyingSpeed == 0.02f) {
+            finalFlyingSpeed = (float) this.getAttributeValue(Attributes.FLYING_SPEED) / 0.6f;
+        }
+        else {
+            finalFlyingSpeed = finalFlyingSpeed / 0.02f;
+        }
+        return finalFlyingSpeed;
+    }
+
     public static boolean checkMobSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor iWorld, MobSpawnType spawnReason, BlockPos blockPos, Random random) {
         return true;
     }
@@ -241,7 +258,13 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
             if (this.isTame()) {
                 if (this.isOwnedBy(player)) {
                     if (BzItemTags.BEE_FEEDING_ITEMS.contains(item) && !player.isShiftKeyDown()) {
-                        if (BzItemTags.HONEY_BUCKETS.contains(item)) {
+                        if(item == BzItems.BEE_BREAD) {
+                            this.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 2, false, false, false));
+                            BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
+                            addFriendship(5);
+                            return InteractionResult.PASS;
+                        }
+                        else if (BzItemTags.HONEY_BUCKETS.contains(item)) {
                             this.heal(this.getMaxHealth() - this.getHealth());
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
                             addFriendship(5);
@@ -303,18 +326,18 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
             // Taming Beehemoth
             else if (BzItemTags.BEE_FEEDING_ITEMS.contains(item)) {
                 if(getFriendship() >= 0) {
-                    int tameChance;
-                    if (BzItemTags.HONEY_BUCKETS.contains(item)) {
-                        tameChance = 5;
+                    float tameChance;
+                    if (BzItemTags.HONEY_BUCKETS.contains(item) || item == BzItems.BEE_BREAD) {
+                        tameChance = 0.25f;
                     }
                     else if (itemRL.getPath().contains("honey")) {
-                        tameChance = 10;
+                        tameChance = 0.1f;
                     }
                     else {
-                        tameChance = 15;
+                        tameChance = 0.067f;
                     }
 
-                    if (this.random.nextInt(tameChance) == 0) {
+                    if (this.random.nextFloat() < tameChance) {
                         this.tame(player);
                         setFriendship(6);
                         this.setOrderedToSit(true);
@@ -326,7 +349,11 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                 }
                 else {
                     addFriendship(1);
-                    if (BzItemTags.HONEY_BUCKETS.contains(item)) {
+                    if(item == BzItems.BEE_BREAD) {
+                        addFriendship(5);
+                        return InteractionResult.PASS;
+                    }
+                    else if (BzItemTags.HONEY_BUCKETS.contains(item)) {
                         addFriendship(3);
                     }
                     else if (itemRL.getPath().contains("honey")) {
@@ -410,7 +437,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     }
 
     @Override
-    protected void checkFallDamage(double pY, boolean pOnGround, BlockState pState, BlockPos pPos) {
+    protected void checkFallDamage(double y, boolean onGround, BlockState blockState, BlockPos blockPos) {
     }
 
     @Override
@@ -423,7 +450,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     }
 
     @Override
-    protected void playStepSound(BlockPos pPos, BlockState pBlock) {
+    protected void playStepSound(BlockPos pos, BlockState blockState) {
     }
 
     @Override
@@ -432,7 +459,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
         return BzSounds.BEEHEMOTH_HURT;
     }
 
@@ -455,8 +482,6 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
         // Become untamed if bee is no longer a friend
         else if(getFriendship() < 0 && isTame()) {
             ejectPassengers();
-            this.setTame(false);
-            this.setOwnerUUID(null);
             spawnMadParticles();
         }
     }
@@ -467,8 +492,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     }
 
     @Override
-    public void setLeashedTo(Entity pEntity, boolean pSendAttachNotification) {
-        super.setLeashedTo(pEntity, pSendAttachNotification);
+    public void setLeashedTo(Entity entity, boolean sendAttachNotification) {
+        super.setLeashedTo(entity, sendAttachNotification);
         stopWandering = true;
     }
 

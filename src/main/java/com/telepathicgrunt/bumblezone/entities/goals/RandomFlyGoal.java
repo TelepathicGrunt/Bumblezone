@@ -20,14 +20,14 @@ public class RandomFlyGoal extends Goal {
     }
 
     public boolean canUse() {
-        MoveControl movementcontroller = this.beehemothEntity.getMoveControl();
+        MoveControl movementcontroller = beehemothEntity.getMoveControl();
         if (beehemothEntity.isStopWandering()) {
             return false;
         }
         if (!movementcontroller.hasWanted() || target == null) {
             target = getBlockInViewBeehemoth();
             if (target != null) {
-                this.beehemothEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, 1.0D);
+                beehemothEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, beehemothEntity.getFinalFlyingSpeed());
             }
             return true;
         }
@@ -47,7 +47,7 @@ public class RandomFlyGoal extends Goal {
             target = getBlockInViewBeehemoth();
         }
         if (target != null) {
-            this.beehemothEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, 1.0D);
+            beehemothEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, beehemothEntity.getFinalFlyingSpeed());
             if (beehemothEntity.distanceToSqr(Vec3.atCenterOf(target)) < 2.5F) {
                 target = null;
             }

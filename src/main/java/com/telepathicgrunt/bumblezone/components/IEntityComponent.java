@@ -1,4 +1,4 @@
-package com.telepathicgrunt.bumblezone.entities;
+package com.telepathicgrunt.bumblezone.components;
 
 import dev.onyxstudios.cca.api.v3.component.Component;
 import net.minecraft.resources.ResourceLocation;

@@ -1,0 +1,15 @@
+{
+  "type": "the_bumblezone:container_shapeless_recipe_bz",
+  "group": "the_bumblezone",
+  "ingredients": [
+    {
+      "item": "the_bumblezone:pollen_puff"
+    },
+    {
+      "item": "minecraft:honey_bottle"
+    }
+  ],
+  "result": {
+    "item": "the_bumblezone:bee_bread"
+  }
+}

@@ -49,7 +49,7 @@ public class BeehemothAIRide extends Goal {
 
         if (player.zza != 0 || ((LivingEntityAccessor)player).isJumping()) {
             currentSpeed = Math.min(
-                    Bumblezone.BZ_CONFIG.BZGeneralConfig.beehemothSpeed * speedModifier,
+                    Bumblezone.BZ_CONFIG.BZGeneralConfig.beehemothSpeed * speedModifier * beehemothEntity.getFinalFlyingSpeed(),
                     currentSpeed + 0.3D);
         }
         else {

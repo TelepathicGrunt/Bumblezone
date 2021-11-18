@@ -2,9 +2,11 @@ package com.telepathicgrunt.bumblezone.modinit;
 
 import com.telepathicgrunt.bumblezone.advancements.*;
 import net.fabricmc.fabric.api.object.builder.v1.advancement.CriterionRegistry;
+import net.minecraft.advancements.CriteriaTriggers;
 
 public class BzCriterias {
     // CRITERIA TRIGGERS
+    public static final BeenergizedMaxTrigger BEENERGIZED_MAXED_TRIGGER = new BeenergizedMaxTrigger();
     public static final BeeDropPollenPuffTrigger BEE_DROP_POLLEN_PUFF_TRIGGER = new BeeDropPollenPuffTrigger();
     public static final CleanupStickyHoneyResidueTrigger CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER = new CleanupStickyHoneyResidueTrigger();
     public static final CombCutterExtraDropsTrigger COMB_CUTTER_EXTRA_DROPS_TRIGGER = new CombCutterExtraDropsTrigger();
@@ -32,6 +34,7 @@ public class BzCriterias {
     public static final TeleportToBumblezoneByPistonTrigger TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER = new TeleportToBumblezoneByPistonTrigger();
 
     public static void registerCriteriaTriggers() {
+        CriterionRegistry.register(BEENERGIZED_MAXED_TRIGGER);
         CriterionRegistry.register(BEE_DROP_POLLEN_PUFF_TRIGGER);
         CriterionRegistry.register(CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER);
         CriterionRegistry.register(COMB_CUTTER_EXTRA_DROPS_TRIGGER);

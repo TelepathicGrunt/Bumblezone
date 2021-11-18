@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     {
+      "id": "the_bumblezone:bee_bread",
+      "required": true
+    },
+    {
       "id": "minecraft:honey_bottle",
       "required": true
     },

@@ -1,4 +1,4 @@
-package com.telepathicgrunt.bumblezone.entities;
+package com.telepathicgrunt.bumblezone.components;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import net.minecraft.nbt.CompoundTag;
