@@ -12,7 +12,7 @@ Honeycomb Brood Blocks has a chance of dropping Bee Bread when broken.
 
 ##### Entities:
 Beehemoth is now immune to block suffocation damage for a bit after teleporting to and from the bumblezone.
-(Uses portal cooldown to know when to be invincible to block suffocation)
+ (Uses portal cooldown to know when to be invincible to block suffocation)
 
 Beehemoth now reads both Flying Speed attribute and flyingSpeed field when riding the mob or it is randomly flying around. 
  (changes to flyingSpeed field overrides Flying Speed attribute changes)
