@@ -133,6 +133,7 @@ public class BzWorldSavedData extends SavedData
 		Entity teleportedEntity;
 		List<Entity> passengers = entity.getPassengers();
 		entity.ejectPassengers();
+		entity.setPortalCooldown();
 
 		if (entity instanceof ServerPlayer) {
 			if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {

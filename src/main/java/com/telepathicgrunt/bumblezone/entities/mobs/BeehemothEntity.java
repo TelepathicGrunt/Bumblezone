@@ -154,7 +154,12 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (this.isInvulnerableTo(source)) {
+        if (isInvulnerableTo(source)) {
+            return false;
+        }
+        else if(isOnPortalCooldown() && source == DamageSource.IN_WALL) {
+            spawnMadParticles();
+            playHurtSound(source);
             return false;
         }
         else {
@@ -168,7 +173,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
             }
 
             spawnMadParticles();
-            this.setOrderedToSit(false);
+            setOrderedToSit(false);
             return super.hurt(source, amount);
         }
     }

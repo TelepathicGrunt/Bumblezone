@@ -1,5 +1,9 @@
 ### **(V.3.3.3 Changes) (1.17.1 Minecraft)**
 
+##### Entities:
+Beehemoth is now immune to block suffocation damage for a bit after teleporting to and from the bumblezone.
+ (Uses portal cooldown to know when to be invincible to block suffocation)
+
 #### Mod Compat:
 Added support for Notify - https://www.curseforge.com/minecraft/mc-mods/notify
  Notify will let you know if a new update for this mod is out on the Mod Menu screen.
