@@ -17,5 +17,5 @@ public class BzEffects {
 
     public static final RegistryObject<Effect> WRATH_OF_THE_HIVE = EFFECTS.register("wrath_of_the_hive", () -> new WrathOfTheHiveEffect(EffectType.HARMFUL, 16737285));
     public static final RegistryObject<Effect> PROTECTION_OF_THE_HIVE = EFFECTS.register("protection_of_the_hive", () -> new ProtectionOfTheHiveEffect(EffectType.BENEFICIAL, 15049988));
-    public static final RegistryObject<Effect> BEENERGIZED = EFFECTS.register("beenergized", () -> new BeenergizedEffect(EffectType.BENEFICIAL, 16768000).addAttributeModifier(Attributes.FLYING_SPEED, "9ed2fcd5-061e-4e25-a033-4306b824e941", 0.045D, AttributeModifier.Operation.MULTIPLY_BASE));
+    public static final RegistryObject<Effect> BEENERGIZED = EFFECTS.register("beenergized", () -> new BeenergizedEffect(EffectType.BENEFICIAL, 16768000).addAttributeModifier(Attributes.FLYING_SPEED, "9ed2fcd5-061e-4e25-a033-4306b824e941", 0.04D, AttributeModifier.Operation.MULTIPLY_BASE));
 }

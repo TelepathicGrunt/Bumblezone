@@ -1,12 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
-import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
-import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.util.math.vector.Vector3d;
 
 import java.util.EnumSet;
 

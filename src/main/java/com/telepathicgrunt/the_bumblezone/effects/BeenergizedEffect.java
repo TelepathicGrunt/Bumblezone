@@ -1,33 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.effects;
 
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityFlyingSpeed;
-import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
-import com.telepathicgrunt.the_bumblezone.capabilities.FlyingSpeedProvider;
-import com.telepathicgrunt.the_bumblezone.capabilities.IEntityPosAndDim;
 import com.telepathicgrunt.the_bumblezone.capabilities.IFlyingSpeed;
-import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
-import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import org.w3c.dom.Attr;
-
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 
 public class BeenergizedEffect extends Effect {

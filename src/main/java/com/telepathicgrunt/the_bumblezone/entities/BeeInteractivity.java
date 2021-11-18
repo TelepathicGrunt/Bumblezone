@@ -43,8 +43,8 @@ public class BeeInteractivity {
         boolean removedWrath;
         ItemStack itemstackOriginal = itemstack.copy();
 
-        // Let the honey treat behavior continue on so their gene stuff is not lost.
-        if (itemRL.equals(PRODUCTIVE_BEES_HONEY_TREAT)) {
+        // Special cased items so the ActionResultType continues and make the item's behavior not lost.
+        if (itemstackOriginal.getItem() == BzItems.BEE_BREAD.get() || itemRL.equals(PRODUCTIVE_BEES_HONEY_TREAT)) {
             removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
 
             if(removedWrath && playerEntity instanceof ServerPlayerEntity ) {

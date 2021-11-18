@@ -1,8 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.capabilities;
 
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3d;
 
 
 public class EntityFlyingSpeed implements IFlyingSpeed {

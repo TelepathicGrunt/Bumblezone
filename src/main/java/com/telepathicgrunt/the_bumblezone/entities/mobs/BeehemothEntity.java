@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothAIRide;
 import com.telepathicgrunt.the_bumblezone.entities.goals.FlyingStillGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.RandomFlyGoal;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -12,7 +13,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -20,7 +20,6 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.SitGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.item.ItemEntity;
@@ -28,7 +27,6 @@ import net.minecraft.entity.passive.IFlyingAnimal;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -257,7 +255,13 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
             if (this.isTame()) {
                 if (this.isOwnedBy(player)) {
                     if (BzItemTags.BEE_FEEDING_ITEMS.contains(item) && !player.isShiftKeyDown()) {
-                        if (item.is(BzItemTags.HONEY_BUCKETS)) {
+                        if(item.getItem() == BzItems.BEE_BREAD.get()) {
+                            this.addEffect(new EffectInstance(Effects.HEAL, 1, 2, false, false, false));
+                            BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
+                            addFriendship(5);
+                            return ActionResultType.PASS;
+                        }
+                        else if (item.is(BzItemTags.HONEY_BUCKETS)) {
                             this.heal(this.getMaxHealth() - this.getHealth());
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
                             addFriendship(5);
@@ -319,18 +323,18 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
             // Taming Beehemoth
             else if (BzItemTags.BEE_FEEDING_ITEMS.contains(item)) {
                 if(getFriendship() >= 0) {
-                    int tameChance;
-                    if (item.is(BzItemTags.HONEY_BUCKETS)) {
-                        tameChance = 5;
+                    float tameChance;
+                    if (item.is(BzItemTags.HONEY_BUCKETS) || item.getItem() == BzItems.BEE_BREAD.get()) {
+                        tameChance = 0.25f;
                     }
                     else if (itemRL.getPath().contains("honey")) {
-                        tameChance = 10;
+                        tameChance = 0.1f;
                     }
                     else {
-                        tameChance = 15;
+                        tameChance = 0.067f;
                     }
 
-                    if (this.random.nextInt(tameChance) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, player)) {
+                    if (this.random.nextFloat() < tameChance && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, player)) {
                         this.tame(player);
                         setFriendship(6);
                         this.setOrderedToSit(true);
@@ -342,7 +346,11 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
                 }
                 else {
                     addFriendship(1);
-                    if (item.is(BzItemTags.HONEY_BUCKETS)) {
+                    if(item.getItem() == BzItems.BEE_BREAD.get()) {
+                        addFriendship(5);
+                        return ActionResultType.PASS;
+                    }
+                    else if (item.is(BzItemTags.HONEY_BUCKETS)) {
                         addFriendship(3);
                     }
                     else if (itemRL.getPath().contains("honey")) {
@@ -447,7 +455,7 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
         return BzSounds.BEEHEMOTH_HURT.get();
     }
 

@@ -31,6 +31,7 @@
   "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy.desc": "Rat Faced Boy - Honey Bee",
   "item.the_bumblezone.pollen_puff": "Pollen Puff",
   "item.the_bumblezone.honey_bucket": "Honey Bucket",
+  "item.the_bumblezone.bee_bread": "Bee Bread",
 
   "entity.the_bumblezone.honey_slime": "Slime de miel",
   "entity.the_bumblezone.beehemoth" : "Beehemoth",
@@ -48,12 +49,15 @@
 
   "effect.the_bumblezone.wrath_of_the_hive": "Ira de la colmena",
   "effect.the_bumblezone.protection_of_the_hive": "Protección de la colmena",
+  "effect.the_bumblezone.beenergized": "Beenergized",
 
   "subtitles.the_bumblezone.behemoth.hurt": "Beehemoth ferida",
   "subtitles.the_bumblezone.behemoth.dies": "Beehemoth morreu",
 
   "advancements.the_bumblezone.root.title": "The Buzzing Bumbling Bumblezone!",
   "advancements.the_bumblezone.root.description": "Enter The Bumblezone dimension by any means",
+  "advancements.the_bumblezone.beenergized_maxed.title": "Speedy Buzzy Bees!",
+  "advancements.the_bumblezone.beenergized_maxed.description": "By combining pollen and honey, create Bee Bread and feed it to bees until they are maximum speed! Zoom!",
   "advancements.the_bumblezone.tamed_beehemoth.title": "Bee Movie But It's 300% Larger",
   "advancements.the_bumblezone.tamed_beehemoth.description": "Tame a Beehemoth with buckets of honey!",
   "advancements.the_bumblezone.queen_beehemoth.title": "Regal Friends Till The Very End!",
