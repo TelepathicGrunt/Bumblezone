@@ -3,6 +3,8 @@
 ##### Misc:
 Updated Fabric API code usage to not use deprecated code to prevent blowing up in future fabric API updates. Hopefully.
 
+Switched to using FabricEntityTypeBuilder to not get "DataFixer" log spam for Bumblezone entities.
+
 
 ### **(V.3.4.0 Changes) (1.17.1 Minecraft)**
 

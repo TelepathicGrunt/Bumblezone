@@ -6,8 +6,10 @@ import com.telepathicgrunt.bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.bumblezone.mixin.entities.SpawnPlacementsAccessor;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
@@ -16,15 +18,14 @@ import net.minecraft.world.level.levelgen.Heightmap;
 
 public class BzEntities {
 
-    public static final EntityType<HoneySlimeEntity> HONEY_SLIME = EntityType.Builder.<HoneySlimeEntity>of(HoneySlimeEntity::new, MobCategory.CREATURE).sized(0.6F, 1.99F).clientTrackingRange(8).build("honey_slime");
-    public static final EntityType<BeehemothEntity> BEEHEMOTH = EntityType.Builder.<BeehemothEntity>of(BeehemothEntity::new, MobCategory.CREATURE).sized(1.2F, 1.2F).clientTrackingRange(16).build("beehemoth");
-    public static final EntityType<PollenPuffEntity> POLLEN_PUFF_ENTITY = EntityType.Builder.<PollenPuffEntity>of(PollenPuffEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build("pollen_puff");
+    public static final EntityType<HoneySlimeEntity> HONEY_SLIME = FabricEntityTypeBuilder.<HoneySlimeEntity>create(MobCategory.CREATURE, HoneySlimeEntity::new).dimensions(EntityDimensions.fixed(0.6F, 1.99F)).trackRangeChunks(8).build();
+    public static final EntityType<BeehemothEntity> BEEHEMOTH = FabricEntityTypeBuilder.create(MobCategory.CREATURE, BeehemothEntity::new).dimensions(EntityDimensions.fixed(1.2F, 1.2F)).trackRangeChunks(16).build();
+    public static final EntityType<PollenPuffEntity> POLLEN_PUFF_ENTITY = FabricEntityTypeBuilder.<PollenPuffEntity>create(MobCategory.MISC, PollenPuffEntity::new).dimensions(EntityDimensions.fixed(0.25F, 0.25F)).trackRangeChunks(4).trackedUpdateRate(10).build();
 
     public static void registerEntities() {
         Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "honey_slime"), HONEY_SLIME);
         Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "beehemoth"), BEEHEMOTH);
         Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "pollen_puff"), POLLEN_PUFF_ENTITY);
-
         registerEntitySpawnRestrictions();
         registerEntityAttributes();
     }
