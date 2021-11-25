@@ -1,11 +1,11 @@
 package com.telepathicgrunt.bumblezone;
 
+import com.telepathicgrunt.bumblezone.components.EntityComponent;
 import com.telepathicgrunt.bumblezone.components.FlyingSpeedComponent;
+import com.telepathicgrunt.bumblezone.components.IEntityComponent;
 import com.telepathicgrunt.bumblezone.components.IFlyingSpeedComponent;
 import com.telepathicgrunt.bumblezone.configs.BzConfig;
 import com.telepathicgrunt.bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.bumblezone.components.EntityComponent;
-import com.telepathicgrunt.bumblezone.components.IEntityComponent;
 import com.telepathicgrunt.bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.bumblezone.modcompat.ModChecker;

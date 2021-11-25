@@ -9,7 +9,6 @@ import com.telepathicgrunt.bumblezone.modinit.BzItems;
 import com.telepathicgrunt.bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.bumblezone.utils.GeneralUtils;
-import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;

@@ -2,7 +2,6 @@ package com.telepathicgrunt.bumblezone.modinit;
 
 import com.telepathicgrunt.bumblezone.advancements.*;
 import net.fabricmc.fabric.api.object.builder.v1.advancement.CriterionRegistry;
-import net.minecraft.advancements.CriteriaTriggers;
 
 public class BzCriterias {
     // CRITERIA TRIGGERS

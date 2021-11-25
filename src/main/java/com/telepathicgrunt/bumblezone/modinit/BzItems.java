@@ -8,7 +8,6 @@ import com.telepathicgrunt.bumblezone.items.BzSmartBucket;
 import com.telepathicgrunt.bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.bumblezone.items.PollenPuff;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;

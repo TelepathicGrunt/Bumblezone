@@ -3,7 +3,6 @@ package com.telepathicgrunt.bumblezone.items;
 import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;
-import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

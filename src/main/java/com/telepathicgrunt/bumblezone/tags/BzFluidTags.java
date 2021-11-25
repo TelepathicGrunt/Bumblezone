@@ -2,7 +2,6 @@ package com.telepathicgrunt.bumblezone.tags;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import net.fabricmc.fabric.api.tag.TagFactory;
-import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.level.material.Fluid;
