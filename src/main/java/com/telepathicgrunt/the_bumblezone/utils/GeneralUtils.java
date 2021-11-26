@@ -175,14 +175,9 @@ public class GeneralUtils {
         AtomicBoolean lotsOfHoney = new AtomicBoolean(false);
         itemstack.getCapability(FLUID_HANDLER_ITEM_CAPABILITY).ifPresent(
             cap -> {
-                for(int tankIndex = 0; tankIndex < cap.getTanks(); tankIndex++) {
-                    FluidStack fluidStack = cap.getFluidInTank(tankIndex);
-                    // Cannot do simulated drain because bucket items require an exact 1000 drain and other people could make items
-                    // that require a drain of 1500 which would make a drain of 1000 fail. This gets true amount of fluid always.
-                    if(fluidStack.getFluid().is(BzFluidTags.HONEY_FLUID) && fluidStack.getAmount() >= 1000) {
-                        lotsOfHoney.set(true);
-                        break;
-                    }
+                FluidStack fluidStack = cap.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
+                if(fluidStack.getFluid().is(BzFluidTags.HONEY_FLUID) && fluidStack.getAmount() >= 1000) {
+                    lotsOfHoney.set(true);
                 }
             }
         );
