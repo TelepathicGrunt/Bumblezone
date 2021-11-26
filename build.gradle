@@ -113,6 +113,8 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:cyclic-239286:3484473")
     //runtimeOnly fg.deobf("curse.maven:quark-243121:3490981")
     //runtimeOnly fg.deobf("curse.maven:autoreglib-250363:3326041")
+    runtimeOnly fg.deobf("curse.maven:inspirations-284007:3414517")
+    runtimeOnly fg.deobf("curse.maven:mantle-74924:3482897")
 
     compileOnly fg.deobf("noobanidus.mods.carrierbees:carrierbees:${carrierbees_version}")
     compileOnly fg.deobf("com.resourcefulbees:ResourcefulBees:${resourcefulbees_version}")

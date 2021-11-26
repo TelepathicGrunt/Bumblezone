@@ -37,7 +37,7 @@ public class BeeInteractivity {
         ResourceLocation itemRL = itemstack.getItem().getRegistryName();
 
         // Disallow all non-tagged items from being fed to bees
-        if (itemRL == null || !BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
+        if (itemRL == null || !(BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()) || GeneralUtils.hasHoneyFluid(itemstack)))
             return ActionResultType.PASS;
 
         boolean removedWrath;
@@ -55,7 +55,7 @@ public class BeeInteractivity {
             return ActionResultType.PASS;
         }
 
-        if (itemstack.getItem().is(BzItemTags.HONEY_BUCKETS)) {
+        if (itemstack.getItem().is(BzItemTags.HONEY_BUCKETS) || GeneralUtils.hasLargeAmountOfHoneyFluid(itemstack)) {
             beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
             removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);
             if (beeEntity.isBaby()) {

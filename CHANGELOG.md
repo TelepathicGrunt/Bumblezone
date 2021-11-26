@@ -1,3 +1,15 @@
+### **(V.3.2.1 Changes) (1.16.5 Minecraft)**
+
+##### Mod Compat:
+Added compat with Inspirations's honey buckets so it can be fed to bees and stuff.
+ Inspirations mod: https://www.curseforge.com/minecraft/mc-mods/inspirations
+
+Added allowHoneyFluidTanksFeedingCompat config option that works alongside the bee_feeding item tag.
+ Any item with a Forge fluid capability attached and has a fluid tagged as forge:fluids/honey inside, will now be able
+ to be fed to bees and have all the same behavior as bee_feeding item tag. This works for items that are not in that tag too.
+ The config is in the mod compat config file and is set to true by default.
+
+
 ### **(V.3.2.0 Changes) (1.16.5 Minecraft)**
 
 ##### Items:

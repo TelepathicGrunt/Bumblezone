@@ -1,8 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
 import com.mojang.datafixers.util.Pair;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DefaultDispenseItemBehaviorInvoker;
 import com.telepathicgrunt.the_bumblezone.mixin.world.BiomeGenerationSettingsAccessor;
+import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IDispenseItemBehavior;
@@ -17,10 +20,17 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
 public class GeneralUtils {
@@ -147,5 +157,35 @@ public class GeneralUtils {
             // drops result item if inventory is full
             playerEntity.drop(itemToGive, false);
         }
+    }
+
+    //////////////////////////////////////////////
+    @CapabilityInject(IFluidHandlerItem.class)
+    static Capability<IFluidHandlerItem> FLUID_HANDLER_ITEM_CAPABILITY = null;
+
+    public static boolean hasHoneyFluid(ItemStack itemstack) {
+        return BzModCompatibilityConfigs.allowHoneyFluidTanksFeedingCompat.get() &&
+                FluidUtil.getFluidContained(itemstack).orElse(FluidStack.EMPTY).getFluid().is(BzFluidTags.HONEY_FLUID);
+    }
+
+    public static boolean hasLargeAmountOfHoneyFluid(ItemStack itemstack) {
+        if(!BzModCompatibilityConfigs.allowHoneyFluidTanksFeedingCompat.get())
+            return false;
+
+        AtomicBoolean lotsOfHoney = new AtomicBoolean(false);
+        itemstack.getCapability(FLUID_HANDLER_ITEM_CAPABILITY).ifPresent(
+            cap -> {
+                for(int tankIndex = 0; tankIndex < cap.getTanks(); tankIndex++) {
+                    FluidStack fluidStack = cap.getFluidInTank(tankIndex);
+                    // Cannot do simulated drain because bucket items require an exact 1000 drain and other people could make items
+                    // that require a drain of 1500 which would make a drain of 1000 fail. This gets true amount of fluid always.
+                    if(fluidStack.getFluid().is(BzFluidTags.HONEY_FLUID) && fluidStack.getAmount() >= 1000) {
+                        lotsOfHoney.set(true);
+                        break;
+                    }
+                }
+            }
+        );
+        return lotsOfHoney.get();
     }
 }

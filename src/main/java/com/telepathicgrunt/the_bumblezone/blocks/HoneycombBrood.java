@@ -131,7 +131,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         /*
          * Player is feeding larva
          */
-        else if (itemstack.getItem().is(BzItemTags.BEE_FEEDING_ITEMS)) {
+        else if (itemstack.getItem().is(BzItemTags.BEE_FEEDING_ITEMS) || GeneralUtils.hasHoneyFluid(itemstack)) {
             if (!world.isClientSide()) {
                 boolean successfulGrowth = false;
 
@@ -159,7 +159,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                     }
                     else {
                         int newStage = stage + 1;
-                        if (itemstack.getItem().is(BzItemTags.HONEY_BUCKETS)) {
+                        if (itemstack.getItem().is(BzItemTags.HONEY_BUCKETS) || GeneralUtils.hasLargeAmountOfHoneyFluid(itemstack)) {
                             newStage = 3;
                             if (!world.isClientSide()) {
                                 Direction facing = thisBlockState.getValue(FACING).getOpposite();

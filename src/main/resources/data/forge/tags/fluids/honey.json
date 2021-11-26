@@ -2,6 +2,14 @@
   "replace": false,
   "values": [
     "the_bumblezone:honey_fluid_still",
-    "the_bumblezone:honey_fluid_flowing"
+    "the_bumblezone:honey_fluid_flowing",
+    {
+      "id": "inspirations:honey",
+      "required": false
+    },
+    {
+      "id": "inspirations:flowing_honey",
+      "required": false
+    }
   ]
 }

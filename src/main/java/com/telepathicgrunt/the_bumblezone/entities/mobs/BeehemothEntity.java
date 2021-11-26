@@ -239,8 +239,8 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     }
 
     public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getItemInHand(hand);
-        Item item = stack.getItem();
+        ItemStack itemstack = player.getItemInHand(hand);
+        Item item = itemstack.getItem();
         ResourceLocation itemRL = item.getRegistryName();
         if (this.level.isClientSide) {
             if (this.isTame() && this.isOwnedBy(player)) {
@@ -254,14 +254,14 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
             // Healing and befriending Beehemoth
             if (this.isTame()) {
                 if (this.isOwnedBy(player)) {
-                    if (BzItemTags.BEE_FEEDING_ITEMS.contains(item) && !player.isShiftKeyDown()) {
+                    if ((BzItemTags.BEE_FEEDING_ITEMS.contains(item) || GeneralUtils.hasHoneyFluid(itemstack)) && !player.isShiftKeyDown()) {
                         if(item.getItem() == BzItems.BEE_BREAD.get()) {
                             this.addEffect(new EffectInstance(Effects.HEAL, 1, 2, false, false, false));
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
                             addFriendship(5);
                             return ActionResultType.PASS;
                         }
-                        else if (item.is(BzItemTags.HONEY_BUCKETS)) {
+                        else if (item.is(BzItemTags.HONEY_BUCKETS) || GeneralUtils.hasLargeAmountOfHoneyFluid(itemstack)) {
                             this.heal(this.getMaxHealth() - this.getHealth());
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
                             addFriendship(5);
@@ -279,7 +279,7 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
 
                         if (!player.isCreative()) {
                             // remove current item
-                            stack.shrink(1);
+                            itemstack.shrink(1);
                             GeneralUtils.givePlayerItem(player, hand, new ItemStack(item), true);
                         }
 
@@ -288,13 +288,13 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
                     }
 
                     if (item == Items.SADDLE && !isSaddled()) {
-                        this.usePlayerItem(player, stack);
+                        this.usePlayerItem(player, itemstack);
                         this.setSaddled(true);
                         return ActionResultType.CONSUME;
                     }
 
                     if(player.isShiftKeyDown()) {
-                        if (isSaddled() && this.isInSittingPose() && stack.isEmpty()) {
+                        if (isSaddled() && this.isInSittingPose() && itemstack.isEmpty()) {
                             setSaddled(false);
                             ItemStack saddle = new ItemStack(Items.SADDLE);
                             if (player.addItem(saddle)) {
@@ -321,10 +321,10 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
                 }
             }
             // Taming Beehemoth
-            else if (BzItemTags.BEE_FEEDING_ITEMS.contains(item)) {
+            else if (BzItemTags.BEE_FEEDING_ITEMS.contains(item) || GeneralUtils.hasHoneyFluid(itemstack)) {
                 if(getFriendship() >= 0) {
                     float tameChance;
-                    if (item.is(BzItemTags.HONEY_BUCKETS) || item.getItem() == BzItems.BEE_BREAD.get()) {
+                    if (item.is(BzItemTags.HONEY_BUCKETS) || item.getItem() == BzItems.BEE_BREAD.get() || GeneralUtils.hasLargeAmountOfHoneyFluid(itemstack)) {
                         tameChance = 0.25f;
                     }
                     else if (itemRL.getPath().contains("honey")) {
@@ -363,7 +363,7 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
 
                 if (!player.isCreative()) {
                     // remove current item
-                    stack.shrink(1);
+                    itemstack.shrink(1);
                     GeneralUtils.givePlayerItem(player, hand, new ItemStack(item), true);
                 }
                 this.setPersistenceRequired();

@@ -12,6 +12,10 @@
     {
       "id": "cyclic:honey_bucket",
       "required": false
+    },
+    {
+      "id": "inspirations:honey_bucket",
+      "required": false
     }
   ]
 }
