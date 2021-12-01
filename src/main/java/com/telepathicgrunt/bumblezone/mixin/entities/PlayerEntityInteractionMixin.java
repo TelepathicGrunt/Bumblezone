@@ -40,10 +40,10 @@ public class PlayerEntityInteractionMixin {
     @Inject(method = "getDestroySpeed(Lnet/minecraft/world/level/block/state/BlockState;)F",
             at = @At(value = "RETURN"), cancellable = true)
     private void thebumblezone_blockBreakingSpeed(BlockState block, CallbackInfoReturnable<Float> cir) {
-        if(BzEnchantments.COMB_CUTTER.getTargetBlocks().contains(block.getBlock())){
+        if(BzEnchantments.COMB_CUTTER.getTargetBlocks().contains(block.getBlock())) {
             cir.setReturnValue(CombCutterEnchantment.attemptFasterMining(cir.getReturnValue(), false, ((Player) (Object) this)));
         }
-        else if(BzEnchantments.COMB_CUTTER.getLesserTargetBlocks().contains(block.getBlock())){
+        else if(BzEnchantments.COMB_CUTTER.getLesserTargetBlocks().contains(block.getBlock())) {
             cir.setReturnValue(CombCutterEnchantment.attemptFasterMining(cir.getReturnValue(), true, ((Player) (Object) this)));
         }
     }

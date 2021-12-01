@@ -30,12 +30,12 @@ public class BzEntities {
         registerEntityAttributes();
     }
 
-    private static void registerEntitySpawnRestrictions(){
+    private static void registerEntitySpawnRestrictions() {
         SpawnPlacementsAccessor.thebumblezone_invokeRegister(HONEY_SLIME, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
         SpawnPlacementsAccessor.thebumblezone_invokeRegister(BEEHEMOTH, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BeehemothEntity::checkMobSpawnRules);
     }
 
-    private static void registerEntityAttributes(){
+    private static void registerEntityAttributes() {
         FabricDefaultAttributeRegistry.register(HONEY_SLIME, HoneySlimeEntity.getAttributeBuilder());
         FabricDefaultAttributeRegistry.register(BEEHEMOTH, BeehemothEntity.getAttributeBuilder());
     }

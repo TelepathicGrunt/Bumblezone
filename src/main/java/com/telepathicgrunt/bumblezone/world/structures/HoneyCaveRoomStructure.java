@@ -1,50 +1,47 @@
 package com.telepathicgrunt.bumblezone.world.structures;
 
 import com.mojang.serialization.Codec;
-import com.telepathicgrunt.bumblezone.Bumblezone;
+import com.telepathicgrunt.bumblezone.mixin.JigsawConfigurationAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.Vec3i;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.structures.JigsawPlacement;
-import net.minecraft.world.level.levelgen.structure.NoiseAffectingStructureStart;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
-import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.PostPlacementProcessor;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 
-public class HoneyCaveRoomStructure extends StructureFeature<NoneFeatureConfiguration> {
+import java.util.Optional;
 
-    public HoneyCaveRoomStructure(Codec<NoneFeatureConfiguration> codec) {
-        super(codec);
+public class HoneyCaveRoomStructure extends StructureFeature<JigsawConfiguration> {
+
+    public HoneyCaveRoomStructure(Codec<JigsawConfiguration> codec) {
+        super(codec, (context) -> {
+                    if (!isFeatureChunk(context)) {
+                        return Optional.empty();
+                    }
+                    else {
+                        return generatePieces(context);
+                    }
+                },
+                PostPlacementProcessor.NONE);
     }
 
-    @Override
-    public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
-        return Start::new;
-    }
+    protected static boolean isFeatureChunk(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
+        BlockPos centerPos = new BlockPos(context.chunkPos().x, 0,context.chunkPos().z);
 
-    @Override
-    public boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeProvider, long seed, WorldgenRandom random, ChunkPos chunkPos1, Biome biome, ChunkPos chunkPos2, NoneFeatureConfiguration config, LevelHeightAccessor heightLimitView) {
-        BlockPos centerPos = new BlockPos(chunkPos1.x, 0, chunkPos1.z);
-
-        WorldgenRandom positionedRandom = new WorldgenRandom(seed + (chunkPos1.x * (chunkPos1.z * 17L)));
-        int height = chunkGenerator.getSeaLevel() + positionedRandom.nextInt(Math.max(chunkGenerator.getGenDepth() - (chunkGenerator.getSeaLevel() + 50), 1));
+        WorldgenRandom positionedRandom = new WorldgenRandom(new LegacyRandomSource(context.seed() + (context.chunkPos().x * (context.chunkPos().z * 17L))));
+        int height = context.chunkGenerator().getSeaLevel() + positionedRandom.nextInt(Math.max(context.chunkGenerator().getGenDepth() - (context.chunkGenerator().getSeaLevel() + 50), 1));
         centerPos = centerPos.above(height);
-        return validSpot(chunkGenerator, centerPos, heightLimitView);
+        return validSpot(context.chunkGenerator(), centerPos, context.heightAccessor());
     }
 
     private static boolean validSpot(ChunkGenerator chunkGenerator, BlockPos centerPos, LevelHeightAccessor heightLimitView) {
@@ -55,9 +52,9 @@ public class HoneyCaveRoomStructure extends StructureFeature<NoneFeatureConfigur
                 mutable.set(centerPos).move(x, 0, z);
                 NoiseColumn columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView);
                 moveMutable(mutable, Direction.UP, 0, centerPos);
-                BlockState state = columnOfBlocks.getBlockState(mutable);
+                BlockState state = columnOfBlocks.getBlock(mutable.getY());
                 moveMutable(mutable, Direction.UP, 15, centerPos);
-                BlockState aboveState = columnOfBlocks.getBlockState(mutable);
+                BlockState aboveState = columnOfBlocks.getBlock(mutable.getY());
                 if(state.isAir() || !state.getFluidState().isEmpty() ||
                     aboveState.isAir() || !aboveState.getFluidState().isEmpty())
                 {
@@ -86,55 +83,16 @@ public class HoneyCaveRoomStructure extends StructureFeature<NoneFeatureConfigur
         }
     }
 
+    public static Optional<PieceGenerator<JigsawConfiguration>> generatePieces(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
+        WorldgenRandom positionedRandom = new WorldgenRandom(new LegacyRandomSource(context.seed() + (context.chunkPos().x * (context.chunkPos().z * 17L))));
+        int height = context.chunkGenerator().getSeaLevel() + positionedRandom.nextInt(Math.max(context.chunkGenerator().getGenDepth() - (context.chunkGenerator().getSeaLevel() + 50), 1));
+        BlockPos centerPos = new BlockPos(context.chunkPos().getMinBlockX(), height, context.chunkPos().getMinBlockZ());
+        ((JigsawConfigurationAccessor)context.config()).setMaxDepth(12);
+        return JigsawPlacement.addPieces(context, PoolElementStructurePiece::new, centerPos, false, false);
+    }
+
     @Override
     public GenerationStep.Decoration step() {
         return GenerationStep.Decoration.LOCAL_MODIFICATIONS;
-    }
-
-    /**
-     * Handles calling up the structure's pieces class and height that structure will spawn at.
-     */
-    public static class Start extends NoiseAffectingStructureStart<NoneFeatureConfiguration> {
-
-        private final long seed;
-
-        public Start(StructureFeature<NoneFeatureConfiguration> structureIn, ChunkPos pos, int referenceIn, long seedIn) {
-            super(structureIn, pos, referenceIn, seedIn);
-            seed = seedIn;
-        }
-
-        @Override
-        public void generatePieces(RegistryAccess dynamicRegistryManager, ChunkGenerator chunkGenerator, StructureManager templateManagerIn, ChunkPos pos, Biome biomeIn, NoneFeatureConfiguration config, LevelHeightAccessor heightLimitView) {
-
-            WorldgenRandom positionedRandom = new WorldgenRandom(seed + (pos.x * (pos.z * 17L)));
-            int height = chunkGenerator.getSeaLevel() + positionedRandom.nextInt(Math.max(chunkGenerator.getGenDepth() - (chunkGenerator.getSeaLevel() + 50), 1));
-            BlockPos centerPos = new BlockPos(pos.getMinBlockX(), height, pos.getMinBlockZ());
-
-            JigsawPlacement.addPieces(
-                    dynamicRegistryManager,
-                    new JigsawConfiguration(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(new ResourceLocation(Bumblezone.MODID, "honey_cave_room")), 12),
-                    PoolElementStructurePiece::new,
-                    chunkGenerator,
-                    templateManagerIn,
-                    centerPos,
-                    this,
-                    this.random,
-                    false,
-                    false,
-                    heightLimitView);
-
-
-            Vec3i structureCenter = this.pieces.get(0).getBoundingBox().getCenter();
-            int xOffset = centerPos.getX() - structureCenter.getX();
-            int zOffset = centerPos.getZ() - structureCenter.getZ();
-            for(StructurePiece structurePiece : this.pieces){
-                // centers the whole structure to structureCenter
-                structurePiece.move(xOffset, 0, zOffset);
-            }
-
-            // Sets the bounds of the structure once you are finished.
-            this.createBoundingBox();
-        }
-
     }
 }

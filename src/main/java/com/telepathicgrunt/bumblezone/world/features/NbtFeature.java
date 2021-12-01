@@ -33,7 +33,7 @@ public class NbtFeature extends Feature<NbtFeatureConfig> {
 
         StructureManager structureManager = context.level().getLevel().getStructureManager();
         StructureTemplate template = structureManager.getOrCreate(nbtRL);
-        if(template == null){
+        if(template == null) {
             Bumblezone.LOGGER.error("Identifier to the specified nbt file was not found! : {}", nbtRL);
             return false;
         }

@@ -17,18 +17,18 @@ public class MusicHandler {
     private static SoundInstance ANGRY_BEE_MUSIC = null;
     private static final ResourceLocation BIOME_MUSIC = new ResourceLocation(Bumblezone.MODID, "biome_music");
 
-    public static void playAngryBeeMusic(Player entity){
+    public static void playAngryBeeMusic(Player entity) {
         Minecraft minecraftClient = Minecraft.getInstance();
-        if(!entity.isCreative() && entity == minecraftClient.player && !minecraftClient.getSoundManager().isActive(ANGRY_BEE_MUSIC)){
+        if(!entity.isCreative() && entity == minecraftClient.player && !minecraftClient.getSoundManager().isActive(ANGRY_BEE_MUSIC)) {
             ANGRY_BEE_MUSIC = SimpleSoundInstance.forMusic(BzSounds.ANGERED_BEES);
             minecraftClient.getSoundManager().play(ANGRY_BEE_MUSIC);
         }
         minecraftClient.getSoundManager().stop(BIOME_MUSIC, SoundSource.MUSIC);
     }
 
-    public static void stopAngryBeeMusic(Player entity){
+    public static void stopAngryBeeMusic(Player entity) {
         Minecraft minecraftClient = Minecraft.getInstance();
-        if(entity == minecraftClient.player && ANGRY_BEE_MUSIC != null){
+        if(entity == minecraftClient.player && ANGRY_BEE_MUSIC != null) {
             minecraftClient.getSoundManager().stop(ANGRY_BEE_MUSIC);
         }
     }

@@ -58,7 +58,7 @@ public class BzConfiguredFeatures {
             )).decorated(BzPlacements.BEE_DUNGEON_PLACER.configured(DecoratorConfiguration.NONE));
 
 
-    public static void registerConfiguredFeatures(){
+    public static void registerConfiguredFeatures() {
         Registry<ConfiguredFeature<?, ?>> registry = BuiltinRegistries.CONFIGURED_FEATURE;
      
         Registry.register(registry, new ResourceLocation(Bumblezone.MODID, "sugar_waterfall_high"), SUGAR_WATERFALL_HIGH);

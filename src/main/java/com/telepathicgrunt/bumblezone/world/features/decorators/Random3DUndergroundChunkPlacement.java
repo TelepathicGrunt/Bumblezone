@@ -32,7 +32,7 @@ public class Random3DUndergroundChunkPlacement extends FeatureDecorator<CountCon
             // Nice quick way to only generate clusters of crystals within a chunk without
             // going over chunk edges.
             int attempts = 0;
-            for(; attempts < 8; attempts++){
+            for(; attempts < 8; attempts++) {
                 mutableBlockPos.set(pos.getX(), 0, pos.getZ())
                         .move(random.nextInt(4) + 8,
                                 random.nextInt(253) + 1,

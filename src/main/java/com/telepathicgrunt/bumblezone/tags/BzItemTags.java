@@ -8,7 +8,7 @@ import net.minecraft.world.item.Item;
 
 public class BzItemTags {
     // Sole purpose is to initalize the tag wrappers at mod startup
-    public static void initTags(){}
+    public static void initTags() {}
 
     public static final Tag<Item> TURN_SLIME_TO_HONEY_SLIME = TagFactory.ITEM.create(new ResourceLocation(Bumblezone.MODID, "turn_slime_to_honey_slime"));
     public static final Tag<Item> HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS = TagFactory.ITEM.create(new ResourceLocation(Bumblezone.MODID, "honey_crystal_shield_repair_items"));

@@ -18,7 +18,7 @@ public class BzBiomeScaleLayer implements CastleTransformer {
         int hivePillarId = BzBiomeProvider.LAYERS_BIOME_REGISTRY.getId(
                 BzBiomeProvider.LAYERS_BIOME_REGISTRY.get(this.biomeToExpand));
 
-        if(center != hivePillarId){
+        if(center != hivePillarId) {
             boolean borderingHivePillar = false;
 
             if((n == hivePillarId || e == hivePillarId) ||

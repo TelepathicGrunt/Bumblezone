@@ -30,11 +30,11 @@ public class CombCutterEnchantment extends Enchantment {
         super(Enchantment.Rarity.RARE, EnchantmentCategory.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
-    public Set<Block> getTargetBlocks(){
+    public Set<Block> getTargetBlocks() {
         return TARGET_BLOCKS.getOrCompute(() -> {
             Set<Block> validBlocks = new HashSet<>();
             Registry.BLOCK.entrySet().forEach(entry ->{
-                if(entry.getKey().location().getPath().contains("comb")){
+                if(entry.getKey().location().getPath().contains("comb")) {
                     validBlocks.add(entry.getValue());
                 }
             });
@@ -42,12 +42,12 @@ public class CombCutterEnchantment extends Enchantment {
         });
     }
 
-    public Set<Block> getLesserTargetBlocks(){
+    public Set<Block> getLesserTargetBlocks() {
         return LESSER_TARGET_BLOCKS.getOrCompute(() -> {
             Set<Block> validBlocks = new HashSet<>();
             Registry.BLOCK.entrySet().forEach(entry ->{
                 String path = entry.getKey().location().getPath();
-                if(entry.getValue() instanceof BeehiveBlock || path.contains("hive") || path.contains("nest") || (path.contains("wax") && !path.contains("waxed"))){
+                if(entry.getValue() instanceof BeehiveBlock || path.contains("hive") || path.contains("nest") || (path.contains("wax") && !path.contains("waxed"))) {
                     validBlocks.add(entry.getValue());
                 }
             });
@@ -55,7 +55,7 @@ public class CombCutterEnchantment extends Enchantment {
         });
     }
 
-    public static float attemptFasterMining(float breakSpeed, boolean lesserTarget, Player playerEntity){
+    public static float attemptFasterMining(float breakSpeed, boolean lesserTarget, Player playerEntity) {
         ItemStack itemStack = playerEntity.getMainHandItem();
         int equipmentLevel = EnchantmentHelper.getEnchantmentLevel(BzEnchantments.COMB_CUTTER, playerEntity);
         if (equipmentLevel > 0 && !itemStack.isEmpty()) {
@@ -64,7 +64,7 @@ public class CombCutterEnchantment extends Enchantment {
         return breakSpeed;
     }
 
-    public static void increasedCombDrops(Player playerEntity, Level world, BlockPos pos){
+    public static void increasedCombDrops(Player playerEntity, Level world, BlockPos pos) {
         ItemStack itemStack = playerEntity.getMainHandItem();
         int equipmentLevel = EnchantmentHelper.getEnchantmentLevel(BzEnchantments.COMB_CUTTER, playerEntity);
         if (equipmentLevel > 0 && !itemStack.isEmpty()) {

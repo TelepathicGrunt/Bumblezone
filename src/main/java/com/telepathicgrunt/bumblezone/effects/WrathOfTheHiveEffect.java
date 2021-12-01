@@ -64,17 +64,17 @@ public class WrathOfTheHiveEffect extends MobEffect {
         if (amplifier >= 2) {
             unBEElievablyHighAggression(world, entity);
 
-            if(GeneralUtils.getEntityCountInBz() < Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity * 3.0f){
+            if(GeneralUtils.getEntityCountInBz() < Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity * 3.0f) {
                 // Spawn bees when high wrath effect.
                 // Must be very low as this method is fired every tick for status effects.
                 // We don't want to spawn millions of bees
-                if(!world.isClientSide() && world.random.nextFloat() <= 0.0045f){
+                if(!world.isClientSide() && world.random.nextFloat() <= 0.0045f) {
                     // Grab a nearby air materialposition not in the player's field of view
                     BlockPos spawnBlockPos = new BlockPos(
                             entity.getX() + (world.random.nextInt(30) + 10) * (world.random.nextBoolean() ? 1 : -1),
                             entity.getY() + (world.random.nextInt(30) + 10) * (world.random.nextBoolean() ? 1 : -1),
                             entity.getZ() + (world.random.nextInt(30) + 10) * (world.random.nextBoolean() ? 1 : -1));
-                    if(world.getBlockState(spawnBlockPos).getMaterial() != Material.AIR){
+                    if(world.getBlockState(spawnBlockPos).getMaterial() != Material.AIR) {
                         return;
                     }
 
@@ -105,7 +105,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
         }
 
         // makes brood blocks grow faster near wrath of the hive entities.
-        if(!world.isClientSide()){
+        if(!world.isClientSide()) {
             PoiManager pointofinterestmanager = ((ServerLevel)world).getPoiManager();
             List<PoiRecord> poiInRange = pointofinterestmanager.getInSquare(
                     (pointOfInterestType) -> pointOfInterestType == BzPOI.BROOD_BLOCK_POI,
@@ -116,11 +116,11 @@ public class WrathOfTheHiveEffect extends MobEffect {
 
             float chanceofGrowth = 0.001f;
             if(poiInRange.size() != 0) {
-                for(int index = poiInRange.size() - 1; index >= 0; index--){
+                for(int index = poiInRange.size() - 1; index >= 0; index--) {
                     PoiRecord poi = poiInRange.remove(index);
-                    if(world.random.nextFloat() < chanceofGrowth){
+                    if(world.random.nextFloat() < chanceofGrowth) {
                         BlockState state = world.getBlockState(poi.getPos());
-                        if(state.getBlock() instanceof HoneycombBrood){
+                        if(state.getBlock() instanceof HoneycombBrood) {
                             state.tick((ServerLevel) world, poi.getPos(), world.random);
                         }
                     }
@@ -165,13 +165,13 @@ public class WrathOfTheHiveEffect extends MobEffect {
         List<? extends Mob> beeList = world.getNearbyEntities(entityToFind, sightMode, livingEntity, livingEntity.getBoundingBox().inflate(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius));
         for (Mob bee : beeList) {
             bee.setTarget(livingEntity);
-            if(bee instanceof NeutralMob){
+            if(bee instanceof NeutralMob) {
                 ((NeutralMob)bee).setRemainingPersistentAngerTime(20);
                 ((NeutralMob)bee).setPersistentAngerTarget(livingEntity.getUUID());
             }
 
             MobEffectInstance effect = livingEntity.getEffect(BzEffects.WRATH_OF_THE_HIVE);
-            if(effect != null){
+            if(effect != null) {
                 int leftoverDuration = effect.getDuration();
 
                 bee.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, leftoverDuration, speed, false, false));
@@ -203,7 +203,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
 
     // Don't remove wrath effect from mobs that bees are to always be angry at (bears, non-bee insects)
     public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
-        if(BeeAggression.doesBeesHateEntity(entity)){
+        if(BeeAggression.doesBeesHateEntity(entity)) {
             //refresh the bee anger timer
             entity.addEffect(new MobEffectInstance(
                     BzEffects.WRATH_OF_THE_HIVE,

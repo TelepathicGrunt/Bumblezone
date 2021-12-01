@@ -3,6 +3,7 @@ package com.telepathicgrunt.bumblezone.world.processors;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -22,8 +23,7 @@ public class FluidTickProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
         BlockState structureState = structureBlockInfoWorld.state;
         if(!structureState.getFluidState().isEmpty() && structureBlockInfoWorld.pos.getY() > worldView.getMinBuildHeight() && structureBlockInfoWorld.pos.getY() < worldView.getMaxBuildHeight()) {
-            ChunkAccess chunk = worldView.getChunk(structureBlockInfoWorld.pos);
-            chunk.getLiquidTicks().scheduleTick(structureBlockInfoWorld.pos, structureState.getFluidState().getType(), 0);
+            ((LevelAccessor)worldView).scheduleTick(structureBlockInfoWorld.pos, structureState.getFluidState().getType(), 0);
         }
         return structureBlockInfoWorld;
     }

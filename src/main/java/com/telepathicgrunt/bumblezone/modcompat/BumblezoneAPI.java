@@ -29,7 +29,7 @@ public class BumblezoneAPI {
      * Please only call this for throwables that teleport the entity like Enderpearls.
      * @return - Whether the projectile hit a beehive or bee nest.
      */
-    public static boolean runEnderpearlImpact(HitResult hitResult, Projectile pearlEntity){
+    public static boolean runEnderpearlImpact(HitResult hitResult, Projectile pearlEntity) {
         return EntityTeleportationHookup.runEnderpearlImpact(hitResult, pearlEntity);
     }
 

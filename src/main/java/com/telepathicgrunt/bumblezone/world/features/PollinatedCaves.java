@@ -50,7 +50,7 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
                             mutableBlockPos.getZ() * 0.019D,
                             mutableBlockPos.getY() * 0.038D);
 
-                    if(noise1 >= 0.0360555127546399D){
+                    if(noise1 >= 0.0360555127546399D) {
                         continue;
                     }
 
@@ -76,7 +76,7 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
         if(!currentState.isAir() && currentState.getFluidState().isEmpty() && !currentState.is(BzBlocks.PILE_OF_POLLEN)) {
             // varies the surface of the cave surface
             if(finalNoise > 0.0105f) {
-                if((noise * 3) % 2 < 0.35D){
+                if((noise * 3) % 2 < 0.35D) {
                     world.setBlock(position, BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(), 3);
                 }
                 return;
@@ -98,10 +98,10 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
 
             if(!belowState.isAir() && belowState.getFluidState().isEmpty() && belowState.getMaterial().blocksMotion()) {
                 world.setBlock(position, BzBlocks.PILE_OF_POLLEN.defaultBlockState().setValue(PileOfPollen.LAYERS, (int)Math.max(Math.min((noise + 1D) * 3D, 8), 1)), 3);
-                world.getBlockTicks().scheduleTick(position, BzBlocks.PILE_OF_POLLEN, 0);
+                world.scheduleTick(position, BzBlocks.PILE_OF_POLLEN, 0);
 
                 int carveHeight = Math.abs((int) ((noise * 1000) % 0.8D)) * 2 + 1;
-                for(int i = 0; i < carveHeight; i++){
+                for(int i = 0; i < carveHeight; i++) {
                     position.move(Direction.UP);
                     // cannot carve next to fluids
                     for(Direction direction : Direction.values()) {

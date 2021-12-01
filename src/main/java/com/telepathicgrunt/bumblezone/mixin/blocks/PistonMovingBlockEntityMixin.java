@@ -30,7 +30,7 @@ public class PistonMovingBlockEntityMixin {
                                                              AABB box, List<Entity> list, List<AABB> list1, boolean isSlimeBlock,
                                                              Iterator<Entity> iterator, Entity entity)
     {
-        if(entity instanceof LivingEntity && !entity.level.isClientSide()){
+        if(entity instanceof LivingEntity && !entity.level.isClientSide()) {
             EntityTeleportationHookup.runPistonPushed(direction, (LivingEntity) entity);
         }
     }

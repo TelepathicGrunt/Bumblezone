@@ -46,14 +46,14 @@ public class HoneyFluidBlock extends LiquidBlock {
     @Override
     public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         if (this.neighboringFluidInteractions(world, pos)) {
-            world.getLiquidTicks().scheduleTick(pos, state.getFluidState().getType(), this.fluid.getTickDelay(world));
+            world.scheduleTick(pos, state.getFluidState().getType(), this.fluid.getTickDelay(world));
         }
     }
 
     @Override
     public void onPlace(BlockState blockState, Level world, BlockPos blockPos, BlockState previousBlockState, boolean notify) {
         if (this.neighboringFluidInteractions(world, blockPos)) {
-            world.getLiquidTicks().scheduleTick(blockPos, blockState.getFluidState().getType(), this.fluid.getTickDelay(world));
+            world.scheduleTick(blockPos, blockState.getFluidState().getType(), this.fluid.getTickDelay(world));
         }
     }
 
@@ -125,7 +125,7 @@ public class HoneyFluidBlock extends LiquidBlock {
                 }
             }
         }
-        else if(Math.abs(entity.getDeltaMovement().y()) > verticalSpeedDeltaLimit && entity.fallDistance <= 0.2D){
+        else if(Math.abs(entity.getDeltaMovement().y()) > verticalSpeedDeltaLimit && entity.fallDistance <= 0.2D) {
             Vec3 vector3d = entity.getDeltaMovement();
             entity.setDeltaMovement(new Vec3(vector3d.x(), Math.copySign(verticalSpeedDeltaLimit, vector3d.y()), vector3d.z()));
         }

@@ -12,6 +12,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
@@ -32,7 +33,7 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
         BlockState blockState = structureBlockInfoWorld.state;
         BlockPos worldPos = structureBlockInfoWorld.pos;
-        Random random = new WorldgenRandom();
+        Random random = new WorldgenRandom(new LegacyRandomSource(0));
         random.setSeed(worldPos.asLong() * worldPos.getY());
 
         // placing altar blocks
@@ -41,11 +42,11 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
             BlockState belowBlock = worldView.getChunk(worldPos).getBlockState(worldPos);
 
             //altar blocks cannot be placed on air
-            if(belowBlock.isAir()){
+            if(belowBlock.isAir()) {
                 blockState = Blocks.CAVE_AIR.defaultBlockState();
             }
             else{
-                switch (metadata){
+                switch (metadata) {
                     case "center": {
                         if (random.nextFloat() < 0.6f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.defaultBlockState();
@@ -57,10 +58,10 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                             blockState = blockState.setValue(CandleBlock.LIT, false);
                         }
                         /*
-                        else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.2f){
+                        else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.2f) {
                             blockState = BeeBetterRedirection.getCandle(random);
                         }
-                        else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.2f){
+                        else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.2f) {
                             blockState = BeeBetterRedirection.getCandle(random);
                         }
                          */
@@ -108,12 +109,12 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
         }
 
         // main body and ceiling
-        else if(blockState.is(Blocks.HONEYCOMB_BLOCK) || blockState.is(BzBlocks.FILLED_POROUS_HONEYCOMB)){
+        else if(blockState.is(Blocks.HONEYCOMB_BLOCK) || blockState.is(BzBlocks.FILLED_POROUS_HONEYCOMB)) {
            if (random.nextFloat() < 0.15f) {
                blockState = Blocks.HONEYCOMB_BLOCK.defaultBlockState();
            }
            /*
-           else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.4f){
+           else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.4f) {
                blockState = BeeBetterRedirection.getSpiderDungeonBlock(random);
            }
            */
@@ -123,13 +124,13 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
         }
 
         // walls
-        else if(blockState.is(BzBlocks.HONEYCOMB_BROOD)){
+        else if(blockState.is(BzBlocks.HONEYCOMB_BROOD)) {
             if (random.nextFloat() < 0.6f) {
                 blockState = BzBlocks.EMPTY_HONEYCOMB_BROOD.defaultBlockState()
                         .setValue(HoneycombBrood.FACING, blockState.getValue(HoneycombBrood.FACING));
             }
             /*
-            else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.4f){
+            else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.4f) {
                 blockState = BeeBetterRedirection.getSpiderDungeonBlock(random);
             }
             */
@@ -142,7 +143,7 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
         }
 
         // sugar water
-        else if(blockState.is(BzFluids.SUGAR_WATER_BLOCK)){
+        else if(blockState.is(BzFluids.SUGAR_WATER_BLOCK)) {
             blockState = Blocks.CAVE_AIR.defaultBlockState();
         }
 

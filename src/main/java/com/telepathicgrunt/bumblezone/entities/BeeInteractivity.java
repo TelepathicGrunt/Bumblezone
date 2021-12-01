@@ -84,7 +84,7 @@ public class BeeInteractivity {
                     }
                 }
             }
-            else if(itemRL.getPath().contains("honey")){
+            else if(itemRL.getPath().contains("honey")) {
                 beeEntity.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 2, false, false, false));
                 removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
             }
@@ -146,7 +146,7 @@ public class BeeInteractivity {
         boolean calmed = world.random.nextFloat() < calmChance;
         boolean removedWrath = false;
         if (calmed) {
-            if(playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE)){
+            if(playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE)) {
                 playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE);
                 WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
                 removedWrath = true;

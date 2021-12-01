@@ -39,6 +39,7 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.ticks.ScheduledTick;
 
 import java.util.Map;
 
@@ -118,7 +119,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
             return Blocks.AIR.defaultBlockState();
         } else {
             if (blockstate.getValue(WATERLOGGED)) {
-                world.getLiquidTicks().scheduleTick(currentPos, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickDelay(world));
+                world.scheduleTick(currentPos, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickDelay(world));
             }
 
             return super.updateShape(blockstate, facing, facingState, world, currentPos, facingPos);
@@ -224,7 +225,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
         if (!blockState.getValue(WATERLOGGED) && fluidState.getType().is(FluidTags.WATER) && fluidState.isSource()) {
             if (!world.isClientSide()) {
                 world.setBlock(blockPos, blockState.setValue(WATERLOGGED, true), 3);
-                world.getLiquidTicks().scheduleTick(blockPos, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickDelay(world));
+                world.scheduleTick(blockPos, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickDelay(world));
             }
             return true;
         }

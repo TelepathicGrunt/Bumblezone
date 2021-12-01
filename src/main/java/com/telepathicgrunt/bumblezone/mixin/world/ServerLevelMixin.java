@@ -24,9 +24,9 @@ public class ServerLevelMixin {
 	)
 	private void thebumblezone_countBzDimEntities(CallbackInfo ci) {
 		ServerLevel world = ((ServerLevel) (Object) this);
-		if(world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)){
+		if(world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
 			thebumblezone_counter++;
-			if(thebumblezone_counter % thebumblezone_updateInterval == 0){
+			if(thebumblezone_counter % thebumblezone_updateInterval == 0) {
 				thebumblezone_counter = 0;
 				GeneralUtils.updateEntityCount(world);
 			}

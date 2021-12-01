@@ -102,12 +102,12 @@ public class FluidClientOverlay {
         }
     }
 
-    public static float getDimensionBrightnessAtEyes(Entity entity){
+    public static float getDimensionBrightnessAtEyes(Entity entity) {
         float lightLevelAtEyes = entity.level.getRawBrightness(new BlockPos(entity.getEyePosition(1)), 0);
         return lightLevelAtEyes / 15f;
     }
 
-    public static FluidState getNearbyHoneyFluid(Camera camera){
+    public static FluidState getNearbyHoneyFluid(Camera camera) {
         Entity entity = camera.getEntity();
         Level world = entity.level;
         FluidState fluidstate = world.getFluidState(camera.getBlockPosition());

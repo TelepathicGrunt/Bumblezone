@@ -196,7 +196,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
       }
 
       int fallDamage = this.calculateFallDamage(distance, damageMultiplier);
-      if(this.isInHoney()){
+      if(this.isInHoney()) {
          fallDamage = (int)((fallDamage * 0.35f) - 3);
       }
 
@@ -277,7 +277,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
          if (!isInHoney()) {
             setInHoneyGrowthTime(getInHoneyGrowthTime() + 1);
 
-            if(!this.level.isClientSide() && HONEY_BASED_BLOCKS.contains(this.level.getBlockState(this.blockPosition().below()).getBlock())){
+            if(!this.level.isClientSide() && HONEY_BASED_BLOCKS.contains(this.level.getBlockState(this.blockPosition().below()).getBlock())) {
                if(this.random.nextFloat() < 0.001)
                   setInHoneyGrowthTime(0);
             }

@@ -165,7 +165,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                             mutableBlockPos.getZ() * 0.019D,
                             mutableBlockPos.getY() * 0.038D);
 
-                    if(noise1 >= 0.0360555127546399D){
+                    if(noise1 >= 0.0360555127546399D) {
                         continue;
                     }
 

@@ -36,7 +36,7 @@ public class HoneyCrystalShieldBehavior {
                     ((PlayerDamageShieldInvoker) player).thebumblezone_callDamagedShield(Math.max(player.getUseItem().getMaxDamage() / 3, 18));
                 }
                 else if (source.isFire()) {
-                    if(source.isProjectile()){
+                    if(source.isProjectile()) {
                         ((PlayerDamageShieldInvoker) player).thebumblezone_callDamagedShield(Math.max(player.getUseItem().getMaxDamage() / 6, 3));
                     }
                     else{
@@ -73,7 +73,7 @@ public class HoneyCrystalShieldBehavior {
         }
     }
 
-    public static void setShieldCooldown(Player playerEntity, Mob mob){
+    public static void setShieldCooldown(Player playerEntity, Mob mob) {
         float f = 0.25F + (float) EnchantmentHelper.getBlockEfficiency(mob) * 0.05F;
         if (mob.getRandom().nextFloat() < f) {
             playerEntity.getCooldowns().addCooldown(BzItems.HONEY_CRYSTAL_SHIELD, 100);
@@ -81,8 +81,8 @@ public class HoneyCrystalShieldBehavior {
         }
     }
 
-    public static boolean damageHoneyCrystalShield(Player player, float amount){
-        if(player.getUseItem().getItem() == BzItems.HONEY_CRYSTAL_SHIELD){
+    public static boolean damageHoneyCrystalShield(Player player, float amount) {
+        if(player.getUseItem().getItem() == BzItems.HONEY_CRYSTAL_SHIELD) {
             if (amount >= 3.0F) {
                 int damageToDo = 1 + Mth.floor(amount);
                 InteractionHand hand = player.getUsedItemHand();

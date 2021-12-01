@@ -6,6 +6,7 @@ import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.SectionPos;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -47,8 +48,8 @@ public class CloseOffOutsideFluidsProcessor extends StructureProcessor {
                         // This bypasses the PaletteContainer's lock as it was throwing `Accessing PalettedContainer from multiple threads` crash
                         // even though everything seemed to be safe and fine.
                         int sectionYIndex = cachedChunk.getSectionIndex(sidePos.getY());
-                        LevelChunkSection levelChunkSection = cachedChunk.getOrCreateSection(sectionYIndex);
-                        if (LevelChunkSection.isEmpty(levelChunkSection)) continue;
+                        LevelChunkSection levelChunkSection = cachedChunk.getSection(sectionYIndex);
+                        if (levelChunkSection == null) continue;
 
                         levelChunkSection.setBlockState(
                                 SectionPos.sectionRelative(sidePos.getX()),
@@ -58,7 +59,7 @@ public class CloseOffOutsideFluidsProcessor extends StructureProcessor {
                                 false);
                     }
                     else if(!worldView.isOutsideBuildHeight(sidePos)) {
-                        cachedChunk.getLiquidTicks().scheduleTick(sidePos, neighborState.getFluidState().getType(), 0);
+                        ((LevelAccessor)worldView).scheduleTick(sidePos, neighborState.getFluidState().getType(), 0);
                     }
                 }
             }

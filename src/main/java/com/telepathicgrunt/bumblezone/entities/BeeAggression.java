@@ -69,7 +69,7 @@ public class BeeAggression {
                 try {
                     entity = entityType.create(world);
                 }
-                catch(Exception e){
+                catch(Exception e) {
                     Bumblezone.LOGGER.log(Level.WARN, "Failed to temporary create " + Registry.ENTITY_TYPE.getResourceKey(entityType) +
                             " mob in order to check if it is an arthropod that bees should be naturally angry at. " +
                             "Will check if mob is a bear or wasp in its name instead. Error message is: " + e.getMessage());
@@ -119,7 +119,7 @@ public class BeeAggression {
                 !player.isCreative() &&
                 !player.isSpectator())
         {
-            if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
+            if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
                 player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE);
             }
             else {
@@ -147,7 +147,7 @@ public class BeeAggression {
                     !((Player)attackerEntity).isCreative() &&
                     !attackerEntity.isSpectator())
             {
-                if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
+                if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
                     player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                     WrathOfTheHiveEffect.calmTheBees(player.level, player); // prevent bees from be naturally angry
                 }
@@ -169,7 +169,7 @@ public class BeeAggression {
                 }
             }
             else if(attackerEntity instanceof Mob mob) {
-                if(mob.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
+                if(mob.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
                     mob.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                     WrathOfTheHiveEffect.calmTheBees(mob.level, mob); // prevent bees from be naturally angry
                 }
@@ -202,7 +202,7 @@ public class BeeAggression {
     }
 
     //Returns true if bees hate the entity type. (bears, non-bee insects)
-    public static boolean doesBeesHateEntity(Entity entity){
+    public static boolean doesBeesHateEntity(Entity entity) {
 
         //Also checks to make sure we are in the dimension.
         if (!entity.level.isClientSide() &&
@@ -229,9 +229,9 @@ public class BeeAggression {
         }
 
         //Makes the fog redder when this effect is active
-        if(playerEntity.level.isClientSide()){
+        if(playerEntity.level.isClientSide()) {
             boolean wrathEffect = playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE);
-            if(wrathEffect){
+            if(wrathEffect) {
                 MusicHandler.playAngryBeeMusic(playerEntity);
             }
 

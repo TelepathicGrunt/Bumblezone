@@ -231,7 +231,7 @@ public class PileOfPollen extends FallingBlock {
             else {
                 world.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
                 if(world.isClientSide()) {
-                    for(int i = 0; i < blockState.getValue(LAYERS) * 30; i++){
+                    for(int i = 0; i < blockState.getValue(LAYERS) * 30; i++) {
                         spawnParticles(blockState, world, blockPos, world.random, true);
                     }
                 }
@@ -239,15 +239,15 @@ public class PileOfPollen extends FallingBlock {
         }
 
         // Make pollen puff entity grow pile of pollen
-        else if(entity.getType().equals(BzEntities.POLLEN_PUFF_ENTITY)){
+        else if(entity.getType().equals(BzEntities.POLLEN_PUFF_ENTITY)) {
             if(((PollenPuffEntity)entity).isConsumed()) return; // do not run this code if a block already was set.
 
             stackPollen(blockState, world, blockPos, BzBlocks.PILE_OF_POLLEN.defaultBlockState());
             entity.remove(Entity.RemovalReason.DISCARDED);
             ((PollenPuffEntity)entity).consumed();
 
-            if(world.isClientSide()){
-                for(int i = 0; i < 50; i++){
+            if(world.isClientSide()) {
+                for(int i = 0; i < 50; i++) {
                     spawnParticles(world, entity.position(), world.random, 0.055D, 0.0075D, 0);
                 }
             }
@@ -282,7 +282,7 @@ public class PileOfPollen extends FallingBlock {
             double entitySpeed = entity.getDeltaMovement().length();
 
             // Need to multiply speed to avoid issues where tiny movement is seen as zero.
-            if(entitySpeed > 0.00001D && world.random.nextFloat() < chance){
+            if(entitySpeed > 0.00001D && world.random.nextFloat() < chance) {
                 int particleNumber = (int) (entitySpeed / 0.0045D);
                 int particleStrength = (entity instanceof ItemEntity) ? Math.min(10, particleNumber / 3) : Math.min(20, particleNumber);
 
@@ -302,7 +302,7 @@ public class PileOfPollen extends FallingBlock {
                     }
                 }
                 // Player and item entity runs this method on client side already so do not run it on server to reduce particle packet spam
-                else if (!(entity instanceof Player || entity instanceof ItemEntity)){
+                else if (!(entity instanceof Player || entity instanceof ItemEntity)) {
                     spawnParticlesServer(
                             world,
                             entity.position()
@@ -340,7 +340,7 @@ public class PileOfPollen extends FallingBlock {
         int layersToAdd = pollonToStack.getValue(LAYERS);
 
         // Fill up current pile
-        if(initialLayerValue < 8){
+        if(initialLayerValue < 8) {
             int layerToMax = (8 - initialLayerValue);
             lastSetState = blockState.setValue(LAYERS, initialLayerValue + Math.min(layerToMax, layersToAdd));
             if(!world.isClientSide()) world.setBlock(blockPos, lastSetState, 3);

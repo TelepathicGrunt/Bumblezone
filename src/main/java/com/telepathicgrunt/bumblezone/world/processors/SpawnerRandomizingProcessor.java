@@ -13,6 +13,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.SpawnerBlock;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
@@ -25,7 +26,7 @@ import java.util.Random;
 public class SpawnerRandomizingProcessor extends StructureProcessor {
 
     public static final Codec<SpawnerRandomizingProcessor> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            Codec.mapPair(Registry.ENTITY_TYPE.fieldOf("resourcelocation"), Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight")).codec().listOf().fieldOf("spawner_mob_entries").forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.spawnerRandomizingProcessor)
+            Codec.mapPair(Registry.ENTITY_TYPE.byNameCodec().fieldOf("resourcelocation"), Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight")).codec().listOf().fieldOf("spawner_mob_entries").forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.spawnerRandomizingProcessor)
     ).apply(instance, instance.stable(SpawnerRandomizingProcessor::new)));
 
     public final List<Pair<EntityType<?>, Integer>> spawnerRandomizingProcessor;
@@ -38,7 +39,7 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
         if (structureBlockInfoWorld.state.getBlock() instanceof SpawnerBlock) {
             BlockPos worldPos = structureBlockInfoWorld.pos;
-            Random random = new WorldgenRandom();
+            Random random = new WorldgenRandom(new LegacyRandomSource(0));
             random.setSeed(worldPos.asLong() * worldPos.getY());
             return new StructureTemplate.StructureBlockInfo(
                     worldPos,

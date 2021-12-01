@@ -121,7 +121,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         }
 
         if (flag1) {
-            world.getBlockTicks().scheduleTick(new BlockPos(pos), this, this.getTickRate());
+            world.scheduleTick(new BlockPos(pos), this, this.getTickRate());
         }
     }
 
@@ -156,7 +156,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
 
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         if (this.computeRedstoneStrength(state, world, pos) > 0) {
-            world.getBlockTicks().scheduleTick(pos, this, 1);
+            world.scheduleTick(pos, this, 1);
         }
 
     }

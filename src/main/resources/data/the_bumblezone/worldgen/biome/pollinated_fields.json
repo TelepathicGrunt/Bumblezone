@@ -21,7 +21,6 @@
     "water_color": 14402413,
     "water_fog_color": 11700268
   },
-  "surface_builder": "the_bumblezone:pollen_surface_builder",
   "carvers": {},
   "features": [
     [
@@ -45,9 +44,6 @@
       "the_bumblezone:sugar_waterfall_low"
     ],
     []
-  ],
-  "starts": [
-    "the_bumblezone:pollinated_stream"
   ],
   "creature_spawn_probability": 0.13,
   "spawners": {
@@ -98,6 +94,8 @@
       }
     ],
     "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
     "water_creature": [],
     "water_ambient": [],
     "misc": []

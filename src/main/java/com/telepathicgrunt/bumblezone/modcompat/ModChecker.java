@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Level;
 public class ModChecker {
 
     public static boolean potionOfBeesPresent = false;
-    public static boolean beeBetterPresent = false;
     public static boolean charmPresent = false;
 
     /*
@@ -24,17 +23,17 @@ public class ModChecker {
     public static void setupModCompat() {
         String currentModID = "";
 
-        try {
-            currentModID = "charm";
-            loadupModCompat(currentModID, () -> CharmCompat.setupCharm());
-        }
-        catch (Exception e) {
-            printErrorToLogs("classloading " + currentModID + " and so, mod compat done afterwards broke");
-            e.printStackTrace();
-        }
+//        try {
+//            currentModID = "charm";
+//            loadupModCompat(currentModID, () -> CharmCompat.setupCharm());
+//        }
+//        catch (Exception e) {
+//            printErrorToLogs("classloading " + currentModID + " and so, mod compat done afterwards broke");
+//            e.printStackTrace();
+//        }
     }
 
-    private static void loadupModCompat(String modid, Runnable runnable){
+    private static void loadupModCompat(String modid, Runnable runnable) {
         try {
             if (FabricLoader.getInstance().isModLoaded(modid)) {
                 runnable.run();

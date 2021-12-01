@@ -3,6 +3,7 @@
   "package": "com.telepathicgrunt.bumblezone.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "JigsawConfigurationAccessor",
     "blocks.AbstractFurnaceBlockEntityMixin",
     "blocks.BeeHiveDropsMixin",
     "blocks.DefaultDispenseItemBehaviorInvoker",

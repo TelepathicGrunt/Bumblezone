@@ -8,16 +8,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
 
 public class BzStructures {
 
-    public static final StructureFeature<NoneFeatureConfiguration> POLLINATED_STREAM = new PollinatedStreamStructure(NoneFeatureConfiguration.CODEC);
-    public static final StructureFeature<NoneFeatureConfiguration> HONEY_CAVE_ROOM = new HoneyCaveRoomStructure(NoneFeatureConfiguration.CODEC);
+    public static final StructureFeature<JigsawConfiguration> POLLINATED_STREAM = new PollinatedStreamStructure(JigsawConfiguration.CODEC);
+    public static final StructureFeature<JigsawConfiguration> HONEY_CAVE_ROOM = new HoneyCaveRoomStructure(JigsawConfiguration.CODEC);
 
     public static void registerStructures() {
-        FabricStructureBuilder.create(new ResourceLocation(Bumblezone.MODID, "pollinated_stream"), POLLINATED_STREAM).step(GenerationStep.Decoration.UNDERGROUND_STRUCTURES).defaultConfig(new StructureFeatureConfiguration(12, 8, 938497222)).superflatFeature(POLLINATED_STREAM.configured(FeatureConfiguration.NONE)).register();
-        FabricStructureBuilder.create(new ResourceLocation(Bumblezone.MODID, "honey_cave_room"), HONEY_CAVE_ROOM).step(GenerationStep.Decoration.UNDERGROUND_STRUCTURES).defaultConfig(new StructureFeatureConfiguration(6, 3, 722299384)).superflatFeature(HONEY_CAVE_ROOM.configured(FeatureConfiguration.NONE)).register();
+        FabricStructureBuilder.create(new ResourceLocation(Bumblezone.MODID, "pollinated_stream"), POLLINATED_STREAM).step(GenerationStep.Decoration.UNDERGROUND_STRUCTURES).defaultConfig(new StructureFeatureConfiguration(12, 8, 938497222)).register();
+        FabricStructureBuilder.create(new ResourceLocation(Bumblezone.MODID, "honey_cave_room"), HONEY_CAVE_ROOM).step(GenerationStep.Decoration.UNDERGROUND_STRUCTURES).defaultConfig(new StructureFeatureConfiguration(6, 3, 722299384)).register();
     }
 }

@@ -139,7 +139,7 @@ public abstract class HoneyFluid extends FlowingFluid {
                 fluidState = newFluidState;
                 BlockState blockstate = newFluidState.createLegacyBlock();
                 world.setBlock(blockPos, blockstate, 2);
-                world.getLiquidTicks().scheduleTick(blockPos, newFluidState.getType(), spreadDelay);
+                world.scheduleTick(blockPos, newFluidState.getType(), spreadDelay);
                 world.updateNeighborsAt(blockPos, blockstate.getBlock());
             }
         }
@@ -218,7 +218,7 @@ public abstract class HoneyFluid extends FlowingFluid {
                 }
 
                 highestNeighboringFluidLevel = Math.max(highestNeighboringFluidLevel, sideFluidState.getAmount());
-                if(sideFluidState.getType() instanceof HoneyFluid){
+                if(sideFluidState.getType() instanceof HoneyFluid) {
                     lowestNeighboringFluidLevel = Math.min(lowestNeighboringFluidLevel, sideFluidState.isSource() ? 0 : sideFluidState.getValue(BOTTOM_LEVEL));
                 }
             }

@@ -7,7 +7,7 @@ import net.minecraft.world.item.Items;
 
 public class WanderingTrades {
 
-    public static void addWanderingTrades(){
+    public static void addWanderingTrades() {
 
         // Traders
         // Rare trades
@@ -35,7 +35,7 @@ public class WanderingTrades {
     public static void addRareTrade(int tier, VillagerTrades.ItemListing trade) {
         int newSize = VillagerTrades.WANDERING_TRADER_TRADES.get(tier).length + 1;
         VillagerTrades.ItemListing[] factory = new VillagerTrades.ItemListing[newSize];
-        for(int index = 0; index < VillagerTrades.WANDERING_TRADER_TRADES.get(tier).length; index++){
+        for(int index = 0; index < VillagerTrades.WANDERING_TRADER_TRADES.get(tier).length; index++) {
             factory[index] = VillagerTrades.WANDERING_TRADER_TRADES.get(tier)[index];
         }
         factory[newSize - 1] = trade;

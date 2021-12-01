@@ -28,7 +28,7 @@ public class EntityTeleportationHookup {
     // Methods that setup and call PlayerTeleportationBackend //
 
     //Living Entity ticks
-    public static void entityTick(LivingEntity livingEntity){
+    public static void entityTick(LivingEntity livingEntity) {
         //Makes it so player does not get killed for falling into the void
         if (livingEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (livingEntity.getY() < -2) {
@@ -42,7 +42,7 @@ public class EntityTeleportationHookup {
                 }
                 livingEntity.fallDistance = 0;
 
-                if(!livingEntity.level.isClientSide()){
+                if(!livingEntity.level.isClientSide()) {
                     teleportOutOfBz(livingEntity);
                 }
             }
@@ -52,7 +52,7 @@ public class EntityTeleportationHookup {
                     livingEntity.absMoveTo(livingEntity.getX(), 257, livingEntity.getZ());
                 }
 
-                if(!livingEntity.level.isClientSide()){
+                if(!livingEntity.level.isClientSide()) {
                     teleportOutOfBz(livingEntity);
                 }
             }
@@ -66,7 +66,7 @@ public class EntityTeleportationHookup {
             MinecraftServer minecraftServer = livingEntity.getServer(); // the server itself
             ResourceKey<Level> worldKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, Bumblezone.ENTITY_COMPONENT.get(livingEntity).getNonBZDimension());
             ServerLevel serverWorld = minecraftServer.getLevel(worldKey);
-            if(serverWorld == null){
+            if(serverWorld == null) {
                 serverWorld = minecraftServer.getLevel(Level.OVERWORLD);
             }
             BzWorldSavedData.queueEntityToTeleport(livingEntity, serverWorld.dimension());
@@ -74,7 +74,7 @@ public class EntityTeleportationHookup {
     }
 
     // Enderpearl
-    public static boolean runEnderpearlImpact(HitResult hitResult, Projectile pearlEntity){
+    public static boolean runEnderpearlImpact(HitResult hitResult, Projectile pearlEntity) {
         Level world = pearlEntity.level; // world we threw in
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
@@ -163,7 +163,7 @@ public class EntityTeleportationHookup {
                         validBelowBlock = true;
                     }
                     else if(Bumblezone.BZ_CONFIG.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive) {
-                        if(pushedEntity instanceof Player playerEntity){
+                        if(pushedEntity instanceof Player playerEntity) {
                             //failed. Block below isn't the required block
                             Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
                             Component message = new TextComponent("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");

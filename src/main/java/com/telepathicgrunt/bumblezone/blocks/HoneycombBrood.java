@@ -98,7 +98,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                     !playerEntity.isSpectator() &&
                     Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
             {
-                if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
+                if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
                     playerEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                 }
                 else {
@@ -125,7 +125,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                 }
 
                 if (successfulGrowth && world.random.nextFloat() < 0.30F) {
-                    if(!playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE)){
+                    if(!playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE)) {
                         playerEntity.addEffect(new MobEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, (int) (Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts * 0.75f), 1, false, false,  true));
                     }
                 }
@@ -206,11 +206,11 @@ public class HoneycombBrood extends ProperFacingBlock {
                 world.setBlock(position, state.setValue(STAGE, stage + 1), 2);
             }
         }
-        else if(Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity != 0){
-            if(!nearbyEntities.isEmpty() && GeneralUtils.getEntityCountInBz() < Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity * 1.75f){
+        else if(Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity != 0) {
+            if(!nearbyEntities.isEmpty() && GeneralUtils.getEntityCountInBz() < Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity * 1.75f) {
                 spawnBroodMob(world, state, position, stage);
             }
-            else if(GeneralUtils.getEntityCountInBz() < Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity){
+            else if(GeneralUtils.getEntityCountInBz() < Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity) {
                 spawnBroodMob(world, state, position, stage);
             }
         }
@@ -237,7 +237,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                     !playerEntity.isSpectator() &&
                     Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
             {
-                if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
+                if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
                     playerEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                 }
                 else{
@@ -262,7 +262,7 @@ public class HoneycombBrood extends ProperFacingBlock {
             beeMob.setBaby(true);
             spawnMob(world, blockpos, beeMob, beeMob);
 
-            if(world.random.nextFloat() < 0.1f){
+            if(world.random.nextFloat() < 0.1f) {
                 Mob honeySlimeMob = BzEntities.HONEY_SLIME.create(world);
                 honeySlimeMob.setBaby(true);
                 spawnMob(world, blockpos, beeMob, honeySlimeMob);

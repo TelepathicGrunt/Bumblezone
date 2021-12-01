@@ -98,8 +98,8 @@ public class BzWorldSavedData extends SavedData
 			ServerLevel bumblezoneWorld = minecraftServer.getLevel(BzDimension.BZ_WORLD_KEY);
 
 			// Prevent crash due to mojang bug that makes mod's json dimensions not exist upload first creation of world on server. A restart fixes this.
-			if(bumblezoneWorld == null){
-				if(entity instanceof ServerPlayer playerEntity){
+			if(bumblezoneWorld == null) {
+				if(entity instanceof ServerPlayer playerEntity) {
 					Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: https://bugs.mojang.com/browse/MC-195468. A restart will fix this.");
 					TextComponent message = new TextComponent("Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: §6https://bugs.mojang.com/browse/MC-195468§f. A restart will fix this.");
 					playerEntity.displayClientMessage(message, true);

@@ -17,7 +17,7 @@ public class RedstoneDustCanConnectMixin {
             at = @At(value = "TAIL"),
             cancellable = true)
     private static void thebumblezone_canConnectVisually(BlockState state, Direction dir, CallbackInfoReturnable<Boolean> cir) {
-        if (state.getBlock() == BzBlocks.STICKY_HONEY_REDSTONE){
+        if (state.getBlock() == BzBlocks.STICKY_HONEY_REDSTONE) {
             boolean canConnect = false;
 
             if (state.getValue(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {

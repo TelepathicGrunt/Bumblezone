@@ -27,14 +27,14 @@ public class RemoveFloatingBlocksProcessor extends StructureProcessor {
         ChunkAccess cachedChunk = worldView.getChunk(mutable);
 
         // attempts to remove invalid floating plants
-        if(structureBlockInfoWorld.state.isAir() || structureBlockInfoWorld.state.getMaterial().isLiquid()){
+        if(structureBlockInfoWorld.state.isAir() || structureBlockInfoWorld.state.getMaterial().isLiquid()) {
 
             // set the block in the world so that canPlaceAt's result changes
             cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state, false);
             BlockState aboveWorldState = worldView.getBlockState(mutable.move(Direction.UP));
 
             // detects the invalidly placed blocks
-            while(mutable.getY() < worldView.getHeight() && !aboveWorldState.canSurvive(worldView, mutable)){
+            while(mutable.getY() < worldView.getHeight() && !aboveWorldState.canSurvive(worldView, mutable)) {
                 cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state, false);
                 aboveWorldState = worldView.getBlockState(mutable.move(Direction.UP));
             }

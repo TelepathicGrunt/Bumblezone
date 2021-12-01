@@ -122,7 +122,7 @@ public abstract class EntityMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;setSwimming(Z)V", ordinal = 1, shift = At.Shift.AFTER))
     private void thebumblezone_setSwimming(CallbackInfo ci) {
         // check if we were not set to swimming in water. If not, then check if we are swimming in honey fluid instead
-        if(!this.isSwimming() && this.isSprinting() && this.isUnderWater() && !this.isPassenger()){
+        if(!this.isSwimming() && this.isSprinting() && this.isUnderWater() && !this.isPassenger()) {
             this.setSwimming(this.level.getFluidState(this.blockPosition()).is(BzFluidTags.BZ_HONEY_FLUID));
         }
     }

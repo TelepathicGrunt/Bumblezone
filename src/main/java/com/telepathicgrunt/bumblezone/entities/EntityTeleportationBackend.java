@@ -191,10 +191,10 @@ public class EntityTeleportationBackend {
         // place hive block below player if they would've fallen out of dimension
         // because there's air all the way down to y = 0 below player
         int heightCheck = 0;
-        while(heightCheck <= validBlockPos.getY() && bumblezoneWorld.getBlockState(validBlockPos.below(heightCheck)).isAir()){
+        while(heightCheck <= validBlockPos.getY() && bumblezoneWorld.getBlockState(validBlockPos.below(heightCheck)).isAir()) {
             heightCheck++;
         }
-        if(heightCheck >= validBlockPos.getY()){
+        if(heightCheck >= validBlockPos.getY()) {
             bumblezoneWorld.setBlockAndUpdate(validBlockPos.getY() == 0 ? validBlockPos : validBlockPos.below(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
         }
 
@@ -238,7 +238,7 @@ public class EntityTeleportationBackend {
         Stream<BlockEntity> allBlockEntitiesInRange = tempSet.stream().filter(be -> {
 
             // filter out all block entities that are not valid bee blocks we want
-            if(!isValidBeeHive(be.getBlockState())){
+            if(!isValidBeeHive(be.getBlockState())) {
                 return false;
             }
 
@@ -260,7 +260,7 @@ public class EntityTeleportationBackend {
             int xzDiff = Math.abs(mutableTemp1.getX() - mutableTemp2.getX()) + Math.abs(mutableTemp1.getZ() - mutableTemp2.getZ());
 
             // Reverse direction if checking upward
-            if(checkingUpward){
+            if(checkingUpward) {
                 heightDiff *= -1;
                 xzDiff *= -1;
             }
@@ -269,7 +269,7 @@ public class EntityTeleportationBackend {
             return heightDiff - xzDiff;
         }).collect(Collectors.toList());
 
-        for(BlockEntity blockEntity : sortedBlockEntities){
+        for(BlockEntity blockEntity : sortedBlockEntities) {
             //try to find a valid spot next to it
             BlockPos validSpot = validPlayerSpawnLocation(world, blockEntity.getBlockPos(), 4);
             if (validSpot != null) {
@@ -368,7 +368,7 @@ public class EntityTeleportationBackend {
     }
 
     // Player exiting Bumblezone dimension
-    public static void playerLeavingBz(ResourceLocation dimensionLeaving, Entity entity){
+    public static void playerLeavingBz(ResourceLocation dimensionLeaving, Entity entity) {
         //Updates the non-BZ dimension that the player is leaving
         if (!dimensionLeaving.equals(Bumblezone.MOD_DIMENSION_ID) && entity instanceof LivingEntity) {
             Bumblezone.ENTITY_COMPONENT.get(entity).setNonBZDimension(dimensionLeaving);

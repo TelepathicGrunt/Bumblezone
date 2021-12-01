@@ -48,7 +48,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
 
         for (Bee bee : beeList)
         {
-            if(bee.getTarget() == entity){
+            if(bee.getTarget() == entity) {
                 bee.setTarget(null);
                 bee.setPersistentAngerTarget(null);
                 bee.setRemainingPersistentAngerTime(0);
@@ -62,7 +62,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
      * Makes the bees swarm at the attacking entity
      */
     public void applyEffectTick(LivingEntity entity, int amplifier) {
-       if(entity.hurtTime > 0 && entity.getLastHurtByMob() != null){
+       if(entity.hurtTime > 0 && entity.getLastHurtByMob() != null) {
            resetBeeAngry(entity.level, entity.getLastHurtByMob());
 
            if(!(entity.getLastHurtByMob() instanceof Bee)) {
@@ -85,7 +85,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
         SEE_THROUGH_WALLS.range(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D);
         List<Bee> beeList = world.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D));
 
-        if(livingEntity instanceof Bee){
+        if(livingEntity instanceof Bee) {
             entity = null;
             uuid = null;
         }
@@ -94,7 +94,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
         {
             bee.setTarget(entity);
             bee.setPersistentAngerTarget(uuid);
-            if(entity == null){
+            if(entity == null) {
                 bee.setRemainingPersistentAngerTime(0);
             }
         }

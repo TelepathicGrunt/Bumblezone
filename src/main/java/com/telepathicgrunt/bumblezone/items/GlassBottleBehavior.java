@@ -54,7 +54,7 @@ public class GlassBottleBehavior {
 //                    !playerEntity.isSpectator() &&
 //                    Bumblezone.BzBeeAggressionConfig.aggressiveBees.get())
 //            {
-//                if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())){
+//                if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
 //                    playerEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
 //                }
 //                else{

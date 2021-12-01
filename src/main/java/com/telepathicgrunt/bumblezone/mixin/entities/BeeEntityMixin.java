@@ -27,8 +27,8 @@ public abstract class BeeEntityMixin extends Entity {
      */
     @Inject(method = "customServerAiStep()V",
             at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/entity/animal/Bee;isInWaterOrBubble()Z", shift = At.Shift.AFTER))
-    private void thebumblezone_honeyFluidNotDrown(CallbackInfo ci){
-        if(this.underWaterTicks >= 10 && this.fluidHeight.get(BzFluidTags.BZ_HONEY_FLUID) > 0){
+    private void thebumblezone_honeyFluidNotDrown(CallbackInfo ci) {
+        if(this.underWaterTicks >= 10 && this.fluidHeight.get(BzFluidTags.BZ_HONEY_FLUID) > 0) {
             this.underWaterTicks = 9;
         }
     }

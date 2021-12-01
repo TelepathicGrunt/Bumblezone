@@ -14,7 +14,7 @@ public enum BzBiomePollinatedFieldsLayer implements CastleTransformer {
         int pollinatedFields = BzBiomeProvider.LAYERS_BIOME_REGISTRY.getId(
                 BzBiomeProvider.LAYERS_BIOME_REGISTRY.get(BzBiomeProvider.POLLINATED_FIELDS));
 
-        if(center != hivePillarId){
+        if(center != hivePillarId) {
             boolean borderingHivePillar = false;
 
             if((n == hivePillarId || e == hivePillarId) ||

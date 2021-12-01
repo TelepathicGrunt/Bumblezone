@@ -27,7 +27,7 @@ public class SugarWaterBlock extends LiquidBlock {
     @Override
     public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         if (this.shouldSpreadLiquid(world, pos, state)) {
-            world.getLiquidTicks().scheduleTick(pos, state.getFluidState().getType(), this.fluid.getTickDelay(world));
+            world.scheduleTick(pos, state.getFluidState().getType(), this.fluid.getTickDelay(world));
         }
     }
 

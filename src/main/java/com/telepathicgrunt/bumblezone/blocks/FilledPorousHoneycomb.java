@@ -55,7 +55,7 @@ public class FilledPorousHoneycomb extends Block {
                     !playerEntity.isSpectator() &&
                     Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
             {
-                if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)){
+                if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
                     playerEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                 }
                 else{

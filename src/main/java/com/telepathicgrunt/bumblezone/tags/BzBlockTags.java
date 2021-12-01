@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.Block;
 
 public class BzBlockTags {
     // Sole purpose is to initalize the tag wrappers at mod startup
-    public static void initTags(){}
+    public static void initTags() {}
 
     public static final Tag<Block> REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT = TagFactory.BLOCK.create(new ResourceLocation(Bumblezone.MODID, "required_blocks_under_hive_to_teleport"));
     public static final Tag<Block> BLACKLISTED_TELEPORTATION_HIVES = TagFactory.BLOCK.create(new ResourceLocation(Bumblezone.MODID, "blacklisted_teleportable_hive_blocks"));

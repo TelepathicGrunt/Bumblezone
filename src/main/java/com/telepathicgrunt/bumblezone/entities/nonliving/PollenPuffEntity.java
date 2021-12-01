@@ -52,11 +52,11 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         super(BzEntities.POLLEN_PUFF_ENTITY, x, y, z, world);
     }
 
-    public void consumed(){
+    public void consumed() {
         consumed = true;
     }
 
-    public boolean isConsumed(){
+    public boolean isConsumed() {
         return consumed;
     }
 
@@ -172,7 +172,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 }
             }
         }
-        else if(blockstate.is(Blocks.HONEY_BLOCK) || blockstate.is(Blocks.SOUL_SAND) || (blockHitResult.getDirection() == Direction.UP && !blockstate.getFluidState().is(FluidTags.WATER)) || blockstate.isFaceSturdy(this.level, blockHitResult.getBlockPos(), blockHitResult.getDirection())){
+        else if(blockstate.is(Blocks.HONEY_BLOCK) || blockstate.is(Blocks.SOUL_SAND) || (blockHitResult.getDirection() == Direction.UP && !blockstate.getFluidState().is(FluidTags.WATER)) || blockstate.isFaceSturdy(this.level, blockHitResult.getBlockPos(), blockHitResult.getDirection())) {
             BlockPos impactSide = blockHitResult.getBlockPos().relative(blockHitResult.getDirection());
             BlockState sideState = this.level.getBlockState(impactSide);
             BlockState pileOfPollen = BzBlocks.PILE_OF_POLLEN.defaultBlockState();

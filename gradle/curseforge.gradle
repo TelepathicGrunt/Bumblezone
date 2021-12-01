@@ -11,8 +11,7 @@ curseforge {
         releaseType = "release"
         changelogType = 'markdown'
         changelog = fileContents
-        addGameVersion("1.17")
-        addGameVersion("1.17.1")
+        addGameVersion("1.18")
         addGameVersion("Fabric")
 
         relations {

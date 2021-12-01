@@ -35,7 +35,7 @@ public class ReplaceNotAirProcessor extends StructureProcessor {
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
 
-        if(!blocksToAlwaysPlace.contains(structureBlockInfoWorld.state)){
+        if(!blocksToAlwaysPlace.contains(structureBlockInfoWorld.state)) {
             BlockPos position = structureBlockInfoWorld.pos;
             BlockState worldState = worldView.getBlockState(position);
 

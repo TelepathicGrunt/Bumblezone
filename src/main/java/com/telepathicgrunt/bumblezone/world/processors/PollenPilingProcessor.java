@@ -9,6 +9,7 @@ import com.telepathicgrunt.bumblezone.utils.OpenSimplex2F;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -64,7 +65,7 @@ public class PollenPilingProcessor extends StructureProcessor {
             ChunkAccess chunk = worldView.getChunk(belowPos);
             BlockState belowState = chunk.getBlockState(belowPos);
             if(!belowState.canOcclude()) {
-                chunk.getBlockTicks().scheduleTick(belowPos, structureState.getBlock(), 0);
+                ((LevelAccessor)worldView).scheduleTick(belowPos, structureState.getBlock(), 0);
             }
 
             BlockPos.MutableBlockPos sidePos = new BlockPos.MutableBlockPos();
@@ -86,7 +87,7 @@ public class PollenPilingProcessor extends StructureProcessor {
             ChunkAccess chunk = worldView.getChunk(abovePos);
             BlockState aboveState = chunk.getBlockState(abovePos);
             if(aboveState.is(BzBlocks.PILE_OF_POLLEN)) {
-                chunk.getBlockTicks().scheduleTick(abovePos, aboveState.getBlock(), 0);
+                ((LevelAccessor)worldView).scheduleTick(abovePos, aboveState.getBlock(), 0);
             }
         }
 

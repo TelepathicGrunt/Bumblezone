@@ -24,7 +24,7 @@ public class GeneralUtils {
 
     private static int ACTIVE_ENTITIES = 0;
 
-    public static void updateEntityCount(ServerLevel world){
+    public static void updateEntityCount(ServerLevel world) {
 
         // If iterable is a collection, just get size directly
         if (world.getAllEntities() instanceof Collection) {
@@ -40,7 +40,7 @@ public class GeneralUtils {
         ACTIVE_ENTITIES = counter;
     }
 
-    public static int getEntityCountInBz(){
+    public static int getEntityCountInBz() {
         return ACTIVE_ENTITIES;
     }
 
@@ -102,11 +102,11 @@ public class GeneralUtils {
         protected final int experience;
         protected final float multiplier;
 
-        public BasicItemTrade(Item itemToTrade, int amountToGive, Item itemToReceive, int amountToReceive){
+        public BasicItemTrade(Item itemToTrade, int amountToGive, Item itemToReceive, int amountToReceive) {
             this(itemToTrade, amountToGive, itemToReceive, amountToReceive, 20, 2, 0.05F);
         }
 
-        public BasicItemTrade(Item itemToTrade, int amountToGive, Item itemToReceive, int amountToReceive, int maxUses, int experience, float multiplier){
+        public BasicItemTrade(Item itemToTrade, int amountToGive, Item itemToReceive, int amountToReceive, int maxUses, int experience, float multiplier) {
             this.itemToTrade = itemToTrade;
             this.itemToReceive = itemToReceive;
             this.amountToGive = amountToGive;
