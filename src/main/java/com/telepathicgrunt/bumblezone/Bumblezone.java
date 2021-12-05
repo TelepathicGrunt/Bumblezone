@@ -23,6 +23,7 @@ import com.telepathicgrunt.bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.bumblezone.modinit.BzRecipes;
 import com.telepathicgrunt.bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.bumblezone.modinit.BzStructures;
+import com.telepathicgrunt.bumblezone.modinit.BzSurfaceRules;
 import com.telepathicgrunt.bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.bumblezone.tags.BzEntityTags;
 import com.telepathicgrunt.bumblezone.tags.BzFluidTags;
@@ -39,6 +40,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.levelgen.SurfaceRules;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -80,6 +82,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzProcessors.registerProcessors();
         BzPlacements.registerPlacements();
         BzFeatures.registerFeatures();
+        BzSurfaceRules.registerSurfaceRules();
         BzStructures.registerStructures();
         BzDimension.setupDimension();
 

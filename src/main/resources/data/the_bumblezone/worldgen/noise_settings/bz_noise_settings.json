@@ -101,25 +101,10 @@
       },
       {
         "if_true": {
-          "anchor": {
-            "below_top": 5
-          },
-          "surface_depth_multiplier": 0,
-          "add_stone_depth": false,
-          "type": "minecraft:y_above"
-        },
-        "then_run": {
-          "result_state": {
-            "Name": "minecraft:honeycomb_block"
-          },
-          "type": "minecraft:block"
-        },
-        "type": "minecraft:condition"
-      },
-      {
-        "if_true": {
           "biome_is": [
-            "the_bumblezone:hive_pillar"
+            "the_bumblezone:hive_pillar",
+            "the_bumblezone:hive_wall",
+            "the_bumblezone:sugar_water_floor"
           ],
           "type": "minecraft:biome"
         },
@@ -129,35 +114,15 @@
               "if_true": {
                 "offset": 0,
                 "add_surface_depth": true,
-                "add_surface_secondary_depth": false,
-                "surface_type": "ceiling",
+                "add_surface_secondary_depth": true,
+                "surface_type": "floor",
                 "type": "minecraft:stone_depth"
               },
               "then_run": {
-                "sequence": [
-                  {
-                    "if_true": {
-                      "noise": "minecraft:nether_state_selector",
-                      "min_threshold": 0.0,
-                      "max_threshold": 1.7976931348623157E308,
-                      "type": "minecraft:noise_threshold"
-                    },
-                    "then_run": {
-                      "result_state": {
-                        "Name": "minecraft:soul_sand"
-                      },
-                      "type": "minecraft:block"
-                    },
-                    "type": "minecraft:condition"
-                  },
-                  {
-                    "result_state": {
-                      "Name": "minecraft:soul_soil"
-                    },
-                    "type": "minecraft:block"
-                  }
-                ],
-                "type": "minecraft:sequence"
+                "result_state": {
+                  "Name": "the_bumblezone:porous_honeycomb_block"
+                },
+                "type": "minecraft:block"
               },
               "type": "minecraft:condition"
             },
@@ -170,232 +135,21 @@
                 "type": "minecraft:stone_depth"
               },
               "then_run": {
-                "sequence": [
-                  {
-                    "if_true": {
-                      "noise": "minecraft:patch",
-                      "min_threshold": -0.012,
-                      "max_threshold": 1.7976931348623157E308,
-                      "type": "minecraft:noise_threshold"
-                    },
-                    "then_run": {
-                      "if_true": {
-                        "anchor": {
-                          "absolute": 30
-                        },
-                        "surface_depth_multiplier": 0,
-                        "add_stone_depth": true,
-                        "type": "minecraft:y_above"
-                      },
-                      "then_run": {
-                        "if_true": {
-                          "invert": {
-                            "anchor": {
-                              "absolute": 35
-                            },
-                            "surface_depth_multiplier": 0,
-                            "add_stone_depth": true,
-                            "type": "minecraft:y_above"
-                          },
-                          "type": "minecraft:not"
-                        },
-                        "then_run": {
-                          "result_state": {
-                            "Name": "minecraft:gravel"
-                          },
-                          "type": "minecraft:block"
-                        },
-                        "type": "minecraft:condition"
-                      },
-                      "type": "minecraft:condition"
-                    },
-                    "type": "minecraft:condition"
-                  },
-                  {
-                    "if_true": {
-                      "noise": "minecraft:nether_state_selector",
-                      "min_threshold": 0.0,
-                      "max_threshold": 1.7976931348623157E308,
-                      "type": "minecraft:noise_threshold"
-                    },
-                    "then_run": {
-                      "result_state": {
-                        "Name": "minecraft:soul_sand"
-                      },
-                      "type": "minecraft:block"
-                    },
-                    "type": "minecraft:condition"
-                  },
-                  {
-                    "result_state": {
-                      "Name": "minecraft:soul_soil"
-                    },
-                    "type": "minecraft:block"
-                  }
-                ],
-                "type": "minecraft:sequence"
-              },
-              "type": "minecraft:condition"
-            }
-          ],
-          "type": "minecraft:sequence"
-        },
-        "type": "minecraft:condition"
-      },
-      {
-        "if_true": {
-          "offset": 0,
-          "add_surface_depth": false,
-          "add_surface_secondary_depth": false,
-          "surface_type": "floor",
-          "type": "minecraft:stone_depth"
-        },
-        "then_run": {
-          "sequence": [
-            {
-              "if_true": {
-                "invert": {
-                  "anchor": {
-                    "absolute": 32
-                  },
-                  "surface_depth_multiplier": 0,
-                  "add_stone_depth": false,
-                  "type": "minecraft:y_above"
-                },
-                "type": "minecraft:not"
-              },
-              "then_run": {
                 "if_true": {
-                  "type": "minecraft:hole"
+                  "offset": 5,
+                  "surface_depth_multiplier": -1,
+                  "add_stone_depth": true,
+                  "type": "minecraft:water"
                 },
                 "then_run": {
                   "result_state": {
-                    "Properties": {
-                      "level": "0"
-                    },
-                    "Name": "minecraft:lava"
+                    "Name": "the_bumblezone:porous_honeycomb_block"
                   },
                   "type": "minecraft:block"
                 },
                 "type": "minecraft:condition"
               },
               "type": "minecraft:condition"
-            },
-            {
-              "if_true": {
-                "biome_is": [
-                  "minecraft:warped_forest"
-                ],
-                "type": "minecraft:biome"
-              },
-              "then_run": {
-                "if_true": {
-                  "invert": {
-                    "noise": "minecraft:netherrack",
-                    "min_threshold": 0.54,
-                    "max_threshold": 1.7976931348623157E308,
-                    "type": "minecraft:noise_threshold"
-                  },
-                  "type": "minecraft:not"
-                },
-                "then_run": {
-                  "if_true": {
-                    "anchor": {
-                      "absolute": 31
-                    },
-                    "surface_depth_multiplier": 0,
-                    "add_stone_depth": false,
-                    "type": "minecraft:y_above"
-                  },
-                  "then_run": {
-                    "sequence": [
-                      {
-                        "if_true": {
-                          "noise": "minecraft:nether_wart",
-                          "min_threshold": 1.17,
-                          "max_threshold": 1.7976931348623157E308,
-                          "type": "minecraft:noise_threshold"
-                        },
-                        "then_run": {
-                          "result_state": {
-                            "Name": "minecraft:warped_wart_block"
-                          },
-                          "type": "minecraft:block"
-                        },
-                        "type": "minecraft:condition"
-                      },
-                      {
-                        "result_state": {
-                          "Name": "minecraft:warped_nylium"
-                        },
-                        "type": "minecraft:block"
-                      }
-                    ],
-                    "type": "minecraft:sequence"
-                  },
-                  "type": "minecraft:condition"
-                },
-                "type": "minecraft:condition"
-              },
-              "type": "minecraft:condition"
-            },
-            {
-              "if_true": {
-                "biome_is": [
-                  "minecraft:crimson_forest"
-                ],
-                "type": "minecraft:biome"
-              },
-              "then_run": {
-                "if_true": {
-                  "invert": {
-                    "noise": "minecraft:netherrack",
-                    "min_threshold": 0.54,
-                    "max_threshold": 1.7976931348623157E308,
-                    "type": "minecraft:noise_threshold"
-                  },
-                  "type": "minecraft:not"
-                },
-                "then_run": {
-                  "if_true": {
-                    "anchor": {
-                      "absolute": 31
-                    },
-                    "surface_depth_multiplier": 0,
-                    "add_stone_depth": false,
-                    "type": "minecraft:y_above"
-                  },
-                  "then_run": {
-                    "sequence": [
-                      {
-                        "if_true": {
-                          "noise": "minecraft:nether_wart",
-                          "min_threshold": 1.17,
-                          "max_threshold": 1.7976931348623157E308,
-                          "type": "minecraft:noise_threshold"
-                        },
-                        "then_run": {
-                          "result_state": {
-                            "Name": "minecraft:nether_wart_block"
-                          },
-                          "type": "minecraft:block"
-                        },
-                        "type": "minecraft:condition"
-                      },
-                      {
-                        "result_state": {
-                          "Name": "minecraft:crimson_nylium"
-                        },
-                        "type": "minecraft:block"
-                      }
-                    ],
-                    "type": "minecraft:sequence"
-                  },
-                  "type": "minecraft:condition"
-                },
-                "type": "minecraft:condition"
-              },
-              "type": "minecraft:condition"
             }
           ],
           "type": "minecraft:sequence"
@@ -405,12 +159,45 @@
       {
         "if_true": {
           "biome_is": [
-            "minecraft:nether_wastes"
+            "the_bumblezone:pollinated_fields",
+            "the_bumblezone:pollinated_pillar"
           ],
           "type": "minecraft:biome"
         },
         "then_run": {
           "sequence": [
+            {
+              "if_true": {
+                "offset": 0,
+                "add_surface_depth": true,
+                "add_surface_secondary_depth": true,
+                "surface_type": "floor",
+                "type": "minecraft:stone_depth"
+              },
+              "then_run": {
+                "result_state": {
+                  "Name": "the_bumblezone:porous_honeycomb_block"
+                },
+                "type": "minecraft:block"
+              },
+              "type": "minecraft:condition"
+            },
+            {
+              "if_true": {
+                "offset": 1,
+                "add_surface_depth": false,
+                "add_surface_secondary_depth": false,
+                "surface_type": "floor",
+                "type": "minecraft:stone_depth"
+              },
+              "then_run": {
+                "result_state": {
+                  "Name": "the_bumblezone:pile_of_pollen"
+                },
+                "type": "the_bumblezone:pollinated_surface_source"
+              },
+              "type": "minecraft:condition"
+            },
             {
               "if_true": {
                 "offset": 0,
@@ -421,142 +208,16 @@
               },
               "then_run": {
                 "if_true": {
-                  "noise": "minecraft:soul_sand_layer",
-                  "min_threshold": -0.012,
-                  "max_threshold": 1.7976931348623157E308,
-                  "type": "minecraft:noise_threshold"
+                  "offset": 5,
+                  "surface_depth_multiplier": -1,
+                  "add_stone_depth": true,
+                  "type": "minecraft:water"
                 },
                 "then_run": {
-                  "sequence": [
-                    {
-                      "if_true": {
-                        "invert": {
-                          "type": "minecraft:hole"
-                        },
-                        "type": "minecraft:not"
-                      },
-                      "then_run": {
-                        "if_true": {
-                          "anchor": {
-                            "absolute": 30
-                          },
-                          "surface_depth_multiplier": 0,
-                          "add_stone_depth": true,
-                          "type": "minecraft:y_above"
-                        },
-                        "then_run": {
-                          "if_true": {
-                            "invert": {
-                              "anchor": {
-                                "absolute": 35
-                              },
-                              "surface_depth_multiplier": 0,
-                              "add_stone_depth": true,
-                              "type": "minecraft:y_above"
-                            },
-                            "type": "minecraft:not"
-                          },
-                          "then_run": {
-                            "result_state": {
-                              "Name": "minecraft:soul_sand"
-                            },
-                            "type": "minecraft:block"
-                          },
-                          "type": "minecraft:condition"
-                        },
-                        "type": "minecraft:condition"
-                      },
-                      "type": "minecraft:condition"
-                    },
-                    {
-                      "result_state": {
-                        "Name": "minecraft:netherrack"
-                      },
-                      "type": "minecraft:block"
-                    }
-                  ],
-                  "type": "minecraft:sequence"
-                },
-                "type": "minecraft:condition"
-              },
-              "type": "minecraft:condition"
-            },
-            {
-              "if_true": {
-                "offset": 0,
-                "add_surface_depth": false,
-                "add_surface_secondary_depth": false,
-                "surface_type": "floor",
-                "type": "minecraft:stone_depth"
-              },
-              "then_run": {
-                "if_true": {
-                  "anchor": {
-                    "absolute": 31
+                  "result_state": {
+                    "Name": "the_bumblezone:porous_honeycomb_block"
                   },
-                  "surface_depth_multiplier": 0,
-                  "add_stone_depth": false,
-                  "type": "minecraft:y_above"
-                },
-                "then_run": {
-                  "if_true": {
-                    "invert": {
-                      "anchor": {
-                        "absolute": 35
-                      },
-                      "surface_depth_multiplier": 0,
-                      "add_stone_depth": true,
-                      "type": "minecraft:y_above"
-                    },
-                    "type": "minecraft:not"
-                  },
-                  "then_run": {
-                    "if_true": {
-                      "noise": "minecraft:gravel_layer",
-                      "min_threshold": -0.012,
-                      "max_threshold": 1.7976931348623157E308,
-                      "type": "minecraft:noise_threshold"
-                    },
-                    "then_run": {
-                      "sequence": [
-                        {
-                          "if_true": {
-                            "anchor": {
-                              "absolute": 32
-                            },
-                            "surface_depth_multiplier": 0,
-                            "add_stone_depth": false,
-                            "type": "minecraft:y_above"
-                          },
-                          "then_run": {
-                            "result_state": {
-                              "Name": "minecraft:gravel"
-                            },
-                            "type": "minecraft:block"
-                          },
-                          "type": "minecraft:condition"
-                        },
-                        {
-                          "if_true": {
-                            "invert": {
-                              "type": "minecraft:hole"
-                            },
-                            "type": "minecraft:not"
-                          },
-                          "then_run": {
-                            "result_state": {
-                              "Name": "minecraft:gravel"
-                            },
-                            "type": "minecraft:block"
-                          },
-                          "type": "minecraft:condition"
-                        }
-                      ],
-                      "type": "minecraft:sequence"
-                    },
-                    "type": "minecraft:condition"
-                  },
-                  "type": "minecraft:condition"
+                  "type": "minecraft:block"
                 },
                 "type": "minecraft:condition"
               },
@@ -566,12 +227,6 @@
           "type": "minecraft:sequence"
         },
         "type": "minecraft:condition"
-      },
-      {
-        "result_state": {
-          "Name": "minecraft:netherrack"
-        },
-        "type": "minecraft:block"
       }
     ],
     "type": "minecraft:sequence"

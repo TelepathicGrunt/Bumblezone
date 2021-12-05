@@ -1,4 +1,4 @@
-package com.telepathicgrunt.bumblezone.mixin;
+package com.telepathicgrunt.bumblezone.mixin.world;
 
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import org.spongepowered.asm.mixin.Mixin;

@@ -3,7 +3,6 @@
   "package": "com.telepathicgrunt.bumblezone.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "JigsawConfigurationAccessor",
     "blocks.AbstractFurnaceBlockEntityMixin",
     "blocks.BeeHiveDropsMixin",
     "blocks.DefaultDispenseItemBehaviorInvoker",
@@ -46,8 +45,10 @@
     "items.PlayerDamageShieldInvoker",
     "items.SimpleCookingSerializerMixin",
     "world.BiomeLayerAccessor",
+    "world.JigsawConfigurationAccessor",
     "world.ServerLevelMixin",
-    "world.StructureTemplateAccessor"
+    "world.StructureTemplateAccessor",
+    "world.WorldGenSettingsMixin"
   ],
   "client": [
     "blocks.ScreenEffectRendererMixin",
