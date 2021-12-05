@@ -2,8 +2,6 @@ package com.telepathicgrunt.bumblezone.configs;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
-import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
 @Config(name = "mod_compatibility")
 public class BzModCompatibilityConfig implements ConfigData {

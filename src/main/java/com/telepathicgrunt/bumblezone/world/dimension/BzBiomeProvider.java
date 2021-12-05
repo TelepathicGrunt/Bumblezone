@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.bumblezone.Bumblezone;
 import com.telepathicgrunt.bumblezone.mixin.world.BiomeSourceAccessor;
+import com.telepathicgrunt.bumblezone.utils.WorldSeedHolder;
 import com.telepathicgrunt.bumblezone.world.dimension.layer.BzBiomeLayer;
 import com.telepathicgrunt.bumblezone.world.dimension.layer.BzBiomeMergeLayer;
 import com.telepathicgrunt.bumblezone.world.dimension.layer.BzBiomeNonstandardLayer;
@@ -39,7 +40,8 @@ public class BzBiomeProvider extends BiomeSource {
 
     public static final Codec<BzBiomeProvider> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
-                    RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter((biomeSource) -> biomeSource.biomeRegistry))
+                Codec.LONG.fieldOf("seed").orElseGet(WorldSeedHolder::getSeed).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
+                RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter((biomeSource) -> biomeSource.biomeRegistry))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
 
 
@@ -49,14 +51,10 @@ public class BzBiomeProvider extends BiomeSource {
     public static ResourceLocation POLLINATED_FIELDS = new ResourceLocation(Bumblezone.MODID, "pollinated_fields");
     public static ResourceLocation POLLINATED_PILLAR = new ResourceLocation(Bumblezone.MODID, "pollinated_pillar");
 
+    private final long seed;
     private final Layer biomeSampler;
     private final Registry<Biome> biomeRegistry;
     public static List<Biome> nonstandardBiome = new ArrayList<>();
-
-    public BzBiomeProvider(Registry<Biome> biomeRegistry) {
-        // Need world seed passed here
-        this(0, biomeRegistry);
-    }
 
     public BzBiomeProvider(long seed, Registry<Biome> biomeRegistry) {
         super(biomeRegistry.entrySet().stream()
@@ -67,14 +65,15 @@ public class BzBiomeProvider extends BiomeSource {
         nonstandardBiome = ((BiomeSourceAccessor)this).getPossibleBiomes().stream()
                 .filter(biome ->  {
                     ResourceLocation rlKey = biomeRegistry.getKey(biome);
-                    return !rlKey.equals(HIVE_WALL) &&
+                    return rlKey != null &&
+                            !rlKey.equals(HIVE_WALL) &&
                             !rlKey.equals(HIVE_PILLAR) &&
                             !rlKey.equals(SUGAR_WATER_FLOOR) &&
                             !rlKey.equals(POLLINATED_FIELDS) &&
                             !rlKey.equals(POLLINATED_PILLAR);
                 }).collect(Collectors.toList());
 
-        BzBiomeLayer.setSeed(seed);
+        this.seed = seed;
         this.biomeRegistry = biomeRegistry;
         this.biomeSampler = buildWorldProcedure(seed, biomeRegistry);
     }
@@ -101,13 +100,13 @@ public class BzBiomeProvider extends BiomeSource {
 
 
     public static Layer buildWorldProcedure(long seed, Registry<Biome> biomeRegistry) {
-        AreaFactory<LazyArea> layerFactory = build((salt) -> new LazyAreaContext(25, seed, salt), biomeRegistry);
+        AreaFactory<LazyArea> layerFactory = build((salt) -> new LazyAreaContext(25, seed, salt), seed, biomeRegistry);
         return new Layer(layerFactory);
     }
 
 
-    public static <T extends Area, C extends BigContext<T>> AreaFactory<T> build(LongFunction<C> contextFactory, Registry<Biome> biomeRegistry) {
-        AreaFactory<T> layer = new BzBiomeLayer(biomeRegistry).run(contextFactory.apply(200L));
+    public static <T extends Area, C extends BigContext<T>> AreaFactory<T> build(LongFunction<C> contextFactory, long seed, Registry<Biome> biomeRegistry) {
+        AreaFactory<T> layer = new BzBiomeLayer(seed, biomeRegistry).run(contextFactory.apply(200L));
         layer = new BzBiomePillarLayer(biomeRegistry).run(contextFactory.apply(1008L), layer);
         layer = new BzBiomeScaleLayer(HIVE_PILLAR, biomeRegistry).run(contextFactory.apply(1055L), layer);
         layer = ZoomLayer.FUZZY.run(contextFactory.apply(2003L), layer);

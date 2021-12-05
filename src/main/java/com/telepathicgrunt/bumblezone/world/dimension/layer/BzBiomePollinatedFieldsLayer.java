@@ -7,22 +7,16 @@ import net.minecraft.core.Registry;
 import net.minecraft.world.level.biome.Biome;
 
 
-public class BzBiomePollinatedFieldsLayer implements CastleTransformer {
-    
-    private final Registry<Biome> biomeRegistry;
-
-    public BzBiomePollinatedFieldsLayer(Registry<Biome> biomeRegistry) {
-        this.biomeRegistry = biomeRegistry;
-    }
+public record BzBiomePollinatedFieldsLayer(Registry<Biome> biomeRegistry) implements CastleTransformer {
 
     public int apply(Context context, int n, int e, int s, int w, int center) {
         int hivePillarId = biomeRegistry.getId(biomeRegistry.get(BzBiomeProvider.POLLINATED_PILLAR));
         int pollinatedFields = biomeRegistry.getId(biomeRegistry.get(BzBiomeProvider.POLLINATED_FIELDS));
 
-        if(center != hivePillarId) {
+        if (center != hivePillarId) {
             boolean borderingHivePillar = false;
 
-            if((n == hivePillarId || e == hivePillarId) || (w == hivePillarId || s == hivePillarId)) {
+            if ((n == hivePillarId || e == hivePillarId) || (w == hivePillarId || s == hivePillarId)) {
                 borderingHivePillar = true;
             }
 

@@ -7,13 +7,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.world.level.biome.Biome;
 
 
-public class BzBiomePollinatedPillarLayer implements CastleTransformer {
-
-    private final Registry<Biome> biomeRegistry;
-
-    public BzBiomePollinatedPillarLayer(Registry<Biome> biomeRegistry) {
-        this.biomeRegistry = biomeRegistry;
-    }
+public record BzBiomePollinatedPillarLayer(Registry<Biome> biomeRegistry) implements CastleTransformer {
 
     public int apply(Context context, int n, int e, int s, int w, int center) {
 
@@ -23,5 +17,4 @@ public class BzBiomePollinatedPillarLayer implements CastleTransformer {
 
         return center;
     }
-
 }

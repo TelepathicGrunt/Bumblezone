@@ -40,7 +40,6 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.levelgen.SurfaceRules;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
