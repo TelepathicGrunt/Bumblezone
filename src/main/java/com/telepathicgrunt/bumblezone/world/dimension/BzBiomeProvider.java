@@ -34,16 +34,12 @@ import java.util.function.LongFunction;
 import java.util.stream.Collectors;
 
 public class BzBiomeProvider extends BiomeSource {
-    public static void registerBiomeProvider() {
-        Registry.register(Registry.BIOME_SOURCE, new ResourceLocation(Bumblezone.MODID, "biome_source"), BzBiomeProvider.CODEC);
-    }
 
     public static final Codec<BzBiomeProvider> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
                 Codec.LONG.fieldOf("seed").orElseGet(WorldSeedHolder::getSeed).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
                 RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter((biomeSource) -> biomeSource.biomeRegistry))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
-
 
     public static ResourceLocation HIVE_WALL = new ResourceLocation(Bumblezone.MODID, "hive_wall");
     public static ResourceLocation HIVE_PILLAR = new ResourceLocation(Bumblezone.MODID, "hive_pillar");
@@ -76,6 +72,10 @@ public class BzBiomeProvider extends BiomeSource {
         this.seed = seed;
         this.biomeRegistry = biomeRegistry;
         this.biomeSampler = buildWorldProcedure(seed, biomeRegistry);
+    }
+
+    public static void registerBiomeProvider() {
+        Registry.register(Registry.BIOME_SOURCE, new ResourceLocation(Bumblezone.MODID, "biome_source"), BzBiomeProvider.CODEC);
     }
 
     @Override

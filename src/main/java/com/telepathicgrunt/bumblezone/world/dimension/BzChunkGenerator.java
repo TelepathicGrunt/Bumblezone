@@ -74,10 +74,6 @@ import java.util.function.Supplier;
 
 public class BzChunkGenerator extends ChunkGenerator {
 
-    public static void registerChunkgenerator() {
-        Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Bumblezone.MODID, "chunk_generator"), BzChunkGenerator.CODEC);
-    }
-
     public static final Codec<BzChunkGenerator> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             RegistryLookupCodec.create(Registry.NOISE_REGISTRY).forGetter(bzChunkGenerator -> bzChunkGenerator.noises),
             BiomeSource.CODEC.fieldOf("biome_source").forGetter(bzChunkGenerator -> bzChunkGenerator.biomeSource),
@@ -99,42 +95,46 @@ public class BzChunkGenerator extends ChunkGenerator {
     private static final MobSpawnSettings.SpawnerData INITIAL_BEE_ENTRY = new MobSpawnSettings.SpawnerData(EntityType.BEE, 1, 1, 4);
     private static final MobSpawnSettings.SpawnerData INITIAL_BEEHEMOTH_ENTRY = new MobSpawnSettings.SpawnerData(BzEntities.BEEHEMOTH, 1, 1, 1);
 
-    public BzChunkGenerator(Registry<NormalNoise.NoiseParameters> registry, BiomeSource biomeSource, long l, Supplier<NoiseGeneratorSettings> supplier) {
-        this(registry, biomeSource, biomeSource, l, supplier);
+    public BzChunkGenerator(Registry<NormalNoise.NoiseParameters> registry, BiomeSource biomeSource, long seed, Supplier<NoiseGeneratorSettings> supplier) {
+        this(registry, biomeSource, biomeSource, seed, supplier);
     }
 
-    private BzChunkGenerator(Registry<NormalNoise.NoiseParameters> registry, BiomeSource biomeSource, BiomeSource biomeSource2, long l, Supplier<NoiseGeneratorSettings> supplier) {
-        super(biomeSource, biomeSource2, supplier.get().structureSettings(), l);
+    private BzChunkGenerator(Registry<NormalNoise.NoiseParameters> registry, BiomeSource biomeSource, BiomeSource biomeSource2, long seed, Supplier<NoiseGeneratorSettings> supplier) {
+        super(biomeSource, biomeSource2, supplier.get().structureSettings(), seed);
         this.noises = registry;
-        this.seed = l;
+        this.seed = seed;
         this.settings = supplier;
         NoiseGeneratorSettings noiseGeneratorSettings = this.settings.get();
         this.defaultBlock = noiseGeneratorSettings.getDefaultBlock();
         NoiseSettings noiseSettings = noiseGeneratorSettings.noiseSettings();
-        this.sampler = new NoiseSampler(noiseSettings, noiseGeneratorSettings.isNoiseCavesEnabled(), l, registry, noiseGeneratorSettings.getRandomSource());
+        this.sampler = new NoiseSampler(noiseSettings, noiseGeneratorSettings.isNoiseCavesEnabled(), seed, registry, noiseGeneratorSettings.getRandomSource());
         ImmutableList.Builder<WorldGenMaterialRule> builder = ImmutableList.builder();
         builder.add((noiseChunk, x, y, z) -> ((NoiseChunkAccessor)noiseChunk).thebumblezone_callUpdateNoiseAndGenerateBaseState(x, y, z));
         builder.add((noiseChunk, x, y, z) -> ((NoiseChunkAccessor)noiseChunk).thebumblezone_callOreVeinify(x, y, z));
         this.materialRule = new MaterialRuleList(builder.build());
         Aquifer.FluidStatus fluidStatus = new Aquifer.FluidStatus(-54, Blocks.LAVA.defaultBlockState());
-        int i = noiseGeneratorSettings.seaLevel();
-        Aquifer.FluidStatus fluidStatus2 = new Aquifer.FluidStatus(i, noiseGeneratorSettings.getDefaultFluid());
-        this.globalFluidPicker = (j, k, lx) -> k < Math.min(-54, i) ? fluidStatus : fluidStatus2;
-        this.surfaceSystem = new SurfaceSystem(registry, this.defaultBlock, i, l, noiseGeneratorSettings.getRandomSource());
+        int seaLevel = noiseGeneratorSettings.seaLevel();
+        Aquifer.FluidStatus fluidStatus2 = new Aquifer.FluidStatus(seaLevel, noiseGeneratorSettings.getDefaultFluid());
+        this.globalFluidPicker = (j, k, lx) -> k < Math.min(-54, seaLevel) ? fluidStatus : fluidStatus2;
+        this.surfaceSystem = new SurfaceSystem(registry, this.defaultBlock, seaLevel, seed, noiseGeneratorSettings.getRandomSource());
+    }
+
+    public static void registerChunkgenerator() {
+        Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Bumblezone.MODID, "chunk_generator"), BzChunkGenerator.CODEC);
     }
 
     @Override
     public CompletableFuture<ChunkAccess> createBiomes(Registry<Biome> registry, Executor executor, Blender blender, StructureFeatureManager structureFeatureManager, ChunkAccess chunkAccess) {
-        return CompletableFuture.supplyAsync(Util.wrapThreadWithTaskName("init_biomes", (Supplier)(() -> {
+        return CompletableFuture.supplyAsync(Util.wrapThreadWithTaskName("init_biomes", () -> {
             this.doCreateBiomes(registry, blender, structureFeatureManager, chunkAccess);
             return chunkAccess;
-        })), Util.backgroundExecutor());
+        }), Util.backgroundExecutor());
     }
 
     private void doCreateBiomes(Registry<Biome> registry, Blender blender, StructureFeatureManager structureFeatureManager, ChunkAccess chunkAccess) {
         NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk(this.sampler, () -> new Beardifier(structureFeatureManager, chunkAccess), this.settings.get(), this.globalFluidPicker, blender);
         BiomeResolver biomeResolver = BelowZeroRetrogen.getBiomeResolver(blender.getBiomeResolver(this.runtimeBiomeSource), registry, chunkAccess);
-        chunkAccess.fillBiomesFromNoise(biomeResolver, (i, j, k) -> this.sampler.target(i, j, k, noiseChunk.noiseData(i, k)));
+        chunkAccess.fillBiomesFromNoise(biomeResolver, (x, y, z) -> this.sampler.target(x, y, z, noiseChunk.noiseData(x, z)));
     }
 
     @Override
@@ -143,7 +143,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public void applyCarvers(WorldGenRegion worldGenRegion, long l, BiomeManager biomeManager, StructureFeatureManager structureFeatureManager, ChunkAccess chunkAccess, GenerationStep.Carving carving) {}
+    public void applyCarvers(WorldGenRegion worldGenRegion, long seed, BiomeManager biomeManager, StructureFeatureManager structureFeatureManager, ChunkAccess chunkAccess, GenerationStep.Carving carving) {}
 
     @Override
     protected Codec<? extends ChunkGenerator> codec() {
@@ -151,48 +151,49 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public ChunkGenerator withSeed(long l) {
-        return new BzChunkGenerator(this.noises, this.biomeSource.withSeed(l), l, this.settings);
+    public ChunkGenerator withSeed(long seed) {
+        return new BzChunkGenerator(this.noises, this.biomeSource.withSeed(seed), seed, this.settings);
     }
 
-    public boolean stable(long l, ResourceKey<NoiseGeneratorSettings> resourceKey) {
-        return this.seed == l && this.settings.get().stable(resourceKey);
-    }
-
-    @Override
-    public int getBaseHeight(int i, int j, Heightmap.Types types, LevelHeightAccessor levelHeightAccessor) {
-        NoiseSettings noiseSettings = this.settings.get().noiseSettings();
-        int k = Math.max(noiseSettings.minY(), levelHeightAccessor.getMinBuildHeight());
-        int l = Math.min(noiseSettings.minY() + noiseSettings.height(), levelHeightAccessor.getMaxBuildHeight());
-        int m = Mth.intFloorDiv(k, noiseSettings.getCellHeight());
-        int n = Mth.intFloorDiv(l - k, noiseSettings.getCellHeight());
-        return n <= 0 ? levelHeightAccessor.getMinBuildHeight() : this.iterateNoiseColumn(i, j, null, types.isOpaque(), m, n).orElse(levelHeightAccessor.getMinBuildHeight());
+    public boolean stable(long seed, ResourceKey<NoiseGeneratorSettings> resourceKey) {
+        return this.seed == seed && this.settings.get().stable(resourceKey);
     }
 
     @Override
-    public NoiseColumn getBaseColumn(int i, int j, LevelHeightAccessor levelHeightAccessor) {
+    public int getBaseHeight(int x, int z, Heightmap.Types types, LevelHeightAccessor levelHeightAccessor) {
         NoiseSettings noiseSettings = this.settings.get().noiseSettings();
-        int k = Math.max(noiseSettings.minY(), levelHeightAccessor.getMinBuildHeight());
-        int l = Math.min(noiseSettings.minY() + noiseSettings.height(), levelHeightAccessor.getMaxBuildHeight());
-        int m = Mth.intFloorDiv(k, noiseSettings.getCellHeight());
-        int n = Mth.intFloorDiv(l - k, noiseSettings.getCellHeight());
-        if (n <= 0) {
-            return new NoiseColumn(k, EMPTY_COLUMN);
-        } else {
-            BlockState[] blockStates = new BlockState[n * noiseSettings.getCellHeight()];
-            this.iterateNoiseColumn(i, j, blockStates, null, m, n);
-            return new NoiseColumn(k, blockStates);
+        int maxY = Math.max(noiseSettings.minY(), levelHeightAccessor.getMinBuildHeight());
+        int minY = Math.min(noiseSettings.minY() + noiseSettings.height(), levelHeightAccessor.getMaxBuildHeight());
+        int maxYCell = Mth.intFloorDiv(maxY, noiseSettings.getCellHeight());
+        int minYCell = Mth.intFloorDiv(minY - maxY, noiseSettings.getCellHeight());
+        return minYCell <= 0 ? levelHeightAccessor.getMinBuildHeight() : this.iterateNoiseColumn(x, z, null, types.isOpaque(), maxYCell, minYCell).orElse(levelHeightAccessor.getMinBuildHeight());
+    }
+
+    @Override
+    public NoiseColumn getBaseColumn(int x, int z, LevelHeightAccessor levelHeightAccessor) {
+        NoiseSettings noiseSettings = this.settings.get().noiseSettings();
+        int maxY = Math.max(noiseSettings.minY(), levelHeightAccessor.getMinBuildHeight());
+        int minY = Math.min(noiseSettings.minY() + noiseSettings.height(), levelHeightAccessor.getMaxBuildHeight());
+        int maxYCell = Mth.intFloorDiv(maxY, noiseSettings.getCellHeight());
+        int minYCell = Mth.intFloorDiv(minY - maxY, noiseSettings.getCellHeight());
+        if (minYCell <= 0) {
+            return new NoiseColumn(maxY, EMPTY_COLUMN);
+        }
+        else {
+            BlockState[] blockStates = new BlockState[minYCell * noiseSettings.getCellHeight()];
+            this.iterateNoiseColumn(x, z, blockStates, null, maxYCell, minYCell);
+            return new NoiseColumn(maxY, blockStates);
         }
     }
 
-    private OptionalInt iterateNoiseColumn(int i, int j, @Nullable BlockState[] blockStates, @Nullable Predicate<BlockState> predicate, int k, int l) {
+    private OptionalInt iterateNoiseColumn(int x, int z, @Nullable BlockState[] blockStates, @Nullable Predicate<BlockState> predicate, int k, int l) {
         NoiseSettings noiseSettings = this.settings.get().noiseSettings();
         int m = noiseSettings.getCellWidth();
         int n = noiseSettings.getCellHeight();
-        int o = Math.floorDiv(i, m);
-        int p = Math.floorDiv(j, m);
-        int q = Math.floorMod(i, m);
-        int r = Math.floorMod(j, m);
+        int o = Math.floorDiv(x, m);
+        int p = Math.floorDiv(z, m);
+        int q = Math.floorMod(x, m);
+        int r = Math.floorMod(z, m);
         int s = o * m;
         int t = p * m;
         double d = (double)q / (double)m;
@@ -210,11 +211,11 @@ public class BzChunkGenerator extends ChunkGenerator {
                 noiseChunk.updateForY(f);
                 noiseChunk.updateForX(d);
                 noiseChunk.updateForZ(e);
-                BlockState blockState = this.materialRule.apply(noiseChunk, i, w, j);
+                BlockState blockState = this.materialRule.apply(noiseChunk, x, w, z);
                 BlockState blockState2 = blockState == null ? this.defaultBlock : blockState;
                 if (blockStates != null) {
-                    int x = u * n + v;
-                    blockStates[x] = blockState2;
+                    int index = u * n + v;
+                    blockStates[index] = blockState2;
                 }
 
                 if (predicate != null && predicate.test(blockState2)) {
@@ -240,24 +241,25 @@ public class BzChunkGenerator extends ChunkGenerator {
     public CompletableFuture<ChunkAccess> fillFromNoise(Executor executor, Blender blender, StructureFeatureManager structureFeatureManager, ChunkAccess chunkAccess) {
         NoiseSettings noiseSettings = this.settings.get().noiseSettings();
         LevelHeightAccessor levelHeightAccessor = chunkAccess.getHeightAccessorForGeneration();
-        int i = Math.max(noiseSettings.minY(), levelHeightAccessor.getMinBuildHeight());
-        int j = Math.min(noiseSettings.minY() + noiseSettings.height(), levelHeightAccessor.getMaxBuildHeight());
-        int k = Mth.intFloorDiv(i, noiseSettings.getCellHeight());
-        int l = Mth.intFloorDiv(j - i, noiseSettings.getCellHeight());
-        if (l <= 0) {
+        int maxY = Math.max(noiseSettings.minY(), levelHeightAccessor.getMinBuildHeight());
+        int minY = Math.min(noiseSettings.minY() + noiseSettings.height(), levelHeightAccessor.getMaxBuildHeight());
+        int maxYCell = Mth.intFloorDiv(maxY, noiseSettings.getCellHeight());
+        int minYCell = Mth.intFloorDiv(minY - maxY, noiseSettings.getCellHeight());
+        if (minYCell <= 0) {
             return CompletableFuture.completedFuture(chunkAccess);
-        } else {
-            int m = chunkAccess.getSectionIndex(l * noiseSettings.getCellHeight() - 1 + i);
-            int n = chunkAccess.getSectionIndex(i);
+        }
+        else {
+            int maxChunkSection = chunkAccess.getSectionIndex(minYCell * noiseSettings.getCellHeight() - 1 + maxY);
+            int minChunkSection = chunkAccess.getSectionIndex(maxY);
             Set<LevelChunkSection> set = Sets.newHashSet();
 
-            for(int o = m; o >= n; --o) {
-                LevelChunkSection levelChunkSection = chunkAccess.getSection(o);
+            for(int currentChunkSection = maxChunkSection; currentChunkSection >= minChunkSection; --currentChunkSection) {
+                LevelChunkSection levelChunkSection = chunkAccess.getSection(currentChunkSection);
                 levelChunkSection.acquire();
                 set.add(levelChunkSection);
             }
 
-            return CompletableFuture.supplyAsync(Util.wrapThreadWithTaskName("wgen_fill_noise", (Supplier)(() -> this.doFill(blender, structureFeatureManager, chunkAccess, k, l))), Util.backgroundExecutor()).whenCompleteAsync((chunkAccessx, throwable) -> {
+            return CompletableFuture.supplyAsync(Util.wrapThreadWithTaskName("wgen_fill_noise", () -> this.doFill(blender, structureFeatureManager, chunkAccess, maxYCell, minYCell)), Util.backgroundExecutor()).whenCompleteAsync((chunkAccessx, throwable) -> {
                 for(LevelChunkSection levelChunkSectionx : set) {
                     levelChunkSectionx.release();
                 }
@@ -387,6 +389,7 @@ public class BzChunkGenerator extends ChunkGenerator {
      * dimension as well.
      */
     @Override
+    @SuppressWarnings("deprecation")
     public void spawnOriginalMobs(WorldGenRegion region) {
         NoiseGeneratorSettings noiseGeneratorSettings = this.settings.get();
         if (!((NoiseGeneratorSettingsInvoker)(Object)noiseGeneratorSettings).thebumblezone_callDisableMobGeneration()) {
@@ -394,11 +397,11 @@ public class BzChunkGenerator extends ChunkGenerator {
             Biome biome = region.getBiome(chunkPos.getWorldPosition());
             WorldgenRandom sharedseedrandom = new WorldgenRandom(new LegacyRandomSource(RandomSupport.seedUniquifier()));
             sharedseedrandom.setDecorationSeed(region.getSeed(), chunkPos.getMinBlockX(), chunkPos.getMinBlockZ());
-            while (sharedseedrandom.nextFloat() < biome.getMobSettings().getCreatureProbability() * 0.75f) {
-                //20% of time, spawn honey slime. Otherwise, spawn bees.
+            while (sharedseedrandom.nextFloat() < biome.getMobSettings().getCreatureProbability()) {
+                //15% of time, spawn honey slime. Otherwise, spawn bees.
                 MobSpawnSettings.SpawnerData biome$spawnlistentry;
                 float threshold = sharedseedrandom.nextFloat();
-                if(threshold < 0.25f) {
+                if(threshold < 0.15f) {
                     biome$spawnlistentry = INITIAL_HONEY_SLIME_ENTRY;
                 }
                 else if (threshold < 0.95f) {
