@@ -10,7 +10,6 @@ import com.telepathicgrunt.bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.bumblezone.modinit.BzConfiguredFeatures;
 import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.bumblezone.modinit.BzEnchantments;
@@ -51,11 +50,8 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
     public static BzConfig BZ_CONFIG;
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
-    // legacy name to prevent breaking player's data even though this is for entities now
-    public static final ComponentKey<IEntityComponent> ENTITY_COMPONENT =
-            ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "player_component"), IEntityComponent.class);
-    public static final ComponentKey<IFlyingSpeedComponent> FLYING_SPEED_COMPONENT =
-            ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "original_flying_speed"), IFlyingSpeedComponent.class);
+    public static final ComponentKey<IEntityComponent> ENTITY_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "entity_component"), IEntityComponent.class);
+    public static final ComponentKey<IFlyingSpeedComponent> FLYING_SPEED_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "original_flying_speed"), IFlyingSpeedComponent.class);
 
     @Override
     public void onInitialize() {
@@ -79,20 +75,20 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzEffects.registerEffects();
         BzEnchantments.registerEnchantment();
         BzCriterias.registerCriteriaTriggers();
-
         BzPOI.registerPOIs();
+
         BzProcessors.registerProcessors();
         BzPlacements.registerPlacements();
         BzFeatures.registerFeatures();
-        BzConfiguredFeatures.registerConfiguredFeatures();
         BzStructures.registerStructures();
         BzDimension.setupDimension();
+
         WanderingTrades.addWanderingTrades();
-        ServerTickEvents.END_WORLD_TICK.register(BzWorldSavedData::tick);
+        DispenserItemSetup.setupDispenserBehaviors();
 
         BeeAggression.setupEvents();
-        DispenserItemSetup.setupDispenserBehaviors();
         ModChecker.setupModCompat();
+        ServerTickEvents.END_WORLD_TICK.register(BzWorldSavedData::tick);
     }
 
     @Override
