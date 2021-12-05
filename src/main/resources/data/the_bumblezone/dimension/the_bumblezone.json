@@ -1,23 +1,10 @@
 {
   "type": "the_bumblezone:the_bumblezone",
   "generator": {
+    "type": "the_bumblezone:chunk_generator",
+    "settings": "the_bumblezone:bz_noise_settings",
     "biome_source": {
       "type": "the_bumblezone:biome_source"
-    },
-    "type": "the_bumblezone:chunk_generator",
-    "structures": {
-      "structures": {
-        "the_bumblezone:pollinated_stream": {
-          "spacing": 8,
-          "separation": 6,
-          "salt": 938497222
-        },
-        "the_bumblezone:honey_cave_room": {
-          "spacing": 3,
-          "separation": 1,
-          "salt": 722299384
-        }
-      }
     }
   }
 }

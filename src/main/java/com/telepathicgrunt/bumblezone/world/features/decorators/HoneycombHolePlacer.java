@@ -1,29 +1,37 @@
 package com.telepathicgrunt.bumblezone.world.features.decorators;
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.bumblezone.modinit.BzPlacements;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneDecoratorConfiguration;
-import net.minecraft.world.level.levelgen.placement.DecorationContext;
-import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
+import net.minecraft.world.level.levelgen.placement.PlacementContext;
+import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
-public class HoneycombHolePlacer extends FeatureDecorator<NoneDecoratorConfiguration> {
+public class HoneycombHolePlacer extends PlacementModifier {
     private enum SliceState {NEITHER, AIR, SOLID}
+    private static final HoneycombHolePlacer INSTANCE = new HoneycombHolePlacer();
+    public static final Codec<HoneycombHolePlacer> CODEC = Codec.unit(() -> INSTANCE);
 
-    public HoneycombHolePlacer(Codec<NoneDecoratorConfiguration> codec) {
-        super(codec);
+    public static HoneycombHolePlacer honeycombHolePlacer() {
+        return INSTANCE;
     }
 
     @Override
-    public Stream<BlockPos> getPositions(DecorationContext context, Random random, NoneDecoratorConfiguration placementConfig, BlockPos pos) {
+    public PlacementModifierType<?> type() {
+        return BzPlacements.HONEYCOMB_HOLE_PLACER;
+    }
+
+    @Override
+    public Stream<BlockPos> getPositions(PlacementContext placementContext, Random random, BlockPos blockPos) {
         //Start at top
-        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(pos.getX() - 4, 236, pos.getZ() + 4);
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(blockPos.getX() - 4, 236, blockPos.getZ() + 4);
         List<BlockPos> blockPosList = new ArrayList<>();
         boolean alternate = false;
 
@@ -41,13 +49,13 @@ public class HoneycombHolePlacer extends FeatureDecorator<NoneDecoratorConfigura
                 alternate = !alternate;
 
                 //Makes sure the place for holes is valid
-                if (isPlaceValid(context, mutableBlockPos)) {
+                if (isPlaceValid(placementContext, mutableBlockPos)) {
                     blockPosList.add(mutableBlockPos.immutable());
                 }
             }
 
             //set it back to the top but with an offset for the second layer of holes
-            mutableBlockPos.set(pos.getX() + 4, 236, pos.getZ() + 12);
+            mutableBlockPos.set(blockPos.getX() + 4, 236, blockPos.getZ() + 12);
         }
 
         return blockPosList.stream();
@@ -61,7 +69,7 @@ public class HoneycombHolePlacer extends FeatureDecorator<NoneDecoratorConfigura
      * It also needs one slide to be invalid so that the hole is not
      * placed inside the terrain and cutoff from the outside.
      */
-    private boolean isPlaceValid(DecorationContext world, BlockPos pos) {
+    private boolean isPlaceValid(PlacementContext world, BlockPos pos) {
         boolean completelySolidSlice = false;
         boolean airInSlice = false;
 
@@ -80,7 +88,7 @@ public class HoneycombHolePlacer extends FeatureDecorator<NoneDecoratorConfigura
     /**
      * Checks if the circular slice here is entirely solid land.
      */
-    private SliceState StateOfThisSlice(DecorationContext world, BlockPos pos) {
+    private SliceState StateOfThisSlice(PlacementContext world, BlockPos pos) {
         BlockState blockState;
         double distanceSq;
 

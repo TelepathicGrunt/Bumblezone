@@ -1,0 +1,12 @@
+{
+  "feature": "the_bumblezone:honey_crystal_feature",
+  "placement": [
+    {
+      "count": 2,
+      "type": "the_bumblezone:random_3d_underground_chunk_placement"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

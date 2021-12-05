@@ -1,0 +1,11 @@
+{
+  "feature": "the_bumblezone:bee_dungeon",
+  "placement": [
+    {
+      "type": "the_bumblezone:bee_dungeon_placer"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

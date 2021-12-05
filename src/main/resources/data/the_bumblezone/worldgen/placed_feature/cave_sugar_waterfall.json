@@ -1,0 +1,27 @@
+{
+  "feature": "the_bumblezone:cave_sugar_waterfall",
+  "placement": [
+    {
+      "count": 75,
+      "type": "minecraft:count"
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "height": {
+        "min_inclusive": {
+          "above_bottom": 8
+        },
+        "max_inclusive": {
+          "below_top": 8
+        },
+        "type": "minecraft:uniform"
+      },
+      "type": "minecraft:height_range"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

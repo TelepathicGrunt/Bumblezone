@@ -1,0 +1,18 @@
+{
+  "config": {
+    "rock_count": 4,
+    "hole_count": 1,
+    "valid_blocks": [
+      "minecraft:honey_block",
+      "minecraft:honeycomb_block"
+    ],
+    "state": {
+      "Properties": {
+        "falling": "true"
+      },
+      "Name": "the_bumblezone:sugar_water"
+    },
+    "requires_block_below": true
+  },
+  "type": "minecraft:spring_feature"
+}
