@@ -2,19 +2,27 @@ package com.telepathicgrunt.bumblezone.world.dimension.layer;
 
 
 import com.telepathicgrunt.bumblezone.world.dimension.BzBiomeProvider;
-import net.minecraft.world.level.newbiome.context.Context;
-import net.minecraft.world.level.newbiome.layer.traits.AreaTransformer0;
+import com.telepathicgrunt.bumblezone.world.dimension.layer.vanilla.AreaTransformer0;
+import com.telepathicgrunt.bumblezone.world.dimension.layer.vanilla.Context;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.biome.Biome;
 
-public enum BzBiomeNonstandardLayer implements AreaTransformer0 {
-    INSTANCE;
+public class BzBiomeNonstandardLayer implements AreaTransformer0 {
+
+    private final Registry<Biome> biomeRegistry;
+
+    public BzBiomeNonstandardLayer(Registry<Biome> biomeRegistry) {
+        this.biomeRegistry = biomeRegistry;
+    }
+
 
     public int applyPixel(Context noise, int x, int z) {
-        if(!BzBiomeProvider.NONSTANDARD_BIOME.isEmpty() && noise.nextRandom(10) == 0) {
-            return BzBiomeProvider.LAYERS_BIOME_REGISTRY.getId(
-                        BzBiomeProvider.NONSTANDARD_BIOME.get(
-                            noise.nextRandom(BzBiomeProvider.NONSTANDARD_BIOME.size())));
+        if(!BzBiomeProvider.nonstandardBiome.isEmpty() && noise.nextRandom(10) == 0) {
+            return biomeRegistry.getId(
+                        BzBiomeProvider.nonstandardBiome.get(
+                            noise.nextRandom(BzBiomeProvider.nonstandardBiome.size())));
         }
-        else{
+        else {
             return -1;
         }
     }

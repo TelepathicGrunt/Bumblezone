@@ -1,24 +1,28 @@
 package com.telepathicgrunt.bumblezone.world.dimension.layer;
 
 import com.telepathicgrunt.bumblezone.world.dimension.BzBiomeProvider;
-import net.minecraft.world.level.newbiome.context.Context;
-import net.minecraft.world.level.newbiome.layer.traits.CastleTransformer;
+import com.telepathicgrunt.bumblezone.world.dimension.layer.vanilla.CastleTransformer;
+import com.telepathicgrunt.bumblezone.world.dimension.layer.vanilla.Context;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.biome.Biome;
 
 
-public enum BzBiomePollinatedFieldsLayer implements CastleTransformer {
-    INSTANCE;
+public class BzBiomePollinatedFieldsLayer implements CastleTransformer {
+    
+    private final Registry<Biome> biomeRegistry;
+
+    public BzBiomePollinatedFieldsLayer(Registry<Biome> biomeRegistry) {
+        this.biomeRegistry = biomeRegistry;
+    }
 
     public int apply(Context context, int n, int e, int s, int w, int center) {
-        int hivePillarId = BzBiomeProvider.LAYERS_BIOME_REGISTRY.getId(
-                BzBiomeProvider.LAYERS_BIOME_REGISTRY.get(BzBiomeProvider.POLLINATED_PILLAR));
-        int pollinatedFields = BzBiomeProvider.LAYERS_BIOME_REGISTRY.getId(
-                BzBiomeProvider.LAYERS_BIOME_REGISTRY.get(BzBiomeProvider.POLLINATED_FIELDS));
+        int hivePillarId = biomeRegistry.getId(biomeRegistry.get(BzBiomeProvider.POLLINATED_PILLAR));
+        int pollinatedFields = biomeRegistry.getId(biomeRegistry.get(BzBiomeProvider.POLLINATED_FIELDS));
 
         if(center != hivePillarId) {
             boolean borderingHivePillar = false;
 
-            if((n == hivePillarId || e == hivePillarId) ||
-                (w == hivePillarId || s == hivePillarId)) {
+            if((n == hivePillarId || e == hivePillarId) || (w == hivePillarId || s == hivePillarId)) {
                 borderingHivePillar = true;
             }
 

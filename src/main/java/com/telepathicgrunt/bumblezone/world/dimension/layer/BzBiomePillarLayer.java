@@ -1,24 +1,29 @@
 package com.telepathicgrunt.bumblezone.world.dimension.layer;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
-import com.telepathicgrunt.bumblezone.world.dimension.BzBiomeProvider;
+import com.telepathicgrunt.bumblezone.world.dimension.layer.vanilla.CastleTransformer;
+import com.telepathicgrunt.bumblezone.world.dimension.layer.vanilla.Context;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.newbiome.context.Context;
-import net.minecraft.world.level.newbiome.layer.traits.CastleTransformer;
+import net.minecraft.world.level.biome.Biome;
 
 
-public enum BzBiomePillarLayer implements CastleTransformer {
-    INSTANCE;
+public class BzBiomePillarLayer implements CastleTransformer {
 
     private static final ResourceLocation HIVE_PILLAR = new ResourceLocation(Bumblezone.MODID, "hive_pillar");
+    private final Registry<Biome> biomeRegistry;
+
+    public BzBiomePillarLayer(Registry<Biome> biomeRegistry) {
+        this.biomeRegistry = biomeRegistry;
+    }
 
     @Override
-    public int apply(Context context, int n, int e, int s, int w, int center) {
+    public int apply(Context context, int n, int e, int s, int w, int c) {
 
-        if (context.nextRandom(12) == 0 && n == center && e == center && s == center && w == center) {
-            return BzBiomeProvider.LAYERS_BIOME_REGISTRY.getId(BzBiomeProvider.LAYERS_BIOME_REGISTRY.get(HIVE_PILLAR));
+        if (context.nextRandom(12) == 0 && n == c && e == c && s == c && w == c) {
+            return biomeRegistry.getId(biomeRegistry.get(HIVE_PILLAR));
         }
 
-        return center;
+        return c;
     }
 }

@@ -9,5 +9,4 @@ public interface PlayerDamageShieldInvoker {
 
     @Invoker("hurtCurrentlyUsedShield")
     void thebumblezone_callDamagedShield(float amount);
-
 }

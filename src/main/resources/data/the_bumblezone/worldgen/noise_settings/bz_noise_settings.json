@@ -32,28 +32,28 @@
   "noise": {
     "min_y": 0,
     "height": 256,
-    "terrain_shaper": {
-      "offset": 0.0,
-      "factor": 0.0,
-      "jaggedness": 0.0
-    },
     "size_horizontal": 1,
     "size_vertical": 2,
     "sampling": {
-      "xz_scale": 1.0,
-      "y_scale": 3.0,
+      "xz_scale": 10,
+      "y_scale": 0.1,
       "xz_factor": 80.0,
-      "y_factor": 60.0
+      "y_factor": 100.0
     },
     "top_slide": {
-      "target": 0.9375,
-      "size": 3,
-      "offset": 0
+      "target": 0.05,
+      "size": 20,
+      "offset": -1
     },
     "bottom_slide": {
-      "target": 2.5,
-      "size": 4,
+      "target": 0.05,
+      "size": 20,
       "offset": -1
+    },
+    "terrain_shaper": {
+      "offset": 0.0,
+      "factor": 0.1,
+      "jaggedness": -7.0
     }
   },
   "surface_rule": {
