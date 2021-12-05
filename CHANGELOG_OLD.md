@@ -82,7 +82,7 @@ Fixed durability bar on Honey Crystal Shield to correctly show how much durabili
 Protection of the Hive on the player will now be removed if you hurt a Bee outside The Bumblezone dimension.
 
 ##### Recipes:
-Renamed the_bumblezone:beeswax_planks_to_bee_nests recipe json to the_bumblezone:beehive_beeswax_to_bee_nest.
+Renamed the_bumblezone:beehive_beeswax_to_bee_nests recipe json to the_bumblezone:beehive_beeswax_to_bee_nest.
 
 
 ### **(V.3.2.6 Changes) (1.17.1 Minecraft)**

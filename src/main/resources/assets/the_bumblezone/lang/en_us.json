@@ -3,14 +3,14 @@
 
   "block.the_bumblezone.porous_honeycomb_block": "Porous Honeycomb Block",
   "block.the_bumblezone.filled_porous_honeycomb_block": "Filled Porous Honeycomb Block",
-  "block.the_bumblezone.dead_honeycomb_larva_block": "Empty Honeycomb Brood Block",
-  "block.the_bumblezone.honeycomb_larva_block": "Honeycomb Brood Block",
+  "block.the_bumblezone.empty_honeycomb_brood_block": "Empty Honeycomb Brood Block",
+  "block.the_bumblezone.honeycomb_brood_block": "Honeycomb Brood Block",
   "block.the_bumblezone.sugar_infused_cobblestone": "Sugar Infused Cobblestone",
   "block.the_bumblezone.sugar_infused_stone": "Sugar Infused Stone",
   "block.the_bumblezone.sticky_honey_residue": "Sticky Honey Residue",
   "block.the_bumblezone.sticky_honey_redstone": "Sticky Honey Redstone",
   "block.the_bumblezone.honey_crystal": "Honey Crystal",
-  "block.the_bumblezone.beeswax_planks": "Beehive Beeswax",
+  "block.the_bumblezone.beehive_beeswax": "Beehive Beeswax",
   "block.the_bumblezone.pile_of_pollen": "Pile of Pollen",
 
   "fluid.the_bumblezone.sugar_water_still": "Sugar Water",

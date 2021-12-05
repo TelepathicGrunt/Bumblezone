@@ -71,7 +71,7 @@
         },
         "then_run": {
           "result_state": {
-            "Name": "the_bumblezone:beeswax_planks"
+            "Name": "the_bumblezone:beehive_beeswax"
           },
           "type": "minecraft:block"
         },
@@ -93,7 +93,7 @@
         },
         "then_run": {
           "result_state": {
-            "Name": "minecraft:beeswax_planks"
+            "Name": "minecraft:beehive_beeswax"
           },
           "type": "minecraft:block"
         },

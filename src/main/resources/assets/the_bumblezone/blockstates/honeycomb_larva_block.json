@@ -1,95 +1,95 @@
 {
   "variants": {
     "facing=down,age=0": {
-      "model": "the_bumblezone:block/stage_1_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_1_honeycomb_brood_block",
       "x": 270
     },
     "facing=down,age=1": {
-      "model": "the_bumblezone:block/stage_2_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_2_honeycomb_brood_block",
       "x": 270
     },
     "facing=down,age=2": {
-      "model": "the_bumblezone:block/stage_3_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_3_honeycomb_brood_block",
       "x": 270
     },
     "facing=down,age=3": {
-      "model": "the_bumblezone:block/stage_4_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_4_honeycomb_brood_block",
       "x": 270
     },
     "facing=up,age=0": {
-      "model": "the_bumblezone:block/stage_1_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_1_honeycomb_brood_block",
       "x": 90
     },
     "facing=up,age=1": {
-      "model": "the_bumblezone:block/stage_2_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_2_honeycomb_brood_block",
       "x": 90
     },
     "facing=up,age=2": {
-      "model": "the_bumblezone:block/stage_3_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_3_honeycomb_brood_block",
       "x": 90
     },
     "facing=up,age=3": {
-      "model": "the_bumblezone:block/stage_4_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_4_honeycomb_brood_block",
       "x": 90
     },
     "facing=south,age=0": {
-      "model": "the_bumblezone:block/stage_1_honeycomb_larva_block"
+      "model": "the_bumblezone:block/stage_1_honeycomb_brood_block"
     },
     "facing=south,age=1": {
-      "model": "the_bumblezone:block/stage_2_honeycomb_larva_block"
+      "model": "the_bumblezone:block/stage_2_honeycomb_brood_block"
     },
     "facing=south,age=2": {
-      "model": "the_bumblezone:block/stage_3_honeycomb_larva_block"
+      "model": "the_bumblezone:block/stage_3_honeycomb_brood_block"
     },
     "facing=south,age=3": {
-      "model": "the_bumblezone:block/stage_4_honeycomb_larva_block"
+      "model": "the_bumblezone:block/stage_4_honeycomb_brood_block"
     },
     "facing=north,age=0": {
-      "model": "the_bumblezone:block/stage_1_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_1_honeycomb_brood_block",
       "y": 180
     },
     "facing=north,age=1": {
-      "model": "the_bumblezone:block/stage_2_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_2_honeycomb_brood_block",
       "y": 180
     },
     "facing=north,age=2": {
-      "model": "the_bumblezone:block/stage_3_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_3_honeycomb_brood_block",
       "y": 180
     },
     "facing=north,age=3": {
-      "model": "the_bumblezone:block/stage_4_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_4_honeycomb_brood_block",
       "y": 180
     },
     "facing=east,age=0": {
-      "model": "the_bumblezone:block/stage_1_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_1_honeycomb_brood_block",
       "y": 270
     },
     "facing=east,age=1": {
-      "model": "the_bumblezone:block/stage_2_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_2_honeycomb_brood_block",
       "y": 270
     },
     "facing=east,age=2": {
-      "model": "the_bumblezone:block/stage_3_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_3_honeycomb_brood_block",
       "y": 270
     },
     "facing=east,age=3": {
-      "model": "the_bumblezone:block/stage_4_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_4_honeycomb_brood_block",
       "y": 270
     },
     "facing=west,age=0": {
-      "model": "the_bumblezone:block/stage_1_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_1_honeycomb_brood_block",
       "y": 90
     },
     "facing=west,age=1": {
-      "model": "the_bumblezone:block/stage_2_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_2_honeycomb_brood_block",
       "y": 90
     },
     "facing=west,age=2": {
-      "model": "the_bumblezone:block/stage_3_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_3_honeycomb_brood_block",
       "y": 90
     },
     "facing=west,age=3": {
-      "model": "the_bumblezone:block/stage_4_honeycomb_larva_block",
+      "model": "the_bumblezone:block/stage_4_honeycomb_brood_block",
       "y": 90
     }
   }

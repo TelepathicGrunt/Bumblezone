@@ -1,7 +1,7 @@
 package com.telepathicgrunt.bumblezone.modinit;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
-import com.telepathicgrunt.bumblezone.blocks.BeeswaxPlanks;
+import com.telepathicgrunt.bumblezone.blocks.BeehiveBeeswax;
 import com.telepathicgrunt.bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.bumblezone.blocks.FilledPorousHoneycomb;
 import com.telepathicgrunt.bumblezone.blocks.HoneyCrystal;
@@ -38,7 +38,7 @@ public class BzBlocks {
     public static final Block HONEY_CRYSTAL = new HoneyCrystal();
     public static final Block STICKY_HONEY_RESIDUE = new StickyHoneyResidue();
     public static final Block STICKY_HONEY_REDSTONE = new StickyHoneyRedstone();
-    public static final Block BEESWAX_PLANKS = new BeeswaxPlanks();
+    public static final Block BEEHIVE_BEESWAX = new BeehiveBeeswax();
     public static final Block PILE_OF_POLLEN = new PileOfPollen();
 
     /**
@@ -47,14 +47,14 @@ public class BzBlocks {
     public static void registerBlocks() {
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "porous_honeycomb_block"), POROUS_HONEYCOMB);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "filled_porous_honeycomb_block"), FILLED_POROUS_HONEYCOMB);
-        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "dead_honeycomb_larva_block"), EMPTY_HONEYCOMB_BROOD);
-        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "honeycomb_larva_block"), HONEYCOMB_BROOD);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "empty_honeycomb_brood_block"), EMPTY_HONEYCOMB_BROOD);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "honeycomb_brood_block"), HONEYCOMB_BROOD);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_infused_stone"), SUGAR_INFUSED_STONE);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_infused_cobblestone"), SUGAR_INFUSED_COBBLESTONE);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "honey_crystal"), HONEY_CRYSTAL);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "sticky_honey_residue"), STICKY_HONEY_RESIDUE);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "sticky_honey_redstone"), STICKY_HONEY_REDSTONE);
-        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "beeswax_planks"), BEESWAX_PLANKS);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "beehive_beeswax"), BEEHIVE_BEESWAX);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "pile_of_pollen"), PILE_OF_POLLEN);
     }
 }
