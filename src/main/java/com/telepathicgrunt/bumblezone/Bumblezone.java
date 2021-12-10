@@ -9,6 +9,7 @@ import com.telepathicgrunt.bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.bumblezone.modinit.BzBiomeHeightRegistry;
 import com.telepathicgrunt.bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.bumblezone.modinit.BzEffects;
@@ -64,6 +65,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzItemTags.initTags();
         BzFluidTags.tagInit();
         BzEntityTags.tagInit();
+        BzBiomeHeightRegistry.initBiomeHeightRegistry();
 
         // Must be before items so that items like music disc can get sounds
         BzSounds.registerSounds();

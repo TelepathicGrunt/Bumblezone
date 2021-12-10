@@ -7,7 +7,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Optional;
-import java.util.function.Supplier;
 
 public final class BzBiomeHeightRegistry {
     private BzBiomeHeightRegistry() {}
