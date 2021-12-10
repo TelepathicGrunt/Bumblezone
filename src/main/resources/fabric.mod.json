@@ -40,7 +40,7 @@
 
   "depends": {
     "fabricloader": ">=0.12.0",
-    "minecraft": ">=1.18.0",
+    "minecraft": ">=1.18.1",
     "fabric": ">=0.43.1",
     "cloth-config2": ">=6.0.42",
     "cardinal-components-base": "*",
