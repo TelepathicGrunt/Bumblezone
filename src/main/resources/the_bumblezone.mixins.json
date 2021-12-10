@@ -3,7 +3,7 @@
   "package": "com.telepathicgrunt.bumblezone.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "NoiseChunkAccessor",
+    "world.NoiseChunkAccessor",
     "blocks.AbstractFurnaceBlockEntityMixin",
     "blocks.BeeHiveDropsMixin",
     "blocks.DefaultDispenseItemBehaviorInvoker",

@@ -5,7 +5,7 @@ import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.bumblezone.Bumblezone;
-import com.telepathicgrunt.bumblezone.mixin.NoiseChunkAccessor;
+import com.telepathicgrunt.bumblezone.mixin.world.NoiseChunkAccessor;
 import com.telepathicgrunt.bumblezone.mixin.world.NoiseGeneratorSettingsInvoker;
 import com.telepathicgrunt.bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.bumblezone.utils.BzPlacingUtils;
@@ -78,7 +78,8 @@ public class BzChunkGenerator extends ChunkGenerator {
             RegistryLookupCodec.create(Registry.NOISE_REGISTRY).forGetter(bzChunkGenerator -> bzChunkGenerator.noises),
             BiomeSource.CODEC.fieldOf("biome_source").forGetter(bzChunkGenerator -> bzChunkGenerator.biomeSource),
             Codec.LONG.fieldOf("seed").orElseGet(WorldSeedHolder::getSeed).stable().forGetter(bzChunkGenerator -> bzChunkGenerator.seed),
-            NoiseGeneratorSettings.CODEC.fieldOf("settings").forGetter(bzChunkGenerator -> bzChunkGenerator.settings))
+            NoiseGeneratorSettings.CODEC.fieldOf("settings").forGetter(bzChunkGenerator -> bzChunkGenerator.settings),
+            RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter((bzChunkGenerator) -> bzChunkGenerator.biomeRegistry))
     .apply(instance, instance.stable(BzChunkGenerator::new)));
 
     private static final BlockState AIR = Blocks.AIR.defaultBlockState();
@@ -88,6 +89,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     private final long seed;
     protected final Supplier<NoiseGeneratorSettings> settings;
     private final NoiseSampler sampler;
+    private final Registry<Biome> biomeRegistry;
     private final SurfaceSystem surfaceSystem;
     private final WorldGenMaterialRule materialRule;
     private final Aquifer.FluidPicker globalFluidPicker;
@@ -95,22 +97,22 @@ public class BzChunkGenerator extends ChunkGenerator {
     private static final MobSpawnSettings.SpawnerData INITIAL_BEE_ENTRY = new MobSpawnSettings.SpawnerData(EntityType.BEE, 1, 1, 4);
     private static final MobSpawnSettings.SpawnerData INITIAL_BEEHEMOTH_ENTRY = new MobSpawnSettings.SpawnerData(BzEntities.BEEHEMOTH, 1, 1, 1);
 
-    public BzChunkGenerator(Registry<NormalNoise.NoiseParameters> registry, BiomeSource biomeSource, long seed, Supplier<NoiseGeneratorSettings> supplier) {
-        this(registry, biomeSource, biomeSource, seed, supplier);
+    public BzChunkGenerator(Registry<NormalNoise.NoiseParameters> registry, BiomeSource biomeSource, long seed, Supplier<NoiseGeneratorSettings> supplier, Registry<Biome> biomeRegistry) {
+        this(registry, biomeSource, biomeSource, seed, supplier, biomeRegistry);
     }
 
-    private BzChunkGenerator(Registry<NormalNoise.NoiseParameters> registry, BiomeSource biomeSource, BiomeSource biomeSource2, long seed, Supplier<NoiseGeneratorSettings> supplier) {
+    private BzChunkGenerator(Registry<NormalNoise.NoiseParameters> registry, BiomeSource biomeSource, BiomeSource biomeSource2, long seed, Supplier<NoiseGeneratorSettings> supplier, Registry<Biome> biomeRegistry) {
         super(biomeSource, biomeSource2, supplier.get().structureSettings(), seed);
         this.noises = registry;
         this.seed = seed;
         this.settings = supplier;
+        this.biomeRegistry = biomeRegistry;
         NoiseGeneratorSettings noiseGeneratorSettings = this.settings.get();
         this.defaultBlock = noiseGeneratorSettings.getDefaultBlock();
         NoiseSettings noiseSettings = noiseGeneratorSettings.noiseSettings();
-        this.sampler = new NoiseSampler(noiseSettings, noiseGeneratorSettings.isNoiseCavesEnabled(), seed, registry, noiseGeneratorSettings.getRandomSource());
+        this.sampler = new BiomeInfluencedNoiseSampler(noiseSettings, noiseGeneratorSettings.isNoiseCavesEnabled(), seed, registry, noiseGeneratorSettings.getRandomSource(), biomeSource, biomeRegistry);
         ImmutableList.Builder<WorldGenMaterialRule> builder = ImmutableList.builder();
         builder.add((noiseChunk, x, y, z) -> ((NoiseChunkAccessor)noiseChunk).thebumblezone_callUpdateNoiseAndGenerateBaseState(x, y, z));
-        builder.add((noiseChunk, x, y, z) -> ((NoiseChunkAccessor)noiseChunk).thebumblezone_callOreVeinify(x, y, z));
         this.materialRule = new MaterialRuleList(builder.build());
         Aquifer.FluidStatus fluidStatus = new Aquifer.FluidStatus(-54, Blocks.LAVA.defaultBlockState());
         int seaLevel = noiseGeneratorSettings.seaLevel();
@@ -152,7 +154,7 @@ public class BzChunkGenerator extends ChunkGenerator {
 
     @Override
     public ChunkGenerator withSeed(long seed) {
-        return new BzChunkGenerator(this.noises, this.biomeSource.withSeed(seed), seed, this.settings);
+        return new BzChunkGenerator(this.noises, this.biomeSource.withSeed(seed), seed, this.settings, this.biomeRegistry);
     }
 
     public boolean stable(long seed, ResourceKey<NoiseGeneratorSettings> resourceKey) {
@@ -172,49 +174,49 @@ public class BzChunkGenerator extends ChunkGenerator {
     @Override
     public NoiseColumn getBaseColumn(int x, int z, LevelHeightAccessor levelHeightAccessor) {
         NoiseSettings noiseSettings = this.settings.get().noiseSettings();
-        int maxY = Math.max(noiseSettings.minY(), levelHeightAccessor.getMinBuildHeight());
-        int minY = Math.min(noiseSettings.minY() + noiseSettings.height(), levelHeightAccessor.getMaxBuildHeight());
-        int maxYCell = Mth.intFloorDiv(maxY, noiseSettings.getCellHeight());
-        int minYCell = Mth.intFloorDiv(minY - maxY, noiseSettings.getCellHeight());
-        if (minYCell <= 0) {
-            return new NoiseColumn(maxY, EMPTY_COLUMN);
+        int minY = Math.max(noiseSettings.minY(), levelHeightAccessor.getMinBuildHeight());
+        int maxY = Math.min(noiseSettings.minY() + noiseSettings.height(), levelHeightAccessor.getMaxBuildHeight());
+        int minYCell = Mth.intFloorDiv(minY, noiseSettings.getCellHeight());
+        int maxYCell = Mth.intFloorDiv(maxY - minY, noiseSettings.getCellHeight());
+        if (maxYCell <= 0) {
+            return new NoiseColumn(minY, EMPTY_COLUMN);
         }
         else {
-            BlockState[] blockStates = new BlockState[minYCell * noiseSettings.getCellHeight()];
-            this.iterateNoiseColumn(x, z, blockStates, null, maxYCell, minYCell);
-            return new NoiseColumn(maxY, blockStates);
+            BlockState[] blockStates = new BlockState[maxYCell * noiseSettings.getCellHeight()];
+            this.iterateNoiseColumn(x, z, blockStates, null, minYCell, maxYCell);
+            return new NoiseColumn(minY, blockStates);
         }
     }
 
-    private OptionalInt iterateNoiseColumn(int x, int z, @Nullable BlockState[] blockStates, @Nullable Predicate<BlockState> predicate, int k, int l) {
+    private OptionalInt iterateNoiseColumn(int x, int z, @Nullable BlockState[] blockStates, @Nullable Predicate<BlockState> predicate, int minYCell, int maxYCell) {
         NoiseSettings noiseSettings = this.settings.get().noiseSettings();
-        int m = noiseSettings.getCellWidth();
-        int n = noiseSettings.getCellHeight();
-        int o = Math.floorDiv(x, m);
-        int p = Math.floorDiv(z, m);
-        int q = Math.floorMod(x, m);
-        int r = Math.floorMod(z, m);
-        int s = o * m;
-        int t = p * m;
-        double d = (double)q / (double)m;
-        double e = (double)r / (double)m;
-        NoiseChunk noiseChunk = NoiseChunk.forColumn(s, t, k, l, this.sampler, this.settings.get(), this.globalFluidPicker);
+        int cellWidth = noiseSettings.getCellWidth();
+        int cellHeight = noiseSettings.getCellHeight();
+        int o = Math.floorDiv(x, cellWidth);
+        int p = Math.floorDiv(z, cellWidth);
+        int q = Math.floorMod(x, cellWidth);
+        int r = Math.floorMod(z, cellWidth);
+        int s = o * cellWidth;
+        int t = p * cellWidth;
+        double d = (double)q / (double)cellWidth;
+        double e = (double)r / (double)cellWidth;
+        NoiseChunk noiseChunk = NoiseChunk.forColumn(s, t, minYCell, maxYCell, this.sampler, this.settings.get(), this.globalFluidPicker);
         noiseChunk.initializeForFirstCellX();
         noiseChunk.advanceCellX(0);
 
-        for(int u = l - 1; u >= 0; --u) {
-            noiseChunk.selectCellYZ(u, 0);
+        for(int currentYCell = maxYCell - 1; currentYCell >= 0; --currentYCell) {
+            noiseChunk.selectCellYZ(currentYCell, 0);
 
-            for(int v = n - 1; v >= 0; --v) {
-                int w = (k + u) * n + v;
-                double f = (double)v / (double)n;
+            for(int yInCell = cellHeight - 1; yInCell >= 0; --yInCell) {
+                int w = (minYCell + currentYCell) * cellHeight + yInCell;
+                double f = (double)yInCell / (double)cellHeight;
                 noiseChunk.updateForY(f);
                 noiseChunk.updateForX(d);
                 noiseChunk.updateForZ(e);
                 BlockState blockState = this.materialRule.apply(noiseChunk, x, w, z);
                 BlockState blockState2 = blockState == null ? this.defaultBlock : blockState;
                 if (blockStates != null) {
-                    int index = u * n + v;
+                    int index = currentYCell * cellHeight + yInCell;
                     blockStates[index] = blockState2;
                 }
 
