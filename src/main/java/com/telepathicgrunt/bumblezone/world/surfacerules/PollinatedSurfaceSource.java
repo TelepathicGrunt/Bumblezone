@@ -1,4 +1,4 @@
-package com.telepathicgrunt.bumblezone.world.SurfaceRules;
+package com.telepathicgrunt.bumblezone.world.surfacerules;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.bumblezone.utils.OpenSimplex2F;

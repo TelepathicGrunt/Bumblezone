@@ -1,7 +1,7 @@
 package com.telepathicgrunt.bumblezone.modinit;
 
 import com.telepathicgrunt.bumblezone.Bumblezone;
-import com.telepathicgrunt.bumblezone.world.SurfaceRules.PollinatedSurfaceSource;
+import com.telepathicgrunt.bumblezone.world.surfacerules.PollinatedSurfaceSource;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 
