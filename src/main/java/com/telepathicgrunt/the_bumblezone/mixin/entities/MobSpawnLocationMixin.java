@@ -25,5 +25,4 @@ public class MobSpawnLocationMixin {
             ci.cancel();
         }
     }
-
 }

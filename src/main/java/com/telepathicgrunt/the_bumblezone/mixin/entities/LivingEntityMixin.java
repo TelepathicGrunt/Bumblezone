@@ -36,7 +36,7 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "die(Lnet/minecraft/world/damagesource/DamageSource;)V",
             at = @At(value = "HEAD"))
     private void thebumblezone_onDeath(DamageSource source, CallbackInfo ci) {
-        WrathOfTheHiveEffect.calmTheBees(((LivingEntity)(Object)this).level, (LivingEntity)(Object)this);
+        WrathOfTheHiveEffect.calmTheBees(this.level, (LivingEntity)(Object)this);
     }
 
     // Handles teleportation

@@ -46,7 +46,6 @@
     "items.PlayerDamageShieldInvoker",
     "items.SimpleCookingSerializerMixin",
     "world.BiomeSourceAccessor",
-    "world.JigsawConfigurationAccessor",
     "world.NoiseGeneratorSettingsInvoker",
     "world.ServerLevelMixin",
     "world.StructureTemplateAccessor",
