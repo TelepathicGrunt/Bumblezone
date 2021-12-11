@@ -1,36 +1,37 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Material;
 
-public class SugarWaterBlock extends FlowingFluidBlock {
 
-    public SugarWaterBlock(java.util.function.Supplier<? extends FlowingFluid> supplier) {
-        super(supplier, AbstractBlock.Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noDrops().speedFactor(0.95F));
+public class SugarWaterBlock extends LiquidBlock {
+
+    public SugarWaterBlock(FlowingFluid baseFluid) {
+        super(baseFluid, BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noDrops().speedFactor(0.95F));
     }
 
     @Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-        if (this.receiveNeighborFluids(world, pos, state)) {
-            world.getLiquidTicks().scheduleTick(pos, state.getFluidState().getType(), this.getFluid().getTickDelay(world));
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+        if (this.shouldSpreadLiquid(world, pos, state)) {
+            world.scheduleTick(pos, state.getFluidState().getType(), this.getFluid().getTickDelay(world));
         }
     }
 
-    private boolean receiveNeighborFluids(World world, BlockPos pos, BlockState state) {
+    private boolean shouldSpreadLiquid(Level world, BlockPos pos, BlockState state)  {
         boolean flag = false;
 
         for (Direction direction : Direction.values()) {
@@ -64,22 +65,17 @@ public class SugarWaterBlock extends FlowingFluidBlock {
      */
     @Deprecated
     @Override
-    public void entityInside(BlockState state, World world, BlockPos position, Entity entity) {
-        if (entity instanceof BeeEntity) {
-            BeeEntity beeEntity = ((BeeEntity) entity);
+    public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
+        if (entity instanceof Bee) {
+            Bee beeEntity = ((Bee) entity);
             if (beeEntity.hurtTime == 0)
-                beeEntity.addEffect(new EffectInstance(
-                        Effects.REGENERATION,
-                        4,
-                        0,
-                        false,
-                        false));
+                beeEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 4, 0, false, false));
         }
 
         super.entityInside(state, world, position, entity);
     }
 
-    private void triggerMixEffects(World world, BlockPos pos) {
+    private void triggerMixEffects(Level world, BlockPos pos) {
         world.levelEvent(1501, pos, 0);
     }
 }

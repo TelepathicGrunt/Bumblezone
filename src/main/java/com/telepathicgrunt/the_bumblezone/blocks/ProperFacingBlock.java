@@ -1,13 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.DirectionalBlock;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.world.level.block.DirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class ProperFacingBlock extends DirectionalBlock {
-    protected ProperFacingBlock(Properties builder) {
-        super(builder);
+    protected ProperFacingBlock(Properties settings) {
+        super(settings);
     }
 
     @Override

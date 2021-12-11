@@ -3,15 +3,15 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public class BeeBread extends Item {
     public BeeBread(Properties properties) {
@@ -19,18 +19,18 @@ public class BeeBread extends Item {
     }
 
     @Override
-    public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity playerEntity, LivingEntity entity, Hand playerHand) {
-        if(!(entity instanceof BeeEntity) && entity.getType() != BzEntities.BEEHEMOTH.get())
-            return ActionResultType.PASS;
+    public InteractionResult interactLivingEntity(ItemStack stack, Player playerEntity, LivingEntity entity, InteractionHand playerHand) {
+        if(!(entity instanceof Bee) && entity.getType() != BzEntities.BEEHEMOTH.get())
+            return InteractionResult.PASS;
 
         int currentEffectAmplifier = 0;
         if(entity.hasEffect(BzEffects.BEENERGIZED.get())) {
             currentEffectAmplifier = Math.min(entity.getEffect(BzEffects.BEENERGIZED.get()).getAmplifier() + 1, 2);
-            if(currentEffectAmplifier == 2 && playerEntity instanceof ServerPlayerEntity) {
-                BzCriterias.BEENERGIZED_MAXED_TRIGGER.trigger((ServerPlayerEntity) playerEntity);
+            if(currentEffectAmplifier == 2 && playerEntity instanceof ServerPlayer) {
+                BzCriterias.BEENERGIZED_MAXED_TRIGGER.trigger((ServerPlayer) playerEntity);
             }
         }
-        entity.addEffect(new EffectInstance(BzEffects.BEENERGIZED.get(), 6000, currentEffectAmplifier, true, true, true));
+        entity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 6000, currentEffectAmplifier, true, true, true));
 
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
         if (!playerEntity.isCreative()) {
@@ -38,6 +38,6 @@ public class BeeBread extends Item {
         }
 
         playerEntity.swing(playerHand, true);
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 }

@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.event.village.WandererTradesEvent;
 
 public class WanderingTrades {

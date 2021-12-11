@@ -1,0 +1,8 @@
+{
+  "feature": "the_bumblezone:honeycomb_caves",
+  "placement": [
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

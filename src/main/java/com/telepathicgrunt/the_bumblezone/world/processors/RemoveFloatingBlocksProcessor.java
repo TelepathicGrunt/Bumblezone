@@ -2,16 +2,16 @@ package com.telepathicgrunt.the_bumblezone.world.processors;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.chunk.IChunk;
-import net.minecraft.world.gen.feature.template.IStructureProcessorType;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.StructureProcessor;
-import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 /**
  * For removing stuff like floating tall grass or kelp
@@ -22,32 +22,32 @@ public class RemoveFloatingBlocksProcessor extends StructureProcessor {
     private RemoveFloatingBlocksProcessor() { }
 
     @Override
-    public Template.BlockInfo processBlock(IWorldReader worldView, BlockPos pos, BlockPos blockPos, Template.BlockInfo structureBlockInfoLocal, Template.BlockInfo structureBlockInfoWorld, PlacementSettings structurePlacementData) {
-        BlockPos.Mutable mutable = new BlockPos.Mutable().set(structureBlockInfoWorld.pos);
-        IChunk cachedChunk = worldView.getChunk(mutable);
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(structureBlockInfoWorld.pos);
+        ChunkAccess cachedChunk = worldView.getChunk(mutable);
 
         // attempts to remove invalid floating plants
         if(structureBlockInfoWorld.state.isAir() || structureBlockInfoWorld.state.getMaterial().isLiquid()) {
 
-            // set the block in the world so that canSurvive's result changes
+            // set the block in the world so that canPlaceAt's result changes
             cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state, false);
             BlockState aboveWorldState = worldView.getBlockState(mutable.move(Direction.UP));
 
             // detects the invalidly placed blocks
-            while(mutable.getY() < worldView.getMaxBuildHeight() && !aboveWorldState.canSurvive(worldView, mutable)) {
+            while(mutable.getY() < worldView.getHeight() && !aboveWorldState.canSurvive(worldView, mutable)) {
                 cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state, false);
                 aboveWorldState = worldView.getBlockState(mutable.move(Direction.UP));
             }
         }
         else if(!structureBlockInfoWorld.state.canSurvive(worldView, mutable)) {
-            return new Template.BlockInfo(structureBlockInfoWorld.pos, Blocks.CAVE_AIR.defaultBlockState(), null);
+            return new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos, Blocks.CAVE_AIR.defaultBlockState(), null);
         }
 
         return structureBlockInfoWorld;
     }
 
     @Override
-    protected IStructureProcessorType<?> getType() {
+    protected StructureProcessorType<?> getType() {
         return BzProcessors.REMOVE_FLOATING_BLOCKS_PROCESSOR;
     }
 }

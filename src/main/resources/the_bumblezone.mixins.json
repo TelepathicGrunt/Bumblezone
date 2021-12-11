@@ -4,7 +4,6 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "the_bumblezone.refmap.json",
   "mixins": [
-    "client.RenderingRegistryAccessor",
     "blocks.BeeHiveDropsMixin",
     "blocks.DefaultDispenseItemBehaviorInvoker",
     "blocks.DispenserBlockInvoker",
@@ -13,7 +12,9 @@
     "blocks.PistonTileEntityMixin",
     "blocks.VineBlockAccessor",
     "blocks.WaterEquivalenceMixin",
+    "client.RenderingRegistryAccessor",
     "containers.WorkbenchContainerMixin",
+    "entities.BeeEntityInvoker",
     "entities.BeeEntityMixin",
     "entities.BeePathfindingMixin",
     "entities.BeePollenatedSpawnMixin",
@@ -36,17 +37,18 @@
     "items.PlayerDamagedMixin",
     "items.PlayerDamageShieldInvoker",
     "world.BiomeGenerationSettingsAccessor",
-    "world.DimensionStructuresSettingsAccessor",
+    "world.BiomeSourceAccessor",
     "world.LayerAccessor",
     "world.ServerWorldMixin",
-    "world.StructureAccessor",
-    "world.TemplateAccessor"
+    "world.StructureFeatureAccessor",
+    "world.StructureSettingsAccessor",
+    "world.StructureTemplateAccessor"
   ],
   "client": [
     "client.FluidBlockRendererMixin",
     "client.FogRendererClientMixin",
     "client.OverlayRendererClientMixin",
-    "world.SkyPropertiesAccessor"
+    "world.DimensionSpecialEffectsAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

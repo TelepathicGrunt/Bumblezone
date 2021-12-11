@@ -3,31 +3,28 @@ package com.telepathicgrunt.the_bumblezone.world.features;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-
-import java.util.Random;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 
-public class CaveSugarWaterfall extends Feature<NoFeatureConfig> {
+public class CaveSugarWaterfall extends Feature<NoneFeatureConfiguration> {
 
     private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
 
-    public CaveSugarWaterfall(Codec<NoFeatureConfig> configFactory) {
+    public CaveSugarWaterfall(Codec<NoneFeatureConfiguration> configFactory) {
         super(configFactory);
     }
 
     @Override
-    public boolean place(ISeedReader world, ChunkGenerator generator, Random random, BlockPos position, NoFeatureConfig config) {
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         //creates a waterfall
-        BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable().set(position);
-        BlockState blockstate = world.getBlockState(blockpos$Mutable.above());
+        BlockPos.MutableBlockPos blockpos$Mutable = new BlockPos.MutableBlockPos().set(context.origin());
+        BlockState blockstate = context.level().getBlockState(blockpos$Mutable.above());
 
         if (!blockstate.canOcclude() || blockstate.is(BzBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
             return false;
@@ -36,7 +33,7 @@ public class CaveSugarWaterfall extends Feature<NoFeatureConfig> {
 
             int numberOfSolidSides = 0;
             int neededNumberOfSides;
-            blockstate = world.getBlockState(blockpos$Mutable.below());
+            blockstate = context.level().getBlockState(blockpos$Mutable.below());
 
             if (blockstate.canOcclude() && blockstate.is(BzBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
                 neededNumberOfSides = 3;
@@ -48,7 +45,7 @@ public class CaveSugarWaterfall extends Feature<NoFeatureConfig> {
 
 
             for (Direction face : Direction.Plane.HORIZONTAL) {
-                blockstate = world.getBlockState(blockpos$Mutable.relative(face));
+                blockstate = context.level().getBlockState(blockpos$Mutable.relative(face));
                 if (blockstate.canOcclude() && blockstate.is(BzBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE)) {
                     ++numberOfSolidSides;
                 } else if (blockstate.getBlock() != CAVE_AIR.getBlock()) {
@@ -58,10 +55,11 @@ public class CaveSugarWaterfall extends Feature<NoFeatureConfig> {
 
             //position valid. begin making waterfall
             if (numberOfSolidSides == neededNumberOfSides) {
-                world.setBlock(blockpos$Mutable, BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), 2);
-                world.getLiquidTicks().scheduleTick(blockpos$Mutable, BzFluids.SUGAR_WATER_FLUID.get(), 0);
+                context.level().setBlock(blockpos$Mutable, BzFluids.SUGAR_WATER_BLOCK.defaultBlockState(), 2);
+                context.level().scheduleTick(blockpos$Mutable, BzFluids.SUGAR_WATER_FLUID, 0);
             }
             return true;
         }
     }
+
 }

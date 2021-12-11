@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
-import net.minecraft.block.VineBlock;
-import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.level.block.VineBlock;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 

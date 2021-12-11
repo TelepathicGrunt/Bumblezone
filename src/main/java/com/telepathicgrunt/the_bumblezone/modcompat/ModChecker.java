@@ -7,17 +7,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 
-public class ModChecker
-{
-	public static boolean potionOfBeesPresent = false;
-	public static boolean productiveBeesPresent = false;
-	public static boolean carrierBeesPresent = false;
-	public static boolean resourcefulBeesPresent = false;
-	public static boolean buzzierBeesPresent = false;
-	public static boolean pokecubePresent = false;
-	public static boolean charmPresent = false;
-	public static boolean cavesAndCliffsPresent = false;
-
+public class ModChecker {
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
 	 *
@@ -29,44 +19,13 @@ public class ModChecker
 	 * after the problematic mod line.
 	 */
     public static void setupModCompat() {
-		String modid = "";
-		try {
-			modid = "potionofbees";
-			loadupModCompat(modid, () -> PotionOfBeesCompat.setupPotionOfBees());
-
-			modid = "carrierbees";
-			loadupModCompat(modid, () -> CarrierBeesCompat.setupCarrierBees());
-
-			modid = "resourcefulbees";
-			loadupModCompat(modid, () -> ResourcefulBeesCompat.setupResourcefulBees());
-
-			modid = "buzzier_bees";
-			loadupModCompat(modid, () -> BuzzierBeesCompat.setupBuzzierBees());
-
-			modid = "productivebees";
-			if(isNotOutdated(modid, "0.5.1", true))
-				loadupModCompat(modid, () -> ProductiveBeesCompat.setupProductiveBees());
-
-			modid = "pokecube_mobs";
-			loadupModCompat(modid, () -> PokecubeCompat.setupPokecube());
-
-			modid = "charm";
-			loadupModCompat(modid, () -> CharmCompat.setupCharm());
-
-			modid = "cavesandcliffs";
-			if(ModList.get().isLoaded(modid)) {
-				if(ModList.get().getModContainerById(modid).get().getModInfo().getVersion().toString().equals("1.16.5-7.1.1")) {
-					Bumblezone.LOGGER.log(Level.INFO, "BUMBLEZONE: You're using version 1.16.5-7.1.1 of " + modid + " that is known to not work with Bumblezone. Please update " + modid + " to the latest version or downgrade it to enable compat with Bumblezone again.");
-				}
-				else {
-					loadupModCompat(modid, () -> CavesAndCliffsBackportCompat.setupCavesAndCliffs());
-				}
-			}
-		}
-		catch (Throwable e) {
-			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
-			e.printStackTrace();
-		}
+//		String modid = "";
+//		try {
+//		}
+//		catch (Throwable e) {
+//			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
+//			e.printStackTrace();
+//		}
     }
 
     private static void loadupModCompat(String modid, Runnable runnable){

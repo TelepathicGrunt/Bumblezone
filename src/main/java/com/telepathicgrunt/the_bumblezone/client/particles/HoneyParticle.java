@@ -1,23 +1,23 @@
 package com.telepathicgrunt.the_bumblezone.client.particles;
 
 import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleFactory;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.UnderwaterParticle;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.SuspendedParticle;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.world.level.material.FluidState;
 
-public class HoneyParticle extends UnderwaterParticle {
-    private HoneyParticle(ClientWorld clientWorld, double xPos, double yPos, double zPos) {
-        super(clientWorld, xPos, yPos, zPos);
+public class HoneyParticle extends SuspendedParticle {
+    private HoneyParticle(ClientLevel clientWorld, SpriteSet spriteProvider, double xPos, double yPos, double zPos) {
+        super(clientWorld, spriteProvider, xPos, yPos, zPos);
         this.rCol = 1F;
         this.gCol = 0.65F;
         this.bCol = 0.0F;
         this.quadSize *= this.random.nextFloat() * 8.5F + 0.5F;
-        this.lifetime = (int)(440 * (Math.random() * 0.55D + 0.45D));
+        this.age = (int)(440 * (Math.random() * 0.55D + 0.45D));
     }
 
     @Override
@@ -25,9 +25,10 @@ public class HoneyParticle extends UnderwaterParticle {
         this.xo = this.x;
         this.yo = this.y;
         this.zo = this.z;
-        if (this.lifetime-- <= 0) {
+        if (this.age-- <= 0) {
             this.remove();
-        } else {
+        }
+        else {
             FluidState fluidState = this.level.getFluidState(new BlockPos(this.x, this.y, this.z));
             if (fluidState.is(BzFluidTags.BZ_HONEY_FLUID)) {
                 if(fluidState.isSource()) {
@@ -43,16 +44,16 @@ public class HoneyParticle extends UnderwaterParticle {
         }
     }
 
-    public static class Factory implements IParticleFactory<BasicParticleType> {
-        private final IAnimatedSprite sprites;
+    public static class Factory implements ParticleProvider<SimpleParticleType> {
+        private final SpriteSet sprites;
 
-        public Factory(IAnimatedSprite sprite) {
+        public Factory(SpriteSet sprite) {
             this.sprites = sprite;
         }
 
         @Override
-        public Particle createParticle(BasicParticleType particleType, ClientWorld clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed) {
-            HoneyParticle honeyParticle = new HoneyParticle(clientWorld, xPos, yPos, zPos);
+        public Particle createParticle(SimpleParticleType particleType, ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed) {
+            HoneyParticle honeyParticle = new HoneyParticle(clientWorld, sprites, xPos, yPos, zPos);
             honeyParticle.pickSprite(this.sprites);
             return honeyParticle;
         }

@@ -2,42 +2,52 @@ package com.telepathicgrunt.the_bumblezone.world.features.decorators;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.feature.WorldDecoratingHelper;
-import net.minecraft.world.gen.placement.NoPlacementConfig;
-import net.minecraft.world.gen.placement.Placement;
+import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.placement.PlacementContext;
+import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.stream.Stream;
 
 
-public class BeeDungeonPlacer extends Placement<NoPlacementConfig> {
-    public BeeDungeonPlacer(Codec<NoPlacementConfig> codec) {
-        super(codec);
+public class BeeDungeonPlacer extends PlacementModifier {
+    private static final BeeDungeonPlacer INSTANCE = new BeeDungeonPlacer();
+    public static final Codec<BeeDungeonPlacer> CODEC = Codec.unit(() -> INSTANCE);
+
+    public static BeeDungeonPlacer beeDungeonPlacer() {
+        return INSTANCE;
     }
 
     @Override
-    public Stream<BlockPos> getPositions(WorldDecoratingHelper context, Random random, NoPlacementConfig placementConfig, BlockPos pos) {
+    public PlacementModifierType<?> type() {
+        return BzPlacements.BEE_DUNGEON_PLACER;
+    }
+
+    @Override
+    public Stream<BlockPos> getPositions(PlacementContext placementContext, Random random, BlockPos blockPos) {
         ArrayList<BlockPos> validPositions = new ArrayList<>();
-        BlockPos.Mutable mutable = new BlockPos.Mutable().set(pos);
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(blockPos);
         boolean validSpot;
 
         for (int currentAttempt = 0; currentAttempt <= 10; currentAttempt++) {
             validSpot = false;
-            int x = random.nextInt(4) + pos.getX() + 6;
-            int z = random.nextInt(4) + pos.getZ() + 6;
-            int y = random.nextInt(context.getGenDepth() - 10 - context.getSeaLevel()) + context.getSeaLevel() + 2;
+            int sealevel = placementContext.getLevel().getLevel().getChunkSource().getGenerator().getSeaLevel();
+            int x = random.nextInt(8) + blockPos.getX() + 4;
+            int z = random.nextInt(8) + blockPos.getZ() + 4;
+            int y = random.nextInt(placementContext.getGenDepth() - 10 - sealevel) + sealevel + 2;
 
             //find a cave air spot
             for (Direction face : Direction.Plane.HORIZONTAL) {
                 mutable.set(x, y, z).move(face, 3);
 
-                BlockState state = context.getBlockState(mutable);
-                if (state.is(Blocks.CAVE_AIR) || state.is(BzBlocks.PILE_OF_POLLEN.get()))
+                BlockState state = placementContext.getBlockState(mutable);
+                if (state.is(Blocks.CAVE_AIR) || state.is(BzBlocks.PILE_OF_POLLEN))
                     validSpot = true;
             }
 
@@ -47,7 +57,7 @@ public class BeeDungeonPlacer extends Placement<NoPlacementConfig> {
                     for (int yOffset = -3; yOffset <= 9; yOffset += 3) {
                         mutable.set(x, y, z).move(xOffset, yOffset, zOffset);
 
-                        if (context.getBlockState(mutable).is(Blocks.AIR))
+                        if (placementContext.getBlockState(mutable).is(Blocks.AIR))
                             validSpot = false;
                     }
                 }
@@ -55,12 +65,12 @@ public class BeeDungeonPlacer extends Placement<NoPlacementConfig> {
 
 
             mutable.set(x, y, z);
-            if (validSpot && context.getBlockState(mutable).canOcclude()) {
+            if (validSpot && placementContext.getBlockState(mutable).canOcclude()) {
                 validPositions.add(mutable);
-                return validPositions.stream();
+                break; // Only 1 dungeon max per chunk
             }
         }
 
-        return Stream.empty();
+        return validPositions.stream();
     }
 }

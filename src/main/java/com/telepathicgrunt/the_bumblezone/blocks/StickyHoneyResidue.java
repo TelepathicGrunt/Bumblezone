@@ -4,56 +4,56 @@ import com.telepathicgrunt.the_bumblezone.mixin.blocks.VineBlockAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SixWayBlock;
-import net.minecraft.block.VineBlock;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.block.VineBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
 import java.util.Map;
 
 public class StickyHoneyResidue extends VineBlock {
-    public static final BooleanProperty DOWN = SixWayBlock.DOWN;
+    public static final BooleanProperty DOWN = PipeBlock.DOWN;
     protected static final VoxelShape DOWN_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 0.8D, 16.0D);
     public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP =
-            SixWayBlock.PROPERTY_BY_DIRECTION.entrySet().stream().collect(Util.toMap());
+            PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().collect(Util.toMap());
 
     public StickyHoneyResidue() {
-        super(AbstractBlock.Properties.of(BzBlocks.ORANGE_NOT_SOLID, MaterialColor.COLOR_ORANGE).noCollission().strength(6.0f, 0.0f).noOcclusion());
+        super(BlockBehaviour.Properties.of(BzBlocks.ORANGE_NOT_SOLID, MaterialColor.TERRACOTTA_ORANGE).noCollission().strength(6.0f, 0.0f).noOcclusion());
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(UP, false)
                 .setValue(NORTH, false)
@@ -63,8 +63,8 @@ public class StickyHoneyResidue extends VineBlock {
                 .setValue(DOWN, false));
     }
 
-    public StickyHoneyResidue(AbstractBlock.Properties properties) {
-        super(properties);
+    public StickyHoneyResidue(BlockBehaviour.Properties settings) {
+        super(settings);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(UP, false)
                 .setValue(NORTH, false)
@@ -78,7 +78,7 @@ public class StickyHoneyResidue extends VineBlock {
      * Set up properties.
      */
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(UP, NORTH, EAST, SOUTH, WEST, DOWN);
     }
 
@@ -86,30 +86,30 @@ public class StickyHoneyResidue extends VineBlock {
      * Returns the shape based on the state of the block.
      */
     @Override
-    public VoxelShape getShape(BlockState blockstate, IBlockReader world, BlockPos pos, ISelectionContext context) {
-        VoxelShape voxelshape = VoxelShapes.empty();
+    public VoxelShape getShape(BlockState blockstate, BlockGetter world, BlockPos pos, CollisionContext context) {
+        VoxelShape voxelshape = Shapes.empty();
         if (blockstate.getValue(UP)) {
-            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.thebumblezone_getUP_SHAPE());
-        }
-
-        if (blockstate.getValue(NORTH)) {
-            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.thebumblezone_getNORTH_SHAPE());
-        }
-
-        if (blockstate.getValue(EAST)) {
-            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.thebumblezone_getEAST_SHAPE());
+            voxelshape = Shapes.or(voxelshape, VineBlockAccessor.thebumblezone_getUP_SHAPE());
         }
 
         if (blockstate.getValue(SOUTH)) {
-            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.thebumblezone_getSOUTH_SHAPE());
+            voxelshape = Shapes.or(voxelshape, VineBlockAccessor.thebumblezone_getSOUTH_SHAPE());
         }
 
         if (blockstate.getValue(WEST)) {
-            voxelshape = VoxelShapes.or(voxelshape, VineBlockAccessor.thebumblezone_getWEST_SHAPE());
+            voxelshape = Shapes.or(voxelshape, VineBlockAccessor.thebumblezone_getWEST_SHAPE());
+        }
+
+        if (blockstate.getValue(NORTH)) {
+            voxelshape = Shapes.or(voxelshape, VineBlockAccessor.thebumblezone_getNORTH_SHAPE());
+        }
+
+        if (blockstate.getValue(EAST)) {
+            voxelshape = Shapes.or(voxelshape, VineBlockAccessor.thebumblezone_getEAST_SHAPE());
         }
 
         if (blockstate.getValue(DOWN)) {
-            voxelshape = VoxelShapes.or(voxelshape, DOWN_AABB);
+            voxelshape = Shapes.or(voxelshape, DOWN_AABB);
         }
 
         return voxelshape;
@@ -121,13 +121,13 @@ public class StickyHoneyResidue extends VineBlock {
      */
     @Deprecated
     @Override
-    public void entityInside(BlockState blockstate, World world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState blockstate, Level world, BlockPos pos, Entity entity) {
 
-        AxisAlignedBB axisalignedbb = getShape(blockstate, world, pos, null).bounds().move(pos);
-        List<? extends Entity> list = world.getLoadedEntitiesOfClass(LivingEntity.class, axisalignedbb);
+        AABB axisalignedbb = getShape(blockstate, world, pos, null).bounds().move(pos);
+        List<? extends Entity> list = world.getEntitiesOfClass(LivingEntity.class, axisalignedbb);
 
         if (list.contains(entity)) {
-            entity.makeStuckInBlock(blockstate, new Vector3d(0.35D, 0.2F, 0.35D));
+            entity.makeStuckInBlock(blockstate, new Vec3(0.35D, 0.2F, 0.35D));
         }
     }
 
@@ -135,7 +135,7 @@ public class StickyHoneyResidue extends VineBlock {
      * Is spot valid (has at least 1 face possible).
      */
     @Override
-    public boolean canSurvive(BlockState blockstate, IWorldReader world, BlockPos pos) {
+    public boolean canSurvive(BlockState blockstate, LevelReader world, BlockPos pos) {
         return this.hasAtleastOneAttachment(this.setAttachments(blockstate, world, pos));
     }
 
@@ -164,7 +164,7 @@ public class StickyHoneyResidue extends VineBlock {
     /**
      * Set the state based on solid blocks around it.
      */
-    private BlockState setAttachments(BlockState blockstate, IWorldReader blockReader, BlockPos pos) {
+    private BlockState setAttachments(BlockState blockstate, LevelReader blockReader, BlockPos pos) {
 
         for (Direction direction : Direction.values()) {
             BooleanProperty booleanproperty = FACING_TO_PROPERTY_MAP.get(direction);
@@ -181,7 +181,7 @@ public class StickyHoneyResidue extends VineBlock {
      * allows player to add more faces to this block based on player's direction.
      */
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockState currentBlockstate = context.getLevel().getBlockState(context.getClickedPos());
         boolean isSameBlock = currentBlockstate.getBlock() == this;
         BlockState newBlockstate = isSameBlock ? currentBlockstate : this.defaultBlockState();
@@ -201,7 +201,7 @@ public class StickyHoneyResidue extends VineBlock {
      * double check to make sure this block has at least one face and can attach.
      */
     @Override
-    public BlockState updateShape(BlockState blockstate, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState blockstate, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
         BlockState newBlockstate = this.setAttachments(blockstate, world, currentPos);
         return !this.hasAtleastOneAttachment(newBlockstate) ? Blocks.AIR.defaultBlockState() : newBlockstate;
     }
@@ -226,7 +226,7 @@ public class StickyHoneyResidue extends VineBlock {
      * the power fed into comparator (1 - 4)
      */
     @Override
-    public int getAnalogOutputSignal(BlockState blockstate, World world, BlockPos pos) {
+    public int getAnalogOutputSignal(BlockState blockstate, Level world, BlockPos pos) {
         return numberOfAttachments(blockstate);
     }
 
@@ -235,7 +235,7 @@ public class StickyHoneyResidue extends VineBlock {
      * This block is full of holes and can let light through
      */
     @Override
-    public int getLightBlock(BlockState state, IBlockReader world, BlockPos pos) {
+    public int getLightBlock(BlockState state, BlockGetter world, BlockPos pos) {
         return 1;
     }
 
@@ -244,116 +244,51 @@ public class StickyHoneyResidue extends VineBlock {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResultType use(BlockState blockstate, World world, BlockPos position, PlayerEntity playerEntity, Hand playerHand, BlockRayTraceResult raytraceResult) {
+    public InteractionResult use(BlockState blockstate, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
-        if ((itemstack.getItem() instanceof BucketItem &&
-                ((BucketItem) itemstack.getItem()).getFluid().is(FluidTags.WATER)) ||
+        if ((itemstack.getItem() instanceof BucketItem bucketItem &&
+                bucketItem.getFluid().is(FluidTags.WATER)) ||
                 itemstack.getOrCreateTag().getString("Potion").contains("water") ||
                 itemstack.getItem() == Items.WET_SPONGE ||
                 itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
 
-            if(itemstack.getItem() == Items.WET_SPONGE && playerEntity instanceof ServerPlayerEntity) {
-                BzCriterias.CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER.trigger((ServerPlayerEntity) playerEntity);
+            if(itemstack.getItem() == Items.WET_SPONGE && playerEntity instanceof ServerPlayer) {
+                BzCriterias.CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER.trigger((ServerPlayer) playerEntity);
             }
 
             world.destroyBlock(position, false);
 
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
-                    SoundEvents.PHANTOM_SWOOP, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+                    SoundEvents.PHANTOM_SWOOP, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
-            if (world instanceof ServerWorld) {
+            if (world instanceof ServerLevel) {
                 if (blockstate.getValue(UP)) {
-                    ((ServerWorld) world).sendParticles(
-                            (ServerPlayerEntity) playerEntity,
-                            ParticleTypes.FALLING_WATER,
-                            true,
-                            position.getX() + 0.5D,
-                            position.getY() + 0.95D,
-                            position.getZ() + 0.5D,
-                            6,
-                            0.3D,
-                            0.0D,
-                            0.3D,
-                            1);
+                    ((ServerLevel) world).sendParticles((ServerPlayer) playerEntity, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.95D, position.getZ() + 0.5D, 6, 0.3D, 0.0D, 0.3D, 1);
                 }
 
                 if (blockstate.getValue(NORTH)) {
-                    ((ServerWorld) world).sendParticles(
-                            (ServerPlayerEntity) playerEntity,
-                            ParticleTypes.FALLING_WATER,
-                            true,
-                            position.getX() + 0.5D,
-                            position.getY() + 0.5D,
-                            position.getZ() + 0.05D,
-                            6,
-                            0.3D,
-                            0.3D,
-                            0.0D,
-                            1);
+                    ((ServerLevel) world).sendParticles((ServerPlayer) playerEntity, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.05D, 6, 0.3D, 0.3D, 0.0D, 1);
                 }
 
                 if (blockstate.getValue(EAST)) {
-                    ((ServerWorld) world).sendParticles(
-                            (ServerPlayerEntity) playerEntity,
-                            ParticleTypes.FALLING_WATER,
-                            true,
-                            position.getX() + 0.95D,
-                            position.getY() + 0.5D,
-                            position.getZ() + 0.5D,
-                            6, 0.0D,
-                            0.3D,
-                            0.3D,
-                            1);
+                    ((ServerLevel) world).sendParticles((ServerPlayer) playerEntity, ParticleTypes.FALLING_WATER, true, position.getX() + 0.95D, position.getY() + 0.5D, position.getZ() + 0.5D, 6, 0.0D, 0.3D, 0.3D, 1);
                 }
 
                 if (blockstate.getValue(SOUTH)) {
-                    ((ServerWorld) world).sendParticles(
-                            (ServerPlayerEntity) playerEntity,
-                            ParticleTypes.FALLING_WATER,
-                            true,
-                            position.getX() + 0.5D,
-                            position.getY() + 0.5D,
-                            position.getZ() + 0.95D,
-                            6,
-                            0.3D,
-                            0.3D,
-                            0.0D,
-                            1);
+                    ((ServerLevel) world).sendParticles((ServerPlayer) playerEntity, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.95D, 6, 0.3D, 0.3D, 0.0D, 1);
                 }
 
                 if (blockstate.getValue(WEST)) {
-                    ((ServerWorld) world).sendParticles(
-                            (ServerPlayerEntity) playerEntity,
-                            ParticleTypes.FALLING_WATER,
-                            true,
-                            position.getX() + 0.05D,
-                            position.getY() + 0.5D,
-                            position.getZ() + 0.5D,
-                            6,
-                            0.0D,
-                            0.3D,
-                            0.3D,
-                            1);
+                    ((ServerLevel) world).sendParticles((ServerPlayer) playerEntity, ParticleTypes.FALLING_WATER, true, position.getX() + 0.05D, position.getY() + 0.5D, position.getZ() + 0.5D, 6, 0.0D, 0.3D, 0.3D, 1);
                 }
 
                 if (blockstate.getValue(DOWN)) {
-                    ((ServerWorld) world).sendParticles(
-                            (ServerPlayerEntity) playerEntity,
-                            ParticleTypes.FALLING_WATER,
-                            true,
-                            position.getX() + 0.5D,
-                            position.getY() + 0.05D,
-                            position.getZ() + 0.5D,
-                            6,
-                            0.3D,
-                            0.0D,
-                            0.3D,
-                            1);
+                    ((ServerLevel) world).sendParticles((ServerPlayer) playerEntity, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.05D, position.getZ() + 0.5D, 6, 0.3D, 0.0D, 0.3D, 1);
                 }
             }
 
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
         return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);

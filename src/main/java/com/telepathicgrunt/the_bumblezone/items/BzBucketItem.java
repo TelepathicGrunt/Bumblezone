@@ -2,25 +2,26 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ILiquidContainer;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
 import java.util.function.Supplier;
+
 
 public class BzBucketItem extends BucketItem {
     public BzBucketItem(Supplier<? extends Fluid> supplier, Properties builder) {
@@ -28,12 +29,12 @@ public class BzBucketItem extends BucketItem {
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {
-        ActionResult<ItemStack> actionResult = super.use(world, playerEntity, hand);
+    public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand hand) {
+        InteractionResultHolder<ItemStack> actionResult = super.use(world, playerEntity, hand);
 
-        if(this.getFluid() == BzFluids.SUGAR_WATER_FLUID.get() && actionResult.getResult() == ActionResultType.CONSUME && playerEntity instanceof ServerPlayerEntity) {
-            BlockRayTraceResult raytraceresult = getPlayerPOVHitResult(world, playerEntity, RayTraceContext.FluidMode.NONE);
-            if(raytraceresult.getType() == RayTraceResult.Type.BLOCK) {
+        if(this.getFluid() == BzFluids.SUGAR_WATER_FLUID.get() && actionResult.getResult() == InteractionResult.CONSUME && playerEntity instanceof ServerPlayer) {
+            BlockHitResult raytraceresult = getPlayerPOVHitResult(world, playerEntity, ClipContext.Fluid.NONE);
+            if(raytraceresult.getType() == HitResult.Type.BLOCK) {
                 BlockPos blockpos = raytraceresult.getBlockPos();
                 Direction direction = raytraceresult.getDirection();
                 BlockPos blockpos1 = blockpos.relative(direction);
@@ -41,7 +42,7 @@ public class BzBucketItem extends BucketItem {
                 BlockPos blockpos2 = canBlockContainFluid(world, blockpos, blockstate) ? blockpos : blockpos1;
 
                 boolean isNextToSugarCane = false;
-                BlockPos.Mutable mutable = new BlockPos.Mutable();
+                BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
                 for(Direction directionOffset : Direction.Plane.HORIZONTAL) {
                     mutable.set(blockpos2).move(directionOffset).move(Direction.UP);
                     BlockState state = world.getBlockState(mutable);
@@ -52,7 +53,7 @@ public class BzBucketItem extends BucketItem {
                 }
 
                 if(isNextToSugarCane) {
-                    BzCriterias.SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER.trigger((ServerPlayerEntity) playerEntity);
+                    BzCriterias.SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER.trigger((ServerPlayer) playerEntity);
                 }
             }
         }
@@ -60,7 +61,7 @@ public class BzBucketItem extends BucketItem {
         return actionResult;
     }
 
-    private boolean canBlockContainFluid(World worldIn, BlockPos posIn, BlockState blockstate) {
-        return blockstate.getBlock() instanceof ILiquidContainer && ((ILiquidContainer)blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, getFluid());
+    private boolean canBlockContainFluid(Level worldIn, BlockPos posIn, BlockState blockstate) {
+        return blockstate.getBlock() instanceof LiquidBlockContainer && ((LiquidBlockContainer)blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, getFluid());
     }
 }

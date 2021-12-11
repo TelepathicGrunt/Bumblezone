@@ -1,17 +1,17 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
 
 public class FlyingStillGoal extends Goal {
-    private final TameableEntity mob;
+    private final TamableAnimal mob;
 
-    public FlyingStillGoal(TameableEntity p_i1654_1_) {
-        this.mob = p_i1654_1_;
+    public FlyingStillGoal(TamableAnimal tamableAnimal) {
+        this.mob = tamableAnimal;
         this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
     }
 
@@ -40,7 +40,7 @@ public class FlyingStillGoal extends Goal {
     @Override
     public void tick() {
         this.mob.setOnGround(false);
-        MovementController moveControl = this.mob.getMoveControl();
+        MoveControl moveControl = this.mob.getMoveControl();
         moveControl.setWantedPosition(
             moveControl.getWantedX(),
             moveControl.getWantedY(),

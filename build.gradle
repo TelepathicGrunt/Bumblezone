@@ -7,7 +7,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
         classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.2.1'
@@ -16,18 +16,16 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'maven-publish'
-apply plugin: 'maven'
 apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'eclipse'
 
 version = "${mod_version}+${mc_version}"
 group = "com.telepathicgrunt"
 archivesBaseName = "${modid}_forge"
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
-    mappings channel:"official", version:"1.16.5"
+    mappings channel: "official", version: "${mc_version}"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
@@ -97,39 +95,38 @@ dependencies {
 
     // Switch to `implementation` when testing mod compat
     //implementation fg.deobf("com.minecraftabnormals:abnormals-core:${abnormalcore_mc_version}-${abnormalcore_version}")
-    compileOnly fg.deobf("curse.maven:abnormals_core-382216:3233486")
+    //compileOnly fg.deobf("curse.maven:abnormals_core-382216:3233486")
 
-    compileOnly fg.deobf("curse.maven:buzzier_bees-355458:${buzzierbees_file_id}")
-    compileOnly fg.deobf("curse.maven:charm_reforged-430988:${charmreforged_file_id}")
+    //compileOnly fg.deobf("curse.maven:buzzier_bees-355458:${buzzierbees_file_id}")
+    //compileOnly fg.deobf("curse.maven:charm_reforged-430988:${charmreforged_file_id}")
 
-    compileOnly fg.deobf("curse.maven:better_beekeeping-503676:${better_beekeeping_file_id}")
-    compileOnly fg.deobf("curse.maven:amb_aurums_more_blocks-361597:${amb_file_id}")
-    compileOnly fg.deobf("curse.maven:potion_of_bees-355348:${potionofbees_file_id}")
-    compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
-    compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
-    compileOnly fg.deobf("curse.maven:buzzy_drones-460283:${buzzy_drones_file_id}")
-    compileOnly fg.deobf("curse.maven:caves_and_cliffs_backport-417430:${caves_and_cliffs_backport_file_id}")
-    compileOnly fg.deobf("curse.maven:caves_api-441706:${caves_api_file_id}")
+    //compileOnly fg.deobf("curse.maven:better_beekeeping-503676:${better_beekeeping_file_id}")
+    //compileOnly fg.deobf("curse.maven:amb_aurums_more_blocks-361597:${amb_file_id}")
+    //compileOnly fg.deobf("curse.maven:potion_of_bees-355348:${potionofbees_file_id}")
+    //compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
+    //compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
+    //compileOnly fg.deobf("curse.maven:buzzy_drones-460283:${buzzy_drones_file_id}")
+    //compileOnly fg.deobf("curse.maven:caves_and_cliffs_backport-417430:${caves_and_cliffs_backport_file_id}")
+    //compileOnly fg.deobf("curse.maven:caves_api-441706:${caves_api_file_id}")
     //runtimeOnly fg.deobf("curse.maven:cyclic-239286:3484473")
     //runtimeOnly fg.deobf("curse.maven:quark-243121:3490981")
     //runtimeOnly fg.deobf("curse.maven:autoreglib-250363:3326041")
     //runtimeOnly fg.deobf("curse.maven:inspirations-284007:3414517")
     //runtimeOnly fg.deobf("curse.maven:mantle-74924:3482897")
 
-    compileOnly fg.deobf("noobanidus.mods.carrierbees:carrierbees:${carrierbees_version}")
-    compileOnly fg.deobf("com.resourcefulbees:ResourcefulBees:${resourcefulbees_version}")
-    runtimeOnly fg.deobf("com.telepathicgrunt:Blame:${blame_version}")
+    //compileOnly fg.deobf("noobanidus.mods.carrierbees:carrierbees:${carrierbees_version}")
+    //compileOnly fg.deobf("com.resourcefulbees:ResourcefulBees:${resourcefulbees_version}")
 
     compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
 apply from: 'gradle/processresources.gradle'
 apply from: 'gradle/manifest.gradle'
 
-mixin { add sourceSets.main, "the_bumblezone.refmap.json" }
+mixin { 
+    add sourceSets.main, "${modid}.refmap.json"
+}
 
 apply from: 'gradle/maven.gradle'
 apply from: 'gradle/curseforge.gradle'

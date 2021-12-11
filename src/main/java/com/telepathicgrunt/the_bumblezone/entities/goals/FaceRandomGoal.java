@@ -2,8 +2,8 @@ package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
 
@@ -21,7 +21,7 @@ public class FaceRandomGoal extends Goal {
      * Returns whether the EntityAIBase should begin execution.
      */
     public boolean canUse() {
-        return this.slime.getTarget() == null && (this.slime.isOnGround() || this.slime.isInWater() || this.slime.isInLava() || this.slime.hasEffect(Effects.LEVITATION)) && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
+        return this.slime.getTarget() == null && (this.slime.isOnGround() || this.slime.isInWater() || this.slime.isInLava() || this.slime.hasEffect(MobEffects.LEVITATION)) && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
     }
 
     /**

@@ -1,228 +1,149 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.entity.model.ModelUtils;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+
+// Made with Blockbench 4.0.0-beta.5
+// Exported for Minecraft version 1.17 with Mojang mappings
 
 public class BeehemothModel extends EntityModel<BeehemothEntity> {
-    private float bodyPitch;
+    // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bumblezone.MODID, "beehemoth"), "main");
+    private final ModelPart ROOT;
+    protected final ModelPart SADDLE;
+    protected final ModelPart CROWN;
+    protected final ModelPart WING_RIGHT;
+    protected final ModelPart WING_LEFT;
+    protected final ModelPart LEG_FRONTLEFT;
+    protected final ModelPart LEG_FRONTRIGHT;
+    protected final ModelPart LEG_MIDLEFT;
+    protected final ModelPart LEG_MIDRIGHT;
+    protected final ModelPart LEG_REARLEFT;
+    protected final ModelPart LEG_REARRIGHT;
+    protected final ModelPart KneeFrontRightCube_r1;
+    protected final ModelPart KneeMidRightCube_r1;
+    protected final ModelPart KneeRearRightCube_r1;
+    protected final ModelPart KneeFrontLeftCube_r1;
+    protected final ModelPart KneeMidLeftCube_r1;
+    protected final ModelPart KneeRearLeftCube_r1;
+    protected final ModelPart ANTENNA_LEFT;
+    protected final ModelPart ANTENNA_RIGHT;
+    protected final ModelPart THORAX;
+    protected final ModelPart FACE;
+    protected final ModelPart ABDOMEN;
 
-    private final ModelRenderer ROOT;
-    private final ModelRenderer FACE;
-    private final ModelRenderer THORAX;
-    private final ModelRenderer CROWN;
-    private final ModelRenderer LEG_FRONTLEFT;
-    private final ModelRenderer KNEE_FRONTLEFT;
-    private final ModelRenderer ANTENNA_LEFT;
-    private final ModelRenderer ANTENNA_RIGHT;
-    private final ModelRenderer KneeFrontLeftCube_r1;
-    private final ModelRenderer LEG_MIDLEFT;
-    private final ModelRenderer KNEE_MIDLEFT;
-    private final ModelRenderer KneeMidLeftCube_r1;
-    private final ModelRenderer LEG_REARLEFT;
-    private final ModelRenderer KNEE_REARLEFT;
-    private final ModelRenderer KneeRearLeftCube_r1;
-    private final ModelRenderer LEG_FRONTRIGHT;
-    private final ModelRenderer KNEE_FRONTRIGHT;
-    private final ModelRenderer KneeFrontRightCube_r1;
-    private final ModelRenderer LEG_MIDRIGHT;
-    private final ModelRenderer KNEE_MIDRIGHT;
-    private final ModelRenderer KneeMidRightCube_r1;
-    private final ModelRenderer LEG_REARRIGHT;
-    private final ModelRenderer KNEE_REARRIGHT;
-    private final ModelRenderer KneeRearRightCube_r1;
-    private final ModelRenderer WING_LEFT;
-    private final ModelRenderer WingLeftPlane_r1;
-    private final ModelRenderer WING_RIGHT;
-    private final ModelRenderer WingRightPlane_r1;
-    private final ModelRenderer ABDOMEN;
-    private final ModelRenderer SADDLE;
-
-    public BeehemothModel() {
-        texWidth = 64;
-        texHeight = 64;
-
-        ROOT = new ModelRenderer(this);
-        ROOT.setPos(0.0F, 24.0F, 0.0F);
-
-        FACE = new ModelRenderer(this);
-        FACE.setPos(0.0F, -8.0F, -6.0F);
-        ROOT.addChild(FACE);
-        setRotationAngle(FACE, 0.3927F, 0.0F, 0.0F);
-        FACE.texOffs(0, 0).addBox(-3.5F, 0.0F, -6.0F, 7.0F, 7.0F, 7.0F, 0.0F, false);
-
-        ANTENNA_LEFT = new ModelRenderer(this);
-        ANTENNA_LEFT.setPos(0.0F, 8.0F, 6.0F);
-        FACE.addChild(ANTENNA_LEFT);
-        ANTENNA_LEFT.texOffs(57, 1).addBox(-1.5F, -8.0F, -15.0F, 0.0F, 2.0F, 3.0F, 0.0F, false);
-
-        ANTENNA_RIGHT = new ModelRenderer(this);
-        ANTENNA_RIGHT.setPos(0.0F, 8.0F, 6.0F);
-        FACE.addChild(ANTENNA_RIGHT);
-        ANTENNA_RIGHT.texOffs(57, 1).addBox(1.5F, -8.0F, -15.0F, 0.0F, 2.0F, 3.0F, 0.0F, false);
-
-        CROWN = new ModelRenderer(this);
-        CROWN.setPos(0.0F, 0.0F, 0.0F);
-        FACE.addChild(CROWN);
-        CROWN.texOffs(40, 26).addBox(-2.5F, -3.0F, -5.0F, 5.0F, 3.0F, 5.0F, 0.0F, false);
-
-        THORAX = new ModelRenderer(this);
-        THORAX.setPos(0.0F, 0.0F, 0.0F);
-        ROOT.addChild(THORAX);
-        THORAX.texOffs(0, 14).addBox(-4.5F, -9.0F, -6.0F, 9.0F, 9.0F, 11.0F, 0.0F, false);
-
-        LEG_FRONTLEFT = new ModelRenderer(this);
-        LEG_FRONTLEFT.setPos(4.5F, -2.0F, -4.0F);
-        THORAX.addChild(LEG_FRONTLEFT);
-        setRotationAngle(LEG_FRONTLEFT, 0.0F, 0.0873F, 1.309F);
-        LEG_FRONTLEFT.texOffs(21, 0).addBox(-1.0F, 0.0F, -1.5F, 5.0F, 3.0F, 3.0F, 0.0F, false);
-
-        KNEE_FRONTLEFT = new ModelRenderer(this);
-        KNEE_FRONTLEFT.setPos(4.0F, 1.5F, 4.5F);
-        LEG_FRONTLEFT.addChild(KNEE_FRONTLEFT);
-
-
-        KneeFrontLeftCube_r1 = new ModelRenderer(this);
-        KneeFrontLeftCube_r1.setPos(0.0F, 0.0F, -6.0F);
-        KNEE_FRONTLEFT.addChild(KneeFrontLeftCube_r1);
-        setRotationAngle(KneeFrontLeftCube_r1, 0.0F, -0.6981F, 0.0F);
-        KneeFrontLeftCube_r1.texOffs(37, 2).addBox(0.0F, -1.0F, 0.0F, 5.0F, 2.0F, 2.0F, 0.0F, false);
-
-        LEG_MIDLEFT = new ModelRenderer(this);
-        LEG_MIDLEFT.setPos(4.5F, -2.0F, -0.5F);
-        THORAX.addChild(LEG_MIDLEFT);
-        setRotationAngle(LEG_MIDLEFT, 0.0F, 0.0F, 1.1345F);
-        LEG_MIDLEFT.texOffs(21, 0).addBox(-1.0F, 0.0F, -1.5F, 5.0F, 3.0F, 3.0F, 0.0F, false);
-
-        KNEE_MIDLEFT = new ModelRenderer(this);
-        KNEE_MIDLEFT.setPos(4.0F, 1.5F, 4.5F);
-        LEG_MIDLEFT.addChild(KNEE_MIDLEFT);
-
-
-        KneeMidLeftCube_r1 = new ModelRenderer(this);
-        KneeMidLeftCube_r1.setPos(0.0F, 0.0F, -6.0F);
-        KNEE_MIDLEFT.addChild(KneeMidLeftCube_r1);
-        setRotationAngle(KneeMidLeftCube_r1, 0.0F, -0.8727F, 0.0F);
-        KneeMidLeftCube_r1.texOffs(37, 2).addBox(0.0F, -1.0F, 0.0F, 5.0F, 2.0F, 2.0F, 0.0F, false);
-
-        LEG_REARLEFT = new ModelRenderer(this);
-        LEG_REARLEFT.setPos(4.5F, -2.0F, 3.0F);
-        THORAX.addChild(LEG_REARLEFT);
-        setRotationAngle(LEG_REARLEFT, 0.0F, -0.2182F, 0.9599F);
-        LEG_REARLEFT.texOffs(21, 0).addBox(-1.0F, 0.0F, -1.5F, 5.0F, 3.0F, 3.0F, 0.0F, false);
-
-        KNEE_REARLEFT = new ModelRenderer(this);
-        KNEE_REARLEFT.setPos(4.0F, 1.5F, 4.5F);
-        LEG_REARLEFT.addChild(KNEE_REARLEFT);
-
-
-        KneeRearLeftCube_r1 = new ModelRenderer(this);
-        KneeRearLeftCube_r1.setPos(0.0F, 0.0F, -6.0F);
-        KNEE_REARLEFT.addChild(KneeRearLeftCube_r1);
-        setRotationAngle(KneeRearLeftCube_r1, 0.0F, -1.0472F, 0.0F);
-        KneeRearLeftCube_r1.texOffs(37, 2).addBox(0.0F, -1.0F, 0.0F, 5.0F, 2.0F, 2.0F, 0.0F, false);
-
-        LEG_FRONTRIGHT = new ModelRenderer(this);
-        LEG_FRONTRIGHT.setPos(-4.5F, -2.0F, -4.0F);
-        THORAX.addChild(LEG_FRONTRIGHT);
-        setRotationAngle(LEG_FRONTRIGHT, 0.0F, -0.0873F, -1.309F);
-        LEG_FRONTRIGHT.texOffs(21, 0).addBox(-4.0F, 0.0F, -1.5F, 5.0F, 3.0F, 3.0F, 0.0F, true);
-
-        KNEE_FRONTRIGHT = new ModelRenderer(this);
-        KNEE_FRONTRIGHT.setPos(-4.0F, 1.5F, 4.5F);
-        LEG_FRONTRIGHT.addChild(KNEE_FRONTRIGHT);
-
-
-        KneeFrontRightCube_r1 = new ModelRenderer(this);
-        KneeFrontRightCube_r1.setPos(0.0F, 0.0F, -6.0F);
-        KNEE_FRONTRIGHT.addChild(KneeFrontRightCube_r1);
-        setRotationAngle(KneeFrontRightCube_r1, 0.0F, 0.6981F, 0.0F);
-        KneeFrontRightCube_r1.texOffs(37, 2).addBox(-5.0F, -1.0F, 0.0F, 5.0F, 2.0F, 2.0F, 0.0F, true);
-
-        LEG_MIDRIGHT = new ModelRenderer(this);
-        LEG_MIDRIGHT.setPos(-4.5F, -2.0F, -0.5F);
-        THORAX.addChild(LEG_MIDRIGHT);
-        setRotationAngle(LEG_MIDRIGHT, 0.0F, 0.0F, -1.1345F);
-        LEG_MIDRIGHT.texOffs(21, 0).addBox(-4.0F, 0.0F, -1.5F, 5.0F, 3.0F, 3.0F, 0.0F, true);
-
-        KNEE_MIDRIGHT = new ModelRenderer(this);
-        KNEE_MIDRIGHT.setPos(-4.0F, 1.5F, 4.5F);
-        LEG_MIDRIGHT.addChild(KNEE_MIDRIGHT);
-
-
-        KneeMidRightCube_r1 = new ModelRenderer(this);
-        KneeMidRightCube_r1.setPos(0.0F, 0.0F, -6.0F);
-        KNEE_MIDRIGHT.addChild(KneeMidRightCube_r1);
-        setRotationAngle(KneeMidRightCube_r1, 0.0F, 0.8727F, 0.0F);
-        KneeMidRightCube_r1.texOffs(37, 2).addBox(-5.0F, -1.0F, 0.0F, 5.0F, 2.0F, 2.0F, 0.0F, true);
-
-        LEG_REARRIGHT = new ModelRenderer(this);
-        LEG_REARRIGHT.setPos(-4.5F, -2.0F, 3.0F);
-        THORAX.addChild(LEG_REARRIGHT);
-        setRotationAngle(LEG_REARRIGHT, 0.0F, 0.2182F, -0.9599F);
-        LEG_REARRIGHT.texOffs(21, 0).addBox(-4.0F, 0.0F, -1.5F, 5.0F, 3.0F, 3.0F, 0.0F, true);
-
-        KNEE_REARRIGHT = new ModelRenderer(this);
-        KNEE_REARRIGHT.setPos(-4.0F, 1.5F, 4.5F);
-        LEG_REARRIGHT.addChild(KNEE_REARRIGHT);
-
-
-        KneeRearRightCube_r1 = new ModelRenderer(this);
-        KneeRearRightCube_r1.setPos(0.0F, 0.0F, -6.0F);
-        KNEE_REARRIGHT.addChild(KneeRearRightCube_r1);
-        setRotationAngle(KneeRearRightCube_r1, 0.0F, 1.0472F, 0.0F);
-        KneeRearRightCube_r1.texOffs(37, 2).addBox(-5.0F, -1.0F, 0.0F, 5.0F, 2.0F, 2.0F, 0.0F, true);
-
-        WING_LEFT = new ModelRenderer(this);
-        WING_LEFT.setPos(3.5F, -9.0F, -5.0F);
-        THORAX.addChild(WING_LEFT);
-
-        WingLeftPlane_r1 = new ModelRenderer(this);
-        WingLeftPlane_r1.setPos(0.0F, 0.0F, 1.0F);
-        WING_LEFT.addChild(WingLeftPlane_r1);
-        setRotationAngle(WingLeftPlane_r1, 0.0F, 0.2182F, -0.1745F);
-        WingLeftPlane_r1.texOffs(5, 34).addBox(0.0F, 0.0F, -1.0F, 7.0F, 0.0F, 8.0F, 0.0F, false);
-
-        WING_RIGHT = new ModelRenderer(this);
-        WING_RIGHT.setPos(-3.5F, -9.0F, -5.0F);
-        THORAX.addChild(WING_RIGHT);
-
-
-        WingRightPlane_r1 = new ModelRenderer(this);
-        WingRightPlane_r1.setPos(0.0F, 0.0F, 1.0F);
-        WING_RIGHT.addChild(WingRightPlane_r1);
-        setRotationAngle(WingRightPlane_r1, 0.0F, -0.2182F, 0.1745F);
-        WingRightPlane_r1.texOffs(5, 34).addBox(-7.0F, 0.0F, -1.0F, 7.0F, 0.0F, 8.0F, 0.0F, true);
-
-        ABDOMEN = new ModelRenderer(this);
-        ABDOMEN.setPos(0.0F, -8.0F, 5.0F);
-        ROOT.addChild(ABDOMEN);
-        setRotationAngle(ABDOMEN, -0.3927F, 0.0F, 0.0F);
-        ABDOMEN.texOffs(29, 8).addBox(-3.5F, 0.0F, -1.0F, 7.0F, 7.0F, 10.0F, 0.0F, false);
-        ABDOMEN.texOffs(51, 3).addBox(-0.5F, 3.0F, 9.0F, 1.0F, 1.0F, 2.0F, 0.0F, false);
-
-        SADDLE = new ModelRenderer(this);
-        SADDLE.setPos(0.0F, 0.0F, 0.0F);
-        ROOT.addChild(SADDLE);
-        SADDLE.texOffs(0, 42).addBox(-5.5F, -9.25F, -4.0F, 11.0F, 5.0F, 9.0F, 0.0F, false);
+    public BeehemothModel(ModelPart modelPart) {
+        this.ROOT = modelPart.getChild("ROOT");
+        this.FACE = this.ROOT.getChild("FACE");
+        this.CROWN = this.FACE.getChild("CROWN");
+        this.ANTENNA_LEFT = this.FACE.getChild("ANTENNA_LEFT");
+        this.ANTENNA_RIGHT = this.FACE.getChild("ANTENNA_RIGHT");
+        this.THORAX = this.ROOT.getChild("THORAX");
+        this.LEG_FRONTLEFT = this.THORAX.getChild("LEG_FRONTLEFT");
+        this.KneeFrontLeftCube_r1 = this.LEG_FRONTLEFT.getChild("KNEE_FRONTLEFT").getChild("KneeFrontLeftCube_r1");
+        this.LEG_MIDLEFT = this.THORAX.getChild("LEG_MIDLEFT");
+        this.KneeMidLeftCube_r1 = this.LEG_MIDLEFT.getChild("KNEE_MIDLEFT").getChild("KneeMidLeftCube_r1");
+        this.LEG_REARLEFT = this.THORAX.getChild("LEG_REARLEFT");
+        this.KneeRearLeftCube_r1 = this.LEG_REARLEFT.getChild("KNEE_REARLEFT").getChild("KneeRearLeftCube_r1");
+        this.LEG_FRONTRIGHT = this.THORAX.getChild("LEG_FRONTRIGHT");
+        this.KneeFrontRightCube_r1 = this.LEG_FRONTRIGHT.getChild("KNEE_FRONTRIGHT").getChild("KneeFrontRightCube_r1");
+        this.LEG_MIDRIGHT = this.THORAX.getChild("LEG_MIDRIGHT");
+        this.KneeMidRightCube_r1 = this.LEG_MIDRIGHT.getChild("KNEE_MIDRIGHT").getChild("KneeMidRightCube_r1");
+        this.LEG_REARRIGHT = this.THORAX.getChild("LEG_REARRIGHT");
+        this.KneeRearRightCube_r1 = this.LEG_REARRIGHT.getChild("KNEE_REARRIGHT").getChild("KneeRearRightCube_r1");
+        this.WING_LEFT = this.THORAX.getChild("WING_LEFT");
+        this.WING_RIGHT = this.THORAX.getChild("WING_RIGHT");
+        this.ABDOMEN = this.ROOT.getChild("ABDOMEN");
+        this.SADDLE = this.ROOT.getChild("SADDLE");
     }
 
-    @Override
-    public void prepareMobModel(BeehemothEntity entityIn, float limbSwing, float limbSwingAmount, float partialTick) {
-        super.prepareMobModel(entityIn, limbSwing, limbSwingAmount, partialTick);
+    public static LayerDefinition createBodyLayer() {
+        MeshDefinition meshdefinition = new MeshDefinition();
+        PartDefinition partdefinition = meshdefinition.getRoot();
+
+        PartDefinition ROOT = partdefinition.addOrReplaceChild("ROOT", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
+
+        PartDefinition FACE = ROOT.addOrReplaceChild("FACE", CubeListBuilder.create().texOffs(0, 0).addBox(-3.5F, 0.0F, -6.0F, 7.0F, 7.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -8.0F, -6.0F, 0.3927F, 0.0F, 0.0F));
+
+        PartDefinition CROWN = FACE.addOrReplaceChild("CROWN", CubeListBuilder.create().texOffs(40, 26).addBox(-2.5F, -3.0F, -5.0F, 5.0F, 3.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition ANTENNA_LEFT = FACE.addOrReplaceChild("ANTENNA_LEFT", CubeListBuilder.create().texOffs(57, 1).addBox(-1.5F, 0.0F, -9.0F, 0.0F, 2.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition ANTENNA_RIGHT = FACE.addOrReplaceChild("ANTENNA_RIGHT", CubeListBuilder.create().texOffs(57, 1).addBox(1.5F, 0.0F, -9.0F, 0.0F, 2.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition THORAX = ROOT.addOrReplaceChild("THORAX", CubeListBuilder.create().texOffs(0, 14).addBox(-4.5F, -9.0F, -6.0F, 9.0F, 9.0F, 11.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition LEG_FRONTLEFT = THORAX.addOrReplaceChild("LEG_FRONTLEFT", CubeListBuilder.create().texOffs(21, 0).addBox(-1.0F, 0.0F, -1.5F, 5.0F, 3.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(4.5F, -2.0F, -4.0F, 0.0F, 0.0873F, 1.309F));
+
+        PartDefinition KNEE_FRONTLEFT = LEG_FRONTLEFT.addOrReplaceChild("KNEE_FRONTLEFT", CubeListBuilder.create(), PartPose.offset(4.0F, 1.5F, 4.5F));
+
+        PartDefinition KneeFrontLeftCube_r1 = KNEE_FRONTLEFT.addOrReplaceChild("KneeFrontLeftCube_r1", CubeListBuilder.create().texOffs(37, 2).addBox(0.0F, -1.0F, 0.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, -6.0F, 0.0F, -0.6981F, 0.0F));
+
+        PartDefinition LEG_MIDLEFT = THORAX.addOrReplaceChild("LEG_MIDLEFT", CubeListBuilder.create().texOffs(21, 0).addBox(-1.0F, 0.0F, -1.5F, 5.0F, 3.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(4.5F, -2.0F, -0.5F, 0.0F, 0.0F, 1.1345F));
+
+        PartDefinition KNEE_MIDLEFT = LEG_MIDLEFT.addOrReplaceChild("KNEE_MIDLEFT", CubeListBuilder.create(), PartPose.offset(4.0F, 1.5F, 4.5F));
+
+        PartDefinition KneeMidLeftCube_r1 = KNEE_MIDLEFT.addOrReplaceChild("KneeMidLeftCube_r1", CubeListBuilder.create().texOffs(37, 2).addBox(0.0F, -1.0F, 0.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, -6.0F, 0.0F, -0.8727F, 0.0F));
+
+        PartDefinition LEG_REARLEFT = THORAX.addOrReplaceChild("LEG_REARLEFT", CubeListBuilder.create().texOffs(21, 0).addBox(-1.0F, 0.0F, -1.5F, 5.0F, 3.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(4.5F, -2.0F, 3.0F, 0.0F, -0.2182F, 0.9599F));
+
+        PartDefinition KNEE_REARLEFT = LEG_REARLEFT.addOrReplaceChild("KNEE_REARLEFT", CubeListBuilder.create(), PartPose.offset(4.0F, 1.5F, 4.5F));
+
+        PartDefinition KneeRearLeftCube_r1 = KNEE_REARLEFT.addOrReplaceChild("KneeRearLeftCube_r1", CubeListBuilder.create().texOffs(37, 2).addBox(0.0F, -1.0F, 0.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, -6.0F, 0.0F, -1.0472F, 0.0F));
+
+        PartDefinition LEG_FRONTRIGHT = THORAX.addOrReplaceChild("LEG_FRONTRIGHT", CubeListBuilder.create().texOffs(21, 0).mirror().addBox(-4.0F, 0.0F, -1.5F, 5.0F, 3.0F, 3.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-4.5F, -2.0F, -4.0F, 0.0F, -0.0873F, -1.309F));
+
+        PartDefinition KNEE_FRONTRIGHT = LEG_FRONTRIGHT.addOrReplaceChild("KNEE_FRONTRIGHT", CubeListBuilder.create(), PartPose.offset(-4.0F, 1.5F, 4.5F));
+
+        PartDefinition KneeFrontRightCube_r1 = KNEE_FRONTRIGHT.addOrReplaceChild("KneeFrontRightCube_r1", CubeListBuilder.create().texOffs(37, 2).mirror().addBox(-5.0F, -1.0F, 0.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, 0.0F, -6.0F, 0.0F, 0.6981F, 0.0F));
+
+        PartDefinition LEG_MIDRIGHT = THORAX.addOrReplaceChild("LEG_MIDRIGHT", CubeListBuilder.create().texOffs(21, 0).mirror().addBox(-4.0F, 0.0F, -1.5F, 5.0F, 3.0F, 3.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-4.5F, -2.0F, -0.5F, 0.0F, 0.0F, -1.1345F));
+
+        PartDefinition KNEE_MIDRIGHT = LEG_MIDRIGHT.addOrReplaceChild("KNEE_MIDRIGHT", CubeListBuilder.create(), PartPose.offset(-4.0F, 1.5F, 4.5F));
+
+        PartDefinition KneeMidRightCube_r1 = KNEE_MIDRIGHT.addOrReplaceChild("KneeMidRightCube_r1", CubeListBuilder.create().texOffs(37, 2).mirror().addBox(-5.0F, -1.0F, 0.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, 0.0F, -6.0F, 0.0F, 0.8727F, 0.0F));
+
+        PartDefinition LEG_REARRIGHT = THORAX.addOrReplaceChild("LEG_REARRIGHT", CubeListBuilder.create().texOffs(21, 0).mirror().addBox(-4.0F, 0.0F, -1.5F, 5.0F, 3.0F, 3.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-4.5F, -2.0F, 3.0F, 0.0F, 0.2182F, -0.9599F));
+
+        PartDefinition KNEE_REARRIGHT = LEG_REARRIGHT.addOrReplaceChild("KNEE_REARRIGHT", CubeListBuilder.create(), PartPose.offset(-4.0F, 1.5F, 4.5F));
+
+        PartDefinition KneeRearRightCube_r1 = KNEE_REARRIGHT.addOrReplaceChild("KneeRearRightCube_r1", CubeListBuilder.create().texOffs(37, 2).mirror().addBox(-5.0F, -1.0F, 0.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, 0.0F, -6.0F, 0.0F, 1.0472F, 0.0F));
+
+        PartDefinition WING_LEFT = THORAX.addOrReplaceChild("WING_LEFT", CubeListBuilder.create(), PartPose.offset(3.5F, -9.0F, -5.0F));
+
+        PartDefinition WingLeftPlane_r1 = WING_LEFT.addOrReplaceChild("WingLeftPlane_r1", CubeListBuilder.create().texOffs(5, 34).addBox(0.0F, 0.0F, -1.0F, 7.0F, 0.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 1.0F, 0.0F, 0.2182F, -0.1745F));
+
+        PartDefinition WING_RIGHT = THORAX.addOrReplaceChild("WING_RIGHT", CubeListBuilder.create(), PartPose.offset(-3.5F, -9.0F, -5.0F));
+
+        PartDefinition WingRightPlane_r1 = WING_RIGHT.addOrReplaceChild("WingRightPlane_r1", CubeListBuilder.create().texOffs(5, 34).mirror().addBox(-7.0F, 0.0F, -1.0F, 7.0F, 0.0F, 8.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, 0.0F, 1.0F, 0.0F, -0.2182F, 0.1745F));
+
+        PartDefinition ABDOMEN = ROOT.addOrReplaceChild("ABDOMEN", CubeListBuilder.create().texOffs(29, 8).addBox(-3.5F, 0.0F, -1.0F, 7.0F, 7.0F, 10.0F, new CubeDeformation(0.0F))
+                .texOffs(51, 3).addBox(-0.5F, 3.0F, 9.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -8.0F, 5.0F, -0.3927F, 0.0F, 0.0F));
+
+        PartDefinition SADDLE = ROOT.addOrReplaceChild("SADDLE", CubeListBuilder.create().texOffs(0, 42).addBox(-5.5F, -9.25F, -4.0F, 11.0F, 5.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
     private float getSine(float time, float max, float min) {
-        float so = MathHelper.sin(time * 0.25f);
+        float so = Mth.sin(time * 0.25f);
         float range = max - min;
-        float out = (so * range) + min;
-        return out;
+        return (so * range) + min;
     }
-
+    
     @Override
     public void setupAnim(BeehemothEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         SADDLE.visible = entity.isSaddled();
@@ -244,11 +165,11 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
             LEG_MIDRIGHT.xRot = 0.0f;
             LEG_REARLEFT.xRot = 0.0f;
             LEG_REARRIGHT.xRot = 0.0f;
-        }
+        } 
         else {
             WING_RIGHT.yRot = 0.0f;
             float wingSpeed = isSitting ? 0.75f : 1f;
-            WING_LEFT.zRot = ((float) (MathHelper.cos((limbSwing + ageInTicks) * 2.1f * wingSpeed) * Math.PI * 0.15f));
+            WING_LEFT.zRot = ((float) (Mth.cos((limbSwing + ageInTicks) * 2.1f * wingSpeed) * Math.PI * 0.15f));
             WING_LEFT.xRot = WING_RIGHT.xRot;
             WING_LEFT.yRot = WING_RIGHT.yRot;
             WING_RIGHT.zRot = -WING_LEFT.zRot;
@@ -278,32 +199,29 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
         ROOT.yRot = 0.0F;
         ROOT.zRot = 0.0F;
 
-        float swayingMotion = MathHelper.sin(ageInTicks * 0.18F);
+        float swayingMotion = Mth.sin(ageInTicks * 0.18F);
         if(isSitting) {
             ANTENNA_LEFT.xRot = swayingMotion * (float) Math.PI * 0.002F;
             ANTENNA_RIGHT.xRot = swayingMotion * (float) Math.PI * 0.002F;
-            ANTENNA_LEFT.z = 7.2F;
-            ANTENNA_RIGHT.z = 7.2F;
-            ANTENNA_LEFT.y = 5.5F;
-            ANTENNA_RIGHT.y = 5.5F;
+            ANTENNA_LEFT.z = -0.3F;
+            ANTENNA_RIGHT.z = -0.3F;
+            ANTENNA_LEFT.y = -1.1F;
+            ANTENNA_RIGHT.y = -1.1F;
             ANTENNA_LEFT.xRot += 0.2F;
             ANTENNA_RIGHT.xRot += 0.2F;
         }
         else {
             ANTENNA_LEFT.xRot = swayingMotion * (float) Math.PI * 0.005F;
             ANTENNA_RIGHT.xRot = swayingMotion * (float) Math.PI * 0.005F;
-            ANTENNA_LEFT.y = 6.2F;
-            ANTENNA_RIGHT.y = 6.2F;
+            ANTENNA_LEFT.z = 0.1F;
+            ANTENNA_RIGHT.z = 0.1F;
+            ANTENNA_LEFT.y = -1F;
+            ANTENNA_RIGHT.y = -1F;
         }
 
         if (!onGround) {
             ROOT.xRot = 0.1F + swayingMotion * (float) Math.PI * 0.015F;
-            ROOT.y = 19.0F - MathHelper.cos(ageInTicks * 0.18F) * 0.9F;
-        }
-
-        if (this.bodyPitch > 0.0F) {
-            // Change pitch to affect abdomen and head
-            ROOT.xRot = ModelUtils.rotlerpRad(ROOT.xRot, 3.0915928F, this.bodyPitch);
+            ROOT.y = 19.0F - Mth.cos(ageInTicks * 0.18F) * 0.9F;
         }
 
         THORAX.xRot = 0;
@@ -311,14 +229,9 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
         ABDOMEN.xRot = (float) (netHeadYaw / Math.PI / 180) - 0.3f;
     }
 
-    @Override
-    public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        ROOT.render(matrixStack, buffer, packedLight, packedOverlay);
-    }
 
-    public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-        modelRenderer.xRot = x;
-        modelRenderer.yRot = y;
-        modelRenderer.zRot = z;
+    @Override
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        ROOT.render(poseStack, buffer, packedLight, packedOverlay);
     }
 }

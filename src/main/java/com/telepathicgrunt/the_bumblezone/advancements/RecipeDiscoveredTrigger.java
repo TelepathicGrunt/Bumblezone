@@ -4,20 +4,19 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
-import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.loot.ConditionArraySerializer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.DeserializationContext;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.SerializationContext;
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class RecipeDiscoveredTrigger extends AbstractCriterionTrigger<RecipeDiscoveredTrigger.Instance> {
+public class RecipeDiscoveredTrigger extends SimpleCriterionTrigger<RecipeDiscoveredTrigger.Instance> {
     private static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "recipe_discovered");
 
     @Override
@@ -26,11 +25,11 @@ public class RecipeDiscoveredTrigger extends AbstractCriterionTrigger<RecipeDisc
     }
 
     @Override
-    public RecipeDiscoveredTrigger.Instance createInstance(JsonObject jsonObject, EntityPredicate.AndPredicate predicate, ConditionArrayParser conditionArrayParser) {
-        return new RecipeDiscoveredTrigger.Instance(predicate, fromJson(jsonObject));
+    public Instance createInstance(JsonObject jsonObject, EntityPredicate.Composite predicate, DeserializationContext deserializationContext) {
+        return new Instance(predicate, fromJson(jsonObject));
     }
 
-    public static ResourceLocation[] fromJson(@Nullable JsonElement jsonElement) {
+    public static ResourceLocation[] fromJson(JsonElement jsonElement) {
         if (jsonElement != null && !jsonElement.isJsonNull()) {
             JsonArray jsonarray = jsonElement.getAsJsonObject().getAsJsonArray("recipes");
             ResourceLocation[] resourceLocations = new ResourceLocation[jsonarray.size()];
@@ -46,14 +45,14 @@ public class RecipeDiscoveredTrigger extends AbstractCriterionTrigger<RecipeDisc
         }
     }
 
-    public void trigger(ServerPlayerEntity serverPlayerEntity, ResourceLocation recipeRL) {
-        super.trigger(serverPlayerEntity, (currentItemStack) -> currentItemStack.matches(recipeRL));
+    public void trigger(ServerPlayer serverPlayer, ResourceLocation recipeRL) {
+        super.trigger(serverPlayer, (currentItemStack) -> currentItemStack.matches(recipeRL));
     }
 
-    public static class Instance extends CriterionInstance {
+    public static class Instance extends AbstractCriterionTriggerInstance {
         private final Set<ResourceLocation> resourceLocations;
 
-        public Instance(EntityPredicate.AndPredicate predicate, ResourceLocation[] resourceLocations) {
+        public Instance(EntityPredicate.Composite predicate, ResourceLocation[] resourceLocations) {
             super(RecipeDiscoveredTrigger.ID, predicate);
             this.resourceLocations = new HashSet<>((Arrays.asList(resourceLocations)));
         }
@@ -63,8 +62,8 @@ public class RecipeDiscoveredTrigger extends AbstractCriterionTrigger<RecipeDisc
         }
 
         @Override
-        public JsonObject serializeToJson(ConditionArraySerializer conditionArraySerializer) {
-            JsonObject jsonobject = super.serializeToJson(conditionArraySerializer);
+        public JsonObject serializeToJson(SerializationContext serializationContext) {
+            JsonObject jsonobject = super.serializeToJson(serializationContext);
             String[] recipes = new String[this.resourceLocations.size()];
             int i = 0;
             for(ResourceLocation rl : this.resourceLocations) {

@@ -3,22 +3,22 @@ package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.dispenser.IPosition;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.DispenserTileEntity;
-import net.minecraft.tileentity.HopperTileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockSource;
+import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.entity.DispenserBlockEntity;
+import net.minecraft.world.level.block.entity.HopperBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 
 public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavior {
@@ -27,15 +27,15 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
     /**
      * Dispense the specified stack, play the dispense sound and spawn particles.
      */
-    public ItemStack execute(IBlockSource source, ItemStack stack) {
+    public ItemStack execute(BlockSource source, ItemStack stack) {
         BucketItem bucketitem = (BucketItem) stack.getItem();
-        IPosition iposition = DispenserBlock.getDispensePosition(source);
+        ServerLevel world = source.getLevel();
+        Position iposition = DispenserBlock.getDispensePosition(source);
         BlockPos position = new BlockPos(iposition);
-        ServerWorld world = source.getLevel();
         BlockState blockstate = world.getBlockState(position);
 
-        if (bucketitem.emptyBucket(null, world, position, null)) {
-            bucketitem.checkExtraContent(world, stack, position);
+        if (bucketitem.emptyContents(null, world, position, null)) {
+            bucketitem.checkExtraContent(null, world, stack, position);
             return new ItemStack(Items.BUCKET);
         }
         else if (blockstate.is(BzBlocks.HONEYCOMB_BROOD.get()) && BzItemTags.BEE_FEEDING_ITEMS.contains(stack.getItem())) {
@@ -43,14 +43,14 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
             int stage = blockstate.getValue(HoneycombBrood.STAGE);
             if (stage == 3) {
                 // the front of the block
-                BlockPos.Mutable blockpos = new BlockPos.Mutable().set(position);
+                BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos().set(position);
                 blockpos.move(blockstate.getValue(HoneycombBrood.FACING).getOpposite());
 
                 // do nothing if front is blocked off
                 if (!world.getBlockState(blockpos).getMaterial().isSolid()) {
-                    MobEntity beeEntity = EntityType.BEE.create(world);
+                    Mob beeEntity = EntityType.BEE.create(world);
                     beeEntity.moveTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, world.getRandom().nextFloat() * 360.0F, 0.0F);
-                    beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(new BlockPos(beeEntity.blockPosition())), SpawnReason.TRIGGERED, null, null);
+                    beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(new BlockPos(beeEntity.position())), MobSpawnType.TRIGGERED, null, null);
                     world.addFreshEntity(beeEntity);
                     world.setBlockAndUpdate(position, blockstate.setValue(HoneycombBrood.STAGE, 0));
                 }
@@ -85,18 +85,18 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
             return stack;
         }
         else {
-            return DROP_ITEM_BEHAVIOR.dispense(source, stack);
+            return this.DROP_ITEM_BEHAVIOR.dispense(source, stack);
         }
     }
 
     /**
      * Adds bucket to dispenser or if no room, dispense it
      */
-    private static void addBucketToDispenser(IBlockSource source) {
-        if (source.getEntity() instanceof DispenserTileEntity) {
-            DispenserTileEntity dispenser = source.getEntity();
+    private static void addBucketToDispenser(BlockSource source) {
+        if (source.getEntity() instanceof DispenserBlockEntity) {
+            DispenserBlockEntity dispenser = source.getEntity();
             ItemStack honeyBottle = new ItemStack(Items.BUCKET);
-            if (!HopperTileEntity.addItem(null, dispenser, honeyBottle, null).isEmpty()) {
+            if (!HopperBlockEntity.addItem(null, dispenser, honeyBottle, null).isEmpty()) {
                 DROP_ITEM_BEHAVIOR.dispense(source, honeyBottle);
             }
         }

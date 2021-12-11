@@ -7,15 +7,15 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 @JeiPlugin
-public class JEIIntegration implements IModPlugin
-{
+public class JEIIntegration implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
 	return new ResourceLocation(Bumblezone.MODID+"jei_plugin");
@@ -49,15 +49,15 @@ public class JEIIntegration implements IModPlugin
     
     private static void addInfo(IRecipeRegistration registration, Item item) {
 	registration.addIngredientInfo(
-		new ItemStack(item), 
-		VanillaTypes.ITEM, 
-		Bumblezone.MODID+"."+item.getRegistryName().getPath()+".jei_description");
+		new ItemStack(item),
+		VanillaTypes.ITEM,
+		new TranslatableComponent(Bumblezone.MODID+"."+item.getRegistryName().getPath()+".jei_description"));
     }
     
     private static void addInfo(IRecipeRegistration registration, Fluid fluid) {
 	registration.addIngredientInfo(
 		new FluidStack(fluid, 1), 
-		VanillaTypes.FLUID, 
-		Bumblezone.MODID+"."+fluid.getRegistryName().getPath()+".jei_description");
+		VanillaTypes.FLUID,
+			new TranslatableComponent(Bumblezone.MODID+"."+fluid.getRegistryName().getPath()+".jei_description"));
     }
 }

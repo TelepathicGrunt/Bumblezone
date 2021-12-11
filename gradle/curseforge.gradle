@@ -7,7 +7,7 @@ curseforge {
         releaseType = "release"
         changelogType = 'markdown'
         changelog = file('CHANGELOG.md')
-        addGameVersion("1.16.5")
+        addGameVersion("1.18.1")
         addGameVersion("Forge")
 
         mainArtifact(jar) {

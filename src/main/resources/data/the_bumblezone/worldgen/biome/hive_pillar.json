@@ -21,7 +21,6 @@
     "water_color": 14402413,
     "water_fog_color": 11700268
   },
-  "surface_builder": "the_bumblezone:honey_surface_builder",
   "carvers": {},
   "features": [
     [
@@ -47,7 +46,6 @@
     ],
     []
   ],
-  "starts": [],
   "creature_spawn_probability": 0.17,
   "spawners": {
     "monster": [
@@ -109,6 +107,8 @@
       }
     ],
     "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
     "water_creature": [],
     "water_ambient": [],
     "misc": []

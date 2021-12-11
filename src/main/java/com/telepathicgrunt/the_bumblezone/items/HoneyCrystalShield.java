@@ -2,15 +2,17 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShieldItem;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -20,15 +22,6 @@ public class HoneyCrystalShield extends ShieldItem {
         //starts off with 20 durability so it is super weak
         super(new Item.Properties().durability(20).tab(BzItems.BUMBLEZONE_CREATIVE_TAB));
     }
-
-    /**
-     * It's a shield of course.
-     */
-    @Override
-    public boolean isShield(ItemStack stack, LivingEntity entity){
-        return true;
-    }
-
 
     /**
      * Specify what item can repair this shield
@@ -43,26 +36,25 @@ public class HoneyCrystalShield extends ShieldItem {
      */
     // CLIENT-SIDED
     @Override
-    public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         if (stack.hasTag()) {
             int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
-            tooltip.add(new TranslationTextComponent("item.the_bumblezone.honey_crystal_shield.level_tooltip").append(": " + (repairLevel + 1)));
+            tooltip.add(new TranslatableComponent("item.the_bumblezone.honey_crystal_shield.level_tooltip").append(": " + (repairLevel + 1)));
         }
     }
 
     /**
      * Increases the durability of the shield by 10 for every shield level (repair cost)
      */
-    @SuppressWarnings("deprecation")
     @Override
     public int getMaxDamage(ItemStack stack) {
         if(stack.hasTag()) {
             int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
             if (repairLevel != 0) {
-                return getItem().getMaxDamage() + repairLevel * 10;
+                return stack.getItem().getMaxDamage() + repairLevel * 10;
             }
         }
-        return getItem().getMaxDamage();
+        return stack.getItem().getMaxDamage();
     }
 
     /**
@@ -87,7 +79,7 @@ public class HoneyCrystalShield extends ShieldItem {
      * blacklisted mending enchantment
      */
     @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, net.minecraft.enchantment.Enchantment enchantment) {
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if(enchantment == Enchantments.MENDING)
             return false;
 

@@ -1,21 +1,21 @@
 package com.telepathicgrunt.the_bumblezone.world.dimension.layer;
 
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzBiomeProvider;
-import net.minecraft.world.gen.INoiseRandom;
-import net.minecraft.world.gen.layer.traits.ICastleTransformer;
+import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.CastleTransformer;
+import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.Context;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.biome.Biome;
 
 
-public enum BzBiomePillarLayer implements ICastleTransformer {
-    INSTANCE;
+public record BzBiomePillarLayer(Registry<Biome> biomeRegistry) implements CastleTransformer {
 
-    public int apply(INoiseRandom context, int n, int e, int s, int w, int center) {
+    @Override
+    public int apply(Context context, int n, int e, int s, int w, int c) {
 
-        if (context.nextRandom(12) == 0 && n == center && e == center && s == center && w == center) {
-            return BzBiomeProvider.LAYERS_BIOME_REGISTRY.getId(
-                    BzBiomeProvider.LAYERS_BIOME_REGISTRY.get(BzBiomeProvider.HIVE_PILLAR));
+        if (context.nextRandom(12) == 0 && n == c && e == c && s == c && w == c) {
+            return biomeRegistry.getId(biomeRegistry.get(BzBiomeProvider.HIVE_PILLAR));
         }
 
-        return center;
+        return c;
     }
-
 }

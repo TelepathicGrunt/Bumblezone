@@ -6,18 +6,19 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import net.minecraft.block.SpawnerBlock;
-import net.minecraft.entity.EntityType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.SharedSeedRandom;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.gen.feature.template.IStructureProcessorType;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.StructureProcessor;
-import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.SpawnerBlock;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.List;
 import java.util.Random;
@@ -25,7 +26,7 @@ import java.util.Random;
 public class SpawnerRandomizingProcessor extends StructureProcessor {
 
     public static final Codec<SpawnerRandomizingProcessor> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            Codec.mapPair(Registry.ENTITY_TYPE.fieldOf("resourcelocation"), Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight")).codec().listOf().fieldOf("spawner_mob_entries").forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.spawnerRandomizingProcessor)
+            Codec.mapPair(Registry.ENTITY_TYPE.byNameCodec().fieldOf("resourcelocation"), Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight")).codec().listOf().fieldOf("spawner_mob_entries").forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.spawnerRandomizingProcessor)
     ).apply(instance, instance.stable(SpawnerRandomizingProcessor::new)));
 
     public final List<Pair<EntityType<?>, Integer>> spawnerRandomizingProcessor;
@@ -35,12 +36,12 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
     }
 
     @Override
-    public Template.BlockInfo processBlock(IWorldReader worldView, BlockPos pos, BlockPos blockPos, Template.BlockInfo structureBlockInfoLocal, Template.BlockInfo structureBlockInfoWorld, PlacementSettings structurePlacementData) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
         if (structureBlockInfoWorld.state.getBlock() instanceof SpawnerBlock) {
             BlockPos worldPos = structureBlockInfoWorld.pos;
-            Random random = new SharedSeedRandom();
+            Random random = new WorldgenRandom(new LegacyRandomSource(0));
             random.setSeed(worldPos.asLong() * worldPos.getY());
-            return new Template.BlockInfo(
+            return new StructureTemplate.StructureBlockInfo(
                     worldPos,
                     structureBlockInfoWorld.state,
                     SetMobSpawnerEntity(random, structureBlockInfoWorld.nbt));
@@ -51,10 +52,10 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
     /**
      * Makes the given block entity now have the correct spawner mob
      */
-    private CompoundNBT SetMobSpawnerEntity(Random random, CompoundNBT nbt) {
+    private CompoundTag SetMobSpawnerEntity(Random random, CompoundTag nbt) {
         EntityType<?> entity = GeneralUtils.getRandomEntry(spawnerRandomizingProcessor, random);
         if (entity != null) {
-            CompoundNBT compound = new CompoundNBT();
+            CompoundTag compound = new CompoundTag();
             compound.putShort("Delay", (short) 20);
             compound.putShort("MinSpawnDelay", (short) 200);
             compound.putShort("MaxSpawnDelay", (short) 800);
@@ -63,18 +64,18 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
             compound.putShort("RequiredPlayerRange", (short) 16);
             compound.putShort("SpawnRange", (short) 4);
 
-            CompoundNBT spawnData = new CompoundNBT();
+            CompoundTag spawnData = new CompoundTag();
             spawnData.putString("id", Registry.ENTITY_TYPE.getKey(entity).toString());
             compound.put("SpawnData", spawnData);
 
-            CompoundNBT entityData = new CompoundNBT();
+            CompoundTag entityData = new CompoundTag();
             entityData.putString("id", Registry.ENTITY_TYPE.getKey(entity).toString());
 
-            CompoundNBT listEntry = new CompoundNBT();
+            CompoundTag listEntry = new CompoundTag();
             listEntry.put("Entity", entityData);
             listEntry.putInt("Weight", 1);
 
-            ListNBT listnbt = new ListNBT();
+            ListTag listnbt = new ListTag();
             listnbt.add(listEntry);
 
             compound.put("SpawnPotentials", listnbt);
@@ -89,7 +90,7 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
     }
 
     @Override
-    protected IStructureProcessorType<?> getType() {
+    protected StructureProcessorType<?> getType() {
         return BzProcessors.SPAWNER_RANDOMIZING_PROCESSOR;
     }
 }

@@ -1,0 +1,12 @@
+{
+  "config": {
+    "processors": "the_bumblezone:honeycomb_hole_processors",
+    "dungeon_nbt_entries": [
+      {
+        "resourcelocation": "the_bumblezone:honeycomb_hole",
+        "weight": 1
+      }
+    ]
+  },
+  "type": "the_bumblezone:honeycomb_holes"
+}

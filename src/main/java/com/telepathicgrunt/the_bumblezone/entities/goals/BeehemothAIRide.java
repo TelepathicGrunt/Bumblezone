@@ -1,12 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
@@ -22,8 +23,8 @@ public class BeehemothAIRide extends Goal {
 
     @Override
     public boolean canUse() {
-        if (beehemothEntity.getControllingPassenger() instanceof PlayerEntity && beehemothEntity.isSaddled()) {
-            player = (PlayerEntity) beehemothEntity.getControllingPassenger();
+        if (beehemothEntity.getControllingPassenger() instanceof Player && beehemothEntity.isSaddled()) {
+            player = (Player) beehemothEntity.getControllingPassenger();
             return true;
         }
         return false;
@@ -42,14 +43,14 @@ public class BeehemothAIRide extends Goal {
         double y = beehemothEntity.getY();
         double z = beehemothEntity.getZ();
 
-        Vector3d lookVec = player.getLookAngle();
+        Vec3 lookVec = player.getLookAngle();
         if (player.zza < 0) {
             lookVec = lookVec.yRot((float) Math.PI);
         }
 
         if (player.zza != 0 || ((LivingEntityAccessor)player).isJumping()) {
             currentSpeed = Math.min(
-                    BzGeneralConfigs.beeheemothSpeed.get() * speedModifier * beehemothEntity.getFinalFlyingSpeed(),
+                    BzGeneralConfigs.beehemothSpeed.get() * speedModifier * beehemothEntity.getFinalFlyingSpeed(),
                     currentSpeed + 0.3D);
         }
         else {
@@ -62,7 +63,7 @@ public class BeehemothAIRide extends Goal {
 
         if(((LivingEntityAccessor)player).isJumping()) {
             y += 5;
-            Vector3d velocity = beehemothEntity.getDeltaMovement();
+            Vec3 velocity = beehemothEntity.getDeltaMovement();
             beehemothEntity.setDeltaMovement(velocity.x(), Math.min(velocity.y, 0.1D * currentSpeed), velocity.z());
 
             if(player.zza == 0) {
@@ -71,7 +72,7 @@ public class BeehemothAIRide extends Goal {
             }
         }
 
-        beehemothEntity.xxa = player.xxa * 0.35F;
+        beehemothEntity.xxa = player.xxa * 0.35f;
         beehemothEntity.maxUpStep = 1;
         beehemothEntity.getMoveControl().setWantedPosition(x, y, z, currentSpeed);
     }
