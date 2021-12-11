@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;

@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.mixin.items.PlayerDamageShieldInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;

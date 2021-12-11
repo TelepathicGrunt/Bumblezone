@@ -2,11 +2,8 @@ package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidClientOverlay;
-import com.telepathicgrunt.the_bumblezone.client.rendering.PileOfPollenRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ScreenEffectRenderer;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

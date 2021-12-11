@@ -1,11 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.world.structures;
 
 import com.mojang.serialization.Codec;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.block.state.BlockState;

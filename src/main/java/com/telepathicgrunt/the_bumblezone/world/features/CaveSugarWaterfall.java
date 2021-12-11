@@ -55,8 +55,8 @@ public class CaveSugarWaterfall extends Feature<NoneFeatureConfiguration> {
 
             //position valid. begin making waterfall
             if (numberOfSolidSides == neededNumberOfSides) {
-                context.level().setBlock(blockpos$Mutable, BzFluids.SUGAR_WATER_BLOCK.defaultBlockState(), 2);
-                context.level().scheduleTick(blockpos$Mutable, BzFluids.SUGAR_WATER_FLUID, 0);
+                context.level().setBlock(blockpos$Mutable, BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), 2);
+                context.level().scheduleTick(blockpos$Mutable, BzFluids.SUGAR_WATER_FLUID.get(), 0);
             }
             return true;
         }

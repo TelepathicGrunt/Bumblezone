@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.capabilities;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 
 
 public class EntityFlyingSpeed implements IFlyingSpeed {
@@ -17,15 +17,15 @@ public class EntityFlyingSpeed implements IFlyingSpeed {
 	}
 
 	@Override
-	public CompoundNBT saveNBTData() {
-		CompoundNBT nbt = new CompoundNBT();
+	public CompoundTag saveNBTData() {
+		CompoundTag nbt = new CompoundTag();
 		nbt.putFloat("original_flying_speed", this.getOriginalFlyingSpeed());
 		return nbt;
 	}
 
 
 	@Override
-	public void loadNBTData(CompoundNBT nbtTag) {
+	public void loadNBTData(CompoundTag nbtTag) {
 		this.setOriginalFlyingSpeed(nbtTag.getFloat("original_flying_speed"));
 	}
 }

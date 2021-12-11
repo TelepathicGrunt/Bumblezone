@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuff;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeeVariantRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeehemothRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidClientOverlay;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HoneySlimeRendering;
@@ -43,31 +44,23 @@ public class BumblezoneClient {
         modEventBus.addListener(BumblezoneClient::onClientSetup);
         modEventBus.addListener(BumblezoneClient::onParticleSetup);
         modEventBus.addListener(BumblezoneClient::registerEntityRenderers);
+        modEventBus.addListener(BumblezoneClient::registerEntityModels);
         forgeBus.addListener(FluidClientOverlay::sugarWaterFluidOverlay);
         forgeBus.addListener(FluidClientOverlay::renderHoneyFog);
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
     }
 
     public static void onClientSetup(FMLClientSetupEvent event) {
-        DimensionSpecialEffectsAccessor.thebumblezone_getBY_ResourceLocation().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
-
-        if(BzClientConfigs.enableLgbtBeeRenderer.get()) {
-            //noinspection unchecked cast
-            BeeVariantRenderer.OLD_BEE_RENDER_FACTORY = (EntityRendererProvider<Bee>)RenderingRegistryAccessor.getEntityRenderers().get(EntityType.BEE);
-            EntityRenderers.register(EntityType.BEE, BeeVariantRenderer::new);
-        }
-
         //enqueueWork because I have been told RenderTypeLookup is not thread safe
         event.enqueueWork(() -> {
-            ItemBlockRenderTypes.setRenderLayer(BzBlocks.STICKY_HONEY_REDSTONE.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(BzBlocks.STICKY_HONEY_RESIDUE.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(BzBlocks.HONEY_CRYSTAL.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(BzFluids.SUGAR_WATER_FLUID.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(BzFluids.SUGAR_WATER_FLUID_FLOWING.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(BzFluids.SUGAR_WATER_BLOCK.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(BzFluids.HONEY_FLUID.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(BzFluids.HONEY_FLUID_FLOWING.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(BzFluids.HONEY_FLUID_BLOCK.get(), RenderType.translucent());
+            DimensionSpecialEffectsAccessor.thebumblezone_getBY_ResourceLocation().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
+            registerRenderLayers();
+
+            if(BzClientConfigs.enableLgbtBeeRenderer.get()) {
+                //noinspection unchecked cast
+                BeeVariantRenderer.OLD_BEE_RENDER_FACTORY = (EntityRendererProvider<Bee>)RenderingRegistryAccessor.getEntityRenderers().get(EntityType.BEE);
+                EntityRenderers.register(EntityType.BEE, BeeVariantRenderer::new);
+            }
 
             // Allows shield to use the blocking json file for offset
             ItemProperties.register(
@@ -79,6 +72,22 @@ public class BumblezoneClient {
                                     livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
             );
         });
+    }
+
+    private static void registerRenderLayers() {
+        ItemBlockRenderTypes.setRenderLayer(BzBlocks.STICKY_HONEY_REDSTONE.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BzBlocks.STICKY_HONEY_RESIDUE.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BzBlocks.HONEY_CRYSTAL.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(BzFluids.SUGAR_WATER_FLUID.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(BzFluids.SUGAR_WATER_FLUID_FLOWING.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(BzFluids.SUGAR_WATER_BLOCK.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(BzFluids.HONEY_FLUID.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(BzFluids.HONEY_FLUID_FLOWING.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(BzFluids.HONEY_FLUID_BLOCK.get(), RenderType.translucent());
+    }
+
+    public static void registerEntityModels(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(BeehemothModel.LAYER_LOCATION, BeehemothModel::createBodyLayer);
     }
 
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers.RegisterRenderers event) {

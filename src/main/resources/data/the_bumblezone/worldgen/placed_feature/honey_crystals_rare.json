@@ -1,8 +1,8 @@
 {
-  "feature": "the_bumblezone:honey_crystal_feature",
+  "feature": "the_bumblezone:honey_crystals_feature",
   "placement": [
     {
-      "count": 4,
+      "count": 1,
       "type": "the_bumblezone:random_3d_underground_chunk_placement"
     },
     {

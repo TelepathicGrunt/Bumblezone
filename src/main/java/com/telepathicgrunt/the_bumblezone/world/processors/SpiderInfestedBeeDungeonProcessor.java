@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.world.processors;
 
 import com.mojang.serialization.Codec;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;

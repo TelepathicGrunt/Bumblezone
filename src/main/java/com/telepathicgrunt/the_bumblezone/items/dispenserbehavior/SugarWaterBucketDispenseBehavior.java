@@ -9,7 +9,6 @@ import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraft.world.level.block.state.BlockState;
 
 
 public class SugarWaterBucketDispenseBehavior extends DefaultDispenseItemBehavior {

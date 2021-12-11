@@ -17,10 +17,12 @@ import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 
+import java.util.function.Supplier;
+
 
 public class SugarWaterBlock extends LiquidBlock {
 
-    public SugarWaterBlock(FlowingFluid baseFluid) {
+    public SugarWaterBlock(Supplier<? extends FlowingFluid> baseFluid) {
         super(baseFluid, BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noDrops().speedFactor(0.95F));
     }
 

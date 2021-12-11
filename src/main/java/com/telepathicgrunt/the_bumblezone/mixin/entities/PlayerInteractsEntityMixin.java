@@ -1,16 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
-import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.CreatingHoneySlime;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

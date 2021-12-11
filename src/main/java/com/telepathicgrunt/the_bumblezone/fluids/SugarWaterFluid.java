@@ -20,17 +20,21 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 import java.util.Random;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.LEVEL_FLOWING;
 
 
-public abstract class SugarWaterFluid extends FlowingFluid {
+public abstract class SugarWaterFluid extends ForgeFlowingFluid  {
+
+    protected SugarWaterFluid(Properties properties) {
+        super(properties);
+    }
 
     @Override
     public Fluid getFlowing() {
@@ -155,6 +159,11 @@ public abstract class SugarWaterFluid extends FlowingFluid {
     }
 
     public static class Flowing extends SugarWaterFluid {
+        public Flowing(Properties properties) {
+            super(properties);
+            registerDefaultState(getStateDefinition().any().setValue(LEVEL, 7));
+        }
+
         protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder) {
             super.createFluidStateDefinition(builder);
             builder.add(LEVEL_FLOWING);
@@ -177,6 +186,10 @@ public abstract class SugarWaterFluid extends FlowingFluid {
     }
 
     public static class Source extends SugarWaterFluid {
+
+        public Source(ForgeFlowingFluid.Properties properties) {
+            super(properties);
+        }
 
         @Override
         public int getAmount(FluidState state) {

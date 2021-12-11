@@ -27,8 +27,8 @@ public abstract class FishingBobberEntityMixin extends Entity {
         BlockPos blockpos = this.blockPosition();
         FluidState fluidstate = this.level.getFluidState(blockpos);
         if (fluidstate.is(BzFluidTags.BZ_HONEY_FLUID)) {
-            Vec3 vector3d = this.getDeltaMovement();
-            this.setDeltaMovement(vector3d.x * 0.5D, 0, vector3d.z * 0.5D);
+            Vec3 vec3 = this.getDeltaMovement();
+            this.setDeltaMovement(vec3.x * 0.5D, 0, vec3.z * 0.5D);
         }
     }
 }

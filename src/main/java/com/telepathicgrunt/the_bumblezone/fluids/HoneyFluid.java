@@ -28,40 +28,43 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 import java.util.Random;
 
-public abstract class HoneyFluid extends FlowingFluid {
+public abstract class HoneyFluid extends ForgeFlowingFluid {
 
     public static final IntegerProperty BOTTOM_LEVEL = HoneyFluidBlock.BOTTOM_LEVEL;
     public static final BooleanProperty ABOVE_FLUID = HoneyFluidBlock.ABOVE_FLUID;
 
-    protected HoneyFluid() { }
+    protected HoneyFluid(Properties properties) {
+        super(properties);
+    }
+
 
     @Override
     public Fluid getFlowing() {
-        return BzFluids.HONEY_FLUID_FLOWING;
+        return BzFluids.HONEY_FLUID_FLOWING.get();
     }
 
     @Override
     public Fluid getSource() {
-        return BzFluids.HONEY_FLUID;
+        return BzFluids.HONEY_FLUID.get();
     }
 
     @Override
     public Item getBucket() {
-        return BzItems.HONEY_BUCKET;
+        return BzItems.HONEY_BUCKET.get();
     }
 
     @Override
     public void animateTick(Level worldIn, BlockPos pos, FluidState state, Random random) {
         if (random.nextInt(82) == 0) {
-            worldIn.addParticle(BzParticles.HONEY_PARTICLE,
+            worldIn.addParticle(BzParticles.HONEY_PARTICLE.get(),
                     pos.getX() + random.nextFloat(),
                     pos.getY() + random.nextFloat(),
                     pos.getZ() + random.nextFloat(),
@@ -73,7 +76,7 @@ public abstract class HoneyFluid extends FlowingFluid {
 
     @Override
     public ParticleOptions getDripParticle() {
-        return BzParticles.HONEY_PARTICLE;
+        return BzParticles.HONEY_PARTICLE.get();
     }
 
     @Override
@@ -113,7 +116,7 @@ public abstract class HoneyFluid extends FlowingFluid {
 
     @Override
     public BlockState createLegacyBlock(FluidState state) {
-        return BzFluids.HONEY_FLUID_BLOCK.defaultBlockState()
+        return BzFluids.HONEY_FLUID_BLOCK.get().defaultBlockState()
                 .setValue(LiquidBlock.LEVEL, state.isSource() ? 0 : state.getAmount())
                 .setValue(BOTTOM_LEVEL, state.isSource() ? 0 : state.getValue(BOTTOM_LEVEL))
                 .setValue(FALLING, !state.isSource() && state.getValue(FALLING))
@@ -355,13 +358,13 @@ public abstract class HoneyFluid extends FlowingFluid {
                     );
                     if (thisEntity.getAirSupply() == -20) {
                         thisEntity.setAirSupply(0);
-                        Vec3 vector3d = thisEntity.getDeltaMovement();
+                        Vec3 vec3 = thisEntity.getDeltaMovement();
 
                         for(int i = 0; i < 8; ++i) {
                             double d2 = thisEntity.level.random.nextDouble() - thisEntity.level.random.nextDouble();
                             double d3 = thisEntity.level.random.nextDouble() - thisEntity.level.random.nextDouble();
                             double d4 = thisEntity.level.random.nextDouble() - thisEntity.level.random.nextDouble();
-                            thisEntity.level.addParticle(BzParticles.HONEY_PARTICLE, thisEntity.getX() + d2, thisEntity.getY() + d3, thisEntity.getZ() + d4, vector3d.x, vector3d.y, vector3d.z);
+                            thisEntity.level.addParticle(BzParticles.HONEY_PARTICLE.get(), thisEntity.getX() + d2, thisEntity.getY() + d3, thisEntity.getZ() + d4, vec3.x, vec3.y, vec3.z);
                         }
 
                         thisEntity.hurt(DamageSource.DROWN, 2.0F);
@@ -381,7 +384,8 @@ public abstract class HoneyFluid extends FlowingFluid {
     }
 
     public static class Flowing extends HoneyFluid {
-        public Flowing() {
+        public Flowing(Properties properties) {
+            super(properties);
             registerDefaultState(getStateDefinition().any()
                     .setValue(LEVEL, 8)
                     .setValue(BOTTOM_LEVEL, 0)
@@ -414,7 +418,8 @@ public abstract class HoneyFluid extends FlowingFluid {
 
     public static class Source extends HoneyFluid {
 
-        public Source() {
+        public Source(Properties properties) {
+            super(properties);
             registerDefaultState(getStateDefinition().any().setValue(ABOVE_FLUID, false));
         }
 

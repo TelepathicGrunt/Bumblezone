@@ -18,14 +18,6 @@ import java.util.Random;
 
 
 public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
-    //https://github.com/Deadrik/TFC2
-
-    private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
-    private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState();
-    private static final BlockState HONEYCOMB_BLOCK = Blocks.HONEYCOMB_BLOCK.defaultBlockState();
-    private static final BlockState SUGAR_WATER = BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState();
-
-
     protected long seed;
     protected static OpenSimplex2F noiseGen;
     protected static OpenSimplex2F noiseGen2;
@@ -221,18 +213,18 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                 if (blockPos.getY() < generator.getSeaLevel()) {
                     boolean isNextToDrySpace = shouldCloseOff(world, blockPos, mutable, false);
                     if(isNextToAir || isNextToDrySpace)
-                        world.setBlock(blockPos, FILLED_POROUS_HONEYCOMB, 3);
+                        world.setBlock(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3);
                     else
-                        world.setBlock(blockPos, SUGAR_WATER, 3);
+                        world.setBlock(blockPos, BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), 3);
                 }
                 else {
-                    world.setBlock(blockPos, CAVE_AIR, 3);
+                    world.setBlock(blockPos, Blocks.CAVE_AIR.defaultBlockState(), 3);
                 }
             } else if (posResult == 1) {
                 if (random.nextInt(3) == 0) {
-                    world.setBlock(blockPos, HONEYCOMB_BLOCK, 3);
+                    world.setBlock(blockPos, Blocks.HONEYCOMB_BLOCK.defaultBlockState(), 3);
                 } else {
-                    world.setBlock(blockPos, FILLED_POROUS_HONEYCOMB, 3);
+                    world.setBlock(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3);
                 }
             }
         }

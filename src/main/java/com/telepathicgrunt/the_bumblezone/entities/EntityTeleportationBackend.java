@@ -2,12 +2,13 @@ package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.google.common.primitives.Doubles;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
+import com.telepathicgrunt.the_bumblezone.capabilities.IEntityPosAndDim;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 
 import java.util.HashSet;
 import java.util.List;
@@ -51,7 +53,8 @@ public class EntityTeleportationBackend {
         }
 
         else if(BzDimensionConfigs.teleportationMode.get() == 2) {
-            Vec3 playerPos = Bumblezone.ENTITY_COMPONENT.get(entity).getNonBZPos();
+            IEntityPosAndDim capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
+            Vec3 playerPos = capability.getNonBZPos();
             if(playerPos != null) {
                 validBlockPos = new BlockPos(playerPos);
             }
@@ -75,7 +78,8 @@ public class EntityTeleportationBackend {
             //Gets valid space in other world
             validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward, false);
 
-            Vec3 playerPos = Bumblezone.ENTITY_COMPONENT.get(entity).getNonBZPos();
+            IEntityPosAndDim capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
+            Vec3 playerPos = capability.getNonBZPos();
             if(validBlockPos == null && playerPos != null) {
                 validBlockPos = new BlockPos(playerPos);
             }
@@ -369,10 +373,11 @@ public class EntityTeleportationBackend {
     }
 
     // Player exiting Bumblezone dimension
-    public static void playerLeavingBz(ResourceLocation dimensionLeaving, Entity entity) {
+    public static void playerLeavingBz(EntityTravelToDimensionEvent event) {
         //Updates the non-BZ dimension that the player is leaving
-        if (!dimensionLeaving.equals(Bumblezone.MOD_DIMENSION_ID) && entity instanceof LivingEntity) {
-            Bumblezone.ENTITY_COMPONENT.get(entity).setNonBZDimension(dimensionLeaving);
+        if (!event.getDimension().location().equals(Bumblezone.MOD_DIMENSION_ID) && event.getEntity() instanceof LivingEntity livingEntity) {
+            IEntityPosAndDim capability = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
+            capability.setNonBZDim(event.getDimension().location());
         }
     }
 }

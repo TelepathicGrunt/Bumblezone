@@ -22,6 +22,8 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.function.Supplier;
+
 public class HoneyFluidBlock extends LiquidBlock {
 
     public static final int maxBottomLayer = 8;
@@ -29,7 +31,7 @@ public class HoneyFluidBlock extends LiquidBlock {
     public static final BooleanProperty FALLING = BlockStateProperties.FALLING;
     public static final BooleanProperty ABOVE_FLUID = BooleanProperty.create("above_support");
 
-    public HoneyFluidBlock(FlowingFluid fluid) {
+    public HoneyFluidBlock(Supplier<? extends FlowingFluid> fluid) {
         super(fluid, BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noDrops().speedFactor(0.15F));
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(LEVEL, 0)
@@ -126,8 +128,8 @@ public class HoneyFluidBlock extends LiquidBlock {
             }
         }
         else if(Math.abs(entity.getDeltaMovement().y()) > verticalSpeedDeltaLimit && entity.fallDistance <= 0.2D) {
-            Vec3 vector3d = entity.getDeltaMovement();
-            entity.setDeltaMovement(new Vec3(vector3d.x(), Math.copySign(verticalSpeedDeltaLimit, vector3d.y()), vector3d.z()));
+            Vec3 vec3 = entity.getDeltaMovement();
+            entity.setDeltaMovement(new Vec3(vec3.x(), Math.copySign(verticalSpeedDeltaLimit, vec3.y()), vec3.z()));
         }
 
         super.entityInside(state, world, position, entity);

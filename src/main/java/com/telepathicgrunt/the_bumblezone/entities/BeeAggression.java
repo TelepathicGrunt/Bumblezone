@@ -9,8 +9,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import net.minecraft.core.Registry;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -22,8 +20,8 @@ import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Panda;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -218,7 +216,9 @@ public class BeeAggression {
         return false;
     }
 
-    public static void playerTick(Player playerEntity) {
+    public static void playerTick(TickEvent.PlayerTickEvent event) {
+        Player playerEntity = event.player;
+
         //removes the wrath of the hive if it is disallowed outside dimension
         if(!playerEntity.level.isClientSide() &&
                 playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get()) &&

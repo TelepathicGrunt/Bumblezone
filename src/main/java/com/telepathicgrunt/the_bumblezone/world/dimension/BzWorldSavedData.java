@@ -2,6 +2,8 @@ package com.telepathicgrunt.the_bumblezone.world.dimension;
 
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
+import com.telepathicgrunt.the_bumblezone.capabilities.IEntityPosAndDim;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -19,6 +21,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.TickEvent;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -57,7 +60,13 @@ public class BzWorldSavedData extends SavedData {
 	public static boolean isEntityQueuedToTeleportAlready(Entity entity) {
 		return QUEUED_ENTITIES_TO_TELEPORT.stream().anyMatch(entry -> entry.getFirst().equals(entity));
 	}
-	
+
+	public static void worldTick(TickEvent.WorldTickEvent event){
+		if(event.phase == TickEvent.Phase.END && !event.world.isClientSide()){
+			BzWorldSavedData.tick((ServerLevel) event.world);
+		}
+	}
+
 	public static void tick(ServerLevel world) {
 		if(QUEUED_ENTITIES_TO_TELEPORT.size() == 0) return;
 
@@ -74,7 +83,8 @@ public class BzWorldSavedData extends SavedData {
 			// Also updates teleportedEntities to keep track of which entity was teleported.
 			if (destinationKey.equals(BzDimension.BZ_WORLD_KEY)) {
 				enteringBumblezone(entity, teleportedEntities);
-			} else {
+			}
+			else {
 				exitingBumblezone(entity, destination, teleportedEntities);
 			}
 		}
@@ -88,8 +98,9 @@ public class BzWorldSavedData extends SavedData {
 		Vec3 destinationPosition;
 
 		if (!entity.level.isClientSide()) {
-			Bumblezone.ENTITY_COMPONENT.get(entity).setNonBZPos(entity.position());
-			Bumblezone.ENTITY_COMPONENT.get(entity).setNonBZDimension(entity.level.dimension().location());
+			IEntityPosAndDim capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
+			capability.setNonBZPos(entity.position());
+			capability.setNonBZDim(entity.level.dimension().location());
 
 			MinecraftServer minecraftServer = entity.getServer(); // the server itself
 			ServerLevel bumblezoneWorld = minecraftServer.getLevel(BzDimension.BZ_WORLD_KEY);

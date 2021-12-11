@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
 import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
 import net.minecraft.world.damagesource.DamageSource;

@@ -511,9 +511,9 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
 
         public void tick() {
             if (this.operation == Operation.STRAFE) {
-                Vec3 vector3d = new Vec3(this.wantedX - beehemothEntity.getX(), this.wantedY - beehemothEntity.getY(), this.wantedZ - beehemothEntity.getZ());
-                double d0 = vector3d.length();
-                beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().add(0, vector3d.scale(this.speedModifier * 0.05D / d0).y(), 0));
+                Vec3 vec3 = new Vec3(this.wantedX - beehemothEntity.getX(), this.wantedY - beehemothEntity.getY(), this.wantedZ - beehemothEntity.getZ());
+                double d0 = vec3.length();
+                beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().add(0, vec3.scale(this.speedModifier * 0.05D / d0).y(), 0));
                 float f = (float) this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED);
                 float f1 = (float) this.speedModifier * f;
                 this.strafeForwards = 1.0F;
@@ -525,8 +525,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                 this.operation = MoveControl.Operation.WAIT;
             }
             else if (this.operation == MoveControl.Operation.MOVE_TO) {
-                Vec3 vector3d = new Vec3(this.wantedX - beehemothEntity.getX(), this.wantedY - beehemothEntity.getY(), this.wantedZ - beehemothEntity.getZ());
-                double d0 = vector3d.length();
+                Vec3 vec3 = new Vec3(this.wantedX - beehemothEntity.getX(), this.wantedY - beehemothEntity.getY(), this.wantedZ - beehemothEntity.getZ());
+                double d0 = vec3.length();
                 if (d0 < beehemothEntity.getBoundingBox().getSize()) {
                     this.operation = MoveControl.Operation.WAIT;
                     beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().scale(0.5D));
@@ -536,7 +536,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                     if (beehemothEntity.isVehicle()) {
                         localSpeed *= 1.5D;
                     }
-                    beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().add(vector3d.scale(localSpeed * 0.005D / d0)));
+                    beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().add(vec3.scale(localSpeed * 0.005D / d0)));
                     if (beehemothEntity.getTarget() == null) {
                         double d2 = this.wantedX - beehemothEntity.getX();
                         double d1 = this.wantedZ - beehemothEntity.getZ();

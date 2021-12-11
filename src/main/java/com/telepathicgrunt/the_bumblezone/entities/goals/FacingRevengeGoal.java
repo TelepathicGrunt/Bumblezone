@@ -5,7 +5,6 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.EnumSet;
 
 public class FacingRevengeGoal extends HurtByTargetGoal {

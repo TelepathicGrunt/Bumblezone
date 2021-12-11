@@ -1,13 +1,13 @@
 modLoader="javafml" #mandatory
 loaderVersion="[38,)" #mandatory 
 issueTrackerURL="https://github.com/TelepathicGrunt/Bumblezone/issues" #optional
-license="https://github.com/TelepathicGrunt/Bumblezone/blob/1.16/LICENSE"
+license="https://github.com/TelepathicGrunt/Bumblezone/blob/latest-released/LICENSE"
 
 [[mods]] #mandatory
 modId="the_bumblezone" #mandatory
 logoFile="the_bumblezone_logo.png"
 logoBlur=false
-version="${version}" #mandatory
+version="${file.jarVersion}" #mandatory
 displayName="The Bumblezone" #mandatory
 displayURL="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-forge"
 authors="TelepathicGrunt"

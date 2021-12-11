@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.capabilities;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec3;
 
 public interface IEntityPosAndDim {
 
@@ -10,9 +10,9 @@ public interface IEntityPosAndDim {
 	
 	void setNonBZDim(ResourceLocation incomingDim);
 	ResourceLocation getNonBZDim();
-	void setNonBZPos(Vector3d incomingPos);
-	Vector3d getNonBZPos();
+	void setNonBZPos(Vec3 incomingPos);
+	Vec3 getNonBZPos();
 
-	CompoundNBT saveNBTData();
-	void loadNBTData(CompoundNBT nbtTag);
+	CompoundTag saveNBTData();
+	void loadNBTData(CompoundTag nbtTag);
 }

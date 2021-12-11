@@ -17,7 +17,6 @@
     "entities.BeeEntityInvoker",
     "entities.BeeEntityMixin",
     "entities.BeePathfindingMixin",
-    "entities.BeePollenatedSpawnMixin",
     "entities.BeePollinatedSpawnMixin",
     "entities.EntityMixin",
     "entities.FishingBobberEntityMixin",
@@ -46,7 +45,6 @@
     "blocks.ScreenEffectRendererMixin",
     "client.FluidRendererMixin",
     "client.FogRendererClientMixin",
-    "client.OverlayRendererClientMixin",
     "world.DimensionSpecialEffectsAccessor"
   ],
   "injectors": {

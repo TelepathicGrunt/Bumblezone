@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone;
 
-import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityEntityPosAndDim;
-import com.telepathicgrunt.the_bumblezone.capabilities.CapabilityFlyingSpeed;
+import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
@@ -11,6 +10,8 @@ import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import com.telepathicgrunt.the_bumblezone.entities.EnderpearlImpact;
+import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
@@ -37,7 +38,6 @@ import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -73,15 +73,12 @@ public class Bumblezone{
         forgeBus.addListener(BeeAggression::pickupItemAnger);
         forgeBus.addListener(EventPriority.LOWEST, BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
         forgeBus.addListener(WanderingTrades::addWanderingTrades);
-        forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
-        forgeBus.addListener(HoneycombBroodEvents::reviveByPotionOfBees);
         forgeBus.addListener(CombCutterEnchantment::attemptFasterMining);
         forgeBus.addListener(EventPriority.HIGH, EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
-        forgeBus.addGenericListener(Entity.class, CapabilityEntityPosAndDim::onAttachCapabilitiesToEntities);
-        forgeBus.addGenericListener(Entity.class, CapabilityFlyingSpeed::onAttachCapabilitiesToEntities);
         forgeBus.addListener(EntityTeleportationHookup::entityTick);
         forgeBus.addListener(BeeAggression::playerTick);
         forgeBus.addListener(BzWorldSavedData::worldTick);
+        forgeBus.addListener(EntityTeleportationBackend::playerLeavingBz);
 
         //Registration
         modEventBus.addListener(EventPriority.NORMAL, this::setup);
@@ -100,6 +97,7 @@ public class Bumblezone{
         BzParticles.PARTICLE_TYPES.register(modEventBus);
         BzEnchantments.ENCHANTMENTS.register(modEventBus);
 
+        BzCapabilities.setupCapabilities();
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> BumblezoneClient::subscribeClientEvents);
 
         // generates/handles config
@@ -121,8 +119,6 @@ public class Bumblezone{
 			BzEntities.registerAdditionalEntityInformation();
 			BzStructures.setupStructures();
 		});
-        CapabilityEntityPosAndDim.register();
-        CapabilityFlyingSpeed.register();
     }
 
     private void modCompatSetup(final FMLCommonSetupEvent event) {

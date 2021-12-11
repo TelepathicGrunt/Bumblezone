@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.capabilities;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 
 public interface IFlyingSpeed {
 
@@ -9,6 +9,6 @@ public interface IFlyingSpeed {
 	void setOriginalFlyingSpeed(float incomingDim);
 	float getOriginalFlyingSpeed();
 
-	CompoundNBT saveNBTData();
-	void loadNBTData(CompoundNBT nbtTag);
+	CompoundTag saveNBTData();
+	void loadNBTData(CompoundTag nbtTag);
 }
