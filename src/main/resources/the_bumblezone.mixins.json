@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "com.telepathicgrunt.bumblezone.mixin",
+  "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "world.NoiseChunkAccessor",
