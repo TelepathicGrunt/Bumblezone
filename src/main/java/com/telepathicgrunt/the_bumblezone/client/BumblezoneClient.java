@@ -27,6 +27,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -41,6 +42,7 @@ public class BumblezoneClient {
 
         modEventBus.addListener(BumblezoneClient::onClientSetup);
         modEventBus.addListener(BumblezoneClient::onParticleSetup);
+        modEventBus.addListener(BumblezoneClient::registerEntityRenderers);
         forgeBus.addListener(FluidClientOverlay::sugarWaterFluidOverlay);
         forgeBus.addListener(FluidClientOverlay::renderHoneyFog);
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
@@ -48,10 +50,6 @@ public class BumblezoneClient {
 
     public static void onClientSetup(FMLClientSetupEvent event) {
         DimensionSpecialEffectsAccessor.thebumblezone_getBY_ResourceLocation().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
-
-        EntityRenderers.register(BzEntities.HONEY_SLIME.get(), HoneySlimeRendering::new);
-        EntityRenderers.register(BzEntities.BEEHEMOTH.get(), BeehemothRenderer::new);
-        EntityRenderers.register(BzEntities.POLLEN_PUFF_ENTITY.get(), ThrownItemRenderer::new);
 
         if(BzClientConfigs.enableLgbtBeeRenderer.get()) {
             //noinspection unchecked cast
@@ -81,6 +79,12 @@ public class BumblezoneClient {
                                     livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
             );
         });
+    }
+
+    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers.RegisterRenderers event) {
+        EntityRenderers.register(BzEntities.HONEY_SLIME.get(), HoneySlimeRendering::new);
+        EntityRenderers.register(BzEntities.BEEHEMOTH.get(), BeehemothRenderer::new);
+        EntityRenderers.register(BzEntities.POLLEN_PUFF_ENTITY.get(), ThrownItemRenderer::new);
     }
 
     public static void onParticleSetup(ParticleFactoryRegisterEvent event) {

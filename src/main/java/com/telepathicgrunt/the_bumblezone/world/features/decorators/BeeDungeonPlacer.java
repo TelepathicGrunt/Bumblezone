@@ -47,7 +47,7 @@ public class BeeDungeonPlacer extends PlacementModifier {
                 mutable.set(x, y, z).move(face, 3);
 
                 BlockState state = placementContext.getBlockState(mutable);
-                if (state.is(Blocks.CAVE_AIR) || state.is(BzBlocks.PILE_OF_POLLEN))
+                if (state.is(Blocks.CAVE_AIR) || state.is(BzBlocks.PILE_OF_POLLEN.get()))
                     validSpot = true;
             }
 

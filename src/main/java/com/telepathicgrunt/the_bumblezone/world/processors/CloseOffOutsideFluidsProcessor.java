@@ -49,13 +49,11 @@ public class CloseOffOutsideFluidsProcessor extends StructureProcessor {
                         // even though everything seemed to be safe and fine.
                         int sectionYIndex = cachedChunk.getSectionIndex(sidePos.getY());
                         LevelChunkSection levelChunkSection = cachedChunk.getSection(sectionYIndex);
-                        if (levelChunkSection == null) continue;
-
                         levelChunkSection.setBlockState(
                                 SectionPos.sectionRelative(sidePos.getX()),
                                 SectionPos.sectionRelative(sidePos.getY()),
                                 SectionPos.sectionRelative(sidePos.getZ()),
-                                BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(),
+                                BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(),
                                 false);
                     }
                     else if(!worldView.isOutsideBuildHeight(sidePos)) {

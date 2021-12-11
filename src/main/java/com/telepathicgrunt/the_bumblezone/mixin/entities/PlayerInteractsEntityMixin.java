@@ -1,36 +1,38 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
+import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.CreatingHoneySlime;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.SlimeEntity;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-
-@Mixin(PlayerEntity.class)
+@Mixin(Player.class)
 public class PlayerInteractsEntityMixin {
-    // Feeding bees honey or sugar water
-    // Or make honey slime
+
+    // Feeding bees honey or sugar water. Or turning Slime into Honey Slime
     @Inject(method = "interactOn",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isEmpty()Z", ordinal = 1),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 0),
             cancellable = true)
-    private void thebumblezone_onBeeFeeding(Entity entity, Hand hand, CallbackInfoReturnable<ActionResultType> cir) {
-        if(entity instanceof BeeEntity) {
-            if(BeeInteractivity.beeFeeding(entity.level, ((PlayerEntity)(Object)this), hand, (BeeEntity)entity) == ActionResultType.SUCCESS)
-                cir.setReturnValue(ActionResultType.SUCCESS);
-            else if(BeeInteractivity.beeUnpollinating(entity.level, ((PlayerEntity)(Object)this), hand, (BeeEntity)entity) == ActionResultType.SUCCESS)
-                cir.setReturnValue(ActionResultType.SUCCESS);
+    private void thebumblezone_onBeeFeeding(Entity entity, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+        if(entity instanceof Bee beeEntity) {
+            if(BeeInteractivity.beeFeeding(entity.level, ((Player)(Object)this), hand, beeEntity) == InteractionResult.SUCCESS)
+                cir.setReturnValue(InteractionResult.SUCCESS);
+            else if(BeeInteractivity.beeUnpollinating(entity.level, ((Player)(Object)this), hand, beeEntity) == InteractionResult.SUCCESS)
+                cir.setReturnValue(InteractionResult.SUCCESS);
         }
-        else if (entity instanceof SlimeEntity) {
-            if(CreatingHoneySlime.createHoneySlime(entity.level, ((PlayerEntity)(Object)this), hand, (SlimeEntity)entity) == ActionResultType.SUCCESS)
-                cir.setReturnValue(ActionResultType.SUCCESS);
+        else if (entity instanceof Slime slimeEntity) {
+            if(CreatingHoneySlime.createHoneySlime(entity.level, ((Player)(Object)this), hand, slimeEntity) == InteractionResult.SUCCESS)
+                cir.setReturnValue(InteractionResult.SUCCESS);
         }
     }
 }

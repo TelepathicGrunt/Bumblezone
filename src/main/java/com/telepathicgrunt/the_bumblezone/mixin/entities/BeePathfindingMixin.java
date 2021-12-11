@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.telepathicgrunt.the_bumblezone.entities.BeeAI;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
-import net.minecraft.entity.passive.BeeEntity;
+import net.minecraft.world.entity.animal.Bee;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -11,12 +11,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(BeeEntity.WanderGoal.class)
+@Mixin(Bee.BeeWanderGoal.class)
 public class BeePathfindingMixin {
 
     @Final
     @Shadow(aliases = "field_226508_a_")
-    private BeeEntity this$0;
+    private Bee this$0;
 
     @Unique
     private BeeAI.CachedPathHolder thebumblezone_cachedPathHolder;

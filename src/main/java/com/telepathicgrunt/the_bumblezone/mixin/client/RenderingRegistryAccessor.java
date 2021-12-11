@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Mixin(EntityRenderers.class)
 public interface RenderingRegistryAccessor {
-    @Accessor(value = "PROVIDERS", remap = false)
+    @Accessor(value = "PROVIDERS")
     static Map<EntityType<? extends Entity>, EntityRendererProvider<? extends Entity>> getEntityRenderers() {
         throw new RuntimeException();
     }

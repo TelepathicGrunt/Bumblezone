@@ -53,7 +53,7 @@ public class PollenPilingProcessor extends StructureProcessor {
         BlockPos worldPos = structureBlockInfoToReturn.pos;
 
 
-        if(structureState.is(BzBlocks.PILE_OF_POLLEN)) {
+        if(structureState.is(BzBlocks.PILE_OF_POLLEN.get())) {
             if(!pollenReplaceSolids && !worldView.getBlockState(worldPos).isAir()) {
                 return null;
             }
@@ -72,7 +72,7 @@ public class PollenPilingProcessor extends StructureProcessor {
             for(Direction direction : Direction.values()) {
                 sidePos.set(worldPos).move(direction);
                 if(worldView.getBlockState(sidePos).getFluidState().isSource()) {
-                    return new StructureTemplate.StructureBlockInfo(worldPos, BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(), null);
+                    return new StructureTemplate.StructureBlockInfo(worldPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), null);
                 }
             }
 
@@ -86,7 +86,7 @@ public class PollenPilingProcessor extends StructureProcessor {
             BlockPos abovePos = worldPos.above();
             ChunkAccess chunk = worldView.getChunk(abovePos);
             BlockState aboveState = chunk.getBlockState(abovePos);
-            if(aboveState.is(BzBlocks.PILE_OF_POLLEN)) {
+            if(aboveState.is(BzBlocks.PILE_OF_POLLEN.get())) {
                 ((LevelAccessor)worldView).scheduleTick(abovePos, aboveState.getBlock(), 0);
             }
         }

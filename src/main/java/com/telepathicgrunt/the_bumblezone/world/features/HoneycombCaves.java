@@ -21,9 +21,9 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
     //https://github.com/Deadrik/TFC2
 
     private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
-    private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState();
+    private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState();
     private static final BlockState HONEYCOMB_BLOCK = Blocks.HONEYCOMB_BLOCK.defaultBlockState();
-    private static final BlockState SUGAR_WATER = BzFluids.SUGAR_WATER_BLOCK.defaultBlockState();
+    private static final BlockState SUGAR_WATER = BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState();
 
 
     protected long seed;

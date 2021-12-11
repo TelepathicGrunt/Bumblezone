@@ -52,7 +52,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
                 switch (metadata) {
                     case "center" -> {
                         if (random.nextFloat() < 0.6f) {
-                            blockState = BzBlocks.HONEY_CRYSTAL.defaultBlockState();
+                            blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
                         } else if (random.nextFloat() < 0.6f) {
                             blockState = GeneralUtils.VANILLA_CANDLES.get(random.nextInt(GeneralUtils.VANILLA_CANDLES.size()));
                             blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(4) + 1);
@@ -63,7 +63,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
                     }
                     case "inner_ring" -> {
                         if (random.nextFloat() < 0.35f) {
-                            blockState = BzBlocks.HONEY_CRYSTAL.defaultBlockState();
+                            blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
                         } else if (random.nextFloat() < 0.35f) {
                             blockState = GeneralUtils.VANILLA_CANDLES.get(random.nextInt(GeneralUtils.VANILLA_CANDLES.size()));
                             blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(random.nextInt(4) + 1) + 1);
@@ -74,7 +74,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
                     }
                     case "outer_ring" -> {
                         if (random.nextFloat() < 0.45f) {
-                            blockState = BzBlocks.HONEY_CRYSTAL.defaultBlockState();
+                            blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
                         } else if (random.nextFloat() < 0.2f) {
                             blockState = GeneralUtils.VANILLA_CANDLES.get(random.nextInt(GeneralUtils.VANILLA_CANDLES.size()));
                             blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(random.nextInt(4) + 1) + 1);
@@ -90,19 +90,19 @@ public class BeeDungeonProcessor extends StructureProcessor {
         }
 
         // main body and ceiling
-        else if (blockState.is(Blocks.HONEYCOMB_BLOCK) || blockState.is(BzBlocks.FILLED_POROUS_HONEYCOMB)) {
+        else if (blockState.is(Blocks.HONEYCOMB_BLOCK) || blockState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get())) {
             if (random.nextFloat() < 0.4f) {
                 blockState = Blocks.HONEYCOMB_BLOCK.defaultBlockState();
             }
             else {
-                blockState = BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState();
+                blockState = BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState();
             }
         }
 
         // walls
-        else if (blockState.is(BzBlocks.HONEYCOMB_BROOD)) {
+        else if (blockState.is(BzBlocks.HONEYCOMB_BROOD.get())) {
             if (random.nextFloat() < 0.6f) {
-                blockState = BzBlocks.HONEYCOMB_BROOD.defaultBlockState()
+                blockState = BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
                         .setValue(HoneycombBrood.STAGE, random.nextInt(3))
                         .setValue(HoneycombBrood.FACING, blockState.getValue(HoneycombBrood.FACING));
             }
@@ -110,14 +110,14 @@ public class BeeDungeonProcessor extends StructureProcessor {
                 blockState = Blocks.HONEY_BLOCK.defaultBlockState();
             }
             else {
-                blockState = BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState();
+                blockState = BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState();
             }
         }
 
         // sugar water
-        else if (blockState.is(BzFluids.SUGAR_WATER_BLOCK)) {
+        else if (blockState.is(BzFluids.SUGAR_WATER_BLOCK.get())) {
             if (random.nextFloat() < 0.1f) {
-                blockState = BzBlocks.HONEY_CRYSTAL.defaultBlockState().setValue(HoneyCrystal.WATERLOGGED, true);
+                blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState().setValue(HoneyCrystal.WATERLOGGED, true);
             }
         }
 

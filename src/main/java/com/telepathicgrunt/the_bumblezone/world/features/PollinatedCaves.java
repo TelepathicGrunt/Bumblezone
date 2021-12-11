@@ -73,11 +73,11 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
 
     private static void carve(WorldGenLevel world, BlockPos.MutableBlockPos position, double finalNoise, double noise) {
         BlockState currentState = world.getBlockState(position);
-        if(!currentState.isAir() && currentState.getFluidState().isEmpty() && !currentState.is(BzBlocks.PILE_OF_POLLEN)) {
+        if(!currentState.isAir() && currentState.getFluidState().isEmpty() && !currentState.is(BzBlocks.PILE_OF_POLLEN.get())) {
             // varies the surface of the cave surface
             if(finalNoise > 0.0105f) {
                 if((noise * 3) % 2 < 0.35D) {
-                    world.setBlock(position, BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(), 3);
+                    world.setBlock(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3);
                 }
                 return;
             }
@@ -97,8 +97,8 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
             position.move(Direction.UP);
 
             if(!belowState.isAir() && belowState.getFluidState().isEmpty() && belowState.getMaterial().blocksMotion()) {
-                world.setBlock(position, BzBlocks.PILE_OF_POLLEN.defaultBlockState().setValue(PileOfPollen.LAYERS, (int)Math.max(Math.min((noise + 1D) * 3D, 8), 1)), 3);
-                world.scheduleTick(position, BzBlocks.PILE_OF_POLLEN, 0);
+                world.setBlock(position, BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int)Math.max(Math.min((noise + 1D) * 3D, 8), 1)), 3);
+                world.scheduleTick(position, BzBlocks.PILE_OF_POLLEN.get(), 0);
 
                 int carveHeight = Math.abs((int) ((noise * 1000) % 0.8D)) * 2 + 1;
                 for(int i = 0; i < carveHeight; i++) {

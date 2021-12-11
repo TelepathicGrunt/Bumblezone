@@ -46,7 +46,7 @@ public class HoneyCrystalFeature extends Feature<NoneFeatureConfiguration> {
             }
 
 
-            BlockState honeyCrystal = BzBlocks.HONEY_CRYSTAL.defaultBlockState()
+            BlockState honeyCrystal = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState()
                     .setValue(HoneyCrystal.WATERLOGGED, originalBlockstate.getFluidState().is(FluidTags.WATER));
 
             //loop through all 6 directions

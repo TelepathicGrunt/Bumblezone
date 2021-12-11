@@ -1,7 +1,6 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
-        jcenter()
         mavenCentral()
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         maven { url "https://plugins.gradle.org/m2/" }
@@ -19,7 +18,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
 version = "${mod_version}+${mc_version}"
-group = "com.telepathicgrunt"
+group = "com.telepathicgrunt.${modid}"
 archivesBaseName = "${modid}_forge"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -90,7 +89,7 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
     if (System.getProperty("idea.sync.active") != "true") {
-        annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
+        annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     }
 
     // Switch to `implementation` when testing mod compat

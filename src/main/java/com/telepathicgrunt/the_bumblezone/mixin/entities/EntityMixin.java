@@ -1,12 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
-import net.minecraft.entity.Entity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,13 +18,19 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public abstract class EntityMixin {
 
     @Shadow
-    public abstract boolean updateFluidHeightAndDoFluidPushing(ITag<Fluid> fluidITag, double v);
+    public abstract boolean updateFluidHeightAndDoFluidPushing(Tag<Fluid> fluidITag, double v);
 
     @Shadow
-    public abstract boolean isEyeInFluid(ITag<Fluid> fluidITag);
+    public abstract boolean isEyeInFluid(Tag<Fluid> fluidITag);
 
     @Shadow
     public abstract void clearFire();
+
+    @Shadow
+    public abstract double getX();
+
+    @Shadow
+    public abstract double getZ();
 
     @Shadow
     protected boolean wasTouchingWater;
@@ -36,10 +42,10 @@ public abstract class EntityMixin {
     public float fallDistance;
 
     @Shadow
-    public World level;
+    public Level level;
 
     @Shadow
-    protected ITag<Fluid> fluidOnEyes;
+    protected Tag<Fluid> fluidOnEyes;
 
     // let honey fluid push entity
     @Inject(method = "updateInWaterStateAndDoWaterCurrentPushing()V",
@@ -55,7 +61,7 @@ public abstract class EntityMixin {
     // make sure we set that we are in fluid
     @Inject(method = "updateFluidOnEyes()V",
             at = @At(value = "INVOKE_ASSIGN",
-                    target = "net/minecraft/entity/Entity.isEyeInFluid(Lnet/minecraft/tags/ITag;)Z",
+                    target = "Lnet/minecraft/world/entity/Entity;isEyeInFluid(Lnet/minecraft/tags/Tag;)Z",
                     shift = At.Shift.AFTER))
     private void thebumblezone_markEyesInFluid(CallbackInfo ci) {
         if(!this.wasEyeInWater) {
@@ -65,13 +71,16 @@ public abstract class EntityMixin {
 
     @Inject(method = "updateFluidOnEyes()V",
             at = @At(value = "INVOKE_ASSIGN",
-                    target = "net/minecraft/world/World.getFluidState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/fluid/FluidState;",
+                    target = "Lnet/minecraft/world/level/Level;getFluidState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;",
                     shift = At.Shift.AFTER),
             locals = LocalCapture.CAPTURE_FAILHARD,
             cancellable = true)
-    private void thebumblezone_markEyesInFluid2(CallbackInfo ci, double eyeHeight, Entity entity, BlockPos blockpos, FluidState fluidstate) {
-        if (fluidstate.is(BzFluidTags.BZ_HONEY_FLUID)) {
-            double fluidHeight = (float)blockpos.getY() + fluidstate.getHeight(this.level, blockpos);
+    private void thebumblezone_markEyesInFluid2(CallbackInfo ci, double eyeHeight) {
+        // Have to get the fluid myself as the local capture here is uh broken. Dies on the vehicle entity variable
+        BlockPos blockPos = new BlockPos(this.getX(), eyeHeight, this.getZ());
+        FluidState fluidState = this.level.getFluidState(blockPos);
+        if (fluidState.is(BzFluidTags.BZ_HONEY_FLUID)) {
+            double fluidHeight = (float)blockPos.getY() + fluidState.getHeight(this.level, blockPos);
             if (fluidHeight > eyeHeight) {
                 this.fluidOnEyes = BzFluidTags.BZ_HONEY_FLUID;
                 ci.cancel();

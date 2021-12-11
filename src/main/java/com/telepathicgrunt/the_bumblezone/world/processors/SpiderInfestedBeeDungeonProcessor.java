@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.world.processors;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
@@ -45,105 +46,76 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
             if(belowBlock.isAir()) {
                 blockState = Blocks.CAVE_AIR.defaultBlockState();
             }
-            else{
+            else {
                 switch (metadata) {
-                    case "center": {
+                    case "center" -> {
                         if (random.nextFloat() < 0.6f) {
-                            blockState = BzBlocks.HONEY_CRYSTAL.defaultBlockState();
-                        }
-                        else if(random.nextFloat() < 0.25f)
-                        {
+                            blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
+                        } else if (random.nextFloat() < 0.25f) {
                             blockState = GeneralUtils.VANILLA_CANDLES.get(random.nextInt(GeneralUtils.VANILLA_CANDLES.size()));
                             blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(4) + 1);
                             blockState = blockState.setValue(CandleBlock.LIT, false);
                         }
-                        /*
-                        else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.2f) {
-                            blockState = BeeBetterRedirection.getCandle(random);
-                        }
-                        else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.2f) {
-                            blockState = BeeBetterRedirection.getCandle(random);
-                        }
-                         */
-                        else if(random.nextFloat() < 0.05f) {
+                        else if (random.nextFloat() < 0.05f) {
                             blockState = Blocks.COBWEB.defaultBlockState();
-                        }
-                        else {
+                        } else {
                             blockState = Blocks.CAVE_AIR.defaultBlockState();
                         }
                     }
-                    break;
-                    case "inner_ring": {
+                    case "inner_ring" -> {
                         if (random.nextFloat() < 0.3f) {
-                            blockState = BzBlocks.HONEY_CRYSTAL.defaultBlockState();
-                        }
-                        else if(random.nextFloat() < 0.07f) {
+                            blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
+                        } else if (random.nextFloat() < 0.07f) {
                             blockState = Blocks.COBWEB.defaultBlockState();
-                        }
-                        else {
+                        } else {
                             blockState = Blocks.CAVE_AIR.defaultBlockState();
                         }
                     }
-                    break;
-                    case "outer_ring": {
+                    case "outer_ring" -> {
                         if (random.nextFloat() < 0.4f) {
-                            blockState = BzBlocks.HONEY_CRYSTAL.defaultBlockState();
-                        }
-                        else if(random.nextFloat() < 0.2f)
-                        {
+                            blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
+                        } else if (random.nextFloat() < 0.2f) {
                             blockState = GeneralUtils.VANILLA_CANDLES.get(random.nextInt(GeneralUtils.VANILLA_CANDLES.size()));
                             blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(random.nextInt(4) + 1) + 1);
                             blockState = blockState.setValue(CandleBlock.LIT, false);
-                        }
-                        else if(random.nextFloat() < 0.07f) {
+                        } else if (random.nextFloat() < 0.07f) {
                             blockState = Blocks.COBWEB.defaultBlockState();
-                        }
-                        else {
+                        } else {
                             blockState = Blocks.CAVE_AIR.defaultBlockState();
                         }
                     }
-                    break;
-                    default: break;
+                    default -> {
+                    }
                 }
             }
         }
 
         // main body and ceiling
-        else if(blockState.is(Blocks.HONEYCOMB_BLOCK) || blockState.is(BzBlocks.FILLED_POROUS_HONEYCOMB)) {
+        else if(blockState.is(Blocks.HONEYCOMB_BLOCK) || blockState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get())) {
            if (random.nextFloat() < 0.15f) {
                blockState = Blocks.HONEYCOMB_BLOCK.defaultBlockState();
            }
-           /*
-           else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.4f) {
-               blockState = BeeBetterRedirection.getSpiderDungeonBlock(random);
-           }
-           */
            else {
-               blockState = BzBlocks.POROUS_HONEYCOMB.defaultBlockState();
+               blockState = BzBlocks.POROUS_HONEYCOMB.get().defaultBlockState();
            }
         }
 
         // walls
-        else if(blockState.is(BzBlocks.HONEYCOMB_BROOD)) {
+        else if(blockState.is(BzBlocks.HONEYCOMB_BROOD.get())) {
             if (random.nextFloat() < 0.6f) {
-                blockState = BzBlocks.EMPTY_HONEYCOMB_BROOD.defaultBlockState()
+                blockState = BzBlocks.EMPTY_HONEYCOMB_BROOD.get().defaultBlockState()
                         .setValue(HoneycombBrood.FACING, blockState.getValue(HoneycombBrood.FACING));
             }
-            /*
-            else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.4f) {
-                blockState = BeeBetterRedirection.getSpiderDungeonBlock(random);
-            }
-            */
-            else if (random.nextDouble() < BzDungeonsConfig.spawnerRateSpiderBeeDungeon.get()) {
+            else if (random.nextDouble() < BzWorldgenConfigs.spawnerRateSpiderBeeDungeon.get()) {
                 blockState = Blocks.SPAWNER.defaultBlockState();
             }
             else {
-                blockState = BzBlocks.POROUS_HONEYCOMB.defaultBlockState();
+                blockState = BzBlocks.POROUS_HONEYCOMB.get().defaultBlockState();
             }
         }
 
         // sugar water
-        else if(blockState.is(BzFluids.SUGAR_WATER_BLOCK)) {
+        else if(blockState.is(BzFluids.SUGAR_WATER_BLOCK.get())) {
             blockState = Blocks.CAVE_AIR.defaultBlockState();
         }
 
