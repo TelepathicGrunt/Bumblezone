@@ -20,7 +20,9 @@ public class FacingRevengeGoal extends HurtByTargetGoal {
     }
 
     public void tick() {
-        this.slime.lookAt(this.slime.getTarget(), 10.0F, 10.0F);
+        if(this.slime.getTarget() != null) {
+            this.slime.lookAt(this.slime.getTarget(), 10.0F, 10.0F);
+        }
         ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.getYRot(), this.slime.canDamagePlayer());
     }
 }
