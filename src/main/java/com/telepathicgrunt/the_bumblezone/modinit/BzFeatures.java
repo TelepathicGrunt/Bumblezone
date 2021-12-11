@@ -30,7 +30,7 @@ public class BzFeatures {
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "honeycomb_caves"), HONEYCOMB_CAVES);
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "pollinated_caves"), POLLINATED_CAVES);
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "cave_sugar_waterfall"), CAVE_SUGAR_WATERFALL);
-        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "honey_crystal_feature"), HONEY_CRYSTAL_FEATURE);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "honey_crystals_feature"), HONEY_CRYSTAL_FEATURE);
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "nbt_feature"), NBT_FEATURE);
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "bee_dungeon"), BEE_DUNGEON);
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "spider_infested_bee_dungeon"), SPIDER_INFESTED_BEE_DUNGEON);

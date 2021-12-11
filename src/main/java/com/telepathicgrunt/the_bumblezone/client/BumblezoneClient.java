@@ -19,7 +19,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -30,26 +30,25 @@ import net.minecraft.world.entity.animal.Bee;
 
 @Environment(EnvType.CLIENT)
 public class BumblezoneClient implements ClientModInitializer {
-    public static final ResourceLocation SUGAR_WATER_FLUID_STILL = new ResourceLocation(Bumblezone.MODID + ":block/sugar_water_still");
-    public static final ResourceLocation SUGAR_WATER_FLUID_FLOWING = new ResourceLocation(Bumblezone.MODID + ":block/sugar_water_flow");
-    public static final ResourceLocation HONEY_FLUID_STILL = new ResourceLocation(Bumblezone.MODID + ":block/honey_fluid_still");
-    public static final ResourceLocation HONEY_FLUID_FLOWING = new ResourceLocation(Bumblezone.MODID + ":block/honey_fluid_flow");
+    public static final ResourceLocation SUGAR_WATER_FLUID_STILL = new ResourceLocation(Bumblezone.MODID, "block/sugar_water_still");
+    public static final ResourceLocation SUGAR_WATER_FLUID_FLOWING = new ResourceLocation(Bumblezone.MODID, "block/sugar_water_flow");
+    public static final ResourceLocation HONEY_FLUID_STILL = new ResourceLocation(Bumblezone.MODID, "block/honey_fluid_still");
+    public static final ResourceLocation HONEY_FLUID_FLOWING = new ResourceLocation(Bumblezone.MODID, "block/honey_fluid_flow");
 
     @Override
-    @SuppressWarnings("unchecked")
     public void onInitializeClient() {
         FluidRender.setupFluidRendering(BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID_FLOWING, SUGAR_WATER_FLUID_STILL, SUGAR_WATER_FLUID_FLOWING, true);
         FluidRender.setupFluidRendering(BzFluids.HONEY_FLUID, BzFluids.HONEY_FLUID_FLOWING, HONEY_FLUID_STILL, HONEY_FLUID_FLOWING, false);
         registerRenderLayers();
         BzParticles.registerParticles();
 
-        EntityRendererRegistry.INSTANCE.register(BzEntities.POLLEN_PUFF_ENTITY, ThrownItemRenderer::new);
-        EntityRendererRegistry.INSTANCE.register(BzEntities.HONEY_SLIME, HoneySlimeRendering::new);
-        EntityRendererRegistry.INSTANCE.register(BzEntities.BEEHEMOTH, BeehemothRenderer::new);
+        EntityRendererRegistry.register(BzEntities.POLLEN_PUFF_ENTITY, ThrownItemRenderer::new);
+        EntityRendererRegistry.register(BzEntities.HONEY_SLIME, HoneySlimeRendering::new);
+        EntityRendererRegistry.register(BzEntities.BEEHEMOTH, BeehemothRenderer::new);
 
         if(Bumblezone.BZ_CONFIG.BZClientConfig.enableLgbtBeeRenderer) {
             BeeVariantRenderer.OLD_BEE_RENDER_FACTORY = (EntityRendererProvider<Bee>)EntityRendererRegistryImplAccessor.getMap().get(EntityType.BEE);
-            EntityRendererRegistry.INSTANCE.register(EntityType.BEE, BeeVariantRenderer::new);
+            EntityRendererRegistry.register(EntityType.BEE, BeeVariantRenderer::new);
         }
 
         EntityModelLayerRegistry.registerModelLayer(BeehemothModel.LAYER_LOCATION, BeehemothModel::createBodyLayer);
