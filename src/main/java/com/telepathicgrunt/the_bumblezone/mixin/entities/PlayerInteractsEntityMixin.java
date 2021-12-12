@@ -18,7 +18,7 @@ public class PlayerInteractsEntityMixin {
 
     // Feeding bees honey or sugar water. Or turning Slime into Honey Slime
     @Inject(method = "interactOn",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 0),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 1),
             cancellable = true)
     private void thebumblezone_onBeeFeeding(Entity entity, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if(entity instanceof Bee beeEntity) {

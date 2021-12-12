@@ -10,7 +10,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -29,6 +28,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class BeeInteractivity {
 
@@ -37,7 +37,7 @@ public class BeeInteractivity {
         if (target instanceof Bee beeEntity) {
 
             ItemStack itemstack = playerEntity.getItemInHand(hand);
-            ResourceLocation itemRL = Registry.ITEM.getKey(itemstack.getItem());
+            ResourceLocation itemRL = ForgeRegistries.ITEMS.getKey(itemstack.getItem());
 
             // Disallow all non-tagged items from being fed to bees
             if(!BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))

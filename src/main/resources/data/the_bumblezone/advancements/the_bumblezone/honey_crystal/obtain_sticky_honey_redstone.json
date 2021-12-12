@@ -24,7 +24,7 @@
       "conditions": {
         "items": [
           {
-            "item": "the_bumblezone:sticky_honey_redstone"
+            "items": ["the_bumblezone:sticky_honey_redstone"]
           }
         ]
       }

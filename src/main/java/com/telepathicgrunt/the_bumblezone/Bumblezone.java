@@ -31,6 +31,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSurfaceRules;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
@@ -59,6 +60,9 @@ public class Bumblezone{
     public static final String MODID = "the_bumblezone";
     public static final ResourceLocation MOD_DIMENSION_ID = new ResourceLocation(Bumblezone.MODID, Bumblezone.MODID);
     public static final Logger LOGGER = LogManager.getLogger(MODID);
+
+    // TODO: Fix side of honey fluid
+    // TODO: Fix bottom of honey fluid not representing bottom layer correctly
 
     public Bumblezone() {
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
@@ -118,6 +122,7 @@ public class Bumblezone{
 			BzDimension.setupDimension();
 			BzEntities.registerAdditionalEntityInformation();
 			BzStructures.setupStructures();
+            BzSurfaceRules.registerSurfaceRules();
 		});
     }
 

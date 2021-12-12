@@ -10,7 +10,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -58,10 +57,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Random;
 
 public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
+
     private static final EntityDataAccessor<Boolean> SADDLED = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> QUEEN = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> FRIENDSHIP = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.INT);
@@ -210,7 +211,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     public float getFinalFlyingSpeed() {
         float finalFlyingSpeed = this.flyingSpeed;
         if (finalFlyingSpeed == 0.02f) {
-            finalFlyingSpeed = (float) this.getAttributeValue(Attributes.FLYING_SPEED) / 0.6f;
+            finalFlyingSpeed = (float) getAttributeValue(Attributes.FLYING_SPEED) / 0.6f;
         }
         else {
             finalFlyingSpeed = finalFlyingSpeed / 0.02f;
@@ -229,13 +230,13 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
 
     @Override
     public boolean checkSpawnObstruction(LevelReader worldReader) {
-        AABB box = this.getBoundingBox();
+        AABB box = getBoundingBox();
         return !worldReader.containsAnyLiquid(box) && worldReader.getBlockStates(box).noneMatch(state -> state.getMaterial().blocksMotion()) && worldReader.isUnobstructed(this);
     }
 
     @Override
     public Entity getControllingPassenger() {
-        for (Entity p : this.getPassengers()) {
+        for (Entity p : getPassengers()) {
             return p;
         }
         return null;
@@ -244,37 +245,38 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
-        ResourceLocation itemRL = Registry.ITEM.getKey(item);
+        ResourceLocation itemRL = ForgeRegistries.ITEMS.getKey(item);
         if (this.level.isClientSide) {
-            if (this.isTame() && this.isOwnedBy(player)) {
+            if (isTame() && isOwnedBy(player)) {
                 return InteractionResult.SUCCESS;
-            } else {
-                return !(this.getHealth() < this.getMaxHealth()) && this.isTame() ? InteractionResult.PASS : InteractionResult.SUCCESS;
+            } 
+            else {
+                return !(getHealth() < getMaxHealth()) && isTame() ? InteractionResult.PASS : InteractionResult.SUCCESS;
             }
         }
         else {
             // Healing and befriending Beehemoth
-            if (this.isTame()) {
-                if (this.isOwnedBy(player)) {
+            if (isTame()) {
+                if (isOwnedBy(player)) {
                     if (BzItemTags.BEE_FEEDING_ITEMS.contains(item) && !player.isShiftKeyDown()) {
                         if(item == BzItems.BEE_BREAD.get()) {
-                            this.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 2, false, false, false));
+                            addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 2, false, false, false));
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
                             addFriendship(5);
                             return InteractionResult.PASS;
                         }
                         else if (BzItemTags.HONEY_BUCKETS.contains(item)) {
-                            this.heal(this.getMaxHealth() - this.getHealth());
+                            heal(getMaxHealth() - getHealth());
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
                             addFriendship(5);
                         }
                         else if (itemRL.getPath().contains("honey")) {
-                            this.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 2, false, false, false));
+                            addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 2, false, false, false));
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.3f, 3);
                             addFriendship(3);
                         }
                         else {
-                            this.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 1, false, false, false));
+                            addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 1, false, false, false));
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.1f, 3);
                             addFriendship(1);
                         }
@@ -290,13 +292,13 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                     }
 
                     if (item == Items.SADDLE && !isSaddled()) {
-                        this.usePlayerItem(player, hand, stack);
-                        this.setSaddled(true);
+                        usePlayerItem(player, hand, stack);
+                        setSaddled(true);
                         return InteractionResult.CONSUME;
                     }
 
                     if(player.isShiftKeyDown()) {
-                        if (isSaddled() && this.isInSittingPose() && stack.isEmpty()) {
+                        if (isSaddled() && isInSittingPose() && stack.isEmpty()) {
                             setSaddled(false);
                             ItemStack saddle = new ItemStack(Items.SADDLE);
                             if (player.addItem(saddle)) {
@@ -305,17 +307,17 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                             }
                         }
                         else {
-                            this.setOrderedToSit(!this.isOrderedToSit());
+                            setOrderedToSit(!isOrderedToSit());
                             this.navigation.stop();
-                            this.setTarget(null);
+                            setTarget(null);
                         }
                         return InteractionResult.SUCCESS;
                     }
 
-                    if (!this.isVehicle() && !player.isSecondaryUseActive()) {
+                    if (!isVehicle() && !player.isSecondaryUseActive()) {
                         if (!this.level.isClientSide) {
                             player.startRiding(this);
-                            this.setOrderedToSit(false);
+                            setOrderedToSit(false);
                         }
 
                         return InteractionResult.sidedSuccess(this.level.isClientSide);
@@ -337,9 +339,9 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                     }
 
                     if (this.random.nextFloat() < tameChance) {
-                        this.tame(player);
+                        tame(player);
                         setFriendship(6);
-                        this.setOrderedToSit(true);
+                        setOrderedToSit(true);
                         this.level.broadcastEntityEvent(this, (byte) 7);
                     }
                     else {
@@ -368,7 +370,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                     stack.shrink(1);
                     GeneralUtils.givePlayerItem(player, hand, new ItemStack(item), true);
                 }
-                this.setPersistenceRequired();
+                setPersistenceRequired();
                 player.swing(hand, true);
 
                 if(getFriendship() < 0) {
@@ -380,7 +382,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
 
             InteractionResult actionresulttype1 = super.mobInteract(player, hand);
             if (actionresulttype1.consumesAction()) {
-                this.setPersistenceRequired();
+                setPersistenceRequired();
             }
 
             if(getFriendship() < 0) {
@@ -392,13 +394,12 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     }
 
     private void spawnMadParticles() {
-        if (!this.level.isClientSide())
-        {
+        if (!this.level.isClientSide()) {
             ((ServerLevel) this.level).sendParticles(
                     ParticleTypes.ANGRY_VILLAGER,
-                    this.getX(),
-                    this.getY(),
-                    this.getZ(),
+                    getX(),
+                    getY(),
+                    getZ(),
                     Math.min(Math.max(1, getFriendship() / -3), 7),
                     this.level.getRandom().nextFloat() - 0.5f,
                     this.level.getRandom().nextFloat() * 0.4f + 0.4f,
@@ -408,14 +409,14 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     }
 
     public void positionRider(Entity passenger) {
-        if (this.hasPassenger(passenger)) {
+        if (hasPassenger(passenger)) {
             float radius = -0.25F;
             float angle = (0.01745329251F * this.yBodyRot);
             double extraX = radius * Mth.sin((float) (Math.PI + angle));
             double extraZ = radius * Mth.cos(angle);
-            passenger.setPos(this.getX() + extraX, this.getY() + this.getPassengersRidingOffset() + passenger.getMyRidingOffset(), this.getZ() + extraZ);
+            passenger.setPos(getX() + extraX, getY() + getPassengersRidingOffset() + passenger.getMyRidingOffset(), getZ() + extraZ);
 
-            double currentSpeed = this.getDeltaMovement().length();
+            double currentSpeed = getDeltaMovement().length();
             if(currentSpeed > 0.000001D &&
                 this.level.random.nextFloat() < 0.0085D &&
                 passenger.getUUID().equals(getOwnerUUID()))
@@ -428,7 +429,14 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     public double getPassengersRidingOffset() {
         float f = Math.min(0.25F, this.animationSpeed);
         float f1 = this.animationPosition;
-        return (double) this.getBbHeight() - 0.2D + (double) (0.12F * Mth.cos(f1 * 0.7F) * 0.7F * f);
+        return (double) getBbHeight() - 0.2D + (double) (0.12F * Mth.cos(f1 * 0.7F) * 0.7F * f);
+    }
+
+    protected void removePassenger(Entity entity) {
+        super.removePassenger(entity);
+        if(entity == getOwner()) {
+            setOrderedToSit(true);
+        }
     }
 
     public boolean isNoGravity() {
@@ -474,8 +482,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
         // Become queen if friendship is maxed out.
         if(!isQueen() && getFriendship() >= 1000) {
             setQueen(true);
-            if(this.getOwner() instanceof ServerPlayer) {
-                BzCriterias.QUEEN_BEEHEMOTH_TRIGGER.trigger((ServerPlayer) this.getOwner());
+            if(getOwner() instanceof ServerPlayer serverPlayer) {
+                BzCriterias.QUEEN_BEEHEMOTH_TRIGGER.trigger(serverPlayer);
             }
         }
         // Become untamed if bee is no longer a friend
@@ -541,13 +549,13 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                         double d2 = this.wantedX - beehemothEntity.getX();
                         double d1 = this.wantedZ - beehemothEntity.getZ();
                         float newRot = (float)(-Mth.atan2(d2, d1) * (180F / (float) Math.PI));
-                        beehemothEntity.setYRot(this.rotlerp(beehemothEntity.getYRot(), newRot, 10.0F));
+                        beehemothEntity.setYRot(rotlerp(beehemothEntity.getYRot(), newRot, 10.0F));
                     }
                     else {
                         double d2 = beehemothEntity.getTarget().getX() - beehemothEntity.getX();
                         double d1 = beehemothEntity.getTarget().getZ() - beehemothEntity.getZ();
                         float newRot = (float)(-Mth.atan2(d1, d2) * (180F / (float) Math.PI));
-                        beehemothEntity.setYRot(this.rotlerp(beehemothEntity.getYRot(), newRot, 10.0F));
+                        beehemothEntity.setYRot(rotlerp(beehemothEntity.getYRot(), newRot, 10.0F));
                     }
                 }
 
@@ -556,7 +564,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     }
 
     public boolean isTargetBlocked(Vec3 target) {
-        Vec3 vec3 = new Vec3(this.getX(), this.getEyeY(), this.getZ());
+        Vec3 vec3 = new Vec3(getX(), getEyeY(), getZ());
         return this.level.clip(new ClipContext(vec3, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)).getType() != HitResult.Type.MISS;
     }
 

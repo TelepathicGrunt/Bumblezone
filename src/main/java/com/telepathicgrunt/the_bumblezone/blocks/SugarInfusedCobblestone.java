@@ -8,6 +8,6 @@ import net.minecraft.world.level.material.Material;
 public class SugarInfusedCobblestone extends Block {
 
     public SugarInfusedCobblestone() {
-        super(BlockBehaviour.Properties.of(Material.STONE).strength(2.0F, 6.0F));
+        super(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.0F, 6.0F));
     }
 }

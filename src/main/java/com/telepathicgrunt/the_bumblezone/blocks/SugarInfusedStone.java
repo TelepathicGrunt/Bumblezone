@@ -9,6 +9,6 @@ import net.minecraft.world.level.material.MaterialColor;
 public class SugarInfusedStone extends Block {
 
     public SugarInfusedStone() {
-        super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(1.5F, 6.0F));
+        super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 6.0F));
     }
 }

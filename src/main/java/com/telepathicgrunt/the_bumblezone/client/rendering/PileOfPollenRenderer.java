@@ -57,6 +57,7 @@ public class PileOfPollenRenderer {
             }
 
             if(!isInPollen) {
+                event.setCanceled(true);
                 return;
             }
 
@@ -108,6 +109,7 @@ public class PileOfPollenRenderer {
             bufferbuilder.end();
             BufferUploader.end(bufferbuilder);
             RenderSystem.disableBlend();
+            event.setCanceled(true);
         }
     }
 }

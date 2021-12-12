@@ -42,7 +42,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -69,9 +68,9 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
 
    private static final EntityDataAccessor<Boolean> IN_HONEY = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.BOOLEAN);
    private static final EntityDataAccessor<Integer> IN_HONEY_GROWTH_TIME = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.INT);
-   private static final Ingredient BREEDING_ITEM = Ingredient.of(Items.SUGAR);
-   private static final EntityDataAccessor<Integer> ANGRY_TIMER = SynchedEntityData.defineId(Bee.class, EntityDataSerializers.INT);
+   private static final EntityDataAccessor<Integer> ANGRY_TIMER = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.INT);
    private static final UniformInt MAX_ANGER_DURATION = TimeUtil.rangeOfSeconds(22, 36);
+   private static final Ingredient BREEDING_ITEM = Ingredient.of(Items.SUGAR);
    private UUID target_UUID;
 
 

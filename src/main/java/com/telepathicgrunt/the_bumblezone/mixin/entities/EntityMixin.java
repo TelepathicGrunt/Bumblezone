@@ -24,6 +24,24 @@ public abstract class EntityMixin {
     public abstract boolean isEyeInFluid(Tag<Fluid> fluidITag);
 
     @Shadow
+    public abstract boolean isSwimming();
+
+    @Shadow
+    public abstract boolean isSprinting();
+
+    @Shadow
+    public abstract boolean isUnderWater();
+
+    @Shadow
+    public abstract boolean isPassenger();
+
+    @Shadow
+    public abstract BlockPos blockPosition();
+
+    @Shadow
+    public abstract void setSwimming(boolean isSwimming);
+
+    @Shadow
     public abstract void clearFire();
 
     @Shadow
@@ -85,6 +103,16 @@ public abstract class EntityMixin {
                 this.fluidOnEyes = BzFluidTags.BZ_HONEY_FLUID;
                 ci.cancel();
             }
+        }
+    }
+
+    // let honey fluid be swimmable
+    @Inject(method = "updateSwimming()V",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;setSwimming(Z)V", ordinal = 1, shift = At.Shift.AFTER))
+    private void thebumblezone_setSwimming(CallbackInfo ci) {
+        // check if we were not set to swimming in water. If not, then check if we are swimming in honey fluid instead
+        if(!this.isSwimming() && this.isSprinting() && this.isUnderWater() && !this.isPassenger()) {
+            this.setSwimming(this.level.getFluidState(this.blockPosition()).is(BzFluidTags.BZ_HONEY_FLUID));
         }
     }
 }
