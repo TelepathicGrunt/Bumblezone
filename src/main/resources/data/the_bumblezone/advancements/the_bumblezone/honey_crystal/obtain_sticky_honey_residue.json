@@ -24,7 +24,7 @@
       "conditions": {
         "items": [
           {
-            "items": [ "the_bumblezone:sticky_honey_residue" ]
+            "items": ["the_bumblezone:sticky_honey_residue"]
           }
         ]
       }

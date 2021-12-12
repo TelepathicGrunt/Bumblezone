@@ -117,7 +117,7 @@ public abstract class EntityMixin {
         }
     }
 
-    // let honey fluid push entity
+    // let honey fluid be swimmable
     @Inject(method = "updateSwimming()V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;setSwimming(Z)V", ordinal = 1, shift = At.Shift.AFTER))
     private void thebumblezone_setSwimming(CallbackInfo ci) {
