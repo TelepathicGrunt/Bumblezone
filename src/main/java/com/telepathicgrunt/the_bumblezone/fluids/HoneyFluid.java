@@ -301,11 +301,13 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
                     if (fluidStateHeight >= 0.8F) {
                         totalHeight += fluidStateHeight * 10.0F;
                         checkedSides += 10;
-                    } else {
+                    }
+                    else {
                         totalHeight += fluidStateHeight;
                         checkedSides++;
                     }
-                } else if (!world.getBlockState(currentBlockPos).getMaterial().isSolid()) {
+                }
+                else if (!world.getBlockState(currentBlockPos).getMaterial().isSolid()) {
                     checkedSides++;
                 }
             }

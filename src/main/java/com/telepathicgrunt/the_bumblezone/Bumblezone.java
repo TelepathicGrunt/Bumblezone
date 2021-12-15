@@ -61,9 +61,6 @@ public class Bumblezone{
     public static final ResourceLocation MOD_DIMENSION_ID = new ResourceLocation(Bumblezone.MODID, Bumblezone.MODID);
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
-    // TODO: Fix side of honey fluid
-    // TODO: Fix bottom of honey fluid not representing bottom layer correctly
-
     public Bumblezone() {
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
