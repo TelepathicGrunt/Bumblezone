@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.LevelReader;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 import java.util.Random;
@@ -54,36 +56,58 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
      */
     private CompoundTag SetMobSpawnerEntity(Random random, CompoundTag nbt) {
         EntityType<?> entity = GeneralUtils.getRandomEntry(spawnerRandomizingProcessor, random);
-        if (entity != null) {
-            CompoundTag compound = new CompoundTag();
-            compound.putShort("Delay", (short) 20);
-            compound.putShort("MinSpawnDelay", (short) 200);
-            compound.putShort("MaxSpawnDelay", (short) 800);
-            compound.putShort("SpawnCount", (short) 4);
-            compound.putShort("MaxNearbyEntities", (short) 6);
-            compound.putShort("RequiredPlayerRange", (short) 16);
-            compound.putShort("SpawnRange", (short) 4);
+        if(entity != null) {
+            if(nbt != null) {
+                CompoundTag spawnDataTag = nbt.getCompound("SpawnData");
+                if(spawnDataTag.isEmpty()) {
+                    spawnDataTag = new CompoundTag();
+                    nbt.put("SpawnData", spawnDataTag);
+                }
+                CompoundTag entityTag = nbt.getCompound("entity");
+                if(entityTag.isEmpty()) {
+                    entityTag = new CompoundTag();
+                    spawnDataTag.put("entity", entityTag);
+                }
+                entityTag.putString("id", ForgeRegistries.ENTITIES.getKey(entity).toString());
 
-            CompoundTag spawnData = new CompoundTag();
-            spawnData.putString("id", Registry.ENTITY_TYPE.getKey(entity).toString());
-            compound.put("SpawnData", spawnData);
+                CompoundTag spawnEntityDataTag = new CompoundTag();
+                spawnEntityDataTag.putString("id", ForgeRegistries.ENTITIES.getKey(entity).toString());
+                CompoundTag spawnPotentialDataEntryTag = new CompoundTag();
+                spawnPotentialDataEntryTag.put("entity", spawnEntityDataTag);
+                CompoundTag spawnPotentialEntryTag = new CompoundTag();
+                spawnPotentialEntryTag.put("data", spawnPotentialDataEntryTag);
+                spawnPotentialEntryTag.put("weight", IntTag.valueOf(1));
+                nbt.put("SpawnPotentials", new ListTag());
+                return nbt;
+            }
+            else {
+                CompoundTag compound = new CompoundTag();
+                compound.putShort("Delay", (short) 20);
+                compound.putShort("MinSpawnDelay", (short) 200);
+                compound.putShort("MaxSpawnDelay", (short) 800);
+                compound.putShort("SpawnCount", (short) 4);
+                compound.putShort("MaxNearbyEntities", (short) 6);
+                compound.putShort("RequiredPlayerRange", (short) 16);
+                compound.putShort("SpawnRange", (short) 4);
 
-            CompoundTag entityData = new CompoundTag();
-            entityData.putString("id", Registry.ENTITY_TYPE.getKey(entity).toString());
+                CompoundTag spawnDataEntity = new CompoundTag();
+                spawnDataEntity.putString("id", ForgeRegistries.ENTITIES.getKey(entity).toString());
+                CompoundTag spawnData = new CompoundTag();
+                spawnData.put("entity", spawnDataEntity);
+                compound.put("SpawnData", spawnData);
 
-            CompoundTag listEntry = new CompoundTag();
-            listEntry.put("Entity", entityData);
-            listEntry.putInt("Weight", 1);
+                CompoundTag entityData = new CompoundTag();
+                entityData.putString("id", ForgeRegistries.ENTITIES.getKey(entity).toString());
 
-            ListTag listnbt = new ListTag();
-            listnbt.add(listEntry);
+                CompoundTag spawnPotentialData = new CompoundTag();
+                spawnPotentialData.put("entity", entityData);
+                CompoundTag listEntry = new CompoundTag();
+                listEntry.put("data", spawnPotentialData);
+                listEntry.putInt("weight", 1);
+                compound.put("SpawnPotentials", new ListTag());
 
-            compound.put("SpawnPotentials", listnbt);
-
-            return compound;
-        }
-        else {
-            Bumblezone.LOGGER.warn("EntityType in a dungeon does not exist in registry! : {}", spawnerRandomizingProcessor);
+                return compound;
+            }
         }
 
         return nbt;
