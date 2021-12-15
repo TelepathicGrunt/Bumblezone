@@ -9,7 +9,7 @@ public class BzDimension {
     public static final ResourceKey<Level> BZ_WORLD_KEY = ResourceKey.create(Registry.DIMENSION_REGISTRY, Bumblezone.MOD_DIMENSION_ID);
 
     public static void setupDimension() {
-        BzChunkGenerator.registerChunkgenerator();
+        BzChunkGenerator.registerChunkGenerator();
         BzBiomeProvider.registerBiomeProvider();
     }
 }

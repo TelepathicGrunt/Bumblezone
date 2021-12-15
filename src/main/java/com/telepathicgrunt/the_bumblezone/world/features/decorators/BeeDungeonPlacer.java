@@ -38,8 +38,8 @@ public class BeeDungeonPlacer extends PlacementModifier {
         for (int currentAttempt = 0; currentAttempt <= 10; currentAttempt++) {
             validSpot = false;
             int sealevel = placementContext.getLevel().getLevel().getChunkSource().getGenerator().getSeaLevel();
-            int x = random.nextInt(8) + blockPos.getX() + 4;
-            int z = random.nextInt(8) + blockPos.getZ() + 4;
+            int x = random.nextInt(7) + blockPos.getX() + 3;
+            int z = random.nextInt(7) + blockPos.getZ() + 3;
             int y = random.nextInt(placementContext.getGenDepth() - 10 - sealevel) + sealevel + 2;
 
             //find a cave air spot

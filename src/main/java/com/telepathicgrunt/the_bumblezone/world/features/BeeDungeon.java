@@ -15,7 +15,7 @@ public class BeeDungeon extends NbtFeature{
     @Override
     public boolean place(FeaturePlaceContext<NbtFeatureConfig> context) {
         //affect rarity
-        if (BzWorldgenConfigs.beeDungeonRarity.get()>= 1000 ||
+        if (BzWorldgenConfigs.beeDungeonRarity.get() >= 1000 ||
                 context.random().nextInt(BzWorldgenConfigs.beeDungeonRarity.get()) != 0) return false;
 
         // generate dungeon

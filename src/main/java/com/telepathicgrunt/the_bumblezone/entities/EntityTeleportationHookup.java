@@ -58,7 +58,8 @@ public class EntityTeleportationHookup {
                 }
 
                 if(!livingEntity.level.isClientSide()) {
-                    teleportOutOfBz(livingEntity);
+                    //TODO: fix null cap on spectator player teleporting by command to bumblezone.
+                    //teleportOutOfBz(livingEntity);
                 }
             }
         }

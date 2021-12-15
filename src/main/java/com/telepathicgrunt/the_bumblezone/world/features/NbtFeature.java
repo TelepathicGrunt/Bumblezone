@@ -32,8 +32,8 @@ public class NbtFeature extends Feature<NbtFeatureConfig> {
         ResourceLocation nbtRL = GeneralUtils.getRandomEntry(context.config().nbtResourcelocationsAndWeights, context.random());
 
         StructureManager structureManager = context.level().getLevel().getStructureManager();
-        StructureTemplate template = structureManager.getOrCreate(nbtRL);
-        if(template == null) {
+        Optional<StructureTemplate> template = structureManager.get(nbtRL);
+        if(template.isEmpty()) {
             Bumblezone.LOGGER.error("Identifier to the specified nbt file was not found! : {}", nbtRL);
             return false;
         }
@@ -41,9 +41,9 @@ public class NbtFeature extends Feature<NbtFeatureConfig> {
 
         // For proper offsetting the feature so it rotate properly around position parameter.
         BlockPos halfLengths = new BlockPos(
-                template.getSize().getX() / 2,
-                template.getSize().getY() / 2,
-                template.getSize().getZ() / 2);
+                template.get().getSize().getX() / 2,
+                template.get().getSize().getY() / 2,
+                template.get().getSize().getZ() / 2);
 
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(context.origin());
 
@@ -54,7 +54,7 @@ public class NbtFeature extends Feature<NbtFeatureConfig> {
         Optional<StructureProcessorList> processor = context.level().getLevel().getServer().registryAccess().registryOrThrow(Registry.PROCESSOR_LIST_REGISTRY).getOptional(context.config().processor);
         processor.orElse(ProcessorLists.EMPTY).list().forEach(placementsettings::addProcessor); // add all processors
         mutable.set(position).move(-halfLengths.getX(), 0, -halfLengths.getZ()); // pivot
-        template.placeInWorld(context.level(), position, mutable, placementsettings, context.random(), Block.UPDATE_INVISIBLE);
+        template.get().placeInWorld(context.level(), mutable, mutable, placementsettings, context.random(), Block.UPDATE_INVISIBLE);
 
         // Post-processors
         // For all processors that are sensitive to neighboring blocks such as vines.
@@ -62,7 +62,7 @@ public class NbtFeature extends Feature<NbtFeatureConfig> {
         placementsettings.clearProcessors();
         Optional<StructureProcessorList> postProcessor = context.level().getLevel().getServer().registryAccess().registryOrThrow(Registry.PROCESSOR_LIST_REGISTRY).getOptional(context.config().postProcessor);
         postProcessor.orElse(ProcessorLists.EMPTY).list().forEach(placementsettings::addProcessor); // add all post processors
-        List<StructureTemplate.StructureBlockInfo> list = placementsettings.getRandomPalette(((StructureTemplateAccessor)template).thebumblezone_getBlocks(), mutable).blocks();
+        List<StructureTemplate.StructureBlockInfo> list = placementsettings.getRandomPalette(((StructureTemplateAccessor)template.get()).thebumblezone_getBlocks(), mutable).blocks();
         StructureTemplate.processBlockInfos(context.level(), mutable, mutable, placementsettings, list);
 
         return true;
