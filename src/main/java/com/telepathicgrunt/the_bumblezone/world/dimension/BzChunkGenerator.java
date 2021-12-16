@@ -82,9 +82,9 @@ public class BzChunkGenerator extends ChunkGenerator {
             RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter((bzChunkGenerator) -> bzChunkGenerator.biomeRegistry))
     .apply(instance, instance.stable(BzChunkGenerator::new)));
 
-    private static final BlockState AIR = Blocks.AIR.defaultBlockState();
     private static final BlockState[] EMPTY_COLUMN = new BlockState[0];
     protected final BlockState defaultBlock;
+    protected final BlockState defaultFluid;
     private final Registry<NormalNoise.NoiseParameters> noises;
     private final long seed;
     protected final Supplier<NoiseGeneratorSettings> settings;
@@ -109,6 +109,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         this.biomeRegistry = biomeRegistry;
         NoiseGeneratorSettings noiseGeneratorSettings = this.settings.get();
         this.defaultBlock = noiseGeneratorSettings.getDefaultBlock();
+        this.defaultFluid = noiseGeneratorSettings.getDefaultFluid();
         NoiseSettings noiseSettings = noiseGeneratorSettings.noiseSettings();
         this.sampler = new BiomeInfluencedNoiseSampler(noiseSettings, noiseGeneratorSettings.isNoiseCavesEnabled(), seed, registry, noiseGeneratorSettings.getRandomSource(), biomeSource, biomeRegistry);
         ImmutableList.Builder<WorldGenMaterialRule> builder = ImmutableList.builder();
@@ -121,7 +122,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         this.surfaceSystem = new SurfaceSystem(registry, this.defaultBlock, seaLevel, seed, noiseGeneratorSettings.getRandomSource());
     }
 
-    public static void registerChunkgenerator() {
+    public static void registerChunkGenerator() {
         Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Bumblezone.MODID, "chunk_generator"), BzChunkGenerator.CODEC);
     }
 
@@ -208,20 +209,24 @@ public class BzChunkGenerator extends ChunkGenerator {
             noiseChunk.selectCellYZ(currentYCell, 0);
 
             for(int yInCell = cellHeight - 1; yInCell >= 0; --yInCell) {
-                int w = (minYCell + currentYCell) * cellHeight + yInCell;
+                int y = (minYCell + currentYCell) * cellHeight + yInCell;
                 double f = (double)yInCell / (double)cellHeight;
                 noiseChunk.updateForY(f);
                 noiseChunk.updateForX(d);
                 noiseChunk.updateForZ(e);
-                BlockState blockState = this.materialRule.apply(noiseChunk, x, w, z);
+                BlockState blockState = this.materialRule.apply(noiseChunk, x, y, z);
                 BlockState blockState2 = blockState == null ? this.defaultBlock : blockState;
+                if(blockState.isAir() && y < getSeaLevel()) {
+                    blockState2 = this.defaultFluid;
+                }
+
                 if (blockStates != null) {
                     int index = currentYCell * cellHeight + yInCell;
                     blockStates[index] = blockState2;
                 }
 
                 if (predicate != null && predicate.test(blockState2)) {
-                    return OptionalInt.of(w + 1);
+                    return OptionalInt.of(y + 1);
                 }
             }
         }
@@ -243,16 +248,16 @@ public class BzChunkGenerator extends ChunkGenerator {
     public CompletableFuture<ChunkAccess> fillFromNoise(Executor executor, Blender blender, StructureFeatureManager structureFeatureManager, ChunkAccess chunkAccess) {
         NoiseSettings noiseSettings = this.settings.get().noiseSettings();
         LevelHeightAccessor levelHeightAccessor = chunkAccess.getHeightAccessorForGeneration();
-        int maxY = Math.max(noiseSettings.minY(), levelHeightAccessor.getMinBuildHeight());
-        int minY = Math.min(noiseSettings.minY() + noiseSettings.height(), levelHeightAccessor.getMaxBuildHeight());
-        int maxYCell = Mth.intFloorDiv(maxY, noiseSettings.getCellHeight());
-        int minYCell = Mth.intFloorDiv(minY - maxY, noiseSettings.getCellHeight());
-        if (minYCell <= 0) {
+        int minY = Math.max(noiseSettings.minY(), levelHeightAccessor.getMinBuildHeight());
+        int maxY = Math.min(noiseSettings.minY() + noiseSettings.height(), levelHeightAccessor.getMaxBuildHeight());
+        int minYCell = Mth.intFloorDiv(minY, noiseSettings.getCellHeight());
+        int maxYCell = Mth.intFloorDiv(maxY - minY, noiseSettings.getCellHeight());
+        if (maxYCell <= 0) {
             return CompletableFuture.completedFuture(chunkAccess);
         }
         else {
-            int maxChunkSection = chunkAccess.getSectionIndex(minYCell * noiseSettings.getCellHeight() - 1 + maxY);
-            int minChunkSection = chunkAccess.getSectionIndex(maxY);
+            int maxChunkSection = chunkAccess.getSectionIndex(maxYCell * noiseSettings.getCellHeight() - 1 + minY);
+            int minChunkSection = chunkAccess.getSectionIndex(minY);
             Set<LevelChunkSection> set = Sets.newHashSet();
 
             for(int currentChunkSection = maxChunkSection; currentChunkSection >= minChunkSection; --currentChunkSection) {
@@ -261,7 +266,7 @@ public class BzChunkGenerator extends ChunkGenerator {
                 set.add(levelChunkSection);
             }
 
-            return CompletableFuture.supplyAsync(Util.wrapThreadWithTaskName("wgen_fill_noise", () -> this.doFill(blender, structureFeatureManager, chunkAccess, maxYCell, minYCell)), Util.backgroundExecutor()).whenCompleteAsync((chunkAccessx, throwable) -> {
+            return CompletableFuture.supplyAsync(Util.wrapThreadWithTaskName("wgen_fill_noise", () -> this.doFill(blender, structureFeatureManager, chunkAccess, minYCell, maxYCell)), Util.backgroundExecutor()).whenCompleteAsync((chunkAccessx, throwable) -> {
                 for(LevelChunkSection levelChunkSectionx : set) {
                     levelChunkSectionx.release();
                 }
@@ -270,8 +275,8 @@ public class BzChunkGenerator extends ChunkGenerator {
         }
     }
 
-    private ChunkAccess doFill(Blender blender, StructureFeatureManager structureFeatureManager, ChunkAccess chunkAccess, int i, int j) {
-        NoiseGeneratorSettings noiseGeneratorSettings = this.settings.get();
+    private ChunkAccess doFill(Blender blender, StructureFeatureManager structureFeatureManager, ChunkAccess chunkAccess, int minYCell, int maxYCell) {
+        NoiseGeneratorSettings noiseGeneratorSettings = (NoiseGeneratorSettings)this.settings.get();
         NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk(this.sampler, () -> new Beardifier(structureFeatureManager, chunkAccess), noiseGeneratorSettings, this.globalFluidPicker, blender);
         Heightmap heightmap = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.OCEAN_FLOOR_WG);
         Heightmap heightmap2 = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.WORLD_SURFACE_WG);
@@ -293,11 +298,11 @@ public class BzChunkGenerator extends ChunkGenerator {
             for(int r = 0; r < p; ++r) {
                 LevelChunkSection levelChunkSection = chunkAccess.getSection(chunkAccess.getSectionsCount() - 1);
 
-                for(int s = j - 1; s >= 0; --s) {
+                for(int s = maxYCell - 1; s >= 0; --s) {
                     noiseChunk.selectCellYZ(s, r);
 
                     for(int t = n - 1; t >= 0; --t) {
-                        int u = (i + s) * n + t;
+                        int u = (minYCell + s) * n + t;
                         int v = u & 15;
                         int w = chunkAccess.getSectionIndex(u);
                         if (chunkAccess.getSectionIndex(levelChunkSection.bottomBlockY()) != w) {
@@ -323,7 +328,11 @@ public class BzChunkGenerator extends ChunkGenerator {
                                     blockState = this.defaultBlock;
                                 }
 
-                                if (blockState != AIR && !SharedConstants.debugVoidTerrain(chunkAccess.getPos())) {
+                                if (blockState.isAir() && u < this.getSeaLevel()) {
+                                    blockState = this.defaultFluid;
+                                }
+
+                                if (!blockState.isAir() && !SharedConstants.debugVoidTerrain(chunkAccess.getPos())) {
                                     if (blockState.getLightEmission() != 0 && chunkAccess instanceof ProtoChunk) {
                                         mutableBlockPos.set(y, u, ab);
                                         ((ProtoChunk)chunkAccess).addLight(mutableBlockPos);

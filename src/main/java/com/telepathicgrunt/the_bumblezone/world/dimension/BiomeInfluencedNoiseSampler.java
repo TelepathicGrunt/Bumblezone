@@ -13,6 +13,8 @@ import net.minecraft.world.level.levelgen.Aquifer;
 import net.minecraft.world.level.levelgen.NoiseChunk;
 import net.minecraft.world.level.levelgen.NoiseSampler;
 import net.minecraft.world.level.levelgen.NoiseSettings;
+import net.minecraft.world.level.levelgen.Noises;
+import net.minecraft.world.level.levelgen.PositionalRandomFactory;
 import net.minecraft.world.level.levelgen.RandomSource;
 import net.minecraft.world.level.levelgen.TerrainInfo;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
@@ -32,7 +34,7 @@ public class BiomeInfluencedNoiseSampler extends NoiseSampler {
         for(int x = -RADIUS; x <= RADIUS; ++x) {
             for(int z = -RADIUS; z <= RADIUS; ++z) {
                 float weight = 10.0F / Mth.sqrt((float)(x * x + z * z) + 0.2F);
-                array[x + RADIUS + (z + RADIUS) * 5] = weight;
+                array[x + RADIUS + (z + RADIUS) * 5] = weight / 22f;
             }
         }
     });
@@ -40,6 +42,7 @@ public class BiomeInfluencedNoiseSampler extends NoiseSampler {
     private final NoiseSettings noiseSettings;
     private final NoiseChunk.InterpolatableNoise baseNoise;
     private final BlendedNoise blendedNoise;
+    private final NormalNoise jaggedNoise;
     @Nullable
     private final SimplexNoise islandNoise;
     private final BiomeSource biomeSource;
@@ -62,54 +65,46 @@ public class BiomeInfluencedNoiseSampler extends NoiseSampler {
         }
 
         this.blendedNoise = new BlendedNoise(algorithm.newInstance(l), noiseSettings.noiseSamplingSettings(), noiseSettings.getCellWidth(), noiseSettings.getCellHeight());
+        PositionalRandomFactory positionalRandomFactory = algorithm.newInstance(l).forkPositional();
+        this.jaggedNoise = Noises.instantiate(registry, positionalRandomFactory, Noises.JAGGED);
     }
 
     private double calculateBaseNoise(int x, int y, int z, TerrainInfo terrainInfo, Blender blender) {
         double d = this.blendedNoise.calculateNoise(x, y, z);
-        return this.calculateBaseNoise(x, y, z, terrainInfo, d, true, true, blender);
+        return this.calculateBaseNoise(x, y, z, terrainInfo, d, true, blender);
     }
 
-    private double calculateBaseNoise(int x, int y, int z, TerrainInfo terrainInfo, double d, boolean bl, boolean bl2, Blender blender) {
+    private double calculateBaseNoise(int x, int y, int z, TerrainInfo terrainInfo, double d, boolean bl2, Blender blender) {
         double e;
         if (this.islandNoise != null) {
             e = ((double) TheEndBiomeSource.getHeightValue(this.islandNoise, x / 8, z / 8) - 8.0) / 128.0;
         }
         else {
-            double f = 0.0;
+            double f = bl2 ? this.sampleJaggedNoise(terrainInfo.jaggedness(), x, z) : 0.0;
             double g = (this.computeBaseDensity(y, terrainInfo) + f) * terrainInfo.factor();
             e = g * (double)(g > 0.0 ? 4 : 1);
         }
 
         double f = e + d;
-        double totalDepth;
         double m = -64.0;
-        totalDepth = f;
 
-        float totalScale = 0.0F;
         float totalHeight = 0.0F;
-        float depth = BzBiomeHeightRegistry.BIOME_HEIGHT_REGISTRY.getOptional(this.biomeRegistry.getKey(
-                        this.biomeSource.getNoiseBiome(x, 64, z, this))).orElse(new BzBiomeHeightRegistry.BiomeTerrain(1, 0)).depth();
-
-        for(int weightX = -2; weightX <= 2; ++weightX) {
-            for(int weightZ = -2; weightZ <= 2; ++weightZ) {
+        for(int xOffset = -2; xOffset <= 2; ++xOffset) {
+            for(int zOffset = -2; zOffset <= 2; ++zOffset) {
                 BzBiomeHeightRegistry.BiomeTerrain biomeTerrain = BzBiomeHeightRegistry.BIOME_HEIGHT_REGISTRY.getOptional(this.biomeRegistry.getKey(
-                        this.biomeSource.getNoiseBiome(x + weightX, 64, z + weightZ, this))).orElse(new BzBiomeHeightRegistry.BiomeTerrain(1, 0));
-                float neighborDepth = biomeTerrain.depth();
-                float neighborScale = biomeTerrain.scale();
-
-                float contribution = neighborDepth > depth ? 0.5F : 1.0F;
-                float weight = contribution * BIOME_WEIGHT_TABLE[weightX + 2 + (weightZ + 2) * 5] / (neighborDepth + 2.0F);
-                totalScale += neighborScale * weight;
-                totalDepth += neighborDepth * weight;
-                totalHeight += weight;
+                        this.biomeSource.getNoiseBiome((x >> 2) + xOffset, 40, (z >> 2) + zOffset, this))).orElse(new BzBiomeHeightRegistry.BiomeTerrain(4, 1));
+                float biomeDepth = biomeTerrain.depth;
+                float weightModifier = biomeTerrain.weightModifier;
+                float weight = Math.min(1, BIOME_WEIGHT_TABLE[xOffset + 2 + (zOffset + 2) * 5] * weightModifier);
+                totalHeight += (biomeDepth * weight);
             }
         }
-        double finalScale = 1 + totalScale;
-        double finalBiomeHeight = totalHeight * 20;
+        double finalBiomeHeight = totalHeight / 400f;
 
-        double n = Math.max(totalDepth, m);
+        double n = Math.max(f, m);
         n = this.applySlide(n, y / this.noiseSettings.getCellHeight());
-        n = blender.blendDensity((int)(x * finalScale), y, (int)(z * finalScale), n) + finalBiomeHeight;
+        n = blender.blendDensity(x, y, z, n);
+        n += finalBiomeHeight;
         return Mth.clamp(n, -64.0, 64.0);
     }
 
@@ -124,13 +119,23 @@ public class BiomeInfluencedNoiseSampler extends NoiseSampler {
         return this.noiseSettings.bottomSlideSettings().applySlide(d, j);
     }
 
-    protected NoiseChunk.BlockStateFiller makeBaseNoiseFiller(NoiseChunk noiseChunk, NoiseChunk.NoiseFiller noiseFiller, boolean bl) {
+    private double sampleJaggedNoise(double x, double y, double z) {
+        if (x == 0.0) {
+            return 0.0;
+        }
+        else {
+            double h = this.jaggedNoise.getValue(y * 1500.0, 0.0, z * 1500.0);
+            return h > 0.0 ? x * h : x / 2.0 * h;
+        }
+    }
+
+    protected NoiseChunk.BlockStateFiller makeBaseNoiseFiller(NoiseChunk noiseChunk, NoiseChunk.NoiseFiller beardifier, boolean bl) {
         NoiseChunk.Sampler sampler = this.baseNoise.instantiate(noiseChunk);
         return (i, j, k) -> {
             double d = sampler.sample();
             double e = Mth.clamp(d * 0.64, -1.0, 1.0);
             e = e / 2.0 - e * e * e / 24.0;
-            e += noiseFiller.calculateNoise(i, j, k);
+            e += beardifier.calculateNoise(i, j, k);
             return noiseChunk.aquifer().computeSubstance(i, j, k, d, e);
         };
     }
@@ -171,12 +176,12 @@ public class BiomeInfluencedNoiseSampler extends NoiseSampler {
 //        }
     }
 
-    protected int getPreliminarySurfaceLevel(int i, int j, TerrainInfo terrainInfo) {
-        for(int k = this.noiseSettings.getMinCellY() + this.noiseSettings.getCellCountY(); k >= this.noiseSettings.getMinCellY(); --k) {
-            int l = k * this.noiseSettings.getCellHeight();
-            double e = this.calculateBaseNoise(i, l, j, terrainInfo, -0.703125, true, false, Blender.empty());
-            if (e > 0.390625) {
-                return l;
+    protected int getPreliminarySurfaceLevel(int x, int z, TerrainInfo terrainInfo) {
+        for(int cellY = this.noiseSettings.getMinCellY() + this.noiseSettings.getCellCountY(); cellY >= this.noiseSettings.getMinCellY(); --cellY) {
+            int y = cellY * this.noiseSettings.getCellHeight();
+            double baseNoise = this.calculateBaseNoise(x, y, z, terrainInfo, -0.703125D, false, Blender.empty());
+            if (baseNoise > 0.390625D) {
+                return y;
             }
         }
 

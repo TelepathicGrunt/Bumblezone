@@ -66,10 +66,8 @@ public class SugarWaterBlock extends LiquidBlock {
     @Deprecated
     @Override
     public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
-        if (entity instanceof Bee) {
-            Bee beeEntity = ((Bee) entity);
-            if (beeEntity.hurtTime == 0)
-                beeEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 4, 0, false, false));
+        if (entity instanceof Bee beeEntity) {
+            if (beeEntity.hurtMarked) beeEntity.heal(1);
         }
 
         super.entityInside(state, world, position, entity);
