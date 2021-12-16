@@ -20,15 +20,15 @@ public final class BzBiomeHeightRegistry {
         Optional<? extends Registry<?>> registryOptional = Registry.REGISTRY.getOptional(BIOME_HEIGHT_KEY.location());
         registryOptional.ifPresent(registry -> {
             Registry.register((Registry<BiomeTerrain>)registry,
-                    new ResourceLocation(Bumblezone.MODID, "hive_pillar"), new BiomeTerrain(3, 0));
+                    new ResourceLocation(Bumblezone.MODID, "hive_pillar"), new BiomeTerrain(15, 1));
             Registry.register((Registry<BiomeTerrain>)registry,
-                    new ResourceLocation(Bumblezone.MODID, "hive_wall"), new BiomeTerrain(1, 0));
+                    new ResourceLocation(Bumblezone.MODID, "hive_wall"), new BiomeTerrain(8, 1.2f));
             Registry.register((Registry<BiomeTerrain>)registry,
-                    new ResourceLocation(Bumblezone.MODID, "pollinated_fields"), new BiomeTerrain(0, 0));
+                    new ResourceLocation(Bumblezone.MODID, "pollinated_fields"), new BiomeTerrain(3, 3));
             Registry.register((Registry<BiomeTerrain>)registry,
-                    new ResourceLocation(Bumblezone.MODID, "pollinated_pillar"), new BiomeTerrain(4, 0));
+                    new ResourceLocation(Bumblezone.MODID, "pollinated_pillar"), new BiomeTerrain(15, 1));
             Registry.register((Registry<BiomeTerrain>)registry,
-                    new ResourceLocation(Bumblezone.MODID, "sugar_water_floor"), new BiomeTerrain(-1, 0));
+                    new ResourceLocation(Bumblezone.MODID, "sugar_water_floor"), new BiomeTerrain(-3.5f, 1));
         });
     }
 
@@ -36,5 +36,13 @@ public final class BzBiomeHeightRegistry {
         return ((WritableRegistry<R>)Registry.REGISTRY).register(resourceKey, (R)new MappedRegistry<>(resourceKey, Lifecycle.stable()), Lifecycle.stable());
     }
 
-    public record BiomeTerrain(float depth, float scale) {}
+    public static class BiomeTerrain{
+        public final float depth;
+        public final float weightModifier;
+
+        public BiomeTerrain(float depth, float weightModifier) {
+            this.depth = depth;
+            this.weightModifier = weightModifier;
+        }
+    }
 }
