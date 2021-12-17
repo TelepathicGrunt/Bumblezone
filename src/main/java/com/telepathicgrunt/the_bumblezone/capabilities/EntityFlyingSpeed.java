@@ -17,15 +17,14 @@ public class EntityFlyingSpeed implements IFlyingSpeed {
 	}
 
 	@Override
-	public CompoundTag saveNBTData() {
+	public CompoundTag serializeNBT() {
 		CompoundTag nbt = new CompoundTag();
 		nbt.putFloat("original_flying_speed", this.getOriginalFlyingSpeed());
 		return nbt;
 	}
 
-
 	@Override
-	public void loadNBTData(CompoundTag nbtTag) {
+	public void deserializeNBT(CompoundTag nbtTag) {
 		this.setOriginalFlyingSpeed(nbtTag.getFloat("original_flying_speed"));
 	}
 }
