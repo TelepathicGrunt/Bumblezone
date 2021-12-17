@@ -18,15 +18,15 @@ public final class BzBiomeHeightRegistry {
         Optional<? extends Registry<?>> registryOptional = Registry.REGISTRY.getOptional(BIOME_HEIGHT_KEY.location());
         registryOptional.ifPresent(registry -> {
             Registry.register((Registry<BiomeTerrain>)registry,
-                    new ResourceLocation(Bumblezone.MODID, "hive_pillar"), new BiomeTerrain(15, 1));
+                    new ResourceLocation(Bumblezone.MODID, "hive_pillar"), new BiomeTerrain(15, 0));
             Registry.register((Registry<BiomeTerrain>)registry,
-                    new ResourceLocation(Bumblezone.MODID, "hive_wall"), new BiomeTerrain(8, 1.2f));
+                    new ResourceLocation(Bumblezone.MODID, "hive_wall"), new BiomeTerrain(8, 0.1f));
             Registry.register((Registry<BiomeTerrain>)registry,
-                    new ResourceLocation(Bumblezone.MODID, "pollinated_fields"), new BiomeTerrain(3, 3));
+                    new ResourceLocation(Bumblezone.MODID, "pollinated_fields"), new BiomeTerrain(5, 0.8f));
             Registry.register((Registry<BiomeTerrain>)registry,
-                    new ResourceLocation(Bumblezone.MODID, "pollinated_pillar"), new BiomeTerrain(15, 1));
+                    new ResourceLocation(Bumblezone.MODID, "pollinated_pillar"), new BiomeTerrain(13, 0));
             Registry.register((Registry<BiomeTerrain>)registry,
-                    new ResourceLocation(Bumblezone.MODID, "sugar_water_floor"), new BiomeTerrain(-3.5f, 1));
+                    new ResourceLocation(Bumblezone.MODID, "sugar_water_floor"), new BiomeTerrain(-3.5f, 0));
         });
     }
 

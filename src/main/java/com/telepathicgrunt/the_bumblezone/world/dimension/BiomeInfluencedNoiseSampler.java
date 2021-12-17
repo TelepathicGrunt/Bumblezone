@@ -88,14 +88,20 @@ public class BiomeInfluencedNoiseSampler extends NoiseSampler {
         double f = e + d;
         double m = -64.0;
 
+        BzBiomeHeightRegistry.BiomeTerrain centerBiomeInfo = BzBiomeHeightRegistry.BIOME_HEIGHT_REGISTRY.getOptional(this.biomeRegistry.getKey(
+                this.biomeSource.getNoiseBiome(x >> 2, 40, z >> 2, this))).orElse(new BzBiomeHeightRegistry.BiomeTerrain(4, 1));
+
         float totalHeight = 0.0F;
         for(int xOffset = -2; xOffset <= 2; ++xOffset) {
             for(int zOffset = -2; zOffset <= 2; ++zOffset) {
                 BzBiomeHeightRegistry.BiomeTerrain biomeTerrain = BzBiomeHeightRegistry.BIOME_HEIGHT_REGISTRY.getOptional(this.biomeRegistry.getKey(
                         this.biomeSource.getNoiseBiome((x >> 2) + xOffset, 40, (z >> 2) + zOffset, this))).orElse(new BzBiomeHeightRegistry.BiomeTerrain(4, 1));
                 float biomeDepth = biomeTerrain.depth;
-                float weightModifier = biomeTerrain.weightModifier;
-                float weight = Math.min(1, BIOME_WEIGHT_TABLE[xOffset + 2 + (zOffset + 2) * 5] * weightModifier);
+                float weight = BIOME_WEIGHT_TABLE[xOffset + 2 + (zOffset + 2) * 5];
+                if(biomeDepth != centerBiomeInfo.depth) {
+                    biomeDepth = Mth.lerp(centerBiomeInfo.weightModifier, biomeDepth, centerBiomeInfo.depth);
+                }
+
                 totalHeight += (biomeDepth * weight);
             }
         }

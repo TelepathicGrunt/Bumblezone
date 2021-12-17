@@ -1,0 +1,8 @@
+{
+  "feature": "the_bumblezone:pollinated_surface_thick",
+  "placement": [
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}
