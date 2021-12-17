@@ -29,6 +29,9 @@ public final class BzCapabilities {
     }
 
     public static void copyOverCaps(PlayerEvent.Clone event) {
+        event.getOriginal().reviveCaps();
+        event.getPlayer().reviveCaps();
+
         IEntityPosAndDim originalEPADCapability = event.getOriginal().getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
         IEntityPosAndDim newEPADCapability = event.getPlayer().getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
         newEPADCapability.setNonBZDim(originalEPADCapability.getNonBZDim());
