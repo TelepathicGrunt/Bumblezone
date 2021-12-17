@@ -6,9 +6,11 @@ import com.telepathicgrunt.the_bumblezone.world.features.CaveSugarWaterfall;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneyCrystalFeature;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneycombCaves;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneycombHole;
+import com.telepathicgrunt.the_bumblezone.world.features.LayeredBlockSurface;
 import com.telepathicgrunt.the_bumblezone.world.features.NbtFeature;
 import com.telepathicgrunt.the_bumblezone.world.features.PollinatedCaves;
 import com.telepathicgrunt.the_bumblezone.world.features.SpiderInfestedBeeDungeon;
+import com.telepathicgrunt.the_bumblezone.world.features.configs.BiomeBasedLayerConfig;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -24,6 +26,7 @@ public class BzFeatures {
     public static Feature<NbtFeatureConfig> NBT_FEATURE = new NbtFeature(NbtFeatureConfig.CODEC);
     public static Feature<NbtFeatureConfig> BEE_DUNGEON = new BeeDungeon(NbtFeatureConfig.CODEC);
     public static Feature<NbtFeatureConfig> SPIDER_INFESTED_BEE_DUNGEON = new SpiderInfestedBeeDungeon(NbtFeatureConfig.CODEC);
+    public static Feature<BiomeBasedLayerConfig> LAYERED_BLOCK_SURFACE = new LayeredBlockSurface(BiomeBasedLayerConfig.CODEC);
 
     public static void registerFeatures() {
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "honeycomb_holes"), HONEYCOMB_HOLE);
@@ -34,5 +37,6 @@ public class BzFeatures {
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "nbt_feature"), NBT_FEATURE);
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "bee_dungeon"), BEE_DUNGEON);
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "spider_infested_bee_dungeon"), SPIDER_INFESTED_BEE_DUNGEON);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "layered_block_surface"), LAYERED_BLOCK_SURFACE);
     }
 }
