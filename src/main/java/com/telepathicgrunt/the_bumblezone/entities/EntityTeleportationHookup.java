@@ -195,9 +195,7 @@ public class EntityTeleportationHookup {
     private static void checkAndCorrectStoredDimension(LivingEntity livingEntity) {
         //Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone.
         //Go to Overworld instead as default. Or go to Overworld if config is set.
-        if (Bumblezone.ENTITY_COMPONENT.get(livingEntity).getNonBZDimension().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                Bumblezone.BZ_CONFIG.BZDimensionConfig.forceExitToOverworld)
-        {
+        if (Bumblezone.ENTITY_COMPONENT.get(livingEntity).getNonBZDimension().equals(Bumblezone.MOD_DIMENSION_ID) || Bumblezone.BZ_CONFIG.BZDimensionConfig.forceExitToOverworld) {
             // go to overworld by default
             //update stored dimension
             Bumblezone.ENTITY_COMPONENT.get(livingEntity).setNonBZDimension(Level.OVERWORLD.location());
