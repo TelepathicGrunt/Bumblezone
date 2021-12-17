@@ -8,9 +8,12 @@ import com.telepathicgrunt.the_bumblezone.world.features.HoneycombCaves;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneycombHole;
 import com.telepathicgrunt.the_bumblezone.world.features.NbtFeature;
 import com.telepathicgrunt.the_bumblezone.world.features.PollinatedCaves;
+import com.telepathicgrunt.the_bumblezone.world.features.LayeredBlockSurface;
 import com.telepathicgrunt.the_bumblezone.world.features.SpiderInfestedBeeDungeon;
+import com.telepathicgrunt.the_bumblezone.world.features.configs.BiomeBasedLayerConfig;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.LayerConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,4 +30,5 @@ public class BzFeatures {
     public static final RegistryObject<Feature<NbtFeatureConfig>> NBT_FEATURE = FEATURES.register("nbt_feature", () -> new NbtFeature(NbtFeatureConfig.CODEC));
     public static final RegistryObject<Feature<NbtFeatureConfig>> BEE_DUNGEON = FEATURES.register("bee_dungeon", () -> new BeeDungeon(NbtFeatureConfig.CODEC));
     public static final RegistryObject<Feature<NbtFeatureConfig>> SPIDER_INFESTED_BEE_DUNGEON = FEATURES.register("spider_infested_bee_dungeon", () -> new SpiderInfestedBeeDungeon(NbtFeatureConfig.CODEC));
+    public static final RegistryObject<Feature<BiomeBasedLayerConfig>> LAYERED_BLOCK_SURFACE = FEATURES.register("layered_block_surface", () -> new LayeredBlockSurface(BiomeBasedLayerConfig.CODEC));
 }

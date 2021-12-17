@@ -57,235 +57,226 @@
     }
   },
   "surface_rule": {
+    "type": "minecraft:sequence",
     "sequence": [
       {
+        "type": "minecraft:condition",
         "if_true": {
+          "type": "minecraft:not",
           "invert": {
-            "anchor": {
-              "above_bottom": 5
-            },
+            "type": "minecraft:y_above",
             "surface_depth_multiplier": 0,
             "add_stone_depth": false,
-            "type": "minecraft:y_above"
-          },
-          "type": "minecraft:not"
+            "anchor": {
+              "above_bottom": 5
+            }
+          }
         },
         "then_run": {
+          "type": "minecraft:block",
           "result_state": {
             "Name": "the_bumblezone:beehive_beeswax"
-          },
-          "type": "minecraft:block"
-        },
-        "type": "minecraft:condition"
+          }
+        }
       },
       {
+        "type": "minecraft:condition",
         "if_true": {
+          "type": "minecraft:vertical_gradient",
           "random_name": "minecraft:bedrock_floor",
           "true_at_and_below": {
             "above_bottom": 4
           },
           "false_at_and_above": {
             "above_bottom": 7
-          },
-          "type": "minecraft:vertical_gradient"
+          }
         },
         "then_run": {
+          "type": "minecraft:block",
           "result_state": {
             "Name": "the_bumblezone:beehive_beeswax"
-          },
-          "type": "minecraft:block"
-        },
-        "type": "minecraft:condition"
+          }
+        }
       },
       {
+        "type": "minecraft:condition",
         "if_true": {
-          "anchor": {
-            "below_top": 5
-          },
+          "type": "minecraft:y_above",
           "surface_depth_multiplier": 0,
           "add_stone_depth": false,
-          "type": "minecraft:y_above"
+          "anchor": {
+            "below_top": 5
+          }
         },
         "then_run": {
+          "type": "minecraft:block",
           "result_state": {
             "Name": "the_bumblezone:beehive_beeswax"
-          },
-          "type": "minecraft:block"
-        },
-        "type": "minecraft:condition"
+          }
+        }
       },
       {
+        "type": "minecraft:condition",
         "if_true": {
+          "type": "minecraft:not",
           "invert": {
+            "type": "minecraft:vertical_gradient",
             "random_name": "minecraft:bedrock_roof",
             "true_at_and_below": {
               "below_top": 7
             },
             "false_at_and_above": {
               "below_top": 4
-            },
-            "type": "minecraft:vertical_gradient"
-          },
-          "type": "minecraft:not"
+            }
+          }
         },
         "then_run": {
+          "type": "minecraft:block",
           "result_state": {
             "Name": "the_bumblezone:beehive_beeswax"
-          },
-          "type": "minecraft:block"
-        },
-        "type": "minecraft:condition"
+          }
+        }
       },
       {
+        "type": "minecraft:condition",
         "if_true": {
-          "anchor": {
-            "below_top": 7
-          },
+          "type": "minecraft:y_above",
           "surface_depth_multiplier": 0,
           "add_stone_depth": false,
-          "type": "minecraft:y_above"
+          "anchor": {
+            "below_top": 7
+          }
         },
         "then_run": {
+          "type": "minecraft:block",
           "result_state": {
             "Name": "minecraft:honeycomb_block"
-          },
-          "type": "minecraft:block"
-        },
-        "type": "minecraft:condition"
+          }
+        }
       },
       {
+        "type": "minecraft:condition",
         "if_true": {
+          "type": "minecraft:biome",
           "biome_is": [
             "the_bumblezone:hive_pillar",
             "the_bumblezone:hive_wall",
             "the_bumblezone:sugar_water_floor"
-          ],
-          "type": "minecraft:biome"
+          ]
         },
         "then_run": {
+          "type": "minecraft:sequence",
           "sequence": [
             {
+              "type": "minecraft:condition",
               "if_true": {
-                "offset": 0,
-                "add_surface_depth": true,
-                "add_surface_secondary_depth": false,
-                "surface_type": "floor",
-                "type": "minecraft:stone_depth"
-              },
-              "then_run": {
-                "result_state": {
-                  "Name": "the_bumblezone:porous_honeycomb_block"
-                },
-                "type": "minecraft:block"
-              },
-              "type": "minecraft:condition"
-            },
-            {
-              "if_true": {
-                "offset": 0,
-                "add_surface_depth": true,
-                "add_surface_secondary_depth": false,
-                "surface_type": "floor",
-                "type": "minecraft:stone_depth"
-              },
-              "then_run": {
-                "if_true": {
-                  "offset": 5,
-                  "surface_depth_multiplier": -1,
+                "type": "minecraft:not",
+                "invert": {
+                  "type": "minecraft:y_above",
+                  "surface_depth_multiplier": 2,
                   "add_stone_depth": true,
-                  "type": "minecraft:water"
+                  "anchor": {
+                    "above_bottom": 40
+                  }
+                }
+              },
+              "then_run": {
+                "type": "minecraft:condition",
+                "if_true": {
+                  "type": "minecraft:stone_depth",
+                  "offset": 0,
+                  "add_surface_depth": true,
+                  "add_surface_secondary_depth": false,
+                  "surface_type": "floor"
                 },
                 "then_run": {
+                  "type": "minecraft:block",
                   "result_state": {
                     "Name": "the_bumblezone:filled_porous_honeycomb_block"
-                  },
-                  "type": "minecraft:block"
-                },
-                "type": "minecraft:condition"
+                  }
+                }
+              }
+            },
+            {
+              "type": "minecraft:condition",
+              "if_true": {
+                "type": "minecraft:stone_depth",
+                "offset": 0,
+                "add_surface_depth": true,
+                "add_surface_secondary_depth": false,
+                "surface_type": "floor"
               },
-              "type": "minecraft:condition"
+              "then_run": {
+                "type": "minecraft:block",
+                "result_state": {
+                  "Name": "the_bumblezone:porous_honeycomb_block"
+                }
+              }
             }
-          ],
-          "type": "minecraft:sequence"
-        },
-        "type": "minecraft:condition"
+          ]
+        }
       },
       {
+        "type": "minecraft:condition",
         "if_true": {
+          "type": "minecraft:biome",
           "biome_is": [
             "the_bumblezone:pollinated_fields",
             "the_bumblezone:pollinated_pillar"
-          ],
-          "type": "minecraft:biome"
+          ]
         },
         "then_run": {
+          "type": "minecraft:sequence",
           "sequence": [
             {
+              "type": "minecraft:condition",
               "if_true": {
-                "offset": 0,
-                "add_surface_depth": true,
-                "add_surface_secondary_depth": false,
-                "surface_type": "floor",
-                "type": "minecraft:stone_depth"
-              },
-              "then_run": {
-                "result_state": {
-                  "Name": "the_bumblezone:porous_honeycomb_block"
-                },
-                "type": "minecraft:block"
-              },
-              "type": "minecraft:condition"
-            },
-            {
-              "if_true": {
-                "offset": 1,
-                "add_surface_depth": false,
-                "add_surface_secondary_depth": false,
-                "surface_type": "floor",
-                "type": "minecraft:stone_depth"
-              },
-              "then_run": {
-                "result_state": {
-                  "Properties": {
-                    "layer": "8"
-                  },
-                  "Name": "the_bumblezone:pile_of_pollen"
-                },
-                "type": "the_bumblezone:pollinated_surface_source"
-              },
-              "type": "minecraft:condition"
-            },
-            {
-              "if_true": {
-                "offset": 0,
-                "add_surface_depth": true,
-                "add_surface_secondary_depth": false,
-                "surface_type": "floor",
-                "type": "minecraft:stone_depth"
-              },
-              "then_run": {
-                "if_true": {
-                  "offset": 5,
-                  "surface_depth_multiplier": -1,
+                "type": "minecraft:not",
+                "invert": {
+                  "type": "minecraft:y_above",
+                  "surface_depth_multiplier": 2,
                   "add_stone_depth": true,
-                  "type": "minecraft:water"
+                  "anchor": {
+                    "above_bottom": 40
+                  }
+                }
+              },
+              "then_run": {
+                "type": "minecraft:condition",
+                "if_true": {
+                  "type": "minecraft:stone_depth",
+                  "offset": 0,
+                  "add_surface_depth": true,
+                  "add_surface_secondary_depth": false,
+                  "surface_type": "floor"
                 },
                 "then_run": {
+                  "type": "minecraft:block",
                   "result_state": {
                     "Name": "the_bumblezone:filled_porous_honeycomb_block"
-                  },
-                  "type": "minecraft:block"
-                },
-                "type": "minecraft:condition"
+                  }
+                }
+              }
+            },
+            {
+              "type": "minecraft:condition",
+              "if_true": {
+                "type": "minecraft:stone_depth",
+                "offset": 0,
+                "add_surface_depth": true,
+                "add_surface_secondary_depth": false,
+                "surface_type": "floor"
               },
-              "type": "minecraft:condition"
+              "then_run": {
+                "type": "minecraft:block",
+                "result_state": {
+                  "Name": "the_bumblezone:porous_honeycomb_block"
+                }
+              }
             }
-          ],
-          "type": "minecraft:sequence"
-        },
-        "type": "minecraft:condition"
+          ]
+        }
       }
-    ],
-    "type": "minecraft:sequence"
+    ]
   }
 }
