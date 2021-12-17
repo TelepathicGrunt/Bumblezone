@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public final class AttacherFlyingSpeed {
 
-    private static class MyCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+    private static class FSCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
         public static final ResourceLocation IDENTIFIER = new ResourceLocation(Bumblezone.MODID, "original_flying_speed");
 
@@ -45,8 +45,8 @@ public final class AttacherFlyingSpeed {
     public static void attach(final AttachCapabilitiesEvent<Entity> event) {
         Entity entity = event.getObject();
         if (entity instanceof LivingEntity) {
-            final MyCapabilityProvider provider = new MyCapabilityProvider();
-            event.addCapability(MyCapabilityProvider.IDENTIFIER, provider);
+            final FSCapabilityProvider provider = new FSCapabilityProvider();
+            event.addCapability(FSCapabilityProvider.IDENTIFIER, provider);
             event.addListener(provider::invalidate);
         }
     }

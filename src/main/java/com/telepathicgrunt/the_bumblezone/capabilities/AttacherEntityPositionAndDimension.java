@@ -14,7 +14,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 
 public final class AttacherEntityPositionAndDimension {
 
-    private static class MyCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+    private static class EPADCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
         public static final ResourceLocation IDENTIFIER = new ResourceLocation(Bumblezone.MODID, "entity_position_and_dimension");
 
@@ -44,8 +44,8 @@ public final class AttacherEntityPositionAndDimension {
     public static void attach(final AttachCapabilitiesEvent<Entity> event) {
         Entity entity = event.getObject();
         if (entity instanceof LivingEntity) {
-            final MyCapabilityProvider provider = new MyCapabilityProvider();
-            event.addCapability(MyCapabilityProvider.IDENTIFIER, provider);
+            final EPADCapabilityProvider provider = new EPADCapabilityProvider();
+            event.addCapability(EPADCapabilityProvider.IDENTIFIER, provider);
             event.addListener(provider::invalidate);
         }
     }
