@@ -32,12 +32,12 @@ public final class AttacherEntityPositionAndDimension {
 
         @Override
         public CompoundTag serializeNBT() {
-            return this.backend.saveNBTData();
+            return this.backend.serializeNBT();
         }
 
         @Override
         public void deserializeNBT(CompoundTag nbt) {
-            this.backend.loadNBTData(nbt);
+            this.backend.deserializeNBT(nbt);
         }
     }
 

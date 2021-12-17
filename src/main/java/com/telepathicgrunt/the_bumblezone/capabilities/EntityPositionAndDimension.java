@@ -31,7 +31,7 @@ public class EntityPositionAndDimension implements IEntityPosAndDim {
 
 
 	@Override
-	public CompoundTag saveNBTData() {
+	public CompoundTag serializeNBT() {
 		CompoundTag nbt = new CompoundTag();
 
 		if (this.getNonBZDim() != null) {
@@ -50,14 +50,21 @@ public class EntityPositionAndDimension implements IEntityPosAndDim {
 
 
 	@Override
-	public void loadNBTData(CompoundTag nbtTag) {
+	public void deserializeNBT(CompoundTag nbtTag) {
 		//grabs past dimension resource location and tries to get that dimension from the registry
-		ResourceLocation storedDimension = new ResourceLocation(nbtTag.getString("PreviousDimensionNamespace"), nbtTag.getString("PreviousDimensionPath"));
+		String namespace = nbtTag.getString("PreviousDimensionNamespace");
+		String path = nbtTag.getString("PreviousDimensionPath");
+		ResourceLocation storedDimension = new ResourceLocation(namespace, path);
+		if(storedDimension.toString().equals("minecraft:")) {
+			storedDimension = new ResourceLocation("minecraft", "overworld");
+		}
+
 		Vec3 storedPositionNonBZ = null;
 		//Need check for null so we can let rest for code know the entity has not exit the dimension yet for the first time.
 		if (nbtTag.contains("NonBZ_X") && nbtTag.contains("NonBZ_Y") && nbtTag.contains("NonBZ_Z")) {
 		    storedPositionNonBZ = new Vec3(nbtTag.getFloat("NonBZ_X"), nbtTag.getFloat("NonBZ_Y"), nbtTag.getFloat("NonBZ_Z"));
 		}
+
 		this.setNonBZDim(storedDimension.getPath().isEmpty() ? new ResourceLocation("minecraft", "overworld") : storedDimension);
 		this.setNonBZPos(storedPositionNonBZ);
 	}

@@ -9,9 +9,11 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-public class BzCapabilities {
+public final class BzCapabilities {
     public static final Capability<IFlyingSpeed> ORIGINAL_FLYING_SPEED_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
     public static final Capability<IEntityPosAndDim> ENTITY_POS_AND_DIM_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+
+    private BzCapabilities() {}
 
     public static void setupCapabilities() {
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
