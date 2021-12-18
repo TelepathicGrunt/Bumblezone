@@ -176,18 +176,18 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 blockstate.is(Blocks.SOUL_SAND) ||
                 blockstate.isFaceSturdy(this.level, blockHitResult.getBlockPos(), blockHitResult.getDirection()))
         {
+            BlockState pileOfPollen = BzBlocks.PILE_OF_POLLEN.defaultBlockState();
             BlockPos impactSide = blockHitResult.getBlockPos().relative(blockHitResult.getDirection());
             BlockState sideState = this.level.getBlockState(impactSide);
             BlockState belowSideState = this.level.getBlockState(impactSide.below());
             boolean belowSideStateHasCollision = !belowSideState.getCollisionShape(this.level, impactSide.below()).isEmpty();
-            BlockState pileOfPollen = BzBlocks.PILE_OF_POLLEN.defaultBlockState();
 
             if(sideState.is(pileOfPollen.getBlock()) && pileOfPollen.canSurvive(this.level, impactSide)) {
-                PileOfPollen.stackPollen(sideState, this.level, impactSide, BzBlocks.PILE_OF_POLLEN.defaultBlockState());
+                PileOfPollen.stackPollen(sideState, this.level, impactSide, pileOfPollen);
                 consumed = true;
             }
             else if((!belowSideStateHasCollision && sideState.isAir()) || (belowSideStateHasCollision && pileOfPollen.canSurvive(this.level, impactSide))) {
-                this.level.setBlock(impactSide, BzBlocks.PILE_OF_POLLEN.defaultBlockState(), 3);
+                this.level.setBlock(impactSide, pileOfPollen, 3);
                 consumed = true;
             }
         }
