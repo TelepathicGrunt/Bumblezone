@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.google.common.primitives.Doubles;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
-import com.telepathicgrunt.the_bumblezone.capabilities.IEntityPosAndDim;
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
@@ -53,7 +53,7 @@ public class EntityTeleportationBackend {
         }
 
         else if(BzDimensionConfigs.teleportationMode.get() == 2) {
-            IEntityPosAndDim capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
+            EntityPositionAndDimension capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
             Vec3 playerPos = capability.getNonBZPos();
             if(playerPos != null) {
                 validBlockPos = new BlockPos(playerPos);
@@ -78,7 +78,7 @@ public class EntityTeleportationBackend {
             //Gets valid space in other world
             validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward, false);
 
-            IEntityPosAndDim capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
+            EntityPositionAndDimension capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
             Vec3 playerPos = capability.getNonBZPos();
             if(validBlockPos == null && playerPos != null) {
                 validBlockPos = new BlockPos(playerPos);
@@ -376,7 +376,7 @@ public class EntityTeleportationBackend {
     public static void playerLeavingBz(EntityTravelToDimensionEvent event) {
         //Updates the non-BZ dimension that the player is leaving
         if (!event.getDimension().location().equals(Bumblezone.MOD_DIMENSION_ID) && event.getEntity() instanceof LivingEntity livingEntity) {
-            IEntityPosAndDim capability = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
+            EntityPositionAndDimension capability = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
             capability.setNonBZDim(event.getDimension().location());
         }
     }

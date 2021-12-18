@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.capabilities;
 import net.minecraft.nbt.CompoundTag;
 
 
-public class EntityFlyingSpeed implements IFlyingSpeed {
+public class EntityFlyingSpeed implements EntityFlyingSpeed {
 	private float originalFlyingSpeed = 0.02f;
 
 	@Override

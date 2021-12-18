@@ -15,12 +15,13 @@ import org.jetbrains.annotations.NotNull;
 
 public final class AttacherFlyingSpeed {
 
+    // Every entity will hold their own instance of FSCapabilityProvider.
+    // Their instances will hold a lazy that holds the cap.
     private static class FSCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
         public static final ResourceLocation IDENTIFIER = new ResourceLocation(Bumblezone.MODID, "original_flying_speed");
-
-        private final IFlyingSpeed backend = new EntityFlyingSpeed();
-        private final LazyOptional<IFlyingSpeed> optionalData = LazyOptional.of(() -> backend);
+        private final EntityFlyingSpeed backend = new EntityFlyingSpeed();
+        private final LazyOptional<EntityFlyingSpeed> optionalData = LazyOptional.of(() -> backend);
 
         @Override
         public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction side) {
@@ -38,6 +39,7 @@ public final class AttacherFlyingSpeed {
         }
     }
 
+    // attach only to living entities
     public static void attach(final AttachCapabilitiesEvent<Entity> event) {
         Entity entity = event.getObject();
         if (entity instanceof LivingEntity) {

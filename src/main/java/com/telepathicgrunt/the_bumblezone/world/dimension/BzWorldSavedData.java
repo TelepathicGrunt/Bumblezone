@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.world.dimension;
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
-import com.telepathicgrunt.the_bumblezone.capabilities.IEntityPosAndDim;
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -98,7 +98,7 @@ public class BzWorldSavedData extends SavedData {
 		Vec3 destinationPosition;
 
 		if (!entity.level.isClientSide()) {
-			IEntityPosAndDim capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
+			EntityPositionAndDimension capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
 			capability.setNonBZPos(entity.position());
 			capability.setNonBZDim(entity.level.dimension().location());
 

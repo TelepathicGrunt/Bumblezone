@@ -3,11 +3,9 @@ package com.telepathicgrunt.the_bumblezone.world.features.configs;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.LayerConfiguration;
 
 public class BiomeBasedLayerConfig implements FeatureConfiguration {
     public static final Codec<BiomeBasedLayerConfig> CODEC = RecordCodecBuilder.create((instance) -> instance.group(

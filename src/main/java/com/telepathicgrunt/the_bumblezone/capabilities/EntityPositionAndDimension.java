@@ -3,28 +3,25 @@ package com.telepathicgrunt.the_bumblezone.capabilities;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.INBTSerializable;
 
 
-public class EntityPositionAndDimension implements IEntityPosAndDim {
+public class EntityPositionAndDimension implements INBTSerializable<CompoundTag> {
 	private ResourceLocation nonBZDimension = new ResourceLocation("minecraft", "overworld");
 	private Vec3 nonBZPosition = null;
 
-	@Override
 	public void setNonBZDim(ResourceLocation incomingDim) {
 		nonBZDimension = incomingDim;
 	}
 
-	@Override
 	public ResourceLocation getNonBZDim() {
 		return nonBZDimension;
 	}
-	
-	@Override
+
 	public void setNonBZPos(Vec3 incomingPos) {
 		nonBZPosition = incomingPos;
 	}
 
-	@Override
 	public Vec3 getNonBZPos() {
 		return nonBZPosition;
 	}

@@ -14,12 +14,13 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 
 public final class AttacherEntityPositionAndDimension {
 
+    // Every entity will hold their own instance of EPADCapabilityProvider.
+    // Their instances will hold a lazy that holds the cap.
     private static class EPADCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
         public static final ResourceLocation IDENTIFIER = new ResourceLocation(Bumblezone.MODID, "entity_position_and_dimension");
-
-        private final IEntityPosAndDim backend = new EntityPositionAndDimension();
-        private final LazyOptional<IEntityPosAndDim> optionalData = LazyOptional.of(() -> backend);
+        private final EntityPositionAndDimension backend = new EntityPositionAndDimension();
+        private final LazyOptional<EntityPositionAndDimension> optionalData = LazyOptional.of(() -> backend);
 
         @Override
         public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
@@ -37,6 +38,7 @@ public final class AttacherEntityPositionAndDimension {
         }
     }
 
+    // attach only to living entities
     public static void attach(final AttachCapabilitiesEvent<Entity> event) {
         Entity entity = event.getObject();
         if (entity instanceof LivingEntity) {
