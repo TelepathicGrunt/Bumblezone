@@ -32,16 +32,7 @@ public final class BzCapabilities {
     }
 
     public static void copyOverCaps(PlayerEvent.Clone event) {
-        event.getOriginal().reviveCaps();
-        event.getPlayer().reviveCaps();
-
-        IEntityPosAndDim originalEPADCapability = event.getOriginal().getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
-        IEntityPosAndDim newEPADCapability = event.getPlayer().getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
-        newEPADCapability.setNonBZDim(originalEPADCapability.getNonBZDim());
-        newEPADCapability.setNonBZPos(originalEPADCapability.getNonBZPos());
-
-        IFlyingSpeed originalFSCapability = event.getOriginal().getCapability(BzCapabilities.ORIGINAL_FLYING_SPEED_CAPABILITY).orElseThrow(RuntimeException::new);
-        IFlyingSpeed newFSCapability = event.getPlayer().getCapability(BzCapabilities.ORIGINAL_FLYING_SPEED_CAPABILITY).orElseThrow(RuntimeException::new);
-        newFSCapability.setOriginalFlyingSpeed(originalFSCapability.getOriginalFlyingSpeed());
+        event.getOriginal().getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).invalidate();
+        event.getOriginal().getCapability(BzCapabilities.ORIGINAL_FLYING_SPEED_CAPABILITY).invalidate();
     }
 }

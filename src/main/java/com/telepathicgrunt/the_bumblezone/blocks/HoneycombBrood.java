@@ -85,7 +85,6 @@ public class HoneycombBrood extends ProperFacingBlock {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
         if(!world.isClientSide()) {
             IEntityPosAndDim capability = playerEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
-
         }
 
         //VANILLA COMPAT

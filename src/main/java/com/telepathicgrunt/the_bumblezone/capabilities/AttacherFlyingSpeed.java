@@ -27,10 +27,6 @@ public final class AttacherFlyingSpeed {
             return BzCapabilities.ORIGINAL_FLYING_SPEED_CAPABILITY.orEmpty(cap, this.optionalData);
         }
 
-        void invalidate() {
-            this.optionalData.invalidate();
-        }
-
         @Override
         public CompoundTag serializeNBT() {
             return this.backend.serializeNBT();
@@ -47,7 +43,6 @@ public final class AttacherFlyingSpeed {
         if (entity instanceof LivingEntity) {
             final FSCapabilityProvider provider = new FSCapabilityProvider();
             event.addCapability(FSCapabilityProvider.IDENTIFIER, provider);
-            event.addListener(provider::invalidate);
         }
     }
 }

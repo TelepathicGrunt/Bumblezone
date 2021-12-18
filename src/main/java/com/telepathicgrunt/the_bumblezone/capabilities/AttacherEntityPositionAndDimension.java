@@ -26,10 +26,6 @@ public final class AttacherEntityPositionAndDimension {
             return BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY.orEmpty(cap, this.optionalData);
         }
 
-        void invalidate() {
-            this.optionalData.invalidate();
-        }
-
         @Override
         public CompoundTag serializeNBT() {
             return this.backend.serializeNBT();
@@ -46,7 +42,6 @@ public final class AttacherEntityPositionAndDimension {
         if (entity instanceof LivingEntity) {
             final EPADCapabilityProvider provider = new EPADCapabilityProvider();
             event.addCapability(EPADCapabilityProvider.IDENTIFIER, provider);
-            event.addListener(provider::invalidate);
         }
     }
 }
