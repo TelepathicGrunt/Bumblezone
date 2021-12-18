@@ -2,8 +2,6 @@ package com.telepathicgrunt.the_bumblezone;
 
 import com.telepathicgrunt.the_bumblezone.components.EntityComponent;
 import com.telepathicgrunt.the_bumblezone.components.FlyingSpeedComponent;
-import com.telepathicgrunt.the_bumblezone.components.IEntityComponent;
-import com.telepathicgrunt.the_bumblezone.components.IFlyingSpeedComponent;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
@@ -52,8 +50,8 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
     public static BzConfig BZ_CONFIG;
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
-    public static final ComponentKey<IEntityComponent> ENTITY_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "entity_component"), IEntityComponent.class);
-    public static final ComponentKey<IFlyingSpeedComponent> FLYING_SPEED_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "original_flying_speed"), IFlyingSpeedComponent.class);
+    public static final ComponentKey<EntityComponent> ENTITY_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "entity_component"), EntityComponent.class);
+    public static final ComponentKey<FlyingSpeedComponent> FLYING_SPEED_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "original_flying_speed"), FlyingSpeedComponent.class);
 
     @Override
     public void onInitialize() {

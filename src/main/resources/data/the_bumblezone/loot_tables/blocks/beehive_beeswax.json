@@ -5,8 +5,8 @@
       "rolls": 1,
       "entries": [
         {
-          "type": "minecraft:item",
-          "name": "the_bumblezone:empty_honeycomb_brood_block"
+          "name": "the_bumblezone:beehive_beeswax",
+          "type": "minecraft:item"
         }
       ],
       "conditions": [

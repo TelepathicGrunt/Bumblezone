@@ -9,7 +9,7 @@
           "type": "minecraft:alternatives",
           "children": [
             {
-              "name": "the_bumblezone:filled_porous_honeycomb_block",
+              "name": "the_bumblezone:honeycomb_brood_block",
               "type": "minecraft:item",
               "conditions": [
                 {
@@ -55,8 +55,48 @@
       "rolls": 1,
       "entries": [
         {
-          "name": "the_bumblezone:porous_honeycomb_block",
+          "name": "the_bumblezone:empty_honeycomb_brood_block",
           "type": "minecraft:item"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        },
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "enchantments": [
+                {
+                  "enchantment": "minecraft:silk_touch",
+                  "levels": {
+                    "min": 1
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "pool3",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:bee_bread",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 0,
+                "max": 1
+              }
+            }
+          ]
         }
       ],
       "conditions": [

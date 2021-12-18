@@ -8,6 +8,7 @@
           "type": "minecraft:alternatives",
           "children": [
             {
+              "name": "the_bumblezone:sugar_infused_stone",
               "type": "minecraft:item",
               "conditions": [
                 {
@@ -23,17 +24,16 @@
                     ]
                   }
                 }
-              ],
-              "name": "the_bumblezone:sugar_infused_stone"
+              ]
             },
             {
+              "name": "minecraft:cobblestone",
               "type": "minecraft:item",
               "conditions": [
                 {
                   "condition": "minecraft:survives_explosion"
                 }
-              ],
-              "name": "minecraft:cobblestone"
+              ]
             }
           ]
         }
@@ -43,35 +43,27 @@
       "rolls": 1,
       "entries": [
         {
-          "type": "minecraft:alternatives",
-          "children": [
+          "name": "minecraft:sugar",
+          "type": "minecraft:item",
+          "conditions": [
             {
-              "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "enchantments": [
-                      {
-                        "enchantment": "minecraft:silk_touch",
-                        "levels": {
-                          "min": 1
-                        }
-                      }
-                    ]
-                  }
-                }
-              ],
-              "name": "minecraft:air"
+              "condition": "minecraft:survives_explosion"
             },
             {
-              "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:survives_explosion"
+              "condition": "minecraft:inverted",
+              "term": {
+                "condition": "minecraft:match_tool",
+                "predicate": {
+                  "enchantments": [
+                    {
+                      "enchantment": "minecraft:silk_touch",
+                      "levels": {
+                        "min": 1
+                      }
+                    }
+                  ]
                 }
-              ],
-              "name": "minecraft:sugar"
+              }
             }
           ]
         }
