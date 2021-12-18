@@ -20,16 +20,16 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.telepathicgrunt.bumblezone.Bumblezone"
+      "com.telepathicgrunt.the_bumblezone.Bumblezone"
     ],
     "modmenu": [
-      "com.telepathicgrunt.bumblezone.configs.ModMenuConfig"
+      "com.telepathicgrunt.the_bumblezone.configs.ModMenuConfig"
     ],
     "client": [
-      "com.telepathicgrunt.bumblezone.client.BumblezoneClient"
+      "com.telepathicgrunt.the_bumblezone.client.BumblezoneClient"
     ],
     "cardinal-components-entity": [
-      "com.telepathicgrunt.bumblezone.Bumblezone"
+      "com.telepathicgrunt.the_bumblezone.Bumblezone"
     ]
   },
   "mixins": [
