@@ -94,7 +94,7 @@ public class EntityTeleportationBackend {
             (Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 3 && validBlockPos == null))
         {
 
-            if (destination.getBlockState(finalSpawnPos.above()).canOcclude()) {
+            if (destination.getBlockState(finalSpawnPos.above()).isSuffocating(destination, finalSpawnPos.above())) {
                 destination.setBlock(finalSpawnPos, Blocks.AIR.defaultBlockState(), 3);
                 destination.setBlock(finalSpawnPos.above(), Blocks.AIR.defaultBlockState(), 3);
             }
