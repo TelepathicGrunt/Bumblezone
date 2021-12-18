@@ -13,7 +13,6 @@ import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
 import dev.cafeteria.fakeplayerapi.server.FakePlayerBuilder;
 import dev.cafeteria.fakeplayerapi.server.FakeServerPlayer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
