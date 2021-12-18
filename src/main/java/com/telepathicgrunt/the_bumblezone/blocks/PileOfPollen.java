@@ -184,22 +184,6 @@ public class PileOfPollen extends FallingBlock {
     }
 
     @Override
-    public void tick(BlockState blockState, ServerLevel serverWorld, BlockPos blockPos, Random random) {
-        BlockState stateBelow = serverWorld.getBlockState(blockPos.below());
-        if(stateBelow.is(BzBlocks.PILE_OF_POLLEN)) {
-            if(stateBelow.getValue(LAYERS) == 8) {
-                return;
-            }
-            else {
-                serverWorld.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 2);
-                stackPollen(stateBelow, serverWorld, blockPos.below(), blockState);
-            }
-        }
-
-        super.tick(blockState, serverWorld, blockPos, random);
-    }
-
-    @Override
     public void destroy(LevelAccessor world, BlockPos blockPos, BlockState blockState) {
         if(world.isClientSide()) {
             for(int i = 0; i < 50; i++) {
