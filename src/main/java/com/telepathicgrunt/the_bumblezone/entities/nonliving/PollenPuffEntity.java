@@ -8,11 +8,16 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
 import dev.cafeteria.fakeplayerapi.server.FakePlayerBuilder;
 import dev.cafeteria.fakeplayerapi.server.FakeServerPlayer;
+import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -141,6 +146,12 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             BlockState fallingState = fallingBlockEntity.getBlockState();
             int newLayer = Math.min(8, fallingState.getValue(PileOfPollen.LAYERS) + 1);
             ((FallingBlockEntityAccessor)fallingBlockEntity).thebumblezone_setBlock(fallingState.setValue(PileOfPollen.LAYERS, newLayer));
+
+            FriendlyByteBuf passedData = new FriendlyByteBuf(Unpooled.buffer());
+            passedData.writeInt(fallingBlockEntity.getId());
+            passedData.writeShort((short)newLayer);
+            PlayerLookup.world((ServerLevel) this.level).forEach(player ->
+                    ServerPlayNetworking.send(player, UpdateFallingBlockPacket.PACKET_ID, passedData));
         }
     }
 

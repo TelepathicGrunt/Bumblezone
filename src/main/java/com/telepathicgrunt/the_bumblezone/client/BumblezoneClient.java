@@ -13,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -63,6 +64,8 @@ public class BumblezoneClient implements ClientModInitializer {
                                 livingEntity.isUsingItem() &&
                                 livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
         );
+
+        UpdateFallingBlockPacket.registerPacket();
     }
     
     public static void registerRenderLayers() {
