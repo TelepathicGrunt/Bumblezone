@@ -9,6 +9,7 @@
           "type": "minecraft:alternatives",
           "children": [
             {
+              "name": "the_bumblezone:honey_crystal",
               "type": "minecraft:item",
               "conditions": [
                 {
@@ -24,10 +25,10 @@
                     ]
                   }
                 }
-              ],
-              "name": "the_bumblezone:honey_crystal"
+              ]
             },
             {
+              "name": "the_bumblezone:honey_crystal_shards",
               "type": "minecraft:item",
               "functions": [
                 {
@@ -38,8 +39,7 @@
                 {
                   "function": "minecraft:explosion_decay"
                 }
-              ],
-              "name": "the_bumblezone:honey_crystal_shards"
+              ]
             }
           ]
         }
