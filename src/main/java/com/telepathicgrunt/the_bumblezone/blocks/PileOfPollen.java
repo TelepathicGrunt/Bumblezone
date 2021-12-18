@@ -162,7 +162,8 @@ public class PileOfPollen extends FallingBlock {
         if (blockState.is(this)) {
             int layerValue = blockState.getValue(LAYERS);
             return blockState.setValue(LAYERS, Math.min(8, layerValue + 1));
-        } else {
+        }
+        else {
             return super.getStateForPlacement(itemPlacementContext);
         }
     }
@@ -181,22 +182,6 @@ public class PileOfPollen extends FallingBlock {
     @Override
     public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
         return blockState.getValue(LAYERS);
-    }
-
-    @Override
-    public void tick(BlockState blockState, ServerLevel serverWorld, BlockPos blockPos, Random random) {
-        BlockState stateBelow = serverWorld.getBlockState(blockPos.below());
-        if(stateBelow.is(BzBlocks.PILE_OF_POLLEN.get())) {
-            if(stateBelow.getValue(LAYERS) == 8) {
-                return;
-            }
-            else {
-                serverWorld.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 2);
-                stackPollen(stateBelow, serverWorld, blockPos.below(), blockState);
-            }
-        }
-
-        super.tick(blockState, serverWorld, blockPos, random);
     }
 
     @Override
@@ -343,7 +328,7 @@ public class PileOfPollen extends FallingBlock {
         if(initialLayerValue < 8) {
             int layerToMax = (8 - initialLayerValue);
             lastSetState = blockState.setValue(LAYERS, initialLayerValue + Math.min(layerToMax, layersToAdd));
-            if(!world.isClientSide()) world.setBlock(blockPos, lastSetState, 3);
+            world.setBlock(blockPos, lastSetState, 3);
             layersToAdd -= layerToMax;
         }
 
@@ -355,7 +340,7 @@ public class PileOfPollen extends FallingBlock {
             // Stack on top of this pile
             if(layersToAdd > 0 && aboveState.isAir()) {
                 lastSetState = blockState.setValue(LAYERS, layersToAdd);
-                if(!world.isClientSide()) world.setBlock(blockPos.above(), blockState.setValue(LAYERS, layersToAdd), 3);
+                world.setBlock(blockPos.above(), blockState.setValue(LAYERS, layersToAdd), 3);
             }
 
             // Particles!
