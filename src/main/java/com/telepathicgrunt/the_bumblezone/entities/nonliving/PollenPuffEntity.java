@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
+import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -22,6 +23,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Panda;
+import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.projectile.Fireball;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
@@ -136,6 +138,11 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             if(this.getOwner() instanceof ServerPlayer)
                 BzCriterias.POLLEN_PUFF_FIREBALL_TRIGGER.trigger((ServerPlayer) this.getOwner());
         }
+        else if(entity instanceof FallingBlockEntity fallingBlockEntity && fallingBlockEntity.getBlockState().is(BzBlocks.PILE_OF_POLLEN)) {
+            BlockState fallingState = fallingBlockEntity.getBlockState();
+            int newLayer = Math.min(8, fallingState.getValue(PileOfPollen.LAYERS) + 1);
+            ((FallingBlockEntityAccessor)fallingBlockEntity).thebumblezone_setBlock(fallingState.setValue(PileOfPollen.LAYERS, newLayer));
+        }
     }
 
 
@@ -182,7 +189,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             BlockState belowSideState = this.level.getBlockState(impactSide.below());
             boolean belowSideStateHasCollision = !belowSideState.getCollisionShape(this.level, impactSide.below()).isEmpty();
 
-            if(sideState.is(pileOfPollen.getBlock()) && pileOfPollen.canSurvive(this.level, impactSide)) {
+            if(sideState.is(pileOfPollen.getBlock())) {
                 PileOfPollen.stackPollen(sideState, this.level, impactSide, pileOfPollen);
                 consumed = true;
             }
