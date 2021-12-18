@@ -32,6 +32,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
 public class PollenPuffEntity extends ThrowableItemProjectile {
@@ -166,17 +167,22 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 }
             }
         }
-        else if(blockstate.is(Blocks.HONEY_BLOCK) || blockstate.is(Blocks.SOUL_SAND) || (blockHitResult.getDirection() == Direction.UP && !blockstate.getFluidState().is(FluidTags.WATER)) || blockstate.isFaceSturdy(this.level, blockHitResult.getBlockPos(), blockHitResult.getDirection())) {
+        else if(blockstate.is(Blocks.HONEY_BLOCK) ||
+                blockstate.is(Blocks.SOUL_SAND) ||
+                blockstate.isFaceSturdy(this.level, blockHitResult.getBlockPos(), blockHitResult.getDirection()))
+        {
             BlockPos impactSide = blockHitResult.getBlockPos().relative(blockHitResult.getDirection());
             BlockState sideState = this.level.getBlockState(impactSide);
+            BlockState belowSideState = this.level.getBlockState(impactSide.below());
+            boolean belowSideStateHasCollision = !belowSideState.getCollisionShape(this.level, impactSide.below()).isEmpty();
             BlockState pileOfPollen = BzBlocks.PILE_OF_POLLEN.get().defaultBlockState();
 
-            if(sideState.isAir()) {
-                this.level.setBlock(impactSide, BzBlocks.PILE_OF_POLLEN.get().defaultBlockState(), 3);
+            if(sideState.is(pileOfPollen.getBlock()) && pileOfPollen.canSurvive(this.level, impactSide)) {
+                PileOfPollen.stackPollen(sideState, this.level, impactSide, BzBlocks.PILE_OF_POLLEN.get().defaultBlockState());
                 consumed = true;
             }
-            else if(sideState.is(pileOfPollen.getBlock()) && pileOfPollen.canSurvive(this.level, impactSide)) {
-                PileOfPollen.stackPollen(sideState, this.level, impactSide, BzBlocks.PILE_OF_POLLEN.get().defaultBlockState());
+            else if((!belowSideStateHasCollision && sideState.isAir()) || (belowSideStateHasCollision && pileOfPollen.canSurvive(this.level, impactSide))) {
+                this.level.setBlock(impactSide, BzBlocks.PILE_OF_POLLEN.get().defaultBlockState(), 3);
                 consumed = true;
             }
         }

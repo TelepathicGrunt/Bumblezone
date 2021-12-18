@@ -83,9 +83,6 @@ public class HoneycombBrood extends ProperFacingBlock {
     @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState thisBlockState, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
-        if(!world.isClientSide()) {
-            IEntityPosAndDim capability = playerEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
-        }
 
         //VANILLA COMPAT
         /*
