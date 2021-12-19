@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
-import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.material.Material;
 
 public class BzPlacingUtils
 {
@@ -14,9 +14,9 @@ public class BzPlacingUtils
 	 * @param position - x/z position to use
 	 * @return - height of the first non-air block
 	 */
-	public static int topOfSurfaceBelowHeight(IWorld world, int startHeight, int minHeight, BlockPos position)
+	public static int topOfSurfaceBelowHeight(LevelAccessor world, int startHeight, int minHeight, BlockPos position)
 	{
-		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position.getX(), startHeight, position.getZ());
+		BlockPos.MutableBlockPos blockpos$Mutable = new BlockPos.MutableBlockPos(position.getX(), startHeight, position.getZ());
 
 		//if height is inside a non-air block, move down until we reached an air block
 		while (blockpos$Mutable.getY() > minHeight)
@@ -51,9 +51,9 @@ public class BzPlacingUtils
 	 * @param position - x/z position to use
 	 * @return - height of the first non-air block
 	 */
-	public static int topOfSurfaceBelowHeightThroughWater(IWorld world, int startHeight, int minHeight, BlockPos position)
+	public static int topOfSurfaceBelowHeightThroughWater(LevelAccessor world, int startHeight, int minHeight, BlockPos position)
 	{
-		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position.getX(), startHeight, position.getZ());
+		BlockPos.MutableBlockPos blockpos$Mutable = new BlockPos.MutableBlockPos(position.getX(), startHeight, position.getZ());
 
 		//if height is inside a non-solid block, move down until we reached an air block
 		while (blockpos$Mutable.getY() > minHeight)
@@ -87,9 +87,9 @@ public class BzPlacingUtils
 	 * @param position - x/z position to use
 	 * @return - height of the first solid block
 	 */
-	public static int topOfCeilingAboveHeight(IWorld world, int startHeight, BlockPos position)
+	public static int topOfCeilingAboveHeight(LevelAccessor world, int startHeight, BlockPos position)
 	{
-		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position.getX(), startHeight, position.getZ());
+		BlockPos.MutableBlockPos blockpos$Mutable = new BlockPos.MutableBlockPos(position.getX(), startHeight, position.getZ());
 
 		// if height is inside a non-air block, move up until we reached an air block
 		while (blockpos$Mutable.getY() < 255)
@@ -125,9 +125,9 @@ public class BzPlacingUtils
 	 * @param position - x/z position to use
 	 * @return - height of the first solid block
 	 */
-	public static int topOfUnderwaterSurfaceBelowHeight(IWorld world, int startHeight, BlockPos position)
+	public static int topOfUnderwaterSurfaceBelowHeight(LevelAccessor world, int startHeight, BlockPos position)
 	{
-		BlockPos.Mutable blockpos$Mutable = new BlockPos.Mutable(position.getX(), startHeight, position.getZ());
+		BlockPos.MutableBlockPos blockpos$Mutable = new BlockPos.MutableBlockPos(position.getX(), startHeight, position.getZ());
 
 		//If height is inside a non-air/water block, move down until we reached an air/waterlogged block
 		//Treats waterlogged wood as non-waterlogged blocks.

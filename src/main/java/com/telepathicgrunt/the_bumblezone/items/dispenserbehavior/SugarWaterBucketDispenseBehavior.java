@@ -1,17 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 
-import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.dispenser.IPosition;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockSource;
+import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.DispenserBlock;
 
 
 public class SugarWaterBucketDispenseBehavior extends DefaultDispenseItemBehavior {
@@ -20,27 +17,19 @@ public class SugarWaterBucketDispenseBehavior extends DefaultDispenseItemBehavio
     /**
      * Dispense the specified stack, play the dispense sound and spawn particles.
      */
-    public ItemStack execute(IBlockSource source, ItemStack stack) {
+    public ItemStack execute(BlockSource source, ItemStack stack) {
         BucketItem bucketitem = (BucketItem) stack.getItem();
-        IPosition iposition = DispenserBlock.getDispensePosition(source);
+        Position iposition = DispenserBlock.getDispensePosition(source);
         BlockPos position = new BlockPos(iposition);
-        ServerWorld world = source.getLevel();
-        BlockState blockstate = world.getBlockState(position);
+        ServerLevel world = source.getLevel();
 
-        if (bucketitem.emptyBucket(null, world, position, null)) {
+        if (bucketitem.emptyContents(null, world, position, null)) {
 
-            bucketitem.checkExtraContent(world, stack, position);
-            return new ItemStack(Items.BUCKET);
-        }
-        else if(blockstate.getBlock() == BzBlocks.HONEY_CRYSTAL.get() && !blockstate.getValue(BlockStateProperties.WATERLOGGED)) {
-
-            world.setBlockAndUpdate(position, BzBlocks.HONEY_CRYSTAL.get().defaultBlockState()
-                    .setValue(BlockStateProperties.FACING, blockstate.getValue(BlockStateProperties.FACING))
-                    .setValue(BlockStateProperties.WATERLOGGED, true));
+            bucketitem.checkExtraContent(null, world, stack, position);
             return new ItemStack(Items.BUCKET);
         }
         else {
-            return this.DROP_ITEM_BEHAVIOR.dispense(source, stack);
+            return DROP_ITEM_BEHAVIOR.dispense(source, stack);
         }
     }
 }

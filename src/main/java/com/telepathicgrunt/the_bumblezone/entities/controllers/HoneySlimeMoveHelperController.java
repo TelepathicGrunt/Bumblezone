@@ -1,10 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.entities.controllers;
 
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.MovementController;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
 
-public class HoneySlimeMoveHelperController extends MovementController {
+public class HoneySlimeMoveHelperController extends MoveControl {
     /**
      * Special thanks to Bagel for the Honey Slime code and texture!
      */
@@ -17,7 +17,7 @@ public class HoneySlimeMoveHelperController extends MovementController {
     public HoneySlimeMoveHelperController(HoneySlimeEntity slimeIn) {
         super(slimeIn);
         this.slime = slimeIn;
-        this.targetYaw = 180.0F * slimeIn.yRot / (float) Math.PI;
+        this.targetYaw = 180.0F * slimeIn.getYRot() / (float) Math.PI;
     }
 
     public void setDirection(float yRotIn, boolean aggressive) {
@@ -32,17 +32,17 @@ public class HoneySlimeMoveHelperController extends MovementController {
 
     public void setSpeed(double speedIn) {
         this.speedModifier = speedIn;
-        this.operation = MovementController.Action.MOVE_TO;
+        this.operation = MoveControl.Operation.MOVE_TO;
     }
 
     public void tick() {
-        this.mob.yRot = this.rotlerp(this.mob.yRot, this.targetYaw, 90.0F);
-        this.mob.yHeadRot = this.mob.yRot;
-        this.mob.yBodyRot = this.mob.yRot;
-        if (this.operation != MovementController.Action.MOVE_TO) {
+        this.mob.setYRot(this.rotlerp(this.mob.getYRot(), this.targetYaw, 90.0F));
+        this.mob.yHeadRot = this.mob.getYRot();
+        this.mob.yBodyRot = this.mob.getYRot();
+        if (this.operation != MoveControl.Operation.MOVE_TO) {
             this.mob.setZza(0.0F);
         } else {
-            this.operation = MovementController.Action.WAIT;
+            this.operation = MoveControl.Operation.WAIT;
             if (this.mob.isOnGround()) {
                 this.mob.setSpeed((float) (this.speedModifier * this.mob.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue()));
                 if (this.jumpDelay-- <= 0) {

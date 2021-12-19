@@ -1,50 +1,49 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.mixin.blocks.DefaultDispenseItemBehaviorInvoker;
-import com.telepathicgrunt.the_bumblezone.mixin.world.BiomeGenerationSettingsAccessor;
-import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
-import net.minecraft.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.dispenser.IDispenseItemBehavior;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.merchant.villager.VillagerTrades;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.MerchantOffer;
-import net.minecraft.util.Hand;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
+
+import static java.util.Objects.requireNonNull;
 
 public class GeneralUtils {
 
     private static int ACTIVE_ENTITIES = 0;
 
-    public static void updateEntityCount(ServerWorld world){
-        List<Entity> entitiesList = world.getEntities(null, (entity) -> true);
-        ACTIVE_ENTITIES = entitiesList.size();
+    public static void updateEntityCount(ServerLevel world) {
+
+        // If iterable is a collection, just get size directly
+        if (world.getAllEntities() instanceof Collection) {
+            ACTIVE_ENTITIES = ((Collection<?>) world.getAllEntities()).size();
+            return;
+        }
+
+        // If iterable isn't a collection, we have to manually count how many entities there are
+        int counter = 0;
+        for (Object ignored : world.getAllEntities()) {
+            counter++;
+        }
+        ACTIVE_ENTITIES = counter;
     }
 
-    public static int getEntityCountInBz(){
+    public static int getEntityCountInBz() {
         return ACTIVE_ENTITIES;
     }
+
 
     /////////////////////////////
 
@@ -67,48 +66,34 @@ public class GeneralUtils {
         return rlList.get(index).getFirst();
     }
 
-    /**
-     * Helper method to make WB biomes mutable to add stuff to it later
-     */
-    public static void makeBiomeMutable(Biome biome){
-        // Make the structure and features list mutable for modification late
-        List<List<Supplier<ConfiguredFeature<?, ?>>>> tempFeature = ((BiomeGenerationSettingsAccessor)biome.getGenerationSettings()).thebumblezone_getFeatures();
-        List<List<Supplier<ConfiguredFeature<?, ?>>>> mutableGenerationStages = new ArrayList<>();
+    ////////////////
 
-        // Fill in generation stages so there are at least 10 or else Minecraft crashes.
-        // (we need all stages for adding features/structures to the right stage too)
-        for(int currentStageIndex = 0; currentStageIndex < Math.max(GenerationStage.Decoration.values().length, tempFeature.size()); currentStageIndex++){
-            if(currentStageIndex >= tempFeature.size()){
-                mutableGenerationStages.add(new ArrayList<>());
-            }else{
-                mutableGenerationStages.add(new ArrayList<>(tempFeature.get(currentStageIndex)));
+    // Source: https://dzone.com/articles/be-lazy-with-java-8
+    public static final class Lazy<T> {
+
+        private volatile T value;
+
+        public T getOrCompute(Supplier<T> supplier) {
+            final T result = value; // Just one volatile read
+            return result == null ? maybeCompute(supplier) : result;
+        }
+
+        private synchronized T maybeCompute(Supplier<T> supplier) {
+            if (value == null) {
+                value = requireNonNull(supplier.get());
             }
-        }
-
-        // Make the Structure and GenerationStages (features) list mutable for modification later
-        ((BiomeGenerationSettingsAccessor)biome.getGenerationSettings()).thebumblezone_setFeatures(mutableGenerationStages);
-    }
-
-    // If it instanceof DefaultDispenseItemBehavior, call dispenseStack directly to avoid
-    // playing particles and sound twice due to dispense method having that by default.
-    public static ItemStack dispenseStackProperly(IBlockSource source, ItemStack stack, IDispenseItemBehavior defaultDispenseBehavior) {
-
-        if (defaultDispenseBehavior instanceof DefaultDispenseItemBehavior) {
-            return ((DefaultDispenseItemBehaviorInvoker) defaultDispenseBehavior).thebumblezone_invokeExecute(source, stack);
-        }
-        else {
-            // Fallback to dispense as someone chose to make a custom class without dispenseStack.
-            return defaultDispenseBehavior.dispense(source, stack);
+            return value;
         }
     }
+
 
     //////////////////////////////////////////
 
     /**
-     * For doing basic trades without forge's implementation.
+     * For doing basic trades.
      * Very short and barebone to what I want
      */
-    public static class BasicItemTrade implements VillagerTrades.ITrade {
+    public static class BasicItemTrade implements VillagerTrades.ItemListing  {
         private final Item itemToTrade;
         private final Item itemToReceive;
         private final int amountToGive;
@@ -117,11 +102,11 @@ public class GeneralUtils {
         protected final int experience;
         protected final float multiplier;
 
-        public BasicItemTrade(Item itemToTrade, int amountToGive, Item itemToReceive, int amountToReceive){
+        public BasicItemTrade(Item itemToTrade, int amountToGive, Item itemToReceive, int amountToReceive) {
             this(itemToTrade, amountToGive, itemToReceive, amountToReceive, 20, 2, 0.05F);
         }
 
-        public BasicItemTrade(Item itemToTrade, int amountToGive, Item itemToReceive, int amountToReceive, int maxUses, int experience, float multiplier){
+        public BasicItemTrade(Item itemToTrade, int amountToGive, Item itemToReceive, int amountToReceive, int maxUses, int experience, float multiplier) {
             this.itemToTrade = itemToTrade;
             this.itemToReceive = itemToReceive;
             this.amountToGive = amountToGive;
@@ -139,53 +124,45 @@ public class GeneralUtils {
         }
     }
 
+    ///////////////////////
+
+    public static final List<BlockState> VANILLA_CANDLES = ImmutableList.of(
+            Blocks.CANDLE.defaultBlockState(),
+            Blocks.CYAN_CANDLE.defaultBlockState(),
+            Blocks.BLACK_CANDLE.defaultBlockState(),
+            Blocks.BLUE_CANDLE.defaultBlockState(),
+            Blocks.BROWN_CANDLE.defaultBlockState(),
+            Blocks.GRAY_CANDLE.defaultBlockState(),
+            Blocks.GREEN_CANDLE.defaultBlockState(),
+            Blocks.LIGHT_BLUE_CANDLE.defaultBlockState(),
+            Blocks.LIGHT_GRAY_CANDLE.defaultBlockState(),
+            Blocks.LIME_CANDLE.defaultBlockState(),
+            Blocks.MAGENTA_CANDLE.defaultBlockState(),
+            Blocks.ORANGE_CANDLE.defaultBlockState(),
+            Blocks.PINK_CANDLE.defaultBlockState(),
+            Blocks.PURPLE_CANDLE.defaultBlockState(),
+            Blocks.RED_CANDLE.defaultBlockState(),
+            Blocks.WHITE_CANDLE.defaultBlockState(),
+            Blocks.YELLOW_CANDLE.defaultBlockState()
+    );
+
     //////////////////////////////////////////////
 
     /**
      * For giving the player an item properly into their inventory
      */
-    public static void givePlayerItem(PlayerEntity playerEntity, Hand hand, ItemStack itemstack, boolean giveContainerItem) {
-        if(giveContainerItem && !itemstack.hasContainerItem()) return;
+    public static void givePlayerItem(Player playerEntity, InteractionHand hand, ItemStack itemstack, boolean giveContainerItem) {
+        if(giveContainerItem && !itemstack.getItem().hasCraftingRemainingItem()) return;
 
-        ItemStack itemToGive = giveContainerItem ? itemstack.getContainerItem() : itemstack;
+        ItemStack itemToGive = giveContainerItem ? itemstack.getItem().getCraftingRemainingItem().getDefaultInstance() : itemstack;
         if (itemstack.isEmpty()) {
             // places result item in hand
             playerEntity.setItemInHand(hand, itemToGive);
         }
         // places result item in inventory
-        else if (!playerEntity.inventory.add(itemToGive)) {
+        else if (!playerEntity.getInventory().add(itemToGive)) {
             // drops result item if inventory is full
             playerEntity.drop(itemToGive, false);
         }
-    }
-
-    //////////////////////////////////////////////
-    @CapabilityInject(IFluidHandlerItem.class)
-    static Capability<IFluidHandlerItem> FLUID_HANDLER_ITEM_CAPABILITY = null;
-
-    public static boolean hasHoneyFluid(ItemStack itemstack) {
-        return BzModCompatibilityConfigs.allowHoneyFluidTanksFeedingCompat.get() &&
-                FluidUtil.getFluidContained(itemstack).orElse(FluidStack.EMPTY).getFluid().is(BzFluidTags.HONEY_FLUID);
-    }
-
-    public static boolean hasLargeAmountOfHoneyFluid(ItemStack itemstack) {
-        if(!BzModCompatibilityConfigs.allowHoneyFluidTanksFeedingCompat.get())
-            return false;
-
-        AtomicBoolean lotsOfHoney = new AtomicBoolean(false);
-        itemstack.getCapability(FLUID_HANDLER_ITEM_CAPABILITY).ifPresent(
-            cap -> {
-                for(int tankIndex = 0; tankIndex < cap.getTanks(); tankIndex++) {
-                    FluidStack fluidStack = cap.getFluidInTank(tankIndex);
-                    // Cannot do simulated drain because bucket items require an exact 1000 drain and other people could make items
-                    // that require a drain of 1500 which would make a drain of 1000 fail. This gets true amount of fluid always.
-                    if(fluidStack.getFluid().is(BzFluidTags.HONEY_FLUID) && fluidStack.getAmount() >= 1000) {
-                        lotsOfHoney.set(true);
-                        break;
-                    }
-                }
-            }
-        );
-        return lotsOfHoney.get();
     }
 }

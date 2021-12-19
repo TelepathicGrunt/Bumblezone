@@ -2,32 +2,35 @@ package com.telepathicgrunt.the_bumblezone.fluids;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.Item;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.StateContainer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 import java.util.Random;
 
-public abstract class SugarWaterFluid extends ForgeFlowingFluid {
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.LEVEL_FLOWING;
+
+
+public abstract class SugarWaterFluid extends ForgeFlowingFluid  {
 
     protected SugarWaterFluid(Properties properties) {
         super(properties);
@@ -49,13 +52,13 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid {
     }
 
     @Override
-    public void randomTick(World world, BlockPos position, FluidState state, Random random) {
+    public void randomTick(Level world, BlockPos position, FluidState state, Random random) {
         //only attempts to grow sugar cane 50% of the time.
         if (random.nextBoolean() || !world.hasChunksAt(position, position))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
 
         //check one of the spot next to sugar water for sugar cane to grow
-        BlockPos.Mutable blockPos = new BlockPos.Mutable().set(position.above());
+        BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos().set(position.above());
         blockPos.move(Direction.from2DDataValue(random.nextInt(4)));
         BlockState blockstate = world.getBlockState(blockPos);
 
@@ -78,7 +81,7 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid {
 
 
     @Override
-    public void animateTick(World worldIn, BlockPos pos, FluidState state, Random random) {
+    public void animateTick(Level worldIn, BlockPos pos, FluidState state, Random random) {
         if (!state.isSource() && !state.getValue(FALLING)) {
             if (random.nextInt(64) == 0) {
                 worldIn.playLocalSound(
@@ -86,7 +89,7 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid {
                         (double) pos.getY() + 0.5D,
                         (double) pos.getZ() + 0.5D,
                         SoundEvents.WATER_AMBIENT,
-                        SoundCategory.BLOCKS,
+                        SoundSource.BLOCKS,
                         random.nextFloat() * 0.25F + 0.75F,
                         random.nextFloat() + 0.5F, false);
             }
@@ -103,7 +106,7 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid {
 
 
     @Override
-    public IParticleData getDripParticle() {
+    public ParticleOptions getDripParticle() {
         return ParticleTypes.DRIPPING_WATER;
     }
 
@@ -115,7 +118,7 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid {
 
 
     @Override
-    public int getTickDelay(IWorldReader world) {
+    public int getTickDelay(LevelReader world) {
         return 5;
     }
 
@@ -125,18 +128,18 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid {
     }
 
     @Override
-    protected void beforeDestroyingBlock(IWorld world, BlockPos pos, BlockState state) {
-        TileEntity blockEntity = state.getBlock().isEntityBlock() ? world.getBlockEntity(pos) : null;
+    protected void beforeDestroyingBlock(LevelAccessor world, BlockPos pos, BlockState state) {
+        BlockEntity blockEntity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
         Block.dropResources(state, world, pos, blockEntity);
     }
 
     @Override
-    public int getSlopeFindDistance(IWorldReader world) {
+    public int getSlopeFindDistance(LevelReader world) {
         return 4;
     }
 
     @Override
-    public int getDropOff(IWorldReader world) {
+    public int getDropOff(LevelReader world) {
         return 1;
     }
 
@@ -146,13 +149,13 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid {
     }
 
     @Override
-    public boolean canBeReplacedWith(FluidState state, IBlockReader world, BlockPos pos, Fluid fluid, Direction direction) {
+    public boolean canBeReplacedWith(FluidState state, BlockGetter world, BlockPos pos, Fluid fluid, Direction direction) {
         return direction == Direction.DOWN && !fluid.is(FluidTags.WATER);
     }
 
     @Override
     public BlockState createLegacyBlock(FluidState state) {
-        return BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState().setValue(FlowingFluidBlock.LEVEL, getLegacyLevel(state));
+        return BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState().setValue(LiquidBlock.LEVEL, getLegacyLevel(state));
     }
 
     public static class Flowing extends SugarWaterFluid {
@@ -161,14 +164,14 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid {
             registerDefaultState(getStateDefinition().any().setValue(LEVEL, 7));
         }
 
-        protected void createFluidStateDefinition(StateContainer.Builder<Fluid, FluidState> builder) {
+        protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder) {
             super.createFluidStateDefinition(builder);
-            builder.add(LEVEL);
+            builder.add(LEVEL_FLOWING);
         }
 
         @Override
         public int getAmount(FluidState state) {
-            return state.getValue(LEVEL);
+            return state.getValue(LEVEL_FLOWING);
         }
 
         @Override
@@ -184,14 +187,8 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid {
 
     public static class Source extends SugarWaterFluid {
 
-        public Source(Properties properties) {
+        public Source(ForgeFlowingFluid.Properties properties) {
             super(properties);
-            registerDefaultState(getStateDefinition().any().setValue(LEVEL, 7));
-        }
-
-        protected void createFluidStateDefinition(StateContainer.Builder<Fluid, FluidState> builder) {
-            super.createFluidStateDefinition(builder);
-            builder.add(LEVEL);
         }
 
         @Override

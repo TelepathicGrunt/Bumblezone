@@ -5,10 +5,9 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import net.minecraft.client.renderer.entity.BeeRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.animal.Bee;
 
 import java.util.List;
 import java.util.Locale;
@@ -20,18 +19,18 @@ public class BeeVariantRenderer extends BeeRenderer {
     // https://github.com/VazkiiMods/Quark/blob/master/src/main/java/vazkii/quark/content/client/render/variant/VariantBeeRenderer.java
 
     private static final List<String> VARIANTS = ImmutableList.of("transbee", "asexualbee");
-    public static IRenderFactory<? super BeeEntity> OLD_BEE_RENDER_FACTORY = null;
-    private EntityRenderer<? super BeeEntity> OLD_BEE_RENDER = null;
+    public static EntityRendererProvider<? super Bee> OLD_BEE_RENDER_FACTORY = null;
+    private EntityRenderer<? super Bee> OLD_BEE_RENDER = null;
 
-    public BeeVariantRenderer(EntityRendererManager renderManagerIn) {
-        super(renderManagerIn);
+    public BeeVariantRenderer(EntityRendererProvider.Context context) {
+        super(context);
         if(OLD_BEE_RENDER_FACTORY != null) {
-            OLD_BEE_RENDER = OLD_BEE_RENDER_FACTORY.createRenderFor(renderManagerIn);
+            OLD_BEE_RENDER = OLD_BEE_RENDER_FACTORY.create(context);
         }
     }
 
     @Override
-    public ResourceLocation getTextureLocation(BeeEntity entity) {
+    public ResourceLocation getTextureLocation(Bee entity) {
         UUID id = entity.getUUID();
         long most = id.getMostSignificantBits();
 

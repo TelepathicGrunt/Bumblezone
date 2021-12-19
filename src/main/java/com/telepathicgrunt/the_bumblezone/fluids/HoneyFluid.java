@@ -6,33 +6,34 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.Item;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.potion.EffectUtils;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectUtil;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.Random;
 
@@ -44,6 +45,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
     protected HoneyFluid(Properties properties) {
         super(properties);
     }
+
 
     @Override
     public Fluid getFlowing() {
@@ -61,7 +63,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
     }
 
     @Override
-    public void animateTick(World worldIn, BlockPos pos, FluidState state, Random random) {
+    public void animateTick(Level worldIn, BlockPos pos, FluidState state, Random random) {
         if (random.nextInt(82) == 0) {
             worldIn.addParticle(BzParticles.HONEY_PARTICLE.get(),
                     pos.getX() + random.nextFloat(),
@@ -74,7 +76,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
     }
 
     @Override
-    public IParticleData getDripParticle() {
+    public ParticleOptions getDripParticle() {
         return BzParticles.HONEY_PARTICLE.get();
     }
 
@@ -84,19 +86,23 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
     }
 
     @Override
-    protected void beforeDestroyingBlock(IWorld world, BlockPos pos, BlockState state) {
-        TileEntity blockEntity = state.getBlock().isEntityBlock() ? world.getBlockEntity(pos) : null;
+    protected void beforeDestroyingBlock(LevelAccessor world, BlockPos pos, BlockState state) {
+        BlockEntity blockEntity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
         Block.dropResources(state, world, pos, blockEntity);
     }
 
     @Override
-    public int getSlopeFindDistance(IWorldReader world) {
+    public int getSlopeFindDistance(LevelReader world) {
         return 4;
     }
 
     @Override
-    public int getDropOff(IWorldReader world) {
+    public int getDropOff(LevelReader world) {
         return 1;
+    }
+
+    public int getTickDelay(LevelReader world) {
+        return 30;
     }
 
     @Override
@@ -105,21 +111,21 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
     }
 
     @Override
-    public boolean canBeReplacedWith(FluidState state, IBlockReader world, BlockPos pos, Fluid fluid, Direction direction) {
+    public boolean canBeReplacedWith(FluidState state, BlockGetter world, BlockPos pos, Fluid fluid, Direction direction) {
         return direction == Direction.DOWN && !fluid.is(FluidTags.WATER);
     }
 
     @Override
     public BlockState createLegacyBlock(FluidState state) {
         return BzFluids.HONEY_FLUID_BLOCK.get().defaultBlockState()
-                .setValue(FlowingFluidBlock.LEVEL, state.isSource() ? 0 : state.getAmount())
+                .setValue(LiquidBlock.LEVEL, state.isSource() ? 0 : state.getAmount())
                 .setValue(BOTTOM_LEVEL, state.isSource() ? 0 : state.getValue(BOTTOM_LEVEL))
                 .setValue(FALLING, !state.isSource() && state.getValue(FALLING))
                 .setValue(ABOVE_FLUID, state.getValue(ABOVE_FLUID));
     }
 
     @Override
-    public void tick(World world, BlockPos blockPos, FluidState fluidState) {
+    public void tick(Level world, BlockPos blockPos, FluidState fluidState) {
         boolean justFilledBottom = false;
         // removes self if not source and is not fed.
         // otherwise, schedule fluid tick and update flow.
@@ -137,7 +143,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
                 fluidState = newFluidState;
                 BlockState blockstate = newFluidState.createLegacyBlock();
                 world.setBlock(blockPos, blockstate, 2);
-                world.getLiquidTicks().scheduleTick(blockPos, newFluidState.getType(), spreadDelay);
+                world.scheduleTick(blockPos, newFluidState.getType(), spreadDelay);
                 world.updateNeighborsAt(blockPos, blockstate.getBlock());
             }
         }
@@ -170,7 +176,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
     }
 
     @Override
-    protected void spread(IWorld world, BlockPos blockPos, FluidState fluidState) {
+    protected void spread(LevelAccessor world, BlockPos blockPos, FluidState fluidState) {
         if (!fluidState.isEmpty()) {
             int bottomFluidLevel = fluidState.getValue(BOTTOM_LEVEL);
             if(bottomFluidLevel == 0) {
@@ -191,7 +197,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
         }
     }
 
-    protected void spreadDown(IWorld world, BlockPos blockPos, BlockState blockState, Direction direction, FluidState fluidState) {
+    protected void spreadDown(LevelAccessor world, BlockPos blockPos, BlockState blockState, Direction direction, FluidState fluidState) {
         if (!blockState.isAir()) {
             this.beforeDestroyingBlock(world, blockPos, blockState);
         }
@@ -199,7 +205,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
     }
 
     @Override
-    protected FluidState getNewLiquid(IWorldReader worldReader, BlockPos blockPos, BlockState blockState) {
+    protected FluidState getNewLiquid(LevelReader worldReader, BlockPos blockPos, BlockState blockState) {
         int lowestNeighboringFluidLevel = blockState.getBlock() instanceof HoneyFluidBlock ? blockState.getValue(BOTTOM_LEVEL) : HoneyFluidBlock.maxBottomLayer;
         int currentFluidLevel = blockState.getBlock() instanceof HoneyFluidBlock ? blockState.getValue(HoneyFluidBlock.LEVEL) : 0;
         int highestNeighboringFluidLevel = currentFluidLevel;
@@ -211,12 +217,12 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
             BlockState sideBlockState = worldReader.getBlockState(sideBlockPos);
             FluidState sideFluidState = sideBlockState.getFluidState();
             if (sideFluidState.getType().isSame(this) && ((FlowingFluidAccessor)this).thebumblezone_callCanPassThroughWall(direction, worldReader, blockPos, blockState, sideBlockPos, sideBlockState)) {
-                if (sideFluidState.isSource() && net.minecraftforge.event.ForgeEventFactory.canCreateFluidSource(worldReader, sideBlockPos, sideBlockState, this.canConvertToSource())) {
+                if (sideFluidState.isSource()) {
                     ++neighboringFluidSource;
                 }
 
                 highestNeighboringFluidLevel = Math.max(highestNeighboringFluidLevel, sideFluidState.getAmount());
-                if(sideFluidState.getType() instanceof HoneyFluid){
+                if(sideFluidState.getType() instanceof HoneyFluid) {
                     lowestNeighboringFluidLevel = Math.min(lowestNeighboringFluidLevel, sideFluidState.isSource() ? 0 : sideFluidState.getValue(BOTTOM_LEVEL));
                 }
             }
@@ -253,7 +259,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
     }
 
     @Override
-    public float getHeight(FluidState fluidState, IBlockReader world, BlockPos blockPos) {
+    public float getHeight(FluidState fluidState, BlockGetter world, BlockPos blockPos) {
         BlockPos aboveBlockPos = blockPos.above();
         BlockState aboveBlockState = world.getBlockState(aboveBlockPos);
         FluidState aboveFluidState = aboveBlockState.getFluidState();
@@ -265,7 +271,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
         return fluidState.getValue(ABOVE_FLUID) || aboveFluidIsThisFluid ? 1.0f : fluidState.getOwnHeight();
     }
 
-    public static float getHoneyFluidHeight(IBlockReader world, BlockPos blockPos, Fluid fluid) {
+    public static float getHoneyFluidHeight(BlockGetter world, BlockPos blockPos, Fluid fluid) {
         float totalHeight = 0.0F;
         int checkedSides = 0;
         int fluidSides = 0;
@@ -296,11 +302,13 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
                     if (fluidStateHeight >= 0.8F) {
                         totalHeight += fluidStateHeight * 10.0F;
                         checkedSides += 10;
-                    } else {
+                    }
+                    else {
                         totalHeight += fluidStateHeight;
                         checkedSides++;
                     }
-                } else if (!world.getBlockState(currentBlockPos).getMaterial().isSolid()) {
+                }
+                else if (!world.getBlockState(currentBlockPos).getMaterial().isSolid()) {
                     checkedSides++;
                 }
             }
@@ -317,7 +325,16 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
         return totalHeight / (float)checkedSides;
     }
 
-    public static boolean shouldNotCullSide(IBlockReader world, BlockPos blockPos, Direction direction, FluidState currentFluidState) {
+    // Used in FluidRendererMixin
+    public static double setBottomFluidHeight(double bottomY, BlockPos blockPos, FluidState fluidState) {
+        if(fluidState.is(BzFluidTags.BZ_HONEY_FLUID)) {
+            double blockY = (blockPos.getY() & 15);
+            return blockY + (fluidState.isSource() ? 0f : fluidState.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8f);
+        }
+        return bottomY;
+    }
+
+    public static boolean shouldNotCullSide(BlockGetter world, BlockPos blockPos, Direction direction, FluidState currentFluidState) {
         if(direction == Direction.UP) {
             FluidState aboveFluidState = world.getBlockState(blockPos.above()).getFluidState();
             return aboveFluidState.is(BzFluidTags.BZ_HONEY_FLUID) && !aboveFluidState.isSource() &&
@@ -341,10 +358,10 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
     }
 
     public static void breathing(LivingEntity thisEntity) {
-        boolean invulnerable = thisEntity instanceof PlayerEntity && ((PlayerEntity)thisEntity).abilities.invulnerable;
+        boolean invulnerable = thisEntity instanceof Player && ((Player)thisEntity).getAbilities().invulnerable;
         if (thisEntity.isAlive()) {
             if (thisEntity.isEyeInFluid(BzFluidTags.BZ_HONEY_FLUID)) {
-                if (!thisEntity.canBreatheUnderwater() && !EffectUtils.hasWaterBreathing(thisEntity) && !invulnerable) {
+                if (!thisEntity.canBreatheUnderwater() && !MobEffectUtil.hasWaterBreathing(thisEntity) && !invulnerable) {
                     thisEntity.setAirSupply(
                         decreaseAirSupply(
                             thisEntity.getAirSupply() - 4, // -4 to counteract the +4 for rebreathing as vanilla thinks the honey fluid is air
@@ -353,20 +370,20 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
                     );
                     if (thisEntity.getAirSupply() == -20) {
                         thisEntity.setAirSupply(0);
-                        Vector3d vector3d = thisEntity.getDeltaMovement();
+                        Vec3 vec3 = thisEntity.getDeltaMovement();
 
                         for(int i = 0; i < 8; ++i) {
                             double d2 = thisEntity.level.random.nextDouble() - thisEntity.level.random.nextDouble();
                             double d3 = thisEntity.level.random.nextDouble() - thisEntity.level.random.nextDouble();
                             double d4 = thisEntity.level.random.nextDouble() - thisEntity.level.random.nextDouble();
-                            thisEntity.level.addParticle(BzParticles.HONEY_PARTICLE.get(), thisEntity.getX() + d2, thisEntity.getY() + d3, thisEntity.getZ() + d4, vector3d.x, vector3d.y, vector3d.z);
+                            thisEntity.level.addParticle(BzParticles.HONEY_PARTICLE.get(), thisEntity.getX() + d2, thisEntity.getY() + d3, thisEntity.getZ() + d4, vec3.x, vec3.y, vec3.z);
                         }
 
                         thisEntity.hurt(DamageSource.DROWN, 2.0F);
                     }
                 }
 
-                if (!thisEntity.level.isClientSide() && thisEntity.isPassenger() && thisEntity.getVehicle() != null && !thisEntity.getVehicle().canBeRiddenInWater(thisEntity)) {
+                if (!thisEntity.level.isClientSide() && thisEntity.isPassenger() && thisEntity.getVehicle() != null && !thisEntity.getVehicle().rideableUnderWater()) {
                     thisEntity.stopRiding();
                 }
             }
@@ -388,7 +405,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
             );
         }
 
-        protected void createFluidStateDefinition(StateContainer.Builder<Fluid, FluidState> builder) {
+        protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder) {
             super.createFluidStateDefinition(builder);
             builder.add(LEVEL);
             builder.add(BOTTOM_LEVEL);
@@ -418,7 +435,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
             registerDefaultState(getStateDefinition().any().setValue(ABOVE_FLUID, false));
         }
 
-        protected void createFluidStateDefinition(StateContainer.Builder<Fluid, FluidState> builder) {
+        protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder) {
             super.createFluidStateDefinition(builder);
             builder.add(ABOVE_FLUID);
         }

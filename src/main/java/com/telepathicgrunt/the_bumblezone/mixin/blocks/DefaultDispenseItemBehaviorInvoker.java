@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
-import net.minecraft.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.BlockSource;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
@@ -10,5 +10,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface DefaultDispenseItemBehaviorInvoker {
 
     @Invoker("execute")
-    ItemStack thebumblezone_invokeExecute(IBlockSource p_82487_1_, ItemStack p_82487_2_);
+    ItemStack thebumblezone_invokeDispenseSilently(BlockSource pointer, ItemStack stack);
 }
+

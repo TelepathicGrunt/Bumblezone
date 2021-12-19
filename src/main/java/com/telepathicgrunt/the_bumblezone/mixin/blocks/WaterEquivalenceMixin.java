@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.WaterFluid;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.WaterFluid;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,5 +18,4 @@ public class WaterEquivalenceMixin {
         if(fluid == BzFluids.SUGAR_WATER_FLUID.get() || fluid == BzFluids.SUGAR_WATER_FLUID_FLOWING.get())
             cir.setReturnValue(true);
     }
-
 }

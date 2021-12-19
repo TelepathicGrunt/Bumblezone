@@ -1,12 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
+
 
 public class SugarInfusedCobblestone extends Block {
 
     public SugarInfusedCobblestone() {
-        super(AbstractBlock.Properties.of(Material.STONE).strength(2.0F, 6.0F));
+        super(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.0F, 6.0F));
     }
 }

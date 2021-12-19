@@ -1,34 +1,38 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.Vec3;
 
-public class HoneyFluidBlock extends FlowingFluidBlock {
+import java.util.function.Supplier;
+
+public class HoneyFluidBlock extends LiquidBlock {
 
     public static final int maxBottomLayer = 8;
     public static final IntegerProperty BOTTOM_LEVEL = IntegerProperty.create("bottom_level", 0, maxBottomLayer);
     public static final BooleanProperty FALLING = BlockStateProperties.FALLING;
     public static final BooleanProperty ABOVE_FLUID = BooleanProperty.create("above_support");
 
-    public HoneyFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier) {
-        super(supplier, Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noDrops().speedFactor(0.15F));
+    public HoneyFluidBlock(Supplier<? extends FlowingFluid> fluid) {
+        super(fluid, BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noDrops().speedFactor(0.15F));
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(LEVEL, 0)
                 .setValue(BOTTOM_LEVEL, 0)
@@ -37,25 +41,25 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> stateBuilder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
         stateBuilder.add(LEVEL, BOTTOM_LEVEL, FALLING, ABOVE_FLUID);
     }
 
     @Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         if (this.neighboringFluidInteractions(world, pos)) {
-            world.getLiquidTicks().scheduleTick(pos, state.getFluidState().getType(), this.getFluid().getTickDelay(world));
+            world.scheduleTick(pos, state.getFluidState().getType(), this.getFluid().getTickDelay(world));
         }
     }
 
     @Override
-    public void onPlace(BlockState blockState, World world, BlockPos blockPos, BlockState previousBlockState, boolean notify) {
+    public void onPlace(BlockState blockState, Level world, BlockPos blockPos, BlockState previousBlockState, boolean notify) {
         if (this.neighboringFluidInteractions(world, blockPos)) {
-            world.getLiquidTicks().scheduleTick(blockPos, blockState.getFluidState().getType(), this.getFluid().getTickDelay(world));
+            world.scheduleTick(blockPos, blockState.getFluidState().getType(), this.getFluid().getTickDelay(world));
         }
     }
 
-    private boolean neighboringFluidInteractions(World world, BlockPos pos)  {
+    private boolean neighboringFluidInteractions(Level world, BlockPos pos)  {
         boolean lavaflag = false;
 
         for (Direction direction : Direction.values()) {
@@ -64,7 +68,7 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
                 lavaflag = true;
                 break;
             }
-            else if(!fluidState.getType().equals(BzFluids.SUGAR_WATER_FLUID.get()) && fluidState.is(FluidTags.WATER) && fluidState.isSource()) {
+            else if(!fluidState.getType().equals(BzFluids.SUGAR_WATER_FLUID) && fluidState.is(FluidTags.WATER) && fluidState.isSource()) {
                 world.setBlock(pos.relative(direction), BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), 3);
             }
         }
@@ -94,10 +98,10 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
         boolean isFalling = blockState.getValue(FALLING);
         FluidState fluidState;
         if(fluidLevel == 0) {
-            fluidState = getFluid().getSource(false);
+            fluidState = this.getFluid().getSource(false);
         }
         else {
-            fluidState = getFluid().getFlowing(fluidLevel, isFalling).setValue(BOTTOM_LEVEL, bottomFluidLevel);
+            fluidState = this.getFluid().getFlowing(fluidLevel, isFalling).setValue(BOTTOM_LEVEL, bottomFluidLevel);
         }
         return fluidState.setValue(ABOVE_FLUID, blockState.getValue(ABOVE_FLUID));
     }
@@ -106,12 +110,11 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
      * Heal bees if they are damaged or create honey source if pollinated
      */
     @Override
-    public void entityInside(BlockState state, World world, BlockPos position, Entity entity) {
+    public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
         double verticalSpeedDeltaLimit = 0.01D;
-        if (entity instanceof BeeEntity) {
-            BeeEntity beeEntity = ((BeeEntity) entity);
+        if (entity instanceof Bee beeEntity) {
             if(beeEntity.hasNectar() && !state.getFluidState().isSource()) {
-                ((BeeEntity)entity).setFlag(8, false);
+                ((BeeEntityInvoker)entity).thebumblezone_callSetHasNectar(false);
                 world.setBlock(position, BzFluids.HONEY_FLUID.get().defaultFluidState().createLegacyBlock(), 3);
             }
 
@@ -124,15 +127,15 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
                 }
             }
         }
-        else if(Math.abs(entity.getDeltaMovement().y()) > verticalSpeedDeltaLimit && entity.fallDistance <= 0.2D){
-            Vector3d vector3d = entity.getDeltaMovement();
-            entity.setDeltaMovement(new Vector3d(vector3d.x, Math.copySign(verticalSpeedDeltaLimit, vector3d.y), vector3d.z));
+        else if(Math.abs(entity.getDeltaMovement().y()) > verticalSpeedDeltaLimit && entity.fallDistance <= 0.2D) {
+            Vec3 vec3 = entity.getDeltaMovement();
+            entity.setDeltaMovement(new Vec3(vec3.x(), Math.copySign(verticalSpeedDeltaLimit, vec3.y()), vec3.z()));
         }
 
         super.entityInside(state, world, position, entity);
     }
 
-    private void triggerMixEffects(World world, BlockPos pos) {
+    private void triggerMixEffects(Level world, BlockPos pos) {
         world.levelEvent(1501, pos, 0);
     }
 }

@@ -1,26 +1,22 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
-import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
-import net.minecraft.block.BeehiveBlock;
-import net.minecraft.block.Block;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.ShearsItem;
-import net.minecraft.item.SwordItem;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.Lazy;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BeehiveBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -28,41 +24,36 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class CombCutterEnchantment extends Enchantment {
-    private static final Lazy<Set<Block>> TARGET_BLOCKS = Lazy.of(
-        () -> {
+    private static final GeneralUtils.Lazy<Set<Block>> TARGET_BLOCKS = new GeneralUtils.Lazy<>();
+    private static final GeneralUtils.Lazy<Set<Block>> LESSER_TARGET_BLOCKS = new GeneralUtils.Lazy<>();
+
+    public CombCutterEnchantment() {
+        super(Enchantment.Rarity.RARE, EnchantmentCategory.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+    }
+
+    public Set<Block> getTargetBlocks() {
+        return TARGET_BLOCKS.getOrCompute(() -> {
             Set<Block> validBlocks = new HashSet<>();
             ForgeRegistries.BLOCKS.getEntries().forEach(entry ->{
-                if(entry.getKey().location().getPath().contains("comb")){
+                if(entry.getKey().location().getPath().contains("comb")) {
                     validBlocks.add(entry.getValue());
                 }
             });
             return validBlocks;
-        }
-    );
-
-    private static final Lazy<Set<Block>> LESSER_TARGET_BLOCKS = Lazy.of(
-            () -> {
-                Set<Block> validBlocks = new HashSet<>();
-                ForgeRegistries.BLOCKS.getEntries().forEach(entry ->{
-                    String path = entry.getKey().location().getPath();
-                    if(entry.getValue() instanceof BeehiveBlock || path.contains("hive") || path.contains("nest") || (path.contains("wax") && !path.contains("waxed")) || entry.getValue().is(BzBlockTags.FORGE_STORAGE_BLOCK_WAX)){
-                        validBlocks.add(entry.getValue());
-                    }
-                });
-                return validBlocks;
-            }
-    );
-
-    public CombCutterEnchantment() {
-        super(Enchantment.Rarity.RARE, EnchantmentType.create("comb_cutter", CombCutterEnchantment::canEnchantItem), new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
+        });
     }
 
-    public Set<Block> getTargetBlocks(){
-        return TARGET_BLOCKS.get();
-    }
-
-    public Set<Block> getLesserTargetBlocks(){
-        return LESSER_TARGET_BLOCKS.get();
+    public Set<Block> getLesserTargetBlocks() {
+        return LESSER_TARGET_BLOCKS.getOrCompute(() -> {
+            Set<Block> validBlocks = new HashSet<>();
+            ForgeRegistries.BLOCKS.getEntries().forEach(entry ->{
+                String path = entry.getKey().location().getPath();
+                if(entry.getValue() instanceof BeehiveBlock || path.contains("hive") || path.contains("nest") || (path.contains("wax") && !path.contains("waxed"))) {
+                    validBlocks.add(entry.getValue());
+                }
+            });
+            return validBlocks;
+        });
     }
 
     public static void attemptFasterMining(PlayerEvent.BreakSpeed event){
@@ -76,7 +67,7 @@ public class CombCutterEnchantment extends Enchantment {
 
     private static void mineFaster(PlayerEvent.BreakSpeed event, boolean lesserTarget) {
         float breakSpeed = event.getNewSpeed();
-        PlayerEntity playerEntity = event.getPlayer();
+        Player playerEntity = event.getPlayer();
         ItemStack itemStack = playerEntity.getMainHandItem();
         int equipmentLevel = EnchantmentHelper.getEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), playerEntity);
         if (equipmentLevel > 0 && !itemStack.isEmpty()) {
@@ -85,13 +76,13 @@ public class CombCutterEnchantment extends Enchantment {
         event.setNewSpeed(breakSpeed);
     }
 
-    public static void increasedCombDrops(PlayerEntity playerEntity, World world, BlockPos pos){
+    public static void increasedCombDrops(Player playerEntity, Level world, BlockPos pos) {
         ItemStack itemStack = playerEntity.getMainHandItem();
         int equipmentLevel = EnchantmentHelper.getEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), playerEntity);
         if (equipmentLevel > 0 && !itemStack.isEmpty()) {
             Block.popResource(world, pos, new ItemStack(Items.HONEYCOMB, equipmentLevel * 3));
-            if(playerEntity instanceof ServerPlayerEntity) {
-                BzCriterias.COMB_CUTTER_EXTRA_DROPS_TRIGGER.trigger((ServerPlayerEntity) playerEntity);
+            if(playerEntity instanceof ServerPlayer) {
+                BzCriterias.COMB_CUTTER_EXTRA_DROPS_TRIGGER.trigger((ServerPlayer) playerEntity);
             }
         }
     }
@@ -105,7 +96,6 @@ public class CombCutterEnchantment extends Enchantment {
     public int getMaxCost(int level) {
         return super.getMinCost(level) + 13;
     }
-
     @Override
     public int getMaxLevel() {
         return 1;
@@ -113,10 +103,6 @@ public class CombCutterEnchantment extends Enchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return canEnchantItem(stack.getItem());
-    }
-
-    public static boolean canEnchantItem(Item item) {
-        return item instanceof ShearsItem || item instanceof SwordItem || item == Items.BOOK || (ModChecker.resourcefulBeesPresent && ResourcefulBeesCompat.isRBComb(item));
+        return stack.getItem() instanceof ShearsItem || stack.getItem() instanceof SwordItem || stack.is(Items.BOOK);
     }
 }

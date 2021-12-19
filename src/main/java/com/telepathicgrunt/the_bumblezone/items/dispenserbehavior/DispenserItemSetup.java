@@ -2,10 +2,10 @@ package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DispenserBlock;
 
 public class DispenserItemSetup {
     /**
@@ -16,7 +16,7 @@ public class DispenserItemSetup {
         // Behavior for custom items
         DispenserBlock.registerBehavior(BzItems.SUGAR_WATER_BUCKET.get(), new SugarWaterBucketDispenseBehavior()); // adds compatibility with sugar water buckets in dispensers
         DispenserBlock.registerBehavior(BzItems.SUGAR_WATER_BOTTLE.get(), new SugarWaterBottleDispenseBehavior()); // adds compatibility with sugar water bottles in dispensers
-        DispenserBlock.registerBehavior(BzItems.HONEY_BUCKET.get(), new HoneyFluidBucketDispenseBehavior()); // adds compatibility with honey fluid buckets in dispensers
+        DispenserBlock.registerBehavior(BzItems.HONEY_BUCKET.get(), new HoneyFluidBucketDispenseBehavior()); // adds compatibility with honey buckets in dispensers
 
         // Behavior chaining with vanilla items
 

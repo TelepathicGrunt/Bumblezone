@@ -1,0 +1,13 @@
+{
+  "config": {
+    "biome_resourcelocation": "the_bumblezone:pollinated_fields",
+    "height": 1,
+    "state": {
+      "Name": "the_bumblezone:pile_of_pollen",
+      "Properties": {
+        "layer": "8"
+      }
+    }
+  },
+  "type": "the_bumblezone:layered_block_surface"
+}

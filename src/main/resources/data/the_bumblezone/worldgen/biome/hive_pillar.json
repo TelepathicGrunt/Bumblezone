@@ -14,6 +14,12 @@
       "max_delay": 12000,
       "replace_current_music": false
     },
+    "particle": {
+      "options": {
+        "type": "the_bumblezone:pollen_puff"
+      },
+      "probability": 0.002
+    },
     "sky_color": 16759808,
     "foliage_color": 7593531,
     "grass_color": 7600187,
@@ -21,7 +27,6 @@
     "water_color": 14402413,
     "water_fog_color": 11700268
   },
-  "surface_builder": "the_bumblezone:honey_surface_builder",
   "carvers": {},
   "features": [
     [
@@ -47,7 +52,6 @@
     ],
     []
   ],
-  "starts": [],
   "creature_spawn_probability": 0.17,
   "spawners": {
     "monster": [
@@ -109,6 +113,8 @@
       }
     ],
     "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
     "water_creature": [],
     "water_ambient": [],
     "misc": []

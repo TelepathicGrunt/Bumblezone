@@ -1,0 +1,12 @@
+{
+  "feature": "the_bumblezone:honeycomb_holes",
+  "placement": [
+    {
+      "count": 1,
+      "type": "the_bumblezone:honeycomb_hole_placer"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

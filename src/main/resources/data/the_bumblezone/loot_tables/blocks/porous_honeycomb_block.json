@@ -5,8 +5,8 @@
       "rolls": 1,
       "entries": [
         {
-          "type": "minecraft:item",
-          "name": "the_bumblezone:porous_honeycomb_block"
+          "name": "the_bumblezone:porous_honeycomb_block",
+          "type": "minecraft:item"
         }
       ],
       "conditions": [

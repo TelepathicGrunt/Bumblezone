@@ -2,8 +2,8 @@ package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 
 import java.util.EnumSet;
 
@@ -20,7 +20,9 @@ public class FacingRevengeGoal extends HurtByTargetGoal {
     }
 
     public void tick() {
-        this.slime.lookAt(this.slime.getTarget(), 10.0F, 10.0F);
-        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.yRot, this.slime.canDamagePlayer());
+        if(this.slime.getTarget() != null) {
+            this.slime.lookAt(this.slime.getTarget(), 10.0F, 10.0F);
+        }
+        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.getYRot(), this.slime.canDamagePlayer());
     }
 }

@@ -5,13 +5,13 @@ import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.gen.feature.template.IStructureProcessorType;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.StructureProcessor;
-import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.HashSet;
 
@@ -22,7 +22,7 @@ public class ReplaceNotAirProcessor extends StructureProcessor {
 
     public static final Codec<ReplaceNotAirProcessor> CODEC  = RecordCodecBuilder.create((instance) -> instance.group(
             BlockState.CODEC.listOf()
-                    .xmap(a -> Sets.newHashSet(a), a -> Lists.newArrayList(a))
+                    .xmap(Sets::newHashSet, Lists::newArrayList)
                     .optionalFieldOf("blocks_to_always_place", new HashSet<>())
                     .forGetter((config) -> config.blocksToAlwaysPlace))
             .apply(instance, instance.stable(ReplaceNotAirProcessor::new)));
@@ -33,23 +33,23 @@ public class ReplaceNotAirProcessor extends StructureProcessor {
     }
 
     @Override
-    public Template.BlockInfo processBlock(IWorldReader worldView, BlockPos pos, BlockPos blockPos, Template.BlockInfo structureBlockInfoLocal, Template.BlockInfo structureBlockInfoWorld, PlacementSettings structurePlacementData) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
 
-        if(!blocksToAlwaysPlace.contains(structureBlockInfoWorld.state)){
+        if(!blocksToAlwaysPlace.contains(structureBlockInfoWorld.state)) {
             BlockPos position = structureBlockInfoWorld.pos;
             BlockState worldState = worldView.getBlockState(position);
 
             if (worldState.isAir() &&
-                !structureBlockInfoWorld.state.getBlock().isEntityBlock())
+                !structureBlockInfoWorld.state.hasBlockEntity())
             {
-                structureBlockInfoWorld = new Template.BlockInfo(structureBlockInfoWorld.pos, worldState, null);
+                structureBlockInfoWorld = new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos, worldState, null);
             }
         }
         return structureBlockInfoWorld;
     }
 
     @Override
-    protected IStructureProcessorType<?> getType() {
+    protected StructureProcessorType<?> getType() {
         return BzProcessors.REPLACE_NOT_AIR_PROCESSOR;
     }
 }

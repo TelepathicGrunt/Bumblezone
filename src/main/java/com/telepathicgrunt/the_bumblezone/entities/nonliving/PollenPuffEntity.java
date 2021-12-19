@@ -1,60 +1,62 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
+import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DoublePlantBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.GhastEntity;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.passive.PandaEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.FireballEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.state.properties.DoubleBlockHalf;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerEntity;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Panda;
+import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.monster.Ghast;
+import net.minecraft.world.entity.projectile.Fireball;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.util.FakePlayerFactory;
-import net.minecraftforge.fml.network.NetworkHooks;
 
-public class PollenPuffEntity extends ProjectileItemEntity {
+public class PollenPuffEntity extends ThrowableItemProjectile {
     private boolean consumed = false;
 
-    public PollenPuffEntity(EntityType<? extends PollenPuffEntity> entityType, World world) {
+    public PollenPuffEntity(EntityType<? extends PollenPuffEntity> entityType, Level world) {
         super(entityType, world);
     }
 
-    public PollenPuffEntity(World world, LivingEntity livingEntity) {
+    public PollenPuffEntity(Level world, LivingEntity livingEntity) {
         super(BzEntities.POLLEN_PUFF_ENTITY.get(), livingEntity, world);
     }
 
-    public PollenPuffEntity(World world, double x, double y, double z) {
+    public PollenPuffEntity(Level world, double x, double y, double z) {
         super(BzEntities.POLLEN_PUFF_ENTITY.get(), x, y, z, world);
     }
 
-    public void consumed(){
+    public void consumed() {
         consumed = true;
     }
 
-    public boolean isConsumed(){
+    public boolean isConsumed() {
         return consumed;
     }
 
@@ -73,14 +75,14 @@ public class PollenPuffEntity extends ProjectileItemEntity {
         }
 
         // make pollen puff be able to hit flowers
-        BlockRayTraceResult raytraceresult = this.level.clip(new RayTraceContext(
+        BlockHitResult raytraceresult = this.level.clip(new ClipContext(
                 this.position(),
                 this.position().add(this.getDeltaMovement().multiply(1, 1, 1)),
-                RayTraceContext.BlockMode.OUTLINE,
-                RayTraceContext.FluidMode.ANY,
+                ClipContext.Block.OUTLINE,
+                ClipContext.Fluid.ANY,
                 this));
 
-        if (raytraceresult.getType() == RayTraceResult.Type.BLOCK) {
+        if (raytraceresult.getType() == HitResult.Type.BLOCK) {
             BlockPos blockpos = raytraceresult.getBlockPos();
             BlockState blockstate = this.level.getBlockState(blockpos);
             if (blockstate.is(BzBlockTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzBlockTags.FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF)) {
@@ -94,11 +96,11 @@ public class PollenPuffEntity extends ProjectileItemEntity {
     }
 
     @Override
-    protected void onHit(RayTraceResult rayTraceResult) {
+    protected void onHit(HitResult rayTraceResult) {
         super.onHit(rayTraceResult);
 
         if (!this.level.isClientSide()) {
-            this.remove();
+            this.remove(RemovalReason.DISCARDED);
         }
         else {
             for(int i = 0; i < 150; ++i) {
@@ -108,40 +110,47 @@ public class PollenPuffEntity extends ProjectileItemEntity {
     }
 
     @Override
-    protected void onHitEntity(EntityRayTraceResult entityRayTraceResult) {
+    protected void onHitEntity(EntityHitResult entityRayTraceResult) {
         if(this.level.isClientSide() || consumed) return; // do not run this code if a block already was set.
 
         super.onHitEntity(entityRayTraceResult);
         Entity entity = entityRayTraceResult.getEntity();
 
         // pollinates the bee
-        if(entity instanceof BeeEntity && BzEntityTags.POLLEN_PUFF_CAN_POLLINATE.contains(entity.getType())) {
-            ((BeeEntity)entity).setFlag(8, true);
-            ((BeeEntity)entity).resetTicksWithoutNectarSinceExitingHive();
+        if(entity instanceof Bee && BzEntityTags.POLLEN_PUFF_CAN_POLLINATE.contains(entity.getType())) {
+            ((BeeEntityInvoker)entity).thebumblezone_callSetHasNectar(true);
+            ((Bee)entity).resetTicksWithoutNectarSinceExitingHive();
 
-            if(this.getOwner() instanceof ServerPlayerEntity) {
-                BzCriterias.POLLEN_PUFF_POLLINATED_BEE_TRIGGER.trigger((ServerPlayerEntity) this.getOwner());
+            if(this.getOwner() instanceof ServerPlayer) {
+                BzCriterias.POLLEN_PUFF_POLLINATED_BEE_TRIGGER.trigger((ServerPlayer) this.getOwner());
             }
         }
-        else if(entity instanceof PandaEntity) {
-            ((PandaEntity)entity).sneeze(true);
+        else if(entity instanceof Panda panda) {
+            panda.sneeze(true);
 
-            if(this.getOwner() instanceof ServerPlayerEntity) {
-                BzCriterias.POLLEN_PUFF_PANDA_TRIGGER.trigger((ServerPlayerEntity) this.getOwner());
+            if(this.getOwner() instanceof ServerPlayer) {
+                BzCriterias.POLLEN_PUFF_PANDA_TRIGGER.trigger((ServerPlayer) this.getOwner());
             }
         }
-        else if(entity instanceof FireballEntity && ((FireballEntity)entity).getOwner() instanceof GhastEntity) {
-            if(this.getOwner() instanceof ServerPlayerEntity)
-                BzCriterias.POLLEN_PUFF_FIREBALL_TRIGGER.trigger((ServerPlayerEntity) this.getOwner());
+        else if(entity instanceof Fireball && ((Fireball)entity).getOwner() instanceof Ghast) {
+            if(this.getOwner() instanceof ServerPlayer)
+                BzCriterias.POLLEN_PUFF_FIREBALL_TRIGGER.trigger((ServerPlayer) this.getOwner());
+        }
+        else if(entity instanceof FallingBlockEntity fallingBlockEntity && fallingBlockEntity.getBlockState().is(BzBlocks.PILE_OF_POLLEN.get())) {
+            BlockState fallingState = fallingBlockEntity.getBlockState();
+            int newLayer = Math.min(8, fallingState.getValue(PileOfPollen.LAYERS) + 1);
+            ((FallingBlockEntityAccessor)fallingBlockEntity).bumblezone_setBlockState(fallingState.setValue(PileOfPollen.LAYERS, newLayer));
+
+            UpdateFallingBlockPacket.sendToClient(fallingBlockEntity, fallingBlockEntity.getId(), (short)newLayer);
         }
     }
 
     @Override
-    protected void onHitBlock(BlockRayTraceResult blockRayTraceResult) {
+    protected void onHitBlock(BlockHitResult blockHitResult) {
         if(this.level.isClientSide() || consumed) return; // do not run this code if a block already was set.
 
-        BlockState blockstate = this.level.getBlockState(blockRayTraceResult.getBlockPos());
-        blockstate.onProjectileHit(this.level, blockstate, blockRayTraceResult, this);
+        BlockState blockstate = this.level.getBlockState(blockHitResult.getBlockPos());
+        blockstate.onProjectileHit(this.level, blockstate, blockHitResult, this);
 
         if(blockstate.is(BzBlockTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzBlockTags.FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF)) {
             boolean isTallPlant = false;
@@ -151,40 +160,39 @@ public class PollenPuffEntity extends ProjectileItemEntity {
             }
             int flowerAttempts = 2 + this.random.nextInt(3);
             for(int i = 0; i < flowerAttempts; i++) {
-                BlockPos newPos = blockRayTraceResult.getBlockPos().offset(
+                BlockPos newPos = blockHitResult.getBlockPos().offset(
                         this.random.nextInt(5) - 2,
                         this.random.nextInt(3) - 1,
                         this.random.nextInt(5) - 2);
 
                 if(this.level.isEmptyBlock(newPos) && blockstate.canSurvive(this.level, newPos)) {
                     this.level.setBlock(newPos, blockstate, 3);
-                    blockstate.getBlock().setPlacedBy(this.level, newPos, blockstate, FakePlayerFactory.getMinecraft((ServerWorld) this.level), ItemStack.EMPTY);
+                    blockstate.getBlock().setPlacedBy(this.level, newPos, blockstate, FakePlayerFactory.getMinecraft((ServerLevel) this.level), ItemStack.EMPTY);
 
-                    if(isTallPlant && this.getOwner() instanceof ServerPlayerEntity) {
-                        BzCriterias.POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER.trigger((ServerPlayerEntity) this.getOwner());
+                    if(isTallPlant && this.getOwner() instanceof ServerPlayer) {
+                        BzCriterias.POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER.trigger((ServerPlayer) this.getOwner());
                     }
                 }
             }
         }
-        else if(blockstate.is(Blocks.HONEY_BLOCK) || blockstate.is(Blocks.SOUL_SAND) || (blockRayTraceResult.getDirection() == Direction.UP && !blockstate.getFluidState().is(FluidTags.WATER)) || blockstate.isFaceSturdy(this.level, blockRayTraceResult.getBlockPos(), blockRayTraceResult.getDirection())){
-            BlockPos impactSide = blockRayTraceResult.getBlockPos().relative(blockRayTraceResult.getDirection());
-            BlockState sideState = this.level.getBlockState(impactSide);
+        else if(blockstate.is(Blocks.HONEY_BLOCK) ||
+                blockstate.is(Blocks.SOUL_SAND) ||
+                blockstate.isFaceSturdy(this.level, blockHitResult.getBlockPos(), blockHitResult.getDirection()))
+        {
             BlockState pileOfPollen = BzBlocks.PILE_OF_POLLEN.get().defaultBlockState();
+            BlockPos impactSide = blockHitResult.getBlockPos().relative(blockHitResult.getDirection());
+            BlockState sideState = this.level.getBlockState(impactSide);
+            BlockState belowSideState = this.level.getBlockState(impactSide.below());
+            boolean belowSideStateHasCollision = !belowSideState.getCollisionShape(this.level, impactSide.below()).isEmpty();
 
-            if(sideState.isAir()) {
-                this.level.setBlock(impactSide, BzBlocks.PILE_OF_POLLEN.get().defaultBlockState(), 3);
+            if(sideState.is(pileOfPollen.getBlock())) {
+                PileOfPollen.stackPollen(sideState, this.level, impactSide, pileOfPollen);
                 consumed = true;
             }
-            else if(sideState.is(pileOfPollen.getBlock()) && pileOfPollen.canSurvive(this.level, impactSide)) {
-                PileOfPollen.stackPollen(sideState, this.level, impactSide, BzBlocks.PILE_OF_POLLEN.get().defaultBlockState());
+            else if((!belowSideStateHasCollision && sideState.isAir()) || (belowSideStateHasCollision && pileOfPollen.canSurvive(this.level, impactSide))) {
+                this.level.setBlock(impactSide, pileOfPollen, 3);
                 consumed = true;
             }
         }
-    }
-
-    @Override
-    public IPacket<?> getAddEntityPacket()
-    {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

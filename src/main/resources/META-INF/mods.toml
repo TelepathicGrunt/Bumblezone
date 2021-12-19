@@ -1,13 +1,13 @@
 modLoader="javafml" #mandatory
-loaderVersion="[30,)" #mandatory 
+loaderVersion="[38,)" #mandatory 
 issueTrackerURL="https://github.com/TelepathicGrunt/Bumblezone/issues" #optional
-license="https://github.com/TelepathicGrunt/Bumblezone/blob/1.16/LICENSE"
+license="https://github.com/TelepathicGrunt/Bumblezone/blob/latest-released/LICENSE"
 
 [[mods]] #mandatory
 modId="the_bumblezone" #mandatory
 logoFile="the_bumblezone_logo.png"
 logoBlur=false
-version="${version}" #mandatory
+version="${file.jarVersion}" #mandatory
 displayName="The Bumblezone" #mandatory
 displayURL="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-forge"
 authors="TelepathicGrunt"
@@ -15,11 +15,11 @@ credits="Thanks to Commoble for suggesting this awesome name for this mod! Speci
 description='''An awesome dimension full of bees that becomes REALLY angry if you take their honey! Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going above Y = 256 to below Y = 0.'''
 
 [[dependencies.the_bumblezone]]
-    modId="productivebees"
-    mandatory=false
-    versionRange="[0.3.4,)"
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.18.1,1.19)"
 
 [[dependencies.the_bumblezone]]
     modId="forge"
     mandatory=true
-    versionRange="[36.1.3,)"
+    versionRange="[39.0.0,)"

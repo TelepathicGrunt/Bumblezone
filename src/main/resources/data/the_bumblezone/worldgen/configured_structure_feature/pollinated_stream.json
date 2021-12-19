@@ -1,4 +1,7 @@
 {
-  "config": {},
+  "config": {
+    "start_pool": "the_bumblezone:pollinated_stream/waterfall_start",
+    "size": 6
+  },
   "type": "the_bumblezone:pollinated_stream"
 }

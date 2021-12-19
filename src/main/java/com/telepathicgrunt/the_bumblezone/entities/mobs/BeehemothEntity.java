@@ -9,66 +9,70 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.passive.IFlyingAnimal;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.pathfinding.GroundPathNavigator;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Random;
 
-public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
-    private static final DataParameter<Boolean> SADDLED = EntityDataManager.defineId(BeehemothEntity.class, DataSerializers.BOOLEAN);
-    private static final DataParameter<Boolean> QUEEN = EntityDataManager.defineId(BeehemothEntity.class, DataSerializers.BOOLEAN);
-    private static final DataParameter<Integer> FRIENDSHIP = EntityDataManager.defineId(BeehemothEntity.class, DataSerializers.INT);
+public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
 
+    private static final EntityDataAccessor<Boolean> SADDLED = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> QUEEN = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> FRIENDSHIP = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.INT);
+
+    public static final int TICKS_PER_FLAP = Mth.ceil(1.4959966F);
     private boolean stopWandering = false;
+
     public float offset1, offset2, offset3, offset4, offset5, offset6;
 
-    public BeehemothEntity(EntityType<? extends BeehemothEntity> type, World world) {
+    public BeehemothEntity(EntityType<? extends BeehemothEntity> type, Level world) {
         super(type, world);
         this.moveControl = new MoveHelperController(this);
         this.offset1 = (this.random.nextFloat() - 0.5f);
@@ -79,10 +83,10 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         this.offset6 = (this.random.nextFloat() - 0.5f);
     }
 
-    private static final TranslationTextComponent QUEEN_NAME = new TranslationTextComponent("entity.the_bumblezone.beehemoth_queen");
+    private static final TranslatableComponent QUEEN_NAME = new TranslatableComponent("entity.the_bumblezone.beehemoth_queen");
 
     @Override
-    protected ITextComponent getTypeName() {
+    protected Component getTypeName() {
         if (isQueen()) {
             return QUEEN_NAME;
         }
@@ -113,10 +117,6 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         this.entityData.set(QUEEN, queen);
     }
 
-    public boolean isStopWandering() {
-        return stopWandering;
-    }
-
     public int getFriendship() {
         return this.entityData.get(FRIENDSHIP);
     }
@@ -129,8 +129,12 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         this.entityData.set(FRIENDSHIP, Math.min(Math.max(getFriendship() + deltaFriendship, -100), 1000));
     }
 
+    public boolean isStopWandering() {
+        return stopWandering;
+    }
+
     @Override
-    public void addAdditionalSaveData(CompoundNBT tag) {
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("saddled", isSaddled());
         tag.putBoolean("queen", isQueen());
@@ -138,7 +142,7 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundNBT tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         setSaddled(tag.getBoolean("saddled"));
         setQueen(tag.contains("queen") && tag.getBoolean("queen"));
@@ -146,8 +150,8 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     }
 
     @Override
-    protected boolean isMovementNoisy() {
-        return false;
+    protected Entity.MovementEmission getMovementEmission() {
+        return MovementEmission.NONE;
     }
 
     @Override
@@ -176,8 +180,8 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         }
     }
 
-    public static AttributeModifierMap.MutableAttribute getAttributeBuilder() {
-        return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 42.0D)
+    public static AttributeSupplier.Builder getAttributeBuilder() {
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 42.0D)
                 .add(Attributes.FLYING_SPEED, 0.6)
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
                 .add(Attributes.ATTACK_DAMAGE, 4.0D)
@@ -190,13 +194,13 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         this.goalSelector.addGoal(1, new FlyingStillGoal(this));
         this.goalSelector.addGoal(2, new TemptGoal(this, 1.5D, Ingredient.of(BzItemTags.HONEY_BUCKETS), false));
         this.goalSelector.addGoal(3, new RandomFlyGoal(this));
-        this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 60));
-        this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
-        this.goalSelector.addGoal(5, new SwimGoal(this));
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 60));
+        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(5, new FloatGoal(this));
     }
 
     @Override
-    protected PathNavigator createNavigation(World pLevel) {
+    protected PathNavigation createNavigation(Level pLevel) {
         return new DirectPathNavigator(this, pLevel);
     }
 
@@ -207,7 +211,7 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     public float getFinalFlyingSpeed() {
         float finalFlyingSpeed = this.flyingSpeed;
         if (finalFlyingSpeed == 0.02f) {
-            finalFlyingSpeed = (float) this.getAttributeValue(Attributes.FLYING_SPEED) / 0.6f;
+            finalFlyingSpeed = (float) getAttributeValue(Attributes.FLYING_SPEED) / 0.6f;
         }
         else {
             finalFlyingSpeed = finalFlyingSpeed / 0.02f;
@@ -215,86 +219,86 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         return finalFlyingSpeed;
     }
 
-    public static boolean checkMobSpawnRules(EntityType<? extends MobEntity> entityType, IWorld iWorld, SpawnReason spawnReason, BlockPos blockPos, Random random) {
+    public static boolean checkMobSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor iWorld, MobSpawnType spawnReason, BlockPos blockPos, Random random) {
         return true;
     }
 
     @Override
-    public boolean checkSpawnRules(IWorld world, SpawnReason spawnReason) {
+    public boolean checkSpawnRules(LevelAccessor world, MobSpawnType spawnReason) {
         return true;
     }
 
     @Override
-    public boolean checkSpawnObstruction(IWorldReader worldReader) {
-        AxisAlignedBB box = this.getBoundingBox();
+    public boolean checkSpawnObstruction(LevelReader worldReader) {
+        AABB box = getBoundingBox();
         return !worldReader.containsAnyLiquid(box) && worldReader.getBlockStates(box).noneMatch(state -> state.getMaterial().blocksMotion()) && worldReader.isUnobstructed(this);
     }
 
     @Override
     public Entity getControllingPassenger() {
-        for (Entity p : this.getPassengers()) {
+        for (Entity p : getPassengers()) {
             return p;
         }
         return null;
     }
 
-    public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
-        ItemStack itemstack = player.getItemInHand(hand);
-        Item item = itemstack.getItem();
-        ResourceLocation itemRL = item.getRegistryName();
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        Item item = stack.getItem();
+        ResourceLocation itemRL = ForgeRegistries.ITEMS.getKey(item);
         if (this.level.isClientSide) {
-            if (this.isTame() && this.isOwnedBy(player)) {
-                return ActionResultType.SUCCESS;
-            }
+            if (isTame() && isOwnedBy(player)) {
+                return InteractionResult.SUCCESS;
+            } 
             else {
-                return !(this.getHealth() < this.getMaxHealth()) && this.isTame() ? ActionResultType.PASS : ActionResultType.SUCCESS;
+                return !(getHealth() < getMaxHealth()) && isTame() ? InteractionResult.PASS : InteractionResult.SUCCESS;
             }
         }
         else {
             // Healing and befriending Beehemoth
-            if (this.isTame()) {
-                if (this.isOwnedBy(player)) {
-                    if ((BzItemTags.BEE_FEEDING_ITEMS.contains(item) || GeneralUtils.hasHoneyFluid(itemstack)) && !player.isShiftKeyDown()) {
-                        if(item.getItem() == BzItems.BEE_BREAD.get()) {
-                            this.addEffect(new EffectInstance(Effects.HEAL, 1, 2, false, false, false));
+            if (isTame()) {
+                if (isOwnedBy(player)) {
+                    if (BzItemTags.BEE_FEEDING_ITEMS.contains(item) && !player.isShiftKeyDown()) {
+                        if(item == BzItems.BEE_BREAD.get()) {
+                            heal(2);
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
                             addFriendship(5);
-                            return ActionResultType.PASS;
+                            return InteractionResult.PASS;
                         }
-                        else if (item.is(BzItemTags.HONEY_BUCKETS) || GeneralUtils.hasLargeAmountOfHoneyFluid(itemstack)) {
-                            this.heal(this.getMaxHealth() - this.getHealth());
+                        else if (BzItemTags.HONEY_BUCKETS.contains(item)) {
+                            heal(getMaxHealth() - getHealth());
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
                             addFriendship(5);
                         }
                         else if (itemRL.getPath().contains("honey")) {
-                            this.addEffect(new EffectInstance(Effects.HEAL, 1, 2, false, false, false));
+                            heal(2);
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.3f, 3);
                             addFriendship(3);
                         }
                         else {
-                            this.addEffect(new EffectInstance(Effects.HEAL, 1, 1, false, false, false));
+                            heal(1);
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.1f, 3);
                             addFriendship(1);
                         }
 
                         if (!player.isCreative()) {
                             // remove current item
-                            itemstack.shrink(1);
+                            stack.shrink(1);
                             GeneralUtils.givePlayerItem(player, hand, new ItemStack(item), true);
                         }
 
                         player.swing(hand, true);
-                        return ActionResultType.CONSUME;
+                        return InteractionResult.CONSUME;
                     }
 
                     if (item == Items.SADDLE && !isSaddled()) {
-                        this.usePlayerItem(player, itemstack);
-                        this.setSaddled(true);
-                        return ActionResultType.CONSUME;
+                        usePlayerItem(player, hand, stack);
+                        setSaddled(true);
+                        return InteractionResult.CONSUME;
                     }
 
                     if(player.isShiftKeyDown()) {
-                        if (isSaddled() && this.isInSittingPose() && itemstack.isEmpty()) {
+                        if (isSaddled() && isInSittingPose() && stack.isEmpty()) {
                             setSaddled(false);
                             ItemStack saddle = new ItemStack(Items.SADDLE);
                             if (player.addItem(saddle)) {
@@ -303,28 +307,28 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
                             }
                         }
                         else {
-                            this.setOrderedToSit(!this.isOrderedToSit());
+                            setOrderedToSit(!isOrderedToSit());
                             this.navigation.stop();
-                            this.setTarget(null);
+                            setTarget(null);
                         }
-                        return ActionResultType.SUCCESS;
+                        return InteractionResult.SUCCESS;
                     }
 
-                    if (!this.isVehicle() && !player.isSecondaryUseActive()) {
+                    if (!isVehicle() && !player.isSecondaryUseActive()) {
                         if (!this.level.isClientSide) {
-                            this.setOrderedToSit(false);
                             player.startRiding(this);
+                            setOrderedToSit(false);
                         }
 
-                        return ActionResultType.sidedSuccess(this.level.isClientSide);
+                        return InteractionResult.sidedSuccess(this.level.isClientSide);
                     }
                 }
             }
             // Taming Beehemoth
-            else if (BzItemTags.BEE_FEEDING_ITEMS.contains(item) || GeneralUtils.hasHoneyFluid(itemstack)) {
+            else if (BzItemTags.BEE_FEEDING_ITEMS.contains(item)) {
                 if(getFriendship() >= 0) {
                     float tameChance;
-                    if (item.is(BzItemTags.HONEY_BUCKETS) || item.getItem() == BzItems.BEE_BREAD.get() || GeneralUtils.hasLargeAmountOfHoneyFluid(itemstack)) {
+                    if (BzItemTags.HONEY_BUCKETS.contains(item) || item == BzItems.BEE_BREAD.get()) {
                         tameChance = 0.25f;
                     }
                     else if (itemRL.getPath().contains("honey")) {
@@ -334,10 +338,10 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
                         tameChance = 0.067f;
                     }
 
-                    if (this.random.nextFloat() < tameChance && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, player)) {
-                        this.tame(player);
+                    if (this.random.nextFloat() < tameChance) {
+                        tame(player);
                         setFriendship(6);
-                        this.setOrderedToSit(true);
+                        setOrderedToSit(true);
                         this.level.broadcastEntityEvent(this, (byte) 7);
                     }
                     else {
@@ -346,11 +350,11 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
                 }
                 else {
                     addFriendship(1);
-                    if(item.getItem() == BzItems.BEE_BREAD.get()) {
+                    if(item == BzItems.BEE_BREAD.get()) {
                         addFriendship(5);
-                        return ActionResultType.PASS;
+                        return InteractionResult.PASS;
                     }
-                    else if (item.is(BzItemTags.HONEY_BUCKETS)) {
+                    else if (BzItemTags.HONEY_BUCKETS.contains(item)) {
                         addFriendship(3);
                     }
                     else if (itemRL.getPath().contains("honey")) {
@@ -363,22 +367,22 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
 
                 if (!player.isCreative()) {
                     // remove current item
-                    itemstack.shrink(1);
+                    stack.shrink(1);
                     GeneralUtils.givePlayerItem(player, hand, new ItemStack(item), true);
                 }
-                this.setPersistenceRequired();
+                setPersistenceRequired();
                 player.swing(hand, true);
 
                 if(getFriendship() < 0) {
                     spawnMadParticles();
                 }
 
-                return ActionResultType.CONSUME;
+                return InteractionResult.CONSUME;
             }
 
-            ActionResultType actionresulttype1 = super.mobInteract(player, hand);
+            InteractionResult actionresulttype1 = super.mobInteract(player, hand);
             if (actionresulttype1.consumesAction()) {
-                this.setPersistenceRequired();
+                setPersistenceRequired();
             }
 
             if(getFriendship() < 0) {
@@ -391,28 +395,28 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
 
     private void spawnMadParticles() {
         if (!this.level.isClientSide()) {
-            ((ServerWorld) this.level).sendParticles(
+            ((ServerLevel) this.level).sendParticles(
                     ParticleTypes.ANGRY_VILLAGER,
-                    this.getX(),
-                    this.getY(),
-                    this.getZ(),
+                    getX(),
+                    getY(),
+                    getZ(),
                     Math.min(Math.max(1, getFriendship() / -3), 7),
-                    this.level.getRandom().nextFloat() * 1.0f - 0.5f,
+                    this.level.getRandom().nextFloat() - 0.5f,
                     this.level.getRandom().nextFloat() * 0.4f + 0.4f,
-                    this.level.getRandom().nextFloat() * 1.0f - 0.5f,
+                    this.level.getRandom().nextFloat() - 0.5f,
                     this.level.getRandom().nextFloat() * 0.8f + 0.4f);
         }
     }
 
     public void positionRider(Entity passenger) {
-        if (this.hasPassenger(passenger)) {
+        if (hasPassenger(passenger)) {
             float radius = -0.25F;
             float angle = (0.01745329251F * this.yBodyRot);
-            double extraX = radius * MathHelper.sin((float) (Math.PI + angle));
-            double extraZ = radius * MathHelper.cos(angle);
-            passenger.setPos(this.getX() + extraX, this.getY() + this.getPassengersRidingOffset() + passenger.getMyRidingOffset(), this.getZ() + extraZ);
+            double extraX = radius * Mth.sin((float) (Math.PI + angle));
+            double extraZ = radius * Mth.cos(angle);
+            passenger.setPos(getX() + extraX, getY() + getPassengersRidingOffset() + passenger.getMyRidingOffset(), getZ() + extraZ);
 
-            double currentSpeed = this.getDeltaMovement().length();
+            double currentSpeed = getDeltaMovement().length();
             if(currentSpeed > 0.000001D &&
                 this.level.random.nextFloat() < 0.0085D &&
                 passenger.getUUID().equals(getOwnerUUID()))
@@ -425,7 +429,14 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     public double getPassengersRidingOffset() {
         float f = Math.min(0.25F, this.animationSpeed);
         float f1 = this.animationPosition;
-        return (double) this.getBbHeight() - 0.2D + (double) (0.12F * MathHelper.cos(f1 * 0.7F) * 0.7F * f);
+        return (double) getBbHeight() - 0.2D + (double) (0.12F * Mth.cos(f1 * 0.7F) * 0.7F * f);
+    }
+
+    protected void removePassenger(Entity entity) {
+        super.removePassenger(entity);
+        if(entity == getOwner()) {
+            setOrderedToSit(true);
+        }
     }
 
     public boolean isNoGravity() {
@@ -437,7 +448,7 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     }
 
     @Override
-    public boolean causeFallDamage(float fallDistance, float damageModifier) {
+    public boolean causeFallDamage(float fallDistance, float damageModifier, DamageSource damageSource) {
         return false;
     }
 
@@ -471,8 +482,8 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         // Become queen if friendship is maxed out.
         if(!isQueen() && getFriendship() >= 1000) {
             setQueen(true);
-            if(this.getOwner() instanceof ServerPlayerEntity) {
-                BzCriterias.QUEEN_BEEHEMOTH_TRIGGER.trigger((ServerPlayerEntity) this.getOwner());
+            if(getOwner() instanceof ServerPlayer serverPlayer) {
+                BzCriterias.QUEEN_BEEHEMOTH_TRIGGER.trigger(serverPlayer);
             }
         }
         // Become untamed if bee is no longer a friend
@@ -483,7 +494,7 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
     }
 
     @Override
-    public AgeableEntity getBreedOffspring(ServerWorld serverWorld, AgeableEntity ageableEntity) {
+    public AgeableMob getBreedOffspring(ServerLevel serverWorld, AgeableMob ageableEntity) {
         return null;
     }
 
@@ -493,7 +504,12 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         stopWandering = true;
     }
 
-    static class MoveHelperController extends MovementController {
+    @Override
+    public boolean isFlying() {
+        return this.tickCount % TICKS_PER_FLAP == 0;
+    }
+
+    static class MoveHelperController extends MoveControl {
         private final BeehemothEntity beehemothEntity;
 
         public MoveHelperController(BeehemothEntity beehemothEntity) {
@@ -502,10 +518,10 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         }
 
         public void tick() {
-            if (this.operation == Action.STRAFE) {
-                Vector3d vector3d = new Vector3d(this.wantedX - beehemothEntity.getX(), this.wantedY - beehemothEntity.getY(), this.wantedZ - beehemothEntity.getZ());
-                double d0 = vector3d.length();
-                beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().add(0, vector3d.scale(this.speedModifier * 0.05D / d0).y(), 0));
+            if (this.operation == Operation.STRAFE) {
+                Vec3 vec3 = new Vec3(this.wantedX - beehemothEntity.getX(), this.wantedY - beehemothEntity.getY(), this.wantedZ - beehemothEntity.getZ());
+                double d0 = vec3.length();
+                beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().add(0, vec3.scale(this.speedModifier * 0.05D / d0).y(), 0));
                 float f = (float) this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED);
                 float f1 = (float) this.speedModifier * f;
                 this.strafeForwards = 1.0F;
@@ -514,13 +530,13 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
                 this.mob.setSpeed(f1);
                 this.mob.setZza(this.strafeForwards);
                 this.mob.setXxa(this.strafeRight);
-                this.operation = MovementController.Action.WAIT;
+                this.operation = MoveControl.Operation.WAIT;
             }
-            else if (this.operation == MovementController.Action.MOVE_TO) {
-                Vector3d vector3d = new Vector3d(this.wantedX - beehemothEntity.getX(), this.wantedY - beehemothEntity.getY(), this.wantedZ - beehemothEntity.getZ());
-                double d0 = vector3d.length();
+            else if (this.operation == MoveControl.Operation.MOVE_TO) {
+                Vec3 vec3 = new Vec3(this.wantedX - beehemothEntity.getX(), this.wantedY - beehemothEntity.getY(), this.wantedZ - beehemothEntity.getZ());
+                double d0 = vec3.length();
                 if (d0 < beehemothEntity.getBoundingBox().getSize()) {
-                    this.operation = MovementController.Action.WAIT;
+                    this.operation = MoveControl.Operation.WAIT;
                     beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().scale(0.5D));
                 }
                 else {
@@ -528,20 +544,18 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
                     if (beehemothEntity.isVehicle()) {
                         localSpeed *= 1.5D;
                     }
-                    beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().add(vector3d.scale(localSpeed * 0.005D / d0)));
+                    beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().add(vec3.scale(localSpeed * 0.005D / d0)));
                     if (beehemothEntity.getTarget() == null) {
                         double d2 = this.wantedX - beehemothEntity.getX();
                         double d1 = this.wantedZ - beehemothEntity.getZ();
-                        float newRot = (float)(-MathHelper.atan2(d2, d1) * (180F / (float) Math.PI));
-                        beehemothEntity.yRot = this.rotlerp(beehemothEntity.yRot, newRot, 10.0F);
-                        beehemothEntity.yBodyRot = beehemothEntity.yRot;
+                        float newRot = (float)(-Mth.atan2(d2, d1) * (180F / (float) Math.PI));
+                        beehemothEntity.setYRot(rotlerp(beehemothEntity.getYRot(), newRot, 10.0F));
                     }
                     else {
                         double d2 = beehemothEntity.getTarget().getX() - beehemothEntity.getX();
                         double d1 = beehemothEntity.getTarget().getZ() - beehemothEntity.getZ();
-                        float newRot = (float)(-MathHelper.atan2(d1, d2) * (180F / (float) Math.PI));
-                        beehemothEntity.yRot = this.rotlerp(beehemothEntity.yRot, newRot, 10.0F);
-                        beehemothEntity.yBodyRot = beehemothEntity.yRot;
+                        float newRot = (float)(-Mth.atan2(d1, d2) * (180F / (float) Math.PI));
+                        beehemothEntity.setYRot(rotlerp(beehemothEntity.getYRot(), newRot, 10.0F));
                     }
                 }
 
@@ -549,16 +563,16 @@ public class BeehemothEntity extends TameableEntity implements IFlyingAnimal {
         }
     }
 
-    public boolean isTargetBlocked(Vector3d target) {
-        Vector3d Vector3d = new Vector3d(this.getX(), this.getEyeY(), this.getZ());
-        return this.level.clip(new RayTraceContext(Vector3d, target, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this)).getType() != RayTraceResult.Type.MISS;
+    public boolean isTargetBlocked(Vec3 target) {
+        Vec3 vec3 = new Vec3(getX(), getEyeY(), getZ());
+        return this.level.clip(new ClipContext(vec3, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)).getType() != HitResult.Type.MISS;
     }
 
-    public static class DirectPathNavigator extends GroundPathNavigator {
+    public static class DirectPathNavigator extends GroundPathNavigation {
 
-        private final MobEntity mob;
+        private final Mob mob;
 
-        public DirectPathNavigator(MobEntity mob, World world) {
+        public DirectPathNavigator(Mob mob, Level world) {
             super(mob, world);
             this.mob = mob;
         }

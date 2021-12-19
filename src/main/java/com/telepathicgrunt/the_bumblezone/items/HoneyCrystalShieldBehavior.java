@@ -3,31 +3,31 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.mixin.items.PlayerDamageShieldInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 public class HoneyCrystalShieldBehavior {
     /**
      * Deals massive damage to shield when blocking explosion or getting fire damage with Honey Crystal Shield
      */
-    public static boolean damageShieldFromExplosionAndFire(DamageSource source, PlayerEntity player) {
+    public static boolean damageShieldFromExplosionAndFire(DamageSource source, Player player) {
 
         // checks for explosion and player
         if ((source.isExplosion() || source.isFire())) {
             if (player.getUseItem().getItem() instanceof HoneyCrystalShield) {
-                if(player instanceof ServerPlayerEntity) {
-                    BzCriterias.HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER.trigger((ServerPlayerEntity) player);
+                if(player instanceof ServerPlayer) {
+                    BzCriterias.HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER.trigger((ServerPlayer) player);
                 }
 
                 if (source.isExplosion() && player.isBlocking()) {
@@ -55,7 +55,7 @@ public class HoneyCrystalShieldBehavior {
     /**
      * Applies slowness to physical attackers when blocking with Honey Crystal Shield
      */
-    public static void slowPhysicalAttackers(DamageSource source, PlayerEntity player) {
+    public static void slowPhysicalAttackers(DamageSource source, Player player) {
 
         // checks for living attacker and player victim
         // and also ignores explosions or magic damage
@@ -70,12 +70,12 @@ public class HoneyCrystalShieldBehavior {
                     && player.isBlocking()) {
 
                 // apply slowness to attacker
-                attacker.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 80, 0, false, false, false));
+                attacker.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 0, false, false, false));
             }
         }
     }
 
-    public static void setShieldCooldown(PlayerEntity playerEntity, MobEntity mob){
+    public static void setShieldCooldown(Player playerEntity, Mob mob){
         float f = 0.25F + (float) EnchantmentHelper.getBlockEfficiency(mob) * 0.05F;
         if (mob.getRandom().nextFloat() < f) {
             playerEntity.getCooldowns().addCooldown(BzItems.HONEY_CRYSTAL_SHIELD.get(), 100);
@@ -83,17 +83,17 @@ public class HoneyCrystalShieldBehavior {
         }
     }
 
-    public static boolean damageHoneyCrystalShield(PlayerEntity player, float amount){
+    public static boolean damageHoneyCrystalShield(Player player, float amount){
         if(player.getUseItem().getItem() == BzItems.HONEY_CRYSTAL_SHIELD.get()){
             if (amount >= 3.0F) {
-                int damageToDo = 1 + MathHelper.floor(amount);
-                Hand hand = player.getUsedItemHand();
+                int damageToDo = 1 + Mth.floor(amount);
+                InteractionHand hand = player.getUsedItemHand();
                 player.getUseItem().hurtAndBreak(damageToDo, player, (playerEntity) -> playerEntity.broadcastBreakEvent(hand));
                 if (player.getUseItem().isEmpty()) {
-                    if (hand == Hand.MAIN_HAND) {
-                        player.setItemSlot(EquipmentSlotType.MAINHAND, ItemStack.EMPTY);
+                    if (hand == InteractionHand.MAIN_HAND) {
+                        player.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
                     } else {
-                        player.setItemSlot(EquipmentSlotType.OFFHAND, ItemStack.EMPTY);
+                        player.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
                     }
 
                     player.stopUsingItem();
@@ -133,7 +133,7 @@ public class HoneyCrystalShieldBehavior {
             if (damageCaused < 0 && repairLevel != 0) {
 
                 int reducedDamage = Math.min(-1, damageCaused + (repairLevel / 14));
-               return stack.getDamageValue() + (-reducedDamage);
+                return stack.getDamageValue() + (-reducedDamage);
             }
         }
 

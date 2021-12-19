@@ -2,39 +2,38 @@ package com.telepathicgrunt.the_bumblezone.world.processors;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
-import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
-import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
-import com.telepathicgrunt.the_bumblezone.modcompat.CavesAndCliffsBackportCompat;
-import com.telepathicgrunt.the_bumblezone.modcompat.CharmCompat;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
-import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.SharedSeedRandom;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.gen.feature.template.IStructureProcessorType;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.StructureProcessor;
-import net.minecraft.world.gen.feature.template.Template;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CandleBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.Random;
 
+/**
+ * POOL ENTRY MUST BE USING legacy_single_pool_element OR ELSE THE STRUCTURE BLOCK IS REMOVED BEFORE THIS PROCESSOR RUNS.
+ */
 public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
 
     public static final Codec<SpiderInfestedBeeDungeonProcessor> CODEC = Codec.unit(SpiderInfestedBeeDungeonProcessor::new);
     private SpiderInfestedBeeDungeonProcessor() { }
 
     @Override
-    public Template.BlockInfo processBlock(IWorldReader worldView, BlockPos pos, BlockPos blockPos, Template.BlockInfo structureBlockInfoLocal, Template.BlockInfo structureBlockInfoWorld, PlacementSettings structurePlacementData) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
         BlockState blockState = structureBlockInfoWorld.state;
         BlockPos worldPos = structureBlockInfoWorld.pos;
-        Random random = new SharedSeedRandom();
+        Random random = new WorldgenRandom(new LegacyRandomSource(0));
         random.setSeed(worldPos.asLong() * worldPos.getY());
 
         // placing altar blocks
@@ -43,101 +42,65 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
             BlockState belowBlock = worldView.getChunk(worldPos).getBlockState(worldPos);
 
             //altar blocks cannot be placed on air
-            if(belowBlock.isAir()){
+            if(belowBlock.isAir()) {
                 blockState = Blocks.CAVE_AIR.defaultBlockState();
             }
-            else{
-                switch (metadata){
-                    case "center": {
-                        if(ModChecker.buzzierBeesPresent && random.nextFloat() < 0.25f && BzModCompatibilityConfigs.allowScentedCandlesSpiderBeeDungeon.get()) {
-                            blockState = BuzzierBeesCompat.BBGetRandomTier3Candle(
-                                    random,
-                                    BzModCompatibilityConfigs.powerfulCandlesRaritySpiderBeeDungeon.get()+1,
-                                    random.nextInt(random.nextInt(random.nextInt(3)+1)+1)+1,
-                                    false,
-                                    true);
-                        }
-                        else if(ModChecker.cavesAndCliffsPresent && !ModChecker.buzzierBeesPresent &&
-                                BzModCompatibilityConfigs.allowCACCandlesSpiderBeeDungeon.get() && random.nextFloat() < 0.33f)
-                        {
-                            blockState = CavesAndCliffsBackportCompat.CACGetRandomCandle(random, random.nextInt(random.nextInt(random.nextInt(3)+1)+1)+1, false, false);
-                        }
-                        else if(ModChecker.charmPresent && BzModCompatibilityConfigs.allowCCandlesSpiderBeeDungeon.get() &&
-                                (ModChecker.buzzierBeesPresent ? random.nextFloat() < 0.1f : random.nextFloat() < 0.33f))
-                        {
-                            blockState = CharmCompat.CGetCandle(false, false);
-                        }
-                        else if (ModChecker.buzzierBeesPresent ? random.nextFloat() < 0.3f : random.nextFloat() < 0.6f) {
+            else {
+                switch (metadata) {
+                    case "center" -> {
+                        if (random.nextFloat() < 0.6f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
+                        } else if (random.nextFloat() < 0.25f) {
+                            blockState = GeneralUtils.VANILLA_CANDLES.get(random.nextInt(GeneralUtils.VANILLA_CANDLES.size()));
+                            blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(4) + 1);
+                            blockState = blockState.setValue(CandleBlock.LIT, false);
                         }
-                        else if(ModChecker.buzzierBeesPresent || random.nextFloat() < 0.05f) {
+                        else if (random.nextFloat() < 0.05f) {
                             blockState = Blocks.COBWEB.defaultBlockState();
-                        }
-                        else {
+                        } else {
                             blockState = Blocks.CAVE_AIR.defaultBlockState();
                         }
                     }
-                    break;
-                    case "inner_ring": {
+                    case "inner_ring" -> {
                         if (random.nextFloat() < 0.3f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
-                        }
-                        else if(random.nextFloat() < 0.07f) {
+                        } else if (random.nextFloat() < 0.07f) {
                             blockState = Blocks.COBWEB.defaultBlockState();
-                        }
-                        else {
+                        } else {
                             blockState = Blocks.CAVE_AIR.defaultBlockState();
                         }
                     }
-                    break;
-                    case "outer_ring": {
+                    case "outer_ring" -> {
                         if (random.nextFloat() < 0.4f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
-                        }
-                        else if(ModChecker.cavesAndCliffsPresent && BzModCompatibilityConfigs.allowCACCandlesSpiderBeeDungeon.get() && random.nextFloat() < 0.07f)
-                        {
-                            blockState = CavesAndCliffsBackportCompat.CACGetRandomCandle(random, random.nextInt(3)+1, false, false);
-                        }
-                        else if(ModChecker.charmPresent && BzModCompatibilityConfigs.allowCCandlesSpiderBeeDungeon.get() && random.nextFloat() < 0.07f) {
-                            blockState = CharmCompat.CGetCandle(false, false);
-                        }
-                        else if(random.nextFloat() < 0.07f) {
+                        } else if (random.nextFloat() < 0.2f) {
+                            blockState = GeneralUtils.VANILLA_CANDLES.get(random.nextInt(GeneralUtils.VANILLA_CANDLES.size()));
+                            blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(random.nextInt(4) + 1) + 1);
+                            blockState = blockState.setValue(CandleBlock.LIT, false);
+                        } else if (random.nextFloat() < 0.07f) {
                             blockState = Blocks.COBWEB.defaultBlockState();
-                        }
-                        else {
+                        } else {
                             blockState = Blocks.CAVE_AIR.defaultBlockState();
                         }
                     }
-                    break;
-                    default: break;
+                    default -> {
+                    }
                 }
             }
         }
 
         // main body and ceiling
-        else if(blockState.is(Blocks.HONEYCOMB_BLOCK) || blockState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get())){
-            if(ModChecker.productiveBeesPresent && random.nextFloat() < BzModCompatibilityConfigs.PBOreHoneycombSpawnRateSpiderBeeDungeon.get()) {
-                blockState = ProductiveBeesCompat.PBGetRandomHoneycomb(random, BzModCompatibilityConfigs.PBGreatHoneycombRaritySpiderBeeDungeon.get());
-            }
-            else if(ModChecker.resourcefulBeesPresent && random.nextFloat() < BzModCompatibilityConfigs.RBOreHoneycombSpawnRateSpiderBeeDungeon.get()) {
-                blockState = ResourcefulBeesCompat.RBGetRandomHoneycomb(random, BzModCompatibilityConfigs.RBGreatHoneycombRaritySpiderBeeDungeon.get());
-            }
-            else if(ModChecker.productiveBeesPresent && random.nextFloat() < 0.5f && BzModCompatibilityConfigs.spawnProductiveBeesHoneycombVariants.get()) {
-                blockState = ProductiveBeesCompat.PBGetRottenedHoneycomb(random);
-            }
-            else if(ModChecker.resourcefulBeesPresent && random.nextFloat() < 0.5f && BzModCompatibilityConfigs.spawnResourcefulBeesHoneycombVariants.get()) {
-                blockState = ResourcefulBeesCompat.RBGetSpiderHoneycomb(random);
-            }
-            else if (random.nextFloat() < 0.15f) {
-                blockState = Blocks.HONEYCOMB_BLOCK.defaultBlockState();
-            }
-            else {
-                blockState = BzBlocks.POROUS_HONEYCOMB.get().defaultBlockState();
-            }
+        else if(blockState.is(Blocks.HONEYCOMB_BLOCK) || blockState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get())) {
+           if (random.nextFloat() < 0.15f) {
+               blockState = Blocks.HONEYCOMB_BLOCK.defaultBlockState();
+           }
+           else {
+               blockState = BzBlocks.POROUS_HONEYCOMB.get().defaultBlockState();
+           }
         }
 
         // walls
-        else if(blockState.is(BzBlocks.HONEYCOMB_BROOD.get())){
+        else if(blockState.is(BzBlocks.HONEYCOMB_BROOD.get())) {
             if (random.nextFloat() < 0.6f) {
                 blockState = BzBlocks.EMPTY_HONEYCOMB_BROOD.get().defaultBlockState()
                         .setValue(HoneycombBrood.FACING, blockState.getValue(HoneycombBrood.FACING));
@@ -145,32 +108,21 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
             else if (random.nextDouble() < BzWorldgenConfigs.spawnerRateSpiderBeeDungeon.get()) {
                 blockState = Blocks.SPAWNER.defaultBlockState();
             }
-            else if(ModChecker.productiveBeesPresent && random.nextFloat() < 0.5f && BzModCompatibilityConfigs.spawnProductiveBeesHoneycombVariants.get()) {
-                blockState = ProductiveBeesCompat.PBGetRottenedHoneycomb(random);
-            }
-            else if(ModChecker.resourcefulBeesPresent && random.nextFloat() < 0.5f && BzModCompatibilityConfigs.spawnResourcefulBeesHoneycombVariants.get()) {
-                blockState = ResourcefulBeesCompat.RBGetSpiderHoneycomb(random);
-            }
             else {
                 blockState = BzBlocks.POROUS_HONEYCOMB.get().defaultBlockState();
             }
         }
 
         // sugar water
-        else if(blockState.is(BzFluids.SUGAR_WATER_BLOCK.get())){
-            if(ModChecker.buzzierBeesPresent) {
-                blockState = BuzzierBeesCompat.getCrystallizedHoneyBlock();
-            }
-            else {
-                blockState = Blocks.CAVE_AIR.defaultBlockState();
-            }
+        else if(blockState.is(BzFluids.SUGAR_WATER_BLOCK.get())) {
+            blockState = Blocks.CAVE_AIR.defaultBlockState();
         }
 
-        return new Template.BlockInfo(worldPos, blockState, structureBlockInfoWorld.nbt);
+        return new StructureTemplate.StructureBlockInfo(worldPos, blockState, structureBlockInfoWorld.nbt);
     }
 
     @Override
-    protected IStructureProcessorType<?> getType() {
+    protected StructureProcessorType<?> getType() {
         return BzProcessors.SPIDER_INFESTED_BEE_DUNGEON_PROCESSOR;
     }
 }
