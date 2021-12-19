@@ -11,9 +11,6 @@
               "type": "minecraft:item",
               "conditions": [
                 {
-                  "condition": "minecraft:survives_explosion"
-                },
-                {
                   "condition": "minecraft:block_state_property",
                   "block": "the_bumblezone:pile_of_pollen",
                   "properties": {
@@ -51,9 +48,6 @@
             {
               "type": "minecraft:item",
               "conditions": [
-                {
-                  "condition": "minecraft:survives_explosion"
-                },
                 {
                   "condition": "minecraft:block_state_property",
                   "block": "the_bumblezone:pile_of_pollen",
@@ -93,9 +87,6 @@
               "type": "minecraft:item",
               "conditions": [
                 {
-                  "condition": "minecraft:survives_explosion"
-                },
-                {
                   "condition": "minecraft:block_state_property",
                   "block": "the_bumblezone:pile_of_pollen",
                   "properties": {
@@ -133,9 +124,6 @@
             {
               "type": "minecraft:item",
               "conditions": [
-                {
-                  "condition": "minecraft:survives_explosion"
-                },
                 {
                   "condition": "minecraft:block_state_property",
                   "block": "the_bumblezone:pile_of_pollen",
@@ -175,9 +163,6 @@
               "type": "minecraft:item",
               "conditions": [
                 {
-                  "condition": "minecraft:survives_explosion"
-                },
-                {
                   "condition": "minecraft:block_state_property",
                   "block": "the_bumblezone:pile_of_pollen",
                   "properties": {
@@ -215,9 +200,6 @@
             {
               "type": "minecraft:item",
               "conditions": [
-                {
-                  "condition": "minecraft:survives_explosion"
-                },
                 {
                   "condition": "minecraft:block_state_property",
                   "block": "the_bumblezone:pile_of_pollen",
@@ -257,9 +239,6 @@
               "type": "minecraft:item",
               "conditions": [
                 {
-                  "condition": "minecraft:survives_explosion"
-                },
-                {
                   "condition": "minecraft:block_state_property",
                   "block": "the_bumblezone:pile_of_pollen",
                   "properties": {
@@ -297,9 +276,6 @@
             {
               "type": "minecraft:item",
               "conditions": [
-                {
-                  "condition": "minecraft:survives_explosion"
-                },
                 {
                   "condition": "minecraft:block_state_property",
                   "block": "the_bumblezone:pile_of_pollen",
@@ -340,9 +316,7 @@
       ],
       "conditions": [
         {
-          "condition": "minecraft:entity_properties",
-          "predicate": {},
-          "entity": "this"
+          "condition": "minecraft:survives_explosion"
         }
       ]
     }

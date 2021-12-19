@@ -2,3 +2,8 @@ accessWidener v1 named
 accessible class net/minecraft/world/item/crafting/SimpleCookingSerializer$CookieBaker
 accessible class net/minecraft/world/entity/animal/Bee$BeeWanderGoal
 accessible method net/minecraft/client/particle/SuspendedParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/particle/SpriteSet;DDD)V
+accessible class net/minecraft/world/level/levelgen/SurfaceRules$Context
+accessible class net/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule
+accessible class net/minecraft/world/level/levelgen/SurfaceRules$StateRule
+accessible method net/minecraft/world/level/levelgen/SurfaceRules$StateRule <init> (Lnet/minecraft/world/level/block/state/BlockState;)V
+accessible method net/minecraft/world/level/levelgen/Beardifier <init> (Lnet/minecraft/world/level/StructureFeatureManager;Lnet/minecraft/world/level/chunk/ChunkAccess;)V

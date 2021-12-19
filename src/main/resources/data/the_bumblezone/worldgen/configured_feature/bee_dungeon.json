@@ -1,0 +1,13 @@
+{
+  "config": {
+    "processors": "the_bumblezone:bee_dungeon_processors",
+    "structure_y_offset": -4,
+    "dungeon_nbt_entries": [
+      {
+        "resourcelocation": "the_bumblezone:bee_dungeon",
+        "weight": 1
+      }
+    ]
+  },
+  "type": "the_bumblezone:bee_dungeon"
+}

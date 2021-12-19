@@ -11,19 +11,19 @@ buildscript {
 }
 
 plugins {
-	id 'fabric-loom' version '0.8-SNAPSHOT'
-	id 'maven-publish'
+	id 'fabric-loom' version '0.10-SNAPSHOT'
+	id 'io.github.juuxel.loom-quiltflower-mini' version '1.1.0'
 }
 
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 version = "${project.mod_version}+${project.minecraft_version}"
 archivesBaseName = "${project.archives_base_name}_fabric"
 group = project.maven_group
 
-minecraft {
-	accessWidener = file("src/main/resources/the_bumblezone.accesswidener")
+loom {
+	accessWidenerPath = file("src/main/resources/the_bumblezone.accesswidener")
 }
 
 repositories {
@@ -62,26 +62,19 @@ dependencies {
 	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"
 	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_version}"
 
-	modImplementation "dev.cafeteria:fake-player-api:0.2.0"
-	include "dev.cafeteria:fake-player-api:0.2.0"
+	modImplementation "dev.cafeteria:fake-player-api:${project.fake_player_version}"
+	include "dev.cafeteria:fake-player-api:${project.fake_player_version}"
 
 	modImplementation ("maven.modrinth:modmenu:${project.mod_menu_version}") { transitive = false }
 
-	modCompileOnly ("curse.maven:charm-318872:3355096") { transitive = false }
-
-	modImplementation "com.telepathicgrunt:Blame-Fabric:${project.blame_version}"
+	//modCompileOnly ("curse.maven:charm-318872:3355096") { transitive = false }
 }
 
 apply from: 'gradle/processresources.gradle'
 
 tasks.withType(JavaCompile).configureEach {
 	it.options.encoding = "UTF-8"
-	it.options.release = 16
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-	classifier = "sources"
-	from sourceSets.main.allSource
+	it.options.release = 17
 }
 
 java {
@@ -89,9 +82,7 @@ java {
 }
 
 jar {
-	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
-	}
+	from "LICENSE"
 }
 
 apply from: 'gradle/maven.gradle'

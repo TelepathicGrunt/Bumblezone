@@ -24,7 +24,7 @@
       "conditions": {
         "items": [
           {
-            "items": [ "the_bumblezone:sugar_infused_stone" ]
+            "items": ["the_bumblezone:sugar_infused_stone"]
           }
         ]
       }
@@ -34,7 +34,7 @@
       "conditions": {
         "items": [
           {
-            "items": [ "the_bumblezone:sugar_infused_cobblestone" ]
+            "items": ["the_bumblezone:sugar_infused_cobblestone"]
           }
         ]
       }

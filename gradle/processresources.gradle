@@ -24,7 +24,7 @@ processResources {
             try{
                 file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
             }
-            catch(Exception e){
+            catch(Exception e) {
                 System.out.println("Parsing JSON error in " + file.path)
                 throw e
             }

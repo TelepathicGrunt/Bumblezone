@@ -20,16 +20,16 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.telepathicgrunt.bumblezone.Bumblezone"
+      "com.telepathicgrunt.the_bumblezone.Bumblezone"
     ],
     "modmenu": [
-      "com.telepathicgrunt.bumblezone.configs.ModMenuConfig"
+      "com.telepathicgrunt.the_bumblezone.configs.ModMenuConfig"
     ],
     "client": [
-      "com.telepathicgrunt.bumblezone.client.BumblezoneClient"
+      "com.telepathicgrunt.the_bumblezone.client.BumblezoneClient"
     ],
     "cardinal-components-entity": [
-      "com.telepathicgrunt.bumblezone.Bumblezone"
+      "com.telepathicgrunt.the_bumblezone.Bumblezone"
     ]
   },
   "mixins": [
@@ -39,16 +39,16 @@
   "accessWidener" : "the_bumblezone.accesswidener",
 
   "depends": {
-    "fabricloader": ">=0.11.3",
-    "minecraft": ">=1.17.0",
-    "fabric": ">=0.41.0",
+    "fabricloader": ">=0.12.0",
+    "minecraft": ">=1.18.1",
+    "fabric": ">=0.43.1",
+    "cloth-config2": ">=6.0.42",
     "cardinal-components-base": "*",
-    "cardinal-components-entity": "*",
-    "cloth-config2": ">=5.0.0"
+    "cardinal-components-entity": "*"
   },
   "custom": {
     "cardinal-components": [
-      "the_bumblezone:player_component",
+      "the_bumblezone:entity_component",
       "the_bumblezone:original_flying_speed"
     ],
     "notify_gradle_properties_url": "https://raw.githubusercontent.com/TelepathicGrunt/Bumblezone-Fabric/latest-released/gradle.properties",

@@ -9,6 +9,7 @@
           "type": "minecraft:alternatives",
           "children": [
             {
+              "name": "the_bumblezone:filled_porous_honeycomb_block",
               "type": "minecraft:item",
               "conditions": [
                 {
@@ -24,10 +25,10 @@
                     ]
                   }
                 }
-              ],
-              "name": "the_bumblezone:filled_porous_honeycomb_block"
+              ]
             },
             {
+              "name": "minecraft:honeycomb",
               "type": "minecraft:item",
               "functions": [
                 {
@@ -38,8 +39,7 @@
                 {
                   "function": "minecraft:explosion_decay"
                 }
-              ],
-              "name": "minecraft:honeycomb"
+              ]
             }
           ]
         }
@@ -55,47 +55,29 @@
       "rolls": 1,
       "entries": [
         {
-          "type": "minecraft:alternatives",
-          "children": [
-            {
-              "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "enchantments": [
-                      {
-                        "enchantment": "minecraft:silk_touch",
-                        "levels": {
-                          "min": 1
-                        }
-                      }
-                    ]
-                  }
-                }
-              ],
-              "functions": [
-                {
-                  "function": "minecraft:set_count",
-                  "count": {
-                    "min": 0.0,
-                    "max": 0.0,
-                    "type": "minecraft:uniform"
-                  }
-                }
-              ],
-              "name": "minecraft:stone"
-            },
-            {
-              "type": "minecraft:item",
-              "name": "the_bumblezone:porous_honeycomb_block"
-            }
-          ]
+          "name": "the_bumblezone:porous_honeycomb_block",
+          "type": "minecraft:item"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
+        },
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "enchantments": [
+                {
+                  "enchantment": "minecraft:silk_touch",
+                  "levels": {
+                    "min": 1
+                  }
+                }
+              ]
+            }
+          }
         }
       ]
     }

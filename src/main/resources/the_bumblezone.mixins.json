@@ -1,8 +1,9 @@
 {
   "required": true,
-  "package": "com.telepathicgrunt.bumblezone.mixin",
-  "compatibilityLevel": "JAVA_8",
+  "package": "com.telepathicgrunt.the_bumblezone.mixin",
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "world.NoiseChunkAccessor",
     "blocks.AbstractFurnaceBlockEntityMixin",
     "blocks.BeeHiveDropsMixin",
     "blocks.DefaultDispenseItemBehaviorInvoker",
@@ -44,9 +45,11 @@
     "items.PlayerDamagedMixin",
     "items.PlayerDamageShieldInvoker",
     "items.SimpleCookingSerializerMixin",
-    "world.BiomeLayerAccessor",
+    "world.BiomeSourceAccessor",
+    "world.NoiseGeneratorSettingsInvoker",
     "world.ServerLevelMixin",
-    "world.StructureTemplateAccessor"
+    "world.StructureTemplateAccessor",
+    "world.WorldGenSettingsMixin"
   ],
   "client": [
     "blocks.ScreenEffectRendererMixin",

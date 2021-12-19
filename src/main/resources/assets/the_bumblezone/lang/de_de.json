@@ -3,14 +3,14 @@
 
   "block.the_bumblezone.porous_honeycomb_block": "Poriger Honigwabenblock",
   "block.the_bumblezone.filled_porous_honeycomb_block": "Gef\u00fcllter poriger Honigwabenblock",
-  "block.the_bumblezone.dead_honeycomb_larva_block": "Leerer Wabenbrutblock",
-  "block.the_bumblezone.honeycomb_larva_block": "Wabenbrutblock",
+  "block.the_bumblezone.empty_honeycomb_brood_block": "Leerer Wabenbrutblock",
+  "block.the_bumblezone.honeycomb_brood_block": "Wabenbrutblock",
   "block.the_bumblezone.sugar_infused_cobblestone": "Zuckergetr\u00e4nkter Bruchstein",
   "block.the_bumblezone.sugar_infused_stone": "Zuckergetr\u00e4nkter Stein",
   "block.the_bumblezone.sticky_honey_residue": "Klebriger Honigrest",
   "block.the_bumblezone.sticky_honey_redstone": "Klebriger Honigredstone",
   "block.the_bumblezone.honey_crystal": "Honigkristall",
-  "block.the_bumblezone.beeswax_planks": "Beehive Beeswax",
+  "block.the_bumblezone.beehive_beeswax": "Beehive Beeswax",
   "block.the_bumblezone.pile_of_pollen": "Pile of Pollen",
 
   "fluid.the_bumblezone.sugar_water_still": "Sugar Water",

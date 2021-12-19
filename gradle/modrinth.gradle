@@ -14,15 +14,14 @@ import com.modrinth.minotaur.TaskModrinthUpload
 String fileContents = new File("./", "CHANGELOG.md").text
 
 // Make sure it runs after build!
-task publishModrinth (type: TaskModrinthUpload){
+task publishModrinth (type: TaskModrinthUpload) {
     token = "$System.env.MODRINTH"
     versionName = "The Bumblezone"
     projectId = 'eA8SXqWL'
     versionNumber = project.version
     uploadFile = remapJar
     changelog = fileContents
-    addGameVersion("1.17")
-    addGameVersion("1.17.1")
+    addGameVersion("1.18")
     addLoader('fabric')
 }
 

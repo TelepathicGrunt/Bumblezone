@@ -14,6 +14,12 @@
       "max_delay": 12000,
       "replace_current_music": false
     },
+    "particle": {
+      "options": {
+        "type": "the_bumblezone:pollen_puff"
+      },
+      "probability": 0.02
+    },
     "sky_color": 16759808,
     "foliage_color": 7593531,
     "grass_color": 7600187,
@@ -21,10 +27,10 @@
     "water_color": 14402413,
     "water_fog_color": 11700268
   },
-  "surface_builder": "the_bumblezone:pollen_deep_surface_builder",
   "carvers": {},
   "features": [
     [
+      "the_bumblezone:pollinated_surface_thick",
       "the_bumblezone:pollinated_caves"
     ],
     [],
@@ -45,10 +51,6 @@
       "the_bumblezone:sugar_waterfall_low"
     ],
     []
-  ],
-  "starts": [
-    "the_bumblezone:pollinated_stream",
-    "the_bumblezone:honey_cave_room"
   ],
   "creature_spawn_probability": 0.17,
   "spawners": {
@@ -105,6 +107,8 @@
       }
     ],
     "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
     "water_creature": [],
     "water_ambient": [],
     "misc": []
