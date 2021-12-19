@@ -84,11 +84,11 @@ public class BeeInteractivity {
                 }
             }
             else if(itemRL.getPath().contains("honey")) {
-                beeEntity.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 2, false, false, false));
+                beeEntity.heal(2);
                 removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
             }
             else{
-                beeEntity.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 1, false, false, false));
+                beeEntity.heal(1);
                 removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.1f, 3);
             }
 
