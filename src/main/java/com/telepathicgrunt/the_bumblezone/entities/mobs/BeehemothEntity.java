@@ -260,7 +260,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                 if (isOwnedBy(player)) {
                     if (BzItemTags.BEE_FEEDING_ITEMS.contains(item) && !player.isShiftKeyDown()) {
                         if(item == BzItems.BEE_BREAD) {
-                            addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 2, false, false, false));
+                            heal(2);
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
                             addFriendship(5);
                             return InteractionResult.PASS;
@@ -271,12 +271,12 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                             addFriendship(5);
                         }
                         else if (itemRL.getPath().contains("honey")) {
-                            addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 2, false, false, false));
+                            heal(2);
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.3f, 3);
                             addFriendship(3);
                         }
                         else {
-                            addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 1, false, false, false));
+                            heal(1);
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.1f, 3);
                             addFriendship(1);
                         }
