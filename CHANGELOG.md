@@ -1,3 +1,9 @@
+### **(V.4.0.1 Changes) (1.18.1 Minecraft)**
+
+##### Items:
+Fixed Pollen Puff not growing a Pile of Pollen if thrown through a tall stack.
+
+
 ### **(V.4.0.0 Changes) (1.18.1 Minecraft)**
 
 ##### Major:
