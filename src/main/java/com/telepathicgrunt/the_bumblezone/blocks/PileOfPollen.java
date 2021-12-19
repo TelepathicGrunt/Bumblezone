@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Panda;
@@ -37,6 +38,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -137,6 +139,21 @@ public class PileOfPollen extends FallingBlock {
     @Override
     public BlockState updateShape(BlockState oldBlockState, Direction direction, BlockState newBlockState, LevelAccessor world, BlockPos blockPos, BlockPos blockPos1) {
         return !oldBlockState.canSurvive(world, blockPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(oldBlockState, direction, newBlockState, world, blockPos, blockPos1);
+    }
+
+    @Override
+    public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
+        if (canFall(serverLevel.getBlockState(blockPos.below())) && blockPos.getY() >= serverLevel.getMinBuildHeight()) {
+            FallingBlockEntity fallingblockentity = new FallingBlockEntity(serverLevel, (double)blockPos.getX() + 0.5D, blockPos.getY(), (double)blockPos.getZ() + 0.5D, serverLevel.getBlockState(blockPos));
+            this.falling(fallingblockentity);
+            serverLevel.addFreshEntity(fallingblockentity);
+        }
+    }
+
+    private static boolean canFall(BlockState blockState) {
+        Material material = blockState.getMaterial();
+        boolean isFullPollenPile = blockState.is(BzBlocks.PILE_OF_POLLEN) && blockState.getValue(PileOfPollen.LAYERS) == 8;
+        return !isFullPollenPile && (blockState.isAir() || blockState.is(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable());
     }
 
     @Override
