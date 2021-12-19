@@ -48,7 +48,7 @@
   },
   "custom": {
     "cardinal-components": [
-      "the_bumblezone:player_component",
+      "the_bumblezone:entity_component",
       "the_bumblezone:original_flying_speed"
     ],
     "notify_gradle_properties_url": "https://raw.githubusercontent.com/TelepathicGrunt/Bumblezone-Fabric/latest-released/gradle.properties",

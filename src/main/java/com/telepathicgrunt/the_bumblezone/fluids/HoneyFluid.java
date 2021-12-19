@@ -33,6 +33,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.Random;
 
@@ -317,6 +318,14 @@ public abstract class HoneyFluid extends FlowingFluid {
         }
 
         return totalHeight / (float)checkedSides;
+    }
+
+    // Used in FluidRendererMixin
+    public static void setBottomFluidHeight(Args args, BlockPos blockPos, FluidState fluidState) {
+        if(fluidState.is(BzFluidTags.BZ_HONEY_FLUID)) {
+            double blockY = (blockPos.getY() & 15);
+            args.set(2, blockY + (fluidState.isSource() ? 0f : fluidState.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8f));
+        }
     }
 
     public static boolean shouldNotCullSide(BlockGetter world, BlockPos blockPos, Direction direction, FluidState currentFluidState) {
