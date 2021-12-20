@@ -3,6 +3,9 @@
 ##### Items:
 Fixed Pollen Puff not growing a Pile of Pollen if thrown through a tall stack.
 
+##### Mod Compat:
+Fixed crash with some mods asking for getBaseHeight from Bumblezone's chunk generator.
+
 
 ### **(V.4.0.0 Changes) (1.18.1 Minecraft)**
 
