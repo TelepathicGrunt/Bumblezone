@@ -222,7 +222,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
                 }
 
                 highestNeighboringFluidLevel = Math.max(highestNeighboringFluidLevel, sideFluidState.getAmount());
-                if(sideFluidState.getType() instanceof HoneyFluid) {
+                if(sideFluidState.getType() instanceof HoneyFluid && sideFluidState.isSource()) {
                     lowestNeighboringFluidLevel = Math.min(lowestNeighboringFluidLevel, sideFluidState.isSource() ? 0 : sideFluidState.getValue(BOTTOM_LEVEL));
                 }
             }
@@ -323,15 +323,6 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
         }
 
         return totalHeight / (float)checkedSides;
-    }
-
-    // Used in FluidRendererMixin
-    public static double setBottomFluidHeight(double bottomY, BlockPos blockPos, FluidState fluidState) {
-        if(fluidState.is(BzFluidTags.BZ_HONEY_FLUID)) {
-            double blockY = (blockPos.getY() & 15);
-            return blockY + (fluidState.isSource() ? 0f : fluidState.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8f);
-        }
-        return bottomY;
     }
 
     public static boolean shouldNotCullSide(BlockGetter world, BlockPos blockPos, Direction direction, FluidState currentFluidState) {
