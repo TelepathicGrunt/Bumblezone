@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.client;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.telepathicgrunt.the_bumblezone.blocks.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
 import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
 import net.minecraft.client.renderer.block.LiquidBlockRenderer;
@@ -16,11 +15,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(LiquidBlockRenderer.class)
 public class FluidRendererMixin {
