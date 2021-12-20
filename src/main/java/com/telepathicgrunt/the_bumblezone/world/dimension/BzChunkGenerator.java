@@ -216,7 +216,7 @@ public class BzChunkGenerator extends ChunkGenerator {
                 noiseChunk.updateForZ(e);
                 BlockState blockState = this.materialRule.apply(noiseChunk, x, y, z);
                 BlockState blockState2 = blockState == null ? this.defaultBlock : blockState;
-                if(blockState.isAir() && y < getSeaLevel()) {
+                if((blockState == null || blockState.isAir()) && y < getSeaLevel()) {
                     blockState2 = this.defaultFluid;
                 }
 

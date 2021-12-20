@@ -1,3 +1,9 @@
+### **(V.4.0.1 Changes) (1.18.1 Minecraft)**
+
+##### Mod Compat:
+Fixed crash with some mods asking for getBaseHeight from Bumblezone's chunk generator.
+
+
 ### **(V.4.0.0 Changes) (1.18.1 Minecraft)**
 
 ##### Major:
