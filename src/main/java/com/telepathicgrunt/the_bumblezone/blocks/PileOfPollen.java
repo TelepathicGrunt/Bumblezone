@@ -240,7 +240,7 @@ public class PileOfPollen extends FallingBlock {
         }
 
         // Make pollen puff entity grow pile of pollen
-        else if(entity.getType().equals(BzEntities.POLLEN_PUFF_ENTITY)) {
+        else if(entity.getType() == BzEntities.POLLEN_PUFF_ENTITY) {
             if(((PollenPuffEntity)entity).isConsumed()) return; // do not run this code if a block already was set.
 
             stackPollen(blockState, world, blockPos, BzBlocks.PILE_OF_POLLEN.defaultBlockState());

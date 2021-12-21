@@ -207,7 +207,12 @@ public abstract class HoneyFluid extends FlowingFluid {
         int currentFluidLevel = blockState.getBlock() instanceof HoneyFluidBlock ? blockState.getValue(HoneyFluidBlock.LEVEL) : 0;
         int highestNeighboringFluidLevel = currentFluidLevel;
         int neighboringFluidSource = 0;
-        boolean hadAboveFluid = blockState.getBlock() instanceof HoneyFluidBlock ? blockState.getValue(ABOVE_FLUID) : false;
+        boolean hasAboveFluid = blockState.getBlock() instanceof HoneyFluidBlock ? blockState.getValue(ABOVE_FLUID) : false;
+
+        BlockPos aboveBlockPos = blockPos.above();
+        BlockState aboveBlockState = worldReader.getBlockState(aboveBlockPos);
+        BlockState belowBlockState = worldReader.getBlockState(blockPos.below());
+        boolean canPassThroughBelow = ((FlowingFluidAccessor)this).thebumblezone_callCanPassThroughWall(Direction.DOWN, worldReader, blockPos, blockState, blockPos.below(), belowBlockState);
 
         for(Direction direction : Direction.Plane.HORIZONTAL) {
             BlockPos sideBlockPos = blockPos.relative(direction);
@@ -219,21 +224,19 @@ public abstract class HoneyFluid extends FlowingFluid {
                 }
 
                 highestNeighboringFluidLevel = Math.max(highestNeighboringFluidLevel, sideFluidState.getAmount());
-                if(sideFluidState.getType() instanceof HoneyFluid) {
+                if(sideFluidState.is(BzFluidTags.BZ_HONEY_FLUID) && !(canPassThroughBelow && !sideFluidState.isSource() && sideBlockState.getValue(HoneyFluidBlock.FALLING) && aboveBlockState.getFluidState().is(BzFluidTags.BZ_HONEY_FLUID))) {
                     lowestNeighboringFluidLevel = Math.min(lowestNeighboringFluidLevel, sideFluidState.isSource() ? 0 : sideFluidState.getValue(BOTTOM_LEVEL));
                 }
             }
         }
 
-        BlockPos aboveBlockPos = blockPos.above();
-        BlockState aboveBlockState = worldReader.getBlockState(aboveBlockPos);
         FluidState aboveFluidState = aboveBlockState.getFluidState();
         boolean aboveFluidIsThisFluid = !aboveFluidState.isEmpty() && aboveFluidState.getType().isSame(this);
         int newBottomFluidLevel = Math.max(lowestNeighboringFluidLevel - 1, 0);
         boolean isFalling = true;
         int newFluidLevel = 8;
         int dropOffValue = this.getDropOff(worldReader);
-        if(hadAboveFluid && !aboveFluidIsThisFluid) {
+        if(hasAboveFluid && !aboveFluidIsThisFluid) {
             dropOffValue = 0;
         }
 
@@ -243,8 +246,7 @@ public abstract class HoneyFluid extends FlowingFluid {
             }
         }
         else {
-            BlockState belowBlockState = worldReader.getBlockState(blockPos.below());
-            isFalling = aboveFluidState.isEmpty() && neighboringFluidSource == 0 && highestNeighboringFluidLevel <= currentFluidLevel && ((FlowingFluidAccessor)this).thebumblezone_callCanPassThroughWall(Direction.DOWN, worldReader, blockPos, blockState, blockPos.below(), belowBlockState);
+            isFalling = aboveFluidState.isEmpty() && neighboringFluidSource == 0 && highestNeighboringFluidLevel <= currentFluidLevel && canPassThroughBelow;
             newFluidLevel = highestNeighboringFluidLevel - dropOffValue;
         }
 

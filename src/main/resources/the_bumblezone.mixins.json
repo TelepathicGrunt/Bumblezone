@@ -29,7 +29,6 @@
     "entities.PlayerEntityInteractionMixin",
     "entities.PlayerEntityMixin",
     "entities.ProtoChunkAddEntityMixin",
-    "entities.SpawnPlacementsAccessor",
     "items.BucketItemAccessor",
     "items.EnchantmentHelperMixin",
     "items.EnderpearlImpactMixin",
