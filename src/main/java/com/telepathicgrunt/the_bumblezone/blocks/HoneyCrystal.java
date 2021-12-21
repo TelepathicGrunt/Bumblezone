@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.google.common.collect.Maps;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -116,7 +117,8 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
 
         if (facing.getOpposite() == blockstate.getValue(FACING) && !blockstate.canSurvive(world, currentPos)) {
             return Blocks.AIR.defaultBlockState();
-        } else {
+        }
+        else {
             if (blockstate.getValue(WATERLOGGED)) {
                 world.scheduleTick(currentPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(world));
             }
@@ -146,7 +148,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
         for (Direction direction : context.getNearestLookingDirections()) {
             blockstate = blockstate.setValue(FACING, direction.getOpposite());
             if (blockstate.canSurvive(worldReader, blockpos)) {
-                return blockstate.setValue(WATERLOGGED, fluidstate.getType().is(FluidTags.WATER) && fluidstate.isSource());
+                return blockstate.setValue(WATERLOGGED, fluidstate.getType().is(BzFluidTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidstate.isSource());
             }
         }
 
@@ -216,12 +218,12 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
 
     @Override
     public boolean canPlaceLiquid(BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
-        return !blockState.getValue(WATERLOGGED) && fluid.is(FluidTags.WATER) && fluid.defaultFluidState().isSource();
+        return !blockState.getValue(WATERLOGGED) && fluid.is(BzFluidTags.CONVERTIBLE_TO_SUGAR_WATER) && fluid.defaultFluidState().isSource();
     }
 
     @Override
     public boolean placeLiquid(LevelAccessor world, BlockPos blockPos, BlockState blockState, FluidState fluidState) {
-        if (!blockState.getValue(WATERLOGGED) && fluidState.getType().is(FluidTags.WATER) && fluidState.isSource()) {
+        if (!blockState.getValue(WATERLOGGED) && fluidState.getType().is(BzFluidTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidState.isSource()) {
             if (!world.isClientSide()) {
                 world.setBlock(blockPos, blockState.setValue(WATERLOGGED, true), 3);
                 world.scheduleTick(blockPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(world));

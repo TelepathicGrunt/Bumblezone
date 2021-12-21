@@ -1,3 +1,14 @@
+### **(V.4.0.2 Changes) (1.18.1 Minecraft)**
+
+##### Fluids:
+Fixed weird interactions with modded fluids bordering Bumblezone's fluids.
+ Such as Honey Fluid turning any water-tagged modded fluid into Sugar Water regardless of that that other fluid is.
+ Solution was more tags.
+ the_bumblezone:fluids/convertible_to_sugar_water
+ forge:fluids/visual/honey
+ forge:fluids/visual/water
+
+
 ### **(V.4.0.1 Changes) (1.18.1 Minecraft)**
 
 ##### Blocks:

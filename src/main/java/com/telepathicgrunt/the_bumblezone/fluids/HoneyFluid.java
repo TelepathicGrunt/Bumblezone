@@ -107,7 +107,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
 
     @Override
     public boolean isSame(Fluid fluid) {
-        return fluid.is(BzFluidTags.HONEY_FLUID);
+        return fluid.is(BzFluidTags.VISUAL_HONEY_FLUID);
     }
 
     @Override
