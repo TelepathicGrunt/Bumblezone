@@ -12,99 +12,38 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(LiquidBlockRenderer.class)
 public class FluidRendererMixin {
-    
-    @Unique
-    BlockPos bz_fluidBlockPos = new BlockPos(0, 0, 0);
-    
-    @Unique
-    FluidState bz_fluidState = null;
-    
-    @Inject(method = "tesselate(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/level/material/FluidState;)Z",
-            at = @At(value = "HEAD"))
-    private void thebumblezone_storeParamInfo(BlockAndTintGetter blockAndTintGetter, BlockPos blockPos, VertexConsumer vertexConsumer, FluidState fluidState, CallbackInfoReturnable<Boolean> cir) {
-        bz_fluidBlockPos = blockPos;
-        bz_fluidState = fluidState;
+
+    // REPLACE WITH modifyArgs mixins WHEN IT WORKS AGAIN IN FORGE.
+    // DO NOT USE modifyArg WITH STORING VALUES IN FIELDS AS THAT ISN'T THREADSAFE AND WILL MESS UP RENDERING HONEY FLUID
+    // DO NOT ASK HOW I KNOW.
+    // make honey fluid flow downward slower
+    @ModifyVariable(method = "tesselate(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/level/material/FluidState;)Z",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;getU0()F",
+                    ordinal = 1, shift = At.Shift.BY, by = -6),
+            ordinal = 13)
+    private float thebumblezone_changeFluidHeight(float fluidBottomHeight, BlockAndTintGetter blockDisplayReader, BlockPos blockPos, VertexConsumer vertexBuilder, FluidState fluidState) {
+        if(fluidState.is(BzFluidTags.BZ_HONEY_FLUID)) {
+            return fluidState.isSource() ? 0f : fluidState.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8f;
+        }
+        return fluidBottomHeight;
     }
 
-    // make honey fluid render with correct height for bottom layer amount
-    @ModifyArg(method = "tesselate(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/level/material/FluidState;)Z",
-            index = 2,
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;vertex(Lcom/mojang/blaze3d/vertex/VertexConsumer;DDDFFFFFFI)V", ordinal = 0),
-            slice = @Slice(from = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;getLightColor(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;)I", ordinal = 1),
-                    to = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;getLightColor(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;)I", ordinal = 2)))
-    private double thebumblezone_changeFluidHeight1(double bottomY) {
-        return HoneyFluid.setBottomFluidHeight(bottomY, bz_fluidBlockPos, bz_fluidState);
-    }
-
-    @ModifyArg(method = "tesselate(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/level/material/FluidState;)Z",
-            index = 2,
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;vertex(Lcom/mojang/blaze3d/vertex/VertexConsumer;DDDFFFFFFI)V", ordinal = 1),
-            slice = @Slice(from = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;getLightColor(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;)I", ordinal = 1),
-                    to = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;getLightColor(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;)I", ordinal = 2)))
-    private double thebumblezone_changeFluidHeight2(double bottomY) {
-        return HoneyFluid.setBottomFluidHeight(bottomY, bz_fluidBlockPos, bz_fluidState);
-    }
-
-    @ModifyArg(method = "tesselate(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/level/material/FluidState;)Z",
-            index = 2,
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;vertex(Lcom/mojang/blaze3d/vertex/VertexConsumer;DDDFFFFFFI)V", ordinal = 2),
-            slice = @Slice(from = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;getLightColor(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;)I", ordinal = 1),
-                    to = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;getLightColor(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;)I", ordinal = 2)))
-    private double thebumblezone_changeFluidHeight3(double bottomY) {
-        return HoneyFluid.setBottomFluidHeight(bottomY, bz_fluidBlockPos, bz_fluidState);
-    }
-
-    @ModifyArg(method = "tesselate(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/level/material/FluidState;)Z",
-            index = 2,
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;vertex(Lcom/mojang/blaze3d/vertex/VertexConsumer;DDDFFFFFFI)V", ordinal = 3),
-            slice = @Slice(from = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;getLightColor(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;)I", ordinal = 1),
-                    to = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;getLightColor(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;)I", ordinal = 2)))
-    private double thebumblezone_changeFluidHeight4(double bottomY) {
-        return HoneyFluid.setBottomFluidHeight(bottomY, bz_fluidBlockPos, bz_fluidState);
-    }
-
-    @ModifyArg(method = "tesselate(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/level/material/FluidState;)Z",
-            index = 2,
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;vertex(Lcom/mojang/blaze3d/vertex/VertexConsumer;DDDFFFFFFI)V", ordinal = 2),
-            slice = @Slice(from = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/core/BlockPos;relative(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;")))
-    private double thebumblezone_changeFluidHeight5(double bottomY) {
-        return HoneyFluid.setBottomFluidHeight(bottomY, bz_fluidBlockPos, bz_fluidState);
-    }
-
-    @ModifyArg(method = "tesselate(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/level/material/FluidState;)Z",
-            index = 2,
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;vertex(Lcom/mojang/blaze3d/vertex/VertexConsumer;DDDFFFFFFI)V", ordinal = 3),
-            slice = @Slice(from = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/core/BlockPos;relative(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;")))
-    private double thebumblezone_changeFluidHeight6(double bottomY) {
-        return HoneyFluid.setBottomFluidHeight(bottomY, bz_fluidBlockPos, bz_fluidState);
-    }
-
-    @ModifyArg(method = "tesselate(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/level/material/FluidState;)Z",
-            index = 2,
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;vertex(Lcom/mojang/blaze3d/vertex/VertexConsumer;DDDFFFFFFI)V", ordinal = 4),
-            slice = @Slice(from = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/core/BlockPos;relative(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;")))
-    private double thebumblezone_changeFluidHeight7(double bottomY) {
-        return HoneyFluid.setBottomFluidHeight(bottomY, bz_fluidBlockPos, bz_fluidState);
-    }
-
-    @ModifyArg(method = "tesselate(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/level/material/FluidState;)Z",
-            index = 2,
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;vertex(Lcom/mojang/blaze3d/vertex/VertexConsumer;DDDFFFFFFI)V", ordinal = 5),
-            slice = @Slice(from = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/core/BlockPos;relative(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;")))
-    private double thebumblezone_changeFluidHeight8(double bottomY) {
-        return HoneyFluid.setBottomFluidHeight(bottomY, bz_fluidBlockPos, bz_fluidState);
+    @ModifyVariable(method = "tesselate(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/level/material/FluidState;)Z",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;shouldRenderFace(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;)Z",
+                    ordinal = 1, shift = At.Shift.BEFORE),
+            ordinal = 2)
+    private boolean thebumblezone_cullBottom(boolean showBottom, BlockAndTintGetter blockDisplayReader, BlockPos blockPos, VertexConsumer vertexBuilder, FluidState fluidState) {
+        if(fluidState.is(BzFluidTags.BZ_HONEY_FLUID) && !fluidState.isSource()) {
+            return showBottom || fluidState.getValue(HoneyFluidBlock.BOTTOM_LEVEL) != 8;
+        }
+        return showBottom;
     }
 
 
