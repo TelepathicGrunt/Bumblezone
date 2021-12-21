@@ -10,9 +10,12 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 
-public class HoneySlimeSpawnEgg extends SpawnEggItem {
-    public HoneySlimeSpawnEgg(EntityType<? extends Mob> typeIn, int primaryColorIn, int secondaryColorIn, Properties builder) {
+import java.util.function.Supplier;
+
+public class DispenserAddedSpawnEgg extends ForgeSpawnEggItem {
+    public DispenserAddedSpawnEgg(Supplier<? extends EntityType<? extends Mob>> typeIn, int primaryColorIn, int secondaryColorIn, Properties builder) {
         super(typeIn, primaryColorIn, secondaryColorIn, builder);
 
         // Have to manually add dispenser behavior due to forge item registry event running too late.

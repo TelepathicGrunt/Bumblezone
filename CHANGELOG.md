@@ -4,6 +4,10 @@
 Undid a mixin for Honey Fluid rendering to use an old and fragile mixin instead. Reason is modifyArgs mixin is broken in 
  Forge and when I tried to use modifyArg with storing values I need in a field, it broke rendering Honey Fluid as it is not threadsafe.
 
+Fixed Honey Fluid bottom not rendering when it is slowly falling onto an opaque block.
+
+Fixed Honey Fluid falling faster if there is neighboring Honey Fluid that is also falling.
+
 ##### Items:
 Fixed Pollen Puff not growing a Pile of Pollen if thrown through a tall stack.
 
