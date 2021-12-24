@@ -70,7 +70,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
                 // Must be very low as this method is fired every tick for status effects.
                 // We don't want to spawn millions of bees
                 if(!world.isClientSide() && world.random.nextFloat() <= 0.0045f) {
-                    // Grab a nearby air materialposition not in the player's field of view
+                    // Grab a nearby air materialposition a bit away
                     BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(world, entity, 30, 10);
                     if(world.getBlockState(spawnBlockPos).getMaterial() != Material.AIR) {
                         return;

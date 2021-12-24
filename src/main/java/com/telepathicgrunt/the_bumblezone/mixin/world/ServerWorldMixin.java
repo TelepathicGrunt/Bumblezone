@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.world;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.BeeDedicatedSpawning;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.resources.ResourceKey;
@@ -39,7 +40,9 @@ public abstract class ServerWorldMixin extends Level {
 			if(thebumblezone_counter % thebumblezone_updateInterval == 0){
 				thebumblezone_counter = 0;
 				GeneralUtils.updateEntityCount(((ServerLevel) (Object) this));
-				BeeDedicatedSpawning.specialSpawnBees((ServerLevel) (Object) this);
+				if(BzGeneralConfigs.specialBeeSpawning.get()) {
+					BeeDedicatedSpawning.specialSpawnBees((ServerLevel) (Object) this);
+				}
 			}
 		}
 	}

@@ -87,7 +87,6 @@ public class GeneralUtils {
 
     ////////////////
 
-    @NotNull
     public static BlockPos getRandomBlockposWithinRange(Level world, Entity entity, int maxRadius, int minRadius) {
         BlockPos newBeePos;
         newBeePos = new BlockPos(

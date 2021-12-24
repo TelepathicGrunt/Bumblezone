@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -32,7 +33,7 @@ public final class BeeDedicatedSpawning {
             }
         }
 
-        int beesPerPlayer = 25;
+        int beesPerPlayer = BzGeneralConfigs.nearbyBeesPerPlayerInBz.get();
         int maxWildBeeLimit = beesPerPlayer * serverPlayers.size();
         if(allWildBees.size() <= maxWildBeeLimit) {
             for(ServerPlayer serverPlayer : serverPlayers) {
