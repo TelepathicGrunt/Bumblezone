@@ -2,48 +2,67 @@ package com.telepathicgrunt.the_bumblezone.utils;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
 public class GeneralUtils {
 
     private static int ACTIVE_ENTITIES = 0;
+    private static final Set<Bee> BEE_SET = new HashSet<>();
 
     public static void updateEntityCount(ServerLevel world) {
-
-        // If iterable is a collection, just get size directly
-        if (world.getAllEntities() instanceof Collection) {
-            ACTIVE_ENTITIES = ((Collection<?>) world.getAllEntities()).size();
-            return;
-        }
-
-        // If iterable isn't a collection, we have to manually count how many entities there are
+        BEE_SET.clear();
         int counter = 0;
-        for (Object ignored : world.getAllEntities()) {
+        for (Entity entity : world.getAllEntities()) {
             counter++;
+            if(entity.getType() == EntityType.BEE) {
+                BEE_SET.add((Bee)entity);
+            }
         }
         ACTIVE_ENTITIES = counter;
+        BEE_SET.removeIf(bee ->
+                bee.isPersistenceRequired()
+                || bee.hasHive()
+                || bee.hasCustomName()
+                || bee.isLeashed()
+                || bee.isVehicle());
     }
 
     public static int getEntityCountInBz() {
         return ACTIVE_ENTITIES;
     }
 
+    public static void adjustEntityCountInBz(int adjust) {
+        ACTIVE_ENTITIES += adjust;
+    }
+
+    public static Set<Bee> getAllWildBees() {
+        return BEE_SET;
+    }
 
     /////////////////////////////
 
@@ -64,6 +83,18 @@ public class GeneralUtils {
         }
 
         return rlList.get(index).getFirst();
+    }
+
+    ////////////////
+
+    @NotNull
+    public static BlockPos getRandomBlockposWithinRange(Level world, Entity entity, int maxRadius, int minRadius) {
+        BlockPos newBeePos;
+        newBeePos = new BlockPos(
+                entity.getX() + (world.random.nextInt(maxRadius) + minRadius) * (world.random.nextBoolean() ? 1 : -1),
+                entity.getY() + (world.random.nextInt(maxRadius) + minRadius) * (world.random.nextBoolean() ? 1 : -1),
+                entity.getZ() + (world.random.nextInt(maxRadius) + minRadius) * (world.random.nextBoolean() ? 1 : -1));
+        return newBeePos;
     }
 
     ////////////////
