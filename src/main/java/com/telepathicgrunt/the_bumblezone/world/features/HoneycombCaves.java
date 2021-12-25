@@ -219,11 +219,18 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                 }
                 else {
                     world.setBlock(blockPos, Blocks.CAVE_AIR.defaultBlockState(), 3);
+                    BlockPos abovePos = blockPos.above();
+                    BlockState aboveState = world.getBlockState(abovePos);
+                    if(!aboveState.isAir() && !aboveState.isCollisionShapeFullBlock(world, abovePos)) {
+                        world.setBlock(abovePos, Blocks.CAVE_AIR.defaultBlockState(), 3);
+                    }
                 }
-            } else if (posResult == 1) {
+            }
+            else if (posResult == 1) {
                 if (random.nextInt(3) == 0) {
                     world.setBlock(blockPos, Blocks.HONEYCOMB_BLOCK.defaultBlockState(), 3);
-                } else {
+                }
+                else {
                     world.setBlock(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3);
                 }
             }
