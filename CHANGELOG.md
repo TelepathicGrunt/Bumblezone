@@ -17,6 +17,9 @@ Fixed weird interactions with modded fluids bordering Bumblezone's fluids.
 ##### Structures:
 Fixed Honey Cave Room and Pollinated Streams not spawning.
 
+##### Features:
+Bee Dungeon and Spider Infested Bee Dungeon spawns again now.
+
 
 ### **(V.4.0.1 Changes) (1.18.1 Minecraft)**
 
