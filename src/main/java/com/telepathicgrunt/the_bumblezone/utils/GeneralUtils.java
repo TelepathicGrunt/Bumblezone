@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.primitives.Doubles;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -87,7 +88,7 @@ public class GeneralUtils {
         BlockPos newBeePos;
         newBeePos = new BlockPos(
                 entity.getX() + (world.random.nextInt(maxRadius) + minRadius) * (world.random.nextBoolean() ? 1 : -1),
-                entity.getY() + (world.random.nextInt(maxRadius) + minRadius) * (world.random.nextBoolean() ? 1 : -1),
+                Doubles.constrainToRange(entity.getY() + (world.random.nextInt(maxRadius) + minRadius) * (world.random.nextBoolean() ? 1 : -1), 1, 254),
                 entity.getZ() + (world.random.nextInt(maxRadius) + minRadius) * (world.random.nextBoolean() ? 1 : -1));
         return newBeePos;
     }
