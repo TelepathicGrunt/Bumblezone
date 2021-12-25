@@ -19,7 +19,7 @@ sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 version = "${project.mod_version}+${project.minecraft_version}"
-archivesBaseName = "${project.archives_base_name}_fabric"
+archivesBaseName = "${project.modid}_fabric"
 group = project.maven_group
 
 loom {
