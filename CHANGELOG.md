@@ -1,7 +1,7 @@
 ### **(V.4.1.0 Changes) (1.18.1 Minecraft)**
 
 ##### Major:
-Now hard depends on feature-nbt-deadlock-be-gone mod to prevent deadlocks with Bumblezone's worldgen caused by vanilla bug.
+Now hard depends on Feature NBT Deadlock Be Gone mod to prevent deadlocks with Bumblezone's worldgen caused by vanilla bug.
 
 ##### Entities:
 Added specialBeeSpawning and nearbyBeesPerPlayerInBz config options which makes Bumblezone handle 
