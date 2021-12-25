@@ -27,3 +27,4 @@ description='''An awesome dimension full of bees that becomes REALLY angry if yo
 [[dependencies.the_bumblezone]]
     modId="feature_nbt_deadlock_be_gone"
     mandatory=true
+    versionRange="*"
