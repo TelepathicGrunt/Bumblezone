@@ -14,6 +14,9 @@ Fixed weird interactions with modded fluids bordering Bumblezone's fluids.
  forge:fluids/visual/honey
  forge:fluids/visual/water
 
+##### Structures:
+Fixed Honey Cave Room and Pollinated Streams not spawning.
+
 
 ### **(V.4.0.1 Changes) (1.18.1 Minecraft)**
 

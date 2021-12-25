@@ -53,7 +53,7 @@ public class BzStructures {
                             .build());
         }
 
-        StructureSettingsAccessor.bumblezone_setDEFAULTS(
+        StructureSettingsAccessor.setDEFAULTS(
                 ImmutableMap.<StructureFeature<?>, StructureFeatureConfiguration>builder()
                         .putAll(StructureSettings.DEFAULTS)
                         .put(structure, structureFeatureConfiguration)
