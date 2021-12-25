@@ -44,7 +44,8 @@
     "fabric": ">=0.43.1",
     "cloth-config2": ">=6.0.42",
     "cardinal-components-base": "*",
-    "cardinal-components-entity": "*"
+    "cardinal-components-entity": "*",
+    "feature_nbt_deadlock_be_gone": "*"
   },
   "custom": {
     "cardinal-components": [
