@@ -10,6 +10,10 @@ curseforge {
         addGameVersion("1.18.1")
         addGameVersion("Forge")
 
+        relations {
+            requiredDependency 'feature-nbt-deadlock-be-gone'
+        }
+
         mainArtifact(jar) {
             displayName = "The Bumblezone v${project.mod_version} (${project.mc_version} MC)"
         }

@@ -18,7 +18,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
 version = "${mod_version}+${mc_version}"
-group = "com.telepathicgrunt.${modid}"
+group = "com.telepathicgrunt"
 archivesBaseName = "${modid}_forge"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -91,6 +91,8 @@ dependencies {
     if (System.getProperty("idea.sync.active") != "true") {
         annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     }
+
+    runtimeOnly fg.deobf("com.telepathicgrunt:FeatureNBTDeadlockBeGone-Forge:1.0.0+1.18.1")
 
     // Switch to `implementation` when testing mod compat
     //implementation fg.deobf("com.minecraftabnormals:abnormals-core:${abnormalcore_mc_version}-${abnormalcore_version}")

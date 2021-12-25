@@ -23,3 +23,7 @@ description='''An awesome dimension full of bees that becomes REALLY angry if yo
     modId="forge"
     mandatory=true
     versionRange="[39.0.0,)"
+
+[[dependencies.the_bumblezone]]
+    modId="feature_nbt_deadlock_be_gone"
+    mandatory=true
