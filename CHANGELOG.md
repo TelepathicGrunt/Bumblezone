@@ -1,4 +1,4 @@
-### **(V.4.0.2 Changes) (1.18.1 Minecraft)**
+### **(V.4.1.0 Changes) (1.18.1 Minecraft)**
 
 ##### Entities:
 Added specialBeeSpawning and nearbyBeesPerPlayerInBz config options which makes Bumblezone handle
@@ -13,6 +13,9 @@ Fixed weird interactions with modded fluids bordering Bumblezone's fluids.
  the_bumblezone:fluids/convertible_to_sugar_water
  c:fluids/visual/honey
  c:fluids/visual/water
+
+##### Structures:
+Fixed Honey Cave Room and Pollinated Streams not spawning.
 
 
 ### **(V.4.0.1 Changes) (1.18.1 Minecraft)**
