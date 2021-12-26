@@ -1,0 +1,16 @@
+{
+  "feature": "the_bumblezone:sticky_honey_residue_feature",
+  "placement": [
+    {
+      "chance": 3,
+      "type": "minecraft:rarity_filter"
+    },
+    {
+      "count": 1,
+      "type": "the_bumblezone:random_3d_cluster_placement"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

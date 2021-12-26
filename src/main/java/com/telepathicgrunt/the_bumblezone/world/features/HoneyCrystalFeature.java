@@ -20,9 +20,6 @@ public class HoneyCrystalFeature extends Feature<NoneFeatureConfiguration> {
         super(configFactory);
     }
 
-    private static final Block CAVE_AIR = Blocks.CAVE_AIR;
-    private static final Block AIR = Blocks.AIR;
-
     /**
      * Place crystal block attached to a block if it is buried underground or underwater
      */
@@ -34,13 +31,13 @@ public class HoneyCrystalFeature extends Feature<NoneFeatureConfiguration> {
         BlockState blockstate;
         ChunkPos currentChunkPos = new ChunkPos(blockpos$Mutable);
 
-        if (originalBlockstate.getBlock() == CAVE_AIR || originalBlockstate.getFluidState().is(FluidTags.WATER)) {
+        if (originalBlockstate.getBlock() == Blocks.CAVE_AIR || originalBlockstate.getFluidState().is(FluidTags.WATER)) {
 
             for (Direction face : Direction.values()) {
                 blockpos$Mutable.set(context.origin());
                 blockstate = context.level().getBlockState(blockpos$Mutable.move(face, 7));
 
-                if (blockstate.getBlock() == AIR) {
+                if (blockstate.getBlock() == Blocks.AIR) {
                     return false; // too close to the outside. Refuse generation
                 }
             }
@@ -60,7 +57,7 @@ public class HoneyCrystalFeature extends Feature<NoneFeatureConfiguration> {
 
                     //if the spot is invalid, we get air back
                     BlockState result = HoneyCrystal.updateFromNeighbourShapes(honeyCrystal, context.level(), blockpos$Mutable);
-                    if (result.getBlock() != AIR) {
+                    if (result.getBlock() != Blocks.AIR) {
                         //avoid placing crystal on block in other chunk as the cave hasn't carved it yet.
                         Direction directionProp = result.getValue(HoneyCrystal.FACING);
                         blockpos$Mutable.move(directionProp.getOpposite());
