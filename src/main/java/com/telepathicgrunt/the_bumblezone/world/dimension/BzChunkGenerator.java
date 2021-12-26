@@ -66,6 +66,7 @@ import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.material.MaterialRuleList;
 import net.minecraft.world.level.levelgen.material.WorldGenMaterialRule;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
+import net.minecraftforge.common.ForgeHooks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -466,7 +467,9 @@ public class BzChunkGenerator extends ChunkGenerator {
                     if (entity instanceof Mob mobEntity) {
                         if (mobEntity.checkSpawnRules(region, MobSpawnType.CHUNK_GENERATION) && mobEntity.checkSpawnObstruction(region)) {
                             mobEntity.finalizeSpawn(region, region.getCurrentDifficultyAt(new BlockPos(mobEntity.position())), MobSpawnType.CHUNK_GENERATION, null, null);
-                            region.addFreshEntity(mobEntity);
+                            if(ForgeHooks.canEntitySpawn(mobEntity, region, entity.position().x(), entity.position().y(), entity.position().z(), null, MobSpawnType.CHUNK_GENERATION) != -1) {
+                                region.addFreshEntity(mobEntity);
+                            }
                         }
                     }
                 }

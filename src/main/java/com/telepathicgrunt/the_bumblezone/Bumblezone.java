@@ -16,6 +16,7 @@ import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBiomeHeightRegistry;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -81,6 +82,7 @@ public class Bumblezone{
         forgeBus.addListener(BeeAggression::playerTick);
         forgeBus.addListener(BzWorldSavedData::worldTick);
         forgeBus.addListener(EntityTeleportationBackend::playerLeavingBz);
+        forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
 
         //Registration
         modEventBus.addListener(EventPriority.NORMAL, this::setup);

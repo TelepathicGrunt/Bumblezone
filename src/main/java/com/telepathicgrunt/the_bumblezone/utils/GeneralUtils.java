@@ -40,7 +40,7 @@ public class GeneralUtils {
         int counter = 0;
         for (Entity entity : world.getAllEntities()) {
             counter++;
-            if(entity.getType() == EntityType.BEE) {
+            if(entity instanceof Bee) {
                 BEE_SET.add((Bee)entity);
             }
         }

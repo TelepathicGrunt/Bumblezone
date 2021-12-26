@@ -27,6 +27,9 @@ Bee Dungeon and Spider Infested Bee Dungeon spawns again now.
 
 Sticky Honey Residue now spawns in patches in The Bumblezone dimension.
 
+##### Mod Compat:
+Mod compat with Productive Bees is now back and better balanced now! More config options are available.
+
 
 ### **(V.4.0.1 Changes) (1.18.1 Minecraft)**
 

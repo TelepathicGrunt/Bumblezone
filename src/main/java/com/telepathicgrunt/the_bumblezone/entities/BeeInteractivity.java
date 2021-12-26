@@ -1,9 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -32,6 +34,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class BeeInteractivity {
 
+    private static final ResourceLocation PRODUCTIVE_BEES_HONEY_TREAT = new ResourceLocation("productivebees", "honey_treat");
+
     // heal bees with sugar water bottle or honey bottle
     public static InteractionResult beeFeeding(Level world, Player playerEntity, InteractionHand hand, Entity target) {
         if (target instanceof Bee beeEntity) {
@@ -49,7 +53,7 @@ public class BeeInteractivity {
             ItemStack itemstackOriginal = itemstack.copy();
 
             // Special cased items so the ActionResultType continues and make the item's behavior not lost.
-            if (itemstackOriginal.getItem() == BzItems.BEE_BREAD.get()) {
+            if (itemstackOriginal.getItem() == BzItems.BEE_BREAD.get() || (BzModCompatibilityConfigs.allowHoneyTreatCompat.get() && itemRL.equals(PRODUCTIVE_BEES_HONEY_TREAT))) {
                 removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
 
                 if(removedWrath && playerEntity instanceof ServerPlayer) {

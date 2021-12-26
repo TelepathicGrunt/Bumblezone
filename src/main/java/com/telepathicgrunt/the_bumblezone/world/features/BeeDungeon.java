@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
 
-public class BeeDungeon extends NbtFeature{
+public class BeeDungeon extends NbtFeature {
 
     public BeeDungeon(Codec<NbtFeatureConfig> configFactory) {
         super(configFactory);

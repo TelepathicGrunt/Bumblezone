@@ -11,6 +11,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeHooks;
 
 import java.util.List;
 import java.util.Set;
@@ -38,7 +39,7 @@ public final class BeeDedicatedSpawning {
         if(allWildBees.size() <= maxWildBeeLimit) {
             for(ServerPlayer serverPlayer : serverPlayers) {
                 List<Bee> nearbyBees = world.getEntities(serverPlayer, serverPlayer.getBoundingBox().inflate(despawnDistance, despawnDistance, despawnDistance))
-                        .stream().filter(entity -> entity.getType() == EntityType.BEE).map(entity -> (Bee)entity).collect(Collectors.toList());
+                        .stream().filter(entity -> entity instanceof Bee).map(entity -> (Bee)entity).collect(Collectors.toList());
 
                 for(int i = nearbyBees.size(); i <= beesPerPlayer; i++) {
                     BlockPos newBeePos = GeneralUtils.getRandomBlockposWithinRange(world, serverPlayer, 50, 25);
@@ -51,8 +52,10 @@ public final class BeeDedicatedSpawning {
                     newBee.setDeltaMovement(new Vec3(0, 1D, 0));
                     newBee.setSpeed(0);
                     newBee.finalizeSpawn(world, world.getCurrentDifficultyAt(newBee.blockPosition()), MobSpawnType.NATURAL, null, null);
-                    world.addFreshEntity(newBee);
-                    entityCountChange++;
+                    if(ForgeHooks.canEntitySpawn(newBee, world, newBee.position().x(), newBee.position().y(), newBee.position().z(), null, MobSpawnType.NATURAL) != -1) {
+                        world.addFreshEntity(newBee);
+                        entityCountChange++;
+                    }
                 }
             }
         }
