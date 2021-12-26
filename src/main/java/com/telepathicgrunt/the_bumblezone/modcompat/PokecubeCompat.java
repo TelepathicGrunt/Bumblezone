@@ -15,8 +15,11 @@ import pokecube.core.PokecubeCore;
 import pokecube.core.commands.Pokemake;
 import pokecube.core.database.Database;
 import pokecube.core.database.PokedexEntry;
+import pokecube.core.database.spawns.SpawnBiomeMatcher;
 import pokecube.core.entity.pokemobs.GenericPokemob;
 import pokecube.core.events.pokemob.SpawnEvent;
+import pokecube.core.interfaces.IPokemob;
+import pokecube.core.interfaces.capabilities.CapabilityPokemob;
 import thut.api.maths.Vector3;
 import thut.api.maths.vecmath.Vector3d;
 
@@ -45,7 +48,7 @@ public class PokecubeCompat {
     }
 
     /**
-     * Spawn Pokecube bees 
+     * Spawn Pokecube bees
      */
     public static void PCMobSpawnEvent(LivingSpawnEvent.CheckSpawn event, boolean isChild) {
         List<PokedexEntry> pokemonListToUse = isChild ? BABY_POKECUBE_POKEMON_LIST : POKECUBE_POKEMON_LIST;
@@ -64,6 +67,8 @@ public class PokecubeCompat {
 
         // randomly pick a Pokecube mob entry
         PokedexEntry pokemonDatabase = pokemonListToUse.get(world.getRandom().nextInt(pokemonListToUse.size()));
+        PokedexEntry.SpawnData spawn = pokemonDatabase.getSpawnData();
+        if(spawn == null) return;
         Mob pokemon = PokecubeCore.createPokemob(pokemonDatabase, entity.level);
         if (pokemon == null) return;
 
@@ -76,6 +81,15 @@ public class PokecubeCompat {
                 blockpos.getZ() + 0.5f,
                 world.getRandom().nextFloat() * 360.0F,
                 0.0F);
+
+        IPokemob pokemob = CapabilityPokemob.getPokemobFor(pokemon);
+        if(!isChild) {
+            SpawnBiomeMatcher spawnMatcher = spawn.getMatcher(((ServerLevel) world), Vector3.entity(pokemon), null);
+            pokemob.spawnInit(spawnMatcher.spawnRule);
+        }
+        else {
+            pokemob.setExp(0, false);
+        }
 
         pokemon.finalizeSpawn(
                 (ServerLevelAccessor) world,
