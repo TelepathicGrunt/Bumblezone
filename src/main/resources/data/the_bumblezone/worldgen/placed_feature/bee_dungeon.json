@@ -2,7 +2,23 @@
   "feature": "the_bumblezone:bee_dungeon",
   "placement": [
     {
-      "type": "the_bumblezone:bee_dungeon_placer"
+      "type": "minecraft:count",
+      "count": 3
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "min_inclusive": {
+          "above_bottom": 40
+        },
+        "max_inclusive": {
+          "below_top": 10
+        }
+      }
     },
     {
       "type": "minecraft:biome"

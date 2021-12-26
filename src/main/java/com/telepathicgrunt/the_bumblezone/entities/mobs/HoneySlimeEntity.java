@@ -115,7 +115,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
    @Override
    protected void defineSynchedData() {
       super.defineSynchedData();
-      this.entityData.define(IN_HONEY, false);
+      this.entityData.define(IN_HONEY, true);
       this.entityData.define(IN_HONEY_GROWTH_TIME, 0);
       this.entityData.define(ANGRY_TIMER, 0);
    }

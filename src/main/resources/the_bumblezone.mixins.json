@@ -3,7 +3,6 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "world.NoiseChunkAccessor",
     "blocks.AbstractFurnaceBlockEntityMixin",
     "blocks.BeeHiveDropsMixin",
     "blocks.DefaultDispenseItemBehaviorInvoker",
@@ -45,8 +44,10 @@
     "items.PlayerDamageShieldInvoker",
     "items.SimpleCookingSerializerMixin",
     "world.BiomeSourceAccessor",
+    "world.NoiseChunkAccessor",
     "world.NoiseGeneratorSettingsInvoker",
     "world.ServerLevelMixin",
+    "world.StructureSettingsAccessor",
     "world.StructureTemplateAccessor",
     "world.WorldGenSettingsMixin"
   ],

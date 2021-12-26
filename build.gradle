@@ -19,7 +19,7 @@ sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 version = "${project.mod_version}+${project.minecraft_version}"
-archivesBaseName = "${project.archives_base_name}_fabric"
+archivesBaseName = "${project.modid}_fabric"
 group = project.maven_group
 
 loom {
@@ -67,6 +67,7 @@ dependencies {
 
 	modImplementation ("maven.modrinth:modmenu:${project.mod_menu_version}") { transitive = false }
 
+	runtimeOnly ("com.telepathicgrunt:FeatureNBTDeadlockBeGone-Fabric:1.0.0+1.18.1") { transitive = false }
 	//modCompileOnly ("curse.maven:charm-318872:3355096") { transitive = false }
 }
 
