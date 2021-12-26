@@ -24,6 +24,7 @@ public class StickyHoneyResidueFeature extends Feature<NoneFeatureConfiguration>
             .setValue(StickyHoneyResidue.WEST, true)
             .setValue(StickyHoneyResidue.NORTH, true)
             .setValue(StickyHoneyResidue.SOUTH, true);
+
     /**
      * Place crystal block attached to a block if it is buried underground or underwater
      */
@@ -44,6 +45,10 @@ public class StickyHoneyResidueFeature extends Feature<NoneFeatureConfiguration>
                     if(!(new ChunkPos(mutableBlockPos).equals(currentChunkPos))) {
                         honeyResidue = honeyResidue.setValue(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(side), false);
                     }
+                }
+
+                if(!StickyHoneyResidue.hasAtleastOneAttachment(honeyResidue)) {
+                    return false;
                 }
 
                 context.level().setBlock(context.origin(), honeyResidue, 3);
