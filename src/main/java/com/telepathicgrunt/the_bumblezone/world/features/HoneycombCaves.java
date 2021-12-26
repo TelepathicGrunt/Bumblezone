@@ -196,23 +196,24 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
         for (int x = 0; x < 14; x++) {
             for (int z = 0; z < 11; z++) {
                 int posResult = hexagonArray[index][z][x];
+                int abovePosResult = z == 10 ? 0 : hexagonArray[index][z + 1][x];
 
                 if (posResult != 0) {
                     blockState = world.getBlockState(mutableBlockPos.set(position).move(x - 7, 0, z - 5));
-                    carveAtBlock(world, generator, random, mutableBlockPos, tempMutable, blockState, posResult);
+                    carveAtBlock(world, generator, random, mutableBlockPos, tempMutable, blockState, posResult, abovePosResult);
 
                     blockState = world.getBlockState(mutableBlockPos.set(position).move(0, x - 7, z - 5));
-                    carveAtBlock(world, generator, random, mutableBlockPos, tempMutable, blockState, posResult);
+                    carveAtBlock(world, generator, random, mutableBlockPos, tempMutable, blockState, posResult, abovePosResult);
 
                     blockState = world.getBlockState(mutableBlockPos.set(position).move(z - 5, x - 7, 0));
-                    carveAtBlock(world, generator, random, mutableBlockPos, tempMutable, blockState, posResult);
+                    carveAtBlock(world, generator, random, mutableBlockPos, tempMutable, blockState, posResult, abovePosResult);
                 }
             }
         }
     }
 
     private static void carveAtBlock(WorldGenLevel world, ChunkGenerator generator, Random random,
-                                     BlockPos blockPos, BlockPos.MutableBlockPos mutable, BlockState blockState, int posResult) {
+                                     BlockPos blockPos, BlockPos.MutableBlockPos mutable, BlockState blockState, int posResult, int abovePosResult) {
         if (blockState.canOcclude()) {
             boolean isNextToAir = shouldCloseOff(world, blockPos, mutable, true);
             if(blockPos.getY() >= generator.getSeaLevel() && isNextToAir) return;
@@ -226,10 +227,13 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                         world.setBlock(blockPos, SUGAR_WATER, 3);
                 }
                 else {
-                    BlockPos abovePos = blockPos.above();
-                    BlockState aboveState = world.getBlockState(abovePos);
-                    if(!aboveState.isAir() && !aboveState.isCollisionShapeFullBlock(world, abovePos)) {
-                        world.setBlock(abovePos, Blocks.CAVE_AIR.defaultBlockState(), 3);
+                    world.setBlock(blockPos, CAVE_AIR, 3);
+                    if(abovePosResult <= 1) {
+                        BlockPos abovePos = blockPos.above();
+                        BlockState aboveState = world.getBlockState(abovePos);
+                        if(!aboveState.isAir() && !aboveState.isCollisionShapeFullBlock(world, abovePos)) {
+                            world.setBlock(abovePos, Blocks.CAVE_AIR.defaultBlockState(), 3);
+                        }
                     }
                 }
             }
