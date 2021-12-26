@@ -95,7 +95,7 @@ dependencies {
     runtimeOnly fg.deobf("com.telepathicgrunt:FeatureNBTDeadlockBeGone-Forge:1.0.0+1.18.1")
 
     // Switch to `implementation` when testing mod compat
-    implementation fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
+    compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
     compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
 
     compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
