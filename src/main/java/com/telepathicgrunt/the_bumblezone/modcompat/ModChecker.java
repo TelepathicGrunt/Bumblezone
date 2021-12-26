@@ -25,8 +25,8 @@ public class ModChecker {
     public static void setupModCompat() {
 		String modid = "";
 		try {
-//			modid = "pokecube_mobs";
-//			loadupModCompat(modid, () -> PokecubeCompat.setupPokecube());
+			modid = "pokecube_mobs";
+			loadupModCompat(modid, () -> PokecubeCompat.setupPokecube());
 
 			modid = "productivebees";
 			loadupModCompat(modid, () -> ProductiveBeesCompat.setupProductiveBees());

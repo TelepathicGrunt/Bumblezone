@@ -33,7 +33,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.Random;
 

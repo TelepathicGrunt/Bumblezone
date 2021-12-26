@@ -6,7 +6,7 @@
         "spawnRules": [
           {
             "values": {
-              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
+              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor,the_bumblezone:pollinated_fields,the_bumblezone:pollinated_pillar",
               "rate": "0.33",
               "level": 4,
               "variance": "x + (11 * rand())"
@@ -21,7 +21,7 @@
         "spawnRules": [
           {
             "values": {
-              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
+              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor,the_bumblezone:pollinated_fields,the_bumblezone:pollinated_pillar",
               "rate": "0.15",
               "level": 12,
               "variance": "x + (7 * rand())"
@@ -36,7 +36,7 @@
         "spawnRules": [
           {
             "values": {
-              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
+              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor,the_bumblezone:pollinated_fields,the_bumblezone:pollinated_pillar",
               "rate": "0.1",
               "level": 33,
               "variance": "x + (3 * rand())"
@@ -51,7 +51,7 @@
         "spawnRules": [
           {
             "values": {
-              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
+              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor,the_bumblezone:pollinated_fields,the_bumblezone:pollinated_pillar",
               "rate": "0.55",
               "level": 10,
               "variance": "x + (8 * rand())"
@@ -66,7 +66,7 @@
         "spawnRules": [
           {
             "values": {
-              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
+              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor,the_bumblezone:pollinated_fields,the_bumblezone:pollinated_pillar",
               "rate": "0.1",
               "level": 35,
               "variance": "x + (3 * rand())"
@@ -81,7 +81,7 @@
         "spawnRules": [
           {
             "values": {
-              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
+              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor,the_bumblezone:pollinated_fields,the_bumblezone:pollinated_pillar",
               "rate": "0.33",
               "level": 8,
               "variance": "x + (8 * rand())"
@@ -96,7 +96,7 @@
         "spawnRules": [
           {
             "values": {
-              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor",
+              "biomes": "the_bumblezone:hive_pillar,the_bumblezone:hive_wall,the_bumblezone:sugar_water_floor,the_bumblezone:pollinated_fields,the_bumblezone:pollinated_pillar",
               "rate": "0.1",
               "level": 29,
               "variance": "x + (3 * rand())"

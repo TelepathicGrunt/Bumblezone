@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.world.features.BlockEntityCombOre;
 import com.telepathicgrunt.the_bumblezone.world.features.BeeDungeon;
+import com.telepathicgrunt.the_bumblezone.world.features.BlockEntityCombOre;
 import com.telepathicgrunt.the_bumblezone.world.features.CaveSugarWaterfall;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneyCrystalFeature;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneycombCaves;

@@ -3,8 +3,6 @@ package com.telepathicgrunt.the_bumblezone.world.features;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
-import cy.jdkdigital.productivebees.common.block.ConfigurableCombBlock;
-import cy.jdkdigital.productivebees.common.block.entity.CombBlockBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
@@ -39,7 +37,7 @@ public class BlockEntityCombOre extends Feature<OreConfiguration> {
 		int maxY = (int) (size / 3);
 		int minY = -maxY - 1;
 		String nbt = null;
-		if(ModChecker.productiveBeesPresent && context.config().targetStates.get(0).state.getBlock() instanceof ConfigurableCombBlock combBlock) {
+		if(ModChecker.productiveBeesPresent && ProductiveBeesCompat.PBIsConfigurableComb(context.config().targetStates.get(0).state.getBlock())) {
 			nbt = ProductiveBeesCompat.PBGetRandomCombType(context.random());
 		}
 
@@ -74,13 +72,8 @@ public class BlockEntityCombOre extends Feature<OreConfiguration> {
 						blockToReplace = cachedChunk.getBlockState(blockposMutable);
 						for(OreConfiguration.TargetBlockState targetBlockState : context.config().targetStates) {
 							if(targetBlockState.target.test(blockToReplace, context.random())) {
-								if(ModChecker.productiveBeesPresent && targetBlockState.state.getBlock() instanceof ConfigurableCombBlock combBlock) {
-									if(nbt != null) {
-										cachedChunk.setBlockState(blockposMutable, targetBlockState.state, false);
-										CombBlockBlockEntity be = (CombBlockBlockEntity) combBlock.newBlockEntity(blockposMutable, targetBlockState.state);
-										be.setType(nbt);
-										cachedChunk.setBlockEntity(be);
-									}
+								if(ModChecker.productiveBeesPresent && ProductiveBeesCompat.PBIsConfigurableComb(targetBlockState.state.getBlock())) {
+									ProductiveBeesCompat.placeConfigurableCombBlockEntity(blockposMutable, cachedChunk, nbt, targetBlockState, targetBlockState.state.getBlock());
 									continue;
 								}
 
@@ -94,6 +87,7 @@ public class BlockEntityCombOre extends Feature<OreConfiguration> {
 		
 		return true;
 	}
+
 
 	private static final Map<ResourceKey<Level>, Map<Long, ChunkAccess>> CACHED_CHUNKS_ALL_WORLDS = new WeakHashMap<>();
 	public ChunkAccess getCachedChunk(ServerLevelAccessor world, BlockPos blockpos) {

@@ -6,7 +6,9 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFeatures;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehive;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehiveAbstract;
+import cy.jdkdigital.productivebees.common.block.ConfigurableCombBlock;
 import cy.jdkdigital.productivebees.common.block.ExpansionBox;
+import cy.jdkdigital.productivebees.common.block.entity.CombBlockBlockEntity;
 import cy.jdkdigital.productivebees.common.entity.bee.ConfigurableBee;
 import cy.jdkdigital.productivebees.init.ModBlocks;
 import cy.jdkdigital.productivebees.init.ModEntities;
@@ -21,7 +23,9 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -176,6 +180,19 @@ public class ProductiveBeesCompat {
 
 		world.addFreshEntity(productiveBeeEntity);
 		return true;
+	}
+
+	public static boolean PBIsConfigurableComb(Block block) {
+		return block instanceof ConfigurableCombBlock;
+	}
+
+	public static void placeConfigurableCombBlockEntity(BlockPos.MutableBlockPos blockposMutable, ChunkAccess cachedChunk, String nbt, OreConfiguration.TargetBlockState targetBlockState, Block combBlock) {
+		if(nbt != null) {
+			cachedChunk.setBlockState(blockposMutable, targetBlockState.state, false);
+			CombBlockBlockEntity be = (CombBlockBlockEntity)((ConfigurableCombBlock)combBlock).newBlockEntity(blockposMutable, targetBlockState.state);
+			be.setType(nbt);
+			cachedChunk.setBlockEntity(be);
+		}
 	}
 
 	/**

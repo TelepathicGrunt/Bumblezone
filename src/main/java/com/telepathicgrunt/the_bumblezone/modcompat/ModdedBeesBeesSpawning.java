@@ -37,7 +37,7 @@ public class ModdedBeesBeesSpawning
 
 				if (ModChecker.pokecubePresent &&
 					BzModCompatibilityConfigs.spawnPokecubeBeePokemon.get() &&
-					entity.level.getRandom().nextFloat() < BzModCompatibilityConfigs.spawnrateOfPokecubeBeePokemon.get())
+					entity.level.getRandom().nextFloat() < 0.5f)
 				{
 					PokecubeCompat.PCMobSpawnEvent(event, entity.isBaby());
 				}
