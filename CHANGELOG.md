@@ -25,6 +25,8 @@ Fixed Honey Cave Room and Pollinated Streams not spawning.
 ##### Features:
 Bee Dungeon and Spider Infested Bee Dungeon spawns again now.
 
+Sticky Honey Residue now spawns in patches in The Bumblezone dimension.
+
 
 ### **(V.4.0.1 Changes) (1.18.1 Minecraft)**
 
