@@ -50,6 +50,10 @@ public class StickyHoneyResidueFeature extends Feature<NoneFeatureConfiguration>
                     }
                 }
 
+                if(!StickyHoneyResidue.hasAtleastOneAttachment(honeyResidue)) {
+                    return false;
+                }
+
                 context.level().setBlock(context.origin(), honeyResidue, 3);
                 return true;
             }
