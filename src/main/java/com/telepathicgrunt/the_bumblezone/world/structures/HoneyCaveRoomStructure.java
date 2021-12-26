@@ -103,7 +103,7 @@ public class HoneyCaveRoomStructure extends StructureFeature<JigsawConfiguration
                 context.registryAccess()
         );
 
-        return JigsawPlacement.addPieces(context, PoolElementStructurePiece::new, centerPos, false, false);
+        return JigsawPlacement.addPieces(newContext, PoolElementStructurePiece::new, centerPos, false, false);
     }
 
     @Override

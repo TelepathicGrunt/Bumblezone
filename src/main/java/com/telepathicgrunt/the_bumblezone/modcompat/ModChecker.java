@@ -8,6 +8,10 @@ import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 
 public class ModChecker {
+
+	public static boolean productiveBeesPresent = false;
+	public static boolean pokecubePresent = false;
+
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
 	 *
@@ -19,13 +23,18 @@ public class ModChecker {
 	 * after the problematic mod line.
 	 */
     public static void setupModCompat() {
-//		String modid = "";
-//		try {
-//		}
-//		catch (Throwable e) {
-//			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
-//			e.printStackTrace();
-//		}
+		String modid = "";
+		try {
+			modid = "pokecube_mobs";
+			loadupModCompat(modid, () -> PokecubeCompat.setupPokecube());
+
+			modid = "productivebees";
+			loadupModCompat(modid, () -> ProductiveBeesCompat.setupProductiveBees());
+		}
+		catch (Throwable e) {
+			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
+			e.printStackTrace();
+		}
     }
 
     private static void loadupModCompat(String modid, Runnable runnable){

@@ -122,8 +122,13 @@ public class StickyHoneyResidue extends VineBlock {
     @Deprecated
     @Override
     public void entityInside(BlockState blockstate, Level world, BlockPos pos, Entity entity) {
+        VoxelShape voxelShape = getShape(blockstate, world, pos, null);
+        if(voxelShape == Shapes.empty()) {
+            world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+            return;
+        }
 
-        AABB axisalignedbb = getShape(blockstate, world, pos, null).bounds().move(pos);
+        AABB axisalignedbb = voxelShape.bounds().move(pos);
         List<? extends Entity> list = world.getEntitiesOfClass(LivingEntity.class, axisalignedbb);
 
         if (list.contains(entity)) {
@@ -136,20 +141,20 @@ public class StickyHoneyResidue extends VineBlock {
      */
     @Override
     public boolean canSurvive(BlockState blockstate, LevelReader world, BlockPos pos) {
-        return this.hasAtleastOneAttachment(this.setAttachments(blockstate, world, pos));
+        return hasAtleastOneAttachment(this.setAttachments(blockstate, world, pos));
     }
 
     /**
      * Returns true if the block has at least one face (it exists).
      */
-    private boolean hasAtleastOneAttachment(BlockState blockstate) {
-        return this.numberOfAttachments(blockstate) > 0;
+    public static boolean hasAtleastOneAttachment(BlockState blockstate) {
+        return numberOfAttachments(blockstate) > 0;
     }
 
     /**
      * How many faces this block has at this time.
      */
-    private int numberOfAttachments(BlockState blockstate) {
+    private static int numberOfAttachments(BlockState blockstate) {
         int i = 0;
 
         for (BooleanProperty booleanproperty : FACING_TO_PROPERTY_MAP.values()) {
@@ -203,7 +208,7 @@ public class StickyHoneyResidue extends VineBlock {
     @Override
     public BlockState updateShape(BlockState blockstate, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
         BlockState newBlockstate = this.setAttachments(blockstate, world, currentPos);
-        return !this.hasAtleastOneAttachment(newBlockstate) ? Blocks.AIR.defaultBlockState() : newBlockstate;
+        return !hasAtleastOneAttachment(newBlockstate) ? Blocks.AIR.defaultBlockState() : newBlockstate;
     }
 
     /**

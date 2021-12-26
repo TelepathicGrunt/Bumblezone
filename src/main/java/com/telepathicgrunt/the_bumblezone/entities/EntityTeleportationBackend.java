@@ -5,6 +5,8 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import net.minecraft.core.BlockPos;
@@ -16,6 +18,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.BeehiveBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,6 +28,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashSet;
 import java.util.List;
@@ -362,11 +366,20 @@ public class EntityTeleportationBackend {
         return null;
     }
 
-    public static boolean isValidBeeHive(BlockState block) {
-        if(BzBlockTags.BLACKLISTED_TELEPORTATION_HIVES.contains(block.getBlock())) return false;
+    public static boolean isValidBeeHive(BlockState blockState) {
+        Block block = blockState.getBlock();
+        if(BzBlockTags.BLACKLISTED_TELEPORTATION_HIVES.contains(block)) return false;
 
-        if(BlockTags.BEEHIVES.contains(block.getBlock()) || block.getBlock() instanceof BeehiveBlock) {
-            return true;
+        if(BlockTags.BEEHIVES.contains(block) || block instanceof BeehiveBlock) {
+            if(ForgeRegistries.BLOCKS.getKey(block).getNamespace().equals("minecraft") || BzDimensionConfigs.allowTeleportationWithModdedBeehives.get()) {
+                return true;
+            }
+        }
+
+        if(BzDimensionConfigs.allowTeleportationWithModdedBeehives.get()) {
+            if(ModChecker.productiveBeesPresent && ProductiveBeesCompat.PBIsExpandedBeehiveBlock(blockState)) {
+                return true;
+            }
         }
 
         return false;

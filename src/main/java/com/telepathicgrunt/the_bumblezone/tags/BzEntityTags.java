@@ -10,5 +10,5 @@ public class BzEntityTags {
     // All tag wrappers need to be made at mod init.
     public static void tagInit(){}
 
-    public static final Tag.Named<EntityType<?>> POLLEN_PUFF_CAN_POLLINATE = EntityTypeTags.createOptional(new ResourceLocation(Bumblezone.MODID+":pollen_puff_can_pollinate"));
+    public static final Tag.Named<EntityType<?>> POLLEN_PUFF_CAN_POLLINATE = EntityTypeTags.createOptional(new ResourceLocation(Bumblezone.MODID, "pollen_puff_can_pollinate"));
 }

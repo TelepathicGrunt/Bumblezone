@@ -6,6 +6,8 @@ public class BzGeneralConfigs {
     public static final ForgeConfigSpec GENERAL_SPEC;
 
     public static ForgeConfigSpec.DoubleValue beehemothSpeed;
+    public static ForgeConfigSpec.BooleanValue specialBeeSpawning;
+    public static ForgeConfigSpec.IntValue nearbyBeesPerPlayerInBz;
     public static ForgeConfigSpec.BooleanValue dispensersDropGlassBottles;
     public static ForgeConfigSpec.IntValue broodBlocksBeeSpawnCapacity;
 
@@ -23,6 +25,27 @@ public class BzGeneralConfigs {
                         " Base speed for the Beehemoth when being rode by a player.\n")
                 .translation("the_bumblezone.config.beehemothSpeed")
                 .defineInRange("beehemothSpeed", 0.95D, 0D, 100D);
+
+        builder.pop();
+
+
+        builder.push("Special Bee Spawning Options");
+
+        specialBeeSpawning = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether Bumblezone will handle spawning vanilla bees near players in the Bumblezone to make it feel full of Bees.",
+                        " Bees too far will be despawned in Bumblezone unless the bee has a hive, is name tagged, or is set to persistent.",
+                        " Note: Modded bees will not be spawned through this system. Those will be spawned by normal biome spawning.\n")
+                .translation("the_bumblezone.config.specialbeespawning")
+                .define("specialBeeSpawning", true);
+
+
+        nearbyBeesPerPlayerInBz = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " If specialBeeSpawning is set to true, this config controls how many vanilla bees should be",
+                        " near each player in Bumblezone dimension. Higher numbers like 100 is insane lol. 25 is nice.\n")
+                .translation("the_bumblezone.config.nearbybeesperplayerinbz")
+                .defineInRange("nearbyBeesPerPlayerInBz", 25, 0, 1000);
 
         builder.pop();
 

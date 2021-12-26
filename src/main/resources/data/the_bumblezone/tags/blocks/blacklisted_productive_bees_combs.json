@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    {
-      "id": "productivebees:configurable_comb",
-      "required": false
-    }
-  ]
-}

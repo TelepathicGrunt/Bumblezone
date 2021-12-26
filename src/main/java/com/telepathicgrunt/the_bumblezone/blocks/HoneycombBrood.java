@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -15,6 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -48,12 +50,14 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.ForgeHooks;
 
 import java.util.List;
 import java.util.Random;
 
 
 public class HoneycombBrood extends ProperFacingBlock {
+    private static final ResourceLocation HONEY_TREAT = new ResourceLocation("productivebees:honey_treat");
     public static final IntegerProperty STAGE = BlockStateProperties.AGE_3;
 
     public HoneycombBrood() {
@@ -109,6 +113,37 @@ public class HoneycombBrood extends ProperFacingBlock {
                 }
             }
 
+            return InteractionResult.SUCCESS;
+        }
+        else if (BzModCompatibilityConfigs.allowHoneyTreatCompat.get() && itemstack.getItem().getRegistryName().equals(HONEY_TREAT)) {
+            if (!world.isClientSide()) {
+                // spawn bee if at final stage and front isn't blocked off
+                int stage = thisBlockState.getValue(STAGE);
+                if (stage == 3) {
+                    spawnBroodMob(world, thisBlockState, position, stage);
+                } else {
+                    int stageIncrease = world.random.nextFloat() < 0.2f ? 2 : 1;
+                    world.setBlockAndUpdate(position, thisBlockState.setValue(STAGE, Math.min(3, stage + stageIncrease)));
+                }
+            }
+
+            // block grew one stage or bee was spawned
+            world.playSound(
+                    playerEntity,
+                    playerEntity.getX(),
+                    playerEntity.getY(),
+                    playerEntity.getZ(),
+                    SoundEvents.BOTTLE_EMPTY,
+                    SoundSource.NEUTRAL,
+                    1.0F,
+                    1.0F);
+
+            // removes used item
+            if (!playerEntity.isCreative()) {
+                Item item = itemstack.getItem();
+                itemstack.shrink(1);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(item), true);
+            }
             return InteractionResult.SUCCESS;
         }
         /*
@@ -174,7 +209,14 @@ public class HoneycombBrood extends ProperFacingBlock {
             }
 
             //block grew one stage or bee was spawned
-            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.NEUTRAL, 1.0F, 1.0F);
+            world.playSound(playerEntity,
+                    playerEntity.getX(),
+                    playerEntity.getY(),
+                    playerEntity.getZ(),
+                    SoundEvents.BOTTLE_EMPTY,
+                    SoundSource.NEUTRAL,
+                    1.0F,
+                    1.0F);
 
             //removes used item
             if (!playerEntity.isCreative()) {
@@ -271,16 +313,17 @@ public class HoneycombBrood extends ProperFacingBlock {
             }
 
             world.setBlockAndUpdate(position, state.setValue(STAGE, 0));
-
         }
-
     }
 
     private static void spawnMob(Level world, BlockPos.MutableBlockPos blockpos, Mob beeMob, Mob entity) {
         if(entity == null || world.isClientSide()) return;
         entity.moveTo(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, world.getRandom().nextFloat() * 360.0F, 0.0F);
         entity.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(new BlockPos(beeMob.position())), MobSpawnType.TRIGGERED, null, null);
-        world.addFreshEntity(entity);
+
+        if(ForgeHooks.canEntitySpawn(entity, world, entity.position().x(), entity.position().y(), entity.position().z(), null, MobSpawnType.SPAWNER) != -1) {
+            world.addFreshEntity(entity);
+        }
     }
 
 

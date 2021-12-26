@@ -1,13 +1,17 @@
 package com.telepathicgrunt.the_bumblezone.world.dimension;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseChunkAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseGeneratorSettingsInvoker;
+import com.telepathicgrunt.the_bumblezone.mixin.world.StructureSettingsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import com.telepathicgrunt.the_bumblezone.utils.WorldSeedHolder;
 import net.minecraft.SharedConstants;
@@ -57,11 +61,17 @@ import net.minecraft.world.level.levelgen.WorldGenerationContext;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.blending.Blender;
 import net.minecraft.world.level.levelgen.carver.CarvingContext;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.material.MaterialRuleList;
 import net.minecraft.world.level.levelgen.material.WorldGenMaterialRule;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
+import net.minecraftforge.common.ForgeHooks;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
@@ -79,7 +89,8 @@ public class BzChunkGenerator extends ChunkGenerator {
             BiomeSource.CODEC.fieldOf("biome_source").forGetter(bzChunkGenerator -> bzChunkGenerator.biomeSource),
             Codec.LONG.fieldOf("seed").orElseGet(WorldSeedHolder::getSeed).stable().forGetter(bzChunkGenerator -> bzChunkGenerator.seed),
             NoiseGeneratorSettings.CODEC.fieldOf("settings").forGetter(bzChunkGenerator -> bzChunkGenerator.settings),
-            RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter((bzChunkGenerator) -> bzChunkGenerator.biomeRegistry))
+            RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter((bzChunkGenerator) -> bzChunkGenerator.biomeRegistry),
+            RegistryLookupCodec.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY).forGetter((bzChunkGenerator) -> bzChunkGenerator.configuredStructureFeaturesRegistry))
     .apply(instance, instance.stable(BzChunkGenerator::new)));
 
     private static final BlockState[] EMPTY_COLUMN = new BlockState[0];
@@ -90,6 +101,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     protected final Supplier<NoiseGeneratorSettings> settings;
     private final NoiseSampler sampler;
     private final Registry<Biome> biomeRegistry;
+    private final Registry<ConfiguredStructureFeature<?,?>> configuredStructureFeaturesRegistry;
     private final SurfaceSystem surfaceSystem;
     private final WorldGenMaterialRule materialRule;
     private final Aquifer.FluidPicker globalFluidPicker;
@@ -97,11 +109,11 @@ public class BzChunkGenerator extends ChunkGenerator {
     private static final MobSpawnSettings.SpawnerData INITIAL_BEE_ENTRY = new MobSpawnSettings.SpawnerData(EntityType.BEE, 1, 1, 4);
     private static final MobSpawnSettings.SpawnerData INITIAL_BEEHEMOTH_ENTRY = new MobSpawnSettings.SpawnerData(BzEntities.BEEHEMOTH.get(), 1, 1, 1);
 
-    public BzChunkGenerator(Registry<NormalNoise.NoiseParameters> registry, BiomeSource biomeSource, long seed, Supplier<NoiseGeneratorSettings> supplier, Registry<Biome> biomeRegistry) {
-        this(registry, biomeSource, biomeSource, seed, supplier, biomeRegistry);
+    public BzChunkGenerator(Registry<NormalNoise.NoiseParameters> registry, BiomeSource biomeSource, long seed, Supplier<NoiseGeneratorSettings> supplier, Registry<Biome> biomeRegistry, Registry<ConfiguredStructureFeature<?,?>> configuredStructureFeaturesRegistry) {
+        this(registry, biomeSource, biomeSource, seed, supplier, biomeRegistry, configuredStructureFeaturesRegistry);
     }
 
-    private BzChunkGenerator(Registry<NormalNoise.NoiseParameters> registry, BiomeSource biomeSource, BiomeSource biomeSource2, long seed, Supplier<NoiseGeneratorSettings> supplier, Registry<Biome> biomeRegistry) {
+    private BzChunkGenerator(Registry<NormalNoise.NoiseParameters> registry, BiomeSource biomeSource, BiomeSource biomeSource2, long seed, Supplier<NoiseGeneratorSettings> supplier, Registry<Biome> biomeRegistry, Registry<ConfiguredStructureFeature<?,?>> configuredStructureFeaturesRegistry) {
         super(biomeSource, biomeSource2, supplier.get().structureSettings(), seed);
         this.noises = registry;
         this.seed = seed;
@@ -120,6 +132,20 @@ public class BzChunkGenerator extends ChunkGenerator {
         Aquifer.FluidStatus fluidStatus2 = new Aquifer.FluidStatus(seaLevel, noiseGeneratorSettings.getDefaultFluid());
         this.globalFluidPicker = (j, k, lx) -> k < Math.min(-54, seaLevel) ? fluidStatus : fluidStatus2;
         this.surfaceSystem = new SurfaceSystem(registry, this.defaultBlock, seaLevel, seed, noiseGeneratorSettings.getRandomSource());
+        this.configuredStructureFeaturesRegistry = configuredStructureFeaturesRegistry;
+
+        ImmutableMap<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> originalMultiMap = ((StructureSettingsAccessor)noiseGeneratorSettings.structureSettings()).getConfiguredStructures();
+        Map<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> newMultiMaps = new HashMap<>(originalMultiMap);
+        newMultiMaps.put(BzStructures.HONEY_CAVE_ROOM.get(), ImmutableMultimap.of(
+                Objects.requireNonNull(configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "honey_cave_room"))),
+                ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_pillar"))));
+        newMultiMaps.put(BzStructures.POLLINATED_STREAM.get(), ImmutableMultimap.of(
+                Objects.requireNonNull(configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "pollinated_stream"))),
+                ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_pillar")),
+                Objects.requireNonNull(configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "pollinated_stream"))),
+                ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_fields"))
+        ));
+        ((StructureSettingsAccessor)noiseGeneratorSettings.structureSettings()).setConfiguredStructures(ImmutableMap.copyOf(newMultiMaps));
     }
 
     public static void registerChunkGenerator() {
@@ -155,7 +181,7 @@ public class BzChunkGenerator extends ChunkGenerator {
 
     @Override
     public ChunkGenerator withSeed(long seed) {
-        return new BzChunkGenerator(this.noises, this.biomeSource.withSeed(seed), seed, this.settings, this.biomeRegistry);
+        return new BzChunkGenerator(this.noises, this.biomeSource.withSeed(seed), seed, this.settings, this.biomeRegistry, this.configuredStructureFeaturesRegistry);
     }
 
     public boolean stable(long seed, ResourceKey<NoiseGeneratorSettings> resourceKey) {
@@ -441,7 +467,9 @@ public class BzChunkGenerator extends ChunkGenerator {
                     if (entity instanceof Mob mobEntity) {
                         if (mobEntity.checkSpawnRules(region, MobSpawnType.CHUNK_GENERATION) && mobEntity.checkSpawnObstruction(region)) {
                             mobEntity.finalizeSpawn(region, region.getCurrentDifficultyAt(new BlockPos(mobEntity.position())), MobSpawnType.CHUNK_GENERATION, null, null);
-                            region.addFreshEntity(mobEntity);
+                            if(ForgeHooks.canEntitySpawn(mobEntity, region, entity.position().x(), entity.position().y(), entity.position().z(), null, MobSpawnType.CHUNK_GENERATION) != -1) {
+                                region.addFreshEntity(mobEntity);
+                            }
                         }
                     }
                 }
