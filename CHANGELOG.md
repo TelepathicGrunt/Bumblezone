@@ -9,6 +9,8 @@ Added specialBeeSpawning and nearbyBeesPerPlayerInBz config options which makes 
  always have a set number of vanilla bees near the player as often as possible to make the dimension feel full.
  Vanilla bees that are too far from player will be forcefully despawned unless the bee is name tagged, persistent, or has a hive associated with it.
 
+Fixed Honey Slime not being honey filled for 1 frame after being spawned.
+
 ##### Fluids:
 Fixed weird interactions with modded fluids bordering Bumblezone's fluids.
  Such as Honey Fluid turning any water-tagged modded fluid into Sugar Water regardless of that that other fluid is. 
