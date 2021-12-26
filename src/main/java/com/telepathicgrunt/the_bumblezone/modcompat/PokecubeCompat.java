@@ -45,7 +45,7 @@ public class PokecubeCompat {
     }
 
     /**
-     * 1/15th of bees spawning will also spawn Resourceful Bees' bees
+     * Spawn Pokecube bees 
      */
     public static void PCMobSpawnEvent(LivingSpawnEvent.CheckSpawn event, boolean isChild) {
         List<PokedexEntry> pokemonListToUse = isChild ? BABY_POKECUBE_POKEMON_LIST : POKECUBE_POKEMON_LIST;
