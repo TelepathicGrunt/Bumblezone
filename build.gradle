@@ -61,6 +61,8 @@ dependencies {
 
 	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"
 	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_version}"
+	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"
+	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_version}"
 
 	modImplementation "dev.cafeteria:fake-player-api:${project.fake_player_version}"
 	include "dev.cafeteria:fake-player-api:${project.fake_player_version}"

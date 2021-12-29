@@ -1,3 +1,9 @@
+### **(V.4.1.1 Changes) (1.18.1 Minecraft)**
+
+##### Dependencies:
+Jar-In-Jar Cardinal Components now to bypass an issue where dependency checking cannot detect new Cardinal Components.
+
+
 ### **(V.4.1.0 Changes) (1.18.1 Minecraft)**
 
 ##### Major:
