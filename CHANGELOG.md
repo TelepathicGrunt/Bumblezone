@@ -2,6 +2,7 @@
 
 ##### Dependencies:
 Jar-In-Jar Cardinal Components now to bypass an issue where dependency checking cannot detect new Cardinal Components.
+ You don't need to download the Cardinal Components jar yourself. It is now packaged within Bumblezone.
 
 
 ### **(V.4.1.0 Changes) (1.18.1 Minecraft)**

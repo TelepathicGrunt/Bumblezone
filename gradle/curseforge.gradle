@@ -16,7 +16,6 @@ curseforge {
 
         relations {
             requiredDependency 'cloth-config'
-            requiredDependency 'cardinal-components'
             requiredDependency 'fabric-api'
             requiredDependency 'feature-nbt-deadlock-be-gone'
         }
