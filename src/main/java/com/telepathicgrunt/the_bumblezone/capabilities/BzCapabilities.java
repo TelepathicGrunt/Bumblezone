@@ -25,18 +25,11 @@ public final class BzCapabilities {
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         forgeBus.addGenericListener(Entity.class, AttacherFlyingSpeed::attach);
         forgeBus.addGenericListener(Entity.class, AttacherEntityPositionAndDimension::attach);
-        forgeBus.addListener(BzCapabilities::copyOverCaps);
     }
 
     // make sure the caps classes are registered so they can be found
     public static void registerCaps(RegisterCapabilitiesEvent event) {
         event.register(EntityFlyingSpeed.class);
         event.register(EntityPositionAndDimension.class);
-    }
-
-    // invalidate original player's caps on death (respawning player)
-    public static void copyOverCaps(PlayerEvent.Clone event) {
-        event.getOriginal().getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).invalidate();
-        event.getOriginal().getCapability(BzCapabilities.ORIGINAL_FLYING_SPEED_CAPABILITY).invalidate();
     }
 }
