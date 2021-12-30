@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
@@ -27,6 +28,7 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -389,8 +391,22 @@ public class EntityTeleportationBackend {
     public static void playerLeavingBz(EntityTravelToDimensionEvent event) {
         //Updates the non-BZ dimension that the player is leaving
         if (!event.getDimension().location().equals(Bumblezone.MOD_DIMENSION_ID) && event.getEntity() instanceof LivingEntity livingEntity) {
-            EntityPositionAndDimension capability = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
-            capability.setNonBZDim(event.getDimension().location());
+            LazyOptional<EntityPositionAndDimension> lazyOptional = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
+            if(lazyOptional.isPresent()) {
+                EntityPositionAndDimension capability = lazyOptional.orElseThrow(RuntimeException::new);
+                capability.setNonBZDim(event.getDimension().location());
+            }
+            else {
+                Entity entity = event.getEntity();
+                Bumblezone.LOGGER.error("Bumblezone entity pos/dim cap was not found for given entity: {}, {}, {}, {}, at {} which has the internal dimension of: {} and is coming from: {}",
+                        entity.getType(),
+                        entity.getClass().getName(),
+                        entity.getDisplayName() instanceof TextComponent textComponent ? textComponent.getText() : "N/A",
+                        entity.getUUID(),
+                        entity.position(),
+                        entity.level.dimension(),
+                        event.getDimension());
+            }
         }
     }
 }

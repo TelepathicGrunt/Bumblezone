@@ -1,3 +1,9 @@
+### **(V.4.1.1 Changes) (1.18.1 Minecraft)**
+
+##### Misc:
+Tried fixing an issue where other mod's fake players or something is crashing Bumblezone. I think? It's cursed and hard to debug.
+
+
 ### **(V.4.1.0 Changes) (1.18.1 Minecraft)**
 
 ##### Major:
