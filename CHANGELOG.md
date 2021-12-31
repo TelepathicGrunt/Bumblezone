@@ -1,3 +1,9 @@
+### **(V.4.1.2 Changes) (1.18.1 Minecraft)**
+
+##### Fluids:
+Adjusted Honey Fluid texture slightly.
+
+
 ### **(V.4.1.1 Changes) (1.18.1 Minecraft)**
 
 ##### Dependencies:
