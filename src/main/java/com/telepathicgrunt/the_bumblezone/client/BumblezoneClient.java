@@ -77,6 +77,7 @@ public class BumblezoneClient {
     private static void registerRenderLayers() {
         ItemBlockRenderTypes.setRenderLayer(BzBlocks.STICKY_HONEY_REDSTONE.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BzBlocks.STICKY_HONEY_RESIDUE.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BzBlocks.HONEY_WEB.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BzBlocks.HONEY_CRYSTAL.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.SUGAR_WATER_FLUID.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.SUGAR_WATER_FLUID_FLOWING.get(), RenderType.translucent());
