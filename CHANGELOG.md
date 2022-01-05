@@ -1,5 +1,13 @@
 ### **(V.4.1.2 Changes) (1.18.1 Minecraft)**
 
+##### Blocks:
+Sticky Honey Residue and Sticky Honey Redstone now give a temporary slowness status effect.
+
+Sticky Honey Residue and Sticky Honey Redstone collision checking is optimized a bit better.
+
+##### Items:
+Fixed Pollen Puff able to replace non-replaceable non-solid blocks is thrown inside the space for that block.
+
 ##### Fluids:
 Adjusted Honey Fluid texture slightly.
 
