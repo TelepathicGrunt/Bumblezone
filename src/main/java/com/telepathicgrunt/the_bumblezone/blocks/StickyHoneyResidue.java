@@ -15,6 +15,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -39,6 +41,7 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -128,11 +131,18 @@ public class StickyHoneyResidue extends VineBlock {
             return;
         }
 
-        AABB axisalignedbb = voxelShape.bounds().move(pos);
-        List<? extends Entity> list = world.getEntitiesOfClass(LivingEntity.class, axisalignedbb);
-
-        if (list.contains(entity)) {
+        voxelShape = voxelShape.move(pos.getX(), pos.getY(), pos.getZ());
+        if (Shapes.joinIsNotEmpty(voxelShape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND)) {
             entity.makeStuckInBlock(blockstate, new Vec3(0.35D, 0.2F, 0.35D));
+            if (entity instanceof LivingEntity livingEntity) {
+                livingEntity.addEffect(new MobEffectInstance(
+                        MobEffects.MOVEMENT_SLOWDOWN,
+                        200,
+                        1,
+                        false,
+                        false,
+                        true));
+            }
         }
     }
 
