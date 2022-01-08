@@ -16,14 +16,14 @@ repositories {
 
 &nbsp;
 
-Don't forget to change <modversion> with the actual latest version of this mod like `3.1.0` for example.
+Don't forget to change \<modversion> with the actual latest version of this mod like `3.1.0` for example.
 
 <blockquote>
 dependencies {
 
 ...
 
-&nbsp;&nbsp;&nbsp;&nbsp;modImplementation "com.telepathicgrunt:Bumblezone-Fabric:<modversion>+1.17.1"
+&nbsp;&nbsp;&nbsp;&nbsp;modImplementation "com.telepathicgrunt:Bumblezone-Fabric:\<modversion>+1.17.1"
 
 }</blockquote>
 
