@@ -234,9 +234,9 @@ public class HoneyWeb extends Block {
      */
     @Override
     public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
-        //number of particles in this tick
-        for (int i = 0; i < random.nextInt(5); ++i) {
-            this.addHoneyParticle(world, position, blockState.getCollisionShape(world, position), random.nextFloat());
+        //chance of particle in this tick
+        for (int i = 0; i == random.nextInt(50); ++i) {
+            this.addHoneyParticle(world, position, blockState.getShape(world, position));
         }
     }
 
@@ -244,21 +244,22 @@ public class HoneyWeb extends Block {
      * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addHoneyParticle
      * method
      */
-    private void addHoneyParticle(Level world, BlockPos blockPos, VoxelShape blockShape, double height) {
+    private void addHoneyParticle(Level world, BlockPos blockPos, VoxelShape blockShape) {
         this.addHoneyParticle(
                 world,
                 blockPos.getX() + blockShape.min(Direction.Axis.X),
                 blockPos.getX() + blockShape.max(Direction.Axis.X),
+                blockPos.getY() + blockShape.min(Direction.Axis.Y),
+                blockPos.getY() + blockShape.max(Direction.Axis.Y),
                 blockPos.getZ() + blockShape.min(Direction.Axis.Z),
-                blockPos.getZ() + blockShape.max(Direction.Axis.Z),
-                height);
+                blockPos.getZ() + blockShape.max(Direction.Axis.Z));
     }
 
 
     /**
      * Adds the actual honey particle into the world within the given range
      */
-    private void addHoneyParticle(Level world, double xMin, double xMax, double zMax, double zMin, double yHeight) {
-        world.addParticle(ParticleTypes.DRIPPING_HONEY, Mth.lerp(world.random.nextDouble(), xMin, xMax), yHeight, Mth.lerp(world.random.nextDouble(), zMax, zMin), 0.0D, 0.0D, 0.0D);
+    private void addHoneyParticle(Level world, double xMin, double xMax, double yMin, double yMax, double zMax, double zMin) {
+        world.addParticle(ParticleTypes.DRIPPING_HONEY, Mth.lerp(world.random.nextDouble(), xMin, xMax), Mth.lerp(world.random.nextDouble(), yMin, yMax), Mth.lerp(world.random.nextDouble(), zMin, zMax), 0.0D, 0.0D, 0.0D);
     }
 }
