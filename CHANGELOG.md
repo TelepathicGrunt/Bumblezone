@@ -1,3 +1,16 @@
+### **(V.4.1.3 Changes) (1.18.1 Minecraft)**
+
+##### Major:
+Fixed clients disconnecting from the server because I had unregistered particletypes on server...
+Please update now if you have this mod on a server.
+
+
+### **(V.4.1.2 Changes) (1.18.1 Minecraft)**
+
+##### Fluids:
+Adjusted Honey Fluid texture slightly.
+
+
 ### **(V.4.1.1 Changes) (1.18.1 Minecraft)**
 
 ##### Dependencies:
