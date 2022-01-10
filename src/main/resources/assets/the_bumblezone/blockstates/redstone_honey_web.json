@@ -1,0 +1,488 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "northsouth": "true",
+        "power": "0"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_0_ns",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "northsouth": "true",
+        "power": "1"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_1_ns",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "northsouth": "true",
+        "power": "2"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_2_ns",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "northsouth": "true",
+        "power": "3"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_3_ns",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "northsouth": "true",
+        "power": "4"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_4_ns",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "northsouth": "true",
+        "power": "5"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_5_ns",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "northsouth": "true",
+        "power": "6"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_6_ns",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "northsouth": "true",
+        "power": "7"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_7_ns",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "northsouth": "true",
+        "power": "8"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_8_ns",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "northsouth": "true",
+        "power": "9"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_9_ns",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "northsouth": "true",
+        "power": "10"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_10_ns",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "northsouth": "true",
+        "power": "11"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_11_ns",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "northsouth": "true",
+        "power": "12"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_12_ns",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "northsouth": "true",
+        "power": "13"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_13_ns",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "northsouth": "true",
+        "power": "14"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_14_ns",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "northsouth": "true",
+        "power": "15"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_15_ns",
+        "uvlock": true
+      }
+    },
+
+
+    {
+      "when": {
+        "eastwest": "true",
+        "power": "0"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_0_ew",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true",
+        "power": "1"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_1_ew",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true",
+        "power": "2"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_2_ew",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true",
+        "power": "3"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_3_ew",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true",
+        "power": "4"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_4_ew",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true",
+        "power": "5"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_5_ew",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true",
+        "power": "6"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_6_ew",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true",
+        "power": "7"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_7_ew",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true",
+        "power": "8"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_8_ew",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true",
+        "power": "9"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_9_ew",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true",
+        "power": "10"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_10_ew",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true",
+        "power": "11"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_11_ew",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true",
+        "power": "12"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_12_ew",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true",
+        "power": "13"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_13_ew",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true",
+        "power": "14"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_14_ew",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true",
+        "power": "15"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_15_ew",
+        "uvlock": true
+      }
+    },
+
+
+    {
+      "when": {
+        "updown": "true",
+        "power": "0"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_0_ud",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "updown": "true",
+        "power": "1"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_1_ud",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "updown": "true",
+        "power": "2"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_2_ud",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "updown": "true",
+        "power": "3"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_3_ud",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "updown": "true",
+        "power": "4"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_4_ud",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "updown": "true",
+        "power": "5"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_5_ud",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "updown": "true",
+        "power": "6"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_6_ud",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "updown": "true",
+        "power": "7"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_7_ud",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "updown": "true",
+        "power": "8"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_8_ud",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "updown": "true",
+        "power": "9"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_9_ud",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "updown": "true",
+        "power": "10"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_10_ud",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "updown": "true",
+        "power": "11"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_11_ud",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "updown": "true",
+        "power": "12"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_12_ud",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "updown": "true",
+        "power": "13"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_13_ud",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "updown": "true",
+        "power": "14"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_14_ud",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "updown": "true",
+        "power": "15"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/redstone_honey_web_15_ud",
+        "uvlock": true
+      }
+    }
+  ]
+}

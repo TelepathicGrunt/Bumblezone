@@ -22,6 +22,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -48,7 +49,11 @@ public class HoneyWeb extends Block {
     private final Object2IntMap<BlockState> stateToIndex = new Object2IntOpenHashMap<>();
 
     public HoneyWeb() {
-        super(Properties.of(Material.WEB, MaterialColor.COLOR_ORANGE).noCollission().requiresCorrectToolForDrops().strength(4.0F));
+        this(Properties.of(Material.WEB, MaterialColor.COLOR_ORANGE).noCollission().requiresCorrectToolForDrops().strength(4.0F));
+    }
+
+    public HoneyWeb(BlockBehaviour.Properties properties) {
+        super(properties);
         this.collisionShapeByIndex = this.makeShapes();
         this.shapeByIndex = this.makeShapes();
         this.registerDefaultState(this.stateDefinition.any()
@@ -112,7 +117,7 @@ public class HoneyWeb extends Block {
                     Vec3 deltaMovement = entity.getDeltaMovement();
                     entity.setDeltaMovement(new Vec3(
                             deltaMovement.x * speedReduction,
-                            deltaMovement.y * speedReduction * 2,
+                            deltaMovement.y * speedReduction * 3,
                             deltaMovement.z * speedReduction));
                 }
                 else {
@@ -229,8 +234,7 @@ public class HoneyWeb extends Block {
     }
 
     /**
-     * Called periodically clientside on blocks near the player to show honey particles. 20% of attempting to spawn a
-     * particle
+     * Called periodically clientside on blocks near the player to show honey particles
      */
     @Override
     public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
@@ -241,8 +245,7 @@ public class HoneyWeb extends Block {
     }
 
     /**
-     * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addHoneyParticle
-     * method
+     * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addHoneyParticle method
      */
     private void addHoneyParticle(Level world, BlockPos blockPos, VoxelShape blockShape) {
         this.addHoneyParticle(

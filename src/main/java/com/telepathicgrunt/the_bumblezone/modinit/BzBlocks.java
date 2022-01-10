@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.HoneyWeb;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.blocks.PorousHoneycomb;
+import com.telepathicgrunt.the_bumblezone.blocks.RedstoneHoneyWeb;
 import com.telepathicgrunt.the_bumblezone.blocks.StickyHoneyRedstone;
 import com.telepathicgrunt.the_bumblezone.blocks.StickyHoneyResidue;
 import com.telepathicgrunt.the_bumblezone.blocks.SugarInfusedCobblestone;
@@ -42,5 +43,6 @@ public class BzBlocks {
     public static final RegistryObject<Block> BEEHIVE_BEESWAX = BLOCKS.register("beehive_beeswax", BeehiveBeeswax::new);
     public static final RegistryObject<Block> PILE_OF_POLLEN = BLOCKS.register("pile_of_pollen", PileOfPollen::new);
     public static final RegistryObject<Block> HONEY_WEB = BLOCKS.register("honey_web", HoneyWeb::new);
+    public static final RegistryObject<Block> REDSTONE_HONEY_WEB = BLOCKS.register("redstone_honey_web", RedstoneHoneyWeb::new);
 
 }
