@@ -17,6 +17,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFeatures;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
+import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
@@ -77,6 +78,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzEnchantments.registerEnchantment();
         BzCriterias.registerCriteriaTriggers();
         BzPOI.registerPOIs();
+        BzParticles.registerParticles();
 
         BzProcessors.registerProcessors();
         BzPlacements.registerPlacements();
