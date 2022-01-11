@@ -1,12 +1,17 @@
 ### **(V.4.1.2 Changes) (1.18.1 Minecraft)**
 
 ##### Blocks:
+Added Honey Web and Sticky Honey Web blocks! They are crafted from 3 Sticky Honey Reside or 3 Sticky Honey Redstone in a row. 
+ They act like the residue forms but instead, can be placed to create a wall of stickiness without being attached to a block surface.
+
 Sticky Honey Residue and Sticky Honey Redstone now give a temporary slowness status effect.
 
 Sticky Honey Residue and Sticky Honey Redstone collision checking is optimized a bit better.
 
 ##### Items:
 Fixed Pollen Puff able to replace non-replaceable non-solid blocks is thrown inside the space for that block.
+
+Buffed the slowness that Honey Crystal Shield gives physical attackers.
 
 ##### Fluids:
 Adjusted Honey Fluid texture slightly.
