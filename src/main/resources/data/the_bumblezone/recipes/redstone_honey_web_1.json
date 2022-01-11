@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "the_bumblezone",
+  "pattern": [
+    "s",
+    "s",
+    "s"
+  ],
+  "key": {
+    "s": {
+      "item": "the_bumblezone:sticky_honey_redstone"
+    }
+  },
+  "result": {
+    "item": "the_bumblezone:redstone_honey_web"
+  }
+}

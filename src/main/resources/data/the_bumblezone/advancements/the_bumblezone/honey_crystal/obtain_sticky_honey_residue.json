@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/honey_crystal/obtain_honey_crystal_block",
+  "parent": "the_bumblezone:the_bumblezone/honey_crystal/consume_honey_crystal_shards",
   "display": {
     "icon": {
       "item": "the_bumblezone:sticky_honey_residue"

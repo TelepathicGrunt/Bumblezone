@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -30,6 +31,8 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -57,7 +60,7 @@ public class HoneyWeb extends Block {
     private final Object2IntMap<BlockState> stateToIndex = new Object2IntOpenHashMap<>();
 
     public HoneyWeb() {
-        this(Properties.of(Material.WEB, MaterialColor.COLOR_ORANGE).noCollission().requiresCorrectToolForDrops().strength(4.0F));
+        this(Properties.of(Material.WEB, MaterialColor.COLOR_ORANGE).noOcclusion().noCollission().requiresCorrectToolForDrops().strength(4.0F));
     }
 
     public HoneyWeb(BlockBehaviour.Properties properties) {
@@ -214,6 +217,10 @@ public class HoneyWeb extends Block {
                     1.0F,
                     1.0F);
 
+            if(itemstack.getItem() == Items.WET_SPONGE && playerEntity instanceof ServerPlayer) {
+                BzCriterias.CLEANUP_HONEY_WEB_TRIGGER.trigger((ServerPlayer) playerEntity);
+            }
+
             if (world.isClientSide()) {
                 for (int i = 0; i < 25; ++i) {
                     this.addParticle(
@@ -291,6 +298,14 @@ public class HoneyWeb extends Block {
         }
 
         return currentBlockstate;
+    }
+
+
+    public BlockState rotate(BlockState blockState, Rotation rotation) {
+        return switch (rotation) {
+            case COUNTERCLOCKWISE_90, CLOCKWISE_90 -> blockState.setValue(NORTHSOUTH, blockState.getValue(EASTWEST)).setValue(EASTWEST, blockState.getValue(NORTHSOUTH));
+            default -> blockState;
+        };
     }
 
     /**

@@ -2,15 +2,18 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.google.common.collect.Sets;
 import com.mojang.math.Vector3f;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -67,6 +70,10 @@ public class RedstoneHoneyWeb extends HoneyWeb {
             if (blockState.is(this) && blockState.getValue(POWER) != 15) {
                 level.setBlock(blockPos, blockState.setValue(POWER, 15), 3);
                 level.scheduleTick(new BlockPos(blockPos), this, 10);
+
+                if(entity instanceof ServerPlayer serverPlayer) {
+                    BzCriterias.TRIGGER_REDSTONE_HONEY_WEB_TRIGGER.trigger(serverPlayer);
+                }
             }
         }
     }
@@ -163,28 +170,6 @@ public class RedstoneHoneyWeb extends HoneyWeb {
         }
 
         return 0;
-    }
-
-    public int getBestNeighborSignal(Level level, BlockState centerState, BlockPos blockPos) {
-        int maxPower = 0;
-        
-        for(Direction direction : Direction.values()) {
-            BlockPos sidePos = blockPos.relative(direction);
-            BlockState neighboringBlockstate = level.getBlockState(sidePos);
-
-            if(neighboringBlockstate.is(this)) {
-                if (direction.getAxis() != Direction.Axis.X && centerState.getValue(NORTHSOUTH)) {
-                    maxPower = Math.max(level.getSignal(sidePos, direction), maxPower);
-                }
-                else if (direction.getAxis() != Direction.Axis.Z && centerState.getValue(EASTWEST)) {
-                    maxPower = Math.max(level.getSignal(sidePos, direction), maxPower);
-                }
-                else if (direction.getAxis() != Direction.Axis.Y && centerState.getValue(UPDOWN)) {
-                    maxPower = Math.max(level.getSignal(sidePos, direction), maxPower);
-                }
-            }
-        }
-        return maxPower;
     }
 
     /**
