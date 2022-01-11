@@ -1,14 +1,21 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
-import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -16,20 +23,20 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -37,7 +44,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.Random;
 
 
@@ -182,6 +188,48 @@ public class HoneyWeb extends Block {
         return state;
     }
 
+    /**
+     * Allow player to remove this block with water buckets, water bottles, or wet sponges
+     */
+    @Override
+    @SuppressWarnings("deprecation")
+    public InteractionResult use(BlockState blockstate, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
+        ItemStack itemstack = playerEntity.getItemInHand(playerHand);
+
+        if ((itemstack.getItem() instanceof BucketItem bucketItem &&
+                bucketItem.getFluid().is(FluidTags.WATER)) ||
+                itemstack.getOrCreateTag().getString("Potion").contains("water") ||
+                itemstack.getItem() == Items.WET_SPONGE ||
+                itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
+
+            world.destroyBlock(position, false);
+
+            world.playSound(
+                    playerEntity,
+                    playerEntity.getX(),
+                    playerEntity.getY(),
+                    playerEntity.getZ(),
+                    SoundEvents.PHANTOM_SWOOP,
+                    SoundSource.NEUTRAL,
+                    1.0F,
+                    1.0F);
+
+            if (world.isClientSide()) {
+                for (int i = 0; i < 25; ++i) {
+                    this.addParticle(
+                            ParticleTypes.FALLING_WATER,
+                            world,
+                            position,
+                            blockstate.getShape(world, position));
+                }
+            }
+
+            return InteractionResult.SUCCESS;
+        }
+
+        return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);
+    }
+
     private void updateNeighboringStates(Level level, BlockState centerState, BlockPos blockpos) {
         for (Direction direction : Direction.values()) {
             BlockPos sidePos = blockpos.relative(direction);
@@ -252,15 +300,16 @@ public class HoneyWeb extends Block {
     public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
         //chance of particle in this tick
         for (int i = 0; i == random.nextInt(50); ++i) {
-            this.addHoneyParticle(world, position, blockState.getShape(world, position));
+            this.addParticle(ParticleTypes.DRIPPING_HONEY, world, position, blockState.getShape(world, position));
         }
     }
 
     /**
-     * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addHoneyParticle method
+     * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addParticle method
      */
-    private void addHoneyParticle(Level world, BlockPos blockPos, VoxelShape blockShape) {
-        this.addHoneyParticle(
+    protected void addParticle(ParticleOptions particleType, Level world, BlockPos blockPos, VoxelShape blockShape) {
+        this.addParticle(
+                particleType,
                 world,
                 blockPos.getX() + blockShape.min(Direction.Axis.X),
                 blockPos.getX() + blockShape.max(Direction.Axis.X),
@@ -270,11 +319,10 @@ public class HoneyWeb extends Block {
                 blockPos.getZ() + blockShape.max(Direction.Axis.Z));
     }
 
-
     /**
-     * Adds the actual honey particle into the world within the given range
+     * Adds the actual particle into the world within the given range
      */
-    private void addHoneyParticle(Level world, double xMin, double xMax, double yMin, double yMax, double zMax, double zMin) {
-        world.addParticle(ParticleTypes.DRIPPING_HONEY, Mth.lerp(world.random.nextDouble(), xMin, xMax), Mth.lerp(world.random.nextDouble(), yMin, yMax), Mth.lerp(world.random.nextDouble(), zMin, zMax), 0.0D, 0.0D, 0.0D);
+    private void addParticle(ParticleOptions particleType, Level world, double xMin, double xMax, double yMin, double yMax, double zMax, double zMin) {
+        world.addParticle(particleType, Mth.lerp(world.random.nextDouble(), xMin, xMax), Mth.lerp(world.random.nextDouble(), yMin, yMax), Mth.lerp(world.random.nextDouble(), zMin, zMax), 0.0D, 0.0D, 0.0D);
     }
 }

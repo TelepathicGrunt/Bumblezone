@@ -274,8 +274,15 @@ public class StickyHoneyResidue extends VineBlock {
 
             world.destroyBlock(position, false);
 
-            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
-                    SoundEvents.PHANTOM_SWOOP, SoundSource.NEUTRAL, 1.0F, 1.0F);
+            world.playSound(
+                    playerEntity,
+                    playerEntity.getX(),
+                    playerEntity.getY(),
+                    playerEntity.getZ(),
+                    SoundEvents.PHANTOM_SWOOP,
+                    SoundSource.NEUTRAL,
+                    1.0F,
+                    1.0F);
 
             if (world instanceof ServerLevel) {
                 if (blockstate.getValue(UP)) {
