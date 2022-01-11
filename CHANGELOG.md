@@ -9,7 +9,7 @@ Sticky Honey Residue and Sticky Honey Redstone now give a temporary slowness sta
 Sticky Honey Residue and Sticky Honey Redstone collision checking is optimized a bit better.
 
 ##### Items:
-Fixed Pollen Puff able to replace non-replaceable non-solid blocks is thrown inside the space for that block.
+Fixed Pollen Puff able to replace non-replaceable non-solid blocks when thrown inside the space for that block.
 
 Buffed the slowness that Honey Crystal Shield gives physical attackers.
 
