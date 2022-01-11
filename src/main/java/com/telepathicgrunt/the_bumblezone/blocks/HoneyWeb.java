@@ -14,6 +14,8 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -111,26 +113,36 @@ public class HoneyWeb extends Block {
             VoxelShape shape = this.shapeByIndex[this.getAABBIndex(blockState)];
             shape = shape.move(blockPos.getX(), blockPos.getY(), blockPos.getZ());
             if (Shapes.joinIsNotEmpty(shape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND)) {
-                double speedReduction = 0.15f;
-
-                if (entity instanceof ThrowableItemProjectile) {
+                if(entity instanceof Projectile) {
+                    double speedReduction = 0.015f;
                     Vec3 deltaMovement = entity.getDeltaMovement();
-                    entity.setDeltaMovement(new Vec3(
-                            deltaMovement.x * speedReduction,
-                            deltaMovement.y * speedReduction * 3,
-                            deltaMovement.z * speedReduction));
+                    double magnitude = deltaMovement.length();
+                    if(magnitude != 0) {
+                        speedReduction = speedReduction / magnitude;
+                        entity.setDeltaMovement(new Vec3(
+                                deltaMovement.x * speedReduction,
+                                deltaMovement.y * speedReduction,
+                                deltaMovement.z * speedReduction));
+                    }
                 }
                 else {
-                    entity.makeStuckInBlock(blockState, new Vec3(speedReduction, speedReduction * 2, speedReduction));
-                    if (entity instanceof LivingEntity livingEntity) {
-                        livingEntity.addEffect(new MobEffectInstance(
-                                MobEffects.MOVEMENT_SLOWDOWN,
-                                200,
-                                1,
-                                false,
-                                false,
-                                true));
+                    double speedReduction = 0.1f;
+                    Vec3 deltaMovement = entity.getDeltaMovement();
+                    double magnitude = deltaMovement.length();
+                    if(magnitude != 0) {
+                        speedReduction = speedReduction / magnitude;
                     }
+                    entity.makeStuckInBlock(blockState, new Vec3(speedReduction, speedReduction, speedReduction));
+                }
+
+                if (entity instanceof LivingEntity livingEntity) {
+                    livingEntity.addEffect(new MobEffectInstance(
+                            MobEffects.MOVEMENT_SLOWDOWN,
+                            200,
+                            1,
+                            false,
+                            false,
+                            true));
                 }
             }
         }

@@ -140,16 +140,13 @@ public class RedstoneHoneyWeb extends HoneyWeb {
     }
     
     private int calculateTargetStrength(Level level, BlockState centerState, BlockPos blockPos) {
-        int maxNeighborPower = getBestNeighborSignal(level, centerState, blockPos);
         int decreasingPower = 0;
-        if (maxNeighborPower < 15) {
-            for(Direction direction : Direction.values()) {
-                BlockPos blockpos2 = blockPos.relative(direction);
-                BlockState neighborState = level.getBlockState(blockpos2);
-                decreasingPower = Math.max(decreasingPower, this.getWireSignal(centerState, neighborState));
-            }
+        for(Direction direction : Direction.values()) {
+            BlockPos blockpos2 = blockPos.relative(direction);
+            BlockState neighborState = level.getBlockState(blockpos2);
+            decreasingPower = Math.max(decreasingPower, this.getWireSignal(centerState, neighborState));
         }
-        return Math.max(maxNeighborPower, decreasingPower - 1);
+        return Math.max(0, decreasingPower - 1);
     }
     
     private int getWireSignal(BlockState centerState, BlockState neighborState) {
@@ -165,7 +162,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
             }
         }
 
-        return neighborState.getBlock() instanceof RedStoneWireBlock ? neighborState.getValue(POWER) : 0;
+        return 0;
     }
 
     public int getBestNeighborSignal(Level level, BlockState centerState, BlockPos blockPos) {
@@ -175,7 +172,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
             BlockPos sidePos = blockPos.relative(direction);
             BlockState neighboringBlockstate = level.getBlockState(sidePos);
 
-            if(!neighboringBlockstate.is(this)) {
+            if(neighboringBlockstate.is(this)) {
                 if (direction.getAxis() != Direction.Axis.X && centerState.getValue(NORTHSOUTH)) {
                     maxPower = Math.max(level.getSignal(sidePos, direction), maxPower);
                 }
