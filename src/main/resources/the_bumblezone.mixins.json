@@ -12,7 +12,6 @@
     "blocks.PistonMovingBlockEntityMixin",
     "blocks.VineBlockAccessor",
     "blocks.WaterEquivalenceMixin",
-    "client.RenderingRegistryAccessor",
     "containers.WorkbenchContainerMixin",
     "entities.BeeEntityInvoker",
     "entities.BeeEntityMixin",
@@ -47,6 +46,7 @@
     "blocks.ScreenEffectRendererMixin",
     "client.FluidRendererMixin",
     "client.FogRendererClientMixin",
+    "client.RenderingRegistryAccessor",
     "world.DimensionSpecialEffectsAccessor"
   ],
   "injectors": {

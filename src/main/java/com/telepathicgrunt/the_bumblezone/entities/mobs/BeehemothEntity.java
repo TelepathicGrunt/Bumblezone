@@ -484,8 +484,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     @Override
     public void recreateFromPacket(ClientboundAddMobPacket clientboundAddMobPacket) {
         super.recreateFromPacket(clientboundAddMobPacket);
-        BeehemothFlyingSoundInstance beesoundinstance = new BeehemothFlyingSoundInstance(this, BzSounds.BEEHEMOTH_LOOP.get(), SoundSource.NEUTRAL);
-        Minecraft.getInstance().getSoundManager().queueTickingSound(beesoundinstance);
+        BeehemothFlyingSoundInstance.playSound(this);
     }
 
     public void tick() {

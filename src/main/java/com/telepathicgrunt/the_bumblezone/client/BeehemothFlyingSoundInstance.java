@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.client;
 
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -54,5 +56,10 @@ public class BeehemothFlyingSoundInstance extends AbstractTickableSoundInstance 
 
     public boolean canPlaySound() {
         return !this.beehemothEntity.isSilent();
+    }
+
+    public static void playSound(BeehemothEntity beehemothEntity) {
+        BeehemothFlyingSoundInstance beesoundinstance = new BeehemothFlyingSoundInstance(beehemothEntity, BzSounds.BEEHEMOTH_LOOP.get(), SoundSource.NEUTRAL);
+        Minecraft.getInstance().getSoundManager().queueTickingSound(beesoundinstance);
     }
 }

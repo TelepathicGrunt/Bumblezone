@@ -24,6 +24,9 @@ Beehemoth now has a buzzing sound when flying!
 ##### Biomes:
 Walls of Honey Web now spawns in the caves of Bumblezone!
 
+##### Misc:
+Fixed a client-sided mixin trying to load on servers.
+
 ##### Dimension:
 Lowered volume of ambient buzzing sound in Bumblezone dimension.
 
