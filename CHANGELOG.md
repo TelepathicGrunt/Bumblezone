@@ -21,6 +21,9 @@ Adjusted Honey Fluid texture slightly.
 ##### Biomes:
 Walls of Honey Web now spawns in the caves of Bumblezone!
 
+##### Mod Compat:
+Mob Catcher's passive mob item can now catch tamed Beehemoths but only if you are the owner. Wild Beehemoths can be mob catched by anyone still.
+
 
 ### **(V.4.1.3 Changes) (1.18.1 Minecraft)**
 
