@@ -18,8 +18,14 @@ Buffed the slowness that Honey Crystal Shield gives physical attackers.
 ##### Fluids:
 Adjusted Honey Fluid texture slightly.
 
+##### Entities:
+Beehemoth now has a buzzing sound when flying!
+
 ##### Biomes:
 Walls of Honey Web now spawns in the caves of Bumblezone!
+
+##### Dimension:
+Lowered volume of ambient buzzing sound in Bumblezone dimension.
 
 ##### Mod Compat:
 Mob Catcher's passive mob item can now catch tamed Beehemoths but only if you are the owner. Wild Beehemoths can be mob catched by anyone still.

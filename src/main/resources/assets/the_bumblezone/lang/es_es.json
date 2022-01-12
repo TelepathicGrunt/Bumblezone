@@ -11,6 +11,8 @@
   "block.the_bumblezone.beehive_beeswax": "Tablones de cera de abejas",
   "block.the_bumblezone.honey_crystal": "Cristal de miel",
   "block.the_bumblezone.pile_of_pollen": "Pile of Pollen",
+  "block.the_bumblezone.honey_web": "Honey Web",
+  "block.the_bumblezone.redstone_honey_web": "Redstone Honey Web",
 
   "fluid.the_bumblezone.sugar_water_still": "Agua azucarada",
   "fluid.the_bumblezone.sugar_water_flowing": "Agua azucarada",
@@ -50,8 +52,9 @@
   "effect.the_bumblezone.protection_of_the_hive": "Protección de la colmena",
   "effect.the_bumblezone.beenergized": "Beenergized",
 
-  "subtitles.the_bumblezone.behemoth.hurt": "Beehemoth ferida",
-  "subtitles.the_bumblezone.behemoth.dies": "Beehemoth morreu",
+  "subtitles.the_bumblezone.beehemoth.hurt": "Beehemoth ferida",
+  "subtitles.the_bumblezone.beehemoth.dies": "Beehemoth morreu",
+  "subtitles.the_bumblezone.beehemoth.loop": "Beehemoth buzzing",
 
   "advancements.the_bumblezone.root.title": "The Buzzing Bumbling Bumblezone!",
   "advancements.the_bumblezone.root.description": "Enter The Bumblezone dimension by any means",
@@ -133,6 +136,10 @@
   "advancements.the_bumblezone.extended_wrath_of_the_hive.description": "Make the mistake of attacking a bee while under the Wrath of the Hive",
   "advancements.the_bumblezone.food_removed_wrath_of_the_hive.title": "A Honey Offering Of Peace",
   "advancements.the_bumblezone.food_removed_wrath_of_the_hive.description": "Appease the angry swarm of bees with food... if you can survive...",
+  "advancements.the_bumblezone.cleanup_honey_web.title": "Clean Freak!",
+  "advancements.the_bumblezone.cleanup_honey_web.description": "Wash away a web of honey with a web sponge!",
+  "advancements.the_bumblezone.trigger_redstone_honey_web.title": "The Power Of Sticky!",
+  "advancements.the_bumblezone.trigger_redstone_honey_web.description": "Generate Redstone power from a special web of honey",
 
   "text.autoconfig.the_bumblezone-main.title": "The Bumblezone Configs",
   "text.autoconfig.the_bumblezone-main.category.dungeons": "Dungeons",
@@ -140,6 +147,8 @@
   "text.autoconfig.the_bumblezone-main.category.dimension": "Dimension",
   "text.autoconfig.the_bumblezone-main.category.block_mechanics": "Block Mechanics",
   "text.autoconfig.the_bumblezone-main.category.mod_compatibility": "Mod Compatibility",
+  "text.autoconfig.the_bumblezone-main.category.general": "General",
+  "text.autoconfig.the_bumblezone-main.category.client": "Client",
 
   "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.beeDungeonRarity": "Bee Dungeon Rarity",
   "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spiderInfestedBeeDungeonRarity": "Infested Bee Dungeon Rarity",

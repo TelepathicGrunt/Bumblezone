@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
+import com.telepathicgrunt.the_bumblezone.client.BeehemothFlyingSoundInstance;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothAIRide;
 import com.telepathicgrunt.the_bumblezone.entities.goals.FlyingStillGoal;
@@ -9,12 +10,14 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundAddMobPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -22,6 +25,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -482,6 +486,13 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     @Override
     protected SoundEvent getDeathSound() {
         return BzSounds.BEEHEMOTH_DEATH;
+    }
+
+    @Override
+    public void recreateFromPacket(ClientboundAddMobPacket clientboundAddMobPacket) {
+        super.recreateFromPacket(clientboundAddMobPacket);
+        BeehemothFlyingSoundInstance beesoundinstance = new BeehemothFlyingSoundInstance(this, BzSounds.BEEHEMOTH_LOOP, SoundSource.NEUTRAL);
+        Minecraft.getInstance().getSoundManager().queueTickingSound(beesoundinstance);
     }
 
     public void tick() {

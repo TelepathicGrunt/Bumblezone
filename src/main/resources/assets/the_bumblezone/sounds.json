@@ -4,7 +4,7 @@
       {
         "name": "the_bumblezone:beehive_sounds_compressed",
         "stream": true,
-        "volume": 0.075
+        "volume": 0.025
       }
     ]
   },
@@ -30,8 +30,7 @@
     "sounds": [
       {
         "name": "the_bumblezone:honey_bee_rat_faced_boy",
-        "stream": true,
-        "volume": 1
+        "stream": true
       }
     ]
   },
@@ -39,12 +38,11 @@
     "sounds": [
       {
         "name": "the_bumblezone:flight_of_the_bumblebee_rimsky_korsakov",
-        "stream": true,
-        "volume": 1
+        "stream": true
       }
     ]
   },
-  "entity.beehemoth.hurt": {
+  "entity.the_bumblezone.beehemoth.hurt": {
     "sounds": [
       {
         "attenuation_distance": 16,
@@ -83,9 +81,9 @@
         "pitch": 0.3
       }
     ],
-    "subtitle": "subtitles.the_bumblezone.behemoth.hurt"
+    "subtitle": "subtitles.the_bumblezone.beehemoth.hurt"
   },
-  "entity.beehemoth.death": {
+  "entity.the_bumblezone.beehemoth.death": {
     "sounds": [
       {
         "attenuation_distance": 16,
@@ -100,6 +98,47 @@
         "pitch": 0.2
       }
     ],
-    "subtitle": "subtitles.the_bumblezone.behemoth.dies"
+    "subtitle": "subtitles.the_bumblezone.beehemoth.dies"
+  },
+  "entity.the_bumblezone.beehemoth.loop": {
+    "sounds": [
+      {
+        "attenuation_distance": 9,
+        "name": "mob/bee/loop5",
+        "volume": 0.85,
+        "pitch": 0.4
+      },
+      {
+        "attenuation_distance": 9,
+        "name": "mob/bee/loop5",
+        "volume": 0.8,
+        "pitch": 0.4
+      },
+      {
+        "attenuation_distance": 9,
+        "name": "mob/bee/loop1",
+        "volume": 0.7,
+        "pitch": 0.4
+      },
+      {
+        "attenuation_distance": 9,
+        "name": "mob/bee/loop2",
+        "volume": 0.7,
+        "pitch": 0.4
+      },
+      {
+        "attenuation_distance": 9,
+        "name": "mob/bee/loop3",
+        "volume": 0.75,
+        "pitch": 0.4
+      },
+      {
+        "attenuation_distance": 9,
+        "name": "mob/bee/loop4",
+        "volume": 0.75,
+        "pitch": 0.4
+      }
+    ],
+    "subtitle": "subtitles.the_bumblezone.beehemoth.loop"
   }
 }
