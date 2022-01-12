@@ -48,6 +48,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class StickyHoneyResidue extends VineBlock {
     public static final BooleanProperty DOWN = PipeBlock.DOWN;
@@ -219,6 +220,13 @@ public class StickyHoneyResidue extends VineBlock {
     public BlockState updateShape(BlockState blockstate, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
         BlockState newBlockstate = this.setAttachments(blockstate, world, currentPos);
         return !hasAtleastOneAttachment(newBlockstate) ? Blocks.AIR.defaultBlockState() : newBlockstate;
+    }
+
+    @Override
+    public void tick(BlockState blockstate, ServerLevel world, BlockPos currentPos, Random random) {
+        super.tick(blockstate, world, currentPos, random);
+        BlockState newBlockstate = this.setAttachments(blockstate, world, currentPos);
+        world.setBlock(currentPos, newBlockstate, 3);
     }
 
     /**

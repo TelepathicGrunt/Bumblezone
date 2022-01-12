@@ -1,10 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
@@ -32,6 +35,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.PipeBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -47,6 +51,8 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -58,6 +64,11 @@ public class HoneyWeb extends Block {
     protected final VoxelShape[] collisionShapeByIndex;
     protected final VoxelShape[] shapeByIndex;
     private final Object2IntMap<BlockState> stateToIndex = new Object2IntOpenHashMap<>();
+    public static final Map<Direction.Axis, BooleanProperty> AXIS_TO_PROP = ImmutableMap.copyOf(Util.make(Maps.newEnumMap(Direction.Axis.class), (map) -> {
+        map.put(Direction.Axis.X, NORTHSOUTH);
+        map.put(Direction.Axis.Z, EASTWEST);
+        map.put(Direction.Axis.Y, UPDOWN);
+    }));
 
     public HoneyWeb() {
         this(Properties.of(Material.WEB, MaterialColor.COLOR_ORANGE).noOcclusion().noCollission().requiresCorrectToolForDrops().strength(4.0F));
