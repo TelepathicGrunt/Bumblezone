@@ -27,6 +27,9 @@ Walls of Honey Web now spawns in the caves of Bumblezone!
 ##### Dimension:
 Lowered volume of ambient buzzing sound in Bumblezone dimension.
 
+##### Misc:
+Fixed a client-sided mixin trying to load on servers.
+
 ##### Mod Compat:
 Mob Catcher's passive mob item can now catch tamed Beehemoths but only if you are the owner. Wild Beehemoths can be mob catched by anyone still.
 
