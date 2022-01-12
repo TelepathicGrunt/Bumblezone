@@ -45,6 +45,8 @@ public class BzItems {
     public static final Item STICKY_HONEY_REDSTONE = new BlockItem(BzBlocks.STICKY_HONEY_REDSTONE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item BEESWAX_PLANKS = new BlockItem(BzBlocks.BEEHIVE_BEESWAX, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item PILE_OF_POLLEN = new BlockItem(BzBlocks.PILE_OF_POLLEN, new Item.Properties());
+    public static final Item HONEY_WEB = new BlockItem(BzBlocks.HONEY_WEB, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item REDSTONE_HONEY_WEB = new BlockItem(BzBlocks.REDSTONE_HONEY_WEB, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
 
     //items
     public static final Item HONEY_CRYSTAL_SHARDS = new Item(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)
@@ -98,5 +100,7 @@ public class BzItems {
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "pollen_puff"), POLLEN_PUFF);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_bread"), BEE_BREAD);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_bucket"), HONEY_BUCKET);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_web"), HONEY_WEB);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "redstone_honey_web"), REDSTONE_HONEY_WEB);
     }
 }

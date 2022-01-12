@@ -203,7 +203,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 PileOfPollen.stackPollen(sideState, this.level, impactSide, pileOfPollen);
                 consumed = true;
             }
-            else if((!belowSideStateHasCollision && sideState.isAir()) || (belowSideStateHasCollision && pileOfPollen.canSurvive(this.level, impactSide))) {
+            else if((!belowSideStateHasCollision && sideState.isAir()) || (belowSideStateHasCollision && pileOfPollen.canSurvive(this.level, impactSide) && sideState.getMaterial().isReplaceable())) {
                 this.level.setBlock(impactSide, pileOfPollen, 3);
                 consumed = true;
             }

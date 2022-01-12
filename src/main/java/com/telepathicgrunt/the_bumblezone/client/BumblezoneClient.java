@@ -76,6 +76,8 @@ public class BumblezoneClient implements ClientModInitializer {
     public static void registerRenderLayers() {
         BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STICKY_HONEY_REDSTONE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STICKY_HONEY_RESIDUE, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.HONEY_WEB, RenderType.translucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.REDSTONE_HONEY_WEB, RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.HONEY_CRYSTAL, RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putBlock(BzFluids.SUGAR_WATER_BLOCK, RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putFluid(BzFluids.SUGAR_WATER_FLUID, RenderType.translucent());

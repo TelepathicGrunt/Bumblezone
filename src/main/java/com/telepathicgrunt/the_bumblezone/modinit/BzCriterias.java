@@ -2,11 +2,13 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.advancements.*;
 import net.fabricmc.fabric.api.object.builder.v1.advancement.CriterionRegistry;
+import net.minecraft.advancements.CriteriaTriggers;
 
 public class BzCriterias {
     // CRITERIA TRIGGERS
     public static final BeenergizedMaxTrigger BEENERGIZED_MAXED_TRIGGER = new BeenergizedMaxTrigger();
     public static final BeeDropPollenPuffTrigger BEE_DROP_POLLEN_PUFF_TRIGGER = new BeeDropPollenPuffTrigger();
+    public static final CleanupHoneyWebTrigger CLEANUP_HONEY_WEB_TRIGGER = new CleanupHoneyWebTrigger();
     public static final CleanupStickyHoneyResidueTrigger CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER = new CleanupStickyHoneyResidueTrigger();
     public static final CombCutterExtraDropsTrigger COMB_CUTTER_EXTRA_DROPS_TRIGGER = new CombCutterExtraDropsTrigger();
     public static final ExtendedWrathOfTheHiveTrigger EXTENDED_WRATH_OF_THE_HIVE_TRIGGER = new ExtendedWrathOfTheHiveTrigger();
@@ -31,10 +33,12 @@ public class BzCriterias {
     public static final TeleportOutOfBumblezoneFallTrigger TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER = new TeleportOutOfBumblezoneFallTrigger();
     public static final TeleportToBumblezoneByPearlTrigger TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER = new TeleportToBumblezoneByPearlTrigger();
     public static final TeleportToBumblezoneByPistonTrigger TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER = new TeleportToBumblezoneByPistonTrigger();
+    public static final TriggerRedstoneHoneyWebTrigger TRIGGER_REDSTONE_HONEY_WEB_TRIGGER = new TriggerRedstoneHoneyWebTrigger();
 
     public static void registerCriteriaTriggers() {
         CriterionRegistry.register(BEENERGIZED_MAXED_TRIGGER);
         CriterionRegistry.register(BEE_DROP_POLLEN_PUFF_TRIGGER);
+        CriterionRegistry.register(CLEANUP_HONEY_WEB_TRIGGER);
         CriterionRegistry.register(CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER);
         CriterionRegistry.register(COMB_CUTTER_EXTRA_DROPS_TRIGGER);
         CriterionRegistry.register(EXTENDED_WRATH_OF_THE_HIVE_TRIGGER);
@@ -59,5 +63,6 @@ public class BzCriterias {
         CriterionRegistry.register(TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER);
         CriterionRegistry.register(TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER);
         CriterionRegistry.register(TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER);
+        CriterionRegistry.register(TRIGGER_REDSTONE_HONEY_WEB_TRIGGER);
     }
 }

@@ -1,0 +1,31 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "northsouth": "true"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/honey_web_ns",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/honey_web_ew",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "updown": "true"
+      },
+      "apply": {
+        "model": "the_bumblezone:block/honey_web_ud",
+        "uvlock": true
+      }
+    }
+  ]
+}
