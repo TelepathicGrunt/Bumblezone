@@ -12,6 +12,8 @@
   "block.the_bumblezone.beehive_beeswax": "Tábuas de cera de abelha",
   "block.the_bumblezone.honey_crystal": "Mel cristalizado",
   "block.the_bumblezone.pile_of_pollen": "Pilha de pólen",
+  "block.the_bumblezone.honey_web": "Honey Web",
+  "block.the_bumblezone.redstone_honey_web": "Redstone Honey Web",
 
   "fluid.the_bumblezone.sugar_water_still": "Água açucarada",
   "fluid.the_bumblezone.sugar_water_flowing": "Água açucarada",
@@ -51,8 +53,9 @@
   "effect.the_bumblezone.protection_of_the_hive": "Proteção da colmeia",
   "effect.the_bumblezone.beenergized": "Beenergized",
 
-  "subtitles.the_bumblezone.behemoth.hurt": "Beehemoth hurt",
-  "subtitles.the_bumblezone.behemoth.dies": "Beehemoth died",
+  "subtitles.the_bumblezone.beehemoth.hurt": "Beehemoth hurt",
+  "subtitles.the_bumblezone.beehemoth.dies": "Beehemoth died",
+  "subtitles.the_bumblezone.beehemoth.loop": "Beehemoth buzzing",
 
   "advancements.the_bumblezone.root.title": "The Buzzing Bumbling Bumblezone!",
   "advancements.the_bumblezone.root.description": "Enter The Bumblezone dimension by any means",
@@ -134,6 +137,10 @@
   "advancements.the_bumblezone.extended_wrath_of_the_hive.description": "Make the mistake of attacking a bee while under the Wrath of the Hive",
   "advancements.the_bumblezone.food_removed_wrath_of_the_hive.title": "A Honey Offering Of Peace",
   "advancements.the_bumblezone.food_removed_wrath_of_the_hive.description": "Appease the angry swarm of bees with food... if you can survive...",
+  "advancements.the_bumblezone.cleanup_honey_web.title": "Clean Freak!",
+  "advancements.the_bumblezone.cleanup_honey_web.description": "Wash away a web of honey with a web sponge!",
+  "advancements.the_bumblezone.trigger_redstone_honey_web.title": "The Power Of Sticky!",
+  "advancements.the_bumblezone.trigger_redstone_honey_web.description": "Generate Redstone power from a special web of honey",
 
   "the_bumblezone.porous_honeycomb_block.jei_description": " Um bloco de favo de mel cheio de buracos! Você pode armazenar mel neste bloco com frascos de mel.",
   "the_bumblezone.filled_porous_honeycomb_block.jei_description": " Um bloco de favo de mel cheio até a borda com mel! Você pode tirar o mel deste bloco com um frasco vasio. No entanto, isso pode irritar as abelhas próximas. \n\n Quando extraído, este bloco solta bloco de favo de mel poroso e alguns favos de mel. A queda é afetada por fortuna ou você pode usar toque suave para manter o bloco intacto. \n\n Este bloco também emite um sinal Redstone de 1 quando um comparador está voltado para este bloco.",
@@ -155,5 +162,7 @@
   "the_bumblezone.pollen_puff.jei_description": " Uma bola fofa de pólen! Encontrado minerando pilhas de pólen ou ao despolinizar abelhas ao clicar com o botão direito nelas com uma esponga úmida, frasco de água ou balde de água. \n\n Pode ser atirado para criat um bloco de pilha de pólen em qualquer lugar que cair. Se acertar uma abelha polinizada, a abelha é polinizada. Se acertar um panda, ele espirra. Entretanto, se certar um das flores permitidas, ela pode se reproduzir! \n\n Um bloco de pilha de pólen desacelera multidões e emite muitas partículas de pólen. Ele também irá polinizar qualquer abelha desponilizada que voar nele ou fazer pandas espirrarem. Também pode ser medido por um comparador de redstone.",
   "the_bumblezone.bee_bread.jei_description": " A gross looking pellet created from a fermented blend of pollen and honey. Bees love this and will get a burst of energy that makes them faster if they are fed Bee Bread. You can eat it too for good nutrition but it may make you lightheaded for a second or two...",
   "the_bumblezone.honey_fluid_still.jei_description": " Um delicioso mel! Flui vagarosamente e irá desacelera multidões nele consideravelmente. Multidões que não são do jogador e barcos tendem a afundar no mel como se fosse um armadilha grudenta! \n\n Pode ser pego por um balde ou um frasco e ele irá curar qulquer abelha . \n\n Quando esse fluido entrar em contato com qualquer fluido com a tag de lava, ele irá se tornar em pedregulho açucarado ou pedra açucarada.",
-  "the_bumblezone.honey_bucket.jei_description": " Balde com mel. Pode ser obtido ao fabricar baldes com frascos de mel e pode ser fabricado em frascos de mel de volta também. \n\n Se usado em abelhas, irá curá-las completamente. Se usado em abelhas adultas, pôe ela e as proximas a ela no modo amor! Se usado em uma abelha filhote, possui uma chance de fazê-las crescer em adultos. Pode ser usados em ejetores também!"
+  "the_bumblezone.honey_bucket.jei_description": " Balde com mel. Pode ser obtido ao fabricar baldes com frascos de mel e pode ser fabricado em frascos de mel de volta também. \n\n Se usado em abelhas, irá curá-las completamente. Se usado em abelhas adultas, pôe ela e as proximas a ela no modo amor! Se usado em uma abelha filhote, possui uma chance de fazê-las crescer em adultos. Pode ser usados em ejetores também!",
+  "the_bumblezone.honey_web.jei_description": " A super sticky web of honey! Greatly slows any mobs that gets stuck in it but can easily be cleanse with water or wet sponges. Basically it acts similar to Sticky Honey Residue except Honey Web does not need to be attached to a block.",
+  "the_bumblezone.redstone_honey_web.jei_description": " A Redstone variant of Honey Web that will output a Redstone signal when a mob is trapped in it. Redstone Honey Web cannot take in a Redstone signal from a non-Redstone Honey Web block. The rest of its behaviors is the same as Honey Web block."
 }
