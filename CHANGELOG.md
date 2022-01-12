@@ -1,4 +1,4 @@
-### **(V.4.1.2 Changes) (1.18.1 Minecraft)**
+### **(V.4.2.0 Changes) (1.18.1 Minecraft)**
 
 ##### Blocks:
 Added Honey Web and Sticky Honey Web blocks! They are crafted from 3 Sticky Honey Reside or 3 Sticky Honey Redstone in a row. 
