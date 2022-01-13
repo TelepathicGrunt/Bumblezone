@@ -1,3 +1,9 @@
+### **(V.4.2.1 Changes) (1.18.1 Minecraft)**
+
+##### Teleportation:
+Fixed beehives/beenest so that any Y value can still get players into The Bumblezone.
+
+
 ### **(V.4.2.0 Changes) (1.18.1 Minecraft)**
 
 ##### Blocks:

@@ -128,7 +128,7 @@ public class EntityTeleportationBackend {
         }
         BlockPos blockpos = new BlockPos(
                 Doubles.constrainToRange(entity.position().x() * coordinateScale, -29999936D, 29999936D),
-                entity.position().y(),
+                Doubles.constrainToRange(entity.position().y(), 45, 200),
                 Doubles.constrainToRange(entity.position().z() * coordinateScale, -29999936D, 29999936D));
 
 
