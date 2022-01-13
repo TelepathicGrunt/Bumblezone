@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
+import com.telepathicgrunt.the_bumblezone.client.BeehemothFlyingSoundInstance;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothAIRide;
 import com.telepathicgrunt.the_bumblezone.entities.goals.FlyingStillGoal;
@@ -15,6 +16,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundAddMobPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -65,6 +67,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     private static final EntityDataAccessor<Boolean> QUEEN = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> FRIENDSHIP = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.INT);
 
+    private static final ResourceLocation MOB_CATCHER_RL = new ResourceLocation("mob_catcher", "mob_catcher");
     public static final int TICKS_PER_FLAP = Mth.ceil(1.4959966F);
     private boolean stopWandering = false;
 
@@ -244,6 +247,16 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
         ResourceLocation itemRL = Registry.ITEM.getKey(item);
+
+        if (this.isTame() && itemRL.equals(MOB_CATCHER_RL)) {
+            if(this.isOwnedBy(player)) {
+                return InteractionResult.PASS;
+            }
+            else {
+                return InteractionResult.SUCCESS;
+            }
+        }
+
         if (this.level.isClientSide) {
             if (isTame() && isOwnedBy(player)) {
                 return InteractionResult.SUCCESS;
@@ -471,6 +484,12 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     @Override
     protected SoundEvent getDeathSound() {
         return BzSounds.BEEHEMOTH_DEATH;
+    }
+
+    @Override
+    public void recreateFromPacket(ClientboundAddMobPacket clientboundAddMobPacket) {
+        super.recreateFromPacket(clientboundAddMobPacket);
+        BeehemothFlyingSoundInstance.playSound(this);
     }
 
     public void tick() {

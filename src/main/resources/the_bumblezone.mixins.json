@@ -13,7 +13,6 @@
     "blocks.RedstoneDustCanConnectMixin",
     "blocks.VineBlockAccessor",
     "blocks.WaterEquivalenceMixin",
-    "client.EntityRendererRegistryImplAccessor",
     "containers.WorkbenchContainerMixin",
     "entities.BeeEntityInvoker",
     "entities.BeeEntityMixin",
@@ -55,6 +54,7 @@
     "blocks.ScreenEffectRendererMixin",
     "client.FluidRendererMixin",
     "client.FogRendererMixin",
+    "client.EntityRendererRegistryImplAccessor",
     "world.DimensionSpecialEffectsAccessor"
   ],
   "injectors": {

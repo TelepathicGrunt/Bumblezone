@@ -59,16 +59,13 @@ public class HoneyCrystalShieldBehavior {
 
         // checks for living attacker and player victim
         // and also ignores explosions or magic damage
-        if (source.getDirectEntity() instanceof LivingEntity attacker &&
-                !source.isExplosion() &&
-                !source.isMagic()) {
+        if (source.getDirectEntity() instanceof LivingEntity attacker && !source.isExplosion() && !source.isMagic()) {
 
             // checks to see if player is blocking with our shield
-            if (player.getUseItem().getItem() instanceof HoneyCrystalShield
-                    && player.isBlocking()) {
+            if (player.getUseItem().getItem() instanceof HoneyCrystalShield && player.isBlocking()) {
 
                 // apply slowness to attacker
-                attacker.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 0, false, false, false));
+                attacker.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 165, 1, true, true, false));
             }
         }
     }

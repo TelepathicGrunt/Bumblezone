@@ -40,11 +40,13 @@ public class BzItems {
     public static final Item HONEYCOMB_LARVA = new BlockItem(BzBlocks.HONEYCOMB_BROOD, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item SUGAR_INFUSED_STONE = new BlockItem(BzBlocks.SUGAR_INFUSED_STONE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item SUGAR_INFUSED_COBBLESTONE = new BlockItem(BzBlocks.SUGAR_INFUSED_COBBLESTONE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
-    public static final Item HONEY_CRYSTAL = new BzBlockItem(BzBlocks.HONEY_CRYSTAL, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item BEESWAX_PLANKS = new BlockItem(BzBlocks.BEEHIVE_BEESWAX, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item STICKY_HONEY_RESIDUE = new BlockItem(BzBlocks.STICKY_HONEY_RESIDUE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item STICKY_HONEY_REDSTONE = new BlockItem(BzBlocks.STICKY_HONEY_REDSTONE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
-    public static final Item BEESWAX_PLANKS = new BlockItem(BzBlocks.BEEHIVE_BEESWAX, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item HONEY_WEB = new BlockItem(BzBlocks.HONEY_WEB, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item REDSTONE_HONEY_WEB = new BlockItem(BzBlocks.REDSTONE_HONEY_WEB, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item PILE_OF_POLLEN = new BlockItem(BzBlocks.PILE_OF_POLLEN, new Item.Properties());
+    public static final Item HONEY_CRYSTAL = new BzBlockItem(BzBlocks.HONEY_CRYSTAL, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
 
     //items
     public static final Item HONEY_CRYSTAL_SHARDS = new Item(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)
@@ -82,11 +84,13 @@ public class BzItems {
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honeycomb_brood_block"), HONEYCOMB_LARVA);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "sugar_infused_stone"), SUGAR_INFUSED_STONE);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "sugar_infused_cobblestone"), SUGAR_INFUSED_COBBLESTONE);
-        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_crystal"), HONEY_CRYSTAL);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "beehive_beeswax"), BEESWAX_PLANKS);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "sticky_honey_residue"), STICKY_HONEY_RESIDUE);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "sticky_honey_redstone"), STICKY_HONEY_REDSTONE);
-        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "beehive_beeswax"), BEESWAX_PLANKS);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_web"), HONEY_WEB);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "redstone_honey_web"), REDSTONE_HONEY_WEB);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "pile_of_pollen"), PILE_OF_POLLEN);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_crystal"), HONEY_CRYSTAL);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_crystal_shards"), HONEY_CRYSTAL_SHARDS);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_crystal_shield"), HONEY_CRYSTAL_SHIELD);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "sugar_water_bucket"), SUGAR_WATER_BUCKET);

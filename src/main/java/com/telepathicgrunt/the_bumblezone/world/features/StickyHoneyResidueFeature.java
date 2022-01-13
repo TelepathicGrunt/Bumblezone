@@ -52,6 +52,7 @@ public class StickyHoneyResidueFeature extends Feature<NoneFeatureConfiguration>
                 }
 
                 context.level().setBlock(context.origin(), honeyResidue, 3);
+                context.level().scheduleTick(context.origin(), honeyResidue.getBlock(), 0);
                 return true;
             }
         }

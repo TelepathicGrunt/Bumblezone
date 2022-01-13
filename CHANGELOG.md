@@ -1,3 +1,39 @@
+### **(V.4.2.0 Changes) (1.18.1 Minecraft)**
+
+##### Blocks:
+Added Honey Web and Sticky Honey Web blocks! They are crafted from 3 Sticky Honey Reside or 3 Sticky Honey Redstone in a row.
+They act like the residue forms but instead, can be placed to create a wall of stickiness without being attached to a block surface.
+
+Sticky Honey Residue and Sticky Honey Redstone now give a temporary slowness status effect.
+
+Sticky Honey Residue and Sticky Honey Redstone collision checking is optimized a bit better.
+
+Fixed issue where Sticky Honey Residue could spawn in midair during worldgen.
+
+##### Items:
+Fixed Pollen Puff able to replace non-replaceable non-solid blocks when thrown inside the space for that block.
+
+Buffed the slowness that Honey Crystal Shield gives physical attackers.
+
+##### Fluids:
+Adjusted Honey Fluid texture slightly.
+
+##### Entities:
+Beehemoth now has a buzzing sound when flying!
+
+##### Biomes:
+Walls of Honey Web now spawns in the caves of Bumblezone!
+
+##### Dimension:
+Lowered volume of ambient buzzing sound in Bumblezone dimension.
+
+##### Misc:
+Fixed a client-sided mixin trying to load on servers.
+
+##### Mod Compat:
+Mob Catcher's passive mob item can now catch tamed Beehemoths but only if you are the owner. Wild Beehemoths can be mob catched by anyone still.
+
+
 ### **(V.4.1.3 Changes) (1.18.1 Minecraft)**
 
 ##### Major:

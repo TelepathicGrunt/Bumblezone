@@ -40,7 +40,9 @@
       "the_bumblezone:spider_infested_bee_dungeon"
     ],
     [],
-    [],
+    [
+      "the_bumblezone:web_wall"
+    ],
     [
       "the_bumblezone:honey_crystals_uncommon",
       "the_bumblezone:sticky_honey_residue_feature"

@@ -17,6 +17,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -38,15 +40,15 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class StickyHoneyResidue extends VineBlock {
     public static final BooleanProperty DOWN = PipeBlock.DOWN;
@@ -130,11 +132,18 @@ public class StickyHoneyResidue extends VineBlock {
             return;
         }
 
-        AABB axisalignedbb = voxelShape.bounds().move(pos);
-        List<? extends Entity> list = world.getEntitiesOfClass(LivingEntity.class, axisalignedbb);
-
-        if (list.contains(entity)) {
+        voxelShape = voxelShape.move(pos.getX(), pos.getY(), pos.getZ());
+        if (Shapes.joinIsNotEmpty(voxelShape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND)) {
             entity.makeStuckInBlock(blockstate, new Vec3(0.35D, 0.2F, 0.35D));
+            if (entity instanceof LivingEntity livingEntity) {
+                livingEntity.addEffect(new MobEffectInstance(
+                        MobEffects.MOVEMENT_SLOWDOWN,
+                        200,
+                        1,
+                        false,
+                        false,
+                        true));
+            }
         }
     }
 
@@ -213,6 +222,13 @@ public class StickyHoneyResidue extends VineBlock {
         return !hasAtleastOneAttachment(newBlockstate) ? Blocks.AIR.defaultBlockState() : newBlockstate;
     }
 
+    @Override
+    public void tick(BlockState blockstate, ServerLevel world, BlockPos currentPos, Random random) {
+        super.tick(blockstate, world, currentPos, random);
+        BlockState newBlockstate = this.setAttachments(blockstate, world, currentPos);
+        world.setBlock(currentPos, newBlockstate, 3);
+    }
+
     /**
      * Destroyed by pistons.
      */
@@ -266,8 +282,15 @@ public class StickyHoneyResidue extends VineBlock {
 
             world.destroyBlock(position, false);
 
-            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
-                    SoundEvents.PHANTOM_SWOOP, SoundSource.NEUTRAL, 1.0F, 1.0F);
+            world.playSound(
+                    playerEntity,
+                    playerEntity.getX(),
+                    playerEntity.getY(),
+                    playerEntity.getZ(),
+                    SoundEvents.PHANTOM_SWOOP,
+                    SoundSource.NEUTRAL,
+                    1.0F,
+                    1.0F);
 
             if (world instanceof ServerLevel) {
                 if (blockstate.getValue(UP)) {
