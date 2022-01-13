@@ -9,8 +9,11 @@
   "block.the_bumblezone.sugar_infused_stone": "Zuckergetr\u00e4nkter Stein",
   "block.the_bumblezone.sticky_honey_residue": "Klebriger Honigrest",
   "block.the_bumblezone.sticky_honey_redstone": "Klebriger Honigredstone",
+  "block.the_bumblezone.beehive_beeswax": "Beehive Beeswax",
   "block.the_bumblezone.honey_crystal": "Honigkristall",
   "block.the_bumblezone.pile_of_pollen": "Pile of Pollen",
+  "block.the_bumblezone.honey_web": "Honey Web",
+  "block.the_bumblezone.redstone_honey_web": "Redstone Honey Web",
 
   "fluid.the_bumblezone.sugar_water_still": "Sugar Water",
   "fluid.the_bumblezone.sugar_water_flowing": "Sugar Water",
@@ -50,8 +53,9 @@
   "effect.the_bumblezone.protection_of_the_hive": "Bienenschutz",
   "effect.the_bumblezone.beenergized": "Beenergized",
 
-  "subtitles.the_bumblezone.behemoth.hurt": "Beehemoth hurt",
-  "subtitles.the_bumblezone.behemoth.dies": "Beehemoth died",
+  "subtitles.the_bumblezone.beehemoth.hurt": "Beehemoth hurt",
+  "subtitles.the_bumblezone.beehemoth.dies": "Beehemoth died",
+  "subtitles.the_bumblezone.beehemoth.loop": "Beehemoth buzzing",
 
   "advancements.the_bumblezone.root.title": "The Buzzing Bumbling Bumblezone!",
   "advancements.the_bumblezone.root.description": "Enter The Bumblezone dimension by any means",
@@ -133,6 +137,10 @@
   "advancements.the_bumblezone.extended_wrath_of_the_hive.description": "Make the mistake of attacking a bee while under the Wrath of the Hive",
   "advancements.the_bumblezone.food_removed_wrath_of_the_hive.title": "A Honey Offering Of Peace",
   "advancements.the_bumblezone.food_removed_wrath_of_the_hive.description": "Appease the angry swarm of bees with food... if you can survive...",
+  "advancements.the_bumblezone.cleanup_honey_web.title": "Clean Freak!",
+  "advancements.the_bumblezone.cleanup_honey_web.description": "Wash away a web of honey with a web sponge!",
+  "advancements.the_bumblezone.trigger_redstone_honey_web.title": "The Power Of Sticky!",
+  "advancements.the_bumblezone.trigger_redstone_honey_web.description": "Generate Redstone power from a special web of honey",
 
   "the_bumblezone.porous_honeycomb_block.jei_description": " A honeycomb block filled with holes! You can store honey into this block with Honey Bottles or Honey Buckets.",
   "the_bumblezone.filled_porous_honeycomb_block.jei_description": " A honeycomb block filled to the brim with honey! You can take honey out of this block with a Glass Bottle. However, this may anger nearby bees. \n\n When mined, this block drops Porous Honeycomb Block and some Honeycombs. The drop is affect by Fortune or you can use Silk Touch to keep the block intact. \n\n This block also give off a Redstone signal of 1 when a Comparator is facing this block.",
@@ -154,5 +162,7 @@
   "the_bumblezone.pollen_puff.jei_description": " A soft ball of clumped pollen! Found when mining Pile of Pollen or unpollinating a bee by right clicking it with wet sponge, water bottle, or water bucket. \n\n It can be thrown to create a Pile of Pollen block where-ever it hits. If it hits an unpollinated bee, the bee becomes pollinated. If it hits a panda, it will sneeze. But if it hits an allowed flower, it may cause the flower to reproduce! \n\n A Pile of Pollen block slows mobs in it and gives off a ton of pollen particles. It will also pollinate any unpollinated bee that flies into the Pile of Pollen or make Pandas sneeze. It also can be measured by a Redstone Comparator.",
   "the_bumblezone.bee_bread.jei_description": " A gross looking pellet created from a fermented blend of pollen and honey. Bees love this and will get a burst of energy that makes them faster if they are fed Bee Bread. You can eat it too for good nutrition but it may make you lightheaded for a second or two...",
   "the_bumblezone.honey_fluid_still.jei_description": " A delicious fluid of honey! It flows very slowly and will slow mobs in it significantly. Non-player mobs and boats tends to sink into the Honey Fluid as if it is a sticky trap! \n\n Can be picked up with a Bucket or Glass Bottle and it will heal any hurt bee that flies into the fluid. \n\n When this fluid comes in contact with any other fluid that has a lava tag, this fluid will turn into either Sugar Infused Cobblestone or Sugar Infused Stone blocks.",
-  "the_bumblezone.honey_bucket.jei_description": " Bucket holding Honey fluid. Can be obtained by crafting buckets with Honey Bottles and can be reverse crafted back to Honey Bottles too. \n\n If used on bees, it will fully heal them. if used on an adult bee, it puts it and nearby bees into love mode! if used on a child bee, it has a chance of growing them into an adult. Can be used in Dispensers too!"
+  "the_bumblezone.honey_bucket.jei_description": " Bucket holding Honey fluid. Can be obtained by crafting buckets with Honey Bottles and can be reverse crafted back to Honey Bottles too. \n\n If used on bees, it will fully heal them. if used on an adult bee, it puts it and nearby bees into love mode! if used on a child bee, it has a chance of growing them into an adult. Can be used in Dispensers too!",
+  "the_bumblezone.honey_web.jei_description": " A super sticky web of honey! Greatly slows any mobs that gets stuck in it but can easily be cleanse with water or wet sponges. Basically it acts similar to Sticky Honey Residue except Honey Web does not need to be attached to a block.",
+  "the_bumblezone.redstone_honey_web.jei_description": " A Redstone variant of Honey Web that will output a Redstone signal when a mob is trapped in it. Redstone Honey Web cannot take in a Redstone signal from a non-Redstone Honey Web block. The rest of its behaviors is the same as Honey Web block."
 }

@@ -1,0 +1,24 @@
+{
+  "feature": "the_bumblezone:web_wall",
+  "placement": [
+    {
+      "count": 5,
+      "type": "minecraft:count"
+    },
+    {
+      "height": {
+        "min_inclusive": {
+          "above_bottom": 48
+        },
+        "max_inclusive": {
+          "below_top": 16
+        },
+        "type": "minecraft:uniform"
+      },
+      "type": "minecraft:height_range"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

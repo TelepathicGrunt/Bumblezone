@@ -390,14 +390,15 @@ public class EntityTeleportationBackend {
     // Player exiting Bumblezone dimension
     public static void playerLeavingBz(EntityTravelToDimensionEvent event) {
         //Updates the non-BZ dimension that the player is leaving
-        if (!event.getDimension().location().equals(Bumblezone.MOD_DIMENSION_ID) && event.getEntity() instanceof LivingEntity livingEntity) {
+        Entity entity = event.getEntity();
+
+        if (entity instanceof LivingEntity livingEntity && !livingEntity.level.isClientSide() && !event.getDimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             LazyOptional<EntityPositionAndDimension> lazyOptional = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
             if(lazyOptional.isPresent()) {
                 EntityPositionAndDimension capability = lazyOptional.orElseThrow(RuntimeException::new);
                 capability.setNonBZDim(event.getDimension().location());
             }
             else {
-                Entity entity = event.getEntity();
                 Bumblezone.LOGGER.error("Bumblezone entity pos/dim cap was not found for given entity: {}, {}, {}, {}, at {} which has the internal dimension of: {} and is coming from: {}",
                         entity.getType(),
                         entity.getClass().getName(),

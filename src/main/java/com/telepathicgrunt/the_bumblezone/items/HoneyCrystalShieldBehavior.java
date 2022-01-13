@@ -59,18 +59,13 @@ public class HoneyCrystalShieldBehavior {
 
         // checks for living attacker and player victim
         // and also ignores explosions or magic damage
-        if (source.getDirectEntity() instanceof LivingEntity &&
-                !source.isExplosion() &&
-                !source.isMagic()) {
+        if (source.getDirectEntity() instanceof LivingEntity attacker && !source.isExplosion() && !source.isMagic()) {
 
             // checks to see if player is blocking with our shield
-            LivingEntity attacker = (LivingEntity) source.getDirectEntity();
-
-            if (player.getUseItem().getItem() instanceof HoneyCrystalShield
-                    && player.isBlocking()) {
+            if (player.getUseItem().getItem() instanceof HoneyCrystalShield && player.isBlocking()) {
 
                 // apply slowness to attacker
-                attacker.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 0, false, false, false));
+                attacker.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 165, 1, true, true, false));
             }
         }
     }
@@ -106,38 +101,4 @@ public class HoneyCrystalShieldBehavior {
 
         return false;
     }
-
-    /**
-     * Increases the durability of the shield by 10 for every shield level (repair cost)
-     */
-    public static int getMaximumDamage(ItemStack stack)
-    {
-        if(stack.hasTag()) {
-            int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
-            if (repairLevel != 0) {
-                return BzItems.HONEY_CRYSTAL_SHIELD.get().getMaxDamage() + repairLevel * 10;
-            }
-        }
-        return BzItems.HONEY_CRYSTAL_SHIELD.get().getMaxDamage();
-    }
-
-    /**
-     * reduces damage done to the shield for higher shield levels (repair cost)
-     */
-    public static int setDamage(ItemStack stack, int damage) {
-        if (stack.hasTag()) {
-            int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
-            int damageCaused = stack.getDamageValue() - damage;
-
-            // ignore anvil repairing
-            if (damageCaused < 0 && repairLevel != 0) {
-
-                int reducedDamage = Math.min(-1, damageCaused + (repairLevel / 14));
-                return stack.getDamageValue() + (-reducedDamage);
-            }
-        }
-
-        return damage;
-    }
-
 }

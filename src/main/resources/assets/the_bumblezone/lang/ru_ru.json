@@ -12,6 +12,8 @@
  "block.the_bumblezone.beehive_beeswax": "Пчелиный воск для улья",
  "block.the_bumblezone.honey_crystal": "Медовый кристалл",
  "block.the_bumblezone.pile_of_pollen": "Кучка пыльцы",
+ "block.the_bumblezone.honey_web": "Honey Web",
+ "block.the_bumblezone.redstone_honey_web": "Redstone Honey Web",
 
  "fluid.the_bumblezone.sugar_water_still": "Сахарная вода",
  "fluid.the_bumblezone.sugar_water_flowing": "Сахарная вода",
@@ -51,8 +53,9 @@
  "effect.the_bumblezone.protection_of_the_hive": "Защита улья",
  "effect.the_bumblezone.beenergized": "Beenergized",
 
- "subtitles.the_bumblezone.behemoth.hurt": "Гиганской пчеле больно",
- "subtitles.the_bumblezone.behemoth.dies": "Гиганская пчела умерла",
+ "subtitles.the_bumblezone.beehemoth.hurt": "Гиганской пчеле больно",
+ "subtitles.the_bumblezone.beehemoth.dies": "Гиганская пчела умерла",
+ "subtitles.the_bumblezone.beehemoth.loop": "Beehemoth buzzing",
 
  "the_bumblezone.porous_honeycomb_block.jei_description": " Блок сот, покрытый медовыми ячейками. Можно заполнить мёдом из бутылочек или вёдер.",
  "the_bumblezone.filled_porous_honeycomb_block.jei_description": " Блок сот, заполненный до краёв мёдом! Из него можно наполнить бутылочки мёдом. Однако это может разозлить ближайших пчёл. \n\n При добывании выпадает ячеистый блок сот и немного пчелиных сот. На добывание влияет удача, можно также использовать шёлковое касание. \n\n Выдаёт сигнал редстоуна силой 1, когда подключен к компаратору.",
@@ -138,6 +141,10 @@
  "advancements.the_bumblezone.extended_wrath_of_the_hive.description": "Make the mistake of attacking a bee while under the Wrath of the Hive",
  "advancements.the_bumblezone.food_removed_wrath_of_the_hive.title": "A Honey Offering Of Peace",
  "advancements.the_bumblezone.food_removed_wrath_of_the_hive.description": "Appease the angry swarm of bees with food... if you can survive...",
+ "advancements.the_bumblezone.cleanup_honey_web.title": "Clean Freak!",
+ "advancements.the_bumblezone.cleanup_honey_web.description": "Wash away a web of honey with a web sponge!",
+ "advancements.the_bumblezone.trigger_redstone_honey_web.title": "The Power Of Sticky!",
+ "advancements.the_bumblezone.trigger_redstone_honey_web.description": "Generate Redstone power from a special web of honey",
 
  "the_bumblezone.honeycomb_brood_block.jei_description": " Внутри блока, в гигантском отверстии, живёт личинка! Личинка будет медленно расти, проходя 4 стадии (быстрее в пчелином измерении), и когда она достигнет последней стадии, у неё появится шанс заспаунить Пчелу или Медового Слизня перед блоком! Можно ускорить рост при помощи бутылочек сахарной воды, бутылочек с мёдом или вёдер с мёдом, вручную или через раздатчик. \n\n С помощью бутылочек можно забирать мёд из этого блока, превращая его в Пустой Блок сот с личинкой. Это разозлит ближайших пчёл, потому что вы убьёте личинку! \n\n Этот блок также будет выдавать сигнал редстоуна на компаратор силой от 1 до 4 в зависимости от стадии роста личинки внутри.   Смотрите страницу мода Bumblezone для получения дополнительной информации о совместимости модов с этим блоком.",
  "the_bumblezone.sugar_infused_cobblestone.jei_description": " Декоративный блок, образующийся при слиянии Сахарной Воды с Лавой. При добыче выпадает булыжник и сахар, если только не используется шёлковое касание. Можно выжечь сахар из блока в печи и получить немного опыта.",
@@ -156,5 +163,7 @@
  "the_bumblezone.pollen_puff.jei_description": " Мягкий комочек слипшейся пыльцы! Может выпасть из кучки пыльцы или из пчёл во время опыления, если нажать по ним ПКМ влажной губкой, бутылочкой воды или ведром воды. \n\n Его можно бросить, чтобы создать кучку пыльцы, куда бы он ни попадал. Если он попадает в неопыленную пчелу, пчела опыляется. Если попасть им в панду, она чихнет. Но если он попадает в растущий цветок, это может привести к размножению цветка! \n\n Блоки пыльцы замедляют мобов и выделяет много частиц при физическом контакте. Он также будет опылять любую неопылённую пчелу, которая влетает в кучу пыльцы или заставлять чихать панд. Его также можно измерить с помощью редстоуного компаратора.",
  "the_bumblezone.bee_bread.jei_description": " A gross looking pellet created from a fermented blend of pollen and honey. Bees love this and will get a burst of energy that makes them faster if they are fed Bee Bread. You can eat it too for good nutrition but it may make you lightheaded for a second or two...",
  "the_bumblezone.honey_fluid_still.jei_description": " Вкусный жидкий мёд! Он течёт очень медленно и значительно замедлит любых существ. Мобы и лодки, имеют тенденцию тонуть в жидком мёде, как если бы это была липкая ловушка! \n\n Можно собрать ведром или стеклянной бутылкой, а так же он вылечит любую раненую пчелу, которая попадёт в него. \n\n Когда эта жидкость вступает в контакт с любой другой жидкостью, имеющей свойства лавы, эта жидкость превращается либо в засахаренный булыжник или в засахаренный камень.",
- "the_bumblezone.honey_bucket.jei_description": " Ведро с жидким мёдом.\n\n Использование на пчёлах полностью их излечит.. Если использовать на взрослой пчеле, он и соседние пчелы переходят в режим любви! при использовании на детской пчеле есть шанс вырастить из неё взрослую. Может использоваться и в раздатчиках!"
+ "the_bumblezone.honey_bucket.jei_description": " Ведро с жидким мёдом.\n\n Использование на пчёлах полностью их излечит.. Если использовать на взрослой пчеле, он и соседние пчелы переходят в режим любви! при использовании на детской пчеле есть шанс вырастить из неё взрослую. Может использоваться и в раздатчиках!",
+ "the_bumblezone.honey_web.jei_description": " A super sticky web of honey! Greatly slows any mobs that gets stuck in it but can easily be cleanse with water or wet sponges. Basically it acts similar to Sticky Honey Residue except Honey Web does not need to be attached to a block.",
+ "the_bumblezone.redstone_honey_web.jei_description": " A Redstone variant of Honey Web that will output a Redstone signal when a mob is trapped in it. Redstone Honey Web cannot take in a Redstone signal from a non-Redstone Honey Web block. The rest of its behaviors is the same as Honey Web block."
 }
