@@ -90,7 +90,7 @@ public class HoneycombBrood extends ProperFacingBlock {
             //spawn angry bee if at final stage and front isn't blocked off
             int stage = thisBlockState.getValue(STAGE);
             spawnBroodMob(world, thisBlockState, position, stage);
-            GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false);
+            GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
 
             if ((playerEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
                     Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
@@ -120,7 +120,8 @@ public class HoneycombBrood extends ProperFacingBlock {
                 if (itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {
                     if (world.random.nextFloat() < 0.30F)
                         successfulGrowth = true;
-                } else {
+                } 
+                else {
                     successfulGrowth = true;
                 }
 
@@ -176,9 +177,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
             //removes used item
             if (!playerEntity.isCreative()) {
-                Item item = itemstack.getItem();
-                itemstack.shrink(1); // remove current honey item
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(item), true);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(itemstack.getItem()), true, true);
             }
 
             return InteractionResult.SUCCESS;

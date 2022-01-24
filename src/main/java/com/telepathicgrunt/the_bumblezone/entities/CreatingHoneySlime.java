@@ -62,10 +62,7 @@ public class CreatingHoneySlime {
                     1.0F);
 
             if (!playerEntity.isCreative()) {
-                // remove current honey item
-                Item item = itemstack.getItem();
-                itemstack.shrink(1);
-                GeneralUtils.givePlayerItem(playerEntity, hand, new ItemStack(item), true);
+                GeneralUtils.givePlayerItem(playerEntity, hand, new ItemStack(itemstack.getItem()), true, true);
             }
 
             playerEntity.swing(hand, true);
