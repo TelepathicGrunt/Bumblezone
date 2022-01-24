@@ -25,8 +25,7 @@ public class GlassBottleBehavior {
                 world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
                 if(!playerEntity.isCreative()) {
-                    itemstack.shrink(1);
-                    GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()), false);
+                    GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()), false, true);
                 }
                 return true;
             }
@@ -39,13 +38,11 @@ public class GlassBottleBehavior {
     public static boolean useBottleOnHoneyFluid(Level world, Player playerEntity, InteractionHand playerHand, BlockPos blockPos) {
         FluidState currentFluidState = world.getFluidState(blockPos);
         if (currentFluidState.is(BzFluidTags.BZ_HONEY_FLUID) && currentFluidState.isSource()) {
-            ItemStack itemstack = playerEntity.getItemInHand(playerHand);
             world.setBlock(blockPos, currentFluidState.createLegacyBlock().setValue(HoneyFluidBlock.LEVEL, 5), 3); // reduce honey
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
             if(!playerEntity.isCreative()) {
-                itemstack.shrink(1);
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
             }
 
 //            if ((playerEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||

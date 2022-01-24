@@ -96,7 +96,7 @@ public class HoneycombBrood extends ProperFacingBlock {
             //spawn angry bee if at final stage and front isn't blocked off
             int stage = thisBlockState.getValue(STAGE);
             spawnBroodMob(world, thisBlockState, position, stage);
-            GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false);
+            GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
 
             if ((playerEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
                     BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
@@ -121,7 +121,8 @@ public class HoneycombBrood extends ProperFacingBlock {
                 int stage = thisBlockState.getValue(STAGE);
                 if (stage == 3) {
                     spawnBroodMob(world, thisBlockState, position, stage);
-                } else {
+                }
+                else {
                     int stageIncrease = world.random.nextFloat() < 0.2f ? 2 : 1;
                     world.setBlockAndUpdate(position, thisBlockState.setValue(STAGE, Math.min(3, stage + stageIncrease)));
                 }
@@ -140,9 +141,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
             // removes used item
             if (!playerEntity.isCreative()) {
-                Item item = itemstack.getItem();
-                itemstack.shrink(1);
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(item), true);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(itemstack.getItem()), true, true);
             }
             return InteractionResult.SUCCESS;
         }
@@ -220,9 +219,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
             //removes used item
             if (!playerEntity.isCreative()) {
-                Item item = itemstack.getItem();
-                itemstack.shrink(1); // remove current honey item
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(item), true);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(itemstack.getItem()), true, true);
             }
 
             return InteractionResult.SUCCESS;

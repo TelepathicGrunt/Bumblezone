@@ -1,5 +1,8 @@
 ### **(V.4.3.0 Changes) (1.18.1 Minecraft)**
 
+##### Blocks:
+Fixed some honey filled blocks not consuming Glass Bottles when collecting Honey Bottles from the blocks.
+
 ##### Bee Aggression:
 Fixed bees not getting automatically angry at bugs and bears in the Bumblezone dimension.
 
