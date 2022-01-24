@@ -13,6 +13,10 @@ buildscript {
     }
 }
 
+plugins {
+    id "net.darkhax.curseforgegradle" version "1.0.7"
+}
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
@@ -102,7 +106,6 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
 }
 
-apply from: 'gradle/processresources.gradle'
 apply from: 'gradle/manifest.gradle'
 
 mixin { 
@@ -110,8 +113,22 @@ mixin {
 }
 
 apply from: 'gradle/maven.gradle'
-apply from: 'gradle/curseforge.gradle'
 apply from: 'gradle/modrinth.gradle'
+task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+    apiToken = "$System.env.CURSEFORGEKEY"
+    int projectId = 362479
+    String changelogText = new File("CHANGELOG.md").getText('UTF-8')
+
+    def mainFile = upload(projectId, jar)
+    mainFile.changelog = changelogText
+    mainFile.changelogType = "markdown"
+    mainFile.releaseType = "release"
+    mainFile.displayName = "The Bumblezone v${project.mod_version} (${project.mc_version} MC)"
+    mainFile.addRequirement("feature-nbt-deadlock-be-gone")
+}
 
 task buildAndRelease{}
-tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish, tasks.curseforge, tasks.publishModrinth)
+tasks.publish.mustRunAfter tasks.build
+tasks.publishCurseForge.mustRunAfter tasks.publish
+tasks.publishModrinth.mustRunAfter tasks.publish
+tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish, tasks.publishCurseForge, tasks.publishModrinth)
