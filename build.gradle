@@ -11,6 +11,7 @@ buildscript {
 }
 
 plugins {
+	id "net.darkhax.curseforgegradle" version "1.0.7"
 	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'io.github.juuxel.loom-quiltflower-mini' version '1.1.0'
 }
@@ -74,7 +75,13 @@ dependencies {
 	//modCompileOnly ("curse.maven:charm-318872:3355096") { transitive = false }
 }
 
-apply from: 'gradle/processresources.gradle'
+processResources {
+	inputs.property "version", project.version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
+}
 
 tasks.withType(JavaCompile).configureEach {
 	it.options.encoding = "UTF-8"
@@ -90,8 +97,25 @@ jar {
 }
 
 apply from: 'gradle/maven.gradle'
-apply from: 'gradle/curseforge.gradle'
 apply from: 'gradle/modrinth.gradle'
+task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+	apiToken = "$System.env.CURSEFORGEKEY"
+	int projectId = 363949
+	String changelogText = new File("CHANGELOG.md").getText('UTF-8')
+
+	def mainFile = upload(projectId, remapJar)
+	mainFile.changelog = changelogText
+	mainFile.changelogType = "markdown"
+	mainFile.releaseType = "release"
+	mainFile.displayName = "The Bumblezone v${project.mod_version} (${project.minecraft_version} MC)"
+	mainFile.addRequirement("cloth-config")
+	mainFile.addRequirement("fabric-api")
+	mainFile.addRequirement("feature-nbt-deadlock-be-gone")
+}
 
 task buildAndRelease{}
-tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish, tasks.curseforge, tasks.publishModrinth)
+tasks.publish.mustRunAfter tasks.build
+tasks.publishCurseForge.mustRunAfter tasks.publish
+tasks.publishModrinth.mustRunAfter tasks.publish
+tasks.publishCurseForge.dependsOn("remapJar")
+tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish, tasks.publishCurseForge, tasks.publishModrinth)
