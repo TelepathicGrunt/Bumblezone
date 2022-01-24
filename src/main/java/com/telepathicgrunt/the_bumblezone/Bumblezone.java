@@ -73,6 +73,7 @@ public class Bumblezone{
         BzBiomeHeightRegistry.initBiomeHeightRegistry();
 
         //Events
+        forgeBus.addListener(BeeAggression::setupBeeHatingList);
         forgeBus.addListener(BeeAggression::pickupItemAnger);
         forgeBus.addListener(EventPriority.LOWEST, BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
         forgeBus.addListener(WanderingTrades::addWanderingTrades);

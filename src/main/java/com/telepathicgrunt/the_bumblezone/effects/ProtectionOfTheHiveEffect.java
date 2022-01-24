@@ -46,8 +46,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
         SEE_THROUGH_WALLS.range(BzBeeAggressionConfigs.aggressionTriggerRadius.get()*0.5D);
         List<Bee> beeList = entity.level.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius.get()*0.5D));
 
-        for (Bee bee : beeList)
-        {
+        for (Bee bee : beeList) {
             if(bee.getTarget() == entity) {
                 bee.setTarget(null);
                 bee.setPersistentAngerTarget(null);
@@ -77,8 +76,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
     /**
      * Changes the entity Bees are angry at.
      */
-    public static void resetBeeAngry(Level world, LivingEntity livingEntity)
-    {
+    public static void resetBeeAngry(Level world, LivingEntity livingEntity) {
         LivingEntity entity = livingEntity;
         UUID uuid = entity.getUUID();
 
@@ -90,8 +88,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
             uuid = null;
         }
 
-        for (Bee bee : beeList)
-        {
+        for (Bee bee : beeList) {
             bee.setTarget(entity);
             bee.setPersistentAngerTarget(uuid);
             if(entity == null) {

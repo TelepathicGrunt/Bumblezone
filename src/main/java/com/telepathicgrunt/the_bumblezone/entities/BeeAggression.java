@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import net.minecraft.core.Registry;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -23,7 +24,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.Level;
 
@@ -43,14 +47,16 @@ public class BeeAggression {
      *  But yeah, this sets up the list of entitytype of mobs for bees to always attack. Making
      *  the list can be expensive which is why we make it at start of world rather than every tick.
      */
-    public static void setupBeeHatingList(net.minecraft.world.level.Level world) {
+    public static void setupBeeHatingList(final ServerAboutToStartEvent event) {
+        ServerLevel world = event.getServer().overworld();
+
         // Build list only once
         if(SET_OF_BEE_HATED_ENTITIES.size() != 0) return;
 
         for(EntityType<?> entityType : ForgeRegistries.ENTITIES) {
             if(entityType.getCategory() == MobCategory.MONSTER ||
-                    entityType.getCategory() == MobCategory.CREATURE ||
-                    entityType.getCategory() == MobCategory.AMBIENT )
+                entityType.getCategory() == MobCategory.CREATURE ||
+                entityType.getCategory() == MobCategory.AMBIENT )
             {
                 Entity entity;
 
@@ -118,10 +124,7 @@ public class BeeAggression {
                 !player.isCreative() &&
                 !player.isSpectator())
         {
-            if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
-            }
-            else {
+            if(!player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
                 //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
                 player.addEffect(new MobEffectInstance(
                         BzEffects.WRATH_OF_THE_HIVE.get(),
