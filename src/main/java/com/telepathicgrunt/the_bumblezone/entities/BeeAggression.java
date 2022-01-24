@@ -58,8 +58,8 @@ public class BeeAggression {
 
         for(EntityType<?> entityType : Registry.ENTITY_TYPE) {
             if(entityType.getCategory() == MobCategory.MONSTER ||
-                    entityType.getCategory() == MobCategory.CREATURE ||
-                    entityType.getCategory() == MobCategory.AMBIENT )
+                entityType.getCategory() == MobCategory.CREATURE ||
+                entityType.getCategory() == MobCategory.AMBIENT )
             {
                 Entity entity;
 
@@ -119,10 +119,7 @@ public class BeeAggression {
                 !player.isCreative() &&
                 !player.isSpectator())
         {
-            if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
-                player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE);
-            }
-            else {
+            if(!player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
                 //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
                 player.addEffect(new MobEffectInstance(
                         BzEffects.WRATH_OF_THE_HIVE,
