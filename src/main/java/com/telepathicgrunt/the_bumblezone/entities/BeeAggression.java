@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -235,7 +236,12 @@ public class BeeAggression {
         if(playerEntity.level.isClientSide()) {
             boolean wrathEffect = playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get());
             if(wrathEffect) {
-                MusicHandler.playAngryBeeMusic(playerEntity);
+                if(BzClientConfigs.playWrathOfHiveEffectMusic.get()) {
+                    MusicHandler.playAngryBeeMusic(playerEntity);
+                }
+                else {
+                    MusicHandler.stopAngryBeeMusic(playerEntity);
+                }
             }
 
             if(!WrathOfTheHiveEffect.ACTIVE_WRATH && wrathEffect) {
