@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
-import com.telepathicgrunt.the_bumblezone.mixin.MobEffectInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;

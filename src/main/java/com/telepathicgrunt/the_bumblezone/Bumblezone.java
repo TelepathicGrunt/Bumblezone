@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone;
 
-import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
@@ -9,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
+import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.EnderpearlImpact;

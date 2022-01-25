@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
@@ -16,7 +15,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,8 +22,6 @@ import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Panda;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
@@ -52,7 +48,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.event.entity.living.LivingEvent;
 
 import java.util.Random;
 

@@ -16,8 +16,6 @@ import com.telepathicgrunt.the_bumblezone.blocks.SugarInfusedCobblestone;
 import com.telepathicgrunt.the_bumblezone.blocks.SugarInfusedStone;
 import com.telepathicgrunt.the_bumblezone.mixin.items.MaterialInvoker;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.WebBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.registries.DeferredRegister;

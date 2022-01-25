@@ -1,7 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.effects;
 
-import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
-import com.telepathicgrunt.the_bumblezone.capabilities.EntityFlyingSpeed;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import net.minecraft.world.effect.MobEffect;
@@ -9,7 +7,6 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraftforge.event.entity.living.LivingEvent;
