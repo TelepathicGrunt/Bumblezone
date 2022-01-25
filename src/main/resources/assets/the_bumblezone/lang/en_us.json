@@ -159,6 +159,7 @@
   "text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.dispensersDropGlassBottles": "Dispensers Drop Glass Bottles",
   "text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity": "Brood Blocks Bee Spawn Capacity",
 
+  "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.beehemothTriggersWrath": "Hurting Beehemoth causes Wrath",
   "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone": "Bumblezone Status Outside Dimension",
   "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.showWrathOfTheHiveParticles": "Visible Status Particles",
   "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.aggressiveBees": "Super Aggressive Bees",
@@ -196,6 +197,7 @@
   "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.teleportationMode.@PrefixText": "Teleportation Mode:  Which mode of teleportation should be used when leaving The Bumblezone dimension.\n\nMode 1: Coordinates will be converted to the other dimension's coordinate scale and the game will look for a Bee Nest/Beehive at the new spot to spawn players at. If none is found, players will still be placed at the spot.\n\nMode 2: Will always spawn players at the original spot in the non-BZ dimension where they threw the Enderpearl at a Beenest/Beehive.\n\nMode 3: Will use mode 1's teleportation method if Bee Nest/Beehive is near the spot when exiting the dimension. If none is found, then mode 2's teleportation method is used instead.",
   "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.onlyOverworldHivesTeleports.@PrefixText": "Makes throwing Enderpearls at Bee Nests or Hives only work in the Overworld. What this means setting this to true makes it only possible to enter The Bumblezone dimension from the Overworld",
 
+  "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.beehemothTriggersWrath.@PrefixText": "If set to true, any entity that harms a beehemoth and is not owner of it, that entity will get Wrath of the Hive effect.",
   "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.@PrefixText": "Determines if Wrath of the Hive can be applied to players outside the Bumblezone dimension when they pick up Honey blocks, take honey from Filled Porous Honey blocks, or drink Honey Bottles.",
   "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.showWrathOfTheHiveParticles.@PrefixText": "Show the orangish particles when you get Wrath of the Hive after you angered the bees in the Bumblezone dimension.",
   "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.aggressiveBees.@PrefixText": "Turn on/off the ability to get Wrath of the Hive effect from certain actions. \nThe bees can see you through walls and will have speed, absorption, and strength effects applied to them. \nWill also affect the bee's aggression toward other mobs in the dimension. Note: Peaceful mode will always override the bee aggressive setting.",
