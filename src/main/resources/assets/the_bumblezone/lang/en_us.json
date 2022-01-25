@@ -219,5 +219,8 @@
   "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.beehemothSpeed.@PrefixText": "Base speed for the Beehemoth when being rode by a player.",
 
   "text.autoconfig.the_bumblezone-main.option.BZClientConfig.lgbtBeeRate": "LGBT+ Bee Skin Rate",
-  "text.autoconfig.the_bumblezone-main.option.BZClientConfig.lgbtBeeRate.@PrefixText": "Rate for how often a bee will have an LGBT+ coat!"
+  "text.autoconfig.the_bumblezone-main.option.BZClientConfig.lgbtBeeRate.@PrefixText": "Rate for how often a bee will have an LGBT+ coat!",
+
+  "text.autoconfig.the_bumblezone-main.option.BZClientConfig.playWrathOfHiveEffectMusic": "Play Wrath Of Hive Effect Music",
+  "text.autoconfig.the_bumblezone-main.option.BZClientConfig.playWrathOfHiveEffectMusic.@PrefixText": "If on, Flight of the Bumblebee by Rimsky Korsakov will play when you have Wrath of the Hive effect on."
 }

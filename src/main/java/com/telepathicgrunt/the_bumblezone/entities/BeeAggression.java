@@ -229,7 +229,12 @@ public class BeeAggression {
         if(playerEntity.level.isClientSide()) {
             boolean wrathEffect = playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE);
             if(wrathEffect) {
-                MusicHandler.playAngryBeeMusic(playerEntity);
+                if(Bumblezone.BZ_CONFIG.BZClientConfig.playWrathOfHiveEffectMusic) {
+                    MusicHandler.playAngryBeeMusic(playerEntity);
+                }
+                else {
+                    MusicHandler.stopAngryBeeMusic(playerEntity);
+                }
             }
 
             if(!WrathOfTheHiveEffect.ACTIVE_WRATH && wrathEffect) {

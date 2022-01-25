@@ -36,3 +36,5 @@ Fixed Piston teleportation no longer working when `REQUIRED_BLOCKS_UNDER_HIVE_TO
 ##### Configs:
 Added beehemothTriggersWrath config option. It is set to false by default.
  If turned on, any mobs that hurts a Beehemoth and is not the owner of the Beehemoth, that mob will get Wrath of the Hive effect.
+
+Added playWrathOfHiveEffectMusic config option to allow players to turn off the music that plays when you have Wrath of the Hive effect.
