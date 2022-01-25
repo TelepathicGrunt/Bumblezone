@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
+import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
@@ -16,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
@@ -46,6 +48,15 @@ public abstract class LivingEntityMixin extends Entity {
         EntityTeleportationHookup.entityTick((LivingEntity) (Object) this);
     }
 
+    //hides entities with hidden effect
+    @Inject(method = "getVisibilityPercent(Lnet/minecraft/world/entity/Entity;)D",
+            at = @At(value = "RETURN"), cancellable = true)
+    private void thebumblezone_hideEntityWithHiddenEffect(Entity entity, CallbackInfoReturnable<Double> cir) {
+        double newVisibility = HiddenEffect.hideEntity(entity, cir.getReturnValue());
+        if(cir.getReturnValue() != newVisibility) {
+            cir.setReturnValue(newVisibility);
+        }
+    }
 
     //-----------------------------------------------------------//
 
