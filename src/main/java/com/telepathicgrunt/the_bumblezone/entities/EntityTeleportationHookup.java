@@ -18,9 +18,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntityTeleportationHookup {
 
@@ -147,22 +151,36 @@ public class EntityTeleportationHookup {
         {
             if(BzWorldSavedData.isEntityQueuedToTeleportAlready(pushedEntity)) return; // Skip checks if entity is teleporting already to Bz.
 
-            BlockPos hivePos = new BlockPos(0,0,0);
             BlockPos.MutableBlockPos entityPos = new BlockPos.MutableBlockPos().set(pushedEntity.blockPosition());
+            BlockPos[] blockPositions = new BlockPos[]{
+                    entityPos,
+                    entityPos.relative(direction),
+                    entityPos.relative(Direction.UP),
+                    entityPos.relative(Direction.UP).relative(direction)
+            };
+            List<Block> belowHiveBlocks = new ArrayList<>();
 
-            // Checks if entity is pushed into hive block (the mutable is moved for each check and enters early if any is true)
-            if (EntityTeleportationBackend.isValidBeeHive(world.getBlockState(entityPos)) ||
-                    EntityTeleportationBackend.isValidBeeHive(world.getBlockState(entityPos.move(Direction.UP))) ||
-                    EntityTeleportationBackend.isValidBeeHive(world.getBlockState(entityPos.move(direction))) ||
-                    EntityTeleportationBackend.isValidBeeHive(world.getBlockState(entityPos.move(Direction.DOWN))))
-            {
+            // Checks if entity is pushed into hive block
+            boolean isPushedIntoBeehive = false;
+            for(BlockPos pos : blockPositions) {
+                if(EntityTeleportationBackend.isValidBeeHive(world.getBlockState(pos))) {
+                    isPushedIntoBeehive = true;
+                    belowHiveBlocks.add(world.getBlockState(pos.below()).getBlock());
+                }
+            }
+
+            if (isPushedIntoBeehive) {
                 //checks if block under hive is correct if config needs one
                 boolean validBelowBlock = false;
                 if(!BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.getValues().isEmpty()) {
-                    if(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.below()).getBlock())) {
-                        validBelowBlock = true;
+
+                    for(Block belowBlock : belowHiveBlocks) {
+                        if(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(belowBlock)) {
+                            validBelowBlock = true;
+                        }
                     }
-                    else if(Bumblezone.BZ_CONFIG.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive) {
+
+                    if(!validBelowBlock && Bumblezone.BZ_CONFIG.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive) {
                         if(pushedEntity instanceof Player playerEntity) {
                             //failed. Block below isn't the required block
                             Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
