@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     {
+      "id": "the_bumblezone:honeycomb_brood_block",
+      "required": true
+    },
+    {
       "id": "minecraft:honey_block",
       "required": true
     }

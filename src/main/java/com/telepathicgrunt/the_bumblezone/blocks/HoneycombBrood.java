@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -228,22 +229,6 @@ public class HoneycombBrood extends ProperFacingBlock {
             if (stage == 3) {
                 spawnBroodMob(world, blockState, position, stage);
             }
-
-            if ((playerEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
-                    !playerEntity.isCreative() &&
-                    !playerEntity.isSpectator() &&
-                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
-            {
-                if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
-                    playerEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE);
-                }
-                else{
-                    //Now all bees nearby in Bumblezone will get VERY angry!!!
-                    playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
-                }
-            }
-
         }
 
         super.playerWillDestroy(world, position, state, playerEntity);
