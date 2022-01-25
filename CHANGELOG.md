@@ -3,7 +3,7 @@
 ##### Blocks:
 Fixed some honey filled blocks not consuming Glass Bottles when collecting Honey Bottles from the blocks.
 
-Tall stacks of Pile of Pollen blocks now will hide entities inside them. 
+Tall stacks of Pile of Pollen blocks now will hide entities inside them by giving them the new Hidden effect. 
  Monsters will now have to be closer to see the player buried in Pile of Pollen.
  However, once seen, the monsters will not be fooled if you dive back into the Pile of Pollen.
  Effective for hiding from swarms of angry bees.
@@ -28,3 +28,8 @@ Fixed bees not getting automatically angry at bugs and bears in the Bumblezone d
 Protection of the Hive will no longer be removed when taking honey from blocks picking up/mining various honey blocks.
  HOWEVER, hitting a bee or mining/taking honey from Honeycomb Brood Blocks will still remove Protection of the Hive.
 
+Hidden effect is added which is given to entities hiding in Pile of pollen. 
+ It reduces range of sight fo hostiles to see the hidden mob.
+
+##### Teleportation:
+Fixed Piston teleportation no longer working when `REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT` block tag is non-empty.
