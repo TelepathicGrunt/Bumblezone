@@ -3,6 +3,11 @@
 ##### Blocks:
 Fixed some honey filled blocks not consuming Glass Bottles when collecting Honey Bottles from the blocks.
 
+Tall stacks of Pile of Pollen blocks now will hide entities inside them. 
+ Monsters will now have to be closer to see the player buried in Pile of Pollen.
+ However, once seen, the monsters will not be fooled if you dive back into the Pile of Pollen.
+ Effective for hiding from swarms of angry bees.
+
 ##### Bee Aggression:
 Fixed bees not getting automatically angry at bugs and bears in the Bumblezone dimension.
 

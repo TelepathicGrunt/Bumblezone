@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone;
 
+import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
@@ -84,6 +85,7 @@ public class Bumblezone{
         forgeBus.addListener(BzWorldSavedData::worldTick);
         forgeBus.addListener(EntityTeleportationBackend::playerLeavingBz);
         forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
+        forgeBus.addListener(HiddenEffect::hideEntity);
 
         //Registration
         modEventBus.addListener(EventPriority.NORMAL, this::setup);

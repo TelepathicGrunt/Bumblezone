@@ -286,7 +286,6 @@ public class HoneycombBrood extends ProperFacingBlock {
                     playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
                 }
             }
-
         }
 
         super.playerWillDestroy(world, position, state, playerEntity);

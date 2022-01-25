@@ -1,10 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
@@ -14,11 +16,16 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Panda;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
@@ -40,10 +47,12 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.event.entity.living.LivingEvent;
 
 import java.util.Random;
 
@@ -329,10 +338,34 @@ public class PileOfPollen extends FallingBlock {
                     world.setBlock(blockPos, blockState.setValue(LAYERS, layerValueMinusOne), 3);
                 }
             }
-        }
 
-        if(entity instanceof Panda pandaEntity) {
-            pandaSneezing(pandaEntity);
+            // make pandas sneeze
+            if(entity instanceof Panda pandaEntity) {
+                pandaSneezing(pandaEntity);
+            }
+
+            // make entity invisible if hidden inside
+            if(entity instanceof LivingEntity livingEntity) {
+                AABB blockBounds = blockState.getShape(world, blockPos).bounds().move(blockPos.getX(), blockPos.getY(), blockPos.getZ()).inflate(0.1f);
+                if(blockBounds.contains(livingEntity.getEyePosition())) {
+                    livingEntity.addEffect(new MobEffectInstance(
+                            BzEffects.HIDDEN.get(),
+                            10,
+                            1,
+                            false,
+                            false,
+                            true));
+                }
+                else if (blockState.getValue(LAYERS) > 6) {
+                    livingEntity.addEffect(new MobEffectInstance(
+                            BzEffects.HIDDEN.get(),
+                            1,
+                            0,
+                            false,
+                            false,
+                            true));
+                }
+            }
         }
     }
 
