@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.Level;
@@ -45,7 +46,7 @@ public class BeeAggression {
      *  But yeah, this sets up the list of entitytype of mobs for bees to always attack. Making
      *  the list can be expensive which is why we make it at start of world rather than every tick.
      */
-    public static void setupBeeHatingList(final ServerAboutToStartEvent event) {
+    public static void setupBeeHatingList(final ServerStartedEvent event) {
         ServerLevel world = event.getServer().overworld();
 
         // Build list only once
@@ -54,7 +55,7 @@ public class BeeAggression {
         for(EntityType<?> entityType : ForgeRegistries.ENTITIES) {
             if(entityType.getCategory() == MobCategory.MONSTER ||
                 entityType.getCategory() == MobCategory.CREATURE ||
-                entityType.getCategory() == MobCategory.AMBIENT )
+                entityType.getCategory() == MobCategory.AMBIENT)
             {
                 Entity entity;
 
