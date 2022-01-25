@@ -11,6 +11,8 @@ Tall stacks of Pile of Pollen blocks now will hide entities inside them.
 ##### Entities:
 Fixed Honey Slime bounding boxes.
 
+Fixed Honey Slime not following creative mode players with Sugar in hand.
+
 ##### Bee Aggression:
 Fixed bees not getting automatically angry at bugs and bears in the Bumblezone dimension.
 
