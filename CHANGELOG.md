@@ -8,6 +8,14 @@ Tall stacks of Pile of Pollen blocks now will hide entities inside them.
  However, once seen, the monsters will not be fooled if you dive back into the Pile of Pollen.
  Effective for hiding from swarms of angry bees.
 
+##### Items:
+Honey Crystal Shields now have an internal "ShieldLevel" nbt to keep track of its strength.
+ The shield level is increased by 1 each time the shield has more than 1/5th of its durability repaired.
+ The maximum shield level now is 10 and shields now start with more durability initially.
+ Legacy Honey Crystal Shields obtained before this update should automatically be converted to the new shield level system based on their RepairCost.
+
+Honey Crystal Shield has a chance of being disabled by axes instead of always being disabled by axes. Matches vanilla shield behavior.
+
 ##### Entities:
 Fixed Honey Slime bounding boxes.
 

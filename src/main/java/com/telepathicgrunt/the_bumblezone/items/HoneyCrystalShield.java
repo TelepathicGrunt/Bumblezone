@@ -16,10 +16,12 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 public class HoneyCrystalShield extends ShieldItem {
+    private static final int[] shieldDurabilityBoostPerLevel = new int[]{0,20,45,75,110,150,195,245,316,632};
+    private static final int maxShieldLevel = shieldDurabilityBoostPerLevel.length - 1;
 
     public HoneyCrystalShield() {
-        //starts off with 20 durability so it is super weak
-        super(new Item.Properties().durability(20).tab(BzItems.BUMBLEZONE_CREATIVE_TAB));
+        //starts off with 40 durability so it is super weak
+        super(new Item.Properties().durability(40).tab(BzItems.BUMBLEZONE_CREATIVE_TAB));
     }
 
     /**
@@ -37,8 +39,8 @@ public class HoneyCrystalShield extends ShieldItem {
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         if (stack.hasTag()) {
-            int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
-            tooltip.add(new TranslatableComponent("item.the_bumblezone.honey_crystal_shield.level_tooltip").append(": " + (repairLevel + 1)));
+            int shieldLevel = Math.max(Math.min(stack.getOrCreateTag().getInt("ShieldLevel"), maxShieldLevel), 0);
+            tooltip.add(new TranslatableComponent("item.the_bumblezone.honey_crystal_shield.level_tooltip").append(": " + (shieldLevel + 1)));
         }
     }
 
@@ -48,12 +50,29 @@ public class HoneyCrystalShield extends ShieldItem {
     @Override
     public int getMaxDamage(ItemStack stack) {
         if(stack.hasTag()) {
-            int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
-            if (repairLevel != 0) {
-                return stack.getItem().getMaxDamage() + repairLevel * 10;
+            upgradeLegacyShield(stack);
+
+            int shieldLevel = Math.max(Math.min(stack.getOrCreateTag().getInt("ShieldLevel"), maxShieldLevel), 0);
+            if (shieldLevel != 0) {
+                return stack.getItem().getMaxDamage() + shieldDurabilityBoostPerLevel[shieldLevel];
             }
         }
         return stack.getItem().getMaxDamage();
+    }
+
+    private void upgradeLegacyShield(ItemStack stack) {
+        if(stack.hasTag() && !stack.getTag().contains("ShieldLevel")) {
+            int repairCost = stack.getOrCreateTag().getInt("RepairCost");
+            if (repairCost >= 32) {
+                stack.getOrCreateTag().putInt("ShieldLevel", maxShieldLevel);
+            }
+            else if(repairCost >= 16) {
+                stack.getOrCreateTag().putInt("ShieldLevel", maxShieldLevel - 1);
+            }
+            else if(repairCost >= 5) {
+                stack.getOrCreateTag().putInt("ShieldLevel", maxShieldLevel / 2);
+            }
+        }
     }
 
     /**
@@ -61,17 +80,22 @@ public class HoneyCrystalShield extends ShieldItem {
      */
     @Override
     public void setDamage(ItemStack stack, int damage) {
-        if (stack.hasTag()) {
-            int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
-            int damageCaused = this.getDamage(stack) - damage;
+        int newDamage = damage;
+        int oldDamage = this.getDamage(stack);
+        int damageCaused = oldDamage - damage;
+        int shieldLevel = stack.getOrCreateTag().getInt("ShieldLevel");
 
-            // ignore anvil repairing
-            if (damageCaused < 0 && repairLevel != 0) {
-                int reducedDamage = Math.min(-1, damageCaused + (repairLevel / 14));
-                stack.getOrCreateTag().putInt("Damage", Math.max(0, this.getDamage(stack) + reducedDamage));
-            }
+        // ignore anvil repairing
+        if (damageCaused < 0) {
+            int reducedDamage = -1 * Math.min(-1, damageCaused + (shieldLevel / 4));
+            newDamage = Math.max(0, this.getDamage(stack) + reducedDamage);
         }
-        stack.getOrCreateTag().putInt("Damage", Math.max(0, damage));
+        // strengthen on significant repair
+        else if (damageCaused > stack.getMaxDamage() / 5) {
+            stack.getOrCreateTag().putInt("ShieldLevel", Math.min(maxShieldLevel, shieldLevel + 1));
+        }
+
+        stack.getOrCreateTag().putInt("Damage", Math.max(0, newDamage));
     }
 
     /**

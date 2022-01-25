@@ -10,11 +10,14 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 public class HoneyCrystalShieldBehavior {
@@ -70,11 +73,11 @@ public class HoneyCrystalShieldBehavior {
         }
     }
 
-    public static void setShieldCooldown(Player playerEntity, Mob mob){
-        float f = 0.25F + (float) EnchantmentHelper.getBlockEfficiency(mob) * 0.05F;
-        if (mob.getRandom().nextFloat() < f) {
+    public static void setShieldCooldown(Player playerEntity, LivingEntity livingEntity){
+        float disableChance = 0.25F + (float) EnchantmentHelper.getBlockEfficiency(livingEntity) * 0.05F;
+        if (livingEntity.getRandom().nextFloat() < disableChance) {
             playerEntity.getCooldowns().addCooldown(BzItems.HONEY_CRYSTAL_SHIELD.get(), 100);
-            mob.level.broadcastEntityEvent(playerEntity, (byte)30);
+            livingEntity.level.broadcastEntityEvent(playerEntity, (byte)30);
         }
     }
 
@@ -87,7 +90,8 @@ public class HoneyCrystalShieldBehavior {
                 if (player.getUseItem().isEmpty()) {
                     if (hand == InteractionHand.MAIN_HAND) {
                         player.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
-                    } else {
+                    }
+                    else {
                         player.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
                     }
 
