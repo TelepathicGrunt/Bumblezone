@@ -8,6 +8,9 @@ Tall stacks of Pile of Pollen blocks now will hide entities inside them.
  However, once seen, the monsters will not be fooled if you dive back into the Pile of Pollen.
  Effective for hiding from swarms of angry bees.
 
+##### Entities:
+Fixed Honey Slime bounding boxes.
+
 ##### Effects:
 Protection of the Hive will no longer be removed when taking honey from blocks picking up/mining various honey blocks.
  HOWEVER, hitting a bee or mining/taking honey from Honeycomb Brood Blocks will still remove Protection of the Hive.

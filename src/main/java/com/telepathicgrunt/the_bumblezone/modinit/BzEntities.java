@@ -21,7 +21,7 @@ public class BzEntities {
             .spawnGroup(MobCategory.CREATURE)
             .entityFactory(HoneySlimeEntity::new)
             .defaultAttributes(HoneySlimeEntity::getAttributeBuilder)
-            .dimensions(EntityDimensions.fixed(0.6F, 1.99F))
+            .dimensions(EntityDimensions.fixed(1F, 1F))
             .trackRangeChunks(8)
             .spawnRestriction(SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules)
             .build();
