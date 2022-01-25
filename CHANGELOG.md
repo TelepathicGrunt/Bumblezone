@@ -8,6 +8,9 @@ Tall stacks of Pile of Pollen blocks now will hide entities inside them.
  However, once seen, the monsters will not be fooled if you dive back into the Pile of Pollen.
  Effective for hiding from swarms of angry bees.
 
+##### Entities:
+Fixed Honey Slime bounding boxes.
+
 ##### Bee Aggression:
 Fixed bees not getting automatically angry at bugs and bears in the Bumblezone dimension.
 

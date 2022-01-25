@@ -79,8 +79,9 @@ public class HoneyCrystalShield extends ShieldItem {
      */
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        if(enchantment == Enchantments.MENDING)
+        if(enchantment == Enchantments.MENDING) {
             return false;
+        }
 
         return enchantment.category.canEnchant(stack.getItem());
     }

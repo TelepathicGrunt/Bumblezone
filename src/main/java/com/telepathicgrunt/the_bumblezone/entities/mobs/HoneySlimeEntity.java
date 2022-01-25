@@ -352,11 +352,11 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
 
    @Override
    public void refreshDimensions() {
-      double d0 = this.getX();
-      double d1 = this.getY();
-      double d2 = this.getZ();
+      double x = this.getX();
+      double y = this.getY();
+      double z = this.getZ();
       super.refreshDimensions();
-      this.absMoveTo(d0, d1, d2);
+      this.absMoveTo(x, y, z);
    }
 
    @Override
