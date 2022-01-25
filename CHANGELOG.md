@@ -11,6 +11,8 @@ Tall stacks of Pile of Pollen blocks now will hide entities inside them.
 ##### Entities:
 Fixed Honey Slime bounding boxes.
 
+Fixed Honey Slime not following creative mode players with Sugar in hand.
+
 ##### Effects:
 Protection of the Hive will no longer be removed when taking honey from blocks picking up/mining various honey blocks.
  HOWEVER, hitting a bee or mining/taking honey from Honeycomb Brood Blocks will still remove Protection of the Hive.
