@@ -1,11 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.BeehemothFlyingSoundInstance;
+import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothAIRide;
 import com.telepathicgrunt.the_bumblezone.entities.goals.FlyingStillGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.RandomFlyGoal;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
@@ -27,9 +30,11 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.TamableAnimal;
@@ -169,6 +174,24 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
 
             if (entity != null && entity.getUUID().equals(getOwnerUUID())) {
                 addFriendship((int) (-3 * amount));
+            }
+            if (BzBeeAggressionConfigs.beehemothTriggersWrath.get() && entity instanceof LivingEntity livingEntity) {
+                addFriendship((int) (-amount));
+
+                if (!(livingEntity instanceof Player player && player.isCreative()) &&
+                        (livingEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                        !livingEntity.isSpectator() &&
+                        BzBeeAggressionConfigs.aggressiveBees.get())
+                {
+                    if(livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
+                        livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
+                    }
+                    else {
+                        //Now all bees nearby in Bumblezone will get VERY angry!!!
+                        livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
+                    }
+                }
             }
             else {
                 addFriendship((int) -amount);
