@@ -8,6 +8,8 @@ Tall stacks of Pile of Pollen blocks now will hide entities inside them.
  However, once seen, the monsters will not be fooled if you dive back into the Pile of Pollen.
  Effective for hiding from swarms of angry bees.
 
+Honey Crystal Shield has a chance of being disabled by axes instead of always being disabled by axes. Matches vanilla shield behavior.
+
 ##### Entities:
 Fixed Honey Slime bounding boxes.
 

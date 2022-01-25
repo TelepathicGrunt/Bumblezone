@@ -14,10 +14,12 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 public class HoneyCrystalShield extends ShieldItem {
+    protected static final int[] shieldDurabilityBoostPerLevel = new int[]{0,20,45,75,110,150,195,245,316,632};
+    protected static final int maxShieldLevel = shieldDurabilityBoostPerLevel.length - 1;
 
     public HoneyCrystalShield() {
         //starts off with 20 durability so it is super weak
-        super(new Item.Properties().durability(20).tab(BzItems.BUMBLEZONE_CREATIVE_TAB));
+        super(new Item.Properties().durability(30).tab(BzItems.BUMBLEZONE_CREATIVE_TAB));
     }
 
     /**
@@ -34,8 +36,8 @@ public class HoneyCrystalShield extends ShieldItem {
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         if (stack.hasTag()) {
-            int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
-            tooltip.add(new TranslatableComponent("item.the_bumblezone.honey_crystal_shield.level_tooltip").append(": " + (repairLevel + 1)));
+            int shieldLevel = Math.max(Math.min(stack.getOrCreateTag().getInt("ShieldLevel"), maxShieldLevel), 0);
+            tooltip.add(new TranslatableComponent("item.the_bumblezone.honey_crystal_shield.level_tooltip").append(": " + (shieldLevel + 1)));
         }
     }
 
