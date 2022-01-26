@@ -143,7 +143,6 @@ public class GlazedCocoon extends BaseEntityBlock implements SimpleWaterloggedBl
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState blockstate, Level world,
                                  BlockPos position, Player playerEntity,
                                  InteractionHand playerHand, BlockHitResult raytraceResult) {
@@ -171,6 +170,7 @@ public class GlazedCocoon extends BaseEntityBlock implements SimpleWaterloggedBl
         }
     }
 
+    @Override
     public void playerWillDestroy(Level level, BlockPos blockPos, BlockState blockState, Player player) {
         BlockEntity blockentity = level.getBlockEntity(blockPos);
         if (blockentity instanceof GlazedCocoonBlockEntity glazedCocoonBlockEntity) {
@@ -193,6 +193,7 @@ public class GlazedCocoon extends BaseEntityBlock implements SimpleWaterloggedBl
         super.playerWillDestroy(level, blockPos, blockState, player);
     }
 
+    @Override
     public List<ItemStack> getDrops(BlockState p_56246_, LootContext.Builder p_56247_) {
         BlockEntity blockentity = p_56247_.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if (blockentity instanceof ShulkerBoxBlockEntity) {
