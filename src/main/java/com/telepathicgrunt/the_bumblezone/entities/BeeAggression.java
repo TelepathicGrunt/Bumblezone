@@ -7,9 +7,11 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,71 +29,41 @@ import net.minecraft.world.level.block.Block;
 import org.apache.logging.log4j.Level;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class BeeAggression {
 
     public static void setupEvents() {
-        ServerWorldEvents.LOAD.register((MinecraftServer minecraftServer, ServerLevel serverWorld) ->
-                BeeAggression.setupBeeHatingList(serverWorld));
+        ServerLifecycleEvents.SERVER_STARTING.register((MinecraftServer minecraftServer) ->
+                BeeAggression.setupBeeHatingList());
 
         PlayerBlockBreakEvents.AFTER.register((world, playerEntity, blockPos, blockState, blockEntity) ->
                 blockBreakAnger(playerEntity, blockState.getBlock()));
     }
 
 
-    private static final Set<EntityType<?>> SET_OF_BEE_HATED_ENTITIES = new HashSet<>();
+    private static final Set<String> LIST_OF_BEE_HATING_NAMES = Set.of("bear", "panda", "wasp", "spider");
+    private static final Set<EntityType<?>> SET_OF_BEE_HATED_NAMED_ENTITIES = new HashSet<>();
+    private static final Set<EntityType<?>> SET_OF_BEE_NAMED_ENTITIES = new HashSet<>();
 
     /*
-     * Have to run this code at world startup because the only way to check a CreatureAttribute
-     * from an EntityType is the make an Entity but you cannot pass null into Entitytype.create(null)
-     * because some mobs will crash the game. Thus, that's why this code runs here instead of in FMLCommonSetupEvent.
-     *
-     *  gg. Mojang. gg.
-     *
-     *  But yeah, this sets up the list of entitytype of mobs for bees to always attack. Making
-     *  the list can be expensive which is why we make it at start of world rather than every tick.
+     * This sets up the list of entitytype of mobs for bees to always attack if named triggers some keywords.
+     * Making the list can be expensive which is why we make it at start of world rather than every tick.
      */
-    public static void setupBeeHatingList(net.minecraft.world.level.Level world) {
-        // Build list only once
-        if(SET_OF_BEE_HATED_ENTITIES.size() != 0) return;
+    public static void setupBeeHatingList() {
+        if(SET_OF_BEE_HATED_NAMED_ENTITIES.size() != 0) return;
+        if(SET_OF_BEE_NAMED_ENTITIES.size() != 0) return;
 
-        for(EntityType<?> entityType : Registry.ENTITY_TYPE) {
-            if(entityType.getCategory() == MobCategory.MONSTER ||
-                entityType.getCategory() == MobCategory.CREATURE ||
-                entityType.getCategory() == MobCategory.AMBIENT )
-            {
-                Entity entity;
+        for(Map.Entry<ResourceKey<EntityType<?>>, EntityType<?>> entry : Registry.ENTITY_TYPE.entrySet()) {
 
-                // We could crash if a modded entity is super picky about when they are created or if
-                // the mob we grab is actually unfinished and wasn't supposed to be created.
-                // If it does fail to be made, use weaker way to check if bear or wasp.
-                try {
-                    entity = entityType.create(world);
-                }
-                catch(Exception e) {
-                    Bumblezone.LOGGER.log(Level.WARN, "Failed to temporary create " + Registry.ENTITY_TYPE.getResourceKey(entityType) +
-                            " mob in order to check if it is an arthropod that bees should be naturally angry at. " +
-                            "Will check if mob is a bear or wasp in its name instead. Error message is: " + e.getMessage());
+            String mobName = entry.getKey().location().getPath();
 
-                    String mobName = Registry.ENTITY_TYPE.getResourceKey(entityType).toString();
-                    if(mobName.contains("bear") || mobName.contains("wasp")) {
-                        SET_OF_BEE_HATED_ENTITIES.add(entityType);
-                    }
-                    continue;
-                }
-
-                if(entity instanceof Mob mobEntity) {
-                    String mobName = Registry.ENTITY_TYPE.getKey(entityType).toString();
-
-                    if((mobEntity.getMobType() == MobType.ARTHROPOD && !mobName.contains("bee")) ||
-                            mobEntity instanceof Panda ||
-                            mobName.contains("bear") ||
-                            mobName.contains("wasp"))
-                    {
-                        SET_OF_BEE_HATED_ENTITIES.add(entityType);
-                    }
-                }
+            if(mobName.contains("bee")) {
+                SET_OF_BEE_NAMED_ENTITIES.add(entry.getValue());
+            }
+            if(LIST_OF_BEE_HATING_NAMES.stream().anyMatch(mobName::contains)) {
+                SET_OF_BEE_HATED_NAMED_ENTITIES.add(entry.getValue());
             }
         }
     }
@@ -208,7 +180,11 @@ public class BeeAggression {
                 entity instanceof Mob mobEntity)
         {
             //must be a bear or insect animal with no wrath of the hive effect on
-            return SET_OF_BEE_HATED_ENTITIES.contains(entity.getType()) && !mobEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE);
+            if(SET_OF_BEE_HATED_NAMED_ENTITIES.contains(entity.getType()) ||
+                (!SET_OF_BEE_NAMED_ENTITIES.contains(entity.getType()) && mobEntity.getMobType() == MobType.ARTHROPOD))
+            {
+                return !mobEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE);
+            }
         }
 
         return false;
