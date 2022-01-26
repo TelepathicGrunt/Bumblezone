@@ -21,8 +21,15 @@ Fixed Honey Slime bounding boxes.
 
 Fixed Honey Slime not following creative mode players with Sugar in hand.
 
+Fixed Beehemoth not being Arthropod mob type in backend. 
+ Bane of Arthropod enchantment now should inflect more damage on Beehemoth.
+
 ##### Bee Aggression:
 Fixed bees not getting automatically angry at bugs and bears in the Bumblezone dimension.
+
+Fixed up the checks for what mobs are bears or non-bee arthropods so that they get Wrath of the Hive in Bumblezone dimension. 
+ The new checks are much safer and shouldn't break other mods anymore.
+ It may also be better and not have as many false positives/negatives.
 
 ##### Effects:
 Protection of the Hive will no longer be removed when taking honey from blocks picking up/mining various honey blocks.

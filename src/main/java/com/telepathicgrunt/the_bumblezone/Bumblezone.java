@@ -19,6 +19,7 @@ import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemS
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBiomeHeightRegistry;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -74,7 +75,6 @@ public class Bumblezone{
         BzBiomeHeightRegistry.initBiomeHeightRegistry();
 
         //Events
-        forgeBus.addListener(BeeAggression::setupBeeHatingList);
         forgeBus.addListener(BeeAggression::pickupItemAnger);
         forgeBus.addListener(EventPriority.LOWEST, BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
         forgeBus.addListener(WanderingTrades::addWanderingTrades);
@@ -103,6 +103,7 @@ public class Bumblezone{
         BzStructures.STRUCTURES.register(modEventBus);
         BzParticles.PARTICLE_TYPES.register(modEventBus);
         BzEnchantments.ENCHANTMENTS.register(modEventBus);
+        BzBlockEntities.BLOCK_ENTITIES.register(modEventBus);
 
         BzCapabilities.setupCapabilities();
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> BumblezoneClient::subscribeClientEvents);
@@ -126,6 +127,7 @@ public class Bumblezone{
 			BzEntities.registerAdditionalEntityInformation();
 			BzStructures.setupStructures();
             BzSurfaceRules.registerSurfaceRules();
+            BeeAggression.setupBeeHatingList();
 		});
         MessageHandler.init();
     }
