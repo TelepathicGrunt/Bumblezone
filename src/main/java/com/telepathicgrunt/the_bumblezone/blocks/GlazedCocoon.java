@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.GlazedCocoonBlockEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -45,9 +46,11 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -128,15 +131,28 @@ public class GlazedCocoon extends BaseEntityBlock implements SimpleWaterloggedBl
 
         BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
         if(blockEntity instanceof GlazedCocoonBlockEntity glazedCocoonBlockEntity) {
-            ItemStack takenItem = glazedCocoonBlockEntity.removeItem(random.nextInt(glazedCocoonBlockEntity.getContainerSize()), 1);
+            List<Pair<ItemStack, Integer>> itemStacks = new ArrayList<>();
+            for(int i = 0; i < glazedCocoonBlockEntity.getContainerSize(); i++) {
+                ItemStack itemStack = glazedCocoonBlockEntity.getItem(i);
+                if(!itemStack.isEmpty()) {
+                    itemStacks.add(new Pair<>(itemStack, i));
+                }
+            }
+
+            if(itemStacks.isEmpty()) {
+                return;
+            }
+
+            ItemStack takenItem = glazedCocoonBlockEntity.removeItem(itemStacks.get(random.nextInt(itemStacks.size())).getSecond(), 1);
             if(takenItem.getItem() != Items.AIR) {
                 ItemEntity itemEntity = new ItemEntity(
                         serverLevel,
-                        blockPos.getX(),
-                        blockPos.getY() + 1,
-                        blockPos.getZ(),
+                        blockPos.getX() + 0.5D,
+                        blockPos.getY() + 1D,
+                        blockPos.getZ() + 0.5D,
                         takenItem);
                 itemEntity.setDefaultPickUpDelay();
+                itemEntity.setDeltaMovement(new Vec3(0, -0.2D, 0));
                 serverLevel.addFreshEntity(itemEntity);
             }
         }
