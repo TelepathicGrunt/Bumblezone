@@ -11,6 +11,8 @@ Tall stacks of Pile of Pollen blocks now will hide entities inside them by givin
  However, once seen, the monsters will not be fooled if you dive back into the Pile of Pollen.
  Effective for hiding from swarms of angry bees.
 
+Fixed Pile of Pollen sometimes not removing the FallingBlockEntity instance of itself from the client.
+
 ##### Items:
 Honey Crystal Shields now have an internal "ShieldLevel" nbt to keep track of its strength.
  The shield level is increased by 1 each time the shield has more than 1/5th of its durability repaired.

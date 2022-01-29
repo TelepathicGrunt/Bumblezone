@@ -223,12 +223,12 @@ public class PileOfPollen extends FallingBlock {
 
         // make falling block of this block stack the pollen or else destroy it
         if(entity instanceof FallingBlockEntity) {
-            if(((FallingBlockEntity) entity).getBlockState().isAir())
+            if(((FallingBlockEntity) entity).getBlockState().isAir() || world.isClientSide())
                 return;
 
             if(((FallingBlockEntity)entity).getBlockState().is(BzBlocks.PILE_OF_POLLEN.get())) {
                 stackPollen(blockState, world, blockPos, ((FallingBlockEntity)entity).getBlockState());
-                entity.remove(Entity.RemovalReason.DISCARDED);
+                entity.discard();
 
                 // Prevents the FallingBlock's checkInsideBlocks from triggering this
                 // method again for the pollen block we just set above our collision block.
