@@ -8,6 +8,8 @@ Monsters will now have to be closer to see the player buried in Pile of Pollen.
  However, once seen, the monsters will not be fooled if you dive back into the Pile of Pollen.
  Effective for hiding from swarms of angry bees.
 
+Fixed Pile of Pollen sometimes not removing the FallingBlockEntity instance of itself from the client.
+
 Honey Crystal Shield has a chance of being disabled by axes instead of always being disabled by axes. Matches vanilla shield behavior.
 
 ##### Items:
