@@ -3,9 +3,14 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.GlazedCocoonBlockEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
+import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
+import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,7 +23,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -26,10 +30,8 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -47,7 +49,6 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -120,41 +121,90 @@ public class GlazedCocoon extends BaseEntityBlock implements SimpleWaterloggedBl
 
     @Override
     public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
-        if(!blockState.getValue(WATERLOGGED)) {
-            return;
-        }
-
         BlockState aboveState = serverLevel.getBlockState(blockPos.above());
-        if(!aboveState.getFluidState().is(FluidTags.WATER) || !aboveState.getCollisionShape(serverLevel, blockPos).isEmpty()) {
-            return;
-        }
+        if(blockState.getValue(WATERLOGGED) && aboveState.getFluidState().is(FluidTags.WATER) && aboveState.getCollisionShape(serverLevel, blockPos).isEmpty()) {
 
-        BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
-        if(blockEntity instanceof GlazedCocoonBlockEntity glazedCocoonBlockEntity) {
-            List<Pair<ItemStack, Integer>> itemStacks = new ArrayList<>();
-            for(int i = 0; i < glazedCocoonBlockEntity.getContainerSize(); i++) {
-                ItemStack itemStack = glazedCocoonBlockEntity.getItem(i);
-                if(!itemStack.isEmpty()) {
-                    itemStacks.add(new Pair<>(itemStack, i));
+            BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
+            if(blockEntity instanceof GlazedCocoonBlockEntity glazedCocoonBlockEntity) {
+                List<Pair<ItemStack, Integer>> itemStacks = new ArrayList<>();
+                for(int i = 0; i < glazedCocoonBlockEntity.getContainerSize(); i++) {
+                    ItemStack itemStack = glazedCocoonBlockEntity.getItem(i);
+                    if(!itemStack.isEmpty()) {
+                        itemStacks.add(new Pair<>(itemStack, i));
+                    }
+                }
+
+                if(itemStacks.isEmpty()) {
+                    return;
+                }
+
+                ItemStack takenItem = glazedCocoonBlockEntity.removeItem(itemStacks.get(random.nextInt(itemStacks.size())).getSecond(), 1);
+                spawnItemEntity(serverLevel, blockPos, takenItem, -0.2D);
+            }
+        }
+        else if(!blockState.getValue(WATERLOGGED)) {
+            BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
+            if(blockEntity instanceof GlazedCocoonBlockEntity glazedCocoonBlockEntity) {
+                List<Pair<ItemStack, Integer>> emptyBroods = new ArrayList<>();
+                List<Pair<ItemStack, Integer>> beeFeeding = new ArrayList<>();
+                for(int i = 0; i < glazedCocoonBlockEntity.getContainerSize(); i++) {
+                    ItemStack itemStack = glazedCocoonBlockEntity.getItem(i);
+                    if(!itemStack.isEmpty()) {
+                        if(itemStack.getItem() == BzItems.EMPTY_HONEYCOMB_BROOD.get()) {
+                            emptyBroods.add(new Pair<>(itemStack, i));
+                        }
+
+                        if(itemStack.is(BzItemTags.BEE_FEEDING_ITEMS)) {
+                            beeFeeding.add(new Pair<>(itemStack, i));
+                        }
+                    }
+                }
+
+                if(emptyBroods.isEmpty() || beeFeeding.isEmpty()) {
+                    return;
+                }
+
+
+                glazedCocoonBlockEntity.removeItem(emptyBroods.get(random.nextInt(emptyBroods.size())).getSecond(), 1);
+                ItemStack consumedItem = glazedCocoonBlockEntity.removeItem(beeFeeding.get(random.nextInt(beeFeeding.size())).getSecond(), 1);
+                if(consumedItem.hasContainerItem()) {
+                    ItemStack ejectedItem = consumedItem.getContainerItem();
+                    spawnItemEntity(serverLevel, blockPos, ejectedItem, 0.2D);
+                }
+
+                boolean addedToInv = false;
+                for(int i = 0; i < glazedCocoonBlockEntity.getContainerSize(); i++) {
+                    ItemStack itemStack = glazedCocoonBlockEntity.getItem(i);
+                    if (itemStack.isEmpty() || (itemStack.getItem() == BzItems.HONEYCOMB_BROOD.get() && itemStack.getCount() < 64)) {
+                        if(itemStack.isEmpty()) {
+                            glazedCocoonBlockEntity.setItem(i, BzItems.HONEYCOMB_BROOD.get().getDefaultInstance());
+                        }
+                        else {
+                            itemStack.grow(1);
+                        }
+
+                        addedToInv = true;
+                        break;
+                    }
+                }
+                if(!addedToInv) {
+                    spawnItemEntity(serverLevel, blockPos, BzItems.HONEYCOMB_BROOD.get().getDefaultInstance(), 0.2D);
                 }
             }
+        }
+    }
 
-            if(itemStacks.isEmpty()) {
-                return;
-            }
-
-            ItemStack takenItem = glazedCocoonBlockEntity.removeItem(itemStacks.get(random.nextInt(itemStacks.size())).getSecond(), 1);
-            if(takenItem.getItem() != Items.AIR) {
-                ItemEntity itemEntity = new ItemEntity(
-                        serverLevel,
-                        blockPos.getX() + 0.5D,
-                        blockPos.getY() + 1D,
-                        blockPos.getZ() + 0.5D,
-                        takenItem);
-                itemEntity.setDefaultPickUpDelay();
-                itemEntity.setDeltaMovement(new Vec3(0, -0.2D, 0));
-                serverLevel.addFreshEntity(itemEntity);
-            }
+    private static void spawnItemEntity(ServerLevel serverLevel, BlockPos blockPos, ItemStack itemToSpawn, double ySpeed) {
+        if(!itemToSpawn.isEmpty()) {
+            ItemEntity itemEntity = new ItemEntity(
+                    serverLevel,
+                    blockPos.getX() + 0.5D,
+                    blockPos.getY() + 1D,
+                    blockPos.getZ() + 0.5D,
+                    itemToSpawn);
+            itemEntity.setDefaultPickUpDelay();
+            itemEntity.setDeltaMovement(new Vec3(0, ySpeed, 0));
+            serverLevel.addFreshEntity(itemEntity);
         }
     }
 

@@ -23,12 +23,12 @@ public class JEIIntegration implements IModPlugin {
     
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-		addInfo(registration, BzItems.EMPTY_HONEYCOMB_LARVA.get());
+		addInfo(registration, BzItems.EMPTY_HONEYCOMB_BROOD.get());
 		addInfo(registration, BzItems.FILLED_POROUS_HONEYCOMB.get());
 		addInfo(registration, BzItems.HONEY_CRYSTAL.get());
 		addInfo(registration, BzItems.HONEY_CRYSTAL_SHARDS.get());
 		addInfo(registration, BzItems.HONEY_CRYSTAL_SHIELD.get());
-		addInfo(registration, BzItems.HONEYCOMB_LARVA.get());
+		addInfo(registration, BzItems.HONEYCOMB_BROOD.get());
 		addInfo(registration, BzItems.POROUS_HONEYCOMB.get());
 		addInfo(registration, BzItems.STICKY_HONEY_REDSTONE.get());
 		addInfo(registration, BzItems.STICKY_HONEY_RESIDUE.get());

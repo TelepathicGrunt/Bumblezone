@@ -14,6 +14,7 @@
   "block.the_bumblezone.pile_of_pollen": "Pile of Pollen",
   "block.the_bumblezone.honey_web": "Honey Web",
   "block.the_bumblezone.redstone_honey_web": "Redstone Honey Web",
+  "block.the_bumblezone.glazed_cocoon": "Glazed Cocoon",
 
   "fluid.the_bumblezone.sugar_water_still": "Sugar Water",
   "fluid.the_bumblezone.sugar_water_flowing": "Sugar Water",
@@ -165,5 +166,6 @@
   "the_bumblezone.honey_fluid_still.jei_description": " A delicious fluid of honey! It flows very slowly and will slow mobs in it significantly. Non-player mobs and boats tends to sink into the Honey Fluid as if it is a sticky trap! \n\n Can be picked up with a Bucket or Glass Bottle and it will heal any hurt bee that flies into the fluid. \n\n When this fluid comes in contact with any other fluid that has a lava tag, this fluid will turn into either Sugar Infused Cobblestone or Sugar Infused Stone blocks.",
   "the_bumblezone.honey_bucket.jei_description": " Bucket holding Honey fluid. Can be obtained by crafting buckets with Honey Bottles and can be reverse crafted back to Honey Bottles too. \n\n If used on bees, it will fully heal them. if used on an adult bee, it puts it and nearby bees into love mode! if used on a child bee, it has a chance of growing them into an adult. Can be used in Dispensers too!",
   "the_bumblezone.honey_web.jei_description": " A super sticky web of honey! Greatly slows any mobs that gets stuck in it but can easily be cleanse with water or wet sponges. Basically it acts similar to Sticky Honey Residue except Honey Web does not need to be attached to a block.",
-  "the_bumblezone.redstone_honey_web.jei_description": " A Redstone variant of Honey Web that will output a Redstone signal when a mob is trapped in it. Redstone Honey Web cannot take in a Redstone signal from a non-Redstone Honey Web block. The rest of its behaviors is the same as Honey Web block."
+  "the_bumblezone.redstone_honey_web.jei_description": " A Redstone variant of Honey Web that will output a Redstone signal when a mob is trapped in it. Redstone Honey Web cannot take in a Redstone signal from a non-Redstone Honey Web block. The rest of its behaviors is the same as Honey Web block.",
+  "the_bumblezone.glazed_cocoon.jei_description": " A strange cocoon made of honey! It can store items within itself. Interestingly, Empty Brood Blocks in the cocoon will consume any bee feeding item and transform into an filled Brood Block! This cocoon will also lose items over time if it is submerged underwater..."
 }
