@@ -28,7 +28,9 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -66,6 +68,15 @@ public class BumblezoneClient {
             ItemProperties.register(
                     BzItems.HONEY_CRYSTAL_SHIELD.get(),
                     new ResourceLocation("blocking"),
+                    (itemStack, world, livingEntity, integer) ->
+                            livingEntity != null &&
+                                    livingEntity.isUsingItem() &&
+                                    livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
+            );
+
+            ItemProperties.register(
+                    BzItems.STINGER_SPEAR.get(),
+                    new ResourceLocation("throwing"),
                     (itemStack, world, livingEntity, integer) ->
                             livingEntity != null &&
                                     livingEntity.isUsingItem() &&
