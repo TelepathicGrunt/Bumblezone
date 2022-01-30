@@ -1,7 +1,7 @@
 ### **(V.4.3.0 Changes) (1.18.1 Minecraft)**
 
 - glazed cocoon (test breaking later)
-- 
+- stinger spear (test durability later)
 
 ##### Blocks:
 Fixed some honey filled blocks not consuming Glass Bottles when collecting Honey Bottles from the blocks.
