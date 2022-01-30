@@ -44,6 +44,8 @@
 
   "enchantment.the_bumblezone.comb_cutter": "Comb Cutter",
   "enchantment.the_bumblezone.comb_cutter.desc": "Mines combs, hives, nest, and wax blocks faster. Doubles the output of BeeNest and BeeHive blocks including Resourceful Bee's hives.",
+  "enchantment.the_bumblezone.potent_poison": "Potent Poison",
+  "enchantment.the_bumblezone.neurotoxins": "Neurotoxins",
 
   "biome.the_bumblezone.sugar_water_floor": "Sugar Water Floor",
   "biome.the_bumblezone.hive_wall": "Hive Wall",
@@ -55,10 +57,15 @@
   "effect.the_bumblezone.protection_of_the_hive": "Protection of the Hive",
   "effect.the_bumblezone.beenergized": "Beenergized",
   "effect.the_bumblezone.hidden": "Hidden",
+  "effect.the_bumblezone.paralyzed": "Paralyzed",
 
   "subtitles.the_bumblezone.beehemoth.hurt": "Beehemoth hurt",
   "subtitles.the_bumblezone.beehemoth.dies": "Beehemoth died",
   "subtitles.the_bumblezone.beehemoth.loop": "Beehemoth buzzing",
+  "subtitles.item.the_bumblezone.stinger_spear.hit": "Stinger Spear stabs",
+  "subtitles.item.the_bumblezone.stinger_spear.hit_ground": "Stinger Spear vibrates",
+  "subtitles.item.the_bumblezone.stinger_spear.return": "Stinger Spear returns",
+  "subtitles.item.the_bumblezone.stinger_spear.throw": "Stinger Spear zooms",
 
   "advancements.the_bumblezone.root.title": "The Buzzing Bumbling Bumblezone!",
   "advancements.the_bumblezone.root.description": "Enter The Bumblezone dimension by any means",

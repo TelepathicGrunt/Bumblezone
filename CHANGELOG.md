@@ -1,7 +1,10 @@
 ### **(V.4.3.0 Changes) (1.18.1 Minecraft)**
 
 - glazed cocoon (test breaking later)
-- stinger spear (test durability later)
+- stinger spear (test durability later) 
+- Paralyzed
+- potent poison
+- neurotoxin
 
 ##### Blocks:
 Fixed some honey filled blocks not consuming Glass Bottles when collecting Honey Bottles from the blocks.
@@ -42,6 +45,9 @@ Protection of the Hive will no longer be removed when taking honey from blocks p
 
 Hidden effect is added which is given to entities hiding in Pile of pollen. 
  It reduces range of sight fo hostiles to see the hidden mob.
+
+##### Enchantments:
+Fixed Comb Cutter showing up for invalid items in the Enchantment Table.
 
 ##### Teleportation:
 Fixed Piston teleportation no longer working when `REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT` block tag is non-empty.

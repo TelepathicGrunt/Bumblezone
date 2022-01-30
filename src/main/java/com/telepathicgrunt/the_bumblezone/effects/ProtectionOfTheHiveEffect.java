@@ -27,6 +27,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
     /**
      * Returns true if the potion has an instant effect instead of a continuous one (eg Harming)
      */
+    @Override
     public boolean isInstantenous() {
         return false;
     }
@@ -34,6 +35,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
     /**
      * checks if Potion effect is ready to be applied this tick.
      */
+    @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {
         return duration >= 1;
     }
@@ -41,6 +43,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
     /**
      * Calm all attacking bees when first applied to the entity
      */
+    @Override
     public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
 
         SEE_THROUGH_WALLS.range(BzBeeAggressionConfigs.aggressionTriggerRadius.get()*0.5D);
@@ -60,6 +63,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
     /**
      * Makes the bees swarm at the attacking entity
      */
+    @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
        if(entity.hurtTime > 0 && entity.getLastHurtByMob() != null) {
            resetBeeAngry(entity.level, entity.getLastHurtByMob());

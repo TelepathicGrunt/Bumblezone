@@ -3,37 +3,31 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
-import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.ThrownTrident;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TridentItem;
-import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 
 public class StingerSpearItem extends TridentItem {
     public static final float BASE_DAMAGE = 1F;
@@ -69,13 +63,13 @@ public class StingerSpearItem extends TridentItem {
                 if (!level.isClientSide) {
                     itemStack.hurtAndBreak(1, player, playerx -> playerx.broadcastBreakEvent(livingEntity.getUsedItemHand()));
                     ThrownStingerSpearEntity thrownStingerSpear = new ThrownStingerSpearEntity(level, player, itemStack);
-                    thrownStingerSpear.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.5F + 0.5F, 1.0F);
+                    thrownStingerSpear.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 3.0F, 1.0F);
                     if (player.getAbilities().instabuild) {
                         thrownStingerSpear.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
                     }
 
                     level.addFreshEntity(thrownStingerSpear);
-                    level.playSound(null, thrownStingerSpear, SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    level.playSound(null, thrownStingerSpear, BzSounds.STINGER_SPEAR_THROW.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
                     if (!player.getAbilities().instabuild) {
                         player.getInventory().removeItem(itemStack);
                     }
@@ -83,6 +77,14 @@ public class StingerSpearItem extends TridentItem {
 
                 player.awardStat(Stats.ITEM_USED.get(this));
             }
+        }
+    }
+
+    public static void isOnCooldown(AttackEntityEvent event) {
+        Player player = event.getPlayer();
+        ItemStack itemStack = player.getItemInHand(player.getUsedItemHand());
+        if(player.getCooldowns().isOnCooldown(itemStack.getItem())) {
+            event.setCanceled(true);
         }
     }
 
@@ -112,7 +114,17 @@ public class StingerSpearItem extends TridentItem {
                 true,
                 true,
                 true));
-        itemStack.hurtAndBreak(1, user, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+
+        int durabilityDecrease = 1;
+        if(user instanceof Player player) {
+            int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), itemStack);
+            if (neuroToxinLevel > 0) {
+                player.getCooldowns().addCooldown(BzItems.STINGER_SPEAR.get(), 200 * neuroToxinLevel);
+                durabilityDecrease = 5;
+            }
+        }
+
+        itemStack.hurtAndBreak(durabilityDecrease, user, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
         return true;
     }
 

@@ -44,6 +44,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
     /**
      * Returns true if the potion has an instant effect instead of a continuous one (eg Harming)
      */
+    @Override
     public boolean isInstantenous() {
         return true;
     }
@@ -51,6 +52,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
     /**
      * checks if Potion effect is ready to be applied this tick.
      */
+    @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {
         return duration >= 1;
     }
@@ -58,6 +60,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
     /**
      * Makes the bees swarm at the entity
      */
+    @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         Level world = entity.level;
 
@@ -212,6 +215,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
     }
 
     // Don't remove wrath effect from mobs that bees are to always be angry at (bears, non-bee insects)
+    @Override
     public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
         if(BeeAggression.doesBeesHateEntity(entity)) {
             //refresh the bee anger timer

@@ -96,6 +96,7 @@ public class CombCutterEnchantment extends Enchantment {
     public int getMaxCost(int level) {
         return super.getMinCost(level) + 13;
     }
+
     @Override
     public int getMaxLevel() {
         return 1;
@@ -104,5 +105,10 @@ public class CombCutterEnchantment extends Enchantment {
     @Override
     public boolean canEnchant(ItemStack stack) {
         return stack.getItem() instanceof ShearsItem || stack.getItem() instanceof SwordItem || stack.is(Items.BOOK);
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack) {
+        return this.canEnchant(stack);
     }
 }

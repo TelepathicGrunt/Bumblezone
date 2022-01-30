@@ -1,10 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
-import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -13,11 +13,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -81,7 +81,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
                 double returnSpeed = 0.05D * (double)loyalty;
                 this.setDeltaMovement(this.getDeltaMovement().scale(0.95D).add(vec3.normalize().scale(returnSpeed)));
                 if (this.clientSideReturnSpearTickCount == 0) {
-                    this.playSound(SoundEvents.TRIDENT_RETURN, 10.0F, 1.0F);
+                    this.playSound(BzSounds.STINGER_SPEAR_RETURN.get(), 10.0F, 1.0F);
                 }
 
                 ++this.clientSideReturnSpearTickCount;
@@ -102,7 +102,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         Entity owner = this.getOwner();
         DamageSource damagesource = DamageSource.trident(this, owner == null ? this : owner);
         dealtDamage = true;
-        SoundEvent soundevent = SoundEvents.TRIDENT_HIT;
+        SoundEvent soundevent = BzSounds.STINGER_SPEAR_HIT.get();
         if (entity.hurt(damagesource, damageAmount)) {
             if (entity.getType() == EntityType.ENDERMAN) {
                 return;
@@ -124,13 +124,24 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
 
     @Override
     protected void doPostHurtEffects(LivingEntity livingEntity) {
+        int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get(), this.spearItem);
+        int duration = Math.max(200 - (potentPoisonLevel * 80) + ((potentPoisonLevel / 2) * 140), 40);
+
         livingEntity.addEffect(new MobEffectInstance(
                 MobEffects.POISON,
-                200,
-                0,
+                duration,
+                potentPoisonLevel, // 1-3 level poison
                 true,
                 true,
                 true));
+
+        if(this.getOwner() instanceof Player player) {
+            int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), this.spearItem);
+            if (neuroToxinLevel > 0) {
+                player.getCooldowns().addCooldown(BzItems.STINGER_SPEAR.get(), 200 * neuroToxinLevel);
+                this.spearItem.hurtAndBreak(5, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+            }
+        }
     }
 
     @Override
@@ -169,7 +180,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
 
     @Override
     protected SoundEvent getDefaultHitGroundSoundEvent() {
-        return SoundEvents.TRIDENT_HIT_GROUND;
+        return BzSounds.STINGER_SPEAR_HIT_GROUND.get();
     }
 
     @Override

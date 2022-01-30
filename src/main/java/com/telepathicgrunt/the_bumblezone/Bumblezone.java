@@ -15,6 +15,7 @@ import com.telepathicgrunt.the_bumblezone.entities.EnderpearlImpact;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
+import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
@@ -86,6 +87,7 @@ public class Bumblezone{
         forgeBus.addListener(EntityTeleportationBackend::playerLeavingBz);
         forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
         forgeBus.addListener(HiddenEffect::hideEntity);
+        forgeBus.addListener(StingerSpearItem::isOnCooldown);
 
         //Registration
         modEventBus.addListener(EventPriority.NORMAL, this::setup);
