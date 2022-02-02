@@ -46,6 +46,7 @@
     "blocks.ScreenEffectRendererMixin",
     "client.FluidRendererMixin",
     "client.FogRendererClientMixin",
+    "client.LivingEntityRendererMixin",
     "client.RenderingRegistryAccessor",
     "world.DimensionSpecialEffectsAccessor"
   ],
