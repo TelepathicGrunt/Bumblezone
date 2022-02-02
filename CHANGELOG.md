@@ -16,6 +16,12 @@ Tall stacks of Pile of Pollen blocks now will hide entities inside them by givin
 
 Fixed Pile of Pollen sometimes not removing the FallingBlockEntity instance of itself from the client.
 
+Sticky Honey Residue/Redstone's collision shape is now cached so it has better performance.
+
+Sticky Honey Residue/Redstone no longer extend VineBlock now.
+
+Sticky Honey Residue/Redstone now has particle effects (dripping honey particle and the redstone version has redstone particles when powered)
+
 ##### Items:
 Honey Crystal Shields now have an internal "ShieldLevel" nbt to keep track of its strength.
  The shield level is increased by 1 each time the shield has more than 1/5th of its durability repaired.

@@ -69,7 +69,6 @@ public class Bumblezone{
 
     public Bumblezone() {
         // TODO: make honey residue not extend vine block and have dripping particles
-        // TODO: cache honey residue collision shape
 
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
