@@ -1,36 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.effects;
 
-import com.google.common.collect.Lists;
-import com.mojang.datafixers.util.Pair;
-import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientboundAddMobPacket;
-import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
-import net.minecraft.network.protocol.game.ClientboundSetEntityLinkPacket;
-import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
-import net.minecraft.network.protocol.game.ClientboundSetEquipmentPacket;
-import net.minecraft.network.protocol.game.ClientboundSetPassengersPacket;
-import net.minecraft.network.protocol.game.ClientboundUpdateAttributesPacket;
+import com.telepathicgrunt.the_bumblezone.utils.MessageHandler;
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.function.Consumer;
+import net.minecraftforge.network.PacketDistributor;
 
 public class ParalyzedEffect extends MobEffect {
     public ParalyzedEffect(MobEffectCategory type, int potionColor) {
@@ -59,13 +39,10 @@ public class ParalyzedEffect extends MobEffect {
     @Override
     public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
         MobEffectInstance effect = entity.getEffect(BzEffects.PARALYZED.get());
-        if(!entity.isRemoved() && effect != null && entity.level instanceof ServerLevel serverLevel) {
-            List<ServerPlayer> serverPlayers = serverLevel.players();
-            for (ServerPlayer serverPlayer : serverPlayers) {
-                if(serverPlayer.level == entity.level) {
-                    serverPlayer.connection.send(new ClientboundUpdateMobEffectPacket(entity.getId(), effect));
-                }
-            }
+        if(!entity.isRemoved() && effect != null && entity.level instanceof ServerLevel) {
+            MessageHandler.DEFAULT_CHANNEL.send(
+                PacketDistributor.TRACKING_ENTITY.with(() -> entity),
+                new ClientboundUpdateMobEffectPacket(entity.getId(), effect));
         }
         super.addAttributeModifiers(entity, attributes, amplifier);
     }
@@ -73,21 +50,18 @@ public class ParalyzedEffect extends MobEffect {
     @Override
     public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
         MobEffectInstance effect = entity.getEffect(BzEffects.PARALYZED.get());
-        if(!entity.isRemoved() && effect != null && entity.level instanceof ServerLevel serverLevel) {
-            List<ServerPlayer> serverPlayers = serverLevel.players();
-            for (ServerPlayer serverPlayer : serverPlayers) {
-                if(serverPlayer.level == entity.level) {
-                    serverPlayer.connection.send(new ClientboundUpdateMobEffectPacket(entity.getId(),
-                        new MobEffectInstance(
-                            BzEffects.PARALYZED.get(),
-                            0,
-                            effect.getAmplifier() + 1,
-                            false,
-                            true,
-                            true))
-                    );
-                }
-            }
+        if(!entity.isRemoved() && effect != null && entity.level instanceof ServerLevel) {
+            MessageHandler.DEFAULT_CHANNEL.send(
+                PacketDistributor.TRACKING_ENTITY.with(() -> entity),
+                new ClientboundUpdateMobEffectPacket(
+                    entity.getId(),
+                    new MobEffectInstance(
+                    BzEffects.PARALYZED.get(),
+                    0,
+                    effect.getAmplifier() + 1,
+                    false,
+                    true,
+                    true)));
         }
         super.removeAttributeModifiers(entity, attributes, amplifier);
     }
