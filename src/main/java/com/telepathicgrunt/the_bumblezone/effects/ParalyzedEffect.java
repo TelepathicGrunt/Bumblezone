@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.effects;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.packets.MobEffectClientSyncPacket;
 import com.telepathicgrunt.the_bumblezone.utils.MessageHandler;
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -40,9 +41,7 @@ public class ParalyzedEffect extends MobEffect {
     public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
         MobEffectInstance effect = entity.getEffect(BzEffects.PARALYZED.get());
         if(!entity.isRemoved() && effect != null && entity.level instanceof ServerLevel) {
-            MessageHandler.DEFAULT_CHANNEL.send(
-                PacketDistributor.TRACKING_ENTITY.with(() -> entity),
-                new ClientboundUpdateMobEffectPacket(entity.getId(), effect));
+            MobEffectClientSyncPacket.sendToClient(entity, effect);
         }
         super.addAttributeModifiers(entity, attributes, amplifier);
     }
@@ -51,24 +50,23 @@ public class ParalyzedEffect extends MobEffect {
     public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
         MobEffectInstance effect = entity.getEffect(BzEffects.PARALYZED.get());
         if(!entity.isRemoved() && effect != null && entity.level instanceof ServerLevel) {
-            MessageHandler.DEFAULT_CHANNEL.send(
-                PacketDistributor.TRACKING_ENTITY.with(() -> entity),
-                new ClientboundUpdateMobEffectPacket(
-                    entity.getId(),
-                    new MobEffectInstance(
+            MobEffectClientSyncPacket.sendToClient(
+                entity,
+                new MobEffectInstance(
                     BzEffects.PARALYZED.get(),
                     0,
                     effect.getAmplifier() + 1,
                     false,
                     true,
-                    true)));
+                    true)
+            );
         }
         super.removeAttributeModifiers(entity, attributes, amplifier);
     }
 
     public static boolean isParalyzed(LivingEntity livingEntity) {
-        if(livingEntity instanceof Player player) {
-            return !(player.isCreative() || player.isSpectator());
+        if(livingEntity instanceof Player player && (player.isCreative() || player.isSpectator())) {
+            return false;
         }
 
         return livingEntity.hasEffect(BzEffects.PARALYZED.get());

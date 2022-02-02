@@ -13,6 +13,8 @@ The coordinate scale has been shrunk from 10 to 4.
 Teleportation mode 2 (selectable in config) has been fixed so that it properly places players in their destination without coordinate scaling done.
 
 ##### Blocks:
+Added Honey Cocoon which is a new storage block! Found in 
+
 Fixed some honey filled blocks not consuming Glass Bottles when collecting Honey Bottles from the blocks.
 
 Tall stacks of Pile of Pollen blocks now will hide entities inside them by giving them the new Hidden effect. 
