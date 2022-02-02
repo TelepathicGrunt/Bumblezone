@@ -97,6 +97,7 @@ dependencies {
     }
 
     runtimeOnly fg.deobf("com.telepathicgrunt:FeatureNBTDeadlockBeGone-Forge:1.0.0+1.18.1")
+    runtimeOnly fg.deobf("curse.maven:terralith-513688:3606078")
 
     // Switch to `implementation` when testing mod compat
     compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")

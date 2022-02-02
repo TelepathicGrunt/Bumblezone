@@ -50,15 +50,15 @@ public class BzDimensionConfigs{
                        " a Bee Nest/Beehive at the new spot to spawn players at. ",
                        " If none is found, players will still be placed at the spot.",
                        " ",
-                       " Mode 2: Will always spawn players at the original spot ",
-                       " in the non-BZ dimension where they threw the Enderpearl ",
-                       " at a Bee Nest/Beehive.",
+                       " Mode 2: Will always spawn players at the original spot in the",
+                       " non-BZ dimension where they threw the Enderpearl at a Bee Nest/Beehive.",
+                       " Coordinate scale of dimension is ignored both ways.",
                        " ",
                        "Mode 3: Will use mode 1's teleportation method if Bee Nest/Beehive",
                        "is near the spot when exiting the dimension. If none is found,",
                        "then mode 2's teleportation method is used instead.\n")
                 .translation("the_bumblezone.config.teleportationmode")
-                .defineInRange("teleportationMode", 1, 1, 3);
+                .defineInRange("teleportationMode", 3, 1, 3);
 
             generateBeenest = builder
                 .comment(" \n-----------------------------------------------------\n",

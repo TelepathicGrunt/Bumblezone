@@ -6,6 +6,12 @@
 - potent poison (dont forget description)
 - neurotoxin (dont forget description)
 
+##### Dimension:
+The coordinate scale has been shrunk from 10 to 4. 
+ Now exiting Bumblezone at 100, -3, 1000 will put you around 400, ?, 4000 in the destination dimension.
+
+Teleportation mode 2 (selectable in config) has been fixed so that it properly places players in their destination without coordinate scaling done.
+
 ##### Blocks:
 Fixed some honey filled blocks not consuming Glass Bottles when collecting Honey Bottles from the blocks.
 
@@ -63,3 +69,5 @@ Added beehemothTriggersWrath config option. It is set to false by default.
  If turned on, any mobs that hurts a Beehemoth and is not the owner of the Beehemoth, that mob will get Wrath of the Hive effect.
 
 Added playWrathOfHiveEffectMusic config option to allow players to turn off the music that plays when you have Wrath of the Hive effect.
+
+Default teleportation mode in config is changed from 1 to 3.

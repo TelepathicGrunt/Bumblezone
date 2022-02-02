@@ -14,5 +14,5 @@
   "bed_works" : true,
   "fixed_time" : 6000,
   "piglin_safe" : false,
-  "coordinate_scale": 10.0
+  "coordinate_scale": 4.0
 }

@@ -34,7 +34,7 @@ public class ParalyzedEffect extends MobEffect {
     }
 
     /**
-     * Calm all attacking bees when first applied to the entity
+     * sync paralysis to client so they can shake on client side
      */
     @Override
     public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
