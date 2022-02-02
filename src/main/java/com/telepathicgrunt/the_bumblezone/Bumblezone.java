@@ -68,8 +68,6 @@ public class Bumblezone{
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     public Bumblezone() {
-        // TODO: make honey residue not extend vine block and have dripping particles
-
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         BzBlockTags.tagInit(); // Done extra early as some features needs the tag wrapper.
