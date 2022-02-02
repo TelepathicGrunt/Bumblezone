@@ -11,7 +11,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -52,6 +51,10 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         super.defineSynchedData();
         this.entityData.define(ID_LOYALTY, (byte)0);
         this.entityData.define(ID_FOIL, false);
+    }
+
+    public ItemStack getSpearItemStack() {
+        return this.spearItem;
     }
 
     @Override
@@ -138,7 +141,6 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         if(this.getOwner() instanceof Player player) {
             int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), this.spearItem);
             if (neuroToxinLevel > 0) {
-                player.getCooldowns().addCooldown(BzItems.STINGER_SPEAR.get(), 200 * neuroToxinLevel);
                 this.spearItem.hurtAndBreak(5, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             }
         }

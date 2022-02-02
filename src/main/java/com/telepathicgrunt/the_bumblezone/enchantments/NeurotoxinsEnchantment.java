@@ -1,17 +1,29 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
+import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityFlyingSpeed;
+import com.telepathicgrunt.the_bumblezone.capabilities.NeurotoxinsMissCounter;
+import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
+import com.telepathicgrunt.the_bumblezone.mixin.ThrownTridentAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 
 public class NeurotoxinsEnchantment extends Enchantment {
 
@@ -44,16 +56,63 @@ public class NeurotoxinsEnchantment extends Enchantment {
         return this.canEnchant(stack);
     }
 
-    @Override
-    public void doPostAttack(LivingEntity attacker, Entity victim, int level) {
-        if(victim instanceof LivingEntity livingEntity && livingEntity.getHealth() < 80) {
-            livingEntity.addEffect(new MobEffectInstance(
-                    BzEffects.PARALYZED.get(),
-                    100 * level,
-                    level,
-                    false,
-                    true,
-                    true));
+    public static void entityHurtEvent(LivingAttackEvent event) {
+        if(event.getEntity().level.isClientSide()) {
+            return;
+        }
+
+        ItemStack attackingItem = null;
+        LivingEntity attacker = null;
+        if(event.getSource().getEntity() instanceof LivingEntity livingEntity) {
+            attacker = livingEntity;
+            attackingItem = attacker.getMainHandItem();
+        }
+        if(event.getSource().isProjectile()) {
+           Entity projectile = event.getSource().getDirectEntity();
+           if(projectile instanceof ThrownTrident thrownTrident) {
+               attackingItem = ((ThrownTridentAccessor)thrownTrident).getTridentItem();
+           }
+           else if (projectile instanceof ThrownStingerSpearEntity thrownStingerSpearEntity) {
+               attackingItem = thrownStingerSpearEntity.getSpearItemStack();
+           }
+        }
+
+        if(attackingItem != null && !attackingItem.isEmpty()) {
+            applyNeurotoxins(attacker, event.getEntityLiving(), attackingItem);
+        }
+    }
+
+    public static void applyNeurotoxins(Entity attacker, Entity victim, ItemStack itemStack) {
+        int level = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), itemStack);
+
+        if(level > 0 && victim instanceof LivingEntity livingEntity && livingEntity.getMobType() != MobType.UNDEAD) {
+            float applyChance = 1.0f;
+            NeurotoxinsMissCounter capability = null;
+
+            if(attacker != null) {
+                capability = attacker.getCapability(BzCapabilities.NEUROTOXINS_MISS_COUNTER_CAPABILITY).orElseThrow(RuntimeException::new);
+                float healthModifier = Math.max(100 - livingEntity.getHealth(), 10) / 100f;
+                applyChance = (healthModifier * level) * (capability.getMissedParalysis() + 1);
+            }
+
+            if(victim.level.random.nextFloat() < applyChance) {
+                livingEntity.addEffect(new MobEffectInstance(
+                        BzEffects.PARALYZED.get(),
+                        100 * level,
+                        level,
+                        false,
+                        true,
+                        true));
+
+                if(capability != null) {
+                    capability.setMissedParalysis(0);
+                }
+            }
+            else {
+                if(capability != null) {
+                    capability.setMissedParalysis(capability.getMissedParalysis() + 1);
+                }
+            }
         }
     }
 }

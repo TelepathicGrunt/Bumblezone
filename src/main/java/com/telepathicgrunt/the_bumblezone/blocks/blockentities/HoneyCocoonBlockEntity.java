@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
-import com.telepathicgrunt.the_bumblezone.blocks.GlazedCocoon;
+import com.telepathicgrunt.the_bumblezone.blocks.HoneyCocoon;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,15 +25,15 @@ import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import javax.annotation.Nullable;
 import java.util.stream.IntStream;
 
-public class GlazedCocoonBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
+public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
     private NonNullList<ItemStack> itemStacks = NonNullList.withSize(18, ItemStack.EMPTY);
 
-    protected GlazedCocoonBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
+    protected HoneyCocoonBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
     }
 
-    public GlazedCocoonBlockEntity(BlockPos blockPos, BlockState blockState) {
-        this(BzBlockEntities.GLAZED_COCOON_BE.get(), blockPos, blockState);
+    public HoneyCocoonBlockEntity(BlockPos blockPos, BlockState blockState) {
+        this(BzBlockEntities.HONEY_COCOON_BE.get(), blockPos, blockState);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class GlazedCocoonBlockEntity extends RandomizableContainerBlockEntity im
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("the_bumblezone.container.glazed_cocoon");
+        return new TranslatableComponent("the_bumblezone.container.honey_cocoon");
     }
 
     @Override
@@ -89,7 +89,7 @@ public class GlazedCocoonBlockEntity extends RandomizableContainerBlockEntity im
 
     @Override
     public boolean canPlaceItemThroughFace(int i, ItemStack item, @Nullable Direction direction) {
-        return direction.getAxis() == Direction.Axis.Y && !(Block.byItem(item.getItem()) instanceof GlazedCocoon);
+        return direction.getAxis() == Direction.Axis.Y && !(Block.byItem(item.getItem()) instanceof HoneyCocoon);
     }
 
     @Override

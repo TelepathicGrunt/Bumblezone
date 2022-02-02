@@ -50,7 +50,6 @@ public class BumblezoneClient {
         forgeBus.addListener(FluidClientOverlay::sugarWaterFluidOverlay);
         forgeBus.addListener(FluidClientOverlay::renderHoneyFog);
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
-        forgeBus.addListener(StingerSpearCooldownClient::isOnCooldown);
     }
 
     public static void onClientSetup(FMLClientSetupEvent event) {

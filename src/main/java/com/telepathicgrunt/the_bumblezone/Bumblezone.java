@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
+import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.EnderpearlImpact;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
@@ -67,6 +68,9 @@ public class Bumblezone{
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     public Bumblezone() {
+        // TODO: make honey residue not extend vine block and have dripping particles
+        // TODO: cache honey residue collision shape
+
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         BzBlockTags.tagInit(); // Done extra early as some features needs the tag wrapper.
@@ -87,7 +91,7 @@ public class Bumblezone{
         forgeBus.addListener(EntityTeleportationBackend::playerLeavingBz);
         forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
         forgeBus.addListener(HiddenEffect::hideEntity);
-        forgeBus.addListener(StingerSpearItem::isOnCooldown);
+        forgeBus.addListener(NeurotoxinsEnchantment::entityHurtEvent);
 
         //Registration
         modEventBus.addListener(EventPriority.NORMAL, this::setup);

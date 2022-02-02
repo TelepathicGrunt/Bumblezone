@@ -43,10 +43,13 @@ public class ParalyzedEffect extends MobEffect {
 
     @Override
     public void applyEffectTick(LivingEntity livingEntity, int level) {
-        livingEntity.setPos(
-                livingEntity.getX() + (livingEntity.level.getGameTime() % 2 * 2 - 1) * 0.05D,
-                livingEntity.getY(),
-                livingEntity.getZ() + (livingEntity.level.getGameTime() % 2 * 2 - 1) * 0.05D);
+        // TODO: make jitter without phasing through blocks
+        if(!livingEntity.isDeadOrDying()) {
+//            livingEntity.setPos(
+//                    livingEntity.getX() + (livingEntity.level.getGameTime() % 2 * 2 - 1) * 0.05D,
+//                    livingEntity.getY(),
+//                    livingEntity.getZ() + (livingEntity.level.getGameTime() % 2 * 2 - 1) * 0.05D);
+        }
     }
 
     public static boolean isParalyzed(LivingEntity livingEntity) {

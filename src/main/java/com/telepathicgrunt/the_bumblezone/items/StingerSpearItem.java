@@ -80,14 +80,6 @@ public class StingerSpearItem extends TridentItem {
         }
     }
 
-    public static void isOnCooldown(AttackEntityEvent event) {
-        Player player = event.getPlayer();
-        ItemStack itemStack = player.getItemInHand(player.getUsedItemHand());
-        if(player.getCooldowns().isOnCooldown(itemStack.getItem())) {
-            event.setCanceled(true);
-        }
-    }
-
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
@@ -116,10 +108,9 @@ public class StingerSpearItem extends TridentItem {
                 true));
 
         int durabilityDecrease = 1;
-        if(user instanceof Player player) {
+        if(user instanceof Player) {
             int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), itemStack);
             if (neuroToxinLevel > 0) {
-                player.getCooldowns().addCooldown(BzItems.STINGER_SPEAR.get(), 200 * neuroToxinLevel);
                 durabilityDecrease = 5;
             }
         }

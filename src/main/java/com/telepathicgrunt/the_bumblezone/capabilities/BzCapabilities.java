@@ -14,6 +14,7 @@ public final class BzCapabilities {
     // The cap reference to use for getting the caps from entities anywhere in my codebase
     public static final Capability<EntityFlyingSpeed> ORIGINAL_FLYING_SPEED_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
     public static final Capability<EntityPositionAndDimension> ENTITY_POS_AND_DIM_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+    public static final Capability<NeurotoxinsMissCounter> NEUROTOXINS_MISS_COUNTER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 
     private BzCapabilities() {}
 
@@ -24,11 +25,13 @@ public final class BzCapabilities {
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         forgeBus.addGenericListener(Entity.class, AttacherFlyingSpeed::attach);
         forgeBus.addGenericListener(Entity.class, AttacherEntityPositionAndDimension::attach);
+        forgeBus.addGenericListener(Entity.class, AttacherNeurotoxinsMissedCounter::attach);
     }
 
     // make sure the caps classes are registered so they can be found
     public static void registerCaps(RegisterCapabilitiesEvent event) {
         event.register(EntityFlyingSpeed.class);
         event.register(EntityPositionAndDimension.class);
+        event.register(NeurotoxinsMissCounter.class);
     }
 }

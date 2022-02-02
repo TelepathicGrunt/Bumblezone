@@ -1,7 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.datafixers.util.Pair;
-import com.telepathicgrunt.the_bumblezone.blocks.blockentities.GlazedCocoonBlockEntity;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
+import com.telepathicgrunt.the_bumblezone.mixin.blocks.VineBlockAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -10,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -45,6 +47,9 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -52,19 +57,30 @@ import java.util.List;
 import java.util.Random;
 
 
-public class GlazedCocoon extends BaseEntityBlock implements SimpleWaterloggedBlock {
+public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final ResourceLocation CONTENTS = new ResourceLocation("contents");
+    protected final VoxelShape shape;
 
-    public GlazedCocoon() {
+    public HoneyCocoon() {
         super(Properties.of(Material.EGG, MaterialColor.COLOR_YELLOW).strength(0.1F, 0.1F).randomTicks().noOcclusion().sound(SoundType.HONEY_BLOCK));
         this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE));
+
+        VoxelShape voxelshape = Block.box(1.0D, 1.0D, 1.0D, 15.0D, 14.0D, 15.0D);
+        voxelshape = Shapes.or(voxelshape, Block.box(2.0D, 0.0D, 2.0D, 14.0D, 1.0D, 14.0D));
+        voxelshape = Shapes.or(voxelshape, Block.box(3.0D, 14.0D, 3.0D, 13.0D, 16.0D, 13.0D));
+        shape = voxelshape;
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState blockstate, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        return shape;
     }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return BzBlockEntities.GLAZED_COCOON_BE.get().create(blockPos, blockState);
+        return BzBlockEntities.HONEY_COCOON_BE.get().create(blockPos, blockState);
     }
 
     @Override
@@ -121,10 +137,10 @@ public class GlazedCocoon extends BaseEntityBlock implements SimpleWaterloggedBl
         if(blockState.getValue(WATERLOGGED) && aboveState.getFluidState().is(FluidTags.WATER) && aboveState.getCollisionShape(serverLevel, blockPos).isEmpty()) {
 
             BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
-            if(blockEntity instanceof GlazedCocoonBlockEntity glazedCocoonBlockEntity) {
+            if(blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
                 List<Pair<ItemStack, Integer>> itemStacks = new ArrayList<>();
-                for(int i = 0; i < glazedCocoonBlockEntity.getContainerSize(); i++) {
-                    ItemStack itemStack = glazedCocoonBlockEntity.getItem(i);
+                for(int i = 0; i < honeyCocoonBlockEntity.getContainerSize(); i++) {
+                    ItemStack itemStack = honeyCocoonBlockEntity.getItem(i);
                     if(!itemStack.isEmpty()) {
                         itemStacks.add(new Pair<>(itemStack, i));
                     }
@@ -134,17 +150,17 @@ public class GlazedCocoon extends BaseEntityBlock implements SimpleWaterloggedBl
                     return;
                 }
 
-                ItemStack takenItem = glazedCocoonBlockEntity.removeItem(itemStacks.get(random.nextInt(itemStacks.size())).getSecond(), 1);
+                ItemStack takenItem = honeyCocoonBlockEntity.removeItem(itemStacks.get(random.nextInt(itemStacks.size())).getSecond(), 1);
                 spawnItemEntity(serverLevel, blockPos, takenItem, -0.2D);
             }
         }
-        else if(!blockState.getValue(WATERLOGGED)) {
+        else if(!blockState.getValue(WATERLOGGED) && aboveState.getCollisionShape(serverLevel, blockPos).isEmpty()) {
             BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
-            if(blockEntity instanceof GlazedCocoonBlockEntity glazedCocoonBlockEntity) {
+            if(blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
                 List<Pair<ItemStack, Integer>> emptyBroods = new ArrayList<>();
                 List<Pair<ItemStack, Integer>> beeFeeding = new ArrayList<>();
-                for(int i = 0; i < glazedCocoonBlockEntity.getContainerSize(); i++) {
-                    ItemStack itemStack = glazedCocoonBlockEntity.getItem(i);
+                for(int i = 0; i < honeyCocoonBlockEntity.getContainerSize(); i++) {
+                    ItemStack itemStack = honeyCocoonBlockEntity.getItem(i);
                     if(!itemStack.isEmpty()) {
                         if(itemStack.getItem() == BzItems.EMPTY_HONEYCOMB_BROOD.get()) {
                             emptyBroods.add(new Pair<>(itemStack, i));
@@ -161,19 +177,19 @@ public class GlazedCocoon extends BaseEntityBlock implements SimpleWaterloggedBl
                 }
 
 
-                glazedCocoonBlockEntity.removeItem(emptyBroods.get(random.nextInt(emptyBroods.size())).getSecond(), 1);
-                ItemStack consumedItem = glazedCocoonBlockEntity.removeItem(beeFeeding.get(random.nextInt(beeFeeding.size())).getSecond(), 1);
+                honeyCocoonBlockEntity.removeItem(emptyBroods.get(random.nextInt(emptyBroods.size())).getSecond(), 1);
+                ItemStack consumedItem = honeyCocoonBlockEntity.removeItem(beeFeeding.get(random.nextInt(beeFeeding.size())).getSecond(), 1);
                 if(consumedItem.hasContainerItem()) {
                     ItemStack ejectedItem = consumedItem.getContainerItem();
                     spawnItemEntity(serverLevel, blockPos, ejectedItem, 0.2D);
                 }
 
                 boolean addedToInv = false;
-                for(int i = 0; i < glazedCocoonBlockEntity.getContainerSize(); i++) {
-                    ItemStack itemStack = glazedCocoonBlockEntity.getItem(i);
+                for(int i = 0; i < honeyCocoonBlockEntity.getContainerSize(); i++) {
+                    ItemStack itemStack = honeyCocoonBlockEntity.getItem(i);
                     if (itemStack.isEmpty() || (itemStack.getItem() == BzItems.HONEYCOMB_BROOD.get() && itemStack.getCount() < 64)) {
                         if(itemStack.isEmpty()) {
-                            glazedCocoonBlockEntity.setItem(i, BzItems.HONEYCOMB_BROOD.get().getDefaultInstance());
+                            honeyCocoonBlockEntity.setItem(i, BzItems.HONEYCOMB_BROOD.get().getDefaultInstance());
                         }
                         else {
                             itemStack.grow(1);
@@ -235,12 +251,12 @@ public class GlazedCocoon extends BaseEntityBlock implements SimpleWaterloggedBl
     @Override
     public void playerWillDestroy(Level level, BlockPos blockPos, BlockState blockState, Player player) {
         BlockEntity blockentity = level.getBlockEntity(blockPos);
-        if (blockentity instanceof GlazedCocoonBlockEntity glazedCocoonBlockEntity) {
-            if (!level.isClientSide && !glazedCocoonBlockEntity.isEmpty()) {
-                ItemStack itemstack = BzItems.GLAZED_COCOON.get().getDefaultInstance();
+        if (blockentity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
+            if (!level.isClientSide && !honeyCocoonBlockEntity.isEmpty()) {
+                ItemStack itemstack = BzItems.HONEY_COCOON.get().getDefaultInstance();
                 blockentity.saveToItem(itemstack);
-                if (glazedCocoonBlockEntity.hasCustomName()) {
-                    itemstack.setHoverName(glazedCocoonBlockEntity.getCustomName());
+                if (honeyCocoonBlockEntity.hasCustomName()) {
+                    itemstack.setHoverName(honeyCocoonBlockEntity.getCustomName());
                 }
 
                 ItemEntity itementity = new ItemEntity(level, (double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.5D, (double)blockPos.getZ() + 0.5D, itemstack);
@@ -248,7 +264,7 @@ public class GlazedCocoon extends BaseEntityBlock implements SimpleWaterloggedBl
                 level.addFreshEntity(itementity);
             }
             else {
-                glazedCocoonBlockEntity.unpackLootTable(player);
+                honeyCocoonBlockEntity.unpackLootTable(player);
             }
         }
 
@@ -300,4 +316,44 @@ public class GlazedCocoon extends BaseEntityBlock implements SimpleWaterloggedBl
             return ItemStack.EMPTY;
         }
     }
+
+    /**
+     * Called periodically clientside on blocks near the player to show honey particles.
+     */
+    @Override
+    public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
+        if(!blockState.getValue(WATERLOGGED)) {
+            if (world.random.nextFloat() < 0.05F) {
+                this.spawnHoneyParticles(world, position);
+            }
+        }
+    }
+
+    /**
+     * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addHoneyParticle
+     * method
+     */
+    private void spawnHoneyParticles(Level world, BlockPos position) {
+        double x = (world.random.nextDouble() * 14) + 1;
+        double y = (world.random.nextDouble() * 6) + 5;
+        double z = (world.random.nextDouble() * 14) + 1;
+
+        if (world.random.nextBoolean()) {
+            if (world.random.nextBoolean()) x = 0.8D;
+            else x = 15.2;
+        }
+        else {
+            if (world.random.nextBoolean()) z = 0.8D;
+            else z = 15.2;
+        }
+
+        world.addParticle(ParticleTypes.FALLING_HONEY,
+                (x / 16) + position.getX(),
+                (y / 16) + position.getY(),
+                (z / 16) + position.getZ(),
+                0.0D,
+                0.0D,
+                0.0D);
+    }
+
 }
