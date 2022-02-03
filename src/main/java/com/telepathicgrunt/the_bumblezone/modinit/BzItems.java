@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.BeeBread;
 import com.telepathicgrunt.the_bumblezone.items.BzBlockItem;
 import com.telepathicgrunt.the_bumblezone.items.BzBucketItem;
-import com.telepathicgrunt.the_bumblezone.items.ContainerCraftingRecipe;
+import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.items.PollenPuff;

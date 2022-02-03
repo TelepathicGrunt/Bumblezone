@@ -62,7 +62,7 @@
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"ground": {
-			"translation": [0, -1.5, 0],
+			"translation": [0, 2.5, 0],
 			"scale": [0.3, 0.3, 0.3]
 		},
 		"gui": {

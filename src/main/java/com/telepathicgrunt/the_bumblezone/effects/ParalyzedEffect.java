@@ -73,8 +73,8 @@ public class ParalyzedEffect extends MobEffect {
     }
 
     public static boolean isParalyzedClient(LivingEntity livingEntity) {
-        if(livingEntity instanceof Player player) {
-            return !(player.isCreative() || player.isSpectator());
+        if(livingEntity instanceof Player player && (player.isCreative() || player.isSpectator())) {
+            return false;
         }
 
         MobEffectInstance effect = livingEntity.getEffect(BzEffects.PARALYZED.get());

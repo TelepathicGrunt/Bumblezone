@@ -1,6 +1,5 @@
 ### **(V.4.3.0 Changes) (1.18.1 Minecraft)**
 
-- honey cocoon (test breaking later)
 - stinger spear (test durability later) 
 - Paralyzed
 - potent poison (dont forget description)
@@ -13,7 +12,10 @@ The coordinate scale has been shrunk from 10 to 4.
 Teleportation mode 2 (selectable in config) has been fixed so that it properly places players in their destination without coordinate scaling done.
 
 ##### Blocks:
-Added Honey Cocoon which is a new storage block! Found in 
+Added Honey Cocoon which is a new storage block! Found in Cell Maze structure.
+ They turn Empty Honeycomb Brood Blocks into filled Brood Blocks if they are inside this cocoon with a bee feeding item like Honey Bottles over time!
+ If waterlogged with water above, they will slowly drop items above over time.
+ When broken, they drop themselves and all items unless you use Silk Touch, then they keep their items inside like Shulker Boxes do.
 
 Fixed some honey filled blocks not consuming Glass Bottles when collecting Honey Bottles from the blocks.
 

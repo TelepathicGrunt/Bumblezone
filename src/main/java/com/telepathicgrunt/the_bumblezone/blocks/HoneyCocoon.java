@@ -62,7 +62,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     protected final VoxelShape shape;
 
     public HoneyCocoon() {
-        super(Properties.of(Material.EGG, MaterialColor.COLOR_YELLOW).strength(0.1F, 0.1F).randomTicks().noOcclusion().sound(SoundType.HONEY_BLOCK));
+        super(Properties.of(Material.EGG, MaterialColor.COLOR_YELLOW).strength(0.3F, 0.3F).randomTicks().noOcclusion().sound(SoundType.HONEY_BLOCK));
         this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE));
 
         VoxelShape voxelshape = Block.box(1.0D, 1.0D, 1.0D, 15.0D, 14.0D, 15.0D);
@@ -245,45 +245,6 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
             return InteractionResult.CONSUME;
         }
-    }
-
-    @Override
-    public void playerWillDestroy(Level level, BlockPos blockPos, BlockState blockState, Player player) {
-        BlockEntity blockentity = level.getBlockEntity(blockPos);
-        if (blockentity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
-            if (!level.isClientSide && !honeyCocoonBlockEntity.isEmpty()) {
-                ItemStack itemstack = BzItems.HONEY_COCOON.get().getDefaultInstance();
-                blockentity.saveToItem(itemstack);
-                if (honeyCocoonBlockEntity.hasCustomName()) {
-                    itemstack.setHoverName(honeyCocoonBlockEntity.getCustomName());
-                }
-
-                ItemEntity itementity = new ItemEntity(level, (double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.5D, (double)blockPos.getZ() + 0.5D, itemstack);
-                itementity.setDefaultPickUpDelay();
-                level.addFreshEntity(itementity);
-            }
-            else {
-                honeyCocoonBlockEntity.unpackLootTable(player);
-            }
-        }
-
-        super.playerWillDestroy(level, blockPos, blockState, player);
-    }
-
-    @Override
-    public List<ItemStack> getDrops(BlockState p_56246_, LootContext.Builder p_56247_) {
-        BlockEntity blockentity = p_56247_.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
-        if (blockentity instanceof ShulkerBoxBlockEntity) {
-            ShulkerBoxBlockEntity shulkerboxblockentity = (ShulkerBoxBlockEntity)blockentity;
-            p_56247_ = p_56247_.withDynamicDrop(CONTENTS, (p_56218_, p_56219_) -> {
-                for(int i = 0; i < shulkerboxblockentity.getContainerSize(); ++i) {
-                    p_56219_.accept(shulkerboxblockentity.getItem(i));
-                }
-
-            });
-        }
-
-        return super.getDrops(p_56246_, p_56247_);
     }
 
     @Override

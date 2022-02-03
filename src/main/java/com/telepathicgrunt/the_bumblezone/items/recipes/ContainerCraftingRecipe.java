@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.items;
+package com.telepathicgrunt.the_bumblezone.items.recipes;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
