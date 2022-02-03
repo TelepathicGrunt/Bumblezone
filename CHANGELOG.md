@@ -1,7 +1,6 @@
 ### **(V.4.3.0 Changes) (1.18.1 Minecraft)**
 
 - stinger spear (test durability later) 
-- Paralyzed
 - potent poison (dont forget description)
 - neurotoxin (dont forget description)
 
@@ -33,12 +32,26 @@ Sticky Honey Residue/Redstone no longer extend VineBlock now.
 Sticky Honey Residue/Redstone now has particle effects (dripping honey particle and the redstone version has redstone particles when powered)
 
 ##### Items:
+Stinger Spear item is added! They are rare throwable weapons found in Cell Maze structure. 
+ Can be repaired by Flint and inflicts short weak poison on any non-undead mob it hits.
+ Has 1 dedicated enchantment for it called Neurotoxins. See Enchantment section for more info.
+
 Honey Crystal Shields now have an internal "ShieldLevel" nbt to keep track of its strength.
  The shield level is increased by 1 each time the shield has more than 1/5th of its durability repaired.
  The maximum shield level now is 10 and shields now start with more durability initially.
  Legacy Honey Crystal Shields obtained before this update should automatically be converted to the new shield level system based on their RepairCost.
 
 Honey Crystal Shield has a chance of being disabled by axes instead of always being disabled by axes. Matches vanilla shield behavior.
+
+##### Enchantments:
+Neurotoxins enchantment added that only applies to Stinger Spear item. (Max enchantment level is 2)
+ Will cause the weapon to have a chance of causing Paralysis Effect on non-undead mobs for 5 seconds per enchantment level. 
+ Has a lower chance of paralyzing if the mob has more health remaining with 10% chance at its lowest.
+ Every hit that does not cause paralysis will increase the chance of the next hit causing paralysis.
+
+Potent Poison enchantment is available for all trident-like items including Stinger Spear. (Max enchantment level is 3)
+ When the weapon hits a non-undead mob, it inflicts poison effect on them with higher enchantment levels increasing
+ the duration and level 3 increases the poison level. If on Stinger Spear, the level of poison is increased by an extra level.
 
 ##### Entities:
 Fixed Honey Slime bounding boxes.
@@ -61,6 +74,10 @@ Protection of the Hive will no longer be removed when taking honey from blocks p
 
 Hidden effect is added which is given to entities hiding in Pile of pollen. 
  It reduces range of sight fo hostiles to see the hidden mob.
+
+Paralysis effect is added and is caused by Neurotoxins enchantment right now. This sets the mob's immobile method
+ to return true which causes many mobs to stand still. They will also shake when paralyzed and give off yellow particle effects.
+ Some mobs may be able to still do some actions such as Witches drinking potions.
 
 ##### Enchantments:
 Fixed Comb Cutter showing up for invalid items in the Enchantment Table.

@@ -14,6 +14,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -96,13 +97,16 @@ public class StingerSpearItem extends TridentItem {
 
     @Override
     public boolean hurtEnemy(ItemStack itemStack, LivingEntity enemy, LivingEntity user) {
-        enemy.addEffect(new MobEffectInstance(
-                MobEffects.POISON,
-                200,
-                0,
-                true,
-                true,
-                true));
+        int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get(), itemStack);
+        if (enemy.getMobType() != MobType.UNDEAD) {
+            enemy.addEffect(new MobEffectInstance(
+                    MobEffects.POISON,
+                    100 + 100 * (potentPoisonLevel - ((potentPoisonLevel - 1) / 2)),
+                    potentPoisonLevel, // 0, 1, 2, 3
+                    true,
+                    true,
+                    true));
+        }
 
         int durabilityDecrease = 1;
         if(user instanceof Player) {

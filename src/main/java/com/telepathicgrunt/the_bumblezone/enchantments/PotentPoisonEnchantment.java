@@ -47,8 +47,8 @@ public class PotentPoisonEnchantment extends Enchantment {
         if(victim instanceof LivingEntity livingEntity && livingEntity.getMobType() != MobType.UNDEAD) {
             livingEntity.addEffect(new MobEffectInstance(
                     MobEffects.POISON,
-                    200,
-                    level - 1, // 0-2 level poison
+                    100 + 100 * (level - ((level - 1) / 2)), // 200, 300, 300 duration
+                    ((level - 1) / 2), // 0, 0, 1 level poison
                     true,
                     true,
                     true));

@@ -18,6 +18,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
@@ -128,15 +129,15 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
     @Override
     protected void doPostHurtEffects(LivingEntity livingEntity) {
         int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get(), this.spearItem);
-        int duration = Math.max(200 - (potentPoisonLevel * 80) + ((potentPoisonLevel / 2) * 140), 40);
-
-        livingEntity.addEffect(new MobEffectInstance(
-                MobEffects.POISON,
-                duration,
-                potentPoisonLevel, // 1-3 level poison
-                true,
-                true,
-                true));
+        if (livingEntity.getMobType() != MobType.UNDEAD) {
+            livingEntity.addEffect(new MobEffectInstance(
+                    MobEffects.POISON,
+                    100 + 100 * (potentPoisonLevel - ((potentPoisonLevel - 1) / 2)),
+                    potentPoisonLevel, // 0, 1, 2, 3 level poison if
+                    true,
+                    true,
+                    true));
+        }
 
         if(this.getOwner() instanceof Player player) {
             int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), this.spearItem);
