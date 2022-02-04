@@ -31,6 +31,8 @@ Sticky Honey Residue/Redstone no longer extend VineBlock now.
 
 Sticky Honey Residue/Redstone now has particle effects (dripping honey particle and the redstone version has redstone particles when powered)
 
+Fixed Sugar Water Block not being able to waterlog some of Bumblezone's blocks like Honey Crystals.
+
 ##### Items:
 Stinger Spear item is added! They are rare throwable weapons found in Cell Maze structure. 
  Can be repaired by Flint and inflicts short weak poison on any non-undead mob it hits.
