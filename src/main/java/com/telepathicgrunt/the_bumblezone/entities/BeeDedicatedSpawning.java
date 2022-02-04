@@ -9,10 +9,12 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,9 +30,11 @@ public final class BeeDedicatedSpawning {
 
         // Remove all wild bees too far from a player.
         for(Bee wildBee : allWildBees) {
-            if(serverPlayers.stream().anyMatch(player -> (wildBee.position().subtract(player.position()).length() > despawnDistance))) {
-                wildBee.remove(Entity.RemovalReason.DISCARDED);
-                entityCountChange--;
+            for (ServerPlayer player : serverPlayers) {
+                if(wildBee.position().subtract(player.position()).length() > despawnDistance) {
+                    wildBee.remove(Entity.RemovalReason.DISCARDED);
+                    entityCountChange--;
+                }
             }
         }
 
@@ -38,10 +42,14 @@ public final class BeeDedicatedSpawning {
         int maxWildBeeLimit = beesPerPlayer * serverPlayers.size();
         if(allWildBees.size() <= maxWildBeeLimit) {
             for(ServerPlayer serverPlayer : serverPlayers) {
-                List<Bee> nearbyBees = world.getEntities(serverPlayer, serverPlayer.getBoundingBox().inflate(despawnDistance, despawnDistance, despawnDistance))
-                        .stream().filter(entity -> entity instanceof Bee).map(entity -> (Bee)entity).collect(Collectors.toList());
+                int nearbyBees = 0;
+                for (Entity entity : world.getEntities(serverPlayer, serverPlayer.getBoundingBox().inflate(despawnDistance, despawnDistance, despawnDistance))) {
+                    if (entity instanceof Bee) {
+                        nearbyBees++;
+                    }
+                }
 
-                for(int i = nearbyBees.size(); i <= beesPerPlayer; i++) {
+                for(int i = nearbyBees; i <= beesPerPlayer; i++) {
                     BlockPos newBeePos = GeneralUtils.getRandomBlockposWithinRange(world, serverPlayer, 50, 25);
                     if(world.getBlockState(newBeePos).getMaterial() != Material.AIR) {
                         continue;
