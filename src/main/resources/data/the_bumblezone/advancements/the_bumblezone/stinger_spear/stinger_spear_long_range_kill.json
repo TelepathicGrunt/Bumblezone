@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/stinger_spear/stinger_spear_paralyze_boss",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:stinger_spear"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.stinger_spear_long_range_kill.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.stinger_spear_long_range_kill.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 30
+  },
+  "criteria": {
+    "stinger_spear_long_range_kill": {
+      "trigger": "the_bumblezone:stinger_spear_long_range_kill",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "stinger_spear_long_range_kill"
+    ]
+  ]
+}

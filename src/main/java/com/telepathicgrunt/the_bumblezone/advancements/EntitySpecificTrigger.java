@@ -12,12 +12,16 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.storage.loot.LootContext;
 
-public class ExtendedWrathOfTheHiveTrigger extends SimpleCriterionTrigger<ExtendedWrathOfTheHiveTrigger.Instance> {
-    private static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "extended_wrath_of_the_hive");
+public class EntitySpecificTrigger extends SimpleCriterionTrigger<EntitySpecificTrigger.Instance> {
+    private final ResourceLocation id;
+
+    public EntitySpecificTrigger(ResourceLocation id) {
+        this.id = id;
+    }
 
     @Override
     public ResourceLocation getId() {
-        return ID;
+        return this.id;
     }
 
     @Override
@@ -31,11 +35,11 @@ public class ExtendedWrathOfTheHiveTrigger extends SimpleCriterionTrigger<Extend
         this.trigger(serverPlayer, (instance) -> instance.matches(lootcontext));
     }
 
-    public static class Instance extends AbstractCriterionTriggerInstance {
+    public class Instance extends AbstractCriterionTriggerInstance {
         private final EntityPredicate.Composite attackerEntityPredicate;
 
         public Instance(EntityPredicate.Composite predicate, EntityPredicate.Composite attackerEntityPredicate) {
-            super(ExtendedWrathOfTheHiveTrigger.ID, predicate);
+            super(id, predicate);
             this.attackerEntityPredicate = attackerEntityPredicate;
         }
 

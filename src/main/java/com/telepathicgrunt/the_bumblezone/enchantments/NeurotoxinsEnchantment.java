@@ -5,8 +5,11 @@ import com.telepathicgrunt.the_bumblezone.capabilities.NeurotoxinsMissCounter;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.ThrownTridentAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -97,6 +100,14 @@ public class NeurotoxinsEnchantment extends Enchantment {
                         false,
                         true,
                         true));
+
+                if (itemStack.getItem() == BzItems.STINGER_SPEAR.get() && attacker instanceof ServerPlayer serverPlayer) {
+                    BzCriterias.STINGER_SPEAR_PARALYZING_TRIGGER.trigger(serverPlayer);
+
+                    if (livingEntity.getHealth() > 70) {
+                        BzCriterias.STINGER_SPEAR_PARALYZE_BOSS_TRIGGER.trigger(serverPlayer);
+                    }
+                }
 
                 if(capability != null) {
                     capability.setMissedParalysis(0);

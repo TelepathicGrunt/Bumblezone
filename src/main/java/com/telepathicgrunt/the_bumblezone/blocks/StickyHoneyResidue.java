@@ -321,7 +321,7 @@ public class StickyHoneyResidue extends Block {
 
         if ((itemstack.getItem() instanceof BucketItem bucketItem &&
                 bucketItem.getFluid().is(FluidTags.WATER)) ||
-                itemstack.getOrCreateTag().getString("Potion").contains("water") ||
+                (itemstack.hasTag() && itemstack.getOrCreateTag().getString("Potion").contains("water")) ||
                 itemstack.getItem() == Items.WET_SPONGE ||
                 itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
 

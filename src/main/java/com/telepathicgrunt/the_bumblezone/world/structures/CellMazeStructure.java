@@ -1,8 +1,15 @@
 package com.telepathicgrunt.the_bumblezone.world.structures;
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
+import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.block.Blocks;
@@ -25,6 +32,24 @@ public class CellMazeStructure extends StructureFeature<JigsawConfiguration> {
 
     public CellMazeStructure(Codec<JigsawConfiguration> codec) {
         super(codec, CellMazeStructure::generatePieces, PostPlacementProcessor.NONE);
+    }
+
+    public static void applyAngerIfInMaze(ServerPlayer serverPlayer) {
+        if(serverPlayer.isCreative() || serverPlayer.isSpectator() || !BzBeeAggressionConfigs.aggressiveBees.get()) {
+            return;
+        }
+
+        if(((ServerLevel)serverPlayer.level).structureFeatureManager().getStructureWithPieceAt(serverPlayer.blockPosition(), BzStructures.CELL_MAZE.get()).isValid()) {
+            if (!serverPlayer.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
+                serverPlayer.addEffect(new MobEffectInstance(
+                        BzEffects.WRATH_OF_THE_HIVE.get(),
+                        BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),
+                        2,
+                        false,
+                        BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(),
+                        true));
+            }
+        }
     }
 
     private static boolean validSpot(ChunkGenerator chunkGenerator, BlockPos centerPos, LevelHeightAccessor heightLimitView) {
@@ -59,8 +84,8 @@ public class CellMazeStructure extends StructureFeature<JigsawConfiguration> {
             if (validSpot(context.chunkGenerator(), centerPos, context.heightAccessor())) {
                 break;
             }
-            else if (i == 4) {
-                return Optional.empty();
+            else {
+                centerPos = context.chunkPos().getMiddleBlockPosition(context.chunkGenerator().getSeaLevel() + 3);
             }
         }
 

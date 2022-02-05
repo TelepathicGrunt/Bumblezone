@@ -1,0 +1,31 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/combs_and_beeswax/comb_cutter_extra_drops",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:honey_cocoon"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.honey_cocoon_silk_touch.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.honey_cocoon_silk_touch.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "honey_cocoon_silk_touch": {
+      "trigger": "the_bumblezone:honey_cocoon_silk_touch"
+    }
+  },
+  "requirements": [
+    [
+      "honey_cocoon_silk_touch"
+    ]
+  ]
+}

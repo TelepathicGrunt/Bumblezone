@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -120,6 +121,14 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
 
                 this.doPostHurtEffects(hitEntity);
             }
+        }
+
+        if(entity instanceof LivingEntity livingEntity &&
+            livingEntity.isDeadOrDying() &&
+            this.getOwner() instanceof ServerPlayer serverPlayer &&
+            !serverPlayer.blockPosition().closerThan(this.blockPosition(), 50))
+        {
+            BzCriterias.STINGER_SPEAR_LONG_RANGE_KILL_TRIGGER.trigger(serverPlayer);
         }
 
         this.setDeltaMovement(this.getDeltaMovement().multiply(-0.01D, -0.1D, -0.01D));

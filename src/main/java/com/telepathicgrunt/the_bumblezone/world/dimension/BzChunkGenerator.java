@@ -172,7 +172,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     private void doCreateBiomes(Registry<Biome> registry, Blender blender, StructureFeatureManager structureFeatureManager, ChunkAccess chunkAccess) {
-        NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk(this.sampler, () -> new Beardifier(structureFeatureManager, chunkAccess), this.settings.get(), this.globalFluidPicker, blender);
+        NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk(this.sampler, () -> new BumblezoneBeardifier(structureFeatureManager, chunkAccess), this.settings.get(), this.globalFluidPicker, blender);
         BiomeResolver biomeResolver = BelowZeroRetrogen.getBiomeResolver(blender.getBiomeResolver(this.runtimeBiomeSource), registry, chunkAccess);
         chunkAccess.fillBiomesFromNoise(biomeResolver, (x, y, z) -> this.sampler.target(x, y, z, noiseChunk.noiseData(x, z)));
     }
@@ -276,7 +276,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         if (!SharedConstants.debugVoidTerrain(chunkAccess.getPos())) {
             WorldGenerationContext worldGenerationContext = new WorldGenerationContext(this, worldGenRegion);
             NoiseGeneratorSettings noiseGeneratorSettings = this.settings.get();
-            NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk(this.sampler, () -> new Beardifier(structureFeatureManager, chunkAccess), noiseGeneratorSettings, this.globalFluidPicker, Blender.of(worldGenRegion));
+            NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk(this.sampler, () -> new BumblezoneBeardifier(structureFeatureManager, chunkAccess), noiseGeneratorSettings, this.globalFluidPicker, Blender.of(worldGenRegion));
             this.surfaceSystem.buildSurface(worldGenRegion.getBiomeManager(), worldGenRegion.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY), noiseGeneratorSettings.useLegacyRandomSource(), worldGenerationContext, chunkAccess, noiseChunk, noiseGeneratorSettings.surfaceRule());
         }
     }
@@ -314,7 +314,7 @@ public class BzChunkGenerator extends ChunkGenerator {
 
     private ChunkAccess doFill(Blender blender, StructureFeatureManager structureFeatureManager, ChunkAccess chunkAccess, int minYCell, int maxYCell) {
         NoiseGeneratorSettings noiseGeneratorSettings = this.settings.get();
-        NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk(this.sampler, () -> new Beardifier(structureFeatureManager, chunkAccess), noiseGeneratorSettings, this.globalFluidPicker, blender);
+        NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk(this.sampler, () -> new BumblezoneBeardifier(structureFeatureManager, chunkAccess), noiseGeneratorSettings, this.globalFluidPicker, blender);
         Heightmap heightmap = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.OCEAN_FLOOR_WG);
         Heightmap heightmap2 = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.WORLD_SURFACE_WG);
         ChunkPos chunkPos = chunkAccess.getPos();

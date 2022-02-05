@@ -1,9 +1,5 @@
 ### **(V.4.3.0 Changes) (1.18.1 Minecraft)**
 
-- stinger spear (test durability later) 
-- potent poison (dont forget description)
-- neurotoxin (dont forget description)
-
 ##### Dimension:
 The coordinate scale has been shrunk from 10 to 4. 
  Now exiting Bumblezone at 100, -3, 1000 will put you around 400, ?, 4000 in the destination dimension.
@@ -11,7 +7,7 @@ The coordinate scale has been shrunk from 10 to 4.
 Teleportation mode 2 (selectable in config) has been fixed so that it properly places players in their destination without coordinate scaling done.
 
 ##### Blocks:
-Added Honey Cocoon which is a new storage block! Found in Cell Maze structure.
+Added Honey Cocoon which is a new storage block! Found in Cell Maze structure, Honeycomb Cave structure, and Bee Dungeons.
  They turn Empty Honeycomb Brood Blocks into filled Brood Blocks if they are inside this cocoon with a bee feeding item like Honey Bottles over time!
  If waterlogged with water above, they will slowly drop items above over time.
  When broken, they drop themselves and all items unless you use Silk Touch, then they keep their items inside like Shulker Boxes do.
@@ -32,6 +28,8 @@ Sticky Honey Residue/Redstone no longer extend VineBlock now.
 Sticky Honey Residue/Redstone now has particle effects (dripping honey particle and the redstone version has redstone particles when powered)
 
 Fixed Sugar Water Block not being able to waterlog some of Bumblezone's blocks like Honey Crystals.
+
+Fixed Honey Sticky Webs and Honey Sticky Residue attaching an empty tag to held items when right clicked which was preventing that item from stacking.
 
 ##### Items:
 Stinger Spear item is added! They are rare throwable weapons found in Cell Maze structure. 
@@ -69,6 +67,8 @@ Fixed bees not getting automatically angry at bugs and bears in the Bumblezone d
 Fixed up the checks for what mobs are bears or non-bee arthropods so that they get Wrath of the Hive in Bumblezone dimension. 
  The new checks are much safer and shouldn't break other mods anymore.
  It may also be better and not have as many false positives/negatives.
+
+Bees fed and calmed while having Wrath of the Hive will now apply Protection of the Hive right away.
 
 ##### Effects:
 Protection of the Hive will no longer be removed when taking honey from blocks picking up/mining various honey blocks.

@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -10,6 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 
 public class PotentPoisonEnchantment extends Enchantment {
 
@@ -52,6 +56,10 @@ public class PotentPoisonEnchantment extends Enchantment {
                     true,
                     true,
                     true));
+        }
+
+        if (attacker instanceof ServerPlayer serverPlayer) {
+            BzCriterias.HONEY_COCOON_SILK_TOUCH_TRIGGER.trigger(serverPlayer);
         }
     }
 }

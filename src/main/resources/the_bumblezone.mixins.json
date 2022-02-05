@@ -24,6 +24,7 @@
     "entities.MobSpawnLocationMixin",
     "entities.PlayerEntityMixin",
     "entities.PlayerInteractsEntityMixin",
+    "entities.ServerPlayerMixin",
     "entities.ThrownTridentAccessor",
     "items.GlassBottleUseMixin",
     "items.HoneyShieldCooldownMixin",
@@ -37,6 +38,7 @@
     "world.NoiseChunkAccessor",
     "world.NoiseGeneratorSettingsInvoker",
     "world.ServerWorldMixin",
+    "world.SinglePoolElementAccessor",
     "world.StructureFeatureAccessor",
     "world.StructureSettingsAccessor",
     "world.StructureTemplateAccessor"

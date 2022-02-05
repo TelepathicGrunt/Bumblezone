@@ -44,7 +44,7 @@ public class BzStructures {
                 new StructureFeatureConfiguration(20,
                         10,
                         456768898),
-                false);
+                true);
     }
 
     public static <F extends StructureFeature<?>> void setupMapSpacingAndLand(
