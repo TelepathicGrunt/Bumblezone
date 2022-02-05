@@ -28,8 +28,8 @@
         "salt": 722299384
       },
       "the_bumblezone:cell_maze": {
-        "spacing": 14,
-        "separation": 7,
+        "spacing": 50,
+        "separation": 20,
         "salt": 456768898
       }
     }

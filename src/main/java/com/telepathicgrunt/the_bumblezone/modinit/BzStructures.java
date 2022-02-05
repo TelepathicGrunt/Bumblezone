@@ -30,7 +30,7 @@ public class BzStructures {
                 new StructureFeatureConfiguration(12,
                         8,
                         938497222),
-                false);
+                true);
 
         setupMapSpacingAndLand(
                 HONEY_CAVE_ROOM.get(),
@@ -41,8 +41,8 @@ public class BzStructures {
 
         setupMapSpacingAndLand(
                 CELL_MAZE.get(),
-                new StructureFeatureConfiguration(20,
-                        10,
+                new StructureFeatureConfiguration(50,
+                        20,
                         456768898),
                 true);
     }

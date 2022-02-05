@@ -129,20 +129,9 @@
           ]
         },
         {
-          "name": "minecraft:flowers",
-          "type": "minecraft:tag",
-          "expand": true,
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
+          "type": "minecraft:loot_table",
+          "name": "the_bumblezone:structures/flowers",
+          "weight": 1
         }
       ]
     },

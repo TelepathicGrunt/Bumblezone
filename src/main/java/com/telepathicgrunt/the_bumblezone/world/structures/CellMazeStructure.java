@@ -77,15 +77,17 @@ public class CellMazeStructure extends StructureFeature<JigsawConfiguration> {
         int height;
         BlockPos centerPos = context.chunkPos().getWorldPosition();
 
-        for (int i = 0; i < 5; i++) {
-            height = context.chunkGenerator().getSeaLevel() + positionedRandom.nextInt(Math.max(context.chunkGenerator().getGenDepth() - (context.chunkGenerator().getSeaLevel() - 10), 1));
+        for (int i = 0; i < 3; i++) {
+            int topY = context.chunkGenerator().getMinY() + context.chunkGenerator().getGenDepth();
+            int lowerBounds = Math.max(context.chunkGenerator().getSeaLevel(), topY - 120);
+            height = lowerBounds + positionedRandom.nextInt(Math.max(topY - (lowerBounds - 10), 1));
             centerPos = context.chunkPos().getMiddleBlockPosition(height);
 
             if (validSpot(context.chunkGenerator(), centerPos, context.heightAccessor())) {
                 break;
             }
             else {
-                centerPos = context.chunkPos().getMiddleBlockPosition(context.chunkGenerator().getSeaLevel() + 3);
+                centerPos = context.chunkPos().getMiddleBlockPosition(context.chunkGenerator().getSeaLevel());
             }
         }
 

@@ -23,24 +23,7 @@ import java.util.Optional;
 public class HoneyCaveRoomStructure extends StructureFeature<JigsawConfiguration> {
 
     public HoneyCaveRoomStructure(Codec<JigsawConfiguration> codec) {
-        super(codec, (context) -> {
-                    if (!isFeatureChunk(context)) {
-                        return Optional.empty();
-                    }
-                    else {
-                        return generatePieces(context);
-                    }
-                },
-                PostPlacementProcessor.NONE);
-    }
-
-    protected static boolean isFeatureChunk(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
-        BlockPos centerPos = new BlockPos(context.chunkPos().x, 0,context.chunkPos().z);
-
-        WorldgenRandom positionedRandom = new WorldgenRandom(new LegacyRandomSource(context.seed() + (context.chunkPos().x * (context.chunkPos().z * 17L))));
-        int height = context.chunkGenerator().getSeaLevel() + positionedRandom.nextInt(Math.max(context.chunkGenerator().getGenDepth() - (context.chunkGenerator().getSeaLevel() + 50), 1));
-        centerPos = centerPos.above(height);
-        return validSpot(context.chunkGenerator(), centerPos, context.heightAccessor());
+        super(codec, HoneyCaveRoomStructure::generatePieces, PostPlacementProcessor.NONE);
     }
 
     private static boolean validSpot(ChunkGenerator chunkGenerator, BlockPos centerPos, LevelHeightAccessor heightLimitView) {
@@ -67,6 +50,10 @@ public class HoneyCaveRoomStructure extends StructureFeature<JigsawConfiguration
         WorldgenRandom positionedRandom = new WorldgenRandom(new LegacyRandomSource(context.seed() + (context.chunkPos().x * (context.chunkPos().z * 17L))));
         int height = context.chunkGenerator().getSeaLevel() + positionedRandom.nextInt(Math.max(context.chunkGenerator().getGenDepth() - (context.chunkGenerator().getSeaLevel() + 50), 1));
         BlockPos centerPos = new BlockPos(context.chunkPos().getMinBlockX(), height, context.chunkPos().getMinBlockZ());
+
+        if(!validSpot(context.chunkGenerator(), centerPos, context.heightAccessor())) {
+            return Optional.empty();
+        }
 
         // increase depth to 12
         JigsawConfiguration newConfig = new JigsawConfiguration(context.config().startPool(), 12);

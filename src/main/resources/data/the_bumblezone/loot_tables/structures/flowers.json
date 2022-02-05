@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": {
+        "min": 1.0,
+        "max": 2.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "name": "minecraft:flowers",
+          "type": "minecraft:tag",
+          "expand": true,
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

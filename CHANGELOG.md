@@ -61,6 +61,13 @@ Fixed Honey Slime not following creative mode players with Sugar in hand.
 Fixed Beehemoth not being Arthropod mob type in backend. 
  Bane of Arthropod enchantment now should inflect more damage on Beehemoth.
 
+##### Structures:
+Added Cell Maze structure to all Bumblezone biomes! It will inflict Wrath of the Hive on you if you enter it without Protection of the Hive effect.
+ Enjoy the fun loot and exploration of this small maze-like structure!
+
+Pollinated Stream structure is now more common in Pollinated Fields and Pollinated Pillar biomes.
+ Land will be made around this structure now to help prevent it from floating in midair.
+
 ##### Bee Aggression:
 Fixed bees not getting automatically angry at bugs and bears in the Bumblezone dimension.
 

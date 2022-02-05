@@ -19,25 +19,26 @@ public class BumblezoneBeardifier extends Beardifier {
     }
 
     @Override
-    public double calculateNoise(int p_188452_, int p_188453_, int p_188454_) {
-        double d0 = 0.0D;
+    public double calculateNoise(int x, int y, int z) {
+        double noiseResult = 0.0D;
 
         while(this.pieceIterator.hasNext()) {
             StructurePiece structurepiece = this.pieceIterator.next();
             BoundingBox boundingbox = structurepiece.getBoundingBox();
-            int i = Math.max(0, Math.max(boundingbox.minX() - p_188452_, p_188452_ - boundingbox.maxX()));
-            int j = p_188453_ - (boundingbox.minY() + (structurepiece instanceof PoolElementStructurePiece ? ((PoolElementStructurePiece)structurepiece).getGroundLevelDelta() : 0));
-            int k = Math.max(0, Math.max(boundingbox.minZ() - p_188454_, p_188454_ - boundingbox.maxZ()));
+            int x2 = Math.max(0, Math.max(boundingbox.minX() - x, x - boundingbox.maxX()));
+            int y2 = y - (boundingbox.minY() + (structurepiece instanceof PoolElementStructurePiece ? ((PoolElementStructurePiece)structurepiece).getGroundLevelDelta() : 0));
+            int z2 = Math.max(0, Math.max(boundingbox.minZ() - z, z - boundingbox.maxZ()));
             NoiseEffect noiseeffect = structurepiece.getNoiseEffect();
-            if (noiseeffect == NoiseEffect.BURY ||
-                (structurepiece instanceof PoolElementStructurePiece poolElementStructurePiece &&
-                poolElementStructurePiece.getElement() instanceof SinglePoolElement singlePoolElement &&
-                ((SinglePoolElementAccessor)singlePoolElement).getTemplate().left().orElseGet(() -> new ResourceLocation("")).getPath().equals(Bumblezone.MODID)))
+            boolean isBzStructure = (structurepiece instanceof PoolElementStructurePiece poolElementStructurePiece &&
+                    poolElementStructurePiece.getElement() instanceof SinglePoolElement singlePoolElement &&
+                    ((SinglePoolElementAccessor)singlePoolElement).getTemplate().left().orElseGet(() -> new ResourceLocation("")).getNamespace().equals(Bumblezone.MODID));
+
+            if (noiseeffect == NoiseEffect.BURY || isBzStructure)
             {
-                d0 += getBuryContribution(i, j, k);
+                noiseResult += getBuryContribution(x2, y2, z2);
             }
             else if (noiseeffect == NoiseEffect.BEARD) {
-                d0 += getBeardContribution(i, j, k) * 0.8D;
+                noiseResult += getBeardContribution(x2, y2, z2) * 0.8D;
             }
         }
 
@@ -45,14 +46,14 @@ public class BumblezoneBeardifier extends Beardifier {
 
         while(this.junctionIterator.hasNext()) {
             JigsawJunction jigsawjunction = this.junctionIterator.next();
-            int l = p_188452_ - jigsawjunction.getSourceX();
-            int i1 = p_188453_ - jigsawjunction.getSourceGroundY();
-            int j1 = p_188454_ - jigsawjunction.getSourceZ();
-            d0 += getBeardContribution(l, i1, j1) * 0.4D;
+            int x3 = x - jigsawjunction.getSourceX();
+            int y3 = y - jigsawjunction.getSourceGroundY();
+            int z3 = z - jigsawjunction.getSourceZ();
+            noiseResult += getBeardContribution(x3, y3, z3) * 0.4D;
         }
 
         this.junctionIterator.back(this.junctions.size());
-        return d0;
+        return noiseResult;
     }
 
 }
