@@ -9,10 +9,10 @@
     "Name": "minecraft:honeycomb_block"
   },
   "default_fluid": {
+    "Name": "the_bumblezone:sugar_water_block",
     "Properties": {
       "level": "0"
-    },
-    "Name": "the_bumblezone:sugar_water_block"
+    }
   },
   "sea_level": 40,
   "structures": {
@@ -26,6 +26,11 @@
         "spacing": 3,
         "separation": 1,
         "salt": 722299384
+      },
+      "the_bumblezone:cell_maze": {
+        "spacing": 50,
+        "separation": 20,
+        "salt": 456768898
       }
     }
   },

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "name": "minecraft:flowers",
+          "type": "minecraft:tag",
+          "expand": true,
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}
