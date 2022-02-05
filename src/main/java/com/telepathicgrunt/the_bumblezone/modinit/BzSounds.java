@@ -12,6 +12,10 @@ public class BzSounds {
     public final static SoundEvent BEEHEMOTH_LOOP = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.beehemoth.loop"));
     public final static SoundEvent MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "music_disc.honey_bee_rat_faced_boy"));
     public final static SoundEvent MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "music_disc.flight_of_the_bumblebee_rimsky_korsakov"));
+    public static final SoundEvent STINGER_SPEAR_HIT = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.stinger_spear.hit"));
+    public static final SoundEvent STINGER_SPEAR_HIT_GROUND = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.stinger_spear.hit_ground"));
+    public static final SoundEvent STINGER_SPEAR_RETURN = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.stinger_spear.return"));
+    public static final SoundEvent STINGER_SPEAR_THROW = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.stinger_spear.throw"));
 
     public static void registerSounds() {
         Registry.register(Registry.SOUND_EVENT, ANGERED_BEES.getLocation(), ANGERED_BEES);
@@ -20,5 +24,9 @@ public class BzSounds {
         Registry.register(Registry.SOUND_EVENT, BEEHEMOTH_LOOP.getLocation(), BEEHEMOTH_LOOP);
         Registry.register(Registry.SOUND_EVENT, MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY.getLocation(), MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY);
         Registry.register(Registry.SOUND_EVENT, MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV.getLocation(), MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV);
+        Registry.register(Registry.SOUND_EVENT, STINGER_SPEAR_HIT.getLocation(), STINGER_SPEAR_HIT);
+        Registry.register(Registry.SOUND_EVENT, STINGER_SPEAR_HIT_GROUND.getLocation(), STINGER_SPEAR_HIT_GROUND);
+        Registry.register(Registry.SOUND_EVENT, STINGER_SPEAR_RETURN.getLocation(), STINGER_SPEAR_RETURN);
+        Registry.register(Registry.SOUND_EVENT, STINGER_SPEAR_THROW.getLocation(), STINGER_SPEAR_THROW);
     }
 }

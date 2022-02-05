@@ -8,6 +8,8 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeehemothRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HoneySlimeRendering;
+import com.telepathicgrunt.the_bumblezone.client.rendering.StingerSpearModel;
+import com.telepathicgrunt.the_bumblezone.client.rendering.StingerSpearRenderer;
 import com.telepathicgrunt.the_bumblezone.mixin.client.EntityRendererRegistryImplAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.DimensionSpecialEffectsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -15,6 +17,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.packets.MobEffectClientSyncPacket;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
 import net.fabricmc.api.ClientModInitializer;
@@ -51,6 +54,7 @@ public class BumblezoneClient implements ClientModInitializer {
         EntityRendererRegistry.register(BzEntities.POLLEN_PUFF_ENTITY, ThrownItemRenderer::new);
         EntityRendererRegistry.register(BzEntities.HONEY_SLIME, HoneySlimeRendering::new);
         EntityRendererRegistry.register(BzEntities.BEEHEMOTH, BeehemothRenderer::new);
+        EntityRendererRegistry.register(BzEntities.THROWN_STINGER_SPEAR_ENTITY, StingerSpearRenderer::new);
 
         if(Bumblezone.BZ_CONFIG.BZClientConfig.enableLgbtBeeRenderer) {
             BeeVariantRenderer.OLD_BEE_RENDER_FACTORY = (EntityRendererProvider<Bee>)EntityRendererRegistryImplAccessor.getMap().get(EntityType.BEE);
@@ -58,6 +62,7 @@ public class BumblezoneClient implements ClientModInitializer {
         }
 
         EntityModelLayerRegistry.registerModelLayer(BeehemothModel.LAYER_LOCATION, BeehemothModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(StingerSpearModel.LAYER_LOCATION, StingerSpearModel::createLayer);
         DimensionSpecialEffectsAccessor.thebumblezone_getBY_IDENTIFIER().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
 
         // Allows shield to use the blocking json file for offset
@@ -71,6 +76,7 @@ public class BumblezoneClient implements ClientModInitializer {
         );
 
         UpdateFallingBlockPacket.registerPacket();
+        MobEffectClientSyncPacket.registerPacket();
     }
     
     public static void registerRenderLayers() {

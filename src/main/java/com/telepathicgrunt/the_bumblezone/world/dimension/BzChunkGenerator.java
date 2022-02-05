@@ -133,17 +133,28 @@ public class BzChunkGenerator extends ChunkGenerator {
         this.surfaceSystem = new SurfaceSystem(registry, this.defaultBlock, seaLevel, seed, noiseGeneratorSettings.getRandomSource());
         this.configuredStructureFeaturesRegistry = configuredStructureFeaturesRegistry;
 
+        ConfiguredStructureFeature<?,?> currentStructure;
         ImmutableMap<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> originalMultiMap = ((StructureSettingsAccessor)noiseGeneratorSettings.structureSettings()).getConfiguredStructures();
         Map<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> newMultiMaps = new HashMap<>(originalMultiMap);
+
+        currentStructure = configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "honey_cave_room"));
         newMultiMaps.put(BzStructures.HONEY_CAVE_ROOM, ImmutableMultimap.of(
-                Objects.requireNonNull(configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "honey_cave_room"))),
-                ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_pillar"))));
+                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_pillar"))));
+
+        currentStructure = configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "pollinated_stream"));
         newMultiMaps.put(BzStructures.POLLINATED_STREAM, ImmutableMultimap.of(
-                Objects.requireNonNull(configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "pollinated_stream"))),
-                ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_pillar")),
-                Objects.requireNonNull(configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "pollinated_stream"))),
-                ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_fields"))
+                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_pillar")),
+                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_fields"))
         ));
+
+        currentStructure = configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "cell_maze"));
+        newMultiMaps.put(BzStructures.CELL_MAZE, ImmutableMultimap.of(
+                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_pillar")),
+                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_fields")),
+                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "hive_pillar")),
+                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "hive_wall"))
+        ));
+
         ((StructureSettingsAccessor)noiseGeneratorSettings.structureSettings()).setConfiguredStructures(ImmutableMap.copyOf(newMultiMaps));
     }
 

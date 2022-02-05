@@ -3,6 +3,8 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "BeardifierAccessor",
+    "SinglePoolElementAccessor",
     "blocks.AbstractFurnaceBlockEntityMixin",
     "blocks.BeeHiveDropsMixin",
     "blocks.DefaultDispenseItemBehaviorInvoker",
@@ -52,9 +54,9 @@
   ],
   "client": [
     "blocks.ScreenEffectRendererMixin",
+    "client.EntityRendererRegistryImplAccessor",
     "client.FluidRendererMixin",
     "client.FogRendererMixin",
-    "client.EntityRendererRegistryImplAccessor",
     "world.DimensionSpecialEffectsAccessor"
   ],
   "injectors": {

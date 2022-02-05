@@ -2,28 +2,13 @@ package com.telepathicgrunt.the_bumblezone;
 
 import com.telepathicgrunt.the_bumblezone.components.EntityComponent;
 import com.telepathicgrunt.the_bumblezone.components.FlyingSpeedComponent;
+import com.telepathicgrunt.the_bumblezone.components.NeurotoxinsMissedCounterComponent;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modinit.BzBiomeHeightRegistry;
-import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
-import com.telepathicgrunt.the_bumblezone.modinit.BzFeatures;
-import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
-import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
-import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
-import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
-import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
-import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
-import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
-import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
-import com.telepathicgrunt.the_bumblezone.modinit.BzSurfaceRules;
+import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
@@ -53,6 +38,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
     public static final ComponentKey<EntityComponent> ENTITY_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "entity_component"), EntityComponent.class);
     public static final ComponentKey<FlyingSpeedComponent> FLYING_SPEED_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "original_flying_speed"), FlyingSpeedComponent.class);
+    public static final ComponentKey<NeurotoxinsMissedCounterComponent> NEUROTOXINS_MISSED_COUNTER_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "neurotoxins_missed_counter"), NeurotoxinsMissedCounterComponent.class);
 
     @Override
     public void onInitialize() {
@@ -70,6 +56,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzSounds.registerSounds();
 
         BzBlocks.registerBlocks();
+        BzBlockEntities.registerBlockEntities();
         BzFluids.registerFluids();
         BzEntities.registerEntities();
         BzItems.registerItems();
@@ -80,6 +67,8 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzPOI.registerPOIs();
         BzParticles.registerParticles();
 
+        BzPredicates.registerPredicates();
+        BzLootFunctionTypes.registerContainerLootFunctions();
         BzProcessors.registerProcessors();
         BzPlacements.registerPlacements();
         BzFeatures.registerFeatures();
@@ -100,5 +89,6 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         //attach component to living entities
         registry.registerFor(LivingEntity.class, ENTITY_COMPONENT, p -> new EntityComponent());
         registry.registerFor(LivingEntity.class, FLYING_SPEED_COMPONENT, p -> new FlyingSpeedComponent());
+        registry.registerFor(LivingEntity.class, NEUROTOXINS_MISSED_COUNTER_COMPONENT, p -> new NeurotoxinsMissedCounterComponent());
     }
 }

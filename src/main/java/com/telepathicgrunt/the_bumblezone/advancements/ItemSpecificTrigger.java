@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.advancements;
 
 import com.google.gson.JsonObject;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EntityPredicate;
@@ -13,12 +12,16 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 
 
-public class FoodRemovedWrathOfTheHiveTrigger extends SimpleCriterionTrigger<FoodRemovedWrathOfTheHiveTrigger.Instance> {
-    private static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "food_removed_wrath_of_the_hive");
+public class ItemSpecificTrigger extends SimpleCriterionTrigger<ItemSpecificTrigger.Instance> {
+    private final ResourceLocation id;
+
+    public ItemSpecificTrigger(ResourceLocation id) {
+        this.id = id;
+    }
 
     @Override
     public ResourceLocation getId() {
-        return ID;
+        return this.id;
     }
 
     @Override
@@ -30,11 +33,11 @@ public class FoodRemovedWrathOfTheHiveTrigger extends SimpleCriterionTrigger<Foo
         super.trigger(serverPlayer, (currentItemStack) -> currentItemStack.matches(itemStack));
     }
 
-    public static class Instance extends AbstractCriterionTriggerInstance {
+    public class Instance extends AbstractCriterionTriggerInstance {
         private final ItemPredicate itemPredicate;
 
         public Instance(EntityPredicate.Composite predicate, ItemPredicate itemPredicate) {
-            super(FoodRemovedWrathOfTheHiveTrigger.ID, predicate);
+            super(id, predicate);
             this.itemPredicate = itemPredicate;
         }
 

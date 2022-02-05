@@ -206,9 +206,9 @@ public class HoneyWeb extends Block {
     public InteractionResult use(BlockState blockstate, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
-        if ((itemstack.getItem() instanceof BucketItem &&
-                ((BucketItemAccessor) itemstack.getItem()).thebumblezone_getFluid().is(FluidTags.WATER)) ||
-                itemstack.getOrCreateTag().getString("Potion").contains("water") ||
+        if ((itemstack.getItem() instanceof BucketItem bucketItem &&
+                ((BucketItemAccessor) bucketItem).thebumblezone_getFluid().is(FluidTags.WATER)) ||
+                (itemstack.hasTag() && itemstack.getOrCreateTag().getString("Potion").contains("water"))  ||
                 itemstack.getItem() == Items.WET_SPONGE ||
                 itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {
 

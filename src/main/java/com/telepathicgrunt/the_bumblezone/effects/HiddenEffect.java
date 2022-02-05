@@ -23,6 +23,7 @@ public class HiddenEffect extends MobEffect {
     /**
      * Returns true if the potion has an instant effect instead of a continuous one (eg Harming)
      */
+    @Override
     public boolean isInstantenous() {
         return false;
     }
@@ -30,17 +31,18 @@ public class HiddenEffect extends MobEffect {
     /**
      * checks if Potion effect is ready to be applied this tick.
      */
+    @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {
         return duration >= 1;
     }
 
     /**
-     * Calm all attacking bees when first applied to the entity
+     * Calm all attacking bees at this entity when first applied to the entity
      */
+    @Override
     public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
         SEE_THROUGH_WALLS.range(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D);
         List<Bee> beeList = entity.level.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D));
-
         for (Bee bee : beeList) {
             if(bee.getTarget() == entity) {
                 bee.setTarget(null);
@@ -66,5 +68,4 @@ public class HiddenEffect extends MobEffect {
         }
         return currentVisibilty;
     }
-
 }

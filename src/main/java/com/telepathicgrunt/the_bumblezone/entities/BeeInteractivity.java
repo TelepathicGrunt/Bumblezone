@@ -147,20 +147,19 @@ public class BeeInteractivity {
                 WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
                 removedWrath = true;
             }
-            else{
-                playerEntity.addEffect(new MobEffectInstance(
-                        BzEffects.PROTECTION_OF_THE_HIVE,
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts,
-                        2,
-                        false,
-                        false,
-                        true));
-            }
+
+            playerEntity.addEffect(new MobEffectInstance(
+                    BzEffects.PROTECTION_OF_THE_HIVE,
+                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts,
+                    2,
+                    false,
+                    false,
+                    true));
         }
 
         if (beeEntity instanceof Bee ?
-                (!((Bee)beeEntity).isAngry() || calmed) :
-                calmed)
+            (!((Bee)beeEntity).isAngry() || calmed) :
+            calmed)
         {
             ((ServerLevel) world).sendParticles(
                     ParticleTypes.HEART,
