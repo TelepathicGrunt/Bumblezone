@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin;
+package com.telepathicgrunt.the_bumblezone.mixin.world;
 
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;

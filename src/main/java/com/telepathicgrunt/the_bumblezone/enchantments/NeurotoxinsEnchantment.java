@@ -1,8 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
-import com.telepathicgrunt.the_bumblezone.capabilities.NeurotoxinsMissCounter;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.ThrownTridentAccessor;
@@ -11,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -21,8 +20,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
 public class NeurotoxinsEnchantment extends Enchantment {
 
@@ -50,19 +47,19 @@ public class NeurotoxinsEnchantment extends Enchantment {
         return stack.getItem() instanceof StingerSpearItem;
     }
 
-    public static void entityHurtEvent(LivingAttackEvent event) {
-        if(event.getEntity().level.isClientSide()) {
+    public static void entityHurt(Entity victimIn, DamageSource damageSource) {
+        if(victimIn.level.isClientSide()) {
             return;
         }
 
         ItemStack attackingItem = null;
         LivingEntity attacker = null;
-        if(event.getSource().getEntity() instanceof LivingEntity livingEntity) {
+        if(damageSource.getEntity() instanceof LivingEntity livingEntity) {
             attacker = livingEntity;
             attackingItem = attacker.getMainHandItem();
         }
-        if(event.getSource().isProjectile()) {
-           Entity projectile = event.getSource().getDirectEntity();
+        if(damageSource.isProjectile()) {
+           Entity projectile = damageSource.getDirectEntity();
            if(projectile instanceof ThrownTrident thrownTrident) {
                attackingItem = ((ThrownTridentAccessor)thrownTrident).getTridentItem();
            }
@@ -72,7 +69,7 @@ public class NeurotoxinsEnchantment extends Enchantment {
         }
 
         if(attackingItem != null && !attackingItem.isEmpty()) {
-            applyNeurotoxins(attacker, event.getEntityLiving(), attackingItem);
+            applyNeurotoxins(attacker, victimIn, attackingItem);
         }
     }
 

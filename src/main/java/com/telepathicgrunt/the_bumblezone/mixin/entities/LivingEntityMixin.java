@@ -1,7 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
+import com.telepathicgrunt.the_bumblezone.effects.ParalyzedEffect;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
+import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
@@ -24,6 +26,20 @@ public abstract class LivingEntityMixin extends Entity {
 
     public LivingEntityMixin(EntityType<?> type, Level world) {
         super(type, world);
+    }
+
+    @Inject(method = "isImmobile()Z",
+            at = @At(value = "HEAD"), cancellable = true)
+    private void thebumblezone_isParalyzedCheck(CallbackInfoReturnable<Boolean> cir) {
+        if(ParalyzedEffect.isParalyzed((LivingEntity)(Object)this)) {
+            cir.setReturnValue(true);
+        }
+    }
+
+    @Inject(method = "hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+            at = @At(value = "HEAD"))
+    private void thebumblezone_entityHurt(DamageSource source, float pAmount, CallbackInfoReturnable<Boolean> cir) {
+        NeurotoxinsEnchantment.entityHurt(this, source);
     }
 
     //bees become angrier when hit in bumblezone

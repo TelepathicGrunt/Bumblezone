@@ -19,6 +19,6 @@ public class PlayerDamagedMixin {
     private void thebumblezone_playerAttacked(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         HoneyCrystalShieldBehavior.slowPhysicalAttackers(source, ((Player) (Object) this));
         if(HoneyCrystalShieldBehavior.damageShieldFromExplosionAndFire(source, ((Player) (Object) this)))
-            cir.cancel();
+            cir.setReturnValue(true);
     }
 }

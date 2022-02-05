@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin;
+package com.telepathicgrunt.the_bumblezone.mixin.world;
 
 import com.mojang.datafixers.util.Either;
 import net.minecraft.resources.ResourceLocation;

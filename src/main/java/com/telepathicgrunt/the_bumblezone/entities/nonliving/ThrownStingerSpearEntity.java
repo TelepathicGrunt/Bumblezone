@@ -28,8 +28,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nullable;
-
 public class ThrownStingerSpearEntity extends AbstractArrow {
     private static final EntityDataAccessor<Byte> ID_LOYALTY = SynchedEntityData.defineId(ThrownStingerSpearEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> ID_FOIL = SynchedEntityData.defineId(ThrownStingerSpearEntity.class, EntityDataSerializers.BOOLEAN);

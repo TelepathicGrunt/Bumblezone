@@ -9,6 +9,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.MendingEnchantment;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
@@ -50,5 +52,9 @@ public class HoneyCrystalShield extends ShieldItem {
     public int getBarColor(ItemStack itemStack) {
         float f = Math.max(0.0F, ((float)itemStack.getMaxDamage() - (float)itemStack.getDamageValue()) / (float)itemStack.getMaxDamage());
         return Mth.hsvToRgb(f / 3.0F, 1.0F, 1.0F);
+    }
+
+    public static boolean isInvalidForHoneyCrystalShield(ItemStack stack, Enchantment enchantment) {
+        return stack.getItem() == BzItems.HONEY_CRYSTAL_SHIELD && enchantment instanceof MendingEnchantment;
     }
 }

@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.world.dimension;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.mixin.BeardifierAccessor;
-import com.telepathicgrunt.the_bumblezone.mixin.SinglePoolElementAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.world.BeardifierAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.world.SinglePoolElementAccessor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.chunk.ChunkAccess;

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import net.minecraft.sounds.SoundSource;
@@ -25,6 +26,7 @@ import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.MendingEnchantment;
 import net.minecraft.world.level.Level;
 
 public class StingerSpearItem extends TridentItem {
@@ -123,12 +125,8 @@ public class StingerSpearItem extends TridentItem {
     /**
      * blacklisted riptide and channeling enchantment
      */
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        if(enchantment == Enchantments.CHANNELING || enchantment == Enchantments.RIPTIDE) {
-            return false;
-        }
-
-        return enchantment.category.canEnchant(stack.getItem());
+    public static boolean isInvalidForStingerSpear(ItemStack stack, Enchantment enchantment) {
+        return stack.getItem() == BzItems.STINGER_SPEAR &&
+                (enchantment == Enchantments.CHANNELING || enchantment == Enchantments.RIPTIDE);
     }
 }

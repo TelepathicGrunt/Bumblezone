@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.world;
+package com.telepathicgrunt.the_bumblezone.mixin.client;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import net.minecraft.client.renderer.DimensionSpecialEffects;

@@ -30,5 +30,11 @@ public class EnchantmentHelperMixin {
         if(enchantment == BzEnchantments.COMB_CUTTER && !BzEnchantments.COMB_CUTTER.canEnchant(stack) && !list.isEmpty()) {
             list.remove(list.size() - 1);
         }
+        else if(enchantment == BzEnchantments.NEUROTOXINS && !BzEnchantments.NEUROTOXINS.canEnchant(stack) && !list.isEmpty()) {
+            list.remove(list.size() - 1);
+        }
+        else if(enchantment == BzEnchantments.POTENT_POISON && !BzEnchantments.POTENT_POISON.canEnchant(stack) && !list.isEmpty()) {
+            list.remove(list.size() - 1);
+        }
     }
 }
