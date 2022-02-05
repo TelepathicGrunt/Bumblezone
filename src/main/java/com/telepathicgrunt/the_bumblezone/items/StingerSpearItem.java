@@ -26,7 +26,6 @@ import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.item.enchantment.MendingEnchantment;
 import net.minecraft.world.level.Level;
 
 public class StingerSpearItem extends TridentItem {

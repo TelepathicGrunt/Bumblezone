@@ -2,10 +2,8 @@ package com.telepathicgrunt.the_bumblezone.mixin.items;
 
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
-import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.MendingEnchantment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

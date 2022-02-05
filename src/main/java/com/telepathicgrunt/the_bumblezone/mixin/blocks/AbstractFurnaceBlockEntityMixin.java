@@ -20,5 +20,4 @@ public class AbstractFurnaceBlockEntityMixin {
         itemStack3.shrink(1); // undo previous increment
         itemStack3.grow(itemStack2.getCount()); // increment properly
     }
-
 }
