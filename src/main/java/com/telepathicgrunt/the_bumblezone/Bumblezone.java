@@ -33,6 +33,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
+import com.telepathicgrunt.the_bumblezone.modinit.BzPredicates;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
@@ -130,6 +131,7 @@ public class Bumblezone{
 
     private void setup(final FMLCommonSetupEvent event) {
     	event.enqueueWork(() -> {
+            BzPredicates.registerPredicates();
             BzLootFunctionTypes.registerContainerLootFunctions();
             BzPlacements.registerPlacements();
             BzCriterias.registerCriteriaTriggers();

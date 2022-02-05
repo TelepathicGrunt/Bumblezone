@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.mixin.world.StructureFeatureAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.StructureSettingsAccessor;
+import com.telepathicgrunt.the_bumblezone.world.structures.CellMazeStructure;
 import com.telepathicgrunt.the_bumblezone.world.structures.HoneyCaveRoomStructure;
 import com.telepathicgrunt.the_bumblezone.world.structures.PollinatedStreamStructure;
 import net.minecraft.world.level.levelgen.StructureSettings;
@@ -21,6 +22,7 @@ public class BzStructures {
 
     public static final RegistryObject<StructureFeature<JigsawConfiguration>> POLLINATED_STREAM = STRUCTURES.register("pollinated_stream", () -> (new PollinatedStreamStructure(JigsawConfiguration.CODEC)));
     public static final RegistryObject<StructureFeature<JigsawConfiguration>> HONEY_CAVE_ROOM = STRUCTURES.register("honey_cave_room", () -> (new HoneyCaveRoomStructure(JigsawConfiguration.CODEC)));
+    public static final RegistryObject<StructureFeature<JigsawConfiguration>> CELL_MAZE = STRUCTURES.register("cell_maze", () -> (new CellMazeStructure(JigsawConfiguration.CODEC)));
 
     public static void setupStructures() {
         setupMapSpacingAndLand(
@@ -35,6 +37,13 @@ public class BzStructures {
                 new StructureFeatureConfiguration(12,
                         4,
                         722299384),
+                false);
+
+        setupMapSpacingAndLand(
+                CELL_MAZE.get(),
+                new StructureFeatureConfiguration(20,
+                        10,
+                        456768898),
                 false);
     }
 

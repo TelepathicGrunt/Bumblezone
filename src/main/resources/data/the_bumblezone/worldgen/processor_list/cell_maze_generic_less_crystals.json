@@ -1,0 +1,80 @@
+{
+  "processors": [
+    {
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:cave_air"
+          },
+          "input_predicate": {
+            "block": "minecraft:air",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    },
+    {
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:honeycomb_block"
+          },
+          "input_predicate": {
+            "block": "the_bumblezone:filled_porous_honeycomb_block",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.05
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:cave_air"
+          },
+          "input_predicate": {
+            "block": "the_bumblezone:honey_crystal",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.65
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    },
+    {
+      "rules": [
+        {
+          "output_state": {
+            "Name": "the_bumblezone:sugar_water_block",
+            "Properties": {
+              "level": "8"
+            }
+          },
+          "position_predicate": {
+            "min_chance": 1,
+            "max_chance": 0,
+            "min_dist": 1,
+            "max_dist": 2,
+            "axis": "y",
+            "predicate_type": "the_bumblezone:piece_origin_axis_aligned_linear_pos_rule_test"
+          },
+          "input_predicate": {
+            "block": "minecraft:cave_air",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    }
+  ]
+}

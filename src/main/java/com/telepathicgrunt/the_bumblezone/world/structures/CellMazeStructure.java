@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -20,40 +21,23 @@ import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplie
 
 import java.util.Optional;
 
-public class HoneyCaveRoomStructure extends StructureFeature<JigsawConfiguration> {
+public class CellMazeStructure extends StructureFeature<JigsawConfiguration> {
 
-    public HoneyCaveRoomStructure(Codec<JigsawConfiguration> codec) {
-        super(codec, (context) -> {
-                    if (!isFeatureChunk(context)) {
-                        return Optional.empty();
-                    }
-                    else {
-                        return generatePieces(context);
-                    }
-                },
-                PostPlacementProcessor.NONE);
-    }
-
-    protected static boolean isFeatureChunk(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
-        BlockPos centerPos = new BlockPos(context.chunkPos().x, 0,context.chunkPos().z);
-
-        WorldgenRandom positionedRandom = new WorldgenRandom(new LegacyRandomSource(context.seed() + (context.chunkPos().x * (context.chunkPos().z * 17L))));
-        int height = context.chunkGenerator().getSeaLevel() + positionedRandom.nextInt(Math.max(context.chunkGenerator().getGenDepth() - (context.chunkGenerator().getSeaLevel() + 50), 1));
-        centerPos = centerPos.above(height);
-        return validSpot(context.chunkGenerator(), centerPos, context.heightAccessor());
+    public CellMazeStructure(Codec<JigsawConfiguration> codec) {
+        super(codec, CellMazeStructure::generatePieces, PostPlacementProcessor.NONE);
     }
 
     private static boolean validSpot(ChunkGenerator chunkGenerator, BlockPos centerPos, LevelHeightAccessor heightLimitView) {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-        int radius = 24;
+        int radius = 5;
         for(int x = -radius; x <= radius; x += radius) {
             for(int z = -radius; z <= radius; z += radius) {
-                mutable.set(centerPos).move(x, 0, z);
+                mutable.set(centerPos).move(x * 16, 0, z * 16);
                 NoiseColumn columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView);
-                BlockState state = columnOfBlocks.getBlock(mutable.getY());
+                BlockState state = columnOfBlocks.getBlock(mutable.getY() - 3);
                 BlockState aboveState = columnOfBlocks.getBlock(mutable.getY() + 15);
-                if(state.isAir() || !state.getFluidState().isEmpty() ||
-                    aboveState.isAir() || !aboveState.getFluidState().isEmpty())
+                if(!(state.getFluidState().isEmpty() && !state.isAir()) ||
+                    !(aboveState.getFluidState().isEmpty() && !aboveState.isAir()))
                 {
                     return false;
                 }
@@ -65,11 +49,23 @@ public class HoneyCaveRoomStructure extends StructureFeature<JigsawConfiguration
 
     public static Optional<PieceGenerator<JigsawConfiguration>> generatePieces(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
         WorldgenRandom positionedRandom = new WorldgenRandom(new LegacyRandomSource(context.seed() + (context.chunkPos().x * (context.chunkPos().z * 17L))));
-        int height = context.chunkGenerator().getSeaLevel() + positionedRandom.nextInt(Math.max(context.chunkGenerator().getGenDepth() - (context.chunkGenerator().getSeaLevel() + 50), 1));
-        BlockPos centerPos = new BlockPos(context.chunkPos().getMinBlockX(), height, context.chunkPos().getMinBlockZ());
+        int height;
+        BlockPos centerPos = context.chunkPos().getWorldPosition();
+
+        for (int i = 0; i < 5; i++) {
+            height = context.chunkGenerator().getSeaLevel() + positionedRandom.nextInt(Math.max(context.chunkGenerator().getGenDepth() - (context.chunkGenerator().getSeaLevel() - 10), 1));
+            centerPos = context.chunkPos().getMiddleBlockPosition(height);
+
+            if (validSpot(context.chunkGenerator(), centerPos, context.heightAccessor())) {
+                break;
+            }
+            else if (i == 4) {
+                return Optional.empty();
+            }
+        }
 
         // increase depth to 12
-        JigsawConfiguration newConfig = new JigsawConfiguration(context.config().startPool(), 12);
+        JigsawConfiguration newConfig = new JigsawConfiguration(context.config().startPool(), 8);
 
         // Create a new context with the new config that has our json pool. We will pass this into JigsawPlacement.addPieces
         PieceGeneratorSupplier.Context<JigsawConfiguration> newContext = new PieceGeneratorSupplier.Context<>(

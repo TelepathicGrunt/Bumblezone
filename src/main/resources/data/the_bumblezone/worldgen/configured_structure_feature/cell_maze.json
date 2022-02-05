@@ -1,0 +1,7 @@
+{
+  "config": {
+    "start_pool": "the_bumblezone:cell_maze/start_pool",
+    "size": 7
+  },
+  "type": "the_bumblezone:cell_maze"
+}
