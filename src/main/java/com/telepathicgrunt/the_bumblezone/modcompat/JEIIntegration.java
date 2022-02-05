@@ -46,6 +46,8 @@ public class JEIIntegration implements IModPlugin {
 		addInfo(registration, BzItems.HONEY_BUCKET.get());
 		addInfo(registration, BzItems.HONEY_WEB.get());
 		addInfo(registration, BzItems.REDSTONE_HONEY_WEB.get());
+		addInfo(registration, BzItems.HONEY_COCOON.get());
+		addInfo(registration, BzItems.STINGER_SPEAR.get());
     }
 
     
