@@ -69,7 +69,6 @@ public class Bumblezone{
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     public Bumblezone() {
-        // TODO: make Cell Maze structure that gives wrath of hive if you do not have protection of the hive.
         // TODO: Add bee armor!
         // TODO: new advancements
         // TODO: lang files

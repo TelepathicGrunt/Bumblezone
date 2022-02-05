@@ -94,6 +94,9 @@ Fixed Comb Cutter showing up for invalid items in the Enchantment Table.
 ##### Teleportation:
 Fixed Piston teleportation no longer working when `REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT` block tag is non-empty.
 
+##### Advancements:
+Added more Advancements and moved some around to different branches.
+
 ##### Configs:
 Added beehemothTriggersWrath config option. It is set to false by default.
  If turned on, any mobs that hurts a Beehemoth and is not the owner of the Beehemoth, that mob will get Wrath of the Hive effect.
