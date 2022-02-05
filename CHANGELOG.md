@@ -53,6 +53,8 @@ Potent Poison enchantment is available for all trident-like items including Stin
  When the weapon hits a non-undead mob, it inflicts poison effect on them with higher enchantment levels increasing
  the duration and level 3 increases the poison level. If on Stinger Spear, the level of poison is increased by an extra level.
 
+Fixed Comb Cutter showing up for invalid items in the Enchantment Table.
+
 ##### Entities:
 Fixed Honey Slime bounding boxes.
 
@@ -87,9 +89,6 @@ Hidden effect is added which is given to entities hiding in Pile of pollen.
 Paralysis effect is added and is caused by Neurotoxins enchantment right now. This sets the mob's immobile method
  to return true which causes many mobs to stand still. They will also shake when paralyzed and give off yellow particle effects.
  Some mobs may be able to still do some actions such as Witches drinking potions.
-
-##### Enchantments:
-Fixed Comb Cutter showing up for invalid items in the Enchantment Table.
 
 ##### Teleportation:
 Fixed Piston teleportation no longer working when `REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT` block tag is non-empty.

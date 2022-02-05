@@ -182,11 +182,11 @@ public class GeneralUtils {
             playerEntity.getItemInHand(hand).shrink(1);
         }
 
-        if(giveContainerItem && !itemstack.getItem().hasCraftingRemainingItem()) {
+        if(giveContainerItem && !itemstack.hasContainerItem()) {
             return;
         }
 
-        ItemStack itemToGive = giveContainerItem ? itemstack.getItem().getCraftingRemainingItem().getDefaultInstance() : itemstack;
+        ItemStack itemToGive = giveContainerItem ? itemstack.getContainerItem() : itemstack;
         if (itemstack.isEmpty()) {
             // places result item in hand
             playerEntity.setItemInHand(hand, itemToGive);

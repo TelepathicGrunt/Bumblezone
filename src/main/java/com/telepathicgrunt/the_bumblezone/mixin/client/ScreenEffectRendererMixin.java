@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.blocks;
+package com.telepathicgrunt.the_bumblezone.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidClientOverlay;

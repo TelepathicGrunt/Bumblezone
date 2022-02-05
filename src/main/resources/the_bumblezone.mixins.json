@@ -44,12 +44,12 @@
     "world.StructureTemplateAccessor"
   ],
   "client": [
-    "blocks.ScreenEffectRendererMixin",
+    "client.ScreenEffectRendererMixin",
     "client.FluidRendererMixin",
     "client.FogRendererClientMixin",
     "client.LivingEntityRendererMixin",
     "client.RenderingRegistryAccessor",
-    "world.DimensionSpecialEffectsAccessor"
+    "client.DimensionSpecialEffectsAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
