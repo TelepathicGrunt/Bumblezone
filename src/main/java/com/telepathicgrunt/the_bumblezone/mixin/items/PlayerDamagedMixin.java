@@ -21,4 +21,5 @@ public class PlayerDamagedMixin {
         if(HoneyCrystalShieldBehavior.damageShieldFromExplosionAndFire(source, ((Player) (Object) this)))
             cir.setReturnValue(true);
     }
+
 }
