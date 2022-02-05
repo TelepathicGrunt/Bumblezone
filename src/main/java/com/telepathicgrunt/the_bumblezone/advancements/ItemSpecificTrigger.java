@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.advancements;
 
 import com.google.gson.JsonObject;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EntityPredicate;

@@ -1,7 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.advancements.*;
+import com.telepathicgrunt.the_bumblezone.advancements.EntitySpecificTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.GenericTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.ItemSpecificTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.RecipeDiscoveredTrigger;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.resources.ResourceLocation;
 
