@@ -64,6 +64,6 @@ public class MobEffectClientSyncPacket {
         passedData.writeByte(flags);
 
         PlayerLookup.world((ServerLevel) entity.level).forEach(player ->
-                ServerPlayNetworking.send(player, UpdateFallingBlockPacket.PACKET_ID, passedData));
+                ServerPlayNetworking.send(player, PACKET_ID, passedData));
     }
 }

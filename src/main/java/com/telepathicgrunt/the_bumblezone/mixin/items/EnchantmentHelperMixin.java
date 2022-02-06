@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.items;
 
+import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
+import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -34,6 +36,12 @@ public class EnchantmentHelperMixin {
             list.remove(list.size() - 1);
         }
         else if(enchantment == BzEnchantments.POTENT_POISON && !BzEnchantments.POTENT_POISON.canEnchant(stack) && !list.isEmpty()) {
+            list.remove(list.size() - 1);
+        }
+        else if(HoneyCrystalShield.isInvalidForHoneyCrystalShield(stack, enchantment)) {
+            list.remove(list.size() - 1);
+        }
+        else if(StingerSpearItem.isInvalidForStingerSpear(stack, enchantment)) {
             list.remove(list.size() - 1);
         }
     }

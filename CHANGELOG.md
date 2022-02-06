@@ -43,6 +43,8 @@ Honey Crystal Shields now have an internal "ShieldLevel" nbt to keep track of it
 
 Honey Crystal Shield has a chance of being disabled by axes instead of always being disabled by axes. Matches vanilla shield behavior.
 
+Fixed Bee Bread unable to be crafted from Honey Buckets.
+
 ##### Enchantments:
 Neurotoxins enchantment added that only applies to Stinger Spear item. (Max enchantment level is 2)
  Will cause the weapon to have a chance of causing Paralysis Effect on non-undead mobs for 5 seconds per enchantment level.
@@ -52,8 +54,6 @@ Neurotoxins enchantment added that only applies to Stinger Spear item. (Max ench
 Potent Poison enchantment is available for all trident-like items including Stinger Spear. (Max enchantment level is 3)
  When the weapon hits a non-undead mob, it inflicts poison effect on them with higher enchantment levels increasing
  the duration and level 3 increases the poison level. If on Stinger Spear, the level of poison is increased by an extra level.
-
-Fixed Comb Cutter showing up for invalid items in the Enchantment Table.
 
 ##### Entities:
 Fixed Honey Slime bounding boxes.
