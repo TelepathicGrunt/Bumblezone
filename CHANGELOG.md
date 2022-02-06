@@ -31,6 +31,9 @@ Fixed Sugar Water Block not being able to waterlog some of Bumblezone's blocks l
 
 Fixed Honey Sticky Webs and Honey Sticky Residue attaching an empty tag to held items when right clicked which was preventing that item from stacking.
 
+##### Fluids:
+Fixed crash if Bumblezone's Honey Fluid touches Productive Bee's Honey Fluid.
+
 ##### Items:
 Stinger Spear item is added! They are rare throwable weapons found in Cell Maze structure. 
  Can be repaired by Flint and inflicts short weak poison on any non-undead mob it hits.

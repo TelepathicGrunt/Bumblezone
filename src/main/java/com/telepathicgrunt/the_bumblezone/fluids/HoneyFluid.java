@@ -205,11 +205,12 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
 
     @Override
     protected FluidState getNewLiquid(LevelReader worldReader, BlockPos blockPos, BlockState blockState) {
-        int lowestNeighboringFluidLevel = blockState.getBlock() instanceof HoneyFluidBlock ? blockState.getValue(BOTTOM_LEVEL) : HoneyFluidBlock.maxBottomLayer;
-        int currentFluidLevel = blockState.getBlock() instanceof HoneyFluidBlock ? blockState.getValue(HoneyFluidBlock.LEVEL) : 0;
+        boolean isBzFluidBlock = blockState.getBlock() instanceof HoneyFluidBlock;
+        int lowestNeighboringFluidLevel = isBzFluidBlock ? blockState.getValue(BOTTOM_LEVEL) : HoneyFluidBlock.maxBottomLayer;
+        int currentFluidLevel = isBzFluidBlock ? blockState.getValue(HoneyFluidBlock.LEVEL) : 0;
         int highestNeighboringFluidLevel = currentFluidLevel;
         int neighboringFluidSource = 0;
-        boolean hasAboveFluid = blockState.getBlock() instanceof HoneyFluidBlock ? blockState.getValue(ABOVE_FLUID) : false;
+        boolean hasAboveFluid = isBzFluidBlock ? blockState.getValue(ABOVE_FLUID) : false;
 
         BlockPos aboveBlockPos = blockPos.above();
         BlockState aboveBlockState = worldReader.getBlockState(aboveBlockPos);
@@ -243,7 +244,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
         }
 
         if (aboveFluidIsThisFluid && ((FlowingFluidAccessor)this).thebumblezone_callCanPassThroughWall(Direction.UP, worldReader, blockPos, blockState, aboveBlockPos, aboveBlockState)) {
-            if(!aboveFluidState.isSource() && aboveFluidState.getValue(BOTTOM_LEVEL) != 0) {
+            if(!aboveFluidState.isSource() && aboveFluidState.is(BzFluidTags.BZ_HONEY_FLUID) && aboveFluidState.getValue(BOTTOM_LEVEL) != 0) {
                 newFluidLevel = highestNeighboringFluidLevel - dropOffValue;
             }
         }
@@ -267,7 +268,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
         boolean aboveFluidIsThisFluid =
                     !aboveFluidState.isEmpty() &&
                     aboveFluidState.getType().isSame(this) &&
-                    (aboveFluidState.isSource() || aboveFluidState.getValue(BOTTOM_LEVEL) == 0);
+                    (aboveFluidState.isSource() || !aboveFluidState.is(BzFluidTags.BZ_HONEY_FLUID) || aboveFluidState.getValue(BOTTOM_LEVEL) == 0);
 
         return fluidState.getValue(ABOVE_FLUID) || aboveFluidIsThisFluid ? 1.0f : fluidState.getOwnHeight();
     }
@@ -291,7 +292,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
                 }
 
                 FluidState aboveFluidState = world.getFluidState(currentBlockPos.above());
-                if (aboveFluidState.getType().isSame(fluid) && (aboveFluidState.isSource() || aboveFluidState.getValue(BOTTOM_LEVEL) == 0)) {
+                if (aboveFluidState.getType().isSame(fluid) && (aboveFluidState.isSource() || !aboveFluidState.is(BzFluidTags.BZ_HONEY_FLUID) || aboveFluidState.getValue(BOTTOM_LEVEL) == 0)) {
                     return 1.0F;
                 }
 
