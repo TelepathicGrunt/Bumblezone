@@ -50,9 +50,5 @@ public class PotentPoisonEnchantment extends Enchantment {
                     true,
                     true));
         }
-
-        if (attacker instanceof ServerPlayer serverPlayer) {
-            BzCriterias.HONEY_COCOON_SILK_TOUCH_TRIGGER.trigger(serverPlayer);
-        }
     }
 }

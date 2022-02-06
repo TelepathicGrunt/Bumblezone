@@ -3,9 +3,11 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -106,6 +108,10 @@ public class StingerSpearItem extends TridentItem {
                     true,
                     true,
                     true));
+
+            if (user instanceof ServerPlayer serverPlayer) {
+                BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.trigger(serverPlayer);
+            }
         }
 
         int durabilityDecrease = 1;

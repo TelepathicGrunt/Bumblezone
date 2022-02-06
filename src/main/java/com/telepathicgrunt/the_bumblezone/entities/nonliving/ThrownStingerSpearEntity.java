@@ -146,6 +146,10 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
                     true,
                     true,
                     true));
+
+            if (this.getOwner() instanceof ServerPlayer serverPlayer) {
+                BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.trigger(serverPlayer);
+            }
         }
 
         if(this.getOwner() instanceof Player player) {
