@@ -35,11 +35,6 @@ public class PotentPoisonEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof TridentItem;
-    }
-
-    @Override
     public void doPostAttack(LivingEntity attacker, Entity victim, int level) {
         if(victim instanceof LivingEntity livingEntity && livingEntity.getMobType() != MobType.UNDEAD) {
             livingEntity.addEffect(new MobEffectInstance(
