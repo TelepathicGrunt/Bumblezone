@@ -35,11 +35,6 @@ public class PotentPoisonEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof TridentItem;
-    }
-
-    @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
         return this.canEnchant(stack);
     }
