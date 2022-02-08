@@ -35,11 +35,6 @@ public class PotentPoisonEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return this.canEnchant(stack);
-    }
-
-    @Override
     public void doPostAttack(LivingEntity attacker, Entity victim, int level) {
         if(victim instanceof LivingEntity livingEntity && livingEntity.getMobType() != MobType.UNDEAD) {
             livingEntity.addEffect(new MobEffectInstance(

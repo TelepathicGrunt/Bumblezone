@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -174,16 +175,22 @@ public class StickyHoneyResidue extends Block {
      */
     @Deprecated
     @Override
-    public void entityInside(BlockState blockstate, Level world, BlockPos pos, Entity entity) {
-        VoxelShape voxelShape = getShape(blockstate, world, pos, null);
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+        VoxelShape voxelShape = getShape(blockState, level, blockPos, null);
         if(voxelShape == Shapes.empty()) {
-            world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+            level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
             return;
         }
 
-        voxelShape = voxelShape.move(pos.getX(), pos.getY(), pos.getZ());
+        ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
+        if(!beeLeggings.isEmpty()) {
+            super.entityInside(blockState, level, blockPos, entity);
+            return;
+        }
+
+        voxelShape = voxelShape.move(blockPos.getX(), blockPos.getY(), blockPos.getZ());
         if (Shapes.joinIsNotEmpty(voxelShape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND)) {
-            entity.makeStuckInBlock(blockstate, new Vec3(0.35D, 0.2F, 0.35D));
+            entity.makeStuckInBlock(blockState, new Vec3(0.35D, 0.2F, 0.35D));
             if (entity instanceof LivingEntity livingEntity) {
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.MOVEMENT_SLOWDOWN,
@@ -194,6 +201,8 @@ public class StickyHoneyResidue extends Block {
                         true));
             }
         }
+
+        super.entityInside(blockState, level, blockPos, entity);
     }
 
     /**

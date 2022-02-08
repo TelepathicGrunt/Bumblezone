@@ -51,9 +51,9 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      */
     @Deprecated
     @Override
-    public void entityInside(BlockState blockstate, Level world, BlockPos pos, Entity entity) {
-        updateState(world, pos, blockstate, 0);
-        super.entityInside(blockstate, world, pos, entity);
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+        updateState(level, blockPos, blockState, 0);
+        super.entityInside(blockState, level, blockPos, entity);
     }
 
     protected int getTickRate() {

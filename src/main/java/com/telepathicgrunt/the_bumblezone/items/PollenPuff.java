@@ -21,6 +21,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.phys.Vec3;
 
 public class PollenPuff extends Item {
     public PollenPuff(Item.Properties properties) {
@@ -85,6 +86,14 @@ public class PollenPuff extends Item {
             double y = (double)(world.random.nextFloat() * 0.5F) + 0.25D;
             double z = (double)(world.random.nextFloat() * 0.5F) + 0.25D;
             ItemEntity itemEntity = new ItemEntity(world, (double)blockPos.getX() + x, (double)blockPos.getY() + y, (double)blockPos.getZ() + z, itemStack);
+            itemEntity.setDefaultPickUpDelay();
+            world.addFreshEntity(itemEntity);
+        }
+    }
+
+    public static void spawnItemstackEntity(Level world, Vec3 pos, ItemStack itemStack) {
+        if (!world.isClientSide() && !itemStack.isEmpty()) {
+            ItemEntity itemEntity = new ItemEntity(world, pos.x(), pos.y(), pos.z(), itemStack);
             itemEntity.setDefaultPickUpDelay();
             world.addFreshEntity(itemEntity);
         }

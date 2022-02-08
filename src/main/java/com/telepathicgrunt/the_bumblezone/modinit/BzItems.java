@@ -5,13 +5,16 @@ import com.telepathicgrunt.the_bumblezone.items.BeeBread;
 import com.telepathicgrunt.the_bumblezone.items.BzBlockItem;
 import com.telepathicgrunt.the_bumblezone.items.BzBucketItem;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -75,4 +78,5 @@ public class BzItems {
     public static final RegistryObject<Item> POLLEN_PUFF = ITEMS.register("pollen_puff", () -> new PollenPuff(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).stacksTo(16)));
     public static final RegistryObject<Item> BEE_BREAD = ITEMS.register("bee_bread", () -> new BeeBread(new Item.Properties().food((new FoodProperties.Builder()).nutrition(8).saturationMod(0.12F).effect(() -> new MobEffectInstance(BzEffects.BEENERGIZED.get(), 6000, 0), 1.0F).effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 120, 1), 1.0F).build()).tab(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> STINGER_SPEAR = ITEMS.register("stinger_spear", () -> new StingerSpearItem(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> HONEY_BEE_LEGGINGS = ITEMS.register("honey_bee_leggings", () -> new HoneyBeeLeggings(ArmorMaterials.GOLD, EquipmentSlot.LEGS, new Item.Properties().tab(BzItems.BUMBLEZONE_CREATIVE_TAB)));
 }
