@@ -6,9 +6,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -18,8 +15,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ArmorMaterials;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -68,7 +63,7 @@ public class HoneyBeeLeggings extends ArmorItem {
                 else if(random.nextFloat() < 0.004f && withinBlock.is(BlockTags.FLOWERS)) {
                     setPollinated(itemstack);
                     if(entity instanceof ServerPlayer) {
-                        BzCriterias.BUMBLE_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER.trigger((ServerPlayer) entity);
+                        BzCriterias.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER.trigger((ServerPlayer) entity);
                     }
                 }
             }

@@ -2,13 +2,13 @@
   "parent": "the_bumblezone:the_bumblezone/cell_maze/enter_cell_maze",
   "display": {
     "icon": {
-      "item": "the_bumblezone:bumble_bee_leggings"
+      "item": "the_bumblezone:honey_bee_leggings"
     },
     "title": {
-      "translate": "advancements.the_bumblezone.bumble_bee_leggings_flower_pollen.title"
+      "translate": "advancements.the_bumblezone.honey_bee_leggings_flower_pollen.title"
     },
     "description": {
-      "translate": "advancements.the_bumblezone.bumble_bee_leggings_flower_pollen.description"
+      "translate": "advancements.the_bumblezone.honey_bee_leggings_flower_pollen.description"
     },
     "frame": "task",
     "show_toast": true,
@@ -19,16 +19,16 @@
     "experience": 20
   },
   "criteria": {
-    "bumble_bee_leggings_flower_pollen": {
+    "honey_bee_leggings_flower_pollen": {
       "trigger": "minecraft:location",
       "conditions": {
-        "feature": "the_bumblezone:bumble_bee_leggings_flower_pollen"
+        "feature": "the_bumblezone:honey_bee_leggings_flower_pollen"
       }
     }
   },
   "requirements": [
     [
-      "bumble_bee_leggings_flower_pollen"
+      "honey_bee_leggings_flower_pollen"
     ]
   ]
 }
