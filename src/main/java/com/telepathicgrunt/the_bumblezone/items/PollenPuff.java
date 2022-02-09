@@ -42,9 +42,8 @@ public class PollenPuff extends Item {
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player playerEntity, LivingEntity entity, InteractionHand hand) {
         // No clientside exit early because if we return early, the use method runs on server and thus, throws pollen puff and depollinates bee at same time.
-        if (!(entity instanceof Bee)) return InteractionResult.PASS;
+        if (!(entity instanceof Bee beeEntity)) return InteractionResult.PASS;
 
-        Bee beeEntity = (Bee)entity;
         ItemStack itemstack = playerEntity.getItemInHand(hand);
 
         // right clicking on pollinated bee with pollen puff with room, gets pollen puff into hand.
