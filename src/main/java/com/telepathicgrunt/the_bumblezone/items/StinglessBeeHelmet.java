@@ -23,7 +23,7 @@ import java.util.Set;
 
 
 public class StinglessBeeHelmet extends ArmorItem {
-    public static int HELMET_EFFECT_COUNTER_CLIENTSIDE = 6;
+    public static int HELMET_EFFECT_COUNTER_CLIENTSIDE = 0;
     public static boolean ALL_BEE_ARMOR_ON_CLIENTSIDE = false;
     public static Set<Entity> BEE_HIGHLIGHTED_COUNTER_CLIENTSIDE = new ObjectArraySet<>();
     public static int PACKET_SEND_COOLDOWN_CLIENTSIDE = 20;

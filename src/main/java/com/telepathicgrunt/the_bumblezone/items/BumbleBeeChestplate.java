@@ -67,7 +67,7 @@ public class BumbleBeeChestplate extends ArmorItem {
                 Vec3 velocity = entity.getDeltaMovement();
                 double additiveSpeed = velocity.y() > 0 ? velocity.y() > 0.1D ? 0.06D : 0.080D : 0.13D;
                 if(isBeenergized) {
-                    additiveSpeed += (beenergized.getAmplifier() + 1) * 0.012D;
+                    additiveSpeed += (beenergized.getAmplifier() + 1) * 0.0125D;
                 }
 
                 double newYSpeed = velocity.y() + additiveSpeed;
