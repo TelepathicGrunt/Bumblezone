@@ -39,6 +39,24 @@ Stinger Spear item is added! They are rare throwable weapons found in Cell Maze 
  Can be repaired by Flint and inflicts short weak poison on any non-undead mob it hits.
  Has 1 dedicated enchantment for it called Neurotoxins. See Enchantment section for more info.
 
+Stingless Bee Helmet is added!
+ When couching, all Bees and Beehemoths will be glowing for you.
+ Nausea effect duration will also decrease twice as fast when this armor is on.
+ Can be repaired by Honeycomb, Leather, Wool, or Rabbit Hide.
+ While having all 3 bee armor on, the bee outlining range will be increased and will remain glowing for a brief time after standing up.
+ Furthermore, with the 3 armor on, Nausea effect duration will decrease much faster and now Poison effect duration will decrease twice as fast.
+
+Bumble Bee Chestplate is added!
+ This clothing lets you be able to fly for a short period of time by holding the jump button anytime after jumping!
+ Getting Beenergized effect will improve flight! Can be repaired by Honeycomb, Leather, Wool, or Rabbit Hide.
+ Flight time will be further boosted if all 3 bee armor is on!
+
+Honey Bee Leggings is added!
+ It resists slowness from many Bumblezone blocks that cause slowness and can collect pollen from flowers or Pile of Pollens!
+ Crouch to spawn a Pollen Puff when full of pollen.
+ Can be repaired by Honeycomb, Leather, Wool, or Rabbit Hide.
+ If all three bee armor is on, chance of collecting pollen from flowers is improved and Slowness effect duration will decrease twice as fast now!
+
 Honey Crystal Shields now have an internal "ShieldLevel" nbt to keep track of its strength.
  The shield level is increased by 1 each time the shield has more than 1/5th of its durability repaired.
  The maximum shield level now is 10 and shields now start with more durability initially.
@@ -47,6 +65,8 @@ Honey Crystal Shields now have an internal "ShieldLevel" nbt to keep track of it
 Honey Crystal Shield has a chance of being disabled by axes instead of always being disabled by axes. Matches vanilla shield behavior.
 
 Fixed Bee Bread unable to be crafted from Honey Buckets.
+
+Bee Bread can now always be eaten even when hunger bar is full.
 
 ##### Enchantments:
 Neurotoxins enchantment added that only applies to Stinger Spear item. (Max enchantment level is 2)

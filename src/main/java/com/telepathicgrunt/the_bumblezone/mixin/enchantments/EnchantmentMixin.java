@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.items;
+package com.telepathicgrunt.the_bumblezone.mixin.enchantments;
 
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;

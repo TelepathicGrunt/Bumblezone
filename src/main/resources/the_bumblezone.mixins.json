@@ -13,7 +13,11 @@
     "blocks.RedstoneDustCanConnectMixin",
     "blocks.WaterEquivalenceMixin",
     "client.LivingEntityRendererMixin",
+    "client.MinecraftMixin",
     "containers.WorkbenchContainerMixin",
+    "effects.MobEffectInstanceAccessor",
+    "enchantments.EnchantmentHelperMixin",
+    "enchantments.EnchantmentMixin",
     "entities.BeeEntityInvoker",
     "entities.BeeEntityMixin",
     "entities.BeePathfindingMixin",
@@ -21,6 +25,7 @@
     "entities.EntityMixin",
     "entities.EntityTypeMixin",
     "entities.FishingBobberEntityMixin",
+    "entities.InventoryMixin",
     "entities.LivingEntityAccessor",
     "entities.LivingEntityMixin",
     "entities.MobSpawnLocationMixin",
@@ -29,14 +34,12 @@
     "entities.ServerPlayerMixin",
     "entities.ThrownTridentAccessor",
     "items.BucketItemAccessor",
-    "items.EnchantmentHelperMixin",
     "items.EnderpearlImpactMixin",
     "items.GlassBottleUseMixin",
     "items.HoneyPickupMixin",
     "items.HoneyShieldCooldownMixin",
     "items.HoneyShieldDamageMixin",
     "items.HoneyShieldDisableMixin",
-    "items.EnchantmentMixin",
     "items.HoneyShieldItemstackGetMaximumDamageMixin",
     "items.HoneyShieldItemstackSetDamageMixin",
     "items.HoneyShieldPreferredSlotMixin",
@@ -54,11 +57,11 @@
     "world.WorldGenSettingsMixin"
   ],
   "client": [
-    "client.ScreenEffectRendererMixin",
+    "client.DimensionSpecialEffectsAccessor",
     "client.EntityRendererRegistryImplAccessor",
     "client.FluidRendererMixin",
     "client.FogRendererMixin",
-    "client.DimensionSpecialEffectsAccessor"
+    "client.ScreenEffectRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

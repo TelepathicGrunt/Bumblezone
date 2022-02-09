@@ -6,18 +6,21 @@ import com.telepathicgrunt.the_bumblezone.advancements.GenericTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.ItemSpecificTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.RecipeDiscoveredTrigger;
 import net.fabricmc.fabric.api.object.builder.v1.advancement.CriterionRegistry;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.resources.ResourceLocation;
 
 public class BzCriterias {
     // CRITERIA TRIGGERS
     public static final GenericTrigger BEENERGIZED_MAXED_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "beenergized_maxed"));
     public static final ItemSpecificTrigger BEE_DROP_POLLEN_PUFF_TRIGGER = new ItemSpecificTrigger(new ResourceLocation(Bumblezone.MODID, "bee_drop_pollen_puff"));
+    public static final GenericTrigger BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_max_flight"));
     public static final GenericTrigger CLEANUP_HONEY_WEB_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "cleanup_honey_web"));
     public static final GenericTrigger CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "cleanup_sticky_honey_residue"));
     public static final GenericTrigger COMB_CUTTER_EXTRA_DROPS_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "comb_cutter_extra_drops"));
     public static final EntitySpecificTrigger EXTENDED_WRATH_OF_THE_HIVE_TRIGGER = new EntitySpecificTrigger(new ResourceLocation(Bumblezone.MODID, "extended_wrath_of_the_hive"));
     public static final GenericTrigger FALLING_ON_POLLEN_BLOCK_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "fall_onto_pollen_pile"));
     public static final ItemSpecificTrigger FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER = new ItemSpecificTrigger(new ResourceLocation(Bumblezone.MODID, "food_removed_wrath_of_the_hive"));
+    public static final GenericTrigger HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings_flower_pollen"));
     public static final GenericTrigger HONEY_BUCKET_BEE_GROW_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bucket_bee_grow"));
     public static final GenericTrigger HONEY_BUCKET_BEE_LOVE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bucket_bee_love"));
     public static final GenericTrigger HONEY_BUCKET_BROOD_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bucket_brood"));
@@ -38,6 +41,7 @@ public class BzCriterias {
     public static final GenericTrigger STINGER_SPEAR_PARALYZE_BOSS_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "stinger_spear_paralyze_boss"));
     public static final GenericTrigger STINGER_SPEAR_PARALYZING_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "stinger_spear_paralyzing"));
     public static final GenericTrigger STINGER_SPEAR_POISONING_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "stinger_spear_poisoning"));
+    public static final GenericTrigger STINGLESS_BEE_HELMET_SUPER_SIGHT_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet_super_sight"));
     public static final GenericTrigger SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "sugar_water_next_to_sugar_cane"));
     public static final GenericTrigger TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "teleport_out_of_bumblezone_fall"));
     public static final GenericTrigger TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "teleport_to_bumblezone_pearl"));
@@ -47,12 +51,14 @@ public class BzCriterias {
     public static void registerCriteriaTriggers() {
         CriterionRegistry.register(BEENERGIZED_MAXED_TRIGGER);
         CriterionRegistry.register(BEE_DROP_POLLEN_PUFF_TRIGGER);
+        CriterionRegistry.register(BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER);
         CriterionRegistry.register(CLEANUP_HONEY_WEB_TRIGGER);
         CriterionRegistry.register(CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER);
         CriterionRegistry.register(COMB_CUTTER_EXTRA_DROPS_TRIGGER);
         CriterionRegistry.register(EXTENDED_WRATH_OF_THE_HIVE_TRIGGER);
         CriterionRegistry.register(FALLING_ON_POLLEN_BLOCK_TRIGGER);
         CriterionRegistry.register(FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER);
+        CriterionRegistry.register(HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER);
         CriterionRegistry.register(HONEY_BUCKET_BEE_GROW_TRIGGER);
         CriterionRegistry.register(HONEY_BUCKET_BEE_LOVE_TRIGGER);
         CriterionRegistry.register(HONEY_BUCKET_BROOD_TRIGGER);
@@ -73,6 +79,7 @@ public class BzCriterias {
         CriterionRegistry.register(STINGER_SPEAR_PARALYZE_BOSS_TRIGGER);
         CriterionRegistry.register(STINGER_SPEAR_PARALYZING_TRIGGER);
         CriterionRegistry.register(STINGER_SPEAR_POISONING_TRIGGER);
+        CriterionRegistry.register(STINGLESS_BEE_HELMET_SUPER_SIGHT_TRIGGER);
         CriterionRegistry.register(SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER);
         CriterionRegistry.register(TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER);
         CriterionRegistry.register(TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER);

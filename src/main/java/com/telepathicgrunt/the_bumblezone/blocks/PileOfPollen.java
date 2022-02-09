@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -261,9 +262,13 @@ public class PileOfPollen extends FallingBlock {
         // slows the entity and spawns particles
         else {
             int layerValueMinusOne = blockState.getValue(LAYERS) - 1;
-            double speedReduction = (entity instanceof Projectile) ? 0.85f : 1 - layerValueMinusOne * 0.1D;
-            double chance = 0.22f + layerValueMinusOne * 0.09f;
+            double speedReduction = (entity instanceof Projectile) ? 0.85D : 1 - (layerValueMinusOne * 0.1D);
+            double chance = 0.22D + layerValueMinusOne * 0.09D;
 
+            ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
+            if(!beeLeggings.isEmpty()) {
+                speedReduction = Math.max(0.9D, speedReduction);
+            }
 
             Vec3 deltaMovement = entity.getDeltaMovement();
             double newYDelta = deltaMovement.y;
@@ -273,10 +278,10 @@ public class PileOfPollen extends FallingBlock {
             }
 
             if(deltaMovement.y > 0) {
-                newYDelta *= (1f - layerValueMinusOne * 0.01f);
+                newYDelta *= (1D - layerValueMinusOne * 0.01D);
             }
             else {
-                newYDelta *= (0.84f - layerValueMinusOne * 0.03f);
+                newYDelta *= (0.84D - layerValueMinusOne * 0.03D);
             }
 
             entity.setDeltaMovement(new Vec3(

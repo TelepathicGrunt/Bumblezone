@@ -1,0 +1,31 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/armor/honey_bee_leggings_flower_pollen",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:bumble_bee_chestplate"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.bumble_bee_chestplate_max_flight.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.bumble_bee_chestplate_max_flight.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 20
+  },
+  "criteria": {
+    "bumble_bee_chestplate_max_flight": {
+      "trigger": "the_bumblezone:bumble_bee_chestplate_max_flight"
+    }
+  },
+  "requirements": [
+    [
+      "bumble_bee_chestplate_max_flight"
+    ]
+  ]
+}

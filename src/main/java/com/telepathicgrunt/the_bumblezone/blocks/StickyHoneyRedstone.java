@@ -51,9 +51,9 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      */
     @Deprecated
     @Override
-    public void entityInside(BlockState blockstate, Level world, BlockPos pos, Entity entity) {
-        updateState(world, pos, blockstate, 0);
-        super.entityInside(blockstate, world, pos, entity);
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+        updateState(level, blockPos, blockState, 0);
+        super.entityInside(blockState, level, blockPos, entity);
     }
 
     protected int getTickRate() {
@@ -120,6 +120,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         }
     }
 
+    @Override
     public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean moved) {
         this.updateTarget(world, pos, state);
     }
@@ -134,6 +135,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         }
     }
 
+    @Override
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         if (this.computeRedstoneStrength(state, world, pos) > 0) {
             world.scheduleTick(pos, this, 1);
