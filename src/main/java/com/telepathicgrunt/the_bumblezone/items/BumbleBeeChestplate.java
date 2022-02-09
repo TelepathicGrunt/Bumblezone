@@ -84,6 +84,9 @@ public class BumbleBeeChestplate extends TickingArmorItem {
                 if(newYSpeed > -0.3) {
                     entity.resetFallDistance();
                 }
+                else if (newYSpeed <= -0.3) {
+                    entity.fallDistance = ((float) Math.abs(newYSpeed) / 0.3f) + 1.75f;
+                }
 
                 tag.putInt("flyCounter", flyCounter - 1);
                 if(!world.isClientSide() && world.random.nextFloat() < 0.0025f) {
