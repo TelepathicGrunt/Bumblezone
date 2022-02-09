@@ -14,6 +14,7 @@ public class BumbleBeeChestplateFlyingPacket {
     public static void registerPacket() {
         ServerPlayNetworking.registerGlobalReceiver(PACKET_ID,
             (minecraftServer, serverPlayer, packetListener, buf, packetSender) -> {
+                boolean isFlying = buf.readByte() != 0;
                 minecraftServer.execute(() -> {
                     if(serverPlayer == null) {
                         return;
@@ -21,7 +22,6 @@ public class BumbleBeeChestplateFlyingPacket {
 
                     ItemStack itemStack = BumbleBeeChestplate.getEntityBeeChestplate(serverPlayer);
                     if(!itemStack.isEmpty()) {
-                        boolean isFlying = buf.readByte() != 0;
                         CompoundTag tag = itemStack.getOrCreateTag();
                         tag.putBoolean("isFlying", isFlying);
                     }

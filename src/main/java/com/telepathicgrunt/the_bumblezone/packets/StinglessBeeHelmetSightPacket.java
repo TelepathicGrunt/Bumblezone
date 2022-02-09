@@ -12,8 +12,9 @@ public class StinglessBeeHelmetSightPacket {
     public static void registerPacket() {
         ServerPlayNetworking.registerGlobalReceiver(PACKET_ID,
             (minecraftServer, serverPlayer, packetListener, buf, packetSender) -> {
+                boolean giveAdvancement = buf.readByte() != 0;
                 minecraftServer.execute(() -> {
-                    if(serverPlayer != null && buf.readByte() != 0) {
+                    if(serverPlayer != null && giveAdvancement) {
                         BzCriterias.STINGLESS_BEE_HELMET_SUPER_SIGHT_TRIGGER.trigger(serverPlayer);
                     }
                 });
