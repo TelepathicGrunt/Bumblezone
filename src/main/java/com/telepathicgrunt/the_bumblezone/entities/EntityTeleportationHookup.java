@@ -84,7 +84,7 @@ public class EntityTeleportationHookup {
     }
 
     // Enderpearl
-    public static boolean runEnderpearlImpact(Vec3 hitBlockPos, Entity thrower){
+    public static boolean runEnderpearlImpact(Vec3 hitPos, Entity thrower, Entity pearl){
         Level world = thrower.level; // world we threw in
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
@@ -93,26 +93,19 @@ public class EntityTeleportationHookup {
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
             (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(Level.OVERWORLD)))
         {
-            // the thrower
-            BlockPos hivePos = new BlockPos(0,0,0);
-            boolean hitHive = false;
+            // get nearby hives
+            BlockPos hivePos;
+            hivePos = getNearbyHivePos(hitPos, world);
 
-            //check with offset in all direction as the position of exact hit point could barely be outside the hive block
-            //even through the pearl hit the block directly.
-            for(double offset = -0.99D; offset <= 0.99D; offset += 0.99D) {
-                for(double offset2 = -0.99D; offset2 <= 0.99D; offset2 += 0.99D) {
-                    for (double offset3 = -0.99D; offset3 <= 0.99D; offset3 += 0.99D) {
-                        BlockPos offsettedHitPos = new BlockPos(hitBlockPos.add(offset, offset2, offset3));
-                        BlockState block = world.getBlockState(offsettedHitPos);
-                        if(EntityTeleportationBackend.isValidBeeHive(block)) {
-                            hitHive = true;
-                            hivePos = offsettedHitPos;
-                            offset = 1;
-                            offset2 = 1;
-                            break;
-                        }
-                    }
-                }
+            // if fail, move the hit pos one step based on pearl velocity and try again
+            if(hivePos == null) {
+                hitPos = hitPos.add(pearl.getDeltaMovement());
+                hivePos = getNearbyHivePos(hitPos, world);
+            }
+
+            // no hive hit, exit early
+            if(hivePos == null) {
+                return false;
             }
 
             //checks if block under hive is correct if config needs one
@@ -134,15 +127,32 @@ public class EntityTeleportationHookup {
                 validBelowBlock = true;
             }
 
-
             //if the pearl hit a beehive, begin the teleportation.
-            if (hitHive && validBelowBlock) {
+            if (validBelowBlock) {
                 BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(playerEntity);
-                BzWorldSavedData.queueEntityToTeleport(playerEntity, BzDimension.BZ_WORLD_KEY);
+                //BzWorldSavedData.queueEntityToTeleport(playerEntity, BzDimension.BZ_WORLD_KEY);
                 return true;
             }
         }
         return false;
+    }
+
+    private static BlockPos getNearbyHivePos(Vec3 hitBlockPos, Level world) {
+        double checkRadius = 0.5D;
+        //check with offset in all direction as the position of exact hit point could barely be outside the hive block
+        //even through the pearl hit the block directly.
+        for(double offset = -checkRadius; offset <= checkRadius; offset += checkRadius) {
+            for(double offset2 = -checkRadius; offset2 <= checkRadius; offset2 += checkRadius) {
+                for (double offset3 = -checkRadius; offset3 <= checkRadius; offset3 += checkRadius) {
+                    BlockPos offsettedHitPos = new BlockPos(hitBlockPos.add(offset, offset2, offset3));
+                    BlockState block = world.getBlockState(offsettedHitPos);
+                    if(EntityTeleportationBackend.isValidBeeHive(block)) {
+                        return offsettedHitPos;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
 
