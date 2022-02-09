@@ -120,6 +120,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         }
     }
 
+    @Override
     public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean moved) {
         this.updateTarget(world, pos, state);
     }
@@ -134,6 +135,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         }
     }
 
+    @Override
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         if (this.computeRedstoneStrength(state, world, pos) > 0) {
             world.scheduleTick(pos, this, 1);

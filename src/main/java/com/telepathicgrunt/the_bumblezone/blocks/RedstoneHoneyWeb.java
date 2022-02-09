@@ -51,10 +51,12 @@ public class RedstoneHoneyWeb extends HoneyWeb {
                 .setValue(POWER, 0));
     }
 
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> blockStateBuilder) {
         blockStateBuilder.add(NORTHSOUTH, EASTWEST, UPDOWN, POWER);
     }
 
+    @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
         super.entityInside(blockState,level, blockPos, entity);
         VoxelShape shape = this.shapeByIndex[this.getAABBIndex(blockState)];
@@ -71,6 +73,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
         }
     }
 
+    @Override
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
         if (serverLevel.getBlockState(blockPos).getValue(POWER) == 15) {
             boolean noEntitiesInbounds = true;
@@ -93,10 +96,12 @@ public class RedstoneHoneyWeb extends HoneyWeb {
         }
     }
 
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext placeContext) {
         return super.getStateForPlacement(placeContext);
     }
 
+    @Override
     public void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState1, boolean pushed) {
         if (!blockState1.is(blockState.getBlock()) && !level.isClientSide) {
             this.updatePowerStrength(level, blockState, blockPos);
@@ -106,7 +111,8 @@ public class RedstoneHoneyWeb extends HoneyWeb {
             }
         }
     }
-    
+
+    @Override
     public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState1, boolean pushed) {
         if (!pushed && !blockState.is(blockState1.getBlock())) {
             super.onRemove(blockState, level, blockPos, blockState1, pushed);
@@ -118,6 +124,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
         }
     }
 
+    @Override
     public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos blockPos1, boolean b) {
         if (!level.isClientSide) {
             if(blockState.is(this) && blockState.getValue(POWER) != 15) {
@@ -125,7 +132,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
             }
         }
     }
-    
+
     private void updatePowerStrength(Level level, BlockState blockState, BlockPos blockPos) {
         int currentPower = this.calculateTargetStrength(level, blockState, blockPos);
         if (blockState.getValue(POWER) != currentPower) {
