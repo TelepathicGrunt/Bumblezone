@@ -39,6 +39,8 @@
   "item.the_bumblezone.bee_bread": "Bee Bread",
   "item.the_bumblezone.stinger_spear": "Stinger Spear",
   "item.the_bumblezone.honey_bee_leggings": "Honey Bee Leggings",
+  "item.the_bumblezone.bumble_bee_chestplate": "Bumble Bee Chestplate",
+  "item.the_bumblezone.stingless_bee_helmet": "Stingless Bee Helmet",
 
   "entity.the_bumblezone.honey_slime": "Honey Slime",
   "entity.the_bumblezone.beehemoth": "Beehemoth",
@@ -177,8 +179,14 @@
   "advancements.the_bumblezone.stinger_spear_paralyze_boss.description": "Inflict paralysis on a high health mob by using a Stinger Spear!",
   "advancements.the_bumblezone.stinger_spear_long_range_kill.title": "A Worthy Javelin Throw",
   "advancements.the_bumblezone.stinger_spear_long_range_kill.description": "Yeet a Stinger Spear over a massive distance and kill a mob",
-  "advancements.the_bumblezone.honey_bee_leggings_flower_pollen.title": "Who even needs bees? Not you!",
+  "advancements.the_bumblezone.warrior_bee.title": "The Bee Warrior Rises!",
+  "advancements.the_bumblezone.warrior_bee.description": "Equip yourself with the greatest weapon and armor that the bees have to offer!",
+  "advancements.the_bumblezone.honey_bee_leggings_flower_pollen.title": "It's the Bee's Knees!",
   "advancements.the_bumblezone.honey_bee_leggings_flower_pollen.description": "Collect pollen on your Honey Bee Leggings by running through flowers!",
+  "advancements.the_bumblezone.bumble_bee_chestplate_max_flight.title": "It's a Bird! It's a Plane! No it's...",
+  "advancements.the_bumblezone.bumble_bee_chestplate_max_flight.description": "Buzz your wings with the longest duration possible for Bumble Bee Chestplate!",
+  "advancements.the_bumblezone.stingless_bee_helmet_super_sight.title": "Compound Eyes",
+  "advancements.the_bumblezone.stingless_bee_helmet_super_sight.description": "With the power of Stingless Bee Helmet, highlight at least 100 bees all at once!",
 
   "the_bumblezone.porous_honeycomb_block.jei_description": " A honeycomb block filled with holes! You can store honey into this block with Honey Bottles or Honey Buckets.",
   "the_bumblezone.filled_porous_honeycomb_block.jei_description": " A honeycomb block filled to the brim with honey! You can take honey out of this block with a Glass Bottle. However, this may anger nearby bees. \n\n When mined, this block drops Porous Honeycomb Block and some Honeycombs. The drop is affect by Fortune or you can use Silk Touch to keep the block intact. \n\n This block also give off a Redstone signal of 1 when a Comparator is facing this block.",
@@ -205,5 +213,7 @@
   "the_bumblezone.redstone_honey_web.jei_description": " A Redstone variant of Honey Web that will output a Redstone signal when a mob is trapped in it. Redstone Honey Web cannot take in a Redstone signal from a non-Redstone Honey Web block. The rest of its behaviors is the same as Honey Web block.",
   "the_bumblezone.honey_cocoon.jei_description": " A strange cocoon made of honey! It can store items within itself. Interestingly, Empty Brood Blocks in the cocoon will consume any bee feeding item and transform into an filled Brood Block! This cocoon will also lose items over time if it is submerged underwater...",
   "the_bumblezone.stinger_spear.jei_description": " A fragile but throwable lethal spear utilizing a bee stinger! Can be repaired with Flint and enchanted. It will always inflict a weak poison onto any non undead-mob it hits",
-  "the_bumblezone.honey_bee_leggings.jei_description": " An amazing clothing created by the best bee weavers! It resists slowness from many Bumblezone blocks that cause slowness and can collect pollen from flowers or Pile of Pollens! Crouch to spawn a Pollen Puff when full of pollen. Can be repaired by Honeycomb, Leather, Wool, or Rabbit Hide."
+  "the_bumblezone.honey_bee_leggings.jei_description": " An amazing clothing created by the best bee weavers! It resists slowness from many Bumblezone blocks that cause slowness and can collect pollen from flowers or Pile of Pollens! Crouch to spawn a Pollen Puff when full of pollen. Can be repaired by Honeycomb, Leather, Wool, or Rabbit Hide. If all three bee armor is on, chance of collecting pollen from flowers is improved and Slowness effect duration will decrease twice as fast now!",
+  "the_bumblezone.bumble_bee_chestplate.jei_description": " An amazing clothing created by the best bee weavers! This clothing lets you be able to fly for a short period of time by holding the jump button anytime after jumping! Getting Beenergized effect will improve flight! Can be repaired by Honeycomb, Leather, Wool, or Rabbit Hide. Flight time will be further boosted if all 3 bee armor is on!",
+  "the_bumblezone.stingless_bee_helmet.jei_description": " An amazing clothing created by the best bee weavers! When couching, all Bees and Beehemoths will be glowing for you. Nausea effect duration will also decrease twice as fast when this armor is on. Can be repaired by Honeycomb, Leather, Wool, or Rabbit Hide. While having all 3 bee armor on, the bee outlining range will be increased and will remain glowing for a brief time after standing up. Furthermore, with the 3 armor on, Nausea effect duration will decrease much faster and now Poison effect duration will decrease twice as fast."
 }

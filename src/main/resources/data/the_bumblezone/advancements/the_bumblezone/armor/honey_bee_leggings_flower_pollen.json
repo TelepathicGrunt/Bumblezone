@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/cell_maze/enter_cell_maze",
+  "parent": "the_bumblezone:the_bumblezone/armor/warrior_bee",
   "display": {
     "icon": {
       "item": "the_bumblezone:honey_bee_leggings"
@@ -20,10 +20,7 @@
   },
   "criteria": {
     "honey_bee_leggings_flower_pollen": {
-      "trigger": "minecraft:location",
-      "conditions": {
-        "feature": "the_bumblezone:honey_bee_leggings_flower_pollen"
-      }
+      "trigger": "the_bumblezone:honey_bee_leggings_flower_pollen"
     }
   },
   "requirements": [

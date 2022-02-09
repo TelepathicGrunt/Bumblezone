@@ -91,7 +91,7 @@ public class MobEffectClientSyncPacket {
     }
 
     /*
-     * How the server will read the packet.
+     * How the client will read the packet.
      */
     public static MobEffectClientSyncPacket parse(final FriendlyByteBuf buf) {
         return new MobEffectClientSyncPacket(
@@ -120,7 +120,7 @@ public class MobEffectClientSyncPacket {
     public static class Handler {
         //this is what gets run on the client
         public static void handle(final MobEffectClientSyncPacket pkt, final Supplier<NetworkEvent.Context> ctx) {
-            Minecraft.getInstance().execute(() -> {
+            ctx.get().enqueueWork(() -> {
                 if(Minecraft.getInstance().level == null) {
                     return;
                 }

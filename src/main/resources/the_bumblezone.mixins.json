@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "the_bumblezone.refmap.json",
   "mixins": [
+    "entities.LivingEntityAccessor",
     "blocks.BeeHiveDropsMixin",
     "blocks.DefaultDispenseItemBehaviorInvoker",
     "blocks.DispenserBlockInvoker",
@@ -12,6 +13,7 @@
     "blocks.PistonMovingBlockEntityMixin",
     "blocks.WaterEquivalenceMixin",
     "containers.WorkbenchContainerMixin",
+    "effects.MobEffectInstanceAccessor",
     "entities.BeeEntityInvoker",
     "entities.BeeEntityMixin",
     "entities.BeePathfindingMixin",
@@ -19,7 +21,6 @@
     "entities.EntityMixin",
     "entities.EntityTypeMixin",
     "entities.FishingBobberEntityMixin",
-    "entities.LivingEntityAccessor",
     "entities.LivingEntityMixin",
     "entities.MobSpawnLocationMixin",
     "entities.PlayerEntityMixin",
@@ -44,12 +45,13 @@
     "world.StructureTemplateAccessor"
   ],
   "client": [
-    "client.ScreenEffectRendererMixin",
+    "client.DimensionSpecialEffectsAccessor",
     "client.FluidRendererMixin",
     "client.FogRendererClientMixin",
     "client.LivingEntityRendererMixin",
+    "client.MinecraftMixin",
     "client.RenderingRegistryAccessor",
-    "client.DimensionSpecialEffectsAccessor"
+    "client.ScreenEffectRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -20,7 +20,7 @@ public record UpdateFallingBlockPacket(int fallingBlockId, short layer) {
     }
 
     /*
-     * How the server will read the packet.
+     * How the client will read the packet.
      */
     public static UpdateFallingBlockPacket parse(final FriendlyByteBuf buf) {
         return new UpdateFallingBlockPacket(buf.readInt(), buf.readShort());
@@ -40,7 +40,7 @@ public record UpdateFallingBlockPacket(int fallingBlockId, short layer) {
     public static class Handler {
         //this is what gets run on the client
         public static void handle(final UpdateFallingBlockPacket pkt, final Supplier<NetworkEvent.Context> ctx) {
-            Minecraft.getInstance().execute(() -> {
+            ctx.get().enqueueWork(() -> {
                 if(Minecraft.getInstance().level == null) {
                     return;
                 }

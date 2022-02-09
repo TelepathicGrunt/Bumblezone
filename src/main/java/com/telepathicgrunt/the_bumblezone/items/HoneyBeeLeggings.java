@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
+import com.telepathicgrunt.the_bumblezone.mixin.effects.MobEffectInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -10,6 +11,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -43,10 +46,14 @@ public class HoneyBeeLeggings extends ArmorItem {
         Random random = world.random;
         boolean isPollinated = isPollinated(itemstack);
         boolean isSprinting = entity.isSprinting();
+        boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(entity);
 
         if(!world.isClientSide()) {
             if(entity.isCrouching() && isPollinated) {
                 removeAndSpawnPollen(world, entity.position(), itemstack);
+                if(!world.isClientSide() && world.random.nextFloat() < 0.1f) {
+                    itemstack.hurtAndBreak(1, entity, (playerEntity) -> {});
+                }
             }
             else if(!entity.isCrouching() && !isPollinated && isSprinting) {
                 BlockState withinBlock = world.getBlockState(entity.blockPosition());
@@ -60,32 +67,48 @@ public class HoneyBeeLeggings extends ArmorItem {
                         world.setBlock(entity.blockPosition(), withinBlock.setValue(PileOfPollen.LAYERS, newLevel), 3);
                     }
                 }
-                else if(random.nextFloat() < 0.004f && withinBlock.is(BlockTags.FLOWERS)) {
+                else if(random.nextFloat() < (isAllBeeArmorOn ? 0.01f : 0.003f) && withinBlock.is(BlockTags.FLOWERS)) {
                     setPollinated(itemstack);
                     if(entity instanceof ServerPlayer) {
                         BzCriterias.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER.trigger((ServerPlayer) entity);
                     }
                 }
             }
+
+            if(isAllBeeArmorOn) {
+                MobEffectInstance slowness = entity.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
+                if (slowness != null) {
+                    ((MobEffectInstanceAccessor) slowness).callTickDownDuration();
+                    if(!world.isClientSide() &&
+                        world.random.nextFloat() < 0.004f &&
+                        itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
+                    {
+                        itemstack.hurtAndBreak(1, entity, (playerEntity) -> {});
+                    }
+                }
+            }
         }
 
-        if(world.isClientSide() && isPollinated && (isSprinting || random.nextFloat() < 0.025f)) {
-            double speedYModifier = isSprinting ? 0.05D : 0.02D;
-            double speedXZModifier = isSprinting ? 0.03D : 0.02D;
-            double xOffset = (random.nextFloat() * 0.1) - 0.05;
-            double yOffset = (random.nextFloat() * 0.1) + 0.25;
-            double zOffset = (random.nextFloat() * 0.1) - 0.05;
-            Vec3 pos = entity.position();
+        if(world.isClientSide() && isPollinated && (isSprinting || random.nextFloat() < (isAllBeeArmorOn ? 0.03f : 0.025f))) {
+            int particles = isAllBeeArmorOn ? 2 : 1;
+            for(int i = 0; i < particles; i++){
+                double speedYModifier = isSprinting ? 0.05D : 0.02D;
+                double speedXZModifier = isSprinting ? 0.03D : 0.02D;
+                double xOffset = (random.nextFloat() * 0.1) - 0.05;
+                double yOffset = (random.nextFloat() * 0.1) + 0.25;
+                double zOffset = (random.nextFloat() * 0.1) - 0.05;
+                Vec3 pos = entity.position();
 
-            world.addParticle(
-                    BzParticles.POLLEN.get(),
-                    true,
-                    pos.x() + xOffset,
-                    pos.y() + yOffset,
-                    pos.z() + zOffset,
-                    random.nextGaussian() * speedXZModifier,
-                    ((random.nextGaussian() + 0.25D) * speedYModifier),
-                    random.nextGaussian() * speedXZModifier);
+                world.addParticle(
+                        BzParticles.POLLEN.get(),
+                        true,
+                        pos.x() + xOffset,
+                        pos.y() + yOffset,
+                        pos.z() + zOffset,
+                        random.nextGaussian() * speedXZModifier,
+                        ((random.nextGaussian() + 0.25D) * speedYModifier),
+                        random.nextGaussian() * speedXZModifier);
+            }
         }
 
         super.onArmorTick(itemstack, world, entity);
@@ -128,6 +151,11 @@ public class HoneyBeeLeggings extends ArmorItem {
     @Override
     public float getToughness() {
         return 0.5f;
+    }
+
+    @Override
+    public int getDefense() {
+        return 2;
     }
 
     @Nullable

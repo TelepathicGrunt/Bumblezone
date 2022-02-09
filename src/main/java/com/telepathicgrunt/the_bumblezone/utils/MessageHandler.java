@@ -1,7 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacket;
 import com.telepathicgrunt.the_bumblezone.packets.MobEffectClientSyncPacket;
+import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetSightPacket;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
@@ -23,5 +25,7 @@ public class MessageHandler {
         int channelID = -1;
         DEFAULT_CHANNEL.registerMessage(++channelID, UpdateFallingBlockPacket.class, UpdateFallingBlockPacket::compose, UpdateFallingBlockPacket::parse, UpdateFallingBlockPacket.Handler::handle);
         DEFAULT_CHANNEL.registerMessage(++channelID, MobEffectClientSyncPacket.class, MobEffectClientSyncPacket::compose, MobEffectClientSyncPacket::parse, MobEffectClientSyncPacket.Handler::handle);
+        DEFAULT_CHANNEL.registerMessage(++channelID, BumbleBeeChestplateFlyingPacket.class, BumbleBeeChestplateFlyingPacket::compose, BumbleBeeChestplateFlyingPacket::parse, BumbleBeeChestplateFlyingPacket.Handler::handle);
+        DEFAULT_CHANNEL.registerMessage(++channelID, StinglessBeeHelmetSightPacket.class, StinglessBeeHelmetSightPacket::compose, StinglessBeeHelmetSightPacket::parse, StinglessBeeHelmetSightPacket.Handler::handle);
     }
 }
