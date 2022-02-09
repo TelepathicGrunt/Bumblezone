@@ -6,6 +6,10 @@ The coordinate scale has been shrunk from 10 to 4.
 
 Teleportation mode 2 (selectable in config) has been fixed so that it properly places players in their destination without coordinate scaling done.
 
+Tighten up and improved the Enderpearl collision checking code so it detects that it hit bee hive/bee nests better.
+ Before, due to speed of the pearl, it could think it hit the air before the actual hive block.
+ Now velocity is taken into account to get true hit position.
+
 ##### Blocks:
 Added Honey Cocoon which is a new storage block! Found in Cell Maze structure, Honeycomb Cave structure, and Bee Dungeons.
  They turn Empty Honeycomb Brood Blocks into filled Brood Blocks if they are inside this cocoon with a bee feeding item like Honey Bottles over time!
