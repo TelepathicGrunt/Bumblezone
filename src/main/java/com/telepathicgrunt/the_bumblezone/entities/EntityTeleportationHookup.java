@@ -130,7 +130,7 @@ public class EntityTeleportationHookup {
             //if the pearl hit a beehive, begin the teleportation.
             if (validBelowBlock) {
                 BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(playerEntity);
-                //BzWorldSavedData.queueEntityToTeleport(playerEntity, BzDimension.BZ_WORLD_KEY);
+                BzWorldSavedData.queueEntityToTeleport(playerEntity, BzDimension.BZ_WORLD_KEY);
                 return true;
             }
         }
