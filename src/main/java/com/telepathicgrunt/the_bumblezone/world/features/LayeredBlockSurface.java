@@ -107,7 +107,8 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
                                 }
                                 chunk.setBlockState(mutable.above(height), configBlockState.setValue(BlockStateProperties.LAYERS, layerHeight), false);
                                 context.level().scheduleTick(mutable.above(height), configBlockState.getBlock(), 0);
-                            } else {
+                            }
+                            else {
                                 chunk.setBlockState(mutable.above(height), configBlockState, false);
                             }
                         }

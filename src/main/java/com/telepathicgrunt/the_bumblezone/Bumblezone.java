@@ -8,7 +8,9 @@ import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
+import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
+import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.EnderpearlImpact;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
@@ -18,6 +20,7 @@ import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemS
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBiomeHeightRegistry;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -26,9 +29,11 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFeatures;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
+import com.telepathicgrunt.the_bumblezone.modinit.BzPredicates;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
@@ -64,6 +69,12 @@ public class Bumblezone{
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     public Bumblezone() {
+        // TODO: Add bee armor!
+        // TODO: new advancements
+        // TODO: lang files
+        // TODO: port to fabric
+        // TODO: update mod images and description
+
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         BzBlockTags.tagInit(); // Done extra early as some features needs the tag wrapper.
@@ -83,6 +94,8 @@ public class Bumblezone{
         forgeBus.addListener(BzWorldSavedData::worldTick);
         forgeBus.addListener(EntityTeleportationBackend::playerLeavingBz);
         forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
+        forgeBus.addListener(HiddenEffect::hideEntity);
+        forgeBus.addListener(NeurotoxinsEnchantment::entityHurtEvent);
 
         //Registration
         modEventBus.addListener(EventPriority.NORMAL, this::setup);
@@ -100,6 +113,7 @@ public class Bumblezone{
         BzStructures.STRUCTURES.register(modEventBus);
         BzParticles.PARTICLE_TYPES.register(modEventBus);
         BzEnchantments.ENCHANTMENTS.register(modEventBus);
+        BzBlockEntities.BLOCK_ENTITIES.register(modEventBus);
 
         BzCapabilities.setupCapabilities();
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> BumblezoneClient::subscribeClientEvents);
@@ -116,6 +130,8 @@ public class Bumblezone{
 
     private void setup(final FMLCommonSetupEvent event) {
     	event.enqueueWork(() -> {
+            BzPredicates.registerPredicates();
+            BzLootFunctionTypes.registerContainerLootFunctions();
             BzPlacements.registerPlacements();
             BzCriterias.registerCriteriaTriggers();
             BzProcessors.registerProcessors();
@@ -123,6 +139,7 @@ public class Bumblezone{
 			BzEntities.registerAdditionalEntityInformation();
 			BzStructures.setupStructures();
             BzSurfaceRules.registerSurfaceRules();
+            BeeAggression.setupBeeHatingList();
 		});
         MessageHandler.init();
     }

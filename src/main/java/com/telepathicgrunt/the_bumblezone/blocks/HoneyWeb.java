@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -12,7 +13,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -34,8 +34,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.PipeBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -51,7 +49,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -84,6 +81,7 @@ public class HoneyWeb extends Block {
                 .setValue(UPDOWN, false));
     }
 
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> blockStateBuilder) {
         blockStateBuilder.add(NORTHSOUTH, EASTWEST, UPDOWN);
     }
@@ -124,12 +122,17 @@ public class HoneyWeb extends Block {
         });
     }
 
+    @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
         return this.shapeByIndex[this.getAABBIndex(blockState)];
     }
 
+    @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
         if (!(entity instanceof Bee || entity instanceof BeehemothEntity)) {
+
+            ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
+
             VoxelShape shape = this.shapeByIndex[this.getAABBIndex(blockState)];
             shape = shape.move(blockPos.getX(), blockPos.getY(), blockPos.getZ());
             if (Shapes.joinIsNotEmpty(shape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND)) {
@@ -147,15 +150,20 @@ public class HoneyWeb extends Block {
                 }
                 else {
                     double speedReduction = 0.1f;
-                    Vec3 deltaMovement = entity.getDeltaMovement();
-                    double magnitude = deltaMovement.length();
-                    if(magnitude != 0) {
-                        speedReduction = speedReduction / magnitude;
+                    if(!beeLeggings.isEmpty()) {
+                        speedReduction = 0.9f;
+                    }
+                    else {
+                        Vec3 deltaMovement = entity.getDeltaMovement();
+                        double magnitude = deltaMovement.length();
+                        if(magnitude != 0) {
+                            speedReduction = speedReduction / magnitude;
+                        }
                     }
                     entity.makeStuckInBlock(blockState, new Vec3(speedReduction, speedReduction, speedReduction));
                 }
 
-                if (entity instanceof LivingEntity livingEntity) {
+                if (beeLeggings.isEmpty() && entity instanceof LivingEntity livingEntity) {
                     livingEntity.addEffect(new MobEffectInstance(
                             MobEffects.MOVEMENT_SLOWDOWN,
                             200,
@@ -166,8 +174,10 @@ public class HoneyWeb extends Block {
                 }
             }
         }
+        super.entityInside(blockState, level, blockPos, entity);
     }
 
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext placeContext) {
         Level level = placeContext.getLevel();
         BlockPos blockpos = placeContext.getClickedPos();
@@ -212,7 +222,7 @@ public class HoneyWeb extends Block {
 
         if ((itemstack.getItem() instanceof BucketItem bucketItem &&
                 bucketItem.getFluid().is(FluidTags.WATER)) ||
-                itemstack.getOrCreateTag().getString("Potion").contains("water") ||
+                (itemstack.hasTag() && itemstack.getOrCreateTag().getString("Potion").contains("water")) ||
                 itemstack.getItem() == Items.WET_SPONGE ||
                 itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
 
@@ -312,6 +322,7 @@ public class HoneyWeb extends Block {
     }
 
 
+    @Override
     public BlockState rotate(BlockState blockState, Rotation rotation) {
         return switch (rotation) {
             case COUNTERCLOCKWISE_90, CLOCKWISE_90 -> blockState.setValue(NORTHSOUTH, blockState.getValue(EASTWEST)).setValue(EASTWEST, blockState.getValue(NORTHSOUTH));

@@ -1,0 +1,24 @@
+{
+  "name": "the_bumblezone:cell_maze/start_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:cell_maze/knight_room_1",
+        "processors": "the_bumblezone:cell_maze_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:cell_maze/knight_room_2",
+        "processors": "the_bumblezone:cell_maze_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

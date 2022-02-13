@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -141,6 +142,11 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             ((FallingBlockEntityAccessor)fallingBlockEntity).bumblezone_setBlockState(fallingState.setValue(PileOfPollen.LAYERS, newLayer));
 
             UpdateFallingBlockPacket.sendToClient(fallingBlockEntity, fallingBlockEntity.getId(), (short)newLayer);
+        }
+
+        ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
+        if(!entity.isCrouching() && !beeLeggings.isEmpty()) {
+            HoneyBeeLeggings.setPollinated(beeLeggings);
         }
     }
 

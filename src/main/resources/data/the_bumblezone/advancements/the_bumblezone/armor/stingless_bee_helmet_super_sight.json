@@ -1,0 +1,31 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/armor/bumble_bee_chestplate_max_flight",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:stingless_bee_helmet_2"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.stingless_bee_helmet_super_sight.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.stingless_bee_helmet_super_sight.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 20
+  },
+  "criteria": {
+    "stingless_bee_helmet_super_sight": {
+      "trigger": "the_bumblezone:stingless_bee_helmet_super_sight"
+    }
+  },
+  "requirements": [
+    [
+      "stingless_bee_helmet_super_sight"
+    ]
+  ]
+}

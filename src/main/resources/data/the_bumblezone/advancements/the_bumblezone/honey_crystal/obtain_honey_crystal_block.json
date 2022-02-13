@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/honey_crystal/consume_honey_crystal_shards",
+  "parent": "the_bumblezone:the_bumblezone/sugar_water/obtain_sugar_infused_stones",
   "display": {
     "icon": {
       "item": "the_bumblezone:honey_crystal"

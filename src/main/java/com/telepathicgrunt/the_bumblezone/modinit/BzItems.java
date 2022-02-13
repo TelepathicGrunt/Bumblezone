@@ -2,14 +2,20 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.BeeBread;
+import com.telepathicgrunt.the_bumblezone.items.BumbleBeeChestplate;
 import com.telepathicgrunt.the_bumblezone.items.BzBlockItem;
 import com.telepathicgrunt.the_bumblezone.items.BzBucketItem;
-import com.telepathicgrunt.the_bumblezone.items.ContainerCraftingRecipe;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
+import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
+import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
+import com.telepathicgrunt.the_bumblezone.items.materials.BeeArmorMaterial;
+import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
@@ -47,8 +53,8 @@ public class BzItems {
     //blocks
     public static final RegistryObject<Item> POROUS_HONEYCOMB = ITEMS.register("porous_honeycomb_block", () -> new BlockItem(BzBlocks.POROUS_HONEYCOMB.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> FILLED_POROUS_HONEYCOMB = ITEMS.register("filled_porous_honeycomb_block", () -> new BlockItem(BzBlocks.FILLED_POROUS_HONEYCOMB.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
-    public static final RegistryObject<Item> EMPTY_HONEYCOMB_LARVA = ITEMS.register("empty_honeycomb_brood_block", () -> new BlockItem(BzBlocks.EMPTY_HONEYCOMB_BROOD.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
-    public static final RegistryObject<Item> HONEYCOMB_LARVA = ITEMS.register("honeycomb_brood_block", () -> new BlockItem(BzBlocks.HONEYCOMB_BROOD.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> EMPTY_HONEYCOMB_BROOD = ITEMS.register("empty_honeycomb_brood_block", () -> new BlockItem(BzBlocks.EMPTY_HONEYCOMB_BROOD.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> HONEYCOMB_BROOD = ITEMS.register("honeycomb_brood_block", () -> new BlockItem(BzBlocks.HONEYCOMB_BROOD.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> SUGAR_INFUSED_STONE = ITEMS.register("sugar_infused_stone", () -> new BlockItem(BzBlocks.SUGAR_INFUSED_STONE.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> SUGAR_INFUSED_COBBLESTONE = ITEMS.register("sugar_infused_cobblestone", () -> new BlockItem(BzBlocks.SUGAR_INFUSED_COBBLESTONE.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> BEEHIVE_BEESWAX = ITEMS.register("beehive_beeswax", () -> new BlockItem(BzBlocks.BEEHIVE_BEESWAX.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
@@ -58,6 +64,7 @@ public class BzItems {
     public static final RegistryObject<Item> REDSTONE_HONEY_WEB = ITEMS.register("redstone_honey_web", () -> new BlockItem(BzBlocks.REDSTONE_HONEY_WEB.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> PILE_OF_POLLEN = ITEMS.register("pile_of_pollen", () -> new BlockItem(BzBlocks.PILE_OF_POLLEN.get(), new Item.Properties())); // Not obtainable by default. Purely for advancement icon.
     public static final RegistryObject<Item> HONEY_CRYSTAL = ITEMS.register("honey_crystal", () -> new BzBlockItem(BzBlocks.HONEY_CRYSTAL.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> HONEY_COCOON = ITEMS.register("honey_cocoon", () -> new BzBlockItem(BzBlocks.HONEY_COCOON.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
 
 
     //items
@@ -71,5 +78,14 @@ public class BzItems {
     public static final RegistryObject<Item> MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = ITEMS.register("music_disc_flight_of_the_bumblebee_rimsky_korsakov", () -> new RecordItem(14, BzSounds.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV, (new Item.Properties()).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.RARE)));
     public static final RegistryObject<Item> MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = ITEMS.register("music_disc_honey_bee_rat_faced_boy", () -> new RecordItem(15, BzSounds.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY, (new Item.Properties()).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.RARE)));
     public static final RegistryObject<Item> POLLEN_PUFF = ITEMS.register("pollen_puff", () -> new PollenPuff(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).stacksTo(16)));
-    public static final RegistryObject<Item> BEE_BREAD = ITEMS.register("bee_bread", () -> new BeeBread(new Item.Properties().food((new FoodProperties.Builder()).nutrition(8).saturationMod(0.12F).effect(() -> new MobEffectInstance(BzEffects.BEENERGIZED.get(), 6000, 0), 1.0F).effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 120, 1), 1.0F).build()).tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> BEE_BREAD = ITEMS.register("bee_bread", () -> new BeeBread(new Item.Properties().food((new FoodProperties.Builder()).nutrition(8).saturationMod(0.12F).alwaysEat().effect(() -> new MobEffectInstance(BzEffects.BEENERGIZED.get(), 6000, 0), 1.0F).effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 120, 1), 1.0F).build()).tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> STINGER_SPEAR = ITEMS.register("stinger_spear", () -> new StingerSpearItem(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> HONEY_BEE_LEGGINGS_1 = ITEMS.register("honey_bee_leggings_1", () -> new HoneyBeeLeggings(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.LEGS, new Item.Properties().tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 1));
+    public static final RegistryObject<Item> HONEY_BEE_LEGGINGS_2 = ITEMS.register("honey_bee_leggings_2", () -> new HoneyBeeLeggings(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.LEGS, new Item.Properties().tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 2));
+    public static final RegistryObject<Item> BUMBLE_BEE_CHESTPLATE_1 = ITEMS.register("bumble_bee_chestplate_1", () -> new BumbleBeeChestplate(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.CHEST, new Item.Properties().tab(BzItems.BUMBLEZONE_CREATIVE_TAB), false, 1));
+    public static final RegistryObject<Item> BUMBLE_BEE_CHESTPLATE_2 = ITEMS.register("bumble_bee_chestplate_2", () -> new BumbleBeeChestplate(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.CHEST, new Item.Properties().tab(BzItems.BUMBLEZONE_CREATIVE_TAB), false, 2));
+    public static final RegistryObject<Item> TRANS_BUMBLE_BEE_CHESTPLATE_1 = ITEMS.register("bumble_bee_chestplate_trans_1", () -> new BumbleBeeChestplate(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.CHEST, new Item.Properties().tab(BzItems.BUMBLEZONE_CREATIVE_TAB), true, 1));
+    public static final RegistryObject<Item> TRANS_BUMBLE_BEE_CHESTPLATE_2 = ITEMS.register("bumble_bee_chestplate_trans_2", () -> new BumbleBeeChestplate(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.CHEST, new Item.Properties().tab(BzItems.BUMBLEZONE_CREATIVE_TAB), true, 2));
+    public static final RegistryObject<Item> STINGLESS_BEE_HELMET_1 = ITEMS.register("stingless_bee_helmet_1", () -> new StinglessBeeHelmet(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.HEAD, new Item.Properties().tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 1));
+    public static final RegistryObject<Item> STINGLESS_BEE_HELMET_2 = ITEMS.register("stingless_bee_helmet_2", () -> new StinglessBeeHelmet(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.HEAD, new Item.Properties().tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 2));
 }

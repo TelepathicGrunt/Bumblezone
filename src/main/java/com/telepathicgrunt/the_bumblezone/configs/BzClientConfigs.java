@@ -7,6 +7,7 @@ public class BzClientConfigs {
 
     public static ForgeConfigSpec.DoubleValue lgbtBeeRate;
     public static ForgeConfigSpec.BooleanValue enableLgbtBeeRenderer;
+    public static ForgeConfigSpec.BooleanValue playWrathOfHiveEffectMusic;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -27,5 +28,11 @@ public class BzClientConfigs {
                         " Set this to false if the render is messing with other mod's bee renderers.\n")
                 .translation("the_bumblezone.config.enableLgbtBeeRenderer")
                 .define("Enable lgbt+ bee renderer", true);
+
+        playWrathOfHiveEffectMusic = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " If on, Flight of the Bumblebee by Rimsky Korsakov will play when you have Wrath of the Hive effect on.\n")
+                .translation("the_bumblezone.config.playwrathofhiveeffectmusic")
+                .define("playWrathOfHiveEffectMusic", true);
     }
 }

@@ -3,21 +3,19 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
-import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.animal.Bee;
-import net.minecraft.world.entity.animal.Panda;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,64 +23,29 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.logging.log4j.Level;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class BeeAggression {
-    private static final Set<EntityType<?>> SET_OF_BEE_HATED_ENTITIES = new HashSet<>();
+    private static final Set<String> LIST_OF_BEE_HATING_NAMES = Set.of("bear", "panda", "wasp", "spider");
+    private static final Set<EntityType<?>> SET_OF_BEE_HATED_NAMED_ENTITIES = new HashSet<>();
+    private static final Set<EntityType<?>> SET_OF_BEE_NAMED_ENTITIES = new HashSet<>();
 
     /*
-     * Have to run this code at world startup because the only way to check a CreatureAttribute
-     * from an EntityType is the make an Entity but you cannot pass null into Entitytype.create(null)
-     * because some mobs will crash the game. Thus, that's why this code runs here instead of in FMLCommonSetupEvent.
-     *
-     *  gg. Mojang. gg.
-     *
-     *  But yeah, this sets up the list of entitytype of mobs for bees to always attack. Making
-     *  the list can be expensive which is why we make it at start of world rather than every tick.
+     * This sets up the list of entitytype of mobs for bees to always attack if named triggers some keywords.
+     * Making the list can be expensive which is why we make it at game startup rather than every tick.
      */
-    public static void setupBeeHatingList(net.minecraft.world.level.Level world) {
-        // Build list only once
-        if(SET_OF_BEE_HATED_ENTITIES.size() != 0) return;
-
+    public static void setupBeeHatingList() {
         for(EntityType<?> entityType : ForgeRegistries.ENTITIES) {
-            if(entityType.getCategory() == MobCategory.MONSTER ||
-                    entityType.getCategory() == MobCategory.CREATURE ||
-                    entityType.getCategory() == MobCategory.AMBIENT )
-            {
-                Entity entity;
 
-                // We could crash if a modded entity is super picky about when they are created or if
-                // the mob we grab is actually unfinished and wasn't supposed to be created.
-                // If it does fail to be made, use weaker way to check if bear or wasp.
-                try {
-                    entity = entityType.create(world);
-                }
-                catch(Exception e) {
-                    Bumblezone.LOGGER.log(Level.WARN, "Failed to temporary create " + Registry.ENTITY_TYPE.getResourceKey(entityType) +
-                            " mob in order to check if it is an arthropod that bees should be naturally angry at. " +
-                            "Will check if mob is a bear or wasp in its name instead. Error message is: " + e.getMessage());
+            String mobName = ForgeRegistries.ENTITIES.getKey(entityType).getPath();
 
-                    String mobName = ForgeRegistries.ENTITIES.getResourceKey(entityType).toString();
-                    if(mobName.contains("bear") || mobName.contains("wasp")) {
-                        SET_OF_BEE_HATED_ENTITIES.add(entityType);
-                    }
-                    continue;
-                }
-
-                if(entity instanceof Mob mobEntity) {
-                    String mobName = ForgeRegistries.ENTITIES.getKey(entityType).toString();
-
-                    if((mobEntity.getMobType() == MobType.ARTHROPOD && !mobName.contains("bee")) ||
-                            mobEntity instanceof Panda ||
-                            mobName.contains("bear") ||
-                            mobName.contains("wasp"))
-                    {
-                        SET_OF_BEE_HATED_ENTITIES.add(entityType);
-                    }
-                }
+            if(mobName.contains("bee")) {
+                SET_OF_BEE_NAMED_ENTITIES.add(entityType);
+            }
+            if(LIST_OF_BEE_HATING_NAMES.stream().anyMatch(mobName::contains)) {
+                SET_OF_BEE_HATED_NAMED_ENTITIES.add(entityType);
             }
         }
     }
@@ -118,10 +81,7 @@ public class BeeAggression {
                 !player.isCreative() &&
                 !player.isSpectator())
         {
-            if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
-            }
-            else {
+            if(!player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
                 //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
                 player.addEffect(new MobEffectInstance(
                         BzEffects.WRATH_OF_THE_HIVE.get(),
@@ -210,7 +170,11 @@ public class BeeAggression {
                 entity instanceof Mob mobEntity)
         {
             //must be a bear or insect animal with no wrath of the hive effect on
-            return SET_OF_BEE_HATED_ENTITIES.contains(entity.getType()) && !mobEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+            if(SET_OF_BEE_HATED_NAMED_ENTITIES.contains(entity.getType()) ||
+                (!SET_OF_BEE_NAMED_ENTITIES.contains(entity.getType()) && mobEntity.getMobType() == MobType.ARTHROPOD))
+            {
+                return !mobEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+            }
         }
 
         return false;
@@ -233,7 +197,12 @@ public class BeeAggression {
         if(playerEntity.level.isClientSide()) {
             boolean wrathEffect = playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get());
             if(wrathEffect) {
-                MusicHandler.playAngryBeeMusic(playerEntity);
+                if(BzClientConfigs.playWrathOfHiveEffectMusic.get()) {
+                    MusicHandler.playAngryBeeMusic(playerEntity);
+                }
+                else {
+                    MusicHandler.stopAngryBeeMusic(playerEntity);
+                }
             }
 
             if(!WrathOfTheHiveEffect.ACTIVE_WRATH && wrathEffect) {

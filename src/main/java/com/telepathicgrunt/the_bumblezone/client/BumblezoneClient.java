@@ -3,15 +3,18 @@ package com.telepathicgrunt.the_bumblezone.client;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuff;
+import com.telepathicgrunt.the_bumblezone.client.rendering.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeeVariantRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeehemothRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidClientOverlay;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HoneySlimeRendering;
 import com.telepathicgrunt.the_bumblezone.client.rendering.PileOfPollenRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.StingerSpearModel;
+import com.telepathicgrunt.the_bumblezone.client.rendering.StingerSpearRenderer;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
+import com.telepathicgrunt.the_bumblezone.mixin.client.DimensionSpecialEffectsAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.client.RenderingRegistryAccessor;
-import com.telepathicgrunt.the_bumblezone.mixin.world.DimensionSpecialEffectsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -71,6 +74,15 @@ public class BumblezoneClient {
                                     livingEntity.isUsingItem() &&
                                     livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
             );
+
+            ItemProperties.register(
+                    BzItems.STINGER_SPEAR.get(),
+                    new ResourceLocation("throwing"),
+                    (itemStack, world, livingEntity, integer) ->
+                            livingEntity != null &&
+                                    livingEntity.isUsingItem() &&
+                                    livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
+            );
         });
     }
 
@@ -90,12 +102,16 @@ public class BumblezoneClient {
 
     public static void registerEntityModels(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(BeehemothModel.LAYER_LOCATION, BeehemothModel::createBodyLayer);
+        event.registerLayerDefinition(StingerSpearModel.LAYER_LOCATION, StingerSpearModel::createLayer);
+        event.registerLayerDefinition(BeeArmorModel.VARIANT_1_LAYER_LOCATION, BeeArmorModel::createVariant1);
+        event.registerLayerDefinition(BeeArmorModel.VARIANT_2_LAYER_LOCATION, BeeArmorModel::createVariant2);
     }
 
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers.RegisterRenderers event) {
         EntityRenderers.register(BzEntities.HONEY_SLIME.get(), HoneySlimeRendering::new);
         EntityRenderers.register(BzEntities.BEEHEMOTH.get(), BeehemothRenderer::new);
         EntityRenderers.register(BzEntities.POLLEN_PUFF_ENTITY.get(), ThrownItemRenderer::new);
+        EntityRenderers.register(BzEntities.THROWN_STINGER_SPEAR_ENTITY.get(), StingerSpearRenderer::new);
     }
 
     public static void onParticleSetup(ParticleFactoryRegisterEvent event) {

@@ -23,21 +23,7 @@ import java.util.Optional;
 public class PollinatedStreamStructure extends StructureFeature<JigsawConfiguration> {
 
     public PollinatedStreamStructure(Codec<JigsawConfiguration> codec) {
-        super(codec, (context) -> {
-                    if (!isFeatureChunk(context)) {
-                        return Optional.empty();
-                    }
-                    else {
-                        return generatePieces(context);
-                    }
-                },
-                PostPlacementProcessor.NONE);
-    }
-
-    protected static boolean isFeatureChunk(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
-        WorldgenRandom positionedRandom = new WorldgenRandom(new LegacyRandomSource(context.seed() + (context.chunkPos().x * (context.chunkPos().z * 17L))));
-        BlockPos centerPos = new BlockPos(context.chunkPos().x, positionedRandom.nextInt(45) + 10, context.chunkPos().z);
-        return validSpot(context.chunkGenerator(), centerPos, context.heightAccessor());
+        super(codec, PollinatedStreamStructure::generatePieces, PostPlacementProcessor.NONE);
     }
 
     private static boolean validSpot(ChunkGenerator chunkGenerator, BlockPos centerPos, LevelHeightAccessor heightLimitView) {
@@ -48,14 +34,14 @@ public class PollinatedStreamStructure extends StructureFeature<JigsawConfigurat
         for(Direction direction : Direction.Plane.HORIZONTAL) {
             mutable.set(centerPos).move(direction, 12);
             columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView);
-            BlockState state = columnOfBlocks.getBlock(mutable.move(Direction.DOWN, 2).getY());
+            BlockState state = columnOfBlocks.getBlock(41);
             if(!state.getMaterial().blocksMotion()) {
                 return false;
             }
 
             mutable.set(centerPos).move(direction, 55);
             columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView);
-            state = columnOfBlocks.getBlock(mutable.move(Direction.DOWN, 5).getY());
+            state = columnOfBlocks.getBlock(41);
             if(!state.getMaterial().blocksMotion()) {
                 return false;
             }
@@ -69,6 +55,10 @@ public class PollinatedStreamStructure extends StructureFeature<JigsawConfigurat
         int x = context.chunkPos().getMinBlockX();
         int z = context.chunkPos().getMinBlockZ();
         BlockPos centerPos = new BlockPos(x, positionedRandom.nextInt(45) + 10, z);
+
+        if(!validSpot(context.chunkGenerator(), centerPos, context.heightAccessor())) {
+            return Optional.empty();
+        }
 
         // increase depth to 12
         JigsawConfiguration newConfig = new JigsawConfiguration(context.config().startPool(), 12);

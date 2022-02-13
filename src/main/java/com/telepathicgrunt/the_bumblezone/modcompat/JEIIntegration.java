@@ -23,12 +23,12 @@ public class JEIIntegration implements IModPlugin {
     
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-		addInfo(registration, BzItems.EMPTY_HONEYCOMB_LARVA.get());
+		addInfo(registration, BzItems.EMPTY_HONEYCOMB_BROOD.get());
 		addInfo(registration, BzItems.FILLED_POROUS_HONEYCOMB.get());
 		addInfo(registration, BzItems.HONEY_CRYSTAL.get());
 		addInfo(registration, BzItems.HONEY_CRYSTAL_SHARDS.get());
 		addInfo(registration, BzItems.HONEY_CRYSTAL_SHIELD.get());
-		addInfo(registration, BzItems.HONEYCOMB_LARVA.get());
+		addInfo(registration, BzItems.HONEYCOMB_BROOD.get());
 		addInfo(registration, BzItems.POROUS_HONEYCOMB.get());
 		addInfo(registration, BzItems.STICKY_HONEY_REDSTONE.get());
 		addInfo(registration, BzItems.STICKY_HONEY_RESIDUE.get());
@@ -46,6 +46,16 @@ public class JEIIntegration implements IModPlugin {
 		addInfo(registration, BzItems.HONEY_BUCKET.get());
 		addInfo(registration, BzItems.HONEY_WEB.get());
 		addInfo(registration, BzItems.REDSTONE_HONEY_WEB.get());
+		addInfo(registration, BzItems.HONEY_COCOON.get());
+		addInfo(registration, BzItems.STINGER_SPEAR.get());
+		addInfo(registration, BzItems.HONEY_BEE_LEGGINGS_1.get());
+		addInfo(registration, BzItems.HONEY_BEE_LEGGINGS_2.get());
+		addInfo(registration, BzItems.BUMBLE_BEE_CHESTPLATE_1.get());
+		addInfo(registration, BzItems.BUMBLE_BEE_CHESTPLATE_2.get());
+		addInfo(registration, BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_1.get());
+		addInfo(registration, BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2.get());
+		addInfo(registration, BzItems.STINGLESS_BEE_HELMET_1.get());
+		addInfo(registration, BzItems.STINGLESS_BEE_HELMET_2.get());
     }
 
     

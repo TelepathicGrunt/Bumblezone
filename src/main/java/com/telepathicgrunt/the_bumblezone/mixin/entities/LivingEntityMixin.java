@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
+import com.telepathicgrunt.the_bumblezone.effects.ParalyzedEffect;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
@@ -15,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
@@ -36,6 +38,14 @@ public abstract class LivingEntityMixin extends Entity {
             at = @At(value = "HEAD"))
     private void thebumblezone_onDeath(DamageSource source, CallbackInfo ci) {
         WrathOfTheHiveEffect.calmTheBees(this.level, (LivingEntity)(Object)this);
+    }
+
+    @Inject(method = "isImmobile()Z",
+            at = @At(value = "HEAD"), cancellable = true)
+    private void thebumblezone_isParalyzedCheck(CallbackInfoReturnable<Boolean> cir) {
+        if(ParalyzedEffect.isParalyzed((LivingEntity)(Object)this)) {
+            cir.setReturnValue(true);
+        }
     }
 
     //-----------------------------------------------------------//

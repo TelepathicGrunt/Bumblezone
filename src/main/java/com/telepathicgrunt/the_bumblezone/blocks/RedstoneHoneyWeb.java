@@ -1,31 +1,25 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import com.google.common.collect.Sets;
 import com.mojang.math.Vector3f;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -33,7 +27,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 
 public class RedstoneHoneyWeb extends HoneyWeb {
@@ -58,10 +51,12 @@ public class RedstoneHoneyWeb extends HoneyWeb {
                 .setValue(POWER, 0));
     }
 
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> blockStateBuilder) {
         blockStateBuilder.add(NORTHSOUTH, EASTWEST, UPDOWN, POWER);
     }
 
+    @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
         super.entityInside(blockState,level, blockPos, entity);
         VoxelShape shape = this.shapeByIndex[this.getAABBIndex(blockState)];
@@ -78,6 +73,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
         }
     }
 
+    @Override
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
         if (serverLevel.getBlockState(blockPos).getValue(POWER) == 15) {
             boolean noEntitiesInbounds = true;
@@ -100,10 +96,12 @@ public class RedstoneHoneyWeb extends HoneyWeb {
         }
     }
 
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext placeContext) {
         return super.getStateForPlacement(placeContext);
     }
 
+    @Override
     public void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState1, boolean pushed) {
         if (!blockState1.is(blockState.getBlock()) && !level.isClientSide) {
             this.updatePowerStrength(level, blockState, blockPos);
@@ -113,7 +111,8 @@ public class RedstoneHoneyWeb extends HoneyWeb {
             }
         }
     }
-    
+
+    @Override
     public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState1, boolean pushed) {
         if (!pushed && !blockState.is(blockState1.getBlock())) {
             super.onRemove(blockState, level, blockPos, blockState1, pushed);
@@ -125,6 +124,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
         }
     }
 
+    @Override
     public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos blockPos1, boolean b) {
         if (!level.isClientSide) {
             if(blockState.is(this) && blockState.getValue(POWER) != 15) {
@@ -132,7 +132,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
             }
         }
     }
-    
+
     private void updatePowerStrength(Level level, BlockState blockState, BlockPos blockPos) {
         int currentPower = this.calculateTargetStrength(level, blockState, blockPos);
         if (blockState.getValue(POWER) != currentPower) {

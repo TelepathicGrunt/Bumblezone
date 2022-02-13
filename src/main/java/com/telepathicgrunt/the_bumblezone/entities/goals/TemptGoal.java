@@ -3,8 +3,6 @@ package com.telepathicgrunt.the_bumblezone.entities.goals;
 import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
-import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +11,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.EnumSet;
 
 public class TemptGoal extends Goal {
-    private static final TargetingConditions ENTITY_PREDICATE = (TargetingConditions.forCombat()).range(10.0D).ignoreLineOfSight();
+    private static final TargetingConditions ENTITY_PREDICATE = (TargetingConditions.forNonCombat()).range(10.0D).ignoreLineOfSight();
     protected final HoneySlimeEntity slime;
     private double targetX;
     private double targetY;
@@ -28,9 +26,6 @@ public class TemptGoal extends Goal {
         this.slime = creatureIn;
         this.temptItem = temptItemsIn;
         this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE, Goal.Flag.LOOK));
-        if (!(creatureIn.getNavigation() instanceof GroundPathNavigation) && !(creatureIn.getNavigation() instanceof FlyingPathNavigation)) {
-            throw new IllegalArgumentException("Unsupported mob type for TemptGoal");
-        }
     }
 
     /**
@@ -40,11 +35,13 @@ public class TemptGoal extends Goal {
         if (this.delayTemptCounter > 0) {
             --this.delayTemptCounter;
             return false;
-        } else {
+        }
+        else {
             this.closestPlayer = this.slime.level.getNearestPlayer(ENTITY_PREDICATE, this.slime);
             if (this.closestPlayer == null) {
                 return false;
-            } else {
+            }
+            else {
                 return this.isTempting(this.closestPlayer.getMainHandItem()) || this.isTempting(this.closestPlayer.getOffhandItem());
             }
         }
@@ -67,7 +64,8 @@ public class TemptGoal extends Goal {
                 if (Math.abs((double)this.closestPlayer.getXRot() - this.pitch) > 5.0D || Math.abs((double)this.closestPlayer.getYRot() - this.yaw) > 5.0D) {
                     return false;
                 }
-            } else {
+            }
+            else {
                 this.targetX = this.closestPlayer.getX();
                 this.targetY = this.closestPlayer.getY();
                 this.targetZ = this.closestPlayer.getZ();
@@ -109,7 +107,8 @@ public class TemptGoal extends Goal {
         this.slime.getLookControl().setLookAt(this.closestPlayer, (float)(this.slime.getMaxHeadYRot() + 20), (float)this.slime.getMaxHeadXRot());
         if (this.slime.distanceToSqr(this.closestPlayer) < 6.25D) {
             this.slime.getNavigation().stop();
-        } else {
+        }
+        else {
             this.slime.lookAt(this.closestPlayer, 10.0F, 10.0F);
             ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.getYRot(), true);
             ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setSpeed(1.0D);

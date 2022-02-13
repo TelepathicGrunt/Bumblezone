@@ -6,6 +6,7 @@ public class BzBeeAggressionConfigs {
     public static final ForgeConfigSpec GENERAL_SPEC;
 
     // bee aggression
+    public static ForgeConfigSpec.BooleanValue beehemothTriggersWrath;
     public static ForgeConfigSpec.BooleanValue allowWrathOfTheHiveOutsideBumblezone;
     public static ForgeConfigSpec.BooleanValue showWrathOfTheHiveParticles;
     public static ForgeConfigSpec.BooleanValue aggressiveBees;
@@ -26,6 +27,13 @@ public class BzBeeAggressionConfigs {
         builder.push("Wrath of the Hive Options");
 
             builder.push("Bees Aggression Options");
+
+                beehemothTriggersWrath = builder
+                    .comment(" \n-----------------------------------------------------\n",
+                            " If set to true, any entity that harms a beehemoth and is not owner of it,",
+                            " that entity will get Wrath of the Hive effect.")
+                    .translation("the_bumblezone.config.beehemothTriggersWrath")
+                    .define("beehemothTriggersWrath", false);
 
                 allowWrathOfTheHiveOutsideBumblezone = builder
                     .comment(" \n-----------------------------------------------------\n",

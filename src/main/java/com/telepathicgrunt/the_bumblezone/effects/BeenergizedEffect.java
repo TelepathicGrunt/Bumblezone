@@ -17,6 +17,7 @@ public class BeenergizedEffect extends MobEffect {
     /**
      * Returns true if the potion has an instant effect instead of a continuous one (eg Harming)
      */
+    @Override
     public boolean isInstantenous() {
         return false;
     }
@@ -24,6 +25,7 @@ public class BeenergizedEffect extends MobEffect {
     /**
      * checks if Potion effect is ready to be applied this tick.
      */
+    @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {
         return duration >= 1;
     }
@@ -31,6 +33,7 @@ public class BeenergizedEffect extends MobEffect {
     /**
      * Make entity have faster flying speeds at first apply
      */
+    @Override
     public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
         super.addAttributeModifiers(entity, attributes, amplifier);
         // Have to do this way as flyingSpeed field doesnt use the attribute for bees.
@@ -45,6 +48,7 @@ public class BeenergizedEffect extends MobEffect {
     /**
      * Remove effect when finished.
      */
+    @Override
     public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
         super.removeAttributeModifiers(entity, attributes, amplifier);
         if(entity.getAttributes().hasAttribute(Attributes.FLYING_SPEED)) {

@@ -210,8 +210,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
          if (itemstack.getItem() == Items.GLASS_BOTTLE) {
             level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
             if (!player.isCreative()) {
-               itemstack.shrink(1);
-               GeneralUtils.givePlayerItem(player, hand, new ItemStack(Items.HONEY_BOTTLE), false);
+               GeneralUtils.givePlayerItem(player, hand, new ItemStack(Items.HONEY_BOTTLE), false, true);
             }
 
             this.setLastHurtByMob(player);
@@ -353,11 +352,11 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
 
    @Override
    public void refreshDimensions() {
-      double d0 = this.getX();
-      double d1 = this.getY();
-      double d2 = this.getZ();
+      double x = this.getX();
+      double y = this.getY();
+      double z = this.getZ();
       super.refreshDimensions();
-      this.absMoveTo(d0, d1, d2);
+      this.absMoveTo(x, y, z);
    }
 
    @Override
