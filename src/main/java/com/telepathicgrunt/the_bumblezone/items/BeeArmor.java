@@ -61,6 +61,7 @@ public abstract class BeeArmor extends TickingArmorItem {
                 cachedModel = new BeeArmorModel(layer, armorSlot, entityLiving);
                 cachedTexture = new ResourceLocation(getArmorTexture());
             }
+            modelIn.copyPropertiesTo(cachedModel);
             ArmorRenderer.renderPart(matrices, vertexConsumers, light, itemStack, cachedModel, cachedTexture);
         }, this);
     }
