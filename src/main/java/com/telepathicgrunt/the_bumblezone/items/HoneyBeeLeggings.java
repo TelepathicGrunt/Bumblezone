@@ -26,9 +26,10 @@ import net.minecraft.world.phys.Vec3;
 import java.util.Random;
 
 
-public class HoneyBeeLeggings extends TickingArmorItem {
-    public HoneyBeeLeggings(ArmorMaterial material, EquipmentSlot slot, Properties properties) {
-        super(material, slot, properties);
+public class HoneyBeeLeggings extends BeeArmor {
+
+    public HoneyBeeLeggings(ArmorMaterial material, EquipmentSlot slot, Properties properties, int variant) {
+        super(material, slot, properties, variant, false);
     }
 
     /**
@@ -142,20 +143,5 @@ public class HoneyBeeLeggings extends TickingArmorItem {
             PollenPuff.spawnItemstackEntity(world, position.add(new Vec3(0, 0.25f, 0)), new ItemStack(BzItems.POLLEN_PUFF, 1));
             clearPollinated(itemStack);
         }
-    }
-
-    @Override
-    public float getToughness() {
-        return 0.5f;
-    }
-
-    @Override
-    public int getDefense() {
-        return 2;
-    }
-
-    @Override
-    public SoundEvent getEquipSound() {
-        return SoundEvents.ARMOR_EQUIP_LEATHER;
     }
 }

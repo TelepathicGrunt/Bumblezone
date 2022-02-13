@@ -5,7 +5,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:cell_maze/knight_room",
+        "location": "the_bumblezone:cell_maze/knight_room_1",
         "processors": "the_bumblezone:cell_maze_generic",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -13,6 +13,24 @@
     },
     {
       "weight": 1,
+      "element": {
+        "location": "the_bumblezone:cell_maze/knight_room_2",
+        "processors": "the_bumblezone:cell_maze_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:cell_maze/knight_room_leather",
+        "processors": "the_bumblezone:cell_maze_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
       "element": {
         "location": "the_bumblezone:cell_maze/beehemoth_room",
         "processors": "the_bumblezone:cell_maze_generic",
@@ -21,7 +39,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 2,
       "element": {
         "location": "the_bumblezone:cell_maze/candle_room",
         "processors": "the_bumblezone:cell_maze_generic",
@@ -30,7 +48,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 4,
       "element": {
         "location": "the_bumblezone:cell_maze/cave_spider_room",
         "processors": "the_bumblezone:cell_maze_generic",
@@ -39,7 +57,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 6,
       "element": {
         "location": "the_bumblezone:cell_maze/crystal_room",
         "processors": "the_bumblezone:cell_maze_generic_less_crystals",
@@ -48,7 +66,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 4,
       "element": {
         "location": "the_bumblezone:cell_maze/honey_block_room",
         "processors": "the_bumblezone:cell_maze_generic",
@@ -57,7 +75,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 6,
       "element": {
         "location": "the_bumblezone:cell_maze/honey_room",
         "processors": "the_bumblezone:cell_maze_generic",
@@ -66,7 +84,7 @@
       }
     },
     {
-      "weight": 5,
+      "weight": 10,
       "element": {
         "location": "the_bumblezone:cell_maze/pillar_room",
         "processors": "the_bumblezone:cell_maze_generic",
@@ -75,7 +93,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 6,
       "element": {
         "location": "the_bumblezone:cell_maze/pollen_deep_room",
         "processors": "the_bumblezone:cell_maze_generic",
@@ -84,7 +102,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 6,
       "element": {
         "location": "the_bumblezone:cell_maze/pollen_shallow_room",
         "processors": "the_bumblezone:cell_maze_generic",
@@ -93,7 +111,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 6,
       "element": {
         "location": "the_bumblezone:cell_maze/sticky_room",
         "processors": "the_bumblezone:cell_maze_generic",

@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.client.BeehemothFlyingSoundInstance;
+import com.telepathicgrunt.the_bumblezone.client.LivingEntityFlyingSoundInstance;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothAIRide;
 import com.telepathicgrunt.the_bumblezone.entities.goals.FlyingStillGoal;
@@ -513,7 +513,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     @Override
     public void recreateFromPacket(ClientboundAddMobPacket clientboundAddMobPacket) {
         super.recreateFromPacket(clientboundAddMobPacket);
-        BeehemothFlyingSoundInstance.playSound(this);
+        LivingEntityFlyingSoundInstance.playSound(this, BzSounds.BEEHEMOTH_LOOP);
     }
 
     public void tick() {

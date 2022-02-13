@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:the_bumblezone/armor/honey_bee_leggings_flower_pollen",
   "display": {
     "icon": {
-      "item": "the_bumblezone:bumble_bee_chestplate"
+      "item": "the_bumblezone:bumble_bee_chestplate_2"
     },
     "title": {
       "translate": "advancements.the_bumblezone.bumble_bee_chestplate_max_flight.title"

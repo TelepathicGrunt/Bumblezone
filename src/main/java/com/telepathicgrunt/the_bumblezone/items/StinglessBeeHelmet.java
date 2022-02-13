@@ -23,14 +23,14 @@ import net.minecraft.world.level.Level;
 import java.util.Set;
 
 
-public class StinglessBeeHelmet extends TickingArmorItem {
+public class StinglessBeeHelmet extends BeeArmor {
     public static int HELMET_EFFECT_COUNTER_CLIENTSIDE = 0;
     public static boolean ALL_BEE_ARMOR_ON_CLIENTSIDE = false;
     public static Set<Entity> BEE_HIGHLIGHTED_COUNTER_CLIENTSIDE = new ObjectArraySet<>();
     public static int PACKET_SEND_COOLDOWN_CLIENTSIDE = 20;
 
-    public StinglessBeeHelmet(ArmorMaterial material, EquipmentSlot slot, Properties properties) {
-        super(material, slot, properties);
+    public StinglessBeeHelmet(ArmorMaterial material, EquipmentSlot slot, Properties properties, int variant) {
+        super(material, slot, properties, variant, false);
     }
 
     /**
@@ -123,20 +123,5 @@ public class StinglessBeeHelmet extends TickingArmorItem {
             }
         }
         return ItemStack.EMPTY;
-    }
-
-    @Override
-    public float getToughness() {
-        return 0.5f;
-    }
-
-    @Override
-    public int getDefense() {
-        return 2;
-    }
-
-    @Override
-    public SoundEvent getEquipSound() {
-        return SoundEvents.ARMOR_EQUIP_LEATHER;
     }
 }

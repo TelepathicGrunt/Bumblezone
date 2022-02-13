@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:the_bumblezone/armor/bumble_bee_chestplate_max_flight",
   "display": {
     "icon": {
-      "item": "the_bumblezone:stingless_bee_helmet"
+      "item": "the_bumblezone:stingless_bee_helmet_2"
     },
     "title": {
       "translate": "advancements.the_bumblezone.stingless_bee_helmet_super_sight.title"

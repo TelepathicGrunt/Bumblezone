@@ -1,8 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.client.LivingEntityFlyingSoundInstance;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacket;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import io.netty.buffer.Unpooled;
@@ -22,10 +24,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 
-public class BumbleBeeChestplate extends TickingArmorItem {
+public class BumbleBeeChestplate extends BeeArmor {
 
-    public BumbleBeeChestplate(ArmorMaterial material, EquipmentSlot slot, Properties properties) {
-        super(material, slot, properties);
+    public BumbleBeeChestplate(ArmorMaterial material, EquipmentSlot slot, Properties properties, boolean transTexture, int variant) {
+        super(material, slot, properties, variant, transTexture);
     }
 
     /**
@@ -40,9 +42,11 @@ public class BumbleBeeChestplate extends TickingArmorItem {
     public void onArmorTick(ItemStack itemstack, Level world, Player entity) {
         CompoundTag tag = itemstack.getOrCreateTag();
         boolean isFlying = tag.getBoolean("isFlying");
+        int flyCounter = tag.getInt("flyCounter");
         if(world.isClientSide()) {
-            if (!entity.isOnGround() && ((LivingEntityAccessor)entity).isJumping() && !entity.getAbilities().flying && !entity.isPassenger() && !entity.onClimbable()) {
+            if (flyCounter > 0 && !entity.isOnGround() && ((LivingEntityAccessor)entity).isJumping() && !entity.getAbilities().flying && !entity.isPassenger() && !entity.onClimbable()) {
                 if(!isFlying) {
+                    LivingEntityFlyingSoundInstance.playSound(entity, BzSounds.BUMBLE_BEE_CHESTPLATE_FLYING);
                     FriendlyByteBuf passedData = new FriendlyByteBuf(Unpooled.buffer());
                     passedData.writeByte(1);
                     ClientPlayNetworking.send(BumbleBeeChestplateFlyingPacket.PACKET_ID, passedData);
@@ -50,6 +54,7 @@ public class BumbleBeeChestplate extends TickingArmorItem {
                 }
             }
             else if(isFlying) {
+                LivingEntityFlyingSoundInstance.stopSound(entity, BzSounds.BUMBLE_BEE_CHESTPLATE_FLYING);
                 FriendlyByteBuf passedData = new FriendlyByteBuf(Unpooled.buffer());
                 passedData.writeByte(0);
                 ClientPlayNetworking.send(BumbleBeeChestplateFlyingPacket.PACKET_ID, passedData);
@@ -60,11 +65,7 @@ public class BumbleBeeChestplate extends TickingArmorItem {
         boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(entity);
         MobEffectInstance beenergized = entity.getEffect(BzEffects.BEENERGIZED);
         boolean isBeenergized = beenergized != null;
-        if(entity.isOnGround()) {
-            tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5f : 1) * (isAllBeeArmorOn ? 2 : 1)));
-        }
 
-        int flyCounter = tag.getInt("flyCounter");
         isFlying = tag.getBoolean("isFlying");
         if(isFlying) {
             if(flyCounter > 0) {
@@ -100,6 +101,10 @@ public class BumbleBeeChestplate extends TickingArmorItem {
                 }
             }
         }
+
+        if(entity.isOnGround()) {
+            tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5f : 1) * (isAllBeeArmorOn ? 2 : 1)));
+        }
     }
 
     public static ItemStack getEntityBeeChestplate(Entity entity) {
@@ -109,20 +114,5 @@ public class BumbleBeeChestplate extends TickingArmorItem {
             }
         }
         return ItemStack.EMPTY;
-    }
-
-    @Override
-    public float getToughness() {
-        return 0.5f;
-    }
-
-    @Override
-    public int getDefense() {
-        return 4;
-    }
-
-    @Override
-    public SoundEvent getEquipSound() {
-        return SoundEvents.ARMOR_EQUIP_LEATHER;
     }
 }

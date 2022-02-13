@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:the_bumblezone/cell_maze/enter_cell_maze",
   "display": {
     "icon": {
-      "item": "the_bumblezone:stingless_bee_helmet"
+      "item": "the_bumblezone:stingless_bee_helmet_2"
     },
     "title": {
       "translate": "advancements.the_bumblezone.warrior_bee.title"
@@ -24,16 +24,29 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:stingless_bee_helmet"]
+            "items": [
+              "the_bumblezone:stingless_bee_helmet_1",
+              "the_bumblezone:stingless_bee_helmet_2"
+            ]
           },
           {
-            "items": ["the_bumblezone:bumble_bee_chestplate"]
+            "items": [
+              "the_bumblezone:bumble_bee_chestplate_1",
+              "the_bumblezone:bumble_bee_chestplate_2",
+              "the_bumblezone:bumble_bee_chestplate_trans_1",
+              "the_bumblezone:bumble_bee_chestplate_trans_2"
+            ]
           },
           {
-            "items": ["the_bumblezone:honey_bee_leggings"]
+            "items": [
+              "the_bumblezone:honey_bee_leggings_1",
+              "the_bumblezone:honey_bee_leggings_2"
+            ]
           },
           {
-            "items": ["the_bumblezone:stinger_spear"]
+            "items": [
+              "the_bumblezone:stinger_spear"
+            ]
           }
         ]
       }

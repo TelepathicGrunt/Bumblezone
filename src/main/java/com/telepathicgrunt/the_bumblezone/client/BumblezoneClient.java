@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.client;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuff;
+import com.telepathicgrunt.the_bumblezone.client.rendering.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeeVariantRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeehemothRenderer;
@@ -24,7 +25,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.fabric.impl.client.particle.ParticleFactoryRegistryImpl;
@@ -63,6 +64,8 @@ public class BumblezoneClient implements ClientModInitializer {
 
         EntityModelLayerRegistry.registerModelLayer(BeehemothModel.LAYER_LOCATION, BeehemothModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(StingerSpearModel.LAYER_LOCATION, StingerSpearModel::createLayer);
+        EntityModelLayerRegistry.registerModelLayer(BeeArmorModel.VARIANT_1_LAYER_LOCATION, BeeArmorModel::createVariant1);
+        EntityModelLayerRegistry.registerModelLayer(BeeArmorModel.VARIANT_2_LAYER_LOCATION, BeeArmorModel::createVariant2);
         DimensionSpecialEffectsAccessor.thebumblezone_getBY_IDENTIFIER().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
 
         // Allows shield to use the blocking json file for offset
@@ -77,6 +80,15 @@ public class BumblezoneClient implements ClientModInitializer {
 
         UpdateFallingBlockPacket.registerPacket();
         MobEffectClientSyncPacket.registerPacket();
+
+        BzItems.STINGLESS_BEE_HELMET_1.registerRenderer();
+        BzItems.STINGLESS_BEE_HELMET_2.registerRenderer();
+        BzItems.BUMBLE_BEE_CHESTPLATE_1.registerRenderer();
+        BzItems.BUMBLE_BEE_CHESTPLATE_2.registerRenderer();
+        BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_1.registerRenderer();
+        BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2.registerRenderer();
+        BzItems.HONEY_BEE_LEGGINGS_1.registerRenderer();
+        BzItems.HONEY_BEE_LEGGINGS_2.registerRenderer();
     }
     
     public static void registerRenderLayers() {
