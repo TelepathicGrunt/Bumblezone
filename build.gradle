@@ -70,8 +70,8 @@ dependencies {
 
 	modImplementation ("maven.modrinth:modmenu:${project.mod_menu_version}") { transitive = false }
 
-	runtimeOnly ("com.telepathicgrunt:FeatureNBTDeadlockBeGone-Fabric:1.0.0+1.18.1") { transitive = false }
-	//runtimeOnly "curse.maven:requiem-265729:3639233"
+	modRuntimeOnly ("com.telepathicgrunt:FeatureNBTDeadlockBeGone-Fabric:1.0.0+1.18.1") { transitive = false }
+	//modRuntimeOnly "curse.maven:requiem-265729:3639233"
 	//modImplementation ("curse.maven:mobcatcher-498389:3575752") { transitive = false }
 	//modCompileOnly ("curse.maven:charm-318872:3355096") { transitive = false }
 }
