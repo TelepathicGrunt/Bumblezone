@@ -81,14 +81,14 @@ public class BumblezoneClient implements ClientModInitializer {
         UpdateFallingBlockPacket.registerPacket();
         MobEffectClientSyncPacket.registerPacket();
 
-        BzItems.STINGLESS_BEE_HELMET_1.registerRenderer();
-        BzItems.STINGLESS_BEE_HELMET_2.registerRenderer();
-        BzItems.BUMBLE_BEE_CHESTPLATE_1.registerRenderer();
-        BzItems.BUMBLE_BEE_CHESTPLATE_2.registerRenderer();
-        BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_1.registerRenderer();
-        BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2.registerRenderer();
-        BzItems.HONEY_BEE_LEGGINGS_1.registerRenderer();
-        BzItems.HONEY_BEE_LEGGINGS_2.registerRenderer();
+        BzItems.STINGLESS_BEE_HELMET_1.registerRenderer().run();
+        BzItems.STINGLESS_BEE_HELMET_2.registerRenderer().run();
+        BzItems.BUMBLE_BEE_CHESTPLATE_1.registerRenderer().run();
+        BzItems.BUMBLE_BEE_CHESTPLATE_2.registerRenderer().run();
+        BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_1.registerRenderer().run();
+        BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2.registerRenderer().run();
+        BzItems.HONEY_BEE_LEGGINGS_1.registerRenderer().run();
+        BzItems.HONEY_BEE_LEGGINGS_2.registerRenderer().run();
     }
     
     public static void registerRenderLayers() {
