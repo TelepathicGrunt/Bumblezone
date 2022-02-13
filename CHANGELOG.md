@@ -1,3 +1,14 @@
+### **(V.4.3.1 Changes) (1.18.1 Minecraft)**
+
+##### Items:
+Fixed Sugar Water Bottle being able to cure poison effect. (Was accidentally using Honey Bottle class for it... oops)
+
+Fixed bucket/bottle duplication when crafting Sugar Water Bucket or converting Honey Bucket to Honey Bottles and vice versa.
+
+##### Mod Compat:
+Added more compat options into BumblezoneAPI class for Requiem to use. Next Requiem update should hopefully fix the incompat issue!
+
+
 ### **(V.4.3.0 Changes) (1.18.1 Minecraft)**
 
 ##### Dimension:

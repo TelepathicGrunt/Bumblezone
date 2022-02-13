@@ -46,7 +46,8 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
             if (item.getItem().hasCraftingRemainingItem()) {
                 if(containerOutput > 0 &&
                     (recipeOutput.getItem() == item.getItem().getCraftingRemainingItem() ||
-                    recipeOutput.getItem().getCraftingRemainingItem() == item.getItem()))
+                    recipeOutput.getItem().getCraftingRemainingItem() == item.getItem() ||
+                    recipeOutput.getItem().getCraftingRemainingItem() == item.getItem().getCraftingRemainingItem()))
                 {
                     containerOutput--;
                 }
