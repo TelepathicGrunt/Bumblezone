@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:the_bumblezone/cell_maze/enter_cell_maze",
   "display": {
     "icon": {
-      "item": "the_bumblezone:stingless_bee_helmet_2"
+      "item": "the_bumblezone:stingless_bee_helmet_1"
     },
     "title": {
       "translate": "advancements.the_bumblezone.warrior_bee.title"
