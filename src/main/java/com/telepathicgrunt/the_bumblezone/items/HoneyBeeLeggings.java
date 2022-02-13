@@ -1,8 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
-import com.telepathicgrunt.the_bumblezone.client.rendering.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.mixin.effects.MobEffectInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -22,10 +20,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.IItemRenderProperties;
 
 import java.util.Random;
-import java.util.function.Consumer;
 
 
 public class HoneyBeeLeggings extends BeeArmor {
