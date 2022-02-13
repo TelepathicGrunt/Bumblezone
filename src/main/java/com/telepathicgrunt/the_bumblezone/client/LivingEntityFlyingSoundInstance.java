@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.client;
 
-import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
@@ -9,9 +8,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 
-import java.util.Map;
 import java.util.WeakHashMap;
 
 public class LivingEntityFlyingSoundInstance extends AbstractTickableSoundInstance {

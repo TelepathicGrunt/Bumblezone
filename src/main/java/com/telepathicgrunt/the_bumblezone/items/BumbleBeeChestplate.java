@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.client.LivingEntityFlyingSoundInstance;
-import com.telepathicgrunt.the_bumblezone.client.rendering.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -18,9 +17,6 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.IItemRenderProperties;
-
-import java.util.function.Consumer;
 
 
 public class BumbleBeeChestplate extends BeeArmor {

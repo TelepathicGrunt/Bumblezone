@@ -104,6 +104,7 @@ dependencies {
     // Switch to `implementation` when testing mod compat
     compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
     compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
+    runtimeOnly fg.deobf("curse.maven:better_advancements-272515:3562206")
 
     compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")

@@ -1,7 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.client.rendering.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.effects.MobEffectInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetSightPacket;
@@ -16,10 +14,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.client.IItemRenderProperties;
 
 import java.util.Set;
-import java.util.function.Consumer;
 
 
 public class StinglessBeeHelmet extends BeeArmor {
