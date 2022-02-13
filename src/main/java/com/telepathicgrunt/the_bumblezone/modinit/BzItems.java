@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
+import com.telepathicgrunt.the_bumblezone.items.SugarWaterBottle;
 import com.telepathicgrunt.the_bumblezone.items.materials.BeeArmorMaterial;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.core.Registry;
@@ -71,9 +72,8 @@ public class BzItems {
     public static final Item SUGAR_WATER_BUCKET = new BzSmartBucket(BzFluids.SUGAR_WATER_FLUID, new Item.Properties()
             .craftRemainder(Items.BUCKET).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB));
 
-    public static final Item SUGAR_WATER_BOTTLE = new HoneyBottleItem((new Item.Properties()).craftRemainder(Items.GLASS_BOTTLE)
-            .food((new FoodProperties.Builder()).nutrition(1).saturationMod(0.05F)
-                    .effect(new MobEffectInstance(MobEffects.DIG_SPEED, 600, 0), 1.0F).build())
+    public static final Item SUGAR_WATER_BOTTLE = new SugarWaterBottle((new Item.Properties()).craftRemainder(Items.GLASS_BOTTLE)
+            .food((new FoodProperties.Builder()).nutrition(1).saturationMod(0.05F).effect(new MobEffectInstance(MobEffects.DIG_SPEED, 600, 0), 1.0F).build())
             .tab(BUMBLEZONE_CREATIVE_TAB).stacksTo(16));
 
     public static final Item MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = new BzMusicDiscs(14, BzSounds.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV, (new Item.Properties()).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.RARE));
