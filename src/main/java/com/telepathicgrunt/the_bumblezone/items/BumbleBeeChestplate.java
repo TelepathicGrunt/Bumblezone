@@ -1,31 +1,32 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.client.LivingEntityFlyingSoundInstance;
+import com.telepathicgrunt.the_bumblezone.client.rendering.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacket;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.IItemRenderProperties;
 
-import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 
-public class BumbleBeeChestplate extends ArmorItem {
+public class BumbleBeeChestplate extends BeeArmor {
 
-    public BumbleBeeChestplate(ArmorMaterial material, EquipmentSlot slot, Properties properties) {
-        super(material, slot, properties);
+    public BumbleBeeChestplate(ArmorMaterial material, EquipmentSlot slot, Properties properties, boolean transTexture, int variant) {
+        super(material, slot, properties, variant, transTexture);
     }
 
     /**
@@ -40,14 +41,17 @@ public class BumbleBeeChestplate extends ArmorItem {
     public void onArmorTick(ItemStack itemstack, Level world, Player entity) {
         CompoundTag tag = itemstack.getOrCreateTag();
         boolean isFlying = tag.getBoolean("isFlying");
+        int flyCounter = tag.getInt("flyCounter");
         if(world.isClientSide()) {
-            if (!entity.isOnGround() && ((LivingEntityAccessor)entity).isJumping() && !entity.getAbilities().flying && !entity.isPassenger() && !entity.onClimbable()) {
+            if (flyCounter > 0 && !entity.isOnGround() && ((LivingEntityAccessor)entity).isJumping() && !entity.getAbilities().flying && !entity.isPassenger() && !entity.onClimbable()) {
                 if(!isFlying) {
+                    LivingEntityFlyingSoundInstance.playSound(entity, BzSounds.BUMBLE_BEE_CHESTPLATE_FLYING.get());
                     BumbleBeeChestplateFlyingPacket.sendToServer(true);
                     tag.putBoolean("isFlying", true);
                 }
             }
             else if(isFlying) {
+                LivingEntityFlyingSoundInstance.stopSound(entity, BzSounds.BUMBLE_BEE_CHESTPLATE_FLYING.get());
                 BumbleBeeChestplateFlyingPacket.sendToServer(false);
                 tag.putBoolean("isFlying", false);
             }
@@ -56,11 +60,7 @@ public class BumbleBeeChestplate extends ArmorItem {
         boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(entity);
         MobEffectInstance beenergized = entity.getEffect(BzEffects.BEENERGIZED.get());
         boolean isBeenergized = beenergized != null;
-        if(entity.isOnGround()) {
-            tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5f : 1) * (isAllBeeArmorOn ? 2 : 1)));
-        }
 
-        int flyCounter = tag.getInt("flyCounter");
         isFlying = tag.getBoolean("isFlying");
         if(isFlying) {
             if(flyCounter > 0) {
@@ -97,6 +97,9 @@ public class BumbleBeeChestplate extends ArmorItem {
             }
         }
 
+        if(entity.isOnGround()) {
+            tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5f : 1) * (isAllBeeArmorOn ? 2 : 1)));
+        }
 
         super.onArmorTick(itemstack, world, entity);
     }
@@ -108,21 +111,5 @@ public class BumbleBeeChestplate extends ArmorItem {
             }
         }
         return ItemStack.EMPTY;
-    }
-
-    @Override
-    public float getToughness() {
-        return 0.5f;
-    }
-
-    @Override
-    public int getDefense() {
-        return 4;
-    }
-
-    @Nullable
-    @Override
-    public SoundEvent getEquipSound() {
-        return SoundEvents.ARMOR_EQUIP_LEATHER;
     }
 }

@@ -48,9 +48,14 @@ public class JEIIntegration implements IModPlugin {
 		addInfo(registration, BzItems.REDSTONE_HONEY_WEB.get());
 		addInfo(registration, BzItems.HONEY_COCOON.get());
 		addInfo(registration, BzItems.STINGER_SPEAR.get());
-		addInfo(registration, BzItems.HONEY_BEE_LEGGINGS.get());
-		addInfo(registration, BzItems.BUMBLE_BEE_CHESTPLATE.get());
-		addInfo(registration, BzItems.STINGLESS_BEE_HELMET.get());
+		addInfo(registration, BzItems.HONEY_BEE_LEGGINGS_1.get());
+		addInfo(registration, BzItems.HONEY_BEE_LEGGINGS_2.get());
+		addInfo(registration, BzItems.BUMBLE_BEE_CHESTPLATE_1.get());
+		addInfo(registration, BzItems.BUMBLE_BEE_CHESTPLATE_2.get());
+		addInfo(registration, BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_1.get());
+		addInfo(registration, BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2.get());
+		addInfo(registration, BzItems.STINGLESS_BEE_HELMET_1.get());
+		addInfo(registration, BzItems.STINGLESS_BEE_HELMET_2.get());
     }
 
     
