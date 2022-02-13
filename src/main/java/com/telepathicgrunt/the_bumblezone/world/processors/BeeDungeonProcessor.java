@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CandleBlock;
@@ -38,6 +39,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
         BlockPos worldPos = structureBlockInfoWorld.pos;
         Random random = new WorldgenRandom(new LegacyRandomSource(0));
         random.setSeed(worldPos.asLong() * worldPos.getY());
+        CompoundTag nbt = structureBlockInfoWorld.nbt;
 
         // placing altar blocks
         if (blockState.is(Blocks.STRUCTURE_BLOCK)) {
@@ -51,35 +53,46 @@ public class BeeDungeonProcessor extends StructureProcessor {
             else {
                 switch (metadata) {
                     case "center" -> {
-                        if (random.nextFloat() < 0.6f) {
+                        if (random.nextFloat() < 0.1f) {
+                            blockState = BzBlocks.HONEY_COCOON.defaultBlockState();
+                            nbt = new CompoundTag();
+                            nbt.putString("LootTable", "the_bumblezone:structures/bee_dungeon");
+                        }
+                        else if (random.nextFloat() < 0.6f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.defaultBlockState();
-                        } else if (random.nextFloat() < 0.6f) {
+                        }
+                        else if (random.nextFloat() < 0.6f) {
                             blockState = GeneralUtils.VANILLA_CANDLES.get(random.nextInt(GeneralUtils.VANILLA_CANDLES.size()));
                             blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(4) + 1);
                             blockState = blockState.setValue(CandleBlock.LIT, true);
-                        } else {
+                        }
+                        else {
                             blockState = Blocks.CAVE_AIR.defaultBlockState();
                         }
                     }
                     case "inner_ring" -> {
                         if (random.nextFloat() < 0.35f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.defaultBlockState();
-                        } else if (random.nextFloat() < 0.35f) {
+                        }
+                        else if (random.nextFloat() < 0.35f) {
                             blockState = GeneralUtils.VANILLA_CANDLES.get(random.nextInt(GeneralUtils.VANILLA_CANDLES.size()));
                             blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(random.nextInt(4) + 1) + 1);
                             blockState = blockState.setValue(CandleBlock.LIT, true);
-                        } else {
+                        }
+                        else {
                             blockState = Blocks.CAVE_AIR.defaultBlockState();
                         }
                     }
                     case "outer_ring" -> {
                         if (random.nextFloat() < 0.45f) {
                             blockState = BzBlocks.HONEY_CRYSTAL.defaultBlockState();
-                        } else if (random.nextFloat() < 0.2f) {
+                        }
+                        else if (random.nextFloat() < 0.2f) {
                             blockState = GeneralUtils.VANILLA_CANDLES.get(random.nextInt(GeneralUtils.VANILLA_CANDLES.size()));
                             blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(random.nextInt(4) + 1) + 1);
                             blockState = blockState.setValue(CandleBlock.LIT, true);
-                        } else {
+                        }
+                        else {
                             blockState = Blocks.CAVE_AIR.defaultBlockState();
                         }
                     }
@@ -121,7 +134,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
             }
         }
 
-        return new StructureTemplate.StructureBlockInfo(worldPos, blockState, structureBlockInfoWorld.nbt);
+        return new StructureTemplate.StructureBlockInfo(worldPos, blockState, nbt);
     }
 
     @Override

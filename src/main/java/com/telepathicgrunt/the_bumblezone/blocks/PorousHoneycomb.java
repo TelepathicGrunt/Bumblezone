@@ -49,8 +49,7 @@ public class PorousHoneycomb extends Block {
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
             if (!playerEntity.isCreative()) {
-                itemstack.shrink(1); // remove current honey bottle
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true, true);
             }
 
             return InteractionResult.SUCCESS;
@@ -83,8 +82,7 @@ public class PorousHoneycomb extends Block {
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BUCKET_EMPTY, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
             if (!playerEntity.isCreative()) {
-                itemstack.shrink(1); // remove current honey bucket
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, itemstack, true, true);
             }
 
             return InteractionResult.SUCCESS;

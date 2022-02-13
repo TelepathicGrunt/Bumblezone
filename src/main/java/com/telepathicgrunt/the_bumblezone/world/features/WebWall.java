@@ -61,11 +61,13 @@ public class WebWall extends Feature<NoneFeatureConfiguration> {
                             ));
                         }
 
-                        level.setBlock(
-                            validPos,
-                            BzBlocks.HONEY_WEB.defaultBlockState()
-                                    .setValue(HoneyWeb.AXIS_TO_PROP.get(axis), true),
-                            3);
+                        BlockState state = level.getBlockState(validPos);
+                        if (state.is(BzBlocks.HONEY_WEB)) {
+                            level.setBlock(validPos, state.setValue(HoneyWeb.AXIS_TO_PROP.get(axis), true), 3);
+                        }
+                        else {
+                            level.setBlock(validPos, BzBlocks.HONEY_WEB.defaultBlockState().setValue(HoneyWeb.AXIS_TO_PROP.get(axis), true), 3);
+                        }
                     }
 
                     return true;
@@ -89,10 +91,13 @@ public class WebWall extends Feature<NoneFeatureConfiguration> {
 
             if(!validSpaces.contains(newBlockPos)) {
                 BlockState state = level.getBlockState(newBlockPos);
-                if(state.isAir() || state.is(BzBlocks.PILE_OF_POLLEN)) {
+                if(state.isAir() || state.is(BzBlocks.PILE_OF_POLLEN) || state.is(BzBlocks.HONEY_WEB)) {
                     validSpaces.add(newBlockPos);
                     if(!setIfValidSpace(level, axis, originPos, newBlockPos, validSpaces)) {
                         return false;
+                    }
+                    else if (state.is(BzBlocks.HONEY_WEB)) {
+                        validSpaces.add(newBlockPos);
                     }
                 }
             }

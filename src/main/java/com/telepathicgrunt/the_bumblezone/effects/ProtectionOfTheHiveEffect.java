@@ -27,6 +27,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
     /**
      * Returns true if the potion has an instant effect instead of a continuous one (eg Harming)
      */
+    @Override
     public boolean isInstantenous() {
         return false;
     }
@@ -34,6 +35,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
     /**
      * checks if Potion effect is ready to be applied this tick.
      */
+    @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {
         return duration >= 1;
     }
@@ -41,13 +43,13 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
     /**
      * Calm all attacking bees when first applied to the entity
      */
+    @Override
     public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
 
         SEE_THROUGH_WALLS.range(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D);
         List<Bee> beeList = entity.level.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D));
 
-        for (Bee bee : beeList)
-        {
+        for (Bee bee : beeList) {
             if(bee.getTarget() == entity) {
                 bee.setTarget(null);
                 bee.setPersistentAngerTarget(null);
@@ -61,6 +63,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
     /**
      * Makes the bees swarm at the attacking entity
      */
+    @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
        if(entity.hurtTime > 0 && entity.getLastHurtByMob() != null) {
            resetBeeAngry(entity.level, entity.getLastHurtByMob());
@@ -77,8 +80,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
     /**
      * Changes the entity Bees are angry at.
      */
-    public static void resetBeeAngry(Level world, LivingEntity livingEntity)
-    {
+    public static void resetBeeAngry(Level world, LivingEntity livingEntity) {
         LivingEntity entity = livingEntity;
         UUID uuid = entity.getUUID();
 
@@ -90,8 +92,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
             uuid = null;
         }
 
-        for (Bee bee : beeList)
-        {
+        for (Bee bee : beeList) {
             bee.setTarget(entity);
             bee.setPersistentAngerTarget(uuid);
             if(entity == null) {

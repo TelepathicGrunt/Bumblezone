@@ -140,5 +140,98 @@
       }
     ],
     "subtitle": "subtitles.the_bumblezone.beehemoth.loop"
+  },
+  "entity.the_bumblezone.bumble_bee_chestplate.fly": {
+    "sounds": [
+      {
+        "attenuation_distance": 6,
+        "name": "mob/bee/loop5",
+        "volume": 0.6
+      }
+    ],
+    "subtitle": "subtitles.the_bumblezone.beehemoth.loop"
+  },
+  "item.the_bumblezone.stinger_spear.hit": {
+    "sounds": [
+      "item/trident/pierce1",
+      "item/trident/pierce2",
+      "item/trident/pierce3"
+    ],
+    "subtitle": "subtitles.item.the_bumblezone.stinger_spear.hit"
+  },
+  "item.the_bumblezone.stinger_spear.hit_ground": {
+    "sounds": [
+      {
+        "name": "item/trident/ground_impact1",
+        "volume": 0.9
+      },
+      {
+        "name": "item/trident/ground_impact2",
+        "volume": 0.9
+      },
+      {
+        "name": "item/trident/ground_impact3",
+        "volume": 0.9
+      },
+      {
+        "name": "item/trident/ground_impact4",
+        "volume": 0.9
+      }
+    ],
+    "subtitle": "subtitles.item.the_bumblezone.stinger_spear.hit_ground"
+  },
+  "item.the_bumblezone.stinger_spear.return": {
+    "sounds": [
+      {
+        "name": "item/trident/return1",
+        "volume": 0.8
+      },
+      {
+        "name": "item/trident/return2",
+        "pitch": 1.2,
+        "volume": 0.8
+      },
+      {
+        "name": "item/trident/return3",
+        "pitch": 0.8,
+        "volume": 0.8
+      },
+      {
+        "name": "item/trident/return2",
+        "volume": 0.8
+      },
+      {
+        "name": "item/trident/return2",
+        "pitch": 1.2,
+        "volume": 0.8
+      },
+      {
+        "name": "item/trident/return2",
+        "pitch": 0.8,
+        "volume": 0.8
+      },
+      {
+        "name": "item/trident/return3",
+        "volume": 0.8
+      },
+      {
+        "name": "item/trident/return3",
+        "pitch": 1.2,
+        "volume": 0.8
+      },
+      {
+        "name": "item/trident/return3",
+        "pitch": 0.8,
+        "volume": 0.8
+      }
+    ],
+    "subtitle": "subtitles.item.the_bumblezone.stinger_spear.return"
+  },
+  "item.the_bumblezone.stinger_spear.throw": {
+    "sounds": [
+      "item/trident/throw1",
+      "item/trident/throw2"
+    ],
+    "subtitle": "subtitles.item.the_bumblezone.stinger_spear.throw"
   }
 }

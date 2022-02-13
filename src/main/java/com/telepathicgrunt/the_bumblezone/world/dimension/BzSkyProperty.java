@@ -15,7 +15,7 @@ public class BzSkyProperty extends DimensionSpecialEffects {
 
     @Override
     public Vec3 getBrightnessDependentFogColor(Vec3 color, float sunHeight) {
-        return getFogColor().scale(0.003921568627451); // Divide by 255 to amke values between 0 and 1
+        return getFogColor().scale(0.003921568627451); // Divide by 255 to make values between 0 and 1
     }
 
     @Override

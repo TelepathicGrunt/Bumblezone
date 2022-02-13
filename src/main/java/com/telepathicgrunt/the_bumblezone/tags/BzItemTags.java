@@ -12,6 +12,8 @@ public class BzItemTags {
 
     public static final Tag<Item> TURN_SLIME_TO_HONEY_SLIME = TagFactory.ITEM.create(new ResourceLocation(Bumblezone.MODID, "turn_slime_to_honey_slime"));
     public static final Tag<Item> HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS = TagFactory.ITEM.create(new ResourceLocation(Bumblezone.MODID, "honey_crystal_shield_repair_items"));
+    public static final Tag<Item> STINGER_SPEAR_REPAIR_ITEMS = TagFactory.ITEM.create(new ResourceLocation(Bumblezone.MODID, "stinger_spear_repair_items"));
+    public static final Tag<Item> BEE_ARMOR_REPAIR_ITEMS = TagFactory.ITEM.create(new ResourceLocation(Bumblezone.MODID, "bee_armor_repair_items"));
     public static final Tag<Item> BEE_FEEDING_ITEMS = TagFactory.ITEM.create(new ResourceLocation(Bumblezone.MODID, "bee_feeding_items"));
     public static final Tag<Item> WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP = TagFactory.ITEM.create(new ResourceLocation(Bumblezone.MODID, "wrath_activating_items_when_picked_up"));
 

@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "the_bumblezone:item/stinger_spear"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [ 0, -90, 60 ],
+      "translation": [ 0, 3, 0 ],
+      "scale": [ 1, 1, 1 ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [ 0, 90, -60 ],
+      "translation": [ 0, 3, 0 ],
+      "scale": [ 1, 1, 1 ]
+    },
+    "firstperson_righthand": {
+      "rotation": [ 0, -80, 90 ],
+      "translation": [ 3, 3, 0],
+      "scale": [ 1, 1, 1 ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [ 0, -80, 0 ],
+      "translation": [ 3, 3, 0],
+      "scale": [ 1, 1, 1 ]
+    },
+    "ground": {
+      "rotation": [ 0, 0, 0 ],
+      "translation": [ 0, 1, 0],
+      "scale":[ 0.45, 0.45, 0.45]
+    }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "throwing": 1
+      },
+      "model": "the_bumblezone:item/stinger_spear_throwing"
+    }
+  ]
+}

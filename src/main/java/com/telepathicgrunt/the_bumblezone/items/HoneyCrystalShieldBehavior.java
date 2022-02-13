@@ -12,7 +12,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -70,11 +69,11 @@ public class HoneyCrystalShieldBehavior {
         }
     }
 
-    public static void setShieldCooldown(Player playerEntity, Mob mob) {
-        float f = 0.25F + (float) EnchantmentHelper.getBlockEfficiency(mob) * 0.05F;
-        if (mob.getRandom().nextFloat() < f) {
+    public static void setShieldCooldown(Player playerEntity, LivingEntity livingEntity) {
+        float disableChance = 0.25F + (float) EnchantmentHelper.getBlockEfficiency(livingEntity) * 0.05F;
+        if (livingEntity.getRandom().nextFloat() < disableChance) {
             playerEntity.getCooldowns().addCooldown(BzItems.HONEY_CRYSTAL_SHIELD, 100);
-            mob.level.broadcastEntityEvent(playerEntity, (byte)30);
+            livingEntity.level.broadcastEntityEvent(playerEntity, (byte)30);
         }
     }
 
@@ -87,7 +86,8 @@ public class HoneyCrystalShieldBehavior {
                 if (player.getUseItem().isEmpty()) {
                     if (hand == InteractionHand.MAIN_HAND) {
                         player.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
-                    } else {
+                    }
+                    else {
                         player.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
                     }
 
@@ -107,29 +107,50 @@ public class HoneyCrystalShieldBehavior {
      */
     public static int getMaximumDamage(ItemStack stack) {
         if(stack.hasTag()) {
-            int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
-            if (repairLevel != 0) {
-                return BzItems.HONEY_CRYSTAL_SHIELD.getMaxDamage() + repairLevel * 10;
+            upgradeLegacyShield(stack);
+
+            int shieldLevel = Math.max(Math.min(stack.getOrCreateTag().getInt("ShieldLevel"), HoneyCrystalShield.maxShieldLevel), 0);
+            if (shieldLevel != 0) {
+                return BzItems.HONEY_CRYSTAL_SHIELD.getMaxDamage() + HoneyCrystalShield.shieldDurabilityBoostPerLevel[shieldLevel];
             }
         }
         return BzItems.HONEY_CRYSTAL_SHIELD.getMaxDamage();
+    }
+
+    private static void upgradeLegacyShield(ItemStack stack) {
+        if(stack.hasTag() && !stack.getTag().contains("ShieldLevel")) {
+            int repairCost = stack.getOrCreateTag().getInt("RepairCost");
+            if (repairCost >= 32) {
+                stack.getOrCreateTag().putInt("ShieldLevel", HoneyCrystalShield.maxShieldLevel);
+            }
+            else if(repairCost >= 16) {
+                stack.getOrCreateTag().putInt("ShieldLevel", HoneyCrystalShield.maxShieldLevel - 1);
+            }
+            else if(repairCost >= 5) {
+                stack.getOrCreateTag().putInt("ShieldLevel", HoneyCrystalShield.maxShieldLevel / 2);
+            }
+        }
     }
 
     /**
      * reduces damage done to the shield for higher shield levels (repair cost)
      */
     public static int setDamage(ItemStack stack, int damage) {
-        if (stack.hasTag()) {
-            int repairLevel = stack.getTag().contains("RepairCost", 3) ? stack.getTag().getInt("RepairCost") : 0;
-            int damageCaused = stack.getDamageValue() - damage;
+        int newDamage = damage;
+        int oldDamage = stack.getDamageValue();
+        int damageCaused = oldDamage - damage;
+        int shieldLevel = stack.getOrCreateTag().getInt("ShieldLevel");
 
-            // ignore anvil repairing
-            if (damageCaused < 0 && repairLevel != 0) {
-                int reducedDamage = Math.min(-1, damageCaused + (repairLevel / 14));
-                return stack.getDamageValue() + (-reducedDamage);
-            }
+        // ignore anvil repairing
+        if (damageCaused < 0) {
+            int reducedDamage = -1 * Math.min(-1, damageCaused + (shieldLevel / 4));
+            newDamage = Math.max(0, stack.getDamageValue() + reducedDamage);
+        }
+        // strengthen on significant repair
+        else if (damageCaused > stack.getMaxDamage() / 5) {
+            stack.getOrCreateTag().putInt("ShieldLevel", Math.min(HoneyCrystalShield.maxShieldLevel, shieldLevel + 1));
         }
 
-        return damage;
+        return newDamage;
     }
 }

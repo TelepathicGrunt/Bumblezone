@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
+import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +22,7 @@ public class BzEntities {
             .spawnGroup(MobCategory.CREATURE)
             .entityFactory(HoneySlimeEntity::new)
             .defaultAttributes(HoneySlimeEntity::getAttributeBuilder)
-            .dimensions(EntityDimensions.fixed(0.6F, 1.99F))
+            .dimensions(EntityDimensions.fixed(1F, 1F))
             .trackRangeChunks(8)
             .spawnRestriction(SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules)
             .build();
@@ -43,9 +44,17 @@ public class BzEntities {
             .trackedUpdateRate(10)
             .build();
 
+    public static final EntityType<ThrownStingerSpearEntity> THROWN_STINGER_SPEAR_ENTITY = FabricEntityTypeBuilder.
+            <ThrownStingerSpearEntity>create(MobCategory.MISC, ThrownStingerSpearEntity::new)
+            .dimensions(EntityDimensions.fixed(0.5F, 0.5F))
+            .trackRangeChunks(4)
+            .trackedUpdateRate(20)
+            .build();
+
     public static void registerEntities() {
         Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "honey_slime"), HONEY_SLIME);
         Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "beehemoth"), BEEHEMOTH);
         Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "pollen_puff"), POLLEN_PUFF_ENTITY);
+        Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "thrown_stinger_spear"), THROWN_STINGER_SPEAR_ENTITY);
     }
 }

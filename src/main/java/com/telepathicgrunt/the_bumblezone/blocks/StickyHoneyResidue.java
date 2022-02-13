@@ -1,20 +1,25 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import com.telepathicgrunt.the_bumblezone.mixin.blocks.VineBlockAccessor;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.items.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import it.unimi.dsi.fastutil.objects.Object2ShortMap;
+import it.unimi.dsi.fastutil.objects.Object2ShortOpenHashMap;
+import it.unimi.dsi.fastutil.shorts.Short2ObjectArrayMap;
+import it.unimi.dsi.fastutil.shorts.Short2ObjectMap;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -32,7 +37,9 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.VineBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -50,14 +57,29 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.Map;
 import java.util.Random;
 
-public class StickyHoneyResidue extends VineBlock {
+public class StickyHoneyResidue extends Block {
+    public static final BooleanProperty UP = PipeBlock.UP;
     public static final BooleanProperty DOWN = PipeBlock.DOWN;
-    protected static final VoxelShape DOWN_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 0.8D, 16.0D);
+    public static final BooleanProperty WEST = PipeBlock.WEST;
+    public static final BooleanProperty EAST = PipeBlock.EAST;
+    public static final BooleanProperty SOUTH = PipeBlock.SOUTH;
+    public static final BooleanProperty NORTH = PipeBlock.NORTH;
+    private static final VoxelShape[] BASE_SHAPES_BY_DIRECTION_ORDINAL = new VoxelShape[] {
+            Block.box(0, 0, 0, 16, 1, 16),
+            Block.box(0, 15, 0, 16, 16, 16),
+            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 1.0D),
+            Block.box(0.0D, 0.0D, 15.0D, 16.0D, 16.0D, 16.0D),
+            Block.box(0.0D, 0.0D, 0.0D, 1.0D, 16.0D, 16.0D),
+            Block.box(15.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)
+    };
+
+    protected final Short2ObjectMap<VoxelShape> shapeByIndex = new Short2ObjectArrayMap<>();
+    private final Object2ShortMap<BlockState> stateToIndex = new Object2ShortOpenHashMap<>();
     public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP =
             PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().collect(Util.toMap());
 
     public StickyHoneyResidue() {
-        super(FabricBlockSettings.of(BzBlocks.ORANGE_NOT_SOLID, MaterialColor.TERRACOTTA_ORANGE).noCollission().strength(6.0f, 0.0f).noOcclusion());
+        super(BlockBehaviour.Properties.of(BzBlocks.ORANGE_NOT_SOLID, MaterialColor.TERRACOTTA_ORANGE).noCollission().strength(6.0f, 0.0f).noOcclusion());
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(UP, false)
                 .setValue(NORTH, false)
@@ -86,55 +108,90 @@ public class StickyHoneyResidue extends VineBlock {
         builder.add(UP, NORTH, EAST, SOUTH, WEST, DOWN);
     }
 
+    protected short getAABBIndex(BlockState blockState) {
+        return this.stateToIndex.computeIfAbsent(blockState, (a) -> {
+            short bitFlag = 0;
+            for (Direction direction : Direction.values()) {
+                if (blockState.getValue(FACING_TO_PROPERTY_MAP.get(direction))) {
+                    bitFlag |= (1 << direction.ordinal());
+                }
+            }
+            return bitFlag;
+        });
+    }
+
     /**
      * Returns the shape based on the state of the block.
+     * Shape is cached
      */
     @Override
     public VoxelShape getShape(BlockState blockstate, BlockGetter world, BlockPos pos, CollisionContext context) {
-        VoxelShape voxelshape = Shapes.empty();
-        if (blockstate.getValue(UP)) {
-            voxelshape = Shapes.or(voxelshape, VineBlockAccessor.thebumblezone_getUP_SHAPE());
-        }
-
-        if (blockstate.getValue(SOUTH)) {
-            voxelshape = Shapes.or(voxelshape, VineBlockAccessor.thebumblezone_getSOUTH_SHAPE());
-        }
-
-        if (blockstate.getValue(WEST)) {
-            voxelshape = Shapes.or(voxelshape, VineBlockAccessor.thebumblezone_getWEST_SHAPE());
-        }
-
-        if (blockstate.getValue(NORTH)) {
-            voxelshape = Shapes.or(voxelshape, VineBlockAccessor.thebumblezone_getNORTH_SHAPE());
-        }
-
-        if (blockstate.getValue(EAST)) {
-            voxelshape = Shapes.or(voxelshape, VineBlockAccessor.thebumblezone_getEAST_SHAPE());
-        }
-
-        if (blockstate.getValue(DOWN)) {
-            voxelshape = Shapes.or(voxelshape, DOWN_AABB);
-        }
-
-        return voxelshape;
+        return shapeByIndex.computeIfAbsent(
+                getAABBIndex(blockstate),
+                (bitFlag) -> {
+                    VoxelShape shape = Shapes.empty();
+                    for (Direction direction : Direction.values()) {
+                        if (((bitFlag >> direction.ordinal()) & 1) != 0) {
+                            shape = Shapes.or(shape, BASE_SHAPES_BY_DIRECTION_ORDINAL[direction.ordinal()]);
+                        }
+                    }
+                    return shape;
+                }
+        );
     }
 
+    @Override
+    public boolean propagatesSkylightDown(BlockState p_181239_, BlockGetter p_181240_, BlockPos p_181241_) {
+        return true;
+    }
+
+    public static boolean isAcceptableNeighbour(BlockGetter p_57854_, BlockPos p_57855_, Direction p_57856_) {
+        BlockState blockstate = p_57854_.getBlockState(p_57855_);
+        return Block.isFaceFull(blockstate.getCollisionShape(p_57854_, p_57855_), p_57856_.getOpposite());
+    }
+
+    private int countFaces(BlockState blockState) {
+        int i = 0;
+        for(BooleanProperty booleanproperty : FACING_TO_PROPERTY_MAP.values()) {
+            if (blockState.getValue(booleanproperty)) {
+                ++i;
+            }
+        }
+        return i;
+    }
+
+    @Override
+    public boolean canBeReplaced(BlockState blockState, BlockPlaceContext blockPlaceContext) {
+        BlockState blockstate = blockPlaceContext.getLevel().getBlockState(blockPlaceContext.getClickedPos());
+        if (blockstate.is(this)) {
+            return this.countFaces(blockstate) < FACING_TO_PROPERTY_MAP.size();
+        }
+        else {
+            return super.canBeReplaced(blockState, blockPlaceContext);
+        }
+    }
 
     /**
      * Slows all entities inside the block.
      */
     @Deprecated
     @Override
-    public void entityInside(BlockState blockstate, Level world, BlockPos pos, Entity entity) {
-        VoxelShape voxelShape = getShape(blockstate, world, pos, null);
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+        VoxelShape voxelShape = getShape(blockState, level, blockPos, null);
         if(voxelShape == Shapes.empty()) {
-            world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+            level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
             return;
         }
 
-        voxelShape = voxelShape.move(pos.getX(), pos.getY(), pos.getZ());
+        ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
+        if(!beeLeggings.isEmpty()) {
+            super.entityInside(blockState, level, blockPos, entity);
+            return;
+        }
+
+        voxelShape = voxelShape.move(blockPos.getX(), blockPos.getY(), blockPos.getZ());
         if (Shapes.joinIsNotEmpty(voxelShape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND)) {
-            entity.makeStuckInBlock(blockstate, new Vec3(0.35D, 0.2F, 0.35D));
+            entity.makeStuckInBlock(blockState, new Vec3(0.35D, 0.2F, 0.35D));
             if (entity instanceof LivingEntity livingEntity) {
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.MOVEMENT_SLOWDOWN,
@@ -145,6 +202,7 @@ public class StickyHoneyResidue extends VineBlock {
                         true));
             }
         }
+        super.entityInside(blockState, level, blockPos, entity);
     }
 
     /**
@@ -270,9 +328,9 @@ public class StickyHoneyResidue extends VineBlock {
     public InteractionResult use(BlockState blockstate, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
-        if ((itemstack.getItem() instanceof BucketItem &&
-                ((BucketItemAccessor) itemstack.getItem()).thebumblezone_getFluid().is(FluidTags.WATER)) ||
-                itemstack.getOrCreateTag().getString("Potion").contains("water") ||
+        if ((itemstack.getItem() instanceof BucketItem bucketItem &&
+                ((BucketItemAccessor) bucketItem).thebumblezone_getFluid().is(FluidTags.WATER)) ||
+                (itemstack.hasTag() && itemstack.getOrCreateTag().getString("Potion").contains("water")) ||
                 itemstack.getItem() == Items.WET_SPONGE ||
                 itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {
 
@@ -324,4 +382,62 @@ public class StickyHoneyResidue extends VineBlock {
         return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);
     }
 
+    @Override
+    public BlockState rotate(BlockState blockState, Rotation rotation) {
+        return switch (rotation) {
+            case CLOCKWISE_180 -> blockState.setValue(NORTH, blockState.getValue(SOUTH)).setValue(EAST, blockState.getValue(WEST)).setValue(SOUTH, blockState.getValue(NORTH)).setValue(WEST, blockState.getValue(EAST));
+            case COUNTERCLOCKWISE_90 -> blockState.setValue(NORTH, blockState.getValue(EAST)).setValue(EAST, blockState.getValue(SOUTH)).setValue(SOUTH, blockState.getValue(WEST)).setValue(WEST, blockState.getValue(NORTH));
+            case CLOCKWISE_90 -> blockState.setValue(NORTH, blockState.getValue(WEST)).setValue(EAST, blockState.getValue(NORTH)).setValue(SOUTH, blockState.getValue(EAST)).setValue(WEST, blockState.getValue(SOUTH));
+            default -> blockState;
+        };
+    }
+
+    @Override
+    public BlockState mirror(BlockState blockState, Mirror mirror) {
+        return switch (mirror) {
+            case LEFT_RIGHT -> blockState.setValue(NORTH, blockState.getValue(SOUTH)).setValue(SOUTH, blockState.getValue(NORTH));
+            case FRONT_BACK -> blockState.setValue(EAST, blockState.getValue(WEST)).setValue(WEST, blockState.getValue(EAST));
+            default -> super.mirror(blockState, mirror);
+        };
+    }
+
+    /**
+     * Called periodically clientside on blocks near the player to show honey particles
+     */
+    @Override
+    public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
+        //chance of particle in this tick
+        for (int i = 0; i == random.nextInt(50); ++i) {
+            Direction randomDirection = Direction.values()[world.random.nextInt(Direction.values().length)];
+            if (randomDirection != Direction.DOWN) {
+                this.addParticle(ParticleTypes.DRIPPING_HONEY, world, position, blockState, randomDirection);
+            }
+        }
+    }
+
+    /**
+     * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addParticle method
+     */
+    protected void addParticle(ParticleOptions particleType, Level world, BlockPos blockPos, BlockState blockState, Direction direction) {
+        short bitFlag = getAABBIndex(blockState);
+        if(((bitFlag >> direction.ordinal()) & 1) != 0) {
+            VoxelShape chosenSide = BASE_SHAPES_BY_DIRECTION_ORDINAL[direction.ordinal()];
+            this.addParticle(
+                    particleType,
+                    world,
+                    blockPos.getX() + chosenSide.min(Direction.Axis.X),
+                    blockPos.getX() + chosenSide.max(Direction.Axis.X),
+                    blockPos.getY() + chosenSide.min(Direction.Axis.Y),
+                    blockPos.getY() + chosenSide.max(Direction.Axis.Y),
+                    blockPos.getZ() + chosenSide.min(Direction.Axis.Z),
+                    blockPos.getZ() + chosenSide.max(Direction.Axis.Z));
+        }
+    }
+
+    /**
+     * Adds the actual particle into the world within the given range
+     */
+    private void addParticle(ParticleOptions particleType, Level world, double xMin, double xMax, double yMin, double yMax, double zMax, double zMin) {
+        world.addParticle(particleType, Mth.lerp(world.random.nextDouble(), xMin, xMax), Mth.lerp(world.random.nextDouble(), yMin, yMax), Mth.lerp(world.random.nextDouble(), zMin, zMax), 0.0D, 0.0D, 0.0D);
+    }
 }

@@ -23,4 +23,11 @@ public class BzClientConfig implements ConfigData {
             Enable replacing the bee renderer for LGBT+ skins.
             Set this to false if the render is messing with other mod's bee renderers.""")
     public boolean enableLgbtBeeRenderer = true;
+
+
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip(count = 0)
+    @Comment(value = """
+            If on, Flight of the Bumblebee by Rimsky Korsakov will play when you have Wrath of the Hive effect on.""")
+    public boolean playWrathOfHiveEffectMusic = true;
 }

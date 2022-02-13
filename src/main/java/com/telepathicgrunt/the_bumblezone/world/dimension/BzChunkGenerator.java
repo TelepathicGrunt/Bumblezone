@@ -46,7 +46,6 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.chunk.ProtoChunk;
 import net.minecraft.world.level.levelgen.Aquifer;
-import net.minecraft.world.level.levelgen.Beardifier;
 import net.minecraft.world.level.levelgen.BelowZeroRetrogen;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -70,7 +69,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
@@ -133,17 +131,28 @@ public class BzChunkGenerator extends ChunkGenerator {
         this.surfaceSystem = new SurfaceSystem(registry, this.defaultBlock, seaLevel, seed, noiseGeneratorSettings.getRandomSource());
         this.configuredStructureFeaturesRegistry = configuredStructureFeaturesRegistry;
 
+        ConfiguredStructureFeature<?,?> currentStructure;
         ImmutableMap<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> originalMultiMap = ((StructureSettingsAccessor)noiseGeneratorSettings.structureSettings()).getConfiguredStructures();
         Map<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> newMultiMaps = new HashMap<>(originalMultiMap);
+
+        currentStructure = configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "honey_cave_room"));
         newMultiMaps.put(BzStructures.HONEY_CAVE_ROOM, ImmutableMultimap.of(
-                Objects.requireNonNull(configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "honey_cave_room"))),
-                ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_pillar"))));
+                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_pillar"))));
+
+        currentStructure = configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "pollinated_stream"));
         newMultiMaps.put(BzStructures.POLLINATED_STREAM, ImmutableMultimap.of(
-                Objects.requireNonNull(configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "pollinated_stream"))),
-                ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_pillar")),
-                Objects.requireNonNull(configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "pollinated_stream"))),
-                ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_fields"))
+                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_pillar")),
+                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_fields"))
         ));
+
+        currentStructure = configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "cell_maze"));
+        newMultiMaps.put(BzStructures.CELL_MAZE, ImmutableMultimap.of(
+                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_pillar")),
+                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_fields")),
+                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "hive_pillar")),
+                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "hive_wall"))
+        ));
+
         ((StructureSettingsAccessor)noiseGeneratorSettings.structureSettings()).setConfiguredStructures(ImmutableMap.copyOf(newMultiMaps));
     }
 
@@ -160,7 +169,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     }
 
     private void doCreateBiomes(Registry<Biome> registry, Blender blender, StructureFeatureManager structureFeatureManager, ChunkAccess chunkAccess) {
-        NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk(this.sampler, () -> new Beardifier(structureFeatureManager, chunkAccess), this.settings.get(), this.globalFluidPicker, blender);
+        NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk(this.sampler, () -> new BumblezoneBeardifier(structureFeatureManager, chunkAccess), this.settings.get(), this.globalFluidPicker, blender);
         BiomeResolver biomeResolver = BelowZeroRetrogen.getBiomeResolver(blender.getBiomeResolver(this.runtimeBiomeSource), registry, chunkAccess);
         chunkAccess.fillBiomesFromNoise(biomeResolver, (x, y, z) -> this.sampler.target(x, y, z, noiseChunk.noiseData(x, z)));
     }
@@ -264,7 +273,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         if (!SharedConstants.debugVoidTerrain(chunkAccess.getPos())) {
             WorldGenerationContext worldGenerationContext = new WorldGenerationContext(this, worldGenRegion);
             NoiseGeneratorSettings noiseGeneratorSettings = this.settings.get();
-            NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk(this.sampler, () -> new Beardifier(structureFeatureManager, chunkAccess), noiseGeneratorSettings, this.globalFluidPicker, Blender.of(worldGenRegion));
+            NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk(this.sampler, () -> new BumblezoneBeardifier(structureFeatureManager, chunkAccess), noiseGeneratorSettings, this.globalFluidPicker, Blender.of(worldGenRegion));
             this.surfaceSystem.buildSurface(worldGenRegion.getBiomeManager(), worldGenRegion.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY), noiseGeneratorSettings.useLegacyRandomSource(), worldGenerationContext, chunkAccess, noiseChunk, noiseGeneratorSettings.surfaceRule());
         }
     }
@@ -302,7 +311,7 @@ public class BzChunkGenerator extends ChunkGenerator {
 
     private ChunkAccess doFill(Blender blender, StructureFeatureManager structureFeatureManager, ChunkAccess chunkAccess, int minYCell, int maxYCell) {
         NoiseGeneratorSettings noiseGeneratorSettings = (NoiseGeneratorSettings)this.settings.get();
-        NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk(this.sampler, () -> new Beardifier(structureFeatureManager, chunkAccess), noiseGeneratorSettings, this.globalFluidPicker, blender);
+        NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk(this.sampler, () -> new BumblezoneBeardifier(structureFeatureManager, chunkAccess), noiseGeneratorSettings, this.globalFluidPicker, blender);
         Heightmap heightmap = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.OCEAN_FLOOR_WG);
         Heightmap heightmap2 = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.WORLD_SURFACE_WG);
         ChunkPos chunkPos = chunkAccess.getPos();

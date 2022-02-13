@@ -93,10 +93,7 @@ public class BeeInteractivity {
             }
 
             if (!playerEntity.isCreative()) {
-                // remove current item
-                Item item = itemstack.getItem();
-                itemstack.shrink(1);
-                GeneralUtils.givePlayerItem(playerEntity, hand, new ItemStack(item), true);
+                GeneralUtils.givePlayerItem(playerEntity, hand, new ItemStack(itemstack.getItem()), true, true);
             }
 
             if(removedWrath && playerEntity instanceof ServerPlayer) {
@@ -150,20 +147,19 @@ public class BeeInteractivity {
                 WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
                 removedWrath = true;
             }
-            else{
-                playerEntity.addEffect(new MobEffectInstance(
-                        BzEffects.PROTECTION_OF_THE_HIVE,
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts,
-                        2,
-                        false,
-                        false,
-                        true));
-            }
+
+            playerEntity.addEffect(new MobEffectInstance(
+                    BzEffects.PROTECTION_OF_THE_HIVE,
+                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts,
+                    2,
+                    false,
+                    false,
+                    true));
         }
 
         if (beeEntity instanceof Bee ?
-                (!((Bee)beeEntity).isAngry() || calmed) :
-                calmed)
+            (!((Bee)beeEntity).isAngry() || calmed) :
+            calmed)
         {
             ((ServerLevel) world).sendParticles(
                     ParticleTypes.HEART,

@@ -13,6 +13,14 @@ public class BzBeeAggressionConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip(count = 0)
     @Comment(value = """
 
+            If set to true, any entity that harms a beehemoth and is not owner of it,
+            that entity will get Wrath of the Hive effect.""")
+    public boolean beehemothTriggersWrath = false;
+
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip(count = 0)
+    @Comment(value = """
+
             Determines if Wrath of the Hive can be applied to players outside
             the Bumblezone dimension when they pick up Honey blocks, take honey
              from Filled Porous Honey blocks, or drink Honey Bottles.""")

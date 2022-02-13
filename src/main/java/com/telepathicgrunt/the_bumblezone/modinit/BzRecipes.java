@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.items.ContainerCraftingRecipe;
+import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;

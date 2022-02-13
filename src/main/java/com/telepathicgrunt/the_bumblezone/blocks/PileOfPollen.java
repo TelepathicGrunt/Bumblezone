@@ -1,10 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
@@ -14,7 +16,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Panda;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -40,6 +44,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -218,7 +223,7 @@ public class PileOfPollen extends FallingBlock {
 
         // make falling block of this block stack the pollen or else destroy it
         if(entity instanceof FallingBlockEntity) {
-            if(((FallingBlockEntity) entity).getBlockState().isAir())
+            if(((FallingBlockEntity) entity).getBlockState().isAir() || world.isClientSide())
                 return;
 
             if(((FallingBlockEntity)entity).getBlockState().is(BzBlocks.PILE_OF_POLLEN)) {
@@ -257,9 +262,13 @@ public class PileOfPollen extends FallingBlock {
         // slows the entity and spawns particles
         else {
             int layerValueMinusOne = blockState.getValue(LAYERS) - 1;
-            double speedReduction = (entity instanceof Projectile) ? 0.85f : 1 - layerValueMinusOne * 0.1D;
-            double chance = 0.22f + layerValueMinusOne * 0.09f;
+            double speedReduction = (entity instanceof Projectile) ? 0.85D : 1 - (layerValueMinusOne * 0.1D);
+            double chance = 0.22D + layerValueMinusOne * 0.09D;
 
+            ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
+            if(!beeLeggings.isEmpty()) {
+                speedReduction = Math.max(0.9D, speedReduction);
+            }
 
             Vec3 deltaMovement = entity.getDeltaMovement();
             double newYDelta = deltaMovement.y;
@@ -269,10 +278,10 @@ public class PileOfPollen extends FallingBlock {
             }
 
             if(deltaMovement.y > 0) {
-                newYDelta *= (1f - layerValueMinusOne * 0.01f);
+                newYDelta *= (1D - layerValueMinusOne * 0.01D);
             }
             else {
-                newYDelta *= (0.84f - layerValueMinusOne * 0.03f);
+                newYDelta *= (0.84D - layerValueMinusOne * 0.03D);
             }
 
             entity.setDeltaMovement(new Vec3(
@@ -328,10 +337,33 @@ public class PileOfPollen extends FallingBlock {
                     world.setBlock(blockPos, blockState.setValue(LAYERS, layerValueMinusOne), 3);
                 }
             }
-        }
 
-        if(entity instanceof Panda pandaEntity) {
-            pandaSneezing(pandaEntity);
+            if(entity instanceof Panda pandaEntity) {
+                pandaSneezing(pandaEntity);
+            }
+
+            // make entity invisible if hidden inside
+            if(entity instanceof LivingEntity livingEntity) {
+                AABB blockBounds = blockState.getShape(world, blockPos).bounds().move(blockPos.getX(), blockPos.getY(), blockPos.getZ()).inflate(0.1f);
+                if(blockBounds.contains(livingEntity.getEyePosition())) {
+                    livingEntity.addEffect(new MobEffectInstance(
+                            BzEffects.HIDDEN,
+                            10,
+                            1,
+                            false,
+                            false,
+                            true));
+                }
+                else if (blockState.getValue(LAYERS) > 6) {
+                    livingEntity.addEffect(new MobEffectInstance(
+                            BzEffects.HIDDEN,
+                            1,
+                            0,
+                            false,
+                            false,
+                            true));
+                }
+            }
         }
     }
 
@@ -375,7 +407,6 @@ public class PileOfPollen extends FallingBlock {
             }
         }
     }
-
     // Rarely spawn particle on its own
     public void animateTick(BlockState blockState, Level world, BlockPos blockPos, Random random) {
         int layerValue = blockState.getValue(LAYERS);

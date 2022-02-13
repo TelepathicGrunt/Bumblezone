@@ -6,7 +6,9 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
@@ -21,21 +23,21 @@ import java.util.HashSet;
 public class ReplaceNotAirProcessor extends StructureProcessor {
 
     public static final Codec<ReplaceNotAirProcessor> CODEC  = RecordCodecBuilder.create((instance) -> instance.group(
-            BlockState.CODEC.listOf()
+            Registry.BLOCK.byNameCodec().listOf()
                     .xmap(Sets::newHashSet, Lists::newArrayList)
-                    .optionalFieldOf("blocks_to_always_place", new HashSet<>())
-                    .forGetter((config) -> config.blocksToAlwaysPlace))
+                    .optionalFieldOf("blocks_to_always_replace", new HashSet<>())
+                    .forGetter((config) -> config.blocksToAlwaysReplace))
             .apply(instance, instance.stable(ReplaceNotAirProcessor::new)));
 
-    public final HashSet<BlockState> blocksToAlwaysPlace;
-    private ReplaceNotAirProcessor(HashSet<BlockState> blocksToAlwaysPlace) {
-        this.blocksToAlwaysPlace = blocksToAlwaysPlace;
+    public final HashSet<Block> blocksToAlwaysReplace;
+    private ReplaceNotAirProcessor(HashSet<Block> blocksToAlwaysReplace) {
+        this.blocksToAlwaysReplace = blocksToAlwaysReplace;
     }
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
 
-        if(!blocksToAlwaysPlace.contains(structureBlockInfoWorld.state)) {
+        if(blocksToAlwaysReplace.isEmpty() || blocksToAlwaysReplace.contains(structureBlockInfoWorld.state.getBlock())) {
             BlockPos position = structureBlockInfoWorld.pos;
             BlockState worldState = worldView.getBlockState(position);
 

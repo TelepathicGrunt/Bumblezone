@@ -1,0 +1,60 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/cell_maze/enter_cell_maze",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:stingless_bee_helmet_1"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.warrior_bee.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.warrior_bee.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 200
+  },
+  "criteria": {
+    "warrior_bee": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "the_bumblezone:stingless_bee_helmet_1",
+              "the_bumblezone:stingless_bee_helmet_2"
+            ]
+          },
+          {
+            "items": [
+              "the_bumblezone:bumble_bee_chestplate_1",
+              "the_bumblezone:bumble_bee_chestplate_2",
+              "the_bumblezone:bumble_bee_chestplate_trans_1",
+              "the_bumblezone:bumble_bee_chestplate_trans_2"
+            ]
+          },
+          {
+            "items": [
+              "the_bumblezone:honey_bee_leggings_1",
+              "the_bumblezone:honey_bee_leggings_2"
+            ]
+          },
+          {
+            "items": [
+              "the_bumblezone:stinger_spear"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "warrior_bee"
+    ]
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "name": "the_bumblezone:honey_cocoon",
+              "type": "minecraft:item",
+              "functions": [
+                {
+                  "function": "minecraft:copy_name",
+                  "source": "block_entity"
+                },
+                {
+                  "function": "minecraft:copy_nbt",
+                  "source": "block_entity",
+                  "ops": [
+                    {
+                      "source": "Items",
+                      "target": "BlockEntityTag.Items",
+                      "op": "replace"
+                    }
+                  ]
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "minecraft:silk_touch",
+                        "levels": { "min": 1 }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "the_bumblezone:honey_cocoon",
+              "type": "minecraft:item",
+              "functions": [
+                {
+                  "function": "the_bumblezone:drop_container_loot"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ]
+}

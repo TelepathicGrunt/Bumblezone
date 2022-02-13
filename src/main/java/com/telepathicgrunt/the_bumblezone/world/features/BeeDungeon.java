@@ -3,9 +3,11 @@ package com.telepathicgrunt.the_bumblezone.world.features;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.SectionPos;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -34,6 +36,9 @@ public class BeeDungeon extends NbtFeature{
     }
 
     protected static boolean isValidDungeonSpot(FeaturePlaceContext<?> context) {
+        if (!context.level().startsForFeature(SectionPos.of(context.origin()), BzStructures.CELL_MAZE).isEmpty()) {
+            return false;
+        }
 
         boolean validSpot = false;
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();

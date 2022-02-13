@@ -170,8 +170,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
                     SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
-            itemstack.shrink(1);
-            GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE), false);
+            GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE), false, true);
             return InteractionResult.SUCCESS;
         }
 

@@ -1,6 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
+import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
+import com.telepathicgrunt.the_bumblezone.effects.ParalyzedEffect;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
+import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
@@ -16,12 +19,27 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
 
     public LivingEntityMixin(EntityType<?> type, Level world) {
         super(type, world);
+    }
+
+    @Inject(method = "isImmobile()Z",
+            at = @At(value = "HEAD"), cancellable = true)
+    private void thebumblezone_isParalyzedCheck(CallbackInfoReturnable<Boolean> cir) {
+        if(ParalyzedEffect.isParalyzed((LivingEntity)(Object)this)) {
+            cir.setReturnValue(true);
+        }
+    }
+
+    @Inject(method = "hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+            at = @At(value = "HEAD"))
+    private void thebumblezone_entityHurt(DamageSource source, float pAmount, CallbackInfoReturnable<Boolean> cir) {
+        NeurotoxinsEnchantment.entityHurt(this, source);
     }
 
     //bees become angrier when hit in bumblezone
@@ -46,6 +64,15 @@ public abstract class LivingEntityMixin extends Entity {
         EntityTeleportationHookup.entityTick((LivingEntity) (Object) this);
     }
 
+    //hides entities with hidden effect
+    @Inject(method = "getVisibilityPercent(Lnet/minecraft/world/entity/Entity;)D",
+            at = @At(value = "RETURN"), cancellable = true)
+    private void thebumblezone_hideEntityWithHiddenEffect(Entity entity, CallbackInfoReturnable<Double> cir) {
+        double newVisibility = HiddenEffect.hideEntity(entity, cir.getReturnValue());
+        if(cir.getReturnValue() != newVisibility) {
+            cir.setReturnValue(newVisibility);
+        }
+    }
 
     //-----------------------------------------------------------//
 

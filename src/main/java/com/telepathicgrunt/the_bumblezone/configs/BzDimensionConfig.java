@@ -91,6 +91,6 @@ public class BzDimensionConfig implements ConfigData {
             is near the spot when exiting the dimension. If none is found, then
             mode 2's teleportation method is used instead.""")
     @ConfigEntry.BoundedDiscrete(min = 1, max = 3)
-    public int teleportationMode = 1;
+    public int teleportationMode = 3;
 
 }

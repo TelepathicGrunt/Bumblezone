@@ -3,25 +3,29 @@ package com.telepathicgrunt.the_bumblezone.client;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuff;
+import com.telepathicgrunt.the_bumblezone.client.rendering.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeeVariantRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeehemothRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HoneySlimeRendering;
+import com.telepathicgrunt.the_bumblezone.client.rendering.StingerSpearModel;
+import com.telepathicgrunt.the_bumblezone.client.rendering.StingerSpearRenderer;
+import com.telepathicgrunt.the_bumblezone.mixin.client.DimensionSpecialEffectsAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.client.EntityRendererRegistryImplAccessor;
-import com.telepathicgrunt.the_bumblezone.mixin.world.DimensionSpecialEffectsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.packets.MobEffectClientSyncPacket;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.fabric.impl.client.particle.ParticleFactoryRegistryImpl;
@@ -51,6 +55,7 @@ public class BumblezoneClient implements ClientModInitializer {
         EntityRendererRegistry.register(BzEntities.POLLEN_PUFF_ENTITY, ThrownItemRenderer::new);
         EntityRendererRegistry.register(BzEntities.HONEY_SLIME, HoneySlimeRendering::new);
         EntityRendererRegistry.register(BzEntities.BEEHEMOTH, BeehemothRenderer::new);
+        EntityRendererRegistry.register(BzEntities.THROWN_STINGER_SPEAR_ENTITY, StingerSpearRenderer::new);
 
         if(Bumblezone.BZ_CONFIG.BZClientConfig.enableLgbtBeeRenderer) {
             BeeVariantRenderer.OLD_BEE_RENDER_FACTORY = (EntityRendererProvider<Bee>)EntityRendererRegistryImplAccessor.getMap().get(EntityType.BEE);
@@ -58,6 +63,9 @@ public class BumblezoneClient implements ClientModInitializer {
         }
 
         EntityModelLayerRegistry.registerModelLayer(BeehemothModel.LAYER_LOCATION, BeehemothModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(StingerSpearModel.LAYER_LOCATION, StingerSpearModel::createLayer);
+        EntityModelLayerRegistry.registerModelLayer(BeeArmorModel.VARIANT_1_LAYER_LOCATION, BeeArmorModel::createVariant1);
+        EntityModelLayerRegistry.registerModelLayer(BeeArmorModel.VARIANT_2_LAYER_LOCATION, BeeArmorModel::createVariant2);
         DimensionSpecialEffectsAccessor.thebumblezone_getBY_IDENTIFIER().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
 
         // Allows shield to use the blocking json file for offset
@@ -71,6 +79,16 @@ public class BumblezoneClient implements ClientModInitializer {
         );
 
         UpdateFallingBlockPacket.registerPacket();
+        MobEffectClientSyncPacket.registerPacket();
+
+        BzItems.STINGLESS_BEE_HELMET_1.registerRenderer().run();
+        BzItems.STINGLESS_BEE_HELMET_2.registerRenderer().run();
+        BzItems.BUMBLE_BEE_CHESTPLATE_1.registerRenderer().run();
+        BzItems.BUMBLE_BEE_CHESTPLATE_2.registerRenderer().run();
+        BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_1.registerRenderer().run();
+        BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2.registerRenderer().run();
+        BzItems.HONEY_BEE_LEGGINGS_1.registerRenderer().run();
+        BzItems.HONEY_BEE_LEGGINGS_2.registerRenderer().run();
     }
     
     public static void registerRenderLayers() {

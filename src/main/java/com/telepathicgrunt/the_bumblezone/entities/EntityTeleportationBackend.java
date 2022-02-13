@@ -30,6 +30,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class EntityTeleportationBackend {
+    
+    private static final int SEARCH_RADIUS = 44;
 
     public static Vec3 destPostFromOutOfBoundsTeleport(Entity entity, ServerLevel destination, boolean checkingUpward, boolean mustBeNearBeeBlock) {
         //converts the position to get the corresponding position in non-bumblezone dimension
@@ -46,7 +48,7 @@ public class EntityTeleportationBackend {
                     Doubles.constrainToRange(entity.position().z() * coordinateScale, -29999936D, 29999936D));
 
             //Gets valid space in other world
-            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward, mustBeNearBeeBlock);
+            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, SEARCH_RADIUS, checkingUpward, mustBeNearBeeBlock);
         }
 
         else if(Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 2) {
@@ -55,12 +57,7 @@ public class EntityTeleportationBackend {
                 validBlockPos = new BlockPos(playerPos);
             }
             else {
-                finalSpawnPos = new BlockPos(
-                        Doubles.constrainToRange(entity.position().x() * coordinateScale, -29999936D, 29999936D),
-                        entity.position().y(),
-                        Doubles.constrainToRange(entity.position().z() * coordinateScale, -29999936D, 29999936D));
-
-                validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward, mustBeNearBeeBlock);
+                validBlockPos = entity.blockPosition();
             }
         }
 
@@ -72,7 +69,7 @@ public class EntityTeleportationBackend {
                     Doubles.constrainToRange(entity.position().z() * coordinateScale, -29999936D, 29999936D));
 
             //Gets valid space in other world
-            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, 72, checkingUpward, false);
+            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, SEARCH_RADIUS, checkingUpward, false);
 
             Vec3 playerPos = Bumblezone.ENTITY_COMPONENT.get(entity).getNonBZPos();
             if(validBlockPos == null && playerPos != null) {

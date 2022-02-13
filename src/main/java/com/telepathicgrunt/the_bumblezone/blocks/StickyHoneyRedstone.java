@@ -1,9 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.math.Vector3f;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,33 +20,11 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.AABB;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class StickyHoneyRedstone extends StickyHoneyResidue {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
-    protected static final AABB DOWN_REAL_AABB = new AABB(0.0D, 0.0D, 0.0D, 1D, 0.2D, 1D);
-    protected static final AABB UP_REAL_AABB = new AABB(0.0D, 0.8D, 0.0D, 1D, 1D, 1D);
-    protected static final AABB NORTH_REAL_AABB = new AABB(0.0D, 0.0D, 0.0D, 1D, 1D, 0.2D);
-    protected static final AABB EAST_REAL_AABB = new AABB(0.8D, 0.0D, 0.0D, 1D, 1D, 1D);
-    protected static final AABB WEST_REAL_AABB = new AABB(0.0D, 0.0D, 0.0D, 0.2D, 1D, 1D);
-    protected static final AABB SOUTH_REAL_AABB = new AABB(0.0D, 0.0D, 0.2D, 1D, 1D, 1D);
-    public static final Map<Direction, AABB> FACING_TO_AABB_MAP;
-
-    static {
-        Map<Direction, AABB> map = new HashMap<Direction, AABB>();
-
-        map.put(Direction.DOWN, DOWN_REAL_AABB);
-        map.put(Direction.UP, UP_REAL_AABB);
-        map.put(Direction.EAST, EAST_REAL_AABB);
-        map.put(Direction.WEST, WEST_REAL_AABB);
-        map.put(Direction.NORTH, NORTH_REAL_AABB);
-        map.put(Direction.SOUTH, SOUTH_REAL_AABB);
-
-        FACING_TO_AABB_MAP = map;
-    }
 
     public StickyHoneyRedstone() {
         super(FabricBlockSettings.of(BzBlocks.ORANGE_NOT_SOLID, MaterialColor.TERRACOTTA_ORANGE).lightLevel(blockState -> blockState.getValue(POWERED) ? 1 : 0).noCollission().strength(6.0f, 0.0f).noOcclusion());
@@ -71,9 +51,9 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      */
     @Deprecated
     @Override
-    public void entityInside(BlockState blockstate, Level world, BlockPos pos, Entity entity) {
-        updateState(world, pos, blockstate, 0);
-        super.entityInside(blockstate, world, pos, entity);
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+        updateState(level, blockPos, blockState, 0);
+        super.entityInside(blockState, level, blockPos, entity);
     }
 
     protected int getTickRate() {
@@ -140,6 +120,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         }
     }
 
+    @Override
     public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean moved) {
         this.updateTarget(world, pos, state);
     }
@@ -154,11 +135,11 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         }
     }
 
+    @Override
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         if (this.computeRedstoneStrength(state, world, pos) > 0) {
             world.scheduleTick(pos, this, 1);
         }
-
     }
 
 
@@ -220,5 +201,16 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         }
 
         return 0;
+    }
+
+    @Override
+    public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
+        super.animateTick(blockState, world, position, random);
+        if (blockState.getValue(POWERED)) {
+            for (int i = 0; i == random.nextInt(2); ++i) {
+                Direction randomDirection = Direction.values()[world.random.nextInt(Direction.values().length)];
+                this.addParticle(new DustParticleOptions(new Vector3f(255, 0, 0), 1.0F), world, position, blockState, randomDirection);
+            }
+        }
     }
 }
