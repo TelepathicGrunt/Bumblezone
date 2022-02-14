@@ -1,5 +1,8 @@
 ### **(V.4.3.2 Changes) (1.18.1 Minecraft)**
 
+##### Entities:
+Improved animation so Beehemoth is still when on ground.
+
 ##### Lang:
 Fixed lang entry for Thrown Stinger Spear entity.
 
