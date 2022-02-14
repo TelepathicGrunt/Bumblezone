@@ -1,3 +1,9 @@
+### **(V.4.3.2 Changes) (1.18.1 Minecraft)**
+
+##### Lang:
+Fixed lang entry for Thrown Stinger Spear entity.
+
+
 ### **(V.4.3.1 Changes) (1.18.1 Minecraft)**
 
 ##### Items:
