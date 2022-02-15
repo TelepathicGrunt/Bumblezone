@@ -51,7 +51,7 @@
   "entity.the_bumblezone.beehemoth": "Beehemoth",
   "entity.the_bumblezone.beehemoth_queen": "Queen Beehemoth",
   "entity.the_bumblezone.pollen_puff": "Pollen Puff",
-  "entity.the_bumblezone.stinger_spear": "Stinger Spear",
+  "entity.the_bumblezone.thrown_stinger_spear": "Stinger Spear",
 
   "enchantment.the_bumblezone.comb_cutter": "Comb Cutter",
   "enchantment.the_bumblezone.comb_cutter.desc": "Mines combs, hives, nest, and wax blocks faster. Doubles the output of BeeNest and BeeHive blocks including Resourceful Bee's hives.",
