@@ -19,9 +19,12 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -83,6 +86,13 @@ public class BumblezoneClient {
                                     livingEntity.isUsingItem() &&
                                     livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
             );
+
+            MenuScreens.register(BzMenuTypes.STRICT_9x1.get(), ContainerScreen::new);
+            MenuScreens.register(BzMenuTypes.STRICT_9x2.get(), ContainerScreen::new);
+            MenuScreens.register(BzMenuTypes.STRICT_9x3.get(), ContainerScreen::new);
+            MenuScreens.register(BzMenuTypes.STRICT_9x4.get(), ContainerScreen::new);
+            MenuScreens.register(BzMenuTypes.STRICT_9x5.get(), ContainerScreen::new);
+            MenuScreens.register(BzMenuTypes.STRICT_9x6.get(), ContainerScreen::new);
         });
     }
 

@@ -25,6 +25,9 @@
                       "op": "replace"
                     }
                   ]
+                },
+                {
+                  "function": "the_bumblezone:uniquify_if_has_items"
                 }
               ],
               "conditions": [
