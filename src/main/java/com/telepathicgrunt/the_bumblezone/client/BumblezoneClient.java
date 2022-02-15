@@ -17,6 +17,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.packets.MobEffectClientSyncPacket;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
@@ -29,6 +30,8 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.fabric.impl.client.particle.ParticleFactoryRegistryImpl;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -89,6 +92,13 @@ public class BumblezoneClient implements ClientModInitializer {
         BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2.registerRenderer().run();
         BzItems.HONEY_BEE_LEGGINGS_1.registerRenderer().run();
         BzItems.HONEY_BEE_LEGGINGS_2.registerRenderer().run();
+
+        MenuScreens.register(BzMenuTypes.STRICT_9x1, ContainerScreen::new);
+        MenuScreens.register(BzMenuTypes.STRICT_9x2, ContainerScreen::new);
+        MenuScreens.register(BzMenuTypes.STRICT_9x3, ContainerScreen::new);
+        MenuScreens.register(BzMenuTypes.STRICT_9x4, ContainerScreen::new);
+        MenuScreens.register(BzMenuTypes.STRICT_9x5, ContainerScreen::new);
+        MenuScreens.register(BzMenuTypes.STRICT_9x6, ContainerScreen::new);
     }
     
     public static void registerRenderLayers() {
