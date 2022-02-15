@@ -13,19 +13,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 
 public class BzBlockItem extends BlockItem {
+    private final boolean fitInContainers;
+
     public BzBlockItem(Block block, Properties properties) {
+        this(block, properties, true);
+    }
+
+    public BzBlockItem(Block block, Properties properties, boolean fitInContainers) {
         super(block, properties);
+        this.fitInContainers = fitInContainers;
     }
 
     @Override
-    protected boolean placeBlock(BlockPlaceContext blockItemUseContext, BlockState blockState) {
-        Player playerEntity = blockItemUseContext.getPlayer();
-        if(playerEntity instanceof ServerPlayer && this.getBlock() == BzBlocks.HONEY_CRYSTAL) {
-            FluidState fluidState = blockItemUseContext.getLevel().getFluidState(blockItemUseContext.getClickedPos());
-            if(!fluidState.isEmpty() && fluidState.is(FluidTags.WATER) && fluidState.getType() != BzFluids.SUGAR_WATER_FLUID && fluidState.getType() != BzFluids.SUGAR_WATER_FLUID_FLOWING) {
-                BzCriterias.HONEY_CRYSTAL_IN_WATER_TRIGGER.trigger((ServerPlayer) playerEntity);
-            }
-        }
-        return blockItemUseContext.getLevel().setBlock(blockItemUseContext.getClickedPos(), blockState, 11);
+    public boolean canFitInsideContainerItems() {
+        return fitInContainers;
     }
 }

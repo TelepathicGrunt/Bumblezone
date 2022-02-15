@@ -1,7 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
-import com.telepathicgrunt.the_bumblezone.blocks.HoneyCocoon;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
+import com.telepathicgrunt.the_bumblezone.screens.StrictChestMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -15,7 +16,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -76,7 +76,7 @@ public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity imp
 
     @Override
     protected AbstractContainerMenu createMenu(int slot, Inventory inventory) {
-        return new ChestMenu(MenuType.GENERIC_9x2, slot, inventory, this, this.getContainerSize() / 9);
+        return new StrictChestMenu(BzMenuTypes.STRICT_9x2, slot, inventory, this, this.getContainerSize() / 9);
     }
 
     @Override
@@ -86,12 +86,12 @@ public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity imp
 
     @Override
     public boolean canPlaceItemThroughFace(int i, ItemStack item, Direction direction) {
-        return direction.getAxis() == Direction.Axis.Y && !(Block.byItem(item.getItem()) instanceof HoneyCocoon);
+        return direction == Direction.UP && item.getItem().canFitInsideContainerItems();
     }
 
     @Override
     public boolean canTakeItemThroughFace(int i, ItemStack itemStack, Direction direction) {
-        return direction.getAxis() == Direction.Axis.Y;
+        return direction == Direction.DOWN;
     }
 
     @Override

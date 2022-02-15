@@ -1,3 +1,21 @@
+### **(V.4.3.2 Changes) (1.18.1 Minecraft)**
+
+##### Blocks:
+Honey Cocoon block now cannot be placed into Shulker Boxes.
+
+Honey Cocoon block only allows other blocks to take or add items through the top of the Honey Cocoon block.
+
+Honey Cocoon's item form now only stacks if it is empty. If it is holding items inside, it cannot stack like Shulker Boxes.
+
+Shulker Boxes cannot be put into Honey Cocoon now and Honey Cocoon cannot be put into Shulker Boxes too.
+
+##### Entities:
+Improved animation so Beehemoth is still when on ground.
+
+##### Lang:
+Fixed lang entry for Thrown Stinger Spear entity.
+
+
 ### **(V.4.3.1 Changes) (1.18.1 Minecraft)**
 
 ##### Items:

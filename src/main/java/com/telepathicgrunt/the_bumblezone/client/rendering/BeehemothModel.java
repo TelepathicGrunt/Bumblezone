@@ -146,6 +146,12 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
         float range = max - min;
         return (so * range) + min;
     }
+
+    private float getCos(float time, float max, float min) {
+        float so = Mth.cos(time * 0.25f);
+        float range = max - min;
+        return (so * range) + min;
+    }
     
     @Override
     public void setupAnim(BeehemothEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
@@ -154,9 +160,10 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
         WING_RIGHT.xRot = 0.0f;
         ROOT.xRot = 0.0f;
         ROOT.y = 19.0f;
-        boolean onGround = entity.isOnGround() && entity.getDeltaMovement().lengthSqr() < 1.0E-7D;
+        boolean onGround = entity.isOnGround();
         boolean isSitting = entity.isInSittingPose();
-        if (onGround && !isSitting) {
+        double xzSpeed = Math.abs(entity.getDeltaMovement().x()) + Math.abs(entity.getDeltaMovement().z());
+        if (onGround) {
             WING_RIGHT.yRot = -0.2618f;
             WING_RIGHT.zRot = 0.0f;
             WING_LEFT.xRot = 0.0f;
@@ -168,6 +175,24 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
             LEG_MIDRIGHT.xRot = 0.0f;
             LEG_REARLEFT.xRot = 0.0f;
             LEG_REARRIGHT.xRot = 0.0f;
+
+            if(xzSpeed > 0.0000008D) {
+                KneeFrontRightCube_r1.yRot = getSine(ageInTicks + entity.offset1, 0.2f, 0.475f);
+                KneeMidRightCube_r1.yRot = getCos(ageInTicks + entity.offset2, 0.375f, 0.525f);
+                KneeRearRightCube_r1.yRot = getSine(ageInTicks + entity.offset3, 0.45f, 0.625f);
+                KneeFrontLeftCube_r1.yRot = getSine(ageInTicks + entity.offset4, -0.20f, -0.475f);
+                KneeMidLeftCube_r1.yRot = getCos(ageInTicks + entity.offset5, -0.375f, -0.525f);
+                KneeRearLeftCube_r1.yRot = getSine(ageInTicks + entity.offset6, -0.45f, -0.625f);
+            }
+
+            if(xzSpeed > 0.03D) {
+                WING_RIGHT.yRot = 0.0f;
+                float wingSpeed = 0.75f;
+                WING_LEFT.zRot = ((float) (Mth.cos((limbSwing + ageInTicks) * 2.1f * wingSpeed) * Math.PI * 0.15f));
+                WING_LEFT.xRot = WING_RIGHT.xRot;
+                WING_LEFT.yRot = WING_RIGHT.yRot;
+                WING_RIGHT.zRot = -WING_LEFT.zRot;
+            }
         } 
         else {
             WING_RIGHT.yRot = 0.0f;

@@ -13,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -71,11 +72,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     private static final EntityDataAccessor<Boolean> SADDLED = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> QUEEN = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> FRIENDSHIP = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.INT);
-
+    private static final TranslatableComponent QUEEN_NAME = new TranslatableComponent("entity.the_bumblezone.beehemoth_queen");
     private static final ResourceLocation MOB_CATCHER_RL = new ResourceLocation("mob_catcher", "mob_catcher");
     public static final int TICKS_PER_FLAP = Mth.ceil(1.4959966F);
     private boolean stopWandering = false;
-
     public float offset1, offset2, offset3, offset4, offset5, offset6;
 
     public BeehemothEntity(EntityType<? extends BeehemothEntity> type, Level world) {
@@ -88,8 +88,6 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
         this.offset5 = (this.random.nextFloat() - 0.5f);
         this.offset6 = (this.random.nextFloat() - 0.5f);
     }
-
-    private static final TranslatableComponent QUEEN_NAME = new TranslatableComponent("entity.the_bumblezone.beehemoth_queen");
 
     @Override
     protected Component getTypeName() {
@@ -271,6 +269,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
         return null;
     }
 
+    @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
@@ -443,6 +442,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
         }
     }
 
+    @Override
     public void positionRider(Entity passenger) {
         if (hasPassenger(passenger)) {
             float radius = -0.25F;
@@ -461,12 +461,14 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
         }
     }
 
+    @Override
     public double getPassengersRidingOffset() {
         float f = Math.min(0.25F, this.animationSpeed);
         float f1 = this.animationPosition;
         return (double) getBbHeight() - 0.2D + (double) (0.12F * Mth.cos(f1 * 0.7F) * 0.7F * f);
     }
 
+    @Override
     protected void removePassenger(Entity entity) {
         super.removePassenger(entity);
         if(entity == getOwner()) {
@@ -474,6 +476,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
         }
     }
 
+    @Override
     public boolean isNoGravity() {
         return true;
     }
@@ -516,6 +519,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
         LivingEntityFlyingSoundInstance.playSound(this, BzSounds.BEEHEMOTH_LOOP);
     }
 
+    @Override
     public void tick() {
         super.tick();
         stopWandering = isLeashed();
@@ -531,6 +535,14 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
         else if(getFriendship() < 0 && isTame()) {
             ejectPassengers();
             if(level.random.nextFloat() < 0.01f) spawnMadParticles();
+        }
+
+        if(isOnGround()) {
+            this.setDeltaMovement(
+                this.getDeltaMovement().x(),
+                this.getDeltaMovement().y() - 0.003D,
+                this.getDeltaMovement().z()
+            );
         }
     }
 
@@ -558,6 +570,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
             this.beehemothEntity = beehemothEntity;
         }
 
+        @Override
         public void tick() {
             if (this.operation == Operation.STRAFE) {
                 Vec3 vector3d = new Vec3(this.wantedX - beehemothEntity.getX(), this.wantedY - beehemothEntity.getY(), this.wantedZ - beehemothEntity.getZ());
@@ -574,8 +587,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                 this.operation = MoveControl.Operation.WAIT;
             }
             else if (this.operation == MoveControl.Operation.MOVE_TO) {
-                Vec3 vector3d = new Vec3(this.wantedX - beehemothEntity.getX(), this.wantedY - beehemothEntity.getY(), this.wantedZ - beehemothEntity.getZ());
-                double d0 = vector3d.length();
+                Vec3 vec3 = new Vec3(this.wantedX - beehemothEntity.getX(), this.wantedY - beehemothEntity.getY(), this.wantedZ - beehemothEntity.getZ());
+                double d0 = vec3.length();
                 if (d0 < beehemothEntity.getBoundingBox().getSize()) {
                     this.operation = MoveControl.Operation.WAIT;
                     beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().scale(0.5D));
@@ -585,7 +598,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                     if (beehemothEntity.isVehicle()) {
                         localSpeed *= 1.5D;
                     }
-                    beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().add(vector3d.scale(localSpeed * 0.005D / d0)));
+                    Vec3 newVelocity = beehemothEntity.getDeltaMovement().add(vec3.scale(localSpeed * 0.005D / d0));
+                    double newYSpeed = beehemothEntity.isOnGround() && newVelocity.y() + 0.0027D > 0 ? (newVelocity.y() + 0.009D) : newVelocity.y();
+                    beehemothEntity.setDeltaMovement(newVelocity.x(), newYSpeed, newVelocity.z());
+
                     if (beehemothEntity.getTarget() == null) {
                         double d2 = this.wantedX - beehemothEntity.getX();
                         double d1 = this.wantedZ - beehemothEntity.getZ();
@@ -599,7 +615,6 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                         beehemothEntity.setYRot(rotlerp(beehemothEntity.getYRot(), newRot, 10.0F));
                     }
                 }
-
             }
         }
     }
@@ -618,15 +633,18 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
             this.mob = mob;
         }
 
+        @Override
         public void tick() {
             ++this.tick;
         }
 
+        @Override
         public boolean moveTo(double x, double y, double z, double speedIn) {
             mob.getMoveControl().setWantedPosition(x, y, z, speedIn);
             return true;
         }
 
+        @Override
         public boolean moveTo(Entity entityIn, double speedIn) {
             mob.getMoveControl().setWantedPosition(entityIn.getX(), entityIn.getY(), entityIn.getZ(), speedIn);
             return true;
