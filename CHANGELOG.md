@@ -9,6 +9,9 @@ When washing away Honey Webs/Residues with water related items (buckets, bottles
 ##### Items:
 Added JEI descriptions for the two Bumblezone music discs: Honey Bee Rat Faced Boy disc and Flight of the Bumblebee Rimsky Korsakov disc.
 
+##### Enchantments:
+Fixed Potent Poison not applying to victim if they are hit by a thrown Trident with the enchantment while in survival.
+
 
 ### **(V.4.3.2 Changes) (1.18.1 Minecraft)**
 
