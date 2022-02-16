@@ -10,6 +10,8 @@ Honey Cocoons now keep their names when placed and picked up again.
 
 Honey Cocoons now has a tooltip that shows what items they have inside when hovering over them in inventory.
 
+Breaking or mining a Honey Cocoon that has a loot table before loot is generated will now generate the loot.
+
 Honey Cocoons will now be dropped when broken in creative mode.
 
 ##### Items:
