@@ -334,6 +334,9 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                 itementity.setDefaultPickUpDelay();
                 level.addFreshEntity(itementity);
             }
+            else {
+                honeyCocoonBlockEntity.unpackLootTable(player);
+            }
         }
     }
 
