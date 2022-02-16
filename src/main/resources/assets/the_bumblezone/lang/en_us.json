@@ -81,6 +81,10 @@
   "subtitles.item.the_bumblezone.stinger_spear.return": "Stinger Spear returns",
   "subtitles.item.the_bumblezone.stinger_spear.throw": "Stinger Spear zooms",
 
+  "filled_map.the_bumblezone:pollinated_stream": "Pollinated Stream Map",
+  "filled_map.the_bumblezone:honey_cave_room": "Honey Cave Room Map",
+  "filled_map.the_bumblezone:cell_maze": "Cell Maze Map",
+
   "advancements.the_bumblezone.root.title": "The Buzzing Bumbling Bumblezone!",
   "advancements.the_bumblezone.root.description": "Enter The Bumblezone dimension by any means",
   "advancements.the_bumblezone.beenergized_maxed.title": "Speedy Buzzy Bees!",
