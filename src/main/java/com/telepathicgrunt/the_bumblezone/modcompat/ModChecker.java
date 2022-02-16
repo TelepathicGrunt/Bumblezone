@@ -23,14 +23,14 @@ public class ModChecker {
     public static void setupModCompat() {
         String currentModID = "";
 
-        try {
-            currentModID = "rei";
-            loadupModCompat(currentModID, () -> REICompat.registerItemDescriptions());
-        }
-        catch (Exception e) {
-            printErrorToLogs("classloading " + currentModID + " and so, mod compat done afterwards broke");
-            e.printStackTrace();
-        }
+//        try {
+//            currentModID = "roughlyenoughitems";
+//            loadupModCompat(currentModID, () -> REICompat.registerItemDescriptions());
+//        }
+//        catch (Exception e) {
+//            printErrorToLogs("classloading " + currentModID + " and so, mod compat done afterwards broke");
+//            e.printStackTrace();
+//        }
     }
 
     private static void loadupModCompat(String modid, Runnable runnable) {

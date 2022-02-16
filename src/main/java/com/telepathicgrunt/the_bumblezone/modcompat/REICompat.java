@@ -3,6 +3,8 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
+import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.plugin.client.BuiltinClientPlugin;
 import net.minecraft.core.Registry;
@@ -10,9 +12,10 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluid;
 
-public class REICompat {
+public class REICompat implements REIClientPlugin {
 
-    public static void registerItemDescriptions() {
+    @Override
+    public void registerDisplays(DisplayRegistry registry) {
         addInfo(BzItems.EMPTY_HONEYCOMB_BROOD);
         addInfo(BzItems.FILLED_POROUS_HONEYCOMB);
         addInfo(BzItems.HONEY_CRYSTAL);
@@ -54,13 +57,19 @@ public class REICompat {
         BuiltinClientPlugin.getInstance().registerInformation(
                 EntryStacks.of(item),
                 new TranslatableComponent(Bumblezone.MODID + "." + Registry.ITEM.getKey(item).getPath() + ".jei_description"),
-                (text) -> text);
+                (text) -> {
+                    text.add(new TranslatableComponent(Bumblezone.MODID + "." + Registry.ITEM.getKey(item).getPath() + ".jei_description"));
+                    return text;
+                });
     }
 
     private static void addInfo(Fluid fluid) {
         BuiltinClientPlugin.getInstance().registerInformation(
                 EntryStacks.of(fluid, 1),
                 new TranslatableComponent(Bumblezone.MODID + "." + Registry.FLUID.getKey(fluid).getPath() + ".jei_description"),
-                (text) -> text);
+                (text) -> {
+                    text.add(new TranslatableComponent(Bumblezone.MODID + "." + Registry.FLUID.getKey(fluid).getPath() + ".jei_description"));
+                    return text;
+                });
     }
 }
