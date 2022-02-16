@@ -1,3 +1,9 @@
+### **(V.4.3.3 Changes) (1.18.1 Minecraft)**
+
+##### Lang:
+Added ja_jp.json lang file donated by a fan! Thank you all!
+
+
 ### **(V.4.3.2 Changes) (1.18.1 Minecraft)**
 
 ##### Blocks:
