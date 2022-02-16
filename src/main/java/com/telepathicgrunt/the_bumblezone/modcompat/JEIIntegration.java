@@ -18,7 +18,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class JEIIntegration implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
-	return new ResourceLocation(Bumblezone.MODID+"jei_plugin");
+		return new ResourceLocation(Bumblezone.MODID, "jei_plugin");
     }
     
     @Override
