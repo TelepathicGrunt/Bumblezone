@@ -76,7 +76,6 @@ dependencies {
 	modRuntimeOnly ("com.telepathicgrunt:FeatureNBTDeadlockBeGone-Fabric:1.0.0+1.18.1") { transitive = false }
 
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:7.2.425"
-	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:7.2.425"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:7.2.425"
 	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:7.2.425"
 
