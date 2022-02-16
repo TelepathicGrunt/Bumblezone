@@ -72,6 +72,6 @@ public class JEIIntegration implements IModPlugin {
 	registration.addIngredientInfo(
 		new FluidStack(fluid, 1), 
 		VanillaTypes.FLUID,
-			new TranslatableComponent(Bumblezone.MODID+"."+fluid.getRegistryName().getPath()+".jei_description"));
+		new TranslatableComponent(Bumblezone.MODID+"."+fluid.getRegistryName().getPath()+".jei_description"));
     }
 }
