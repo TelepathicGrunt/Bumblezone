@@ -18,6 +18,7 @@
     "effects.MobEffectInstanceAccessor",
     "enchantments.EnchantmentHelperMixin",
     "enchantments.EnchantmentMixin",
+    "entities.AbstractArrowMixin",
     "entities.BeeEntityInvoker",
     "entities.BeeEntityMixin",
     "entities.BeePathfindingMixin",

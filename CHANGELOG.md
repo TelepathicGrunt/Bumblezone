@@ -9,6 +9,9 @@ When washing away Honey Webs/Residues with water related items (buckets, bottles
 ##### Items:
 Added REI descriptions for all of Bumblezone's items and fluids.
 
+##### Enchantments:
+Fixed Potent Poison not applying to victim if they are hit by a thrown Trident with the enchantment while in survival.
+
 
 ### **(V.4.3.2 Changes) (1.18.1 Minecraft)**
 
