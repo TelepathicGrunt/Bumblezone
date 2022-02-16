@@ -6,6 +6,9 @@ Added ja_jp.json lang file donated by a fan! Thank you all!
 ##### Blocks:
 When washing away Honey Webs/Residues with water related items (buckets, bottles, wet sponge), the phantom swoop sound is now replaced with boat paddle water sound.
 
+##### Items:
+Added REI descriptions for all of Bumblezone's items and fluids.
+
 
 ### **(V.4.3.2 Changes) (1.18.1 Minecraft)**
 

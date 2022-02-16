@@ -44,6 +44,9 @@ repositories {
 			includeGroup 'dev.cafeteria'
 		}
 	}
+	repositories {
+		maven { url "https://maven.shedaniel.me" }
+	}
 }
 
 dependencies {
@@ -71,6 +74,12 @@ dependencies {
 	modImplementation ("maven.modrinth:modmenu:${project.mod_menu_version}") { transitive = false }
 
 	modRuntimeOnly ("com.telepathicgrunt:FeatureNBTDeadlockBeGone-Fabric:1.0.0+1.18.1") { transitive = false }
+
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:7.2.425"
+	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:7.2.425"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:7.2.425"
+	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:7.2.425"
+
 	//modRuntimeOnly "curse.maven:requiem-265729:3639233"
 	//modImplementation ("curse.maven:mobcatcher-498389:3575752") { transitive = false }
 	//modCompileOnly ("curse.maven:charm-318872:3355096") { transitive = false }
