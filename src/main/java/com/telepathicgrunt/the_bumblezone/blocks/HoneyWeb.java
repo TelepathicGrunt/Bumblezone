@@ -233,7 +233,7 @@ public class HoneyWeb extends Block {
                     playerEntity.getX(),
                     playerEntity.getY(),
                     playerEntity.getZ(),
-                    SoundEvents.PHANTOM_SWOOP,
+                    SoundEvents.BOAT_PADDLE_WATER,
                     SoundSource.NEUTRAL,
                     1.0F,
                     1.0F);
