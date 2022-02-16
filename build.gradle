@@ -9,7 +9,7 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'org.parchmentmc:librarian:1.+'
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.7.+'
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
         classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.2.1'
     }
@@ -38,16 +38,12 @@ minecraft {
         client {
             workingDirectory project.file('run')
             arg "-mixin.config=" + project.getProperty('modid') + ".mixins.json"
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods { the_bumblezone { source sourceSets.main } }
         }
 
         server {
             workingDirectory project.file('run')
             arg "-mixin.config=" + project.getProperty('modid') + ".mixins.json"
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods { the_bumblezone { source sourceSets.main } }
         }
 
@@ -55,8 +51,6 @@ minecraft {
             workingDirectory project.file('run')
             args '--mod', "the_bumblezone", '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
             arg "-mixin.config=" + project.getProperty('modid') + ".mixins.json"
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods { the_bumblezone { source sourceSets.main } }
         }
     }
