@@ -6,6 +6,12 @@ Added ja_jp.json lang file donated by a fan! Thank you all!
 ##### Blocks:
 When washing away Honey Webs/Residues with water related items (buckets, bottles, wet sponge), the phantom swoop sound is now replaced with boat paddle water sound.
 
+Honey Cocoons now keep their names when placed and picked up again.
+
+Honey Cocoons now has a tooltip that shows what items they have inside when hovering over them in inventory.
+
+Honey Cocoons will now be dropped when broken in creative mode.
+
 ##### Items:
 Added REI descriptions for all of Bumblezone's items and fluids.
 
