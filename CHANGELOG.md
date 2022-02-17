@@ -20,6 +20,10 @@ Added JEI descriptions for the two Bumblezone music discs: Honey Bee Rat Faced B
 ##### Enchantments:
 Fixed Potent Poison not applying to victim if they are hit by a thrown Trident with the enchantment while in survival.
 
+##### Entities:
+Tamed Beehemoth will now only follow their owners with Honey Buckets and no one else.
+ They will also fly fast to their owners holding Honey Buckets up to 200 blocks away even without a line of sight!
+
 
 ### **(V.4.3.2 Changes) (1.18.1 Minecraft)**
 

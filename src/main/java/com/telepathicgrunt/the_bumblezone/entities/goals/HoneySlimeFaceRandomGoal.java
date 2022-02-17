@@ -7,12 +7,12 @@ import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
 
-public class FaceRandomGoal extends Goal {
+public class HoneySlimeFaceRandomGoal extends Goal {
     private final HoneySlimeEntity slime;
     private float chosenDegrees;
     private int nextRandomizeTime;
 
-    public FaceRandomGoal(HoneySlimeEntity slimeIn) {
+    public HoneySlimeFaceRandomGoal(HoneySlimeEntity slimeIn) {
         this.slime = slimeIn;
         this.setFlags(EnumSet.of(Goal.Flag.LOOK));
     }

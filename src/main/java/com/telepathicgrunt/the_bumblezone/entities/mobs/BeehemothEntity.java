@@ -5,8 +5,9 @@ import com.telepathicgrunt.the_bumblezone.client.LivingEntityFlyingSoundInstance
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothAIRide;
-import com.telepathicgrunt.the_bumblezone.entities.goals.FlyingStillGoal;
-import com.telepathicgrunt.the_bumblezone.entities.goals.RandomFlyGoal;
+import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothFlyingStillGoal;
+import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothRandomFlyGoal;
+import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothTemptGoal;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -104,6 +105,51 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
         this.entityData.define(FRIENDSHIP, 0);
     }
 
+    public static AttributeSupplier.Builder getAttributeBuilder() {
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 42.0D)
+                .add(Attributes.FLYING_SPEED, 0.6)
+                .add(Attributes.MOVEMENT_SPEED, 0.3)
+                .add(Attributes.ATTACK_DAMAGE, 4.0D)
+                .add(Attributes.FOLLOW_RANGE, 128.0D);
+    }
+
+    @Override
+    protected void registerGoals() {
+        this.goalSelector.addGoal(0, new BeehemothAIRide(this));
+        this.goalSelector.addGoal(1, new BeehemothTemptGoal(this, 1.5D, Ingredient.of(BzItemTags.HONEY_BUCKETS)));
+        this.goalSelector.addGoal(2, new BeehemothFlyingStillGoal(this));
+        this.goalSelector.addGoal(3, new BeehemothRandomFlyGoal(this));
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 60));
+        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(5, new FloatGoal(this));
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("saddled", isSaddled());
+        tag.putBoolean("queen", isQueen());
+        tag.putInt("friendship", getFriendship());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        setSaddled(tag.getBoolean("saddled"));
+        setQueen(tag.contains("queen") && tag.getBoolean("queen"));
+        setFriendship(tag.getInt("friendship"));
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level pLevel) {
+        return new DirectPathNavigator(this, pLevel);
+    }
+
+    @Override
+    protected Entity.MovementEmission getMovementEmission() {
+        return MovementEmission.NONE;
+    }
+
     @Override
     public MobType getMobType() {
         return MobType.ARTHROPOD;
@@ -139,27 +185,6 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
 
     public boolean isStopWandering() {
         return stopWandering;
-    }
-
-    @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        tag.putBoolean("saddled", isSaddled());
-        tag.putBoolean("queen", isQueen());
-        tag.putInt("friendship", getFriendship());
-    }
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        setSaddled(tag.getBoolean("saddled"));
-        setQueen(tag.contains("queen") && tag.getBoolean("queen"));
-        setFriendship(tag.getInt("friendship"));
-    }
-
-    @Override
-    protected Entity.MovementEmission getMovementEmission() {
-        return MovementEmission.NONE;
     }
 
     @Override
@@ -204,30 +229,6 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
             setOrderedToSit(false);
             return super.hurt(source, amount);
         }
-    }
-
-    public static AttributeSupplier.Builder getAttributeBuilder() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 42.0D)
-                .add(Attributes.FLYING_SPEED, 0.6)
-                .add(Attributes.MOVEMENT_SPEED, 0.3)
-                .add(Attributes.ATTACK_DAMAGE, 4.0D)
-                .add(Attributes.FOLLOW_RANGE, 128.0D);
-    }
-
-    @Override
-    protected void registerGoals() {
-        this.goalSelector.addGoal(0, new BeehemothAIRide(this));
-        this.goalSelector.addGoal(1, new FlyingStillGoal(this));
-        this.goalSelector.addGoal(2, new TemptGoal(this, 1.5D, Ingredient.of(BzItemTags.HONEY_BUCKETS), false));
-        this.goalSelector.addGoal(3, new RandomFlyGoal(this));
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 60));
-        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(5, new FloatGoal(this));
-    }
-
-    @Override
-    protected PathNavigation createNavigation(Level pLevel) {
-        return new DirectPathNavigator(this, pLevel);
     }
 
     // If our flyingSpeed is manually modified by something (like Beenergized effect),
