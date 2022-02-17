@@ -23,7 +23,7 @@ public class BeehemothTemptGoal extends Goal {
         this.mob = pathfinderMob;
         this.speedModifier = speedModifier;
         this.items = ingredient;
-        this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
         this.targetingConditions = TEMP_TARGETING.copy().selector(entity -> this.mob.getOwner() == entity).selector(this::shouldFollow);
     }
 
@@ -31,7 +31,7 @@ public class BeehemothTemptGoal extends Goal {
     public boolean canUse() {
         if(mob.isTame()) {
             LivingEntity owner = this.mob.getOwner();
-            if (owner instanceof Player player && player.isAlive() && player.level == mob.level) {
+            if (owner instanceof Player player && player.isAlive() && player.level == mob.level && shouldFollow(player)) {
                 this.player = player;
                 this.mob.setInSittingPose(false);
                 return true;

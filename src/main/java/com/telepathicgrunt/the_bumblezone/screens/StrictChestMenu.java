@@ -5,31 +5,40 @@ import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ChestMenu;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.ShulkerBoxSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class StrictChestMenu extends ChestMenu {
+public class StrictChestMenu extends AbstractContainerMenu {
+    private final Container container;
+    private final int rows;
     
     private StrictChestMenu(MenuType<?> menuType, int id, Inventory inventory, int rows) {
-        super(menuType, id, inventory, new SimpleContainer(9 * rows), rows);
-
-        for(int row = 0; row < rows; ++row) {
-            for(int col = 0; col < 9; ++col) {
-                this.slots.set(col + (row * 9), new ShulkerBoxSlot(this.getContainer(), col + row * 9, 8 + col * 18, 18 + row * 18));
-            }
-        }
+        this(menuType, id, inventory, new SimpleContainer(9 * rows), rows);
     }
 
     public StrictChestMenu(MenuType<?> menuType, int id, Inventory inventory, Container container, int rows) {
-        super(menuType, id, inventory, container, rows);
+        super(menuType, id);
+        int i = (rows - 4) * 18;
+        this.container = container;
+        this.rows = rows;
 
-        for(int row = 0; row < rows; ++row) {
-            for(int col = 0; col < 9; ++col) {
-                this.slots.set(col + (row * 9), new ShulkerBoxSlot(this.getContainer(), col + row * 9, 8 + col * 18, 18 + row * 18));
+        for(int j = 0; j < rows; ++j) {
+            for(int k = 0; k < 9; ++k) {
+                this.addSlot(new ShulkerBoxSlot(container, k + j * 9, 8 + k * 18, 18 + j * 18));
             }
+        }
+
+        for(int l = 0; l < 3; ++l) {
+            for(int j1 = 0; j1 < 9; ++j1) {
+                this.addSlot(new Slot(inventory, j1 + l * 9 + 9, 8 + j1 * 18, 103 + l * 18 + i));
+            }
+        }
+
+        for(int i1 = 0; i1 < 9; ++i1) {
+            this.addSlot(new Slot(inventory, i1, 8 + i1 * 18, 161 + i));
         }
     }
 
@@ -57,6 +66,10 @@ public class StrictChestMenu extends ChestMenu {
         return new StrictChestMenu(BzMenuTypes.STRICT_9x6.get(), id, player, 6);
     }
 
+    public int getRows() {
+        return rows;
+    }
+
     /**
      * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack between the player
      * inventory and the other inventory(s).
@@ -68,11 +81,11 @@ public class StrictChestMenu extends ChestMenu {
         if (slot != null && slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
-            if (index < this.getContainer().getContainerSize()) {
-                if (!this.moveItemStackTo(itemstack1, this.getContainer().getContainerSize(), this.slots.size(), true)) {
+            if (index < container.getContainerSize()) {
+                if (!this.moveItemStackTo(itemstack1, container.getContainerSize(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(itemstack1, 0, this.getContainer().getContainerSize(), false)) {
+            } else if (!this.moveItemStackTo(itemstack1, 0, container.getContainerSize(), false)) {
                 return ItemStack.EMPTY;
             }
 
@@ -84,5 +97,10 @@ public class StrictChestMenu extends ChestMenu {
         }
 
         return itemstack;
+    }
+
+    @Override
+    public boolean stillValid(Player player) {
+        return this.container.stillValid(player);
     }
 }
