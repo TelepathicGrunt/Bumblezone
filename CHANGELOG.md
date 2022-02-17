@@ -1,3 +1,9 @@
+### **(V.4.3.4 Changes) (1.18.1 Minecraft)**
+
+##### Blocks:
+Fixed Honey Cocoon not allowing any items to be placed inside correctly.
+
+
 ### **(V.4.3.3 Changes) (1.18.1 Minecraft)**
 
 ##### Lang:

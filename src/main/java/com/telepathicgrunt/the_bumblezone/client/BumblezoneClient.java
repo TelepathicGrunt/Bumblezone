@@ -21,6 +21,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.packets.MobEffectClientSyncPacket;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
+import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -93,12 +94,12 @@ public class BumblezoneClient implements ClientModInitializer {
         BzItems.HONEY_BEE_LEGGINGS_1.registerRenderer().run();
         BzItems.HONEY_BEE_LEGGINGS_2.registerRenderer().run();
 
-        MenuScreens.register(BzMenuTypes.STRICT_9x1, ContainerScreen::new);
-        MenuScreens.register(BzMenuTypes.STRICT_9x2, ContainerScreen::new);
-        MenuScreens.register(BzMenuTypes.STRICT_9x3, ContainerScreen::new);
-        MenuScreens.register(BzMenuTypes.STRICT_9x4, ContainerScreen::new);
-        MenuScreens.register(BzMenuTypes.STRICT_9x5, ContainerScreen::new);
-        MenuScreens.register(BzMenuTypes.STRICT_9x6, ContainerScreen::new);
+        MenuScreens.register(BzMenuTypes.STRICT_9x1, StrictChestScreen::new);
+        MenuScreens.register(BzMenuTypes.STRICT_9x2, StrictChestScreen::new);
+        MenuScreens.register(BzMenuTypes.STRICT_9x3, StrictChestScreen::new);
+        MenuScreens.register(BzMenuTypes.STRICT_9x4, StrictChestScreen::new);
+        MenuScreens.register(BzMenuTypes.STRICT_9x5, StrictChestScreen::new);
+        MenuScreens.register(BzMenuTypes.STRICT_9x6, StrictChestScreen::new);
     }
     
     public static void registerRenderLayers() {
