@@ -1,11 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
 import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
-import com.telepathicgrunt.the_bumblezone.entities.goals.FaceRandomGoal;
-import com.telepathicgrunt.the_bumblezone.entities.goals.FacingRevengeGoal;
-import com.telepathicgrunt.the_bumblezone.entities.goals.FloatGoal;
-import com.telepathicgrunt.the_bumblezone.entities.goals.HopGoal;
-import com.telepathicgrunt.the_bumblezone.entities.goals.TemptGoal;
+import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFaceRandomGoal;
+import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFacingRevengeGoal;
+import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFloatGoal;
+import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeHopGoal;
+import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeTemptGoal;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
@@ -92,12 +92,12 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
 
    @Override
    protected void registerGoals() {
-      this.goalSelector.addGoal(1, new FloatGoal(this));
-      this.targetSelector.addGoal(1, new FacingRevengeGoal(this));
+      this.goalSelector.addGoal(1, new HoneySlimeFloatGoal(this));
+      this.targetSelector.addGoal(1, new HoneySlimeFacingRevengeGoal(this));
       this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-      this.goalSelector.addGoal(3, new TemptGoal(this, 1.2D, BREEDING_ITEM));
-      this.goalSelector.addGoal(4, new HopGoal(this));
-      this.goalSelector.addGoal(4, new FaceRandomGoal(this));
+      this.goalSelector.addGoal(3, new HoneySlimeTemptGoal(this, 1.2D, BREEDING_ITEM));
+      this.goalSelector.addGoal(4, new HoneySlimeHopGoal(this));
+      this.goalSelector.addGoal(4, new HoneySlimeFaceRandomGoal(this));
    }
 
    @Override

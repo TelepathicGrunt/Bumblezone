@@ -29,48 +29,23 @@ Don't forget to change \<modversion> with the actual latest version of this mod 
 
 &nbsp;
 
-**Add these two properties to both of your run configs in the build.gradle file. These will allow Blame's mixins to work. After you add the properties lines, refresh Gradle and run `genEclipseRuns` or `genIntellijRuns` or `genVSCodeRuns` based on what IDE you are using.**
+**Add the mixingradle to your buildscript's dependencies block. These will allow Blame's mixins to work. After you add the properties lines, refresh Gradle and run `genEclipseRuns` or `genIntellijRuns` or `genVSCodeRuns` based on what IDE you are using.**
 
-<blockquote>minecraft {
+https://github.com/SpongePowered/Mixin/wiki/Mixins-on-Minecraft-Forge#step-1---adding-the-mixingradle-plugin
 
+<blockquote>buildscript {
 
-&nbsp; ...
+&nbsp; &nbsp; ...
 
+&nbsp; &nbsp; dependencies {
 
-&nbsp; runs {
+&nbsp; &nbsp; &nbsp; &nbsp; classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
 
+&nbsp; &nbsp; &nbsp; &nbsp; // MixinGradle:
 
-&nbsp; &nbsp; client {
-
-
-&nbsp; &nbsp; &nbsp; ...
-
-
-&nbsp; &nbsp; &nbsp; property 'mixin.env.remapRefMap', 'true'
-
-
-&nbsp; &nbsp; &nbsp; property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
+&nbsp; &nbsp; &nbsp; &nbsp; classpath 'org.spongepowered:mixingradle:0.7.+'
 
 &nbsp; &nbsp; }
-
-&nbsp; &nbsp; server {
-
-
-&nbsp; &nbsp; &nbsp; ...
-
-
-&nbsp; &nbsp; &nbsp; property 'mixin.env.remapRefMap', 'true'
-
-
-&nbsp; &nbsp; &nbsp; property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-
-&nbsp; &nbsp; }
-
-
-&nbsp; }
-
 
 }</blockquote>
 

@@ -9,21 +9,32 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -36,6 +47,7 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -54,6 +66,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 
 public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlock {
@@ -246,6 +259,19 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
         }
     }
 
+    /**
+     * Called by BlockItem after this block has been placed.
+     */
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity livingEntity, ItemStack itemStack) {
+        if (itemStack.hasCustomHoverName()) {
+            BlockEntity blockentity = level.getBlockEntity(pos);
+            if (blockentity instanceof HoneyCocoonBlockEntity) {
+                ((HoneyCocoonBlockEntity)blockentity).setCustomName(itemStack.getHoverName());
+            }
+        }
+    }
+
     @Override
     public boolean canPlaceLiquid(BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
         return !blockState.getValue(WATERLOGGED) && fluid.is(BzFluidTags.CONVERTIBLE_TO_SUGAR_WATER) && fluid.defaultFluidState().isSource();
@@ -277,12 +303,85 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     }
 
     @Override
+    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
+            if (!level.isClientSide() && player.isCreative() && !honeyCocoonBlockEntity.isEmpty()) {
+                ItemStack itemStack = BzItems.HONEY_COCOON.get().getDefaultInstance();
+                blockEntity.saveToItem(itemStack);
+                if (honeyCocoonBlockEntity.hasCustomName()) {
+                    itemStack.setHoverName(honeyCocoonBlockEntity.getCustomName());
+                }
+
+                CompoundTag parentTag = null;
+                CompoundTag tag = itemStack.getTag();
+                if(tag != null) {
+                    if(tag.contains("BlockEntityTag")) {
+                        parentTag = tag;
+                        tag = tag.getCompound("BlockEntityTag");
+                    }
+                    if(!tag.contains("UUID")) {
+                        if(parentTag != null) {
+                            parentTag.putString("UUID", UUID.randomUUID().toString());
+                        }
+                        else {
+                            tag.putString("UUID", UUID.randomUUID().toString());
+                        }
+                    }
+                }
+
+                ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, itemStack);
+                itementity.setDefaultPickUpDelay();
+                level.addFreshEntity(itementity);
+            }
+            else {
+                honeyCocoonBlockEntity.unpackLootTable(player);
+            }
+        }
+    }
+
+    @Override
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack itemStack) {
         if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) > 0 && player instanceof ServerPlayer serverPlayer) {
             BzCriterias.HONEY_COCOON_SILK_TOUCH_TRIGGER.trigger(serverPlayer);
         }
 
         super.playerDestroy(level, player, pos, state, blockEntity, itemStack);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(itemStack, level, tooltip, flag);
+        CompoundTag compoundtag = BlockItem.getBlockEntityData(itemStack);
+        if (compoundtag != null) {
+            if (compoundtag.contains("LootTable", 8)) {
+                tooltip.add(new TextComponent("???????"));
+            }
+
+            if (compoundtag.contains("Items", 9)) {
+                NonNullList<ItemStack> nonnulllist = NonNullList.withSize(27, ItemStack.EMPTY);
+                ContainerHelper.loadAllItems(compoundtag, nonnulllist);
+                int i = 0;
+                int j = 0;
+
+                for(ItemStack itemstack : nonnulllist) {
+                    if (!itemstack.isEmpty()) {
+                        ++j;
+                        if (i <= 4) {
+                            ++i;
+                            MutableComponent mutablecomponent = itemstack.getHoverName().copy();
+                            mutablecomponent.append(" x").append(String.valueOf(itemstack.getCount()));
+                            tooltip.add(mutablecomponent);
+                        }
+                    }
+                }
+
+                if (j - i > 0) {
+                    tooltip.add((new TranslatableComponent("container.shulkerBox.more", j - i)).withStyle(ChatFormatting.ITALIC));
+                }
+            }
+        }
+
     }
 
     /**

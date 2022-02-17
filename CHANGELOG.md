@@ -1,3 +1,30 @@
+### **(V.4.3.3 Changes) (1.18.1 Minecraft)**
+
+##### Lang:
+Added ja_jp.json lang file donated by a fan! Thank you all!
+
+##### Blocks:
+When washing away Honey Webs/Residues with water related items (buckets, bottles, wet sponge), the phantom swoop sound is now replaced with boat paddle water sound.
+
+Honey Cocoons now keep their names when placed and picked up again.
+
+Honey Cocoons now has a tooltip that shows what items they have inside when hovering over them in inventory.
+
+Breaking or mining a Honey Cocoon that has a loot table before loot is generated will now generate the loot.
+
+Honey Cocoons will now be dropped when broken in creative mode.
+
+##### Items:
+Added JEI descriptions for the two Bumblezone music discs: Honey Bee Rat Faced Boy disc and Flight of the Bumblebee Rimsky Korsakov disc.
+
+##### Enchantments:
+Fixed Potent Poison not applying to victim if they are hit by a thrown Trident with the enchantment while in survival.
+
+##### Entities:
+Tamed Beehemoth will now only follow their owners with Honey Buckets and no one else.
+ They will also fly fast to their owners holding Honey Buckets up to 200 blocks away even without a line of sight!
+
+
 ### **(V.4.3.2 Changes) (1.18.1 Minecraft)**
 
 ##### Blocks:

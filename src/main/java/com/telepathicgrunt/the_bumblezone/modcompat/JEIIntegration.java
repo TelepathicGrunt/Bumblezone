@@ -18,7 +18,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class JEIIntegration implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
-	return new ResourceLocation(Bumblezone.MODID+"jei_plugin");
+		return new ResourceLocation(Bumblezone.MODID, "jei_plugin");
     }
     
     @Override
@@ -47,6 +47,8 @@ public class JEIIntegration implements IModPlugin {
 		addInfo(registration, BzItems.HONEY_WEB.get());
 		addInfo(registration, BzItems.REDSTONE_HONEY_WEB.get());
 		addInfo(registration, BzItems.HONEY_COCOON.get());
+		addInfo(registration, BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV.get());
+		addInfo(registration, BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY.get());
 		addInfo(registration, BzItems.STINGER_SPEAR.get());
 		addInfo(registration, BzItems.HONEY_BEE_LEGGINGS_1.get());
 		addInfo(registration, BzItems.HONEY_BEE_LEGGINGS_2.get());
@@ -70,6 +72,6 @@ public class JEIIntegration implements IModPlugin {
 	registration.addIngredientInfo(
 		new FluidStack(fluid, 1), 
 		VanillaTypes.FLUID,
-			new TranslatableComponent(Bumblezone.MODID+"."+fluid.getRegistryName().getPath()+".jei_description"));
+		new TranslatableComponent(Bumblezone.MODID+"."+fluid.getRegistryName().getPath()+".jei_description"));
     }
 }

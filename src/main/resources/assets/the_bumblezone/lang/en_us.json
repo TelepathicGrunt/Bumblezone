@@ -17,6 +17,8 @@
   "block.the_bumblezone.honey_web": "Honey Web",
   "block.the_bumblezone.redstone_honey_web": "Redstone Honey Web",
   "block.the_bumblezone.honey_cocoon": "Honey Cocoon",
+  "block.the_bumblezone.sugar_water_block": "Sugar Water",
+  "block.the_bumblezone.honey_fluid_block": "Honey Fluid",
 
   "fluid.the_bumblezone.sugar_water_still": "Sugar Water",
   "fluid.the_bumblezone.sugar_water_flowing": "Sugar Water",
@@ -218,6 +220,8 @@
   "the_bumblezone.honey_web.jei_description": " A super sticky web of honey! Greatly slows any mobs that gets stuck in it but can easily be cleanse with water or wet sponges. Basically it acts similar to Sticky Honey Residue except Honey Web does not need to be attached to a block.",
   "the_bumblezone.redstone_honey_web.jei_description": " A Redstone variant of Honey Web that will output a Redstone signal when a mob is trapped in it. Redstone Honey Web cannot take in a Redstone signal from a non-Redstone Honey Web block. The rest of its behaviors is the same as Honey Web block.",
   "the_bumblezone.honey_cocoon.jei_description": " A strange cocoon made of honey! It can store items within itself. Interestingly, Empty Brood Blocks in the cocoon will consume any bee feeding item and transform into an filled Brood Block! This cocoon will also lose items over time if it is submerged underwater...",
+  "the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov.jei_description": " If you listen closely, you can still hear the buzzing of a swarm of angry bees... This rare music disc can be obtained from Wandering Traders! The song is a MIDI version of Flight of the Bumblebee by Rimsky Korsakov.",
+  "the_bumblezone.music_disc_honey_bee_rat_faced_boy.jei_description": " Relax with the number one music that all bees love! This rare music disc can be obtained from Wandering Traders. The song is Honey Bee by Rat Faced Boy and you can purchase it from here: https://acidburp.bandcamp.com/track/honey-bee Always support musicians of your favorite songs!",
   "the_bumblezone.stinger_spear.jei_description": " A fragile but throwable lethal spear utilizing a bee stinger! Can be repaired with Flint and enchanted. It will always inflict a weak poison onto any non undead-mob it hits",
   "the_bumblezone.honey_bee_leggings_1.jei_description": " An amazing clothing created by the best bee weavers! It resists slowness from many Bumblezone blocks that cause slowness and can collect pollen from flowers or Pile of Pollens! Crouch to spawn a Pollen Puff when full of pollen. Can be repaired by Honeycomb, Leather, Wool, or Rabbit Hide. If all three bee armor is on, chance of collecting pollen from flowers is improved and Slowness effect duration will decrease twice as fast now!",
   "the_bumblezone.bumble_bee_chestplate_1.jei_description": " An amazing clothing created by the best bee weavers! This clothing lets you be able to fly for a short period of time by holding the jump button anytime after jumping! Getting Beenergized effect will improve flight! Can be repaired by Honeycomb, Leather, Wool, or Rabbit Hide. Flight time will be further boosted if all 3 bee armor is on!",
