@@ -7,10 +7,10 @@ import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
 
-public class FlyingStillGoal extends Goal {
+public class BeehemothFlyingStillGoal extends Goal {
     private final TamableAnimal mob;
 
-    public FlyingStillGoal(TamableAnimal tamableAnimal) {
+    public BeehemothFlyingStillGoal(TamableAnimal tamableAnimal) {
         this.mob = tamableAnimal;
         this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
     }

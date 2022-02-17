@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
 import java.util.EnumSet;
 import java.util.List;
 
-public class BreedGoal extends Goal {
+public class HoneySlimeBreedGoal extends Goal {
     private static final TargetingConditions field_220689_d = (TargetingConditions.forCombat()).range(8.0D).ignoreLineOfSight();
     protected final HoneySlimeEntity slime;
     private final Class<? extends Animal> mateClass;
@@ -25,11 +25,11 @@ public class BreedGoal extends Goal {
     protected Animal field_75391_e;
     private int spawnBabyDelay;
 
-    public BreedGoal(HoneySlimeEntity animal, double speedIn) {
+    public HoneySlimeBreedGoal(HoneySlimeEntity animal, double speedIn) {
         this(animal, speedIn, animal.getClass());
     }
 
-    public BreedGoal(HoneySlimeEntity p_i47306_1_, double p_i47306_2_, Class<? extends Animal> p_i47306_4_) {
+    public HoneySlimeBreedGoal(HoneySlimeEntity p_i47306_1_, double p_i47306_2_, Class<? extends Animal> p_i47306_4_) {
         this.slime = p_i47306_1_;
         this.world = p_i47306_1_.level;
         this.mateClass = p_i47306_4_;

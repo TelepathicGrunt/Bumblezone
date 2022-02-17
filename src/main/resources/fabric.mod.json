@@ -30,6 +30,9 @@
     ],
     "cardinal-components-entity": [
       "com.telepathicgrunt.the_bumblezone.Bumblezone"
+    ],
+    "rei": [
+      "com.telepathicgrunt.the_bumblezone.modcompat.REICompat"
     ]
   },
   "mixins": [

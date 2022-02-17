@@ -10,11 +10,11 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
-public class RandomFlyGoal extends Goal {
+public class BeehemothRandomFlyGoal extends Goal {
     private final BeehemothEntity beehemothEntity;
     private BlockPos target = null;
 
-    public RandomFlyGoal(BeehemothEntity beehemothEntity) {
+    public BeehemothRandomFlyGoal(BeehemothEntity beehemothEntity) {
         this.beehemothEntity = beehemothEntity;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));
     }

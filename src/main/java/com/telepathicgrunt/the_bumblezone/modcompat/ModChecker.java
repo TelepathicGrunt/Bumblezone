@@ -24,8 +24,8 @@ public class ModChecker {
         String currentModID = "";
 
 //        try {
-//            currentModID = "charm";
-//            loadupModCompat(currentModID, () -> CharmCompat.setupCharm());
+//            currentModID = "roughlyenoughitems";
+//            loadupModCompat(currentModID, () -> REICompat.registerItemDescriptions());
 //        }
 //        catch (Exception e) {
 //            printErrorToLogs("classloading " + currentModID + " and so, mod compat done afterwards broke");
