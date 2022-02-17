@@ -7,10 +7,10 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 
 import java.util.EnumSet;
 
-public class FacingRevengeGoal extends HurtByTargetGoal {
+public class HoneySlimeFacingRevengeGoal extends HurtByTargetGoal {
     private final HoneySlimeEntity slime;
 
-    public FacingRevengeGoal(HoneySlimeEntity slimeIn) {
+    public HoneySlimeFacingRevengeGoal(HoneySlimeEntity slimeIn) {
         super(slimeIn);
         this.slime = slimeIn;
         this.setFlags(EnumSet.of(Goal.Flag.LOOK));

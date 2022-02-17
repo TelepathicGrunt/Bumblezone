@@ -10,7 +10,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.EnumSet;
 
-public class TemptGoal extends Goal {
+public class HoneySlimeTemptGoal extends Goal {
     private static final TargetingConditions ENTITY_PREDICATE = (TargetingConditions.forNonCombat()).range(10.0D).ignoreLineOfSight();
     protected final HoneySlimeEntity slime;
     private double targetX;
@@ -22,7 +22,7 @@ public class TemptGoal extends Goal {
     private int delayTemptCounter;
     private final Ingredient temptItem;
 
-    public TemptGoal(HoneySlimeEntity creatureIn, double speedIn, Ingredient temptItemsIn) {
+    public HoneySlimeTemptGoal(HoneySlimeEntity creatureIn, double speedIn, Ingredient temptItemsIn) {
         this.slime = creatureIn;
         this.temptItem = temptItemsIn;
         this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE, Goal.Flag.LOOK));
