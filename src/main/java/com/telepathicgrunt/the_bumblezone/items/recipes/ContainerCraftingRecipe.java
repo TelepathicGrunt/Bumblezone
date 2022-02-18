@@ -9,17 +9,40 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
+import java.util.Map;
+
+import static java.util.Map.entry;
+
 public class ContainerCraftingRecipe extends ShapelessRecipe {
     private final String group;
     private final ItemStack recipeOutput;
     private final NonNullList<Ingredient> recipeItems;
+    public static final Map<Item, Item> HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET = Map.ofEntries(
+            entry(Items.POWDER_SNOW_BUCKET, Items.BUCKET),
+            entry(Items.AXOLOTL_BUCKET, Items.BUCKET),
+            entry(Items.COD_BUCKET, Items.BUCKET),
+            entry(Items.PUFFERFISH_BUCKET, Items.BUCKET),
+            entry(Items.SALMON_BUCKET, Items.BUCKET),
+            entry(Items.TROPICAL_FISH_BUCKET, Items.BUCKET),
+            entry(Items.SUSPICIOUS_STEW, Items.BOWL),
+            entry(Items.MUSHROOM_STEW, Items.BOWL),
+            entry(Items.RABBIT_STEW, Items.BOWL),
+            entry(Items.BEETROOT_SOUP, Items.BOWL),
+            entry(Items.POTION, Items.GLASS_BOTTLE),
+            entry(Items.SPLASH_POTION, Items.GLASS_BOTTLE),
+            entry(Items.LINGERING_POTION, Items.GLASS_BOTTLE),
+            entry(Items.EXPERIENCE_BOTTLE, Items.GLASS_BOTTLE)
+    );
+
     public ContainerCraftingRecipe(ResourceLocation idIn, String groupIn, ItemStack recipeOutputIn, NonNullList<Ingredient> recipeItemsIn) {
         super(idIn, groupIn, recipeOutputIn, recipeItemsIn);
         this.group = groupIn;
@@ -43,17 +66,26 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
         int containerOutput = recipeOutput.hasContainerItem() ? recipeOutput.getCount() : 0;
 
         for(int i = 0; i < remainingInv.size(); ++i) {
-            ItemStack item = inv.getItem(i);
-            if (item.hasContainerItem()) {
+            ItemStack craftingInput = inv.getItem(i);
+            ItemStack craftingContainer = craftingInput.getContainerItem();
+            ItemStack recipeContainer = recipeOutput.getContainerItem();
+            if (craftingContainer.isEmpty() && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(craftingInput.getItem())) {
+                craftingContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(craftingInput.getItem()).getDefaultInstance();
+            }
+            if (recipeContainer.isEmpty() && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(recipeOutput.getItem())) {
+                recipeContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(recipeOutput.getItem()).getDefaultInstance();
+            }
+
+            if (!craftingContainer.isEmpty()) {
                 if(containerOutput > 0 &&
-                    (recipeOutput.getItem() == item.getContainerItem().getItem() ||
-                    recipeOutput.getContainerItem().getItem() == item.getItem() ||
-                    recipeOutput.getContainerItem().getItem() == item.getContainerItem().getItem()))
+                    (recipeOutput.getItem() == craftingContainer.getItem() ||
+                    recipeContainer.getItem() == craftingInput.getItem() ||
+                    recipeContainer.getItem() == craftingContainer.getItem()))
                 {
                     containerOutput--;
                 }
                 else {
-                    remainingInv.set(i, item.getContainerItem().getItem().getDefaultInstance());
+                    remainingInv.set(i, craftingContainer);
                 }
             }
         }

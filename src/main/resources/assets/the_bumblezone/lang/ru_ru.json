@@ -53,9 +53,9 @@
  "effect.the_bumblezone.protection_of_the_hive": "Защита улья",
  "effect.the_bumblezone.beenergized": "Beenergized",
 
- "subtitles.the_bumblezone.beehemoth.hurt": "Гиганской пчеле больно",
- "subtitles.the_bumblezone.beehemoth.dies": "Гиганская пчела умерла",
- "subtitles.the_bumblezone.beehemoth.loop": "Beehemoth buzzing",
+ "subtitles.entity.the_bumblezone.beehemoth.hurt": "Гиганской пчеле больно",
+ "subtitles.entity.the_bumblezone.beehemoth.dies": "Гиганская пчела умерла",
+ "subtitles.entity.the_bumblezone.beehemoth.loop": "Beehemoth buzzing",
 
  "the_bumblezone.porous_honeycomb_block.jei_description": " Блок сот, покрытый медовыми ячейками. Можно заполнить мёдом из бутылочек или вёдер.",
  "the_bumblezone.filled_porous_honeycomb_block.jei_description": " Блок сот, заполненный до краёв мёдом! Из него можно наполнить бутылочки мёдом. Однако это может разозлить ближайших пчёл. \n\n При добывании выпадает ячеистый блок сот и немного пчелиных сот. На добывание влияет удача, можно также использовать шёлковое касание. \n\n Выдаёт сигнал редстоуна силой 1, когда подключен к компаратору.",

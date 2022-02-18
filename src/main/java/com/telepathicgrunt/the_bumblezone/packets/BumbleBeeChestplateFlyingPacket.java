@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
 import com.telepathicgrunt.the_bumblezone.items.BumbleBeeChestplate;
-import com.telepathicgrunt.the_bumblezone.utils.MessageHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

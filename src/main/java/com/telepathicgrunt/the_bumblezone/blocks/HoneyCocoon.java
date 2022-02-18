@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
+import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -47,7 +48,6 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -72,6 +72,7 @@ import java.util.UUID;
 public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected final VoxelShape shape;
+    private static final int waterDropDelay = 150;
 
     public HoneyCocoon() {
         super(Properties.of(Material.EGG, MaterialColor.COLOR_YELLOW).strength(0.3F, 0.3F).randomTicks().noOcclusion().sound(SoundType.HONEY_BLOCK));
@@ -127,9 +128,19 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
         if (blockstate.getValue(WATERLOGGED)) {
             world.scheduleTick(currentPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(world));
+            world.scheduleTick(currentPos, blockstate.getBlock(), waterDropDelay);
         }
 
         return super.updateShape(blockstate, facing, facingState, world, currentPos, facingPos);
+    }
+
+    @Override
+    public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+        if (blockstate.getValue(WATERLOGGED)) {
+            world.scheduleTick(pos, blockstate.getFluidState().getType(), blockstate.getFluidState().getType().getTickDelay(world));
+            world.scheduleTick(pos, blockstate.getBlock(), waterDropDelay);
+        }
+        super.neighborChanged(blockstate, world, pos, block, fromPos, notify);
     }
 
     /**
@@ -145,27 +156,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     @Override
     public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
         BlockState aboveState = serverLevel.getBlockState(blockPos.above());
-        if(blockState.getValue(WATERLOGGED) && aboveState.getFluidState().is(FluidTags.WATER) && aboveState.getCollisionShape(serverLevel, blockPos).isEmpty()) {
-
-            BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
-            if(blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
-                List<Pair<ItemStack, Integer>> itemStacks = new ArrayList<>();
-                for(int i = 0; i < honeyCocoonBlockEntity.getContainerSize(); i++) {
-                    ItemStack itemStack = honeyCocoonBlockEntity.getItem(i);
-                    if(!itemStack.isEmpty()) {
-                        itemStacks.add(new Pair<>(itemStack, i));
-                    }
-                }
-
-                if(itemStacks.isEmpty()) {
-                    return;
-                }
-
-                ItemStack takenItem = honeyCocoonBlockEntity.removeItem(itemStacks.get(random.nextInt(itemStacks.size())).getSecond(), 1);
-                spawnItemEntity(serverLevel, blockPos, takenItem, -0.2D);
-            }
-        }
-        else if(!blockState.getValue(WATERLOGGED) && aboveState.getCollisionShape(serverLevel, blockPos).isEmpty()) {
+        if(!blockState.getValue(WATERLOGGED) && aboveState.getCollisionShape(serverLevel, blockPos).isEmpty()) {
             BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
             if(blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
                 List<Pair<ItemStack, Integer>> emptyBroods = new ArrayList<>();
@@ -192,7 +183,13 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                 ItemStack consumedItem = honeyCocoonBlockEntity.removeItem(beeFeeding.get(random.nextInt(beeFeeding.size())).getSecond(), 1);
                 if(consumedItem.hasContainerItem()) {
                     ItemStack ejectedItem = consumedItem.getContainerItem();
-                    spawnItemEntity(serverLevel, blockPos, ejectedItem, 0.2D);
+                    if(ejectedItem.isEmpty()) {
+                        ejectedItem = ContainerCraftingRecipe.HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(consumedItem.getItem()).getDefaultInstance();
+                    }
+
+                    if(!ejectedItem.isEmpty()) {
+                        spawnItemEntity(serverLevel, blockPos, ejectedItem, 0.2D);
+                    }
                 }
 
                 boolean addedToInv = false;
@@ -213,6 +210,33 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                 if(!addedToInv) {
                     spawnItemEntity(serverLevel, blockPos, BzItems.HONEYCOMB_BROOD.get().getDefaultInstance(), 0.2D);
                 }
+            }
+        }
+    }
+
+    @Override
+    public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
+        BlockState aboveState = serverLevel.getBlockState(blockPos.above());
+        if(blockState.getValue(WATERLOGGED) && aboveState.getFluidState().is(FluidTags.WATER) && aboveState.getCollisionShape(serverLevel, blockPos).isEmpty()) {
+
+            BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
+            if(blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
+                serverLevel.scheduleTick(blockPos, blockState.getBlock(), waterDropDelay);
+
+                List<Pair<ItemStack, Integer>> itemStacks = new ArrayList<>();
+                for(int i = 0; i < honeyCocoonBlockEntity.getContainerSize(); i++) {
+                    ItemStack itemStack = honeyCocoonBlockEntity.getItem(i);
+                    if(!itemStack.isEmpty()) {
+                        itemStacks.add(new Pair<>(itemStack, i));
+                    }
+                }
+
+                if(itemStacks.isEmpty()) {
+                    return;
+                }
+
+                ItemStack takenItem = honeyCocoonBlockEntity.removeItem(itemStacks.get(random.nextInt(itemStacks.size())).getSecond(), 1);
+                spawnItemEntity(serverLevel, blockPos, takenItem, -0.2D);
             }
         }
     }
@@ -263,12 +287,17 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
      * Called by BlockItem after this block has been placed.
      */
     @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity livingEntity, ItemStack itemStack) {
+    public void setPlacedBy(Level level, BlockPos pos, BlockState blockstate, LivingEntity livingEntity, ItemStack itemStack) {
         if (itemStack.hasCustomHoverName()) {
             BlockEntity blockentity = level.getBlockEntity(pos);
             if (blockentity instanceof HoneyCocoonBlockEntity) {
                 ((HoneyCocoonBlockEntity)blockentity).setCustomName(itemStack.getHoverName());
             }
+        }
+
+        if (blockstate.getValue(WATERLOGGED)) {
+            level.scheduleTick(pos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(level));
+            level.scheduleTick(pos, blockstate.getBlock(), waterDropDelay);
         }
     }
 

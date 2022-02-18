@@ -101,7 +101,9 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:better_advancements-272515:3562206")
 
     compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
+    //runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
+
+    runtimeOnly fg.deobf("curse.maven:shutup_experimental_settings-407174:3544525")
 }
 
 apply from: 'gradle/manifest.gradle'
