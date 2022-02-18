@@ -184,6 +184,14 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
                 KneeMidLeftCube_r1.yRot = getCos(ageInTicks + entity.offset5, -0.375f, -0.525f);
                 KneeRearLeftCube_r1.yRot = getSine(ageInTicks + entity.offset6, -0.45f, -0.625f);
             }
+            else {
+                KneeFrontRightCube_r1.yRot = getSine(entity.offset1, 0.2f, 0.475f);
+                KneeMidRightCube_r1.yRot = getCos(entity.offset2, 0.375f, 0.525f);
+                KneeRearRightCube_r1.yRot = getSine(entity.offset3, 0.45f, 0.625f);
+                KneeFrontLeftCube_r1.yRot = getSine(entity.offset4, -0.20f, -0.475f);
+                KneeMidLeftCube_r1.yRot = getCos(entity.offset5, -0.375f, -0.525f);
+                KneeRearLeftCube_r1.yRot = getSine(entity.offset6, -0.45f, -0.625f);
+            }
 
             if(xzSpeed > 0.03D) {
                 WING_RIGHT.yRot = 0.0f;

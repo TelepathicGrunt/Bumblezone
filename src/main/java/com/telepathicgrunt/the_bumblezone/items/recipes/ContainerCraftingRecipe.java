@@ -9,16 +9,39 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 
+import java.util.Map;
+
+import static java.util.Map.entry;
+
 public class ContainerCraftingRecipe extends ShapelessRecipe {
     private final String group;
     private final ItemStack recipeOutput;
     private final NonNullList<Ingredient> recipeItems;
+    public static final Map<Item, Item> HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET = Map.ofEntries(
+            entry(Items.POWDER_SNOW_BUCKET, Items.BUCKET),
+            entry(Items.AXOLOTL_BUCKET, Items.BUCKET),
+            entry(Items.COD_BUCKET, Items.BUCKET),
+            entry(Items.PUFFERFISH_BUCKET, Items.BUCKET),
+            entry(Items.SALMON_BUCKET, Items.BUCKET),
+            entry(Items.TROPICAL_FISH_BUCKET, Items.BUCKET),
+            entry(Items.SUSPICIOUS_STEW, Items.BOWL),
+            entry(Items.MUSHROOM_STEW, Items.BOWL),
+            entry(Items.RABBIT_STEW, Items.BOWL),
+            entry(Items.BEETROOT_SOUP, Items.BOWL),
+            entry(Items.POTION, Items.GLASS_BOTTLE),
+            entry(Items.SPLASH_POTION, Items.GLASS_BOTTLE),
+            entry(Items.LINGERING_POTION, Items.GLASS_BOTTLE),
+            entry(Items.EXPERIENCE_BOTTLE, Items.GLASS_BOTTLE)
+    );
+
     public ContainerCraftingRecipe(ResourceLocation idIn, String groupIn, ItemStack recipeOutputIn, NonNullList<Ingredient> recipeItemsIn) {
         super(idIn, groupIn, recipeOutputIn, recipeItemsIn);
         this.group = groupIn;
@@ -42,24 +65,32 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
         int containerOutput = recipeOutput.getItem().hasCraftingRemainingItem() ? recipeOutput.getCount() : 0;
 
         for(int i = 0; i < remainingInv.size(); ++i) {
-            ItemStack item = inv.getItem(i);
-            if (item.getItem().hasCraftingRemainingItem()) {
+            ItemStack craftingInput = inv.getItem(i);
+            Item craftingContainer = craftingInput.getItem().getCraftingRemainingItem();
+            Item recipeContainer = recipeOutput.getItem().getCraftingRemainingItem();
+            if (craftingContainer == null && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(craftingInput.getItem())) {
+                craftingContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(craftingInput.getItem());
+            }
+            if (recipeContainer == null && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(recipeOutput.getItem())) {
+                recipeContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(recipeOutput.getItem());
+            }
+
+            if (craftingContainer != null) {
                 if(containerOutput > 0 &&
-                    (recipeOutput.getItem() == item.getItem().getCraftingRemainingItem() ||
-                    recipeOutput.getItem().getCraftingRemainingItem() == item.getItem() ||
-                    recipeOutput.getItem().getCraftingRemainingItem() == item.getItem().getCraftingRemainingItem()))
+                        (recipeOutput.getItem() == craftingContainer ||
+                                recipeContainer == craftingInput.getItem() ||
+                                recipeContainer == craftingContainer))
                 {
                     containerOutput--;
                 }
                 else {
-                    remainingInv.set(i, item.getItem().getCraftingRemainingItem().getDefaultInstance());
+                    remainingInv.set(i, craftingContainer.getDefaultInstance());
                 }
             }
         }
 
         return remainingInv;
     }
-
 
     public static class Serializer implements RecipeSerializer<ContainerCraftingRecipe> {
         @Override

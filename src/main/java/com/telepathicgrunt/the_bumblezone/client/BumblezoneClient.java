@@ -27,12 +27,12 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.fabric.impl.client.particle.ParticleFactoryRegistryImpl;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -100,6 +100,9 @@ public class BumblezoneClient implements ClientModInitializer {
         MenuScreens.register(BzMenuTypes.STRICT_9x4, StrictChestScreen::new);
         MenuScreens.register(BzMenuTypes.STRICT_9x5, StrictChestScreen::new);
         MenuScreens.register(BzMenuTypes.STRICT_9x6, StrictChestScreen::new);
+
+        KeyBindingHelper.registerKeyBinding(BeehemothControls.KEY_BIND_BEEHEMOTH_UP);
+        KeyBindingHelper.registerKeyBinding(BeehemothControls.KEY_BIND_BEEHEMOTH_DOWN);
     }
     
     public static void registerRenderLayers() {

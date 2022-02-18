@@ -1,3 +1,28 @@
+### **(V.4.3.5 Changes) (1.18.1 Minecraft)**
+
+##### Entities:
+When riding tamed Beehemoths, holding Caps Lock button will make the mob fly downward while Space will continue to move the mob up upward.
+ The keys for moving up or down can be changed in the Options -> Controls -> Key Binds menu.
+
+Fixed issue where if multiple Beehemoths are around, the Beehemoths on the ground may have legs rendered in incorrect position.
+
+##### Blocks:
+Honey Cocoon now will lose items much faster when waterlogged with water above as well.
+
+When Honey Cocoon consumes specific honey items to revive Empty Honeycomb Blocks inside, the ejected container of the consumed item will be dropped and should be the correct item this time.
+ (Example: glass bottle for consumed potions if you added potions to the bee_feeding_items item tag)
+
+Honey Cocoon's inventory screen is now orange.
+
+##### Recipes:
+Improved the the_bumblezone:container_shapeless_recipe_bz recipe type so that it converts certain vanilla items into their containers properly.
+ Example: Powder Snow Bucket does not have a container set so I have to hardcode that it should be turned to an empty bucket if used with this recipe type.
+ This doesn't change anything in base Bumblezone. Just may help datapackers make recipes with Bumblezone work properly and have correct containers left behind after crafting.
+
+##### Items:
+Fixed captions when flying when Bumble Bee Chestplate.
+
+
 ### **(V.4.3.4 Changes) (1.18.1 Minecraft)**
 
 ##### Blocks:

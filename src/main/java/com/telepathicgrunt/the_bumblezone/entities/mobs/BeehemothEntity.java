@@ -46,7 +46,6 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.FlyingAnimal;
@@ -77,6 +76,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     public static final int TICKS_PER_FLAP = Mth.ceil(1.4959966F);
     private boolean stopWandering = false;
     public float offset1, offset2, offset3, offset4, offset5, offset6;
+    public boolean movingStraightUp = false;
+    public boolean movingStraightDown = false;
 
     public BeehemothEntity(EntityType<? extends BeehemothEntity> type, Level world) {
         super(type, world);
