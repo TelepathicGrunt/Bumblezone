@@ -81,7 +81,7 @@
         "pitch": 0.3
       }
     ],
-    "subtitle": "subtitles.the_bumblezone.beehemoth.hurt"
+    "subtitle": "subtitles.entity.the_bumblezone.beehemoth.hurt"
   },
   "entity.the_bumblezone.beehemoth.death": {
     "sounds": [
@@ -98,7 +98,7 @@
         "pitch": 0.2
       }
     ],
-    "subtitle": "subtitles.the_bumblezone.beehemoth.dies"
+    "subtitle": "subtitles.entity.the_bumblezone.beehemoth.dies"
   },
   "entity.the_bumblezone.beehemoth.loop": {
     "sounds": [
@@ -139,7 +139,7 @@
         "pitch": 0.4
       }
     ],
-    "subtitle": "subtitles.the_bumblezone.beehemoth.loop"
+    "subtitle": "subtitles.entity.the_bumblezone.beehemoth.loop"
   },
   "entity.the_bumblezone.bumble_bee_chestplate.fly": {
     "sounds": [
@@ -149,7 +149,7 @@
         "volume": 0.6
       }
     ],
-    "subtitle": "subtitles.the_bumblezone.beehemoth.loop"
+    "subtitle": "subtitles.item.the_bumblezone.bumble_bee_chestplate.fly"
   },
   "item.the_bumblezone.stinger_spear.hit": {
     "sounds": [

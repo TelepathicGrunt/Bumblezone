@@ -19,6 +19,9 @@ Improved the the_bumblezone:container_shapeless_recipe_bz recipe type so that it
  Example: Powder Snow Bucket does not have a container set so I have to hardcode that it should be turned to an empty bucket if used with this recipe type.
  This doesn't change anything in base Bumblezone. Just may help datapackers make recipes with Bumblezone work properly and have correct containers left behind after crafting.
 
+##### Items:
+Fixed captions when flying when Bumble Bee Chestplate.
+
 
 ### **(V.4.3.4 Changes) (1.18.1 Minecraft)**
 

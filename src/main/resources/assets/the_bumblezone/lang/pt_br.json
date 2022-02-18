@@ -53,9 +53,9 @@
   "effect.the_bumblezone.protection_of_the_hive": "Proteção da Colmeia",
   "effect.the_bumblezone.beenergized": "Beenergized",
 
-  "subtitles.the_bumblezone.beehemoth.hurt": "Beehemoth hurt",
-  "subtitles.the_bumblezone.beehemoth.dies": "Beehemoth died",
-  "subtitles.the_bumblezone.beehemoth.loop": "Beehemoth buzzing",
+  "subtitles.entity.the_bumblezone.beehemoth.hurt": "Beehemoth hurt",
+  "subtitles.entity.the_bumblezone.beehemoth.dies": "Beehemoth died",
+  "subtitles.entity.the_bumblezone.beehemoth.loop": "Beehemoth buzzing",
 
   "advancements.the_bumblezone.root.title": "The Buzzing Bumbling Bumblezone!",
   "advancements.the_bumblezone.root.description": "Enter The Bumblezone dimension by any means",
