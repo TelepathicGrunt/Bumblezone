@@ -9,7 +9,7 @@ Fixed issue where if multiple Beehemoths are around, the Beehemoths on the groun
 ##### Blocks:
 Honey Cocoon now will lose items much faster when waterlogged with water above as well.
 
-When Honey Cocoon consumes specific honey items to revive Empty Honeycomb Blocks inside, the ejected container of the consumed item will be dropped 
+When Honey Cocoon consumes specific honey items to revive Empty Honeycomb Blocks inside, the ejected container of the consumed item will be dropped and should be the correct item this time.
  (Example: glass bottle for consumed potions if you added potions to the bee_feeding_items item tag)
 
 Honey Cocoon's inventory screen is now orange.
