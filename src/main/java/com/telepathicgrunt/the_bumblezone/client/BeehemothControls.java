@@ -20,8 +20,8 @@ public class BeehemothControls {
     public static void keyInput(InputEvent.KeyInputEvent event) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.getVehicle() instanceof BeehemothEntity) {
             BeehemothControlsPacket.sendToServer(
-                    event.getKey() == KEY_BIND_BEEHEMOTH_UP.getKey().getValue() ? event.getAction() : 2,
-                    event.getKey() == KEY_BIND_BEEHEMOTH_DOWN.getKey().getValue() ? event.getAction() : 2
+                event.getKey() == KEY_BIND_BEEHEMOTH_UP.getKey().getValue() ? event.getAction() : 2,
+                event.getKey() == KEY_BIND_BEEHEMOTH_DOWN.getKey().getValue() ? event.getAction() : 2
             );
         }
     }
