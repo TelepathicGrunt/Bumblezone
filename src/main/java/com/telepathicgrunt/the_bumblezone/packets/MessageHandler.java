@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.utils;
+package com.telepathicgrunt.the_bumblezone.packets;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacket;
@@ -27,5 +27,6 @@ public class MessageHandler {
         DEFAULT_CHANNEL.registerMessage(++channelID, MobEffectClientSyncPacket.class, MobEffectClientSyncPacket::compose, MobEffectClientSyncPacket::parse, MobEffectClientSyncPacket.Handler::handle);
         DEFAULT_CHANNEL.registerMessage(++channelID, BumbleBeeChestplateFlyingPacket.class, BumbleBeeChestplateFlyingPacket::compose, BumbleBeeChestplateFlyingPacket::parse, BumbleBeeChestplateFlyingPacket.Handler::handle);
         DEFAULT_CHANNEL.registerMessage(++channelID, StinglessBeeHelmetSightPacket.class, StinglessBeeHelmetSightPacket::compose, StinglessBeeHelmetSightPacket::parse, StinglessBeeHelmetSightPacket.Handler::handle);
+        DEFAULT_CHANNEL.registerMessage(++channelID, BeehemothControlsPacket.class, BeehemothControlsPacket::compose, BeehemothControlsPacket::parse, BeehemothControlsPacket.Handler::handle);
     }
 }

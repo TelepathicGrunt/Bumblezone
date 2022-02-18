@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
-import com.telepathicgrunt.the_bumblezone.utils.MessageHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.effect.MobEffect;
