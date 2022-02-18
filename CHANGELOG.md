@@ -4,6 +4,8 @@
 When riding tamed Beehemoths, holding Caps Lock button will make the mob fly downward while Space will continue to move the mob up upward.
  The keys for moving up or down can be changed in the Options -> Controls -> Key Binds menu.
 
+Fixed issue where if multiple Beehemoths are around, the Beehemoths on the ground may have legs rendered in incorrect position.
+
 ##### Blocks:
 Honey Cocoon now will lose items much faster when waterlogged with water above as well.
 
