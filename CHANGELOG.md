@@ -1,5 +1,11 @@
 ### **(V.4.3.5 Changes) (1.18.1 Minecraft)**
 
+##### Blocks:
+Honey Cocoon now will lose items much faster when waterlogged with water above as well.
+
+When Honey Cocoon consumes specific honey items to revive Empty Honeycomb Blocks inside, the ejected container of the consumed item will be dropped 
+ (Example: glass bottle for consumed potions if you added potions to the bee_feeding_items item tag)
+
 ##### Recipes:
 Improved the the_bumblezone:container_shapeless_recipe_bz recipe type so that it converts certain vanilla items into their containers properly.
  Example: Powder Snow Bucket does not have a container set so I have to hardcode that it should be turned to an empty bucket if used with this recipe type.

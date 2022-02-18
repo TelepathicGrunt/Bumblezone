@@ -26,7 +26,7 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
     private final String group;
     private final ItemStack recipeOutput;
     private final NonNullList<Ingredient> recipeItems;
-    private static final Map<Item, Item> HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET = Map.ofEntries(
+    public static final Map<Item, Item> HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET = Map.ofEntries(
             entry(Items.POWDER_SNOW_BUCKET, Items.BUCKET),
             entry(Items.AXOLOTL_BUCKET, Items.BUCKET),
             entry(Items.COD_BUCKET, Items.BUCKET),
