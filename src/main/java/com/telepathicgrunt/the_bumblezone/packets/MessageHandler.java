@@ -1,10 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacket;
-import com.telepathicgrunt.the_bumblezone.packets.MobEffectClientSyncPacket;
-import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetSightPacket;
-import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;

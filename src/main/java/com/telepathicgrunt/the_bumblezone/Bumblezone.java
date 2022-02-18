@@ -20,11 +20,11 @@ import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemS
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
+import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
 import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
-import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.resources.ResourceLocation;
