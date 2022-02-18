@@ -1,5 +1,9 @@
 ### **(V.4.3.5 Changes) (1.18.1 Minecraft)**
 
+##### Entities:
+When riding tamed Beehemoths, holding Caps Lock button will make the mob fly downward while Space will continue to move the mob up upward.
+ The keys for moving up or down can be changed in the Options -> Controls -> Key Binds menu.
+
 ##### Blocks:
 Honey Cocoon now will lose items much faster when waterlogged with water above as well.
 

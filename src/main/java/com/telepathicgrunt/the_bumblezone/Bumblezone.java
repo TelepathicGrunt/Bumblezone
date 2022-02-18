@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
+import com.telepathicgrunt.the_bumblezone.packets.BeehemothControlsPacket;
 import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacket;
 import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetSightPacket;
 import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
@@ -86,6 +87,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         ModChecker.setupModCompat();
         ServerTickEvents.END_WORLD_TICK.register(BzWorldSavedData::tick);
 
+        BeehemothControlsPacket.registerPacket();
         BumbleBeeChestplateFlyingPacket.registerPacket();
         StinglessBeeHelmetSightPacket.registerPacket();
     }

@@ -27,6 +27,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
@@ -100,6 +101,9 @@ public class BumblezoneClient implements ClientModInitializer {
         MenuScreens.register(BzMenuTypes.STRICT_9x4, StrictChestScreen::new);
         MenuScreens.register(BzMenuTypes.STRICT_9x5, StrictChestScreen::new);
         MenuScreens.register(BzMenuTypes.STRICT_9x6, StrictChestScreen::new);
+
+        KeyBindingHelper.registerKeyBinding(BeehemothControls.KEY_BIND_BEEHEMOTH_UP);
+        KeyBindingHelper.registerKeyBinding(BeehemothControls.KEY_BIND_BEEHEMOTH_DOWN);
     }
     
     public static void registerRenderLayers() {

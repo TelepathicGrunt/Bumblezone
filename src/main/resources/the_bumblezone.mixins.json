@@ -12,6 +12,7 @@
     "blocks.PistonMovingBlockEntityMixin",
     "blocks.RedstoneDustCanConnectMixin",
     "blocks.WaterEquivalenceMixin",
+    "client.KeyboardHandlerMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
     "containers.WorkbenchContainerMixin",

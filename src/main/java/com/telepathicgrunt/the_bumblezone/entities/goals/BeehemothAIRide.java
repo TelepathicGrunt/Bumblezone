@@ -47,7 +47,7 @@ public class BeehemothAIRide extends Goal {
             lookVec = lookVec.yRot((float) Math.PI);
         }
 
-        if (player.zza != 0 || ((LivingEntityAccessor)player).isJumping()) {
+        if (player.zza != 0 || beehemothEntity.movingStraightUp || beehemothEntity.movingStraightDown) {
             currentSpeed = Math.min(
                     Bumblezone.BZ_CONFIG.BZGeneralConfig.beehemothSpeed * speedModifier * beehemothEntity.getFinalFlyingSpeed(),
                     currentSpeed + 0.3D);
@@ -60,8 +60,14 @@ public class BeehemothAIRide extends Goal {
         y += lookVec.y * 5 + 0.25D;
         z += lookVec.z * 10;
 
-        if(((LivingEntityAccessor)player).isJumping()) {
-            y += 5;
+        if(beehemothEntity.movingStraightUp || beehemothEntity.movingStraightDown) {
+            if(beehemothEntity.movingStraightUp) {
+                y += 5;
+            }
+            if(beehemothEntity.movingStraightDown) {
+                y -= 5;
+            }
+
             Vec3 velocity = beehemothEntity.getDeltaMovement();
             beehemothEntity.setDeltaMovement(velocity.x(), Math.min(velocity.y, 0.1D * currentSpeed), velocity.z());
 
