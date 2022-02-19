@@ -38,7 +38,7 @@ public class BzBiomeProvider extends BiomeSource {
 
     public static final Codec<BzBiomeProvider> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
-                Codec.LONG.fieldOf("seed").orElseGet(BzBiomeProvider::getGenerationSeed).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
+                Codec.LONG.fieldOf("seed").orElseGet(WorldSeedHolder::getSeed).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
                 RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter((biomeSource) -> biomeSource.biomeRegistry))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
 
@@ -47,20 +47,6 @@ public class BzBiomeProvider extends BiomeSource {
     public static final ResourceLocation SUGAR_WATER_FLOOR = new ResourceLocation(Bumblezone.MODID, "sugar_water_floor");
     public static final ResourceLocation POLLINATED_FIELDS = new ResourceLocation(Bumblezone.MODID, "pollinated_fields");
     public static final ResourceLocation POLLINATED_PILLAR = new ResourceLocation(Bumblezone.MODID, "pollinated_pillar");
-
-    private static long generationSeed = 0L;
-    private static long getGenerationSeed() {
-        return generationSeed;
-    }
-    private static long setGenerationSeed(long seed) {
-        if (seed == 0L) {
-            return getGenerationSeed();
-        }
-        else {
-            generationSeed = seed;
-            return seed;
-        }
-    }
 
     private final long seed;
     private final Layer biomeSampler;
@@ -84,7 +70,7 @@ public class BzBiomeProvider extends BiomeSource {
                             !rlKey.equals(POLLINATED_PILLAR);
                 }).collect(Collectors.toList());
 
-        this.seed = setGenerationSeed(seed);
+        this.seed = seed;
         this.biomeRegistry = biomeRegistry;
         this.biomeSampler = buildWorldProcedure(seed, biomeRegistry);
     }

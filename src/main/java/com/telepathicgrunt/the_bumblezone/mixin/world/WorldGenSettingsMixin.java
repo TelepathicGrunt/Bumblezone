@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin;
+package com.telepathicgrunt.the_bumblezone.mixin.world;
 
 import com.telepathicgrunt.the_bumblezone.utils.WorldSeedHolder;
 import net.minecraft.core.MappedRegistry;
