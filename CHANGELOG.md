@@ -1,3 +1,9 @@
+### **(V.4.3.6 Changes) (1.18.1 Minecraft)**
+
+##### Dimension:
+Fixed Bumblezone Dimension not using the random world seed in some edge cases. May produce chunk borders when loading into the dimension if created with past versions of Bumblezone.
+
+
 ### **(V.4.3.5 Changes) (1.18.1 Minecraft)**
 
 ##### Entities:
