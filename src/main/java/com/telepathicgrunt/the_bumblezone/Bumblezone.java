@@ -51,12 +51,6 @@ public class Bumblezone{
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     public Bumblezone() {
-        // TODO: Add bee armor!
-        // TODO: new advancements
-        // TODO: lang files
-        // TODO: port to fabric
-        // TODO: update mod images and description
-
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         BzBlockTags.tagInit(); // Done extra early as some features needs the tag wrapper.
