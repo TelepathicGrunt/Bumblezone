@@ -38,7 +38,7 @@ public class BzBiomeProvider extends BiomeSource {
 
     public static final Codec<BzBiomeProvider> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
-                Codec.LONG.fieldOf("seed").orElseGet(WorldSeedHolder::getSeed).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
+                Codec.LONG.fieldOf("seed").orElseGet(() -> 0L).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
                 RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter((biomeSource) -> biomeSource.biomeRegistry))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
 
@@ -71,6 +71,7 @@ public class BzBiomeProvider extends BiomeSource {
                 }).collect(Collectors.toList());
 
         this.seed = seed;
+        WorldSeedHolder.setSeed(seed);
         this.biomeRegistry = biomeRegistry;
         this.biomeSampler = buildWorldProcedure(seed, biomeRegistry);
     }
