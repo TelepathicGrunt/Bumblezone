@@ -26,6 +26,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
+import org.spongepowered.asm.mixin.Unique;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,15 +38,15 @@ public class BzBiomeProvider extends BiomeSource {
 
     public static final Codec<BzBiomeProvider> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
-                Codec.LONG.fieldOf("seed").orElseGet(WorldSeedHolder::getSeed).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
+                Codec.LONG.fieldOf("seed").orElseGet(() -> 0L).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
                 RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter((biomeSource) -> biomeSource.biomeRegistry))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
 
-    public static ResourceLocation HIVE_WALL = new ResourceLocation(Bumblezone.MODID, "hive_wall");
-    public static ResourceLocation HIVE_PILLAR = new ResourceLocation(Bumblezone.MODID, "hive_pillar");
-    public static ResourceLocation SUGAR_WATER_FLOOR = new ResourceLocation(Bumblezone.MODID, "sugar_water_floor");
-    public static ResourceLocation POLLINATED_FIELDS = new ResourceLocation(Bumblezone.MODID, "pollinated_fields");
-    public static ResourceLocation POLLINATED_PILLAR = new ResourceLocation(Bumblezone.MODID, "pollinated_pillar");
+    public static final ResourceLocation HIVE_WALL = new ResourceLocation(Bumblezone.MODID, "hive_wall");
+    public static final ResourceLocation HIVE_PILLAR = new ResourceLocation(Bumblezone.MODID, "hive_pillar");
+    public static final ResourceLocation SUGAR_WATER_FLOOR = new ResourceLocation(Bumblezone.MODID, "sugar_water_floor");
+    public static final ResourceLocation POLLINATED_FIELDS = new ResourceLocation(Bumblezone.MODID, "pollinated_fields");
+    public static final ResourceLocation POLLINATED_PILLAR = new ResourceLocation(Bumblezone.MODID, "pollinated_pillar");
 
     private final long seed;
     private final Layer biomeSampler;
@@ -70,6 +71,7 @@ public class BzBiomeProvider extends BiomeSource {
                 }).collect(Collectors.toList());
 
         this.seed = seed;
+        WorldSeedHolder.setSeed(seed);
         this.biomeRegistry = biomeRegistry;
         this.biomeSampler = buildWorldProcedure(seed, biomeRegistry);
     }

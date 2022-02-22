@@ -1,6 +1,5 @@
-package com.telepathicgrunt.the_bumblezone.mixin;
+package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
-import com.telepathicgrunt.the_bumblezone.mixin.entities.ThrownTridentAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;

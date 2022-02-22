@@ -85,7 +85,7 @@ public class BzChunkGenerator extends ChunkGenerator {
     public static final Codec<BzChunkGenerator> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             RegistryLookupCodec.create(Registry.NOISE_REGISTRY).forGetter(bzChunkGenerator -> bzChunkGenerator.noises),
             BiomeSource.CODEC.fieldOf("biome_source").forGetter(bzChunkGenerator -> bzChunkGenerator.biomeSource),
-            Codec.LONG.fieldOf("seed").orElseGet(WorldSeedHolder::getSeed).stable().forGetter(bzChunkGenerator -> bzChunkGenerator.seed),
+            Codec.LONG.fieldOf("seed").orElseGet(() -> 0L).stable().forGetter(bzChunkGenerator -> bzChunkGenerator.seed),
             NoiseGeneratorSettings.CODEC.fieldOf("settings").forGetter(bzChunkGenerator -> bzChunkGenerator.settings),
             RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter((bzChunkGenerator) -> bzChunkGenerator.biomeRegistry),
             RegistryLookupCodec.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY).forGetter((bzChunkGenerator) -> bzChunkGenerator.configuredStructureFeaturesRegistry))
