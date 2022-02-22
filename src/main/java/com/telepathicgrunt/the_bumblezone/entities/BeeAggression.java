@@ -164,10 +164,11 @@ public class BeeAggression {
     public static boolean doesBeesHateEntity(Entity entity) {
 
         //Also checks to make sure we are in the dimension.
-        if (!entity.level.isClientSide() &&
-                entity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-                BzBeeAggressionConfigs.aggressiveBees.get() &&
-                entity instanceof Mob mobEntity)
+        if (entity != null &&
+            !entity.level.isClientSide() &&
+            entity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
+            BzBeeAggressionConfigs.aggressiveBees.get() &&
+            entity instanceof Mob mobEntity)
         {
             //must be a bear or insect animal with no wrath of the hive effect on
             if(SET_OF_BEE_HATED_NAMED_ENTITIES.contains(entity.getType()) ||
