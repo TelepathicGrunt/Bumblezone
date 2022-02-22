@@ -85,7 +85,12 @@ public class BzWorldSavedData extends SavedData {
 				enteringBumblezone(entity, teleportedEntities);
 			}
 			else {
-				exitingBumblezone(entity, destination, teleportedEntities);
+				if (entity.getControllingPassenger() != null) {
+					exitingBumblezone(entity.getControllingPassenger(), destination, teleportedEntities);
+				}
+				else {
+					exitingBumblezone(entity, destination, teleportedEntities);
+				}
 			}
 		}
 
@@ -142,6 +147,12 @@ public class BzWorldSavedData extends SavedData {
 		List<Entity> passengers = entity.getPassengers();
 		entity.ejectPassengers();
 		entity.setPortalCooldown();
+
+		if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
+			EntityPositionAndDimension capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
+			capability.setNonBZPos(entity.position());
+			capability.setNonBZDim(entity.level.dimension().location());
+		}
 
 		if (entity instanceof ServerPlayer) {
 			if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
