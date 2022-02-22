@@ -3,6 +3,9 @@
 ##### Dimension:
 Fixed Bumblezone Dimension not using the random world seed in some edge cases. May produce chunk borders when loading into the dimension if created with past versions of Bumblezone.
 
+##### Misc:
+Fixed Bumblezone crash when other mods create a null entity somehow for whatever cursed reason.
+
 
 ### **(V.4.3.5 Changes) (1.18.1 Minecraft)**
 
