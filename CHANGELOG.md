@@ -3,6 +3,10 @@
 ##### Dimension:
 Fixed Bumblezone Dimension not using the random world seed in some edge cases. May produce chunk borders when loading into the dimension if created with past versions of Bumblezone.
 
+##### Teleportation:
+Fixed teleportation getting screwed up when riding mobs and exiting Bumblezone. It should now use the controlling entity for destination instead of vehicle's data.
+ Hopefully there's no more teleportation bugs...
+
 ##### Misc:
 Fixed Bumblezone crash when other mods create a null entity somehow for whatever cursed reason.
 

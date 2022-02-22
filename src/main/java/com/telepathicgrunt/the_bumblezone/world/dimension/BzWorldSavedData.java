@@ -77,8 +77,14 @@ public class BzWorldSavedData extends SavedData
 			// Also updates teleportedEntities to keep track of which entity was teleported.
 			if (destinationKey.equals(BzDimension.BZ_WORLD_KEY)) {
 				enteringBumblezone(entity, teleportedEntities);
-			} else {
-				exitingBumblezone(entity, destination, teleportedEntities);
+			}
+			else {
+				if (entity.getControllingPassenger() != null) {
+					exitingBumblezone(entity.getControllingPassenger(), destination, teleportedEntities);
+				}
+				else {
+					exitingBumblezone(entity, destination, teleportedEntities);
+				}
 			}
 		}
 
@@ -134,6 +140,11 @@ public class BzWorldSavedData extends SavedData
 		List<Entity> passengers = entity.getPassengers();
 		entity.ejectPassengers();
 		entity.setPortalCooldown();
+
+		if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
+			Bumblezone.ENTITY_COMPONENT.get(entity).setNonBZPos(entity.position());
+			Bumblezone.ENTITY_COMPONENT.get(entity).setNonBZDimension(entity.level.dimension().location());
+		}
 
 		if (entity instanceof ServerPlayer) {
 			if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
