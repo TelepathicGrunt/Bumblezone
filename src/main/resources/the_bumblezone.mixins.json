@@ -50,6 +50,7 @@
     "items.SimpleCookingSerializerMixin",
     "world.BeardifierAccessor",
     "world.BiomeSourceAccessor",
+    "world.LevelStorageSourceMixin",
     "world.NoiseChunkAccessor",
     "world.NoiseGeneratorSettingsInvoker",
     "world.ServerLevelMixin",

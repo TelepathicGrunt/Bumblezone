@@ -68,7 +68,18 @@ public class EntityTeleportationHookup {
         if (!livingEntity.level.isClientSide()) {
             checkAndCorrectStoredDimension(livingEntity);
             MinecraftServer minecraftServer = livingEntity.getServer(); // the server itself
-            ResourceKey<Level> worldKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, Bumblezone.ENTITY_COMPONENT.get(livingEntity).getNonBZDimension());
+            ResourceKey<Level> worldKey;
+
+            if (livingEntity.getControllingPassenger() == null) {
+                worldKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, Bumblezone.ENTITY_COMPONENT.get(livingEntity).getNonBZDimension());
+            }
+            else {
+                if(livingEntity.getControllingPassenger() instanceof LivingEntity livingEntity2) {
+                    checkAndCorrectStoredDimension(livingEntity2);
+                }
+                worldKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, Bumblezone.ENTITY_COMPONENT.get(livingEntity.getControllingPassenger()).getNonBZDimension());
+            }
+
             ServerLevel serverWorld = minecraftServer.getLevel(worldKey);
             if(serverWorld == null) {
                 serverWorld = minecraftServer.getLevel(Level.OVERWORLD);
