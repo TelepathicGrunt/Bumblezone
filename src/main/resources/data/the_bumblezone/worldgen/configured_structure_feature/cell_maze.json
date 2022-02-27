@@ -1,7 +1,10 @@
 {
+  "type": "the_bumblezone:cell_maze",
   "config": {
     "start_pool": "the_bumblezone:cell_maze/start_pool",
     "size": 7
   },
-  "type": "the_bumblezone:cell_maze"
+  "biomes": "#the_bumblezone:has_structure/cell_maze",
+  "adapt_noise": true,
+  "spawn_overrides": {}
 }

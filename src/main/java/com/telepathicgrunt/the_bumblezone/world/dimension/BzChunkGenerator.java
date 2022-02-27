@@ -1,17 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.world.dimension;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseChunkAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseGeneratorSettingsInvoker;
-import com.telepathicgrunt.the_bumblezone.mixin.world.StructureSettingsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
-import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import com.telepathicgrunt.the_bumblezone.utils.WorldSeedHolder;
 import net.minecraft.SharedConstants;
@@ -19,7 +15,6 @@ import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.RegistryLookupCodec;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -55,7 +50,6 @@ import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.NoiseChunk;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.NoiseRouter;
-import net.minecraft.world.level.levelgen.NoiseSampler;
 import net.minecraft.world.level.levelgen.NoiseSettings;
 import net.minecraft.world.level.levelgen.RandomSupport;
 import net.minecraft.world.level.levelgen.SurfaceSystem;
@@ -64,15 +58,12 @@ import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.blending.Blender;
 import net.minecraft.world.level.levelgen.carver.CarvingContext;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.material.MaterialRuleList;
 import net.minecraft.world.level.levelgen.material.WorldGenMaterialRule;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
@@ -80,7 +71,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 
 public class BzChunkGenerator extends ChunkGenerator {
@@ -134,30 +124,6 @@ public class BzChunkGenerator extends ChunkGenerator {
         this.globalFluidPicker = (j, k, lx) -> k < Math.min(-54, seaLevel) ? fluidStatus : fluidStatus2;
         this.surfaceSystem = new SurfaceSystem(registry, this.defaultBlock, seaLevel, seed, noiseGeneratorSettings.getRandomSource());
         this.configuredStructureFeaturesRegistry = configuredStructureFeaturesRegistry;
-
-        ConfiguredStructureFeature<?,?> currentStructure;
-        ImmutableMap<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> originalMultiMap = ((StructureSettingsAccessor)noiseGeneratorSettings.structureSettings()).getConfiguredStructures();
-        Map<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> newMultiMaps = new HashMap<>(originalMultiMap);
-
-        currentStructure = configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "honey_cave_room"));
-        newMultiMaps.put(BzStructures.HONEY_CAVE_ROOM, ImmutableMultimap.of(
-                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_pillar"))));
-
-        currentStructure = configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "pollinated_stream"));
-        newMultiMaps.put(BzStructures.POLLINATED_STREAM, ImmutableMultimap.of(
-                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_pillar")),
-                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_fields"))
-        ));
-
-        currentStructure = configuredStructureFeaturesRegistry.get(new ResourceLocation(Bumblezone.MODID, "cell_maze"));
-        newMultiMaps.put(BzStructures.CELL_MAZE, ImmutableMultimap.of(
-                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_pillar")),
-                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollinated_fields")),
-                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "hive_pillar")),
-                currentStructure, ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Bumblezone.MODID, "hive_wall"))
-        ));
-
-        ((StructureSettingsAccessor)noiseGeneratorSettings.structureSettings()).setConfiguredStructures(ImmutableMap.copyOf(newMultiMaps));
     }
 
     public static void registerChunkGenerator() {

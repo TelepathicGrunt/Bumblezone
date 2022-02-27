@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "the_bumblezone:pollinated_stream",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 938497222,
+    "spacing": 12,
+    "separation": 8,
+    "type": "minecraft:random_spread"
+  }
+}
