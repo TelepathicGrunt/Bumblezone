@@ -124,7 +124,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         Entity entity = entityRayTraceResult.getEntity();
 
         // pollinates the bee
-        if(entity instanceof Bee && BzEntityTags.POLLEN_PUFF_CAN_POLLINATE.contains(entity.getType())) {
+        if(entity instanceof Bee && entity.getType().is(BzEntityTags.POLLEN_PUFF_CAN_POLLINATE)) {
             ((BeeEntityInvoker)entity).thebumblezone_callSetHasNectar(true);
             ((Bee)entity).resetTicksWithoutNectarSinceExitingHive();
 

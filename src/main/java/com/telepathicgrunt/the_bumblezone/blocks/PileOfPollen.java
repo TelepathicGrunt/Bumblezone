@@ -327,7 +327,7 @@ public class PileOfPollen extends FallingBlock {
             }
 
             // reduce pile of pollen to pollinate bee
-            if(entity instanceof Bee && !((Bee)entity).hasNectar() && BzEntityTags.POLLEN_PUFF_CAN_POLLINATE.contains(entity.getType())) {
+            if(entity instanceof Bee && !((Bee)entity).hasNectar() && entity.getType().is(BzEntityTags.POLLEN_PUFF_CAN_POLLINATE)) {
                 ((BeeEntityInvoker)entity).thebumblezone_callSetHasNectar(true);
                 ((Bee)entity).resetTicksWithoutNectarSinceExitingHive();
                 if(layerValueMinusOne == 0) {

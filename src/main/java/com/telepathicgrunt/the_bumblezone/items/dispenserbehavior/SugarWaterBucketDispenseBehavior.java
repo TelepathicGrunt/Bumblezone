@@ -23,10 +23,8 @@ public class SugarWaterBucketDispenseBehavior extends DefaultDispenseItemBehavio
         Position iposition = DispenserBlock.getDispensePosition(source);
         BlockPos position = new BlockPos(iposition);
         ServerLevel world = source.getLevel();
-        BlockState blockstate = world.getBlockState(position);
 
         if (bucketitem.emptyContents(null, world, position, null)) {
-
             bucketitem.checkExtraContent(null, world, stack, position);
             return new ItemStack(Items.BUCKET);
         }

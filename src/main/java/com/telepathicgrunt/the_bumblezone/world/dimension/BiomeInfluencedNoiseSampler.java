@@ -11,12 +11,11 @@ import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.TheEndBiomeSource;
 import net.minecraft.world.level.levelgen.Aquifer;
 import net.minecraft.world.level.levelgen.NoiseChunk;
-import net.minecraft.world.level.levelgen.NoiseSampler;
+import net.minecraft.world.level.levelgen.NoiseRouter;
 import net.minecraft.world.level.levelgen.NoiseSettings;
 import net.minecraft.world.level.levelgen.Noises;
 import net.minecraft.world.level.levelgen.PositionalRandomFactory;
 import net.minecraft.world.level.levelgen.RandomSource;
-import net.minecraft.world.level.levelgen.TerrainInfo;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.blending.Blender;
 import net.minecraft.world.level.levelgen.synth.BlendedNoise;
@@ -24,7 +23,7 @@ import net.minecraft.world.level.levelgen.synth.NormalNoise;
 import net.minecraft.world.level.levelgen.synth.SimplexNoise;
 import org.jetbrains.annotations.Nullable;
 
-public class BiomeInfluencedNoiseSampler extends NoiseSampler {
+public class BiomeInfluencedNoiseSampler extends NoiseRouter {
 
     /**
      * Table of weights used to weight faraway biomes less than nearby biomes.

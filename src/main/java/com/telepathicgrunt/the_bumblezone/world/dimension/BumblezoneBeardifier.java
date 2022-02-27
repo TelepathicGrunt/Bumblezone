@@ -7,12 +7,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.Beardifier;
+import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.feature.NoiseEffect;
-import net.minecraft.world.level.levelgen.feature.structures.JigsawJunction;
-import net.minecraft.world.level.levelgen.feature.structures.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.pools.JigsawJunction;
+import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 
 public class BumblezoneBeardifier extends Beardifier {
     public BumblezoneBeardifier(StructureFeatureManager structureFeatureManager, ChunkAccess chunk) {
@@ -20,7 +21,10 @@ public class BumblezoneBeardifier extends Beardifier {
     }
 
     @Override
-    public double calculateNoise(int x, int y, int z) {
+    public double compute(DensityFunction.FunctionContext functionContext) {
+        int x = functionContext.blockX();
+        int y = functionContext.blockY();
+        int z = functionContext.blockZ();
         double noiseResult = 0.0D;
 
         while(((BeardifierAccessor)this).getPieceIterator().hasNext()) {

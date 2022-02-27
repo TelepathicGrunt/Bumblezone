@@ -36,7 +36,7 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior {
         BlockPos position = new BlockPos(iposition);
         BlockState blockstate = world.getBlockState(position);
 
-        if (blockstate.is(BzBlocks.HONEYCOMB_BROOD) && BzItemTags.BEE_FEEDING_ITEMS.contains(stack.getItem())) {
+        if (blockstate.is(BzBlocks.HONEYCOMB_BROOD) && stack.is(BzItemTags.BEE_FEEDING_ITEMS)) {
             // spawn bee if at final stage and front isn't blocked off
             int stage = blockstate.getValue(HoneycombBrood.STAGE);
             if (stage == 3) {

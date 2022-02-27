@@ -33,7 +33,7 @@ public class BumbleBeeChestplate extends BeeArmor {
      */
     @Override
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return BzItemTags.BEE_ARMOR_REPAIR_ITEMS.contains(repair.getItem());
+        return repair.is(BzItemTags.BEE_ARMOR_REPAIR_ITEMS);
     }
 
     @Override

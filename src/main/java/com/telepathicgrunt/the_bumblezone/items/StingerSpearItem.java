@@ -53,7 +53,7 @@ public class StingerSpearItem extends TridentItem {
      */
     @Override
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return BzItemTags.STINGER_SPEAR_REPAIR_ITEMS.contains(repair.getItem());
+        return repair.is(BzItemTags.STINGER_SPEAR_REPAIR_ITEMS);
     }
 
     @Override

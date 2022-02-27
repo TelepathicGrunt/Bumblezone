@@ -14,7 +14,7 @@
     "issues": "https://github.com/TelepathicGrunt/Bumblezone-Fabric/issues"
   },
 
-  "license": "MIT",
+  "license": "LGPLv3",
   "icon": "assets/the_bumblezone/the_bumblezone_logo.png",
 
   "environment": "*",
@@ -42,8 +42,8 @@
   "accessWidener" : "the_bumblezone.accesswidener",
 
   "depends": {
-    "fabricloader": ">=0.12.0",
-    "minecraft": ">=1.18.1",
+    "fabricloader": ">=0.13.3",
+    "minecraft": ">=1.18.2-rc.1",
     "fabric": ">=0.43.1",
     "cloth-config2": ">=6.0.42",
     "feature_nbt_deadlock_be_gone": "*"

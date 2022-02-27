@@ -40,7 +40,7 @@ public class BeeInteractivity {
             ResourceLocation itemRL = Registry.ITEM.getKey(itemstack.getItem());
 
             // Disallow all non-tagged items from being fed to bees
-            if(!BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
+            if(!itemstack.is(BzItemTags.BEE_FEEDING_ITEMS))
                 return InteractionResult.PASS;
             if(world.isClientSide())
                 return InteractionResult.SUCCESS;

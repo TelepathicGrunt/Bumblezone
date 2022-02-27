@@ -58,14 +58,14 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
 
     private boolean doesBiomeChangeInChunk(FeaturePlaceContext<BiomeBasedLayerConfig> context, BlockPos.MutableBlockPos mutableBlockPosForChunk) {
         ChunkGenerator chunkGenerator = context.chunkGenerator();
-        Biome biome = chunkGenerator.getNoiseBiome(QuartPos.fromBlock(mutableBlockPosForChunk.getX()), 40, QuartPos.fromBlock(mutableBlockPosForChunk.getZ()));
-        if(biome != chunkGenerator.getNoiseBiome(QuartPos.fromBlock(mutableBlockPosForChunk.getX() + 16), 40, QuartPos.fromBlock(mutableBlockPosForChunk.getZ()))){
+        Biome biome = chunkGenerator.getNoiseBiome(QuartPos.fromBlock(mutableBlockPosForChunk.getX()), 40, QuartPos.fromBlock(mutableBlockPosForChunk.getZ())).value();
+        if(biome != chunkGenerator.getNoiseBiome(QuartPos.fromBlock(mutableBlockPosForChunk.getX() + 16), 40, QuartPos.fromBlock(mutableBlockPosForChunk.getZ())).value()){
             return true;
         }
-        else if(biome != chunkGenerator.getNoiseBiome(QuartPos.fromBlock(mutableBlockPosForChunk.getX()), 40, QuartPos.fromBlock(mutableBlockPosForChunk.getZ() + 16))){
+        else if(biome != chunkGenerator.getNoiseBiome(QuartPos.fromBlock(mutableBlockPosForChunk.getX()), 40, QuartPos.fromBlock(mutableBlockPosForChunk.getZ() + 16)).value()){
             return true;
         }
-        else if(biome != chunkGenerator.getNoiseBiome(QuartPos.fromBlock(mutableBlockPosForChunk.getX() + 16), 40, QuartPos.fromBlock(mutableBlockPosForChunk.getZ() + 16))){
+        else if(biome != chunkGenerator.getNoiseBiome(QuartPos.fromBlock(mutableBlockPosForChunk.getX() + 16), 40, QuartPos.fromBlock(mutableBlockPosForChunk.getZ() + 16)).value()){
             return true;
         }
         else {
@@ -84,7 +84,7 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
         for (int xOffset = 0; xOffset <= 15; xOffset++) {
             for (int zOffset = 0; zOffset <= 15; zOffset++) {
                 mutable.set(startPos.getX() + xOffset, context.chunkGenerator().getGenDepth() + context.chunkGenerator().getMinY(), startPos.getZ() + zOffset);
-                if(targetBiome != context.level().getBiome(mutable)) {
+                if(targetBiome != context.level().getBiome(mutable).value()) {
                     continue;
                 }
 

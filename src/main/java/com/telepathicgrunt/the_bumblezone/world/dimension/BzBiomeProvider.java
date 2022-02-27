@@ -20,8 +20,9 @@ import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.Layer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.LazyArea;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.LazyAreaContext;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.ZoomLayer;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.RegistryLookupCodec;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
@@ -29,7 +30,6 @@ import net.minecraft.world.level.biome.Climate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.function.LongFunction;
 import java.util.stream.Collectors;
 
@@ -38,7 +38,7 @@ public class BzBiomeProvider extends BiomeSource {
     public static final Codec<BzBiomeProvider> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
                 Codec.LONG.fieldOf("seed").orElseGet(WorldSeedHolder::getSeed).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
-                RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter((biomeSource) -> biomeSource.biomeRegistry))
+                RegistryOps.retrieveRegistry(Registry.BIOME_REGISTRY).forGetter((biomeSource) -> biomeSource.biomeRegistry))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
 
     public static ResourceLocation HIVE_WALL = new ResourceLocation(Bumblezone.MODID, "hive_wall");
@@ -55,7 +55,7 @@ public class BzBiomeProvider extends BiomeSource {
     public BzBiomeProvider(long seed, Registry<Biome> biomeRegistry) {
         super(biomeRegistry.entrySet().stream()
                 .filter(entry -> entry.getKey().location().getNamespace().equals(Bumblezone.MODID))
-                .map(Map.Entry::getValue)
+                .map(biomeEntry -> Holder.direct(biomeEntry.getValue()))
                 .collect(Collectors.toList()));
 
         nonstandardBiome = ((BiomeSourceAccessor)this).getPossibleBiomes().stream()
@@ -128,8 +128,8 @@ public class BzBiomeProvider extends BiomeSource {
     }
 
 
-    public Biome getNoiseBiome(int x, int y, int z, Climate.Sampler sampler) {
-        return biomeSampler.sample(biomeRegistry, x, z);
+    @Override
+    public Holder<Biome> getNoiseBiome(int x, int y, int z, Climate.Sampler sampler) {
+        return new Holder.Direct<>(biomeSampler.sample(biomeRegistry, x, z));
     }
-
 }

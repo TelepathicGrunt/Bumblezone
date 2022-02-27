@@ -24,7 +24,7 @@ public class CreatingHoneySlime {
     // Spawn honey slime instead of passed in entity
     public static InteractionResult createHoneySlime(Level world, Player playerEntity, InteractionHand hand, Entity target) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
-        if (target.getType().equals(EntityType.SLIME) && BzItemTags.TURN_SLIME_TO_HONEY_SLIME.contains(itemstack.getItem())) {
+        if (target.getType().equals(EntityType.SLIME) && itemstack.is(BzItemTags.TURN_SLIME_TO_HONEY_SLIME)) {
 
             Slime slimeEntity = (Slime)target;
             int slimeSize = slimeEntity.getSize();

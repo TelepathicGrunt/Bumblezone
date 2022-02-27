@@ -38,7 +38,7 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
             bucketitem.checkExtraContent(null, world, stack, position);
             return new ItemStack(Items.BUCKET);
         }
-        else if (blockstate.is(BzBlocks.HONEYCOMB_BROOD) && BzItemTags.BEE_FEEDING_ITEMS.contains(stack.getItem())) {
+        else if (blockstate.is(BzBlocks.HONEYCOMB_BROOD) && stack.is(BzItemTags.BEE_FEEDING_ITEMS)) {
             // spawn bee if at final stage and front isn't blocked off
             int stage = blockstate.getValue(HoneycombBrood.STAGE);
             if (stage == 3) {

@@ -1,4 +1,5 @@
 accessWidener v1 named
+accessible method net/minecraft/world/entity/item/FallingBlockEntity <init> (Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/level/block/state/BlockState;)V
 accessible class net/minecraft/world/item/crafting/SimpleCookingSerializer$CookieBaker
 accessible class net/minecraft/world/entity/animal/Bee$BeeWanderGoal
 accessible method net/minecraft/client/particle/SuspendedParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/particle/SpriteSet;DDD)V

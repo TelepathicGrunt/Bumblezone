@@ -65,14 +65,14 @@ public class BeeAggression {
 
     //if player mines an angerable tagged block, bees gets very mad...
     public static void blockBreakAnger(Player player, Block block) {
-        if (BzBlockTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED.contains(block)) {
+        if (block.defaultBlockState().is(BzBlockTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED)) {
             angerBees(player);
         }
     }
 
     //if player picks up an angerable tagged item, bees gets very mad...
     public static void itemPickupAnger(Player player, Item item) {
-        if (BzItemTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP.contains(item)) {
+        if (item.getDefaultInstance().is(BzItemTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP)) {
             angerBees(player);
         }
     }
