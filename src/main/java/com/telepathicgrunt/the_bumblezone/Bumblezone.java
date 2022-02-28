@@ -12,10 +12,10 @@ import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.packets.BeehemothControlsPacket;
 import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacket;
 import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetSightPacket;
-import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
-import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
-import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
-import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
@@ -49,10 +49,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         AutoConfig.register(BzConfig.class, JanksonConfigSerializer::new);
         BZ_CONFIG = AutoConfig.getConfigHolder(BzConfig.class).getConfig();
 
-        BzBlockTags.initTags();
-        BzItemTags.initTags();
-        BzFluidTags.tagInit();
-        BzEntityTags.tagInit();
+        BzTags.initTags();
         BzBiomeHeightRegistry.initBiomeHeightRegistry();
 
         // Must be before items so that items like music disc can get sounds

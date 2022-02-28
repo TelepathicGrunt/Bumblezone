@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
@@ -29,7 +29,7 @@ public class HoneyCrystalShield extends ShieldItem {
      */
     @Override
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return repair.is(BzItemTags.HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS);
+        return repair.is(BzTags.HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS);
     }
 
     /**

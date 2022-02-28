@@ -1,4 +1,5 @@
 accessWidener v1 named
+accessible method net/minecraft/world/level/levelgen/NoiseChunk <init> (IIILnet/minecraft/world/level/levelgen/NoiseRouter;IILnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V
 accessible method net/minecraft/world/entity/item/FallingBlockEntity <init> (Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/level/block/state/BlockState;)V
 accessible class net/minecraft/world/item/crafting/SimpleCookingSerializer$CookieBaker
 accessible class net/minecraft/world/entity/animal/Bee$BeeWanderGoal

@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
@@ -55,7 +55,7 @@ public class PorousHoneycomb extends Block {
             return InteractionResult.SUCCESS;
         }
 
-        else if (itemstack.is(BzItemTags.HONEY_BUCKETS)) {
+        else if (itemstack.is(BzTags.HONEY_BUCKETS)) {
             // added honey to this block and neighboring blocks
             world.setBlock(position, BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(), 3);
 

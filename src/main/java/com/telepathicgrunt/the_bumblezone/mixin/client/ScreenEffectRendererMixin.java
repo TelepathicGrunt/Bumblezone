@@ -29,7 +29,7 @@ public class ScreenEffectRendererMixin {
 
     // make honey fluid have overlay
     @Inject(method = "renderScreenEffect(Lnet/minecraft/client/Minecraft;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;isEyeInFluid(Lnet/minecraft/tags/Tag;)Z"),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;isEyeInFluid(Lnet/minecraft/tags/TagKey;)Z"),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
     private static void thebumblezone_renderHoneyOverlay(Minecraft minecraft, PoseStack matrixStack, CallbackInfo ci) {

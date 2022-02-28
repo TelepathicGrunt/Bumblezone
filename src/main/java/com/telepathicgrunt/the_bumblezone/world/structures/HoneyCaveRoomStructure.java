@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.world.structures;
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.the_bumblezone.world.structures.pieces.BuriedStructurePiece;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
@@ -70,7 +71,7 @@ public class HoneyCaveRoomStructure extends StructureFeature<JigsawConfiguration
                 context.registryAccess()
         );
 
-        return JigsawPlacement.addPieces(newContext, PoolElementStructurePiece::new, centerPos, false, false);
+        return JigsawPlacement.addPieces(newContext, BuriedStructurePiece::new, centerPos, false, false);
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.client;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
-import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.renderer.block.LiquidBlockRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -89,7 +89,7 @@ public class FluidRendererMixin {
                     ordinal = 1, shift = At.Shift.BEFORE),
             ordinal = 2)
     private boolean thebumblezone_cullBottom(boolean showBottom, BlockAndTintGetter blockDisplayReader, BlockPos blockPos, VertexConsumer vertexBuilder, FluidState fluidState) {
-        if(fluidState.is(BzFluidTags.BZ_HONEY_FLUID) && !fluidState.isSource()) {
+        if(fluidState.is(BzTags.BZ_HONEY_FLUID) && !fluidState.isSource()) {
             return showBottom || fluidState.getValue(HoneyFluidBlock.BOTTOM_LEVEL) != 8;
         }
         return showBottom;
@@ -103,7 +103,7 @@ public class FluidRendererMixin {
     @Inject(method = "isNeighborSameFluid(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/material/FluidState;)Z",
             at = @At(value = "HEAD"), cancellable = true)
     private static void thebumblezone_honeyFluidCulling(BlockGetter world, BlockPos blockPos, Direction direction, FluidState fluidState, CallbackInfoReturnable<Boolean> cir) {
-        if(fluidState.getType().is(BzFluidTags.BZ_HONEY_FLUID)) {
+        if(fluidState.getType().is(BzTags.BZ_HONEY_FLUID)) {
             if(HoneyFluid.shouldNotCullSide(world, blockPos, direction, fluidState)) {
                 cir.setReturnValue(false);
             }
@@ -114,7 +114,7 @@ public class FluidRendererMixin {
     @Inject(method = "getWaterHeight(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/Fluid;)F",
             at = @At(value = "HEAD"), cancellable = true)
     private void thebumblezone_honeyFluidHeight(BlockGetter world, BlockPos blockPos, Fluid fluid, CallbackInfoReturnable<Float> cir) {
-        if(fluid.is(BzFluidTags.BZ_HONEY_FLUID)) {
+        if(fluid.is(BzTags.BZ_HONEY_FLUID)) {
             cir.setReturnValue(HoneyFluid.getHoneyFluidHeight(world, blockPos, fluid));
         }
     }

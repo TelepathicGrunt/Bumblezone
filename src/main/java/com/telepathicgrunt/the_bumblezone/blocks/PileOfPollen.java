@@ -10,7 +10,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
-import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -327,7 +327,7 @@ public class PileOfPollen extends FallingBlock {
             }
 
             // reduce pile of pollen to pollinate bee
-            if(entity instanceof Bee && !((Bee)entity).hasNectar() && entity.getType().is(BzEntityTags.POLLEN_PUFF_CAN_POLLINATE)) {
+            if(entity instanceof Bee && !((Bee)entity).hasNectar() && entity.getType().is(BzTags.POLLEN_PUFF_CAN_POLLINATE)) {
                 ((BeeEntityInvoker)entity).thebumblezone_callSetHasNectar(true);
                 ((Bee)entity).resetTicksWithoutNectarSinceExitingHive();
                 if(layerValueMinusOne == 0) {

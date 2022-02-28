@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.core.BlockPos;
@@ -118,9 +118,9 @@ public class EntityTeleportationHookup {
 
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = false;
-            Optional<HolderSet.Named<Block>> blockTag = Registry.BLOCK.getTag(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
+            Optional<HolderSet.Named<Block>> blockTag = Registry.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
             if(blockTag.isPresent() && blockTag.get().size() != 0) {
-                if(world.getBlockState(hivePos.below()).is(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
+                if(world.getBlockState(hivePos.below()).is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
                     validBelowBlock = true;
                 }
                 else if(Bumblezone.BZ_CONFIG.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive)
@@ -196,11 +196,11 @@ public class EntityTeleportationHookup {
             if (isPushedIntoBeehive) {
                 //checks if block under hive is correct if config needs one
                 boolean validBelowBlock = false;
-                Optional<HolderSet.Named<Block>> blockTag = Registry.BLOCK.getTag(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
+                Optional<HolderSet.Named<Block>> blockTag = Registry.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
                 if(blockTag.isPresent() && blockTag.get().size() != 0) {
 
                     for(BlockState belowBlock : belowHiveBlocks) {
-                        if(belowBlock.is(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
+                        if(belowBlock.is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
                             validBelowBlock = true;
                         }
                     }

@@ -3,18 +3,23 @@ package com.telepathicgrunt.the_bumblezone.world.structures;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.world.structures.pieces.BuriedStructurePiece;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
+import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
@@ -36,15 +41,19 @@ public class CellMazeStructure extends StructureFeature<JigsawConfiguration> {
             return;
         }
 
-        if(((ServerLevel)serverPlayer.level).structureFeatureManager().getStructureWithPieceAt(serverPlayer.blockPosition(), BzStructures.CELL_MAZE).isValid()) {
-            if (!serverPlayer.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
-                serverPlayer.addEffect(new MobEffectInstance(
-                        BzEffects.WRATH_OF_THE_HIVE,
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
-                        2,
-                        false,
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles,
-                        true));
+        StructureFeatureManager structureFeatureManager = ((ServerLevel)serverPlayer.level).structureFeatureManager();
+        Registry<ConfiguredStructureFeature<?,?>> configuredStructureFeatureRegistry = serverPlayer.level.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
+        for (Holder<ConfiguredStructureFeature<?, ?>> configuredStructureFeature : configuredStructureFeatureRegistry.getTag(BzTags.WRATH_CAUSING).get()) {
+            if (structureFeatureManager.getStructureAt(serverPlayer.blockPosition(), configuredStructureFeature.value()).isValid()) {
+                if (!serverPlayer.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
+                    serverPlayer.addEffect(new MobEffectInstance(
+                            BzEffects.WRATH_OF_THE_HIVE,
+                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                            2,
+                            false,
+                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles,
+                            true));
+                }
             }
         }
     }
@@ -104,7 +113,7 @@ public class CellMazeStructure extends StructureFeature<JigsawConfiguration> {
                 context.registryAccess()
         );
 
-        return JigsawPlacement.addPieces(newContext, PoolElementStructurePiece::new, centerPos, false, false);
+        return JigsawPlacement.addPieces(newContext, BuriedStructurePiece::new, centerPos, false, false);
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.fluids;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
@@ -142,7 +142,7 @@ public abstract class SugarWaterFluid extends FlowingFluid {
 
     @Override
     public boolean isSame(Fluid fluid) {
-        return fluid.is(BzFluidTags.VISUAL_WATER_FLUID);
+        return fluid.is(BzTags.VISUAL_WATER_FLUID);
     }
 
     @Override

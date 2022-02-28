@@ -9,8 +9,11 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.TheEndBiomeSource;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Aquifer;
+import net.minecraft.world.level.levelgen.DensityFunctions;
 import net.minecraft.world.level.levelgen.NoiseChunk;
+import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.NoiseRouter;
 import net.minecraft.world.level.levelgen.NoiseSettings;
 import net.minecraft.world.level.levelgen.Noises;
@@ -23,7 +26,7 @@ import net.minecraft.world.level.levelgen.synth.NormalNoise;
 import net.minecraft.world.level.levelgen.synth.SimplexNoise;
 import org.jetbrains.annotations.Nullable;
 
-public class BiomeInfluencedNoiseSampler extends NoiseRouter {
+public class BiomeInfluencedNoiseSampler extends NoiseChunk {
 
     /**
      * Table of weights used to weight faraway biomes less than nearby biomes.
@@ -38,34 +41,18 @@ public class BiomeInfluencedNoiseSampler extends NoiseRouter {
         }
     });
 
-    private final NoiseSettings noiseSettings;
-    private final NoiseChunk.InterpolatableNoise baseNoise;
-    private final BlendedNoise blendedNoise;
-    private final NormalNoise jaggedNoise;
-    @Nullable
-    private final SimplexNoise islandNoise;
     private final BiomeSource biomeSource;
     private final Registry<Biome> biomeRegistry;
 
-    public BiomeInfluencedNoiseSampler(NoiseSettings noiseSettings, boolean bl, long l, Registry<NormalNoise.NoiseParameters> registry, WorldgenRandom.Algorithm algorithm, BiomeSource biomeSource, Registry<Biome> biomeRegistry) {
-        super(noiseSettings, bl, l, registry, algorithm);
-        this.noiseSettings = noiseSettings;
+    public BiomeInfluencedNoiseSampler(int i, int j, int k, NoiseRouter noiseRouter, int l, int m, DensityFunctions.BeardifierOrMarker beardifierOrMarker, NoiseGeneratorSettings noiseGeneratorSettings, Aquifer.FluidPicker fluidPicker, Blender blender, BiomeSource biomeSource, Registry<Biome> biomeRegistry) {
+        super(i, j, k, noiseRouter, l, m, beardifierOrMarker, noiseGeneratorSettings, fluidPicker, blender);
         this.biomeSource = biomeSource;
         this.biomeRegistry = biomeRegistry;
-        this.baseNoise = noiseChunk -> ((NoiseChunkAccessor)noiseChunk).thebumblezone_callCreateNoiseInterpolator((ix, jx, kx) ->
-                this.calculateBaseNoise(ix, jx, kx, noiseChunk.noiseData(QuartPos.fromBlock(ix), QuartPos.fromBlock(kx)).terrainInfo(), noiseChunk.getBlender()));
-        if (noiseSettings.islandNoiseOverride()) {
-            RandomSource randomSource = algorithm.newInstance(l);
-            randomSource.consumeCount(17292);
-            this.islandNoise = new SimplexNoise(randomSource);
-        }
-        else {
-            this.islandNoise = null;
-        }
+    }
 
-        this.blendedNoise = new BlendedNoise(algorithm.newInstance(l), noiseSettings.noiseSamplingSettings(), noiseSettings.getCellWidth(), noiseSettings.getCellHeight());
-        PositionalRandomFactory positionalRandomFactory = algorithm.newInstance(l).forkPositional();
-        this.jaggedNoise = Noises.instantiate(registry, positionalRandomFactory, Noises.JAGGED);
+    @Override
+    protected BlockState getInterpolatedState() {
+        return this.blockStateRule.calculate(this);
     }
 
     private double calculateBaseNoise(int x, int y, int z, TerrainInfo terrainInfo, Blender blender) {
@@ -116,84 +103,5 @@ public class BiomeInfluencedNoiseSampler extends NoiseRouter {
     private double computeBaseDensity(int i, TerrainInfo terrainInfo) {
         double d = 1.0 - (double)i / 128.0;
         return d + terrainInfo.offset();
-    }
-
-    private double applySlide(double d, int i) {
-        int j = i - this.noiseSettings.getMinCellY();
-        d = this.noiseSettings.topSlideSettings().applySlide(d, this.noiseSettings.getCellCountY() - j);
-        return this.noiseSettings.bottomSlideSettings().applySlide(d, j);
-    }
-
-    private double sampleJaggedNoise(double x, double y, double z) {
-        if (x == 0.0) {
-            return 0.0;
-        }
-        else {
-            double h = this.jaggedNoise.getValue(y * 1500.0, 0.0, z * 1500.0);
-            return h > 0.0 ? x * h : x / 2.0 * h;
-        }
-    }
-
-    protected NoiseChunk.BlockStateFiller makeBaseNoiseFiller(NoiseChunk noiseChunk, NoiseChunk.NoiseFiller beardifier, boolean bl) {
-        NoiseChunk.Sampler sampler = this.baseNoise.instantiate(noiseChunk);
-        return (i, j, k) -> {
-            double d = sampler.sample();
-            double e = Mth.clamp(d * 0.64, -1.0, 1.0);
-            e = e / 2.0 - e * e * e / 24.0;
-            e += beardifier.calculateNoise(i, j, k);
-            return noiseChunk.aquifer().computeSubstance(i, j, k, d, e);
-        };
-    }
-
-    protected NoiseChunk.BlockStateFiller makeOreVeinifier(NoiseChunk noiseChunk, boolean bl) {
-            return (i, j, k) -> null;
-//        if (!bl) {
-//            return (i, j, k) -> null;
-//        }
-//        else {
-//            NoiseChunk.Sampler sampler = this.veininess.instantiate(noiseChunk);
-//            NoiseChunk.Sampler sampler2 = this.veinA.instantiate(noiseChunk);
-//            NoiseChunk.Sampler sampler3 = this.veinB.instantiate(noiseChunk);
-//            BlockState blockState = null;
-//            return (i, j, k) -> {
-//                RandomSource randomSource = this.oreVeinsPositionalRandomFactory.at(i, j, k);
-//                double d = sampler.sample();
-//                NoiseSampler.VeinType veinType = this.getVeinType(d, j);
-//                if (veinType == null) {
-//                    return blockState;
-//                }
-//                else if (randomSource.nextFloat() > 0.7F) {
-//                    return blockState;
-//                }
-//                else if (this.isVein(sampler2.sample(), sampler3.sample())) {
-//                    double e = Mth.clampedMap(Math.abs(d), 0.4F, 0.6F, 0.1F, 0.3F);
-//                    if ((double)randomSource.nextFloat() < e && this.gapNoise.getValue((double)i, (double)j, (double)k) > -0.3F) {
-//                        return randomSource.nextFloat() < 0.02F ? veinType.rawOreBlock : veinType.ore;
-//                    }
-//                    else {
-//                        return veinType.filler;
-//                    }
-//                }
-//                else {
-//                    return blockState;
-//                }
-//            };
-//        }
-    }
-
-    protected int getPreliminarySurfaceLevel(int x, int z, TerrainInfo terrainInfo) {
-        for(int cellY = this.noiseSettings.getMinCellY() + this.noiseSettings.getCellCountY(); cellY >= this.noiseSettings.getMinCellY(); --cellY) {
-            int y = cellY * this.noiseSettings.getCellHeight();
-            double baseNoise = this.calculateBaseNoise(x, y, z, terrainInfo, -0.703125D, false, Blender.empty());
-            if (baseNoise > 0.390625D) {
-                return y;
-            }
-        }
-
-        return Integer.MAX_VALUE;
-    }
-
-    protected Aquifer createAquifer(NoiseChunk noiseChunk, int i, int j, int k, int l, Aquifer.FluidPicker fluidPicker, boolean bl) {
-        return Aquifer.createDisabled(fluidPicker);
     }
 }

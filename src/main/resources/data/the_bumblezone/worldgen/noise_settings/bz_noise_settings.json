@@ -1,10 +1,8 @@
 {
   "ore_veins_enabled": false,
-  "noodle_caves_enabled": false,
   "legacy_random_source": true,
   "disable_mob_generation": false,
   "aquifers_enabled": false,
-  "noise_caves_enabled": false,
   "default_block": {
     "Name": "minecraft:honeycomb_block"
   },
@@ -15,51 +13,44 @@
     }
   },
   "sea_level": 40,
-  "structures": {
-    "structures": {
-      "the_bumblezone:pollinated_stream": {
-        "spacing": 8,
-        "separation": 6,
-        "salt": 938497222
+  "noise_router": {
+    "erosion": "minecraft:overworld/erosion",
+    "depth": "minecraft:overworld/depth",
+    "ridges": "minecraft:overworld/ridges",
+    "initial_density_without_jaggedness": {
+      "argument1": 4.0,
+      "argument2": {
+        "argument": {
+          "argument1": "minecraft:overworld/depth",
+          "argument2": {
+            "argument": "minecraft:overworld/factor",
+            "type": "minecraft:cache_2d"
+          },
+          "type": "minecraft:mul"
+        },
+        "type": "minecraft:quarter_negative"
       },
-      "the_bumblezone:honey_cave_room": {
-        "spacing": 3,
-        "separation": 1,
-        "salt": 722299384
-      },
-      "the_bumblezone:cell_maze": {
-        "spacing": 50,
-        "separation": 20,
-        "salt": 456768898
-      }
-    }
-  },
-  "noise": {
-    "min_y": 0,
-    "height": 256,
-    "size_horizontal": 1,
-    "size_vertical": 2,
-    "sampling": {
-      "xz_scale": 2.0,
-      "y_scale": 1.0,
-      "xz_factor": 160.0,
-      "y_factor": 100.0
+      "type": "minecraft:mul"
     },
-    "top_slide": {
-      "target": 0.1,
-      "size": 25,
-      "offset": 1
+    "temperature": {
+      "xz_scale": 0.25,
+      "y_scale": 0.0,
+      "noise": "minecraft:temperature",
+      "shift_x": "minecraft:shift_x",
+      "shift_y": 0.0,
+      "shift_z": "minecraft:shift_z",
+      "type": "minecraft:shifted_noise"
     },
-    "bottom_slide": {
-      "target": 0.1,
-      "size": 35,
-      "offset": 1
+    "vegetation": {
+      "xz_scale": 0.25,
+      "y_scale": 0.0,
+      "noise": "minecraft:vegetation",
+      "shift_x": "minecraft:shift_x",
+      "shift_y": 0.0,
+      "shift_z": "minecraft:shift_z",
+      "type": "minecraft:shifted_noise"
     },
-    "terrain_shaper": {
-      "offset": -300.0,
-      "factor": 0.003,
-      "jaggedness": 10.0
-    }
+    "continents": "minecraft:overworld/continents"
   },
   "surface_rule": {
     "type": "minecraft:sequence",

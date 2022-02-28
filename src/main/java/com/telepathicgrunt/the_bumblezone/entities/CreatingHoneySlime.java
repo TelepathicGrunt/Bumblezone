@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
-import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,7 +24,7 @@ public class CreatingHoneySlime {
     // Spawn honey slime instead of passed in entity
     public static InteractionResult createHoneySlime(Level world, Player playerEntity, InteractionHand hand, Entity target) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
-        if (target.getType().equals(EntityType.SLIME) && itemstack.is(BzItemTags.TURN_SLIME_TO_HONEY_SLIME)) {
+        if (target.getType().equals(EntityType.SLIME) && itemstack.is(BzTags.TURN_SLIME_TO_HONEY_SLIME)) {
 
             Slime slimeEntity = (Slime)target;
             int slimeSize = slimeEntity.getSize();

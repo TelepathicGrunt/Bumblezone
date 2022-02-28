@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.google.common.collect.Maps;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.Util;
@@ -147,7 +147,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
         for (Direction direction : context.getNearestLookingDirections()) {
             blockstate = blockstate.setValue(FACING, direction.getOpposite());
             if (blockstate.canSurvive(worldReader, blockpos)) {
-                return blockstate.setValue(WATERLOGGED, fluidstate.getType().is(BzFluidTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidstate.isSource());
+                return blockstate.setValue(WATERLOGGED, fluidstate.getType().is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidstate.isSource());
             }
         }
 
@@ -216,12 +216,12 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
 
     @Override
     public boolean canPlaceLiquid(BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
-        return !blockState.getValue(WATERLOGGED) && fluid.is(BzFluidTags.CONVERTIBLE_TO_SUGAR_WATER) && fluid.defaultFluidState().isSource();
+        return !blockState.getValue(WATERLOGGED) && fluid.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluid.defaultFluidState().isSource();
     }
 
     @Override
     public boolean placeLiquid(LevelAccessor world, BlockPos blockPos, BlockState blockState, FluidState fluidState) {
-        if (!blockState.getValue(WATERLOGGED) && fluidState.getType().is(BzFluidTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidState.isSource()) {
+        if (!blockState.getValue(WATERLOGGED) && fluidState.getType().is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidState.isSource()) {
             if (!world.isClientSide()) {
                 world.setBlock(blockPos, blockState.setValue(WATERLOGGED, true), 3);
                 world.scheduleTick(blockPos, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickDelay(world));

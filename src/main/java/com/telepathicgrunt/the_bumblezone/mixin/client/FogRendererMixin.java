@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.client;
 
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidClientOverlay;
-import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.FogRenderer;
@@ -32,7 +32,7 @@ public class FogRendererMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel$ClientLevelData;getClearColorScale()D"))
     private static void thebumblezone_setupHoneyFogColor(Camera camera, float j, ClientLevel clientWorld, int l, float i1, CallbackInfo ci) {
         FluidState fluidstate = FluidClientOverlay.getNearbyHoneyFluid(camera);
-        if(fluidstate.is(BzFluidTags.BZ_HONEY_FLUID)) {
+        if(fluidstate.is(BzTags.BZ_HONEY_FLUID)) {
             // Scale the brightness of fog but make sure it is never darker than the dimension's min brightness.
             float brightness = (float) Math.max(
                     Math.pow(FluidClientOverlay.getDimensionBrightnessAtEyes(camera.getEntity()), 2D),

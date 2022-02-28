@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Position;
@@ -33,7 +33,7 @@ public class SugarWaterBottleDispenseBehavior extends DefaultDispenseItemBehavio
         BlockPos position = new BlockPos(iposition);
         BlockState blockstate = world.getBlockState(position);
 
-        if (blockstate.is(BzBlocks.HONEYCOMB_BROOD) && stack.is(BzItemTags.BEE_FEEDING_ITEMS)) {
+        if (blockstate.is(BzBlocks.HONEYCOMB_BROOD) && stack.is(BzTags.BEE_FEEDING_ITEMS)) {
             float chance = world.random.nextFloat();
             if (chance <= 0.3F) {
                 // spawn bee if at final stage and front isn't blocked off

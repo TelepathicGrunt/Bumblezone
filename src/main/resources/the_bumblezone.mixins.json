@@ -57,6 +57,7 @@
     "world.SinglePoolElementAccessor",
     "world.StructureSettingsAccessor",
     "world.StructureTemplateAccessor",
+    "world.WorldGenRegionAccessor",
     "world.WorldGenSettingsMixin"
   ],
   "client": [

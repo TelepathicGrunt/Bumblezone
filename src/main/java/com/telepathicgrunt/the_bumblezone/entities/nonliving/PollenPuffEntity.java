@@ -10,8 +10,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
-import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
-import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import dev.cafeteria.fakeplayerapi.server.FakePlayerBuilder;
 import dev.cafeteria.fakeplayerapi.server.FakeServerPlayer;
 import io.netty.buffer.Unpooled;
@@ -92,7 +92,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         if (raytraceresult.getType() == HitResult.Type.BLOCK) {
             BlockPos blockpos = raytraceresult.getBlockPos();
             BlockState blockstate = this.level.getBlockState(blockpos);
-            if (blockstate.is(BzBlockTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzBlockTags.FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF)) {
+            if (blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF)) {
                 this.handleInsidePortal(blockpos);
                 this.onHit(raytraceresult);
             }
@@ -124,7 +124,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         Entity entity = entityRayTraceResult.getEntity();
 
         // pollinates the bee
-        if(entity instanceof Bee && entity.getType().is(BzEntityTags.POLLEN_PUFF_CAN_POLLINATE)) {
+        if(entity instanceof Bee && entity.getType().is(BzTags.POLLEN_PUFF_CAN_POLLINATE)) {
             ((BeeEntityInvoker)entity).thebumblezone_callSetHasNectar(true);
             ((Bee)entity).resetTicksWithoutNectarSinceExitingHive();
 
@@ -169,7 +169,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         BlockState blockstate = this.level.getBlockState(blockHitResult.getBlockPos());
         blockstate.onProjectileHit(this.level, blockstate, blockHitResult, this);
 
-        if(blockstate.is(BzBlockTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzBlockTags.FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF)) {
+        if(blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF)) {
             boolean isTallPlant = false;
             if(blockstate.getBlock() instanceof DoublePlantBlock) {
                 blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);

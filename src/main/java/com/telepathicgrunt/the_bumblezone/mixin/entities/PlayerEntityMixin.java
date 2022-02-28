@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -36,7 +36,7 @@ public abstract class PlayerEntityMixin extends Entity {
             at = @At(value = "RETURN"), cancellable = true)
     private void thebumblezone_honeyUnderwater(CallbackInfoReturnable<Boolean> cir) {
         if(!cir.getReturnValue()) {
-            this.wasUnderwater = this.isEyeInFluid(BzFluidTags.BZ_HONEY_FLUID);
+            this.wasUnderwater = this.isEyeInFluid(BzTags.BZ_HONEY_FLUID);
             if(this.wasUnderwater) cir.setReturnValue(true);
         }
     }
