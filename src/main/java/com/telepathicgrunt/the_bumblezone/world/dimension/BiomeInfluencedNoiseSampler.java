@@ -1,29 +1,22 @@
 package com.telepathicgrunt.the_bumblezone.world.dimension;
 
+import com.telepathicgrunt.the_bumblezone.mixin.MaterialRuleListAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseChunkAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBiomeHeightRegistry;
 import net.minecraft.Util;
-import net.minecraft.core.QuartPos;
 import net.minecraft.core.Registry;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
-import net.minecraft.world.level.biome.TheEndBiomeSource;
+import net.minecraft.world.level.biome.Climate;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Aquifer;
+import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.DensityFunctions;
 import net.minecraft.world.level.levelgen.NoiseChunk;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.NoiseRouter;
-import net.minecraft.world.level.levelgen.NoiseSettings;
-import net.minecraft.world.level.levelgen.Noises;
-import net.minecraft.world.level.levelgen.PositionalRandomFactory;
-import net.minecraft.world.level.levelgen.RandomSource;
-import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.blending.Blender;
-import net.minecraft.world.level.levelgen.synth.BlendedNoise;
-import net.minecraft.world.level.levelgen.synth.NormalNoise;
-import net.minecraft.world.level.levelgen.synth.SimplexNoise;
 import org.jetbrains.annotations.Nullable;
 
 public class BiomeInfluencedNoiseSampler extends NoiseChunk {
@@ -41,67 +34,51 @@ public class BiomeInfluencedNoiseSampler extends NoiseChunk {
         }
     });
 
-    private final BiomeSource biomeSource;
-    private final Registry<Biome> biomeRegistry;
 
     public BiomeInfluencedNoiseSampler(int i, int j, int k, NoiseRouter noiseRouter, int l, int m, DensityFunctions.BeardifierOrMarker beardifierOrMarker, NoiseGeneratorSettings noiseGeneratorSettings, Aquifer.FluidPicker fluidPicker, Blender blender, BiomeSource biomeSource, Registry<Biome> biomeRegistry) {
         super(i, j, k, noiseRouter, l, m, beardifierOrMarker, noiseGeneratorSettings, fluidPicker, blender);
-        this.biomeSource = biomeSource;
-        this.biomeRegistry = biomeRegistry;
+        ((MaterialRuleListAccessor)((NoiseChunkAccessor)this).getBlockStateRule()).getMaterialRuleList().add(new BiomeNoiseStateFiller(biomeSource, biomeRegistry));
     }
 
-    @Override
-    protected BlockState getInterpolatedState() {
-        return this.blockStateRule.calculate(this);
-    }
+    public static class BiomeNoiseStateFiller implements NoiseChunk.BlockStateFiller {
+        private final BiomeSource biomeSource;
+        private final Registry<Biome> biomeRegistry;
 
-    private double calculateBaseNoise(int x, int y, int z, TerrainInfo terrainInfo, Blender blender) {
-        double d = this.blendedNoise.calculateNoise(x, y, z);
-        return this.calculateBaseNoise(x, y, z, terrainInfo, d, true, blender);
-    }
-
-    private double calculateBaseNoise(int x, int y, int z, TerrainInfo terrainInfo, double d, boolean bl2, Blender blender) {
-        double e;
-        if (this.islandNoise != null) {
-            e = ((double) TheEndBiomeSource.getHeightValue(this.islandNoise, x / 8, z / 8) - 8.0) / 128.0;
-        }
-        else {
-            double f = bl2 ? this.sampleJaggedNoise(terrainInfo.jaggedness(), x, z) : 0.0;
-            double g = (this.computeBaseDensity(y, terrainInfo) + f) * terrainInfo.factor();
-            e = g * (double)(g > 0.0 ? 4 : 1);
+        public BiomeNoiseStateFiller(BiomeSource biomeSource, Registry<Biome> biomeRegistry) {
+            this.biomeSource = biomeSource;
+            this.biomeRegistry = biomeRegistry;
         }
 
-        double f = e + d;
-        double m = -64.0;
+        @Nullable
+        @Override
+        public BlockState calculate(DensityFunction.FunctionContext functionContext) {
+            functionContext.getBlender().blendDensity()
 
-        BzBiomeHeightRegistry.BiomeTerrain centerBiomeInfo = BzBiomeHeightRegistry.BIOME_HEIGHT_REGISTRY.getOptional(this.biomeRegistry.getKey(
-                this.biomeSource.getNoiseBiome(x >> 2, 40, z >> 2, this))).orElse(new BzBiomeHeightRegistry.BiomeTerrain(4, 1));
+            return null;
+        }
 
-        float totalHeight = 0.0F;
-        for(int xOffset = -2; xOffset <= 2; ++xOffset) {
-            for(int zOffset = -2; zOffset <= 2; ++zOffset) {
-                BzBiomeHeightRegistry.BiomeTerrain biomeTerrain = BzBiomeHeightRegistry.BIOME_HEIGHT_REGISTRY.getOptional(this.biomeRegistry.getKey(
-                        this.biomeSource.getNoiseBiome((x >> 2) + xOffset, 40, (z >> 2) + zOffset, this))).orElse(new BzBiomeHeightRegistry.BiomeTerrain(4, 1));
-                float biomeDepth = biomeTerrain.depth;
-                float weight = BIOME_WEIGHT_TABLE[xOffset + 2 + (zOffset + 2) * 5];
-                if(biomeDepth != centerBiomeInfo.depth) {
-                    biomeDepth = Mth.lerp(centerBiomeInfo.weightModifier, biomeDepth, centerBiomeInfo.depth);
+
+        private double calculateBaseNoise(int x, int y, int z, Climate.Sampler sampler, double d, boolean bl2, Blender blender) {
+
+            BzBiomeHeightRegistry.BiomeTerrain centerBiomeInfo = BzBiomeHeightRegistry.BIOME_HEIGHT_REGISTRY.getOptional(this.biomeRegistry.getKey(
+                    this.biomeSource.getNoiseBiome(x >> 2, 40, z >> 2, sampler).value())).orElse(new BzBiomeHeightRegistry.BiomeTerrain(4, 1));
+
+            float totalHeight = 0.0F;
+            for(int xOffset = -2; xOffset <= 2; ++xOffset) {
+                for(int zOffset = -2; zOffset <= 2; ++zOffset) {
+                    BzBiomeHeightRegistry.BiomeTerrain biomeTerrain = BzBiomeHeightRegistry.BIOME_HEIGHT_REGISTRY.getOptional(this.biomeRegistry.getKey(
+                            this.biomeSource.getNoiseBiome((x >> 2) + xOffset, 40, (z >> 2) + zOffset, sampler).value())).orElse(new BzBiomeHeightRegistry.BiomeTerrain(4, 1));
+                    float biomeDepth = biomeTerrain.depth;
+                    float weight = BIOME_WEIGHT_TABLE[xOffset + 2 + (zOffset + 2) * 5];
+                    if(biomeDepth != centerBiomeInfo.depth) {
+                        biomeDepth = Mth.lerp(centerBiomeInfo.weightModifier, biomeDepth, centerBiomeInfo.depth);
+                    }
+
+                    totalHeight += (biomeDepth * weight);
                 }
-
-                totalHeight += (biomeDepth * weight);
             }
+
+            return totalHeight / 400f;
         }
-        double finalBiomeHeight = totalHeight / 400f;
-
-        double n = Math.max(f, m);
-        n = this.applySlide(n, y / this.noiseSettings.getCellHeight());
-        n = blender.blendDensity(x, y, z, n);
-        n += finalBiomeHeight;
-        return Mth.clamp(n, -64.0, 64.0);
-    }
-
-    private double computeBaseDensity(int i, TerrainInfo terrainInfo) {
-        double d = 1.0 - (double)i / 128.0;
-        return d + terrainInfo.offset();
     }
 }
