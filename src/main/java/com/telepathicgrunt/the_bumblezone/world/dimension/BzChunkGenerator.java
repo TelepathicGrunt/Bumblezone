@@ -199,6 +199,9 @@ public class BzChunkGenerator extends ChunkGenerator {
             for(int yInCell = cellHeight - 1; yInCell >= 0; --yInCell) {
                 int y = (minYCell + currentYCell) * cellHeight + yInCell;
                 double f = (double)yInCell / (double)cellHeight;
+                y += BiomeInfluencedNoiseSampler.calculateBaseNoise(x, y, z, this.sampler, this.biomeSource, this.biomeRegistry);
+
+
                 noiseChunk.updateForY(y, f);
                 noiseChunk.updateForX(x, d);
                 noiseChunk.updateForZ(z, e);
@@ -290,47 +293,50 @@ public class BzChunkGenerator extends ChunkGenerator {
                     noiseChunk.selectCellYZ(s, r);
 
                     for(int t = n - 1; t >= 0; --t) {
-                        int u = (minYCell + s) * n + t;
-                        int v = u & 15;
-                        int w = chunkAccess.getSectionIndex(u);
+                        int yy = (minYCell + s) * n + t;
+                        int v = yy & 15;
+                        int w = chunkAccess.getSectionIndex(yy);
                         if (chunkAccess.getSectionIndex(levelChunkSection.bottomBlockY()) != w) {
                             levelChunkSection = chunkAccess.getSection(w);
                         }
 
                         double d = (double)t / (double)n;
-                        noiseChunk.updateForY(u, d);
 
                         for(int x = 0; x < m; ++x) {
-                            int y = k + q * m + x;
-                            int z = y & 15;
+                            int xx = k + q * m + x;
+                            int z = xx & 15;
                             double e = (double)x / (double)m;
-                            noiseChunk.updateForX(y, e);
+                            noiseChunk.updateForX(xx, e);
 
                             for(int aa = 0; aa < m; ++aa) {
-                                int ab = l + r * m + aa;
-                                int ac = ab & 15;
+                                int zz = l + r * m + aa;
+                                int ac = zz & 15;
                                 double f = (double)aa / (double)m;
-                                noiseChunk.updateForZ(ab, f);
+                                noiseChunk.updateForZ(zz, f);
+
+                                yy += BiomeInfluencedNoiseSampler.calculateBaseNoise(xx, yy, zz, this.sampler, this.biomeSource, this.biomeRegistry);
+                                noiseChunk.updateForY(yy, d);
+
                                 BlockState blockState = ((NoiseChunkAccessor)noiseChunk).callGetInterpolatedState();
                                 if (blockState == null) {
                                     blockState = this.defaultBlock;
                                 }
 
-                                if (blockState.isAir() && u < this.getSeaLevel()) {
+                                if (blockState.isAir() && yy < this.getSeaLevel()) {
                                     blockState = this.defaultFluid;
                                 }
 
                                 if (!blockState.isAir() && !SharedConstants.debugVoidTerrain(chunkAccess.getPos())) {
                                     if (blockState.getLightEmission() != 0 && chunkAccess instanceof ProtoChunk) {
-                                        mutableBlockPos.set(y, u, ab);
+                                        mutableBlockPos.set(xx, yy, zz);
                                         ((ProtoChunk)chunkAccess).addLight(mutableBlockPos);
                                     }
 
                                     levelChunkSection.setBlockState(z, v, ac, blockState, false);
-                                    heightmap.update(z, u, ac, blockState);
-                                    heightmap2.update(z, u, ac, blockState);
+                                    heightmap.update(z, yy, ac, blockState);
+                                    heightmap2.update(z, yy, ac, blockState);
                                     if (aquifer.shouldScheduleFluidUpdate() && !blockState.getFluidState().isEmpty()) {
-                                        mutableBlockPos.set(y, u, ab);
+                                        mutableBlockPos.set(xx, yy, zz);
                                         chunkAccess.markPosForPostprocessing(mutableBlockPos);
                                     }
                                 }

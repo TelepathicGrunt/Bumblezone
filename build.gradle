@@ -117,7 +117,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	def mainFile = upload(projectId, remapJar)
 	mainFile.changelog = changelogText
 	mainFile.changelogType = "markdown"
-	mainFile.releaseType = "release"
+	mainFile.releaseType = "beta"
 	mainFile.displayName = "The Bumblezone v${project.mod_version} (${project.minecraft_version} MC)"
 	mainFile.addRequirement("cloth-config")
 	mainFile.addRequirement("fabric-api")

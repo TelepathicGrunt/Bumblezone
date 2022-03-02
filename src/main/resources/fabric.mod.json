@@ -43,9 +43,9 @@
 
   "depends": {
     "fabricloader": ">=0.13.3",
-    "minecraft": ">=1.18.2-rc.1",
-    "fabric": ">=0.43.1",
-    "cloth-config2": ">=6.0.42",
+    "minecraft": ">=1.18.2",
+    "fabric": ">=0.47.8",
+    "cloth-config2": ">=6.2.57",
     "feature_nbt_deadlock_be_gone": "*"
   },
   "custom": {

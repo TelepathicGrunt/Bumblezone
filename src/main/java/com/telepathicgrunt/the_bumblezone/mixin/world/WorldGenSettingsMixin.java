@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.world;
 
 import com.telepathicgrunt.the_bumblezone.utils.WorldSeedHolder;
-import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.WorldGenSettings;

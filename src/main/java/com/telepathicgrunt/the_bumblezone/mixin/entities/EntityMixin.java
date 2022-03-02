@@ -4,7 +4,6 @@ import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -19,6 +18,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
+import java.util.Set;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
@@ -68,7 +69,7 @@ public abstract class EntityMixin {
     @Mutable
     @Final
     @Shadow
-    private TagKey<Fluid> fluidOnEyes;
+    private Set<TagKey<Fluid>> fluidOnEyes;
 
     @Shadow
     public Level level;
@@ -116,7 +117,7 @@ public abstract class EntityMixin {
         if (fluidState.is(BzTags.BZ_HONEY_FLUID)) {
             double fluidHeight = (float)blockPos.getY() + fluidState.getHeight(this.level, blockPos);
             if (fluidHeight > eyeHeight) {
-                this.fluidOnEyes = BzTags.BZ_HONEY_FLUID;
+                this.fluidOnEyes.add(BzTags.BZ_HONEY_FLUID);
                 ci.cancel();
             }
         }
