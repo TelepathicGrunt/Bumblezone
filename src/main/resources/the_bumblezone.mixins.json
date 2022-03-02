@@ -52,8 +52,8 @@
     "world.LevelStorageSourceMixin",
     "world.NoiseChunkAccessor",
     "world.NoiseGeneratorSettingsInvoker",
-    "world.ServerLevelMixin",
     "world.SinglePoolElementAccessor",
+    "world.StructureFeatureAccessor",
     "world.StructureTemplateAccessor",
     "world.WorldGenRegionAccessor",
     "world.WorldGenSettingsMixin"

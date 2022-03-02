@@ -178,6 +178,7 @@
                   "offset": 0,
                   "add_surface_depth": true,
                   "add_surface_secondary_depth": false,
+                  "surface_secondary_range": 4,
                   "surface_type": "floor"
                 },
                 "then_run": {
@@ -195,6 +196,7 @@
                 "offset": 0,
                 "add_surface_depth": true,
                 "add_surface_secondary_depth": false,
+                "surface_secondary_range": 4,
                 "surface_type": "floor"
               },
               "then_run": {
@@ -239,6 +241,7 @@
                   "offset": 0,
                   "add_surface_depth": true,
                   "add_surface_secondary_depth": false,
+                  "surface_secondary_range": 4,
                   "surface_type": "floor"
                 },
                 "then_run": {
@@ -256,6 +259,7 @@
                 "offset": 0,
                 "add_surface_depth": true,
                 "add_surface_secondary_depth": false,
+                "surface_secondary_range": 4,
                 "surface_type": "floor"
               },
               "then_run": {

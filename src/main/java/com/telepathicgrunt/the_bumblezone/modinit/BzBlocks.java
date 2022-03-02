@@ -15,7 +15,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.StickyHoneyRedstone;
 import com.telepathicgrunt.the_bumblezone.blocks.StickyHoneyResidue;
 import com.telepathicgrunt.the_bumblezone.blocks.SugarInfusedCobblestone;
 import com.telepathicgrunt.the_bumblezone.blocks.SugarInfusedStone;
-import net.fabricmc.fabric.api.block.FabricMaterialBuilder;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricMaterialBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;

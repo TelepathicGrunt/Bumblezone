@@ -9,7 +9,7 @@
   },
   "argument2": {
     "type": "minecraft:noise",
-    "noise": "meme:ceiling",
+    "noise": "the_bumblezone:ceiling",
     "xz_scale": 0.66,
     "y_scale": 0.2
   }

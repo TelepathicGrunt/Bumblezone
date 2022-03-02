@@ -10,8 +10,8 @@
               "argument1": -64,
               "argument2": {
                 "type": "max",
-                "argument1": "meme:ceiling",
-                "argument2": "meme:floor"
+                "argument1": "the_bumblezone:ceiling",
+                "argument2": "the_bumblezone:floor"
               }
             },
             "type": "minecraft:slide"

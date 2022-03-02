@@ -29,7 +29,7 @@ public class FogRendererMixin {
 
     // make honey fluid have orange fog
     @Inject(method = "setupColor(Lnet/minecraft/client/Camera;FLnet/minecraft/client/multiplayer/ClientLevel;IF)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel$ClientLevelData;getClearColorScale()D"))
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel$ClientLevelData;getClearColorScale()F"))
     private static void thebumblezone_setupHoneyFogColor(Camera camera, float j, ClientLevel clientWorld, int l, float i1, CallbackInfo ci) {
         FluidState fluidstate = FluidClientOverlay.getNearbyHoneyFluid(camera);
         if(fluidstate.is(BzTags.BZ_HONEY_FLUID)) {
@@ -45,8 +45,7 @@ public class FogRendererMixin {
         }
     }
 
-    @Inject(method = "setupFog(Lnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/FogRenderer$FogMode;FZ)V",
-            at = @At(value = "INVOKE", target = "com/mojang/blaze3d/systems/RenderSystem.setShaderFogEnd(F)V", ordinal = 1, shift = At.Shift.AFTER))
+    @Inject(method = "setupFog(Lnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/FogRenderer$FogMode;FZ)V", at = @At(value = "TAIL"))
     private static void thebumblezone_renderHoneyFog(Camera camera, FogRenderer.FogMode fogType, float viewDistance, boolean thickFog, CallbackInfo ci) {
         FluidClientOverlay.renderHoneyFog(camera);
     }
