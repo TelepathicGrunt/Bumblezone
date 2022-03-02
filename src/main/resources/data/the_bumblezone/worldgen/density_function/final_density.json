@@ -1,0 +1,29 @@
+{
+  "argument1": {
+    "argument": {
+      "argument1": 0.64,
+      "argument2": {
+        "argument": {
+          "argument": {
+            "argument": {
+              "type": "max",
+              "argument1": -64,
+              "argument2": {
+                "type": "max",
+                "argument1": "meme:ceiling",
+                "argument2": "meme:floor"
+              }
+            },
+            "type": "minecraft:slide"
+          },
+          "type": "minecraft:blend_density"
+        },
+        "type": "minecraft:interpolated"
+      },
+      "type": "minecraft:mul"
+    },
+    "type": "minecraft:squeeze"
+  },
+  "argument2": 64.0,
+  "type": "minecraft:min"
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:add",
+  "argument1": {
+    "type": "minecraft:y_clamped_gradient",
+    "from_y": 20,
+    "to_y": 100,
+    "from_value": 1,
+    "to_value": -2
+  },
+  "argument2": {
+    "type": "minecraft:noise",
+    "noise": "meme:floor",
+    "xz_scale": 0.66,
+    "y_scale": 0.2
+  }
+}
