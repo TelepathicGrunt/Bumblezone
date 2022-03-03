@@ -314,7 +314,7 @@ public class BzChunkGenerator extends ChunkGenerator {
                                 double f = (double)aa / (double)m;
                                 noiseChunk.updateForZ(zz, f);
 
-                                yy += BiomeInfluencedNoiseSampler.calculateBaseNoise(xx, yy, zz, this.sampler, this.biomeSource, this.biomeRegistry);
+                               // yy += BiomeInfluencedNoiseSampler.calculateBaseNoise(xx, yy, zz, this.sampler, this.biomeSource, this.biomeRegistry);
                                 noiseChunk.updateForY(yy, d);
 
                                 BlockState blockState = ((NoiseChunkAccessor)noiseChunk).callGetInterpolatedState();
