@@ -45,7 +45,643 @@
     "ridges": 0,
     "barrier": 0,
     "fluid_level_floodedness": 0,
-    "fluid_level_spread": 0
+    "fluid_level_spread": 0,
+    "lava": 0
+  },
+  "noise": {
+    "min_y": 0,
+    "height": 256,
+    "size_horizontal": 1,
+    "size_vertical": 1,
+    "sampling": {
+      "xz_scale": 1,
+      "y_scale": 3,
+      "xz_factor": 80,
+      "y_factor": 60
+    },
+    "bottom_slide": {
+      "target": 2.5,
+      "size": 4,
+      "offset": -1
+    },
+    "top_slide": {
+      "target": 0.9675,
+      "size": 6,
+      "offset": 1
+    },
+    "terrain_shaper": {
+      "offset": {
+        "coordinate": "continents",
+        "points": [
+          {
+            "location": -0.3,
+            "derivative": 0,
+            "value": {
+              "coordinate": "erosion",
+              "points": [
+                {
+                  "location": -0.25,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0,
+                        "derivative": 0.1,
+                        "value": -0.2
+                      }
+                    ]
+                  }
+                },
+                {
+                  "location": 0,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0,
+                        "derivative": 1,
+                        "value": 0
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "location": 0.0,
+            "derivative": 0,
+            "value": {
+              "coordinate": "erosion",
+              "points": [
+                {
+                  "location": 0,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0,
+                        "derivative": 1,
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "location": 0.3,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0,
+                        "derivative": 1,
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "location": 0.45,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0,
+                        "derivative": 0.1,
+                        "value": -0.5
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "location": 0.3,
+            "derivative": 0,
+            "value": {
+              "coordinate": "erosion",
+              "points": [
+                {
+                  "location": -0.3,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0,
+                        "derivative": 1,
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "location": 0,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": -0.825,
+                        "derivative": -0.2,
+                        "value": 0.65
+                      },
+                      {
+                        "location": -0.8,
+                        "derivative": 0.0,
+                        "value": 0.725
+                      },
+                      {
+                        "location": -0.05,
+                        "derivative": -1.25,
+                        "value": -0.35
+                      },
+
+                      {
+                        "location": 0.05,
+                        "derivative": 1.25,
+                        "value": -0.35
+                      },
+                      {
+                        "location": 0.825,
+                        "derivative": 0.0,
+                        "value": 0.725
+                      },
+                      {
+                        "location": 0.85,
+                        "derivative": -0.7,
+                        "value": 0.65
+                      }
+                    ]
+                  }
+                },
+                {
+                  "location": 0.3,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": -0.775,
+                        "derivative": -0.65,
+                        "value": 0.775
+                      },
+                      {
+                        "location": -0.75,
+                        "derivative": 0.0,
+                        "value": 0.8
+                      },
+                      {
+                        "location": -0.05,
+                        "derivative": -1.4,
+                        "value": -0.3
+                      },
+
+                      {
+                        "location": 0.05,
+                        "derivative": 1.4,
+                        "value": -0.3
+                      },
+                      {
+                        "location": 0.775,
+                        "derivative": 0.0,
+                        "value": 0.8
+                      },
+                      {
+                        "location": 0.8,
+                        "derivative": -0.65,
+                        "value": 0.775
+                      }
+                    ]
+                  }
+                },
+                {
+                  "location": 0.55,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": -0.725,
+                        "derivative": 1.0,
+                        "value": 0.825
+                      },
+                      {
+                        "location": -0.7,
+                        "derivative": 0.0,
+                        "value": 0.85
+                      },
+                      {
+                        "location": -0.05,
+                        "derivative": -1.7,
+                        "value": -0.3
+                      },
+
+                      {
+                        "location": 0.05,
+                        "derivative": 1.7,
+                        "value": -0.3
+                      },
+                      {
+                        "location": 0.7,
+                        "derivative": 0.0,
+                        "value": 0.85
+                      },
+                      {
+                        "location": 0.725,
+                        "derivative": -1.0,
+                        "value": 0.825
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "factor": {
+        "coordinate": "continents",
+        "points": [
+          {
+            "location": -0.3,
+            "derivative": 0,
+            "value": {
+              "coordinate": "erosion",
+              "points": [
+                {
+                  "location": -0.3,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": -0.4,
+                        "derivative": 0.0,
+                        "value": 0.5
+                      },
+                      {
+                        "location": 0,
+                        "derivative": 0.0,
+                        "value": 0.95
+                      },
+                      {
+                        "location": 0.5,
+                        "derivative": 0.0,
+                        "value": 1.75
+                      }
+                    ]
+                  }
+                },
+                {
+                  "location": 0,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0,
+                        "derivative": 0,
+                        "value": 0
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "location": 0.0,
+            "derivative": 0,
+            "value": {
+              "coordinate": "erosion",
+              "points": [
+                {
+                  "location": 0,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0,
+                        "derivative": 0,
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "location": 0.3,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0,
+                        "derivative": 0,
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "location": 0.45,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0,
+                        "derivative": 0.2,
+                        "value": 0.5
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "location": 0.3,
+            "derivative": 0,
+            "value": {
+              "coordinate": "erosion",
+              "points": [
+                {
+                  "location": -0.3,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0,
+                        "derivative": 0,
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "location": -0.075,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0,
+                        "derivative": 0,
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+
+                {
+                  "location": 0.1,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": -0.5,
+                        "derivative": 0.0,
+                        "value": 4.25
+                      },
+                      {
+                        "location": 0,
+                        "derivative": 0.0,
+                        "value": 2.5
+                      },
+                      {
+                        "location": 0.5,
+                        "derivative": 0.0,
+                        "value": 3.0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "location": 0.5,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": -0.5,
+                        "derivative": 0.0,
+                        "value": 2.65
+                      },
+                      {
+                        "location": 0,
+                        "derivative": 0.0,
+                        "value": 2
+                      },
+                      {
+                        "location": 0.5,
+                        "derivative": 0.0,
+                        "value": 4.25
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "jaggedness": {
+        "coordinate": "continents",
+        "points": [
+          {
+            "location": -0.3,
+            "derivative": 0,
+            "value": {
+              "coordinate": "erosion",
+              "points": [
+                {
+                  "location": -0.25,
+                  "derivative": -0.1,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": -0.5,
+                        "derivative": 0.0,
+                        "value": 2.25
+                      },
+                      {
+                        "location": 0,
+                        "derivative": 0.0,
+                        "value": 1.0
+                      },
+                      {
+                        "location": 0.5,
+                        "derivative": 0.0,
+                        "value": 0.4
+                      }
+                    ]
+                  }
+                },
+                {
+                  "location": 0,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0,
+                        "derivative": 0,
+                        "value": 0
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "location": 0.0,
+            "derivative": 0,
+            "value": {
+              "coordinate": "erosion",
+              "points": [
+                {
+                  "location": 0,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0,
+                        "derivative": 0,
+                        "value": 0
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "location": 0.3,
+            "derivative": 0,
+            "value": {
+              "coordinate": "erosion",
+              "points": [
+                {
+                  "location": -0.3,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0,
+                        "derivative": 0,
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "location": 0.0,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0.75,
+                        "derivative": 0,
+                        "value": 0.1
+                      },
+                      {
+                        "location": -0.6,
+                        "derivative": 1.0,
+                        "value": 0.2
+                      },
+                      {
+                        "location": 0.3,
+                        "derivative": -0.5,
+                        "value": 0.1
+                      },
+                      {
+                        "location": 0,
+                        "derivative": 0.0,
+                        "value": 0.0
+                      },
+                      {
+                        "location": 0.3,
+                        "derivative": 2,
+                        "value": 0.15
+                      },
+                      {
+                        "location": 0.6,
+                        "derivative": -0.5,
+                        "value": 0.5
+                      },
+                      {
+                        "location": 0.75,
+                        "derivative": 0,
+                        "value": 0.1
+                      }
+                    ]
+                  }
+                },
+                {
+                  "location": 0.3,
+                  "derivative": 0,
+                  "value": {
+                    "coordinate": "weirdness",
+                    "points": [
+                      {
+                        "location": 0.75,
+                        "derivative": 0,
+                        "value": 0.2
+                      },
+                      {
+                        "location": -0.6,
+                        "derivative": 1.0,
+                        "value": 0.425
+                      },
+                      {
+                        "location": 0.3,
+                        "derivative": -0.5,
+                        "value": 0.1
+                      },
+                      {
+                        "location": 0,
+                        "derivative": 0.0,
+                        "value": 0.0
+                      },
+                      {
+                        "location": 0.3,
+                        "derivative": 2,
+                        "value": 0.3
+                      },
+                      {
+                        "location": 0.6,
+                        "derivative": -2.0,
+                        "value": 0.9
+                      },
+                      {
+                        "location": 0.75,
+                        "derivative": 0,
+                        "value": 0.3
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
   },
   "surface_rule": {
     "type": "minecraft:sequence",
@@ -178,7 +814,7 @@
                   "offset": 0,
                   "add_surface_depth": true,
                   "add_surface_secondary_depth": false,
-                  "surface_secondary_range": 4,
+                  "secondary_depth_range": 4,
                   "surface_type": "floor"
                 },
                 "then_run": {
@@ -196,7 +832,7 @@
                 "offset": 0,
                 "add_surface_depth": true,
                 "add_surface_secondary_depth": false,
-                "surface_secondary_range": 4,
+                "secondary_depth_range": 4,
                 "surface_type": "floor"
               },
               "then_run": {
@@ -241,7 +877,7 @@
                   "offset": 0,
                   "add_surface_depth": true,
                   "add_surface_secondary_depth": false,
-                  "surface_secondary_range": 4,
+                  "secondary_depth_range": 4,
                   "surface_type": "floor"
                 },
                 "then_run": {
@@ -259,7 +895,7 @@
                 "offset": 0,
                 "add_surface_depth": true,
                 "add_surface_secondary_depth": false,
-                "surface_secondary_range": 4,
+                "secondary_depth_range": 4,
                 "surface_type": "floor"
               },
               "then_run": {

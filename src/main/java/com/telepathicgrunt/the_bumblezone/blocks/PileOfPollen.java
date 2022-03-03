@@ -150,6 +150,7 @@ public class PileOfPollen extends FallingBlock {
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
         if (canFall(serverLevel.getBlockState(blockPos.below())) && blockPos.getY() >= serverLevel.getMinBuildHeight()) {
             FallingBlockEntity fallingblockentity = new FallingBlockEntity(serverLevel, (double)blockPos.getX() + 0.5D, blockPos.getY(), (double)blockPos.getZ() + 0.5D, serverLevel.getBlockState(blockPos));
+            serverLevel.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
             this.falling(fallingblockentity);
             serverLevel.addFreshEntity(fallingblockentity);
         }

@@ -48,7 +48,7 @@ public class BeeDungeon extends NbtFeature{
         Registry<ConfiguredStructureFeature<?,?>> configuredStructureFeatureRegistry = context.level().registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
         StructureFeatureManager structureFeatureManager = ((WorldGenRegionAccessor)context.level()).getStructureFeatureManager();
 
-        for (Holder<ConfiguredStructureFeature<?, ?>> configuredStructureFeature : configuredStructureFeatureRegistry.getTag(BzTags.NO_DUNGEONS).get()) {
+        for (Holder<ConfiguredStructureFeature<?, ?>> configuredStructureFeature : configuredStructureFeatureRegistry.getTagOrEmpty(BzTags.NO_DUNGEONS)) {
             StructureStart startForFeature = structureFeatureManager.getStartForFeature(sectionPos, configuredStructureFeature.value(), chunkAccess);
             if (startForFeature != null && startForFeature.isValid()) {
                 return false;

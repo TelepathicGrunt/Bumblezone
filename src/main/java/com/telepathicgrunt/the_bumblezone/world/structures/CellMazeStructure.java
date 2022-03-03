@@ -42,7 +42,7 @@ public class CellMazeStructure extends StructureFeature<JigsawConfiguration> {
 
         StructureFeatureManager structureFeatureManager = ((ServerLevel)serverPlayer.level).structureFeatureManager();
         Registry<ConfiguredStructureFeature<?,?>> configuredStructureFeatureRegistry = serverPlayer.level.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
-        for (Holder<ConfiguredStructureFeature<?, ?>> configuredStructureFeature : configuredStructureFeatureRegistry.getTag(BzTags.WRATH_CAUSING).get()) {
+        for (Holder<ConfiguredStructureFeature<?, ?>> configuredStructureFeature : configuredStructureFeatureRegistry.getTagOrEmpty(BzTags.WRATH_CAUSING)) {
             if (structureFeatureManager.getStructureAt(serverPlayer.blockPosition(), configuredStructureFeature.value()).isValid()) {
                 if (!serverPlayer.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
                     serverPlayer.addEffect(new MobEffectInstance(

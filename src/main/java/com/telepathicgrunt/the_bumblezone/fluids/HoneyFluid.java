@@ -283,7 +283,9 @@ public abstract class HoneyFluid extends FlowingFluid {
                 BlockPos currentBlockPos = blockPos.offset(xOffset, 0, zOffset);
 
                 if(xOffset == -2 || zOffset == -2 || xOffset == 1 || zOffset == 1) {
-                    if (world.getFluidState(currentBlockPos).getType().isSame(fluid)) {
+                    FluidState currentFluidState = world.getFluidState(currentBlockPos);
+                    if (currentFluidState.getType().isSame(fluid)) {
+                        currentMatchingFluidState = currentFluidState;
                         fluidSides++;
                     }
                     continue;
@@ -302,11 +304,13 @@ public abstract class HoneyFluid extends FlowingFluid {
                     if (fluidStateHeight >= 0.8F) {
                         totalHeight += fluidStateHeight * 10.0F;
                         checkedSides += 10;
-                    } else {
+                    }
+                    else {
                         totalHeight += fluidStateHeight;
                         checkedSides++;
                     }
-                } else if (!world.getBlockState(currentBlockPos).getMaterial().isSolid()) {
+                }
+                else if (!world.getBlockState(currentBlockPos).getMaterial().isSolid()) {
                     checkedSides++;
                 }
             }

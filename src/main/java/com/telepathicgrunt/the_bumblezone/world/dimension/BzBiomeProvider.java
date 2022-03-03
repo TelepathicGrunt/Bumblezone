@@ -59,6 +59,7 @@ public class BzBiomeProvider extends BiomeSource {
                 .collect(Collectors.toList()));
 
         nonstandardBiome = ((BiomeSourceAccessor)this).getPossibleBiomes().stream()
+                .map(Holder::value)
                 .filter(biome ->  {
                     ResourceLocation rlKey = biomeRegistry.getKey(biome);
                     return rlKey != null &&
