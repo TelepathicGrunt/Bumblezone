@@ -349,8 +349,8 @@ public abstract class HoneyFluid extends FlowingFluid {
         else {
             FluidState sideFluidState = world.getBlockState(blockPos.relative(direction)).getFluidState();
             if(sideFluidState.is(BzTags.BZ_HONEY_FLUID)) {
-                int bottomLayerCurrent = currentFluidState.isSource() ? 0 : currentFluidState.getValue(BOTTOM_LEVEL);
-                int bottomLayerSide = sideFluidState.isSource() ? 0 : sideFluidState.getValue(BOTTOM_LEVEL);
+                int bottomLayerCurrent = currentFluidState.isSource() ? 8 : currentFluidState.getValue(BOTTOM_LEVEL);
+                int bottomLayerSide = sideFluidState.isSource() ? 8 : sideFluidState.getValue(BOTTOM_LEVEL);
                 return bottomLayerCurrent < bottomLayerSide;
             }
         }
