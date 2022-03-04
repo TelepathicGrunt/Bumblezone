@@ -1,12 +1,19 @@
 package com.telepathicgrunt.the_bumblezone.world.dimension;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBiomeHeightRegistry;
+import it.unimi.dsi.fastutil.longs.Long2FloatMap;
+import it.unimi.dsi.fastutil.longs.Long2FloatOpenHashMap;
 import net.minecraft.Util;
 import net.minecraft.core.Registry;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
+import org.apache.logging.log4j.Level;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class BiomeInfluencedNoiseSampler {
 
@@ -22,8 +29,15 @@ public final class BiomeInfluencedNoiseSampler {
             }
         }
     });
+    private static final Map<Long, Float> CACHED_INFLUENCE_RESULT = new ConcurrentHashMap<>();
 
-    public static double calculateBaseNoise(int x, int y, int z, Climate.Sampler sampler, BiomeSource biomeSource, Registry<Biome> biomeRegistry) {
+    public static double calculateBaseNoise(int x, int z, Climate.Sampler sampler, BiomeSource biomeSource, Registry<Biome> biomeRegistry) {
+        long longPos = (long)x & 0xFFFFFFFFL | ((long)z & 0xFFFFFFFFL) << 32;
+        Float cachedResult = CACHED_INFLUENCE_RESULT.get(longPos);
+        if (cachedResult != null) {
+            return cachedResult;
+        }
+
         BzBiomeHeightRegistry.BiomeTerrain centerBiomeInfo = BzBiomeHeightRegistry.BIOME_HEIGHT_REGISTRY.getOptional(biomeRegistry.getKey(
                 biomeSource.getNoiseBiome(x >> 2, 40, z >> 2, sampler).value())).orElse(new BzBiomeHeightRegistry.BiomeTerrain(4, 1));
 
@@ -42,6 +56,12 @@ public final class BiomeInfluencedNoiseSampler {
             }
         }
 
-        return (totalHeight / 400f) * (y > 126 ? 1 : -1);
+        float finalInfluence = (totalHeight / 5f) + 1;
+        //Bumblezone.LOGGER.log(Level.WARN, finalInfluence);
+        if (CACHED_INFLUENCE_RESULT.size() > 2000) {
+            CACHED_INFLUENCE_RESULT.clear();
+        }
+        CACHED_INFLUENCE_RESULT.put(longPos, finalInfluence);
+        return finalInfluence;
     }
 }

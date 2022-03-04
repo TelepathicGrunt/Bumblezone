@@ -42,6 +42,8 @@ import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.chunk.ProtoChunk;
 import net.minecraft.world.level.levelgen.Aquifer;
 import net.minecraft.world.level.levelgen.Beardifier;
+import net.minecraft.world.level.levelgen.DensityFunction;
+import net.minecraft.world.level.levelgen.DensityFunctions;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
@@ -111,8 +113,43 @@ public class BzChunkGenerator extends ChunkGenerator {
         NoiseGeneratorSettings noiseGeneratorSettings = this.settings.value();
         this.defaultBlock = noiseGeneratorSettings.defaultBlock();
         this.defaultFluid = noiseGeneratorSettings.defaultFluid();
-        this.router = noiseGeneratorSettings.createNoiseRouter(parametersRegistry, seed);
-        this.sampler = new Climate.Sampler(this.router.temperature(), this.router.humidity(), this.router.continents(), this.router.erosion(), this.router.depth(), this.router.ridges(), this.router.spawnTarget());
+        NoiseRouter noiseRouter = noiseGeneratorSettings.createNoiseRouter(parametersRegistry, seed);
+
+        this.sampler = new Climate.Sampler(
+                noiseRouter.temperature(),
+                noiseRouter.humidity(),
+                noiseRouter.continents(),
+                noiseRouter.erosion(),
+                noiseRouter.depth(),
+                noiseRouter.ridges(),
+                noiseRouter.spawnTarget());
+
+        DensityFunction newFinalDensity = DensityFunctions.mul(
+                new BiomeNoise(Holder.direct(new NormalNoise.NoiseParameters(0, 0, 0)), null, this.climateSampler(), this.biomeRegistry, this.getBiomeSource()),
+                noiseRouter.finalDensity()
+        );
+
+        this.router = new NoiseRouter(
+                noiseRouter.barrierNoise(),
+                noiseRouter.fluidLevelFloodednessNoise(),
+                noiseRouter.fluidLevelSpreadNoise(),
+                noiseRouter.lavaNoise(),
+                noiseRouter.aquiferPositionalRandomFactory(),
+                noiseRouter.oreVeinsPositionalRandomFactory(),
+                noiseRouter.temperature(),
+                noiseRouter.humidity(),
+                noiseRouter.continents(),
+                noiseRouter.erosion(),
+                noiseRouter.depth(),
+                noiseRouter.ridges(),
+                noiseRouter.initialDensityWithoutJaggedness(),
+                newFinalDensity,
+                noiseRouter.veinToggle(),
+                noiseRouter.veinRidged(),
+                noiseRouter.veinGap(),
+                noiseRouter.spawnTarget()
+        );
+
         Aquifer.FluidStatus fluidStatus = new Aquifer.FluidStatus(-54, Blocks.LAVA.defaultBlockState());
         int seaLevel = noiseGeneratorSettings.seaLevel();
         Aquifer.FluidStatus fluidStatus2 = new Aquifer.FluidStatus(seaLevel, noiseGeneratorSettings.defaultFluid());
@@ -123,6 +160,35 @@ public class BzChunkGenerator extends ChunkGenerator {
 
     public static void registerChunkGenerator() {
         Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Bumblezone.MODID, "chunk_generator"), BzChunkGenerator.CODEC);
+    }
+
+    record BiomeNoise(Holder<NormalNoise.NoiseParameters> noiseData, @Nullable NormalNoise offsetNoise, Climate.Sampler sampler, Registry<Biome> biomeRegistry, BiomeSource biomeSource) implements DensityFunction.SimpleFunction
+    {
+        @Override
+        public double compute(DensityFunction.FunctionContext functionContext) {
+            return 100;
+//            return BiomeInfluencedNoiseSampler.calculateBaseNoise(
+//                    functionContext.blockX(),
+//                    functionContext.blockZ(),
+//                    this.sampler,
+//                    this.biomeSource,
+//                    this.biomeRegistry);
+        }
+
+        @Override
+        public double minValue() {
+            return Integer.MIN_VALUE;
+        }
+
+        @Override
+        public double maxValue() {
+            return Integer.MAX_VALUE;
+        }
+
+        @Override
+        public Codec<? extends DensityFunction> codec() {
+            return null;
+        }
     }
 
     @Override
@@ -199,7 +265,7 @@ public class BzChunkGenerator extends ChunkGenerator {
             for(int yInCell = cellHeight - 1; yInCell >= 0; --yInCell) {
                 int y = (minYCell + currentYCell) * cellHeight + yInCell;
                 double f = (double)yInCell / (double)cellHeight;
-                y += BiomeInfluencedNoiseSampler.calculateBaseNoise(x, y, z, this.sampler, this.biomeSource, this.biomeRegistry);
+                y += BiomeInfluencedNoiseSampler.calculateBaseNoise(x, z, this.sampler, this.biomeSource, this.biomeRegistry);
 
 
                 noiseChunk.updateForY(y, f);
@@ -313,8 +379,6 @@ public class BzChunkGenerator extends ChunkGenerator {
                                 int ac = zz & 15;
                                 double f = (double)aa / (double)m;
                                 noiseChunk.updateForZ(zz, f);
-
-                               // yy += BiomeInfluencedNoiseSampler.calculateBaseNoise(xx, yy, zz, this.sampler, this.biomeSource, this.biomeRegistry);
                                 noiseChunk.updateForY(yy, d);
 
                                 BlockState blockState = ((NoiseChunkAccessor)noiseChunk).callGetInterpolatedState();
