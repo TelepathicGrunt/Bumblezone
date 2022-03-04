@@ -25,7 +25,7 @@ public final class BiomeInfluencedNoiseSampler {
         for(int x = -RADIUS; x <= RADIUS; ++x) {
             for(int z = -RADIUS; z <= RADIUS; ++z) {
                 float weight = 10.0F / Mth.sqrt((float)(x * x + z * z) + 0.2F);
-                array[x + RADIUS + (z + RADIUS) * 5] = weight / 22f;
+                array[x + RADIUS + (z + RADIUS) * ((RADIUS * 2) + 1)] = weight / 22f;
             }
         }
     });
@@ -42,12 +42,12 @@ public final class BiomeInfluencedNoiseSampler {
                 biomeSource.getNoiseBiome(x >> 2, 40, z >> 2, sampler).value())).orElse(new BzBiomeHeightRegistry.BiomeTerrain(4, 1));
 
         float totalHeight = 0.0F;
-        for(int xOffset = -2; xOffset <= 2; ++xOffset) {
-            for(int zOffset = -2; zOffset <= 2; ++zOffset) {
+        for(int xOffset = -RADIUS; xOffset <= RADIUS; ++xOffset) {
+            for(int zOffset = -RADIUS; zOffset <= RADIUS; ++zOffset) {
                 BzBiomeHeightRegistry.BiomeTerrain biomeTerrain = BzBiomeHeightRegistry.BIOME_HEIGHT_REGISTRY.getOptional(biomeRegistry.getKey(
                         biomeSource.getNoiseBiome((x >> 2) + xOffset, 40, (z >> 2) + zOffset, sampler).value())).orElse(new BzBiomeHeightRegistry.BiomeTerrain(4, 1));
                 float biomeDepth = biomeTerrain.depth;
-                float weight = BIOME_WEIGHT_TABLE[xOffset + 2 + (zOffset + 2) * 5];
+                float weight = BIOME_WEIGHT_TABLE[xOffset + RADIUS + (zOffset + RADIUS) * ((RADIUS * 2) + 1)];
                 if(biomeDepth != centerBiomeInfo.depth) {
                     biomeDepth = Mth.lerp(centerBiomeInfo.weightModifier, biomeDepth, centerBiomeInfo.depth);
                 }
@@ -56,7 +56,7 @@ public final class BiomeInfluencedNoiseSampler {
             }
         }
 
-        float finalInfluence = (totalHeight / 5f) + 1;
+        float finalInfluence = (totalHeight / 100f) - 0.01f;
         //Bumblezone.LOGGER.log(Level.WARN, finalInfluence);
         if (CACHED_INFLUENCE_RESULT.size() > 2000) {
             CACHED_INFLUENCE_RESULT.clear();

@@ -124,7 +124,7 @@ public class BzChunkGenerator extends ChunkGenerator {
                 noiseRouter.ridges(),
                 noiseRouter.spawnTarget());
 
-        DensityFunction newFinalDensity = DensityFunctions.mul(
+        DensityFunction newFinalDensity = DensityFunctions.add(
                 new BiomeNoise(Holder.direct(new NormalNoise.NoiseParameters(0, 0, 0)), null, this.climateSampler(), this.biomeRegistry, this.getBiomeSource()),
                 noiseRouter.finalDensity()
         );
@@ -166,23 +166,22 @@ public class BzChunkGenerator extends ChunkGenerator {
     {
         @Override
         public double compute(DensityFunction.FunctionContext functionContext) {
-            return 100;
-//            return BiomeInfluencedNoiseSampler.calculateBaseNoise(
-//                    functionContext.blockX(),
-//                    functionContext.blockZ(),
-//                    this.sampler,
-//                    this.biomeSource,
-//                    this.biomeRegistry);
+            return BiomeInfluencedNoiseSampler.calculateBaseNoise(
+                    functionContext.blockX(),
+                    functionContext.blockZ(),
+                    this.sampler,
+                    this.biomeSource,
+                    this.biomeRegistry);
         }
 
         @Override
         public double minValue() {
-            return Integer.MIN_VALUE;
+            return 0;
         }
 
         @Override
         public double maxValue() {
-            return Integer.MAX_VALUE;
+            return 2;
         }
 
         @Override
