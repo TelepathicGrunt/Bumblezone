@@ -1,3 +1,9 @@
+### **(V.5.0.1 Changes) (1.18.2 Minecraft)**
+
+##### Bee Spawning:
+Fixed special bee spawning mechanics not running.
+
+
 ### **(V.5.0.0 Changes) (1.18.2 Minecraft)**
 
 ##### Major:
