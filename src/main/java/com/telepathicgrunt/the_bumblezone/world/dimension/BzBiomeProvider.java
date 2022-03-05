@@ -53,9 +53,8 @@ public class BzBiomeProvider extends BiomeSource {
     public static List<Biome> nonstandardBiome = new ArrayList<>();
 
     public BzBiomeProvider(long seed, Registry<Biome> biomeRegistry) {
-        super(biomeRegistry.entrySet().stream()
-                .filter(entry -> entry.getKey().location().getNamespace().equals(Bumblezone.MODID))
-                .map(biomeEntry -> Holder.direct(biomeEntry.getValue()))
+        super(biomeRegistry.holders()
+                .filter(entry -> entry.key().location().getNamespace().equals(Bumblezone.MODID))
                 .collect(Collectors.toList()));
 
         nonstandardBiome = ((BiomeSourceAccessor)this).getPossibleBiomes().stream()

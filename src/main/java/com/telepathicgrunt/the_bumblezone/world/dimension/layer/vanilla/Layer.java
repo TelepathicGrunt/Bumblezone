@@ -7,6 +7,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,7 +30,7 @@ public class Layer {
             }
             else {
                 // Spawn ocean if we can't resolve the biome from the layers.
-                ResourceKey<Biome> backupBiomeKey = net.minecraft.world.level.biome.Biomes.OCEAN;
+                ResourceKey<Biome> backupBiomeKey = Biomes.OCEAN;
                 Bumblezone.LOGGER.warn("Unknown biome id: ${}. Will spawn ${} instead.", resultBiomeID, backupBiomeKey.location());
                 return dynamicBiomeRegistry.getHolderOrThrow(backupBiomeKey);
             }
