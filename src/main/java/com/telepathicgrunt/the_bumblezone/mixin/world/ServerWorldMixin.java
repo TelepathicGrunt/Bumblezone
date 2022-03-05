@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.BeeDedicatedSpawning;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -20,7 +21,7 @@ import java.util.function.Supplier;
 
 @Mixin(ServerLevel.class)
 public abstract class ServerWorldMixin extends Level {
-	protected ServerWorldMixin(WritableLevelData writableLevelData, ResourceKey<Level> levelResourceKey, DimensionType dimensionType, Supplier<ProfilerFiller> fillerSupplier, boolean b, boolean b1, long l) {
+	protected ServerWorldMixin(WritableLevelData writableLevelData, ResourceKey<Level> levelResourceKey, Holder<DimensionType> dimensionType, Supplier<ProfilerFiller> fillerSupplier, boolean b, boolean b1, long l) {
 		super(writableLevelData, levelResourceKey, dimensionType, fillerSupplier, b, b1, l);
 	}
 

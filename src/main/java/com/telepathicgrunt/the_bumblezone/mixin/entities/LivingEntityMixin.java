@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.effects.ParalyzedEffect;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
-import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -59,14 +59,14 @@ public abstract class LivingEntityMixin extends Entity {
 
     // make jumping in honey weaker
     @ModifyVariable(method = "aiStep()V", ordinal = 0,
-            at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/world/entity/LivingEntity.getFluidHeight(Lnet/minecraft/tags/Tag;)D", ordinal = 1),
+            at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/world/entity/LivingEntity.getFluidHeight(Lnet/minecraft/tags/TagKey;)D", ordinal = 1),
             slice = @Slice(
                     from = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/world/entity/LivingEntity.isAffectedByFluids()Z"),
                     to = @At(value = "INVOKE", target = "net/minecraft/world/entity/LivingEntity.isInWater()Z")
             ))
     private double thebumblezone_honeyFluidJump(double fluidHeight) {
         if(fluidHeight == 0) {
-            return this.getFluidHeight(BzFluidTags.BZ_HONEY_FLUID);
+            return this.getFluidHeight(BzTags.BZ_HONEY_FLUID);
         }
         return fluidHeight;
     }

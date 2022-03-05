@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.client.particles;
 
-import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
@@ -30,7 +30,7 @@ public class HoneyParticle extends SuspendedParticle {
         }
         else {
             FluidState fluidState = this.level.getFluidState(new BlockPos(this.x, this.y, this.z));
-            if (fluidState.is(BzFluidTags.BZ_HONEY_FLUID)) {
+            if (fluidState.is(BzTags.BZ_HONEY_FLUID)) {
                 if(fluidState.isSource()) {
                     this.move(this.xd, this.yd + 0.001D, this.zd);
                 }

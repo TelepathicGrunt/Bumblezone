@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "the_bumblezone:cell_maze",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 456768898,
+    "spacing": 50,
+    "separation": 20,
+    "type": "minecraft:random_spread"
+  }
+}

@@ -5,11 +5,12 @@ import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -28,6 +29,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class EntityTeleportationHookup {
 
@@ -122,8 +124,9 @@ public class EntityTeleportationHookup {
 
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = false;
-            if(!BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.getValues().isEmpty()) {
-                if(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(world.getBlockState(hivePos.below()).getBlock())) {
+            Optional<HolderSet.Named<Block>> blockTag = Registry.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
+            if(blockTag.isPresent() && blockTag.get().size() != 0) {
+                if(world.getBlockState(hivePos.below()).is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
                     validBelowBlock = true;
                 }
                 else if(BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive.get())
@@ -184,24 +187,25 @@ public class EntityTeleportationHookup {
                     entityPos.relative(Direction.UP),
                     entityPos.relative(Direction.UP).relative(direction)
             };
-            List<Block> belowHiveBlocks = new ArrayList<>();
+            List<BlockState> belowHiveBlocks = new ArrayList<>();
 
             // Checks if entity is pushed into hive block
             boolean isPushedIntoBeehive = false;
             for(BlockPos pos : blockPositions) {
                 if(EntityTeleportationBackend.isValidBeeHive(world.getBlockState(pos))) {
                     isPushedIntoBeehive = true;
-                    belowHiveBlocks.add(world.getBlockState(pos.below()).getBlock());
+                    belowHiveBlocks.add(world.getBlockState(pos.below()));
                 }
             }
 
             if (isPushedIntoBeehive) {
                 //checks if block under hive is correct if config needs one
                 boolean validBelowBlock = false;
-                if(!BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.getValues().isEmpty()) {
+                Optional<HolderSet.Named<Block>> blockTag = Registry.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
+                if(blockTag.isPresent() && blockTag.get().size() != 0) {
 
-                    for(Block belowBlock : belowHiveBlocks) {
-                        if(BzBlockTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT.contains(belowBlock)) {
+                    for(BlockState belowBlock : belowHiveBlocks) {
+                        if(belowBlock.is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
                             validBelowBlock = true;
                         }
                     }

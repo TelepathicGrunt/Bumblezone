@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "the_bumblezone:honey_cave_room",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 722299384,
+    "spacing": 15,
+    "separation": 7,
+    "type": "minecraft:random_spread"
+  }
+}

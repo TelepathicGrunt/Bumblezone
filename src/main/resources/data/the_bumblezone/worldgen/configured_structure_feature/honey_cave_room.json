@@ -1,7 +1,10 @@
 {
+  "type": "the_bumblezone:honey_cave_room",
   "config": {
     "start_pool": "the_bumblezone:honey_cave_room",
     "size": 6
   },
-  "type": "the_bumblezone:honey_cave_room"
+  "biomes": "#the_bumblezone:has_structure/honey_cave_room",
+  "adapt_noise": false,
+  "spawn_overrides": {}
 }

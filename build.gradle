@@ -31,7 +31,7 @@ archivesBaseName = "${modid}_forge"
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
-    mappings channel: 'parchment', version: "${parchment_version}-${mc_version}"
+    mappings channel: 'official', version: "${mc_version}"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
@@ -91,19 +91,16 @@ dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    runtimeOnly fg.deobf("com.telepathicgrunt:CommandStructures:1.4.3+1.18.1")
-    runtimeOnly fg.deobf("com.telepathicgrunt:FeatureNBTDeadlockBeGone-Forge:1.0.0+1.18.1")
-    runtimeOnly fg.deobf("com.telepathicgrunt:NoNullProcessors-Forge:2.0.2+1.18.1")
+    runtimeOnly fg.deobf("com.telepathicgrunt:CommandStructures:2.0.0+1.18.2")
+    runtimeOnly fg.deobf("com.telepathicgrunt:FeatureNBTDeadlockBeGone-Forge:2.0.0+1.18.2")
 
     // Switch to `implementation` when testing mod compat
-    compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
-    compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
-    runtimeOnly fg.deobf("curse.maven:better_advancements-272515:3562206")
+    //compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
+    //compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
+    //runtimeOnly fg.deobf("curse.maven:better_advancements-272515:3562206")
 
     compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
-    //runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
-
-    runtimeOnly fg.deobf("curse.maven:shutup_experimental_settings-407174:3544525")
+    runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
 }
 
 apply from: 'gradle/manifest.gradle'
@@ -122,7 +119,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     def mainFile = upload(projectId, jar)
     mainFile.changelog = changelogText
     mainFile.changelogType = "markdown"
-    mainFile.releaseType = "release"
+    mainFile.releaseType = "beta"
     mainFile.displayName = "The Bumblezone v${project.mod_version} (${project.mc_version} MC)"
     mainFile.addRequirement("feature-nbt-deadlock-be-gone")
 }

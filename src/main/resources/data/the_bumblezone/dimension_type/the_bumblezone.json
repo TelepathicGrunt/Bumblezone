@@ -5,7 +5,7 @@
   "ambient_light": 0.25,
   "has_skylight": false,
   "has_ceiling": true,
-  "infiniburn": "minecraft:infiniburn_overworld",
+  "infiniburn": "#minecraft:infiniburn_overworld",
   "logical_height" : 256,
   "height" : 256,
   "min_y": 0,

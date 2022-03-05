@@ -24,12 +24,13 @@ public class ModChecker {
 	 */
     public static void setupModCompat() {
 		String modid = "";
-		try {
+		try {/*
 			modid = "pokecube_mobs";
 			loadupModCompat(modid, () -> PokecubeCompat.setupPokecube());
 
 			modid = "productivebees";
 			loadupModCompat(modid, () -> ProductiveBeesCompat.setupProductiveBees());
+			*/
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
