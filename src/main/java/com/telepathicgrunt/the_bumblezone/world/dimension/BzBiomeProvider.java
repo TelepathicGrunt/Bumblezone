@@ -123,6 +123,7 @@ public class BzBiomeProvider extends BiomeSource {
         layerOverlay = new BzBiomeScaleLayer(POLLINATED_FIELDS, biomeRegistry).run(contextFactory.apply(4055L), layerOverlay);
         layerOverlay = ZoomLayer.FUZZY.run(contextFactory.apply(2853L), layerOverlay);
         layerOverlay = ZoomLayer.FUZZY.run(contextFactory.apply(3583L), layerOverlay);
+        layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(4583L), layerOverlay);
         layer = new BzBiomeMergeLayer().run(contextFactory.apply(5583L), layerOverlay, layer);
 
         return layer;
@@ -131,6 +132,6 @@ public class BzBiomeProvider extends BiomeSource {
 
     @Override
     public Holder<Biome> getNoiseBiome(int x, int y, int z, Climate.Sampler sampler) {
-        return new Holder.Direct<>(biomeSampler.sample(biomeRegistry, x, z));
+        return biomeSampler.sample(biomeRegistry, x, z);
     }
 }

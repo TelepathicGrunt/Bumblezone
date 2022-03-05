@@ -56,8 +56,7 @@ public final class BiomeInfluencedNoiseSampler {
             }
         }
 
-        float finalInfluence = (totalHeight / 100f) - 0.01f;
-        //Bumblezone.LOGGER.log(Level.WARN, finalInfluence);
+        float finalInfluence = totalHeight / 126f;
         if (CACHED_INFLUENCE_RESULT.size() > 2000) {
             CACHED_INFLUENCE_RESULT.clear();
         }

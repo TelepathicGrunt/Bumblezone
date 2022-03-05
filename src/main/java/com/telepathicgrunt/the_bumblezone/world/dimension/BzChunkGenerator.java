@@ -129,6 +129,8 @@ public class BzChunkGenerator extends ChunkGenerator {
                 noiseRouter.finalDensity()
         );
 
+        newFinalDensity = DensityFunctions.interpolated(newFinalDensity);
+
         this.router = new NoiseRouter(
                 noiseRouter.barrierNoise(),
                 noiseRouter.fluidLevelFloodednessNoise(),
@@ -264,9 +266,6 @@ public class BzChunkGenerator extends ChunkGenerator {
             for(int yInCell = cellHeight - 1; yInCell >= 0; --yInCell) {
                 int y = (minYCell + currentYCell) * cellHeight + yInCell;
                 double f = (double)yInCell / (double)cellHeight;
-                y += BiomeInfluencedNoiseSampler.calculateBaseNoise(x, z, this.sampler, this.biomeSource, this.biomeRegistry);
-
-
                 noiseChunk.updateForY(y, f);
                 noiseChunk.updateForX(x, d);
                 noiseChunk.updateForZ(z, e);
