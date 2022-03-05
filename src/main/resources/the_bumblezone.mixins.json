@@ -40,7 +40,8 @@
     "world.NoiseChunkAccessor",
     "world.NoiseGeneratorSettingsInvoker",
     "world.ServerWorldMixin",
-    "world.StructureTemplateAccessor"
+    "world.StructureTemplateAccessor",
+    "world.WorldGenRegionAccessor"
   ],
   "client": [
     "client.DimensionSpecialEffectsAccessor",
