@@ -3,6 +3,12 @@
 ##### Bee Spawning:
 Fixed special bee spawning mechanics not running.
 
+##### Structures:
+Fixed structures not spawning
+
+##### Fluids:
+Fixed Honey Fluid bottom sometimes not rendering.
+
 
 ### **(V.5.0.0 Changes) (1.18.2 Minecraft)**
 
