@@ -48,15 +48,15 @@
     "items.PlayerDamagedMixin",
     "items.PlayerDamageShieldInvoker",
     "items.SimpleCookingSerializerMixin",
-    "world.BeardifierAccessor",
     "world.BiomeSourceAccessor",
     "world.LevelStorageSourceMixin",
     "world.NoiseChunkAccessor",
     "world.NoiseGeneratorSettingsInvoker",
-    "world.ServerLevelMixin",
+    "world.ServerWorldMixin",
     "world.SinglePoolElementAccessor",
-    "world.StructureSettingsAccessor",
+    "world.StructureFeatureAccessor",
     "world.StructureTemplateAccessor",
+    "world.WorldGenRegionAccessor",
     "world.WorldGenSettingsMixin"
   ],
   "client": [

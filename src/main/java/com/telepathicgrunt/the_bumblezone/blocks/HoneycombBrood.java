@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
@@ -111,7 +111,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         /*
          * Player is feeding larva
          */
-        else if (itemstack.is(BzItemTags.BEE_FEEDING_ITEMS)) {
+        else if (itemstack.is(BzTags.BEE_FEEDING_ITEMS)) {
             if (!world.isClientSide()) {
                 boolean successfulGrowth = false;
 
@@ -139,7 +139,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                     }
                     else {
                         int newStage = stage + 1;
-                        if (itemstack.is(BzItemTags.HONEY_BUCKETS)) {
+                        if (itemstack.is(BzTags.HONEY_BUCKETS)) {
                             newStage = 3;
                             if (!world.isClientSide()) {
                                 Direction facing = thisBlockState.getValue(FACING).getOpposite();

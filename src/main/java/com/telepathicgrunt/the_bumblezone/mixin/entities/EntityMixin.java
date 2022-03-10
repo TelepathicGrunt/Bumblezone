@@ -1,15 +1,17 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
-import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,14 +19,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.Set;
+
 @Mixin(Entity.class)
 public abstract class EntityMixin {
 
     @Shadow
-    public abstract boolean updateFluidHeightAndDoFluidPushing(Tag<Fluid> fluidITag, double v);
+    public abstract boolean updateFluidHeightAndDoFluidPushing(TagKey<Fluid> fluidITag, double v);
 
     @Shadow
-    public abstract boolean isEyeInFluid(Tag<Fluid> fluidITag);
+    public abstract boolean isEyeInFluid(TagKey<Fluid> fluidITag);
 
     @Shadow
     public abstract boolean isSwimming();
@@ -62,8 +66,10 @@ public abstract class EntityMixin {
     @Shadow
     public float fallDistance;
 
+    @Mutable
+    @Final
     @Shadow
-    protected Tag<Fluid> fluidOnEyes;
+    private Set<TagKey<Fluid>> fluidOnEyes;
 
     @Shadow
     public Level level;
@@ -80,7 +86,7 @@ public abstract class EntityMixin {
     @Inject(method = "updateInWaterStateAndDoWaterCurrentPushing()V",
             at = @At(value = "TAIL"))
     private void thebumblezone_fluidPushing(CallbackInfo ci) {
-        if (this.updateFluidHeightAndDoFluidPushing(BzFluidTags.BZ_HONEY_FLUID, 0.014D)) {
+        if (this.updateFluidHeightAndDoFluidPushing(BzTags.BZ_HONEY_FLUID, 0.014D)) {
             this.fallDistance = 0.0F;
             this.wasTouchingWater = true;
             this.clearFire();
@@ -90,11 +96,11 @@ public abstract class EntityMixin {
     // make sure we set that we are in fluid
     @Inject(method = "updateFluidOnEyes()V",
             at = @At(value = "INVOKE_ASSIGN",
-                    target = "Lnet/minecraft/world/entity/Entity;isEyeInFluid(Lnet/minecraft/tags/Tag;)Z",
+                    target = "Lnet/minecraft/world/entity/Entity;isEyeInFluid(Lnet/minecraft/tags/TagKey;)Z",
                     shift = At.Shift.AFTER))
     private void thebumblezone_markEyesInFluid(CallbackInfo ci) {
         if(!this.wasEyeInWater) {
-            this.wasEyeInWater = this.isEyeInFluid(BzFluidTags.BZ_HONEY_FLUID);
+            this.wasEyeInWater = this.isEyeInFluid(BzTags.BZ_HONEY_FLUID);
         }
     }
 
@@ -108,10 +114,10 @@ public abstract class EntityMixin {
         // Have to get the fluid myself as the local capture here is uh broken. Dies on the vehicle entity variable
         BlockPos blockPos = new BlockPos(this.getX(), eyeHeight, this.getZ());
         FluidState fluidState = this.level.getFluidState(blockPos);
-        if (fluidState.is(BzFluidTags.BZ_HONEY_FLUID)) {
+        if (fluidState.is(BzTags.BZ_HONEY_FLUID)) {
             double fluidHeight = (float)blockPos.getY() + fluidState.getHeight(this.level, blockPos);
             if (fluidHeight > eyeHeight) {
-                this.fluidOnEyes = BzFluidTags.BZ_HONEY_FLUID;
+                this.fluidOnEyes.add(BzTags.BZ_HONEY_FLUID);
                 ci.cancel();
             }
         }
@@ -123,7 +129,7 @@ public abstract class EntityMixin {
     private void thebumblezone_setSwimming(CallbackInfo ci) {
         // check if we were not set to swimming in water. If not, then check if we are swimming in honey fluid instead
         if(!this.isSwimming() && this.isSprinting() && this.isUnderWater() && !this.isPassenger()) {
-            this.setSwimming(this.level.getFluidState(this.blockPosition()).is(BzFluidTags.BZ_HONEY_FLUID));
+            this.setSwimming(this.level.getFluidState(this.blockPosition()).is(BzTags.BZ_HONEY_FLUID));
         }
     }
 }

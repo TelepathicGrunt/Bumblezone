@@ -1,0 +1,25 @@
+{
+  "argument": {
+    "argument1": 0.64,
+    "argument2": {
+      "argument": {
+        "argument": {
+          "argument": {
+            "type": "max",
+            "argument1": -1.875,
+            "argument2": {
+              "type": "max",
+              "argument1": "the_bumblezone:ceiling",
+              "argument2": "the_bumblezone:floor"
+            }
+          },
+          "type": "minecraft:slide"
+        },
+        "type": "minecraft:blend_density"
+      },
+      "type": "minecraft:interpolated"
+    },
+    "type": "minecraft:mul"
+  },
+  "type": "minecraft:squeeze"
+}

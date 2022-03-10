@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.world;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,5 +11,5 @@ import java.util.Set;
 @Mixin(BiomeSource.class)
 public interface BiomeSourceAccessor {
     @Accessor("possibleBiomes")
-    Set<Biome> getPossibleBiomes();
+    Set<Holder<Biome>> getPossibleBiomes();
 }

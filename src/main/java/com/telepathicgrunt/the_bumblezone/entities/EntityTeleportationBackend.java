@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.google.common.primitives.Doubles;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -355,9 +355,9 @@ public class EntityTeleportationBackend {
     }
 
     public static boolean isValidBeeHive(BlockState block) {
-        if(BzBlockTags.BLACKLISTED_TELEPORTATION_HIVES.contains(block.getBlock())) return false;
+        if(block.is(BzTags.BLACKLISTED_TELEPORTATION_HIVES)) return false;
 
-        if(BlockTags.BEEHIVES.contains(block.getBlock()) || block.getBlock() instanceof BeehiveBlock) {
+        if(block.is(BlockTags.BEEHIVES) || block.getBlock() instanceof BeehiveBlock) {
             return true;
         }
 

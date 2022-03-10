@@ -8,8 +8,7 @@ import com.telepathicgrunt.the_bumblezone.mixin.items.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
-import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
@@ -40,7 +39,7 @@ public class BeeInteractivity {
             ResourceLocation itemRL = Registry.ITEM.getKey(itemstack.getItem());
 
             // Disallow all non-tagged items from being fed to bees
-            if(!BzItemTags.BEE_FEEDING_ITEMS.contains(itemstack.getItem()))
+            if(!itemstack.is(BzTags.BEE_FEEDING_ITEMS))
                 return InteractionResult.PASS;
             if(world.isClientSide())
                 return InteractionResult.SUCCESS;
@@ -60,7 +59,7 @@ public class BeeInteractivity {
                 return InteractionResult.PASS;
             }
 
-            if (itemstack.is(BzItemTags.HONEY_BUCKETS)) {
+            if (itemstack.is(BzTags.HONEY_BUCKETS)) {
                 beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
                 removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);
                 if (beeEntity.isBaby()) {
@@ -108,7 +107,7 @@ public class BeeInteractivity {
 
 
     public static InteractionResult beeUnpollinating(Level world, Player playerEntity, InteractionHand hand, Bee beeEntity) {
-        if (beeEntity.getType().is(BzEntityTags.POLLEN_PUFF_CAN_POLLINATE)) {
+        if (beeEntity.getType().is(BzTags.POLLEN_PUFF_CAN_POLLINATE)) {
             ItemStack itemstack = playerEntity.getItemInHand(hand);
             Item item = itemstack.getItem();
 

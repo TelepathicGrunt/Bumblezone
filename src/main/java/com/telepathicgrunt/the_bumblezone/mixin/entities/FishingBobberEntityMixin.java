@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
-import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -26,7 +26,7 @@ public abstract class FishingBobberEntityMixin extends Entity {
     private void thebumblezone_bobberFloat(CallbackInfo ci) {
         BlockPos blockpos = this.blockPosition();
         FluidState fluidstate = this.level.getFluidState(blockpos);
-        if (fluidstate.is(BzFluidTags.BZ_HONEY_FLUID)) {
+        if (fluidstate.is(BzTags.BZ_HONEY_FLUID)) {
             Vec3 vector3d = this.getDeltaMovement();
             this.setDeltaMovement(vector3d.x * 0.5D, 0, vector3d.z * 0.5D);
         }

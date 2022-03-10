@@ -63,23 +63,23 @@ dependencies {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 
-	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"
-	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_version}"
-	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"
-	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_version}"
+	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_version}"
+	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_version}"
+	include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_version}"
+	include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_version}"
 
 	modImplementation "dev.cafeteria:fake-player-api:${project.fake_player_version}"
 	include "dev.cafeteria:fake-player-api:${project.fake_player_version}"
 
 	modImplementation ("maven.modrinth:modmenu:${project.mod_menu_version}") { transitive = false }
 
-	modRuntimeOnly ("com.telepathicgrunt:FeatureNBTDeadlockBeGone-Fabric:1.0.0+1.18.1") { transitive = false }
+	modRuntimeOnly ("com.telepathicgrunt:FeatureNBTDeadlockBeGone-Fabric:${project.NBTDBG_version}") { transitive = false }
 
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:7.2.425"
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:7.2.425"
-	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:7.2.425"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
+	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 
-	modRuntimeOnly "curse.maven:shutup_experimental_settings-401978:3545078"
+	//modRuntimeOnly "curse.maven:shutup_experimental_settings-401978:3545078"
 
 	//modRuntimeOnly "curse.maven:requiem-265729:3639233"
 	//modImplementation ("curse.maven:mobcatcher-498389:3575752") { transitive = false }

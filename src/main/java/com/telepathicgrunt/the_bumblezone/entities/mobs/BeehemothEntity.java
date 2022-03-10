@@ -11,7 +11,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
-import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -117,7 +117,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new BeehemothAIRide(this));
-        this.goalSelector.addGoal(1, new BeehemothTemptGoal(this, 1.5D, Ingredient.of(BzItemTags.HONEY_BUCKETS)));
+        this.goalSelector.addGoal(1, new BeehemothTemptGoal(this, 1.5D, Ingredient.of(BzTags.HONEY_BUCKETS)));
         this.goalSelector.addGoal(2, new BeehemothFlyingStillGoal(this));
         this.goalSelector.addGoal(3, new BeehemothRandomFlyGoal(this));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 60));
@@ -297,14 +297,14 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
             // Healing and befriending Beehemoth
             if (isTame()) {
                 if (isOwnedBy(player)) {
-                    if (BzItemTags.BEE_FEEDING_ITEMS.contains(item) && !player.isShiftKeyDown()) {
+                    if (stack.is(BzTags.BEE_FEEDING_ITEMS) && !player.isShiftKeyDown()) {
                         if(item == BzItems.BEE_BREAD) {
                             heal(2);
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
                             addFriendship(5);
                             return InteractionResult.PASS;
                         }
-                        else if (BzItemTags.HONEY_BUCKETS.contains(item)) {
+                        else if (stack.is(BzTags.HONEY_BUCKETS)) {
                             heal(getMaxHealth() - getHealth());
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
                             addFriendship(5);
@@ -362,10 +362,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                 }
             }
             // Taming Beehemoth
-            else if (BzItemTags.BEE_FEEDING_ITEMS.contains(item)) {
+            else if (stack.is(BzTags.BEE_FEEDING_ITEMS)) {
                 if(getFriendship() >= 0) {
                     float tameChance;
-                    if (BzItemTags.HONEY_BUCKETS.contains(item) || item == BzItems.BEE_BREAD) {
+                    if (stack.is(BzTags.HONEY_BUCKETS) || item == BzItems.BEE_BREAD) {
                         tameChance = 0.25f;
                     }
                     else if (itemRL.getPath().contains("honey")) {
@@ -391,7 +391,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                         addFriendship(5);
                         return InteractionResult.PASS;
                     }
-                    else if (BzItemTags.HONEY_BUCKETS.contains(item)) {
+                    else if (stack.is(BzTags.HONEY_BUCKETS)) {
                         addFriendship(3);
                     }
                     else if (itemRL.getPath().contains("honey")) {

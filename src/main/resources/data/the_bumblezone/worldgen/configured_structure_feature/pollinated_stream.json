@@ -1,7 +1,10 @@
 {
+  "type": "the_bumblezone:pollinated_stream",
   "config": {
     "start_pool": "the_bumblezone:pollinated_stream/waterfall_start",
     "size": 6
   },
-  "type": "the_bumblezone:pollinated_stream"
+  "biomes": "#the_bumblezone:has_structure/pollinated_stream",
+  "adapt_noise": true,
+  "spawn_overrides": {}
 }

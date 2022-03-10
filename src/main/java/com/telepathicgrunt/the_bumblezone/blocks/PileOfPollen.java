@@ -10,7 +10,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
-import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -150,6 +150,7 @@ public class PileOfPollen extends FallingBlock {
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
         if (canFall(serverLevel.getBlockState(blockPos.below())) && blockPos.getY() >= serverLevel.getMinBuildHeight()) {
             FallingBlockEntity fallingblockentity = new FallingBlockEntity(serverLevel, (double)blockPos.getX() + 0.5D, blockPos.getY(), (double)blockPos.getZ() + 0.5D, serverLevel.getBlockState(blockPos));
+            serverLevel.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
             this.falling(fallingblockentity);
             serverLevel.addFreshEntity(fallingblockentity);
         }
@@ -327,7 +328,7 @@ public class PileOfPollen extends FallingBlock {
             }
 
             // reduce pile of pollen to pollinate bee
-            if(entity instanceof Bee && !((Bee)entity).hasNectar() && BzEntityTags.POLLEN_PUFF_CAN_POLLINATE.contains(entity.getType())) {
+            if(entity instanceof Bee && !((Bee)entity).hasNectar() && entity.getType().is(BzTags.POLLEN_PUFF_CAN_POLLINATE)) {
                 ((BeeEntityInvoker)entity).thebumblezone_callSetHasNectar(true);
                 ((Bee)entity).resetTicksWithoutNectarSinceExitingHive();
                 if(layerValueMinusOne == 0) {
