@@ -1,3 +1,9 @@
+### **(V.5.0.2 Changes) (1.18.2 Minecraft)**
+
+##### Features:
+Fixed bug where Bee Dungeons can be slightly below sealevel.
+
+
 ### **(V.5.0.1 Changes) (1.18.2 Minecraft)**
 
 ##### Bee Spawning:
