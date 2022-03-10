@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:add",
+  "argument1": {
+    "type": "minecraft:y_clamped_gradient",
+    "from_y": 170,
+    "to_y": 240,
+    "from_value": -2,
+    "to_value": 1
+  },
+  "argument2": {
+    "type": "minecraft:noise",
+    "noise": "the_bumblezone:ceiling",
+    "xz_scale": 0.66,
+    "y_scale": 0.2
+  }
+}

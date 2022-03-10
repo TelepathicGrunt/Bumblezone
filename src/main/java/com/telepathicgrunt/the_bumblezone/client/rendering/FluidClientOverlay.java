@@ -10,7 +10,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Matrix4f;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
-import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.Camera;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
@@ -62,7 +62,7 @@ public class FluidClientOverlay {
     }
 
     public static boolean renderHoneyOverlay(LocalPlayer clientPlayerEntity, PoseStack matrixStack) {
-        if(!clientPlayerEntity.isEyeInFluid(BzFluidTags.BZ_HONEY_FLUID)) {
+        if(!clientPlayerEntity.isEyeInFluid(BzTags.BZ_HONEY_FLUID)) {
             return false;
         }
 
@@ -99,7 +99,7 @@ public class FluidClientOverlay {
 
     public static void renderHoneyFog(EntityViewRenderEvent.RenderFogEvent event) {
         FluidState fluidstate = getNearbyHoneyFluid(event.getCamera());
-        if(fluidstate.is(BzFluidTags.BZ_HONEY_FLUID)) {
+        if(fluidstate.is(BzTags.BZ_HONEY_FLUID)) {
             RenderSystem.setShaderFogStart(0.35f);
             RenderSystem.setShaderFogEnd(4);
         }
@@ -126,7 +126,7 @@ public class FluidClientOverlay {
             mutable.set(x, y, z);
             if(!mutable.equals(camera.getBlockPosition())) {
                 FluidState neighboringFluidstate = world.getFluidState(mutable);
-                if(neighboringFluidstate.is(BzFluidTags.BZ_HONEY_FLUID)) {
+                if(neighboringFluidstate.is(BzTags.BZ_HONEY_FLUID)) {
                     fluidstate = neighboringFluidstate;
                 }
             }

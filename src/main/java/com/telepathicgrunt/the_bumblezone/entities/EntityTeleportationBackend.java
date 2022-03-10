@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimensio
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
-import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,7 +19,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.BeehiveBlock;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -366,14 +365,14 @@ public class EntityTeleportationBackend {
     }
 
     public static boolean isValidBeeHive(BlockState blockState) {
-        Block block = blockState.getBlock();
-        if(BzBlockTags.BLACKLISTED_TELEPORTATION_HIVES.contains(block)) return false;
+        if(blockState.is(BzTags.BLACKLISTED_TELEPORTATION_HIVES)) return false;
 
-        if(BlockTags.BEEHIVES.contains(block) || block instanceof BeehiveBlock) {
-            if(ForgeRegistries.BLOCKS.getKey(block).getNamespace().equals("minecraft") || BzDimensionConfigs.allowTeleportationWithModdedBeehives.get()) {
+        if(blockState.is(BlockTags.BEEHIVES) || blockState.getBlock() instanceof BeehiveBlock) {
+            if(ForgeRegistries.BLOCKS.getKey(blockState.getBlock()).getNamespace().equals("minecraft") || BzDimensionConfigs.allowTeleportationWithModdedBeehives.get()) {
                 return true;
             }
         }
+
 
         if(BzDimensionConfigs.allowTeleportationWithModdedBeehives.get()) {
             if(ModChecker.productiveBeesPresent && ProductiveBeesCompat.PBIsExpandedBeehiveBlock(blockState)) {

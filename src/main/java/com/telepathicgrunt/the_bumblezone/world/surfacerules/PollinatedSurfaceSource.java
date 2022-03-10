@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.world.surfacerules;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
-import com.telepathicgrunt.the_bumblezone.utils.WorldSeedHolder;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.SurfaceRules;
@@ -25,8 +24,8 @@ public record PollinatedSurfaceSource (BlockState resultState, RandomLayerStateR
 
     public static class RandomLayerStateRule implements SurfaceRules.SurfaceRule {
         protected BlockState blockState;
-        protected long seed;
-        private OpenSimplex2F noiseGenerator = null;
+        protected static long seed;
+        private static OpenSimplex2F noiseGenerator = null;
         private final boolean haslayer;
         private final float xzScale = 0.035f;
         private final float yScale = 0.015f;
@@ -34,13 +33,12 @@ public record PollinatedSurfaceSource (BlockState resultState, RandomLayerStateR
         public RandomLayerStateRule(BlockState blockState) {
             this.blockState = blockState;
             this.haslayer = this.blockState.hasProperty(BlockStateProperties.LAYERS);
-            initNoise();
         }
 
-        public void initNoise() {
-            if (this.seed != WorldSeedHolder.getSeed() || noiseGenerator == null) {
-                noiseGenerator = new OpenSimplex2F(WorldSeedHolder.getSeed());
-                this.seed = WorldSeedHolder.getSeed();
+        public static void initNoise(long seedIn) {
+            if (seed != seedIn || noiseGenerator == null) {
+                noiseGenerator = new OpenSimplex2F(seedIn);
+                seed = seedIn;
             }
         }
 

@@ -6,7 +6,7 @@ import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearE
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
-import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -52,7 +52,7 @@ public class StingerSpearItem extends TridentItem {
      */
     @Override
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return BzItemTags.STINGER_SPEAR_REPAIR_ITEMS.contains(repair.getItem());
+        return repair.is(BzTags.STINGER_SPEAR_REPAIR_ITEMS);
     }
 
     @Override

@@ -7,8 +7,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
-import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -17,7 +16,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -57,7 +56,7 @@ public class BeeAggression {
         Player player = event.getPlayer();
         BlockState blockState = event.getState();
 
-        if (BzBlockTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED.contains(blockState.getBlock())) {
+        if (blockState.is(BzTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED)) {
             angerBees(player);
         }
     }
@@ -65,9 +64,9 @@ public class BeeAggression {
     //if player picks up a tagged angerable item, bees gets very mad...
     public static void pickupItemAnger(PlayerEvent.ItemPickupEvent event) {
         Player player = event.getPlayer();
-        Item item = event.getStack().getItem();
+        ItemStack itemStack = event.getStack();
 
-        if (BzItemTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP.contains(item)) {
+        if (itemStack.is(BzTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP)) {
             angerBees(player);
         }
     }

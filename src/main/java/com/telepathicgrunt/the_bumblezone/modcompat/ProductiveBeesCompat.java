@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFeatures;
-import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehive;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehiveAbstract;
 import cy.jdkdigital.productivebees.common.block.ConfigurableCombBlock;
@@ -18,8 +18,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -76,31 +77,32 @@ public class ProductiveBeesCompat {
 
 	private static final Lazy<List<String>> ALL_BEES = Lazy.of(() -> BeeReloadListener.INSTANCE.getData().keySet().stream().filter(e -> BzModCompatibilityConfigs.allowedBees.get().contains(e)).toList());
 
-	private static PlacedFeature PB_PLACEDFEATURE;
+	private static final ResourceLocation FEATURE_RL = new ResourceLocation(Bumblezone.MODID, "productivebees_be_comb_feature");
+	public static final TagKey<Block> SOLITARY_OVERWORLD_NESTS_TAG = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("productivebees", "solitary_overworld_nests"));
 
 	public static void setupProductiveBees() {
-
 		// feature to add to biomes
-		ConfiguredFeature<?, ?> PB_CONFIGUREFEATURE = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,
-			new ResourceLocation(Bumblezone.MODID, "productivebees_be_comb_feature"),
-			BzFeatures.BLOCKENTITY_COMBS_FEATURE.get().configured(
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, FEATURE_RL,
+			new ConfiguredFeature<>(BzFeatures.BLOCKENTITY_COMBS_FEATURE.get(),
 				new OreConfiguration(
-						new TagMatchTest(BzBlockTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE),
-						ModBlocks.CONFIGURABLE_COMB.get().defaultBlockState(),
-						16
+					new TagMatchTest(BzTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE),
+					ModBlocks.CONFIGURABLE_COMB.get().defaultBlockState(),
+					16
 				)
 			)
 		);
 
-		PB_PLACEDFEATURE = Registry.register(BuiltinRegistries.PLACED_FEATURE,
+		Registry.register(BuiltinRegistries.PLACED_FEATURE,
 			new ResourceLocation(Bumblezone.MODID, "productivebees_be_comb_feature"),
-			PB_CONFIGUREFEATURE.placed(
-				RarityFilter.onAverageOnceEvery(2),
-				InSquarePlacement.spread(),
-				HeightRangePlacement.uniform(
+			new PlacedFeature(BuiltinRegistries.CONFIGURED_FEATURE.getHolderOrThrow(ResourceKey.create(Registry.CONFIGURED_FEATURE_REGISTRY, FEATURE_RL)),
+				List.of(
+					RarityFilter.onAverageOnceEvery(2),
+					InSquarePlacement.spread(),
+					HeightRangePlacement.uniform(
 						VerticalAnchor.aboveBottom(10),
 						VerticalAnchor.belowTop(10)),
-				BiomeFilter.biome()
+					BiomeFilter.biome()
+				)
 			)
 		);
 
@@ -121,7 +123,9 @@ public class ProductiveBeesCompat {
 
 	public static void PBAddWorldgen(final BiomeLoadingEvent event) {
 		if(ModChecker.productiveBeesPresent && event.getName().getNamespace().equals(Bumblezone.MODID)) {
-			event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, PB_PLACEDFEATURE);
+			event.getGeneration().addFeature(
+					GenerationStep.Decoration.UNDERGROUND_ORES,
+					BuiltinRegistries.PLACED_FEATURE.getHolderOrThrow(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, FEATURE_RL)));
 		}
 	}
 
@@ -133,7 +137,7 @@ public class ProductiveBeesCompat {
 		if (block.getBlock() instanceof ExpansionBox && block.getValue(AdvancedBeehive.EXPANDED) != VerticalHive.NONE) {
 			return true; // expansion boxes only count as beenest when they expand a hive.
 		}
-		else if(BlockTags.getAllTags().getTagOrEmpty(new ResourceLocation("productivebees", "solitary_overworld_nests")).contains(block.getBlock())){
+		else if(block.is(SOLITARY_OVERWORLD_NESTS_TAG)){
 			// Solitary nests are technically AdvancedBeehiveAbstract and will pass the next check.
 			// But this is still done in case they do change that in the future to extend something else or something.
 			return true;

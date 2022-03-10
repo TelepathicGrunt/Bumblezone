@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.world.structures;
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.the_bumblezone.world.structures.pieces.BuriedStructurePiece;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
@@ -11,11 +12,10 @@ import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
-import net.minecraft.world.level.levelgen.feature.structures.JigsawPlacement;
-import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.PostPlacementProcessor;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
+import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 
 import java.util.Optional;
 
@@ -70,7 +70,7 @@ public class HoneyCaveRoomStructure extends StructureFeature<JigsawConfiguration
                 context.registryAccess()
         );
 
-        return JigsawPlacement.addPieces(newContext, PoolElementStructurePiece::new, centerPos, false, false);
+        return JigsawPlacement.addPieces(newContext, BuriedStructurePiece::new, centerPos, false, false);
     }
 
     @Override

@@ -16,6 +16,7 @@ public class ModdedBeesBeesSpawning
 	 * works by making 1/15th of bees spawning also spawn modded bees
 	 */
 	public static void MobSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
+
 		if ((ModChecker.productiveBeesPresent || ModChecker.pokecubePresent) &&
 			(event.getSpawnReason() == MobSpawnType.NATURAL ||
 			event.getSpawnReason() == MobSpawnType.SPAWNER ||

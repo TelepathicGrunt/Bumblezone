@@ -52,7 +52,7 @@ public class HoneycombHole extends Feature<NbtFeatureConfig> {
 
         StructurePlaceSettings structurePlacementData = (new StructurePlaceSettings()).setRotation(Rotation.NONE).setRotationPivot(halfLengths).setIgnoreEntities(false);
         Optional<StructureProcessorList> processor = context.level().getLevel().getServer().registryAccess().registryOrThrow(Registry.PROCESSOR_LIST_REGISTRY).getOptional(context.config().processor);
-        processor.orElse(ProcessorLists.EMPTY).list().forEach(structurePlacementData::addProcessor); // add all processors
+        processor.orElse(ProcessorLists.EMPTY.value()).list().forEach(structurePlacementData::addProcessor); // add all processors
         mutable.set(position).move(-halfLengths.getX(), 0, -halfLengths.getZ());
         template.placeInWorld(context.level(), mutable, mutable, structurePlacementData, context.random(), Block.UPDATE_INVISIBLE);
         // Post-processors
@@ -60,7 +60,7 @@ public class HoneycombHole extends Feature<NbtFeatureConfig> {
         // Post processors will place the blocks themselves so we will not do anything with the return of Structure.process
         structurePlacementData.clearProcessors();
         Optional<StructureProcessorList> postProcessor = context.level().getLevel().getServer().registryAccess().registryOrThrow(Registry.PROCESSOR_LIST_REGISTRY).getOptional(context.config().postProcessor);
-        postProcessor.orElse(ProcessorLists.EMPTY).list().forEach(structurePlacementData::addProcessor); // add all post processors
+        postProcessor.orElse(ProcessorLists.EMPTY.value()).list().forEach(structurePlacementData::addProcessor); // add all post processors
         List<StructureTemplate.StructureBlockInfo> list = structurePlacementData.getRandomPalette(((StructureTemplateAccessor)template).thebumblezone_getBlocks(), mutable).blocks();
         StructureTemplate.processBlockInfos(context.level(), mutable, mutable, structurePlacementData, list);
 

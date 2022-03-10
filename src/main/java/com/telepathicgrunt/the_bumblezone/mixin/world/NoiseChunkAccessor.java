@@ -7,9 +7,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(NoiseChunk.class)
 public interface NoiseChunkAccessor {
-    @Invoker("updateNoiseAndGenerateBaseState")
-    BlockState thebumblezone_callUpdateNoiseAndGenerateBaseState(int x, int y, int z);
-
-    @Invoker("createNoiseInterpolator")
-    NoiseChunk.NoiseInterpolator thebumblezone_callCreateNoiseInterpolator(NoiseChunk.NoiseFiller noiseFiller);
+    @Invoker("getInterpolatedState")
+    BlockState callGetInterpolatedState();
 }

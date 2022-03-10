@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
-import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Bee;
@@ -28,7 +28,7 @@ public abstract class BeeEntityMixin extends Entity {
     @Inject(method = "customServerAiStep()V",
             at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/entity/animal/Bee;isInWaterOrBubble()Z", shift = At.Shift.AFTER))
     private void thebumblezone_honeyFluidNotDrown(CallbackInfo ci) {
-        if(this.underWaterTicks >= 10 && this.fluidHeight.get(BzFluidTags.BZ_HONEY_FLUID) > 0) {
+        if(this.underWaterTicks >= 10 && this.fluidHeight.get(BzTags.BZ_HONEY_FLUID) > 0) {
             this.underWaterTicks = 9;
         }
     }

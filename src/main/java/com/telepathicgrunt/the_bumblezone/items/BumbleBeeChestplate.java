@@ -5,8 +5,8 @@ import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacket;
-import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -30,7 +30,7 @@ public class BumbleBeeChestplate extends BeeArmor {
      */
     @Override
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return BzItemTags.BEE_ARMOR_REPAIR_ITEMS.contains(repair.getItem());
+        return repair.is(BzTags.BEE_ARMOR_REPAIR_ITEMS);
     }
 
     @Override

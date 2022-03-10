@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Position;
@@ -38,7 +38,7 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
             bucketitem.checkExtraContent(null, world, stack, position);
             return new ItemStack(Items.BUCKET);
         }
-        else if (blockstate.is(BzBlocks.HONEYCOMB_BROOD.get()) && BzItemTags.BEE_FEEDING_ITEMS.contains(stack.getItem())) {
+        else if (blockstate.is(BzBlocks.HONEYCOMB_BROOD.get()) && stack.is(BzTags.BEE_FEEDING_ITEMS)) {
             // spawn bee if at final stage and front isn't blocked off
             int stage = blockstate.getValue(HoneycombBrood.STAGE);
             if (stage == 3) {

@@ -7,8 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
-import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -150,7 +149,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockState blockstate = this.defaultBlockState();
         FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
-        return blockstate.setValue(WATERLOGGED, fluidstate.getType().is(BzFluidTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidstate.isSource());
+        return blockstate.setValue(WATERLOGGED, fluidstate.getType().is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidstate.isSource());
     }
 
     @Override
@@ -168,7 +167,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                             emptyBroods.add(new Pair<>(itemStack, i));
                         }
 
-                        if(itemStack.is(BzItemTags.BEE_FEEDING_ITEMS)) {
+                        if(itemStack.is(BzTags.BEE_FEEDING_ITEMS)) {
                             beeFeeding.add(new Pair<>(itemStack, i));
                         }
                     }
@@ -303,12 +302,12 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
     @Override
     public boolean canPlaceLiquid(BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
-        return !blockState.getValue(WATERLOGGED) && fluid.is(BzFluidTags.CONVERTIBLE_TO_SUGAR_WATER) && fluid.defaultFluidState().isSource();
+        return !blockState.getValue(WATERLOGGED) && fluid.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluid.defaultFluidState().isSource();
     }
 
     @Override
     public boolean placeLiquid(LevelAccessor world, BlockPos blockPos, BlockState blockState, FluidState fluidState) {
-        if (!blockState.getValue(WATERLOGGED) && fluidState.getType().is(BzFluidTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidState.isSource()) {
+        if (!blockState.getValue(WATERLOGGED) && fluidState.getType().is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidState.isSource()) {
             if (!world.isClientSide()) {
                 world.setBlock(blockPos, blockState.setValue(WATERLOGGED, true), 3);
                 world.scheduleTick(blockPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(world));

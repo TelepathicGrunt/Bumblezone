@@ -21,15 +21,14 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
-import com.telepathicgrunt.the_bumblezone.tags.BzBlockTags;
-import com.telepathicgrunt.the_bumblezone.tags.BzEntityTags;
-import com.telepathicgrunt.the_bumblezone.tags.BzFluidTags;
-import com.telepathicgrunt.the_bumblezone.tags.BzItemTags;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
+import com.telepathicgrunt.the_bumblezone.world.surfacerules.PollinatedSurfaceSource;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -51,15 +50,14 @@ public class Bumblezone{
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     public Bumblezone() {
-        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        BzBlockTags.tagInit(); // Done extra early as some features needs the tag wrapper.
-        BzItemTags.tagInit();
-        BzEntityTags.tagInit();
-        BzFluidTags.tagInit();
+        BzTags.initTags();
         BzBiomeHeightRegistry.initBiomeHeightRegistry();
 
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        modEventBus.addGenericListener(StructureFeature.class, BzStructures::setupStructures);
+
         //Events
+        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         forgeBus.addListener(BeeAggression::pickupItemAnger);
         forgeBus.addListener(EventPriority.LOWEST, BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
         forgeBus.addListener(WanderingTrades::addWanderingTrades);
@@ -72,6 +70,7 @@ public class Bumblezone{
         forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
         forgeBus.addListener(HiddenEffect::hideEntity);
         forgeBus.addListener(NeurotoxinsEnchantment::entityHurtEvent);
+        forgeBus.addListener(this::serverAboutToStart);
 
         //Registration
         modEventBus.addListener(EventPriority.NORMAL, this::setup);
@@ -114,7 +113,6 @@ public class Bumblezone{
             BzProcessors.registerProcessors();
 			BzDimension.setupDimension();
 			BzEntities.registerAdditionalEntityInformation();
-			BzStructures.setupStructures();
             BzSurfaceRules.registerSurfaceRules();
             BeeAggression.setupBeeHatingList();
 		});
@@ -130,5 +128,9 @@ public class Bumblezone{
             // should run after most other mods just in case
             ModChecker.setupModCompat();
         });
+    }
+
+    private void serverAboutToStart(final ServerAboutToStartEvent event) {
+        PollinatedSurfaceSource.RandomLayerStateRule.initNoise(event.getServer().getWorldData().worldGenSettings().seed());
     }
 }
