@@ -41,7 +41,7 @@ public class EntityTeleportationHookup {
         LivingEntity livingEntity = event.getEntityLiving();
 
         //Makes it so player does not get killed for falling into the void
-        if (livingEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+        if (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (livingEntity.getY() < -2) {
                 if(livingEntity instanceof ServerPlayer && livingEntity.fallDistance > 100 && livingEntity.getDeltaMovement().y() < -1) {
                     BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER.trigger((ServerPlayer) livingEntity);
