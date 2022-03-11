@@ -45,7 +45,7 @@ public class GlassBottleBehavior {
                 GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
             }
 
-//            if ((playerEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+//            if ((playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
 //                    Bumblezone.BzBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.get()) &&
 //                    !playerEntity.isCreative() &&
 //                    !playerEntity.isSpectator() &&

@@ -37,7 +37,7 @@ public class EntityTeleportationBackend {
         //converts the position to get the corresponding position in non-bumblezone dimension
         Entity player = entity.getPassengers().stream().filter(e -> e instanceof Player).findFirst().orElse(null);
         if(player != null) entity = player;
-        double coordinateScale = entity.getCommandSenderWorld().dimensionType().coordinateScale() / destination.dimensionType().coordinateScale();
+        double coordinateScale = entity.level.dimensionType().coordinateScale() / destination.dimensionType().coordinateScale();
         BlockPos finalSpawnPos;
         BlockPos validBlockPos;
 
