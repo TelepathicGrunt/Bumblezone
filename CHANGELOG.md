@@ -1,3 +1,9 @@
+### **(V.5.0.3 Changes) (1.18.2 Minecraft)**
+
+##### Dimension:
+Adjusted terrain to be closer to 1.18.1 Bumblezone terrain. Not perfect tho.
+
+
 ### **(V.5.0.2 Changes) (1.18.2 Minecraft)**
 
 ##### Features:
