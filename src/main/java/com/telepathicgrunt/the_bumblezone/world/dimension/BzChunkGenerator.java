@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseChunkAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseGeneratorSettingsInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
+import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
 import net.minecraft.SharedConstants;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -124,10 +125,14 @@ public class BzChunkGenerator extends ChunkGenerator {
                 noiseRouter.spawnTarget());
 
         DensityFunction newFinalDensity = DensityFunctions.add(
-                new BiomeNoise(Holder.direct(new NormalNoise.NoiseParameters(0, 0, 0)), null, this.climateSampler(), this.biomeRegistry, this.getBiomeSource()),
+                new BiomeNoise(this.climateSampler(), this.biomeRegistry, this.getBiomeSource()),
                 noiseRouter.finalDensity()
         );
-
+        newFinalDensity = DensityFunctions.interpolated(newFinalDensity);
+        newFinalDensity = DensityFunctions.add(
+                new RoughSurfaceNoise(),
+                newFinalDensity
+        );
         newFinalDensity = DensityFunctions.interpolated(newFinalDensity);
 
         this.router = new NoiseRouter(
@@ -163,8 +168,31 @@ public class BzChunkGenerator extends ChunkGenerator {
         Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Bumblezone.MODID, "chunk_generator"), BzChunkGenerator.CODEC);
     }
 
-    record BiomeNoise(Holder<NormalNoise.NoiseParameters> noiseData, @Nullable NormalNoise offsetNoise, Climate.Sampler sampler, Registry<Biome> biomeRegistry, BiomeSource biomeSource) implements DensityFunction.SimpleFunction
-    {
+    record RoughSurfaceNoise() implements DensityFunction.SimpleFunction {
+        private static final OpenSimplex2F noiseGen = new OpenSimplex2F(0);
+
+        @Override
+        public double compute(FunctionContext functionContext) {
+            return (noiseGen.noise3_Classic(functionContext.blockX(), functionContext.blockY(), functionContext.blockZ()) / 100d) - 0.01d;
+        }
+
+        @Override
+        public double minValue() {
+            return 0;
+        }
+
+        @Override
+        public double maxValue() {
+            return 2;
+        }
+
+        @Override
+        public Codec<? extends DensityFunction> codec() {
+            return null;
+        }
+    }
+
+    record BiomeNoise(Climate.Sampler sampler, Registry<Biome> biomeRegistry, BiomeSource biomeSource) implements DensityFunction.SimpleFunction {
         @Override
         public double compute(FunctionContext functionContext) {
             return BiomeInfluencedNoiseSampler.calculateBaseNoise(

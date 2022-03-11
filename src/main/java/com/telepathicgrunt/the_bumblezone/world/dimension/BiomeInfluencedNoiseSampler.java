@@ -52,7 +52,7 @@ public final class BiomeInfluencedNoiseSampler {
             }
         }
 
-        float finalInfluence = totalHeight / 126f;
+        float finalInfluence = Math.min(totalHeight / 123f, 0.4585f);
         if (CACHED_INFLUENCE_RESULT.size() > 2000) {
             CACHED_INFLUENCE_RESULT.clear();
         }
