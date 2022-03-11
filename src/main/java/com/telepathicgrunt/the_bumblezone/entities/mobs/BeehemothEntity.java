@@ -208,7 +208,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                 addFriendship((int) (-amount));
 
                 if (!(livingEntity instanceof Player player && player.isCreative()) &&
-                        (livingEntity.getCommandSenderWorld().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                        (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
                         BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                         !livingEntity.isSpectator() &&
                         BzBeeAggressionConfigs.aggressiveBees.get())
