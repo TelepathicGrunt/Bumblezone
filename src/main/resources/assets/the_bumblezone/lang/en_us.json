@@ -274,9 +274,15 @@
 
   "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.beehemothSpeed": "Beehemoth Speed",
   "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.beehemothSpeed.@PrefixText": "Base speed for the Beehemoth when being rode by a player.",
+  "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.specialBeeSpawning": "Special Bee Spawning",
+  "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.specialBeeSpawning.@PrefixText": "Whether Bumblezone will handle spawning vanilla bees near players in the Bumblezone to make it feel full of Bees. Bees too far will be despawned in Bumblezone unless the bee has a hive, is name tagged, or is set to persistent. Note: Modded bees will not be spawned through this system. Those will be spawned by normal biome spawning.",
+  "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.nearbyBeesPerPlayerInBz": "Nearby Bees in Bumblezoen Dim",
+  "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.nearbyBeesPerPlayerInBz.@PrefixText": "If specialBeeSpawning is set to true, this config controls how many vanilla bees should be near each player in Bumblezone dimension. Higher numbers like 100 is insane lol. 25 is nice.",
 
   "text.autoconfig.the_bumblezone-main.option.BZClientConfig.lgbtBeeRate": "LGBT+ Bee Skin Rate",
   "text.autoconfig.the_bumblezone-main.option.BZClientConfig.lgbtBeeRate.@PrefixText": "Rate for how often a bee will have an LGBT+ coat!",
+  "text.autoconfig.the_bumblezone-main.option.BZClientConfig.enableLgbtBeeRenderer": "Enable LGBT+ Bee Skins",
+  "text.autoconfig.the_bumblezone-main.option.BZClientConfig.enableLgbtBeeRenderer.@PrefixText": "Enable replacing the bee renderer for LGBT+ skins. Set this to false if the render is messing with other mod's bee renderers.",
 
   "text.autoconfig.the_bumblezone-main.option.BZClientConfig.playWrathOfHiveEffectMusic": "Play Wrath Of Hive Effect Music",
   "text.autoconfig.the_bumblezone-main.option.BZClientConfig.playWrathOfHiveEffectMusic.@PrefixText": "If on, Flight of the Bumblebee by Rimsky Korsakov will play when you have Wrath of the Hive effect on.",
