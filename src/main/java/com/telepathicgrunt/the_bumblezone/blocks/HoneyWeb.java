@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.items.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.Util;
@@ -231,7 +232,7 @@ public class HoneyWeb extends Block {
                     playerEntity.getX(),
                     playerEntity.getY(),
                     playerEntity.getZ(),
-                    SoundEvents.BOAT_PADDLE_WATER,
+                    BzSounds.WASHING_RESIDUES,
                     SoundSource.NEUTRAL,
                     1.0F,
                     1.0F);

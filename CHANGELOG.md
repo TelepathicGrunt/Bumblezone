@@ -1,3 +1,13 @@
+### **(V.5.0.4 Changes) (1.18.2 Minecraft)**
+
+##### Subtitles:
+Added correct subtitles for Honey Slime, drinking Sugar Water Bottle, throwing pollen Puff, and washing away Honey Residue/Webs.
+
+##### Mod Compat:
+Added compat with Beekeeper Villager from Friends and Foes mod.
+ Bumblezone items will appear in Beekeeper's trades. This can be turned off in Bumblezone's mod compat config.
+
+
 ### **(V.5.0.3 Changes) (1.18.2 Minecraft)**
 
 ##### Dimension:

@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -59,11 +60,11 @@ public class SugarWaterBottle extends Item {
     }
 
     public SoundEvent getDrinkingSound() {
-        return SoundEvents.HONEY_DRINK;
+        return BzSounds.SUGAR_WATER_DRINK;
     }
 
     public SoundEvent getEatingSound() {
-        return SoundEvents.HONEY_DRINK;
+        return BzSounds.SUGAR_WATER_DRINK;
     }
 
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {

@@ -13,8 +13,8 @@ public class WanderingTrades {
         // Rare trades
         addRareTrade(2, new GeneralUtils.BasicItemTrade(
                 Items.EMERALD,
-                20,
                 BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV,
+                20,
                 1,
                 1,
                 10,
@@ -23,8 +23,8 @@ public class WanderingTrades {
 
         addRareTrade(2, new GeneralUtils.BasicItemTrade(
                 Items.EMERALD,
-                20,
                 BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY,
+                20,
                 1,
                 1,
                 10,

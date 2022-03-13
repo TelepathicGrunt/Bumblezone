@@ -233,5 +233,150 @@
       "item/trident/throw2"
     ],
     "subtitle": "subtitles.item.the_bumblezone.stinger_spear.throw"
+  },
+  "block.the_bumblezone.washing_honey_residues": {
+    "sounds": [
+      {
+        "name": "entity/boat/paddle_water1",
+        "volume": 0.8
+      },
+      {
+        "name": "entity/boat/paddle_water2",
+        "volume": 0.8
+      },
+      {
+        "name": "entity/boat/paddle_water3",
+        "volume": 0.8
+      },
+      {
+        "name": "entity/boat/paddle_water4",
+        "volume": 0.8
+      },
+      {
+        "name": "entity/boat/paddle_water5",
+        "volume": 0.8
+      },
+      {
+        "name": "entity/boat/paddle_water6",
+        "volume": 0.8
+      },
+      {
+        "name": "entity/boat/paddle_water7",
+        "volume": 0.8
+      },
+      {
+        "name": "entity/boat/paddle_water8",
+        "volume": 0.8
+      }
+    ],
+    "subtitle": "subtitles.block.the_bumblezone.washing_honey_residues"
+  },
+  "entity.the_bumblezone.honey_slime.attack": {
+    "sounds": [
+      "mob/slime/attack1",
+      "mob/slime/attack2"
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.honey_slime.attack"
+  },
+  "entity.the_bumblezone.honey_slime.death": {
+    "sounds": [
+      "mob/slime/big1",
+      "mob/slime/big2",
+      "mob/slime/big3",
+      "mob/slime/big4"
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.honey_slime.death"
+  },
+  "entity.the_bumblezone.honey_slime.death_small": {
+    "sounds": [
+      "mob/slime/small1",
+      "mob/slime/small2",
+      "mob/slime/small3",
+      "mob/slime/small4",
+      "mob/slime/small5"
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.honey_slime.death"
+  },
+  "entity.the_bumblezone.honey_slime.hurt": {
+    "sounds": [
+      "mob/slime/big1",
+      "mob/slime/big2",
+      "mob/slime/big3",
+      "mob/slime/big4"
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.honey_slime.hurt"
+  },
+  "entity.the_bumblezone.honey_slime.hurt_small": {
+    "sounds": [
+      "mob/slime/small1",
+      "mob/slime/small2",
+      "mob/slime/small3",
+      "mob/slime/small4",
+      "mob/slime/small5"
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.honey_slime.hurt"
+  },
+  "entity.the_bumblezone.honey_slime.jump": {
+    "sounds": [
+      "mob/slime/big1",
+      "mob/slime/big2",
+      "mob/slime/big3",
+      "mob/slime/big4"
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.honey_slime.jump"
+  },
+  "entity.the_bumblezone.honey_slime.jump_small": {
+    "sounds": [
+      "mob/slime/small1",
+      "mob/slime/small2",
+      "mob/slime/small3",
+      "mob/slime/small4",
+      "mob/slime/small5"
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.honey_slime.jump"
+  },
+  "entity.the_bumblezone.honey_slime.squish": {
+    "sounds": [
+      "mob/slime/big1",
+      "mob/slime/big2",
+      "mob/slime/big3",
+      "mob/slime/big4"
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.honey_slime.squish"
+  },
+  "entity.the_bumblezone.honey_slime.squish_small": {
+    "sounds": [
+      "mob/slime/small1",
+      "mob/slime/small2",
+      "mob/slime/small3",
+      "mob/slime/small4",
+      "mob/slime/small5"
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.honey_slime.squish"
+  },
+  "entity.the_bumblezone.pollen_puff.throw": {
+    "sounds": [
+      "random/bow"
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.pollen_puff.throw"
+  },
+  "item.the_bumblezone.sugar_water_bottle.drink": {
+    "sounds": [
+      {
+        "name": "item/bottle/drink_honey1"
+      },
+      {
+        "name": "item/bottle/drink_honey2"
+      },
+      {
+        "name": "item/bottle/drink_honey3",
+        "volume": 0.35
+      },
+      {
+        "name": "item/bottle/drink_honey3",
+        "volume": 0.75
+      }
+    ],
+    "subtitle": "subtitles.item.the_bumblezone.sugar_water_bottle.drink"
   }
 }

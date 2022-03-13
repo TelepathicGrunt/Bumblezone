@@ -77,11 +77,21 @@
   "subtitles.entity.the_bumblezone.beehemoth.hurt": "Beehemoth hurt",
   "subtitles.entity.the_bumblezone.beehemoth.dies": "Beehemoth died",
   "subtitles.entity.the_bumblezone.beehemoth.loop": "Beehemoth buzzing",
+  "subtitles.entity.the_bumblezone.honey_slime.attack": "Honey Slime attacks",
+  "subtitles.entity.the_bumblezone.honey_slime.hurt": "Honey Slime hurts",
+  "subtitles.entity.the_bumblezone.honey_slime.death": "Honey Slime dies",
+  "subtitles.entity.the_bumblezone.honey_slime.squish": "Honey Slime squishes",
+  "subtitles.entity.the_bumblezone.honey_slime.jump": "Honey Slime jumps",
+  "subtitles.entity.the_bumblezone.honey_slime.hurt_small": "Honey Slime attacks",
+  "subtitles.entity.the_bumblezone.honey_slime.death_small": "Honey Slime attacks",
+  "subtitles.entity.the_bumblezone.honey_slime.squish_small": "Honey Slime attacks",
+  "subtitles.entity.the_bumblezone.honey_slime.jump_small": "Honey Slime attacks",
   "subtitles.item.the_bumblezone.bumble_bee_chestplate.fly": "Player buzzing",
   "subtitles.item.the_bumblezone.stinger_spear.hit": "Stinger Spear stabs",
   "subtitles.item.the_bumblezone.stinger_spear.hit_ground": "Stinger Spear vibrates",
   "subtitles.item.the_bumblezone.stinger_spear.return": "Stinger Spear returns",
   "subtitles.item.the_bumblezone.stinger_spear.throw": "Stinger Spear zooms",
+  "subtitles.block.the_bumblezone.washing_honey_residues": "Honey Residue washes",
 
   "key.categories.the_bumblezone": "The Bumblezone",
   "key.the_bumblezone.beehemoth_down": "Beehemoth Fly Down",
@@ -238,8 +248,8 @@
 
   "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowPotionOfBeesCompat": "Potion of Bees Compat",
   "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat": "Splash Potion of Bees Compat",
-  "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowCharmBeekeeperTradesCompat.@PrefixText": "\nAdds Bumblezone items to Charm's Beekeeper trades!",
-  "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowCharmBeekeeperTradesCompat": "Charm Beekeeper Compat",
+  "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowFriendsAndFoesBeekeeperTradesCompat.@PrefixText": "\nAdds Bumblezone items to Friends and Foes's Beekeeper trades!",
+  "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowFriendsAndFoesBeekeeperTradesCompat": "Friends and Foes Beekeeper Compat",
 
 
   "text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.dispensersDropGlassBottles.@PrefixText": "Should Dispensers always drop the Glass Bottle when using specific bottle items on certain The Bumblezone blocks? \nExample: Using Honey Bottle to feed Honeycomb Brood Blocks will grow the larva and drop the Glass Bottle instead of putting it back into Dispenser if this is set to true.",
@@ -274,9 +284,15 @@
 
   "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.beehemothSpeed": "Beehemoth Speed",
   "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.beehemothSpeed.@PrefixText": "Base speed for the Beehemoth when being rode by a player.",
+  "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.specialBeeSpawning": "Special Bee Spawning",
+  "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.specialBeeSpawning.@PrefixText": "Whether Bumblezone will handle spawning vanilla bees near players in the Bumblezone to make it feel full of Bees. Bees too far will be despawned in Bumblezone unless the bee has a hive, is name tagged, or is set to persistent. Note: Modded bees will not be spawned through this system. Those will be spawned by normal biome spawning.",
+  "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.nearbyBeesPerPlayerInBz": "Nearby Bees in Bumblezoen Dim",
+  "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.nearbyBeesPerPlayerInBz.@PrefixText": "If specialBeeSpawning is set to true, this config controls how many vanilla bees should be near each player in Bumblezone dimension. Higher numbers like 100 is insane lol. 25 is nice.",
 
   "text.autoconfig.the_bumblezone-main.option.BZClientConfig.lgbtBeeRate": "LGBT+ Bee Skin Rate",
   "text.autoconfig.the_bumblezone-main.option.BZClientConfig.lgbtBeeRate.@PrefixText": "Rate for how often a bee will have an LGBT+ coat!",
+  "text.autoconfig.the_bumblezone-main.option.BZClientConfig.enableLgbtBeeRenderer": "Enable LGBT+ Bee Skins",
+  "text.autoconfig.the_bumblezone-main.option.BZClientConfig.enableLgbtBeeRenderer.@PrefixText": "Enable replacing the bee renderer for LGBT+ skins. Set this to false if the render is messing with other mod's bee renderers.",
 
   "text.autoconfig.the_bumblezone-main.option.BZClientConfig.playWrathOfHiveEffectMusic": "Play Wrath Of Hive Effect Music",
   "text.autoconfig.the_bumblezone-main.option.BZClientConfig.playWrathOfHiveEffectMusic.@PrefixText": "If on, Flight of the Bumblebee by Rimsky Korsakov will play when you have Wrath of the Hive effect on.",
