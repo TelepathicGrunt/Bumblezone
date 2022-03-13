@@ -248,8 +248,8 @@
 
   "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowPotionOfBeesCompat": "Potion of Bees Compat",
   "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat": "Splash Potion of Bees Compat",
-  "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowCharmBeekeeperTradesCompat.@PrefixText": "\nAdds Bumblezone items to Charm's Beekeeper trades!",
-  "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowCharmBeekeeperTradesCompat": "Charm Beekeeper Compat",
+  "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowFriendsAndFoesBeekeeperTradesCompat.@PrefixText": "\nAdds Bumblezone items to Friends and Foes's Beekeeper trades!",
+  "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowFriendsAndFoesBeekeeperTradesCompat": "Friends and Foes Beekeeper Compat",
 
 
   "text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.dispensersDropGlassBottles.@PrefixText": "Should Dispensers always drop the Glass Bottle when using specific bottle items on certain The Bumblezone blocks? \nExample: Using Honey Bottle to feed Honeycomb Brood Blocks will grow the larva and drop the Glass Bottle instead of putting it back into Dispenser if this is set to true.",

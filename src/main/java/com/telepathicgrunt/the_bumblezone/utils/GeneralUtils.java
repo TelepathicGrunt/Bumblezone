@@ -129,11 +129,11 @@ public class GeneralUtils {
         protected final int experience;
         protected final float multiplier;
 
-        public BasicItemTrade(Item itemToTrade, int amountToGive, Item itemToReceive, int amountToReceive) {
-            this(itemToTrade, amountToGive, itemToReceive, amountToReceive, 20, 2, 0.05F);
+        public BasicItemTrade(Item itemToTrade, Item itemToReceive, int amountToGive,  int amountToReceive) {
+            this(itemToReceive, itemToTrade, amountToGive, amountToReceive, 20, 2, 0.05F);
         }
 
-        public BasicItemTrade(Item itemToTrade, int amountToGive, Item itemToReceive, int amountToReceive, int maxUses, int experience, float multiplier) {
+        public BasicItemTrade(Item itemToTrade, Item itemToReceive, int amountToGive, int amountToReceive, int maxUses, int experience, float multiplier) {
             this.itemToTrade = itemToTrade;
             this.itemToReceive = itemToReceive;
             this.amountToGive = amountToGive;

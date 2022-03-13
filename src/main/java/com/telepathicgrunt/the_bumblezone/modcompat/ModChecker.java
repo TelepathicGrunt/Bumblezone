@@ -8,7 +8,8 @@ import org.apache.logging.log4j.Level;
 public class ModChecker {
 
     public static boolean potionOfBeesPresent = false;
-    public static boolean charmPresent = false;
+    public static boolean strangePresent = false;
+    public static boolean friendsAndFoesPresent = false;
 
     /*
      * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -23,14 +24,14 @@ public class ModChecker {
     public static void setupModCompat() {
         String currentModID = "";
 
-//        try {
-//            currentModID = "roughlyenoughitems";
-//            loadupModCompat(currentModID, () -> REICompat.registerItemDescriptions());
-//        }
-//        catch (Exception e) {
-//            printErrorToLogs("classloading " + currentModID + " and so, mod compat done afterwards broke");
-//            e.printStackTrace();
-//        }
+        try {
+            currentModID = "friendsandfoes";
+            loadupModCompat(currentModID, () -> FriendsAndFoesCompat.setupCompat());
+        }
+        catch (Exception e) {
+            printErrorToLogs("classloading " + currentModID + " and so, mod compat done afterwards broke");
+            e.printStackTrace();
+        }
     }
 
     private static void loadupModCompat(String modid, Runnable runnable) {
