@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.mixin.items.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import it.unimi.dsi.fastutil.objects.Object2ShortMap;
 import it.unimi.dsi.fastutil.objects.Object2ShortOpenHashMap;
 import it.unimi.dsi.fastutil.shorts.Short2ObjectArrayMap;
@@ -345,7 +346,7 @@ public class StickyHoneyResidue extends Block {
                     playerEntity.getX(),
                     playerEntity.getY(),
                     playerEntity.getZ(),
-                    SoundEvents.BOAT_PADDLE_WATER,
+                    BzSounds.WASHING_RESIDUES,
                     SoundSource.NEUTRAL,
                     1.0F,
                     1.0F);
