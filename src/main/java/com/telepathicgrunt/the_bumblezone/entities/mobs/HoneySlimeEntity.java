@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeTemptGoal;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -185,7 +186,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
    @Override
    public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource damageSource) {
       if (distance > 1.0F) {
-         this.playSound(SoundEvents.SLIME_BLOCK_STEP, 0.4F, 1.0F);
+         this.playSound(this.isBaby() ? BzSounds.HONEY_SLIME_SQUISH_SMALL.get() : BzSounds.HONEY_SLIME_SQUISH.get(), 0.4F, 1.0F);
       }
 
       int fallDamage = this.calculateFallDamage(distance, damageMultiplier);
@@ -322,7 +323,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
       if (this.isAlive()) {
          int i = 2;
          if (this.distanceToSqr(entityIn) < 0.6D * (double) i * 0.6D * (double) i && this.hasLineOfSight(entityIn) && entityIn.hurt(DamageSource.mobAttack(this), this.getAttackStrength())) {
-            this.playSound(SoundEvents.SLIME_ATTACK, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+            this.playSound(BzSounds.HONEY_SLIME_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             this.dealDamage(entityIn);
          }
       }
@@ -376,18 +377,6 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
       return (float) Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).getValue();
    }
 
-   protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-      return this.isBaby() ? SoundEvents.SLIME_HURT_SMALL : SoundEvents.SLIME_HURT;
-   }
-
-   protected SoundEvent getDeathSound() {
-      return this.isBaby() ? SoundEvents.SLIME_DEATH_SMALL : SoundEvents.SLIME_DEATH;
-   }
-
-   protected SoundEvent getSquishSound() {
-      return this.isBaby() ? SoundEvents.SLIME_SQUISH_SMALL : SoundEvents.SLIME_SQUISH;
-   }
-
    @Override
    protected ResourceLocation getDefaultLootTable() {
       return this.isBaby() ? BuiltInLootTables.EMPTY : this.getType().getDefaultLootTable();
@@ -417,11 +406,6 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
       }
       this.hasImpulse = true;
    }
-
-   public SoundEvent getJumpSound() {
-      return this.isBaby() ? SoundEvents.SLIME_JUMP_SMALL : SoundEvents.SLIME_JUMP;
-   }
-
    protected boolean spawnCustomParticles() {
       return false;
    }
@@ -449,5 +433,21 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
    @Override
    public void startPersistentAngerTimer() {
       this.setRemainingPersistentAngerTime(MAX_ANGER_DURATION.sample(this.random));
+   }
+
+   protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+      return this.isBaby() ? BzSounds.HONEY_SLIME_HURT_SMALL.get() : BzSounds.HONEY_SLIME_HURT.get();
+   }
+
+   protected SoundEvent getDeathSound() {
+      return this.isBaby() ? BzSounds.HONEY_SLIME_DEATH_SMALL.get() : BzSounds.HONEY_SLIME_DEATH.get();
+   }
+
+   protected SoundEvent getSquishSound() {
+      return this.isBaby() ? BzSounds.HONEY_SLIME_SQUISH_SMALL.get() : BzSounds.HONEY_SLIME_SQUISH.get();
+   }
+
+   public SoundEvent getJumpSound() {
+      return this.isBaby() ?  BzSounds.HONEY_SLIME_JUMP_SMALL.get() : BzSounds.HONEY_SLIME_JUMP.get();
    }
 }
