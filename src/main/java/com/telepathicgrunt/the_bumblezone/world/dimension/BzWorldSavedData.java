@@ -131,7 +131,7 @@ public class BzWorldSavedData extends SavedData {
 	public static void exitingBumblezone(Entity entity, ServerLevel destination, Set<Entity> teleportedEntities) {
 		boolean upwardChecking = entity.getY() > 0;
 		Vec3 destinationPosition;
-		destinationPosition = EntityTeleportationBackend.destPostFromOutOfBoundsTeleport(entity, destination, upwardChecking, false);
+		destinationPosition = EntityTeleportationBackend.destPostFromOutOfBoundsTeleport(entity, destination, upwardChecking);
 		if(destinationPosition == null) {
 			((ServerPlayer)entity).displayClientMessage(new TextComponent("Error teleporting out of Bumblezone. destinationPosition is null. Report to Bumblezone dev pls."), true);
 		}

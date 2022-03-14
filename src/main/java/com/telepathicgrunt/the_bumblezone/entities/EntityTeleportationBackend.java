@@ -18,6 +18,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -39,9 +40,9 @@ import java.util.stream.Stream;
 
 public class EntityTeleportationBackend {
 
-    private static final int SEARCH_RADIUS = 44;
+    private static final int SEARCH_RADIUS = 48;
 
-    public static Vec3 destPostFromOutOfBoundsTeleport(Entity entity, ServerLevel destination, boolean checkingUpward, boolean mustBeNearBeeBlock) {
+    public static Vec3 destPostFromOutOfBoundsTeleport(Entity entity, ServerLevel destination, boolean checkingUpward) {
         //converts the position to get the corresponding position in non-bumblezone dimension
         Entity player = entity.getPassengers().stream().filter(e -> e instanceof Player).findFirst().orElse(null);
         if(player != null) entity = player;
@@ -49,14 +50,14 @@ public class EntityTeleportationBackend {
         BlockPos finalSpawnPos;
         BlockPos validBlockPos;
 
-        if(BzDimensionConfigs.teleportationMode.get() == 1 || mustBeNearBeeBlock) {
+        if(BzDimensionConfigs.teleportationMode.get() == 1) {
             finalSpawnPos = new BlockPos(
                     Doubles.constrainToRange(entity.position().x() * coordinateScale, -29999936D, 29999936D),
                     entity.position().y(),
                     Doubles.constrainToRange(entity.position().z() * coordinateScale, -29999936D, 29999936D));
 
             //Gets valid space in other world
-            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, SEARCH_RADIUS, checkingUpward, mustBeNearBeeBlock);
+            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, SEARCH_RADIUS, checkingUpward);
         }
 
         else if(BzDimensionConfigs.teleportationMode.get() == 2) {
@@ -78,7 +79,7 @@ public class EntityTeleportationBackend {
                     Doubles.constrainToRange(entity.position().z() * coordinateScale, -29999936D, 29999936D));
 
             //Gets valid space in other world
-            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, SEARCH_RADIUS, checkingUpward, false);
+            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, SEARCH_RADIUS, checkingUpward);
 
             EntityPositionAndDimension capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
             Vec3 playerPos = capability.getNonBZPos();
@@ -90,9 +91,6 @@ public class EntityTeleportationBackend {
         // If all else fails, fallback to player pos
         finalSpawnPos = validBlockPos;
         if(finalSpawnPos == null) {
-            if(mustBeNearBeeBlock) {
-                return null;
-            }
             finalSpawnPos = new BlockPos(entity.position());
         }
 
@@ -218,7 +216,7 @@ public class EntityTeleportationBackend {
     //Util
 
 
-    private static BlockPos validPlayerSpawnLocationByBeehive(net.minecraft.world.level.Level world, BlockPos position, int maximumRange, boolean checkingUpward, boolean mustBeNearBeeBlock) {
+    private static BlockPos validPlayerSpawnLocationByBeehive(Level world, BlockPos position, int maximumRange, boolean checkingUpward) {
 
         // Gets the height of highest block over the area so we aren't checking an
         // excessive amount of area above that doesn't need checking.
@@ -256,7 +254,7 @@ public class EntityTeleportationBackend {
 
             // Return all block entities that are within the radius we want
             mutableTemp1.set(be.getBlockPos()).move(-position.getX(), 0, -position.getZ());
-            return mutableTemp1.getX() * mutableTemp1.getX() + mutableTemp1.getZ() + mutableTemp1.getZ() < maximumRange;
+            return Math.abs(mutableTemp1.getX()) <= maximumRange && Math.abs(mutableTemp1.getZ()) <= maximumRange;
         });
 
         // Sort the block entities in the order we want to check if we should spawn next to them
@@ -285,7 +283,7 @@ public class EntityTeleportationBackend {
         }
 
         //this mode will not generate a beenest automatically.
-        if(BzDimensionConfigs.teleportationMode.get() == 3 || mustBeNearBeeBlock) return null;
+        if(BzDimensionConfigs.teleportationMode.get() == 3) return null;
 
         //no valid spot was found, generate a hive and spawn us on the highest land
         //This if statement is so we dont get placed on roof of other roofed dimension
@@ -310,7 +308,7 @@ public class EntityTeleportationBackend {
         return mutableBlockPos;
     }
 
-    private static void createSpaceForPlayer(net.minecraft.world.level.Level world, BlockPos.MutableBlockPos mutableBlockPos) {
+    private static void createSpaceForPlayer(Level world, BlockPos.MutableBlockPos mutableBlockPos) {
         if(BzDimensionConfigs.generateBeenest.get())
             world.setBlockAndUpdate(mutableBlockPos, Blocks.BEE_NEST.defaultBlockState());
         else if(world.getBlockState(mutableBlockPos).getMaterial() == Material.AIR ||
@@ -321,7 +319,7 @@ public class EntityTeleportationBackend {
         world.setBlockAndUpdate(mutableBlockPos.above(), Blocks.AIR.defaultBlockState());
     }
 
-    private static BlockPos validPlayerSpawnLocation(net.minecraft.world.level.Level world, BlockPos position, int maximumRange) {
+    private static BlockPos validPlayerSpawnLocation(Level world, BlockPos position, int maximumRange) {
         //Try to find 2 non-solid spaces around it that the player can spawn at
         int radius;
         int outerRadius;
@@ -350,8 +348,9 @@ public class EntityTeleportationBackend {
                         if (distanceSq >= radius && distanceSq < outerRadius) {
                             currentPos.set(position.offset(x2, y2, z2));
                             if (world.getBlockState(currentPos.below()).canOcclude() &&
-                                    world.getBlockState(currentPos).getMaterial() == Material.AIR &&
-                                    world.getBlockState(currentPos.above()).getMaterial() == Material.AIR) {
+                                world.getBlockState(currentPos).isAir() &&
+                                world.getBlockState(currentPos.above()).isAir())
+                            {
                                 //valid space for player is found
                                 return currentPos;
                             }

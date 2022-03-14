@@ -1,3 +1,9 @@
+### **(V.5.0.4 Changes) (1.18.2 Minecraft)**
+
+##### Teleportation:
+Fixed teleportation mode 1 and 3 to spawn to closest beenest properly if there's multiple nearby when exiting Bumblezone
+
+
 ### **(V.5.0.3 Changes) (1.18.2 Minecraft)**
 
 ##### Subtitles:
