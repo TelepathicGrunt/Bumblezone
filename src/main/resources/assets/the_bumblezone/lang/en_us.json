@@ -73,6 +73,11 @@
   "effect.the_bumblezone.beenergized": "Beenergized",
   "effect.the_bumblezone.hidden": "Hidden",
   "effect.the_bumblezone.paralyzed": "Paralyzed",
+  "effect.the_bumblezone.wrath_of_the_hive.description": "Will make all nearby bees in The Bumblezone dimension angry at you and gives the bees many effects that makes them stronger and nastier! Nearby Honeycomb Brood Blocks will begin to have accelerated growth and spawn bees quicker as well. \n\nThis effect is obtained when hurting a bee, taking honey from Filled Porous Honeycomb Blocks, killing a Honeycomb Brood Block, or mining a Honey Block. Entering Cell Maze without Protection of the Hive effect will give you Wrath of the Hive effect.",
+  "effect.the_bumblezone.protection_of_the_hive.description": "Calms all nearby bees that were angry at whoever has this effect. If an entity with this effect is hit, nearby bees will become angry at the attacker! Protects against getting Wrath of the Hive effect from any source. Hitting a bee or mining a Honeycomb Brood Block will remove Protection of the Hive effect. \n\nThis effect is obtained when feeding bees or Honeycomb Brood Blocks. ",
+  "effect.the_bumblezone.beenergized.description": "Increase flying speed of most flying mobs. Players with Bumblebee Chestplate can fly farther and longer. \n\nthis effect is obtained when consuming Bee Bread.",
+  "effect.the_bumblezone.hidden.description": "Reduces range of initial detection by hostile mobs. Also good for making swarms of angry bees lose track of you. \n\nThis effect is obtained when hiding in Pile of Pollen blocks.",
+  "effect.the_bumblezone.paralyzed.description": "Sets the mob to be immobile which will usually disable the mob's AI and movements. Some mobs may still be able to resist the effect and do actions such as Witches drinking potions. \n\nThis effect is obtained when hit by a weapon that has Neurotoxins Enchantment.",
 
   "subtitles.entity.the_bumblezone.beehemoth.hurt": "Beehemoth hurt",
   "subtitles.entity.the_bumblezone.beehemoth.dies": "Beehemoth died",
