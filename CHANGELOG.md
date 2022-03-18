@@ -1,3 +1,14 @@
+### **(V.5.0.5 Changes) (1.18.2 Minecraft)**
+
+##### Teleportation:
+Fixed teleportation mode 2 and 3 so that they actually spawn you at the original position you were at in the non-Bumblezone dimension when you entered Bumblezone.
+
+Fixed teleportation mode 2 and 3 not replacing blocks with air if it was going to spawn you inside a block when exiting Bumblezone.
+
+##### Mod Compat:
+Made Productive Bees's Sugarbag Honeycomb item be able to be fed to bees to heal and get Protection of the Hive.
+
+
 ### **(V.5.0.4 Changes) (1.18.2 Minecraft)**
 
 ##### Teleportation:

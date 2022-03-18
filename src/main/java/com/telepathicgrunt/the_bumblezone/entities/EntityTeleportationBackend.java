@@ -30,6 +30,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashSet;
@@ -49,6 +50,7 @@ public class EntityTeleportationBackend {
         double coordinateScale = entity.level.dimensionType().coordinateScale() / destination.dimensionType().coordinateScale();
         BlockPos finalSpawnPos;
         BlockPos validBlockPos;
+        boolean spawnAtFixedPosition = false;
 
         if(BzDimensionConfigs.teleportationMode.get() == 1) {
             finalSpawnPos = new BlockPos(
@@ -63,6 +65,7 @@ public class EntityTeleportationBackend {
         else if(BzDimensionConfigs.teleportationMode.get() == 2) {
             EntityPositionAndDimension capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
             Vec3 playerPos = capability.getNonBZPos();
+            spawnAtFixedPosition = true;
             if(playerPos != null) {
                 validBlockPos = new BlockPos(playerPos);
             }
@@ -82,9 +85,10 @@ public class EntityTeleportationBackend {
             validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, SEARCH_RADIUS, checkingUpward);
 
             EntityPositionAndDimension capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
-            Vec3 playerPos = capability.getNonBZPos();
-            if(validBlockPos == null && playerPos != null) {
-                validBlockPos = new BlockPos(playerPos);
+            Vec3 pastPos = capability.getNonBZPos();
+            if(validBlockPos == null && pastPos != null) {
+                validBlockPos = new BlockPos(pastPos);
+                spawnAtFixedPosition = true;
             }
         }
 
@@ -92,13 +96,11 @@ public class EntityTeleportationBackend {
         finalSpawnPos = validBlockPos;
         if(finalSpawnPos == null) {
             finalSpawnPos = new BlockPos(entity.position());
+            spawnAtFixedPosition = true;
         }
 
         // Make sure spacing is safe if in mode 2 or mode 3 when doing forced teleportation when valid land isn't found.
-        if (BzDimensionConfigs.teleportationMode.get() == 2 ||
-            (BzDimensionConfigs.teleportationMode.get() == 3 && validBlockPos == null))
-        {
-
+        if (spawnAtFixedPosition) {
             if (destination.getBlockState(finalSpawnPos.above()).isSuffocating(destination, finalSpawnPos.above())) {
                 destination.setBlock(finalSpawnPos, Blocks.AIR.defaultBlockState(), 3);
                 destination.setBlock(finalSpawnPos.above(), Blocks.AIR.defaultBlockState(), 3);
@@ -382,16 +384,16 @@ public class EntityTeleportationBackend {
         return false;
     }
 
-    // Player exiting Bumblezone dimension
-    public static void playerLeavingBz(EntityTravelToDimensionEvent event) {
-        //Updates the non-BZ dimension that the player is leaving
+    public static void entityChangingDimension(EntityTravelToDimensionEvent event) {
         Entity entity = event.getEntity();
 
-        if (entity instanceof LivingEntity livingEntity && !livingEntity.level.isClientSide() && !event.getDimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+        // store entity's last position when entering bumblezone.
+        if (entity instanceof LivingEntity livingEntity && !livingEntity.level.isClientSide() && event.getDimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             LazyOptional<EntityPositionAndDimension> lazyOptional = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
             if(lazyOptional.isPresent()) {
                 EntityPositionAndDimension capability = lazyOptional.orElseThrow(RuntimeException::new);
                 capability.setNonBZDim(event.getDimension().location());
+                capability.setNonBZPos(entity.position());
             }
             else {
                 Bumblezone.LOGGER.error("Bumblezone entity pos/dim cap was not found for given entity: {}, {}, {}, {}, at {} which has the internal dimension of: {} and is coming from: {}",

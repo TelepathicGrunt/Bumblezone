@@ -22,6 +22,10 @@
       "required": false
     },
     {
+      "id": "productivebees:sugarbag_honeycomb",
+      "required": false
+    },
+    {
       "id": "buzzier_bees:honey_apple",
       "required": false
     },
