@@ -1,3 +1,9 @@
+### **(V.5.0.5 Changes) (1.18.2 Minecraft)**
+
+##### Mod Compat:
+Made Productive Bees's Sugarbag Honeycomb item be able to be fed to bees to heal and get Protection of the Hive.
+
+
 ### **(V.5.0.4 Changes) (1.18.2 Minecraft)**
 
 ##### Teleportation:
