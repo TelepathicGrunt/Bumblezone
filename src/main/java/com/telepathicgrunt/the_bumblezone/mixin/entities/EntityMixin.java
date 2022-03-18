@@ -78,9 +78,8 @@ public abstract class EntityMixin {
     @Inject(method = "changeDimension(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/entity/Entity;",
             at = @At(value = "HEAD"))
     private void thebumblezone_onDimensionChange(ServerLevel destination, CallbackInfoReturnable<Entity> cir) {
-        EntityTeleportationBackend.playerLeavingBz(level.dimension().location(), ((Entity)(Object)this));
+        EntityTeleportationBackend.entityChangingDimension(destination.dimension().location(), ((Entity)(Object)this));
     }
-
 
     // let honey fluid push entity
     @Inject(method = "updateInWaterStateAndDoWaterCurrentPushing()V",
