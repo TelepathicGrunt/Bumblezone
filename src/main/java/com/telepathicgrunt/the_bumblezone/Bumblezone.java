@@ -66,7 +66,7 @@ public class Bumblezone{
         forgeBus.addListener(EntityTeleportationHookup::entityTick);
         forgeBus.addListener(BeeAggression::playerTick);
         forgeBus.addListener(BzWorldSavedData::worldTick);
-        forgeBus.addListener(EntityTeleportationBackend::playerLeavingBz);
+        forgeBus.addListener(EntityTeleportationBackend::entityChangingDimension);
         forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
         forgeBus.addListener(HiddenEffect::hideEntity);
         forgeBus.addListener(NeurotoxinsEnchantment::entityHurtEvent);
