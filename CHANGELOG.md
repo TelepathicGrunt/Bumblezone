@@ -1,3 +1,11 @@
+### **(V.5.0.6 Changes) (1.18.2 Minecraft)**
+
+##### Teleportation:
+Fixed teleportation mode 2 and 3 so that they actually spawn you at the original position you were at in the non-Bumblezone dimension when you entered Bumblezone.
+
+Fixed teleportation mode 2 and 3 not replacing blocks with air if it was going to spawn you inside a block when exiting Bumblezone.
+
+
 ### **(V.5.0.5 Changes) (1.18.2 Minecraft)**
 
 ##### Teleportation:

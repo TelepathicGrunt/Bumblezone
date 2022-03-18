@@ -41,6 +41,7 @@ public class EntityTeleportationBackend {
         double coordinateScale = entity.level.dimensionType().coordinateScale() / destination.dimensionType().coordinateScale();
         BlockPos finalSpawnPos;
         BlockPos validBlockPos;
+        boolean spawnAtFixedPosition = false;
 
         if(Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 1) {
             finalSpawnPos = new BlockPos(
@@ -54,6 +55,7 @@ public class EntityTeleportationBackend {
 
         else if(Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 2) {
             Vec3 playerPos = Bumblezone.ENTITY_COMPONENT.get(entity).getNonBZPos();
+            spawnAtFixedPosition = true;
             if(playerPos != null) {
                 validBlockPos = new BlockPos(playerPos);
             }
@@ -75,6 +77,7 @@ public class EntityTeleportationBackend {
             Vec3 playerPos = Bumblezone.ENTITY_COMPONENT.get(entity).getNonBZPos();
             if(validBlockPos == null && playerPos != null) {
                 validBlockPos = new BlockPos(playerPos);
+                spawnAtFixedPosition = true;
             }
         }
 
@@ -82,13 +85,11 @@ public class EntityTeleportationBackend {
         finalSpawnPos = validBlockPos;
         if(finalSpawnPos == null) {
             finalSpawnPos = new BlockPos(entity.position());
+            spawnAtFixedPosition = true;
         }
 
         // Make sure spacing is safe if in mode 2 or mode 3 when doing forced teleportation when valid land isn't found.
-        if (Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 2 ||
-            (Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 3 && validBlockPos == null))
-        {
-
+        if (spawnAtFixedPosition) {
             if (destination.getBlockState(finalSpawnPos.above()).isSuffocating(destination, finalSpawnPos.above())) {
                 destination.setBlock(finalSpawnPos, Blocks.AIR.defaultBlockState(), 3);
                 destination.setBlock(finalSpawnPos.above(), Blocks.AIR.defaultBlockState(), 3);
@@ -364,10 +365,11 @@ public class EntityTeleportationBackend {
     }
 
     // Player exiting Bumblezone dimension
-    public static void playerLeavingBz(ResourceLocation dimensionLeaving, Entity entity) {
+    public static void entityChangingDimension(ResourceLocation dimensionEntering, Entity entity) {
         //Updates the non-BZ dimension that the player is leaving
-        if (!dimensionLeaving.equals(Bumblezone.MOD_DIMENSION_ID) && entity instanceof LivingEntity) {
-            Bumblezone.ENTITY_COMPONENT.get(entity).setNonBZDimension(dimensionLeaving);
+        if (dimensionEntering.equals(Bumblezone.MOD_DIMENSION_ID) && entity instanceof LivingEntity) {
+            Bumblezone.ENTITY_COMPONENT.get(entity).setNonBZDimension(dimensionEntering);
+            Bumblezone.ENTITY_COMPONENT.get(entity).setNonBZPos(entity.position());
         }
     }
 }
