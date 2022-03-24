@@ -1,3 +1,9 @@
+### **(V.5.0.8 Changes) (1.18.2 Minecraft)**
+
+##### Misc:
+Fixed honey buckets/honey bottles not giving their empty bucket/bottle if they are a stack of 1 and are used on Porous Honeycomb Block or fed to bees.
+
+
 ### **(V.5.0.7 Changes) (1.18.2 Minecraft)**
 
 ##### Bees:
