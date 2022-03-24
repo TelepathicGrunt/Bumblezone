@@ -61,7 +61,7 @@ public class BumblezoneClient implements ClientModInitializer {
         EntityRendererRegistry.register(BzEntities.BEEHEMOTH, BeehemothRenderer::new);
         EntityRendererRegistry.register(BzEntities.THROWN_STINGER_SPEAR_ENTITY, StingerSpearRenderer::new);
 
-        if(Bumblezone.BZ_CONFIG.BZClientConfig.enableLgbtBeeRenderer) {
+        if(Bumblezone.BZ_CONFIG.BZClientConfig.enableAltBeeSkinRenderer) {
             BeeVariantRenderer.OLD_BEE_RENDER_FACTORY = (EntityRendererProvider<Bee>)EntityRendererRegistryImplAccessor.getMap().get(EntityType.BEE);
             EntityRendererRegistry.register(EntityType.BEE, BeeVariantRenderer::new);
         }
