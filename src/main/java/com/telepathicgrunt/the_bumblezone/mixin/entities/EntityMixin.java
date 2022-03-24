@@ -125,11 +125,4 @@ public abstract class EntityMixin {
             this.setSwimming(this.level.getFluidState(this.blockPosition()).is(BzTags.BZ_HONEY_FLUID));
         }
     }
-
-    // Handles storing of past non-bumblezone dimension the entity is leaving
-    @Inject(method = "changeDimension(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/entity/Entity;",
-            at = @At(value = "HEAD"))
-    private void thebumblezone_onDimensionChange(ServerLevel destination, CallbackInfoReturnable<Entity> cir) {
-        EntityTeleportationBackend.entityChangingDimension(new EntityTravelToDimensionEvent(((Entity)(Object)this), destination.dimension()));
-    }
 }

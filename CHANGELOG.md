@@ -1,3 +1,12 @@
+### **(V.5.0.6 Changes) (1.18.2 Minecraft)**
+
+##### Bees:
+Bees have a small chance of wearing a rare Ukraine flag pajamas!
+
+##### Misc:
+Now requires Forge 40.0.20 or newer. Removed a mixin that is unneeded now.
+
+
 ### **(V.5.0.5 Changes) (1.18.2 Minecraft)**
 
 ##### Teleportation:
