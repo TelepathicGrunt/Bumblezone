@@ -13,16 +13,23 @@ public class BzClientConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip(count = 0)
     @Comment(value = """
 
-            Rate for how often a bee will have an LGBT+ coat!""")
-    public double lgbtBeeRate = 0.02;
+            Rate for how often a bee will have an LGBT+ pajama!""")
+    public double lgbtBeeRate = 0.015;
+
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip(count = 0)
+    @Comment(value = """
+
+            Rate for how often a bee will have an Ukraine pajama!""")
+    public double ukraineBeeRate = 0.01;
 
 
     @ConfigEntry.Gui.PrefixText
     @ConfigEntry.Gui.Tooltip(count = 0)
     @Comment(value = """
-            Enable replacing the bee renderer for LGBT+ skins.
+            Enable replacing the bee renderer for alternative skins.
             Set this to false if the render is messing with other mod's bee renderers.""")
-    public boolean enableLgbtBeeRenderer = true;
+    public boolean enableAltBeeSkinRenderer = true;
 
 
     @ConfigEntry.Gui.PrefixText
