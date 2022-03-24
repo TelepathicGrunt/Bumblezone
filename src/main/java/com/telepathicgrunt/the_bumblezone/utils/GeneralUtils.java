@@ -178,23 +178,23 @@ public class GeneralUtils {
      * For giving the player an item properly into their inventory
      */
     public static void givePlayerItem(Player playerEntity, InteractionHand hand, ItemStack itemstack, boolean giveContainerItem, boolean shrinkCurrentItem) {
+        ItemStack copyItem = itemstack.copy();
+
         if(shrinkCurrentItem) {
             playerEntity.getItemInHand(hand).shrink(1);
         }
 
-        if(giveContainerItem && !itemstack.hasContainerItem()) {
-            return;
-        }
-
-        ItemStack itemToGive = giveContainerItem ? itemstack.getContainerItem() : itemstack;
-        if (itemstack.isEmpty()) {
-            // places result item in hand
-            playerEntity.setItemInHand(hand, itemToGive);
-        }
-        // places result item in inventory
-        else if (!playerEntity.getInventory().add(itemToGive)) {
-            // drops result item if inventory is full
-            playerEntity.drop(itemToGive, false);
+        if(giveContainerItem && copyItem.hasContainerItem()) {
+            ItemStack itemToGive = giveContainerItem ? copyItem.getContainerItem() : copyItem;
+            if (copyItem.isEmpty()) {
+                // places result item in hand
+                playerEntity.setItemInHand(hand, itemToGive);
+            }
+            // places result item in inventory
+            else if (!playerEntity.getInventory().add(itemToGive)) {
+                // drops result item if inventory is full
+                playerEntity.drop(itemToGive, false);
+            }
         }
     }
 }
