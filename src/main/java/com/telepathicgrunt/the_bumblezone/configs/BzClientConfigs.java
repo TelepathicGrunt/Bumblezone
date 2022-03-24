@@ -6,7 +6,8 @@ public class BzClientConfigs {
     public static final ForgeConfigSpec GENERAL_SPEC;
 
     public static ForgeConfigSpec.DoubleValue lgbtBeeRate;
-    public static ForgeConfigSpec.BooleanValue enableLgbtBeeRenderer;
+    public static ForgeConfigSpec.DoubleValue ukraineBeeRate;
+    public static ForgeConfigSpec.BooleanValue enableAltBeeSkinRenderer;
     public static ForgeConfigSpec.BooleanValue playWrathOfHiveEffectMusic;
 
     static {
@@ -18,15 +19,21 @@ public class BzClientConfigs {
     private static void setupConfig(ForgeConfigSpec.Builder builder) {
         lgbtBeeRate = builder
                 .comment(" \n-----------------------------------------------------\n",
-                        " Rate for how often a bee will have an LGBT+ coat!\n")
-                .translation("the_bumblezone.config.lgbtBeeRate")
-                .defineInRange("lgbt+ bee rates", 0.02D, 0D, 1D);
+                        " Rate for how often a bee will have an LGBT+ pajama!\n")
+                .translation("the_bumblezone.config.lgbtbeerate")
+                .defineInRange("lgbt+ bee rates", 0.015D, 0D, 1D);
 
-        enableLgbtBeeRenderer = builder
+        ukraineBeeRate = builder
                 .comment(" \n-----------------------------------------------------\n",
-                        " Enable replacing the bee renderer for LGBT+ skins.",
+                        " Rate for how often a bee will have an Ukraine pajama!\n")
+                .translation("the_bumblezone.config.ukrainebeerate")
+                .defineInRange("ukraine bee rates", 0.01D, 0D, 1D);
+
+        enableAltBeeSkinRenderer = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Enable replacing the bee renderer for alternative skins.",
                         " Set this to false if the render is messing with other mod's bee renderers.\n")
-                .translation("the_bumblezone.config.enableLgbtBeeRenderer")
+                .translation("the_bumblezone.config.enablelgbtbeerenderer")
                 .define("Enable lgbt+ bee renderer", true);
 
         playWrathOfHiveEffectMusic = builder

@@ -18,7 +18,8 @@ public class BeeVariantRenderer extends BeeRenderer {
     // Credit to Quark for this code!
     // https://github.com/VazkiiMods/Quark/blob/master/src/main/java/vazkii/quark/content/client/render/variant/VariantBeeRenderer.java
 
-    private static final List<String> VARIANTS = ImmutableList.of("transbee", "asexualbee");
+    private static final List<String> LGBT_VARIANTS = ImmutableList.of("transbee", "asexualbee");
+    private static final String UKRAINE_VARIANT = "ukrainebee";
     public static EntityRendererProvider<? super Bee> OLD_BEE_RENDER_FACTORY = null;
     private EntityRenderer<? super Bee> OLD_BEE_RENDER = null;
 
@@ -37,15 +38,19 @@ public class BeeVariantRenderer extends BeeRenderer {
         final double lgbtChance = BzClientConfigs.lgbtBeeRate.get();
         boolean lgbt = (new Random(most + 1001)).nextDouble() < lgbtChance; // + 1001 so it doesn't align exactly with quark.
 
-        if(entity.hasCustomName() || lgbt) {
+        final double ukraineChance = BzClientConfigs.ukraineBeeRate.get();
+        boolean ukraine = (new Random(most + 1001)).nextDouble() < ukraineChance; // + 1001 so it doesn't align exactly with quark.
+
+        if(entity.hasCustomName() || lgbt || ukraine) {
             String custName = entity.hasCustomName() ? entity.getCustomName().getString().trim() : "";
             String name = custName.toLowerCase(Locale.ROOT);
 
-            if(!VARIANTS.contains(name)) {
-                if(lgbt) name = VARIANTS.get(Math.abs((int) (most % (VARIANTS.size()))));
+            if(!LGBT_VARIANTS.contains(name) && !UKRAINE_VARIANT.equals(name)) {
+                if(lgbt) name = LGBT_VARIANTS.get(Math.abs((int) (most % (LGBT_VARIANTS.size()))));
+                if(ukraine) name = UKRAINE_VARIANT;
             }
 
-            if(VARIANTS.contains(name)) {
+            if(LGBT_VARIANTS.contains(name) || UKRAINE_VARIANT.equals(name)) {
                 String type = "";
                 boolean angery = entity.hasStung();
                 boolean nectar = entity.hasNectar();

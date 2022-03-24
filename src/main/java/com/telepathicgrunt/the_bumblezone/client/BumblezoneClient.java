@@ -67,7 +67,7 @@ public class BumblezoneClient {
             DimensionSpecialEffectsAccessor.thebumblezone_getBY_ResourceLocation().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
             registerRenderLayers();
 
-            if(BzClientConfigs.enableLgbtBeeRenderer.get()) {
+            if(BzClientConfigs.enableAltBeeSkinRenderer.get()) {
                 //noinspection unchecked cast
                 BeeVariantRenderer.OLD_BEE_RENDER_FACTORY = (EntityRendererProvider<Bee>)RenderingRegistryAccessor.getEntityRenderers().get(EntityType.BEE);
                 EntityRenderers.register(EntityType.BEE, BeeVariantRenderer::new);
