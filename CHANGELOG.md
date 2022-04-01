@@ -1,3 +1,9 @@
+### **(V.5.0.9 Changes) (1.18.2 Minecraft)**
+
+##### Mod Compat:
+Fixed crash with latest Friends & Foes mod's update.
+
+
 ### **(V.5.0.8 Changes) (1.18.2 Minecraft)**
 
 ##### Misc:
