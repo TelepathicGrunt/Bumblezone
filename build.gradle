@@ -80,7 +80,9 @@ dependencies {
 	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 
 	modRuntimeOnly "curse.maven:shutup_experimental_settings-401978:3677546"
-	modCompileOnly "curse.maven:friends_and_foes-551364:3668804"
+	modCompileOnly "curse.maven:friends_and_foes-551364:3725313"
+	//modRuntimeOnly "curse.maven:friends_and_foes-551364:3725313"
+	//modRuntimeOnly "curse.maven:architectury-419697:3717905"
 
 	//modRuntimeOnly "curse.maven:requiem-265729:3639233"
 	//modImplementation ("curse.maven:mobcatcher-498389:3575752") { transitive = false }
