@@ -1,3 +1,9 @@
+### **(V.5.0.8 Changes) (1.18.2 Minecraft)**
+
+##### Mod Compat:
+Added compat with Beekeeper Villager from Friends and Foes mod. Bumblezone items will appear in Beekeeper's trades. This can be turned off in Bumblezone's mod compat config.
+
+
 ### **(V.5.0.7 Changes) (1.18.2 Minecraft)**
 
 ##### Misc:

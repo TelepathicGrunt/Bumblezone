@@ -11,8 +11,8 @@ public class WanderingTrades {
     {
         event.getRareTrades().add(new GeneralUtils.BasicItemTrade(
                 Items.EMERALD,
-                20,
                 BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV.get(),
+                20,
                 1,
                 1,
                 10,
@@ -21,8 +21,8 @@ public class WanderingTrades {
 
         event.getRareTrades().add(new GeneralUtils.BasicItemTrade(
                 Items.EMERALD,
-                20,
                 BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY.get(),
+                20,
                 1,
                 1,
                 10,

@@ -22,6 +22,8 @@ public class BzModCompatibilityConfigs {
 	public static ForgeConfigSpec.ConfigValue<List<? extends String>> allowedCombsAsOres;
 	public static ForgeConfigSpec.ConfigValue<List<? extends String>> allowedBees;
 
+	public static ForgeConfigSpec.BooleanValue allowFriendsAndFoesBeekeeperTradesCompat;
+
 	static {
 		ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
 		setupConfig(configBuilder);
@@ -187,6 +189,15 @@ public class BzModCompatibilityConfigs {
 
 			builder.pop();
 
+			builder.push("Friends and Foes Options");
+
+			allowFriendsAndFoesBeekeeperTradesCompat = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Adds Bumblezone items to Friends and Foes's Beekeeper trades!\n")
+					.translation("the_bumblezone.config.allowfriendsandfoesbeekeepertradescompat")
+					.define("allowFriendsAndFoesBeekeeperTradesCompat", true);
+
+			builder.pop();
 
 		builder.pop();
 	}
