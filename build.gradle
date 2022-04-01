@@ -94,6 +94,9 @@ dependencies {
     runtimeOnly fg.deobf("com.telepathicgrunt:CommandStructures:2.0.0+1.18.2")
     runtimeOnly fg.deobf("com.telepathicgrunt:FeatureNBTDeadlockBeGone-Forge:2.0.0+1.18.2")
     compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
+    compileOnly fg.deobf("curse.maven:friends_and_foes-602059:3725314")
+    runtimeOnly fg.deobf("curse.maven:friends_and_foes-602059:3725314")
+    runtimeOnly fg.deobf("curse.maven:architectury-419699:3717906")
 
     // Switch to `implementation` when testing mod compat
     //compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
