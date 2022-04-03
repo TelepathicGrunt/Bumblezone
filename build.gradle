@@ -97,6 +97,8 @@ dependencies {
     compileOnly fg.deobf("curse.maven:friends_and_foes-602059:3725314")
     runtimeOnly fg.deobf("curse.maven:friends_and_foes-602059:3725314")
     runtimeOnly fg.deobf("curse.maven:architectury-419699:3717906")
+    //runtimeOnly fg.deobf("curse.maven:token_enchanter-444421:3559237")
+    //runtimeOnly fg.deobf("curse.maven:silent_lib-242998:3708359")
 
     // Switch to `implementation` when testing mod compat
     //compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
@@ -128,8 +130,16 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     mainFile.addRequirement("feature-nbt-deadlock-be-gone")
 }
 
+task checkForRefmap() {
+    if (file("./build/libs/the_bumblezone_forge-${project.mod_version}+${project.mc_version}.jar").exists()) {
+        assert zipTree("./build/libs/the_bumblezone_forge-${project.mod_version}+${project.mc_version}.jar")
+                .matching { include "the_bumblezone.refmap.json" }.getSingleFile() != null
+    }
+}
+
 task buildAndRelease{}
-tasks.publish.mustRunAfter tasks.build
+tasks.checkForRefmap.mustRunAfter tasks.build
+tasks.publish.mustRunAfter tasks.checkForRefmap
 tasks.publishCurseForge.mustRunAfter tasks.publish
 tasks.publishModrinth.mustRunAfter tasks.publish
 tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish, tasks.publishCurseForge, tasks.publishModrinth)

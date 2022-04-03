@@ -14,8 +14,7 @@
       "item": "the_bumblezone:honeycomb_brood_block"
     }
   ],
-  "conditions":
-  [
+  "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "jeed"
