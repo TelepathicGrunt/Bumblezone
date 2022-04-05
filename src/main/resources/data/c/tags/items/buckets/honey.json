@@ -1,6 +1,10 @@
 {
   "replace": false,
   "values": [
-    "the_bumblezone:honey_bucket"
+    "the_bumblezone:honey_bucket",
+    {
+      "id": "beebetter:honey_bucket",
+      "required": false
+    }
   ]
 }

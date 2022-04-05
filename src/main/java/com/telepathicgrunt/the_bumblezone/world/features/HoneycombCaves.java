@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.the_bumblezone.modcompat.BeeBetterCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
@@ -238,6 +240,17 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                 }
             }
             else if (posResult == 1) {
+                if(ModChecker.beeBetterPresent) {
+                    double noise2 = noiseGen2.noise3_Classic(
+                            blockPos.getX() * 0.007D,
+                            blockPos.getZ() * 0.007D,
+                            blockPos.getY() * 0.02D);
+                    if (noise2 > 0.35) {
+                        world.setBlock(blockPos, BeeBetterCompat.getBeeswaxBlock((int) (noise2 / 0.03D)), 3);
+                        return;
+                    }
+                }
+
                 if (random.nextInt(3) == 0) {
                     world.setBlock(blockPos, HONEYCOMB_BLOCK, 3);
                 }

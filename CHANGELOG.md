@@ -1,3 +1,9 @@
+### **(V.5.0.10 Changes) (1.18.2 Minecraft)**
+
+##### Mod Compat:
+Added compat with 1.18.2 Bee Better mod. Their Honey Bucket should work with Beehemoth and their blocks appears in caves and bee dungeons.
+
+
 ### **(V.5.0.9 Changes) (1.18.2 Minecraft)**
 
 ##### Mod Compat:
