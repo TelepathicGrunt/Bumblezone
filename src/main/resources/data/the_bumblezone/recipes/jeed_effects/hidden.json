@@ -8,8 +8,7 @@
       "item": "the_bumblezone:pile_of_pollen"
     }
   ],
-  "conditions":
-  [
+  "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "jeed"

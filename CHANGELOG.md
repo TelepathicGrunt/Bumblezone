@@ -1,3 +1,18 @@
+### **(V.5.0.9 Changes) (1.18.2 Minecraft)**
+
+##### Structures:
+Cell maze structure is now significantly larger and can have multiple floors. They only spawn at sealevel now.
+
+##### Sounds:
+Fixed Bumblezone Music Discs not playing music.
+
+##### Mod Compat:
+Added recipes to make Bumblezone's enchantments be craftable with Token Enchanter mod's tokens.
+
+##### Lang:
+Fixed throwing Pollen Puff now having translated captions.
+
+
 ### **(V.5.0.8 Changes) (1.18.2 Minecraft)**
 
 ##### Mod Compat:

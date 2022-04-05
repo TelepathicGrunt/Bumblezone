@@ -8,8 +8,7 @@
       "item": "the_bumblezone:stinger_spear"
     }
   ],
-  "conditions":
-  [
+  "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "jeed"
