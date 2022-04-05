@@ -1,3 +1,17 @@
+### **(V.5.0.10 Changes) (1.18.2 Minecraft)**
+
+##### Structures:
+Cell maze structure is now significantly larger and can have multiple floors. They only spawn at sealevel now.
+
+Removed logspam about missing forge gravity attribute when spawning Cell Maze structure.
+
+##### Mod Compat:
+Added compat with 1.18.2 Bee Better mod. Their Honey Bucket should work with Beehemoth and their blocks appears in caves and bee dungeons.
+
+##### Lang:
+Fixed throwing Pollen Puff now having translated captions.
+
+
 ### **(V.5.0.9 Changes) (1.18.2 Minecraft)**
 
 ##### Mod Compat:

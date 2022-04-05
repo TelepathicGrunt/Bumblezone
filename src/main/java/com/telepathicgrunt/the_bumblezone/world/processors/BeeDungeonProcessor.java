@@ -3,6 +3,8 @@ package com.telepathicgrunt.the_bumblezone.world.processors;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.modcompat.BeeBetterCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
@@ -66,6 +68,9 @@ public class BeeDungeonProcessor extends StructureProcessor {
                             blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(4) + 1);
                             blockState = blockState.setValue(CandleBlock.LIT, true);
                         }
+                        else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.6f){
+                            blockState = BeeBetterCompat.getCandle(random);
+                        }
                         else {
                             blockState = Blocks.CAVE_AIR.defaultBlockState();
                         }
@@ -79,6 +84,9 @@ public class BeeDungeonProcessor extends StructureProcessor {
                             blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(random.nextInt(4) + 1) + 1);
                             blockState = blockState.setValue(CandleBlock.LIT, true);
                         }
+                        else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.35f){
+                            blockState = BeeBetterCompat.getCandle(random);
+                        }
                         else {
                             blockState = Blocks.CAVE_AIR.defaultBlockState();
                         }
@@ -91,6 +99,9 @@ public class BeeDungeonProcessor extends StructureProcessor {
                             blockState = GeneralUtils.VANILLA_CANDLES.get(random.nextInt(GeneralUtils.VANILLA_CANDLES.size()));
                             blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(random.nextInt(4) + 1) + 1);
                             blockState = blockState.setValue(CandleBlock.LIT, true);
+                        }
+                        else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.2f){
+                            blockState = BeeBetterCompat.getCandle(random);
                         }
                         else {
                             blockState = Blocks.CAVE_AIR.defaultBlockState();
@@ -118,6 +129,9 @@ public class BeeDungeonProcessor extends StructureProcessor {
                 blockState = BzBlocks.HONEYCOMB_BROOD.defaultBlockState()
                         .setValue(HoneycombBrood.STAGE, random.nextInt(3))
                         .setValue(HoneycombBrood.FACING, blockState.getValue(HoneycombBrood.FACING));
+            }
+            else if(ModChecker.beeBetterPresent && random.nextFloat() < 0.3f){
+                blockState = BeeBetterCompat.getBeeDungeonBlock(random);
             }
             else if (random.nextFloat() < 0.2f) {
                 blockState = Blocks.HONEY_BLOCK.defaultBlockState();
