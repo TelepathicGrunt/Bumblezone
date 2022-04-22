@@ -20,13 +20,13 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
+import org.quiltmc.qsl.lifecycle.api.event.ServerWorldTickEvents;
 
 public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
@@ -79,7 +79,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
         BeeAggression.setupEvents();
         ModChecker.setupModCompat();
-        ServerTickEvents.END_WORLD_TICK.register(BzWorldSavedData::tick);
+        ServerWorldTickEvents.END.register(BzWorldSavedData::tick);
 
         BeehemothControlsPacket.registerPacket();
         BumbleBeeChestplateFlyingPacket.registerPacket();
