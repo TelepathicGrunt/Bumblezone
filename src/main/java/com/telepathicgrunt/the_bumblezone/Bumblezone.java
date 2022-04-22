@@ -36,6 +36,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 
 public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
@@ -51,7 +53,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
     public static final ComponentKey<MiscComponent> MISC_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "misc_component"), MiscComponent.class);
 
     @Override
-    public void onInitialize() {
+    public void onInitialize(ModContainer mod) {
         //Set up config
         MidnightConfig.init(MODID, BzConfig.class);
 

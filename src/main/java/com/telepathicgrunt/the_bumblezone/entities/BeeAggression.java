@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -25,6 +24,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.Block;
+import org.quiltmc.qsl.lifecycle.api.event.ServerLifecycleEvents;
 
 import java.util.HashSet;
 import java.util.List;
@@ -34,7 +34,7 @@ import java.util.Set;
 public class BeeAggression {
 
     public static void setupEvents() {
-        ServerLifecycleEvents.SERVER_STARTING.register((MinecraftServer minecraftServer) ->
+        ServerLifecycleEvents.STARTING.register((MinecraftServer minecraftServer) ->
                 BeeAggression.setupBeeHatingList());
 
         PlayerBlockBreakEvents.AFTER.register((world, playerEntity, blockPos, blockState, blockEntity) ->
