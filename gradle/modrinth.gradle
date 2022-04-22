@@ -23,6 +23,6 @@ task publishModrinth (type: TaskModrinthUpload) {
     changelog = fileContents
     versionType = "RELEASE"
     addGameVersion("1.18.2")
-    addLoader('fabric')
+    addLoader('quilt')
 }
 

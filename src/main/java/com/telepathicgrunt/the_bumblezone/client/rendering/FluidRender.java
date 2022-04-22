@@ -19,6 +19,8 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
+import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
+import org.quiltmc.qsl.resource.loader.api.reloader.SimpleSynchronousResourceReloader;
 
 import java.util.function.Function;
 
@@ -38,10 +40,10 @@ public class FluidRender {
 
         final TextureAtlasSprite[] fluidSprites = { null, null };
 
-        ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener()
+        ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloader(new SimpleSynchronousResourceReloader()
         {
             @Override
-            public ResourceLocation getFabricId()
+            public ResourceLocation getQuiltId()
             {
                 return listenerId;
             }

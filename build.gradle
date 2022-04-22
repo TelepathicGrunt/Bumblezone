@@ -1,30 +1,38 @@
-import net.fabricmc.loom.task.RemapJarTask
-
 buildscript {
 	repositories {
 		maven { url "https://plugins.gradle.org/m2/" }
 	}
 	dependencies {
-		classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
 		classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.2.1'
 	}
 }
 
 plugins {
+	alias(libs.plugins.quilt.loom)
+	id 'maven-publish'
 	id "net.darkhax.curseforgegradle" version "1.0.7"
-	id 'fabric-loom' version '0.10-SNAPSHOT'
-	id 'io.github.juuxel.loom-quiltflower-mini' version '1.1.0'
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
-version = "${project.mod_version}+${project.minecraft_version}"
-archivesBaseName = "${project.modid}_fabric"
+archivesBaseName = "${project.modid}_quilt"
+version = "${project.mod_version}+${libs.versions.minecraft.get()}"
 group = project.maven_group
 
 loom {
 	accessWidenerPath = file("src/main/resources/the_bumblezone.accesswidener")
+}
+
+configurations.all {
+	resolutionStrategy.dependencySubstitution {
+		substitute module('net.fabricmc:fabric-loader') using module(libs.quilt.loader.get().toString())
+		all { DependencySubstitution dependency ->
+			if (dependency.requested instanceof ModuleComponentSelector && dependency.requested.group == 'net.fabricmc.fabric-api') {
+				if (dependency.requested.module == 'fabric-api')
+					dependency.useTarget libs.quilted.fabric.api.get().toString()
+				else
+					dependency.useTarget 'org.quiltmc.quilted-fabric-api' + ':' + dependency.requested.module + ':' + libs.versions.quilted.fabric.api.get()
+			}
+		}
+	}
 }
 
 repositories {
@@ -50,40 +58,36 @@ repositories {
 }
 
 dependencies {
-	//to change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings minecraft.officialMojangMappings()
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	minecraft libs.minecraft
+	mappings( loom.layered {
+		addLayer quiltMappings.mappings("org.quiltmc:quilt-mappings:${libs.versions.quilt.mappings.get()}:v2")
+		officialMojangMappings()
+	})
+	modImplementation libs.quilt.loader
+	modImplementation libs.quilted.fabric.api
 
-	modImplementation ("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}") {
-		force = true //Force the version we want rather than trusting Gradle to pick it over transitive suggestions
-	}
+	modApi"me.shedaniel.cloth:cloth-config-fabric:${libs.versions.cloth.config.get()}"
 
-	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
-		exclude(group: "net.fabricmc.fabric-api")
-	}
+	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${libs.versions.cardinal.get()}"
+	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${libs.versions.cardinal.get()}"
+	include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${libs.versions.cardinal.get()}"
+	include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${libs.versions.cardinal.get()}"
 
-	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_version}"
-	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_version}"
-	include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_version}"
-	include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_version}"
+	modImplementation "dev.cafeteria:fake-player-api:${libs.versions.fake.player.get()}"
+	include "dev.cafeteria:fake-player-api:${libs.versions.fake.player.get()}"
 
-	modImplementation "dev.cafeteria:fake-player-api:${project.fake_player_version}"
-	include "dev.cafeteria:fake-player-api:${project.fake_player_version}"
+	modImplementation "maven.modrinth:modmenu:${libs.versions.mod.menu.get()}"
 
-	modImplementation ("maven.modrinth:modmenu:${project.mod_menu_version}") { transitive = false }
+	modRuntimeOnly "com.telepathicgrunt:FeatureNBTDeadlockBeGone-Quilt:${libs.versions.nbtdbg.get()}"
 
-	modRuntimeOnly ("com.telepathicgrunt:FeatureNBTDeadlockBeGone-Fabric:${project.NBTDBG_version}") { transitive = false }
-
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
-	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${libs.versions.rei.get()}"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${libs.versions.rei.get()}"
+	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${libs.versions.rei.get()}"
 
 	modRuntimeOnly "curse.maven:shutup_experimental_settings-401978:3677546"
 	modCompileOnly "curse.maven:friends_and_foes-551364:3725313"
-	//modRuntimeOnly "curse.maven:friends_and_foes-551364:3725313"
-	//modRuntimeOnly "curse.maven:architectury-419697:3717905"
 	modCompileOnly "curse.maven:bee_better-351600:3726160"
+	//modRuntimeOnly "curse.maven:architectury-419697:3717905"
 	//modRuntimeOnly "curse.maven:bee_better-351600:3726160"
 
 	//modRuntimeOnly "curse.maven:requiem-265729:3639233"
@@ -91,25 +95,23 @@ dependencies {
 	//modCompileOnly ("curse.maven:charm-318872:3355096") { transitive = false }
 }
 
-processResources {
-	inputs.property "version", project.version
-
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
-	}
-}
+apply from: 'gradle/processresources.gradle'
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.encoding = "UTF-8"
-	it.options.release = 17
+	it.options.encoding = 'UTF-8'
+	it.options.release.set(17)
 }
 
 java {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
 	withSourcesJar()
 }
 
 jar {
-	from "LICENSE"
+	from("LICENSE") {
+		rename { "${it}_${archivesBaseName}"}
+	}
 }
 
 apply from: 'gradle/maven.gradle'
@@ -123,7 +125,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	mainFile.changelog = changelogText
 	mainFile.changelogType = "markdown"
 	mainFile.releaseType = "release"
-	mainFile.displayName = "The Bumblezone v${project.mod_version} (${project.minecraft_version} MC)"
+	mainFile.displayName = "The Bumblezone v${project.mod_version} (${libs.versions.minecraft.get()} MC Quilt)"
 	mainFile.addRequirement("cloth-config")
 	mainFile.addRequirement("fabric-api")
 	mainFile.addRequirement("feature-nbt-deadlock-be-gone")

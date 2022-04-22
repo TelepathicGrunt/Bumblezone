@@ -2,8 +2,8 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.Level;
+import org.quiltmc.loader.api.QuiltLoader;
 
 public class ModChecker {
 
@@ -40,7 +40,7 @@ public class ModChecker {
 
     private static void loadupModCompat(String modid, Runnable runnable) {
         try {
-            if (FabricLoader.getInstance().isModLoaded(modid)) {
+            if (QuiltLoader.isModLoaded(modid)) {
                 runnable.run();
             }
         }

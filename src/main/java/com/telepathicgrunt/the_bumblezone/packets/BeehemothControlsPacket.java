@@ -2,8 +2,8 @@ package com.telepathicgrunt.the_bumblezone.packets;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.resources.ResourceLocation;
+import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 public class BeehemothControlsPacket {
 

@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "com.telepathicgrunt",
+    "id": "the_bumblezone",
+    "version": "${version}",
+    "metadata": {
+      "name": "The Bumblezone",
+      "description": "An awesome dimension full of bees that becomes REALLY angry if you take their honey! Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going above Y = 256 to below Y = 0.",
+      "contributors": {
+        "Me!": "TelepathicGrunt"
+      },
+      "license": "LGPL-3.0-or-later",
+      "icon": "assets/repurposed_structures/RepurposedStructuresLogo.png",
+      "contact": {
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-fabric",
+        "sources": "https://github.com/TelepathicGrunt/Bumblezone-Fabric",
+        "issues": "https://github.com/TelepathicGrunt/Bumblezone-Fabric/issues"
+      }
+    },
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "entrypoints": {
+      "init": "com.telepathicgrunt.the_bumblezone.Bumblezone",
+      "client_init": "com.telepathicgrunt.the_bumblezone.Bumblezone",
+      "modmenu": "com.telepathicgrunt.the_bumblezone.configs.ModMenuConfig"
+    },
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "versions": ">=0.16.0-"
+      },
+      {
+        "id": "quilted_fabric_api",
+        "versions": ">=1.0.0-"
+      },
+      {
+        "id": "minecraft",
+        "versions": ">=1.18.2"
+      },
+      {
+        "id": "cloth-config2",
+        "versions": ">=6.2.57"
+      },
+      {
+        "id": "feature_nbt_deadlock_be_gone",
+        "versions": "*"
+      }
+    ]
+  },
+  "accessWidener" : "the_bumblezone.accesswidener",
+  "mixin": "the_bumblezone.mixins.json",
+  "custom": {
+    "cardinal-components": [
+      "the_bumblezone:entity_component",
+      "the_bumblezone:original_flying_speed",
+      "the_bumblezone:neurotoxins_missed_counter"
+    ]
+  }
+}

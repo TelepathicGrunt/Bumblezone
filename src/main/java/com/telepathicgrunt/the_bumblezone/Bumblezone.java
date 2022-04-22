@@ -20,12 +20,13 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
-import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 
 public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
@@ -40,7 +41,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
     public static final ComponentKey<NeurotoxinsMissedCounterComponent> NEUROTOXINS_MISSED_COUNTER_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "neurotoxins_missed_counter"), NeurotoxinsMissedCounterComponent.class);
 
     @Override
-    public void onInitialize() {
+    public void onInitialize(ModContainer mod) {
         //Set up config
         AutoConfig.register(BzConfig.class, JanksonConfigSerializer::new);
         BZ_CONFIG = AutoConfig.getConfigHolder(BzConfig.class).getConfig();

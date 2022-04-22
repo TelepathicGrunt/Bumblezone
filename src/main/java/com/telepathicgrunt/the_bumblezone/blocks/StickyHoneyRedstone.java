@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.math.Vector3f;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -27,7 +27,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
     public StickyHoneyRedstone() {
-        super(FabricBlockSettings.of(BzBlocks.ORANGE_NOT_SOLID, MaterialColor.TERRACOTTA_ORANGE).lightLevel(blockState -> blockState.getValue(POWERED) ? 1 : 0).noCollission().strength(6.0f, 0.0f).noOcclusion());
+        super(QuiltBlockSettings.of(BzBlocks.ORANGE_NOT_SOLID, MaterialColor.TERRACOTTA_ORANGE).lightLevel(blockState -> blockState.getValue(POWERED) ? 1 : 0).noCollission().strength(6.0f, 0.0f).noOcclusion());
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(UP, false)
                 .setValue(NORTH, false)

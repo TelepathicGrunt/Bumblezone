@@ -16,7 +16,7 @@ publishing {
             }
 
             pom {
-                name = 'TheBumblezone-Fabric'
+                name = 'TheBumblezone-Quilt'
                 description = 'An unBEElievable dimension full of bees that becomes REALLY angry if you take their honey!'
                 url = 'https://github.com/TelepathicGrunt/Bumblezone-Fabric'
 
