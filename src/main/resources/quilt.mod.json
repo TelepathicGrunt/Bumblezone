@@ -21,8 +21,10 @@
     "intermediate_mappings": "net.fabricmc:intermediary",
     "entrypoints": {
       "init": "com.telepathicgrunt.the_bumblezone.Bumblezone",
-      "client_init": "com.telepathicgrunt.the_bumblezone.Bumblezone",
-      "modmenu": "com.telepathicgrunt.the_bumblezone.configs.ModMenuConfig"
+      "client_init": "com.telepathicgrunt.the_bumblezone.client.BumblezoneClient",
+      "modmenu": "com.telepathicgrunt.the_bumblezone.configs.ModMenuConfig",
+      "cardinal-components-entity": "com.telepathicgrunt.the_bumblezone.Bumblezone",
+      "rei": "com.telepathicgrunt.the_bumblezone.modcompat.REICompat"
     },
     "depends": [
       {
@@ -49,11 +51,9 @@
   },
   "accessWidener" : "the_bumblezone.accesswidener",
   "mixin": "the_bumblezone.mixins.json",
-  "custom": {
-    "cardinal-components": [
-      "the_bumblezone:entity_component",
-      "the_bumblezone:original_flying_speed",
-      "the_bumblezone:neurotoxins_missed_counter"
-    ]
-  }
+  "cardinal-components": [
+    "the_bumblezone:entity_component",
+    "the_bumblezone:original_flying_speed",
+    "the_bumblezone:neurotoxins_missed_counter"
+  ]
 }

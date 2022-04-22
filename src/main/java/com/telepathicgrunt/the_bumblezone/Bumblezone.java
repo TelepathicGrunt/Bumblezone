@@ -38,6 +38,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
+import org.quiltmc.qsl.lifecycle.api.event.ServerWorldTickEvents;
 
 public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
@@ -91,7 +92,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
         BeeAggression.setupEvents();
         ModChecker.setupModCompat();
-        ServerTickEvents.END_WORLD_TICK.register(BzWorldSavedData::tick);
+        ServerWorldTickEvents.END.register(BzWorldSavedData::tick);
 
         EntityDataSerializers.registerSerializer(BeeQueenEntity.QUEEN_POSE_SERIALIZER);
         BeehemothControlsPacket.registerPacket();
