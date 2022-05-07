@@ -12,9 +12,6 @@
     "blocks.PistonMovingBlockEntityMixin",
     "blocks.RedstoneDustCanConnectMixin",
     "blocks.WaterEquivalenceMixin",
-    "client.KeyboardHandlerMixin",
-    "client.LivingEntityRendererMixin",
-    "client.MinecraftMixin",
     "containers.WorkbenchContainerMixin",
     "effects.MobEffectInstanceAccessor",
     "enchantments.EnchantmentHelperMixin",
@@ -60,6 +57,10 @@
     "world.WorldGenSettingsMixin"
   ],
   "client": [
+    "client.KeyMappingAccessor",
+    "client.KeyboardHandlerMixin",
+    "client.LivingEntityRendererMixin",
+    "client.MinecraftMixin",
     "client.DimensionSpecialEffectsAccessor",
     "client.EntityRendererRegistryImplAccessor",
     "client.FluidRendererMixin",
