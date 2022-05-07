@@ -13,6 +13,6 @@ public class KeyboardHandlerMixin {
     @Inject(method = "keyPress",
             at = @At(value = "TAIL"))
     private void keyPress(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
-        BeehemothControls.keyInput(key, action);
+        BeehemothControls.keyInput(key, scancode, action);
     }
 }
