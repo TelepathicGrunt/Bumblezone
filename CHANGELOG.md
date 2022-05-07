@@ -1,3 +1,11 @@
+### **(V.5.0.10 Changes) (1.18.2 Minecraft)**
+
+##### Controls:
+Fixed potential keybind issues with Beehemoth flying upward control being bound to spacebar by default. 
+ (It will remain spacebar but now should not prevent jumping from working in rare cases)
+ Also slightly reduced amount of packets sent when controlling Beehemoth.
+
+
 ### **(V.5.0.9 Changes) (1.18.2 Minecraft)**
 
 ##### Structures:
