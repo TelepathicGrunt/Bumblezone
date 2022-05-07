@@ -1,3 +1,9 @@
+### **(V.5.0.12 Changes) (1.18.2 Minecraft)**
+
+##### Sounds:
+Fixed missing music and sound files.
+
+
 ### **(V.5.0.11 Changes) (1.18.2 Minecraft)**
 
 ##### Controls:
