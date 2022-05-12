@@ -1,3 +1,10 @@
+### **(V.5.0.13 Changes) (1.18.2 Minecraft)**
+
+##### Mod Compat:
+Added `retains_durability.json` tag so Enchantment mod does not remove durability for Honey Crystal Shield.
+ The Honey Crystal Shield relies on durability to function properly.
+
+
 ### **(V.5.0.12 Changes) (1.18.2 Minecraft)**
 
 ##### Sounds:
