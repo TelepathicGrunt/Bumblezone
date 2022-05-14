@@ -311,7 +311,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                         }
 
                         if (!player.isCreative()) {
-                            GeneralUtils.givePlayerItem(player, hand, new ItemStack(item), true, true);
+                            GeneralUtils.givePlayerItem(player, hand, ItemStack.EMPTY, true, true);
                         }
 
                         player.swing(hand, true);
@@ -393,7 +393,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                 }
 
                 if (!player.isCreative()) {
-                    GeneralUtils.givePlayerItem(player, hand, new ItemStack(item), true, true);
+                    GeneralUtils.givePlayerItem(player, hand, ItemStack.EMPTY, true, true);
                 }
                 setPersistenceRequired();
                 player.swing(hand, true);

@@ -1,3 +1,10 @@
+### **(V.5.0.11 Changes) (1.18.2 Minecraft)**
+
+##### Items:
+Fixed all items consuming behaviors for all Bumblezone stuff. 
+ (Example: Glass bottle on Filled Porous Honeycomb block, Honey Fluid, and Sugar water. And when feeding items to Beehemoth/Bees)
+
+
 ### **(V.5.0.10 Changes) (1.18.2 Minecraft)**
 
 ##### Controls:

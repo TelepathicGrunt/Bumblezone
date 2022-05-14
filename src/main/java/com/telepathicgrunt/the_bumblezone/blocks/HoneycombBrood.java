@@ -140,7 +140,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
             // removes used item
             if (!playerEntity.isCreative()) {
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(itemstack.getItem()), true, true);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, ItemStack.EMPTY, true, true);
             }
             return InteractionResult.SUCCESS;
         }
@@ -218,7 +218,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
             //removes used item
             if (!playerEntity.isCreative()) {
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(itemstack.getItem()), true, true);
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, ItemStack.EMPTY, true, true);
             }
 
             return InteractionResult.SUCCESS;

@@ -32,7 +32,7 @@ public class BeehemothControls {
              KEY_BIND_BEEHEMOTH_DOWN.matches(event.getKey(), event.getScanCode())))
         {
             BeehemothControlsPacket.sendToServer(
-                KEY_BIND_BEEHEMOTH_UP..matches(event.getKey(), event.getScanCode()) ? event.getAction() : 2,
+                KEY_BIND_BEEHEMOTH_UP.matches(event.getKey(), event.getScanCode()) ? event.getAction() : 2,
                 KEY_BIND_BEEHEMOTH_DOWN.matches(event.getKey(), event.getScanCode()) ? event.getAction() : 2
             );
         }
