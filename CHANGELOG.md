@@ -1,3 +1,9 @@
+### **(V.5.0.12 Changes) (1.18.2 Minecraft)**
+
+##### Items:
+Play the missing glass pickup sound when using Glass Bottles on Honey Fluid source blocks.
+
+
 ### **(V.5.0.11 Changes) (1.18.2 Minecraft)**
 
 ##### Items:
