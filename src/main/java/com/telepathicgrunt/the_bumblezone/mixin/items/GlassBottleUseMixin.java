@@ -28,7 +28,15 @@ public class GlassBottleUseMixin {
     private void thebumblezone_bottleFluidInteract(Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir, List<AreaEffectCloud> list, ItemStack itemStack, HitResult hitResult, BlockPos blockPos) {
         if (GlassBottleBehavior.useBottleOnSugarWater(world, user, hand, blockPos))
             cir.setReturnValue(InteractionResultHolder.success(user.getItemInHand(hand)));
-        else if (GlassBottleBehavior.useBottleOnHoneyFluid(world, user, hand, blockPos))
+    }
+
+    //using glass bottle to get honey could anger bees
+    @Inject(method = "use(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getFluidState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;", ordinal = 0, shift = At.Shift.BEFORE),
+            locals = LocalCapture.CAPTURE_FAILSOFT,
+            cancellable = true)
+    private void thebumblezone_bottleFluidInteract2(Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir, List<AreaEffectCloud> list, ItemStack itemStack, HitResult hitResult, BlockPos blockPos) {
+        if (GlassBottleBehavior.useBottleOnHoneyFluid(world, user, hand, blockPos))
             cir.setReturnValue(InteractionResultHolder.success(user.getItemInHand(hand)));
     }
 }

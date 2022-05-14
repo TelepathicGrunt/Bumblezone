@@ -92,7 +92,7 @@ public class BeeInteractivity {
             }
 
             if (!playerEntity.isCreative()) {
-                GeneralUtils.givePlayerItem(playerEntity, hand, new ItemStack(itemstack.getItem()), true, true);
+                GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, true, true);
             }
 
             if(removedWrath && playerEntity instanceof ServerPlayer) {
