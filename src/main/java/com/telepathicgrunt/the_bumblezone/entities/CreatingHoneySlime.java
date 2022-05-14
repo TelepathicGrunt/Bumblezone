@@ -62,7 +62,7 @@ public class CreatingHoneySlime {
                     1.0F);
 
             if (!playerEntity.isCreative()) {
-                GeneralUtils.givePlayerItem(playerEntity, hand, new ItemStack(itemstack.getItem()), true, true);
+                GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, true, true);
             }
 
             playerEntity.swing(hand, true);
