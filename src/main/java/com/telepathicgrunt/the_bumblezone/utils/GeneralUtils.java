@@ -178,26 +178,39 @@ public class GeneralUtils {
     /**
      * For giving the player an item properly into their inventory
      */
-    public static void givePlayerItem(Player playerEntity, InteractionHand hand, ItemStack itemstack, boolean giveContainerItem, boolean shrinkCurrentItem) {
-        ItemStack copyItem = itemstack.copy();
+    public static void givePlayerItem(Player playerEntity, InteractionHand hand, ItemStack itemstackToGive, boolean giveContainerItem, boolean shrinkCurrentItem) {
+        ItemStack playerItem = playerEntity.getItemInHand(hand);
+        ItemStack copiedPlayerItem = playerItem.copy();
 
         if(shrinkCurrentItem) {
-            playerEntity.getItemInHand(hand).shrink(1);
+            playerItem.shrink(1);
         }
 
-        if(giveContainerItem && !copyItem.getItem().hasCraftingRemainingItem()) {
-            return;
+        // Give item itself to users
+        if(!itemstackToGive.isEmpty()) {
+            if (playerItem.isEmpty()) {
+                // places result item in hand
+                playerEntity.setItemInHand(hand, itemstackToGive);
+            }
+            // places result item in inventory
+            else if (!playerEntity.getInventory().add(itemstackToGive)) {
+                // drops result item if inventory is full
+                playerEntity.drop(itemstackToGive, false);
+            }
         }
 
-        ItemStack itemToGive = giveContainerItem ? copyItem.getItem().getCraftingRemainingItem().getDefaultInstance() : copyItem;
-        if (copyItem.isEmpty()) {
-            // places result item in hand
-            playerEntity.setItemInHand(hand, itemToGive);
-        }
-        // places result item in inventory
-        else if (!playerEntity.getInventory().add(itemToGive)) {
-            // drops result item if inventory is full
-            playerEntity.drop(itemToGive, false);
+        // give container item of player's item if specified
+        if(giveContainerItem && copiedPlayerItem.getItem().hasCraftingRemainingItem()) {
+            ItemStack containerItem = copiedPlayerItem.getItem().getCraftingRemainingItem().getDefaultInstance();
+            if (playerEntity.getItemInHand(hand).isEmpty()) {
+                // places result item in hand
+                playerEntity.setItemInHand(hand, containerItem);
+            }
+            // places result item in inventory
+            else if (!playerEntity.getInventory().add(containerItem)) {
+                // drops result item if inventory is full
+                playerEntity.drop(containerItem, false);
+            }
         }
     }
 }
