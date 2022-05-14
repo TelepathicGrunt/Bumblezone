@@ -73,17 +73,21 @@ dependencies {
 
 	modImplementation ("maven.modrinth:modmenu:${project.mod_menu_version}") { transitive = false }
 
-	modRuntimeOnly ("com.telepathicgrunt:FeatureNBTDeadlockBeGone-Fabric:${project.NBTDBG_version}") { transitive = false }
 
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
 	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 
+	modRuntimeOnly "com.telepathicgrunt:FeatureNBTDeadlockBeGone-Fabric:${project.NBTDBG_version}"
+	modRuntimeOnly "com.telepathicgrunt:CommandStructures-Fabric:2.0.1+1.18.2"
+	modRuntimeOnly "curse.maven:structure_void_toggle-357304:3488866"
+
 	modRuntimeOnly "curse.maven:shutup_experimental_settings-401978:3677546"
 	modCompileOnly "curse.maven:friends_and_foes-551364:3725313"
+	modCompileOnly "curse.maven:bee_better-351600:3726160"
+
 	//modRuntimeOnly "curse.maven:friends_and_foes-551364:3725313"
 	//modRuntimeOnly "curse.maven:architectury-419697:3717905"
-	modCompileOnly "curse.maven:bee_better-351600:3726160"
 	//modRuntimeOnly "curse.maven:bee_better-351600:3726160"
 
 	//modRuntimeOnly "curse.maven:requiem-265729:3639233"
