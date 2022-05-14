@@ -4,6 +4,9 @@
 Fixed all items consuming behaviors for all Bumblezone stuff. 
  (Example: Glass bottle on Filled Porous Honeycomb block, Honey Fluid, and Sugar water. And when feeding items to Beehemoth/Bees)
 
+##### Structures:
+Significantly cleaned up the outer looks of Cell Maze structure.
+
 
 ### **(V.5.0.10 Changes) (1.18.2 Minecraft)**
 
