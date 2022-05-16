@@ -73,6 +73,7 @@ dependencies {
 	include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${libs.versions.cardinal.get()}"
 	include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${libs.versions.cardinal.get()}"
 
+	// https://github.com/CafeteriaGuild/fake-player-api
 	modImplementation "dev.cafeteria:fake-player-api:${libs.versions.fake.player.get()}"
 	include "dev.cafeteria:fake-player-api:${libs.versions.fake.player.get()}"
 
