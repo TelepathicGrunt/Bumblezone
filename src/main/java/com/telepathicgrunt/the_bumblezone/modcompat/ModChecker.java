@@ -55,11 +55,11 @@ public class ModChecker {
 	}
 
 	private static void printErrorToLogs(String currentModID) {
-		Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
-		Bumblezone.LOGGER.log(Level.INFO, " ");
-		Bumblezone.LOGGER.log(Level.INFO, "ERROR: Something broke when trying to add mod compatibility with " + currentModID + ". Please let The Bumblezone developer (TelepathicGrunt) know about this!");
-		Bumblezone.LOGGER.log(Level.INFO, " ");
-		Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
+		Bumblezone.LOGGER.log(Level.ERROR, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
+		Bumblezone.LOGGER.log(Level.ERROR, " ");
+		Bumblezone.LOGGER.log(Level.ERROR, "ERROR: Something broke when trying to add mod compatibility with " + currentModID + ". Please let The Bumblezone developer (TelepathicGrunt) know about this!");
+		Bumblezone.LOGGER.log(Level.ERROR, " ");
+		Bumblezone.LOGGER.log(Level.ERROR, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
 	}
 
     private static boolean isNotOutdated(String currentModID, String minVersion, boolean checkQualifierInstead) {
