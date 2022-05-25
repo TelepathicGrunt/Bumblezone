@@ -15,6 +15,8 @@ public class BzDimensionConfigs{
     public static ForgeConfigSpec.BooleanValue warnPlayersOfWrongBlockUnderHive;
     public static ForgeConfigSpec.BooleanValue allowTeleportationWithModdedBeehives;
     public static ForgeConfigSpec.BooleanValue seaLevelOrHigherExitTeleporting;
+    public static ForgeConfigSpec.BooleanValue enableExitTeleportation;
+    public static ForgeConfigSpec.BooleanValue enableEntranceTeleportation;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -60,6 +62,18 @@ public class BzDimensionConfigs{
                 .translation("the_bumblezone.config.teleportationmode")
                 .defineInRange("teleportationMode", 3, 1, 3);
 
+            enableEntranceTeleportation = builder
+                    .comment(" \n-----------------------------------------------------\n",
+                            " Allow Bumblezone mod to handle teleporting out of Bumblezone dimension.\n")
+                    .translation("the_bumblezone.config.enableentranceteleportation")
+                    .define("enableEntranceTeleportation", true);
+
+            enableExitTeleportation = builder
+                    .comment(" \n-----------------------------------------------------\n",
+                            " Allow Bumblezone mod to handle teleporting into the Bumblezone dimension.\n")
+                    .translation("the_bumblezone.config.enableexitteleportation")
+                    .define("enableExitTeleportation", true);
+
             generateBeenest = builder
                 .comment(" \n-----------------------------------------------------\n",
                        " Will a Beenest generate if no Beenest is  ",
@@ -79,7 +93,7 @@ public class BzDimensionConfigs{
                 .translation("the_bumblezone.config.forceexittooverworld")
                 .define("forceExitToOverworld", false);
 
-        onlyOverworldHivesTeleports = builder
+            onlyOverworldHivesTeleports = builder
                 .comment(" \n-----------------------------------------------------\n",
                        " Makes throwing Enderpearls at Bee Nests or Hives only\n "
                         +" work in the Overworld. What this means setting this to true makes it ",
