@@ -42,24 +42,28 @@ public class EntityTeleportationHookup {
                     BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER.trigger((ServerPlayer) livingEntity);
                 }
 
-                if (livingEntity.getY() < -4) {
-                    livingEntity.moveTo(livingEntity.getX(), -4, livingEntity.getZ());
-                    livingEntity.absMoveTo(livingEntity.getX(), -4, livingEntity.getZ());
-                }
-                livingEntity.fallDistance = 0;
+                if(Bumblezone.BZ_CONFIG.BZDimensionConfig.enableExitTeleportation) {
+                    if (livingEntity.getY() < -4) {
+                        livingEntity.moveTo(livingEntity.getX(), -4, livingEntity.getZ());
+                        livingEntity.absMoveTo(livingEntity.getX(), -4, livingEntity.getZ());
+                    }
+                    livingEntity.fallDistance = 0;
 
-                if(!livingEntity.level.isClientSide()) {
-                    teleportOutOfBz(livingEntity);
+                    if(!livingEntity.level.isClientSide()) {
+                        teleportOutOfBz(livingEntity);
+                    }
                 }
             }
             else if (livingEntity.getY() > 255) {
-                if (livingEntity.getY() > 257) {
-                    livingEntity.moveTo(livingEntity.getX(), 257, livingEntity.getZ());
-                    livingEntity.absMoveTo(livingEntity.getX(), 257, livingEntity.getZ());
-                }
+                if(Bumblezone.BZ_CONFIG.BZDimensionConfig.enableExitTeleportation) {
+                    if (livingEntity.getY() > 257) {
+                        livingEntity.moveTo(livingEntity.getX(), 257, livingEntity.getZ());
+                        livingEntity.absMoveTo(livingEntity.getX(), 257, livingEntity.getZ());
+                    }
 
-                if(!livingEntity.level.isClientSide()) {
-                    teleportOutOfBz(livingEntity);
+                    if (!livingEntity.level.isClientSide()) {
+                        teleportOutOfBz(livingEntity);
+                    }
                 }
             }
         }
@@ -96,7 +100,8 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (!world.isClientSide() && pearlEntity.getOwner() instanceof ServerPlayer playerEntity &&
+        if (Bumblezone.BZ_CONFIG.BZDimensionConfig.enableEntranceTeleportation &&
+            !world.isClientSide() && pearlEntity.getOwner() instanceof ServerPlayer playerEntity &&
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
             (!Bumblezone.BZ_CONFIG.BZDimensionConfig.onlyOverworldHivesTeleports || world.dimension().equals(Level.OVERWORLD)))
         {
@@ -170,8 +175,9 @@ public class EntityTeleportationHookup {
         ServerLevel world = (ServerLevel) pushedEntity.level;
 
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (!world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-                (!Bumblezone.BZ_CONFIG.BZDimensionConfig.onlyOverworldHivesTeleports || world.dimension().equals(Level.OVERWORLD)))
+        if (Bumblezone.BZ_CONFIG.BZDimensionConfig.enableEntranceTeleportation &&
+            !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
+            (!Bumblezone.BZ_CONFIG.BZDimensionConfig.onlyOverworldHivesTeleports || world.dimension().equals(Level.OVERWORLD)))
         {
             if(BzWorldSavedData.isEntityQueuedToTeleportAlready(pushedEntity)) return; // Skip checks if entity is teleporting already to Bz.
 

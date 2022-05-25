@@ -1,7 +1,11 @@
-### **(V.5.0.15 Changes) (1.18.2 Minecraft)**
+### **(V.5.1.0 Changes) (1.18.2 Minecraft)**
 
 ##### Items:
 Play the missing glass pickup sound when using Glass Bottles on Honey Fluid source blocks.
+
+##### Config:
+Added enableExitTeleportation and enableEntranceTeleportation config options to let 
+ players disable Bumblezone's teleportation methods into and out of the Bumblezone dimension.
 
 
 ### **(V.5.0.14 Changes) (1.18.2 Minecraft)**
