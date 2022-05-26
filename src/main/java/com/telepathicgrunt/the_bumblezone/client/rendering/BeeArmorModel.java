@@ -25,20 +25,28 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
     public static final ModelLayerLocation VARIANT_1_LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bumblezone.MODID, "bee_armor"), "bee_armor");
     public static final ModelLayerLocation VARIANT_2_LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bumblezone.MODID, "bee_armor"), "bee_armor_2");
     protected final EquipmentSlot slot;
-    protected final LivingEntity entityLiving;
+    public LivingEntity entityLiving;
     public final ModelPart leftWing;
     public final ModelPart rightWing;
     public final ModelPart leftPollen;
     public final ModelPart rightPollen;
+    public final ModelPart trueRightLeg;
+    public final ModelPart trueLeftLeg;
+    public final ModelPart bootRight;
+    public final ModelPart bootLeft;
 
-    public BeeArmorModel(ModelPart part, EquipmentSlot slot, LivingEntity itemStack) {
+    public BeeArmorModel(ModelPart part, EquipmentSlot slot, LivingEntity livingEntity) {
         super(part);
         this.slot = slot;
-        this.entityLiving = itemStack;
+        this.entityLiving = livingEntity;
         this.leftWing = part.getChild("body").getChild("left_wing");
         this.rightWing = part.getChild("body").getChild("right_wing");
-        this.leftPollen = part.getChild("left_leg").getChild("left_pollen");
-        this.rightPollen = part.getChild("right_leg").getChild("right_pollen");
+        this.leftPollen = part.getChild("left_leg").getChild("true_left_leg").getChild("pollen_left");
+        this.rightPollen = part.getChild("right_leg").getChild("true_right_leg").getChild("pollen_right");
+        this.trueLeftLeg = part.getChild("left_leg").getChild("true_left_leg");
+        this.trueRightLeg = part.getChild("right_leg").getChild("true_right_leg");
+        this.bootRight = part.getChild("right_leg").getChild("right_boot");
+        this.bootLeft = part.getChild("left_leg").getChild("left_boot");
     }
 
     @Override
@@ -90,6 +98,10 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
                 body.visible = true;
                 rightLeg.visible = true;
                 leftLeg.visible = true;
+                trueRightLeg.visible = true;
+                trueLeftLeg.visible = true;
+                bootRight.visible = false;
+                bootLeft.visible = false;
 
                 leftLeg.render(poseStack, buffer, light, overlay);
                 rightLeg.render(poseStack, buffer, light, overlay);
@@ -106,6 +118,12 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
             case FEET -> {
                 rightLeg.visible = true;
                 leftLeg.visible = true;
+                bootRight.visible = true;
+                bootLeft.visible = true;
+                trueRightLeg.visible = false;
+                trueLeftLeg.visible = false;
+                leftLeg.render(poseStack, buffer, light, overlay);
+                rightLeg.render(poseStack, buffer, light, overlay);
             }
         }
     }
@@ -154,13 +172,23 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
                 .texOffs(8, 87).addBox(-1.0F, -5.25F, -0.25F, 0.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
                 .texOffs(7, 89).addBox(-1.0F, -7.25F, -1.25F, 0.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.0946F, -2.7065F, -2.1491F, -0.9071F, 0.8312F, 1.7963F));
 
-        PartDefinition armorRightLeg = partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(20, 37).addBox(-2.75F, 0.0F, -2.5F, 5.0F, 8.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition pollen_right = armorRightLeg.addOrReplaceChild("right_pollen", CubeListBuilder.create().texOffs(40, 37).addBox(1.005F, 1.25F, -2.995F, 3.99F, 4.0F, 5.99F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, 0.0F, 0.0F));
+        PartDefinition right_leg_main = partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition armorLeftLeg = partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(0, 37).addBox(-2.25F, 0.0F, -2.5F, 5.0F, 8.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, 0.0F, 0.0F));
+        PartDefinition right_leg = right_leg_main.addOrReplaceChild("true_right_leg", CubeListBuilder.create().texOffs(20, 37).addBox(-2.75F, 0.0F, -2.5F, 5.0F, 8.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition pollen_left = armorLeftLeg.addOrReplaceChild("left_pollen", CubeListBuilder.create().texOffs(0, 50).addBox(2.995F, 1.25F, -2.995F, 3.99F, 4.0F, 5.99F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, 0.0F, 0.0F));
+        PartDefinition pollen_right = right_leg.addOrReplaceChild("pollen_right", CubeListBuilder.create().texOffs(40, 37).addBox(1.005F, 1.25F, -2.995F, 4.0F, 4.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, 0.0F, 0.0F));
+
+        PartDefinition bootRight = right_leg_main.addOrReplaceChild("right_boot", CubeListBuilder.create().texOffs(52, 44).addBox(-1.0F, 6.25F, -5.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)).texOffs(0, 96).addBox(-3.0F, 7.0F, -4.0F, 6.0F, 5.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition left_leg_main = partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition left_leg = left_leg_main.addOrReplaceChild("true_left_leg", CubeListBuilder.create().texOffs(0, 37).addBox(-2.25F, 0.0F, -2.5F, 5.0F, 8.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition pollen_left = left_leg.addOrReplaceChild("pollen_left", CubeListBuilder.create().texOffs(0, 50).addBox(3.0F, 1.25F, -3.0F, 4.0F, 4.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, 0.0F, 0.0F));
+
+        PartDefinition bootLeft = left_leg_main.addOrReplaceChild("left_boot", CubeListBuilder.create().texOffs(0, 96).addBox(-3.0F, 7.0F, -4.0F, 6.0F, 5.0F, 7.0F, new CubeDeformation(0.0F)).texOffs(52, 44).addBox(-1.0F, 6.25F, -5.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
 
         return LayerDefinition.create(meshdefinition, 128, 128);
     }
@@ -209,13 +237,27 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
                 .texOffs(0, 82).addBox(-1.0F, -5.25F, -0.25F, 0.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
                 .texOffs(0, 80).addBox(-1.0F, -7.25F, -1.25F, 0.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.8446F, -2.9565F, -2.8991F, -0.9071F, 0.8312F, 1.7963F));
 
-        PartDefinition leftLeg = partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(20, 37).addBox(-2.5F, 0.0F, -2.5F, 5.0F, 8.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(2.0F, 0.0F, 0.0F));
+        PartDefinition right_leg_main = partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition leftPollen = leftLeg.addOrReplaceChild("left_pollen", CubeListBuilder.create().texOffs(40, 37).addBox(0.005F, 1.5F, -2.995F, 2.99f, 5.0F, 5.99f, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition right_leg = right_leg_main.addOrReplaceChild("true_right_leg", CubeListBuilder.create().texOffs(0, 37).addBox(-2.5F, 0.0F, -2.5F, 5.0F, 8.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition rightLeg = partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(0, 37).addBox(-2.5F, 0.0F, -2.5F, 5.0F, 8.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, 0.0F, 0.0F));
+        PartDefinition pollen_right = right_leg.addOrReplaceChild("pollen_right", CubeListBuilder.create().texOffs(40, 37).addBox(-2.995F, 1.5F, -3.0F, 3.0F, 5.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition rightPollen = rightLeg.addOrReplaceChild("right_pollen", CubeListBuilder.create().texOffs(0, 50).addBox(-2.995F, 1.5F, -2.995F, 2.99f, 5.0F, 5.99f, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition right_boot = right_leg_main.addOrReplaceChild("right_boot", CubeListBuilder.create()
+                .texOffs(0, 96).addBox(-3.0F, 7.0F, -3.0F, 5.0F, 5.0F, 6.0F, new CubeDeformation(0.005F))
+                .texOffs(22, 107).addBox(-2.901F, 7.9F, -2.1F, 5.0F, 4.0F, 5.0F, new CubeDeformation(-0.1F)),
+                PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition left_leg_main = partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition left_leg = left_leg_main.addOrReplaceChild("true_left_leg", CubeListBuilder.create().texOffs(20, 37).addBox(-2.5F, 0.0F, -2.5F, 5.0F, 8.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition pollen_left = left_leg.addOrReplaceChild("pollen_left", CubeListBuilder.create().texOffs(0, 50).addBox(0.005F, 1.5F, -3.0F, 3.0F, 5.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition left_boot = left_leg_main.addOrReplaceChild("left_boot", CubeListBuilder.create()
+                .texOffs(0, 96).addBox(-2.0F, 7.0F, -3.0F, 5.0F, 5.0F, 6.0F, new CubeDeformation(0.005F))
+                .texOffs(22, 98).addBox(-2.099F, 7.9F, -2.1F, 5.0F, 4.0F, 5.0F, new CubeDeformation(-0.1F)),
+                PartPose.offset(0.0F, 0.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 128, 128);
     }

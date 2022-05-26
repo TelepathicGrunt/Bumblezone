@@ -94,6 +94,8 @@ public class BumblezoneClient implements ClientModInitializer {
         BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2.registerRenderer().run();
         BzItems.HONEY_BEE_LEGGINGS_1.registerRenderer().run();
         BzItems.HONEY_BEE_LEGGINGS_2.registerRenderer().run();
+        BzItems.CARPENTER_BEE_BOOTS_1.registerRenderer().run();
+        BzItems.CARPENTER_BEE_BOOTS_2.registerRenderer().run();
 
         MenuScreens.register(BzMenuTypes.STRICT_9x1, StrictChestScreen::new);
         MenuScreens.register(BzMenuTypes.STRICT_9x2, StrictChestScreen::new);

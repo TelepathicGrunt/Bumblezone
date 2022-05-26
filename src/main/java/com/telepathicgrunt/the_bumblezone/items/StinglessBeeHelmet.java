@@ -111,7 +111,8 @@ public class StinglessBeeHelmet extends BeeArmor {
     public static boolean isAllBeeArmorOn(Entity entity) {
         return !StinglessBeeHelmet.getEntityBeeHelmet(entity).isEmpty() &&
                 !BumbleBeeChestplate.getEntityBeeChestplate(entity).isEmpty() &&
-                !HoneyBeeLeggings.getEntityBeeLegging(entity).isEmpty();
+                !HoneyBeeLeggings.getEntityBeeLegging(entity).isEmpty() &&
+                !CarpenterBeeBoots.getEntityBeeBoots(entity).isEmpty();
     }
 
     public static ItemStack getEntityBeeHelmet(Entity entity) {
