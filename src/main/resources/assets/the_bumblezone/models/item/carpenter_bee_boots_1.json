@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "the_bumblezone:item/carpenter_bee_boots_1",
+        "layer1": "the_bumblezone:item/carpenter_bee_boots_1_overlay"
+    }
+}

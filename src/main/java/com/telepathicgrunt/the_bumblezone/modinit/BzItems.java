@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.items.BzBlockItem;
 import com.telepathicgrunt.the_bumblezone.items.BzHoneyCrystalBlockItem;
 import com.telepathicgrunt.the_bumblezone.items.BzMusicDiscs;
 import com.telepathicgrunt.the_bumblezone.items.BzSmartBucket;
+import com.telepathicgrunt.the_bumblezone.items.CarpenterBeeBoots;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
@@ -89,6 +90,8 @@ public class BzItems {
     public static final BumbleBeeChestplate TRANS_BUMBLE_BEE_CHESTPLATE_2 = new BumbleBeeChestplate(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.CHEST, new Item.Properties().tab(BzItems.BUMBLEZONE_CREATIVE_TAB), true, 2);
     public static final StinglessBeeHelmet STINGLESS_BEE_HELMET_1 = new StinglessBeeHelmet(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.HEAD, new Item.Properties().tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 1);
     public static final StinglessBeeHelmet STINGLESS_BEE_HELMET_2 = new StinglessBeeHelmet(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.HEAD, new Item.Properties().tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 2);
+    public static final CarpenterBeeBoots CARPENTER_BEE_BOOTS_1 = new CarpenterBeeBoots(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.FEET, new Item.Properties().tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 1);
+    public static final CarpenterBeeBoots CARPENTER_BEE_BOOTS_2 = new CarpenterBeeBoots(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.FEET, new Item.Properties().tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 2);
 
     /**
      * registers the item version of the Blocks so they now exist in the registry
@@ -128,5 +131,7 @@ public class BzItems {
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_trans_2"), TRANS_BUMBLE_BEE_CHESTPLATE_2);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet_1"), STINGLESS_BEE_HELMET_1);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet_2"), STINGLESS_BEE_HELMET_2);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots_1"), CARPENTER_BEE_BOOTS_1);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots_2"), CARPENTER_BEE_BOOTS_2);
     }
 }
