@@ -6,6 +6,22 @@
       "required": true
     },
     {
+      "id": "the_bumblezone:porous_honeycomb_block",
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:filled_porous_honeycomb_block",
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:empty_honeycomb_brood_block",
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:honeycomb_brood_block",
+      "required": true
+    },
+    {
       "id": "beebetter:beeswax",
       "required": false
     },
