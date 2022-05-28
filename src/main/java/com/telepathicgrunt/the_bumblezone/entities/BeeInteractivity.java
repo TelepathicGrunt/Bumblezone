@@ -114,8 +114,7 @@ public class BeeInteractivity {
             ItemStack itemstack = playerEntity.getItemInHand(hand);
             Item item = itemstack.getItem();
 
-            // right clicking on pollinated bee with empty hand or pollen puff with room, gets pollen puff into hand.
-            // else, if done with watery items or pollen puff without room, drops pollen puff in world
+            // right clicking on pollinated bee with watery items will drops pollen puff in world
             if(beeEntity.hasNectar()) {
                 if((itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water")) ||
                         item == Items.WET_SPONGE ||

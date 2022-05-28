@@ -17,6 +17,17 @@ Added Carpenter Bee Boots! These boots will automine many kinds of wood, beehive
  Both of these behaviors are controlled by these two block tags that determine what to mine or what to wall hang on:
  `the_bumblezone:carpenter_bee_boots_climbables` and `the_bumblezone:carpenter_bee_boots_mineables`
 
+Stingless Bee Helmet is now buffed to reduce Poison status effect time slowly even when you do not have the full bee armor set.
+ If full armor is on, then it halves the Poison status effect time.
+
+Stingless Bee Helmet now lets you put any entity that extends BeeEntity onto your head by right clicking the mob with an empty hand!
+ The bee will leave your head if you take damage, crouch, has Wrath of the Hive effect, or 30 seconds passes.
+ If full bee armor is on, the 30 second timer is disabled!
+
+Honey Bee Leggings is now buffed to reduce Slowness status effect time slowly even when you do not have the full bee armor set.
+ If full armor is on, then it halves the Slowness status effect time.
+ Also fixed the Slowness effect timer not showing the correct sped up time when the leggings is active.
+
 ##### Entities:
 Added null world check to checking if bees should be angry at spawned entities. 
  Prevents crash with mods that create an entity with a null world. Don't ask why...

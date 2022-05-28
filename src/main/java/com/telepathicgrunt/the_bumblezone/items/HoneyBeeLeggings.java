@@ -71,18 +71,16 @@ public class HoneyBeeLeggings extends BeeArmor {
                     }
                 }
             }
+        }
 
-            if(isAllBeeArmorOn) {
-                MobEffectInstance slowness = entity.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
-                if (slowness != null) {
-                    ((MobEffectInstanceAccessor) slowness).callTickDownDuration();
-                    if(!world.isClientSide() &&
-                        world.random.nextFloat() < 0.004f &&
-                        itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
-                    {
-                        itemstack.hurtAndBreak(1, entity, (playerEntity) -> {});
-                    }
-                }
+        MobEffectInstance slowness = entity.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
+        if (slowness != null && (isAllBeeArmorOn || world.getGameTime() % 2 == 0)) {
+            ((MobEffectInstanceAccessor) slowness).callTickDownDuration();
+            if(!world.isClientSide() &&
+                world.random.nextFloat() < 0.004f &&
+                itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
+            {
+                itemstack.hurtAndBreak(1, entity, (playerEntity) -> {});
             }
         }
 
