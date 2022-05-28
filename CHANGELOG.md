@@ -28,6 +28,8 @@ Honey Bee Leggings is now buffed to reduce Slowness status effect time slowly ev
  If full armor is on, then it halves the Slowness status effect time.
  Also fixed the Slowness effect timer not showing the correct sped up time when the leggings is active.
 
+Added stat entries for all bee armor to the Statistics screen you can find when you pause the game.
+
 ##### Entities:
 Added null world check to checking if bees should be angry at spawned entities.
  Prevents crash with mods that create an entity with a null world. Don't ask why...

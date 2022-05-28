@@ -97,9 +97,9 @@ public class CarpenterBeeBoots extends BeeArmor {
                         }
 
                         if(blockBroken && player instanceof ServerPlayer serverPlayer) {
-                            serverPlayer.awardStat(BzStats.CARPENTER_BEES_BOOTS_MINED_BLOCKS_RL);
+                            serverPlayer.awardStat(BzStats.CARPENTER_BEE_BOOTS_MINED_BLOCKS_RL);
 
-                            if(serverPlayer.getStats().getValue(Stats.CUSTOM.get(BzStats.CARPENTER_BEES_BOOTS_MINED_BLOCKS_RL, StatFormatter.DEFAULT)) >= 200) {
+                            if(serverPlayer.getStats().getValue(Stats.CUSTOM.get(BzStats.CARPENTER_BEE_BOOTS_MINED_BLOCKS_RL, StatFormatter.DEFAULT)) >= 200) {
                                 BzCriterias.CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER.trigger(serverPlayer);
                             }
                         }
@@ -172,9 +172,9 @@ public class CarpenterBeeBoots extends BeeArmor {
                                     tag.putInt("hangTime", hangTime + 1);
 
                                     if(player instanceof ServerPlayer serverPlayer) {
-                                        serverPlayer.awardStat(BzStats.CARPENTER_BEES_BOOTS_WALL_HANG_TIME_RL);
+                                        serverPlayer.awardStat(BzStats.CARPENTER_BEE_BOOTS_WALL_HANG_TIME_RL);
 
-                                        if(serverPlayer.getStats().getValue(Stats.CUSTOM.get(BzStats.CARPENTER_BEES_BOOTS_WALL_HANG_TIME_RL, StatFormatter.DEFAULT)) >= 4000) {
+                                        if(serverPlayer.getStats().getValue(Stats.CUSTOM.get(BzStats.CARPENTER_BEE_BOOTS_WALL_HANG_TIME_RL, StatFormatter.DEFAULT)) >= 4000) {
                                             BzCriterias.CARPENTER_BEE_BOOTS_WALL_HANGING_TRIGGER.trigger(serverPlayer);
                                         }
                                     }

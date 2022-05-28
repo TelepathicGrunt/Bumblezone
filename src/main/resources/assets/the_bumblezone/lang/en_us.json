@@ -109,8 +109,11 @@
   "filled_map.the_bumblezone:honey_cave_room": "Honey Cave Room Map",
   "filled_map.the_bumblezone:cell_maze": "Cell Maze Map",
 
-  "stat.the_bumblezone.carpenter_bees_boots_mined_blocks": "Bz: Carpenter Boots Mined Blocks",
-  "stat.the_bumblezone.carpenter_bees_boots_wall_hang_time": "Bz: Carpenter Boots Hanging Time",
+  "stat.the_bumblezone.carpenter_bee_boots_mined_blocks": "Bz: Carpenter Boots Mined Blocks",
+  "stat.the_bumblezone.carpenter_bee_boots_wall_hang_time": "Bz: Carpenter Boots Hanging Time",
+  "stat.the_bumblezone.stingless_bee_helmet_bee_rider": "Bz: Stingless Helmet Bee Time",
+  "stat.the_bumblezone.bumble_bee_chestplate_fly_time": "Bz: Bumble Chestplate Fly Time",
+  "stat.the_bumblezone.honey_bee_leggings_flower_pollen": "Bz: Honey Leg Flower Pollen",
 
   "advancements.the_bumblezone.root.title": "The Buzzing Bumbling Bumblezone!",
   "advancements.the_bumblezone.root.description": "Enter The Bumblezone dimension by any means",
