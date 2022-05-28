@@ -97,7 +97,12 @@ public class StinglessBeeHelmet extends BeeArmor {
         int beeRidingTimer = tag.getInt("beeRidingTimer");
         boolean hasWrath = entity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get());
         if(hasBeeRider || hasWrath) {
-            if (hasWrath || entity.isHurt() || entity.isCrouching() || (!isAllBeeArmorOn && beeRidingTimer > 600)) {
+            if (hasWrath ||
+                entity.isUnderWater() ||
+                entity.isHurt() ||
+                entity.isCrouching() ||
+                (!isAllBeeArmorOn && beeRidingTimer > 600))
+            {
                 for (Entity passenger : entity.getPassengers()) {
                     if (passenger instanceof Bee bee) {
                         bee.stopRiding();
