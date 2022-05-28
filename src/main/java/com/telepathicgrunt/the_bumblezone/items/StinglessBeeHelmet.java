@@ -3,10 +3,12 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.effects.MobEffectInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetSightPacket;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -109,6 +111,10 @@ public class StinglessBeeHelmet extends BeeArmor {
             }
             else if(!world.isClientSide()) {
                 tag.putInt("beeRidingTimer", beeRidingTimer + 1);
+
+                if(entity instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.awardStat(BzStats.STINGLESS_BEE_HELMET_BEE_RIDER_RL);
+                }
             }
         }
 

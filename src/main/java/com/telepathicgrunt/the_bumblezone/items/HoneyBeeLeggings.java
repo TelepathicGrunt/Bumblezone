@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
@@ -66,8 +67,9 @@ public class HoneyBeeLeggings extends BeeArmor {
                 }
                 else if(random.nextFloat() < (isAllBeeArmorOn ? 0.01f : 0.003f) && withinBlock.is(BlockTags.FLOWERS)) {
                     setPollinated(itemstack);
-                    if(entity instanceof ServerPlayer) {
-                        BzCriterias.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER.trigger((ServerPlayer) entity);
+                    if(entity instanceof ServerPlayer serverPlayer) {
+                        BzCriterias.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER.trigger(serverPlayer);
+                        serverPlayer.awardStat(BzStats.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_RL);
                     }
                 }
             }
