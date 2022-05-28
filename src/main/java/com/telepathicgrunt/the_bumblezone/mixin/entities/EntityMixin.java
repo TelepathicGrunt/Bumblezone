@@ -1,11 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
+import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
@@ -15,6 +18,7 @@ import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
@@ -130,5 +134,11 @@ public abstract class EntityMixin {
         if(!this.isSwimming() && this.isSprinting() && this.isUnderWater() && !this.isPassenger()) {
             this.setSwimming(this.level.getFluidState(this.blockPosition()).is(BzTags.BZ_HONEY_FLUID));
         }
+    }
+
+    @ModifyVariable(method = "positionRider(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity$MoveFunction;)V",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;getX()D"))
+    private double thebumblezone_beeRidingOffset(double yOffset, Entity entity) {
+        return StinglessBeeHelmet.beeRidingOffset(yOffset, ((Entity)(Object)this), entity);
     }
 }

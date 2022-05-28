@@ -64,25 +64,23 @@ public class HoneyBeeLeggings extends BeeArmor {
                         world.setBlock(entity.blockPosition(), withinBlock.setValue(PileOfPollen.LAYERS, newLevel), 3);
                     }
                 }
-                else if(random.nextFloat() < (isAllBeeArmorOn ? 0.01f : 0.003f) && withinBlock.is(BlockTags.FLOWERS)) {
+                else if(random.nextFloat() < (isAllBeeArmorOn ? 0.01f : 0.005f) && withinBlock.is(BlockTags.FLOWERS)) {
                     setPollinated(itemstack);
                     if(entity instanceof ServerPlayer) {
                         BzCriterias.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER.trigger((ServerPlayer) entity);
                     }
                 }
             }
+        }
 
-            if(isAllBeeArmorOn) {
-                MobEffectInstance slowness = entity.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
-                if (slowness != null) {
-                    ((MobEffectInstanceAccessor) slowness).callTickDownDuration();
-                    if(!world.isClientSide() &&
-                        world.random.nextFloat() < 0.004f &&
-                        itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
-                    {
-                        itemstack.hurtAndBreak(1, entity, (playerEntity) -> {});
-                    }
-                }
+        MobEffectInstance slowness = entity.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
+        if (slowness != null && (isAllBeeArmorOn || world.getGameTime() % 2 == 0)) {
+            ((MobEffectInstanceAccessor) slowness).callTickDownDuration();
+            if(!world.isClientSide() &&
+                world.random.nextFloat() < 0.004f &&
+                itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
+            {
+                itemstack.hurtAndBreak(1, entity, (playerEntity) -> {});
             }
         }
 

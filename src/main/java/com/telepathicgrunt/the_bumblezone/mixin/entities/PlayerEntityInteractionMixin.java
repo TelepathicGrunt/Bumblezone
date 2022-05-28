@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.entities;
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.CreatingHoneySlime;
+import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -23,9 +24,11 @@ public class PlayerEntityInteractionMixin {
     @Inject(method = "interactOn",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 0),
             cancellable = true)
-    private void thebumblezone_onBeeFeeding(Entity entity, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+    private void thebumblezone_onBeeInteract(Entity entity, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if(entity instanceof Bee beeEntity) {
             if(BeeInteractivity.beeFeeding(entity.level, ((Player)(Object)this), hand, beeEntity) == InteractionResult.SUCCESS)
+                cir.setReturnValue(InteractionResult.SUCCESS);
+            else if(StinglessBeeHelmet.addBeePassenger(entity.level, ((Player)(Object)this), hand, beeEntity) == InteractionResult.SUCCESS)
                 cir.setReturnValue(InteractionResult.SUCCESS);
             else if(BeeInteractivity.beeUnpollinating(entity.level, ((Player)(Object)this), hand, beeEntity) == InteractionResult.SUCCESS)
                 cir.setReturnValue(InteractionResult.SUCCESS);
