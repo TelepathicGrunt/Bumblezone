@@ -17,6 +17,10 @@ Added Carpenter Bee Boots! These boots will automine many kinds of wood, beehive
  Both of these behaviors are controlled by these two block tags that determine what to mine or what to wall hang on:
  `the_bumblezone:carpenter_bee_boots_climbables` and `the_bumblezone:carpenter_bee_boots_mineables`
 
+##### Entities:
+Added null world check to checking if bees should be angry at spawned entities. 
+ Prevents crash with mods that create an entity with a null world. Don't ask why...
+
 ##### Config:
 Added enableExitTeleportation and enableEntranceTeleportation config options to let
  players disable Bumblezone's teleportation methods into and out of the Bumblezone dimension.
