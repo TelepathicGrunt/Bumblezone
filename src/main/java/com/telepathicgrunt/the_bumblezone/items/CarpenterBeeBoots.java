@@ -1,15 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.tags.BlockTags;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.StatFormatter;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -22,7 +23,6 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -90,10 +90,18 @@ public class CarpenterBeeBoots extends BeeArmor {
                                 belowBlockState,
                                 blockEntity,
                                 beeBoots);
-                        world.destroyBlock(belowBlockPos, false, player);
+                        boolean blockBroken = world.destroyBlock(belowBlockPos, false, player);
 
                         if(world.random.nextFloat() < 0.045) {
                             beeBoots.hurtAndBreak(1, player, (playerEntity) -> {});
+                        }
+
+                        if(blockBroken && player instanceof ServerPlayer serverPlayer) {
+                            serverPlayer.awardStat(BzStats.CARPENTER_BEES_BOOTS_MINED_BLOCKS_RL);
+
+                            if(serverPlayer.getStats().getValue(Stats.CUSTOM.get(BzStats.CARPENTER_BEES_BOOTS_MINED_BLOCKS_RL, StatFormatter.DEFAULT)) >= 200) {
+                                BzCriterias.CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER.trigger(serverPlayer);
+                            }
                         }
 
                         tag.putInt("lastSentState", -1);
@@ -136,7 +144,7 @@ public class CarpenterBeeBoots extends BeeArmor {
             for (float xOffset = -0.45f; xOffset <= 0.45f; xOffset += 0.45f) {
                 for (float zOffset = -0.45f; zOffset <= 0.45f; zOffset += 0.45f) {
                     if(xOffset != 0 && zOffset != 0) {
-                        BlockPos posToCheck = new BlockPos(player.position().add(xOffset, 0.25f, zOffset));
+                        BlockPos posToCheck = new BlockPos(player.position().add(xOffset, 0.057f, zOffset));
                         BlockState sideBlockState = world.getBlockState(posToCheck);
                         if (sideBlockState.is(BzTags.CARPENTER_BEE_BOOTS_CLIMBABLES)) {
                             double newDeltaY = Math.min(playerDeltaY * 0.9d + 0.07d, -0.0055);
@@ -162,6 +170,14 @@ public class CarpenterBeeBoots extends BeeArmor {
                                 }
                                 else {
                                     tag.putInt("hangTime", hangTime + 1);
+
+                                    if(player instanceof ServerPlayer serverPlayer) {
+                                        serverPlayer.awardStat(BzStats.CARPENTER_BEES_BOOTS_WALL_HANG_TIME_RL);
+
+                                        if(serverPlayer.getStats().getValue(Stats.CUSTOM.get(BzStats.CARPENTER_BEES_BOOTS_WALL_HANG_TIME_RL, StatFormatter.DEFAULT)) >= 4000) {
+                                            BzCriterias.CARPENTER_BEE_BOOTS_WALL_HANGING_TRIGGER.trigger(serverPlayer);
+                                        }
+                                    }
                                 }
                             }
 

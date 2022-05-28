@@ -45,6 +45,12 @@
           },
           {
             "items": [
+              "the_bumblezone:carpenter_bee_boots_1",
+              "the_bumblezone:carpenter_bee_boots_2"
+            ]
+          },
+          {
+            "items": [
               "the_bumblezone:stinger_spear"
             ]
           }
