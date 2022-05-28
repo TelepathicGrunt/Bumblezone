@@ -21,7 +21,7 @@ Stingless Bee Helmet is now buffed to reduce Poison status effect time slowly ev
  If full armor is on, then it halves the Poison status effect time.
 
 Stingless Bee Helmet now lets you put any entity that extends BeeEntity onto your head by right clicking the mob with an empty hand!
- The bee will leave your head if you take damage, crouch, has Wrath of the Hive effect, or 30 seconds passes. 
+ The bee will leave your head if you take damage, crouch, go underwater, has Wrath of the Hive effect, or 30 seconds passes. 
  If full bee armor is on, the 30 second timer is disabled!
 
 Honey Bee Leggings is now buffed to reduce Slowness status effect time slowly even when you do not have the full bee armor set.
