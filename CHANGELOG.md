@@ -3,6 +3,9 @@
 ##### Items:
 Play the missing glass pickup sound when using Glass Bottles on Honey Fluid source blocks.
 
+Making Honey Bucket and turning Honey Buckets into Honey Bottles now requires 4 bottles instead of 3.
+ Prevents duplication bugs with other mods that assumes bottles are 1:4 ratio to buckets.
+
 ##### Armor:
 Fixed issue where Bee armor pants and chestplate may not show the right animation/models based on itemstack nbt state.
  (My model cache wasn't correctly done)

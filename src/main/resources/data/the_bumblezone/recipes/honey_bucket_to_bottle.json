@@ -13,10 +13,13 @@
     },
     {
       "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "minecraft:glass_bottle"
     }
   ],
   "result": {
     "item": "minecraft:honey_bottle",
-    "count": 3
+    "count": 4
   }
 }
