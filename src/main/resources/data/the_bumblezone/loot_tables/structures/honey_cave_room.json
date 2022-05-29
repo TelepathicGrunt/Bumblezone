@@ -442,6 +442,21 @@
       ]
     },
     {
+      "rolls": 0,
+      "bonus_rolls": 1,
+      "entries": [
+        {
+          "name": "the_bumblezone:honey_compass",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 10
+        }
+      ]
+    },
+    {
       "rolls": 1,
       "entries": [
         {

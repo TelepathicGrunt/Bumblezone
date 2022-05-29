@@ -19,9 +19,9 @@ public class HoneyCrystalShield extends ShieldItem {
     private static final int[] shieldDurabilityBoostPerLevel = new int[]{0,20,45,75,110,150,195,245,316,632};
     private static final int maxShieldLevel = shieldDurabilityBoostPerLevel.length - 1;
 
-    public HoneyCrystalShield() {
+    public HoneyCrystalShield(Properties properties) {
         //starts off with 40 durability so it is super weak
-        super(new Item.Properties().durability(40).tab(BzItems.BUMBLEZONE_CREATIVE_TAB));
+        super(properties.durability(40));
     }
 
     /**

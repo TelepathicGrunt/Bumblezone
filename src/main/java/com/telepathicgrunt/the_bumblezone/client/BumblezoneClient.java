@@ -13,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.PileOfPollenRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.StingerSpearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.StingerSpearRenderer;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
+import com.telepathicgrunt.the_bumblezone.items.HoneyCompass;
 import com.telepathicgrunt.the_bumblezone.mixin.client.DimensionSpecialEffectsAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.client.RenderingRegistryAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -91,6 +92,12 @@ public class BumblezoneClient {
                                     livingEntity.isUsingItem() &&
                                     livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
             );
+
+            // Allows honey compass to render the correct texture
+            ItemProperties.register(
+                    BzItems.HONEY_COMPASS.get(),
+                    new ResourceLocation("angle"),
+                    HoneyCompass.getClampedItemPropertyFunction());
 
             MenuScreens.register(BzMenuTypes.STRICT_9x1.get(), StrictChestScreen::new);
             MenuScreens.register(BzMenuTypes.STRICT_9x2.get(), StrictChestScreen::new);
