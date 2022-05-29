@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "the_bumblezone:item/honey_compass/honey_compass_01"
+  }
+}

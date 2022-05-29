@@ -68,6 +68,7 @@ dependencies {
 	include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_version}"
 	include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_version}"
 
+	// https://github.com/CafeteriaGuild/fake-player-api
 	modImplementation "dev.cafeteria:fake-player-api:${project.fake_player_version}"
 	include "dev.cafeteria:fake-player-api:${project.fake_player_version}"
 

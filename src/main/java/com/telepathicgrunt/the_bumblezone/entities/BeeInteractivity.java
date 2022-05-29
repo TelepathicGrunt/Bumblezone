@@ -32,77 +32,73 @@ import net.minecraft.world.level.Level;
 public class BeeInteractivity {
 
     // heal bees with sugar water bottle or honey bottle
-    public static InteractionResult beeFeeding(Level world, Player playerEntity, InteractionHand hand, Entity target) {
-        if (target instanceof Bee beeEntity) {
+    public static InteractionResult beeFeeding(Level world, Player playerEntity, InteractionHand hand, Bee beeEntity) {
+        ItemStack itemstack = playerEntity.getItemInHand(hand);
+        ResourceLocation itemRL = Registry.ITEM.getKey(itemstack.getItem());
 
-            ItemStack itemstack = playerEntity.getItemInHand(hand);
-            ResourceLocation itemRL = Registry.ITEM.getKey(itemstack.getItem());
+        // Disallow all non-tagged items from being fed to bees
+        if(!itemstack.is(BzTags.BEE_FEEDING_ITEMS))
+            return InteractionResult.PASS;
+        if(world.isClientSide())
+            return InteractionResult.SUCCESS;
 
-            // Disallow all non-tagged items from being fed to bees
-            if(!itemstack.is(BzTags.BEE_FEEDING_ITEMS))
-                return InteractionResult.PASS;
-            if(world.isClientSide())
-                return InteractionResult.SUCCESS;
+        boolean removedWrath;
+        ItemStack itemstackOriginal = itemstack.copy();
 
-            boolean removedWrath;
-            ItemStack itemstackOriginal = itemstack.copy();
-
-            // Special cased items so the ActionResultType continues and make the item's behavior not lost.
-            if (itemstackOriginal.getItem() == BzItems.BEE_BREAD) {
-                removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
-
-                if(removedWrath && playerEntity instanceof ServerPlayer) {
-                    BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayer) playerEntity, itemstackOriginal);
-                }
-
-                playerEntity.swing(hand, true);
-                return InteractionResult.PASS;
-            }
-
-            if (itemstack.is(BzTags.HONEY_BUCKETS)) {
-                beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
-                removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);
-                if (beeEntity.isBaby()) {
-                    if (world.getRandom().nextBoolean()) {
-                        beeEntity.setBaby(false);
-                        if(playerEntity instanceof ServerPlayer) {
-                            BzCriterias.HONEY_BUCKET_BEE_GROW_TRIGGER.trigger((ServerPlayer) playerEntity);
-                        }
-                    }
-                }
-                else {
-                    int nearbyAdultBees = 0;
-                    for (Bee nearbyBee : world.getEntitiesOfClass(Bee.class, beeEntity.getBoundingBox().inflate(4), beeEntity1 -> true)) {
-                        nearbyBee.setInLove(playerEntity);
-                        if(!nearbyBee.isBaby()) nearbyAdultBees++;
-                    }
-
-                    if(nearbyAdultBees >= 2 && playerEntity instanceof ServerPlayer) {
-                        BzCriterias.HONEY_BUCKET_BEE_LOVE_TRIGGER.trigger((ServerPlayer) playerEntity);
-                    }
-                }
-            }
-            else if(itemRL.getPath().contains("honey")) {
-                beeEntity.heal(2);
-                removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
-            }
-            else{
-                beeEntity.heal(1);
-                removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.1f, 3);
-            }
-
-            if (!playerEntity.isCreative()) {
-                GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, true, true);
-            }
+        // Special cased items so the ActionResultType continues and make the item's behavior not lost.
+        if (itemstackOriginal.getItem() == BzItems.BEE_BREAD) {
+            removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
 
             if(removedWrath && playerEntity instanceof ServerPlayer) {
                 BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayer) playerEntity, itemstackOriginal);
             }
 
             playerEntity.swing(hand, true);
-            return InteractionResult.SUCCESS;
+            return InteractionResult.PASS;
         }
-        return InteractionResult.PASS;
+
+        if (itemstack.is(BzTags.HONEY_BUCKETS)) {
+            beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
+            removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);
+            if (beeEntity.isBaby()) {
+                if (world.getRandom().nextBoolean()) {
+                    beeEntity.setBaby(false);
+                    if(playerEntity instanceof ServerPlayer) {
+                        BzCriterias.HONEY_BUCKET_BEE_GROW_TRIGGER.trigger((ServerPlayer) playerEntity);
+                    }
+                }
+            }
+            else {
+                int nearbyAdultBees = 0;
+                for (Bee nearbyBee : world.getEntitiesOfClass(Bee.class, beeEntity.getBoundingBox().inflate(4), beeEntity1 -> true)) {
+                    nearbyBee.setInLove(playerEntity);
+                    if(!nearbyBee.isBaby()) nearbyAdultBees++;
+                }
+
+                if(nearbyAdultBees >= 2 && playerEntity instanceof ServerPlayer) {
+                    BzCriterias.HONEY_BUCKET_BEE_LOVE_TRIGGER.trigger((ServerPlayer) playerEntity);
+                }
+            }
+        }
+        else if(itemRL.getPath().contains("honey")) {
+            beeEntity.heal(2);
+            removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
+        }
+        else{
+            beeEntity.heal(1);
+            removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.1f, 3);
+        }
+
+        if (!playerEntity.isCreative()) {
+            GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, true, true);
+        }
+
+        if(removedWrath && playerEntity instanceof ServerPlayer) {
+            BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayer) playerEntity, itemstackOriginal);
+        }
+
+        playerEntity.swing(hand, true);
+        return InteractionResult.SUCCESS;
     }
 
 
@@ -111,13 +107,12 @@ public class BeeInteractivity {
             ItemStack itemstack = playerEntity.getItemInHand(hand);
             Item item = itemstack.getItem();
 
-            // right clicking on pollinated bee with empty hand or pollen puff with room, gets pollen puff into hand.
-            // else, if done with watery items or pollen puff without room, drops pollen puff in world
+            // right clicking on pollinated bee with watery items will drops pollen puff in world
             if(beeEntity.hasNectar()) {
                 if((itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water")) ||
-                        item == Items.WET_SPONGE ||
-                        item == BzItems.SUGAR_WATER_BOTTLE ||
-                        (item instanceof BucketItem && ((BucketItemAccessor) item).thebumblezone_getFluid().is(FluidTags.WATER))) {
+                    item == Items.WET_SPONGE ||
+                    item == BzItems.SUGAR_WATER_BOTTLE ||
+                    (item instanceof BucketItem && ((BucketItemAccessor) item).thebumblezone_getFluid().is(FluidTags.WATER))) {
 
                     if(world.isClientSide())
                         return InteractionResult.SUCCESS;

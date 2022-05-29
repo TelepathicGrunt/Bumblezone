@@ -6,13 +6,17 @@ import com.telepathicgrunt.the_bumblezone.advancements.GenericTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.ItemSpecificTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.RecipeDiscoveredTrigger;
 import net.fabricmc.fabric.api.object.builder.v1.advancement.CriterionRegistry;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.resources.ResourceLocation;
 
 public class BzCriterias {
     // CRITERIA TRIGGERS
     public static final GenericTrigger BEENERGIZED_MAXED_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "beenergized_maxed"));
+    public static final GenericTrigger BEE_CANNON_FULL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bee_cannon_full"));
     public static final ItemSpecificTrigger BEE_DROP_POLLEN_PUFF_TRIGGER = new ItemSpecificTrigger(new ResourceLocation(Bumblezone.MODID, "bee_drop_pollen_puff"));
     public static final GenericTrigger BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_max_flight"));
+    public static final GenericTrigger CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots_mined_blocks"));
+    public static final GenericTrigger CARPENTER_BEE_BOOTS_WALL_HANGING_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots_wall_hanging"));
     public static final GenericTrigger CLEANUP_HONEY_WEB_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "cleanup_honey_web"));
     public static final GenericTrigger CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "cleanup_sticky_honey_residue"));
     public static final GenericTrigger COMB_CUTTER_EXTRA_DROPS_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "comb_cutter_extra_drops"));
@@ -25,6 +29,7 @@ public class BzCriterias {
     public static final GenericTrigger HONEY_BUCKET_BROOD_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bucket_brood"));
     public static final GenericTrigger HONEY_BUCKET_POROUS_HONEYCOMB_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bucket_porous_honeycomb"));
     public static final GenericTrigger HONEY_COCOON_SILK_TOUCH_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_cocoon_silk_touch"));
+    public static final GenericTrigger HONEY_COMPASS_USE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_compass_use"));
     public static final GenericTrigger HONEY_CRYSTAL_IN_WATER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_crystal_in_water"));
     public static final GenericTrigger HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_crystal_shield_block_ineffectively"));
     public static final GenericTrigger HONEY_SLIME_CREATION_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_slime_creation"));
@@ -49,8 +54,11 @@ public class BzCriterias {
 
     public static void registerCriteriaTriggers() {
         CriterionRegistry.register(BEENERGIZED_MAXED_TRIGGER);
+        CriterionRegistry.register(BEE_CANNON_FULL_TRIGGER);
         CriterionRegistry.register(BEE_DROP_POLLEN_PUFF_TRIGGER);
         CriterionRegistry.register(BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER);
+        CriterionRegistry.register(CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER);
+        CriterionRegistry.register(CARPENTER_BEE_BOOTS_WALL_HANGING_TRIGGER);
         CriterionRegistry.register(CLEANUP_HONEY_WEB_TRIGGER);
         CriterionRegistry.register(CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER);
         CriterionRegistry.register(COMB_CUTTER_EXTRA_DROPS_TRIGGER);
@@ -63,6 +71,7 @@ public class BzCriterias {
         CriterionRegistry.register(HONEY_BUCKET_BROOD_TRIGGER);
         CriterionRegistry.register(HONEY_BUCKET_POROUS_HONEYCOMB_TRIGGER);
         CriterionRegistry.register(HONEY_COCOON_SILK_TOUCH_TRIGGER);
+        CriterionRegistry.register(HONEY_COMPASS_USE_TRIGGER);
         CriterionRegistry.register(HONEY_CRYSTAL_IN_WATER_TRIGGER);
         CriterionRegistry.register(HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER);
         CriterionRegistry.register(HONEY_SLIME_CREATION_TRIGGER);

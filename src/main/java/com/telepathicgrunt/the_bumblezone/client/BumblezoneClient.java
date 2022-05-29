@@ -11,6 +11,8 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HoneySlimeRendering;
 import com.telepathicgrunt.the_bumblezone.client.rendering.StingerSpearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.StingerSpearRenderer;
+import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
+import com.telepathicgrunt.the_bumblezone.items.HoneyCompass;
 import com.telepathicgrunt.the_bumblezone.mixin.client.DimensionSpecialEffectsAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.client.EntityRendererRegistryImplAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -33,12 +35,33 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.fabric.impl.client.particle.ParticleFactoryRegistryImpl;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.decoration.ItemFrame;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CompassItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
 public class BumblezoneClient implements ClientModInitializer {
@@ -82,6 +105,40 @@ public class BumblezoneClient implements ClientModInitializer {
                                 livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
         );
 
+        // Correct model when about to throw
+        FabricModelPredicateProviderRegistry.register(
+                BzItems.STINGER_SPEAR,
+                new ResourceLocation("throwing"),
+                (itemStack, world, livingEntity, int1) ->
+                        livingEntity != null &&
+                                livingEntity.isUsingItem() &&
+                                livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
+        );
+
+        // Allows honey compass to render the correct texture
+        FabricModelPredicateProviderRegistry.register(
+                BzItems.HONEY_COMPASS,
+                new ResourceLocation("angle"),
+                HoneyCompass.getClampedItemPropertyFunction());
+
+        // Correct model when about to fire
+        FabricModelPredicateProviderRegistry.register(
+                BzItems.BEE_CANNON,
+                new ResourceLocation("primed"),
+                (itemStack, world, livingEntity, int1) ->
+                        livingEntity != null &&
+                                livingEntity.isUsingItem() &&
+                                livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
+        );
+
+        // Correct model based on bees
+        FabricModelPredicateProviderRegistry.register(
+                BzItems.BEE_CANNON,
+                new ResourceLocation("bee_count"),
+                (itemStack, world, livingEntity, int1) ->
+                        BeeCannon.getNumberOfBees(itemStack) / 10f
+        );
+
         UpdateFallingBlockPacket.registerPacket();
         MobEffectClientSyncPacket.registerPacket();
 
@@ -93,6 +150,8 @@ public class BumblezoneClient implements ClientModInitializer {
         BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2.registerRenderer().run();
         BzItems.HONEY_BEE_LEGGINGS_1.registerRenderer().run();
         BzItems.HONEY_BEE_LEGGINGS_2.registerRenderer().run();
+        BzItems.CARPENTER_BEE_BOOTS_1.registerRenderer().run();
+        BzItems.CARPENTER_BEE_BOOTS_2.registerRenderer().run();
 
         MenuScreens.register(BzMenuTypes.STRICT_9x1, StrictChestScreen::new);
         MenuScreens.register(BzMenuTypes.STRICT_9x2, StrictChestScreen::new);

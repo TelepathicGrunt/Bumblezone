@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
@@ -49,7 +50,7 @@ public class HoneyBeeLeggings extends BeeArmor {
             if(entity.isCrouching() && isPollinated) {
                 removeAndSpawnPollen(world, entity.position(), itemstack);
                 if(!world.isClientSide() && world.random.nextFloat() < 0.1f) {
-                    itemstack.hurtAndBreak(1, entity, (playerEntity) -> {});
+                    itemstack.hurtAndBreak(1, entity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.LEGS));
                 }
             }
             else if(!entity.isCrouching() && !isPollinated && isSprinting) {
@@ -64,25 +65,24 @@ public class HoneyBeeLeggings extends BeeArmor {
                         world.setBlock(entity.blockPosition(), withinBlock.setValue(PileOfPollen.LAYERS, newLevel), 3);
                     }
                 }
-                else if(random.nextFloat() < (isAllBeeArmorOn ? 0.01f : 0.003f) && withinBlock.is(BlockTags.FLOWERS)) {
+                else if(random.nextFloat() < (isAllBeeArmorOn ? 0.01f : 0.005f) && withinBlock.is(BlockTags.FLOWERS)) {
                     setPollinated(itemstack);
-                    if(entity instanceof ServerPlayer) {
-                        BzCriterias.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER.trigger((ServerPlayer) entity);
+                    if(entity instanceof ServerPlayer serverPlayer) {
+                        BzCriterias.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER.trigger(serverPlayer);
+                        serverPlayer.awardStat(BzStats.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_RL);
                     }
                 }
             }
+        }
 
-            if(isAllBeeArmorOn) {
-                MobEffectInstance slowness = entity.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
-                if (slowness != null) {
-                    ((MobEffectInstanceAccessor) slowness).callTickDownDuration();
-                    if(!world.isClientSide() &&
-                        world.random.nextFloat() < 0.004f &&
-                        itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
-                    {
-                        itemstack.hurtAndBreak(1, entity, (playerEntity) -> {});
-                    }
-                }
+        MobEffectInstance slowness = entity.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
+        if (slowness != null && (isAllBeeArmorOn || world.getGameTime() % 2 == 0)) {
+            ((MobEffectInstanceAccessor) slowness).callTickDownDuration();
+            if(!world.isClientSide() &&
+                world.random.nextFloat() < 0.004f &&
+                itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
+            {
+                itemstack.hurtAndBreak(1, entity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.LEGS));
             }
         }
 

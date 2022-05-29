@@ -169,6 +169,7 @@ public class BeeAggression {
 
         //Also checks to make sure we are in the dimension.
         if (entity != null &&
+            entity.level != null &&
             !entity.level.isClientSide() &&
             entity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
             Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees &&

@@ -93,4 +93,17 @@ public class BzDimensionConfig implements ConfigData {
     @ConfigEntry.BoundedDiscrete(min = 1, max = 3)
     public int teleportationMode = 3;
 
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip(count = 0)
+    @Comment(value = """
+
+            Allow Bumblezone mod to handle teleporting out of Bumblezone dimension.""")
+    public boolean enableExitTeleportation = true;
+
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip(count = 0)
+    @Comment(value = """
+
+            Allow Bumblezone mod to handle teleporting into the Bumblezone dimension.""")
+    public boolean enableEntranceTeleportation = true;
 }
