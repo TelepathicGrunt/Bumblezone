@@ -1,3 +1,9 @@
+### **(V.5.1.1 Changes) (1.18.2 Minecraft)**
+
+##### Armor:
+Quick fix to make Stingless Bee Helmet only put bee on head if the main currently used hand is empty. Not the offhand.
+
+
 ### **(V.5.1.0 Changes) (1.18.2 Minecraft)**
 
 ##### Items:
