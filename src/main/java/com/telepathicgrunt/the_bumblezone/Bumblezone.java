@@ -41,7 +41,6 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
 
     //TODO: bee cannon?
-    //TODO: fix dimension terrain
     //TODO: add bee queen and structure for it.
     @Override
     public void onInitialize() {

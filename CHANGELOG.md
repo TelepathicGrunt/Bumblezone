@@ -37,6 +37,9 @@ Added stat entries for all bee armor to the Statistics screen you can find when 
 Fixed issue where Bee armor pants and chestplate may not show the right animation/models based on itemstack nbt state.
  (My model cache wasn't correctly done)
 
+##### Dimension:
+Fixed the terrain for Bumblezone dimension so it looks much closer to the terrain of 1.17 and older Bumblezone.
+
 ##### Entities:
 Added null world check to checking if bees should be angry at spawned entities.
  Prevents crash with mods that create an entity with a null world. Don't ask why...
