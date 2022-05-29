@@ -64,12 +64,16 @@ public class HoneyFluidBlock extends LiquidBlock {
         boolean lavaflag = false;
 
         for (Direction direction : Direction.values()) {
-            FluidState fluidState = world.getFluidState(pos.relative(direction));
+            BlockPos sidePos = pos.relative(direction);
+            FluidState fluidState = world.getFluidState(sidePos);
             if (fluidState.is(FluidTags.LAVA)) {
                 lavaflag = true;
                 break;
             }
-            else if(fluidState.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidState.isSource()) {
+            else if(fluidState.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) &&
+                    fluidState.isSource() &&
+                    world.getBlockState(sidePos).getCollisionShape(world, sidePos).isEmpty())
+            {
                 world.setBlock(pos.relative(direction), BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), 3);
             }
         }
