@@ -104,6 +104,16 @@ public class BumblezoneClient implements ClientModInitializer {
                                 livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
         );
 
+        // Correct model when about to throw
+        FabricModelPredicateProviderRegistry.register(
+                BzItems.STINGER_SPEAR,
+                new ResourceLocation("throwing"),
+                (itemStack, world, livingEntity, int1) ->
+                        livingEntity != null &&
+                                livingEntity.isUsingItem() &&
+                                livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
+        );
+
         // Allows honey compass to render the correct texture
         FabricModelPredicateProviderRegistry.register(
                 BzItems.HONEY_COMPASS,

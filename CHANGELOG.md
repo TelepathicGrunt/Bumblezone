@@ -11,6 +11,8 @@ Making Honey Bucket and turning Honey Buckets into Honey Bottles now requires 4 
 
 Play the missing glass pickup sound when using Glass Bottles on Honey Fluid source blocks.
 
+Fixed Stinger Spear having backwards item model when viewed in 3rd person and about to throw.
+
 ##### Armor:
 Added Carpenter Bee Boots! These boots will automine many kinds of wood, beehive, honeycomb blocks that you are standing on when you hold crouch down!
  The boots can be enchanted with the normal boot enchantments but can also be enchanted with Efficiency, Silk Touch, and Fortune.
