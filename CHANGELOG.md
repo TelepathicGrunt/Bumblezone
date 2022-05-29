@@ -6,6 +6,13 @@ Honey Compass is now added! When right clicked on beehives/bee nests, it will ke
  Crafted from 1 Compass, 1 Pollen Puff, 1 Honey Bucket, and 1 Honey Crystal Shard.
  Can be sometimes found in Honey Cocoons in Bee Dungeons, Spider Infested Bee Dungeons, or Honey Cave Room structures.
 
+Bee Cannon is added now! This cannon lets you store bees you right click into the item up to 3 bees.
+ If you hold right button and then release, you fire the bees! Any non-bee mob you are looking at will be attacked by the bees!
+ This can be crafted from Sugar Infused Stone (s), Sugar Infused Cobblestone (c), and Gunpowder (g) in this shape:
+ s s
+ sgs
+ csc
+
 Making Honey Bucket and turning Honey Buckets into Honey Bottles now requires 4 bottles instead of 3.
  Prevents duplication bugs with other mods that assumes bottles are 1:4 ratio to buckets.
 

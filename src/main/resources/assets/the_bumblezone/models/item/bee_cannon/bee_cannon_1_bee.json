@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "the_bumblezone:item/bee_cannon/bee_cannon_1_bee"
+  }
+}

@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 public class BzCriterias {
     // CRITERIA TRIGGERS
     public static final GenericTrigger BEENERGIZED_MAXED_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "beenergized_maxed"));
+    public static final GenericTrigger BEE_CANNON_FULL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bee_cannon_full"));
     public static final ItemSpecificTrigger BEE_DROP_POLLEN_PUFF_TRIGGER = new ItemSpecificTrigger(new ResourceLocation(Bumblezone.MODID, "bee_drop_pollen_puff"));
     public static final GenericTrigger BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_max_flight"));
     public static final GenericTrigger CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots_mined_blocks"));
@@ -52,6 +53,7 @@ public class BzCriterias {
 
     public static void registerCriteriaTriggers() {
         CriteriaTriggers.register(BEENERGIZED_MAXED_TRIGGER);
+        CriteriaTriggers.register(BEE_CANNON_FULL_TRIGGER);
         CriteriaTriggers.register(BEE_DROP_POLLEN_PUFF_TRIGGER);
         CriteriaTriggers.register(BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER);
         CriteriaTriggers.register(CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER);

@@ -83,7 +83,7 @@ public class BumbleBeeChestplate extends BeeArmor {
 
                 tag.putInt("flyCounter", flyCounter - 1);
                 if(!world.isClientSide() && world.random.nextFloat() < 0.0025f) {
-                    itemstack.hurtAndBreak(1, entity, (playerEntity) -> {});
+                    itemstack.hurtAndBreak(1, entity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.CHEST));
                 }
 
                 if(entity instanceof ServerPlayer serverPlayer) {

@@ -13,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.PileOfPollenRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.StingerSpearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.StingerSpearRenderer;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
+import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCompass;
 import com.telepathicgrunt.the_bumblezone.mixin.client.DimensionSpecialEffectsAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.client.RenderingRegistryAccessor;
@@ -99,6 +100,24 @@ public class BumblezoneClient {
                     BzItems.HONEY_COMPASS.get(),
                     new ResourceLocation("angle"),
                     HoneyCompass.getClampedItemPropertyFunction());
+
+            // Correct model when about to fire
+            ItemProperties.register(
+                    BzItems.BEE_CANNON.get(),
+                    new ResourceLocation("primed"),
+                    (itemStack, world, livingEntity, int1) ->
+                            livingEntity != null &&
+                                    livingEntity.isUsingItem() &&
+                                    livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
+            );
+
+            // Correct model based on bees
+            ItemProperties.register(
+                    BzItems.BEE_CANNON.get(),
+                    new ResourceLocation("bee_count"),
+                    (itemStack, world, livingEntity, int1) ->
+                            BeeCannon.getNumberOfBees(itemStack) / 10f
+            );
 
             MenuScreens.register(BzMenuTypes.STRICT_9x1.get(), StrictChestScreen::new);
             MenuScreens.register(BzMenuTypes.STRICT_9x2.get(), StrictChestScreen::new);

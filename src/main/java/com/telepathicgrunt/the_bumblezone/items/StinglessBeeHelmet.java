@@ -55,7 +55,7 @@ public class StinglessBeeHelmet extends BeeArmor {
                     world.random.nextFloat() < 0.001f &&
                     beeHelmet.getMaxDamage() - beeHelmet.getDamageValue() > 1)
                 {
-                    beeHelmet.hurtAndBreak(1, entity, (playerEntity) -> {});
+                    beeHelmet.hurtAndBreak(1, entity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
                 }
             }
         }
@@ -67,7 +67,7 @@ public class StinglessBeeHelmet extends BeeArmor {
                 world.random.nextFloat() < 0.004f &&
                 beeHelmet.getMaxDamage() - beeHelmet.getDamageValue() > 1)
             {
-                beeHelmet.hurtAndBreak(1, entity, (playerEntity) -> {});
+                beeHelmet.hurtAndBreak(1, entity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
             }
         }
 
@@ -87,7 +87,7 @@ public class StinglessBeeHelmet extends BeeArmor {
                 HELMET_EFFECT_COUNTER_CLIENTSIDE = isAllBeeArmorOn ? 200 : 6;
 
                 if(!world.isClientSide() && world.random.nextFloat() < 0.001f) {
-                    beeHelmet.hurtAndBreak(1, entity, (playerEntity) -> {});
+                    beeHelmet.hurtAndBreak(1, entity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
                 }
             }
         }
@@ -137,7 +137,8 @@ public class StinglessBeeHelmet extends BeeArmor {
         ItemStack beeHelmet = StinglessBeeHelmet.getEntityBeeHelmet(playerEntity);
         if (!beeHelmet.isEmpty() &&
             playerEntity.getItemInHand(hand).isEmpty() &&
-            playerEntity.getPassengers().isEmpty())
+            playerEntity.getPassengers().isEmpty() &&
+            !beeEntity.getType().is(BzTags.BLACKLISTED_STINGLESS_BEE_HELMET_PASSENGERS))
         {
             beeEntity.startRiding(playerEntity);
 

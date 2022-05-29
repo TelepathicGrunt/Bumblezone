@@ -50,7 +50,7 @@ public class HoneyBeeLeggings extends BeeArmor {
             if(entity.isCrouching() && isPollinated) {
                 removeAndSpawnPollen(world, entity.position(), itemstack);
                 if(!world.isClientSide() && world.random.nextFloat() < 0.1f) {
-                    itemstack.hurtAndBreak(1, entity, (playerEntity) -> {});
+                    itemstack.hurtAndBreak(1, entity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.LEGS));
                 }
             }
             else if(!entity.isCrouching() && !isPollinated && isSprinting) {
@@ -82,7 +82,7 @@ public class HoneyBeeLeggings extends BeeArmor {
                 world.random.nextFloat() < 0.004f &&
                 itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
             {
-                itemstack.hurtAndBreak(1, entity, (playerEntity) -> {});
+                itemstack.hurtAndBreak(1, entity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.LEGS));
             }
         }
 
