@@ -51,6 +51,9 @@ Fixed the terrain for Bumblezone dimension so it looks much closer to the terrai
 Added null world check to checking if bees should be angry at spawned entities.
  Prevents crash with mods that create an entity with a null world. Don't ask why...
 
+##### Fluids:
+Fixed Honey Fluid deleting regular waterlogged blocks next to it.
+
 ##### Config:
 Added enableExitTeleportation and enableEntranceTeleportation config options to let 
  players disable Bumblezone's teleportation methods into and out of the Bumblezone dimension.
