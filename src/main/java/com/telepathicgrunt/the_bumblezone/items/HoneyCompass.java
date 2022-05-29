@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -14,6 +15,7 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -119,6 +121,10 @@ public class HoneyCompass extends Item implements Vanishable {
             }
 
             level.playSound(null, playerPos, BzSounds.HONEY_COMPASS_STRUCTURE_LOCK.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+            if(player instanceof ServerPlayer serverPlayer) {
+                BzCriterias.HONEY_COMPASS_USE_TRIGGER.trigger(serverPlayer);
+            }
+
             boolean singleCompass = !player.getAbilities().instabuild && itemStack.getCount() == 1;
             if (singleCompass) {
                 this.addStructureTags(level.dimension(), structurePos, itemStack.getOrCreateTag());
@@ -154,6 +160,10 @@ public class HoneyCompass extends Item implements Vanishable {
 
         if (player != null && isValidBeeHive(targetBlock)) {
             level.playSound(null, blockPos, BzSounds.HONEY_COMPASS_BLOCK_LOCK.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+            if(player instanceof ServerPlayer serverPlayer) {
+                BzCriterias.HONEY_COMPASS_USE_TRIGGER.trigger(serverPlayer);
+            }
+
             boolean singleCompass = !player.getAbilities().instabuild && handCompass.getCount() == 1;
             if (singleCompass) {
                 this.addBlockTags(level.dimension(), blockPos, handCompass.getOrCreateTag(), targetBlock.getBlock());

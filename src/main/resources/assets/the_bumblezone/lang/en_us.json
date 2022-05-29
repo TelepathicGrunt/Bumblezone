@@ -232,6 +232,10 @@
   "advancements.the_bumblezone.bumble_bee_chestplate_max_flight.description": "Buzz your wings with the longest duration possible for Bumble Bee Chestplate!",
   "advancements.the_bumblezone.stingless_bee_helmet_super_sight.title": "Compound Eyes",
   "advancements.the_bumblezone.stingless_bee_helmet_super_sight.description": "With the power of Stingless Bee Helmet, highlight at least 100 bees all at once!",
+  "advancements.the_bumblezone.honey_compass_recipe.title": "Is this even still a compass..?",
+  "advancements.the_bumblezone.honey_compass_recipe.description": "Discover the recipe to make a tantalizing Honey Compass!",
+  "advancements.the_bumblezone.honey_compass_use.title": "Dora the Beexplorer",
+  "advancements.the_bumblezone.honey_compass_use.description": "Activate the Honey Compass's tracking/locating abilities!",
 
   "the_bumblezone.porous_honeycomb_block.jei_description": " A honeycomb block filled with holes! You can store honey into this block with Honey Bottles or Honey Buckets.",
   "the_bumblezone.filled_porous_honeycomb_block.jei_description": " A honeycomb block filled to the brim with honey! You can take honey out of this block with a Glass Bottle. However, this may anger nearby bees. \n\n When mined, this block drops Porous Honeycomb Block and some Honeycombs. The drop is affect by Fortune or you can use Silk Touch to keep the block intact. \n\n This block also give off a Redstone signal of 1 when a Comparator is facing this block.",

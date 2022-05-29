@@ -27,6 +27,7 @@ public class BzCriterias {
     public static final GenericTrigger HONEY_BUCKET_BROOD_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bucket_brood"));
     public static final GenericTrigger HONEY_BUCKET_POROUS_HONEYCOMB_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bucket_porous_honeycomb"));
     public static final GenericTrigger HONEY_COCOON_SILK_TOUCH_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_cocoon_silk_touch"));
+    public static final GenericTrigger HONEY_COMPASS_USE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_compass_use"));
     public static final GenericTrigger HONEY_CRYSTAL_IN_WATER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_crystal_in_water"));
     public static final GenericTrigger HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_crystal_shield_block_ineffectively"));
     public static final GenericTrigger HONEY_SLIME_CREATION_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_slime_creation"));
@@ -67,6 +68,7 @@ public class BzCriterias {
         CriteriaTriggers.register(HONEY_BUCKET_BROOD_TRIGGER);
         CriteriaTriggers.register(HONEY_BUCKET_POROUS_HONEYCOMB_TRIGGER);
         CriteriaTriggers.register(HONEY_COCOON_SILK_TOUCH_TRIGGER);
+        CriteriaTriggers.register(HONEY_COMPASS_USE_TRIGGER);
         CriteriaTriggers.register(HONEY_CRYSTAL_IN_WATER_TRIGGER);
         CriteriaTriggers.register(HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER);
         CriteriaTriggers.register(HONEY_SLIME_CREATION_TRIGGER);
