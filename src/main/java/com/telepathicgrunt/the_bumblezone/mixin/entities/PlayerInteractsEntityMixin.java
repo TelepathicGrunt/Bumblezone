@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.CreatingHoneySlime;
+import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -23,6 +24,8 @@ public class PlayerInteractsEntityMixin {
     private void thebumblezone_onBeeFeeding(Entity entity, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if(entity instanceof Bee beeEntity) {
             if(BeeInteractivity.beeFeeding(entity.level, ((Player)(Object)this), hand, beeEntity) == InteractionResult.SUCCESS)
+                cir.setReturnValue(InteractionResult.SUCCESS);
+            else if(StinglessBeeHelmet.addBeePassenger(entity.level, ((Player)(Object)this), hand, beeEntity) == InteractionResult.SUCCESS)
                 cir.setReturnValue(InteractionResult.SUCCESS);
             else if(BeeInteractivity.beeUnpollinating(entity.level, ((Player)(Object)this), hand, beeEntity) == InteractionResult.SUCCESS)
                 cir.setReturnValue(InteractionResult.SUCCESS);

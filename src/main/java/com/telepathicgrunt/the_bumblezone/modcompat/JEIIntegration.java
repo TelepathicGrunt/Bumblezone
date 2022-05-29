@@ -50,6 +50,8 @@ public class JEIIntegration implements IModPlugin {
 		addInfo(registration, BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV.get());
 		addInfo(registration, BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY.get());
 		addInfo(registration, BzItems.STINGER_SPEAR.get());
+		addInfo(registration, BzItems.HONEY_COMPASS.get());
+		addInfo(registration, BzItems.BEE_CANNON.get());
 		addInfo(registration, BzItems.HONEY_BEE_LEGGINGS_1.get());
 		addInfo(registration, BzItems.HONEY_BEE_LEGGINGS_2.get());
 		addInfo(registration, BzItems.BUMBLE_BEE_CHESTPLATE_1.get());
@@ -58,6 +60,8 @@ public class JEIIntegration implements IModPlugin {
 		addInfo(registration, BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2.get());
 		addInfo(registration, BzItems.STINGLESS_BEE_HELMET_1.get());
 		addInfo(registration, BzItems.STINGLESS_BEE_HELMET_2.get());
+		addInfo(registration, BzItems.CARPENTER_BEE_BOOTS_1.get());
+		addInfo(registration, BzItems.CARPENTER_BEE_BOOTS_2.get());
     }
 
     

@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacket;
 import net.minecraft.nbt.CompoundTag;
@@ -82,7 +83,11 @@ public class BumbleBeeChestplate extends BeeArmor {
 
                 tag.putInt("flyCounter", flyCounter - 1);
                 if(!world.isClientSide() && world.random.nextFloat() < 0.0025f) {
-                    itemstack.hurtAndBreak(1, entity, (playerEntity) -> {});
+                    itemstack.hurtAndBreak(1, entity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.CHEST));
+                }
+
+                if(entity instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.awardStat(BzStats.BUMBLE_BEE_CHESTPLATE_FLY_TIME_RL);
                 }
             }
             else {

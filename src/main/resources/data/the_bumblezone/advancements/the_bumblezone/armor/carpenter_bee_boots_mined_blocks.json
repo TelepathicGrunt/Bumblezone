@@ -1,0 +1,31 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/armor/carpenter_bee_boots_wall_hanging",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:carpenter_bee_boots_1"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.carpenter_bee_boots_mined_blocks.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.carpenter_bee_boots_mined_blocks.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 40
+  },
+  "criteria": {
+    "carpenter_bee_boots_mined_blocks": {
+      "trigger": "the_bumblezone:carpenter_bee_boots_mined_blocks"
+    }
+  },
+  "requirements": [
+    [
+      "carpenter_bee_boots_mined_blocks"
+    ]
+  ]
+}

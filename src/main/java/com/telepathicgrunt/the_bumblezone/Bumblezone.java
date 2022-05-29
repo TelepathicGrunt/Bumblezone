@@ -79,10 +79,10 @@ public class Bumblezone{
         BzItems.ITEMS.register(modEventBus);
         BzBlocks.BLOCKS.register(modEventBus);
         BzFluids.FLUIDS.register(modEventBus);
-        BzPOI.POI_TYPES.register(modEventBus);
         BzItems.RECIPES.register(modEventBus);
-        BzMenuTypes.MENUS.register(modEventBus);
+        BzPOI.POI_TYPES.register(modEventBus);
         BzEffects.EFFECTS.register(modEventBus);
+        BzMenuTypes.MENUS.register(modEventBus);
         BzFeatures.FEATURES.register(modEventBus);
         BzEntities.ENTITIES.register(modEventBus);
         BzSounds.SOUND_EVENTS.register(modEventBus);
@@ -111,6 +111,7 @@ public class Bumblezone{
             BzPlacements.registerPlacements();
             BzCriterias.registerCriteriaTriggers();
             BzProcessors.registerProcessors();
+            BzStats.registerStats();
 			BzDimension.setupDimension();
 			BzEntities.registerAdditionalEntityInformation();
             BzSurfaceRules.registerSurfaceRules();

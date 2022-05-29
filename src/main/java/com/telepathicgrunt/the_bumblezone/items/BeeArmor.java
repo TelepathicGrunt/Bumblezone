@@ -68,6 +68,7 @@ public abstract class BeeArmor extends ArmorItem {
 
                     this.model = new BeeArmorModel(layer, armorSlot, entityLiving);
                 }
+                model.entityLiving = entityLiving;
                 return this.model;
             }
         });

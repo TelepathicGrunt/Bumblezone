@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "the_bumblezone:sugar_infused_stone",
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:sugar_infused_cobblestone",
+      "required": true
+    }
+  ]
+}
