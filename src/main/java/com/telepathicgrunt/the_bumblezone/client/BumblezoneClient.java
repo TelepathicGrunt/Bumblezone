@@ -84,6 +84,7 @@ public class BumblezoneClient {
                                     livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
             );
 
+            // Correct model when about to throw
             ItemProperties.register(
                     BzItems.STINGER_SPEAR.get(),
                     new ResourceLocation("throwing"),
