@@ -229,7 +229,7 @@ public class BeeCannon extends Item implements Vanishable {
      */
     @Override
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return repair.is(BzItems.SUGAR_INFUSED_COBBLESTONE) || repair.is(BzItems.SUGAR_INFUSED_STONE);
+        return repair.is(BzTags.BEE_CANNON_REPAIR_ITEMS);
     }
 
     @Override

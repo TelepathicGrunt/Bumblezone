@@ -55,3 +55,6 @@ Added null world check to checking if bees should be angry at spawned entities.
 Added enableExitTeleportation and enableEntranceTeleportation config options to let 
  players disable Bumblezone's teleportation methods into and out of the Bumblezone dimension.
 
+NOTE: This will be the last version that uses Cloth Config. Future versions of Bumblezone will use a new config api instead.
+ This is done because Cloth Config use is heavily discouraged by its creator 
+ but I'll try and see if I can switch to new config api without losing your old configs settings.
