@@ -41,6 +41,9 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
 
     //TODO: fix backwards stinger spear throwing in 3rd person
+    //TODO: bee cannon?
+    //TODO: fix dimension terrain
+    //TODO: add bee queen and structure for it.
     @Override
     public void onInitialize() {
         //Set up config

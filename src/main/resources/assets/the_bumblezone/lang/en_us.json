@@ -232,6 +232,10 @@
   "advancements.the_bumblezone.bumble_bee_chestplate_max_flight.description": "Buzz your wings with the longest duration possible for Bumble Bee Chestplate!",
   "advancements.the_bumblezone.stingless_bee_helmet_super_sight.title": "Compound Eyes",
   "advancements.the_bumblezone.stingless_bee_helmet_super_sight.description": "With the power of Stingless Bee Helmet, highlight at least 100 bees all at once!",
+  "advancements.the_bumblezone.honey_compass_recipe.title": "Is this even still a compass..?",
+  "advancements.the_bumblezone.honey_compass_recipe.description": "Discover the recipe to make a tantalizing Honey Compass!",
+  "advancements.the_bumblezone.honey_compass_use.title": "Dora the Beexplorer",
+  "advancements.the_bumblezone.honey_compass_use.description": "Activate the Honey Compass's tracking/locating abilities!",
 
   "text.autoconfig.the_bumblezone-main.title": "The Bumblezone Configs",
   "text.autoconfig.the_bumblezone-main.category.dungeons": "Dungeons",
