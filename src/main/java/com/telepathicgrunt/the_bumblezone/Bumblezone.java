@@ -64,6 +64,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzPOI.registerPOIs();
         BzMenuTypes.registerMenu();
         BzParticles.registerParticles();
+        BzStats.registerStats();
 
         BzPredicates.registerPredicates();
         BzLootFunctionTypes.registerContainerLootFunctions();

@@ -7,6 +7,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -19,9 +20,9 @@ public class HoneyCrystalShield extends ShieldItem {
     protected static final int[] shieldDurabilityBoostPerLevel = new int[]{0,20,45,75,110,150,195,245,316,632};
     protected static final int maxShieldLevel = shieldDurabilityBoostPerLevel.length - 1;
 
-    public HoneyCrystalShield() {
-        //starts off with 20 durability so it is super weak
-        super(new Item.Properties().durability(30).tab(BzItems.BUMBLEZONE_CREATIVE_TAB));
+    public HoneyCrystalShield(Properties properties) {
+        //starts off with 40 durability so it is super weak
+        super(properties.durability(40));
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.enchantments;
 
+import com.telepathicgrunt.the_bumblezone.items.CarpenterBeeBoots;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
@@ -27,7 +28,7 @@ public class EnchantmentHelperMixin {
     private static void thebumblezone_applyEnchantmentsCorrectly(int power, ItemStack stack, boolean treasureAllowed,
                                                                  CallbackInfoReturnable<List<EnchantmentInstance>> cir,
                                                                  List<EnchantmentInstance> list, Item item,
-                                                                 boolean bl, Iterator<Enchantment> var6, Enchantment enchantment)
+                                                                 boolean treasure, Iterator<Enchantment> var6, Enchantment enchantment)
     {
         if(enchantment == BzEnchantments.COMB_CUTTER && !BzEnchantments.COMB_CUTTER.canEnchant(stack) && !list.isEmpty()) {
             list.remove(list.size() - 1);
@@ -43,6 +44,27 @@ public class EnchantmentHelperMixin {
         }
         else if(StingerSpearItem.isInvalidForStingerSpear(stack, enchantment)) {
             list.remove(list.size() - 1);
+        }
+    }
+
+    // Apply enchantments that normally would not be able to be applied
+    @Inject(method = "getAvailableEnchantmentResults(ILnet/minecraft/world/item/ItemStack;Z)Ljava/util/List;",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;isTreasureOnly()Z"),
+            locals = LocalCapture.CAPTURE_FAILSOFT)
+    private static void thebumblezone_applyEnchantmentsCorrectly2(int power, ItemStack stack, boolean treasureAllowed,
+                                                                 CallbackInfoReturnable<List<EnchantmentInstance>> cir,
+                                                                 List<EnchantmentInstance> list, Item item,
+                                                                 boolean treasure, Iterator<Enchantment> var6, Enchantment enchantment)
+    {
+        if (CarpenterBeeBoots.canBeEnchanted(stack, enchantment)) {
+            if ((!enchantment.isTreasureOnly() || treasure) && enchantment.isDiscoverable()) {
+                for(int currentLevel = enchantment.getMaxLevel(); currentLevel > enchantment.getMinLevel() - 1; --currentLevel) {
+                    if (power >= enchantment.getMinCost(currentLevel) && power <= enchantment.getMaxCost(currentLevel)) {
+                        list.add(new EnchantmentInstance(enchantment, currentLevel));
+                        break;
+                    }
+                }
+            }
         }
     }
 }

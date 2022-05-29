@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.enchantments;
 
+import com.telepathicgrunt.the_bumblezone.items.CarpenterBeeBoots;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import net.minecraft.world.item.ItemStack;
@@ -21,6 +22,9 @@ public class EnchantmentMixin {
         }
         else if (StingerSpearItem.isInvalidForStingerSpear(stack, ((Enchantment)(Object)this))) {
             cir.setReturnValue(false);
+        }
+        else if (CarpenterBeeBoots.canBeEnchanted(stack, ((Enchantment)(Object)this))) {
+            cir.setReturnValue(true);
         }
     }
 }
