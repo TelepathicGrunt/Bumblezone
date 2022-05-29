@@ -93,7 +93,7 @@ public class CarpenterBeeBoots extends BeeArmor {
                         boolean blockBroken = world.destroyBlock(belowBlockPos, false, player);
 
                         if(world.random.nextFloat() < 0.045) {
-                            beeBoots.hurtAndBreak(1, player, (playerEntity) -> {});
+                            beeBoots.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.FEET));
                         }
 
                         if(blockBroken && player instanceof ServerPlayer serverPlayer) {
@@ -182,7 +182,7 @@ public class CarpenterBeeBoots extends BeeArmor {
                             }
 
                             if(world.random.nextFloat() < 0.001) {
-                                beeBoots.hurtAndBreak(1, player, (playerEntity) -> {});
+                                beeBoots.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.FEET));
                             }
                         }
                     }

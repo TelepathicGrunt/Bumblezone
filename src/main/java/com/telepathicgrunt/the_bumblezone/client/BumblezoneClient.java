@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HoneySlimeRendering;
 import com.telepathicgrunt.the_bumblezone.client.rendering.StingerSpearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.StingerSpearRenderer;
+import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCompass;
 import com.telepathicgrunt.the_bumblezone.mixin.client.DimensionSpecialEffectsAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.client.EntityRendererRegistryImplAccessor;
@@ -119,6 +120,24 @@ public class BumblezoneClient implements ClientModInitializer {
                 BzItems.HONEY_COMPASS,
                 new ResourceLocation("angle"),
                 HoneyCompass.getClampedItemPropertyFunction());
+
+        // Correct model when about to fire
+        FabricModelPredicateProviderRegistry.register(
+                BzItems.BEE_CANNON,
+                new ResourceLocation("primed"),
+                (itemStack, world, livingEntity, int1) ->
+                        livingEntity != null &&
+                                livingEntity.isUsingItem() &&
+                                livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
+        );
+
+        // Correct model based on bees
+        FabricModelPredicateProviderRegistry.register(
+                BzItems.BEE_CANNON,
+                new ResourceLocation("bee_count"),
+                (itemStack, world, livingEntity, int1) ->
+                        BeeCannon.getNumberOfBees(itemStack) / 10f
+        );
 
         UpdateFallingBlockPacket.registerPacket();
         MobEffectClientSyncPacket.registerPacket();

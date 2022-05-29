@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.BeeBread;
+import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.BumbleBeeChestplate;
 import com.telepathicgrunt.the_bumblezone.items.BzBlockItem;
 import com.telepathicgrunt.the_bumblezone.items.BzHoneyCrystalBlockItem;
@@ -72,6 +73,7 @@ public class BzItems {
     public static final Item HONEY_CRYSTAL_SHIELD = new HoneyCrystalShield(new Item.Properties().rarity(Rarity.UNCOMMON).tab(BzItems.BUMBLEZONE_CREATIVE_TAB));
     public static final Item STINGER_SPEAR = new StingerSpearItem(new Item.Properties().rarity(Rarity.UNCOMMON).tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item HONEY_COMPASS = new HoneyCompass(new Item.Properties().rarity(Rarity.UNCOMMON).tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item BEE_CANNON = new BeeCannon(new Item.Properties().stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB));
     public static final HoneyBeeLeggings HONEY_BEE_LEGGINGS_1 = new HoneyBeeLeggings(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.LEGS, new Item.Properties().rarity(Rarity.UNCOMMON).tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 1);
     public static final HoneyBeeLeggings HONEY_BEE_LEGGINGS_2 = new HoneyBeeLeggings(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.LEGS, new Item.Properties().rarity(Rarity.UNCOMMON).tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 2);
     public static final BumbleBeeChestplate BUMBLE_BEE_CHESTPLATE_1 = new BumbleBeeChestplate(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.CHEST, new Item.Properties().rarity(Rarity.UNCOMMON).tab(BzItems.BUMBLEZONE_CREATIVE_TAB), false, 1);
@@ -114,6 +116,7 @@ public class BzItems {
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_crystal_shield"), HONEY_CRYSTAL_SHIELD);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "stinger_spear"), STINGER_SPEAR);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_compass"), HONEY_COMPASS);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_cannon"), BEE_CANNON);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings_1"), HONEY_BEE_LEGGINGS_1);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings_2"), HONEY_BEE_LEGGINGS_2);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_1"), BUMBLE_BEE_CHESTPLATE_1);

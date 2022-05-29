@@ -420,5 +420,14 @@
       }
     ],
     "subtitle": "subtitles.item.the_bumblezone.honey_compass.structure_lock"
+  },
+  "item.the_bumblezone.bee_cannon.fire": {
+    "sounds": [
+      "random/explode1",
+      "random/explode2",
+      "random/explode3",
+      "random/explode4"
+    ],
+    "subtitle": "subtitles.item.the_bumblezone.bee_cannon.fire"
   }
 }
