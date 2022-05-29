@@ -1,21 +1,18 @@
 ### **(V.5.1.0 Changes) (1.18.2 Minecraft)**
 
 ##### Items:
-Play the missing glass pickup sound when using Glass Bottles on Honey Fluid source blocks.
-
-Making Honey Bucket and turning Honey Buckets into Honey Bottles now requires 4 bottles instead of 3.
- Prevents duplication bugs with other mods that assumes bottles are 1:4 ratio to buckets.
-
-Honey Compass is now added! When right clicked on beehives/bee nests, it will keep track of the block's position! 
+Honey Compass is now added! When right clicked on beehives/bee nests, it will keep track of the block's position!
  When you right click the air in Bumblezone dimension, it seems to point to some sort of structure...
  Crafted from 1 Compass, 1 Pollen Puff, 1 Honey Bucket, and 1 Honey Crystal Shard.
  Can be sometimes found in Honey Cocoons in Bee Dungeons, Spider Infested Bee Dungeons, or Honey Cave Room structures.
 
-##### Armor:
-Fixed issue where Bee armor pants and chestplate may not show the right animation/models based on itemstack nbt state.
- (My model cache wasn't correctly done)
+Making Honey Bucket and turning Honey Buckets into Honey Bottles now requires 4 bottles instead of 3.
+ Prevents duplication bugs with other mods that assumes bottles are 1:4 ratio to buckets.
 
-Added Carpenter Bee Boots! These boots will automine many kinds of wood, beehive, honeycomb blocks that you are standing on when you hold crouch down! 
+Play the missing glass pickup sound when using Glass Bottles on Honey Fluid source blocks.
+
+##### Armor:
+Added Carpenter Bee Boots! These boots will automine many kinds of wood, beehive, honeycomb blocks that you are standing on when you hold crouch down!
  The boots can be enchanted with the normal boot enchantments but can also be enchanted with Efficiency, Silk Touch, and Fortune.
  To go with Efficiency, the boots also mines faster when you have the full bee armor set on or have Beenergized status effect. These speeds do stack.
  The boots will also let you briefly hang on walls made of wood, beehive, or honeycomb blocks allowing you to wall jump or wall run!
@@ -34,6 +31,9 @@ Honey Bee Leggings is now buffed to reduce Slowness status effect time slowly ev
  Also fixed the Slowness effect timer not showing the correct sped up time when the leggings is active.
 
 Added stat entries for all bee armor to the Statistics screen you can find when you pause the game.
+
+Fixed issue where Bee armor pants and chestplate may not show the right animation/models based on itemstack nbt state.
+ (My model cache wasn't correctly done)
 
 ##### Entities:
 Added null world check to checking if bees should be angry at spawned entities.
