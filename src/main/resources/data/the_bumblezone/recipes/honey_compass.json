@@ -1,0 +1,21 @@
+{
+  "type": "the_bumblezone:container_shapeless_recipe_bz",
+  "group": "the_bumblezone",
+  "ingredients": [
+    {
+      "item": "minecraft:compass"
+    },
+    {
+      "item": "the_bumblezone:honey_bucket"
+    },
+    {
+      "item": "the_bumblezone:honey_crystal_shards"
+    },
+    {
+      "item": "the_bumblezone:pollen_puff"
+    }
+  ],
+  "result": {
+    "item": "the_bumblezone:honey_compass"
+  }
+}

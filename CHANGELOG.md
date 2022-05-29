@@ -6,6 +6,11 @@ Play the missing glass pickup sound when using Glass Bottles on Honey Fluid sour
 Making Honey Bucket and turning Honey Buckets into Honey Bottles now requires 4 bottles instead of 3.
  Prevents duplication bugs with other mods that assumes bottles are 1:4 ratio to buckets.
 
+Honey Compass is now added! When right clicked on beehives/bee nests, it will keep track of the block's position! 
+ When you right click the air in Bumblezone dimension, it seems to point to some sort of structure...
+ Crafted from 1 Compass, 1 Pollen Puff, 1 Honey Bucket, and 1 Honey Crystal Shard.
+ Can be sometimes found in Honey Cocoons in Bee Dungeons, Spider Infested Bee Dungeons, or Honey Cave Room structures.
+
 ##### Armor:
 Fixed issue where Bee armor pants and chestplate may not show the right animation/models based on itemstack nbt state.
  (My model cache wasn't correctly done)

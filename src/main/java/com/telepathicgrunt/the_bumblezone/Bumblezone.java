@@ -39,6 +39,8 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
     public static final ComponentKey<FlyingSpeedComponent> FLYING_SPEED_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "original_flying_speed"), FlyingSpeedComponent.class);
     public static final ComponentKey<NeurotoxinsMissedCounterComponent> NEUROTOXINS_MISSED_COUNTER_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "neurotoxins_missed_counter"), NeurotoxinsMissedCounterComponent.class);
 
+
+    //TODO: fix backwards stinger spear throwing in 3rd person
     @Override
     public void onInitialize() {
         //Set up config

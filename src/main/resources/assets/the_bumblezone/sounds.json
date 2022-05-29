@@ -378,5 +378,47 @@
       }
     ],
     "subtitle": "subtitles.item.the_bumblezone.sugar_water_bottle.drink"
+  },
+  "item.the_bumblezone.honey_compass.block_lock": {
+    "sounds": [
+      {
+        "name": "block/lodestone/lock1",
+        "pitch": 0.85
+      },
+      {
+        "name": "block/lodestone/lock2",
+        "pitch": 0.85
+      },
+      {
+        "name": "block/lodestone/lock1",
+        "pitch": 0.95
+      },
+      {
+        "name": "block/lodestone/lock2",
+        "pitch": 0.95
+      }
+    ],
+    "subtitle": "subtitles.item.the_bumblezone.honey_compass.block_lock"
+  },
+  "item.the_bumblezone.honey_compass.structure_lock": {
+    "sounds": [
+      {
+        "name": "block/lodestone/lock1",
+        "pitch": 0.85
+      },
+      {
+        "name": "block/lodestone/lock2",
+        "pitch": 0.85
+      },
+      {
+        "name": "block/lodestone/lock1",
+        "pitch": 0.95
+      },
+      {
+        "name": "block/lodestone/lock2",
+        "pitch": 0.95
+      }
+    ],
+    "subtitle": "subtitles.item.the_bumblezone.honey_compass.structure_lock"
   }
 }

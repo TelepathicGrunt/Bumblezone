@@ -29,6 +29,8 @@ public class BzSounds {
     public static final SoundEvent HONEY_SLIME_JUMP_SMALL = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.honey_slime.jump_small"));
     public static final SoundEvent POLLEN_PUFF_THROW = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.pollen_puff.throw"));
     public static final SoundEvent SUGAR_WATER_DRINK = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.sugar_water_bottle.drink"));
+    public static final SoundEvent HONEY_COMPASS_BLOCK_LOCK = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.the_bumblezone.honey_compass.block_lock"));
+    public static final SoundEvent HONEY_COMPASS_STRUCTURE_LOCK = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.the_bumblezone.honey_compass.structure_lock"));
 
     public static void registerSounds() {
         Registry.register(Registry.SOUND_EVENT, ANGERED_BEES.getLocation(), ANGERED_BEES);
@@ -54,5 +56,7 @@ public class BzSounds {
         Registry.register(Registry.SOUND_EVENT, HONEY_SLIME_JUMP_SMALL.getLocation(), HONEY_SLIME_JUMP_SMALL);
         Registry.register(Registry.SOUND_EVENT, POLLEN_PUFF_THROW.getLocation(), POLLEN_PUFF_THROW);
         Registry.register(Registry.SOUND_EVENT, SUGAR_WATER_DRINK.getLocation(), SUGAR_WATER_DRINK);
+        Registry.register(Registry.SOUND_EVENT, HONEY_COMPASS_BLOCK_LOCK.getLocation(), HONEY_COMPASS_BLOCK_LOCK);
+        Registry.register(Registry.SOUND_EVENT, HONEY_COMPASS_STRUCTURE_LOCK.getLocation(), HONEY_COMPASS_STRUCTURE_LOCK);
     }
 }
