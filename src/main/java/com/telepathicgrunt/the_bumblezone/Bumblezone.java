@@ -37,6 +37,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.loading.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -92,7 +93,9 @@ public class Bumblezone{
         BzBlockEntities.BLOCK_ENTITIES.register(modEventBus);
 
         BzCapabilities.setupCapabilities();
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> BumblezoneClient::subscribeClientEvents);
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            BumblezoneClient.subscribeClientEvents();
+        }
 
         // generates/handles config
         FileUtils.getOrCreateDirectory(FMLPaths.CONFIGDIR.get().resolve("the_bumblezone"), "the_bumblezone");

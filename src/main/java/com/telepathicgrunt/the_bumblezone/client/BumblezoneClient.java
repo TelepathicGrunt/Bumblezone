@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.client;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuff;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeeArmorModel;
@@ -99,7 +100,7 @@ public class BumblezoneClient {
             ItemProperties.register(
                     BzItems.HONEY_COMPASS.get(),
                     new ResourceLocation("angle"),
-                    HoneyCompass.getClampedItemPropertyFunction());
+                    HoneyCompassItemProperty.getClampedItemPropertyFunction());
 
             // Correct model when about to fire
             ItemProperties.register(
