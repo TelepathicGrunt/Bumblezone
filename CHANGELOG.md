@@ -1,3 +1,9 @@
+### **(V.5.1.2 Changes) (1.18.2 Minecraft)**
+
+##### Misc:
+Fixed server crash due to me accidentally having clientside code in the wrong place for Honey Compass.
+
+
 ### **(V.5.1.1 Changes) (1.18.2 Minecraft)**
 
 ##### Armor:
