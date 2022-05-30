@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 
@@ -26,8 +27,12 @@ public final class BeeDedicatedSpawning {
 
         // Remove all wild bees too far from a player.
         for(Bee wildBee : allWildBees) {
-            for (ServerPlayer player : serverPlayers) {
-                if(wildBee.position().subtract(player.position()).length() > despawnDistance) {
+            for (ServerPlayer serverPlayer : serverPlayers) {
+                if(isFakePlayer(serverPlayer)) {
+                    continue;
+                }
+
+                if(wildBee.position().subtract(serverPlayer.position()).length() > despawnDistance) {
                     wildBee.remove(Entity.RemovalReason.DISCARDED);
                     entityCountChange--;
                 }
@@ -38,6 +43,10 @@ public final class BeeDedicatedSpawning {
         int maxWildBeeLimit = beesPerPlayer * serverPlayers.size();
         if(allWildBees.size() <= maxWildBeeLimit) {
             for(ServerPlayer serverPlayer : serverPlayers) {
+                if(isFakePlayer(serverPlayer)) {
+                    continue;
+                }
+
                 int nearbyBees = 0;
                 for (Entity entity : world.getEntities(serverPlayer, serverPlayer.getBoundingBox().inflate(despawnDistance, despawnDistance, despawnDistance))) {
                     if (entity instanceof Bee) {
@@ -63,5 +72,9 @@ public final class BeeDedicatedSpawning {
         }
 
         GeneralUtils.adjustEntityCountInBz(entityCountChange);
+    }
+
+    private static boolean isFakePlayer(Player player) {
+        return player instanceof ServerPlayer && player.getClass() != ServerPlayer.class;
     }
 }
