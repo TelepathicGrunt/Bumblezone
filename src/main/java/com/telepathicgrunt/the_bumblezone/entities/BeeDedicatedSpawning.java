@@ -12,6 +12,7 @@ import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.util.FakePlayer;
 
 import java.util.List;
 import java.util.Set;
@@ -27,8 +28,12 @@ public final class BeeDedicatedSpawning {
 
         // Remove all wild bees too far from a player.
         for(Bee wildBee : allWildBees) {
-            for (ServerPlayer player : serverPlayers) {
-                if(wildBee.position().subtract(player.position()).length() > despawnDistance) {
+            for (ServerPlayer serverPlayer : serverPlayers) {
+                if(serverPlayer instanceof FakePlayer) {
+                    continue;
+                }
+
+                if(wildBee.position().subtract(serverPlayer.position()).length() > despawnDistance) {
                     wildBee.remove(Entity.RemovalReason.DISCARDED);
                     entityCountChange--;
                 }
@@ -39,6 +44,10 @@ public final class BeeDedicatedSpawning {
         int maxWildBeeLimit = beesPerPlayer * serverPlayers.size();
         if(allWildBees.size() <= maxWildBeeLimit) {
             for(ServerPlayer serverPlayer : serverPlayers) {
+                if(serverPlayer instanceof FakePlayer) {
+                    continue;
+                }
+
                 int nearbyBees = 0;
                 for (Entity entity : world.getEntities(serverPlayer, serverPlayer.getBoundingBox().inflate(despawnDistance, despawnDistance, despawnDistance))) {
                     if (entity instanceof Bee) {

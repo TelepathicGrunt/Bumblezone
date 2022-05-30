@@ -3,6 +3,10 @@
 ##### Items:
 Bee Cannon fires bees slightly lower so they do not block the entire player vision briefly.
 
+##### Misc:
+Make the special bee spawning mechanic in Bumblezone Dimension ignore FakePlayers created by other mods.
+ Just a precaution check that might help performance if a mod is making a ton of FakePlayers in the dimension.
+
 
 ### **(V.5.1.2 Changes) (1.18.2 Minecraft)**
 
