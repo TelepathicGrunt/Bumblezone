@@ -1,3 +1,9 @@
+### **(V.5.1.3 Changes) (1.18.2 Minecraft)**
+
+##### Items:
+Bee Cannon fires bees slightly lower so they do not block the entire player vision briefly.
+
+
 ### **(V.5.1.2 Changes) (1.18.2 Minecraft)**
 
 ##### Misc:
