@@ -53,8 +53,9 @@ public class BeeCannon extends Item implements Vanishable {
                             player.getX(),
                             player.getEyeY() - 0.25f,
                             player.getZ());
-                    bee.moveTo(playerEyePos.x(),
-                            playerEyePos.y(),
+                    bee.moveTo(
+                            playerEyePos.x(),
+                            playerEyePos.y() - 0.5d,
                             playerEyePos.z(),
                             player.getYRot(),
                             player.getXRot());
