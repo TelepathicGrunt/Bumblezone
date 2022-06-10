@@ -36,7 +36,6 @@
     "items.MaterialInvoker",
     "items.PlayerDamagedMixin",
     "items.PlayerDamageShieldInvoker",
-    "world.BiomeSourceAccessor",
     "world.NoiseChunkAccessor",
     "world.NoiseGeneratorSettingsInvoker",
     "world.ServerWorldMixin",

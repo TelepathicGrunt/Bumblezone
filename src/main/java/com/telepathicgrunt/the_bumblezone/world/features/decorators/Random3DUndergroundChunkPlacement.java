@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.block.Blocks;
@@ -39,12 +40,12 @@ public class Random3DUndergroundChunkPlacement extends RepeatingPlacement {
     }
 
     @Override
-    protected int count(Random random, BlockPos blockPos) {
+    protected int count(RandomSource random, BlockPos blockPos) {
         return this.count.sample(random);
     }
 
     @Override
-    public Stream<BlockPos> getPositions(PlacementContext placementContext, Random random, BlockPos blockPos) {
+    public Stream<BlockPos> getPositions(PlacementContext placementContext, RandomSource random, BlockPos blockPos) {
         ArrayList<BlockPos> blockPosList = new ArrayList<>();
 
         // finds the origin of the 16x16x16 area we will be picking from

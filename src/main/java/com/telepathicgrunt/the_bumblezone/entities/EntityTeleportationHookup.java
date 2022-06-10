@@ -13,7 +13,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -138,7 +139,7 @@ public class EntityTeleportationHookup {
                 {
                     //failed. Block below isn't the required block
                     Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
-                    Component message = new TextComponent("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
+                    Component message = MutableComponent.create(new TranslatableContents("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive."));
                     playerEntity.displayClientMessage(message, true);
                     return false;
                 }
@@ -220,7 +221,7 @@ public class EntityTeleportationHookup {
                         if(pushedEntity instanceof Player playerEntity) {
                             //failed. Block below isn't the required block
                             Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
-                            Component message = new TextComponent("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
+                            Component message = MutableComponent.create(new TranslatableContents("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive."));
                             playerEntity.displayClientMessage(message, true);
                         }
                         return;

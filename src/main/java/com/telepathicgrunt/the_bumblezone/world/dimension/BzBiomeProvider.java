@@ -56,7 +56,7 @@ public class BzBiomeProvider extends BiomeSource {
                 .filter(entry -> entry.key().location().getNamespace().equals(Bumblezone.MODID))
                 .collect(Collectors.toList()));
 
-        nonstandardBiome = ((BiomeSourceAccessor)this).getPossibleBiomes().stream()
+        nonstandardBiome = this.possibleBiomes().stream()
                 .map(Holder::value)
                 .filter(biome ->  {
                     ResourceLocation rlKey = biomeRegistry.getKey(biome);
@@ -80,11 +80,6 @@ public class BzBiomeProvider extends BiomeSource {
     @Override
     protected Codec<? extends BiomeSource> codec() {
         return CODEC;
-    }
-
-    @Override
-    public BiomeSource withSeed(long seed) {
-        return new BzBiomeProvider(seed, this.biomeRegistry);
     }
 
     public static <T extends Area, C extends BigContext<T>> AreaFactory<T> stack(long seed, AreaTransformer1 parent, AreaFactory<T> incomingArea, int count, LongFunction<C> contextFactory) {

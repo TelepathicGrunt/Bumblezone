@@ -33,7 +33,7 @@ public class HoneyFluidBlock extends LiquidBlock {
     public static final BooleanProperty ABOVE_FLUID = BooleanProperty.create("above_support");
 
     public HoneyFluidBlock(Supplier<? extends FlowingFluid> fluid) {
-        super(fluid, BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noDrops().speedFactor(0.15F));
+        super(fluid, BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noLootTable().speedFactor(0.15F));
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(LEVEL, 0)
                 .setValue(BOTTOM_LEVEL, 0)

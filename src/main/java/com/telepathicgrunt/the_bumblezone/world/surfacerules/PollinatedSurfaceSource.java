@@ -1,20 +1,20 @@
 package com.telepathicgrunt.the_bumblezone.world.surfacerules;
 
-import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
+import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 
 public record PollinatedSurfaceSource (BlockState resultState, RandomLayerStateRule rule) implements SurfaceRules.RuleSource {
-    public static final Codec<PollinatedSurfaceSource> CODEC = BlockState.CODEC.xmap(PollinatedSurfaceSource::new, PollinatedSurfaceSource::resultState).fieldOf("result_state").codec();
+    public static final KeyDispatchDataCodec<PollinatedSurfaceSource> CODEC = KeyDispatchDataCodec.of(BlockState.CODEC.xmap(PollinatedSurfaceSource::new, PollinatedSurfaceSource::resultState).fieldOf("result_state").codec());
 
     PollinatedSurfaceSource(BlockState blockState) {
         this(blockState, new RandomLayerStateRule(blockState));
     }
 
     @Override
-    public Codec<? extends SurfaceRules.RuleSource> codec() {
+    public KeyDispatchDataCodec<? extends SurfaceRules.RuleSource> codec() {
         return CODEC;
     }
 

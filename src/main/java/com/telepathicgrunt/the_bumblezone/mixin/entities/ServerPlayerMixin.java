@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ServerPlayerMixin {
 
     @Inject(method = "doTick()V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/critereon/LocationTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;)V"))
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/critereon/PlayerTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;)V"))
     private void thebumblezone_checkIfInCellMaze(CallbackInfo ci) {
         CellMazeStructure.applyAngerIfInMaze((ServerPlayer)(Object)this);
     }

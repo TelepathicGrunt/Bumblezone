@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -64,7 +65,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      * Remove vine's ticking with removing power instead.
      */
     @Override
-    public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, Random rand) {
+    public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, RandomSource rand) {
         this.updateState(world, pos, blockstate, blockstate.getValue(POWERED) ? 1 : 0);
     }
 
@@ -204,7 +205,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     }
 
     @Override
-    public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
+    public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         super.animateTick(blockState, world, position, random);
         if (blockState.getValue(POWERED)) {
             for (int i = 0; i == random.nextInt(2); ++i) {

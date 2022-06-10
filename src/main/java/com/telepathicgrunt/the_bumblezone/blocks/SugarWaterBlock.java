@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public class SugarWaterBlock extends LiquidBlock {
 
     public SugarWaterBlock(Supplier<? extends FlowingFluid> baseFluid) {
-        super(baseFluid, BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noDrops().speedFactor(0.95F));
+        super(baseFluid, BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noLootTable().speedFactor(0.95F));
     }
 
     @Override

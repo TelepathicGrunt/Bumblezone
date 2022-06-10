@@ -3,15 +3,13 @@ package com.telepathicgrunt.the_bumblezone.world.processors;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
-import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CandleBlock;
@@ -22,8 +20,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-
-import java.util.Random;
 
 /**
  * POOL ENTRY MUST BE USING legacy_single_pool_element OR ELSE THE STRUCTURE BLOCK IS REMOVED BEFORE THIS PROCESSOR RUNS.
@@ -40,7 +36,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
         BlockState blockState = structureBlockInfoWorld.state;
         BlockPos worldPos = structureBlockInfoWorld.pos;
-        Random random = new WorldgenRandom(new LegacyRandomSource(0));
+        RandomSource random = new WorldgenRandom(new LegacyRandomSource(0));
         random.setSeed(worldPos.asLong() * worldPos.getY());
         CompoundTag nbt = structureBlockInfoWorld.nbt;
 
@@ -107,11 +103,12 @@ public class BeeDungeonProcessor extends StructureProcessor {
 
         // main body and ceiling
         else if (blockState.is(Blocks.HONEYCOMB_BLOCK) || blockState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get())) {
-            if(ModChecker.productiveBeesPresent && random.nextFloat() < BzModCompatibilityConfigs.oreHoneycombSpawnRateBeeDungeon.get()) {
-                StructureTemplate.StructureBlockInfo info = ProductiveBeesCompat.PBGetRandomHoneycomb(worldPos, random);
-                if(info != null) return info;
-            }
-            else if (random.nextFloat() < 0.4f) {
+            //if(ModChecker.productiveBeesPresent && random.nextFloat() < BzModCompatibilityConfigs.oreHoneycombSpawnRateBeeDungeon.get()) {
+            //    StructureTemplate.StructureBlockInfo info = ProductiveBeesCompat.PBGetRandomHoneycomb(worldPos, random);
+            //    if(info != null) return info;
+            //}
+            //else
+            if (random.nextFloat() < 0.4f) {
                 blockState = Blocks.HONEYCOMB_BLOCK.defaultBlockState();
             }
             else {

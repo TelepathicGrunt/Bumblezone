@@ -91,23 +91,23 @@ dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    runtimeOnly fg.deobf("curse.maven:structure_void_toggle-357304:3644532")
-    runtimeOnly fg.deobf("com.telepathicgrunt:CommandStructures:2.0.0+1.18.2")
-    runtimeOnly fg.deobf("com.telepathicgrunt:FeatureNBTDeadlockBeGone-Forge:2.0.0+1.18.2")
-    compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
+    runtimeOnly fg.deobf("com.telepathicgrunt:StructureVoidToggle-Forge:4.0.0+1.19")
+    runtimeOnly fg.deobf("com.telepathicgrunt:CommandStructures-Forge:3.0.0+1.19")
+
+    //compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
+    //runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
+    //runtimeOnly fg.deobf("curse.maven:jeed-532286:${jeed_version}")
+
+    // Switch to `implementation` when testing mod compat
+    //compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
     //compileOnly fg.deobf("curse.maven:friends_and_foes-602059:3725314")
     //runtimeOnly fg.deobf("curse.maven:friends_and_foes-602059:3725314")
     //runtimeOnly fg.deobf("curse.maven:architectury-419699:3717906")
     //runtimeOnly fg.deobf("curse.maven:token_enchanter-444421:3559237")
     //runtimeOnly fg.deobf("curse.maven:silent_lib-242998:3708359")
 
-    // Switch to `implementation` when testing mod compat
     //compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
     //runtimeOnly fg.deobf("curse.maven:better_advancements-272515:3562206")
-
-    compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
-    runtimeOnly fg.deobf("curse.maven:jeed-532286:${jeed_version}")
 }
 
 apply from: 'gradle/manifest.gradle'
@@ -128,7 +128,6 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     mainFile.changelogType = "markdown"
     mainFile.releaseType = "release"
     mainFile.displayName = "The Bumblezone v${project.mod_version} (${project.mc_version} MC)"
-    mainFile.addRequirement("feature-nbt-deadlock-be-gone")
 }
 
 task checkForRefmap() {

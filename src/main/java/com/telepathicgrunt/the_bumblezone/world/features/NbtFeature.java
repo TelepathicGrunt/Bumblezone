@@ -17,6 +17,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureMana
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +32,7 @@ public class NbtFeature extends Feature<NbtFeatureConfig> {
     public boolean place(FeaturePlaceContext<NbtFeatureConfig> context) {
         ResourceLocation nbtRL = GeneralUtils.getRandomEntry(context.config().nbtResourcelocationsAndWeights, context.random());
 
-        StructureManager structureManager = context.level().getLevel().getStructureManager();
+        StructureTemplateManager structureManager = context.level().getLevel().getStructureManager();
         Optional<StructureTemplate> template = structureManager.get(nbtRL);
         if(template.isEmpty()) {
             Bumblezone.LOGGER.error("Identifier to the specified nbt file was not found! : {}", nbtRL);

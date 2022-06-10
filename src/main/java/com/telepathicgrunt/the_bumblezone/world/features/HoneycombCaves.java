@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -179,7 +180,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
     }
 
 
-    private static void hexagon(WorldGenLevel world, ChunkGenerator generator, BlockPos position, Random random, double noise) {
+    private static void hexagon(WorldGenLevel world, ChunkGenerator generator, BlockPos position, RandomSource random, double noise) {
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos().set(position);
         BlockState blockState;
         int index = (int) (((noise * 0.5D) + 0.5D) * 7);
@@ -204,7 +205,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
         }
     }
 
-    private static void carveAtBlock(WorldGenLevel world, ChunkGenerator generator, Random random,
+    private static void carveAtBlock(WorldGenLevel world, ChunkGenerator generator, RandomSource random,
                                      BlockPos blockPos, BlockPos.MutableBlockPos mutable, BlockState blockState, int posResult, int abovePosResult) {
         if (blockState.canOcclude()) {
             boolean isNextToAir = shouldCloseOff(world, blockPos, mutable, true);

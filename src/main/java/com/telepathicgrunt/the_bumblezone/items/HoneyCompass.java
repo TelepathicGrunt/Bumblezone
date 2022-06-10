@@ -115,7 +115,7 @@ public class HoneyCompass extends Item implements Vanishable {
         BlockPos playerPos = player.blockPosition();
 
         if (!level.isClientSide() && !isStructureCompass(itemStack)) {
-            BlockPos structurePos = ((ServerLevel) level).findNearestMapFeature(BzTags.HONEY_COMPASS_LOCATING, playerPos, 100, false);
+            BlockPos structurePos = ((ServerLevel) level).findNearestMapStructure(BzTags.HONEY_COMPASS_LOCATING, playerPos, 100, false);
             if(structurePos == null) {
                 return super.use(level, player, interactionHand);
             }

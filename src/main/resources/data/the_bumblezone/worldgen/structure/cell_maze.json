@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:jigsaw",
+  "start_pool": "the_bumblezone:cell_maze/start_pool",
+  "size": 7,
+  "max_distance_from_center": 128,
+  "biomes": "#the_bumblezone:has_structure/cell_maze",
+  "step": "surface_structures",
+  "terrain_adaptation": "bury",
+  "start_height": {
+    "absolute": 40
+  },
+  "use_expansion_hack": false
+}

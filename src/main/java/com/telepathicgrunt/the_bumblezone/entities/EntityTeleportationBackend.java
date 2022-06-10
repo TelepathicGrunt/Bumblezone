@@ -11,7 +11,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
@@ -30,7 +30,6 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashSet;
@@ -399,7 +398,7 @@ public class EntityTeleportationBackend {
                 Bumblezone.LOGGER.error("Bumblezone entity pos/dim cap was not found for given entity: {}, {}, {}, {}, at {} which has the internal dimension of: {} and is coming from: {}",
                         entity.getType(),
                         entity.getClass().getName(),
-                        entity.getDisplayName() instanceof TextComponent textComponent ? textComponent.getText() : "N/A",
+                        entity.getDisplayName() instanceof MutableComponent mutableComponent ? mutableComponent.toString(): "N/A",
                         entity.getUUID(),
                         entity.position(),
                         entity.level.dimension(),

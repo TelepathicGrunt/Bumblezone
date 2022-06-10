@@ -1,5 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
-
+/*
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -79,3 +79,5 @@ public class JEIIntegration implements IModPlugin {
 		new TranslatableComponent(Bumblezone.MODID+"."+fluid.getRegistryName().getPath()+".jei_description"));
     }
 }
+
+ */

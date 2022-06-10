@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.entity.LivingEntity;
@@ -62,7 +63,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
     }
 
     @Override
-    public void animateTick(Level worldIn, BlockPos pos, FluidState state, Random random) {
+    public void animateTick(Level worldIn, BlockPos pos, FluidState state, RandomSource random) {
         if (random.nextInt(82) == 0) {
             worldIn.addParticle(BzParticles.HONEY_PARTICLE.get(),
                     pos.getX() + random.nextFloat(),
@@ -385,7 +386,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
         }
     }
 
-    protected static int decreaseAirSupply(int airSupply, LivingEntity entity, Random random) {
+    protected static int decreaseAirSupply(int airSupply, LivingEntity entity, RandomSource random) {
         int respiration = EnchantmentHelper.getRespiration(entity);
         return respiration > 0 && random.nextInt(respiration + 1) > 0 ? airSupply : airSupply - 1;
     }

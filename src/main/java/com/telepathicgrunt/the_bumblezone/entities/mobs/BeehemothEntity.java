@@ -18,8 +18,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.network.protocol.game.ClientboundAddMobPacket;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -28,6 +29,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -65,14 +67,12 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Random;
-
 public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
 
     private static final EntityDataAccessor<Boolean> SADDLED = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> QUEEN = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> FRIENDSHIP = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.INT);
-    private static final TranslatableComponent QUEEN_NAME = new TranslatableComponent("entity.the_bumblezone.beehemoth_queen");
+    private static final MutableComponent QUEEN_NAME = MutableComponent.create(new TranslatableContents("entity.the_bumblezone.beehemoth_queen"));
     public static final int TICKS_PER_FLAP = Mth.ceil(1.4959966F);
     private boolean stopWandering = false;
     public float offset1, offset2, offset3, offset4, offset5, offset6;
@@ -247,7 +247,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
         return finalFlyingSpeed;
     }
 
-    public static boolean checkMobSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor iWorld, MobSpawnType spawnReason, BlockPos blockPos, Random random) {
+    public static boolean checkMobSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor iWorld, MobSpawnType spawnReason, BlockPos blockPos, RandomSource random) {
         return true;
     }
 
@@ -505,7 +505,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     }
 
     @Override
-    public void recreateFromPacket(ClientboundAddMobPacket clientboundAddMobPacket) {
+    public void recreateFromPacket(ClientboundAddEntityPacket clientboundAddMobPacket) {
         super.recreateFromPacket(clientboundAddMobPacket);
         LivingEntityFlyingSoundInstance.playSound(this, BzSounds.BEEHEMOTH_LOOP.get());
     }

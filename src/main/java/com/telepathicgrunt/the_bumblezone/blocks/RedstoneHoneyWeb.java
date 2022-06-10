@@ -9,6 +9,7 @@ import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -74,7 +75,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
     }
 
     @Override
-    public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
+    public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
         if (serverLevel.getBlockState(blockPos).getValue(POWER) == 15) {
             boolean noEntitiesInbounds = true;
             List<? extends Entity> list = serverLevel.getEntities(null, blockState.getShape(serverLevel, blockPos).bounds().move(blockPos));
@@ -215,7 +216,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
      * Called periodically clientside on blocks near the player to show redstone particles
      */
     @Override
-    public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
+    public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         super.animateTick(blockState, world, position, random);
 
         int power = blockState.getValue(POWER);

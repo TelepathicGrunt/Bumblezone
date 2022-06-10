@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -46,7 +47,7 @@ public class CarpenterBeeBoots extends BeeArmor {
 
     @Override
     public void onArmorTick(ItemStack beeBoots, Level world, Player player) {
-        Random random = world.random;
+        RandomSource random = world.random;
         boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(player);
         CompoundTag tag = beeBoots.getOrCreateTag();
 
@@ -232,7 +233,7 @@ public class CarpenterBeeBoots extends BeeArmor {
         return currentSpeed;
     }
 
-    private static int generateUniqueItemId(Level world, Random random, CompoundTag tag, int itemId) {
+    private static int generateUniqueItemId(Level world, RandomSource random, CompoundTag tag, int itemId) {
         if (itemId == 0 && !world.isClientSide()) {
             while (true) {
                 boolean anymatch = false;

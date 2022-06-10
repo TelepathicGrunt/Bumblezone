@@ -25,13 +25,13 @@ public class ModChecker {
 	 */
     public static void setupModCompat() {
 		String modid = "";
-		try {/*
-			modid = "pokecube_mobs";
-			loadupModCompat(modid, () -> PokecubeCompat.setupPokecube());
+		try {
 
-			*/
+			modid = "pokecube_mobs";
+			//loadupModCompat(modid, () -> PokecubeCompat.setupPokecube());
+
 			modid = "productivebees";
-			loadupModCompat(modid, () -> ProductiveBeesCompat.setupProductiveBees());
+			//loadupModCompat(modid, () -> ProductiveBeesCompat.setupProductiveBees());
 
 			modid = "friendsandfoes";
 			loadupModCompat(modid, () -> FriendsAndFoesCompat.setupCompat());
