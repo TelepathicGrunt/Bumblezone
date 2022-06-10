@@ -35,8 +35,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 
-import java.util.Random;
-
 public abstract class HoneyFluid extends ForgeFlowingFluid {
 
     public static final IntegerProperty BOTTOM_LEVEL = HoneyFluidBlock.BOTTOM_LEVEL;

@@ -27,8 +27,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 
-import java.util.Random;
-
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.LEVEL_FLOWING;
 
 

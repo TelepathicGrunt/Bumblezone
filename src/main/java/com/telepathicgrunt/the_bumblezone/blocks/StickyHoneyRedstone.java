@@ -22,7 +22,6 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
-import java.util.Random;
 
 public class StickyHoneyRedstone extends StickyHoneyResidue {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;

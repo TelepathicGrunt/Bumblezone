@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.world.dimension;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.mixin.world.BiomeSourceAccessor;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeMergeLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeNonstandardLayer;

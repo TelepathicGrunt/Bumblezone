@@ -27,7 +27,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
-import java.util.Random;
 
 
 public class RedstoneHoneyWeb extends HoneyWeb {

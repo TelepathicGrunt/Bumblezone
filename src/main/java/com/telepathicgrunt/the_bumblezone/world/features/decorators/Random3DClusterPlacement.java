@@ -11,7 +11,6 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraft.world.level.levelgen.placement.RepeatingPlacement;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.stream.Stream;
 
 public class Random3DClusterPlacement extends RepeatingPlacement {

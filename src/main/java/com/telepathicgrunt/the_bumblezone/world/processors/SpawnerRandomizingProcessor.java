@@ -23,7 +23,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
-import java.util.Random;
 
 public class SpawnerRandomizingProcessor extends StructureProcessor {
 

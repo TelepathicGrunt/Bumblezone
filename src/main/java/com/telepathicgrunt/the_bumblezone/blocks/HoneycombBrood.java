@@ -54,7 +54,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
 
 import java.util.List;
-import java.util.Random;
 
 
 public class HoneycombBrood extends ProperFacingBlock {

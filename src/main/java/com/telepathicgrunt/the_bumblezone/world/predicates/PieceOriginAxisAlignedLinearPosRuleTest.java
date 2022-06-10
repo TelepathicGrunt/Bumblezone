@@ -10,8 +10,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.structure.templatesystem.PosRuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.PosRuleTestType;
 
-import java.util.Random;
-
 public class PieceOriginAxisAlignedLinearPosRuleTest extends PosRuleTest {
     public static final Codec<PieceOriginAxisAlignedLinearPosRuleTest> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             Codec.FLOAT.fieldOf("min_chance").orElse(0.0F).forGetter((ruleTest) -> ruleTest.minChance),
