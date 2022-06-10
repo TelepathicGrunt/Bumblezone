@@ -72,10 +72,6 @@ public class BzBiomeProvider extends BiomeSource {
         this.biomeSampler = buildWorldProcedure(seed, biomeRegistry);
     }
 
-    public static void registerBiomeProvider() {
-        Registry.register(Registry.BIOME_SOURCE, new ResourceLocation(Bumblezone.MODID, "biome_source"), BzBiomeProvider.CODEC);
-    }
-
     @Override
     protected Codec<? extends BiomeSource> codec() {
         return CODEC;

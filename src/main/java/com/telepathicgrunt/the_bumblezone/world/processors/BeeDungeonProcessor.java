@@ -143,6 +143,6 @@ public class BeeDungeonProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return BzProcessors.BEE_DUNGEON_PROCESSOR;
+        return BzProcessors.BEE_DUNGEON_PROCESSOR.get();
     }
 }

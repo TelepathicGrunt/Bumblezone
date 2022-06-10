@@ -33,7 +33,7 @@ public class Random3DClusterPlacement extends RepeatingPlacement {
 
     @Override
     public PlacementModifierType<?> type() {
-        return BzPlacements.RANDOM_3D_CLUSTER_PLACEMENT;
+        return BzPlacements.RANDOM_3D_CLUSTER_PLACEMENT.get();
     }
 
     @Override

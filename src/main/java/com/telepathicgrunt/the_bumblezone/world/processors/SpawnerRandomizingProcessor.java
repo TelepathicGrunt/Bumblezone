@@ -114,6 +114,6 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return BzProcessors.SPAWNER_RANDOMIZING_PROCESSOR;
+        return BzProcessors.SPAWNER_RANDOMIZING_PROCESSOR.get();
     }
 }

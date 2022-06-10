@@ -49,6 +49,6 @@ public class PieceOriginAxisAlignedLinearPosRuleTest extends PosRuleTest {
     }
 
     protected PosRuleTestType<?> getType() {
-        return BzPredicates.PIECE_ORIGIN_AXIS_ALIGNED_LINEAR_POS_RULE_TEST;
+        return BzPredicates.PIECE_ORIGIN_AXIS_ALIGNED_LINEAR_POS_RULE_TEST.get();
     }
 }

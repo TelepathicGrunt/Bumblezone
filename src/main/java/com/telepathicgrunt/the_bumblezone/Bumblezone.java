@@ -21,7 +21,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
-import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.world.surfacerules.PollinatedSurfaceSource;
 import net.minecraft.resources.ResourceLocation;
@@ -80,13 +80,21 @@ public class Bumblezone{
         BzPOI.POI_TYPES.register(modEventBus);
         BzEffects.EFFECTS.register(modEventBus);
         BzMenuTypes.MENUS.register(modEventBus);
+        BzStats.CUSTOM_STAT.register(modEventBus);
         BzFeatures.FEATURES.register(modEventBus);
         BzEntities.ENTITIES.register(modEventBus);
         BzSounds.SOUND_EVENTS.register(modEventBus);
         BzStructures.STRUCTURES.register(modEventBus);
+        BzDimension.BIOME_SOURCE.register(modEventBus);
         BzParticles.PARTICLE_TYPES.register(modEventBus);
+        BzPredicates.POS_RULE_TEST.register(modEventBus);
+        BzDimension.CHUNK_GENERATOR.register(modEventBus);
         BzEnchantments.ENCHANTMENTS.register(modEventBus);
+        BzSurfaceRules.SURFACE_RULES.register(modEventBus);
         BzBlockEntities.BLOCK_ENTITIES.register(modEventBus);
+        BzPlacements.PLACEMENT_MODIFIER.register(modEventBus);
+        BzProcessors.STRUCTURE_PROCESSOR.register(modEventBus);
+        BzLootFunctionTypes.LOOT_ITEM_FUNCTION_TYPE.register(modEventBus);
 
         BzCapabilities.setupCapabilities();
         if (FMLEnvironment.dist == Dist.CLIENT) {
@@ -105,16 +113,10 @@ public class Bumblezone{
 
     private void setup(final FMLCommonSetupEvent event) {
     	event.enqueueWork(() -> {
-            BzPredicates.registerPredicates();
-            BzLootFunctionTypes.registerContainerLootFunctions();
-            BzPlacements.registerPlacements();
             BzCriterias.registerCriteriaTriggers();
-            BzProcessors.registerProcessors();
-            BzStats.registerStats();
-			BzDimension.setupDimension();
 			BzEntities.registerAdditionalEntityInformation();
-            BzSurfaceRules.registerSurfaceRules();
             BeeAggression.setupBeeHatingList();
+            BzStats.initStatEntries();
 		});
         MessageHandler.init();
     }

@@ -50,6 +50,6 @@ public class ReplaceNotAirProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return BzProcessors.REPLACE_NOT_AIR_PROCESSOR;
+        return BzProcessors.REPLACE_NOT_AIR_PROCESSOR.get();
     }
 }

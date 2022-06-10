@@ -35,7 +35,7 @@ public class Random3DUndergroundChunkPlacement extends RepeatingPlacement {
 
     @Override
     public PlacementModifierType<?> type() {
-        return BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT;
+        return BzPlacements.RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT.get();
     }
 
     @Override

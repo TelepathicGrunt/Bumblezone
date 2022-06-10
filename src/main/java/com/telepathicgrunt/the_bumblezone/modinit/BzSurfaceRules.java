@@ -1,12 +1,21 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
+import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
 import com.telepathicgrunt.the_bumblezone.world.surfacerules.PollinatedSurfaceSource;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.KeyDispatchDataCodec;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class BzSurfaceRules {
-    public static void registerSurfaceRules() {
-        Registry.register(Registry.RULE, new ResourceLocation(Bumblezone.MODID, "pollinated_surface_source"), PollinatedSurfaceSource.CODEC);
-    }
+
+    public static final DeferredRegister<Codec<? extends SurfaceRules.RuleSource>> SURFACE_RULES = DeferredRegister.create(Registry.RULE_REGISTRY, Bumblezone.MODID);
+
+    public static final RegistryObject<Codec<? extends SurfaceRules.RuleSource>> POLLINATED_SURFACE_SOURCE = SURFACE_RULES.register("pollinated_surface_source", PollinatedSurfaceSource.CODEC::codec);
 }

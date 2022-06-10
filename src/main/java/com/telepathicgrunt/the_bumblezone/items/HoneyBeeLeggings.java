@@ -68,7 +68,7 @@ public class HoneyBeeLeggings extends BeeArmor {
                     setPollinated(itemstack);
                     if(entity instanceof ServerPlayer serverPlayer) {
                         BzCriterias.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER.trigger(serverPlayer);
-                        serverPlayer.awardStat(BzStats.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_RL);
+                        serverPlayer.awardStat(BzStats.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_RL.get());
                     }
                 }
             }

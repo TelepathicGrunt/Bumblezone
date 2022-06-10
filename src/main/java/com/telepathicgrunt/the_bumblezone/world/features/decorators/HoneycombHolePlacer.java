@@ -25,7 +25,7 @@ public class HoneycombHolePlacer extends PlacementModifier {
 
     @Override
     public PlacementModifierType<?> type() {
-        return BzPlacements.HONEYCOMB_HOLE_PLACER;
+        return BzPlacements.HONEYCOMB_HOLE_PLACER.get();
     }
 
     @Override

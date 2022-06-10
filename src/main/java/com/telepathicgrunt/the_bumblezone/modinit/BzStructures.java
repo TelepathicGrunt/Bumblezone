@@ -14,10 +14,6 @@ public class BzStructures {
 
     public static final DeferredRegister<StructureType<?>> STRUCTURES = DeferredRegister.create(Registry.STRUCTURE_TYPE_REGISTRY, Bumblezone.MODID);
 
-    public static final RegistryObject<StructureType<?>> POLLINATED_STREAM = STRUCTURES.register("pollinated_stream", () -> typeConvert(PollinatedStreamStructure.CODEC));
-    public static final RegistryObject<StructureType<?>> HONEY_CAVE_ROOM = STRUCTURES.register("honey_cave_room", () -> typeConvert(HoneyCaveRoomStructure.CODEC));
-
-    private static <S extends Structure> StructureType<S> typeConvert(Codec<S> codec) {
-        return () -> codec;
-    }
+    public static final RegistryObject<StructureType<PollinatedStreamStructure>> POLLINATED_STREAM = STRUCTURES.register("pollinated_stream", () -> () -> PollinatedStreamStructure.CODEC);
+    public static final RegistryObject<StructureType<HoneyCaveRoomStructure>> HONEY_CAVE_ROOM = STRUCTURES.register("honey_cave_room", () -> () -> HoneyCaveRoomStructure.CODEC);
 }

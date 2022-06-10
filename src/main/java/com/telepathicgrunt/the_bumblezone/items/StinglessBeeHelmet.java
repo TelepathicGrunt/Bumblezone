@@ -118,7 +118,7 @@ public class StinglessBeeHelmet extends BeeArmor {
                 tag.putInt("beeRidingTimer", beeRidingTimer + 1);
 
                 if(entity instanceof ServerPlayer serverPlayer) {
-                    serverPlayer.awardStat(BzStats.STINGLESS_BEE_HELMET_BEE_RIDER_RL);
+                    serverPlayer.awardStat(BzStats.STINGLESS_BEE_HELMET_BEE_RIDER_RL.get());
                 }
             }
         }

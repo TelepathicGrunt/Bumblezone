@@ -112,6 +112,6 @@ public class HoneycombHoleProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return BzProcessors.HONEYCOMB_HOLE_PROCESSOR;
+        return BzProcessors.HONEYCOMB_HOLE_PROCESSOR.get();
     }
 }

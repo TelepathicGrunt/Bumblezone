@@ -141,6 +141,6 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return BzProcessors.SPIDER_INFESTED_BEE_DUNGEON_PROCESSOR;
+        return BzProcessors.SPIDER_INFESTED_BEE_DUNGEON_PROCESSOR.get();
     }
 }

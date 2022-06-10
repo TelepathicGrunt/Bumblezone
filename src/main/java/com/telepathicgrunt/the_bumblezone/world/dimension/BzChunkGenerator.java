@@ -151,10 +151,6 @@ public class BzChunkGenerator extends ChunkGenerator {
         this.globalFluidPicker = (j, k, lx) -> k < Math.min(-54, seaLevel) ? fluidStatus : fluidStatus2;
     }
 
-    public static void registerChunkGenerator() {
-        Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Bumblezone.MODID, "chunk_generator"), BzChunkGenerator.CODEC);
-    }
-
     record RoughSurfaceNoise() implements DensityFunction.SimpleFunction {
         private static final OpenSimplex2F noiseGen = new OpenSimplex2F(0);
 

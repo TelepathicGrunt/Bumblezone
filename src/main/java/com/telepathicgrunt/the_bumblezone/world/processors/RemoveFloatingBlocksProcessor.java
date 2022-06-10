@@ -48,6 +48,6 @@ public class RemoveFloatingBlocksProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return BzProcessors.REMOVE_FLOATING_BLOCKS_PROCESSOR;
+        return BzProcessors.REMOVE_FLOATING_BLOCKS_PROCESSOR.get();
     }
 }
