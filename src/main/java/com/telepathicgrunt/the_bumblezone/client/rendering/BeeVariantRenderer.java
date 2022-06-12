@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.client.rendering;
 
 import com.google.common.collect.ImmutableList;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import net.minecraft.client.renderer.entity.BeeRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

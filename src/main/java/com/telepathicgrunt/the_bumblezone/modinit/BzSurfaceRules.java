@@ -7,6 +7,6 @@ import net.minecraft.resources.ResourceLocation;
 
 public class BzSurfaceRules {
     public static void registerSurfaceRules() {
-        Registry.register(Registry.RULE, new ResourceLocation(Bumblezone.MODID, "pollinated_surface_source"), PollinatedSurfaceSource.CODEC);
+        Registry.register(Registry.RULE, new ResourceLocation(Bumblezone.MODID, "pollinated_surface_source"), PollinatedSurfaceSource.CODEC.codec());
     }
 }

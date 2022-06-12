@@ -104,6 +104,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         this.defaultBlock = noiseGeneratorSettings.defaultBlock();
         this.defaultFluid = noiseGeneratorSettings.defaultFluid();
         NoiseRouter noiseRouter = noiseGeneratorSettings.noiseRouter();
+        this.router = noiseRouter;
 
         this.sampler = new Climate.Sampler(
                 noiseRouter.temperature(),
@@ -114,39 +115,38 @@ public class BzChunkGenerator extends ChunkGenerator {
                 noiseRouter.ridges(),
                 noiseGeneratorSettings.spawnTarget());
 
-        DensityFunction newFinalDensity = DensityFunctions.add(
-                new BiomeNoise(this.sampler, this.biomeRegistry, this.getBiomeSource()),
-                noiseRouter.finalDensity()
-        );
-        newFinalDensity = DensityFunctions.interpolated(newFinalDensity);
-        newFinalDensity = DensityFunctions.add(
-                new RoughSurfaceNoise(),
-                newFinalDensity
-        );
-        newFinalDensity = DensityFunctions.interpolated(newFinalDensity);
+//        DensityFunction newFinalDensity = DensityFunctions.add(
+//                new BiomeNoise(this.sampler, this.biomeRegistry, this.getBiomeSource()),
+//                noiseRouter.finalDensity()
+//        );
+//        newFinalDensity = DensityFunctions.interpolated(newFinalDensity);
+//        newFinalDensity = DensityFunctions.add(
+//                new RoughSurfaceNoise(),
+//                newFinalDensity
+//        );
+//        newFinalDensity = DensityFunctions.interpolated(newFinalDensity);
+//
+//        this.router = new NoiseRouter(
+//                noiseRouter.barrierNoise(),
+//                noiseRouter.fluidLevelFloodednessNoise(),
+//                noiseRouter.fluidLevelSpreadNoise(),
+//                noiseRouter.lavaNoise(),
+//                noiseRouter.temperature(),
+//                noiseRouter.vegetation(),
+//                noiseRouter.continents(),
+//                noiseRouter.erosion(),
+//                noiseRouter.depth(),
+//                noiseRouter.ridges(),
+//                noiseRouter.initialDensityWithoutJaggedness(),
+//                newFinalDensity,
+//                noiseRouter.veinToggle(),
+//                noiseRouter.veinRidged(),
+//                noiseRouter.veinGap()
+//        );
 
-        this.router = new NoiseRouter(
-                noiseRouter.barrierNoise(),
-                noiseRouter.fluidLevelFloodednessNoise(),
-                noiseRouter.fluidLevelSpreadNoise(),
-                noiseRouter.lavaNoise(),
-                noiseRouter.temperature(),
-                noiseRouter.vegetation(),
-                noiseRouter.continents(),
-                noiseRouter.erosion(),
-                noiseRouter.depth(),
-                noiseRouter.ridges(),
-                noiseRouter.initialDensityWithoutJaggedness(),
-                newFinalDensity,
-                noiseRouter.veinToggle(),
-                noiseRouter.veinRidged(),
-                noiseRouter.veinGap()
-        );
-
-        Aquifer.FluidStatus fluidStatus = new Aquifer.FluidStatus(-54, Blocks.LAVA.defaultBlockState());
         int seaLevel = noiseGeneratorSettings.seaLevel();
-        Aquifer.FluidStatus fluidStatus2 = new Aquifer.FluidStatus(seaLevel, noiseGeneratorSettings.defaultFluid());
-        this.globalFluidPicker = (j, k, lx) -> k < Math.min(-54, seaLevel) ? fluidStatus : fluidStatus2;
+        Aquifer.FluidStatus fluidStatus = new Aquifer.FluidStatus(seaLevel, noiseGeneratorSettings.defaultFluid());
+        this.globalFluidPicker = (x, y, z) -> fluidStatus;
     }
 
     record RoughSurfaceNoise() implements DensityFunction.SimpleFunction {
@@ -219,7 +219,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         int minY = Math.min(noiseSettings.minY() + noiseSettings.height(), levelHeightAccessor.getMaxBuildHeight());
         int maxYCell = Mth.intFloorDiv(maxY, noiseSettings.getCellHeight());
         int minYCell = Mth.intFloorDiv(minY - maxY, noiseSettings.getCellHeight());
-        return minYCell <= 0 ? levelHeightAccessor.getMinBuildHeight() : this.iterateNoiseColumn(x, z, randomState, null, types.isOpaque(), maxYCell, minYCell).orElse(levelHeightAccessor.getMinBuildHeight());
+        return this.iterateNoiseColumn(levelHeightAccessor, x, z, randomState, null, types.isOpaque(), maxYCell, minYCell).orElse(levelHeightAccessor.getMinBuildHeight());
     }
 
     @Override
@@ -234,7 +234,7 @@ public class BzChunkGenerator extends ChunkGenerator {
         }
         else {
             BlockState[] blockStates = new BlockState[maxYCell * noiseSettings.getCellHeight()];
-            this.iterateNoiseColumn(x, z, randomState, blockStates, null, minYCell, maxYCell);
+            this.iterateNoiseColumn(levelHeightAccessor, x, z, randomState, blockStates, null, minYCell, maxYCell);
             return new NoiseColumn(minY, blockStates);
         }
     }
@@ -242,8 +242,8 @@ public class BzChunkGenerator extends ChunkGenerator {
     @Override
     public void addDebugScreenInfo(List<String> list, RandomState randomState, BlockPos blockPos) {}
 
-    private OptionalInt iterateNoiseColumn(int x, int z, RandomState randomState, @Nullable BlockState[] blockStates, @Nullable Predicate<BlockState> predicate, int minYCell, int maxYCell) {
-        NoiseSettings noiseSettings = this.settings.value().noiseSettings();
+    private OptionalInt iterateNoiseColumn(LevelHeightAccessor levelHeightAccessor, int x, int z, RandomState randomState, @Nullable BlockState[] blockStates, @Nullable Predicate<BlockState> predicate, int minYCell, int maxYCell) {
+        NoiseSettings noiseSettings = this.settings.value().noiseSettings().clampToHeightAccessor(levelHeightAccessor);
         int cellWidth = noiseSettings.getCellWidth();
         int cellHeight = noiseSettings.getCellHeight();
         int o = Math.floorDiv(x, cellWidth);
@@ -279,6 +279,7 @@ public class BzChunkGenerator extends ChunkGenerator {
                 }
 
                 if (predicate != null && predicate.test(blockState2)) {
+                    noiseChunk.stopInterpolation();
                     return OptionalInt.of(y + 1);
                 }
             }
@@ -417,6 +418,7 @@ public class BzChunkGenerator extends ChunkGenerator {
             noiseChunk.swapSlices();
         }
 
+        noiseChunk.stopInterpolation();
         return chunkAccess;
     }
 

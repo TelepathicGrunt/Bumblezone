@@ -31,7 +31,7 @@
     "cardinal-components-entity": [
       "com.telepathicgrunt.the_bumblezone.Bumblezone"
     ],
-    "rei": [
+    "rei_common": [
       "com.telepathicgrunt.the_bumblezone.modcompat.REICompat"
     ]
   },

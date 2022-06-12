@@ -15,7 +15,7 @@
     },
     {
       "id": "#forge:buckets/honey",
-      "required": true
+      "required": false
     },
     {
       "id": "productivebees:honey_treat",

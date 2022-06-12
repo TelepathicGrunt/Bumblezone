@@ -17,13 +17,13 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -63,6 +63,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -383,7 +384,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
         CompoundTag compoundtag = BlockItem.getBlockEntityData(itemStack);
         if (compoundtag != null) {
             if (compoundtag.contains("LootTable", 8)) {
-                tooltip.add(new TextComponent("???????"));
+                tooltip.add(Component.translatable("???????"));
             }
 
             if (compoundtag.contains("Items", 9)) {
@@ -405,7 +406,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                 }
 
                 if (j - i > 0) {
-                    tooltip.add((new TranslatableComponent("container.shulkerBox.more", j - i)).withStyle(ChatFormatting.ITALIC));
+                    tooltip.add((Component.translatable("container.shulkerBox.more", j - i)).withStyle(ChatFormatting.ITALIC));
                 }
             }
         }

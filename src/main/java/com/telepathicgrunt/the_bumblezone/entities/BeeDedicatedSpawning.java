@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

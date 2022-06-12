@@ -1,16 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -132,7 +132,7 @@ public class EntityTeleportationHookup {
                 {
                     //failed. Block below isn't the required block
                     Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
-                    Component message = new TextComponent("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
+                    Component message = Component.translatable("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
                     playerEntity.displayClientMessage(message, true);
                     return false;
                 }
@@ -215,7 +215,7 @@ public class EntityTeleportationHookup {
                         if(pushedEntity instanceof Player playerEntity) {
                             //failed. Block below isn't the required block
                             Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
-                            Component message = new TextComponent("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
+                            Component message = Component.translatable("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
                             playerEntity.displayClientMessage(message, true);
                         }
                         return;

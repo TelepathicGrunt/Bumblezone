@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceKey;
@@ -106,9 +107,10 @@ public class BzWorldSavedData extends SavedData {
 			if(bumblezoneWorld == null) {
 				if(entity instanceof ServerPlayer playerEntity) {
 					Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: https://bugs.mojang.com/browse/MC-195468. A restart will fix this.");
-					MutableComponent message = MutableComponent.create(new TranslatableContents("Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: §6https://bugs.mojang.com/browse/MC-195468§f. A restart will fix this."));
+					MutableComponent message = Component.translatable("Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: §6https://bugs.mojang.com/browse/MC-195468§f. A restart will fix this.");
 					playerEntity.displayClientMessage(message, true);
 				}
+				teleportedEntities.add(entity);
 				return;
 			}
 
@@ -125,7 +127,7 @@ public class BzWorldSavedData extends SavedData {
 		Vec3 destinationPosition;
 		destinationPosition = EntityTeleportationBackend.destPostFromOutOfBoundsTeleport(entity, destination, upwardChecking);
 		if(destinationPosition == null) {
-			((ServerPlayer)entity).displayClientMessage(MutableComponent.create(new TranslatableContents("Error teleporting out of Bumblezone. destinationPosition is null. Report to Bumblezone dev pls.")), true);
+			((ServerPlayer)entity).displayClientMessage(Component.translatable("Error teleporting out of Bumblezone. destinationPosition is null. Report to Bumblezone dev pls."), true);
 		}
 		Entity baseVehicle = entity.getRootVehicle();
 		teleportEntityAndAssignToVehicle(baseVehicle, null, destination, destinationPosition, teleportedEntities);
@@ -147,10 +149,10 @@ public class BzWorldSavedData extends SavedData {
 
 		if (entity instanceof ServerPlayer) {
 			if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
-				((ServerPlayer) entity).displayClientMessage(MutableComponent.create(new TranslatableContents("Teleporting into the Bumblezone...")), true);
+				((ServerPlayer) entity).displayClientMessage(Component.translatable("Teleporting into the Bumblezone..."), true);
 			}
 			else {
-				((ServerPlayer) entity).displayClientMessage(MutableComponent.create(new TranslatableContents("Teleporting out of Bumblezone...")), true);
+				((ServerPlayer) entity).displayClientMessage(Component.translatable("Teleporting out of Bumblezone..."), true);
 			}
 
 			if (((ServerPlayer) entity).isSleeping()) {

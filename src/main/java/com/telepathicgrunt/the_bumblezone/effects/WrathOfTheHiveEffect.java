@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.effects;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
@@ -108,7 +109,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
         if(!world.isClientSide()) {
             PoiManager pointofinterestmanager = ((ServerLevel)world).getPoiManager();
             List<PoiRecord> poiInRange = pointofinterestmanager.getInSquare(
-                    (pointOfInterestType) -> pointOfInterestType == BzPOI.BROOD_BLOCK_POI,
+                    (pointOfInterestType) -> pointOfInterestType.value() == BzPOI.BROOD_BLOCK_POI,
                     entity.blockPosition(),
                     NEARBY_WRATH_EFFECT_RADIUS,
                     PoiManager.Occupancy.ANY)

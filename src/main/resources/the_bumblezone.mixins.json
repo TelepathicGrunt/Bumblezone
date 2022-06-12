@@ -45,16 +45,11 @@
     "items.PlayerDamagedMixin",
     "items.PlayerDamageShieldInvoker",
     "items.SimpleCookingSerializerMixin",
-    "world.BiomeSourceAccessor",
-    "world.LevelStorageSourceMixin",
     "world.NoiseChunkAccessor",
     "world.NoiseGeneratorSettingsInvoker",
     "world.ServerWorldMixin",
-    "world.SinglePoolElementAccessor",
-    "world.StructureFeatureAccessor",
     "world.StructureTemplateAccessor",
-    "world.WorldGenRegionAccessor",
-    "world.WorldGenSettingsMixin"
+    "world.WorldGenRegionAccessor"
   ],
   "client": [
     "client.KeyboardHandlerMixin",

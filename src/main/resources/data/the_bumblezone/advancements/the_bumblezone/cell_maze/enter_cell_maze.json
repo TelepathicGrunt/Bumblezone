@@ -22,9 +22,17 @@
     "in_cell_maze": {
       "trigger": "minecraft:location",
       "conditions": {
-        "location": {
-          "feature": "the_bumblezone:cell_maze"
-        }
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:cell_maze"
+              }
+            }
+          }
+        ]
       }
     }
   },
