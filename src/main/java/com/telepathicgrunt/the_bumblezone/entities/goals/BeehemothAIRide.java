@@ -48,7 +48,7 @@ public class BeehemothAIRide extends Goal {
 
         if (player.zza != 0 || beehemothEntity.movingStraightUp || beehemothEntity.movingStraightDown) {
             currentSpeed = Math.min(
-                    Bumblezone.BZ_CONFIG.BZGeneralConfig.beehemothSpeed * speedModifier * beehemothEntity.getFinalFlyingSpeed(),
+                    BzConfig.beehemothSpeed * speedModifier * beehemothEntity.getFinalFlyingSpeed(),
                     currentSpeed + 0.3D);
         }
         else {

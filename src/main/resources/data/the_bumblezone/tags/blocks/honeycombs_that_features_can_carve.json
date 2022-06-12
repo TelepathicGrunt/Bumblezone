@@ -22,39 +22,71 @@
       "required": true
     },
     {
-      "id": "beebetter:beeswax",
+      "id": "resourcefulbees:coal_honeycomb_block",
       "required": false
     },
     {
-      "id": "beebetter:bubbly_beeswax_bricks",
+      "id": "resourcefulbees:creeper_honeycomb_block",
       "required": false
     },
     {
-      "id": "beebetter:antique_beeswax_bricks",
+      "id": "resourcefulbees:diamond_honeycomb_block",
       "required": false
     },
     {
-      "id": "beebetter:antique_chiseled_beeswax",
+      "id": "resourcefulbees:emerald_honeycomb_block",
       "required": false
     },
     {
-      "id": "beebetter:chiseled_beeswax_pimple",
+      "id": "resourcefulbees:ender_honeycomb_block",
       "required": false
     },
     {
-      "id": "beebetter:ancient_crumbling_beeswax",
+      "id": "resourcefulbees:gold_honeycomb_block",
       "required": false
     },
     {
-      "id": "beebetter:ancient_gravelled_beeswax",
+      "id": "resourcefulbees:iron_honeycomb_block",
       "required": false
     },
     {
-      "id": "beebetter:ancient_mossy_crumbling_beeswax",
+      "id": "resourcefulbees:lapis_honeycomb_block",
       "required": false
     },
     {
-      "id": "beebetter:mossy_beeswax_bricks",
+      "id": "resourcefulbees:netherite_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:nether_quartz_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:pigman_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:redstone_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:rgbee_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:skeleton_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:wither_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:zombie_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "productivebees:configurable_comb",
       "required": false
     }
   ]

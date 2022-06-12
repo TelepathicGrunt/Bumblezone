@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
@@ -18,8 +18,8 @@ public class SpiderInfestedBeeDungeon extends NbtFeature{
     @Override
     public boolean place(FeaturePlaceContext<NbtFeatureConfig> context) {
         //affect rarity
-        if (Bumblezone.BZ_CONFIG.BZDungeonsConfig.spiderInfestedBeeDungeonRarity >= 1000 ||
-            context.random().nextInt(Bumblezone.BZ_CONFIG.BZDungeonsConfig.spiderInfestedBeeDungeonRarity) != 0) {
+        if (BzConfig.spiderInfestedBeeDungeonRarity >= 1000 ||
+            context.random().nextInt(BzConfig.spiderInfestedBeeDungeonRarity) != 0) {
             return false;
         }
 

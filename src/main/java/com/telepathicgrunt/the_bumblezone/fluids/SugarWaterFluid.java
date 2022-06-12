@@ -49,7 +49,7 @@ public abstract class SugarWaterFluid extends FlowingFluid {
     }
 
     @Override
-    public void randomTick(Level world, BlockPos position, FluidState state, Random random) {
+    public void randomTick(Level world, BlockPos position, FluidState state, RandomSource random) {
         //only attempts to grow sugar cane 50% of the time.
         if (random.nextBoolean() || !world.hasChunksAt(position, position))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
@@ -78,7 +78,7 @@ public abstract class SugarWaterFluid extends FlowingFluid {
 
 
     @Override
-    public void animateTick(Level worldIn, BlockPos pos, FluidState state, Random random) {
+    public void animateTick(Level worldIn, BlockPos pos, FluidState state, RandomSource random) {
         if (!state.isSource() && !state.getValue(FALLING)) {
             if (random.nextInt(64) == 0) {
                 worldIn.playLocalSound(

@@ -14,6 +14,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.Camera;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -36,7 +37,8 @@ public class FluidClientOverlay {
             RenderSystem.enableTexture();
             RenderSystem.setShaderTexture(0, TEXTURE_UNDERWATER);
             BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
-            float brightnessAtEyes = clientPlayerEntity.getBrightness();
+            BlockPos blockpos = new BlockPos(clientPlayerEntity.getX(), clientPlayerEntity.getEyeY(), clientPlayerEntity.getZ());
+            float brightnessAtEyes = LightTexture.getBrightness(clientPlayerEntity.level.dimensionType(), clientPlayerEntity.level.getMaxLocalRawBrightness(blockpos));
             float textureAlpha = 0.42F;
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
@@ -49,8 +51,7 @@ public class FluidClientOverlay {
             bufferBuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).uv(0.0F + modifiedYaw, 4.0F + modifiedPitch).endVertex();
             bufferBuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).uv(0.0F + modifiedYaw, 0.0F + modifiedPitch).endVertex();
             bufferBuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).uv(4.0F + modifiedYaw, 0.0F + modifiedPitch).endVertex();
-            bufferBuilder.end();
-            BufferUploader.end(bufferBuilder);
+            BufferUploader.draw(bufferBuilder.end());
             RenderSystem.disableBlend();
             return true;
         }
@@ -72,7 +73,7 @@ public class FluidClientOverlay {
             // Scale the brightness of fog but make sure it is never darker than the dimension's min brightness.
             float brightness = (float) Math.max(
                     Math.pow(FluidClientOverlay.getDimensionBrightnessAtEyes(clientPlayerEntity), 2D),
-                    clientPlayerEntity.level.dimensionType().brightness(0)
+                    clientPlayerEntity.level.dimensionType().ambientLight()
             );
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
@@ -85,8 +86,7 @@ public class FluidClientOverlay {
             bufferBuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).uv(0.0F + modifiedYaw, 2.0F + modifiedPitch).endVertex();
             bufferBuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).uv(1.0F + modifiedYaw, 1.0F + modifiedPitch).endVertex();
             bufferBuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).uv(2.0F + modifiedYaw, 0.0F + modifiedPitch).endVertex();
-            bufferBuilder.end();
-            BufferUploader.end(bufferBuilder);
+            BufferUploader.draw(bufferBuilder.end());
             RenderSystem.disableBlend();
             return true;
         }

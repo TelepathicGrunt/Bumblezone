@@ -1,13 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
-import com.telepathicgrunt.the_bumblezone.modcompat.BeeBetterCompat;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,18 +15,8 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-import java.util.Random;
-
 
 public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
-    //https://github.com/Deadrik/TFC2
-
-    private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
-    private static final BlockState FILLED_POROUS_HONEYCOMB = BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState();
-    private static final BlockState HONEYCOMB_BLOCK = Blocks.HONEYCOMB_BLOCK.defaultBlockState();
-    private static final BlockState SUGAR_WATER = BzFluids.SUGAR_WATER_BLOCK.defaultBlockState();
-
-
     protected long seed;
     protected static OpenSimplex2F noiseGen;
     protected static OpenSimplex2F noiseGen2;
@@ -189,7 +178,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
     }
 
 
-    private static void hexagon(WorldGenLevel world, ChunkGenerator generator, BlockPos position, Random random, double noise) {
+    private static void hexagon(WorldGenLevel world, ChunkGenerator generator, BlockPos position, RandomSource random, double noise) {
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos().set(position);
         BlockState blockState;
         int index = (int) (((noise * 0.5D) + 0.5D) * 7);
@@ -214,7 +203,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
         }
     }
 
-    private static void carveAtBlock(WorldGenLevel world, ChunkGenerator generator, Random random,
+    private static void carveAtBlock(WorldGenLevel world, ChunkGenerator generator, RandomSource random,
                                      BlockPos blockPos, BlockPos.MutableBlockPos mutable, BlockState blockState, int posResult, int abovePosResult) {
         if (blockState.canOcclude()) {
             boolean isNextToAir = shouldCloseOff(world, blockPos, mutable, true);
@@ -224,12 +213,12 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                 if (blockPos.getY() < generator.getSeaLevel()) {
                     boolean isNextToDrySpace = shouldCloseOff(world, blockPos, mutable, false);
                     if(isNextToAir || isNextToDrySpace)
-                        world.setBlock(blockPos, FILLED_POROUS_HONEYCOMB, 3);
+                        world.setBlock(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(), 3);
                     else
-                        world.setBlock(blockPos, SUGAR_WATER, 3);
+                        world.setBlock(blockPos, BzFluids.SUGAR_WATER_BLOCK.defaultBlockState(), 3);
                 }
                 else {
-                    world.setBlock(blockPos, CAVE_AIR, 3);
+                    world.setBlock(blockPos, Blocks.CAVE_AIR.defaultBlockState(), 3);
                     if(abovePosResult <= 1) {
                         BlockPos abovePos = blockPos.above();
                         BlockState aboveState = world.getBlockState(abovePos);
@@ -240,22 +229,11 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                 }
             }
             else if (posResult == 1) {
-                if(ModChecker.beeBetterPresent) {
-                    double noise2 = noiseGen2.noise3_Classic(
-                            blockPos.getX() * 0.007D,
-                            blockPos.getZ() * 0.007D,
-                            blockPos.getY() * 0.02D);
-                    if (noise2 > 0.35) {
-                        world.setBlock(blockPos, BeeBetterCompat.getBeeswaxBlock((int) (noise2 / 0.03D)), 3);
-                        return;
-                    }
-                }
-
                 if (random.nextInt(3) == 0) {
-                    world.setBlock(blockPos, HONEYCOMB_BLOCK, 3);
+                    world.setBlock(blockPos, Blocks.HONEYCOMB_BLOCK.defaultBlockState(), 3);
                 }
                 else {
-                    world.setBlock(blockPos, FILLED_POROUS_HONEYCOMB, 3);
+                    world.setBlock(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(), 3);
                 }
             }
         }

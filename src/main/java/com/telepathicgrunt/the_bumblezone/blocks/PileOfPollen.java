@@ -147,7 +147,7 @@ public class PileOfPollen extends FallingBlock {
     }
 
     @Override
-    public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
+    public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
         if (canFall(serverLevel.getBlockState(blockPos.below())) && blockPos.getY() >= serverLevel.getMinBuildHeight()) {
             FallingBlockEntity fallingblockentity = new FallingBlockEntity(serverLevel, (double)blockPos.getX() + 0.5D, blockPos.getY(), (double)blockPos.getZ() + 0.5D, serverLevel.getBlockState(blockPos));
             serverLevel.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
@@ -409,7 +409,7 @@ public class PileOfPollen extends FallingBlock {
         }
     }
     // Rarely spawn particle on its own
-    public void animateTick(BlockState blockState, Level world, BlockPos blockPos, Random random) {
+    public void animateTick(BlockState blockState, Level world, BlockPos blockPos, RandomSource random) {
         int layerValue = blockState.getValue(LAYERS);
         double chance = 0.015f + layerValue * 0.008f;
         if(random.nextFloat() < chance) spawnParticles(blockState, world, blockPos, random, false);
@@ -420,7 +420,7 @@ public class PileOfPollen extends FallingBlock {
         return 16755200;
     }
 
-    public static void spawnParticles(BlockState blockState, LevelAccessor world, BlockPos blockPos, Random random, boolean disturbed) {
+    public static void spawnParticles(BlockState blockState, LevelAccessor world, BlockPos blockPos, RandomSource random, boolean disturbed) {
         for(Direction direction : Direction.values()) {
             BlockPos blockpos = blockPos.relative(direction);
             if (!world.getBlockState(blockpos).isSolidRender(world, blockpos)) {
@@ -448,7 +448,7 @@ public class PileOfPollen extends FallingBlock {
         }
     }
 
-    public static void spawnParticles(LevelAccessor world, Vec3 location, Random random, double speedXZModifier, double speedYModifier, double initYSpeed) {
+    public static void spawnParticles(LevelAccessor world, Vec3 location, RandomSource random, double speedXZModifier, double speedYModifier, double initYSpeed) {
         double xOffset = (random.nextFloat() * 0.3) - 0.15;
         double yOffset = (random.nextFloat() * 0.3) - 0.15;
         double zOffset = (random.nextFloat() * 0.3) - 0.15;
@@ -463,7 +463,7 @@ public class PileOfPollen extends FallingBlock {
                 random.nextGaussian() * speedXZModifier);
     }
 
-    public static void spawnParticlesServer(LevelAccessor world, Vec3 location, Random random, double speedXZModifier, double speedYModifier, double initYSpeed, int numberOfParticles) {
+    public static void spawnParticlesServer(LevelAccessor world, Vec3 location, RandomSource random, double speedXZModifier, double speedYModifier, double initYSpeed, int numberOfParticles) {
         if(world.isClientSide()) return;
 
         double xOffset = (random.nextFloat() * 0.3) - 0.15;

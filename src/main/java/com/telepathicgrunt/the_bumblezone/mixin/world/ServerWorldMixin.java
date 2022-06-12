@@ -40,7 +40,7 @@ public abstract class ServerWorldMixin extends Level {
 			if(thebumblezone_counter % thebumblezone_updateInterval == 0){
 				thebumblezone_counter = 0;
 				GeneralUtils.updateEntityCount(((ServerLevel) (Object) this));
-				if(Bumblezone.BZ_CONFIG.BZGeneralConfig.specialBeeSpawning) {
+				if(BzConfig.specialBeeSpawning) {
 					BeeDedicatedSpawning.specialSpawnBees((ServerLevel) (Object) this);
 				}
 			}

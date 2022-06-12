@@ -45,16 +45,13 @@
     "fabricloader": ">=0.13.3",
     "minecraft": ">=1.18.2",
     "fabric": ">=0.47.8",
-    "cloth-config2": ">=6.2.57",
-    "feature_nbt_deadlock_be_gone": "*"
+    "midnightlib": ">=0.5.2"
   },
   "custom": {
     "cardinal-components": [
       "the_bumblezone:entity_component",
       "the_bumblezone:original_flying_speed",
       "the_bumblezone:neurotoxins_missed_counter"
-    ],
-    "notify_gradle_properties_url": "https://raw.githubusercontent.com/TelepathicGrunt/Bumblezone-Fabric/latest-released/gradle.properties",
-    "notify_gradle_properties_key": "mod_version"
+    ]
   }
 }

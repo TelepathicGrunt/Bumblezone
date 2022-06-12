@@ -6,7 +6,7 @@
       "required": true
     },
     {
-      "id": "#c:buckets/honey",
+      "id": "#forge:buckets/honey",
       "required": true
     }
   ]

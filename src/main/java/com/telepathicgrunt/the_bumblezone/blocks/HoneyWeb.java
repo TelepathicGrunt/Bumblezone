@@ -332,7 +332,7 @@ public class HoneyWeb extends Block {
      * Called periodically clientside on blocks near the player to show honey particles
      */
     @Override
-    public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
+    public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         //chance of particle in this tick
         for (int i = 0; i == random.nextInt(50); ++i) {
             this.addParticle(ParticleTypes.DRIPPING_HONEY, world, position, blockState.getShape(world, position));

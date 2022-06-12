@@ -46,8 +46,8 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
     @Override
     public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
 
-        SEE_THROUGH_WALLS.range(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D);
-        List<Bee> beeList = entity.level.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D));
+        SEE_THROUGH_WALLS.range(BzConfig.aggressionTriggerRadius*0.5D);
+        List<Bee> beeList = entity.level.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(BzConfig.aggressionTriggerRadius*0.5D));
 
         for (Bee bee : beeList) {
             if(bee.getTarget() == entity) {
@@ -69,7 +69,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
            resetBeeAngry(entity.level, entity.getLastHurtByMob());
 
            if(!(entity.getLastHurtByMob() instanceof Bee)) {
-               entity.getLastHurtByMob().addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, amplifier, true, true, true));
+               entity.getLastHurtByMob().addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, amplifier, true, true, true));
                if (entity instanceof ServerPlayer) {
                    BzCriterias.PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER.trigger((ServerPlayer) entity, entity.getLastHurtByMob());
                }
@@ -84,8 +84,8 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
         LivingEntity entity = livingEntity;
         UUID uuid = entity.getUUID();
 
-        SEE_THROUGH_WALLS.range(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D);
-        List<Bee> beeList = world.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D));
+        SEE_THROUGH_WALLS.range(BzConfig.aggressionTriggerRadius*0.5D);
+        List<Bee> beeList = world.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(BzConfig.aggressionTriggerRadius*0.5D));
 
         if(livingEntity instanceof Bee) {
             entity = null;

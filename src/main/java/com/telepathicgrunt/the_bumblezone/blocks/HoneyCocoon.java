@@ -153,7 +153,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
         return blockstate.setValue(WATERLOGGED, fluidstate.getType().is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidstate.isSource());
     }
     @Override
-    public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
+    public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
         BlockState aboveState = serverLevel.getBlockState(blockPos.above());
         if(!blockState.getValue(WATERLOGGED) && aboveState.getCollisionShape(serverLevel, blockPos).isEmpty()) {
             BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
@@ -214,7 +214,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     }
 
     @Override
-    public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
+    public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
         BlockState aboveState = serverLevel.getBlockState(blockPos.above());
         if(blockState.getValue(WATERLOGGED) && aboveState.getFluidState().is(FluidTags.WATER) && aboveState.getCollisionShape(serverLevel, blockPos).isEmpty()) {
 
@@ -416,7 +416,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
      * Called periodically clientside on blocks near the player to show honey particles.
      */
     @Override
-    public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
+    public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         if(!blockState.getValue(WATERLOGGED)) {
             if (world.random.nextFloat() < 0.05F) {
                 this.spawnHoneyParticles(world, position);

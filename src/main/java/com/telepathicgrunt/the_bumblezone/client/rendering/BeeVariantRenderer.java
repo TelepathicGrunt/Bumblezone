@@ -34,10 +34,10 @@ public class BeeVariantRenderer extends BeeRenderer {
         UUID id = entity.getUUID();
         long most = id.getMostSignificantBits();
 
-        final double lgbtChance = Bumblezone.BZ_CONFIG.BZClientConfig.lgbtBeeRate;
+        final double lgbtChance = BzConfig.lgbtBeeRate;
         boolean lgbt = (new Random(most + 1001)).nextDouble() < lgbtChance; // + 1001 so it doesn't align exactly with quark.
 
-        final double ukraineChance = Bumblezone.BZ_CONFIG.BZClientConfig.ukraineBeeRate;
+        final double ukraineChance = BzConfig.ukraineBeeRate;
         boolean ukraine = (new Random(most + 1001)).nextDouble() < ukraineChance; // + 1001 so it doesn't align exactly with quark.
 
         if(entity.hasCustomName() || lgbt || ukraine) {

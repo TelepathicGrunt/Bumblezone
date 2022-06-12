@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 public class StrangeCompat {
 
 //    public static void setupCompat() {
-//        if(Bumblezone.BZ_CONFIG.BZModCompatibilityConfig.allowStrangeBeekeeperTradesCompat) {
+//        if(BzConfig.allowStrangeBeekeeperTradesCompat) {
 //            ServerLifecycleEvents.SERVER_STARTED.register((server) -> setupStrangeTrades());
 //        }
 //

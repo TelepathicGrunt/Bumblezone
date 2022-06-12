@@ -12,14 +12,12 @@ import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.packets.BeehemothControlsPacket;
 import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacket;
 import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetSightPacket;
-import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
+import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.resources.ResourceLocation;
@@ -32,7 +30,6 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
     public static final String MODID = "the_bumblezone";
     public static final ResourceLocation MOD_DIMENSION_ID = new ResourceLocation(Bumblezone.MODID, Bumblezone.MODID);
 
-    public static BzConfig BZ_CONFIG;
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     public static final ComponentKey<EntityComponent> ENTITY_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "entity_component"), EntityComponent.class);
@@ -42,8 +39,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
     @Override
     public void onInitialize() {
         //Set up config
-        AutoConfig.register(BzConfig.class, JanksonConfigSerializer::new);
-        BZ_CONFIG = AutoConfig.getConfigHolder(BzConfig.class).getConfig();
+        MidnightConfig.init(MODID, BzConfig.class);
 
         BzTags.initTags();
         BzBiomeHeightRegistry.initBiomeHeightRegistry();
@@ -72,7 +68,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzFeatures.registerFeatures();
         BzSurfaceRules.registerSurfaceRules();
         BzStructures.registerStructures();
-        BzDimension.setupDimension();
+        BzDimension.registerDimensionParts();
 
         WanderingTrades.addWanderingTrades();
         DispenserItemSetup.setupDispenserBehaviors();

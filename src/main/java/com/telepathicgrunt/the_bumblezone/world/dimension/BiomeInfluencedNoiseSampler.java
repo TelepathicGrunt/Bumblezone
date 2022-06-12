@@ -1,16 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.world.dimension;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBiomeHeightRegistry;
-import it.unimi.dsi.fastutil.longs.Long2FloatMap;
-import it.unimi.dsi.fastutil.longs.Long2FloatOpenHashMap;
 import net.minecraft.Util;
 import net.minecraft.core.Registry;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
-import org.apache.logging.log4j.Level;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

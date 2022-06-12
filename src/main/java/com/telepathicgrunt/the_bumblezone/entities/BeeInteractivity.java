@@ -144,7 +144,7 @@ public class BeeInteractivity {
 
             playerEntity.addEffect(new MobEffectInstance(
                     BzEffects.PROTECTION_OF_THE_HIVE,
-                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts,
+                    BzConfig.howLongProtectionOfTheHiveLasts,
                     2,
                     false,
                     false,

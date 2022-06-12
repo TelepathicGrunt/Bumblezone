@@ -10,7 +10,4 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface NoiseChunkAccessor {
     @Invoker("getInterpolatedState")
     BlockState callGetInterpolatedState();
-
-    @Accessor("blockStateRule")
-    NoiseChunk.BlockStateFiller getBlockStateRule();
 }

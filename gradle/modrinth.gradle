@@ -22,7 +22,7 @@ task publishModrinth (type: TaskModrinthUpload) {
     uploadFile = remapJar
     changelog = fileContents
     versionType = "RELEASE"
-    addGameVersion("1.18.2")
+    addGameVersion("1.19")
     addLoader('fabric')
 }
 

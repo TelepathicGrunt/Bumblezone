@@ -43,7 +43,7 @@ public class EntityTeleportationBackend {
         BlockPos validBlockPos;
         boolean spawnAtFixedPosition = false;
 
-        if(Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 1) {
+        if(BzConfig.teleportationMode == 1) {
             finalSpawnPos = new BlockPos(
                     Doubles.constrainToRange(entity.position().x() * coordinateScale, -29999936D, 29999936D),
                     entity.position().y(),
@@ -53,7 +53,7 @@ public class EntityTeleportationBackend {
             validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, SEARCH_RADIUS, checkingUpward);
         }
 
-        else if(Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 2) {
+        else if(BzConfig.teleportationMode == 2) {
             Vec3 playerPos = Bumblezone.ENTITY_COMPONENT.get(entity).getNonBZPos();
             spawnAtFixedPosition = true;
             if(playerPos != null) {
@@ -108,7 +108,7 @@ public class EntityTeleportationBackend {
     public static Vec3 getBzCoordinate(Entity entity, ServerLevel originalWorld, ServerLevel bumblezoneWorld) {
         //converts the position to get the corresponding position in bumblezone dimension
         double coordinateScale = 1;
-        if (Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode != 2) {
+        if (BzConfig.teleportationMode != 2) {
             coordinateScale = originalWorld.dimensionType().coordinateScale() / bumblezoneWorld.dimensionType().coordinateScale();
         }
         BlockPos blockpos = new BlockPos(
@@ -239,7 +239,7 @@ public class EntityTeleportationBackend {
             }
 
             // Filter out all positions that are below sealevel if we do not want underground spots.
-            if (Bumblezone.BZ_CONFIG.BZDimensionConfig.seaLevelOrHigherExitTeleporting && be.getBlockPos().getY() < ((ServerLevel)world).getChunkSource().getGenerator().getSeaLevel() - 1) {
+            if (BzConfig.seaLevelOrHigherExitTeleporting && be.getBlockPos().getY() < ((ServerLevel)world).getChunkSource().getGenerator().getSeaLevel() - 1) {
                 return false;
             }
 
@@ -274,7 +274,7 @@ public class EntityTeleportationBackend {
         }
 
         //this mode will not generate a beenest automatically.
-        if(Bumblezone.BZ_CONFIG.BZDimensionConfig.teleportationMode == 3) return null;
+        if(BzConfig.teleportationMode == 3) return null;
 
         //no valid spot was found, generate a hive and spawn us on the highest land
         //This if statement is so we dont get placed on roof of other roofed dimension
@@ -300,7 +300,7 @@ public class EntityTeleportationBackend {
     }
 
     private static void createSpaceForPlayer(Level world, BlockPos.MutableBlockPos mutableBlockPos) {
-        if(Bumblezone.BZ_CONFIG.BZDimensionConfig.generateBeenest)
+        if(BzConfig.generateBeenest)
             world.setBlockAndUpdate(mutableBlockPos, Blocks.BEE_NEST.defaultBlockState());
         else if(world.getBlockState(mutableBlockPos).getMaterial() == Material.AIR ||
                 (!world.getBlockState(mutableBlockPos).getFluidState().isEmpty() &&

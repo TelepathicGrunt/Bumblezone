@@ -12,8 +12,7 @@ buildscript {
 
 plugins {
 	id "net.darkhax.curseforgegradle" version "1.0.7"
-	id 'fabric-loom' version '0.10-SNAPSHOT'
-	id 'io.github.juuxel.loom-quiltflower-mini' version '1.1.0'
+	id 'fabric-loom' version '0.12-SNAPSHOT'
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -52,16 +51,15 @@ repositories {
 dependencies {
 	//to change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings minecraft.officialMojangMappings()
+	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	modImplementation ("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}") {
 		force = true //Force the version we want rather than trusting Gradle to pick it over transitive suggestions
 	}
 
-	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
-		exclude(group: "net.fabricmc.fabric-api")
-	}
+	modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
+	include "maven.modrinth:midnightlib:${project.midnightlib_version}"
 
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_version}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_version}"
@@ -74,23 +72,17 @@ dependencies {
 
 	modImplementation ("maven.modrinth:modmenu:${project.mod_menu_version}") { transitive = false }
 
-
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
 	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 
-	modRuntimeOnly "com.telepathicgrunt:FeatureNBTDeadlockBeGone-Fabric:${project.NBTDBG_version}"
-	modRuntimeOnly "com.telepathicgrunt:CommandStructures-Fabric:2.0.1+1.18.2"
-	modRuntimeOnly "curse.maven:structure_void_toggle-357304:3488866"
+	modRuntimeOnly "com.telepathicgrunt:CommandStructures-Fabric:${project.commandstructures_version}"
+	modRuntimeOnly "com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_version}"
 
-	modRuntimeOnly "curse.maven:shutup_experimental_settings-401978:3677546"
-	modCompileOnly "curse.maven:friends_and_foes-551364:3725313"
-	modCompileOnly "curse.maven:bee_better-351600:3726160"
+	modCompileOnly "curse.maven:friends_and_foes-551364:3827720"
+	//modCompileOnly "curse.maven:bee_better-351600:3726160"
 
-	//modRuntimeOnly "curse.maven:friends_and_foes-551364:3725313"
 	//modRuntimeOnly "curse.maven:architectury-419697:3717905"
-	//modRuntimeOnly "curse.maven:bee_better-351600:3726160"
-
 	//modRuntimeOnly "curse.maven:requiem-265729:3639233"
 	//modImplementation ("curse.maven:mobcatcher-498389:3575752") { transitive = false }
 	//modCompileOnly ("curse.maven:charm-318872:3355096") { transitive = false }

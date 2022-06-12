@@ -13,10 +13,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +32,7 @@ public class HoneycombHole extends Feature<NbtFeatureConfig> {
     public boolean place(FeaturePlaceContext<NbtFeatureConfig> context) {
         ResourceLocation nbtRL = GeneralUtils.getRandomEntry(context.config().nbtResourcelocationsAndWeights, context.random());
 
-        StructureManager structureManager = context.level().getLevel().getStructureManager();
+        StructureTemplateManager structureManager = context.level().getLevel().getStructureManager();
         StructureTemplate template = structureManager.get(nbtRL).orElseThrow(() -> {
             String errorMsg = "Identifier to the specified nbt file was not found! : " + nbtRL;
             Bumblezone.LOGGER.error(errorMsg);

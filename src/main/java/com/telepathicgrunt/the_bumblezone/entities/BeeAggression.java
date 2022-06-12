@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -80,8 +81,8 @@ public class BeeAggression {
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
         if ((player.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
-                Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees &&
+                BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+                BzConfig.aggressiveBees &&
                 !player.isCreative() &&
                 !player.isSpectator())
         {
@@ -89,10 +90,10 @@ public class BeeAggression {
                 //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
                 player.addEffect(new MobEffectInstance(
                         BzEffects.WRATH_OF_THE_HIVE,
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                        BzConfig.howLongWrathOfTheHiveLasts,
                         2,
                         false,
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles,
+                        BzConfig.showWrathOfTheHiveParticles,
                         true));
             }
         }
@@ -115,8 +116,8 @@ public class BeeAggression {
                     WrathOfTheHiveEffect.calmTheBees(player.level, player); // prevent bees from be naturally angry
                 }
                 else if((entity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
+                        BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+                        BzConfig.aggressiveBees)
                 {
                     if(player instanceof ServerPlayer && player.hasEffect(BzEffects.WRATH_OF_THE_HIVE)) {
                         BzCriterias.EXTENDED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayer) player, attackerEntity);
@@ -124,10 +125,10 @@ public class BeeAggression {
 
                     player.addEffect(new MobEffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE,
-                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                            BzConfig.howLongWrathOfTheHiveLasts,
                             2,
                             false,
-                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles,
+                            BzConfig.showWrathOfTheHiveParticles,
                             true));
                 }
             }
@@ -137,12 +138,12 @@ public class BeeAggression {
                     WrathOfTheHiveEffect.calmTheBees(mob.level, mob); // prevent bees from be naturally angry
                 }
                 else if((entity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
+                        BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+                        BzConfig.aggressiveBees)
                 {
                     mob.addEffect(new MobEffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE,
-                            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                            BzConfig.howLongWrathOfTheHiveLasts,
                             2,
                             false,
                             true));
@@ -157,7 +158,7 @@ public class BeeAggression {
         if(doesBeesHateEntity(entity)) {
             ((Mob) entity).addEffect(new MobEffectInstance(
                     BzEffects.WRATH_OF_THE_HIVE,
-                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                    BzConfig.howLongWrathOfTheHiveLasts,
                     1,
                     false,
                     true));
@@ -172,7 +173,7 @@ public class BeeAggression {
             entity.level != null &&
             !entity.level.isClientSide() &&
             entity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees &&
+            BzConfig.aggressiveBees &&
             entity instanceof Mob mobEntity)
         {
             //must be a bear or insect animal with no wrath of the hive effect on
@@ -190,7 +191,7 @@ public class BeeAggression {
         //removes the wrath of the hive if it is disallowed outside dimension
         if(!playerEntity.level.isClientSide() &&
                 playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE) &&
-                !(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone ||
+                !(BzConfig.allowWrathOfTheHiveOutsideBumblezone ||
                         playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)))
         {
             playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE);
@@ -201,7 +202,7 @@ public class BeeAggression {
         if(playerEntity.level.isClientSide()) {
             boolean wrathEffect = playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE);
             if(wrathEffect) {
-                if(Bumblezone.BZ_CONFIG.BZClientConfig.playWrathOfHiveEffectMusic) {
+                if(BzConfig.playWrathOfHiveEffectMusic) {
                     MusicHandler.playAngryBeeMusic(playerEntity);
                 }
                 else {

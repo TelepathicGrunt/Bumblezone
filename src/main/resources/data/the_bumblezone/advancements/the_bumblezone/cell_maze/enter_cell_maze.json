@@ -22,7 +22,9 @@
     "in_cell_maze": {
       "trigger": "minecraft:location",
       "conditions": {
-        "feature": "the_bumblezone:cell_maze"
+        "location": {
+          "feature": "the_bumblezone:cell_maze"
+        }
       }
     }
   },

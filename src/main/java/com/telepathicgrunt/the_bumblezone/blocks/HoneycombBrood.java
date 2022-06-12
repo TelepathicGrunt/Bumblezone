@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -20,6 +21,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -92,17 +94,17 @@ public class HoneycombBrood extends ProperFacingBlock {
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
 
             if ((playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+                    BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&
-                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
+                    BzConfig.aggressiveBees)
             {
                 if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
                     playerEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                 }
                 else {
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
-                    playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
+                    playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
                 }
             }
 
@@ -126,7 +128,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
                 if (successfulGrowth && world.random.nextFloat() < 0.30F) {
                     if(!playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE)) {
-                        playerEntity.addEffect(new MobEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, (int) (Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts * 0.75f), 1, false, false,  true));
+                        playerEntity.addEffect(new MobEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, (int) (BzConfig.howLongProtectionOfTheHiveLasts * 0.75f), 1, false, false,  true));
                     }
                 }
 
@@ -188,7 +190,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
     @SuppressWarnings("deprecation")
     @Override
-    public void tick(BlockState state, ServerLevel world, BlockPos position, Random rand) {
+    public void tick(BlockState state, ServerLevel world, BlockPos position, RandomSource rand) {
         super.tick(state, world, position, rand);
         if (!world.hasChunksAt(position, position))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
@@ -204,11 +206,11 @@ public class HoneycombBrood extends ProperFacingBlock {
                 world.setBlock(position, state.setValue(STAGE, stage + 1), 2);
             }
         }
-        else if(Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity != 0) {
-            if(!nearbyEntities.isEmpty() && GeneralUtils.getEntityCountInBz() < Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity * 1.75f) {
+        else if(BzConfig.broodBlocksBeeSpawnCapacity != 0) {
+            if(!nearbyEntities.isEmpty() && GeneralUtils.getEntityCountInBz() < BzConfig.broodBlocksBeeSpawnCapacity * 1.75f) {
                 spawnBroodMob(world, state, position, stage);
             }
-            else if(GeneralUtils.getEntityCountInBz() < Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity) {
+            else if(GeneralUtils.getEntityCountInBz() < BzConfig.broodBlocksBeeSpawnCapacity) {
                 spawnBroodMob(world, state, position, stage);
             }
         }
@@ -287,7 +289,7 @@ public class HoneycombBrood extends ProperFacingBlock {
      * particle. Also will buzz too based on stage
      */
     @Override
-    public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
+    public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         //number of particles in this tick
         for (int i = 0; i < random.nextInt(2); ++i) {
             this.spawnHoneyParticles(world, position, blockState);

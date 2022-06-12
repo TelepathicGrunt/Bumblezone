@@ -21,6 +21,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -282,7 +283,7 @@ public class StickyHoneyResidue extends Block {
     }
 
     @Override
-    public void tick(BlockState blockstate, ServerLevel world, BlockPos currentPos, Random random) {
+    public void tick(BlockState blockstate, ServerLevel world, BlockPos currentPos, RandomSource random) {
         super.tick(blockstate, world, currentPos, random);
         BlockState newBlockstate = this.setAttachments(blockstate, world, currentPos);
         world.setBlock(currentPos, newBlockstate, 3);
@@ -406,7 +407,7 @@ public class StickyHoneyResidue extends Block {
      * Called periodically clientside on blocks near the player to show honey particles
      */
     @Override
-    public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
+    public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         //chance of particle in this tick
         for (int i = 0; i == random.nextInt(50); ++i) {
             Direction randomDirection = Direction.values()[world.random.nextInt(Direction.values().length)];

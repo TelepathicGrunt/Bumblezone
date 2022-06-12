@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -41,7 +42,7 @@ public class HoneyBeeLeggings extends BeeArmor {
 
     @Override
     public void onArmorTick(ItemStack itemstack, Level world, Player entity) {
-        Random random = world.random;
+        RandomSource random = world.random;
         boolean isPollinated = isPollinated(itemstack);
         boolean isSprinting = entity.isSprinting();
         boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(entity);

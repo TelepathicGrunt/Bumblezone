@@ -39,7 +39,7 @@ public final class BeeDedicatedSpawning {
             }
         }
 
-        int beesPerPlayer = Bumblezone.BZ_CONFIG.BZGeneralConfig.nearbyBeesPerPlayerInBz;
+        int beesPerPlayer = BzConfig.nearbyBeesPerPlayerInBz;
         int maxWildBeeLimit = beesPerPlayer * serverPlayers.size();
         if(allWildBees.size() <= maxWildBeeLimit) {
             for(ServerPlayer serverPlayer : serverPlayers) {

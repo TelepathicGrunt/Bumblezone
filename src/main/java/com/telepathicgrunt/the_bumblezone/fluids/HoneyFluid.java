@@ -60,7 +60,7 @@ public abstract class HoneyFluid extends FlowingFluid {
     }
 
     @Override
-    public void animateTick(Level worldIn, BlockPos pos, FluidState state, Random random) {
+    public void animateTick(Level worldIn, BlockPos pos, FluidState state, RandomSource random) {
         if (random.nextInt(82) == 0) {
             worldIn.addParticle(BzParticles.HONEY_PARTICLE,
                     pos.getX() + random.nextFloat(),
@@ -391,7 +391,7 @@ public abstract class HoneyFluid extends FlowingFluid {
         }
     }
 
-    protected static int decreaseAirSupply(int airSupply, LivingEntity entity, Random random) {
+    protected static int decreaseAirSupply(int airSupply, LivingEntity entity, RandomSource random) {
         int respiration = EnchantmentHelper.getRespiration(entity);
         return respiration > 0 && random.nextInt(respiration + 1) > 0 ? airSupply : airSupply - 1;
     }

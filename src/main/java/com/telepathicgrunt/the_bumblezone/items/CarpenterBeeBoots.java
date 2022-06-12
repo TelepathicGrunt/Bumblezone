@@ -46,7 +46,7 @@ public class CarpenterBeeBoots extends BeeArmor {
 
     @Override
     public void onArmorTick(ItemStack beeBoots, Level world, Player player) {
-        Random random = world.random;
+        RandomSource random = world.random;
         boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(player);
         CompoundTag tag = beeBoots.getOrCreateTag();
 
@@ -232,7 +232,7 @@ public class CarpenterBeeBoots extends BeeArmor {
         return currentSpeed;
     }
 
-    private static int generateUniqueItemId(Level world, Random random, CompoundTag tag, int itemId) {
+    private static int generateUniqueItemId(Level world, RandomSource random, CompoundTag tag, int itemId) {
         if (itemId == 0 && !world.isClientSide()) {
             while (true) {
                 boolean anymatch = false;
