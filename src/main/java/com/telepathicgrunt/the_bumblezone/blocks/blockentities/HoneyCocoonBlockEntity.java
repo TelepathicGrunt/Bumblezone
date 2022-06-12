@@ -42,7 +42,7 @@ public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity imp
 
     @Override
     protected Component getDefaultName() {
-        return MutableComponent.create(new TranslatableContents("the_bumblezone.container.honey_cocoon"));
+        return Component.translatable("the_bumblezone.container.honey_cocoon");
     }
 
     @Override

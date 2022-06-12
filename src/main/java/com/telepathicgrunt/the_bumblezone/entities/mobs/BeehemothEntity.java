@@ -72,7 +72,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     private static final EntityDataAccessor<Boolean> SADDLED = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> QUEEN = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> FRIENDSHIP = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.INT);
-    private static final MutableComponent QUEEN_NAME = MutableComponent.create(new TranslatableContents("entity.the_bumblezone.beehemoth_queen"));
+    private static final MutableComponent QUEEN_NAME = Component.translatable("entity.the_bumblezone.beehemoth_queen");
     public static final int TICKS_PER_FLAP = Mth.ceil(1.4959966F);
     private boolean stopWandering = false;
     public float offset1, offset2, offset3, offset4, offset5, offset6;

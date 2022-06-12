@@ -39,7 +39,7 @@ public class HoneyCrystalShield extends ShieldItem {
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         if (stack.hasTag()) {
             int shieldLevel = Math.max(Math.min(stack.getOrCreateTag().getInt("ShieldLevel"), maxShieldLevel), 0);
-            tooltip.add(MutableComponent.create(new TranslatableContents("item.the_bumblezone.honey_crystal_shield.level_tooltip")).append(": " + (shieldLevel + 1)));
+            tooltip.add(Component.translatable("item.the_bumblezone.honey_crystal_shield.level_tooltip").append(": " + (shieldLevel + 1)));
         }
     }
 

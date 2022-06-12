@@ -382,7 +382,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
         CompoundTag compoundtag = BlockItem.getBlockEntityData(itemStack);
         if (compoundtag != null) {
             if (compoundtag.contains("LootTable", 8)) {
-                tooltip.add(MutableComponent.create(new TranslatableContents("???????")));
+                tooltip.add(Component.translatable("???????"));
             }
 
             if (compoundtag.contains("Items", 9)) {
@@ -404,7 +404,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                 }
 
                 if (j - i > 0) {
-                    tooltip.add((MutableComponent.create(new TranslatableContents("container.shulkerBox.more", j - i))).withStyle(ChatFormatting.ITALIC));
+                    tooltip.add((Component.translatable("container.shulkerBox.more", j - i)).withStyle(ChatFormatting.ITALIC));
                 }
             }
         }

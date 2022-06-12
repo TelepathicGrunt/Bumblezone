@@ -139,7 +139,7 @@ public class EntityTeleportationHookup {
                 {
                     //failed. Block below isn't the required block
                     Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
-                    Component message = MutableComponent.create(new TranslatableContents("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive."));
+                    Component message = Component.translatable("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
                     playerEntity.displayClientMessage(message, true);
                     return false;
                 }
@@ -221,7 +221,7 @@ public class EntityTeleportationHookup {
                         if(pushedEntity instanceof Player playerEntity) {
                             //failed. Block below isn't the required block
                             Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
-                            Component message = MutableComponent.create(new TranslatableContents("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive."));
+                            Component message = Component.translatable("the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
                             playerEntity.displayClientMessage(message, true);
                         }
                         return;
