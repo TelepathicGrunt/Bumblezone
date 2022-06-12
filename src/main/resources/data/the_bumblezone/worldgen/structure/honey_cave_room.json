@@ -9,5 +9,18 @@
   "start_height": {
     "absolute": 0
   },
-  "use_expansion_hack": false
+  "use_expansion_hack": false,
+  "spawn_overrides": {
+    "creature": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "the_bumblezone:beehemoth",
+          "maxCount": 1,
+          "minCount": 1,
+          "weight": 1
+        }
+      ]
+    }
+  }
 }

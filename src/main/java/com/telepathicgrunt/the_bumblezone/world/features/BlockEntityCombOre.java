@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
@@ -35,9 +37,9 @@ public class BlockEntityCombOre extends Feature<OreConfiguration> {
 		int maxY = (int) (size / 3);
 		int minY = -maxY - 1;
 		String nbt = null;
-		//if(ModChecker.productiveBeesPresent && ProductiveBeesCompat.PBIsConfigurableComb(context.config().targetStates.get(0).state.getBlock())) {
-		//	nbt = ProductiveBeesCompat.PBGetRandomCombType(context.random());
-		//}
+		if(ModChecker.productiveBeesPresent && ProductiveBeesCompat.PBIsConfigurableComb(context.config().targetStates.get(0).state.getBlock())) {
+			nbt = ProductiveBeesCompat.PBGetRandomCombType(context.random());
+		}
 
 		for(int y = minY; y <= maxY; y++) {
 			float yModified = y;
@@ -70,10 +72,10 @@ public class BlockEntityCombOre extends Feature<OreConfiguration> {
 						blockToReplace = cachedChunk.getBlockState(blockposMutable);
 						for(OreConfiguration.TargetBlockState targetBlockState : context.config().targetStates) {
 							if(targetBlockState.target.test(blockToReplace, context.random())) {
-								//if(ModChecker.productiveBeesPresent && ProductiveBeesCompat.PBIsConfigurableComb(targetBlockState.state.getBlock())) {
-								//	ProductiveBeesCompat.placeConfigurableCombBlockEntity(blockposMutable, cachedChunk, nbt, targetBlockState, targetBlockState.state.getBlock());
-								//	continue;
-								//}
+								if(ModChecker.productiveBeesPresent && ProductiveBeesCompat.PBIsConfigurableComb(targetBlockState.state.getBlock())) {
+									ProductiveBeesCompat.placeConfigurableCombBlockEntity(blockposMutable, cachedChunk, nbt, targetBlockState, targetBlockState.state.getBlock());
+									continue;
+								}
 
 								cachedChunk.setBlockState(blockposMutable, targetBlockState.state, false);
 							}

@@ -28,7 +28,7 @@ public class PileOfPollenRenderer {
 
     public static void pileOfPollenOverlay(RenderBlockOverlayEvent event) {
         BlockState blockState = event.getBlockState();
-        if (blockState != null && blockState.is(BzBlocks.PILE_OF_POLLEN.get())) {
+        if (blockState.is(BzBlocks.PILE_OF_POLLEN.get())) {
             Player playerEntity = event.getPlayer();
             PoseStack matrixStack = event.getPoseStack();
             boolean isInPollen = false;
@@ -90,21 +90,21 @@ public class PileOfPollenRenderer {
             bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).uv(pitch - smallXZOffset, yawPlus4 - playerPosition.y()).endVertex();
             bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).uv(pitch - smallXZOffset, yaw - playerPosition.y()).endVertex();
             bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).uv(pitchPlus4 - smallXZOffset, yaw - playerPosition.y()).endVertex();
-            BufferUploader.draw(bufferbuilder.end());
+            BufferUploader.drawWithShader(bufferbuilder.end());
             RenderSystem.setShaderColor(brightness * redStrength, brightness * greenStrength, brightness * blueStrength, opacity * 0.33f);
             bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
             bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).uv(pitchPlus4 - playerPosition.x(), yawPlus4 - smallYOffset).endVertex();
             bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).uv(pitch - playerPosition.x(), yawPlus4 - smallYOffset).endVertex();
             bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).uv(pitch - playerPosition.x(), yaw - smallYOffset).endVertex();
             bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).uv(pitchPlus4 - playerPosition.x(), yaw - smallYOffset).endVertex();
-            BufferUploader.draw(bufferbuilder.end());
+            BufferUploader.drawWithShader(bufferbuilder.end());
             RenderSystem.setShaderColor(brightness * redStrength, brightness * greenStrength, brightness * blueStrength, opacity * 0.33f);
             bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
             bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).uv(pitchPlus4 - playerPosition.z(), yawPlus4 - smallYOffset).endVertex();
             bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).uv(pitch - playerPosition.z(), yawPlus4 - smallYOffset).endVertex();
             bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).uv(pitch - playerPosition.z(), yaw - smallYOffset).endVertex();
             bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).uv(pitchPlus4 - playerPosition.z(), yaw - smallYOffset).endVertex();
-            BufferUploader.draw(bufferbuilder.end());
+            BufferUploader.drawWithShader(bufferbuilder.end());
             RenderSystem.disableBlend();
             event.setCanceled(true);
         }

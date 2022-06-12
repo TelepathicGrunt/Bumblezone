@@ -30,9 +30,9 @@ public class ModdedBeesBeesSpawning {
 					BzModCompatibilityConfigs.spawnProductiveBeesBeesMob.get() &&
 					entity.level.getRandom().nextFloat() < BzModCompatibilityConfigs.spawnrateOfProductiveBeesMobs.get())
 				{
-					//if(ProductiveBeesCompat.PBMobSpawnEvent(event, entity.isBaby())) {
-					//	event.setResult(Event.Result.DENY);
-					//}
+					if(ProductiveBeesCompat.PBMobSpawnEvent(event, entity.isBaby())) {
+						event.setResult(Event.Result.DENY);
+					}
 				}
 
 				if (ModChecker.pokecubePresent &&

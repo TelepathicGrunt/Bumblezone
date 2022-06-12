@@ -19,6 +19,7 @@ import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
+import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompatRegs;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
@@ -30,6 +31,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -94,7 +96,13 @@ public class Bumblezone{
         BzBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         BzPlacements.PLACEMENT_MODIFIER.register(modEventBus);
         BzProcessors.STRUCTURE_PROCESSOR.register(modEventBus);
+        BzBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
         BzLootFunctionTypes.LOOT_ITEM_FUNCTION_TYPE.register(modEventBus);
+
+        if (ModList.get().isLoaded("productivebees")) {
+            ProductiveBeesCompatRegs.CONFIGURED_FEATURES.register(modEventBus);
+            ProductiveBeesCompatRegs.PLACED_FEATURES.register(modEventBus);
+        }
 
         BzCapabilities.setupCapabilities();
         if (FMLEnvironment.dist == Dist.CLIENT) {

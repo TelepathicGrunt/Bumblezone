@@ -16,7 +16,7 @@ public class LivingEntityFlyingSoundInstance extends AbstractTickableSoundInstan
     private static final WeakHashMap<Entity, SoundInstance> activeSounds = new WeakHashMap<>();
 
     public LivingEntityFlyingSoundInstance(LivingEntity livingEntity, SoundEvent soundEvent, SoundSource soundSource) {
-        super(soundEvent, soundSource, livingEntity.getRandom());
+        super(soundEvent, soundSource, SoundInstance.createUnseededRandom());
         this.livingEntity = livingEntity;
         this.x = (float) livingEntity.getX();
         this.y = (float) livingEntity.getY();

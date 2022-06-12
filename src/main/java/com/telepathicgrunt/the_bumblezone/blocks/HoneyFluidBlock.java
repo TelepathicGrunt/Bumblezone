@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -62,12 +63,16 @@ public class HoneyFluidBlock extends LiquidBlock {
 
     private boolean neighboringFluidInteractions(Level world, BlockPos pos)  {
         boolean lavaflag = false;
+        boolean lavadownflag = false;
 
         for (Direction direction : Direction.values()) {
             BlockPos sidePos = pos.relative(direction);
             FluidState fluidState = world.getFluidState(sidePos);
             if (fluidState.is(FluidTags.LAVA)) {
                 lavaflag = true;
+                if (direction == Direction.DOWN) {
+                    lavadownflag = true;
+                }
                 break;
             }
             else if(fluidState.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) &&
@@ -86,7 +91,7 @@ public class HoneyFluidBlock extends LiquidBlock {
                 return false;
             }
 
-            if (ifluidstate.getHeight(world, pos) >= 0.44444445F) {
+            if (ifluidstate.getHeight(world, pos) >= 0.44444445F || (lavadownflag && ifluidstate.getValue(HoneyFluid.BOTTOM_LEVEL) == 0)) {
                 world.setBlockAndUpdate(pos, BzBlocks.SUGAR_INFUSED_COBBLESTONE.get().defaultBlockState());
                 this.triggerMixEffects(world, pos);
                 return false;

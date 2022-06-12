@@ -57,7 +57,7 @@ public class FluidClientOverlay {
             bufferBuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).uv(0.0F + modifiedYaw, 4.0F + modifiedPitch).endVertex();
             bufferBuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).uv(0.0F + modifiedYaw, 0.0F + modifiedPitch).endVertex();
             bufferBuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).uv(4.0F + modifiedYaw, 0.0F + modifiedPitch).endVertex();
-            BufferUploader.draw(bufferBuilder.end());
+            BufferUploader.drawWithShader(bufferBuilder.end());
             RenderSystem.disableBlend();
         }
     }
@@ -89,7 +89,7 @@ public class FluidClientOverlay {
             bufferBuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).uv(0.0F + modifiedYaw, 2.0F + modifiedPitch).endVertex();
             bufferBuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).uv(1.0F + modifiedYaw, 1.0F + modifiedPitch).endVertex();
             bufferBuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).uv(2.0F + modifiedYaw, 0.0F + modifiedPitch).endVertex();
-            BufferUploader.draw(bufferBuilder.end());
+            BufferUploader.drawWithShader(bufferBuilder.end());
             RenderSystem.disableBlend();
             return true;
         }

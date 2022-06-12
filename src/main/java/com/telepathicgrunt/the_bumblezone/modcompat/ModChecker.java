@@ -31,7 +31,7 @@ public class ModChecker {
 			//loadupModCompat(modid, () -> PokecubeCompat.setupPokecube());
 
 			modid = "productivebees";
-			//loadupModCompat(modid, () -> ProductiveBeesCompat.setupProductiveBees());
+			loadupModCompat(modid, () -> ProductiveBeesCompat.setupProductiveBees());
 
 			modid = "friendsandfoes";
 			loadupModCompat(modid, () -> FriendsAndFoesCompat.setupCompat());

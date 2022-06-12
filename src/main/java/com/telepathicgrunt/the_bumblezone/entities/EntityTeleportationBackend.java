@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import net.minecraft.core.BlockPos;
@@ -374,7 +375,7 @@ public class EntityTeleportationBackend {
 
 
         if(BzDimensionConfigs.allowTeleportationWithModdedBeehives.get()) {
-            if(ModChecker.productiveBeesPresent) {// && ProductiveBeesCompat.PBIsExpandedBeehiveBlock(blockState)) {
+            if(ModChecker.productiveBeesPresent && ProductiveBeesCompat.PBIsExpandedBeehiveBlock(blockState)) {
                 return true;
             }
         }
