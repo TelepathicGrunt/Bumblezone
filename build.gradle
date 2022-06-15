@@ -35,7 +35,7 @@ repositories {
 		url = "https://ladysnake.jfrog.io/artifactory/mods"
 	}
 	maven {
-		url "https://nexus.resourcefulbees.com/repository/maven-public/"
+		url "https://nexus.resourcefulbees.com/repository/telepathicgrunt/"
 	}
 	maven {
 		url = 'https://maven.cafeteria.dev'
