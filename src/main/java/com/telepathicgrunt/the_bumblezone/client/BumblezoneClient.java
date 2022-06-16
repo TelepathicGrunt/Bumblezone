@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeeVariantRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeehemothRenderer;
-import com.telepathicgrunt.the_bumblezone.client.rendering.FluidClientOverlay;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HoneySlimeRendering;
 import com.telepathicgrunt.the_bumblezone.client.rendering.PileOfPollenRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.StingerSpearModel;
@@ -54,8 +53,6 @@ public class BumblezoneClient {
         modEventBus.addListener(BumblezoneClient::onParticleSetup);
         modEventBus.addListener(BumblezoneClient::registerEntityRenderers);
         modEventBus.addListener(BumblezoneClient::registerEntityModels);
-        forgeBus.addListener(FluidClientOverlay::sugarWaterFluidOverlay);
-        forgeBus.addListener(FluidClientOverlay::renderHoneyFog);
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         forgeBus.addListener(BeehemothControls::keyInput);
 

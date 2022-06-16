@@ -24,7 +24,6 @@
     "entities.LivingEntityAccessor",
     "entities.LivingEntityMixin",
     "entities.MobSpawnLocationMixin",
-    "entities.PlayerEntityMixin",
     "entities.PlayerInteractsEntityMixin",
     "entities.ServerPlayerMixin",
     "entities.ThrownTridentAccessor",
@@ -45,7 +44,6 @@
   "client": [
     "client.DimensionSpecialEffectsAccessor",
     "client.FluidRendererMixin",
-    "client.FogRendererClientMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
     "client.RenderingRegistryAccessor",

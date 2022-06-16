@@ -351,44 +351,6 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
         return false;
     }
 
-    public static void breathing(LivingEntity thisEntity) {
-        boolean invulnerable = thisEntity instanceof Player && ((Player)thisEntity).getAbilities().invulnerable;
-        if (thisEntity.isAlive()) {
-            if (thisEntity.isEyeInFluid(BzTags.BZ_HONEY_FLUID)) {
-                if (!thisEntity.canBreatheUnderwater() && !MobEffectUtil.hasWaterBreathing(thisEntity) && !invulnerable) {
-                    thisEntity.setAirSupply(
-                        decreaseAirSupply(
-                            thisEntity.getAirSupply() - 4, // -4 to counteract the +4 for rebreathing as vanilla thinks the honey fluid is air
-                            thisEntity,
-                            thisEntity.level.random)
-                    );
-                    if (thisEntity.getAirSupply() == -20) {
-                        thisEntity.setAirSupply(0);
-                        Vec3 vec3 = thisEntity.getDeltaMovement();
-
-                        for(int i = 0; i < 8; ++i) {
-                            double d2 = thisEntity.level.random.nextDouble() - thisEntity.level.random.nextDouble();
-                            double d3 = thisEntity.level.random.nextDouble() - thisEntity.level.random.nextDouble();
-                            double d4 = thisEntity.level.random.nextDouble() - thisEntity.level.random.nextDouble();
-                            thisEntity.level.addParticle(BzParticles.HONEY_PARTICLE.get(), thisEntity.getX() + d2, thisEntity.getY() + d3, thisEntity.getZ() + d4, vec3.x, vec3.y, vec3.z);
-                        }
-
-                        thisEntity.hurt(DamageSource.DROWN, 2.0F);
-                    }
-                }
-
-                if (!thisEntity.level.isClientSide() && thisEntity.isPassenger() && thisEntity.getVehicle() != null && !thisEntity.getVehicle().rideableUnderWater()) {
-                    thisEntity.stopRiding();
-                }
-            }
-        }
-    }
-
-    protected static int decreaseAirSupply(int airSupply, LivingEntity entity, RandomSource random) {
-        int respiration = EnchantmentHelper.getRespiration(entity);
-        return respiration > 0 && random.nextInt(respiration + 1) > 0 ? airSupply : airSupply - 1;
-    }
-
     public static class Flowing extends HoneyFluid {
         public Flowing(Properties properties) {
             super(properties);

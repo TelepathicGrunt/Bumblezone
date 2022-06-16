@@ -17,7 +17,8 @@ public class ScreenEffectRendererMixin {
     @Inject(method = "renderScreenEffect(Lnet/minecraft/client/Minecraft;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;isEyeInFluid(Lnet/minecraft/tags/TagKey;)Z"),
             locals = LocalCapture.CAPTURE_FAILSOFT,
-            cancellable = true)
+            cancellable = true,
+            require = 0)
     private static void thebumblezone_renderHoneyOverlay(Minecraft minecraft, PoseStack matrixStack, CallbackInfo ci) {
         if(FluidClientOverlay.renderHoneyOverlay(minecraft.player, matrixStack)) {
             ci.cancel();

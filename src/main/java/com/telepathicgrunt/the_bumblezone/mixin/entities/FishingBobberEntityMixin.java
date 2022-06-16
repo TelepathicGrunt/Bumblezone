@@ -22,7 +22,8 @@ public abstract class FishingBobberEntityMixin extends Entity {
 
     @Inject(method = "tick()V",
             at = @At(value = "INVOKE", ordinal = 0, shift = At.Shift.BY, by = -6,
-                    target = "Lnet/minecraft/world/entity/projectile/FishingHook;getDeltaMovement()Lnet/minecraft/world/phys/Vec3;"))
+                    target = "Lnet/minecraft/world/entity/projectile/FishingHook;getDeltaMovement()Lnet/minecraft/world/phys/Vec3;"),
+            require = 0)
     private void thebumblezone_bobberFloat(CallbackInfo ci) {
         BlockPos blockpos = this.blockPosition();
         FluidState fluidstate = this.level.getFluidState(blockpos);

@@ -85,6 +85,7 @@ public class Bumblezone{
         BzStats.CUSTOM_STAT.register(modEventBus);
         BzFeatures.FEATURES.register(modEventBus);
         BzEntities.ENTITIES.register(modEventBus);
+        BzFluids.FLUID_TYPES.register(modEventBus);
         BzSounds.SOUND_EVENTS.register(modEventBus);
         BzStructures.STRUCTURES.register(modEventBus);
         BzDimension.BIOME_SOURCE.register(modEventBus);
