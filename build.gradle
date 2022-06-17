@@ -85,6 +85,9 @@ repositories {
         url "https://nexus.resourcefulbees.com/repository/telepathicgrunt/"
     }
     maven {
+        url "https://maven.architectury.dev/"
+    }
+    maven {
         url "https://maven.shedaniel.me"
     }
 }
@@ -99,9 +102,9 @@ dependencies {
 
     implementation fg.deobf("mezz.jei:jei-${jei_mc_version}-forge:${jei_version}")
     //runtimeOnly fg.deobf("curse.maven:jeed-532286:${jeed_version}")
-    //compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${project.rei_version}")
-    //compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${project.rei_version}")
-    // implementation fg.deobf("curse.maven:architectury-419699:3834397")
+    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${project.rei_version}")
+    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${project.rei_version}")
+    compileOnly fg.deobf("dev.architectury:architectury-forge:${project.architectury_version}")
 
     // Switch to `implementation` when testing mod compat
     //compileOnly fg.deobf("curse.maven:friends_and_foes-602059:3725314")
