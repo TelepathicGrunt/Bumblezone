@@ -21,8 +21,8 @@ public class BzSounds {
     public static final RegistryObject<SoundEvent> STINGER_SPEAR_HIT_GROUND = registerSoundEvent("item.the_bumblezone.stinger_spear.hit_ground");
     public static final RegistryObject<SoundEvent> STINGER_SPEAR_RETURN = registerSoundEvent("item.the_bumblezone.stinger_spear.return");
     public static final RegistryObject<SoundEvent> STINGER_SPEAR_THROW = registerSoundEvent("item.the_bumblezone.stinger_spear.throw");
-    public static final RegistryObject<SoundEvent> HONEY_COMPASS_BLOCK_LOCK = registerSoundEvent("item.the_bumblezone.the_bumblezone.honey_compass.block_lock");
-    public static final RegistryObject<SoundEvent> HONEY_COMPASS_STRUCTURE_LOCK = registerSoundEvent("item.the_bumblezone.the_bumblezone.honey_compass.structure_lock");
+    public static final RegistryObject<SoundEvent> HONEY_COMPASS_BLOCK_LOCK = registerSoundEvent("item.the_bumblezone.honey_compass.block_lock");
+    public static final RegistryObject<SoundEvent> HONEY_COMPASS_STRUCTURE_LOCK = registerSoundEvent("item.the_bumblezone.honey_compass.structure_lock");
     public static final RegistryObject<SoundEvent> BEE_CANNON_FIRES = registerSoundEvent("item.the_bumblezone.bee_cannon.fires");
     public static final RegistryObject<SoundEvent> SUGAR_WATER_DRINK = registerSoundEvent("item.the_bumblezone.sugar_water_bottle.drink");
     public static final RegistryObject<SoundEvent> WASHING_RESIDUES = registerSoundEvent("block.the_bumblezone.washing_honey_residues");
