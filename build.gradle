@@ -86,7 +86,9 @@ dependencies {
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
 	//modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 
+	modCompileOnlyApi "mezz.jei:jei-${jei_mc_version}-common-api:${jei_version}"
 	modCompileOnlyApi "mezz.jei:jei-${jei_mc_version}-fabric-api:${jei_version}"
+	modRuntimeOnly "mezz.jei:jei-${jei_mc_version}-common:${jei_version}"
 	modRuntimeOnly "mezz.jei:jei-${jei_mc_version}-fabric:${jei_version}"
 
 	modRuntimeOnly "com.telepathicgrunt:CommandStructures-Fabric:${project.commandstructures_version}"
