@@ -24,11 +24,9 @@ import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 public class FluidRender {
-    public static void setupFluidRendering(final Fluid still, final Fluid flowing, final ResourceLocation stillTextureFluidId, final ResourceLocation flowTextureFluidId, boolean waterColored)
-    {
+    public static void setupFluidRendering(final Fluid still, final Fluid flowing, final ResourceLocation stillTextureFluidId, final ResourceLocation flowTextureFluidId, boolean waterColored) {
         // If they're not already present, add the sprites to the block atlas
-        ClientSpriteRegistryCallback.event(TextureAtlas.LOCATION_BLOCKS).register((atlasTexture, registry) ->
-        {
+        ClientSpriteRegistryCallback.event(TextureAtlas.LOCATION_BLOCKS).register((atlasTexture, registry) -> {
             registry.register(stillTextureFluidId);
             registry.register(flowTextureFluidId);
         });
@@ -38,8 +36,7 @@ public class FluidRender {
 
         final TextureAtlasSprite[] fluidSprites = { null, null };
 
-        ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener()
-        {
+        ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
             @Override
             public ResourceLocation getFabricId()
             {
@@ -50,8 +47,7 @@ public class FluidRender {
              * Get the sprites from the block atlas when resources are reloaded
              */
             @Override
-            public void onResourceManagerReload(ResourceManager resourceManager)
-            {
+            public void onResourceManagerReload(ResourceManager resourceManager) {
                 final Function<ResourceLocation, TextureAtlasSprite> atlas = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS);
                 fluidSprites[0] = atlas.apply(stillTextureFluidId);
                 fluidSprites[1] = atlas.apply(flowTextureFluidId);
@@ -59,17 +55,14 @@ public class FluidRender {
         });
 
         // The FluidRenderer gets the sprites and color from a FluidRenderHandler during rendering
-        final FluidRenderHandler renderHandler = new FluidRenderHandler()
-        {
+        final FluidRenderHandler renderHandler = new FluidRenderHandler() {
             @Override
-            public TextureAtlasSprite[] getFluidSprites(BlockAndTintGetter view, BlockPos pos, FluidState state)
-            {
+            public TextureAtlasSprite[] getFluidSprites(BlockAndTintGetter view, BlockPos pos, FluidState state) {
                 return fluidSprites;
             }
 
             @Override
-            public int getFluidColor(BlockAndTintGetter view, BlockPos pos, FluidState state)
-            {
+            public int getFluidColor(BlockAndTintGetter view, BlockPos pos, FluidState state) {
                 return waterColored && view != null && pos != null ? BiomeColors.getAverageWaterColor(view, pos) : -1;
             }
         };
