@@ -40,7 +40,7 @@ public class FluidRendererMixin {
             ordinal = 2)
     private boolean thebumblezone_cullBottom(boolean showBottom, BlockAndTintGetter blockDisplayReader, BlockPos blockPos, VertexConsumer vertexBuilder, BlockState blockState, FluidState fluidState) {
         if(fluidState.is(BzTags.BZ_HONEY_FLUID) && !fluidState.isSource()) {
-            return showBottom || fluidState.getValue(HoneyFluidBlock.BOTTOM_LEVEL) != 8;
+            return showBottom || fluidState.getValue(HoneyFluidBlock.BOTTOM_LEVEL) != 0;
         }
         return showBottom;
     }
