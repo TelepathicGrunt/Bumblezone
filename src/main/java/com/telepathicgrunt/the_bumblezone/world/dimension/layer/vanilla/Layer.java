@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 import java.util.Optional;
 
 public class Layer {
-    private static final Logger LOGGER = LogManager.getLogger();
     private final LazyArea area;
 
     public Layer(AreaFactory<LazyArea> areaFactory) {

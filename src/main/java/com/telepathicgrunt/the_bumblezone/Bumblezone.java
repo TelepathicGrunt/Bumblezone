@@ -94,6 +94,7 @@ public class Bumblezone{
         BzDimension.CHUNK_GENERATOR.register(modEventBus);
         BzEnchantments.ENCHANTMENTS.register(modEventBus);
         BzSurfaceRules.SURFACE_RULES.register(modEventBus);
+        BzDimension.DENSITY_FUNCTIONS.register(modEventBus);
         BzBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         BzPlacements.PLACEMENT_MODIFIER.register(modEventBus);
         BzProcessors.STRUCTURE_PROCESSOR.register(modEventBus);
