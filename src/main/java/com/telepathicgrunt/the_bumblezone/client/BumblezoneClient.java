@@ -35,13 +35,13 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
-import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.fabric.impl.client.particle.ParticleFactoryRegistryImpl;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -103,7 +103,7 @@ public class BumblezoneClient implements ClientModInitializer {
         DimensionSpecialEffectsAccessor.thebumblezone_getBY_IDENTIFIER().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
 
         // Allows shield to use the blocking json file for offset
-        FabricModelPredicateProviderRegistry.register(
+        ItemProperties.register(
                 BzItems.HONEY_CRYSTAL_SHIELD,
                 new ResourceLocation("blocking"),
                 (itemStack, world, livingEntity, int1) ->
@@ -113,7 +113,7 @@ public class BumblezoneClient implements ClientModInitializer {
         );
 
         // Correct model when about to throw
-        FabricModelPredicateProviderRegistry.register(
+        ItemProperties.register(
                 BzItems.STINGER_SPEAR,
                 new ResourceLocation("throwing"),
                 (itemStack, world, livingEntity, int1) ->
@@ -123,13 +123,13 @@ public class BumblezoneClient implements ClientModInitializer {
         );
 
         // Allows honey compass to render the correct texture
-        FabricModelPredicateProviderRegistry.register(
+        ItemProperties.register(
                 BzItems.HONEY_COMPASS,
                 new ResourceLocation("angle"),
                 HoneyCompassItemProperty.getClampedItemPropertyFunction());
 
         // Correct model when about to fire
-        FabricModelPredicateProviderRegistry.register(
+        ItemProperties.register(
                 BzItems.BEE_CANNON,
                 new ResourceLocation("primed"),
                 (itemStack, world, livingEntity, int1) ->
@@ -139,7 +139,7 @@ public class BumblezoneClient implements ClientModInitializer {
         );
 
         // Correct model based on bees
-        FabricModelPredicateProviderRegistry.register(
+        ItemProperties.register(
                 BzItems.BEE_CANNON,
                 new ResourceLocation("bee_count"),
                 (itemStack, world, livingEntity, int1) ->
