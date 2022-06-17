@@ -99,8 +99,8 @@ dependencies {
 
     implementation fg.deobf("mezz.jei:jei-${jei_mc_version}-forge:${jei_version}")
     //runtimeOnly fg.deobf("curse.maven:jeed-532286:${jeed_version}")
-    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${project.rei_version}")
-    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${project.rei_version}")
+    //compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${project.rei_version}")
+    //compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${project.rei_version}")
     // implementation fg.deobf("curse.maven:architectury-419699:3834397")
 
     // Switch to `implementation` when testing mod compat
