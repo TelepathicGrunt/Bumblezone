@@ -84,6 +84,9 @@ repositories {
     maven {
         url "https://nexus.resourcefulbees.com/repository/telepathicgrunt/"
     }
+    maven {
+        url "https://maven.shedaniel.me"
+    }
 }
 
 dependencies {
@@ -94,17 +97,15 @@ dependencies {
     runtimeOnly fg.deobf("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_version}")
     compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
 
-    compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
+    implementation fg.deobf("mezz.jei:jei-${jei_mc_version}-forge:${jei_version}")
     //runtimeOnly fg.deobf("curse.maven:jeed-532286:${jeed_version}")
-
-    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${project.rei_version}"
-    compileOnly "me.shedaniel:RoughlyEnoughItems-api-forge:${project.rei_version}"
+    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${project.rei_version}")
+    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${project.rei_version}")
+    // implementation fg.deobf("curse.maven:architectury-419699:3834397")
 
     // Switch to `implementation` when testing mod compat
     //compileOnly fg.deobf("curse.maven:friends_and_foes-602059:3725314")
     //runtimeOnly fg.deobf("curse.maven:friends_and_foes-602059:3725314")
-    //runtimeOnly fg.deobf("curse.maven:architectury-419699:3717906")
     //runtimeOnly fg.deobf("curse.maven:token_enchanter-444421:3559237")
     //runtimeOnly fg.deobf("curse.maven:silent_lib-242998:3708359")
 

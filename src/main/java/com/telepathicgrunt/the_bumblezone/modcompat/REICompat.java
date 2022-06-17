@@ -6,12 +6,15 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.util.EntryStacks;
+import me.shedaniel.rei.forge.REIPlugin;
 import me.shedaniel.rei.plugin.client.BuiltinClientPlugin;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.registries.ForgeRegistries;
 
+@REIPlugin
 public class REICompat implements REIClientPlugin {
 
     @Override
@@ -58,7 +61,7 @@ public class REICompat implements REIClientPlugin {
     private static void addInfo(Item item) {
         BuiltinClientPlugin.getInstance().registerInformation(
                 EntryStacks.of(item),
-                Component.translatable(Registry.ITEM.getKey(item).toString()),
+                Component.translatable(ForgeRegistries.ITEMS.getKey(item).toString()),
                 (text) -> {
                     text.add(Component.translatable(Bumblezone.MODID + "." + Registry.ITEM.getKey(item).getPath() + ".jei_description"));
                     return text;
@@ -68,7 +71,7 @@ public class REICompat implements REIClientPlugin {
     private static void addInfo(Fluid fluid) {
         BuiltinClientPlugin.getInstance().registerInformation(
                 EntryStacks.of(fluid, 1),
-                Component.translatable(Registry.FLUID.getKey(fluid).toString()),
+                Component.translatable(ForgeRegistries.FLUIDS.getKey(fluid).toString()),
                 (text) -> {
                     text.add(Component.translatable(Bumblezone.MODID + "." + Registry.FLUID.getKey(fluid).getPath() + ".jei_description"));
                     return text;
