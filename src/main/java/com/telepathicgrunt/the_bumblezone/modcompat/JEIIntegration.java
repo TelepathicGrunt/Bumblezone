@@ -1,5 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
-/*
+
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -7,7 +7,7 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -69,15 +69,13 @@ public class JEIIntegration implements IModPlugin {
 	registration.addIngredientInfo(
 		new ItemStack(item),
 		VanillaTypes.ITEM,
-		new TranslatableComponent(Bumblezone.MODID+"."+item.getRegistryName().getPath()+".jei_description"));
+		Component.translatable(Bumblezone.MODID+"."+item.getRegistryName().getPath()+".jei_description"));
     }
     
     private static void addInfo(IRecipeRegistration registration, Fluid fluid) {
 	registration.addIngredientInfo(
 		new FluidStack(fluid, 1), 
 		VanillaTypes.FLUID,
-		new TranslatableComponent(Bumblezone.MODID+"."+fluid.getRegistryName().getPath()+".jei_description"));
+            Component.translatable(Bumblezone.MODID+"."+fluid.getRegistryName().getPath()+".jei_description"));
     }
 }
-
- */

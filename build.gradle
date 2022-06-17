@@ -66,7 +66,7 @@ repositories {
     maven {
         // location of a maven mirror for JEI files, as a fallback
         name = "ModMaven"
-        url = "https://modmaven.k-4u.nl"
+        url = "https://modmaven.dev"
     }
     maven {
         // Carrier Bees
@@ -94,9 +94,12 @@ dependencies {
     runtimeOnly fg.deobf("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_version}")
     compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
 
-    //compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
-    //runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}:${jei_version}")
     //runtimeOnly fg.deobf("curse.maven:jeed-532286:${jeed_version}")
+
+    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${project.rei_version}"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-api-forge:${project.rei_version}"
 
     // Switch to `implementation` when testing mod compat
     //compileOnly fg.deobf("curse.maven:friends_and_foes-602059:3725314")
