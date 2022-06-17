@@ -120,7 +120,7 @@
       }
     },
     {
-      "weight": 26,
+      "weight": 32,
       "element": {
         "location": "the_bumblezone:cell_maze/vertical_room",
         "processors": "the_bumblezone:cell_maze_generic",
