@@ -49,7 +49,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
-import java.util.Random;
 
 
 public class HoneycombBrood extends ProperFacingBlock {

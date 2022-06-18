@@ -1,10 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.configs;
 
 import eu.midnightdust.lib.config.MidnightConfig;
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
-import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
 public class BzConfig extends MidnightConfig {
 

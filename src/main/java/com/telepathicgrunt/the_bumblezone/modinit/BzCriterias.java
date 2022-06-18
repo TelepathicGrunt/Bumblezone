@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.advancements.GenericTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.ItemSpecificTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.RecipeDiscoveredTrigger;
 import net.fabricmc.fabric.api.object.builder.v1.advancement.CriterionRegistry;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.resources.ResourceLocation;
 
 public class BzCriterias {

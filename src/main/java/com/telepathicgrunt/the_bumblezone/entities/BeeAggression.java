@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -21,6 +22,7 @@ import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.Block;
 
 import java.util.HashSet;
@@ -217,6 +219,26 @@ public class BeeAggression {
                 MusicHandler.stopAngryBeeMusic(playerEntity);
                 WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
                 WrathOfTheHiveEffect.ACTIVE_WRATH = false;
+            }
+        }
+    }
+
+    // Makes bees angry if in Cell Maze or other tagged structures.
+    public static void applyAngerIfInTaggedStructures(ServerPlayer serverPlayer) {
+        if(serverPlayer.isCreative() || serverPlayer.isSpectator() || !BzConfig.aggressiveBees) {
+            return;
+        }
+
+        StructureManager structureManager = ((ServerLevel)serverPlayer.level).structureManager();
+        if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.WRATH_CAUSING).isValid()) {
+            if (!serverPlayer.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
+                serverPlayer.addEffect(new MobEffectInstance(
+                        BzEffects.WRATH_OF_THE_HIVE,
+                        BzConfig.howLongWrathOfTheHiveLasts,
+                        2,
+                        false,
+                        BzConfig.showWrathOfTheHiveParticles,
+                        true));
             }
         }
     }

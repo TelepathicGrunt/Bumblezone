@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 import java.util.function.Supplier;
 
