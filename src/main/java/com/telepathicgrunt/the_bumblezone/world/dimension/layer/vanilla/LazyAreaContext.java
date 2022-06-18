@@ -26,11 +26,11 @@ public class LazyAreaContext implements BigContext<LazyArea> {
     }
 
     public LazyArea createResult(PixelTransformer pixelTransformer, LazyArea lazyArea) {
-        return new LazyArea(this.cache, Math.min(1024, lazyArea.getMaxCache() * 4), pixelTransformer);
+        return new LazyArea(this.cache, Math.min(MAX_CACHE, lazyArea.getMaxCache() * 4), pixelTransformer);
     }
 
     public LazyArea createResult(PixelTransformer pixelTransformer, LazyArea lazyArea, LazyArea lazyArea2) {
-        return new LazyArea(this.cache, Math.min(1024, Math.max(lazyArea.getMaxCache(), lazyArea2.getMaxCache()) * 4), pixelTransformer);
+        return new LazyArea(this.cache, Math.min(MAX_CACHE, Math.max(lazyArea.getMaxCache(), lazyArea2.getMaxCache()) * 4), pixelTransformer);
     }
 
     @Override
