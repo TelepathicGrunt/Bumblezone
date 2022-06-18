@@ -9,6 +9,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Random;
+
 @Mixin(Bee.class)
 public class BeePollinatedSpawnMixin {
 
@@ -20,7 +22,7 @@ public class BeePollinatedSpawnMixin {
             Bee beeEntity = (Bee)(Object)this;
 
             //20% chance of being full of pollen
-            if (world.random.nextFloat() < 0.2f) {
+            if ((new Random()).nextFloat() < 0.2f) {
                 ((BeeEntityInvoker) beeEntity).thebumblezone_callSetHasNectar(true);
             }
         }
