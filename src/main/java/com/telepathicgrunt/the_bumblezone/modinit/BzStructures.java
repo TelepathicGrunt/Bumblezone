@@ -1,11 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
-import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.world.structures.HoneyCaveRoomStructure;
 import com.telepathicgrunt.the_bumblezone.world.structures.PollinatedStreamStructure;
 import net.minecraft.core.Registry;
-import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;

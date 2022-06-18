@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.world.features.decorators.HoneycombHolePlacer;
 import com.telepathicgrunt.the_bumblezone.world.processors.BeeDungeonProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.CloseOffOutsideFluidsProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.FluidTickProcessor;
@@ -12,9 +11,6 @@ import com.telepathicgrunt.the_bumblezone.world.processors.ReplaceNotAirProcesso
 import com.telepathicgrunt.the_bumblezone.world.processors.SpawnerRandomizingProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.SpiderInfestedBeeDungeonProcessor;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;

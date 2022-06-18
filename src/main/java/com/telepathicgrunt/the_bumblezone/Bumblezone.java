@@ -22,7 +22,6 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompatRegs;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
-import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.world.surfacerules.PollinatedSurfaceSource;
 import net.minecraft.resources.ResourceLocation;

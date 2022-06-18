@@ -1,22 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 
-import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.items.functions.DropContainerItems;
 import com.telepathicgrunt.the_bumblezone.world.features.decorators.HoneycombHolePlacer;
 import com.telepathicgrunt.the_bumblezone.world.features.decorators.Random3DClusterPlacement;
 import com.telepathicgrunt.the_bumblezone.world.features.decorators.Random3DUndergroundChunkPlacement;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
-import net.minecraft.world.level.levelgen.structure.Structure;
-import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class BzPlacements {
