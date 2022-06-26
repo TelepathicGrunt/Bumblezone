@@ -3,8 +3,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.entities;
 import com.telepathicgrunt.the_bumblezone.effects.ParalyzedEffect;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -50,23 +49,23 @@ public abstract class LivingEntityMixin extends Entity {
 
     //-----------------------------------------------------------//
 
-    //deplete air supply
-    @Inject(method = "baseTick()V",
-            at = @At(value = "TAIL"))
-    private void thebumblezone_breathing(CallbackInfo ci) {
-        HoneyFluid.breathing((LivingEntity)(Object)this);
-    }
-
     // make jumping in honey weaker
     @ModifyVariable(method = "aiStep()V", ordinal = 0,
             at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/world/entity/LivingEntity.getFluidHeight(Lnet/minecraft/tags/TagKey;)D", ordinal = 1),
             slice = @Slice(
                     from = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/world/entity/LivingEntity.isAffectedByFluids()Z"),
                     to = @At(value = "INVOKE", target = "net/minecraft/world/entity/LivingEntity.isInWater()Z")
-            ))
+            ),
+            require = 0)
     private double thebumblezone_honeyFluidJump(double fluidHeight) {
         if(fluidHeight == 0) {
-            return this.getFluidHeight(BzTags.BZ_HONEY_FLUID);
+            double height = this.getFluidTypeHeight(BzFluids.HONEY_FLUID_TYPE.get());
+            if (height == 0) {
+                return this.getFluidTypeHeight(BzFluids.SUGAR_WATER_FLUID_TYPE.get());
+            }
+            else {
+                return height;
+            }
         }
         return fluidHeight;
     }

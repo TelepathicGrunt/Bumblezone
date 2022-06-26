@@ -29,6 +29,6 @@ public class FluidTickProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return BzProcessors.FLUID_TICK_PROCESSOR;
+        return BzProcessors.FLUID_TICK_PROCESSOR.get();
     }
 }

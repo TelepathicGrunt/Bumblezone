@@ -109,7 +109,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
         if(!world.isClientSide()) {
             PoiManager pointofinterestmanager = ((ServerLevel)world).getPoiManager();
             List<PoiRecord> poiInRange = pointofinterestmanager.getInSquare(
-                    (pointOfInterestType) -> pointOfInterestType == BzPOI.BROOD_BLOCK_POI.get(),
+                    (pointOfInterestType) -> pointOfInterestType.value() == BzPOI.BROOD_BLOCK_POI.get(),
                     entity.blockPosition(),
                     NEARBY_WRATH_EFFECT_RADIUS,
                     PoiManager.Occupancy.ANY)

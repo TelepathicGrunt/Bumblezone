@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.world.features.decorators;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
@@ -11,7 +12,6 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Stream;
 
 public class HoneycombHolePlacer extends PlacementModifier {
@@ -25,11 +25,11 @@ public class HoneycombHolePlacer extends PlacementModifier {
 
     @Override
     public PlacementModifierType<?> type() {
-        return BzPlacements.HONEYCOMB_HOLE_PLACER;
+        return BzPlacements.HONEYCOMB_HOLE_PLACER.get();
     }
 
     @Override
-    public Stream<BlockPos> getPositions(PlacementContext placementContext, Random random, BlockPos blockPos) {
+    public Stream<BlockPos> getPositions(PlacementContext placementContext, RandomSource random, BlockPos blockPos) {
         //Start at top
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(blockPos.getX() - 4, 236, blockPos.getZ() + 4);
         List<BlockPos> blockPosList = new ArrayList<>();

@@ -11,30 +11,20 @@ import com.telepathicgrunt.the_bumblezone.world.processors.ReplaceNotAirProcesso
 import com.telepathicgrunt.the_bumblezone.world.processors.SpawnerRandomizingProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.SpiderInfestedBeeDungeonProcessor;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 
 public class BzProcessors {
+    public static final DeferredRegister<StructureProcessorType<?>> STRUCTURE_PROCESSOR = DeferredRegister.create(Registry.STRUCTURE_PROCESSOR_REGISTRY, Bumblezone.MODID);
 
-    public static StructureProcessorType<BeeDungeonProcessor> BEE_DUNGEON_PROCESSOR = () -> BeeDungeonProcessor.CODEC;
-    public static StructureProcessorType<SpiderInfestedBeeDungeonProcessor> SPIDER_INFESTED_BEE_DUNGEON_PROCESSOR = () -> SpiderInfestedBeeDungeonProcessor.CODEC;
-    public static StructureProcessorType<ReplaceNotAirProcessor> REPLACE_NOT_AIR_PROCESSOR = () -> ReplaceNotAirProcessor.CODEC;
-    public static StructureProcessorType<CloseOffOutsideFluidsProcessor> CLOSE_OFF_OUTSIDE_FLUIDS_PROCESSOR = () -> CloseOffOutsideFluidsProcessor.CODEC;
-    public static StructureProcessorType<RemoveFloatingBlocksProcessor> REMOVE_FLOATING_BLOCKS_PROCESSOR = () -> RemoveFloatingBlocksProcessor.CODEC;
-    public static StructureProcessorType<SpawnerRandomizingProcessor> SPAWNER_RANDOMIZING_PROCESSOR = () -> SpawnerRandomizingProcessor.CODEC;
-    public static StructureProcessorType<HoneycombHoleProcessor> HONEYCOMB_HOLE_PROCESSOR = () -> HoneycombHoleProcessor.CODEC;
-    public static StructureProcessorType<PollenPilingProcessor> POLLEN_PILING_PROCESSOR = () -> PollenPilingProcessor.CODEC;
-    public static StructureProcessorType<FluidTickProcessor> FLUID_TICK_PROCESSOR = () -> FluidTickProcessor.CODEC;
-
-    public static void registerProcessors() {
-        Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "bee_dungeon_processor"), BEE_DUNGEON_PROCESSOR);
-        Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "spider_infested_bee_dungeon_processor"), SPIDER_INFESTED_BEE_DUNGEON_PROCESSOR);
-        Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "replace_not_air_processor"), REPLACE_NOT_AIR_PROCESSOR);
-        Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "close_off_outside_fluids_processor"), CLOSE_OFF_OUTSIDE_FLUIDS_PROCESSOR);
-        Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "remove_floating_blocks_processor"), REMOVE_FLOATING_BLOCKS_PROCESSOR);
-        Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "spawner_randomizing_processor"), SPAWNER_RANDOMIZING_PROCESSOR);
-        Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "honeycomb_hole_processor"), HONEYCOMB_HOLE_PROCESSOR);
-        Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "pollen_piling_processor"), POLLEN_PILING_PROCESSOR);
-        Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "fluid_tick_processor"), FLUID_TICK_PROCESSOR);
-    }
+    public static final RegistryObject<StructureProcessorType<BeeDungeonProcessor>> BEE_DUNGEON_PROCESSOR = STRUCTURE_PROCESSOR.register("bee_dungeon_processor", () -> () -> BeeDungeonProcessor.CODEC);
+    public static final RegistryObject<StructureProcessorType<SpiderInfestedBeeDungeonProcessor>> SPIDER_INFESTED_BEE_DUNGEON_PROCESSOR = STRUCTURE_PROCESSOR.register("spider_infested_bee_dungeon_processor", () -> () -> SpiderInfestedBeeDungeonProcessor.CODEC);
+    public static final RegistryObject<StructureProcessorType<ReplaceNotAirProcessor>> REPLACE_NOT_AIR_PROCESSOR = STRUCTURE_PROCESSOR.register("replace_not_air_processor", () -> () -> ReplaceNotAirProcessor.CODEC);
+    public static final RegistryObject<StructureProcessorType<CloseOffOutsideFluidsProcessor>> CLOSE_OFF_OUTSIDE_FLUIDS_PROCESSOR = STRUCTURE_PROCESSOR.register("close_off_outside_fluids_processor", () -> () -> CloseOffOutsideFluidsProcessor.CODEC);
+    public static final RegistryObject<StructureProcessorType<RemoveFloatingBlocksProcessor>> REMOVE_FLOATING_BLOCKS_PROCESSOR = STRUCTURE_PROCESSOR.register("remove_floating_blocks_processor", () -> () -> RemoveFloatingBlocksProcessor.CODEC);
+    public static final RegistryObject<StructureProcessorType<SpawnerRandomizingProcessor>> SPAWNER_RANDOMIZING_PROCESSOR = STRUCTURE_PROCESSOR.register("spawner_randomizing_processor", () -> () -> SpawnerRandomizingProcessor.CODEC);
+    public static final RegistryObject<StructureProcessorType<HoneycombHoleProcessor>> HONEYCOMB_HOLE_PROCESSOR = STRUCTURE_PROCESSOR.register("honeycomb_hole_processor", () -> () -> HoneycombHoleProcessor.CODEC);
+    public static final RegistryObject<StructureProcessorType<PollenPilingProcessor>> POLLEN_PILING_PROCESSOR = STRUCTURE_PROCESSOR.register("pollen_piling_processor", () -> () -> PollenPilingProcessor.CODEC);
+    public static final RegistryObject<StructureProcessorType<FluidTickProcessor>> FLUID_TICK_PROCESSOR = STRUCTURE_PROCESSOR.register("fluid_tick_processor", () -> () -> FluidTickProcessor.CODEC);
 }

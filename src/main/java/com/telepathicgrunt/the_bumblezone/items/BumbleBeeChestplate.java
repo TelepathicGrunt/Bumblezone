@@ -87,7 +87,7 @@ public class BumbleBeeChestplate extends BeeArmor {
                 }
 
                 if(entity instanceof ServerPlayer serverPlayer) {
-                    serverPlayer.awardStat(BzStats.BUMBLE_BEE_CHESTPLATE_FLY_TIME_RL);
+                    serverPlayer.awardStat(BzStats.BUMBLE_BEE_CHESTPLATE_FLY_TIME_RL.get());
                 }
             }
             else {

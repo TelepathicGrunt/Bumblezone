@@ -19,19 +19,18 @@ import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
+import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompatRegs;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
-import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimension;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.world.surfacerules.PollinatedSurfaceSource;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -54,9 +53,6 @@ public class Bumblezone{
         BzTags.initTags();
         BzBiomeHeightRegistry.initBiomeHeightRegistry();
 
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modEventBus.addGenericListener(StructureFeature.class, BzStructures::setupStructures);
-
         //Events
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         forgeBus.addListener(BeeAggression::pickupItemAnger);
@@ -74,6 +70,7 @@ public class Bumblezone{
         forgeBus.addListener(this::serverAboutToStart);
 
         //Registration
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(EventPriority.NORMAL, this::setup);
         modEventBus.addListener(EventPriority.LOWEST, this::modCompatSetup); //run after all mods
         modEventBus.addListener(EventPriority.NORMAL, BzEntities::registerEntityAttributes);
@@ -84,13 +81,29 @@ public class Bumblezone{
         BzPOI.POI_TYPES.register(modEventBus);
         BzEffects.EFFECTS.register(modEventBus);
         BzMenuTypes.MENUS.register(modEventBus);
+        BzStats.CUSTOM_STAT.register(modEventBus);
         BzFeatures.FEATURES.register(modEventBus);
         BzEntities.ENTITIES.register(modEventBus);
+        BzFluids.FLUID_TYPES.register(modEventBus);
         BzSounds.SOUND_EVENTS.register(modEventBus);
         BzStructures.STRUCTURES.register(modEventBus);
+        BzDimension.BIOME_SOURCE.register(modEventBus);
         BzParticles.PARTICLE_TYPES.register(modEventBus);
+        BzPredicates.POS_RULE_TEST.register(modEventBus);
+        BzDimension.CHUNK_GENERATOR.register(modEventBus);
         BzEnchantments.ENCHANTMENTS.register(modEventBus);
+        BzSurfaceRules.SURFACE_RULES.register(modEventBus);
+        BzDimension.DENSITY_FUNCTIONS.register(modEventBus);
         BzBlockEntities.BLOCK_ENTITIES.register(modEventBus);
+        BzPlacements.PLACEMENT_MODIFIER.register(modEventBus);
+        BzProcessors.STRUCTURE_PROCESSOR.register(modEventBus);
+        BzBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
+        BzLootFunctionTypes.LOOT_ITEM_FUNCTION_TYPE.register(modEventBus);
+
+        if (ModList.get().isLoaded("productivebees")) {
+            ProductiveBeesCompatRegs.CONFIGURED_FEATURES.register(modEventBus);
+            ProductiveBeesCompatRegs.PLACED_FEATURES.register(modEventBus);
+        }
 
         BzCapabilities.setupCapabilities();
         if (FMLEnvironment.dist == Dist.CLIENT) {
@@ -109,16 +122,10 @@ public class Bumblezone{
 
     private void setup(final FMLCommonSetupEvent event) {
     	event.enqueueWork(() -> {
-            BzPredicates.registerPredicates();
-            BzLootFunctionTypes.registerContainerLootFunctions();
-            BzPlacements.registerPlacements();
             BzCriterias.registerCriteriaTriggers();
-            BzProcessors.registerProcessors();
-            BzStats.registerStats();
-			BzDimension.setupDimension();
 			BzEntities.registerAdditionalEntityInformation();
-            BzSurfaceRules.registerSurfaceRules();
             BeeAggression.setupBeeHatingList();
+            BzStats.initStatEntries();
 		});
         MessageHandler.init();
     }

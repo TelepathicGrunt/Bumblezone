@@ -1,9 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.modinit.BzFeatures;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehive;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehiveAbstract;
 import cy.jdkdigital.productivebees.common.block.ConfigurableCombBlock;
@@ -16,37 +13,24 @@ import cy.jdkdigital.productivebees.setup.BeeReloadListener;
 import cy.jdkdigital.productivebees.state.properties.VerticalHive;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.VerticalAnchor;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
-import net.minecraft.world.level.levelgen.placement.BiomeFilter;
-import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
-import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
-import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraft.world.level.levelgen.placement.RarityFilter;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
 
 import java.awt.*;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class ProductiveBeesCompat {
 
@@ -77,39 +61,9 @@ public class ProductiveBeesCompat {
 
 	private static final Lazy<List<String>> ALL_BEES = Lazy.of(() -> BeeReloadListener.INSTANCE.getData().keySet().stream().filter(e -> BzModCompatibilityConfigs.allowedBees.get().contains(e)).toList());
 
-	private static final ResourceLocation FEATURE_RL = new ResourceLocation(Bumblezone.MODID, "productivebees_be_comb_feature");
 	public static final TagKey<Block> SOLITARY_OVERWORLD_NESTS_TAG = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("productivebees", "solitary_overworld_nests"));
 
 	public static void setupProductiveBees() {
-		// feature to add to biomes
-		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, FEATURE_RL,
-			new ConfiguredFeature<>(BzFeatures.BLOCKENTITY_COMBS_FEATURE.get(),
-				new OreConfiguration(
-					new TagMatchTest(BzTags.HONEYCOMBS_THAT_FEATURES_CAN_CARVE),
-					ModBlocks.CONFIGURABLE_COMB.get().defaultBlockState(),
-					16
-				)
-			)
-		);
-
-		Registry.register(BuiltinRegistries.PLACED_FEATURE,
-			new ResourceLocation(Bumblezone.MODID, "productivebees_be_comb_feature"),
-			new PlacedFeature(BuiltinRegistries.CONFIGURED_FEATURE.getHolderOrThrow(ResourceKey.create(Registry.CONFIGURED_FEATURE_REGISTRY, FEATURE_RL)),
-				List.of(
-					RarityFilter.onAverageOnceEvery(2),
-					InSquarePlacement.spread(),
-					HeightRangePlacement.uniform(
-						VerticalAnchor.aboveBottom(10),
-						VerticalAnchor.belowTop(10)),
-					BiomeFilter.biome()
-				)
-			)
-		);
-
-		if(BzModCompatibilityConfigs.spawnProductiveBeesHoneycombVariants.get()) {
-			MinecraftForge.EVENT_BUS.addListener(ProductiveBeesCompat::PBAddWorldgen);
-		}
-
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
 		ModChecker.productiveBeesPresent = true;
 	}
@@ -120,15 +74,6 @@ public class ProductiveBeesCompat {
 		int b = a.getBlue() - z.getBlue();
 		return (r*r + g*g + b*b) <= threshold*threshold;
 	}
-
-	public static void PBAddWorldgen(final BiomeLoadingEvent event) {
-		if(ModChecker.productiveBeesPresent && event.getName().getNamespace().equals(Bumblezone.MODID)) {
-			event.getGeneration().addFeature(
-					GenerationStep.Decoration.UNDERGROUND_ORES,
-					BuiltinRegistries.PLACED_FEATURE.getHolderOrThrow(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, FEATURE_RL)));
-		}
-	}
-
 	/**
 	 * Is block is a ProductiveBees nest or beenest block
 	 */
@@ -202,7 +147,7 @@ public class ProductiveBeesCompat {
 	/**
 	 * Returns a random comb type to use
 	 */
-	public static String PBGetRandomCombType(Random random) {
+	public static String PBGetRandomCombType(RandomSource random) {
 		if(!BzModCompatibilityConfigs.spawnProductiveBeesHoneycombVariants.get() || ORE_HONEYCOMBS.get().size() == 0) {
 			return null;
 		}
@@ -213,7 +158,7 @@ public class ProductiveBeesCompat {
 	 * Safely get Rottened Honeycomb. If Rottened Honeycomb wasn't found, return
 	 * Vanilla's Honeycomb
 	 */
-	public static StructureTemplate.StructureBlockInfo PBGetRottenedHoneycomb(BlockPos worldPos, Random random) {
+	public static StructureTemplate.StructureBlockInfo PBGetRottenedHoneycomb(BlockPos worldPos, RandomSource random) {
 		if(!BzModCompatibilityConfigs.spawnProductiveBeesHoneycombVariants.get() || SPIDER_DUNGEON_HONEYCOMBS.get().size() == 0) {
 			return null;
 		}
@@ -228,7 +173,7 @@ public class ProductiveBeesCompat {
 	 * Picks a random Productive Bees Honeycomb with lower index of
 	 * ORE_BASED_HONEYCOMB_VARIANTS list being highly common
 	 */
-	public static StructureTemplate.StructureBlockInfo PBGetRandomHoneycomb(BlockPos worldPos, Random random) {
+	public static StructureTemplate.StructureBlockInfo PBGetRandomHoneycomb(BlockPos worldPos, RandomSource random) {
 		if (!BzModCompatibilityConfigs.spawnProductiveBeesHoneycombVariants.get() || BEE_DUNGEON_HONEYCOMBS.get().size() == 0) {
 			return null;
 		}

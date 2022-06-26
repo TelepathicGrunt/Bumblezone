@@ -8,13 +8,10 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
 public class Layer {
-    private static final Logger LOGGER = LogManager.getLogger();
     private final LazyArea area;
 
     public Layer(AreaFactory<LazyArea> areaFactory) {

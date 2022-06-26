@@ -3,7 +3,6 @@
   "precipitation": "none",
   "temperature": 1.85,
   "downfall": 0.5,
-  "category": "none",
   "depth": 1.8,
   "scale": 3.0,
   "effects": {
@@ -98,7 +97,7 @@
     "creature": [
       {
         "type": "minecraft:bee",
-        "weight": 100,
+        "weight": 50,
         "minCount": 5,
         "maxCount": 8
       },

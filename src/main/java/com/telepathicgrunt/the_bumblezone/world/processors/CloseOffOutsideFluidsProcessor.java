@@ -68,6 +68,6 @@ public class CloseOffOutsideFluidsProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return BzProcessors.CLOSE_OFF_OUTSIDE_FLUIDS_PROCESSOR;
+        return BzProcessors.CLOSE_OFF_OUTSIDE_FLUIDS_PROCESSOR.get();
     }
 }

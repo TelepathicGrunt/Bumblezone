@@ -24,7 +24,6 @@
     "entities.LivingEntityAccessor",
     "entities.LivingEntityMixin",
     "entities.MobSpawnLocationMixin",
-    "entities.PlayerEntityMixin",
     "entities.PlayerInteractsEntityMixin",
     "entities.ServerPlayerMixin",
     "entities.ThrownTridentAccessor",
@@ -36,9 +35,7 @@
     "items.MaterialInvoker",
     "items.PlayerDamagedMixin",
     "items.PlayerDamageShieldInvoker",
-    "world.BiomeSourceAccessor",
     "world.NoiseChunkAccessor",
-    "world.NoiseGeneratorSettingsInvoker",
     "world.ServerWorldMixin",
     "world.StructureTemplateAccessor",
     "world.WorldGenRegionAccessor"
@@ -46,7 +43,6 @@
   "client": [
     "client.DimensionSpecialEffectsAccessor",
     "client.FluidRendererMixin",
-    "client.FogRendererClientMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
     "client.RenderingRegistryAccessor",

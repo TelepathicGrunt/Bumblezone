@@ -8,7 +8,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -41,7 +40,7 @@ public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity imp
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("the_bumblezone.container.honey_cocoon");
+        return Component.translatable("the_bumblezone.container.honey_cocoon");
     }
 
     @Override

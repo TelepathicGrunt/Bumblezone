@@ -1,6 +1,5 @@
 {
   "type": "the_bumblezone:the_bumblezone",
-  "forge:use_server_seed": true,
   "generator": {
     "type": "the_bumblezone:chunk_generator",
     "settings": "the_bumblezone:bz_noise_settings",

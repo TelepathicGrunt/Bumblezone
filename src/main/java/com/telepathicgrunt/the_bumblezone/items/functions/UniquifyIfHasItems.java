@@ -21,7 +21,7 @@ public class UniquifyIfHasItems extends LootItemConditionalFunction {
 
     @Override
     public LootItemFunctionType getType() {
-        return BzLootFunctionTypes.UNIQUIFY_IF_HAS_ITEMS;
+        return BzLootFunctionTypes.UNIQUIFY_IF_HAS_ITEMS.get();
     }
 
     @Override

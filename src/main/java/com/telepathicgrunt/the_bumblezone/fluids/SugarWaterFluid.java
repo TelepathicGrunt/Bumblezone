@@ -10,6 +10,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -25,8 +26,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
-
-import java.util.Random;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.LEVEL_FLOWING;
 
@@ -53,7 +52,7 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid  {
     }
 
     @Override
-    public void randomTick(Level world, BlockPos position, FluidState state, Random random) {
+    public void randomTick(Level world, BlockPos position, FluidState state, RandomSource random) {
         //only attempts to grow sugar cane 50% of the time.
         if (random.nextBoolean() || !world.hasChunksAt(position, position))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
@@ -82,7 +81,7 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid  {
 
 
     @Override
-    public void animateTick(Level worldIn, BlockPos pos, FluidState state, Random random) {
+    public void animateTick(Level worldIn, BlockPos pos, FluidState state, RandomSource random) {
         if (!state.isSource() && !state.getValue(FALLING)) {
             if (random.nextInt(64) == 0) {
                 worldIn.playLocalSound(

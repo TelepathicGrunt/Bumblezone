@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
@@ -57,15 +56,14 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
     }
 
     private boolean doesBiomeChangeInChunk(FeaturePlaceContext<BiomeBasedLayerConfig> context, BlockPos.MutableBlockPos mutableBlockPosForChunk) {
-        ChunkGenerator chunkGenerator = context.chunkGenerator();
-        Biome biome = chunkGenerator.getNoiseBiome(QuartPos.fromBlock(mutableBlockPosForChunk.getX()), 40, QuartPos.fromBlock(mutableBlockPosForChunk.getZ())).value();
-        if(biome != chunkGenerator.getNoiseBiome(QuartPos.fromBlock(mutableBlockPosForChunk.getX() + 16), 40, QuartPos.fromBlock(mutableBlockPosForChunk.getZ())).value()){
+        Biome biome = context.level().getNoiseBiome(QuartPos.fromBlock(mutableBlockPosForChunk.getX()), 40, QuartPos.fromBlock(mutableBlockPosForChunk.getZ())).value();
+        if(biome != context.level().getNoiseBiome(QuartPos.fromBlock(mutableBlockPosForChunk.getX() + 16), 40, QuartPos.fromBlock(mutableBlockPosForChunk.getZ())).value()){
             return true;
         }
-        else if(biome != chunkGenerator.getNoiseBiome(QuartPos.fromBlock(mutableBlockPosForChunk.getX()), 40, QuartPos.fromBlock(mutableBlockPosForChunk.getZ() + 16)).value()){
+        else if(biome != context.level().getNoiseBiome(QuartPos.fromBlock(mutableBlockPosForChunk.getX()), 40, QuartPos.fromBlock(mutableBlockPosForChunk.getZ() + 16)).value()){
             return true;
         }
-        else if(biome != chunkGenerator.getNoiseBiome(QuartPos.fromBlock(mutableBlockPosForChunk.getX() + 16), 40, QuartPos.fromBlock(mutableBlockPosForChunk.getZ() + 16)).value()){
+        else if(biome != context.level().getNoiseBiome(QuartPos.fromBlock(mutableBlockPosForChunk.getX() + 16), 40, QuartPos.fromBlock(mutableBlockPosForChunk.getZ() + 16)).value()){
             return true;
         }
         else {

@@ -6,10 +6,9 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzPredicates;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.structure.templatesystem.PosRuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.PosRuleTestType;
-
-import java.util.Random;
 
 public class PieceOriginAxisAlignedLinearPosRuleTest extends PosRuleTest {
     public static final Codec<PieceOriginAxisAlignedLinearPosRuleTest> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
@@ -39,7 +38,7 @@ public class PieceOriginAxisAlignedLinearPosRuleTest extends PosRuleTest {
         }
     }
 
-    public boolean test(BlockPos blockPos, BlockPos blockPos2, BlockPos blockPos3, Random random) {
+    public boolean test(BlockPos blockPos, BlockPos blockPos2, BlockPos blockPos3, RandomSource random) {
         Direction direction = Direction.get(Direction.AxisDirection.POSITIVE, this.axis);
         float xDist = (float)Math.abs((blockPos.getX()) * direction.getStepX());
         float yDist = (float)Math.abs((blockPos.getY()) * direction.getStepY());
@@ -50,6 +49,6 @@ public class PieceOriginAxisAlignedLinearPosRuleTest extends PosRuleTest {
     }
 
     protected PosRuleTestType<?> getType() {
-        return BzPredicates.PIECE_ORIGIN_AXIS_ALIGNED_LINEAR_POS_RULE_TEST;
+        return BzPredicates.PIECE_ORIGIN_AXIS_ALIGNED_LINEAR_POS_RULE_TEST.get();
     }
 }

@@ -21,7 +21,7 @@ task publishModrinth (type: TaskModrinthUpload){
     versionNumber = project.version
     uploadFile = jar
     changelog = fileContents
-    versionType = "RELEASE"
-    addGameVersion('1.18.2')
+    versionType = "BETA"
+    addGameVersion('1.19')
     addLoader('forge')
 }

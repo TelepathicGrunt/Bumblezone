@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.world.dimension;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.mixin.world.BiomeSourceAccessor;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeMergeLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeNonstandardLayer;
@@ -56,7 +55,7 @@ public class BzBiomeProvider extends BiomeSource {
                 .filter(entry -> entry.key().location().getNamespace().equals(Bumblezone.MODID))
                 .collect(Collectors.toList()));
 
-        nonstandardBiome = ((BiomeSourceAccessor)this).getPossibleBiomes().stream()
+        nonstandardBiome = this.possibleBiomes().stream()
                 .map(Holder::value)
                 .filter(biome ->  {
                     ResourceLocation rlKey = biomeRegistry.getKey(biome);
@@ -73,18 +72,9 @@ public class BzBiomeProvider extends BiomeSource {
         this.biomeSampler = buildWorldProcedure(seed, biomeRegistry);
     }
 
-    public static void registerBiomeProvider() {
-        Registry.register(Registry.BIOME_SOURCE, new ResourceLocation(Bumblezone.MODID, "biome_source"), BzBiomeProvider.CODEC);
-    }
-
     @Override
     protected Codec<? extends BiomeSource> codec() {
         return CODEC;
-    }
-
-    @Override
-    public BiomeSource withSeed(long seed) {
-        return new BzBiomeProvider(seed, this.biomeRegistry);
     }
 
     public static <T extends Area, C extends BigContext<T>> AreaFactory<T> stack(long seed, AreaTransformer1 parent, AreaFactory<T> incomingArea, int count, LongFunction<C> contextFactory) {
@@ -110,6 +100,7 @@ public class BzBiomeProvider extends BiomeSource {
         layer = new BzBiomeScaleLayer(HIVE_PILLAR, biomeRegistry).run(contextFactory.apply(1055L), layer);
         layer = ZoomLayer.FUZZY.run(contextFactory.apply(2003L), layer);
         layer = ZoomLayer.FUZZY.run(contextFactory.apply(2523L), layer);
+        layer = new BzBiomeScaleLayer(SUGAR_WATER_FLOOR, biomeRegistry).run(contextFactory.apply(54088L), layer);
 
         AreaFactory<T> layerOverlay = new BzBiomeNonstandardLayer(biomeRegistry).run(contextFactory.apply(204L));
         layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2423L), layerOverlay);

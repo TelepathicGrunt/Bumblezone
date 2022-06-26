@@ -14,6 +14,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -23,6 +24,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -52,7 +54,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
 
 import java.util.List;
-import java.util.Random;
 
 
 public class HoneycombBrood extends ProperFacingBlock {
@@ -114,7 +115,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
             return InteractionResult.SUCCESS;
         }
-        else if (BzModCompatibilityConfigs.allowHoneyTreatCompat.get() && itemstack.getItem().getRegistryName().equals(HONEY_TREAT)) {
+        else if (BzModCompatibilityConfigs.allowHoneyTreatCompat.get() && Registry.ITEM.getKey(itemstack.getItem()).equals(HONEY_TREAT)) {
             if (!world.isClientSide()) {
                 // spawn bee if at final stage and front isn't blocked off
                 int stage = thisBlockState.getValue(STAGE);
@@ -230,7 +231,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
     @SuppressWarnings("deprecation")
     @Override
-    public void tick(BlockState state, ServerLevel world, BlockPos position, Random rand) {
+    public void tick(BlockState state, ServerLevel world, BlockPos position, RandomSource rand) {
         super.tick(state, world, position, rand);
         if (!world.hasChunksAt(position, position))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
@@ -330,7 +331,7 @@ public class HoneycombBrood extends ProperFacingBlock {
      * particle. Also will buzz too based on stage
      */
     @Override
-    public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
+    public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         //number of particles in this tick
         for (int i = 0; i < random.nextInt(2); ++i) {
             this.spawnHoneyParticles(world, position, blockState);

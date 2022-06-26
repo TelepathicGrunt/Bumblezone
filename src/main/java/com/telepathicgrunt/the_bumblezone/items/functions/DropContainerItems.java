@@ -23,7 +23,7 @@ public class DropContainerItems extends LootItemConditionalFunction {
 
     @Override
     public LootItemFunctionType getType() {
-        return BzLootFunctionTypes.DROP_CONTAINER_ITEMS;
+        return BzLootFunctionTypes.DROP_CONTAINER_ITEMS.get();
     }
 
     @Override

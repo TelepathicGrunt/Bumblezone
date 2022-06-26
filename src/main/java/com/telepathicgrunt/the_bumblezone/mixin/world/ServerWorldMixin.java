@@ -21,8 +21,8 @@ import java.util.function.Supplier;
 
 @Mixin(ServerLevel.class)
 public abstract class ServerWorldMixin extends Level {
-	protected ServerWorldMixin(WritableLevelData writableLevelData, ResourceKey<Level> levelResourceKey, Holder<DimensionType> dimensionType, Supplier<ProfilerFiller> fillerSupplier, boolean b, boolean b1, long l) {
-		super(writableLevelData, levelResourceKey, dimensionType, fillerSupplier, b, b1, l);
+	protected ServerWorldMixin(WritableLevelData writableLevelData, ResourceKey<Level> levelResourceKey, Holder<DimensionType> dimensionTypeHolder, Supplier<ProfilerFiller> profilerFillerSupplier, boolean b1, boolean b, long l, int i) {
+		super(writableLevelData, levelResourceKey, dimensionTypeHolder, profilerFillerSupplier, b1, b, l, i);
 	}
 
 	@Unique
@@ -30,6 +30,7 @@ public abstract class ServerWorldMixin extends Level {
 
 	@Unique
 	private static int thebumblezone_counter = 0;
+
 
 	@Inject(
 			method = "tick(Ljava/util/function/BooleanSupplier;)V",

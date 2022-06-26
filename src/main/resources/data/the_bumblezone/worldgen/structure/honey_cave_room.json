@@ -1,0 +1,26 @@
+{
+  "type": "the_bumblezone:honey_cave_room",
+  "start_pool": "the_bumblezone:honey_cave_room",
+  "size": 6,
+  "max_distance_from_center": 80,
+  "biomes": "#the_bumblezone:has_structure/honey_cave_room",
+  "step": "surface_structures",
+  "terrain_adaptation": "none",
+  "start_height": {
+    "absolute": 0
+  },
+  "use_expansion_hack": false,
+  "spawn_overrides": {
+    "creature": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "the_bumblezone:beehemoth",
+          "maxCount": 1,
+          "minCount": 1,
+          "weight": 1
+        }
+      ]
+    }
+  }
+}
