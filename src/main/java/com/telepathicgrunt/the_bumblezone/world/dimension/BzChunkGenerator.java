@@ -97,61 +97,17 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         this.defaultFluid = noiseGeneratorSettings.defaultFluid();
         NoiseRouter noiseRouter = noiseGeneratorSettings.noiseRouter();
 
-//        Climate.Sampler sampler = new Climate.Sampler(
-//                noiseRouter.temperature(),
-//                noiseRouter.vegetation(),
-//                noiseRouter.continents(),
-//                noiseRouter.erosion(),
-//                noiseRouter.depth(),
-//                noiseRouter.ridges(),
-//                noiseGeneratorSettings.spawnTarget());
-//
-//        DensityFunction newFinalDensity = DensityFunctions.add(
-//                new BiomeNoise(sampler, this.biomeRegistry, this.getBiomeSource()),
-//                noiseRouter.finalDensity()
-//        );
-//        newFinalDensity = DensityFunctions.interpolated(newFinalDensity);
-//        newFinalDensity = DensityFunctions.add(
-//                new RoughSurfaceNoise(),
-//                newFinalDensity
-//        );
-//        newFinalDensity = DensityFunctions.interpolated(newFinalDensity);
-//
-//        NoiseRouter newRouter = new NoiseRouter(
-//                noiseRouter.barrierNoise(),
-//                noiseRouter.fluidLevelFloodednessNoise(),
-//                noiseRouter.fluidLevelSpreadNoise(),
-//                noiseRouter.lavaNoise(),
-//                noiseRouter.temperature(),
-//                noiseRouter.vegetation(),
-//                noiseRouter.continents(),
-//                noiseRouter.erosion(),
-//                noiseRouter.depth(),
-//                noiseRouter.ridges(),
-//                noiseRouter.initialDensityWithoutJaggedness(),
-//                newFinalDensity,
-//                noiseRouter.veinToggle(),
-//                noiseRouter.veinRidged(),
-//                noiseRouter.veinGap()
-//        );
-//
-//        NoiseGeneratorSettings oldSettings = supplier.get();
-//        NoiseGeneratorSettings newSettings = new NoiseGeneratorSettings(
-//                oldSettings.noiseSettings(),
-//                oldSettings.defaultBlock(),
-//                oldSettings.defaultFluid(),
-//                newRouter,
-//                oldSettings.surfaceRule(),
-//                oldSettings.spawnTarget(),
-//                oldSettings.seaLevel(),
-//                oldSettings.disableMobGeneration(),
-//                oldSettings.aquifersEnabled(),
-//                oldSettings.oreVeinsEnabled(),
-//                oldSettings.useLegacyRandomSource()
-//        );
-//        ResourceKey<NoiseGeneratorSettings> settingsRK = settingsRegistry.getResourceKey(oldSettings).get();
-//        Registry.register(settingsRegistry, settingsRK, newSettings);
-//        this.settings = settingsRegistry.getHolderOrThrow(settingsRK);
+        BiomeNoise.biomeRegistry = this.biomeRegistry;
+        BiomeNoise.biomeSource = this.getBiomeSource();
+        BiomeNoise.sampler = new Climate.Sampler(
+                noiseRouter.temperature(),
+                noiseRouter.vegetation(),
+                noiseRouter.continents(),
+                noiseRouter.erosion(),
+                noiseRouter.depth(),
+                noiseRouter.ridges(),
+                noiseGeneratorSettings.spawnTarget());
+
         this.settings = supplier;
 
         int seaLevel = noiseGeneratorSettings.seaLevel();
@@ -159,53 +115,31 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         this.globalFluidPicker = (x, y, z) -> sea;
     }
 
-    public record RoughSurfaceNoise() implements DensityFunction.SimpleFunction {
-        public static final KeyDispatchDataCodec<RoughSurfaceNoise> CODEC = KeyDispatchDataCodec.of(MapCodec.unit(new RoughSurfaceNoise()));
+    public record BiomeNoise() implements DensityFunction.SimpleFunction {
+        public static final KeyDispatchDataCodec<BiomeNoise> CODEC = KeyDispatchDataCodec.of(MapCodec.unit(new BiomeNoise()));
+        public static Climate.Sampler sampler;
+        public static Registry<Biome> biomeRegistry;
+        public static BiomeSource biomeSource;
 
-        private static final OpenSimplex2F noiseGen = new OpenSimplex2F(0);
-
-        @Override
-        public double compute(FunctionContext functionContext) {
-            return (noiseGen.noise3_Classic(functionContext.blockX(), functionContext.blockY(), functionContext.blockZ()) / 100d) - 0.01d;
-        }
-
-        @Override
-        public double minValue() {
-            return 0;
-        }
-
-        @Override
-        public double maxValue() {
-            return 2;
-        }
-
-        @Override
-        public KeyDispatchDataCodec<? extends DensityFunction> codec() {
-            return CODEC;
-        }
-    }
-
-    public record BiomeNoise(Climate.Sampler sampler, Registry<Biome> biomeRegistry, BiomeSource biomeSource) implements DensityFunction.SimpleFunction {
-        public static final KeyDispatchDataCodec<BiomeNoise> CODEC = KeyDispatchDataCodec.of(MapCodec.unit(new BiomeNoise(null, null, null)));
 
         @Override
         public double compute(FunctionContext functionContext) {
             return BiomeInfluencedNoiseSampler.calculateBaseNoise(
                     functionContext.blockX(),
                     functionContext.blockZ(),
-                    this.sampler,
-                    this.biomeSource,
-                    this.biomeRegistry);
+                    sampler,
+                    biomeSource,
+                    biomeRegistry);
         }
 
         @Override
         public double minValue() {
-            return 0;
+            return -10;
         }
 
         @Override
         public double maxValue() {
-            return 2;
+            return 10;
         }
 
         @Override

@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.blocks;
+package com.telepathicgrunt.the_bumblezone.fluids;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;

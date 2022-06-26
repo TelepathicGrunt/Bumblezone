@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
-import com.telepathicgrunt.the_bumblezone.blocks.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FlowingFluidAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -37,7 +36,6 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
     protected HoneyFluid(Properties properties) {
         super(properties);
     }
-
 
     @Override
     public Fluid getFlowing() {
@@ -198,9 +196,9 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
 
     @Override
     protected FluidState getNewLiquid(LevelReader worldReader, BlockPos blockPos, BlockState blockState) {
-        boolean isBzFluidBlock = blockState.getBlock() instanceof HoneyFluidBlock;
+        boolean isBzFluidBlock = blockState.hasProperty(BOTTOM_LEVEL) && blockState.hasProperty(LEVEL);
         int lowestNeighboringFluidLevel = isBzFluidBlock ? blockState.getValue(BOTTOM_LEVEL) : HoneyFluidBlock.maxBottomLayer;
-        int currentFluidLevel = isBzFluidBlock ? blockState.getValue(HoneyFluidBlock.LEVEL) : 0;
+        int currentFluidLevel = isBzFluidBlock ? blockState.getValue(LEVEL) : 0;
         int highestNeighboringFluidLevel = currentFluidLevel;
         int neighboringFluidSource = 0;
         boolean hasAboveFluid = isBzFluidBlock ? blockState.getValue(ABOVE_FLUID) : false;
@@ -220,7 +218,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
                 }
 
                 highestNeighboringFluidLevel = Math.max(highestNeighboringFluidLevel, sideFluidState.getAmount());
-                if(sideFluidState.is(BzTags.BZ_HONEY_FLUID) && !(canPassThroughBelow && !sideFluidState.isSource() && sideBlockState.getValue(HoneyFluidBlock.FALLING) && aboveBlockState.getFluidState().is(BzTags.BZ_HONEY_FLUID))) {
+                if(sideFluidState.is(BzTags.BZ_HONEY_FLUID) && !(canPassThroughBelow && !sideFluidState.isSource() && sideBlockState.getValue(FALLING) && aboveBlockState.getFluidState().is(BzTags.BZ_HONEY_FLUID))) {
                     lowestNeighboringFluidLevel = Math.min(lowestNeighboringFluidLevel, sideFluidState.isSource() ? 0 : sideFluidState.getValue(BOTTOM_LEVEL));
                 }
             }
@@ -264,62 +262,6 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
                     (aboveFluidState.isSource() || !aboveFluidState.is(BzTags.BZ_HONEY_FLUID) || aboveFluidState.getValue(BOTTOM_LEVEL) == 0);
 
         return fluidState.getValue(ABOVE_FLUID) || aboveFluidIsThisFluid ? 1.0f : fluidState.getOwnHeight();
-    }
-
-    public static float getHoneyFluidHeight(BlockGetter world, BlockPos blockPos, Fluid fluid) {
-        float totalHeight = 0.0F;
-        int checkedSides = 0;
-        int fluidSides = 0;
-        FluidState currentMatchingFluidState = null;
-
-        // Checks in a square. One spot will be the current fluid
-        for(int xOffset = -2; xOffset <= 1; xOffset++) {
-            for(int zOffset = -2; zOffset <= 1; zOffset++) {
-                BlockPos currentBlockPos = blockPos.offset(xOffset, 0, zOffset);
-
-                if(xOffset == -2 || zOffset == -2 || xOffset == 1 || zOffset == 1) {
-                    FluidState currentFluidState = world.getFluidState(currentBlockPos);
-                    if (currentFluidState.getType().isSame(fluid)) {
-                        currentMatchingFluidState = currentFluidState;
-                        fluidSides++;
-                    }
-                    continue;
-                }
-
-                FluidState aboveFluidState = world.getFluidState(currentBlockPos.above());
-                if (aboveFluidState.getType().isSame(fluid) && (aboveFluidState.isSource() || !aboveFluidState.is(BzTags.BZ_HONEY_FLUID) || aboveFluidState.getValue(BOTTOM_LEVEL) == 0)) {
-                    return 1.0F;
-                }
-
-                FluidState currentFluidState = world.getFluidState(currentBlockPos);
-                if (currentFluidState.getType().isSame(fluid)) {
-                    currentMatchingFluidState = currentFluidState;
-                    fluidSides++;
-                    float fluidStateHeight = currentFluidState.getHeight(world, currentBlockPos);
-                    if (fluidStateHeight >= 0.8F) {
-                        totalHeight += fluidStateHeight * 10.0F;
-                        checkedSides += 10;
-                    }
-                    else {
-                        totalHeight += fluidStateHeight;
-                        checkedSides++;
-                    }
-                }
-                else if (!world.getBlockState(currentBlockPos).getMaterial().isSolid()) {
-                    checkedSides++;
-                }
-            }
-        }
-
-        if(fluidSides == 1 &&
-            currentMatchingFluidState.getType().isSame(fluid) &&
-            !currentMatchingFluidState.isSource() &&
-            currentMatchingFluidState.getValue(FALLING))
-        {
-            return currentMatchingFluidState.getHeight(world, blockPos);
-        }
-
-        return totalHeight / (float)checkedSides;
     }
 
     public static boolean shouldNotCullSide(BlockGetter world, BlockPos blockPos, Direction direction, FluidState currentFluidState) {

@@ -22,6 +22,5 @@ public class BzDimension {
 
     public static final RegistryObject<Codec<BzChunkGenerator>> BZ_CHUNK_GENERATOR = CHUNK_GENERATOR.register("chunk_generator", () -> BzChunkGenerator.CODEC);
     public static final RegistryObject<Codec<BzBiomeProvider>> BZ_BIOME_SOURCE = BIOME_SOURCE.register("biome_source", () -> BzBiomeProvider.CODEC);
-    public static final RegistryObject<Codec<BzChunkGenerator.RoughSurfaceNoise>> BZ_ROUGH_FUNCTION = DENSITY_FUNCTIONS.register("rough_surface", BzChunkGenerator.RoughSurfaceNoise.CODEC::codec);
     public static final RegistryObject<Codec<BzChunkGenerator.BiomeNoise>> BZ_BIOME_FUNCTION = DENSITY_FUNCTIONS.register("biome_function", BzChunkGenerator.BiomeNoise.CODEC::codec);
 }

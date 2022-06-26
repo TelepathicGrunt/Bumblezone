@@ -15,6 +15,3 @@ Cell Maze structure is now much more spread out in the world.
 ##### Fluids:
 Fixed bottom of honey fluid rendering when it shouldn't in some cases.
 
-##### Mod Compat:
-Added REI support.
-
