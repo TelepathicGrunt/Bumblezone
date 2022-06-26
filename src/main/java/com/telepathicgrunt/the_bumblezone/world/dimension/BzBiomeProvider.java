@@ -100,6 +100,7 @@ public class BzBiomeProvider extends BiomeSource {
         layer = new BzBiomeScaleLayer(HIVE_PILLAR, biomeRegistry).run(contextFactory.apply(1055L), layer);
         layer = ZoomLayer.FUZZY.run(contextFactory.apply(2003L), layer);
         layer = ZoomLayer.FUZZY.run(contextFactory.apply(2523L), layer);
+        layer = new BzBiomeScaleLayer(SUGAR_WATER_FLOOR, biomeRegistry).run(contextFactory.apply(54088L), layer);
 
         AreaFactory<T> layerOverlay = new BzBiomeNonstandardLayer(biomeRegistry).run(contextFactory.apply(204L));
         layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2423L), layerOverlay);
