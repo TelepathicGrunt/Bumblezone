@@ -5,6 +5,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.FogRenderer;
+import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.material.FluidState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -34,9 +36,11 @@ public class FogRendererMixin {
         FluidState fluidstate = FluidClientOverlay.getNearbyHoneyFluid(camera);
         if(fluidstate.is(BzTags.BZ_HONEY_FLUID)) {
             // Scale the brightness of fog but make sure it is never darker than the dimension's min brightness.
+            BlockPos blockpos = new BlockPos(camera.getEntity().getX(), camera.getEntity().getEyeY(), camera.getEntity().getZ());
+            float brightnessAtEyes = LightTexture.getBrightness(camera.getEntity().level.dimensionType(), camera.getEntity().level.getMaxLocalRawBrightness(blockpos));
             float brightness = (float) Math.max(
                     Math.pow(FluidClientOverlay.getDimensionBrightnessAtEyes(camera.getEntity()), 2D),
-                    camera.getEntity().level.dimensionType().brightness(0)
+                    brightnessAtEyes
             );
             fogRed = 0.6F * brightness;
             fogGreen = 0.3F * brightness;
@@ -45,8 +49,8 @@ public class FogRendererMixin {
         }
     }
 
-    @Inject(method = "setupFog(Lnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/FogRenderer$FogMode;FZ)V", at = @At(value = "TAIL"))
-    private static void thebumblezone_renderHoneyFog(Camera camera, FogRenderer.FogMode fogType, float viewDistance, boolean thickFog, CallbackInfo ci) {
+    @Inject(method = "setupFog(Lnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/FogRenderer$FogMode;FZF)V", at = @At(value = "TAIL"))
+    private static void thebumblezone_renderHoneyFog(Camera camera, FogRenderer.FogMode fogMode, float f, boolean bl, float g, CallbackInfo ci) {
         FluidClientOverlay.renderHoneyFog(camera);
     }
 }

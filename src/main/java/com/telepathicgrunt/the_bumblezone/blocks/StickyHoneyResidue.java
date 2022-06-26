@@ -17,10 +17,10 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -56,7 +56,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Map;
-import java.util.Random;
 
 public class StickyHoneyResidue extends Block {
     public static final BooleanProperty UP = PipeBlock.UP;
@@ -282,7 +281,7 @@ public class StickyHoneyResidue extends Block {
     }
 
     @Override
-    public void tick(BlockState blockstate, ServerLevel world, BlockPos currentPos, Random random) {
+    public void tick(BlockState blockstate, ServerLevel world, BlockPos currentPos, RandomSource random) {
         super.tick(blockstate, world, currentPos, random);
         BlockState newBlockstate = this.setAttachments(blockstate, world, currentPos);
         world.setBlock(currentPos, newBlockstate, 3);
@@ -406,7 +405,7 @@ public class StickyHoneyResidue extends Block {
      * Called periodically clientside on blocks near the player to show honey particles
      */
     @Override
-    public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
+    public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         //chance of particle in this tick
         for (int i = 0; i == random.nextInt(50); ++i) {
             Direction randomDirection = Direction.values()[world.random.nextInt(Direction.values().length)];

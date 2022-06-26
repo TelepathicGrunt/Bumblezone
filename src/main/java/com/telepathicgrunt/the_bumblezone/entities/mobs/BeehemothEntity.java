@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.LivingEntityFlyingSoundInstance;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothAIRide;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothFlyingStillGoal;
@@ -18,8 +19,8 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.network.protocol.game.ClientboundAddMobPacket;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -28,6 +29,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -64,14 +66,12 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.Random;
-
 public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
 
     private static final EntityDataAccessor<Boolean> SADDLED = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> QUEEN = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> FRIENDSHIP = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.INT);
-    private static final TranslatableComponent QUEEN_NAME = new TranslatableComponent("entity.the_bumblezone.beehemoth_queen");
+    private static final MutableComponent QUEEN_NAME = Component.translatable("entity.the_bumblezone.beehemoth_queen");
     private static final ResourceLocation MOB_CATCHER_RL = new ResourceLocation("mob_catcher", "mob_catcher");
     public static final int TICKS_PER_FLAP = Mth.ceil(1.4959966F);
     private boolean stopWandering = false;
@@ -204,21 +204,21 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
             if (entity != null && entity.getUUID().equals(getOwnerUUID())) {
                 addFriendship((int) (-3 * amount));
             }
-            if (Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.beehemothTriggersWrath && entity instanceof LivingEntity livingEntity) {
+            if (BzConfig.beehemothTriggersWrath && entity instanceof LivingEntity livingEntity) {
                 addFriendship((int) (-amount));
 
                 if (!(livingEntity instanceof Player player && player.isCreative()) &&
                         (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+                        BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
                         !livingEntity.isSpectator() &&
-                        Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
+                        BzConfig.aggressiveBees)
                 {
                     if(livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
                         livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE);
                     }
                     else {
                         //Now all bees nearby in Bumblezone will get VERY angry!!!
-                        livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
+                        livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
                     }
                 }
             }
@@ -247,7 +247,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
         return finalFlyingSpeed;
     }
 
-    public static boolean checkMobSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor iWorld, MobSpawnType spawnReason, BlockPos blockPos, Random random) {
+    public static boolean checkMobSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor iWorld, MobSpawnType spawnReason, BlockPos blockPos, RandomSource random) {
         return true;
     }
 
@@ -515,7 +515,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     }
 
     @Override
-    public void recreateFromPacket(ClientboundAddMobPacket clientboundAddMobPacket) {
+    public void recreateFromPacket(ClientboundAddEntityPacket clientboundAddMobPacket) {
         super.recreateFromPacket(clientboundAddMobPacket);
         LivingEntityFlyingSoundInstance.playSound(this, BzSounds.BEEHEMOTH_LOOP);
     }

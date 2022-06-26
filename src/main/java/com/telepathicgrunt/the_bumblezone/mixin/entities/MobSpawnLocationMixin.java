@@ -20,7 +20,7 @@ public class MobSpawnLocationMixin {
     private static void thebumblezone_spawnEntitiesInChunk(MobCategory group, ServerLevel world, ChunkAccess chunk, BlockPos pos, NaturalSpawner.SpawnPredicate checker, NaturalSpawner.AfterSpawnCallback runner, CallbackInfo ci) {
 
         //No mobs allowed to spawn on roof of Bumblezone
-        if (pos.getY() > 255 && world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+        if (pos.getY() >= world.getMaxBuildHeight() && world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             //Bumblezone.LOGGER.log(Level.INFO, "canceled spawn");
             ci.cancel();
         }

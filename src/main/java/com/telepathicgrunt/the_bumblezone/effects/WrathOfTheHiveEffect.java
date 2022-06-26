@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.effects;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
@@ -67,7 +67,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
         if (amplifier >= 2) {
             unBEElievablyHighAggression(world, entity);
 
-            if(GeneralUtils.getEntityCountInBz() < Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity * 3.0f) {
+            if(GeneralUtils.getEntityCountInBz() < BzConfig.broodBlocksBeeSpawnCapacity * 3.0f) {
                 // Spawn bees when high wrath effect.
                 // Must be very low as this method is fired every tick for status effects.
                 // We don't want to spawn millions of bees
@@ -108,7 +108,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
         if(!world.isClientSide()) {
             PoiManager pointofinterestmanager = ((ServerLevel)world).getPoiManager();
             List<PoiRecord> poiInRange = pointofinterestmanager.getInSquare(
-                    (pointOfInterestType) -> pointOfInterestType == BzPOI.BROOD_BLOCK_POI,
+                    (pointOfInterestType) -> pointOfInterestType.value() == BzPOI.BROOD_BLOCK_POI,
                     entity.blockPosition(),
                     NEARBY_WRATH_EFFECT_RADIUS,
                     PoiManager.Occupancy.ANY)
@@ -137,9 +137,9 @@ public class WrathOfTheHiveEffect extends MobEffect {
                 livingEntity,
                 Bee.class,
                 LINE_OF_SIGHT,
-                Math.max((Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.speedBoostLevel - 1), 1),
-                Math.max((Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.absorptionBoostLevel - 1) / 2, 1),
-                Math.max((Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.strengthBoostLevel - 1) / 3, 1));
+                Math.max((BzConfig.speedBoostLevel - 1), 1),
+                Math.max((BzConfig.absorptionBoostLevel - 1) / 2, 1),
+                Math.max((BzConfig.strengthBoostLevel - 1) / 3, 1));
     }
 
 
@@ -151,9 +151,9 @@ public class WrathOfTheHiveEffect extends MobEffect {
                 livingEntity,
                 Bee.class,
                 SEE_THROUGH_WALLS,
-                Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.speedBoostLevel - 1,
-                Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.absorptionBoostLevel - 1,
-                Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.strengthBoostLevel - 1);
+                BzConfig.speedBoostLevel - 1,
+                BzConfig.absorptionBoostLevel - 1,
+                BzConfig.strengthBoostLevel - 1);
     }
 
     private static void setAggression(Level world, LivingEntity livingEntity, Class<? extends Mob> entityToFind, TargetingConditions sightMode, int speed, int absorption, int strength) {
@@ -167,8 +167,8 @@ public class WrathOfTheHiveEffect extends MobEffect {
             isHiding = true;
         }
 
-        sightMode.range(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius);
-        List<? extends Mob> beeList = world.getNearbyEntities(entityToFind, sightMode, livingEntity, livingEntity.getBoundingBox().inflate(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius));
+        sightMode.range(BzConfig.aggressionTriggerRadius);
+        List<? extends Mob> beeList = world.getNearbyEntities(entityToFind, sightMode, livingEntity, livingEntity.getBoundingBox().inflate(BzConfig.aggressionTriggerRadius));
         for (Mob bee : beeList) {
             if(bee instanceof NeutralMob) {
                 ((NeutralMob)bee).setRemainingPersistentAngerTime(20);
@@ -197,8 +197,8 @@ public class WrathOfTheHiveEffect extends MobEffect {
      * Calm the bees that are attacking the incoming entity
      */
     public static void calmTheBees(Level world, LivingEntity livingEntity) {
-        SEE_THROUGH_WALLS.range(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D);
-        List<Bee> beeList = world.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().inflate(Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressionTriggerRadius*0.5D));
+        SEE_THROUGH_WALLS.range(BzConfig.aggressionTriggerRadius*0.5D);
+        List<Bee> beeList = world.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().inflate(BzConfig.aggressionTriggerRadius*0.5D));
         for (Bee bee : beeList) {
             if(bee.getTarget() == livingEntity) {
                 bee.setTarget(null);
@@ -218,7 +218,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
             //refresh the bee anger timer
             entity.addEffect(new MobEffectInstance(
                     BzEffects.WRATH_OF_THE_HIVE,
-                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts,
+                    BzConfig.howLongWrathOfTheHiveLasts,
                     1,
                     false,
                     true));

@@ -1,13 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.world.dimension;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.world.phys.Vec3;
 
-@Environment(EnvType.CLIENT)
 public class BzSkyProperty extends DimensionSpecialEffects {
     public BzSkyProperty() {
         super(1000, true, SkyType.NONE, false, false);
@@ -24,7 +21,6 @@ public class BzSkyProperty extends DimensionSpecialEffects {
     }
 
 
-    @Environment(EnvType.CLIENT)
     public static float REDDISH_FOG_TINT = 0;
 
     /**
@@ -40,10 +36,10 @@ public class BzSkyProperty extends DimensionSpecialEffects {
          * The sky will be turned to midnight when brightness is below 50. This lets us get the
          * full range of brightness by utilizing the default brightness that the current celestial time gives.
          */
-        if (Bumblezone.BZ_CONFIG.BZDimensionConfig.fogBrightnessPercentage <= 50) {
-            colorFactor *= (Bumblezone.BZ_CONFIG.BZDimensionConfig.fogBrightnessPercentage / 50);
+        if (BzConfig.fogBrightnessPercentage <= 50) {
+            colorFactor *= (BzConfig.fogBrightnessPercentage / 50);
         } else {
-            colorFactor *= (Bumblezone.BZ_CONFIG.BZDimensionConfig.fogBrightnessPercentage / 100);
+            colorFactor *= (BzConfig.fogBrightnessPercentage / 100);
         }
 
         if (WrathOfTheHiveEffect.ACTIVE_WRATH && REDDISH_FOG_TINT < 0.38f) {

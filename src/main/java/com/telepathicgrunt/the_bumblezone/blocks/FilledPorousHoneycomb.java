@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -10,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -24,8 +26,6 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.util.Random;
 
 
 public class FilledPorousHoneycomb extends Block {
@@ -50,14 +50,14 @@ public class FilledPorousHoneycomb extends Block {
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
 
             if ((playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+                    BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&
-                    Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.aggressiveBees)
+                    BzConfig.aggressiveBees)
             {
                 if(!playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
-                    playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts, 2, false, Bumblezone.BZ_CONFIG.BZBeeAggressionConfig.showWrathOfTheHiveParticles, true));
+                    playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
                 }
             }
 
@@ -73,7 +73,7 @@ public class FilledPorousHoneycomb extends Block {
      * particle
      */
     @Override
-    public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
+    public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         //number of particles in this tick
         for (int i = 0; i < random.nextInt(2); ++i) {
             this.spawnHoneyParticles(world, position, blockState);

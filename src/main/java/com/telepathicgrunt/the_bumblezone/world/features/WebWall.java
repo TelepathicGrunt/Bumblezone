@@ -96,9 +96,9 @@ public class WebWall extends Feature<NoneFeatureConfiguration> {
                     if(!setIfValidSpace(level, axis, originPos, newBlockPos, validSpaces)) {
                         return false;
                     }
-                    else if (state.is(BzBlocks.HONEY_WEB)) {
-                        validSpaces.add(newBlockPos);
-                    }
+                }
+                else if (state.is(BzBlocks.HONEY_WEB)) {
+                    validSpaces.add(newBlockPos);
                 }
             }
         }

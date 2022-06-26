@@ -1,37 +1,130 @@
 package com.telepathicgrunt.the_bumblezone.configs;
 
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import eu.midnightdust.lib.config.MidnightConfig;
 
-@Config(name = "the_bumblezone-main")
-public class BzConfig implements ConfigData {
+public class BzConfig extends MidnightConfig {
 
-    @ConfigEntry.Category("general")
-    @ConfigEntry.Gui.TransitiveObject
-    public BzGeneralConfig BZGeneralConfig = new BzGeneralConfig();
+    @Comment
+    public static Comment beeAggressionComment;
 
-    @ConfigEntry.Category("client")
-    @ConfigEntry.Gui.TransitiveObject
-    public BzClientConfig BZClientConfig = new BzClientConfig();
+    @Entry
+    public static boolean beehemothTriggersWrath = false;
 
-    @ConfigEntry.Category("dungeons")
-    @ConfigEntry.Gui.TransitiveObject
-    public BzDungeonsConfig BZDungeonsConfig = new BzDungeonsConfig();
+    @Entry
+    public static boolean allowWrathOfTheHiveOutsideBumblezone = false;
 
-    @ConfigEntry.Category("bee_aggression")
-    @ConfigEntry.Gui.TransitiveObject
-    public BzBeeAggressionConfig BZBeeAggressionConfig = new BzBeeAggressionConfig();
+    @Entry
+    public static boolean showWrathOfTheHiveParticles = true;
 
-    @ConfigEntry.Category("dimension")
-    @ConfigEntry.Gui.TransitiveObject
-    public BzDimensionConfig BZDimensionConfig = new BzDimensionConfig();
+    @Entry
+    public static boolean aggressiveBees = true;
 
-    @ConfigEntry.Category("block_mechanics")
-    @ConfigEntry.Gui.TransitiveObject
-    public BzBlockMechanicsConfig BZBlockMechanicsConfig = new BzBlockMechanicsConfig();
+    @Entry(min=1, max=10000)
+    public static int aggressionTriggerRadius = 64;
 
-    @ConfigEntry.Category("mod_compatibility")
-    @ConfigEntry.Gui.TransitiveObject
-    public BzModCompatibilityConfig BZModCompatibilityConfig = new BzModCompatibilityConfig();
+    @Entry(min=1, max=10000)
+    public static int howLongWrathOfTheHiveLasts = 1680;
+
+    @Entry(min=1, max=10000)
+    public static int howLongProtectionOfTheHiveLasts = 1680;
+
+    @Entry(min=1, max=100)
+    public static int speedBoostLevel = 2;
+
+    @Entry(min=1, max=100)
+    public static int absorptionBoostLevel = 1;
+
+    @Entry(min=1, max=100)
+    public static int strengthBoostLevel = 2;
+
+
+    @Comment
+    public static Comment blockMechanicsComment;
+
+    @Entry
+    public static boolean dispensersDropGlassBottles = false;
+
+    @Entry(min=1, max=1000)
+    public static int broodBlocksBeeSpawnCapacity = 80;
+
+
+    @Comment
+    public static Comment dimensionComment;
+
+    @Entry(min=0, max=100000)
+    public static double fogBrightnessPercentage = 110;
+
+    @Entry
+    public static boolean onlyOverworldHivesTeleports = false;
+
+    @Entry
+    public static boolean forceExitToOverworld = false;
+
+    @Entry
+    public static boolean seaLevelOrHigherExitTeleporting = true;
+
+    @Entry
+    public static boolean warnPlayersOfWrongBlockUnderHive = true;
+
+    @Entry
+    public static boolean generateBeenest = true;
+
+    @Entry(min=1, max=3)
+    public static int teleportationMode = 3;
+
+    @Entry
+    public static boolean enableExitTeleportation = true;
+
+    @Entry
+    public static boolean enableEntranceTeleportation = true;
+
+
+    @Comment
+    public static Comment dungeonsComment;
+
+    @Entry(min=0, max=1000)
+    public static int beeDungeonRarity = 1;
+
+    @Entry(min=0, max=1000)
+    public static int spiderInfestedBeeDungeonRarity = 8;
+
+    @Entry(min=0, max=1)
+    public static float spawnerRateSpiderBeeDungeon = 0.2f;
+
+
+    @Comment
+    public static Comment generalComment;
+
+    @Entry(min=0, max=100)
+    public static double beehemothSpeed = 0.95;
+
+    @Entry
+    public static boolean specialBeeSpawning = true;
+
+    @Entry
+    public static int nearbyBeesPerPlayerInBz = 25;
+
+
+    @Comment
+    public static Comment modCompatComment;
+
+    @Entry
+    public static boolean allowFriendsAndFoesBeekeeperTradesCompat = true;
+
+
+    @Comment
+    public static Comment clientComment;
+
+    @Entry(min=0, max=1)
+    public static double lgbtBeeRate = 0.015;
+
+    @Entry(min=0, max=1)
+    public static double ukraineBeeRate = 0.01;
+
+    @Entry
+    public static boolean enableAltBeeSkinRenderer = true;
+
+    @Entry
+    public static boolean playWrathOfHiveEffectMusic = true;
+
 }

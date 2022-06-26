@@ -8,7 +8,7 @@ import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.plugin.client.BuiltinClientPlugin;
 import net.minecraft.core.Registry;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluid;
 
@@ -58,9 +58,9 @@ public class REICompat implements REIClientPlugin {
     private static void addInfo(Item item) {
         BuiltinClientPlugin.getInstance().registerInformation(
                 EntryStacks.of(item),
-                new TranslatableComponent(Registry.ITEM.getKey(item).toString()),
+                Component.translatable(Registry.ITEM.getKey(item).toString()),
                 (text) -> {
-                    text.add(new TranslatableComponent(Bumblezone.MODID + "." + Registry.ITEM.getKey(item).getPath() + ".jei_description"));
+                    text.add(Component.translatable(Bumblezone.MODID + "." + Registry.ITEM.getKey(item).getPath() + ".jei_description"));
                     return text;
                 });
     }
@@ -68,9 +68,9 @@ public class REICompat implements REIClientPlugin {
     private static void addInfo(Fluid fluid) {
         BuiltinClientPlugin.getInstance().registerInformation(
                 EntryStacks.of(fluid, 1),
-                new TranslatableComponent(Registry.FLUID.getKey(fluid).toString()),
+                Component.translatable(Registry.FLUID.getKey(fluid).toString()),
                 (text) -> {
-                    text.add(new TranslatableComponent(Bumblezone.MODID + "." + Registry.FLUID.getKey(fluid).getPath() + ".jei_description"));
+                    text.add(Component.translatable(Bumblezone.MODID + "." + Registry.FLUID.getKey(fluid).getPath() + ".jei_description"));
                     return text;
                 });
     }

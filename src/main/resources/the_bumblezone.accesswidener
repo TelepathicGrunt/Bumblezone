@@ -1,5 +1,4 @@
 accessWidener v1 named
-accessible method net/minecraft/world/level/levelgen/NoiseChunk <init> (IIILnet/minecraft/world/level/levelgen/NoiseRouter;IILnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V
 accessible method net/minecraft/world/entity/item/FallingBlockEntity <init> (Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/level/block/state/BlockState;)V
 accessible class net/minecraft/world/item/crafting/SimpleCookingSerializer$CookieBaker
 accessible class net/minecraft/world/entity/animal/Bee$BeeWanderGoal
@@ -8,8 +7,9 @@ accessible class net/minecraft/world/level/levelgen/SurfaceRules$Context
 accessible class net/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule
 accessible class net/minecraft/world/level/levelgen/SurfaceRules$StateRule
 accessible method net/minecraft/world/level/levelgen/SurfaceRules$StateRule <init> (Lnet/minecraft/world/level/block/state/BlockState;)V
-accessible method net/minecraft/world/level/levelgen/Beardifier <init> (Lnet/minecraft/world/level/StructureFeatureManager;Lnet/minecraft/world/level/chunk/ChunkAccess;)V
 accessible class net/minecraft/world/inventory/MenuType$MenuSupplier
 accessible class net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor
 accessible method net/minecraft/world/inventory/MenuType <init> (Lnet/minecraft/world/inventory/MenuType$MenuSupplier;)V
 accessible method net/minecraft/client/gui/screens/MenuScreens register (Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/client/gui/screens/MenuScreens$ScreenConstructor;)V
+accessible class net/minecraft/world/level/levelgen/DensityFunctions$BeardifierMarker
+extendable class net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator

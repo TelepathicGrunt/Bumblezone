@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DefaultDispenseItemBehaviorInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -59,7 +59,7 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior {
             }
 
             stack.shrink(1);
-            if (!Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.dispensersDropGlassBottles) {
+            if (!BzConfig.dispensersDropGlassBottles) {
                 if (!stack.isEmpty())
                     addGlassBottleToDispenser(source);
                 else
@@ -72,7 +72,7 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior {
         else if (blockstate.getBlock() == BzBlocks.POROUS_HONEYCOMB) {
             world.setBlockAndUpdate(position, BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState());
             stack.shrink(1);
-            if (!Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.dispensersDropGlassBottles) {
+            if (!BzConfig.dispensersDropGlassBottles) {
                 if (!stack.isEmpty())
                     addGlassBottleToDispenser(source);
                 else

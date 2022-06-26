@@ -17,13 +17,12 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -65,7 +64,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 
@@ -153,7 +151,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
         return blockstate.setValue(WATERLOGGED, fluidstate.getType().is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidstate.isSource());
     }
     @Override
-    public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
+    public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
         BlockState aboveState = serverLevel.getBlockState(blockPos.above());
         if(!blockState.getValue(WATERLOGGED) && aboveState.getCollisionShape(serverLevel, blockPos).isEmpty()) {
             BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
@@ -214,7 +212,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     }
 
     @Override
-    public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
+    public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
         BlockState aboveState = serverLevel.getBlockState(blockPos.above());
         if(blockState.getValue(WATERLOGGED) && aboveState.getFluidState().is(FluidTags.WATER) && aboveState.getCollisionShape(serverLevel, blockPos).isEmpty()) {
 
@@ -383,7 +381,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
         CompoundTag compoundtag = BlockItem.getBlockEntityData(itemStack);
         if (compoundtag != null) {
             if (compoundtag.contains("LootTable", 8)) {
-                tooltip.add(new TextComponent("???????"));
+                tooltip.add(Component.translatable("???????"));
             }
 
             if (compoundtag.contains("Items", 9)) {
@@ -405,7 +403,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                 }
 
                 if (j - i > 0) {
-                    tooltip.add((new TranslatableComponent("container.shulkerBox.more", j - i)).withStyle(ChatFormatting.ITALIC));
+                    tooltip.add((Component.translatable("container.shulkerBox.more", j - i)).withStyle(ChatFormatting.ITALIC));
                 }
             }
         }
@@ -416,7 +414,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
      * Called periodically clientside on blocks near the player to show honey particles.
      */
     @Override
-    public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
+    public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         if(!blockState.getValue(WATERLOGGED)) {
             if (world.random.nextFloat() < 0.05F) {
                 this.spawnHoneyParticles(world, position);

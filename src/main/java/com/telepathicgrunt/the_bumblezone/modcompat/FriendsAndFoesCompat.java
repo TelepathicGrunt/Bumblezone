@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -16,7 +16,7 @@ import java.util.Optional;
 public class FriendsAndFoesCompat {
 
     public static void setupCompat() {
-        if(Bumblezone.BZ_CONFIG.BZModCompatibilityConfig.allowFriendsAndFoesBeekeeperTradesCompat) {
+        if(BzConfig.allowFriendsAndFoesBeekeeperTradesCompat) {
             ServerLifecycleEvents.SERVER_STARTED.register((server) -> setupFriendsAndFoesTrades());
         }
 

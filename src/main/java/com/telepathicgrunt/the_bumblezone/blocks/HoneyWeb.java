@@ -16,10 +16,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -51,7 +51,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
-import java.util.Random;
 
 
 public class HoneyWeb extends Block {
@@ -332,7 +331,7 @@ public class HoneyWeb extends Block {
      * Called periodically clientside on blocks near the player to show honey particles
      */
     @Override
-    public void animateTick(BlockState blockState, Level world, BlockPos position, Random random) {
+    public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         //chance of particle in this tick
         for (int i = 0; i == random.nextInt(50); ++i) {
             this.addParticle(ParticleTypes.DRIPPING_HONEY, world, position, blockState.getShape(world, position));

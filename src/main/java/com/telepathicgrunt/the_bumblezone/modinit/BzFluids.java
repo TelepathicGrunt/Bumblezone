@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.blocks.HoneyFluidBlock;
-import com.telepathicgrunt.the_bumblezone.blocks.SugarWaterBlock;
+import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock;
+import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterFluid;
 import net.minecraft.core.Registry;

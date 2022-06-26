@@ -24,7 +24,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:buckets/honey"
+            "tag": "forge:buckets/honey"
           }
         ]
       }

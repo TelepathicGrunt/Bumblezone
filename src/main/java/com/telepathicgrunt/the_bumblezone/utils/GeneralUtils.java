@@ -5,6 +5,7 @@ import com.google.common.primitives.Doubles;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -20,7 +21,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -64,7 +64,7 @@ public class GeneralUtils {
     /////////////////////////////
 
     // Weighted Random from: https://stackoverflow.com/a/6737362
-    public static <T> T getRandomEntry(List<Pair<T, Integer>> rlList, Random random) {
+    public static <T> T getRandomEntry(List<Pair<T, Integer>> rlList, RandomSource random) {
         double totalWeight = 0.0;
 
         // Compute the total weight of all items together.
@@ -144,7 +144,7 @@ public class GeneralUtils {
         }
 
         @Override
-        public MerchantOffer getOffer(Entity entity, Random random) {
+        public MerchantOffer getOffer(Entity entity, RandomSource random) {
             ItemStack in = new ItemStack(this.itemToTrade, this.amountToGive);
             ItemStack out = new ItemStack(this.itemToReceive, this.amountToReceive);
             return new MerchantOffer(in, out, this.maxUses, this.experience, this.multiplier);

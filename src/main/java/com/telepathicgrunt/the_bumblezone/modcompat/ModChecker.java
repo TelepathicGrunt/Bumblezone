@@ -30,7 +30,7 @@ public class ModChecker {
             loadupModCompat(currentModID, () -> FriendsAndFoesCompat.setupCompat());
 
             currentModID = "beebetter";
-            loadupModCompat(currentModID, () -> BeeBetterCompat.setupCompat());
+            //loadupModCompat(currentModID, () -> BeeBetterCompat.setupCompat());
         }
         catch (Exception e) {
             printErrorToLogs("classloading " + currentModID + " and so, mod compat done afterwards broke");

@@ -13,10 +13,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +31,7 @@ public class NbtFeature extends Feature<NbtFeatureConfig> {
     public boolean place(FeaturePlaceContext<NbtFeatureConfig> context) {
         ResourceLocation nbtRL = GeneralUtils.getRandomEntry(context.config().nbtResourcelocationsAndWeights, context.random());
 
-        StructureManager structureManager = context.level().getLevel().getStructureManager();
+        StructureTemplateManager structureManager = context.level().getLevel().getStructureManager();
         Optional<StructureTemplate> template = structureManager.get(nbtRL);
         if(template.isEmpty()) {
             Bumblezone.LOGGER.error("Identifier to the specified nbt file was not found! : {}", nbtRL);
@@ -54,7 +54,7 @@ public class NbtFeature extends Feature<NbtFeatureConfig> {
         Optional<StructureProcessorList> processor = context.level().getLevel().getServer().registryAccess().registryOrThrow(Registry.PROCESSOR_LIST_REGISTRY).getOptional(context.config().processor);
         processor.orElse(ProcessorLists.EMPTY.value()).list().forEach(placementsettings::addProcessor); // add all processors
         mutable.set(position).move(-halfLengths.getX(), 0, -halfLengths.getZ()); // pivot
-        template.get().placeInWorld(context.level(), position, mutable, placementsettings, context.random(), Block.UPDATE_INVISIBLE);
+        template.get().placeInWorld(context.level(), mutable, mutable, placementsettings, context.random(), Block.UPDATE_INVISIBLE);
 
         // Post-processors
         // For all processors that are sensitive to neighboring blocks such as vines.

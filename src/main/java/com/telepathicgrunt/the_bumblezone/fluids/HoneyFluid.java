@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
-import com.telepathicgrunt.the_bumblezone.blocks.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FlowingFluidAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -10,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,8 +35,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
-import java.util.Random;
-
 public abstract class HoneyFluid extends FlowingFluid {
 
     public static final IntegerProperty BOTTOM_LEVEL = HoneyFluidBlock.BOTTOM_LEVEL;
@@ -60,7 +58,7 @@ public abstract class HoneyFluid extends FlowingFluid {
     }
 
     @Override
-    public void animateTick(Level worldIn, BlockPos pos, FluidState state, Random random) {
+    public void animateTick(Level worldIn, BlockPos pos, FluidState state, RandomSource random) {
         if (random.nextInt(82) == 0) {
             worldIn.addParticle(BzParticles.HONEY_PARTICLE,
                     pos.getX() + random.nextFloat(),
@@ -203,9 +201,9 @@ public abstract class HoneyFluid extends FlowingFluid {
 
     @Override
     protected FluidState getNewLiquid(LevelReader worldReader, BlockPos blockPos, BlockState blockState) {
-        boolean isBzFluidBlock = blockState.getBlock() instanceof HoneyFluidBlock;
+        boolean isBzFluidBlock = blockState.hasProperty(BOTTOM_LEVEL) && blockState.hasProperty(LEVEL);
         int lowestNeighboringFluidLevel = isBzFluidBlock ? blockState.getValue(BOTTOM_LEVEL) : HoneyFluidBlock.maxBottomLayer;
-        int currentFluidLevel = isBzFluidBlock ? blockState.getValue(HoneyFluidBlock.LEVEL) : 0;
+        int currentFluidLevel = isBzFluidBlock ? blockState.getValue(LEVEL) : 0;
         int highestNeighboringFluidLevel = currentFluidLevel;
         int neighboringFluidSource = 0;
         boolean hasAboveFluid = isBzFluidBlock ? blockState.getValue(ABOVE_FLUID) : false;
@@ -225,7 +223,7 @@ public abstract class HoneyFluid extends FlowingFluid {
                 }
 
                 highestNeighboringFluidLevel = Math.max(highestNeighboringFluidLevel, sideFluidState.getAmount());
-                if(sideFluidState.is(BzTags.BZ_HONEY_FLUID) && !(canPassThroughBelow && !sideFluidState.isSource() && sideBlockState.getValue(HoneyFluidBlock.FALLING) && aboveBlockState.getFluidState().is(BzTags.BZ_HONEY_FLUID))) {
+                if(sideFluidState.is(BzTags.BZ_HONEY_FLUID) && !(canPassThroughBelow && !sideFluidState.isSource() && sideBlockState.getValue(FALLING) && aboveBlockState.getFluidState().is(BzTags.BZ_HONEY_FLUID))) {
                     lowestNeighboringFluidLevel = Math.min(lowestNeighboringFluidLevel, sideFluidState.isSource() ? 0 : sideFluidState.getValue(BOTTOM_LEVEL));
                 }
             }
@@ -331,7 +329,7 @@ public abstract class HoneyFluid extends FlowingFluid {
     public static void setBottomFluidHeight(Args args, BlockPos blockPos, FluidState fluidState) {
         if(fluidState.is(BzTags.BZ_HONEY_FLUID)) {
             double blockY = (blockPos.getY() & 15);
-            args.set(2, blockY + (fluidState.isSource() ? 0f : fluidState.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8f));
+            args.set(2, blockY + (fluidState.isSource() ? 0f : fluidState.getValue(BOTTOM_LEVEL) / 8f));
         }
     }
 
@@ -391,7 +389,7 @@ public abstract class HoneyFluid extends FlowingFluid {
         }
     }
 
-    protected static int decreaseAirSupply(int airSupply, LivingEntity entity, Random random) {
+    protected static int decreaseAirSupply(int airSupply, LivingEntity entity, RandomSource random) {
         int respiration = EnchantmentHelper.getRespiration(entity);
         return respiration > 0 && random.nextInt(respiration + 1) > 0 ? airSupply : airSupply - 1;
     }

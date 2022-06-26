@@ -41,10 +41,8 @@ public class ReplaceNotAirProcessor extends StructureProcessor {
             BlockPos position = structureBlockInfoWorld.pos;
             BlockState worldState = worldView.getBlockState(position);
 
-            if (worldState.isAir() &&
-                !structureBlockInfoWorld.state.hasBlockEntity())
-            {
-                structureBlockInfoWorld = new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos, worldState, null);
+            if (worldState.isAir()) {
+                return null;
             }
         }
         return structureBlockInfoWorld;

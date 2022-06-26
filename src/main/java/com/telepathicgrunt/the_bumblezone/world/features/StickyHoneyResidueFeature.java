@@ -24,7 +24,6 @@ public class StickyHoneyResidueFeature extends Feature<NoneFeatureConfiguration>
             .setValue(StickyHoneyResidue.WEST, true)
             .setValue(StickyHoneyResidue.NORTH, true)
             .setValue(StickyHoneyResidue.SOUTH, true);
-
     /**
      * Place crystal block attached to a block if it is buried underground or underwater
      */

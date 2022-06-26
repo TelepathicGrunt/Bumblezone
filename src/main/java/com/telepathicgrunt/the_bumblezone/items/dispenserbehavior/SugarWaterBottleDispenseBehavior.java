@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
@@ -58,7 +58,7 @@ public class SugarWaterBottleDispenseBehavior extends DefaultDispenseItemBehavio
 
             stack.shrink(1);
 
-            if (!Bumblezone.BZ_CONFIG.BZBlockMechanicsConfig.dispensersDropGlassBottles) {
+            if (!BzConfig.dispensersDropGlassBottles) {
                 if (!stack.isEmpty())
                     addGlassBottleToDispenser(source);
                 else
