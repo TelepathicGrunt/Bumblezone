@@ -1,3 +1,9 @@
+### **(V.6.0.1 Changes) (1.19.0 Minecraft)**
+
+##### Misc:
+Fixed REI compat crashing servers
+
+
 ### **(V.6.0.0 Changes) (1.19.0 Minecraft)**
 
 ##### Major:
