@@ -96,13 +96,13 @@
         "maxCount": 8
       },
       {
-        "type": "the_bumblezome:honey_slime",
+        "type": "the_bumblezone:honey_slime",
         "weight": 40,
         "minCount": 1,
         "maxCount": 3
       },
       {
-        "type": "the_bumblezome:beehemoth",
+        "type": "the_bumblezone:beehemoth",
         "weight": 5,
         "minCount": 1,
         "maxCount": 1

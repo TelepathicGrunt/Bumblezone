@@ -1,3 +1,9 @@
+### **(V.6.0.1 Changes) (1.19 Minecraft)**
+
+##### Entities:
+Fixed Honey Slime and Beehemoth not spawning naturally for regular chunk generation.
+
+
 ### **(V.6.0.0 Changes) (1.19 Minecraft)**
 
 ##### Major:
