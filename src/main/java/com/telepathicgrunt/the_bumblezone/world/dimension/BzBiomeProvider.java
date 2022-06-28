@@ -23,6 +23,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
 
@@ -31,7 +32,7 @@ import java.util.List;
 import java.util.function.LongFunction;
 import java.util.stream.Collectors;
 
-public class BzBiomeProvider extends BiomeSource {
+public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBiomeSource {
 
     public static final Codec<BzBiomeProvider> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
@@ -118,9 +119,13 @@ public class BzBiomeProvider extends BiomeSource {
         return layer;
     }
 
-
     @Override
     public Holder<Biome> getNoiseBiome(int x, int y, int z, Climate.Sampler sampler) {
+        return biomeSampler.sample(biomeRegistry, x, z);
+    }
+
+    @Override
+    public Holder<Biome> getNoiseBiome(int x, int y, int z) {
         return biomeSampler.sample(biomeRegistry, x, z);
     }
 }
