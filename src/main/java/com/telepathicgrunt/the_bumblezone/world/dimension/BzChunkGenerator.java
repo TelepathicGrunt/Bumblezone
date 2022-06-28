@@ -4,26 +4,39 @@ import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseChunkAccessor;
-import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.RegistryOps;
+import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.NoiseColumn;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.biome.BiomeResolver;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -55,6 +68,7 @@ import org.apache.commons.lang3.mutable.MutableObject;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -253,7 +267,14 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     @Override
     public void buildSurface(WorldGenRegion worldGenRegion, StructureManager structureManager, RandomState randomState, ChunkAccess chunkAccess) {
         WorldGenerationContext worldgenerationcontext = new WorldGenerationContext(this, worldGenRegion);
-        this.buildSurface(chunkAccess, worldgenerationcontext, randomState, structureManager, worldGenRegion.getBiomeManager(), worldGenRegion.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY), Blender.of(worldGenRegion));
+        BiomeManager biomeManager;
+        if (biomeSource instanceof BiomeManager.NoiseBiomeSource noiseBiomeSource) {
+            biomeManager = new BiomeManager(noiseBiomeSource, worldGenRegion.getSeed());
+        }
+        else {
+            biomeManager = worldGenRegion.getBiomeManager();
+        }
+        this.buildSurface(chunkAccess, worldgenerationcontext, randomState, structureManager, biomeManager, worldGenRegion.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY), Blender.of(worldGenRegion));
     }
 
     public void buildSurface(ChunkAccess chunkAccess, WorldGenerationContext worldGenerationContext, RandomState randomState, StructureManager structureManager, BiomeManager biomeManager, Registry<Biome> biomeRegistry, Blender blender) {
@@ -403,7 +424,69 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
             Holder<Biome> holder = region.getBiome(chunkpos.getWorldPosition().atY(region.getMaxBuildHeight() - 1));
             WorldgenRandom worldgenrandom = new WorldgenRandom(new LegacyRandomSource(RandomSupport.generateUniqueSeed()));
             worldgenrandom.setDecorationSeed(region.getSeed(), chunkpos.getMinBlockX(), chunkpos.getMinBlockZ());
-            NaturalSpawner.spawnMobsForChunkGeneration(region, holder, chunkpos, worldgenrandom);
+            spawnNonBeeMobsForChunkGeneration(region, holder, chunkpos, worldgenrandom);
+        }
+    }
+
+    // Must do this because vanilla bees will crash worldgen and server due to concurrency with nextInt
+    public static void spawnNonBeeMobsForChunkGeneration(ServerLevelAccessor serverLevelAccessor, Holder<Biome> holder, ChunkPos chunkPos, RandomSource randomSource) {
+        MobSpawnSettings mobSpawnSettings = holder.value().getMobSettings();
+        WeightedRandomList<MobSpawnSettings.SpawnerData> weightedRandomList = mobSpawnSettings.getMobs(MobCategory.CREATURE);
+        weightedRandomList = WeightedRandomList.create(weightedRandomList.unwrap().stream().filter(e -> e.type != EntityType.BEE).toList());
+        if (weightedRandomList.isEmpty()) {
+            return;
+        }
+        int i = chunkPos.getMinBlockX();
+        int j = chunkPos.getMinBlockZ();
+        int seaLevel = ((ServerChunkCache)serverLevelAccessor.getChunkSource()).getGenerator().getSeaLevel();
+        while (randomSource.nextFloat() < mobSpawnSettings.getCreatureProbability() * 0.5) {
+            Optional<MobSpawnSettings.SpawnerData> optional = weightedRandomList.getRandom(randomSource);
+            if (optional.isEmpty()) continue;
+
+            MobSpawnSettings.SpawnerData spawnerData = optional.get();
+            int k = spawnerData.minCount + randomSource.nextInt(1 + spawnerData.maxCount - spawnerData.minCount);
+            SpawnGroupData spawnGroupData = null;
+            int x = i + randomSource.nextInt(16);
+            int z = j + randomSource.nextInt(16);
+            int n = x;
+            int o = z;
+            for (int p = 0; p < k; ++p) {
+                BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(x, randomSource.nextInt(250 - seaLevel) + seaLevel, z);
+                if (serverLevelAccessor.dimensionType().hasCeiling()) {
+                    do {
+                        mutableBlockPos.move(Direction.DOWN);
+                    } while (!serverLevelAccessor.getBlockState(mutableBlockPos).isAir());
+
+                    do {
+                        mutableBlockPos.move(Direction.DOWN);
+                    } while (serverLevelAccessor.getBlockState(mutableBlockPos).isAir() && mutableBlockPos.getY() > serverLevelAccessor.getMinBuildHeight());
+                }
+
+                if (spawnerData.type.canSummon()) {
+                    Entity entity;
+                    float f = spawnerData.type.getWidth();
+                    double d = Mth.clamp(x, (double)i + (double)f, (double)i + 16.0 - (double)f);
+                    double e = Mth.clamp(z, (double)j + (double)f, (double)j + 16.0 - (double)f);
+                    try {
+                        entity = spawnerData.type.create(serverLevelAccessor.getLevel());
+                    }
+                    catch (Exception exception) {
+                        Bumblezone.LOGGER.warn("Failed to create mob", exception);
+                        continue;
+                    }
+                    entity.moveTo(d, mutableBlockPos.getY(), e, randomSource.nextFloat() * 360.0f, 0.0f);
+                    if (entity instanceof Mob mob && mob.checkSpawnObstruction(serverLevelAccessor)) {
+                        spawnGroupData = mob.finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawnGroupData, null);
+                        serverLevelAccessor.addFreshEntityWithPassengers(mob);
+                    }
+                }
+                x += randomSource.nextInt(5) - randomSource.nextInt(5);
+                z += randomSource.nextInt(5) - randomSource.nextInt(5);
+                while (x < i || x >= i + 16 || z < j || z >= j + 16) {
+                    x = n + randomSource.nextInt(5) - randomSource.nextInt(5);
+                    z = o + randomSource.nextInt(5) - randomSource.nextInt(5);
+                }
+            }
         }
     }
 }

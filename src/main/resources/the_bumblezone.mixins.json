@@ -52,14 +52,14 @@
     "world.WorldGenRegionAccessor"
   ],
   "client": [
-    "client.KeyboardHandlerMixin",
-    "client.KeyMappingAccessor",
-    "client.LivingEntityRendererMixin",
-    "client.MinecraftMixin",
     "client.DimensionSpecialEffectsAccessor",
     "client.EntityRendererRegistryImplAccessor",
     "client.FluidRendererMixin",
     "client.FogRendererMixin",
+    "client.KeyboardHandlerMixin",
+    "client.KeyMappingAccessor",
+    "client.LivingEntityRendererMixin",
+    "client.MinecraftMixin",
     "client.ScreenEffectRendererMixin"
   ],
   "injectors": {

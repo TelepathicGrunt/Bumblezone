@@ -59,39 +59,12 @@ public class PollinatedStreamStructure extends Structure {
         this.maxDistanceFromCenter = maxDistanceFromCenter;
     }
 
-    private static boolean validSpot(ChunkGenerator chunkGenerator, BlockPos centerPos, LevelHeightAccessor heightLimitView, RandomState randomState) {
-        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-        mutable.set(centerPos);
-        NoiseColumn columnOfBlocks;
-
-        for(Direction direction : Direction.Plane.HORIZONTAL) {
-            mutable.set(centerPos).move(direction, 12);
-            columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView, randomState);
-            BlockState state = columnOfBlocks.getBlock(41);
-            if(!state.getMaterial().blocksMotion()) {
-                return false;
-            }
-
-            mutable.set(centerPos).move(direction, 55);
-            columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView, randomState);
-            state = columnOfBlocks.getBlock(41);
-            if(!state.getMaterial().blocksMotion()) {
-                return false;
-            }
-        }
-
-        return true;
-    }
 
     public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
         WorldgenRandom positionedRandom = new WorldgenRandom(new LegacyRandomSource(context.seed() + (context.chunkPos().x * (context.chunkPos().z * 17L))));
         int x = context.chunkPos().getMinBlockX();
         int z = context.chunkPos().getMinBlockZ();
         BlockPos centerPos = new BlockPos(x, positionedRandom.nextInt(45) + 10, z);
-
-        if(!validSpot(context.chunkGenerator(), centerPos, context.heightAccessor(), context.randomState())) {
-            return Optional.empty();
-        }
 
         return JigsawPlacement.addPieces(
                 context,
