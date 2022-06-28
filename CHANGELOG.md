@@ -6,6 +6,9 @@ Fixed REI compat crashing servers
 ##### Entities:
 Fixed Honey Slime and Beehemoth not spawning naturally for regular chunk generation.
 
+##### Dimension:
+Improved worldgen time a bit.
+
 
 ### **(V.6.0.0 Changes) (1.19.0 Minecraft)**
 

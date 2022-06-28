@@ -267,7 +267,14 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     @Override
     public void buildSurface(WorldGenRegion worldGenRegion, StructureManager structureManager, RandomState randomState, ChunkAccess chunkAccess) {
         WorldGenerationContext worldgenerationcontext = new WorldGenerationContext(this, worldGenRegion);
-        this.buildSurface(chunkAccess, worldgenerationcontext, randomState, structureManager, worldGenRegion.getBiomeManager(), worldGenRegion.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY), Blender.of(worldGenRegion));
+        BiomeManager biomeManager;
+        if (biomeSource instanceof BiomeManager.NoiseBiomeSource noiseBiomeSource) {
+            biomeManager = new BiomeManager(noiseBiomeSource, worldGenRegion.getSeed());
+        }
+        else {
+            biomeManager = worldGenRegion.getBiomeManager();
+        }
+        this.buildSurface(chunkAccess, worldgenerationcontext, randomState, structureManager, biomeManager, worldGenRegion.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY), Blender.of(worldGenRegion));
     }
 
     public void buildSurface(ChunkAccess chunkAccess, WorldGenerationContext worldGenerationContext, RandomState randomState, StructureManager structureManager, BiomeManager biomeManager, Registry<Biome> biomeRegistry, Blender blender) {
@@ -432,7 +439,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         int i = chunkPos.getMinBlockX();
         int j = chunkPos.getMinBlockZ();
         int seaLevel = ((ServerChunkCache)serverLevelAccessor.getChunkSource()).getGenerator().getSeaLevel();
-        while (randomSource.nextFloat() < mobSpawnSettings.getCreatureProbability()) {
+        while (randomSource.nextFloat() < mobSpawnSettings.getCreatureProbability() * 0.5) {
             Optional<MobSpawnSettings.SpawnerData> optional = weightedRandomList.getRandom(randomSource);
             if (optional.isEmpty()) continue;
 

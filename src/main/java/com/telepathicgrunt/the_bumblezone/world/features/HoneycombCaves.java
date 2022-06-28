@@ -10,6 +10,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -146,11 +147,14 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         setSeed(context.level().getSeed());
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos().set(context.origin());
+        int orgX = context.origin().getX();
+        int orgY = context.origin().getY();
+        int orgZ = context.origin().getZ();
 
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 for (int y = 15; y < 241; y++) {
-                    mutableBlockPos.set(context.origin()).move(x, y, z);
+                    mutableBlockPos.set(orgX, orgY, orgZ).move(x, y, z);
 
                     double noise1 = noiseGen.noise3_Classic(mutableBlockPos.getX() * 0.019D,
                             mutableBlockPos.getZ() * 0.019D,
@@ -183,6 +187,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
         BlockState blockState;
         int index = (int) (((noise * 0.5D) + 0.5D) * 7);
         BlockPos.MutableBlockPos tempMutable = new BlockPos.MutableBlockPos();
+        ChunkAccess chunk = null;
 
         for (int x = 0; x < 14; x++) {
             for (int z = 0; z < 11; z++) {
@@ -190,13 +195,19 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                 int abovePosResult = z == 10 ? 0 : hexagonArray[index][z + 1][x];
 
                 if (posResult != 0) {
-                    blockState = world.getBlockState(mutableBlockPos.set(position).move(x - 7, 0, z - 5));
+                    mutableBlockPos.set(position).move(x - 7, 0, z - 5);
+                    chunk = getChunkForSpot(world, chunk, mutableBlockPos);
+                    blockState = chunk.getBlockState(mutableBlockPos);
                     carveAtBlock(world, generator, random, mutableBlockPos, tempMutable, blockState, posResult, abovePosResult);
 
-                    blockState = world.getBlockState(mutableBlockPos.set(position).move(0, x - 7, z - 5));
+                    mutableBlockPos.set(position).move(0, x - 7, z - 5);
+                    chunk = getChunkForSpot(world, chunk, mutableBlockPos);
+                    blockState = chunk.getBlockState(mutableBlockPos);
                     carveAtBlock(world, generator, random, mutableBlockPos, tempMutable, blockState, posResult, abovePosResult);
 
-                    blockState = world.getBlockState(mutableBlockPos.set(position).move(z - 5, x - 7, 0));
+                    mutableBlockPos.set(position).move(z - 5, x - 7, 0);
+                    chunk = getChunkForSpot(world, chunk, mutableBlockPos);
+                    blockState = chunk.getBlockState(mutableBlockPos);
                     carveAtBlock(world, generator, random, mutableBlockPos, tempMutable, blockState, posResult, abovePosResult);
                 }
             }
@@ -206,12 +217,13 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
     private static void carveAtBlock(WorldGenLevel world, ChunkGenerator generator, RandomSource random,
                                      BlockPos blockPos, BlockPos.MutableBlockPos mutable, BlockState blockState, int posResult, int abovePosResult) {
         if (blockState.canOcclude()) {
-            boolean isNextToAir = shouldCloseOff(world, blockPos, mutable, true);
+            ChunkAccess chunk = getChunkForSpot(world, null, blockPos);
+            boolean isNextToAir = shouldCloseOff(world, chunk, blockPos, mutable, true);
             if(blockPos.getY() >= generator.getSeaLevel() && isNextToAir) return;
 
             if (posResult == 2) {
                 if (blockPos.getY() < generator.getSeaLevel()) {
-                    boolean isNextToDrySpace = shouldCloseOff(world, blockPos, mutable, false);
+                    boolean isNextToDrySpace = shouldCloseOff(world, chunk, blockPos, mutable, false);
                     if(isNextToAir || isNextToDrySpace)
                         world.setBlock(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(), 3);
                     else
@@ -239,16 +251,25 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
         }
     }
 
-    private static boolean shouldCloseOff(WorldGenLevel world, BlockPos position,
-                                          BlockPos.MutableBlockPos position2, boolean checkAbove) {
+    private static boolean shouldCloseOff(WorldGenLevel world, ChunkAccess chunk, BlockPos position,
+                                          BlockPos.MutableBlockPos mutableBlockPos, boolean checkAbove) {
         BlockState blockState;
         for (Direction direction : Direction.values()) {
             if(!checkAbove && direction == Direction.UP) continue;
-            blockState = world.getBlockState(position2.set(position).move(direction));
+            mutableBlockPos.set(position).move(direction);
+            chunk = getChunkForSpot(world, chunk, mutableBlockPos);
+            blockState = chunk.getBlockState(mutableBlockPos);
             if (checkAbove ? blockState.is(Blocks.AIR) : (!blockState.canOcclude() && blockState.getFluidState().isEmpty())) {
                 return true;
             }
         }
         return false;
+    }
+
+    private static ChunkAccess getChunkForSpot(WorldGenLevel world, ChunkAccess chunkAccess, BlockPos blockPos) {
+        if (chunkAccess == null || chunkAccess.getPos().x != blockPos.getX() >> 4 || chunkAccess.getPos().z != blockPos.getZ() >> 4) {
+            return world.getChunk(blockPos);
+        }
+        return chunkAccess;
     }
 }
