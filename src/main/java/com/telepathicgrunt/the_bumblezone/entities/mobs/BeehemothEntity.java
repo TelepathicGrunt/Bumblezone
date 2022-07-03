@@ -203,7 +203,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
             if (entity != null && entity.getUUID().equals(getOwnerUUID())) {
                 addFriendship((int) (-3 * amount));
             }
-            if (BzBeeAggressionConfigs.beehemothTriggersWrath.get() && entity instanceof LivingEntity livingEntity) {
+            if (BzBeeAggressionConfigs.aggressiveBees.get() &&
+                BzBeeAggressionConfigs.beehemothTriggersWrath.get() &&
+                entity instanceof LivingEntity livingEntity)
+            {
                 addFriendship((int) (-amount));
 
                 if (!(livingEntity instanceof Player player && player.isCreative()) &&

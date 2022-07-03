@@ -5,6 +5,8 @@ import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuff;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeeArmorModel;
+import com.telepathicgrunt.the_bumblezone.client.rendering.BeeQueenModel;
+import com.telepathicgrunt.the_bumblezone.client.rendering.BeeQueenRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeeVariantRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeehemothRenderer;
@@ -141,6 +143,7 @@ public class BumblezoneClient {
 
     public static void registerEntityModels(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(BeehemothModel.LAYER_LOCATION, BeehemothModel::createBodyLayer);
+        event.registerLayerDefinition(BeeQueenModel.LAYER_LOCATION, BeeQueenModel::createBodyLayer);
         event.registerLayerDefinition(StingerSpearModel.LAYER_LOCATION, StingerSpearModel::createLayer);
         event.registerLayerDefinition(BeeArmorModel.VARIANT_1_LAYER_LOCATION, BeeArmorModel::createVariant1);
         event.registerLayerDefinition(BeeArmorModel.VARIANT_2_LAYER_LOCATION, BeeArmorModel::createVariant2);
@@ -149,6 +152,7 @@ public class BumblezoneClient {
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers.RegisterRenderers event) {
         EntityRenderers.register(BzEntities.HONEY_SLIME.get(), HoneySlimeRendering::new);
         EntityRenderers.register(BzEntities.BEEHEMOTH.get(), BeehemothRenderer::new);
+        EntityRenderers.register(BzEntities.BEE_QUEEN.get(), BeeQueenRenderer::new);
         EntityRenderers.register(BzEntities.POLLEN_PUFF_ENTITY.get(), ThrownItemRenderer::new);
         EntityRenderers.register(BzEntities.THROWN_STINGER_SPEAR_ENTITY.get(), StingerSpearRenderer::new);
     }
