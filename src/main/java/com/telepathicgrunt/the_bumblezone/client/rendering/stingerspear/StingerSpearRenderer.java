@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.client.rendering;
+package com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

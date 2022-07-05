@@ -1,0 +1,13 @@
+{
+  "wants" : [
+    {
+      "id": "#minecraft:oak_logs",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#minecraft:music_discs"
+    }
+  ]
+}

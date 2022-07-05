@@ -38,6 +38,6 @@ public class BzEntities {
     public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
         event.put(HONEY_SLIME.get(), HoneySlimeEntity.getAttributeBuilder().build());
         event.put(BEEHEMOTH.get(), BeehemothEntity.getAttributeBuilder().build());
-        event.put(BEE_QUEEN.get(), BeehemothEntity.getAttributeBuilder().build());
+        event.put(BEE_QUEEN.get(), BeeQueenEntity.getAttributeBuilder().build());
     }
 }

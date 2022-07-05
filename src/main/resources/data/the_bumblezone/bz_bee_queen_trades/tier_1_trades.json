@@ -1,0 +1,26 @@
+{
+  "wants": [
+    {
+      "id": "minecraft:honeycomb",
+      "required": true
+    },
+    {
+      "id": "#minecraft:small_flowers",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:honey_bottle",
+      "required": true,
+      "xp_reward": 2,
+      "weight": 1
+    },
+    {
+      "id": "#minecraft:redstone_ores",
+      "required": true,
+      "xp_reward": 2,
+      "weight": 1
+    }
+  ]
+}
