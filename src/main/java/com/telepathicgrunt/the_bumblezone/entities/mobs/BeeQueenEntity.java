@@ -228,7 +228,7 @@ public class BeeQueenEntity extends Animal {
             if (this.getAge() % 20 == 0 && throwCooldown <= 0) {
                 Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
                 Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
-                AABB scanArea = this.getBoundingBox().deflate(0.45).move(forwardVect.x() * 0.5d, -0.45, forwardVect.z() * 0.5d);
+                AABB scanArea = this.getBoundingBox().deflate(0.45, 0.9, 0.45).move(forwardVect.x() * 0.5d, -0.95, forwardVect.z() * 0.5d);
                 List<ItemEntity> items = this.level.getEntitiesOfClass(ItemEntity.class, scanArea);
                 items.stream().filter(ie -> !ie.hasPickUpDelay()).findFirst().ifPresent((itemEntity) -> {
                     boolean traded = false;

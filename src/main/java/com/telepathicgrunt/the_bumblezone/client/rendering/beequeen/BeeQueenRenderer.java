@@ -18,7 +18,7 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenModel>
     @Override
     public void render(BeeQueenEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack stack, MultiBufferSource pBuffer, int pPackedLight) {
         stack.pushPose();
-        float scale = 2.3f;
+        float scale = 2.6f;
         stack.scale(scale, scale, scale);
         super.render(pEntity, pEntityYaw, pPartialTicks, stack, pBuffer, pPackedLight);
         stack.popPose();
