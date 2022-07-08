@@ -116,12 +116,13 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new BeehemothAIRide(this));
-        this.goalSelector.addGoal(1, new BeehemothTemptGoal(this, 1.5D, Ingredient.of(BzTags.HONEY_BUCKETS)));
-        this.goalSelector.addGoal(2, new BeehemothFlyingStillGoal(this));
-        this.goalSelector.addGoal(3, new BeehemothRandomFlyGoal(this));
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 60));
-        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(5, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new BeehemothTemptGoal(this, 1.5D, Ingredient.of(BzTags.ROYAL_JELLY_BUCKETS)));
+        this.goalSelector.addGoal(2, new BeehemothTemptGoal(this, 1.5D, Ingredient.of(BzTags.HONEY_BUCKETS)));
+        this.goalSelector.addGoal(3, new BeehemothFlyingStillGoal(this));
+        this.goalSelector.addGoal(4, new BeehemothRandomFlyGoal(this));
+        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 60));
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(6, new FloatGoal(this));
     }
 
     @Override
@@ -290,7 +291,18 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
             if (isTame()) {
                 if (isOwnedBy(player)) {
                     if (stack.is(BzTags.BEE_FEEDING_ITEMS) && !player.isShiftKeyDown()) {
-                        if(item == BzItems.BEE_BREAD.get()) {
+                        if(stack.is(BzTags.ROYAL_JELLY_BUCKETS)) {
+                            heal(40);
+                            BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 1f, 30);
+                            addFriendship(1000);
+                        }
+                        else if(item == BzItems.ROYAL_JELLY_BOTTLE.get()) {
+                            heal(10);
+                            BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 1f, 10);
+                            addFriendship(250);
+                            return InteractionResult.PASS;
+                        }
+                        else if(item == BzItems.BEE_BREAD.get()) {
                             heal(2);
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
                             addFriendship(5);
@@ -357,7 +369,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
             else if (stack.is(BzTags.BEE_FEEDING_ITEMS)) {
                 if(getFriendship() >= 0) {
                     float tameChance;
-                    if (stack.is(BzTags.HONEY_BUCKETS) || item == BzItems.BEE_BREAD.get()) {
+                    if (stack.is(BzTags.ROYAL_JELLY_BUCKETS) || item == BzItems.ROYAL_JELLY_BOTTLE.get()) {
+                        tameChance = 1f;
+                    }
+                    else if (stack.is(BzTags.HONEY_BUCKETS) || item == BzItems.BEE_BREAD.get()) {
                         tameChance = 0.25f;
                     }
                     else if (itemRL.getPath().contains("honey")) {
@@ -379,7 +394,15 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                 }
                 else {
                     addFriendship(1);
-                    if(item == BzItems.BEE_BREAD.get()) {
+                    if (stack.is(BzTags.ROYAL_JELLY_BUCKETS)) {
+                        addFriendship(1000);
+                        return InteractionResult.PASS;
+                    }
+                    else if (item == BzItems.ROYAL_JELLY_BOTTLE.get()) {
+                        addFriendship(250);
+                        return InteractionResult.PASS;
+                    }
+                    else if(item == BzItems.BEE_BREAD.get()) {
                         addFriendship(5);
                         return InteractionResult.PASS;
                     }

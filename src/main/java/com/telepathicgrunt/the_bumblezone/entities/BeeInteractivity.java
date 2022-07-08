@@ -40,6 +40,13 @@ public class BeeInteractivity {
             ItemStack itemstack = playerEntity.getItemInHand(hand);
             ResourceLocation itemRL = ForgeRegistries.ITEMS.getKey(itemstack.getItem());
 
+            if (itemstack.is(BzItems.BEE_STINGER.get())) {
+                beeEntity.hasStung();
+                ((BeeEntityInvoker)beeEntity).callSetHasStung(false);
+                GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, false, true);
+                return InteractionResult.SUCCESS;
+            }
+
             // Disallow all non-tagged items from being fed to bees
             if(!itemstack.is(BzTags.BEE_FEEDING_ITEMS))
                 return InteractionResult.PASS;
@@ -61,11 +68,16 @@ public class BeeInteractivity {
                 return InteractionResult.PASS;
             }
 
-            if (itemstack.is(BzTags.HONEY_BUCKETS)) {
+            if (itemstack.is(BzTags.HONEY_BUCKETS) ||
+                itemstack.is(BzTags.ROYAL_JELLY_BUCKETS) ||
+                itemstack.is(BzItems.ROYAL_JELLY_BOTTLE.get()))
+            {
                 beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
-                removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);
+                boolean isRoyalFed = itemstack.is(BzItems.ROYAL_JELLY_BOTTLE.get()) || itemstack.is(BzItems.ROYAL_JELLY_BUCKET.get());
+
+                removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, isRoyalFed ? 1 : 0.8f, isRoyalFed ? 15 : 5);
                 if (beeEntity.isBaby()) {
-                    if (world.getRandom().nextBoolean()) {
+                    if (isRoyalFed || world.getRandom().nextBoolean()) {
                         beeEntity.setBaby(false);
                         if(playerEntity instanceof ServerPlayer) {
                             BzCriterias.HONEY_BUCKET_BEE_GROW_TRIGGER.trigger((ServerPlayer) playerEntity);
@@ -81,6 +93,13 @@ public class BeeInteractivity {
 
                     if(nearbyAdultBees >= 2 && playerEntity instanceof ServerPlayer) {
                         BzCriterias.HONEY_BUCKET_BEE_LOVE_TRIGGER.trigger((ServerPlayer) playerEntity);
+                    }
+                }
+
+                if (isRoyalFed) {
+                    beeEntity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 24000, 3, true, true, true));
+                    if (playerEntity instanceof ServerPlayer) {
+                        BzCriterias.BEENERGIZED_MAXED_TRIGGER.trigger((ServerPlayer) playerEntity);
                     }
                 }
             }

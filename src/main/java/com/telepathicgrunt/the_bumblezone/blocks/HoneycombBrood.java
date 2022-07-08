@@ -175,7 +175,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                     }
                     else {
                         int newStage = stage + 1;
-                        if (itemstack.is(BzTags.HONEY_BUCKETS)) {
+                        if (itemstack.is(BzTags.HONEY_BUCKETS) || itemstack.is(BzTags.ROYAL_JELLY_BUCKETS) ) {
                             newStage = 3;
                             if (!world.isClientSide()) {
                                 Direction facing = thisBlockState.getValue(FACING).getOpposite();

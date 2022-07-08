@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuff;
+import com.telepathicgrunt.the_bumblezone.client.particles.RoyalJellyParticle;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenRenderer;
@@ -16,6 +17,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerS
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearRenderer;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
+import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.mixin.client.DimensionSpecialEffectsAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.client.RenderingRegistryAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -110,12 +112,29 @@ public class BumblezoneClient {
                                     livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
             );
 
+            ItemProperties.register(
+                    BzItems.CRYSTAL_CANNON.get(),
+                    new ResourceLocation("primed"),
+                    (itemStack, world, livingEntity, int1) ->
+                            livingEntity != null &&
+                                    livingEntity.isUsingItem() &&
+                                    livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
+            );
+
             // Correct model based on bees
             ItemProperties.register(
                     BzItems.BEE_CANNON.get(),
                     new ResourceLocation("bee_count"),
                     (itemStack, world, livingEntity, int1) ->
                             BeeCannon.getNumberOfBees(itemStack) / 10f
+            );
+
+            // Correct model based on crystals
+            ItemProperties.register(
+                    BzItems.CRYSTAL_CANNON.get(),
+                    new ResourceLocation("crystal_count"),
+                    (itemStack, world, livingEntity, int1) ->
+                            CrystalCannon.getNumberOfCrystals(itemStack) / 10f
             );
 
             MenuScreens.register(BzMenuTypes.STRICT_9x1.get(), StrictChestScreen::new);
@@ -133,12 +152,16 @@ public class BumblezoneClient {
         ItemBlockRenderTypes.setRenderLayer(BzBlocks.HONEY_WEB.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BzBlocks.REDSTONE_HONEY_WEB.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BzBlocks.HONEY_CRYSTAL.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(BzBlocks.ROYAL_JELLY_BLOCK.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.SUGAR_WATER_FLUID.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.SUGAR_WATER_FLUID_FLOWING.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.SUGAR_WATER_BLOCK.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.HONEY_FLUID.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.HONEY_FLUID_FLOWING.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.HONEY_FLUID_BLOCK.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(BzFluids.ROYAL_JELLY_FLUID.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(BzFluids.ROYAL_JELLY_FLUID_FLOWING.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(BzFluids.ROYAL_JELLY_FLUID_BLOCK.get(), RenderType.translucent());
     }
 
     public static void registerEntityModels(EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -160,5 +183,6 @@ public class BumblezoneClient {
     public static void onParticleSetup(ParticleFactoryRegisterEvent event) {
         Minecraft.getInstance().particleEngine.register(BzParticles.POLLEN.get(), PollenPuff.Factory::new);
         Minecraft.getInstance().particleEngine.register(BzParticles.HONEY_PARTICLE.get(), HoneyParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(BzParticles.ROYAL_JELLY_PARTICLE.get(), RoyalJellyParticle.Factory::new);
     }
 }

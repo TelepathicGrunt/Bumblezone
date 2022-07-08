@@ -10,14 +10,18 @@ public class TradeEntryObj {
     private Boolean required;
 
     @Expose
+    private Integer count;
+
+    @Expose
     private Integer xp_reward;
 
     @Expose
     private Integer weight;
 
-    public TradeEntryObj(String id, Boolean required, Integer xp_reward, Integer weight) {
+    public TradeEntryObj(String id, Boolean required, Integer count, Integer xp_reward, Integer weight) {
         this.id = id;
         this.required = required;
+        this.count = count;
         this.xp_reward = xp_reward;
         this.weight = weight;
     }
@@ -26,12 +30,24 @@ public class TradeEntryObj {
         return required == null || required;
     }
 
+    public Integer getCount() {
+        if (count == null) {
+            return 1;
+        }
+
+        if (count <= 0) {
+            throw new RuntimeException("Bumblezone: count cannot be 0 or negative. Id entry: " + id);
+        }
+
+        return count;
+    }
+
     public Integer getXpReward() {
         if (xp_reward == null) {
             return 0;
         }
 
-        if (xp_reward <= 0) {
+        if (xp_reward < 0) {
             throw new RuntimeException("Bumblezone: xp_reward cannot be negative. Id entry: " + id);
         }
 

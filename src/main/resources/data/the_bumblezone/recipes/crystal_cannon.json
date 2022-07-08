@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "the_bumblezone",
+  "pattern": [
+    "cbc",
+    " h "
+  ],
+  "key": {
+    "c": {
+      "item": "the_bumblezone:honey_crystal_shards"
+    },
+    "h": {
+      "item": "the_bumblezone:honey_crystal"
+    },
+    "b": {
+      "item": "the_bumblezone:bee_cannon"
+    }
+  },
+  "result": {
+    "item": "the_bumblezone:crystal_cannon"
+  }
+}

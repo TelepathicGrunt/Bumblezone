@@ -24,7 +24,6 @@ import java.util.function.Consumer;
 public class HoneyFluidType extends FluidType {
     public static final ResourceLocation HONEY_FLUID_STILL_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/honey_fluid_still");
     public static final ResourceLocation HONEY_FLUID_FLOWING_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/honey_fluid_flow");
-    public static final ResourceLocation HONEY_FLUID_OVERLAY_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/honey_fluid_overlay");
 
     public HoneyFluidType() {
         super(FluidType.Properties.create()
@@ -68,7 +67,7 @@ public class HoneyFluidType extends FluidType {
             @Override
             public ResourceLocation getOverlayTexture()
             {
-                return HONEY_FLUID_OVERLAY_TEXTURE;
+                return HONEY_FLUID_FLOWING_TEXTURE;
             }
 
             @Override

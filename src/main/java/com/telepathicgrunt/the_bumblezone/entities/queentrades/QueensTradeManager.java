@@ -103,7 +103,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                     Optional<HolderSet.Named<Item>> taggedItems = Registry.ITEM.getTag(itemTag);
                     if (taggedItems.isPresent()) {
                         for (Holder<Item> itemHolder : taggedItems.get()) {
-                            rewards.add(new TradeEntryReducedObj(itemHolder.get(), value.getXpReward(), value.getWeight()));
+                            rewards.add(new TradeEntryReducedObj(itemHolder.get(), value.getCount(), value.getXpReward(), value.getWeight()));
                         }
                     }
                     else if (value.isRequired()) {
@@ -113,7 +113,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 else {
                     Optional<Holder<Item>> item = ForgeRegistries.ITEMS.getHolder(new ResourceLocation(value.id));
                     if (item.isPresent()) {
-                        rewards.add(new TradeEntryReducedObj(item.get().value(), value.getXpReward(), value.getWeight()));
+                        rewards.add(new TradeEntryReducedObj(item.get().value(), value.getCount(), value.getXpReward(), value.getWeight()));
                     }
                     else if (value.isRequired()) {
                         Bumblezone.LOGGER.error("Bumblezone Error: Couldn't find reward item {} in bee queen trades file", value.id);

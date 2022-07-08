@@ -1,6 +1,198 @@
 {
-  "wants" : [
+  "wants": [
+    {
+      "id": "minecraft:honey_block",
+      "required": true
+    },
+    {
+      "id": "minecraft:diamond_block",
+      "required": true
+    },
+    {
+      "id": "#minecraft:beehives",
+      "required": true
+    },
+    {
+      "id": "#forge:buckets/honey",
+      "required": false
+    },
+    {
+      "id": "#productivebees:advanced_beehives",
+      "required": false
+    },
+    {
+      "id": "#productivebees:solitary_overworld_nests",
+      "required": false
+    }
   ],
   "possible_rewards": [
+    {
+      "id": "the_bumblezone:honey_compass",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 20,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:stinger_spear",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 20,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:honey_crystal_shield",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 20,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:crystal_cannon",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 15,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:bee_bread",
+      "count": 10,
+      "xp_reward": 8,
+      "weight": 15,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:honey_bee_leggings_1",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 6,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:honey_bee_leggings_2",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 6,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:stingless_bee_helmet_1",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 6,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:stingless_bee_helmet_2",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 6,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:carpenter_bee_boots_1",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 6,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:carpenter_bee_boots_2",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 6,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:bee_cannon",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:bee_stinger",
+      "count": 20,
+      "xp_reward": 8,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:honey_crystal_shards",
+      "count": 20,
+      "xp_reward": 8,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "minecraft:golden_carrot",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "minecraft:glistering_melon_slice",
+      "count": 2,
+      "xp_reward": 8,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "minecraft:cookie",
+      "count": 8,
+      "xp_reward": 8,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "minecraft:ochre_froglight",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:bumble_bee_chestplate_1",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 3,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:bumble_bee_chestplate_2",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 3,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:bumble_bee_chestplate_trans_1",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 3,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:bumble_bee_chestplate_trans_2",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 3,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_flight_of_the_bumblebee_rimsky_korsakov",
+      "count": 1,
+      "xp_reward": 15,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_honey_bee_rat_faced_boy",
+      "count": 1,
+      "xp_reward": 15,
+      "weight": 1,
+      "required": true
+    }
   ]
 }

@@ -237,7 +237,7 @@ public class BeeQueenEntity extends Animal {
                             for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
                                 Optional<TradeEntryReducedObj> reward = tradeEntries.getValue().getRandom(this.random);
                                 if (reward.isPresent()) {
-                                    spawnReward(forwardVect, sideVect, reward);
+                                    spawnReward(forwardVect, sideVect, reward.get());
                                     traded = true;
                                 }
                             }
@@ -289,7 +289,7 @@ public class BeeQueenEntity extends Animal {
 
                 Optional<TradeEntryReducedObj> reward = tradeEntries.getValue().getRandom(this.random);
                 if (reward.isPresent()) {
-                    spawnReward(forwardVect, sideVect, reward);
+                    spawnReward(forwardVect, sideVect, reward.get());
                     traded = true;
                 }
                 if (traded) {
@@ -313,13 +313,15 @@ public class BeeQueenEntity extends Animal {
         return InteractionResult.PASS;
     }
 
-    private void spawnReward(Vec3 forwardVect, Vec3 sideVect, Optional<TradeEntryReducedObj> reward) {
+    private void spawnReward(Vec3 forwardVect, Vec3 sideVect, TradeEntryReducedObj reward) {
+        ItemStack rewardItem = reward.item().getDefaultInstance();
+        rewardItem.setCount(reward.count());
         ItemEntity rewardItemEntity = new ItemEntity(
                 this.level,
                 this.getX() + (sideVect.x() * 1.75) + (forwardVect.x() * 1),
                 this.getY() + 0.3,
                 this.getZ() + (sideVect.z() * 1.75) + (forwardVect.x() * 1),
-                reward.get().item().getDefaultInstance(),
+                rewardItem,
                 (this.random.nextFloat() - 0.5f) / 10 + forwardVect.x() / 4,
                 0.3f,
                 (this.random.nextFloat() - 0.5f) / 10 + forwardVect.z() / 4);

@@ -1,0 +1,129 @@
+{
+  "wants" : [
+    {
+      "id": "the_bumblezone:royal_jelly_bottle",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:golden_apple",
+      "count": 2,
+      "xp_reward": 10,
+      "weight": 10,
+      "required": true
+    },
+    {
+      "id": "minecraft:experience_bottle",
+      "count": 6,
+      "xp_reward": 10,
+      "weight": 10,
+      "required": true
+    },
+    {
+      "id": "minecraft:glow_ink_sac",
+      "count": 10,
+      "xp_reward": 10,
+      "weight": 10,
+      "required": true
+    },
+    {
+      "id": "minecraft:turtle_egg",
+      "count": 4,
+      "xp_reward": 10,
+      "weight": 10,
+      "required": true
+    },
+    {
+      "id": "minecraft:sculk_catalyst",
+      "count": 10,
+      "xp_reward": 10,
+      "weight": 10,
+      "required": true
+    },
+    {
+      "id": "minecraft:name_tag",
+      "count": 8,
+      "xp_reward": 10,
+      "weight": 10,
+      "required": true
+    },
+    {
+      "id": "minecraft:ender_chest",
+      "count": 1,
+      "xp_reward": 10,
+      "weight": 7,
+      "required": true
+    },
+    {
+      "id": "minecraft:heart_of_the_sea",
+      "count": 1,
+      "xp_reward": 10,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "minecraft:totem_of_undying",
+      "count": 1,
+      "xp_reward": 10,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "minecraft:end_crystal",
+      "count": 1,
+      "xp_reward": 10,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "minecraft:wither_rose",
+      "count": 2,
+      "xp_reward": 10,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "minecraft:dragon_breath",
+      "count": 2,
+      "xp_reward": 10,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "minecraft:enchanted_golden_apple",
+      "count": 1,
+      "xp_reward": 10,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "minecraft:beacon",
+      "count": 1,
+      "xp_reward": 10,
+      "weight": 3,
+      "required": true
+    },
+    {
+      "id": "minecraft:dragon_head",
+      "count": 1,
+      "xp_reward": 10,
+      "weight": 3,
+      "required": true
+    },
+    {
+      "id": "minecraft:budding_amethyst",
+      "count": 2,
+      "xp_reward": 10,
+      "weight": 2,
+      "required": true
+    },
+    {
+      "id": "minecraft:nether_star",
+      "count": 1,
+      "xp_reward": 10,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

@@ -9,4 +9,7 @@ public interface BeeEntityInvoker {
 
     @Invoker("setHasNectar")
     void thebumblezone_callSetHasNectar(boolean value);
+
+    @Invoker("setHasStung")
+    void callSetHasStung(boolean p_27926_);
 }

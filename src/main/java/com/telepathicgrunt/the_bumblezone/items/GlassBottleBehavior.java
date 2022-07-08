@@ -53,4 +53,23 @@ public class GlassBottleBehavior {
 
         return false;
     }
+
+    public static boolean useBottleOnRoyalJellyFluid(Level world, Player playerEntity, InteractionHand playerHand, BlockPos blockPos) {
+        FluidState currentFluidState = world.getFluidState(blockPos);
+        if (currentFluidState.is(BzTags.ROYAL_JELLY_FLUID) && currentFluidState.isSource()) {
+            world.setBlock(blockPos, currentFluidState.createLegacyBlock().setValue(HoneyFluidBlock.LEVEL, 5), 3); // reduce honey
+            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
+
+            if(!playerEntity.isCreative()) {
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.ROYAL_JELLY_BOTTLE.get()), false, true);
+            }
+
+            world.playSound(playerEntity, blockPos.getX(), blockPos.getY(), blockPos.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
+            world.gameEvent(playerEntity, GameEvent.FLUID_PICKUP, blockPos);
+            return true;
+        }
+
+        return false;
+    }
+
 }
