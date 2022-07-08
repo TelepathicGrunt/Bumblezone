@@ -41,7 +41,12 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzItems.BEEHIVE_BEESWAX.get());
         addInfo(BzItems.HONEY_SLIME_SPAWN_EGG.get());
         addInfo(BzItems.BEEHEMOTH_SPAWN_EGG.get());
+        addInfo(BzItems.BEE_QUEEN_SPAWN_EGG.get());
         addInfo(BzFluids.SUGAR_WATER_FLUID.get());
+        addInfo(BzFluids.ROYAL_JELLY_FLUID.get());
+        addInfo(BzItems.ROYAL_JELLY_BOTTLE.get());
+        addInfo(BzItems.ROYAL_JELLY_BUCKET.get());
+        addInfo(BzItems.ROYAL_JELLY_BLOCK.get());
         addInfo(BzItems.POLLEN_PUFF.get());
         addInfo(BzItems.BEE_BREAD.get());
         addInfo(BzFluids.HONEY_FLUID.get());
@@ -53,7 +58,9 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY.get());
         addInfo(BzItems.STINGER_SPEAR.get());
         addInfo(BzItems.HONEY_COMPASS.get());
+        addInfo(BzItems.BEE_STINGER.get());
         addInfo(BzItems.BEE_CANNON.get());
+        addInfo(BzItems.CRYSTAL_CANNON.get());
         addInfo(BzItems.HONEY_BEE_LEGGINGS_1.get());
         addInfo(BzItems.HONEY_BEE_LEGGINGS_2.get());
         addInfo(BzItems.BUMBLE_BEE_CHESTPLATE_1.get());

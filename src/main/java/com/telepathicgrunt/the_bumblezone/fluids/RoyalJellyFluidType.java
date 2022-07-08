@@ -92,7 +92,7 @@ public class RoyalJellyFluidType extends FluidType {
                 );
                 float fogRed = 0.5F * brightness;
                 float fogGreen = 0.0F;
-                float fogBlue = 0.45F * brightness;
+                float fogBlue = 0.55F * brightness;
                 return new Vector3f(fogRed, fogGreen, fogBlue);
             }
 

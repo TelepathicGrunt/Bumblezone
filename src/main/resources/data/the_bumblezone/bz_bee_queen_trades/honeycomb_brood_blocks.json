@@ -7,7 +7,7 @@
   ],
   "possible_rewards": [
     {
-      "id": "minecraft:honeycomb_brood_block",
+      "id": "the_bumblezone:honeycomb_brood_block",
       "count": 1,
       "xp_reward": 0,
       "weight": 1,

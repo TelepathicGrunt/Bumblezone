@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:container_shapeless_recipe_bz",
+  "type": "the_bumblezone:container_shapeless_recipe_bz",
   "group": "the_bumblezone",
   "pattern": [
     "bb",

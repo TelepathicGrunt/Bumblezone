@@ -9,8 +9,12 @@
       "required": true
     },
     {
-      "id": "#minecraft:beehives",
+      "id": "minecraft:bee_nest",
       "required": true
+    },
+    {
+      "id": "#forge:beehive",
+      "required": false
     },
     {
       "id": "#forge:buckets/honey",

@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,11 +30,37 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 
-public class RoyalJellyBlock extends Block {
+public class RoyalJellyBlock extends HalfTransparentBlock {
     protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D);
 
     public RoyalJellyBlock() {
         super(Properties.of(Material.CLAY, MaterialColor.COLOR_PURPLE).speedFactor(0.4F).jumpFactor(0.5F).noOcclusion().sound(SoundType.HONEY_BLOCK));
+    }
+
+    @Override
+    public boolean isSlimeBlock(BlockState state) {
+        return state.getBlock() == BzBlocks.ROYAL_JELLY_BLOCK.get();
+    }
+
+    @Override
+    public boolean isStickyBlock(BlockState state) {
+        return state.getBlock() == BzBlocks.ROYAL_JELLY_BLOCK.get();
+    }
+
+    @Override
+    public boolean canStickTo(BlockState state, BlockState other) {
+        if (state.getBlock() == BzBlocks.ROYAL_JELLY_BLOCK.get() &&
+            (other.getBlock() == Blocks.HONEY_BLOCK ||
+            other.getBlock() == Blocks.SLIME_BLOCK))
+        {
+            return false;
+        }
+
+        return state.isStickyBlock() || other.isStickyBlock();
+    }
+
+    public static boolean isValidMoveDirection(Direction pushDirection, Direction pistonDirection) {
+        return pushDirection == null || pushDirection != pistonDirection;
     }
 
     private static boolean doesEntityDoHoneyBlockSlideEffects(Entity entity) {

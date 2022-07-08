@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:royal_jelly_block"
+          "name": "the_bumblezone:royal_jelly_block"
         }
       ],
       "conditions": [

@@ -69,7 +69,7 @@
       "required": true
     },
     {
-      "id": "minecraft:redstone_dust",
+      "id": "minecraft:redstone",
       "required": true
     },
     {

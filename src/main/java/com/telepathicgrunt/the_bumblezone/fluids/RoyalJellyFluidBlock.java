@@ -1,12 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
@@ -120,21 +124,25 @@ public class RoyalJellyFluidBlock extends LiquidBlock {
      */
     @Override
     public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
-        //TODO: increase bee buff
         double verticalSpeedDeltaLimit = 0.01D;
         if (entity instanceof Bee beeEntity) {
-            if(beeEntity.hasNectar() && !state.getFluidState().isSource()) {
-                ((BeeEntityInvoker)entity).thebumblezone_callSetHasNectar(false);
-                world.setBlock(position, BzFluids.HONEY_FLUID.get().defaultFluidState().createLegacyBlock(), 3);
-            }
-
             if (beeEntity.getHealth() < beeEntity.getMaxHealth()) {
                 float diff = beeEntity.getMaxHealth() - beeEntity.getHealth();
                 beeEntity.heal(diff);
-                BlockState currentState = world.getBlockState(position);
-                if(currentState.is(BzFluids.HONEY_FLUID_BLOCK.get())) {
-                    world.setBlock(position, currentState.setValue(RoyalJellyFluidBlock.LEVEL, Math.max(currentState.getValue(RoyalJellyFluidBlock.LEVEL) - (int)Math.ceil(diff), 1)), 3);
-                }
+                beeEntity.addEffect(new MobEffectInstance(
+                        BzEffects.BEENERGIZED.get(),
+                        600,
+                        0,
+                        false,
+                        true,
+                        true));
+                beeEntity.addEffect(new MobEffectInstance(
+                        MobEffects.REGENERATION,
+                        600,
+                        0,
+                        false,
+                        false,
+                        true));
             }
         }
         else if(Math.abs(entity.getDeltaMovement().y()) > verticalSpeedDeltaLimit && entity.fallDistance <= 0.2D) {
