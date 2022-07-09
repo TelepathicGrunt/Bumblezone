@@ -295,11 +295,14 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
                             heal(40);
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 1f, 30);
                             addFriendship(1000);
+                            this.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 90000, 3, true, true, true));
+                            return InteractionResult.PASS;
                         }
                         else if(item == BzItems.ROYAL_JELLY_BOTTLE.get()) {
                             heal(10);
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 1f, 10);
                             addFriendship(250);
+                            this.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 20000, 3, true, true, true));
                             return InteractionResult.PASS;
                         }
                         else if(item == BzItems.BEE_BREAD.get()) {

@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.entities.queentrades.TradeEntryReduced
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -18,8 +19,11 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.TimeUtil;
 import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -33,6 +37,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -42,16 +47,19 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -61,11 +69,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
-public class BeeQueenEntity extends Animal {
+public class BeeQueenEntity extends Animal implements NeutralMob {
 
     public final AnimationState idleAnimationState = new AnimationState();
     private static final EntityDataAccessor<Integer> THROWCOOLDOWN = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> BEESPAWNCOOLDOWN = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
+    private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(60, 120);
+    private UUID persistentAngerTarget;
+    private int underWaterTicks;
 
     public BeeQueenEntity(EntityType<? extends BeeQueenEntity> type, Level world) {
         super(type, world);
@@ -75,6 +89,8 @@ public class BeeQueenEntity extends Animal {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(THROWCOOLDOWN, 0);
+        this.entityData.define(DATA_REMAINING_ANGER_TIME, 1);
+        this.entityData.define(BEESPAWNCOOLDOWN, 2);
     }
 
     public static AttributeSupplier.Builder getAttributeBuilder() {
@@ -85,7 +101,8 @@ public class BeeQueenEntity extends Animal {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new AlwaysLookAtPlayerGoal(this, Player.class, 60));
+        this.goalSelector.addGoal(1, new AngerableMeleeAttackGoal(this));
+        this.goalSelector.addGoal(2, new AlwaysLookAtPlayerGoal(this, Player.class, 60));
         this.goalSelector.addGoal(3, new FloatGoal(this));
     }
 
@@ -93,12 +110,16 @@ public class BeeQueenEntity extends Animal {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("throwcooldown", getThrowCooldown());
+        tag.putInt("beespawncooldown", getBeeSpawnCooldown());
+        this.addPersistentAngerSaveData(tag);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         setThrowCooldown(tag.getInt("throwcooldown"));
+        setBeeSpawnCooldown(tag.getInt("beespawncooldown"));
+        this.readPersistentAngerSaveData(this.level, tag);
     }
 
     @Override
@@ -116,13 +137,33 @@ public class BeeQueenEntity extends Animal {
         return MobType.ARTHROPOD;
     }
 
+    public static boolean checkMobSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor iWorld, MobSpawnType spawnReason, BlockPos blockPos, RandomSource random) {
+        return true;
+    }
+
+    @Override
+    public boolean checkSpawnRules(LevelAccessor world, MobSpawnType spawnReason) {
+        return true;
+    }
+
+    @Override
+    public boolean checkSpawnObstruction(LevelReader worldReader) {
+        AABB box = getBoundingBox();
+        return !worldReader.containsAnyLiquid(box) && worldReader.getBlockStates(box).noneMatch(state -> state.getMaterial().blocksMotion()) && worldReader.isUnobstructed(this);
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (isInvulnerableTo(source)) {
             return false;
         }
         else if(isOnPortalCooldown() && source == DamageSource.IN_WALL) {
-            spawnMadParticles();
+            spawnAngryParticles(6);
             playHurtSound(source);
             return false;
         }
@@ -142,69 +183,34 @@ public class BeeQueenEntity extends Animal {
                     }
                     else {
                         //Now all bees nearby in Bumblezone will get VERY angry!!!
-                        livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
+                        livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 3, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
+                        this.startPersistentAngerTimer();
+                        this.setPersistentAngerTarget(livingEntity.getUUID());
+                        this.setTarget(livingEntity);
                     }
                 }
             }
 
-            spawnMadParticles();
+            spawnAngryParticles(6);
             return super.hurt(source, amount);
         }
     }
 
-    public static boolean checkMobSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor iWorld, MobSpawnType spawnReason, BlockPos blockPos, RandomSource random) {
-        return true;
-    }
-
-    @Override
-    public boolean checkSpawnRules(LevelAccessor world, MobSpawnType spawnReason) {
-        return true;
-    }
-
-    @Override
-    public boolean checkSpawnObstruction(LevelReader worldReader) {
-        AABB box = getBoundingBox();
-        return !worldReader.containsAnyLiquid(box) && worldReader.getBlockStates(box).noneMatch(state -> state.getMaterial().blocksMotion()) && worldReader.isUnobstructed(this);
-    }
-
-    private void spawnMadParticles() {
-        if (!this.level.isClientSide()) {
-            ((ServerLevel) this.level).sendParticles(
-                    ParticleTypes.ANGRY_VILLAGER,
-                    getX(),
-                    getY(),
-                    getZ(),
-                    6,
-                    this.level.getRandom().nextFloat() - 0.5f,
-                    this.level.getRandom().nextFloat() * 0.4f + 0.4f,
-                    this.level.getRandom().nextFloat() - 0.5f,
-                    this.level.getRandom().nextFloat() * 0.8f + 0.4f);
+    protected void customServerAiStep() {
+        if (this.isUnderWater()) {
+            ++this.underWaterTicks;
         }
-    }
+        else {
+            this.underWaterTicks = 0;
+        }
 
-    @Override
-    protected void playStepSound(BlockPos pos, BlockState blockState) {
-    }
+        if (this.underWaterTicks > 100) {
+            this.hurt(DamageSource.DROWN, 3.0F);
+        }
 
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return null;
-    }
-
-    @Override
-    protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return BzSounds.BEEHEMOTH_HURT.get();
-    }
-
-    @Override
-    protected SoundEvent getDeathSound() {
-        return BzSounds.BEEHEMOTH_DEATH.get();
-    }
-
-    @Override
-    public void recreateFromPacket(ClientboundAddEntityPacket clientboundAddMobPacket) {
-        super.recreateFromPacket(clientboundAddMobPacket);
-        LivingEntityFlyingSoundInstance.playSound(this, BzSounds.BEEHEMOTH_LOOP.get());
+        if (!this.level.isClientSide) {
+            this.updatePersistentAnger((ServerLevel)this.level, false);
+        }
     }
 
     @Override
@@ -222,60 +228,112 @@ public class BeeQueenEntity extends Animal {
         }
 
         if (!this.level.isClientSide()) {
-            int throwCooldown = getThrowCooldown();
-            if (throwCooldown > 0) {
-                setThrowCooldown(throwCooldown - 1);
+            if (this.isAngry()) {
+                performAngryActions();
+            }
+            else {
+                performGroundTrades();
+            }
+        }
+    }
+
+    private void performAngryActions() {
+        int beeCooldown = this.getBeeSpawnCooldown();
+        if (beeCooldown <= 0) {
+            this.setBeeSpawnCooldown(this.random.nextInt(50) + 75);
+
+            // Grab a nearby air materialposition a bit away
+            BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(this.level, this, 5, 0);
+            if(this.level.getBlockState(spawnBlockPos).getMaterial() != Material.AIR) {
+                return;
             }
 
-            if (this.getAge() % 20 == 0 && throwCooldown <= 0) {
-                Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
-                Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
-                AABB scanArea = this.getBoundingBox().deflate(0.45, 0.9, 0.45).move(forwardVect.x() * 0.5d, -0.95, forwardVect.z() * 0.5d);
-                List<ItemEntity> items = this.level.getEntitiesOfClass(ItemEntity.class, scanArea);
-                items.stream().filter(ie -> !ie.hasPickUpDelay()).findFirst().ifPresent((itemEntity) -> {
-                    boolean traded = false;
-                    for (Map.Entry<Set<Item>, WeightedRandomList<TradeEntryReducedObj>> tradeEntries : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
-                        if (tradeEntries.getKey().contains(itemEntity.getItem().getItem())) {
-                            for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
-                                Optional<TradeEntryReducedObj> reward = tradeEntries.getValue().getRandom(this.random);
-                                if (reward.isPresent()) {
-                                    spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem());
-                                    traded = true;
-                                }
-                            }
-                            if (traded) {
-                                break;
+            Bee bee = EntityType.BEE.create(this.level);
+            if(bee == null) return;
+            ((NeutralMob)bee).setRemainingPersistentAngerTime(this.getRemainingPersistentAngerTime());
+            ((NeutralMob)bee).setPersistentAngerTarget(this.getPersistentAngerTarget());
+            bee.setTarget(this.getTarget());
+
+            bee.absMoveTo(
+                    spawnBlockPos.getX() + 0.5D,
+                    spawnBlockPos.getY() + 0.5D,
+                    spawnBlockPos.getZ() + 0.5D,
+                    this.random.nextFloat() * 360.0F,
+                    0.0F);
+
+            bee.finalizeSpawn(
+                    (ServerLevel) this.level,
+                    this.level.getCurrentDifficultyAt(spawnBlockPos),
+                    MobSpawnType.TRIGGERED,
+                    null,
+                    null);
+
+            this.level.addFreshEntity(bee);
+            this.spawnAngryParticles(6);
+        }
+        else {
+            this.setBeeSpawnCooldown(beeCooldown - 1);
+        }
+    }
+
+    private void performGroundTrades() {
+        int throwCooldown = getThrowCooldown();
+        if (throwCooldown > 0) {
+            setThrowCooldown(throwCooldown - 1);
+        }
+
+        if (this.getAge() % 20 == 0 && throwCooldown <= 0) {
+            Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
+            Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
+            AABB scanArea = this.getBoundingBox().deflate(0.45, 0.9, 0.45).move(forwardVect.x() * 0.5d, -0.95, forwardVect.z() * 0.5d);
+            List<ItemEntity> items = this.level.getEntitiesOfClass(ItemEntity.class, scanArea);
+            items.stream().filter(ie -> !ie.hasPickUpDelay()).findFirst().ifPresent((itemEntity) -> {
+                boolean traded = false;
+                for (Map.Entry<Set<Item>, WeightedRandomList<TradeEntryReducedObj>> tradeEntries : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
+                    if (tradeEntries.getKey().contains(itemEntity.getItem().getItem())) {
+                        for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
+                            Optional<TradeEntryReducedObj> reward = tradeEntries.getValue().getRandom(this.random);
+                            if (reward.isPresent()) {
+                                spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem());
+                                traded = true;
                             }
                         }
+                        if (traded) {
+                            break;
+                        }
                     }
+                }
 
-                    if (traded) {
-                        itemEntity.remove(RemovalReason.DISCARDED);
-                    }
-                    else {
-                        itemEntity.remove(RemovalReason.DISCARDED);
-                        ItemEntity rejectedItemEntity = new ItemEntity(
-                                this.level,
-                                this.getX() + (sideVect.x() * 1.75) + (forwardVect.x() * 1),
-                                this.getY() + 0.3,
-                                this.getZ() + (sideVect.z() * 1.75) + (forwardVect.x() * 1),
-                                itemEntity.getItem(),
-                                (this.random.nextFloat() - 0.5f) / 10 + forwardVect.x() / 3,
-                                0.4f,
-                                (this.random.nextFloat() - 0.5f) / 10 + forwardVect.z() / 3);
-                        this.level.addFreshEntity(rejectedItemEntity);
-                        rejectedItemEntity.setDefaultPickUpDelay();
-                        spawnAngryParticles();
-                    }
+                if (traded) {
+                    itemEntity.remove(RemovalReason.DISCARDED);
+                }
+                else {
+                    itemEntity.remove(RemovalReason.DISCARDED);
+                    ItemEntity rejectedItemEntity = new ItemEntity(
+                            this.level,
+                            this.getX() + (sideVect.x() * 1.75) + (forwardVect.x() * 1),
+                            this.getY() + 0.3,
+                            this.getZ() + (sideVect.z() * 1.75) + (forwardVect.x() * 1),
+                            itemEntity.getItem(),
+                            (this.random.nextFloat() - 0.5f) / 10 + forwardVect.x() / 3,
+                            0.4f,
+                            (this.random.nextFloat() - 0.5f) / 10 + forwardVect.z() / 3);
+                    this.level.addFreshEntity(rejectedItemEntity);
+                    rejectedItemEntity.setDefaultPickUpDelay();
+                    spawnAngryParticles(2);
+                }
 
-                    setThrowCooldown(50);
-                });
-            }
+                setThrowCooldown(50);
+            });
         }
     }
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if (this.isAngry()) {
+            return InteractionResult.FAIL;
+        }
+
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
 
@@ -302,7 +360,7 @@ public class BeeQueenEntity extends Animal {
 
         if (!this.level.isClientSide()) {
             if (!traded) {
-                spawnAngryParticles();
+                spawnAngryParticles(2);
             }
             else {
                 setThrowCooldown(50);
@@ -340,17 +398,19 @@ public class BeeQueenEntity extends Animal {
         spawnHappyParticles();
     }
 
-    private void spawnAngryParticles() {
-        ((ServerLevel)this.level).sendParticles(
-                ParticleTypes.ANGRY_VILLAGER,
-                getX(),
-                getY() + 0.45f,
-                getZ(),
-                2,
-                this.level.getRandom().nextFloat() - 0.5f,
-                this.level.getRandom().nextFloat() * 0.4f + 0.4f,
-                this.level.getRandom().nextFloat() - 0.5f,
-                this.level.getRandom().nextFloat() * 0.8f + 0.4f);
+    private void spawnAngryParticles(int particles) {
+        if(!this.level.isClientSide()) {
+            ((ServerLevel)this.level).sendParticles(
+                    ParticleTypes.ANGRY_VILLAGER,
+                    getX(),
+                    getY() + 0.45f,
+                    getZ(),
+                    particles,
+                    this.level.getRandom().nextFloat() - 0.5f,
+                    this.level.getRandom().nextFloat() * 0.4f + 0.4f,
+                    this.level.getRandom().nextFloat() - 0.5f,
+                    this.level.getRandom().nextFloat() * 0.8f + 0.4f);
+        }
     }
 
     private void spawnHappyParticles() {
@@ -368,7 +428,9 @@ public class BeeQueenEntity extends Animal {
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel serverWorld, AgeableMob ageableEntity) {
-        return null;
+        Bee bee = EntityType.BEE.create(serverWorld);
+        bee.setBaby(true);
+        return bee;
     }
 
     @Override
@@ -397,6 +459,71 @@ public class BeeQueenEntity extends Animal {
         this.entityData.set(THROWCOOLDOWN, cooldown);
     }
 
+    public int getBeeSpawnCooldown() {
+        return this.entityData.get(BEESPAWNCOOLDOWN);
+    }
+
+    public void setBeeSpawnCooldown(Integer cooldown) {
+        this.entityData.set(BEESPAWNCOOLDOWN, cooldown);
+    }
+
+    @Override
+    public int getRemainingPersistentAngerTime() {
+        return this.entityData.get(DATA_REMAINING_ANGER_TIME);
+    }
+
+    @Override
+    public void setRemainingPersistentAngerTime(int remainingPersistentAngerTime) {
+        this.entityData.set(DATA_REMAINING_ANGER_TIME, remainingPersistentAngerTime);
+    }
+
+    @Override
+    public UUID getPersistentAngerTarget() {
+        return this.persistentAngerTarget;
+    }
+
+    @Override
+    public void setPersistentAngerTarget(@Nullable UUID uuid) {
+        this.persistentAngerTarget = uuid;
+    }
+
+    @Override
+    public void startPersistentAngerTimer() {
+        this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random));
+    }
+
+    @Override
+    public void stopBeingAngry() {
+        NeutralMob.super.stopBeingAngry();
+        this.setBeeSpawnCooldown(0);
+        this.setTarget(null);
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState blockState) {
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return null;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return BzSounds.BEEHEMOTH_HURT.get();
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return BzSounds.BEEHEMOTH_DEATH.get();
+    }
+
+    @Override
+    public void recreateFromPacket(ClientboundAddEntityPacket clientboundAddMobPacket) {
+        super.recreateFromPacket(clientboundAddMobPacket);
+        LivingEntityFlyingSoundInstance.playSound(this, BzSounds.BEEHEMOTH_LOOP.get());
+    }
+
     public static class DirectPathNavigator extends GroundPathNavigation {
 
         private final Mob mob;
@@ -423,7 +550,6 @@ public class BeeQueenEntity extends Animal {
             return true;
         }
     }
-
 
     public class AlwaysLookAtPlayerGoal extends Goal {
         protected final Mob mob;
@@ -486,6 +612,56 @@ public class BeeQueenEntity extends Animal {
                 double y = this.onlyHorizontal ? this.mob.getEyeY() : this.lookAt.getEyeY();
                 this.mob.getLookControl().setLookAt(this.lookAt.getX(), y, this.lookAt.getZ(), 0.05f, this.mob.getMaxHeadXRot());
             }
+        }
+    }
+
+    public static class AngerableMeleeAttackGoal extends Goal {
+        protected final BeeQueenEntity mob;
+        private int ticksUntilNextAttack;
+
+        public AngerableMeleeAttackGoal(BeeQueenEntity mob) {
+            this.mob = mob;
+        }
+
+        public boolean canUse() {
+            return this.mob.getTarget() != null;
+        }
+
+        public boolean canContinueToUse() {
+            return mob.getTarget() != null && mob.getTarget().isAlive();
+        }
+
+        public void start() {
+            this.ticksUntilNextAttack = 0;
+        }
+
+        public void stop() {}
+
+        public void tick() {
+            LivingEntity target = this.mob.getTarget();
+            if (target != null && target.isAlive()) {
+                double distance = this.mob.distanceToSqr(target.getX(), target.getY(), target.getZ());
+                this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack - 1, 0);
+                this.checkAndPerformAttack(this.mob.getTarget(), distance);
+            }
+        }
+
+        protected void resetAttackCooldown() {
+            this.ticksUntilNextAttack = this.adjustedTickDelay(20);
+        }
+
+        protected void checkAndPerformAttack(LivingEntity target, double distance) {
+            double attackReachSqr1 = this.getAttackReachSqr(target);
+            if (distance <= attackReachSqr1 && this.ticksUntilNextAttack <= 0) {
+                this.resetAttackCooldown();
+                this.mob.swing(InteractionHand.MAIN_HAND);
+                this.mob.doHurtTarget(target);
+                this.mob.spawnAngryParticles(4);
+            }
+        }
+
+        protected double getAttackReachSqr(LivingEntity livingEntity) {
+            return this.mob.getBbWidth() * 1.2f;
         }
     }
 }

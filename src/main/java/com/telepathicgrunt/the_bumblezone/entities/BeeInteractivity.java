@@ -74,6 +74,7 @@ public class BeeInteractivity {
             {
                 beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
                 boolean isRoyalFed = itemstack.is(BzItems.ROYAL_JELLY_BOTTLE.get()) || itemstack.is(BzItems.ROYAL_JELLY_BUCKET.get());
+                boolean isRoyalFedBucket = itemstack.is(BzItems.ROYAL_JELLY_BUCKET.get());
 
                 removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, isRoyalFed ? 1 : 0.8f, isRoyalFed ? 15 : 5);
                 if (beeEntity.isBaby()) {
@@ -97,7 +98,7 @@ public class BeeInteractivity {
                 }
 
                 if (isRoyalFed) {
-                    beeEntity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 24000, 3, true, true, true));
+                    beeEntity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), isRoyalFedBucket ? 90000 : 20000, 3, true, true, true));
                     if (playerEntity instanceof ServerPlayer) {
                         BzCriterias.BEENERGIZED_MAXED_TRIGGER.trigger((ServerPlayer) playerEntity);
                     }

@@ -1,48 +1,35 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
-import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.Vec3;
-
-import javax.annotation.Nullable;
 
 public class BeeStingerEntity extends AbstractArrow {
 
     public BeeStingerEntity(EntityType<? extends BeeStingerEntity> entityType, Level level) {
         super(entityType, level);
+        this.setBaseDamage(0.5d);
     }
 
     public BeeStingerEntity(Level level, LivingEntity livingEntity) {
         super(BzEntities.BEE_STINGER_ENTITY.get(), livingEntity, level);
+        this.setBaseDamage(0.5d);
     }
 
     @Override
@@ -111,7 +98,7 @@ public class BeeStingerEntity extends AbstractArrow {
                     true,
                     true));
 
-            if (isPoisoned && livingEntity.getRandom().nextFloat() < 0.35f) {
+            if (!isParalyzed && isPoisoned && livingEntity.getRandom().nextFloat() < 0.35f) {
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.MOVEMENT_SLOWDOWN,
                         180,
@@ -121,7 +108,7 @@ public class BeeStingerEntity extends AbstractArrow {
                         true));
             }
 
-            if (isPoisoned && isSlowed && livingEntity.getRandom().nextFloat() < 0.3f) {
+            if (!isParalyzed && isPoisoned && isSlowed && livingEntity.getRandom().nextFloat() < 0.3f) {
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.WEAKNESS,
                         200,

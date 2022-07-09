@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "group": "the_bumblezone",
   "pattern": [
-    "s",
-    "s",
-    "p"
+    "ssp"
   ],
   "key": {
     "p": {
