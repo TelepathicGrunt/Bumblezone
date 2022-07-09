@@ -195,7 +195,7 @@ public class CarpenterBeeBoots extends BeeArmor {
     }
 
     public static float getPlayerDestroySpeed(Player player, ItemStack beeBoots, float currentSpeed) {
-        int efficencyLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, beeBoots);
+        int efficencyLevel = beeBoots.getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
         if (efficencyLevel > 0) {
             currentSpeed += efficencyLevel / 4f;
         }

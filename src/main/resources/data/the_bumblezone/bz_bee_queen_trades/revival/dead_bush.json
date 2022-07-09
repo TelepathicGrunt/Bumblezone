@@ -1,0 +1,45 @@
+{
+  "wants" : [
+    {
+      "id": "minecraft:dead_bush",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#minecraft:saplings",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 15,
+      "required": true
+    },
+    {
+      "id": "minecraft:sweet_berries",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 4,
+      "required": true
+    },
+    {
+      "id": "minecraft:azalea",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 2,
+      "required": true
+    },
+    {
+      "id": "minecraft:rose_bush",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "minecraft:flowering_azalea",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

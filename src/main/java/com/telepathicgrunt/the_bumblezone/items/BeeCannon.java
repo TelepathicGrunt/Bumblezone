@@ -23,6 +23,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.Vanishable;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
@@ -44,8 +46,9 @@ public class BeeCannon extends Item implements Vanishable {
             ItemStack mutableBeeCannon = player.getItemInHand(InteractionHand.MAIN_HAND);
 
             int numberOfBees = getNumberOfBees(mutableBeeCannon);
+            int quickCharge = beeCannon.getEnchantmentLevel(Enchantments.QUICK_CHARGE);
             int remainingDuration = this.getUseDuration(mutableBeeCannon) - currentDuration;
-            if (remainingDuration >= 10 && numberOfBees > 0) {
+            if (remainingDuration >= 20 - (quickCharge * 3) && numberOfBees > 0) {
                 List<Entity> bees = tryReleaseBees(level, mutableBeeCannon);
                 bees.forEach(bee -> {
                     Vec3 playerEyePos = new Vec3(
@@ -211,5 +214,14 @@ public class BeeCannon extends Item implements Vanishable {
     @Override
     public UseAnim getUseAnimation(ItemStack itemStack) {
         return UseAnim.BOW;
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        if(enchantment == Enchantments.QUICK_CHARGE) {
+            return true;
+        }
+
+        return enchantment.category.canEnchant(stack.getItem());
     }
 }

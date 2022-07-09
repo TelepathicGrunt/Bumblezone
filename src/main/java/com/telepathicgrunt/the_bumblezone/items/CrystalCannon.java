@@ -2,7 +2,9 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
+import com.telepathicgrunt.the_bumblezone.entities.nonliving.HoneyCrystalShardEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -11,8 +13,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -22,6 +22,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.Vanishable;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -40,8 +43,9 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
             ItemStack mutableCrystalCannon = player.getItemInHand(InteractionHand.MAIN_HAND);
 
             int numberOfCrystals = getNumberOfCrystals(mutableCrystalCannon);
+            int quickCharge = mutableCrystalCannon.getEnchantmentLevel(Enchantments.QUICK_CHARGE);
             int remainingDuration = this.getUseDuration(mutableCrystalCannon) - currentDuration;
-            if (remainingDuration >= 10 && numberOfCrystals > 0) {
+            if (remainingDuration >= 20 - (quickCharge * 3) && numberOfCrystals > 0) {
                 int crystalsToSpawn = getAndClearStoredCrystals(level, mutableCrystalCannon);
                 for (int i = 0; i < crystalsToSpawn; i++) {
                     float offset = 0;
@@ -55,7 +59,22 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
                         offset = level.random.nextFloat() * 10f - 5f;
                     }
 
-                    Arrow newCrystal = EntityType.ARROW.create(level); // TODO: custom crystal entity
+                    HoneyCrystalShardEntity newCrystal = BzEntities.HONEY_CRYSTAL_SHARD.get().create(level);
+                    int power = crystalCannon.getEnchantmentLevel(Enchantments.POWER_ARROWS);
+                    if (power > 0) {
+                        newCrystal.setBaseDamage(newCrystal.getBaseDamage() + (double)power * 0.5D + 0.5D);
+                    }
+
+                    int punch = crystalCannon.getEnchantmentLevel(Enchantments.PUNCH_ARROWS);
+                    if (punch > 0) {
+                        newCrystal.setKnockback(newCrystal.getKnockback() + punch);
+                    }
+
+                    int pierce = crystalCannon.getEnchantmentLevel(Enchantments.PIERCING);
+                    if (pierce > 0) {
+                        newCrystal.setPierceLevel((byte) pierce);
+                    }
+
                     newCrystal.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
                     Vec3 playerEyePos = new Vec3(
                             player.getX(),
@@ -192,5 +211,18 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
     @Override
     public UseAnim getUseAnimation(ItemStack itemStack) {
         return UseAnim.BOW;
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        if(enchantment == Enchantments.QUICK_CHARGE ||
+            enchantment == Enchantments.PIERCING ||
+            enchantment == Enchantments.POWER_ARROWS ||
+            enchantment == Enchantments.PUNCH_ARROWS)
+        {
+            return true;
+        }
+
+        return enchantment.category.canEnchant(stack.getItem());
     }
 }

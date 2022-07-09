@@ -17,6 +17,7 @@ import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
+import com.telepathicgrunt.the_bumblezone.items.BeeStinger;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
@@ -71,6 +72,7 @@ public class Bumblezone{
         forgeBus.addListener(NeurotoxinsEnchantment::entityHurtEvent);
         forgeBus.addListener(this::serverAboutToStart);
         forgeBus.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
+        forgeBus.addListener(BeeStinger::bowUsable);
 
         //Registration
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

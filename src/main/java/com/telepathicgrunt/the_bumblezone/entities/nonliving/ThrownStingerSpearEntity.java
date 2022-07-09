@@ -137,7 +137,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
 
     @Override
     protected void doPostHurtEffects(LivingEntity livingEntity) {
-        int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get(), this.spearItem);
+        int potentPoisonLevel =  this.spearItem.getEnchantmentLevel(BzEnchantments.POTENT_POISON.get());
         if (livingEntity.getMobType() != MobType.UNDEAD) {
             livingEntity.addEffect(new MobEffectInstance(
                     MobEffects.POISON,
@@ -153,7 +153,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         }
 
         if(this.getOwner() instanceof Player player) {
-            int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), this.spearItem);
+            int neuroToxinLevel = this.spearItem.getEnchantmentLevel(BzEnchantments.NEUROTOXINS.get());
             if (neuroToxinLevel > 0) {
                 this.spearItem.hurtAndBreak(5, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             }

@@ -11,6 +11,10 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenRend
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeeVariantRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.beestinger.BeeStingerModel;
+import com.telepathicgrunt.the_bumblezone.client.rendering.beestinger.BeeStingerRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.honeycrystalshard.HoneyCrystalShardModel;
+import com.telepathicgrunt.the_bumblezone.client.rendering.honeycrystalshard.HoneyCrystalShardRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.honeyslime.HoneySlimeRendering;
 import com.telepathicgrunt.the_bumblezone.client.rendering.pileofpollen.PileOfPollenRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearModel;
@@ -168,6 +172,8 @@ public class BumblezoneClient {
         event.registerLayerDefinition(BeehemothModel.LAYER_LOCATION, BeehemothModel::createBodyLayer);
         event.registerLayerDefinition(BeeQueenModel.LAYER_LOCATION, BeeQueenModel::createBodyLayer);
         event.registerLayerDefinition(StingerSpearModel.LAYER_LOCATION, StingerSpearModel::createLayer);
+        event.registerLayerDefinition(BeeStingerModel.LAYER_LOCATION, BeeStingerModel::createLayer);
+        event.registerLayerDefinition(HoneyCrystalShardModel.LAYER_LOCATION, HoneyCrystalShardModel::createLayer);
         event.registerLayerDefinition(BeeArmorModel.VARIANT_1_LAYER_LOCATION, BeeArmorModel::createVariant1);
         event.registerLayerDefinition(BeeArmorModel.VARIANT_2_LAYER_LOCATION, BeeArmorModel::createVariant2);
     }
@@ -178,6 +184,8 @@ public class BumblezoneClient {
         EntityRenderers.register(BzEntities.BEE_QUEEN.get(), BeeQueenRenderer::new);
         EntityRenderers.register(BzEntities.POLLEN_PUFF_ENTITY.get(), ThrownItemRenderer::new);
         EntityRenderers.register(BzEntities.THROWN_STINGER_SPEAR_ENTITY.get(), StingerSpearRenderer::new);
+        EntityRenderers.register(BzEntities.BEE_STINGER_ENTITY.get(), BeeStingerRenderer::new);
+        EntityRenderers.register(BzEntities.HONEY_CRYSTAL_SHARD.get(), HoneyCrystalShardRenderer::new);
     }
 
     public static void onParticleSetup(ParticleFactoryRegisterEvent event) {

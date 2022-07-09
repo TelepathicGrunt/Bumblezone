@@ -368,7 +368,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
     @Override
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack itemStack) {
-        if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) > 0 && player instanceof ServerPlayer serverPlayer) {
+        if (itemStack.getEnchantmentLevel(Enchantments.SILK_TOUCH) > 0 && player instanceof ServerPlayer serverPlayer) {
             BzCriterias.HONEY_COCOON_SILK_TOUCH_TRIGGER.trigger(serverPlayer);
         }
 

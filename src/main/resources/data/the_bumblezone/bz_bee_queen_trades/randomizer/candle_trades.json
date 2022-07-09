@@ -1,0 +1,17 @@
+{
+  "wants": [
+    {
+      "id": "#minecraft:candles",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#minecraft:candles",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

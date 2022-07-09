@@ -1,0 +1,21 @@
+{
+  "wants" : [
+    {
+      "id": "minecraft:ice",
+      "required": true
+    },
+    {
+      "id": "minecraft:packed_ice",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:magma_block",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

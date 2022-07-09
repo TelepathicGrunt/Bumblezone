@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManage
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.TradeEntryReducedObj;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -14,7 +15,6 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
@@ -45,13 +45,14 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
@@ -237,7 +238,7 @@ public class BeeQueenEntity extends Animal {
                             for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
                                 Optional<TradeEntryReducedObj> reward = tradeEntries.getValue().getRandom(this.random);
                                 if (reward.isPresent()) {
-                                    spawnReward(forwardVect, sideVect, reward.get());
+                                    spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem());
                                     traded = true;
                                 }
                             }
@@ -289,7 +290,7 @@ public class BeeQueenEntity extends Animal {
 
                 Optional<TradeEntryReducedObj> reward = tradeEntries.getValue().getRandom(this.random);
                 if (reward.isPresent()) {
-                    spawnReward(forwardVect, sideVect, reward.get());
+                    spawnReward(forwardVect, sideVect, reward.get(), stack);
                     traded = true;
                 }
                 if (traded) {
@@ -313,8 +314,12 @@ public class BeeQueenEntity extends Animal {
         return InteractionResult.PASS;
     }
 
-    private void spawnReward(Vec3 forwardVect, Vec3 sideVect, TradeEntryReducedObj reward) {
+    private void spawnReward(Vec3 forwardVect, Vec3 sideVect, TradeEntryReducedObj reward, ItemStack originalItem) {
         ItemStack rewardItem = reward.item().getDefaultInstance();
+        if (originalItem.is(BzTags.SHULKER_BOXES) && rewardItem.is(BzTags.SHULKER_BOXES) && originalItem.hasTag()) {
+            rewardItem.getOrCreateTag().merge(originalItem.getOrCreateTag());
+        }
+
         rewardItem.setCount(reward.count());
         ItemEntity rewardItemEntity = new ItemEntity(
                 this.level,

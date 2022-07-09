@@ -61,10 +61,6 @@
       "required": true
     },
     {
-      "id": "#minecraft:candles",
-      "required": true
-    },
-    {
       "id": "minecraft:mangrove_propagule",
       "required": true
     },
