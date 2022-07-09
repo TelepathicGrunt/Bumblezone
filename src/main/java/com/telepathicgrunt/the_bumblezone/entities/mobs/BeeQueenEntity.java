@@ -17,6 +17,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.InteractionHand;
@@ -316,7 +317,11 @@ public class BeeQueenEntity extends Animal {
 
     private void spawnReward(Vec3 forwardVect, Vec3 sideVect, TradeEntryReducedObj reward, ItemStack originalItem) {
         ItemStack rewardItem = reward.item().getDefaultInstance();
+
         if (originalItem.is(BzTags.SHULKER_BOXES) && rewardItem.is(BzTags.SHULKER_BOXES) && originalItem.hasTag()) {
+            rewardItem.getOrCreateTag().merge(originalItem.getOrCreateTag());
+        }
+        else if (originalItem.is(ItemTags.BANNERS) && rewardItem.is(ItemTags.BANNERS) && originalItem.hasTag()) {
             rewardItem.getOrCreateTag().merge(originalItem.getOrCreateTag());
         }
 

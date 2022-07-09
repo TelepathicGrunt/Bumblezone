@@ -1,0 +1,45 @@
+{
+  "wants" : [
+    {
+      "id": "minecraft:rotten_flesh",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:poisonous_potato",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 30,
+      "required": true
+    },
+    {
+      "id": "minecraft:feather",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "minecraft:leather",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "minecraft:rabbit_hide",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "minecraft:rabbit_foot",
+      "count": 1,
+      "xp_reward": 10,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}
