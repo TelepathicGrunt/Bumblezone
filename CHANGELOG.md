@@ -1,26 +1,48 @@
-### **(V.6.0.1 Changes) (1.19 Minecraft)**
+### **(V.6.1.0 Changes) (1.19 Minecraft)**
 
 ##### Entities:
-Fixed Honey Slime and Beehemoth not spawning naturally for regular chunk generation.
+Bee Queen!!! A massive passive Bee that wants to trade! Right click while holding items or drop items in front of the 
+ Queen Bee to trade. Try trading various items to see what kind of items are possible to receive based what you give! 
+ Upon first successful trade you will be given The Queen's Desires advancement path which gives a reward for each 
+ advancement completed. After completing the entire advancement path, visit the Bee Queen and right click with 
+ empty hand to reset that advancement path for rewards!
 
-##### Dimension:
-Improved worldgen time a bit.
+##### Items:
+Bee Stingers added which is a common gift from the Queen Bee! Can be used as low-damage ammo for Bows and Crossbows 
+ to have chances of inflicting poison, weakness, slowness, or paralysis effects on non-undead mobs. 
+ Can be right clicked on stinger-less bees to put a stinger back onto them.
+ Can craft Stinger Spear when combined with two sticks in a line. Also can repair Stinger Spears.
 
+Crystal Cannon! By combining a Bee Cannon with a Honey Crystal and 2 Honey Crystal Shards in the right layout, 
+ you can craft this lethal powerful cannon of questionable sturdiness that fires Honey Crystal Shards! 
+ Can store up to 3 shards. Hold down the use button and release to fire the shards that come with high damage and knockback!
+ Can be repaired with Honey Crystal Shards, Sugar Infused Stone, or Sugar Infused Cobblestone. 
+ Takes Quick Charge, Punch, Power, and Piercing enchantments along with Unbreaking, Curse of the Vanishing, and Mending. 
 
-### **(V.6.0.0 Changes) (1.19 Minecraft)**
+Bee Cannon now can get Quick Charge Enchantment along with their existing Unbreaking, Curse of the Vanishing, and Mending.
 
-##### Major:
-Ported to 1.19!
+Royal Jelly Bottle added! A super amazing form of honey from the Bee Queen from a royalty recipe passed down for generations!
+ Drinking this item will restore high amount of Hunger, Speed Boost, and Beenergized level 2! 
+ It will also remove Poison, Weakness, and Slowness status effects when drank as well.
+ You can trade this item back to the Bee Queen for a chance at some valuable rewards! 
+ Can be fed to bees to give extremely high and long lived Beenergized effect (and also grants very high friendship points with Beehemoths).
 
-##### Structures:
-Biome mobs can spawn in Bumblezone's structures naturally now.
+Royal Jelly Bucket added! A bucket sloppily holding extremely rare and valuable form of honey created by the Bee Queen!
+ Can be fed to bees to give extremely high and insanely long lived Beenergized effect (and also turns Beehemoths 
+ straight into Queen Behemoths). Trading this back to the Bee Queen can give you a chance at extremely valuable rewards!
+ Can be obtained by using an empty Bucket on Royal Jelly Fluid or created from 4 Royal Jelly Bottles plus a Bucket. 
+ Can be used in Dispensers too!
 
-Cell Maze structure is now buried better.
-
-Made boundary of Cell Maze tighter so that you only get Wrath of the Hive when it is obvious you are in a Cell maze structure.
-
-Cell Maze structure is now much more spread out in the world.
+##### Blocks:
+Royal Jelly Block added! A solidified storage form of Royal jelly! 
+ It behaves similar to vanilla's Honey Block except for the fact that it can only be "pulled" by pistons and not pushed!
+ Give it some thought and see what kind of awesome moving redstone builds you can do with this!
 
 ##### Fluids:
-Fixed bottom of honey fluid rendering when it shouldn't in some cases.
+Royal Jelly Fluid added! A specially brewed honey of bee royalty! It flows very slowly and will slow mobs in it significantly. 
+ Non-player mobs and boats tends to sink into the Royal Jelly Fluid as if it is a sticky trap! 
+ Can be picked up with a Bucket or Glass Bottle, and it will heal any hurt bee that flies into the fluid and give them a Beenergized and Regenerative effect.
+ When this fluid comes in contact with any other fluid that has a lava tag, this fluid will turn into either Sugar Infused Cobblestone or Sugar Infused Stone blocks.
 
+##### Sounds:
+Fixed drinking Sugar Water not having subtitles.
