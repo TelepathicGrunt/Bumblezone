@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -8,7 +9,6 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -74,7 +73,7 @@ public class RoyalJellyBlock extends HalfTransparentBlock {
 
     @Override
     public void fallOn(Level level, BlockState blockState, BlockPos blockPos, Entity entity, float fallDistance) {
-        entity.playSound(SoundEvents.HONEY_BLOCK_SLIDE, 1.0F, 1.0F);
+        entity.playSound(BzSounds.ROYAL_JELLY_BLOCK_SLIDE.get(), 1.0F, 1.0F);
         if (!level.isClientSide) {
             showJumpParticles((ServerLevel)level, entity);
         }
@@ -135,7 +134,7 @@ public class RoyalJellyBlock extends HalfTransparentBlock {
     private void maybeDoSlideEffects(Level level, Entity entity) {
         if (doesEntityDoHoneyBlockSlideEffects(entity)) {
             if (level.random.nextInt(5) == 0) {
-                entity.playSound(SoundEvents.HONEY_BLOCK_SLIDE, 1.0F, 1.0F);
+                entity.playSound(BzSounds.ROYAL_JELLY_BLOCK_SLIDE.get(), 1.0F, 1.0F);
             }
 
             if (!level.isClientSide && level.random.nextInt(5) == 0) {

@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.entities.queentrades;
 import com.google.gson.annotations.Expose;
 
 import java.util.List;
-import java.util.Map;
 
 public class QueenTradesCollectionObj {
     @Expose

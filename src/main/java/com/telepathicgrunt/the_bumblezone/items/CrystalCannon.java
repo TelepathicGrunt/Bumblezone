@@ -2,9 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
-import com.telepathicgrunt.the_bumblezone.entities.nonliving.HoneyCrystalShardEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -17,13 +15,11 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -59,7 +55,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
                         offset = level.random.nextFloat() * 10f - 5f;
                     }
 
-                    HoneyCrystalShardEntity newCrystal = BzEntities.HONEY_CRYSTAL_SHARD.get().create(level);
+                    AbstractArrow newCrystal = BzItems.HONEY_CRYSTAL_SHARDS.get().createArrow(level, crystalCannon, livingEntity);
                     int power = crystalCannon.getEnchantmentLevel(Enchantments.POWER_ARROWS);
                     if (power > 0) {
                         newCrystal.setBaseDamage(newCrystal.getBaseDamage() + (double)power * 0.5D + 0.5D);
@@ -99,8 +95,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
                             1);
                     level.addFreshEntity(newCrystal);
 
-                    // TODO: custom sound
-                    level.playSound(null, player.blockPosition(), BzSounds.BEE_CANNON_FIRES.get(), SoundSource.PLAYERS, 1.0F, (level.getRandom().nextFloat() * 0.2F) + 0.6F);
+                    level.playSound(null, player.blockPosition(), BzSounds.CRYSTAL_CANNON_FIRES.get(), SoundSource.PLAYERS, 1.0F, (level.getRandom().nextFloat() * 0.2F) + 0.6F);
                     mutableCrystalCannon.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 
                     if(numberOfCrystals >= 3 && player instanceof ServerPlayer serverPlayer) {

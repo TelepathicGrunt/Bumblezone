@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.entities.nonliving.HoneyCrystalShardEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -16,9 +16,7 @@ public class HoneyCrystalShards extends ArrowItem {
 
     @Override
     public AbstractArrow createArrow(Level level, ItemStack stack, LivingEntity livingEntity) {
-        Arrow arrow = new Arrow(level, livingEntity); //TODO: create custom crystald shards entity to spawn
-        arrow.setEffectsFromItem(stack);
-        return arrow;
+        return new HoneyCrystalShardEntity(level, livingEntity);
     }
 
     @Override

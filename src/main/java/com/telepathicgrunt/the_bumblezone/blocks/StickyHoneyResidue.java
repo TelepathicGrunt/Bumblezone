@@ -346,7 +346,7 @@ public class StickyHoneyResidue extends Block {
                     playerEntity.getY(),
                     playerEntity.getZ(),
                     BzSounds.WASHING_RESIDUES.get(),
-                    SoundSource.NEUTRAL,
+                    SoundSource.PLAYERS,
                     1.0F,
                     1.0F);
 

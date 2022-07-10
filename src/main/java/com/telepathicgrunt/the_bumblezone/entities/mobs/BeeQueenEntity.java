@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.client.LivingEntityFlyingSoundInstance;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.TradeEntryReducedObj;
@@ -12,14 +11,13 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.random.WeightedRandomList;
@@ -52,12 +50,9 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
@@ -396,6 +391,13 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         this.level.addFreshEntity(rewardItemEntity);
         rewardItemEntity.setDefaultPickUpDelay();
         spawnHappyParticles();
+        level.playSound(
+                null,
+                this.blockPosition(),
+                BzSounds.BEE_QUEEN_HAPPY.get(),
+                SoundSource.NEUTRAL,
+                1.0F,
+                (level.getRandom().nextFloat() * 0.2F) + 0.6F);
     }
 
     private void spawnAngryParticles(int particles) {
@@ -505,23 +507,17 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return null;
+        return BzSounds.BEE_QUEEN_LOOP.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return BzSounds.BEEHEMOTH_HURT.get();
+        return BzSounds.BEE_QUEEN_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return BzSounds.BEEHEMOTH_DEATH.get();
-    }
-
-    @Override
-    public void recreateFromPacket(ClientboundAddEntityPacket clientboundAddMobPacket) {
-        super.recreateFromPacket(clientboundAddMobPacket);
-        LivingEntityFlyingSoundInstance.playSound(this, BzSounds.BEEHEMOTH_LOOP.get());
+        return BzSounds.BEE_QUEEN_DEATH.get();
     }
 
     public static class DirectPathNavigator extends GroundPathNavigation {

@@ -63,7 +63,7 @@ public class PollenPuff extends Item {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
 
         if (!world.isClientSide()) {
-            world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), BzSounds.POLLEN_PUFF_THROW.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (world.random.nextFloat() * 0.4F + 0.8F));
+            world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), BzSounds.POLLEN_PUFF_THROW.get(), SoundSource.PLAYERS, 0.5F, 0.4F / (world.random.nextFloat() * 0.4F + 0.8F));
                 PollenPuffEntity pollenPuffEntity = new PollenPuffEntity(world, playerEntity);
                 pollenPuffEntity.setItem(itemstack);
                 pollenPuffEntity.shootFromRotation(playerEntity, playerEntity.getXRot(), playerEntity.getYRot(), 0.0F, 1.5F, 1.0F);
@@ -77,7 +77,6 @@ public class PollenPuff extends Item {
 
         return InteractionResultHolder.sidedSuccess(itemstack, world.isClientSide());
     }
-
 
     public static void spawnItemstackEntity(Level world, BlockPos blockPos, ItemStack itemStack) {
         if (!world.isClientSide() && !itemStack.isEmpty()) {

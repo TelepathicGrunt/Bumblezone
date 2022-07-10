@@ -3,14 +3,13 @@ package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,7 +29,7 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
         this.setCritArrow(true);
     }
 
-    public HoneyCrystalShardEntity(Level level, LivingEntity livingEntity, ItemStack itemStack) {
+    public HoneyCrystalShardEntity(Level level, LivingEntity livingEntity) {
         super(BzEntities.HONEY_CRYSTAL_SHARD.get(), livingEntity, level);
         this.setBaseDamage(3);
         this.setKnockback(1);
@@ -96,6 +95,12 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
         if (player.position().closerThan(this.position(), 0.85f)) {
             if(this.level instanceof ServerLevel serverLevel) {
                 showParticles(serverLevel, this, 5);
+                level.playSound(null,
+                        player.blockPosition(),
+                        BzSounds.HONEY_CRYSTAL_SHARD_SHATTER.get(),
+                        SoundSource.PLAYERS,
+                        1.0F,
+                        (level.getRandom().nextFloat() * 0.2F) + 0.6F);
             }
             this.remove(RemovalReason.DISCARDED);
             return false;
@@ -121,7 +126,7 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
 
     @Override
     protected SoundEvent getDefaultHitGroundSoundEvent() {
-        return SoundEvents.ARROW_HIT; // TODO: custom sound for subtitles
+        return BzSounds.HONEY_CRYSTAL_SHARD_HIT.get();
     }
 
     @Override

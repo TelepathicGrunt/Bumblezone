@@ -76,12 +76,12 @@ public class RoyalJellyBottle extends Item {
 
     @Override
     public SoundEvent getDrinkingSound() {
-        return BzSounds.SUGAR_WATER_DRINK.get(); //TODO: change sounds
+        return BzSounds.ROYAL_JELLY_DRINK.get();
     }
 
     @Override
     public SoundEvent getEatingSound() {
-        return BzSounds.SUGAR_WATER_DRINK.get();
+        return BzSounds.ROYAL_JELLY_DRINK.get();
     }
 
     @Override

@@ -135,7 +135,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                     playerEntity.getY(),
                     playerEntity.getZ(),
                     SoundEvents.BOTTLE_EMPTY,
-                    SoundSource.NEUTRAL,
+                    SoundSource.BLOCKS,
                     1.0F,
                     1.0F);
 
@@ -213,7 +213,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                     playerEntity.getY(),
                     playerEntity.getZ(),
                     SoundEvents.BOTTLE_EMPTY,
-                    SoundSource.NEUTRAL,
+                    SoundSource.BLOCKS,
                     1.0F,
                     1.0F);
 
