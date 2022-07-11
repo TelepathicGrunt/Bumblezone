@@ -261,7 +261,7 @@
     ],
     "subtitle": "subtitles.entity.the_bumblezone.bee_queen.happy"
   },
-  "entity.the_bumblezone.bumble_bee_chestplate.fly": {
+  "item.the_bumblezone.bumble_bee_chestplate.fly": {
     "sounds": [
       {
         "attenuation_distance": 6,

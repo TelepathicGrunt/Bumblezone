@@ -38,6 +38,8 @@ Royal Jelly Block added! A solidified storage form of Royal jelly!
  It behaves similar to vanilla's Honey Block except for the fact that it can only be "pulled" by pistons and not pushed!
  Give it some thought and see what kind of awesome moving redstone builds you can do with this!
 
+Honey Web, Sticky Honey Residue, and their redstone counterpart will not give slowness to creative mod players now.
+
 ##### Fluids:
 Royal Jelly Fluid added! A specially brewed honey of bee royalty! It flows very slowly and will slow mobs in it significantly. 
  Non-player mobs and boats tends to sink into the Royal Jelly Fluid as if it is a sticky trap! 

@@ -21,17 +21,15 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 
-public abstract class HoneyFluid extends ForgeFlowingFluid {
+import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.ABOVE_FLUID;
+import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.BOTTOM_LEVEL;
 
-    public static final IntegerProperty BOTTOM_LEVEL = HoneyFluidBlock.BOTTOM_LEVEL;
-    public static final BooleanProperty ABOVE_FLUID = HoneyFluidBlock.ABOVE_FLUID;
+public abstract class HoneyFluid extends ForgeFlowingFluid {
 
     protected HoneyFluid(Properties properties) {
         super(properties);
@@ -196,9 +194,9 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
 
     @Override
     protected FluidState getNewLiquid(LevelReader worldReader, BlockPos blockPos, BlockState blockState) {
-        boolean isBzFluidBlock = blockState.hasProperty(BOTTOM_LEVEL) && blockState.hasProperty(LEVEL);
+        boolean isBzFluidBlock = blockState.hasProperty(BOTTOM_LEVEL) && blockState.hasProperty(LiquidBlock.LEVEL);
         int lowestNeighboringFluidLevel = isBzFluidBlock ? blockState.getValue(BOTTOM_LEVEL) : HoneyFluidBlock.maxBottomLayer;
-        int currentFluidLevel = isBzFluidBlock ? blockState.getValue(LEVEL) : 0;
+        int currentFluidLevel = isBzFluidBlock ? blockState.getValue(LiquidBlock.LEVEL) : 0;
         int highestNeighboringFluidLevel = currentFluidLevel;
         int neighboringFluidSource = 0;
         boolean hasAboveFluid = isBzFluidBlock ? blockState.getValue(ABOVE_FLUID) : false;

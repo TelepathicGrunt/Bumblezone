@@ -129,8 +129,9 @@ public class HoneyWeb extends Block {
 
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        if (!(entity instanceof Bee || entity instanceof BeehemothEntity)) {
-
+        if (!(entity instanceof Bee || entity instanceof BeehemothEntity) &&
+            !(entity instanceof Player player && player.isCreative()))
+        {
             ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
 
             VoxelShape shape = this.shapeByIndex[this.getAABBIndex(blockState)];

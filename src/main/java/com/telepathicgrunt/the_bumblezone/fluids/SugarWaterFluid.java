@@ -155,7 +155,7 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid  {
 
     @Override
     public BlockState createLegacyBlock(FluidState state) {
-        return BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState().setValue(LiquidBlock.LEVEL, getLegacyLevel(state));
+        return BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState().setValue(LEVEL, getLegacyLevel(state));
     }
 
     public static class Flowing extends SugarWaterFluid {

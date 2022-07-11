@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -26,6 +27,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
@@ -191,7 +193,9 @@ public class StickyHoneyResidue extends Block {
         voxelShape = voxelShape.move(blockPos.getX(), blockPos.getY(), blockPos.getZ());
         if (Shapes.joinIsNotEmpty(voxelShape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND)) {
             entity.makeStuckInBlock(blockState, new Vec3(0.35D, 0.2F, 0.35D));
-            if (entity instanceof LivingEntity livingEntity) {
+            if (entity instanceof LivingEntity livingEntity &&
+                !(entity instanceof Player player && player.isCreative()))
+            {
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.MOVEMENT_SLOWDOWN,
                         200,

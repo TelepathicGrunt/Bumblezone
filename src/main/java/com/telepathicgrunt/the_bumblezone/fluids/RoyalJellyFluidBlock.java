@@ -16,8 +16,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
@@ -27,11 +25,11 @@ import java.util.function.Supplier;
 
 import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.ABOVE_FLUID;
 import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.BOTTOM_LEVEL;
+import static net.minecraft.world.level.material.FlowingFluid.FALLING;
 
 public class RoyalJellyFluidBlock extends LiquidBlock {
 
     public static final int maxBottomLayer = 8;
-    public static final BooleanProperty FALLING = BlockStateProperties.FALLING;
 
     public RoyalJellyFluidBlock(Supplier<? extends FlowingFluid> fluid) {
         super(fluid, Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noLootTable().speedFactor(0.15F));
@@ -91,7 +89,7 @@ public class RoyalJellyFluidBlock extends LiquidBlock {
                 return false;
             }
 
-            if (ifluidstate.getHeight(world, pos) >= 0.44444445F || (lavadownflag && ifluidstate.getValue(HoneyFluid.BOTTOM_LEVEL) == 0)) {
+            if (ifluidstate.getHeight(world, pos) >= 0.44444445F || (lavadownflag && ifluidstate.getValue(BOTTOM_LEVEL) == 0)) {
                 world.setBlockAndUpdate(pos, BzBlocks.SUGAR_INFUSED_COBBLESTONE.get().defaultBlockState());
                 this.triggerMixEffects(world, pos);
                 return false;
@@ -126,21 +124,22 @@ public class RoyalJellyFluidBlock extends LiquidBlock {
             if (beeEntity.getHealth() < beeEntity.getMaxHealth()) {
                 float diff = beeEntity.getMaxHealth() - beeEntity.getHealth();
                 beeEntity.heal(diff);
-                beeEntity.addEffect(new MobEffectInstance(
-                        BzEffects.BEENERGIZED.get(),
-                        600,
-                        0,
-                        false,
-                        true,
-                        true));
-                beeEntity.addEffect(new MobEffectInstance(
-                        MobEffects.REGENERATION,
-                        600,
-                        0,
-                        false,
-                        false,
-                        true));
             }
+
+            beeEntity.addEffect(new MobEffectInstance(
+                    BzEffects.BEENERGIZED.get(),
+                    600,
+                    0,
+                    false,
+                    true,
+                    true));
+            beeEntity.addEffect(new MobEffectInstance(
+                    MobEffects.REGENERATION,
+                    600,
+                    0,
+                    false,
+                    false,
+                    true));
         }
         else if(Math.abs(entity.getDeltaMovement().y()) > verticalSpeedDeltaLimit && entity.fallDistance <= 0.2D) {
             Vec3 vec3 = entity.getDeltaMovement();

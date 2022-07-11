@@ -25,11 +25,12 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Supplier;
 
+import static net.minecraft.world.level.material.FlowingFluid.FALLING;
+
 public class HoneyFluidBlock extends LiquidBlock {
 
     public static final int maxBottomLayer = 8;
     public static final IntegerProperty BOTTOM_LEVEL = IntegerProperty.create("bottom_level", 0, maxBottomLayer);
-    public static final BooleanProperty FALLING = BlockStateProperties.FALLING;
     public static final BooleanProperty ABOVE_FLUID = BooleanProperty.create("above_support");
 
     public HoneyFluidBlock(Supplier<? extends FlowingFluid> fluid) {
@@ -90,7 +91,7 @@ public class HoneyFluidBlock extends LiquidBlock {
                 return false;
             }
 
-            if (ifluidstate.getHeight(world, pos) >= 0.44444445F || (lavadownflag && ifluidstate.getValue(HoneyFluid.BOTTOM_LEVEL) == 0)) {
+            if (ifluidstate.getHeight(world, pos) >= 0.44444445F || (lavadownflag && ifluidstate.getValue(BOTTOM_LEVEL) == 0)) {
                 world.setBlockAndUpdate(pos, BzBlocks.SUGAR_INFUSED_COBBLESTONE.get().defaultBlockState());
                 this.triggerMixEffects(world, pos);
                 return false;
