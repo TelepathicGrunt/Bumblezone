@@ -69,77 +69,18 @@ public class BumblezoneClient {
     }
 
     public static void onClientSetup(FMLClientSetupEvent event) {
-        //enqueueWork because I have been told RenderTypeLookup is not thread safe
         event.enqueueWork(() -> {
-            DimensionSpecialEffectsAccessor.thebumblezone_getBY_ResourceLocation().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
+            DimensionSpecialEffectsAccessor.thebumblezone_getBY_ResourceLocation()
+                    .put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
+
             registerRenderLayers();
+            registerItemProperties();
 
             if(BzClientConfigs.enableAltBeeSkinRenderer.get()) {
                 //noinspection unchecked cast
                 BeeVariantRenderer.OLD_BEE_RENDER_FACTORY = (EntityRendererProvider<Bee>)RenderingRegistryAccessor.getEntityRenderers().get(EntityType.BEE);
                 EntityRenderers.register(EntityType.BEE, BeeVariantRenderer::new);
             }
-
-            // Allows shield to use the blocking json file for offset
-            ItemProperties.register(
-                    BzItems.HONEY_CRYSTAL_SHIELD.get(),
-                    new ResourceLocation("blocking"),
-                    (itemStack, world, livingEntity, integer) ->
-                            livingEntity != null &&
-                                    livingEntity.isUsingItem() &&
-                                    livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
-            );
-
-            // Correct model when about to throw
-            ItemProperties.register(
-                    BzItems.STINGER_SPEAR.get(),
-                    new ResourceLocation("throwing"),
-                    (itemStack, world, livingEntity, integer) ->
-                            livingEntity != null &&
-                                    livingEntity.isUsingItem() &&
-                                    livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
-            );
-
-            // Allows honey compass to render the correct texture
-            ItemProperties.register(
-                    BzItems.HONEY_COMPASS.get(),
-                    new ResourceLocation("angle"),
-                    HoneyCompassItemProperty.getClampedItemPropertyFunction());
-
-            // Correct model when about to fire
-            ItemProperties.register(
-                    BzItems.BEE_CANNON.get(),
-                    new ResourceLocation("primed"),
-                    (itemStack, world, livingEntity, int1) ->
-                            livingEntity != null &&
-                                    livingEntity.isUsingItem() &&
-                                    livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
-            );
-
-            ItemProperties.register(
-                    BzItems.CRYSTAL_CANNON.get(),
-                    new ResourceLocation("primed"),
-                    (itemStack, world, livingEntity, int1) ->
-                            livingEntity != null &&
-                                    livingEntity.isUsingItem() &&
-                                    livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
-            );
-
-            // Correct model based on bees
-            ItemProperties.register(
-                    BzItems.BEE_CANNON.get(),
-                    new ResourceLocation("bee_count"),
-                    (itemStack, world, livingEntity, int1) ->
-                            BeeCannon.getNumberOfBees(itemStack) / 10f
-            );
-
-            // Correct model based on crystals
-            ItemProperties.register(
-                    BzItems.CRYSTAL_CANNON.get(),
-                    new ResourceLocation("crystal_count"),
-                    (itemStack, world, livingEntity, int1) ->
-                            CrystalCannon.getNumberOfCrystals(itemStack) / 10f
-            );
 
             MenuScreens.register(BzMenuTypes.STRICT_9x1.get(), StrictChestScreen::new);
             MenuScreens.register(BzMenuTypes.STRICT_9x2.get(), StrictChestScreen::new);
@@ -148,6 +89,69 @@ public class BumblezoneClient {
             MenuScreens.register(BzMenuTypes.STRICT_9x5.get(), StrictChestScreen::new);
             MenuScreens.register(BzMenuTypes.STRICT_9x6.get(), StrictChestScreen::new);
         });
+    }
+
+    private static void registerItemProperties() {
+        // Allows shield to use the blocking json file for offset
+        ItemProperties.register(
+                BzItems.HONEY_CRYSTAL_SHIELD.get(),
+                new ResourceLocation("blocking"),
+                (itemStack, world, livingEntity, integer) ->
+                        livingEntity != null &&
+                                livingEntity.isUsingItem() &&
+                                livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
+        );
+
+        // Correct model when about to throw
+        ItemProperties.register(
+                BzItems.STINGER_SPEAR.get(),
+                new ResourceLocation("throwing"),
+                (itemStack, world, livingEntity, integer) ->
+                        livingEntity != null &&
+                                livingEntity.isUsingItem() &&
+                                livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
+        );
+
+        // Allows honey compass to render the correct texture
+        ItemProperties.register(
+                BzItems.HONEY_COMPASS.get(),
+                new ResourceLocation("angle"),
+                HoneyCompassItemProperty.getClampedItemPropertyFunction());
+
+        // Correct model when about to fire
+        ItemProperties.register(
+                BzItems.BEE_CANNON.get(),
+                new ResourceLocation("primed"),
+                (itemStack, world, livingEntity, int1) ->
+                        livingEntity != null &&
+                                livingEntity.isUsingItem() &&
+                                livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
+        );
+
+        ItemProperties.register(
+                BzItems.CRYSTAL_CANNON.get(),
+                new ResourceLocation("primed"),
+                (itemStack, world, livingEntity, int1) ->
+                        livingEntity != null &&
+                                livingEntity.isUsingItem() &&
+                                livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
+        );
+
+        // Correct model based on bees
+        ItemProperties.register(
+                BzItems.BEE_CANNON.get(),
+                new ResourceLocation("bee_count"),
+                (itemStack, world, livingEntity, int1) ->
+                        BeeCannon.getNumberOfBees(itemStack) / 10f
+        );
+
+        // Correct model based on crystals
+        ItemProperties.register(
+                BzItems.CRYSTAL_CANNON.get(),
+                new ResourceLocation("crystal_count"),
+                (itemStack, world, livingEntity, int1) ->
+                        CrystalCannon.getNumberOfCrystals(itemStack) / 10f
+        );
     }
 
     private static void registerRenderLayers() {

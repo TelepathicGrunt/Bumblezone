@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
@@ -155,7 +156,7 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid  {
 
     @Override
     public BlockState createLegacyBlock(FluidState state) {
-        return BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState().setValue(LEVEL, getLegacyLevel(state));
+        return BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState().setValue(BlockStateProperties.LEVEL, getLegacyLevel(state));
     }
 
     public static class Flowing extends SugarWaterFluid {
