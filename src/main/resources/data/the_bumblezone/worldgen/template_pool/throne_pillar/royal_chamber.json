@@ -1,12 +1,12 @@
 {
-  "name": "the_bumblezone:thone_pillar/royal_chamber",
+  "name": "the_bumblezone:throne_pillar/royal_chamber",
   "fallback": "minecraft:empty",
   "elements": [
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
-        "location": "the_bumblezone:thone_pillar/royal_chamber",
-        "processors": "minecraft:empty",
+        "location": "the_bumblezone:throne_pillar/royal_chamber",
+        "processors": "the_bumblezone:throne_pillar_processors",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
