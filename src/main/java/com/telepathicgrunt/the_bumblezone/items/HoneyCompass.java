@@ -5,11 +5,15 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,6 +26,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -30,7 +35,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Optional;
 
 public class HoneyCompass extends Item implements Vanishable {
@@ -38,6 +46,7 @@ public class HoneyCompass extends Item implements Vanishable {
     public static final String TAG_TARGET_DIMENSION = "TargetDimension";
     public static final String TAG_TYPE = "CompassType";
     public static final String TARGET_BLOCK = "TargetBlock";
+    public static final String IS_THRONE_TYPE = "IsThrone";
 
     public HoneyCompass(Item.Properties properties) {
         super(properties);
@@ -51,7 +60,12 @@ public class HoneyCompass extends Item implements Vanishable {
     @Override
     public String getDescriptionId(ItemStack itemStack) {
         if(isStructureCompass(itemStack)) {
-            return "item.the_bumblezone.honey_compass_structure";
+            if(isThroneStructureCompass(itemStack)) {
+                return "item.the_bumblezone.honey_compass_throne_structure";
+            }
+            else {
+                return "item.the_bumblezone.honey_compass_structure";
+            }
         }
 
         if(isBlockCompass(itemStack)) {
@@ -64,7 +78,7 @@ public class HoneyCompass extends Item implements Vanishable {
     @Override
     public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean bl) {
         if (!level.isClientSide) {
-            if (isBlockCompass(itemStack)) {
+            if (!isThroneStructureCompass(itemStack) && isBlockCompass(itemStack)) {
                 CompoundTag compoundTag = itemStack.getOrCreateTag();
                 if (compoundTag.contains(TAG_TARGET_POS) && compoundTag.contains(TARGET_BLOCK) && compoundTag.contains(TAG_TARGET_DIMENSION)) {
 
@@ -104,7 +118,7 @@ public class HoneyCompass extends Item implements Vanishable {
         ItemStack itemStack = player.getItemInHand(interactionHand);
         BlockPos playerPos = player.blockPosition();
 
-        if (!level.isClientSide() && !isStructureCompass(itemStack)) {
+        if (!level.isClientSide() && !isThroneStructureCompass(itemStack) && !isStructureCompass(itemStack)) {
             BlockPos structurePos = ((ServerLevel) level).findNearestMapStructure(BzTags.HONEY_COMPASS_LOCATING, playerPos, 100, false);
             if(structurePos == null) {
                 return super.use(level, player, interactionHand);
@@ -148,7 +162,7 @@ public class HoneyCompass extends Item implements Vanishable {
         ItemStack handCompass = useOnContext.getItemInHand();
         BlockState targetBlock = level.getBlockState(blockPos);
 
-        if (player != null && isValidBeeHive(targetBlock)) {
+        if (!isThroneStructureCompass(handCompass) && player != null && isValidBeeHive(targetBlock)) {
             level.playSound(null, blockPos, BzSounds.HONEY_COMPASS_BLOCK_LOCK.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
             if(player instanceof ServerPlayer serverPlayer) {
                 BzCriterias.HONEY_COMPASS_USE_TRIGGER.trigger(serverPlayer);
@@ -188,21 +202,36 @@ public class HoneyCompass extends Item implements Vanishable {
         return false;
     }
 
-    private void addStructureTags(ResourceKey<Level> resourceKey, BlockPos blockPos, CompoundTag compoundTag) {
+    @Override
+    public void appendHoverText(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
+        if (isThroneStructureCompass(itemStack)) {
+            components.forEach(component -> {
+                if (component instanceof MutableComponent mutableComponent) {
+                    mutableComponent.withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD);
+                }
+            });
+        }
+    }
+
+    public static void addStructureTags(ResourceKey<Level> resourceKey, BlockPos blockPos, CompoundTag compoundTag) {
         compoundTag.put(TAG_TARGET_POS, NbtUtils.writeBlockPos(blockPos));
         Level.RESOURCE_KEY_CODEC.encodeStart(NbtOps.INSTANCE, resourceKey).resultOrPartial(Bumblezone.LOGGER::error).ifPresent(tag -> compoundTag.put(TAG_TARGET_DIMENSION, tag));
         compoundTag.putString(TAG_TYPE, "structure");
         compoundTag.remove(TARGET_BLOCK);
     }
 
-    private void addBlockTags(ResourceKey<Level> resourceKey, BlockPos blockPos, CompoundTag compoundTag, Block block) {
+    public static void addBlockTags(ResourceKey<Level> resourceKey, BlockPos blockPos, CompoundTag compoundTag, Block block) {
         compoundTag.put(TAG_TARGET_POS, NbtUtils.writeBlockPos(blockPos));
         Level.RESOURCE_KEY_CODEC.encodeStart(NbtOps.INSTANCE, resourceKey).resultOrPartial(Bumblezone.LOGGER::error).ifPresent(tag -> compoundTag.put(TAG_TARGET_DIMENSION, tag));
         compoundTag.putString(TAG_TYPE, "block");
         compoundTag.putString(TARGET_BLOCK, Registry.BLOCK.getKey(block).toString());
     }
 
-    private boolean isBlockCompass(ItemStack compassItem) {
+    public static void addThroneTags(CompoundTag compoundTag) {
+        compoundTag.putBoolean(IS_THRONE_TYPE, true);
+    }
+
+    public static boolean isBlockCompass(ItemStack compassItem) {
         if(compassItem.hasTag()) {
             CompoundTag tag = compassItem.getTag();
             return tag != null && tag.contains(TAG_TYPE) && tag.getString(TAG_TYPE).equals("block");
@@ -210,10 +239,18 @@ public class HoneyCompass extends Item implements Vanishable {
         return false;
     }
 
-    private boolean isStructureCompass(ItemStack compassItem) {
+    public static boolean isStructureCompass(ItemStack compassItem) {
         if(compassItem.hasTag()) {
             CompoundTag tag = compassItem.getTag();
             return tag != null && tag.contains(TAG_TYPE) && tag.getString(TAG_TYPE).equals("structure");
+        }
+        return false;
+    }
+
+    public static boolean isThroneStructureCompass(ItemStack compassItem) {
+        if(compassItem.hasTag()) {
+            CompoundTag tag = compassItem.getTag();
+            return tag != null && tag.contains(IS_THRONE_TYPE) && tag.getBoolean(IS_THRONE_TYPE);
         }
         return false;
     }

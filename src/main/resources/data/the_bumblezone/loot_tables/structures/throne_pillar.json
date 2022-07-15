@@ -9,36 +9,6 @@
       },
       "entries": [
         {
-          "name": "the_bumblezone:bee_bread",
-          "type": "minecraft:item",
-          "weight": 20,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 2.0,
-                "max": 6.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
-          "name": "minecraft:honeycomb",
-          "type": "minecraft:item",
-          "weight": 20,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 2.0,
-                "max": 6.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
           "name": "the_bumblezone:honey_crystal_shards",
           "type": "minecraft:item",
           "weight": 15,
@@ -56,7 +26,7 @@
         {
           "name": "the_bumblezone:pollen_puff",
           "type": "minecraft:item",
-          "weight": 15,
+          "weight": 10,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -69,9 +39,44 @@
           ]
         },
         {
-          "name": "the_bumblezone:sticky_honey_residue",
+          "name": "the_bumblezone:honeycomb_brood_block",
           "type": "minecraft:item",
           "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "the_bumblezone:bee_stinger",
+          "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "the_bumblezone:structures/flowers",
+          "weight": 10
+        },
+        {
+          "name": "the_bumblezone:sticky_honey_residue",
+          "type": "minecraft:item",
+          "weight": 5,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -86,7 +91,7 @@
         {
           "name": "the_bumblezone:honey_web",
           "type": "minecraft:item",
-          "weight": 10,
+          "weight": 5,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -114,39 +119,34 @@
           ]
         },
         {
-          "name": "the_bumblezone:honeycomb_brood_block",
+          "name": "the_bumblezone:bee_bread",
           "type": "minecraft:item",
           "weight": 5,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
-                "min": 1.0,
-                "max": 3.0,
+                "min": 2.0,
+                "max": 6.0,
                 "type": "minecraft:uniform"
               }
             }
           ]
         },
         {
-          "name": "the_bumblezone:bee_stinger",
+          "name": "minecraft:honeycomb",
           "type": "minecraft:item",
           "weight": 5,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
-                "min": 1.0,
-                "max": 3.0,
+                "min": 2.0,
+                "max": 6.0,
                 "type": "minecraft:uniform"
               }
             }
           ]
-        },
-        {
-          "type": "minecraft:loot_table",
-          "name": "the_bumblezone:structures/flowers",
-          "weight": 5
         }
       ]
     },
@@ -160,7 +160,7 @@
         {
           "name": "minecraft:honey_bottle",
           "type": "minecraft:item",
-          "weight": 6,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -175,7 +175,7 @@
         {
           "name": "the_bumblezone:honey_crystal",
           "type": "minecraft:item",
-          "weight": 5,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -188,34 +188,19 @@
           ]
         },
         {
-          "name": "minecraft:honey_block",
-          "type": "minecraft:item",
-          "weight": 4,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 3.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
           "name": "the_bumblezone:honey_crystal_shield",
           "type": "minecraft:item",
-          "weight": 4
+          "weight": 3
         },
         {
           "name": "the_bumblezone:stinger_spear",
           "type": "minecraft:item",
-          "weight": 4
+          "weight": 3
         },
         {
           "name": "minecraft:orange_candle",
           "type": "minecraft:item",
-          "weight": 4,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -245,7 +230,7 @@
         {
           "name": "minecraft:yellow_candle",
           "type": "minecraft:item",
-          "weight": 1,
+          "weight": 2,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -260,7 +245,7 @@
         {
           "name": "minecraft:pink_candle",
           "type": "minecraft:item",
-          "weight": 1,
+          "weight": 2,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -271,87 +256,21 @@
               }
             }
           ]
-        }
-      ]
-    },
-    {
-      "rolls": 0,
-      "bonus_rolls": 1,
-      "entries": [
-        {
-          "name": "the_bumblezone:stinger_spear",
-          "type": "minecraft:item",
-          "weight": 1
         },
         {
+          "name": "minecraft:honey_block",
           "type": "minecraft:item",
-          "name": "minecraft:leather_boots",
           "weight": 1,
           "functions": [
             {
-              "function": "minecraft:enchant_randomly"
-            },
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"display\": {\"color\":16701501}}"
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
             }
           ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:leather_leggings",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly"
-            },
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"display\": {\"color\":16701501}}"
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:leather_chestplate",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly"
-            },
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"display\": {\"color\":16701501}}"
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:leather_helmet",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly"
-            },
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"display\": {\"color\":16701501}}"
-            }
-          ]
-        },
-        {
-          "name": "the_bumblezone:honey_crystal",
-          "type": "minecraft:item",
-          "weight": 3
-        },
-        {
-          "name": "the_bumblezone:honey_crystal_shards",
-          "type": "minecraft:item",
-          "weight": 5
-        },
-        {
-          "type": "minecraft:empty",
-          "weight": 10
         }
       ]
     },
@@ -359,28 +278,28 @@
       "rolls": 3,
       "entries": [
         {
+          "name": "the_bumblezone:honey_crystal_shield",
+          "type": "minecraft:item",
+          "weight": 8
+        },
+        {
+          "name": "the_bumblezone:stinger_spear",
+          "type": "minecraft:item",
+          "weight": 8
+        },
+        {
           "type": "minecraft:empty",
           "weight": 6
         },
         {
           "name": "the_bumblezone:honeycomb_brood_block",
           "type": "minecraft:item",
-          "weight": 2
-        },
-        {
-          "name": "the_bumblezone:honey_crystal_shield",
-          "type": "minecraft:item",
-          "weight": 2
-        },
-        {
-          "name": "the_bumblezone:stinger_spear",
-          "type": "minecraft:item",
-          "weight": 2
+          "weight": 5
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_boots",
-          "weight": 1,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -391,7 +310,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_boots",
-          "weight": 1,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -405,7 +324,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_leggings",
-          "weight": 1,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -416,7 +335,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_leggings",
-          "weight": 1,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -430,7 +349,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_chestplate",
-          "weight": 1,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -441,7 +360,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_chestplate",
-          "weight": 1,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -455,7 +374,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_helmet",
-          "weight": 1,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -466,7 +385,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_helmet",
-          "weight": 1,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -476,16 +395,106 @@
               "tag": "{\"display\": {\"color\":16701501}}"
             }
           ]
-        }
-      ]
-    },
-    {
-      "rolls": 2,
-      "entries": [
+        },
         {
-          "name": "the_bumblezone:honeycomb_brood_block",
           "type": "minecraft:item",
-          "weight": 1
+          "name": "the_bumblezone:honey_bee_leggings_1",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:honey_bee_leggings_2",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:stingless_bee_helmet_1",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:stingless_bee_helmet_2",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:carpenter_bee_boots_1",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:carpenter_bee_boots_2",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:bumble_bee_chestplate_1",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:bumble_bee_chestplate_2",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:bumble_bee_chestplate_trans_1",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:bumble_bee_chestplate_trans_2",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
         }
       ]
     },
@@ -493,25 +502,19 @@
       "rolls": 1,
       "entries": [
         {
+          "name": "the_bumblezone:honeycomb_brood_block",
           "type": "minecraft:item",
-          "name": "the_bumblezone:honey_compass",
           "weight": 1,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"IsThrone\": 1b}"
-            },
-            {
-              "function": "the_bumblezone:honey_compass_locate_structure",
-              "destination": "the_bumblezone:honey_compass_throne_locating",
-              "skip_existing_chunks": false,
-              "search_radius": 40
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 8.0,
+                "type": "minecraft:uniform"
+              }
             }
           ]
-        },
-        {
-          "type": "minecraft:empty",
-          "weight": 19
         }
       ]
     }

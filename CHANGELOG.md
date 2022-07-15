@@ -6,6 +6,7 @@ Bee Queen!!! A massive passive Bee that wants to trade! Right click while holdin
  Upon first successful trade you will be given The Queen's Desires advancement path which gives a reward for each 
  advancement completed. After completing the entire advancement path, visit the Bee Queen and right click with 
  empty hand to reset that advancement path for rewards!
+ Can be found in Throne Pillar structure only.
 
 ##### Items:
 Bee Stingers added which is a common gift from the Queen Bee! Can be used as low-damage ammo for Bows and Crossbows 
@@ -45,6 +46,12 @@ Royal Jelly Fluid added! A specially brewed honey of bee royalty! It flows very 
  Non-player mobs and boats tends to sink into the Royal Jelly Fluid as if it is a sticky trap! 
  Can be picked up with a Bucket or Glass Bottle, and it will heal any hurt bee that flies into the fluid and give them a Beenergized and Regenerative effect.
  When this fluid comes in contact with any other fluid that has a lava tag, this fluid will turn into either Sugar Infused Cobblestone or Sugar Infused Stone blocks.
+
+##### Structures:
+Throne Pillar structure added! This is where the Bee Queen spawns!
+
+Cell Maze structure is now more common and its armor room's Honey Cocoon blocks have a 1/20th chance of having a special 
+ Honey Compass that is permanently locked onto the closest Throne Pillar structure.
 
 ##### Sounds:
 Fixed drinking Sugar Water not having subtitles.
