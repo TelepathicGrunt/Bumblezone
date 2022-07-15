@@ -1,0 +1,46 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/the_queens_desire/the_beginning",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:bee_queen_spawn_egg"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.the_queens_desire.flooding_the_housing_market.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.the_queens_desire.flooding_the_housing_market.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 200,
+    "loot": [
+      "the_bumblezone:advancements/queens_desire"
+    ]
+  },
+  "criteria": {
+    "bee_queen_hand_trade": {
+      "trigger": "the_bumblezone:beehive_crafted",
+      "conditions": {
+        "target_count": 25
+      }
+    },
+    "target_advancement_done": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_bumblezone/the_queens_desire/the_beginning"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bee_queen_hand_trade"
+    ],
+    [
+      "target_advancement_done"
+    ]
+  ]
+}

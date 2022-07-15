@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone;
 
+import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
@@ -18,6 +20,7 @@ import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.items.BeeStinger;
+import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
@@ -73,6 +76,9 @@ public class Bumblezone{
         forgeBus.addListener(this::serverAboutToStart);
         forgeBus.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
         forgeBus.addListener(BeeStinger::bowUsable);
+        forgeBus.addListener(EntityMisc::resetValueOnRespawn);
+        forgeBus.addListener(EntityMisc::onItemCrafted);
+        forgeBus.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
 
         //Registration
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

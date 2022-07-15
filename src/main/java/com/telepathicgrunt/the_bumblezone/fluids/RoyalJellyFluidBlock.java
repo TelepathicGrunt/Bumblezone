@@ -1,11 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
+import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -144,6 +146,23 @@ public class RoyalJellyFluidBlock extends LiquidBlock {
         else if(Math.abs(entity.getDeltaMovement().y()) > verticalSpeedDeltaLimit && entity.fallDistance <= 0.2D) {
             Vec3 vec3 = entity.getDeltaMovement();
             entity.setDeltaMovement(new Vec3(vec3.x(), Math.copySign(verticalSpeedDeltaLimit, vec3.y()), vec3.z()));
+        }
+
+        if (entity instanceof ServerPlayer serverPlayer && EssenceOfTheBees.hasEssence(serverPlayer)) {
+            serverPlayer.addEffect(new MobEffectInstance(
+                    BzEffects.BEENERGIZED.get(),
+                    300,
+                    0,
+                    false,
+                    true,
+                    true));
+            serverPlayer.addEffect(new MobEffectInstance(
+                    MobEffects.REGENERATION,
+                    100,
+                    1,
+                    false,
+                    false,
+                    true));
         }
 
         super.entityInside(state, world, position, entity);

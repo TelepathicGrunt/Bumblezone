@@ -1,25 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.items.BeeBread;
-import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
-import com.telepathicgrunt.the_bumblezone.items.BeeStinger;
-import com.telepathicgrunt.the_bumblezone.items.BumbleBeeChestplate;
-import com.telepathicgrunt.the_bumblezone.items.BzBlockItem;
-import com.telepathicgrunt.the_bumblezone.items.BzBucketItem;
-import com.telepathicgrunt.the_bumblezone.items.BzHoneyCrystalBlockItem;
-import com.telepathicgrunt.the_bumblezone.items.CarpenterBeeBoots;
-import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
-import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
-import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
-import com.telepathicgrunt.the_bumblezone.items.HoneyCompass;
-import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShards;
-import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
-import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
-import com.telepathicgrunt.the_bumblezone.items.RoyalJellyBottle;
-import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
-import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
-import com.telepathicgrunt.the_bumblezone.items.SugarWaterBottle;
+import com.telepathicgrunt.the_bumblezone.items.*;
 import com.telepathicgrunt.the_bumblezone.items.materials.BeeArmorMaterial;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -107,4 +89,5 @@ public class BzItems {
     public static final RegistryObject<Item> STINGLESS_BEE_HELMET_2 = ITEMS.register("stingless_bee_helmet_2", () -> new StinglessBeeHelmet(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.HEAD, new Item.Properties().rarity(Rarity.UNCOMMON).tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 2));
     public static final RegistryObject<Item> CARPENTER_BEE_BOOTS_1 = ITEMS.register("carpenter_bee_boots_1", () -> new CarpenterBeeBoots(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.FEET, new Item.Properties().rarity(Rarity.UNCOMMON).tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 1));
     public static final RegistryObject<Item> CARPENTER_BEE_BOOTS_2 = ITEMS.register("carpenter_bee_boots_2", () -> new CarpenterBeeBoots(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.FEET, new Item.Properties().rarity(Rarity.UNCOMMON).tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 2));
+    public static final RegistryObject<Item> ESSENCE_OF_THE_BEES = ITEMS.register("essence_of_the_bees", () -> new EssenceOfTheBees(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB)));
 }

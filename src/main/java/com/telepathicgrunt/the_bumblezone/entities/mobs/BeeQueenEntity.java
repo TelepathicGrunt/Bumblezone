@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.TradeEntryReducedObj;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -384,6 +385,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 setThrowCooldown(50);
                 stack.shrink(1);
                 player.setItemInHand(hand, stack);
+
+                if (player instanceof ServerPlayer serverPlayer) {
+                    BzCriterias.BEE_QUEEN_HAND_TRADE_TRIGGER.trigger(serverPlayer);
+                }
+
                 return InteractionResult.SUCCESS;
             }
         }

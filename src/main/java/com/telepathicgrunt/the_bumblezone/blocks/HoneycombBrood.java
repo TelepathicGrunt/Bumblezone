@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
+import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -104,12 +105,14 @@ public class HoneycombBrood extends ProperFacingBlock {
                     !playerEntity.isSpectator() &&
                     BzBeeAggressionConfigs.aggressiveBees.get())
             {
-                if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                    playerEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
-                }
-                else {
-                    //Now all bees nearby in Bumblezone will get VERY angry!!!
-                    playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
+                if (playerEntity instanceof ServerPlayer serverPlayer && !EssenceOfTheBees.hasEssence(serverPlayer)) {
+                    if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
+                        playerEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
+                    }
+                    else {
+                        //Now all bees nearby in Bumblezone will get VERY angry!!!
+                        playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
+                    }
                 }
             }
 

@@ -1,10 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.advancements.CounterTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.EntitySpecificTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.GenericTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.ItemSpecificTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.RecipeDiscoveredTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.resources.ResourceLocation;
 
@@ -13,6 +15,8 @@ public class BzCriterias {
     public static final GenericTrigger BEENERGIZED_MAXED_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "beenergized_maxed"));
     public static final GenericTrigger BEE_CANNON_FULL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bee_cannon_full"));
     public static final ItemSpecificTrigger BEE_DROP_POLLEN_PUFF_TRIGGER = new ItemSpecificTrigger(new ResourceLocation(Bumblezone.MODID, "bee_drop_pollen_puff"));
+    public static final CounterTrigger BEEHIVE_CRAFTED_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "beehive_crafted"));
+    public static final GenericTrigger BEE_QUEEN_HAND_TRADE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bee_queen_hand_trade"));
     public static final GenericTrigger BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_max_flight"));
     public static final GenericTrigger CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots_mined_blocks"));
     public static final GenericTrigger CARPENTER_BEE_BOOTS_WALL_HANGING_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots_wall_hanging"));
@@ -46,6 +50,7 @@ public class BzCriterias {
     public static final GenericTrigger STINGER_SPEAR_POISONING_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "stinger_spear_poisoning"));
     public static final GenericTrigger STINGLESS_BEE_HELMET_SUPER_SIGHT_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet_super_sight"));
     public static final GenericTrigger SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "sugar_water_next_to_sugar_cane"));
+    public static final TargetAdvancementDoneTrigger TARGET_ADVANCEMENT_DONE_TRIGGER = new TargetAdvancementDoneTrigger(new ResourceLocation(Bumblezone.MODID, "target_advancement_done"));
     public static final GenericTrigger TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "teleport_out_of_bumblezone_fall"));
     public static final GenericTrigger TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "teleport_to_bumblezone_pearl"));
     public static final GenericTrigger TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "teleport_to_bumblezone_piston"));
@@ -55,6 +60,8 @@ public class BzCriterias {
         CriteriaTriggers.register(BEENERGIZED_MAXED_TRIGGER);
         CriteriaTriggers.register(BEE_CANNON_FULL_TRIGGER);
         CriteriaTriggers.register(BEE_DROP_POLLEN_PUFF_TRIGGER);
+        CriteriaTriggers.register(BEEHIVE_CRAFTED_TRIGGER);
+        CriteriaTriggers.register(BEE_QUEEN_HAND_TRADE_TRIGGER);
         CriteriaTriggers.register(BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER);
         CriteriaTriggers.register(CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER);
         CriteriaTriggers.register(CARPENTER_BEE_BOOTS_WALL_HANGING_TRIGGER);
@@ -88,6 +95,7 @@ public class BzCriterias {
         CriteriaTriggers.register(STINGER_SPEAR_POISONING_TRIGGER);
         CriteriaTriggers.register(STINGLESS_BEE_HELMET_SUPER_SIGHT_TRIGGER);
         CriteriaTriggers.register(SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER);
+        CriteriaTriggers.register(TARGET_ADVANCEMENT_DONE_TRIGGER);
         CriteriaTriggers.register(TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER);
         CriteriaTriggers.register(TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER);
         CriteriaTriggers.register(TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER);

@@ -15,6 +15,7 @@ public final class BzCapabilities {
     public static final Capability<EntityFlyingSpeed> ORIGINAL_FLYING_SPEED_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
     public static final Capability<EntityPositionAndDimension> ENTITY_POS_AND_DIM_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
     public static final Capability<NeurotoxinsMissCounter> NEUROTOXINS_MISS_COUNTER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+    public static final Capability<EntityMisc> ENTITY_MISC = CapabilityManager.get(new CapabilityToken<>() {});
 
     private BzCapabilities() {}
 
@@ -26,6 +27,7 @@ public final class BzCapabilities {
         forgeBus.addGenericListener(Entity.class, AttacherFlyingSpeed::attach);
         forgeBus.addGenericListener(Entity.class, AttacherEntityPositionAndDimension::attach);
         forgeBus.addGenericListener(Entity.class, AttacherNeurotoxinsMissedCounter::attach);
+        forgeBus.addGenericListener(Entity.class, AttacherEntityMisc::attach);
     }
 
     // make sure the caps classes are registered so they can be found
@@ -33,5 +35,6 @@ public final class BzCapabilities {
         event.register(EntityFlyingSpeed.class);
         event.register(EntityPositionAndDimension.class);
         event.register(NeurotoxinsMissCounter.class);
+        event.register(EntityMisc.class);
     }
 }

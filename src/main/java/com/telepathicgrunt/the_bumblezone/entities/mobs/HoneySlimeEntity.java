@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFacingRevenge
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFloatGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeHopGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeTemptGoal;
+import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
@@ -214,10 +215,13 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
                GeneralUtils.givePlayerItem(player, hand, new ItemStack(Items.HONEY_BOTTLE), false, true);
             }
 
-            this.setLastHurtByMob(player);
             getHoneyFromSlime(this);
-            if(player instanceof ServerPlayer) {
-               BzCriterias.HONEY_SLIME_HARVEST_TRIGGER.trigger((ServerPlayer) player);
+            if(player instanceof ServerPlayer serverPlayer) {
+               if(!EssenceOfTheBees.hasEssence(serverPlayer)) {
+                  this.setLastHurtByMob(player);
+               }
+
+               BzCriterias.HONEY_SLIME_HARVEST_TRIGGER.trigger(serverPlayer);
             }
             return InteractionResult.SUCCESS;
          }
