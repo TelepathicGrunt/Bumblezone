@@ -69,20 +69,6 @@ public class BeeStingerEntity extends AbstractArrow {
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult entityHitResult) {
-        super.onHitEntity(entityHitResult);
-
-        Entity entity = entityHitResult.getEntity();
-
-        if(entity instanceof LivingEntity livingEntity &&
-            livingEntity.isDeadOrDying() &&
-            this.getOwner() instanceof ServerPlayer serverPlayer)
-        {
-            BzCriterias.STINGER_SPEAR_LONG_RANGE_KILL_TRIGGER.trigger(serverPlayer); // TODO: make bee stinger kill advancement
-        }
-    }
-
-    @Override
     protected void doPostHurtEffects(LivingEntity livingEntity) {
         if (livingEntity.getMobType() != MobType.UNDEAD) {
             boolean isPoisoned = livingEntity.hasEffect(MobEffects.POISON);
@@ -129,6 +115,10 @@ public class BeeStingerEntity extends AbstractArrow {
 
                 livingEntity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
                 livingEntity.removeEffect(MobEffects.WEAKNESS);
+
+                if(!livingEntity.isDeadOrDying() && this.getOwner() instanceof ServerPlayer serverPlayer) {
+                    BzCriterias.BEE_STINGER_PARALYZE_TRIGGER.trigger(serverPlayer);
+                }
             }
         }
     }

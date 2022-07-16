@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
@@ -143,6 +144,10 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             UpdateFallingBlockPacket.sendToClient(fallingBlockEntity, fallingBlockEntity.getId(), (short)newLayer);
         }
 
+        if(entity instanceof LivingEntity && this.getOwner() instanceof ServerPlayer serverPlayer) {
+            EntityMisc.onPollenHit(serverPlayer);
+        }
+
         ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
         if(!entity.isCrouching() && !beeLeggings.isEmpty()) {
             HoneyBeeLeggings.setPollinated(beeLeggings);
@@ -173,8 +178,11 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                     this.level.setBlock(newPos, blockstate, 3);
                     blockstate.getBlock().setPlacedBy(this.level, newPos, blockstate, FakePlayerFactory.getMinecraft((ServerLevel) this.level), ItemStack.EMPTY);
 
-                    if(isTallPlant && this.getOwner() instanceof ServerPlayer) {
-                        BzCriterias.POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER.trigger((ServerPlayer) this.getOwner());
+                    if(this.getOwner() instanceof ServerPlayer serverPlayer) {
+                        EntityMisc.onFlowerSpawned(serverPlayer);
+                        if(isTallPlant) {
+                            BzCriterias.POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER.trigger(serverPlayer);
+                        }
                     }
                 }
             }

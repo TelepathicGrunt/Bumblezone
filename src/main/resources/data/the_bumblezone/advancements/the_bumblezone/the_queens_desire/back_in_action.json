@@ -1,14 +1,14 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/the_queens_desire/the_beginning",
+  "parent": "the_bumblezone:the_bumblezone/the_queens_desire/flooding_the_housing_market",
   "display": {
     "icon": {
       "item": "the_bumblezone:bee_queen_spawn_egg"
     },
     "title": {
-      "translate": "advancements.the_bumblezone.the_queens_desire.flooding_the_housing_market.title"
+      "translate": "advancements.the_bumblezone.the_queens_desire.back_in_action.title"
     },
     "description": {
-      "translate": "advancements.the_bumblezone.the_queens_desire.flooding_the_housing_market.description"
+      "translate": "advancements.the_bumblezone.the_queens_desire.back_in_action.description"
     },
     "frame": "challenge",
     "show_toast": true,
@@ -22,8 +22,8 @@
     ]
   },
   "criteria": {
-    "beehive_crafted": {
-      "trigger": "the_bumblezone:beehive_crafted",
+    "bee_saved_by_stinger": {
+      "trigger": "the_bumblezone:bee_saved_by_stinger",
       "conditions": {
         "target_count": 24
       }
@@ -31,7 +31,7 @@
   },
   "requirements": [
     [
-      "beehive_crafted"
+      "bee_saved_by_stinger"
     ]
   ]
 }

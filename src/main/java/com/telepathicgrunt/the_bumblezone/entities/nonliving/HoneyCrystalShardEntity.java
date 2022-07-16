@@ -73,19 +73,6 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult entityHitResult) {
-        super.onHitEntity(entityHitResult);
-        Entity entity = entityHitResult.getEntity();
-
-        if(entity instanceof LivingEntity livingEntity &&
-                livingEntity.isDeadOrDying() &&
-                this.getOwner() instanceof ServerPlayer serverPlayer)
-        {
-            BzCriterias.STINGER_SPEAR_LONG_RANGE_KILL_TRIGGER.trigger(serverPlayer); // TODO: make bee stinger kill advancement
-        }
-    }
-
-    @Override
     protected ItemStack getPickupItem() {
         return ItemStack.EMPTY;
     }

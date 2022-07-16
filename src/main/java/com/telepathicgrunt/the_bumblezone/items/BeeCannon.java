@@ -50,11 +50,35 @@ public class BeeCannon extends Item implements Vanishable {
             int remainingDuration = this.getUseDuration(mutableBeeCannon) - currentDuration;
             if (remainingDuration >= 20 - (quickCharge * 3) && numberOfBees > 0) {
                 List<Entity> bees = tryReleaseBees(level, mutableBeeCannon);
+                if (bees.isEmpty()) {
+                    return;
+                }
+
+                float maxDistance = 15;
+                Vec3 playerEyePos = new Vec3(player.getX(), player.getEyeY() - 0.25f, player.getZ());
+                Vec3 maxDistanceDirection = player.getLookAngle().multiply(maxDistance, maxDistance, maxDistance);
+                Vec3 finalPos = playerEyePos.add(maxDistanceDirection);
+                HitResult hitResult = level.clip(new ClipContext(
+                        playerEyePos,
+                        finalPos,
+                        ClipContext.Block.COLLIDER,
+                        ClipContext.Fluid.NONE,
+                        player));
+
+                if (hitResult.getType() != HitResult.Type.MISS) {
+                    finalPos = hitResult.getLocation();
+                }
+
+                EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(
+                        level,
+                        player,
+                        playerEyePos,
+                        finalPos,
+                        player.getBoundingBox().expandTowards(maxDistanceDirection),
+                        entity -> !entity.isInvisibleTo(player),
+                        1);
+
                 bees.forEach(bee -> {
-                    Vec3 playerEyePos = new Vec3(
-                            player.getX(),
-                            player.getEyeY() - 0.25f,
-                            player.getZ());
                     bee.moveTo(playerEyePos.x(),
                             playerEyePos.y(),
                             playerEyePos.z(),
@@ -63,50 +87,30 @@ public class BeeCannon extends Item implements Vanishable {
                     bee.setDeltaMovement(player.getLookAngle().multiply(2.5d, 2.5d, 2.5d));
                     level.addFreshEntity(bee);
 
-                    if(bee instanceof NeutralMob) {
-                        float maxDistance = 15;
-                        Vec3 maxDistanceDirection = player.getLookAngle().multiply(maxDistance, maxDistance, maxDistance);
-                        Vec3 finalPos = playerEyePos.add(maxDistanceDirection);
-
-                        HitResult hitResult = level.clip(new ClipContext(
-                                playerEyePos,
-                                finalPos,
-                                ClipContext.Block.COLLIDER,
-                                ClipContext.Fluid.NONE,
-                                player));
-                        if (hitResult.getType() != HitResult.Type.MISS) {
-                            finalPos = hitResult.getLocation();
+                    if(bee instanceof NeutralMob &&
+                        entityHitResult != null &&
+                        entityHitResult.getType() != HitResult.Type.MISS &&
+                        entityHitResult.getEntity() instanceof LivingEntity targetEntity
+                        && !(targetEntity instanceof Bee))
+                    {
+                        ((NeutralMob)bee).setRemainingPersistentAngerTime(60);
+                        ((NeutralMob)bee).setPersistentAngerTarget(targetEntity.getUUID());
+                        if(bee instanceof Bee trueBee) {
+                            trueBee.setTarget(targetEntity);
                         }
 
-                        EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(
-                                level,
-                                player,
-                                playerEyePos,
-                                finalPos,
-                                player.getBoundingBox().expandTowards(maxDistanceDirection),
-                                entity -> !entity.isInvisibleTo(player),
-                                1);
-
-                        if(entityHitResult != null &&
-                            entityHitResult.getType() != HitResult.Type.MISS &&
-                            entityHitResult.getEntity() instanceof LivingEntity targetEntity
-                            && !(targetEntity instanceof Bee))
-                        {
-                            ((NeutralMob)bee).setRemainingPersistentAngerTime(60);
-                            ((NeutralMob)bee).setPersistentAngerTarget(targetEntity.getUUID());
-                            if(bee instanceof Bee trueBee) {
-                                trueBee.setTarget(targetEntity);
-                            }
+                        if(player instanceof ServerPlayer serverPlayer && targetEntity.getType() == EntityType.ENDER_DRAGON) {
+                            BzCriterias.BEE_CANNON_ENDERDRAGON_TRIGGER.trigger(serverPlayer);
                         }
                     }
 
-                    level.playSound(null, player.blockPosition(), BzSounds.BEE_CANNON_FIRES.get(), SoundSource.PLAYERS, 1.0F, (level.getRandom().nextFloat() * 0.2F) + 0.6F);
                     mutableBeeCannon.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
-
-                    if(numberOfBees >= 3 && player instanceof ServerPlayer serverPlayer) {
-                        BzCriterias.BEE_CANNON_FULL_TRIGGER.trigger(serverPlayer);
-                    }
                 });
+
+                level.playSound(null, player.blockPosition(), BzSounds.BEE_CANNON_FIRES.get(), SoundSource.PLAYERS, 1.0F, (level.getRandom().nextFloat() * 0.2F) + 0.6F);
+                if(numberOfBees >= 3 && player instanceof ServerPlayer serverPlayer) {
+                    BzCriterias.BEE_CANNON_FULL_TRIGGER.trigger(serverPlayer);
+                }
             }
         }
     }

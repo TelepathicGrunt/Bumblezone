@@ -1,0 +1,37 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/the_queens_desire/flooding_the_housing_market",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:bee_queen_spawn_egg"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.the_queens_desire.slimy_mitosis.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.the_queens_desire.slimy_mitosis.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100,
+    "loot": [
+      "the_bumblezone:advancements/queens_desire"
+    ]
+  },
+  "criteria": {
+    "honey_slime_bred": {
+      "trigger": "the_bumblezone:honey_slime_bred",
+      "conditions": {
+        "target_count": 16
+      }
+    }
+  },
+  "requirements": [
+    [
+      "honey_slime_bred"
+    ]
+  ]
+}

@@ -99,7 +99,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
                     mutableCrystalCannon.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 
                     if(numberOfCrystals >= 3 && player instanceof ServerPlayer serverPlayer) {
-                        BzCriterias.BEE_CANNON_FULL_TRIGGER.trigger(serverPlayer); // TODO: custom crystal cannon advancement
+                        BzCriterias.CRYSTAL_CANNON_FULL_TRIGGER.trigger(serverPlayer);
                     }
                 }
             }

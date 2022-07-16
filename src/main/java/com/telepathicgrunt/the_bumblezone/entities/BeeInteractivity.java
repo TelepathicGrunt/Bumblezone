@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
@@ -44,6 +45,11 @@ public class BeeInteractivity {
                 beeEntity.hasStung();
                 ((BeeEntityInvoker)beeEntity).callSetHasStung(false);
                 GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, false, true);
+
+                if (playerEntity instanceof ServerPlayer serverPlayer) {
+                    EntityMisc.onBeesSaved(serverPlayer);
+                }
+
                 return InteractionResult.SUCCESS;
             }
 
@@ -108,7 +114,7 @@ public class BeeInteractivity {
                 beeEntity.heal(2);
                 removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
             }
-            else{
+            else {
                 beeEntity.heal(1);
                 removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.1f, 3);
             }
@@ -118,8 +124,12 @@ public class BeeInteractivity {
                 GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, true, true);
             }
 
-            if(removedWrath && playerEntity instanceof ServerPlayer) {
-                BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayer) playerEntity, itemstackOriginal);
+            if(playerEntity instanceof ServerPlayer serverPlayer) {
+                EntityMisc.onBeesFed(serverPlayer);
+
+                if(removedWrath) {
+                    BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger(serverPlayer, itemstackOriginal);
+                }
             }
 
             playerEntity.swing(hand, true);

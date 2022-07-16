@@ -20,7 +20,6 @@ import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.items.BeeStinger;
-import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
@@ -78,6 +77,10 @@ public class Bumblezone{
         forgeBus.addListener(BeeStinger::bowUsable);
         forgeBus.addListener(EntityMisc::resetValueOnRespawn);
         forgeBus.addListener(EntityMisc::onItemCrafted);
+        forgeBus.addListener(EntityMisc::onBeeBreed);
+        forgeBus.addListener(EntityMisc::onEntityKilled);
+        forgeBus.addListener(EntityMisc::onHoneyBottleDrank);
+        forgeBus.addListener(EntityMisc::onHoneySlimeBred);
         forgeBus.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
 
         //Registration

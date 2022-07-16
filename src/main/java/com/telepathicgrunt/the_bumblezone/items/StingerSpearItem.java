@@ -14,6 +14,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
@@ -122,6 +123,11 @@ public class StingerSpearItem extends TridentItem {
         }
 
         itemStack.hurtAndBreak(durabilityDecrease, user, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+
+        if(user instanceof ServerPlayer serverPlayer && enemy.getType() == EntityType.WITHER && enemy.isDeadOrDying()) {
+            BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.trigger(serverPlayer);
+        }
+
         return true;
     }
 

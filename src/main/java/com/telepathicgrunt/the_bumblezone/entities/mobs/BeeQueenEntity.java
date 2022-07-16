@@ -1,20 +1,28 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.TradeEntryReducedObj;
+import com.telepathicgrunt.the_bumblezone.mixin.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -34,6 +42,7 @@ import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
@@ -356,6 +365,30 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
 
+        if (stack.equals(ItemStack.EMPTY) && player instanceof ServerPlayer serverPlayer) {
+            if (finalbeeQueenAdvancementDone(serverPlayer)) {
+                EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
+                long timeDiff = this.level.getGameTime() - capability.tradeResetPrimedTime;
+                if (timeDiff < 200 && timeDiff > 10) {
+                    Iterable<Advancement> advancements = serverPlayer.createCommandSourceStack().getAdvancement(BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT).getChildren();
+                    for (Advancement advancement : advancements) {
+                        AdvancementProgress advancementprogress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
+                        for(String criteria : advancementprogress.getCompletedCriteria()) {
+                            serverPlayer.getAdvancements().revoke(advancement, criteria);
+                        }
+                    }
+                    capability.tradeResetPrimedTime = -1000;
+                    serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.reset_advancements"), false);
+                }
+                else {
+                    capability.tradeResetPrimedTime = this.level.getGameTime();
+                    serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.advancements_warning"), false);
+                }
+            }
+
+            return InteractionResult.PASS;
+        }
+
         boolean traded = false;
         for (Map.Entry<Set<Item>, WeightedRandomList<TradeEntryReducedObj>> tradeEntries : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
             if (tradeEntries.getKey().contains(item)) {
@@ -388,6 +421,13 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
                 if (player instanceof ServerPlayer serverPlayer) {
                     BzCriterias.BEE_QUEEN_HAND_TRADE_TRIGGER.trigger(serverPlayer);
+                    EntityMisc.onQueenBeeTrade(serverPlayer);
+
+                    if (finalbeeQueenAdvancementDone(serverPlayer)) {
+                        Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
+                        Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
+                        spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(BzItems.ESSENCE_OF_THE_BEES.get(), 1, 1000, 1), ItemStack.EMPTY);
+                    }
                 }
 
                 return InteractionResult.SUCCESS;
@@ -395,6 +435,14 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
 
         return InteractionResult.PASS;
+    }
+
+    private static boolean finalbeeQueenAdvancementDone(ServerPlayer serverPlayer) {
+        Advancement advancement = serverPlayer.createCommandSourceStack().getAdvancement(BzCriterias.QUEENS_DESIRE_FINAL_ADVANCEMENT);
+        Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getAdvancements();
+        return advancement != null &&
+                advancementsProgressMap.containsKey(advancement) &&
+                advancementsProgressMap.get(advancement).isDone();
     }
 
     private void spawnReward(Vec3 forwardVect, Vec3 sideVect, TradeEntryReducedObj reward, ItemStack originalItem) {
@@ -420,6 +468,16 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         this.level.addFreshEntity(rewardItemEntity);
         rewardItemEntity.setDefaultPickUpDelay();
         spawnHappyParticles();
+
+        if (reward.xpReward() > 0 && this.level instanceof ServerLevel serverLevel) {
+            ExperienceOrb.award(
+                    serverLevel,
+                    new Vec3(this.getX() + (forwardVect.x() * 1),
+                            this.getY() + 0.3,
+                            this.getZ() + (forwardVect.x() * 1)),
+                    reward.xpReward());
+        }
+
         level.playSound(
                 null,
                 this.blockPosition(),

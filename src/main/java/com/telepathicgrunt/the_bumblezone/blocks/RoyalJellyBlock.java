@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -13,10 +14,14 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HalfTransparentBlock;
@@ -27,6 +32,8 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import javax.annotation.Nullable;
 
 
 public class RoyalJellyBlock extends HalfTransparentBlock {
@@ -113,8 +120,25 @@ public class RoyalJellyBlock extends HalfTransparentBlock {
     }
 
     private void maybeDoSlideAchievement(Entity entity, BlockPos blockPos) {
-        if (entity instanceof ServerPlayer && entity.level.getGameTime() % 20L == 0L) {
-            CriteriaTriggers.HONEY_BLOCK_SLIDE.trigger((ServerPlayer)entity, entity.level.getBlockState(blockPos));
+        if (entity instanceof ServerPlayer serverPlayer && serverPlayer.level.getGameTime() % 20L == 0L) {
+            CriteriaTriggers.HONEY_BLOCK_SLIDE.trigger(serverPlayer, serverPlayer.level.getBlockState(blockPos));
+        }
+    }
+
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState blockState, LivingEntity entity, ItemStack itemStack) {
+        if (entity instanceof ServerPlayer serverPlayer) {
+            boolean nextToStickyPiston = false;
+            for (Direction direction : Direction.values()) {
+                if (level.getBlockState(pos.relative(direction)).is(Blocks.STICKY_PISTON)) {
+                    nextToStickyPiston = true;
+                    break;
+                }
+            }
+
+            if (nextToStickyPiston) {
+                BzCriterias.ROYAL_JELLY_BLOCK_PISTON_TRIGGER.trigger(serverPlayer);
+            }
         }
     }
 
