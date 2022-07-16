@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/pollen_puff/pollen_puff_fireball",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:pollen_puff"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.pollen_puff_mooshroom.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.pollen_puff_mooshroom.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "pollen_puff_mooshroom": {
+      "trigger": "the_bumblezone:pollen_puff_mooshroom",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "pollen_puff_mooshroom"
+    ]
+  ]
+}

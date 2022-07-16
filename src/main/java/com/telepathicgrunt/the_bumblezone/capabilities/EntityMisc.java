@@ -33,7 +33,9 @@ import java.util.Map;
 
 public class EntityMisc implements INBTSerializable<CompoundTag> {
 
-	private boolean isBeeEssenced = false;
+	public boolean isBeeEssenced = false;
+	public boolean receivedEssencePrize = false;
+	public long tradeResetPrimedTime = -1000;
 	public int craftedBeehives = 0;
 	public int beesBred = 0;
 	public int flowersSpawned = 0;
@@ -44,20 +46,13 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 	public int honeySlimeBred = 0;
 	public int beesFed = 0;
 	public int queenBeeTrade = 0;
-	public long tradeResetPrimedTime = -1000;
 	public Map<ResourceLocation, Integer> mobsKilledTracker = new Object2IntOpenHashMap<>();
-
-	public void setIsBeeEssenced(boolean isBeeEssenced) {
-		this.isBeeEssenced = isBeeEssenced;
-	}
-
-	public boolean getIsBeeEssenced() {
-		return isBeeEssenced;
-	}
 
 	public CompoundTag serializeNBT() {
 		CompoundTag nbt = new CompoundTag();
-		nbt.putBoolean("is_bee_essenced", this.getIsBeeEssenced());
+		nbt.putBoolean("is_bee_essenced", this.isBeeEssenced);
+		nbt.putBoolean("received_essence_prize", this.receivedEssencePrize);
+		nbt.putLong("trade_reset_primed_time", this.tradeResetPrimedTime);
 		nbt.putInt("crafted_beehives", this.craftedBeehives);
 		nbt.putInt("bees_bred", this.beesBred);
 		nbt.putInt("flowers_spawned", this.flowersSpawned);
@@ -68,7 +63,6 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 		nbt.putInt("honey_slime_bred", this.honeySlimeBred);
 		nbt.putInt("bees_fed", this.beesFed);
 		nbt.putInt("queen_bee_trade", this.queenBeeTrade);
-		nbt.putLong("trade_reset_primed_time", this.tradeResetPrimedTime);
 
 		ListTag mapList = new ListTag();
 		for (Map.Entry<ResourceLocation, Integer> entry : this.mobsKilledTracker.entrySet()) {
@@ -83,7 +77,9 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 	}
 
 	public void deserializeNBT(CompoundTag nbtTag) {
-		this.setIsBeeEssenced(nbtTag.getBoolean("is_bee_essenced"));
+		this.isBeeEssenced = nbtTag.getBoolean("is_bee_essenced");
+		this.receivedEssencePrize = nbtTag.getBoolean("received_essence_prize");
+		this.tradeResetPrimedTime = nbtTag.getLong("trade_reset_primed_time");
 		this.craftedBeehives = nbtTag.getInt("crafted_beehives");
 		this.beesBred = nbtTag.getInt("bees_bred");
 		this.flowersSpawned = nbtTag.getInt("flowers_spawned");
@@ -94,7 +90,6 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 		this.honeySlimeBred = nbtTag.getInt("honey_slime_bred");
 		this.beesFed = nbtTag.getInt("bees_fed");
 		this.queenBeeTrade = nbtTag.getInt("queen_bee_trade");
-		this.tradeResetPrimedTime = nbtTag.getLong("trade_reset_primed_time");
 
 		ListTag mapList = nbtTag.getList("mobs_killed_tracker", Tag.TAG_COMPOUND);
 		for (int i = 0; i < mapList.size(); i++) {

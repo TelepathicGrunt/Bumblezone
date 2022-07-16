@@ -72,11 +72,11 @@ public class EssenceOfTheBees extends Item {
 
     public static void setEssence(ServerPlayer serverPlayer, boolean newValue) {
         EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-        capability.setIsBeeEssenced(newValue);
+        capability.isBeeEssenced = newValue;
     }
 
     public static boolean hasEssence(ServerPlayer serverPlayer) {
         EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-        return capability.getIsBeeEssenced();
+        return capability.isBeeEssenced;
     }
 }

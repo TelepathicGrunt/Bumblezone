@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
+import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
@@ -14,6 +15,7 @@ import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -28,6 +30,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,6 +39,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.util.FakePlayerFactory;
+
+import java.util.List;
 
 public class PollenPuffEntity extends ThrowableItemProjectile {
     private boolean consumed = false;
@@ -121,20 +126,21 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             ((BeeEntityInvoker)entity).thebumblezone_callSetHasNectar(true);
             ((Bee)entity).resetTicksWithoutNectarSinceExitingHive();
 
-            if(this.getOwner() instanceof ServerPlayer) {
-                BzCriterias.POLLEN_PUFF_POLLINATED_BEE_TRIGGER.trigger((ServerPlayer) this.getOwner());
+            if(this.getOwner() instanceof ServerPlayer serverPlayer) {
+                BzCriterias.POLLEN_PUFF_POLLINATED_BEE_TRIGGER.trigger(serverPlayer);
             }
         }
         else if(entity instanceof Panda panda) {
             panda.sneeze(true);
 
-            if(this.getOwner() instanceof ServerPlayer) {
-                BzCriterias.POLLEN_PUFF_PANDA_TRIGGER.trigger((ServerPlayer) this.getOwner());
+            if(this.getOwner() instanceof ServerPlayer serverPlayer) {
+                BzCriterias.POLLEN_PUFF_PANDA_TRIGGER.trigger(serverPlayer);
             }
         }
-        else if(entity instanceof Fireball && ((Fireball)entity).getOwner() instanceof Ghast) {
-            if(this.getOwner() instanceof ServerPlayer)
-                BzCriterias.POLLEN_PUFF_FIREBALL_TRIGGER.trigger((ServerPlayer) this.getOwner());
+        else if(entity instanceof Fireball fireball && fireball.getOwner() instanceof Ghast) {
+            if(this.getOwner() instanceof ServerPlayer serverPlayer) {
+                BzCriterias.POLLEN_PUFF_FIREBALL_TRIGGER.trigger(serverPlayer);
+            }
         }
         else if(entity instanceof FallingBlockEntity fallingBlockEntity && fallingBlockEntity.getBlockState().is(BzBlocks.PILE_OF_POLLEN.get())) {
             BlockState fallingState = fallingBlockEntity.getBlockState();
@@ -146,6 +152,18 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
 
         if(entity instanceof LivingEntity && this.getOwner() instanceof ServerPlayer serverPlayer) {
             EntityMisc.onPollenHit(serverPlayer);
+        }
+
+        if (PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.mobToFlowers.containsKey(entity.getType())) {
+            List<Block> plants = PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.mobToFlowers.get(entity.getType());
+            if (!plants.isEmpty()) {
+                Block block = plants.get(random.nextInt(plants.size()));
+                boolean spawnedBlock = spawnPlants(entity.blockPosition(), block.defaultBlockState());
+
+                if(this.getOwner() instanceof ServerPlayer serverPlayer && spawnedBlock && entity.getType() == EntityType.MOOSHROOM) {
+                    BzCriterias.POLLEN_PUFF_MOOSHROOM_TRIGGER.trigger(serverPlayer);
+                }
+            }
         }
 
         ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
@@ -162,30 +180,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         blockstate.onProjectileHit(this.level, blockstate, blockHitResult, this);
 
         if(blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF)) {
-            boolean isTallPlant = false;
-            if(blockstate.getBlock() instanceof DoublePlantBlock) {
-                blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
-                isTallPlant = true;
-            }
-            int flowerAttempts = 2 + this.random.nextInt(3);
-            for(int i = 0; i < flowerAttempts; i++) {
-                BlockPos newPos = blockHitResult.getBlockPos().offset(
-                        this.random.nextInt(5) - 2,
-                        this.random.nextInt(3) - 1,
-                        this.random.nextInt(5) - 2);
-
-                if(this.level.isEmptyBlock(newPos) && blockstate.canSurvive(this.level, newPos)) {
-                    this.level.setBlock(newPos, blockstate, 3);
-                    blockstate.getBlock().setPlacedBy(this.level, newPos, blockstate, FakePlayerFactory.getMinecraft((ServerLevel) this.level), ItemStack.EMPTY);
-
-                    if(this.getOwner() instanceof ServerPlayer serverPlayer) {
-                        EntityMisc.onFlowerSpawned(serverPlayer);
-                        if(isTallPlant) {
-                            BzCriterias.POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER.trigger(serverPlayer);
-                        }
-                    }
-                }
-            }
+            spawnPlants(blockHitResult.getBlockPos(), blockstate);
         }
         else if(blockstate.is(Blocks.HONEY_BLOCK) ||
                 blockstate.is(Blocks.SOUL_SAND) ||
@@ -206,5 +201,35 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 consumed = true;
             }
         }
+    }
+
+    private boolean spawnPlants(BlockPos pos, BlockState blockstate) {
+        boolean spawnedPlant = false;
+        boolean isTallPlant = false;
+        if(blockstate.getBlock() instanceof DoublePlantBlock) {
+            blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
+            isTallPlant = true;
+        }
+        int flowerAttempts = 2 + this.random.nextInt(3);
+        for(int i = 0; i < flowerAttempts; i++) {
+            BlockPos newPos = pos.offset(
+                    this.random.nextInt(5) - 2,
+                    this.random.nextInt(3) - 1,
+                    this.random.nextInt(5) - 2);
+
+            if(this.level.isEmptyBlock(newPos) && blockstate.canSurvive(this.level, newPos)) {
+                this.level.setBlock(newPos, blockstate, 3);
+                blockstate.getBlock().setPlacedBy(this.level, newPos, blockstate, FakePlayerFactory.getMinecraft((ServerLevel) this.level), ItemStack.EMPTY);
+
+                if(this.getOwner() instanceof ServerPlayer serverPlayer && blockstate.is(BlockTags.FLOWERS)) {
+                    EntityMisc.onFlowerSpawned(serverPlayer);
+                    if(isTallPlant) {
+                        BzCriterias.POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER.trigger(serverPlayer);
+                    }
+                }
+                spawnedPlant = true;
+            }
+        }
+        return spawnedPlant;
     }
 }

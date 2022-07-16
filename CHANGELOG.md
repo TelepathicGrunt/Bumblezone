@@ -43,6 +43,10 @@ Essence of the Bees item added! An end game item to get for Bumblezone! When con
 > Can take honey from Filled Porous Honeycomb Blocks safely without getting Wrath of the Hive Effect.
 > Honey Slime will not get angry at you when you take its honey.
 
+Pollen Puff can be thrown at Mooshrooms to spawn Red Mushrooms nearby!
+ Other mobs can be made to spawn flowers as well by adding new files to bz_pollen_puff_entity_flowers by datapack.
+ Friends and Foes's Mooblooms and Glare is supported out of the box. Let me know what other flower mobs should be added by default!
+
 ##### Blocks:
 Royal Jelly Block added! A solidified storage form of Royal jelly! 
  It behaves similar to vanilla's Honey Block except for the fact that it can only be "pulled" by pistons and not pushed!

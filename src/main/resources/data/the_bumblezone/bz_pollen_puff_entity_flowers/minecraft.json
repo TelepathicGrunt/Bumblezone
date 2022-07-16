@@ -1,0 +1,10 @@
+{
+  "entries": [
+    {
+      "entity_type": "minecraft:mooshrooms",
+      "plants_to_spawn": [
+        "minecraft:red_mushroom"
+      ]
+    }
+  ]
+}

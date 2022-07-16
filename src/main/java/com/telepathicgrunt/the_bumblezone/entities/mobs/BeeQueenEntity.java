@@ -378,6 +378,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         }
                     }
                     capability.tradeResetPrimedTime = -1000;
+                    capability.receivedEssencePrize = false;
                     serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.reset_advancements"), false);
                 }
                 else {
@@ -424,9 +425,13 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     EntityMisc.onQueenBeeTrade(serverPlayer);
 
                     if (finalbeeQueenAdvancementDone(serverPlayer)) {
-                        Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
-                        Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
-                        spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(BzItems.ESSENCE_OF_THE_BEES.get(), 1, 1000, 1), ItemStack.EMPTY);
+                        EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
+                        if (!capability.receivedEssencePrize) {
+                            Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
+                            Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
+                            spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(BzItems.ESSENCE_OF_THE_BEES.get(), 1, 1000, 1), ItemStack.EMPTY);
+                            capability.receivedEssencePrize = true;
+                        }
                     }
                 }
 

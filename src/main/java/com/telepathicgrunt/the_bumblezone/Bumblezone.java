@@ -18,6 +18,7 @@ import com.telepathicgrunt.the_bumblezone.entities.EnderpearlImpact;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
+import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.items.BeeStinger;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
@@ -158,6 +159,7 @@ public class Bumblezone{
 
     public void registerDatapackListener(final AddReloadListenerEvent event) {
         event.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER);
+        event.addListener(PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
     }
 
     private void serverAboutToStart(final ServerAboutToStartEvent event) {

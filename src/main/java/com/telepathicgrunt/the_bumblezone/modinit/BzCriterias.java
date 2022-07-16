@@ -54,6 +54,7 @@ public class BzCriterias {
     public static final KilledCounterTrigger KILLED_COUNTER_TRIGGER = new KilledCounterTrigger(new ResourceLocation(Bumblezone.MODID, "killed_counter"));
     public static final GenericTrigger POLLEN_PUFF_FIREBALL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_fireball"));
     public static final CounterTrigger POLLEN_PUFF_HIT_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_hit"));
+    public static final GenericTrigger POLLEN_PUFF_MOOSHROOM_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_mooshroom"));
     public static final CounterTrigger POLLEN_PUFF_SPAWN_FLOWERS_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_spawn_flowers"));
     public static final GenericTrigger POLLEN_PUFF_PANDA_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_panda"));
     public static final GenericTrigger POLLEN_PUFF_POLLINATED_BEE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_pollinate_bee"));
@@ -110,6 +111,7 @@ public class BzCriterias {
         CriteriaTriggers.register(HONEY_SLIME_BRED_TRIGGER);
         CriteriaTriggers.register(HONEY_SLIME_CREATION_TRIGGER);
         CriteriaTriggers.register(HONEY_SLIME_HARVEST_TRIGGER);
+        CriteriaTriggers.register(POLLEN_PUFF_MOOSHROOM_TRIGGER);
         CriteriaTriggers.register(POLLEN_PUFF_FIREBALL_TRIGGER);
         CriteriaTriggers.register(POLLEN_PUFF_PANDA_TRIGGER);
         CriteriaTriggers.register(POLLEN_PUFF_POLLINATED_BEE_TRIGGER);
