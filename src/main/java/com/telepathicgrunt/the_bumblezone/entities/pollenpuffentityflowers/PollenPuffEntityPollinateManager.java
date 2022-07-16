@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueenTradesCollectionObj;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Registry;
@@ -14,9 +13,8 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -25,7 +23,7 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().setLenient().disableHtmlEscaping().excludeFieldsWithoutExposeAnnotation().create();
     public static final PollenPuffEntityPollinateManager POLLEN_PUFF_ENTITY_POLLINATE_MANAGER = new PollenPuffEntityPollinateManager();
 
-    public Map<EntityType<?>, List<Block>> mobToFlowers = new Object2ObjectArrayMap<>();
+    public Map<EntityType<?>, List<BlockState>> mobToFlowers = new Object2ObjectArrayMap<>();
 
     public PollenPuffEntityPollinateManager() {
         super(GSON, "bz_pollen_puff_entity_flowers");
@@ -40,10 +38,10 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
                 for (EntriesObj entriesObj : entries.entries) {
                     Optional<EntityType<?>> entityTypeOptional = Registry.ENTITY_TYPE.getOptional(new ResourceLocation(entriesObj.entity_type));
                     entityTypeOptional.ifPresent(entityType -> {
-                        List<Block> plants = new ObjectArrayList<>();
+                        List<BlockState> plants = new ObjectArrayList<>();
                         for (String plantNames : entriesObj.plants_to_spawn) {
                             Optional<Block> blockOptional = Registry.BLOCK.getOptional(new ResourceLocation(plantNames));
-                            blockOptional.ifPresent(plants::add);
+                            blockOptional.ifPresent(plant -> plants.add(plant.defaultBlockState()));
                         }
                         if (!plants.isEmpty()) {
                             mobToFlowers.put(entityType, plants);

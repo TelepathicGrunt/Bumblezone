@@ -155,10 +155,9 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         }
 
         if (PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.mobToFlowers.containsKey(entity.getType())) {
-            List<Block> plants = PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.mobToFlowers.get(entity.getType());
+            List<BlockState> plants = PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.mobToFlowers.get(entity.getType());
             if (!plants.isEmpty()) {
-                Block block = plants.get(random.nextInt(plants.size()));
-                boolean spawnedBlock = spawnPlants(entity.blockPosition(), block.defaultBlockState());
+                boolean spawnedBlock = spawnPlants(entity.blockPosition(), plants);
 
                 if(this.getOwner() instanceof ServerPlayer serverPlayer && spawnedBlock && entity.getType() == EntityType.MOOSHROOM) {
                     BzCriterias.POLLEN_PUFF_MOOSHROOM_TRIGGER.trigger(serverPlayer);
@@ -180,7 +179,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         blockstate.onProjectileHit(this.level, blockstate, blockHitResult, this);
 
         if(blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF)) {
-            spawnPlants(blockHitResult.getBlockPos(), blockstate);
+            spawnPlants(blockHitResult.getBlockPos(), List.of(blockstate));
         }
         else if(blockstate.is(Blocks.HONEY_BLOCK) ||
                 blockstate.is(Blocks.SOUL_SAND) ||
@@ -203,15 +202,21 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         }
     }
 
-    private boolean spawnPlants(BlockPos pos, BlockState blockstate) {
-        boolean spawnedPlant = false;
-        boolean isTallPlant = false;
-        if(blockstate.getBlock() instanceof DoublePlantBlock) {
-            blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
-            isTallPlant = true;
+    private boolean spawnPlants(BlockPos pos, List<BlockState> blockstates) {
+        if(blockstates.size() == 0) {
+            return false;
         }
+
+        boolean spawnedPlant = false;
         int flowerAttempts = 2 + this.random.nextInt(3);
         for(int i = 0; i < flowerAttempts; i++) {
+            boolean isTallPlant = false;
+            BlockState blockstate = blockstates.get(random.nextInt(blockstates.size()));
+            if(blockstate.getBlock() instanceof DoublePlantBlock) {
+                blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
+                isTallPlant = true;
+            }
+
             BlockPos newPos = pos.offset(
                     this.random.nextInt(5) - 2,
                     this.random.nextInt(3) - 1,
