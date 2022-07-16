@@ -1,7 +1,7 @@
 {
   "entries": [
     {
-      "entity_type": "friendsandfoes:mooblooms",
+      "entity_type": "friendsandfoes:moobloom",
       "plants_to_spawn": [
         "friendsandfoes:buttercup"
       ]

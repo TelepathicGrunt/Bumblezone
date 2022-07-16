@@ -1,0 +1,28 @@
+{
+  "entries": [
+    {
+      "entity_type": "earthtojavamobs:moobloom",
+      "plants_to_spawn": [
+        "earthtojavamobs:buttercup"
+      ]
+    },
+    {
+      "entity_type": "earthtojavamobs:moolip",
+      "plants_to_spawn": [
+        "minecraft:pink_tulip"
+      ]
+    },
+    {
+      "entity_type": "earthtojavamobs:muddy_pig",
+      "plants_to_spawn": [
+        "minecraft:poppy"
+      ]
+    },
+    {
+      "entity_type": "earthtojavamobs:cluckshroom",
+      "plants_to_spawn": [
+        "minecraft:red_mushroom"
+      ]
+    }
+  ]
+}

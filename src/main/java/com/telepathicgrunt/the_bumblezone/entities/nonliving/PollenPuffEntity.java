@@ -13,6 +13,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
@@ -33,6 +35,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.BlockHitResult;
@@ -223,6 +226,13 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                     this.random.nextInt(5) - 2);
 
             if(this.level.isEmptyBlock(newPos) && blockstate.canSurvive(this.level, newPos)) {
+                if (blockstate.is(Blocks.MOSS_CARPET)) {
+                    BlockState belowState = this.level.getBlockState(newPos.below());
+                    if (Registry.BLOCK.getKey(belowState.getBlock()).getPath().contains("carpet") || belowState.is(BlockTags.UNSTABLE_BOTTOM_CENTER) || !belowState.isFaceSturdy(this.level, newPos.below(), Direction.DOWN, SupportType.FULL)) {
+                        continue;
+                    }
+                }
+
                 this.level.setBlock(newPos, blockstate, 3);
                 blockstate.getBlock().setPlacedBy(this.level, newPos, blockstate, FakePlayerFactory.getMinecraft((ServerLevel) this.level), ItemStack.EMPTY);
 

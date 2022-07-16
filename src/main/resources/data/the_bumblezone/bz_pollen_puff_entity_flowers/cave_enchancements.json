@@ -1,25 +1,25 @@
 {
   "entries": [
     {
-      "entity_type": "earthtojava:mooblooms",
+      "entity_type": "cave_enhancements:cruncher",
       "plants_to_spawn": [
-        "earthtojava:buttercup"
+        "minecraft:moss_carpet"
       ]
     },
     {
-      "entity_type": "earthtojava:moolip",
+      "entity_type": "earthtojavamobs:moolip",
       "plants_to_spawn": [
-        "earthtojava:pink_daisy"
+        "earthtojavamobs:pink_daisy"
       ]
     },
     {
-      "entity_type": "earthtojava:muddy_pig",
+      "entity_type": "earthtojavamobs:muddy_pig",
       "plants_to_spawn": [
         "minecraft:poppy"
       ]
     },
     {
-      "entity_type": "earthtojava:cluckshroom",
+      "entity_type": "earthtojavamobs:cluckshroom",
       "plants_to_spawn": [
         "minecraft:red_mushroom"
       ]
