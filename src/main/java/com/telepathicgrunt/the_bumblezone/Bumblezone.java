@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone;
 
 import com.telepathicgrunt.the_bumblezone.components.EntityComponent;
+import com.telepathicgrunt.the_bumblezone.components.EssenceComponent;
 import com.telepathicgrunt.the_bumblezone.components.FlyingSpeedComponent;
 import com.telepathicgrunt.the_bumblezone.components.MiscComponent;
 import com.telepathicgrunt.the_bumblezone.components.NeurotoxinsMissedCounterComponent;
@@ -20,6 +21,8 @@ import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
+import dev.onyxstudios.cca.api.v3.entity.PlayerCopyCallback;
+import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -40,8 +43,9 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
     public static final ComponentKey<EntityComponent> ENTITY_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "entity_component"), EntityComponent.class);
     public static final ComponentKey<FlyingSpeedComponent> FLYING_SPEED_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "original_flying_speed"), FlyingSpeedComponent.class);
-    public static final ComponentKey<MiscComponent> MISC_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "misc_component"), MiscComponent.class);
     public static final ComponentKey<NeurotoxinsMissedCounterComponent> NEUROTOXINS_MISSED_COUNTER_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "neurotoxins_missed_counter"), NeurotoxinsMissedCounterComponent.class);
+    public static final ComponentKey<EssenceComponent> ESSENCE_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "essence_component"), EssenceComponent.class);
+    public static final ComponentKey<MiscComponent> MISC_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "misc_component"), MiscComponent.class);
 
     @Override
     public void onInitialize() {
@@ -88,6 +92,8 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BumbleBeeChestplateFlyingPacket.registerPacket();
         StinglessBeeHelmetSightPacket.registerPacket();
 
+        MiscComponent.onEntityKilled();
+
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(QueensTradeManager.QUEENS_TRADE_MANAGER);
     }
@@ -97,7 +103,20 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         //attach component to living entities
         registry.registerFor(LivingEntity.class, ENTITY_COMPONENT, p -> new EntityComponent());
         registry.registerFor(LivingEntity.class, FLYING_SPEED_COMPONENT, p -> new FlyingSpeedComponent());
-        registry.registerFor(Player.class, MISC_COMPONENT, p -> new MiscComponent());
         registry.registerFor(LivingEntity.class, NEUROTOXINS_MISSED_COUNTER_COMPONENT, p -> new NeurotoxinsMissedCounterComponent());
+        registry.registerForPlayers(ESSENCE_COMPONENT, p -> new EssenceComponent(), RespawnCopyStrategy.NEVER_COPY);
+        registry.registerForPlayers(MISC_COMPONENT, p -> new MiscComponent(), RespawnCopyStrategy.ALWAYS_COPY);
+
+        PlayerCopyCallback.EVENT.register((serverPlayerOriginal, serverPlayerNew, lossless) -> {
+            if (BzConfig.keepBeeEssenceOnRespawning || lossless) {
+                EssenceComponent capabilityOld = Bumblezone.ESSENCE_COMPONENT.get(serverPlayerOriginal);
+                EssenceComponent capability = Bumblezone.ESSENCE_COMPONENT.get(serverPlayerNew);
+                capability.isBeeEssenced = capabilityOld.isBeeEssenced;
+            }
+            else {
+                EssenceComponent capability = Bumblezone.ESSENCE_COMPONENT.get(serverPlayerNew);
+                capability.isBeeEssenced = false;
+            }
+        });
     }
 }

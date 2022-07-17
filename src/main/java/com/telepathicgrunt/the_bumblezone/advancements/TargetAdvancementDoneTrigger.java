@@ -60,9 +60,7 @@ public class TargetAdvancementDoneTrigger extends SimpleCriterionTrigger<TargetA
         }
     }
 
-    public static void OnAdvancementGiven(AdvancementEvent event) {
-        if (event.getEntity() instanceof ServerPlayer serverPlayer) {
-            BzCriterias.TARGET_ADVANCEMENT_DONE_TRIGGER.trigger(serverPlayer);
-        }
+    public static void OnAdvancementGiven(ServerPlayer serverPlayer, Advancement advancement) {
+        BzCriterias.TARGET_ADVANCEMENT_DONE_TRIGGER.trigger(serverPlayer);
     }
 }

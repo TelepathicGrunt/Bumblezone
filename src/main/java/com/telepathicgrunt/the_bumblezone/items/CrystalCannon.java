@@ -109,30 +109,29 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
-        ItemStack beeCannon = player.getItemInHand(interactionHand);
+        ItemStack crystalCannon = player.getItemInHand(interactionHand);
         if (!level.isClientSide()) {
-            loadProjectiles(player, beeCannon);
+            loadProjectiles(player, crystalCannon);
         }
 
-        if (getNumberOfCrystals(beeCannon) == 0) {
-            return InteractionResultHolder.fail(beeCannon);
+        if (getNumberOfCrystals(crystalCannon) == 0) {
+            return InteractionResultHolder.fail(crystalCannon);
         }
         else {
             player.startUsingItem(interactionHand);
-            return InteractionResultHolder.consume(beeCannon);
+            return InteractionResultHolder.consume(crystalCannon);
         }
     }
 
-    private void loadProjectiles(Player player, ItemStack beeCannon) {
-        ItemStack projectItem1 = player.getProjectile(beeCannon);
+    private void loadProjectiles(Player player, ItemStack crystalCannon) {
+        ItemStack projectItem1 = player.getProjectile(crystalCannon);
         if (projectItem1.isEmpty()) {
             return;
         }
 
-        if (tryAddCrystal(beeCannon)) {
+        if (tryAddCrystal(crystalCannon)) {
             boolean infinite = player.getAbilities().instabuild ||
-                    (projectItem1.getItem() instanceof HoneyCrystalShards &&
-                            ((HoneyCrystalShards)projectItem1.getItem()).isInfinite(projectItem1, beeCannon, player));
+                    EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, crystalCannon) > 0;
 
             if (!infinite) {
                 projectItem1.shrink(1);
@@ -209,16 +208,11 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
         return UseAnim.BOW;
     }
 
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        if(enchantment == Enchantments.QUICK_CHARGE ||
-            enchantment == Enchantments.PIERCING ||
-            enchantment == Enchantments.POWER_ARROWS ||
-            enchantment == Enchantments.PUNCH_ARROWS)
-        {
-            return true;
-        }
-
-        return enchantment.category.canEnchant(stack.getItem());
+    public static boolean canBeEnchanted(ItemStack stack, Enchantment enchantment) {
+        return stack.getItem() == BzItems.CRYSTAL_CANNON &&
+                (enchantment == Enchantments.QUICK_CHARGE ||
+                enchantment == Enchantments.PIERCING ||
+                enchantment == Enchantments.POWER_ARROWS ||
+                enchantment == Enchantments.PUNCH_ARROWS);
     }
 }

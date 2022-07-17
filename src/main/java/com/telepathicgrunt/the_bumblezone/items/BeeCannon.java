@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -223,12 +224,7 @@ public class BeeCannon extends Item implements Vanishable {
         return UseAnim.BOW;
     }
 
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        if(enchantment == Enchantments.QUICK_CHARGE) {
-            return true;
-        }
-
-        return enchantment.category.canEnchant(stack.getItem());
+    public static boolean canBeEnchanted(ItemStack stack, Enchantment enchantment) {
+        return stack.getItem() == BzItems.BEE_CANNON && enchantment == Enchantments.QUICK_CHARGE;
     }
 }

@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.mixin.enchantments;
 
+import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CarpenterBeeBoots;
+import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
@@ -56,7 +58,10 @@ public class EnchantmentHelperMixin {
                                                                  List<EnchantmentInstance> list, Item item,
                                                                  boolean treasure, Iterator<Enchantment> var6, Enchantment enchantment)
     {
-        if (CarpenterBeeBoots.canBeEnchanted(stack, enchantment)) {
+        if (CarpenterBeeBoots.canBeEnchanted(stack, enchantment) ||
+            BeeCannon.canBeEnchanted(stack, enchantment) ||
+            CrystalCannon.canBeEnchanted(stack, enchantment)
+        ) {
             if ((!enchantment.isTreasureOnly() || treasure) && enchantment.isDiscoverable()) {
                 for(int currentLevel = enchantment.getMaxLevel(); currentLevel > enchantment.getMinLevel() - 1; --currentLevel) {
                     if (power >= enchantment.getMinCost(currentLevel) && power <= enchantment.getMaxCost(currentLevel)) {

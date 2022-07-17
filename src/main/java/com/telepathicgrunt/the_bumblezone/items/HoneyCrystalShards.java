@@ -18,10 +18,4 @@ public class HoneyCrystalShards extends ArrowItem {
     public AbstractArrow createArrow(Level level, ItemStack stack, LivingEntity livingEntity) {
         return new HoneyCrystalShardEntity(level, livingEntity);
     }
-
-    @Override
-    public boolean isInfinite(ItemStack stack, ItemStack bow, Player player) {
-        int enchantLevel = bow.getEnchantmentLevel(Enchantments.INFINITY_ARROWS);
-        return enchantLevel > 0;
-    }
 }

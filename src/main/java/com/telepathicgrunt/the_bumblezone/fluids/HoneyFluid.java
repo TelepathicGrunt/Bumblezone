@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -26,8 +27,6 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
@@ -35,10 +34,10 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
-public abstract class HoneyFluid extends FlowingFluid {
+import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.ABOVE_FLUID;
+import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.BOTTOM_LEVEL;
 
-    public static final IntegerProperty BOTTOM_LEVEL = HoneyFluidBlock.BOTTOM_LEVEL;
-    public static final BooleanProperty ABOVE_FLUID = HoneyFluidBlock.ABOVE_FLUID;
+public abstract class HoneyFluid extends FlowingFluid {
 
     protected HoneyFluid() { }
 
@@ -223,7 +222,7 @@ public abstract class HoneyFluid extends FlowingFluid {
                 }
 
                 highestNeighboringFluidLevel = Math.max(highestNeighboringFluidLevel, sideFluidState.getAmount());
-                if(sideFluidState.is(BzTags.BZ_HONEY_FLUID) && !(canPassThroughBelow && !sideFluidState.isSource() && sideBlockState.getValue(FALLING) && aboveBlockState.getFluidState().is(BzTags.BZ_HONEY_FLUID))) {
+                if(sideFluidState.is(BzTags.BOTTOM_LAYER_FLUIDS) && !(canPassThroughBelow && !sideFluidState.isSource() && sideBlockState.getValue(FALLING) && aboveBlockState.getFluidState().is(BzTags.BZ_HONEY_FLUID))) {
                     lowestNeighboringFluidLevel = Math.min(lowestNeighboringFluidLevel, sideFluidState.isSource() ? 0 : sideFluidState.getValue(BOTTOM_LEVEL));
                 }
             }
@@ -240,7 +239,7 @@ public abstract class HoneyFluid extends FlowingFluid {
         }
 
         if (aboveFluidIsThisFluid && ((FlowingFluidAccessor)this).thebumblezone_callCanPassThroughWall(Direction.UP, worldReader, blockPos, blockState, aboveBlockPos, aboveBlockState)) {
-            if(!aboveFluidState.isSource() && aboveFluidState.is(BzTags.BZ_HONEY_FLUID) && aboveFluidState.getValue(BOTTOM_LEVEL) != 0) {
+            if(!aboveFluidState.isSource() && aboveFluidState.is(BzTags.BOTTOM_LAYER_FLUIDS) && aboveFluidState.getValue(BOTTOM_LEVEL) != 0) {
                 newFluidLevel = highestNeighboringFluidLevel - dropOffValue;
             }
         }
@@ -264,89 +263,25 @@ public abstract class HoneyFluid extends FlowingFluid {
         boolean aboveFluidIsThisFluid =
                     !aboveFluidState.isEmpty() &&
                     aboveFluidState.getType().isSame(this) &&
-                    (aboveFluidState.isSource() || !aboveFluidState.is(BzTags.BZ_HONEY_FLUID) || aboveFluidState.getValue(BOTTOM_LEVEL) == 0);
+                    (aboveFluidState.isSource() || !aboveFluidState.is(BzTags.BOTTOM_LAYER_FLUIDS) || aboveFluidState.getValue(BOTTOM_LEVEL) == 0);
 
         return fluidState.getValue(ABOVE_FLUID) || aboveFluidIsThisFluid ? 1.0f : fluidState.getOwnHeight();
-    }
-
-    public static float getHoneyFluidHeight(BlockGetter world, BlockPos blockPos, Fluid fluid) {
-        float totalHeight = 0.0F;
-        int checkedSides = 0;
-        int fluidSides = 0;
-        FluidState currentMatchingFluidState = null;
-
-        // Checks in a square. One spot will be the current fluid
-        for(int xOffset = -2; xOffset <= 1; xOffset++) {
-            for(int zOffset = -2; zOffset <= 1; zOffset++) {
-                BlockPos currentBlockPos = blockPos.offset(xOffset, 0, zOffset);
-
-                if(xOffset == -2 || zOffset == -2 || xOffset == 1 || zOffset == 1) {
-                    FluidState currentFluidState = world.getFluidState(currentBlockPos);
-                    if (currentFluidState.getType().isSame(fluid)) {
-                        currentMatchingFluidState = currentFluidState;
-                        fluidSides++;
-                    }
-                    continue;
-                }
-
-                FluidState aboveFluidState = world.getFluidState(currentBlockPos.above());
-                if (aboveFluidState.getType().isSame(fluid) && (aboveFluidState.isSource() || !aboveFluidState.is(BzTags.BZ_HONEY_FLUID) || aboveFluidState.getValue(BOTTOM_LEVEL) == 0)) {
-                    return 1.0F;
-                }
-
-                FluidState currentFluidState = world.getFluidState(currentBlockPos);
-                if (currentFluidState.getType().isSame(fluid)) {
-                    currentMatchingFluidState = currentFluidState;
-                    fluidSides++;
-                    float fluidStateHeight = currentFluidState.getHeight(world, currentBlockPos);
-                    if (fluidStateHeight >= 0.8F) {
-                        totalHeight += fluidStateHeight * 10.0F;
-                        checkedSides += 10;
-                    }
-                    else {
-                        totalHeight += fluidStateHeight;
-                        checkedSides++;
-                    }
-                }
-                else if (!world.getBlockState(currentBlockPos).getMaterial().isSolid()) {
-                    checkedSides++;
-                }
-            }
-        }
-
-        if(fluidSides == 1 &&
-            currentMatchingFluidState.getType().isSame(fluid) &&
-            !currentMatchingFluidState.isSource() &&
-            currentMatchingFluidState.getValue(FALLING))
-        {
-            return currentMatchingFluidState.getHeight(world, blockPos);
-        }
-
-        return totalHeight / (float)checkedSides;
-    }
-
-    // Used in FluidRendererMixin
-    public static void setBottomFluidHeight(Args args, BlockPos blockPos, FluidState fluidState) {
-        if(fluidState.is(BzTags.BZ_HONEY_FLUID)) {
-            double blockY = (blockPos.getY() & 15);
-            args.set(2, blockY + (fluidState.isSource() ? 0f : fluidState.getValue(BOTTOM_LEVEL) / 8f));
-        }
     }
 
     public static boolean shouldNotCullSide(BlockGetter world, BlockPos blockPos, Direction direction, FluidState currentFluidState) {
         if(direction == Direction.UP) {
             FluidState aboveFluidState = world.getBlockState(blockPos.above()).getFluidState();
-            return aboveFluidState.is(BzTags.BZ_HONEY_FLUID) && !aboveFluidState.isSource() &&
+            return aboveFluidState.is(BzTags.BOTTOM_LAYER_FLUIDS) && !aboveFluidState.isSource() &&
                     (aboveFluidState.getValue(BOTTOM_LEVEL) != 0 || currentFluidState.getAmount() != 8);
         }
         else if(direction == Direction.DOWN) {
             FluidState belowFluidState = world.getBlockState(blockPos.below()).getFluidState();
-            return belowFluidState.is(BzTags.BZ_HONEY_FLUID) && !currentFluidState.isSource() &&
+            return belowFluidState.is(BzTags.BOTTOM_LAYER_FLUIDS) && !currentFluidState.isSource() &&
                     (belowFluidState.getAmount() != 8 || currentFluidState.getValue(BOTTOM_LEVEL) != 0);
         }
         else {
             FluidState sideFluidState = world.getBlockState(blockPos.relative(direction)).getFluidState();
-            if(sideFluidState.is(BzTags.BZ_HONEY_FLUID)) {
+            if(sideFluidState.is(BzTags.BOTTOM_LAYER_FLUIDS)) {
                 int bottomLayerCurrent = currentFluidState.isSource() ? 8 : currentFluidState.getValue(BOTTOM_LEVEL);
                 int bottomLayerSide = sideFluidState.isSource() ? 8 : sideFluidState.getValue(BOTTOM_LEVEL);
                 return bottomLayerCurrent < bottomLayerSide;
@@ -356,34 +291,35 @@ public abstract class HoneyFluid extends FlowingFluid {
         return false;
     }
 
-    public static void breathing(LivingEntity thisEntity) {
-        boolean invulnerable = thisEntity instanceof Player && ((Player)thisEntity).getAbilities().invulnerable;
-        if (thisEntity.isAlive()) {
-            if (thisEntity.isEyeInFluid(BzTags.BZ_HONEY_FLUID)) {
-                if (!thisEntity.canBreatheUnderwater() && !MobEffectUtil.hasWaterBreathing(thisEntity) && !invulnerable) {
-                    thisEntity.setAirSupply(
+    public static void breathing(LivingEntity livingEntity) {
+        boolean invulnerable = livingEntity instanceof Player && ((Player)livingEntity).getAbilities().invulnerable;
+        if (livingEntity.isAlive()) {
+            if (livingEntity.isEyeInFluid(BzTags.BZ_HONEY_FLUID) || livingEntity.isEyeInFluid(BzTags.ROYAL_JELLY_FLUID)) {
+                if (!livingEntity.canBreatheUnderwater() && !MobEffectUtil.hasWaterBreathing(livingEntity) && !invulnerable) {
+                    livingEntity.setAirSupply(
                         decreaseAirSupply(
-                            thisEntity.getAirSupply() - 4, // -4 to counteract the +4 for rebreathing as vanilla thinks the honey fluid is air
-                            thisEntity,
-                            thisEntity.level.random)
+                            livingEntity.getAirSupply() - 4, // -4 to counteract the +4 for rebreathing as vanilla thinks the honey fluid is air
+                            livingEntity,
+                            livingEntity.level.random)
                     );
-                    if (thisEntity.getAirSupply() == -20) {
-                        thisEntity.setAirSupply(0);
-                        Vec3 vector3d = thisEntity.getDeltaMovement();
+                    if (livingEntity.getAirSupply() == -20) {
+                        livingEntity.setAirSupply(0);
+                        Vec3 vector3d = livingEntity.getDeltaMovement();
+                        SimpleParticleType simpleParticleType = livingEntity.isEyeInFluid(BzTags.BZ_HONEY_FLUID) ? BzParticles.HONEY_PARTICLE : BzParticles.ROYAL_JELLY_PARTICLE;
 
                         for(int i = 0; i < 8; ++i) {
-                            double d2 = thisEntity.level.random.nextDouble() - thisEntity.level.random.nextDouble();
-                            double d3 = thisEntity.level.random.nextDouble() - thisEntity.level.random.nextDouble();
-                            double d4 = thisEntity.level.random.nextDouble() - thisEntity.level.random.nextDouble();
-                            thisEntity.level.addParticle(BzParticles.HONEY_PARTICLE, thisEntity.getX() + d2, thisEntity.getY() + d3, thisEntity.getZ() + d4, vector3d.x, vector3d.y, vector3d.z);
+                            double d2 = livingEntity.level.random.nextDouble() - livingEntity.level.random.nextDouble();
+                            double d3 = livingEntity.level.random.nextDouble() - livingEntity.level.random.nextDouble();
+                            double d4 = livingEntity.level.random.nextDouble() - livingEntity.level.random.nextDouble();
+                            livingEntity.level.addParticle(simpleParticleType, livingEntity.getX() + d2, livingEntity.getY() + d3, livingEntity.getZ() + d4, vector3d.x, vector3d.y, vector3d.z);
                         }
 
-                        thisEntity.hurt(DamageSource.DROWN, 2.0F);
+                        livingEntity.hurt(DamageSource.DROWN, 2.0F);
                     }
                 }
 
-                if (!thisEntity.level.isClientSide() && thisEntity.isPassenger() && thisEntity.getVehicle() != null && !thisEntity.getVehicle().rideableUnderWater()) {
-                    thisEntity.stopRiding();
+                if (!livingEntity.level.isClientSide() && livingEntity.isPassenger() && livingEntity.getVehicle() != null && !livingEntity.getVehicle().rideableUnderWater()) {
+                    livingEntity.stopRiding();
                 }
             }
         }

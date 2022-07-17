@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import dev.architectury.event.events.common.PlayerEvent;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.core.Registry;
@@ -18,7 +19,9 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -32,7 +35,6 @@ import java.util.Map;
 
 public class MiscComponent implements Component {
 
-    public boolean isBeeEssenced = false;
     public boolean receivedEssencePrize = false;
     public long tradeResetPrimedTime = -1000;
     public int craftedBeehives = 0;
@@ -49,7 +51,6 @@ public class MiscComponent implements Component {
 
     @Override
     public void writeToNbt(CompoundTag nbt) {
-        nbt.putBoolean("is_bee_essenced", this.isBeeEssenced);
         nbt.putBoolean("received_essence_prize", this.receivedEssencePrize);
         nbt.putLong("trade_reset_primed_time", this.tradeResetPrimedTime);
         nbt.putInt("crafted_beehives", this.craftedBeehives);
@@ -75,7 +76,6 @@ public class MiscComponent implements Component {
 
     @Override
     public void readFromNbt(CompoundTag nbtTag) {
-        this.isBeeEssenced = nbtTag.getBoolean("is_bee_essenced");
         this.receivedEssencePrize = nbtTag.getBoolean("received_essence_prize");
         this.tradeResetPrimedTime = nbtTag.getLong("trade_reset_primed_time");
         this.craftedBeehives = nbtTag.getInt("crafted_beehives");
@@ -99,19 +99,8 @@ public class MiscComponent implements Component {
         }
     }
 
-    public static void resetValueOnRespawn(PlayerEvent.Clone event) {
-        if (BzConfig.keepBeeEssenceOnRespawning && event.isWasDeath()) {
-            if (event.getEntity() instanceof ServerPlayer serverPlayerNew && event.getOriginal() instanceof ServerPlayer serverPlayerOld) {
-                serverPlayerOld.reviveCaps();
-                EssenceOfTheBees.setEssence(serverPlayerNew, EssenceOfTheBees.hasEssence(serverPlayerOld));
-                serverPlayerOld.invalidateCaps();
-            }
-        }
-    }
-
-    public static void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
-        ItemStack createdItem = event.getCrafting();
-        if (event.getEntity() instanceof ServerPlayer serverPlayer &&
+    public static void onItemCrafted(ItemStack createdItem, Player player) {
+        if (player instanceof ServerPlayer serverPlayer &&
                 createdItem.getItem() instanceof BlockItem blockItem &&
                 blockItem.getBlock() instanceof BeehiveBlock &&
                 rootAdvancementDone(serverPlayer))
@@ -123,12 +112,8 @@ public class MiscComponent implements Component {
         }
     }
 
-    public static void onBeeBreed(BabyEntitySpawnEvent event) {
-        if (!event.isCanceled() &&
-                event.getChild() instanceof Bee &&
-                event.getCausedByPlayer() instanceof ServerPlayer serverPlayer &&
-                rootAdvancementDone(serverPlayer))
-        {
+    public static void onBeeBreed(AgeableMob baby, ServerPlayer serverPlayer) {
+        if (baby instanceof Bee && rootAdvancementDone(serverPlayer)) {
             MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
             int currentlyBredBees = capability.beesBred + 1;
             BzCriterias.BEE_BREEDING_TRIGGER.trigger(serverPlayer, currentlyBredBees);
@@ -145,28 +130,27 @@ public class MiscComponent implements Component {
         }
     }
 
-    public static void onEntityKilled(LivingDeathEvent event) {
-        DamageSource damageSource = event.getSource();
-        if (!event.isCanceled() &&
-                event.getEntity() instanceof LivingEntity &&
-                damageSource != null &&
-                damageSource.getEntity() instanceof ServerPlayer serverPlayer &&
+    public static void onEntityKilled() {
+        ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((serverLevel, attacker, victim) -> {
+            if (victim != null &&
+                attacker instanceof ServerPlayer serverPlayer &&
                 rootAdvancementDone(serverPlayer))
-        {
-            MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
-            ResourceLocation killedEntity = Registry.ENTITY_TYPE.getKey(event.getEntity().getType());
-            int killedCount = capability.mobsKilledTracker.getOrDefault(killedEntity, 0);
-            killedCount += 1;
+            {
+                MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
+                ResourceLocation killedEntity = Registry.ENTITY_TYPE.getKey(victim.getType());
+                int killedCount = capability.mobsKilledTracker.getOrDefault(killedEntity, 0);
+                killedCount += 1;
 
-            BzCriterias.KILLED_COUNTER_TRIGGER.trigger(serverPlayer, killedEntity, killedCount);
-            capability.mobsKilledTracker.put(killedEntity, killedCount);
-        }
+                BzCriterias.KILLED_COUNTER_TRIGGER.trigger(serverPlayer, killedEntity, killedCount);
+                capability.mobsKilledTracker.put(killedEntity, killedCount);
+            }
+        });
     }
 
-    public static void onHoneyBottleDrank(LivingEntityUseItemEvent.Finish event) {
-        if (event.getEntity() instanceof ServerPlayer serverPlayer &&
-                event.getItem().is(Items.HONEY_BOTTLE)
-                && rootAdvancementDone(serverPlayer))
+    public static void onHoneyBottleDrank(LivingEntity livingEntity, ItemStack itemStack) {
+        if (livingEntity instanceof ServerPlayer serverPlayer &&
+            itemStack.is(Items.HONEY_BOTTLE)
+            && rootAdvancementDone(serverPlayer))
         {
             MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
             int currentlyDrankHoneyBottles = capability.honeyBottleDrank + 1;
@@ -202,12 +186,8 @@ public class MiscComponent implements Component {
         }
     }
 
-    public static void onHoneySlimeBred(BabyEntitySpawnEvent event) {
-        if (!event.isCanceled() &&
-                event.getChild() instanceof HoneySlimeEntity &&
-                event.getCausedByPlayer() instanceof ServerPlayer serverPlayer &&
-                rootAdvancementDone(serverPlayer))
-        {
+    public static void onHoneySlimeBred(AgeableMob baby, ServerPlayer serverPlayer) {
+        if (baby instanceof HoneySlimeEntity && rootAdvancementDone(serverPlayer)) {
             MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
             int currentlyHoneySlimeBred = capability.honeySlimeBred + 1;
             BzCriterias.HONEY_SLIME_BRED_TRIGGER.trigger(serverPlayer, currentlyHoneySlimeBred);

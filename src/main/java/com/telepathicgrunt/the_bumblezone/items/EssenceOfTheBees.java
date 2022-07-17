@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.components.EssenceComponent;
 import com.telepathicgrunt.the_bumblezone.components.MiscComponent;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.network.chat.Component;
@@ -68,12 +69,12 @@ public class EssenceOfTheBees extends Item {
     }
 
     public static void setEssence(ServerPlayer serverPlayer, boolean newValue) {
-        MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
+        EssenceComponent capability = Bumblezone.ESSENCE_COMPONENT.get(serverPlayer);
         capability.isBeeEssenced = newValue;
     }
 
     public static boolean hasEssence(ServerPlayer serverPlayer) {
-        MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
+        EssenceComponent capability = Bumblezone.ESSENCE_COMPONENT.get(serverPlayer);
         return capability.isBeeEssenced;
     }
 }
