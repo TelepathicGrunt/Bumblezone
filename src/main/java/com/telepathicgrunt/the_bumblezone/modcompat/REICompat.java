@@ -69,6 +69,9 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2.get());
         addInfo(BzItems.STINGLESS_BEE_HELMET_1.get());
         addInfo(BzItems.STINGLESS_BEE_HELMET_2.get());
+        addInfo(BzItems.CARPENTER_BEE_BOOTS_1.get());
+        addInfo(BzItems.CARPENTER_BEE_BOOTS_2.get());
+        addInfo(BzItems.ESSENCE_OF_THE_BEES.get());
     }
 
     private static void addInfo(Item item) {
