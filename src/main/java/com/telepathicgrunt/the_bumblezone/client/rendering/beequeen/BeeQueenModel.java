@@ -53,13 +53,13 @@ public class BeeQueenModel extends HierarchicalModel<BeeQueenEntity> {
 
         PartDefinition legs2 = segment1.addOrReplaceChild("legs2", CubeListBuilder.create(), PartPose.offset(-3.8699F, 1.7995F, 1.9238F));
 
-        PartDefinition right2_r1 = legs2.addOrReplaceChild("right2_r1", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, 12.7F, 1.15F, 0.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 0).addBox(-3.0F, 12.7F, 8.15F, 0.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(12.04F, -7.6758F, -0.1381F, 2.7286F, -0.1451F, -1.8894F));
+        PartDefinition right2_r1 = legs2.addOrReplaceChild("right2_r1", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, 12.7F, 1.15F, 0.001F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 0).addBox(-3.0F, 12.7F, 8.15F, 0.001F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(12.04F, -7.6758F, -0.1381F, 2.7286F, -0.1451F, -1.8894F));
 
         PartDefinition legs1 = segment1.addOrReplaceChild("legs1", CubeListBuilder.create(), PartPose.offset(-2.64F, 4.6186F, 1.2902F));
 
-        PartDefinition right1_r1 = legs1.addOrReplaceChild("right1_r1", CubeListBuilder.create().texOffs(0, 0).addBox(-6.0F, 12.7F, 1.15F, 0.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 0).addBox(-6.0F, 12.7F, 8.15F, 0.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(10.8101F, -10.4948F, 0.4955F, 2.7286F, -0.1451F, -1.8894F));
+        PartDefinition right1_r1 = legs1.addOrReplaceChild("right1_r1", CubeListBuilder.create().texOffs(0, 0).addBox(-6.0F, 12.7F, 1.15F, 0.001F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 0).addBox(-6.0F, 12.7F, 8.15F, 0.001F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(10.8101F, -10.4948F, 0.4955F, 2.7286F, -0.1451F, -1.8894F));
 
         PartDefinition head = segment1.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offsetAndRotation(-9.6029F, -6.902F, 4.4631F, -0.0175F, 0.0262F, 0.0F));
 
@@ -69,8 +69,8 @@ public class BeeQueenModel extends HierarchicalModel<BeeQueenEntity> {
 
         PartDefinition legs3 = head.addOrReplaceChild("legs3", CubeListBuilder.create(), PartPose.offset(1.4945F, 6.019F, -0.5393F));
 
-        PartDefinition right3_r1 = legs3.addOrReplaceChild("right3_r1", CubeListBuilder.create().texOffs(0, 0).addBox(2.0F, 3.5F, 2.0F, 1.0F, 2.0F, 0.0F, new CubeDeformation(0.0F))
-                .texOffs(2, 0).addBox(-3.0F, 3.5F, 2.0F, 1.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.6789F, -3.9174F, -0.3982F, -0.3221F, -1.1643F, -0.0159F));
+        PartDefinition right3_r1 = legs3.addOrReplaceChild("right3_r1", CubeListBuilder.create().texOffs(0, 0).addBox(2.0F, 3.5F, 2.0F, 1.0F, 2.0F, 0.001F, new CubeDeformation(0.0F))
+                .texOffs(2, 0).addBox(-3.0F, 3.5F, 2.0F, 1.0F, 2.0F, 0.001F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.6789F, -3.9174F, -0.3982F, -0.3221F, -1.1643F, -0.0159F));
 
         PartDefinition antenna = head.addOrReplaceChild("antenna", CubeListBuilder.create(), PartPose.offset(-3.0823F, 0.0827F, 1.1882F));
 
