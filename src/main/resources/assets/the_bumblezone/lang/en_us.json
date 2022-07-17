@@ -79,6 +79,7 @@
   "entity.the_bumblezone.honey_crystal_shard": "Honey Crystal Shard",
   "entity.the_bumblezone.beehemoth_queen.advancements_warning": "To reset Queen's Desire advancements,\nright click again with empty hand",
   "entity.the_bumblezone.beehemoth_queen.reset_advancements": "Queen's Desire advancements have been reset!",
+  "entity.the_bumblezone.beehemoth_queen.mention_reset": "Congrats on your accomplishments! To redo the Queen's Desire quest-line,\nright click Bee Queen with empty hand to reset those advancements",
 
   "enchantment.the_bumblezone.comb_cutter": "Comb Cutter",
   "enchantment.the_bumblezone.comb_cutter.desc": "Mines combs, hives, nest, and wax blocks faster. Doubles the output of BeeNest and BeeHive blocks including Resourceful Bee's hives.",

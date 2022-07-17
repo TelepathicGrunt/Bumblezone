@@ -67,5 +67,10 @@ Throne Pillar structure added! This is where the Bee Queen spawns!
 Cell Maze structure is now more common and its armor room's Honey Cocoon blocks have a 1/20th chance of having a special 
  Honey Compass that is permanently locked onto the closest Throne Pillar structure.
 
+##### Advancements:
+The Queen's Desire advancement line is added that acts like a quest-line! It is started by first trading with the Bee Queen.
+ Every advancment completed gives a reward! Complete them all for an end-game item!
+ You can then reset the advancement line by right clicking Bee Queen with empty hand.
+
 ##### Sounds:
 Fixed drinking Sugar Water not having subtitles.

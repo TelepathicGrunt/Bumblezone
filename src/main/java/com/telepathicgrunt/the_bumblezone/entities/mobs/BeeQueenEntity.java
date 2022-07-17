@@ -429,6 +429,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                             Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
                             spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(BzItems.ESSENCE_OF_THE_BEES.get(), 1, 1000, 1), ItemStack.EMPTY);
                             capability.receivedEssencePrize = true;
+                            serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.mention_reset"), false);
                         }
                     }
                 }
