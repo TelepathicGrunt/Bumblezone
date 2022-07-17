@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.advancements;
 
 import com.google.gson.JsonObject;
-import com.telepathicgrunt.the_bumblezone.mixin.PlayerAdvancementsAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
@@ -46,7 +46,7 @@ public class TargetAdvancementDoneTrigger extends SimpleCriterionTrigger<TargetA
         }
 
         public boolean matches(ServerPlayer serverPlayer) {
-            Advancement advancement = serverPlayer.createCommandSourceStack().getAdvancement(targetAdvancement);
+            Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(targetAdvancement);
             Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getAdvancements();
             return advancement != null &&
                     advancementsProgressMap.containsKey(advancement) &&

@@ -23,17 +23,9 @@ public class PistonStructureResolverMixin {
     @Shadow
     private Direction pushDirection;
 
-    @Mutable
-    @Final
-    @Shadow
-    private BlockPos pistonPos;
-
-    @Unique
-    private BlockPos oldPistonPos;
-
     // allow royal jelly block to be pullable only
     @Inject(method = "addBlockLine(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;isEmptyBlock(Lnet/minecraft/core/BlockPos;)Z"),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;isEmptyBlock(Lnet/minecraft/core/BlockPos;)Z", ordinal = 0),
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
     private void thebumblezone_pullableOnlyBlocks2(BlockPos blockPos,
@@ -48,7 +40,7 @@ public class PistonStructureResolverMixin {
 
     // allow royal jelly block to be pullable only
     @Inject(method = "addBlockLine(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z",
-            at = @At(value = "INVOKE", target = "Ljava/util/List;size()I", ordinal = 0),
+            at = @At(value = "INVOKE", target = "Ljava/util/List;size()I", ordinal = 0, remap = false),
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
     private void thebumblezone_pullableOnlyBlocks3(BlockPos blockPos,

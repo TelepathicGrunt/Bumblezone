@@ -31,7 +31,7 @@ public class BeehiveMixin {
     }
 
     @Inject(method = "angerNearbyBees(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V",
-            at = @At(value = "INVOKE", target = "Ljava/util/List;isEmpty()Z", ordinal = 1),
+            at = @At(value = "INVOKE", target = "Ljava/util/List;isEmpty()Z", ordinal = 1, remap = false),
             locals = LocalCapture.CAPTURE_FAILHARD)
     private void thebumblezone_essenceBeehive2(Level level, BlockPos blockPos, CallbackInfo ci, List<Bee> beeList, List<Player> playerList) {
         BeeAggression.preventAngerOnEssencedPlayers(beeList, playerList);

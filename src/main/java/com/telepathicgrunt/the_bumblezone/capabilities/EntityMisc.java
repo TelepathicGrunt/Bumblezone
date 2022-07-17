@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.capabilities;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
-import com.telepathicgrunt.the_bumblezone.mixin.PlayerAdvancementsAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.advancements.Advancement;
@@ -150,7 +150,7 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 	public static void onEntityKilled(LivingDeathEvent event) {
 		DamageSource damageSource = event.getSource();
 		if (!event.isCanceled() &&
-			event.getEntity() instanceof LivingEntity &&
+			event.getEntity() != null &&
 			damageSource != null &&
 			damageSource.getEntity() instanceof ServerPlayer serverPlayer &&
 			rootAdvancementDone(serverPlayer))
@@ -236,7 +236,7 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 	}
 
 	private static boolean rootAdvancementDone(ServerPlayer serverPlayer) {
-		Advancement advancement = serverPlayer.createCommandSourceStack().getAdvancement(BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT);
+		Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT);
 		Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getAdvancements();
 		return advancement != null &&
 				advancementsProgressMap.containsKey(advancement) &&

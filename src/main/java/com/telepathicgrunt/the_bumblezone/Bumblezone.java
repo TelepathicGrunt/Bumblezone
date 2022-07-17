@@ -74,7 +74,6 @@ public class Bumblezone{
         forgeBus.addListener(HiddenEffect::hideEntity);
         forgeBus.addListener(NeurotoxinsEnchantment::entityHurtEvent);
         forgeBus.addListener(this::serverAboutToStart);
-        forgeBus.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
         forgeBus.addListener(BeeStinger::bowUsable);
         forgeBus.addListener(EntityMisc::resetValueOnRespawn);
         forgeBus.addListener(EntityMisc::onItemCrafted);

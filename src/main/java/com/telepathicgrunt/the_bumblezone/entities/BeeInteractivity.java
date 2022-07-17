@@ -86,8 +86,8 @@ public class BeeInteractivity {
                 if (beeEntity.isBaby()) {
                     if (isRoyalFed || world.getRandom().nextBoolean()) {
                         beeEntity.setBaby(false);
-                        if(playerEntity instanceof ServerPlayer) {
-                            BzCriterias.HONEY_BUCKET_BEE_GROW_TRIGGER.trigger((ServerPlayer) playerEntity);
+                        if(playerEntity instanceof ServerPlayer serverPlayer) {
+                            BzCriterias.HONEY_BUCKET_BEE_GROW_TRIGGER.trigger(serverPlayer);
                         }
                     }
                 }
@@ -98,8 +98,8 @@ public class BeeInteractivity {
                         if(!nearbyBee.isBaby()) nearbyAdultBees++;
                     }
 
-                    if(nearbyAdultBees >= 2 && playerEntity instanceof ServerPlayer) {
-                        BzCriterias.HONEY_BUCKET_BEE_LOVE_TRIGGER.trigger((ServerPlayer) playerEntity);
+                    if(nearbyAdultBees >= 2 && playerEntity instanceof ServerPlayer serverPlayer) {
+                        BzCriterias.HONEY_BUCKET_BEE_LOVE_TRIGGER.trigger(serverPlayer);
                     }
                 }
 

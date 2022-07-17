@@ -6,7 +6,7 @@ import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.TradeEntryReducedObj;
-import com.telepathicgrunt.the_bumblezone.mixin.PlayerAdvancementsAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -368,7 +368,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
                 long timeDiff = this.level.getGameTime() - capability.tradeResetPrimedTime;
                 if (timeDiff < 200 && timeDiff > 10) {
-                    Iterable<Advancement> advancements = serverPlayer.createCommandSourceStack().getAdvancement(BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT).getChildren();
+                    Iterable<Advancement> advancements = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT).getChildren();
                     for (Advancement advancement : advancements) {
                         AdvancementProgress advancementprogress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
                         for(String criteria : advancementprogress.getCompletedCriteria()) {
@@ -442,7 +442,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     private static boolean finalbeeQueenAdvancementDone(ServerPlayer serverPlayer) {
-        Advancement advancement = serverPlayer.createCommandSourceStack().getAdvancement(BzCriterias.QUEENS_DESIRE_FINAL_ADVANCEMENT);
+        Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.QUEENS_DESIRE_FINAL_ADVANCEMENT);
         Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getAdvancements();
         return advancement != null &&
                 advancementsProgressMap.containsKey(advancement) &&

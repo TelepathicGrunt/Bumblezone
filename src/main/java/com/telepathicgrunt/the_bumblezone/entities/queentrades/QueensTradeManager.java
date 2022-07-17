@@ -52,12 +52,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 Bumblezone.LOGGER.error("Bumblezone Error: Couldn't parse bee queen trades file {}", fileIdentifier, e);
             }
         });
-    }
 
-    public void resolveQueenTrades(final TagsUpdatedEvent event) {
-        if (tradeRaw.isEmpty()) {
-            return;
-        }
 
         ImmutableMap.Builder<Set<Item>, WeightedRandomList<TradeEntryReducedObj>> reducedTradeBuilder = ImmutableMap.builder();
         for (Map.Entry<List<TradeEntryObj>, List<TradeEntryObj>> entry : tradeRaw.entrySet()) {

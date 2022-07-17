@@ -38,11 +38,6 @@ public class RoyalJellyBlock extends HalfTransparentBlock {
     }
 
     @Override
-    public boolean isSlimeBlock(BlockState state) {
-        return state.getBlock() == BzBlocks.ROYAL_JELLY_BLOCK.get();
-    }
-
-    @Override
     public boolean isStickyBlock(BlockState state) {
         return state.getBlock() == BzBlocks.ROYAL_JELLY_BLOCK.get();
     }

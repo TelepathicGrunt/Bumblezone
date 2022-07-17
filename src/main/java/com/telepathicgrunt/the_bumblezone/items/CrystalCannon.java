@@ -108,30 +108,30 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
-        ItemStack beeCannon = player.getItemInHand(interactionHand);
+        ItemStack crystalCannon = player.getItemInHand(interactionHand);
         if (!level.isClientSide()) {
-            loadProjectiles(player, beeCannon);
+            loadProjectiles(player, crystalCannon);
         }
 
-        if (getNumberOfCrystals(beeCannon) == 0) {
-            return InteractionResultHolder.fail(beeCannon);
+        if (getNumberOfCrystals(crystalCannon) == 0) {
+            return InteractionResultHolder.fail(crystalCannon);
         }
         else {
             player.startUsingItem(interactionHand);
-            return InteractionResultHolder.consume(beeCannon);
+            return InteractionResultHolder.consume(crystalCannon);
         }
     }
 
-    private void loadProjectiles(Player player, ItemStack beeCannon) {
-        ItemStack projectItem1 = player.getProjectile(beeCannon);
+    private void loadProjectiles(Player player, ItemStack crystalCannon) {
+        ItemStack projectItem1 = player.getProjectile(crystalCannon);
         if (projectItem1.isEmpty()) {
             return;
         }
 
-        if (tryAddCrystal(beeCannon)) {
+        if (tryAddCrystal(crystalCannon)) {
             boolean infinite = player.getAbilities().instabuild ||
                     (projectItem1.getItem() instanceof HoneyCrystalShards &&
-                            ((HoneyCrystalShards)projectItem1.getItem()).isInfinite(projectItem1, beeCannon, player));
+                            ((HoneyCrystalShards)projectItem1.getItem()).isInfinite(projectItem1, crystalCannon, player));
 
             if (!infinite) {
                 projectItem1.shrink(1);
