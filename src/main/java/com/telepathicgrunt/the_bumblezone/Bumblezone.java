@@ -81,7 +81,8 @@ public class Bumblezone{
         forgeBus.addListener(EntityMisc::onEntityKilled);
         forgeBus.addListener(EntityMisc::onHoneyBottleDrank);
         forgeBus.addListener(EntityMisc::onHoneySlimeBred);
-        forgeBus.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
+        forgeBus.addListener(EntityMisc::onHoneySlimeBred);
+        forgeBus.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
 
         //Registration
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
