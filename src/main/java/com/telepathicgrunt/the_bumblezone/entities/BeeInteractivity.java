@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
+import com.telepathicgrunt.the_bumblezone.components.MiscComponent;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
@@ -30,10 +31,24 @@ import net.minecraft.world.level.Level;
 
 public class BeeInteractivity {
 
+    private static final ResourceLocation PRODUCTIVE_BEES_HONEY_TREAT = new ResourceLocation("productivebees", "honey_treat");
+
     // heal bees with sugar water bottle or honey bottle
     public static InteractionResult beeFeeding(Level world, Player playerEntity, InteractionHand hand, Bee beeEntity) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
         ResourceLocation itemRL = Registry.ITEM.getKey(itemstack.getItem());
+
+        if (itemstack.is(BzItems.BEE_STINGER)) {
+            beeEntity.hasStung();
+            ((BeeEntityInvoker)beeEntity).callSetHasStung(false);
+            GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, false, true);
+
+            if (playerEntity instanceof ServerPlayer serverPlayer) {
+                MiscComponent.onBeesSaved(serverPlayer);
+            }
+
+            return InteractionResult.SUCCESS;
+        }
 
         // Disallow all non-tagged items from being fed to bees
         if(!itemstack.is(BzTags.BEE_FEEDING_ITEMS))
@@ -45,7 +60,7 @@ public class BeeInteractivity {
         ItemStack itemstackOriginal = itemstack.copy();
 
         // Special cased items so the ActionResultType continues and make the item's behavior not lost.
-        if (itemstackOriginal.getItem() == BzItems.BEE_BREAD) {
+        if (itemstackOriginal.getItem() == BzItems.BEE_BREAD || (BzConfig.allowProductiveBeesHoneyTreatCompat && itemRL.equals(PRODUCTIVE_BEES_HONEY_TREAT))) {
             removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
 
             if(removedWrath && playerEntity instanceof ServerPlayer) {
@@ -56,14 +71,20 @@ public class BeeInteractivity {
             return InteractionResult.PASS;
         }
 
-        if (itemstack.is(BzTags.HONEY_BUCKETS)) {
+        if (itemstack.is(BzTags.HONEY_BUCKETS) ||
+            itemstack.is(BzTags.ROYAL_JELLY_BUCKETS) ||
+            itemstack.is(BzItems.ROYAL_JELLY_BOTTLE))
+        {
             beeEntity.heal(beeEntity.getMaxHealth() - beeEntity.getHealth());
-            removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.8f, 5);
+            boolean isRoyalFed = itemstack.is(BzItems.ROYAL_JELLY_BOTTLE) || itemstack.is(BzItems.ROYAL_JELLY_BUCKET);
+            boolean isRoyalFedBucket = itemstack.is(BzItems.ROYAL_JELLY_BUCKET);
+
+            removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, isRoyalFed ? 1 : 0.8f, isRoyalFed ? 15 : 5);
             if (beeEntity.isBaby()) {
                 if (world.getRandom().nextBoolean()) {
                     beeEntity.setBaby(false);
-                    if(playerEntity instanceof ServerPlayer) {
-                        BzCriterias.HONEY_BUCKET_BEE_GROW_TRIGGER.trigger((ServerPlayer) playerEntity);
+                    if(playerEntity instanceof ServerPlayer serverPlayer) {
+                        BzCriterias.HONEY_BUCKET_BEE_GROW_TRIGGER.trigger(serverPlayer);
                     }
                 }
             }
@@ -74,8 +95,15 @@ public class BeeInteractivity {
                     if(!nearbyBee.isBaby()) nearbyAdultBees++;
                 }
 
-                if(nearbyAdultBees >= 2 && playerEntity instanceof ServerPlayer) {
-                    BzCriterias.HONEY_BUCKET_BEE_LOVE_TRIGGER.trigger((ServerPlayer) playerEntity);
+                if(nearbyAdultBees >= 2 && playerEntity instanceof ServerPlayer serverPlayer) {
+                    BzCriterias.HONEY_BUCKET_BEE_LOVE_TRIGGER.trigger(serverPlayer);
+                }
+            }
+
+            if (isRoyalFed) {
+                beeEntity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED, isRoyalFedBucket ? 90000 : 20000, 3, true, true, true));
+                if (playerEntity instanceof ServerPlayer) {
+                    BzCriterias.BEENERGIZED_MAXED_TRIGGER.trigger((ServerPlayer) playerEntity);
                 }
             }
         }
@@ -92,8 +120,12 @@ public class BeeInteractivity {
             GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, true, true);
         }
 
-        if(removedWrath && playerEntity instanceof ServerPlayer) {
-            BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayer) playerEntity, itemstackOriginal);
+        if(playerEntity instanceof ServerPlayer serverPlayer) {
+            MiscComponent.onBeesFed(serverPlayer);
+
+            if(removedWrath) {
+                BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger(serverPlayer, itemstackOriginal);
+            }
         }
 
         playerEntity.swing(hand, true);

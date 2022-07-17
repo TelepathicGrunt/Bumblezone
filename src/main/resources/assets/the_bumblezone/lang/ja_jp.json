@@ -1,5 +1,5 @@
 {
-  "itemGroup.the_bumblezone.main_tab": "ザ・バンブルゾーン",
+  "itemGroup.the_bumblezone": "ザ・バンブルゾーン",
 
   "the_bumblezone.container.honey_cocoon": "ハチミツの繭",
 
@@ -19,7 +19,6 @@
   "block.the_bumblezone.honey_cocoon": "ハチミツの繭",
   "block.the_bumblezone.sugar_water_block": "砂糖水",
   "block.the_bumblezone.honey_fluid_block": "ハチミツ",
-
 
   "fluid.the_bumblezone.sugar_water_still": "砂糖水",
   "fluid.the_bumblezone.sugar_water_flowing": "砂糖水",
@@ -78,7 +77,7 @@
   "subtitles.entity.the_bumblezone.beehemoth.hurt": "ビーヒーモスがダメージを受ける",
   "subtitles.entity.the_bumblezone.beehemoth.dies": "ビーヒーモスが死ぬ",
   "subtitles.entity.the_bumblezone.beehemoth.loop": "ビーヒーモスが羽ばたく",
-  "subtitles.item.the_bumblezone.bumble_bee_chestplate.fly": "プレイヤーが羽ばたく",
+  "subtitles.the_bumblezone.bumble_bee_chestplate.fly": "プレイヤーが羽ばたく",
   "subtitles.item.the_bumblezone.stinger_spear.hit": "ミツバチの針の槍が刺さる",
   "subtitles.item.the_bumblezone.stinger_spear.hit_ground": "ミツバチの針の槍が揺れる",
   "subtitles.item.the_bumblezone.stinger_spear.return": "ミツバチの針の槍が戻ってくる",

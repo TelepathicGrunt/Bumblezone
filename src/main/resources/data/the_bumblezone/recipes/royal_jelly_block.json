@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "the_bumblezone",
+  "pattern": [
+    "bb",
+    "bb"
+  ],
+  "key": {
+    "b": {
+      "item": "the_bumblezone:royal_jelly_bottle"
+    }
+  },
+  "result": {
+    "item": "the_bumblezone:royal_jelly_block"
+  }
+}

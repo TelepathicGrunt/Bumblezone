@@ -1,0 +1,17 @@
+{
+  "type": "jeed:effect_provider",
+  "effect":{
+    "id": "the_bumblezone:protection_of_the_hive"
+  },
+  "providers": [
+    {
+      "item": "the_bumblezone:honeycomb_brood_block"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "jeed"
+    }
+  ]
+}

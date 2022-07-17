@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
+import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
@@ -88,5 +89,13 @@ public class BumblezoneAPI {
      */
     public static void queueEntityForTeleportingOutOfBumblezone(Entity entity, ResourceKey<Level> worldToTeleportTo) {
         BzWorldSavedData.queueEntityToTeleport(entity, worldToTeleportTo);
+    }
+
+    /**
+     * Returns true if the given serverplayer has Bee Essence.
+     * Best used for making bees not attack player when player mines modded hives or takes honey/shears modded hives.
+     */
+    public static boolean playerHasBeeEssence(ServerPlayer serverPlayer) {
+        return EssenceOfTheBees.hasEssence(serverPlayer);
     }
 }

@@ -1,4 +1,14 @@
 {
   "type": "minecraft:entity",
-  "pools": []
+  "pools": [
+      {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:bee_stinger"
+        }
+      ]
+    }
+  ]
 }

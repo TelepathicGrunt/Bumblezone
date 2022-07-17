@@ -1,0 +1,91 @@
+{
+  "wants" : [
+    {
+      "id": "the_bumblezone:royal_jelly_bucket",
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:royal_jelly_block",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:enchanted_golden_apple",
+      "count": 1,
+      "xp_reward": 50,
+      "weight": 30,
+      "required": true
+    },
+    {
+      "id": "minecraft:heart_of_the_sea",
+      "count": 4,
+      "xp_reward": 50,
+      "weight": 25,
+      "required": true
+    },
+    {
+      "id": "minecraft:totem_of_undying",
+      "count": 2,
+      "xp_reward": 50,
+      "weight": 25,
+      "required": true
+    },
+    {
+      "id": "minecraft:end_crystal",
+      "count": 24,
+      "xp_reward": 50,
+      "weight": 20,
+      "required": true
+    },
+    {
+      "id": "minecraft:golden_apple",
+      "count": 9,
+      "xp_reward": 50,
+      "weight": 15,
+      "required": true
+    },
+    {
+      "id": "minecraft:dragon_head",
+      "count": 2,
+      "xp_reward": 50,
+      "weight": 15,
+      "required": true
+    },
+    {
+      "id": "minecraft:nether_star",
+      "count": 1,
+      "xp_reward": 50,
+      "weight": 15,
+      "required": true
+    },
+    {
+      "id": "minecraft:dragon_breath",
+      "count": 10,
+      "xp_reward": 50,
+      "weight": 15,
+      "required": true
+    },
+    {
+      "id": "minecraft:beacon",
+      "count": 2,
+      "xp_reward": 50,
+      "weight": 10,
+      "required": true
+    },
+    {
+      "id": "minecraft:experience_bottle",
+      "count": 32,
+      "xp_reward": 50,
+      "weight": 10,
+      "required": true
+    },
+    {
+      "id": "minecraft:dragon_egg",
+      "count": 1,
+      "xp_reward": 50,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

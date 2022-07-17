@@ -1,0 +1,98 @@
+{
+  "wants": [
+    {
+      "id": "the_bumblezone:filled_porous_honeycomb_block",
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:bee_bread",
+      "required": true
+    },
+    {
+      "id": "#minecraft:small_flowers",
+      "required": true
+    },
+    {
+      "id": "minecraft:flowering_azalea_leaves",
+      "required": true
+    },
+    {
+      "id": "minecraft:amethyst_shard",
+      "required": true
+    },
+    {
+      "id": "#forge:crops",
+      "required": false
+    },
+    {
+      "id": "#forge:chests/wooden",
+      "required": false
+    },
+    {
+      "id": "#forge:barrels/wooden",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/wax",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "the_bumblezone:bee_stinger",
+      "count": 3,
+      "xp_reward": 4,
+      "weight": 56,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:honey_crystal_shards",
+      "count": 3,
+      "xp_reward": 4,
+      "weight": 38,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:pollen_puff",
+      "count": 2,
+      "xp_reward": 4,
+      "weight": 31,
+      "required": true
+    },
+    {
+      "id": "minecraft:honey_bottle",
+      "count": 1,
+      "xp_reward": 4,
+      "weight": 24,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:bee_bread",
+      "count": 1,
+      "xp_reward": 4,
+      "weight": 24,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:beehive_beeswax",
+      "count": 1,
+      "xp_reward": 4,
+      "weight": 17,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:honey_crystal",
+      "count": 1,
+      "xp_reward": 4,
+      "weight": 17,
+      "required": true
+    },
+    {
+      "id": "#minecraft:candles",
+      "count": 2,
+      "xp_reward": 2,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

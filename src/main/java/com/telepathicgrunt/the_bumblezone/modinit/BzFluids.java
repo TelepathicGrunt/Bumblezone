@@ -19,6 +19,10 @@ public class BzFluids {
     public static final FlowingFluid HONEY_FLUID_FLOWING = new HoneyFluid.Flowing();
     public static final Block HONEY_FLUID_BLOCK = new HoneyFluidBlock(HONEY_FLUID);
 
+    public static final FlowingFluid ROYAL_JELLY_FLUID = new RoyalJellyFluid.Source();
+    public static final FlowingFluid ROYAL_JELLY_FLUID_FLOWING = new RoyalJellyFluid.Flowing();
+    public static final Block ROYAL_JELLY_FLUID_BLOCK = new RoyalJellyFluidBlock(HONEY_FLUID);
+
     public static void registerFluids() {
         Registry.register(Registry.FLUID, new ResourceLocation(Bumblezone.MODID, "sugar_water_still"), SUGAR_WATER_FLUID);
         Registry.register(Registry.FLUID, new ResourceLocation(Bumblezone.MODID, "sugar_water_flowing"), SUGAR_WATER_FLUID_FLOWING);
@@ -26,5 +30,8 @@ public class BzFluids {
         Registry.register(Registry.FLUID, new ResourceLocation(Bumblezone.MODID, "honey_fluid_still"), HONEY_FLUID);
         Registry.register(Registry.FLUID, new ResourceLocation(Bumblezone.MODID, "honey_fluid_flowing"), HONEY_FLUID_FLOWING);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "honey_fluid_block"), HONEY_FLUID_BLOCK);
+        Registry.register(Registry.FLUID, new ResourceLocation(Bumblezone.MODID, "royal_jelly_fluid_still"), ROYAL_JELLY_FLUID);
+        Registry.register(Registry.FLUID, new ResourceLocation(Bumblezone.MODID, "royal_jelly_fluid_flowing"), ROYAL_JELLY_FLUID_FLOWING);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "royal_jelly_fluid_block"), ROYAL_JELLY_FLUID_BLOCK);
     }
 }

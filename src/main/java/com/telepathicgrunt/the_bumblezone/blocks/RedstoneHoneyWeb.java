@@ -28,7 +28,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
 
-
 public class RedstoneHoneyWeb extends HoneyWeb {
 
     public static final IntegerProperty POWER = BlockStateProperties.POWER;
@@ -132,7 +131,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
             }
         }
     }
-    
+
     private void updatePowerStrength(Level level, BlockState blockState, BlockPos blockPos) {
         int currentPower = this.calculateTargetStrength(level, blockState, blockPos);
         if (blockState.getValue(POWER) != currentPower) {
@@ -155,7 +154,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
         }
         return Math.max(0, decreasingPower - 1);
     }
-
+    
     private int getWireSignal(BlockState centerState, BlockState neighborState) {
         if(neighborState.is(this)) {
             if (centerState.getValue(NORTHSOUTH) && neighborState.getValue(NORTHSOUTH)) {

@@ -1,8 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
+import com.telepathicgrunt.the_bumblezone.entities.nonliving.BeeStingerEntity;
+import com.telepathicgrunt.the_bumblezone.entities.nonliving.HoneyCrystalShardEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
@@ -37,6 +40,16 @@ public class BzEntities {
             .spawnRestriction(SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BeehemothEntity::checkMobSpawnRules)
             .build();
 
+    public static final EntityType<BeeQueenEntity> BEE_QUEEN = FabricEntityTypeBuilder
+            .<BeeQueenEntity>createMob()
+            .spawnGroup(MobCategory.CREATURE)
+            .entityFactory(BeeQueenEntity::new)
+            .defaultAttributes(BeeQueenEntity::getAttributeBuilder)
+            .dimensions(EntityDimensions.fixed(2.9F, 2.9F))
+            .trackRangeChunks(16)
+            .spawnRestriction(SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BeeQueenEntity::checkMobSpawnRules)
+            .build();
+
     public static final EntityType<PollenPuffEntity> POLLEN_PUFF_ENTITY = FabricEntityTypeBuilder
             .<PollenPuffEntity>create(MobCategory.MISC, PollenPuffEntity::new)
             .dimensions(EntityDimensions.fixed(0.25F, 0.25F))
@@ -51,10 +64,27 @@ public class BzEntities {
             .trackedUpdateRate(20)
             .build();
 
+    public static final EntityType<BeeStingerEntity> BEE_STINGER_ENTITY = FabricEntityTypeBuilder.
+            <BeeStingerEntity>create(MobCategory.MISC, BeeStingerEntity::new)
+            .dimensions(EntityDimensions.fixed(0.5F, 0.5F))
+            .trackRangeChunks(4)
+            .trackedUpdateRate(20)
+            .build();
+
+    public static final EntityType<HoneyCrystalShardEntity> HONEY_CRYSTAL_SHARD = FabricEntityTypeBuilder.
+            <HoneyCrystalShardEntity>create(MobCategory.MISC, HoneyCrystalShardEntity::new)
+            .dimensions(EntityDimensions.fixed(0.5F, 0.5F))
+            .trackRangeChunks(4)
+            .trackedUpdateRate(20)
+            .build();
+
     public static void registerEntities() {
         Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "honey_slime"), HONEY_SLIME);
         Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "beehemoth"), BEEHEMOTH);
+        Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_queen"), BEE_QUEEN);
         Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "pollen_puff"), POLLEN_PUFF_ENTITY);
         Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "thrown_stinger_spear"), THROWN_STINGER_SPEAR_ENTITY);
+        Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_stinger"), BEE_STINGER_ENTITY);
+        Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "honey_crystal_shard"), HONEY_CRYSTAL_SHARD);
     }
 }

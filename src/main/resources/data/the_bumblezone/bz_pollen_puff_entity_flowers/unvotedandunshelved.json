@@ -1,0 +1,10 @@
+{
+  "entries": [
+    {
+      "entity_type": "unvotedandunshelved:glare",
+      "plants_to_spawn": [
+        "minecraft:moss_carpet"
+      ]
+    }
+  ]
+}

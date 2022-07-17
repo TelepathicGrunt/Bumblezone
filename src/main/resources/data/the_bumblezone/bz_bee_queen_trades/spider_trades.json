@@ -1,0 +1,36 @@
+{
+  "wants" : [
+    {
+      "id": "minecraft:string",
+      "required": true
+    },
+    {
+      "id": "minecraft:cobweb",
+      "required": true
+    },
+    {
+      "id": "minecraft:spider_eye",
+      "required": true
+    },
+    {
+      "id": "minecraft:fermented_spider_eye",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:poisonous_potato",
+      "count": 1,
+      "xp_reward": 1,
+      "weight": 10,
+      "required": true
+    },
+    {
+      "id": "minecraft:stone_sword",
+      "count": 1,
+      "xp_reward": 1,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

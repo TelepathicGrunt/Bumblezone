@@ -4,6 +4,7 @@
     "residue": "the_bumblezone:block/sticky_honey_residue",
     "particle": "the_bumblezone:block/sticky_honey_residue"
   },
+  "render_type": "minecraft:cutout",
   "elements": [
     {
       "from": [

@@ -1,0 +1,21 @@
+{
+  "wants" : [
+    {
+      "id": "minecraft:verdant_froglight",
+      "required": true
+    },
+    {
+      "id": "minecraft:pearlescent_froglight",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:ochre_froglight",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

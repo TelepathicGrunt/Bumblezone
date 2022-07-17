@@ -104,12 +104,18 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static int nearbyBeesPerPlayerInBz = 25;
 
+    @Entry
+    public static boolean keepBeeEssenceOnRespawning = false;
+
 
     @Comment
     public static Comment modCompatComment;
 
     @Entry
     public static boolean allowFriendsAndFoesBeekeeperTradesCompat = true;
+
+    @Entry
+    public static boolean allowProductiveBeesHoneyTreatCompat = true;
 
 
     @Comment

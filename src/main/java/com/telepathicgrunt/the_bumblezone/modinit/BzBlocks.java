@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.blocks.PorousHoneycomb;
 import com.telepathicgrunt.the_bumblezone.blocks.RedstoneHoneyWeb;
+import com.telepathicgrunt.the_bumblezone.blocks.RoyalJellyBlock;
 import com.telepathicgrunt.the_bumblezone.blocks.StickyHoneyRedstone;
 import com.telepathicgrunt.the_bumblezone.blocks.StickyHoneyResidue;
 import com.telepathicgrunt.the_bumblezone.blocks.SugarInfusedCobblestone;
@@ -46,6 +47,8 @@ public class BzBlocks {
     public static final Block HONEY_WEB = new HoneyWeb();
     public static final Block REDSTONE_HONEY_WEB = new RedstoneHoneyWeb();
     public static final Block HONEY_COCOON = new HoneyCocoon();
+    public static final Block ROYAL_JELLY_BLOCK = new RoyalJellyBlock();
+
 
     /**
      * registers the Blocks so they now exist in the registry
@@ -65,5 +68,6 @@ public class BzBlocks {
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "honey_web"), HONEY_WEB);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "redstone_honey_web"), REDSTONE_HONEY_WEB);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "honey_cocoon"), HONEY_COCOON);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "royal_jelly_block"), ROYAL_JELLY_BLOCK);
     }
 }

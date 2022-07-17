@@ -10,13 +10,16 @@ public class BzSounds {
     public final static SoundEvent BEEHEMOTH_HURT = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.beehemoth.hurt"));
     public final static SoundEvent BEEHEMOTH_DEATH = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.beehemoth.death"));
     public final static SoundEvent BEEHEMOTH_LOOP = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.beehemoth.loop"));
-    public final static SoundEvent BUMBLE_BEE_CHESTPLATE_FLYING = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.bumble_bee_chestplate.fly"));
     public final static SoundEvent MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "music_disc.honey_bee_rat_faced_boy"));
     public final static SoundEvent MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "music_disc.flight_of_the_bumblebee_rimsky_korsakov"));
-    public static final SoundEvent STINGER_SPEAR_HIT = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.stinger_spear.hit"));
-    public static final SoundEvent STINGER_SPEAR_HIT_GROUND = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.stinger_spear.hit_ground"));
-    public static final SoundEvent STINGER_SPEAR_RETURN = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.stinger_spear.return"));
-    public static final SoundEvent STINGER_SPEAR_THROW = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.stinger_spear.throw"));
+    public static final SoundEvent STINGER_SPEAR_HIT = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.stinger_spear.hit"));
+    public static final SoundEvent STINGER_SPEAR_HIT_GROUND = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.stinger_spear.hit_ground"));
+    public static final SoundEvent STINGER_SPEAR_RETURN = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.stinger_spear.return"));
+    public static final SoundEvent STINGER_SPEAR_THROW = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.stinger_spear.throw"));
+    public static final SoundEvent BEE_STINGER_HIT = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.bee_stinger.hit"));
+    public static final SoundEvent HONEY_CRYSTAL_SHARD_HIT = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.honey_crystal_shard.hit"));
+    public static final SoundEvent HONEY_CRYSTAL_SHARD_SHATTER = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.honey_crystal_shard.shatter"));
+    public static final SoundEvent BUMBLE_BEE_CHESTPLATE_FLYING = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.bumble_bee_chestplate.fly"));
     public static final SoundEvent WASHING_RESIDUES = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "block.the_bumblezone.washing_honey_residues"));
     public static final SoundEvent HONEY_SLIME_ATTACK = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.honey_slime.attack"));
     public static final SoundEvent HONEY_SLIME_HURT = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.honey_slime.hurt"));
@@ -29,9 +32,16 @@ public class BzSounds {
     public static final SoundEvent HONEY_SLIME_JUMP_SMALL = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.honey_slime.jump_small"));
     public static final SoundEvent POLLEN_PUFF_THROW = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.pollen_puff.throw"));
     public static final SoundEvent SUGAR_WATER_DRINK = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.sugar_water_bottle.drink"));
+    public final static SoundEvent BEE_CANNON_FIRES = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.bee_cannon.fire"));
+    public static final SoundEvent CRYSTAL_CANNON_FIRES = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.crystal_cannon.fire"));
+    public static final SoundEvent ROYAL_JELLY_DRINK = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.royal_jelly_bottle.drink"));
+    public static final SoundEvent ROYAL_JELLY_BLOCK_SLIDE = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "block.the_bumblezone.royal_jelly_block.slide"));
     public static final SoundEvent HONEY_COMPASS_BLOCK_LOCK = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.honey_compass.block_lock"));
     public static final SoundEvent HONEY_COMPASS_STRUCTURE_LOCK = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.honey_compass.structure_lock"));
-    public final static SoundEvent BEE_CANNON_FIRES = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.bee_cannon.fire"));
+    public static final SoundEvent BEE_QUEEN_HURT = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.bee_queen.hurt"));
+    public static final SoundEvent BEE_QUEEN_DEATH = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.bee_queen.death"));
+    public static final SoundEvent BEE_QUEEN_LOOP = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.bee_queen.loop"));
+    public static final SoundEvent BEE_QUEEN_HAPPY = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.bee_queen.happy"));
 
     public static void registerSounds() {
         Registry.register(Registry.SOUND_EVENT, ANGERED_BEES.getLocation(), ANGERED_BEES);
@@ -45,6 +55,9 @@ public class BzSounds {
         Registry.register(Registry.SOUND_EVENT, STINGER_SPEAR_HIT_GROUND.getLocation(), STINGER_SPEAR_HIT_GROUND);
         Registry.register(Registry.SOUND_EVENT, STINGER_SPEAR_RETURN.getLocation(), STINGER_SPEAR_RETURN);
         Registry.register(Registry.SOUND_EVENT, STINGER_SPEAR_THROW.getLocation(), STINGER_SPEAR_THROW);
+        Registry.register(Registry.SOUND_EVENT, BEE_STINGER_HIT.getLocation(), BEE_STINGER_HIT);
+        Registry.register(Registry.SOUND_EVENT, HONEY_CRYSTAL_SHARD_HIT.getLocation(), HONEY_CRYSTAL_SHARD_HIT);
+        Registry.register(Registry.SOUND_EVENT, HONEY_CRYSTAL_SHARD_SHATTER.getLocation(), HONEY_CRYSTAL_SHARD_SHATTER);
         Registry.register(Registry.SOUND_EVENT, WASHING_RESIDUES.getLocation(), WASHING_RESIDUES);
         Registry.register(Registry.SOUND_EVENT, HONEY_SLIME_ATTACK.getLocation(), HONEY_SLIME_ATTACK);
         Registry.register(Registry.SOUND_EVENT, HONEY_SLIME_HURT.getLocation(), HONEY_SLIME_HURT);
@@ -57,8 +70,15 @@ public class BzSounds {
         Registry.register(Registry.SOUND_EVENT, HONEY_SLIME_JUMP_SMALL.getLocation(), HONEY_SLIME_JUMP_SMALL);
         Registry.register(Registry.SOUND_EVENT, POLLEN_PUFF_THROW.getLocation(), POLLEN_PUFF_THROW);
         Registry.register(Registry.SOUND_EVENT, SUGAR_WATER_DRINK.getLocation(), SUGAR_WATER_DRINK);
+        Registry.register(Registry.SOUND_EVENT, BEE_CANNON_FIRES.getLocation(), BEE_CANNON_FIRES);
+        Registry.register(Registry.SOUND_EVENT, CRYSTAL_CANNON_FIRES.getLocation(), CRYSTAL_CANNON_FIRES);
+        Registry.register(Registry.SOUND_EVENT, ROYAL_JELLY_DRINK.getLocation(), ROYAL_JELLY_DRINK);
+        Registry.register(Registry.SOUND_EVENT, ROYAL_JELLY_BLOCK_SLIDE.getLocation(), ROYAL_JELLY_BLOCK_SLIDE);
         Registry.register(Registry.SOUND_EVENT, HONEY_COMPASS_BLOCK_LOCK.getLocation(), HONEY_COMPASS_BLOCK_LOCK);
         Registry.register(Registry.SOUND_EVENT, HONEY_COMPASS_STRUCTURE_LOCK.getLocation(), HONEY_COMPASS_STRUCTURE_LOCK);
-        Registry.register(Registry.SOUND_EVENT, BEE_CANNON_FIRES.getLocation(), BEE_CANNON_FIRES);
+        Registry.register(Registry.SOUND_EVENT, BEE_QUEEN_HURT.getLocation(), BEE_QUEEN_HURT);
+        Registry.register(Registry.SOUND_EVENT, BEE_QUEEN_DEATH.getLocation(), BEE_QUEEN_DEATH);
+        Registry.register(Registry.SOUND_EVENT, BEE_QUEEN_LOOP.getLocation(), BEE_QUEEN_LOOP);
+        Registry.register(Registry.SOUND_EVENT, BEE_QUEEN_HAPPY.getLocation(), BEE_QUEEN_HAPPY);
     }
 }

@@ -6,8 +6,12 @@
       "required": true
     },
     {
+      "id": "the_bumblezone:royal_jelly_block",
+      "required": true
+    },
+    {
       "id": "#forge:buckets/honey",
-      "required": false
+      "required": true
     }
   ]
 }

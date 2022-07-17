@@ -2,10 +2,13 @@ package com.telepathicgrunt.the_bumblezone;
 
 import com.telepathicgrunt.the_bumblezone.components.EntityComponent;
 import com.telepathicgrunt.the_bumblezone.components.FlyingSpeedComponent;
+import com.telepathicgrunt.the_bumblezone.components.MiscComponent;
 import com.telepathicgrunt.the_bumblezone.components.NeurotoxinsMissedCounterComponent;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
+import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
+import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
@@ -20,8 +23,11 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,6 +40,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
     public static final ComponentKey<EntityComponent> ENTITY_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "entity_component"), EntityComponent.class);
     public static final ComponentKey<FlyingSpeedComponent> FLYING_SPEED_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "original_flying_speed"), FlyingSpeedComponent.class);
+    public static final ComponentKey<MiscComponent> MISC_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "misc_component"), MiscComponent.class);
     public static final ComponentKey<NeurotoxinsMissedCounterComponent> NEUROTOXINS_MISSED_COUNTER_COMPONENT = ComponentRegistry.getOrCreate(new ResourceLocation(MODID, "neurotoxins_missed_counter"), NeurotoxinsMissedCounterComponent.class);
 
     @Override
@@ -80,6 +87,9 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BeehemothControlsPacket.registerPacket();
         BumbleBeeChestplateFlyingPacket.registerPacket();
         StinglessBeeHelmetSightPacket.registerPacket();
+
+        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
+        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(QueensTradeManager.QUEENS_TRADE_MANAGER);
     }
 
     @Override
@@ -87,6 +97,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         //attach component to living entities
         registry.registerFor(LivingEntity.class, ENTITY_COMPONENT, p -> new EntityComponent());
         registry.registerFor(LivingEntity.class, FLYING_SPEED_COMPONENT, p -> new FlyingSpeedComponent());
+        registry.registerFor(Player.class, MISC_COMPONENT, p -> new MiscComponent());
         registry.registerFor(LivingEntity.class, NEUROTOXINS_MISSED_COUNTER_COMPONENT, p -> new NeurotoxinsMissedCounterComponent());
     }
 }
