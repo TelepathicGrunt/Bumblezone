@@ -2,9 +2,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.animal.Bee;

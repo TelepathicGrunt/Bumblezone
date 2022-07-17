@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers;
 
 import com.google.gson.annotations.Expose;
-import com.telepathicgrunt.the_bumblezone.entities.queentrades.TradeEntryObj;
 
 import java.util.List;
 

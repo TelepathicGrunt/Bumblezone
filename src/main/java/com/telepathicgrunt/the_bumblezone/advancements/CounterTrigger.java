@@ -1,10 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.advancements;
 
 import com.google.gson.JsonObject;
-import com.telepathicgrunt.the_bumblezone.mixin.PlayerAdvancementsAccessor;
-import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EntityPredicate;
@@ -12,9 +8,6 @@ import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.event.entity.player.AdvancementEvent;
-
-import java.util.Map;
 
 public class CounterTrigger extends SimpleCriterionTrigger<CounterTrigger.Instance> {
     private final ResourceLocation id;

@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -12,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.util.Iterator;
 import java.util.List;
 
 @Mixin(BeehiveBlockEntity.class)
