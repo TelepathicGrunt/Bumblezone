@@ -23,7 +23,6 @@ import net.minecraft.world.level.Level;
 
 import java.util.Set;
 
-
 public class StinglessBeeHelmet extends BeeArmor {
     public static int HELMET_EFFECT_COUNTER_CLIENTSIDE = 0;
     public static boolean ALL_BEE_ARMOR_ON_CLIENTSIDE = false;

@@ -25,7 +25,7 @@ public class BeehemothControls {
             "key.categories." + Bumblezone.MODID
     );
 
-    public static void keyInput(InputEvent.KeyInputEvent event) {
+    public static void keyInput(InputEvent.Key event) {
         if (Minecraft.getInstance().player != null &&
             Minecraft.getInstance().player.getVehicle() instanceof BeehemothEntity &&
             (KEY_BIND_BEEHEMOTH_UP.matches(event.getKey(), event.getScanCode()) ||

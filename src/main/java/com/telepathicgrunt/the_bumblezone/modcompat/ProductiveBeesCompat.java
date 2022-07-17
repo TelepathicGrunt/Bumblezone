@@ -101,7 +101,7 @@ public class ProductiveBeesCompat {
 		}
 
 		Mob entity = (Mob) event.getEntity();
-        LevelAccessor world = event.getWorld();
+        LevelAccessor world = event.getLevel();
 
 		// randomly pick a productive bee (the nbt determines the bee)
 		ConfigurableBee productiveBeeEntity = ModEntities.CONFIGURABLE_BEE.get().create(entity.level);

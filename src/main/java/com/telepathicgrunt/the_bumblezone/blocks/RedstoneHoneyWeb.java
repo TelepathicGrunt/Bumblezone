@@ -28,7 +28,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
 
-
 public class RedstoneHoneyWeb extends HoneyWeb {
 
     public static final IntegerProperty POWER = BlockStateProperties.POWER;

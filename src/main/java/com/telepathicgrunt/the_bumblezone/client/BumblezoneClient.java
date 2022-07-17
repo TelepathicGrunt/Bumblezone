@@ -24,7 +24,6 @@ import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.mixin.client.DimensionSpecialEffectsAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.client.RenderingRegistryAccessor;
-import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -32,7 +31,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -43,9 +41,9 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Bee;
-import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -61,11 +59,14 @@ public class BumblezoneClient {
         modEventBus.addListener(BumblezoneClient::onParticleSetup);
         modEventBus.addListener(BumblezoneClient::registerEntityRenderers);
         modEventBus.addListener(BumblezoneClient::registerEntityModels);
+        modEventBus.addListener(BumblezoneClient::registerKeyBinding);
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         forgeBus.addListener(BeehemothControls::keyInput);
+    }
 
-        ClientRegistry.registerKeyBinding(BeehemothControls.KEY_BIND_BEEHEMOTH_UP);
-        ClientRegistry.registerKeyBinding(BeehemothControls.KEY_BIND_BEEHEMOTH_DOWN);
+    public static void registerKeyBinding(RegisterKeyMappingsEvent event) {
+        event.register(BeehemothControls.KEY_BIND_BEEHEMOTH_UP);
+        event.register(BeehemothControls.KEY_BIND_BEEHEMOTH_DOWN);
     }
 
     public static void onClientSetup(FMLClientSetupEvent event) {
@@ -155,21 +156,12 @@ public class BumblezoneClient {
     }
 
     private static void registerRenderLayers() {
-        ItemBlockRenderTypes.setRenderLayer(BzBlocks.STICKY_HONEY_REDSTONE.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BzBlocks.STICKY_HONEY_RESIDUE.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BzBlocks.HONEY_WEB.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BzBlocks.REDSTONE_HONEY_WEB.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BzBlocks.HONEY_CRYSTAL.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BzBlocks.ROYAL_JELLY_BLOCK.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.SUGAR_WATER_FLUID.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.SUGAR_WATER_FLUID_FLOWING.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BzFluids.SUGAR_WATER_BLOCK.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.HONEY_FLUID.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.HONEY_FLUID_FLOWING.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BzFluids.HONEY_FLUID_BLOCK.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.ROYAL_JELLY_FLUID.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.ROYAL_JELLY_FLUID_FLOWING.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BzFluids.ROYAL_JELLY_FLUID_BLOCK.get(), RenderType.translucent());
     }
 
     public static void registerEntityModels(EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -192,9 +184,9 @@ public class BumblezoneClient {
         EntityRenderers.register(BzEntities.HONEY_CRYSTAL_SHARD.get(), HoneyCrystalShardRenderer::new);
     }
 
-    public static void onParticleSetup(ParticleFactoryRegisterEvent event) {
-        Minecraft.getInstance().particleEngine.register(BzParticles.POLLEN.get(), PollenPuff.Factory::new);
-        Minecraft.getInstance().particleEngine.register(BzParticles.HONEY_PARTICLE.get(), HoneyParticle.Factory::new);
-        Minecraft.getInstance().particleEngine.register(BzParticles.ROYAL_JELLY_PARTICLE.get(), RoyalJellyParticle.Factory::new);
+    public static void onParticleSetup(RegisterParticleProvidersEvent event) {
+        event.register(BzParticles.POLLEN.get(), PollenPuff.Factory::new);
+        event.register(BzParticles.HONEY_PARTICLE.get(), HoneyParticle.Factory::new);
+        event.register(BzParticles.ROYAL_JELLY_PARTICLE.get(), RoyalJellyParticle.Factory::new);
     }
 }

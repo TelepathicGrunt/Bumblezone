@@ -103,7 +103,7 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 
 	public static void resetValueOnRespawn(PlayerEvent.Clone event) {
 		if (BzGeneralConfigs.keepBeeEssenceOnRespawning.get() && event.isWasDeath()) {
-			if (event.getPlayer() instanceof ServerPlayer serverPlayerNew && event.getOriginal() instanceof ServerPlayer serverPlayerOld) {
+			if (event.getEntity() instanceof ServerPlayer serverPlayerNew && event.getOriginal() instanceof ServerPlayer serverPlayerOld) {
 				serverPlayerOld.reviveCaps();
 				EssenceOfTheBees.setEssence(serverPlayerNew, EssenceOfTheBees.hasEssence(serverPlayerOld));
 				serverPlayerOld.invalidateCaps();
@@ -113,7 +113,7 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 
 	public static void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
 		ItemStack createdItem = event.getCrafting();
-		if (event.getPlayer() instanceof ServerPlayer serverPlayer &&
+		if (event.getEntity() instanceof ServerPlayer serverPlayer &&
 			createdItem.getItem() instanceof BlockItem blockItem &&
 			blockItem.getBlock() instanceof BeehiveBlock &&
 			rootAdvancementDone(serverPlayer))

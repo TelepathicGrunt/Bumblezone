@@ -8,7 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class BzMenuTypes {
-    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.CONTAINERS, Bumblezone.MODID);
+    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Bumblezone.MODID);
 
     public static final RegistryObject<MenuType<StrictChestMenu>> STRICT_9x1 = MENUS.register("strict_9x1", () -> new MenuType<>(StrictChestMenu::oneRow));
     public static final RegistryObject<MenuType<StrictChestMenu>> STRICT_9x2 = MENUS.register("strict_9x2", () -> new MenuType<>(StrictChestMenu::twoRows));

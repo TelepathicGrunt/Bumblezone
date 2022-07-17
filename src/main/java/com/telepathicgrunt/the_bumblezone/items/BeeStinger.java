@@ -35,7 +35,7 @@ public class BeeStinger extends ArrowItem {
     }
 
     public static void bowUsable(LivingGetProjectileEvent event) {
-        if (event.getEntityLiving() instanceof Player player &&
+        if (event.getEntity() instanceof Player player &&
             (event.getProjectileWeaponItemStack().is(Items.BOW) ||
             event.getProjectileWeaponItemStack().is(Items.CROSSBOW)))
         {

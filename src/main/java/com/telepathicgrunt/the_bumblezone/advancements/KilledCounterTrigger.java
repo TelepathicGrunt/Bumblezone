@@ -11,8 +11,6 @@ import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
-import javax.json.Json;
-
 public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTrigger.Instance> {
     private final ResourceLocation id;
 

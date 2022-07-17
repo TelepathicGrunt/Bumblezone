@@ -67,7 +67,7 @@ public class CombCutterEnchantment extends Enchantment {
 
     private static void mineFaster(PlayerEvent.BreakSpeed event, boolean lesserTarget) {
         float breakSpeed = event.getNewSpeed();
-        Player playerEntity = event.getPlayer();
+        Player playerEntity = event.getEntity();
         ItemStack itemStack = playerEntity.getMainHandItem();
         int equipmentLevel = EnchantmentHelper.getEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), playerEntity);
         if (equipmentLevel > 0 && !itemStack.isEmpty()) {

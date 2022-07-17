@@ -9,7 +9,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 
 public class BzBlockEntities {
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Bumblezone.MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Bumblezone.MODID);
 
     //Blocks
     public static final RegistryObject<BlockEntityType<?>> HONEY_COCOON_BE = BLOCK_ENTITIES.register("honey_cocoon", () -> BlockEntityType.Builder.of(HoneyCocoonBlockEntity::new, BzBlocks.HONEY_COCOON.get()).build(null));

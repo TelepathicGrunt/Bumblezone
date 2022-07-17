@@ -52,7 +52,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-
 public class HoneyWeb extends Block {
 
     public static final BooleanProperty NORTHSOUTH = BooleanProperty.create("northsouth");

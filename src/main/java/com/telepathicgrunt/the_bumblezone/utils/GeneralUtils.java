@@ -199,8 +199,8 @@ public class GeneralUtils {
         }
 
         // give container item of player's item if specified
-        if(giveContainerItem && copiedPlayerItem.hasContainerItem()) {
-            ItemStack containerItem = copiedPlayerItem.getContainerItem();
+        if(giveContainerItem && copiedPlayerItem.hasCraftingRemainingItem()) {
+            ItemStack containerItem = copiedPlayerItem.getCraftingRemainingItem();
             if (playerEntity.getItemInHand(hand).isEmpty()) {
                 // places result item in hand
                 playerEntity.setItemInHand(hand, containerItem);

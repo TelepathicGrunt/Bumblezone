@@ -19,7 +19,7 @@ public class FriendsAndFoesCompat {
 
     public static void setupCompat() {
         if(BzModCompatibilityConfigs.allowFriendsAndFoesBeekeeperTradesCompat.get()) {
-            BEEKEEPER = ForgeRegistries.PROFESSIONS.getHolder(new ResourceLocation("friendsandfoes", "beekeeper"));
+            BEEKEEPER = ForgeRegistries.VILLAGER_PROFESSIONS.getHolder(new ResourceLocation("friendsandfoes", "beekeeper"));
             IEventBus forgeBus = MinecraftForge.EVENT_BUS;
             forgeBus.addListener(FriendsAndFoesCompat::setupFriendsAndFoesTrades);
         }

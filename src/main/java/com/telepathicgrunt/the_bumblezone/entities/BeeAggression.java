@@ -23,7 +23,7 @@ import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashSet;
@@ -40,9 +40,9 @@ public class BeeAggression {
      * Making the list can be expensive which is why we make it at game startup rather than every tick.
      */
     public static void setupBeeHatingList() {
-        for(EntityType<?> entityType : ForgeRegistries.ENTITIES) {
+        for(EntityType<?> entityType : ForgeRegistries.ENTITY_TYPES) {
 
-            String mobName = ForgeRegistries.ENTITIES.getKey(entityType).getPath();
+            String mobName = ForgeRegistries.ENTITY_TYPES.getKey(entityType).getPath();
 
             if(mobName.contains("bee")) {
                 SET_OF_BEE_NAMED_ENTITIES.add(entityType);
@@ -70,7 +70,7 @@ public class BeeAggression {
 
     //if player picks up a tagged angerable item, bees gets very mad...
     public static void pickupItemAnger(PlayerEvent.ItemPickupEvent event) {
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         ItemStack itemStack = event.getStack();
 
         if (player instanceof ServerPlayer serverPlayer &&

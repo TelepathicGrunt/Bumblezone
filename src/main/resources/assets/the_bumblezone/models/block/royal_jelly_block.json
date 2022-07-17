@@ -6,6 +6,7 @@
     "up": "the_bumblezone:block/royal_jelly_block_top",
     "side": "the_bumblezone:block/royal_jelly_block_side"
   },
+  "render_type": "minecraft:translucent",
   "elements": [
     {   "from": [ 0, 0, 0 ],
       "to": [ 16, 16, 16 ],

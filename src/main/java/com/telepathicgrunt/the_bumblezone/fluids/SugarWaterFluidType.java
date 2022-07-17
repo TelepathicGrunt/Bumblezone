@@ -10,7 +10,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraftforge.client.IFluidTypeRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.common.SoundActions;
 import net.minecraftforge.fluids.FluidType;
 
@@ -46,8 +46,8 @@ public class SugarWaterFluidType extends FluidType {
     }
 
     @Override
-    public void initializeClient(Consumer<IFluidTypeRenderProperties> consumer) {
-        consumer.accept(new IFluidTypeRenderProperties() {
+    public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
+        consumer.accept(new IClientFluidTypeExtensions() {
 
             @Override
             public ResourceLocation getStillTexture()
@@ -74,7 +74,7 @@ public class SugarWaterFluidType extends FluidType {
             }
 
             @Override
-            public int getColorTint(FluidState state, BlockAndTintGetter getter, BlockPos pos) {
+            public int getTintColor(FluidState state, BlockAndTintGetter getter, BlockPos pos) {
                 return BiomeColors.getAverageWaterColor(getter, pos) | 0xFF000000;
             }
         });

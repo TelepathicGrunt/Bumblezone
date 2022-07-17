@@ -64,7 +64,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-
 public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected final VoxelShape shape;
@@ -177,8 +176,8 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
                 honeyCocoonBlockEntity.removeItem(emptyBroods.get(random.nextInt(emptyBroods.size())).getSecond(), 1);
                 ItemStack consumedItem = honeyCocoonBlockEntity.removeItem(beeFeeding.get(random.nextInt(beeFeeding.size())).getSecond(), 1);
-                if(consumedItem.hasContainerItem()) {
-                    ItemStack ejectedItem = consumedItem.getContainerItem();
+                if(consumedItem.hasCraftingRemainingItem()) {
+                    ItemStack ejectedItem = consumedItem.getCraftingRemainingItem();
                     if(ejectedItem.isEmpty()) {
                         ejectedItem = ContainerCraftingRecipe.HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(consumedItem.getItem()).getDefaultInstance();
                     }

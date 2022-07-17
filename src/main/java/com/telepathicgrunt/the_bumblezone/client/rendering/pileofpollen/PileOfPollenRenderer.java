@@ -18,7 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.client.event.RenderBlockOverlayEvent;
+import net.minecraftforge.client.event.RenderBlockScreenEffectEvent;
 
 
 // CLIENT-SIDED
@@ -26,7 +26,7 @@ public class PileOfPollenRenderer {
 
     private static final ResourceLocation TEXTURE_POLLEN = new ResourceLocation(Bumblezone.MODID + ":textures/block/pile_of_pollen.png");
 
-    public static void pileOfPollenOverlay(RenderBlockOverlayEvent event) {
+    public static void pileOfPollenOverlay(RenderBlockScreenEffectEvent event) {
         BlockState blockState = event.getBlockState();
         if (blockState.is(BzBlocks.PILE_OF_POLLEN.get())) {
             Player playerEntity = event.getPlayer();

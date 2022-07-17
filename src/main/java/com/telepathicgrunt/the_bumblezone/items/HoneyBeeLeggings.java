@@ -23,7 +23,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-
 public class HoneyBeeLeggings extends BeeArmor {
 
     public HoneyBeeLeggings(ArmorMaterial material, EquipmentSlot slot, Properties properties, int variant) {

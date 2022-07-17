@@ -53,7 +53,7 @@ public class NeurotoxinsEnchantment extends Enchantment {
     }
 
     public static void entityHurtEvent(LivingAttackEvent event) {
-        if(event.getEntityLiving().level.isClientSide()) {
+        if(event.getEntity().level.isClientSide()) {
             return;
         }
 
@@ -74,7 +74,7 @@ public class NeurotoxinsEnchantment extends Enchantment {
         }
 
         if(attackingItem != null && !attackingItem.isEmpty()) {
-            applyNeurotoxins(attacker, event.getEntityLiving(), attackingItem);
+            applyNeurotoxins(attacker, event.getEntity(), attackingItem);
         }
     }
 
