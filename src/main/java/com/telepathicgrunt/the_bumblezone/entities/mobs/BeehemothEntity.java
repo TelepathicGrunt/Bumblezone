@@ -44,6 +44,8 @@ import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -81,7 +83,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
 
     public BeehemothEntity(EntityType<? extends BeehemothEntity> type, Level world) {
         super(type, world);
-        this.moveControl = new MoveHelperController(this);
+        this.moveControl = new FlyingMoveControl(this, 20, true);
+        this.lookControl = new LookControl(this);
         this.offset1 = (this.random.nextFloat() - 0.5f);
         this.offset2 = (this.random.nextFloat() - 0.5f);
         this.offset3 = (this.random.nextFloat() - 0.5f);
@@ -117,12 +120,13 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new BeehemothAIRide(this));
-        this.goalSelector.addGoal(1, new BeehemothTemptGoal(this, 1.5D, Ingredient.of(BzTags.HONEY_BUCKETS)));
-        this.goalSelector.addGoal(2, new BeehemothFlyingStillGoal(this));
-        this.goalSelector.addGoal(3, new BeehemothRandomFlyGoal(this));
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 60));
-        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(5, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new BeehemothTemptGoal(this, 2D, Ingredient.of(BzTags.ROYAL_JELLY_BUCKETS)));
+        this.goalSelector.addGoal(2, new BeehemothTemptGoal(this, 1.5D, Ingredient.of(BzTags.HONEY_BUCKETS)));
+        this.goalSelector.addGoal(3, new BeehemothFlyingStillGoal(this));
+        this.goalSelector.addGoal(4, new BeehemothRandomFlyGoal(this));
+        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 60));
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(6, new FloatGoal(this));
     }
 
     @Override

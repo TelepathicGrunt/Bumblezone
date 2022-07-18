@@ -13,11 +13,11 @@
       "required": true
     },
     {
-      "id": "#forge:beehive",
+      "id": "#c:beehive",
       "required": false
     },
     {
-      "id": "#forge:buckets/honey",
+      "id": "#c:buckets/honey",
       "required": false
     },
     {

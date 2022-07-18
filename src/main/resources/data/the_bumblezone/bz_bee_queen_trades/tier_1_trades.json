@@ -73,19 +73,19 @@
       "required": true
     },
     {
-      "id": "#forge:seeds",
+      "id": "#c:seeds",
       "required": false
     },
     {
-      "id": "#forge:wax",
+      "id": "#c:wax",
       "required": false
     },
     {
-      "id": "#forge:storage_blocks/honeycomb",
+      "id": "#c:storage_blocks/honeycomb",
       "required": false
     },
     {
-      "id": "#forge:honeycombs",
+      "id": "#c:honeycombs",
       "required": false
     },
     {
@@ -101,42 +101,35 @@
     {
       "id": "the_bumblezone:bee_stinger",
       "count": 2,
-      "xp_reward": 2,
+      "xp_reward": 1,
       "weight": 102,
       "required": true
     },
     {
       "id": "minecraft:stick",
       "count": 2,
-      "xp_reward": 2,
+      "xp_reward": 1,
       "weight": 68,
       "required": true
     },
     {
       "id": "minecraft:sugar",
       "count": 1,
-      "xp_reward": 2,
+      "xp_reward": 1,
       "weight": 51,
       "required": true
     },
     {
       "id": "minecraft:poisonous_potato",
       "count": 1,
-      "xp_reward": 2,
-      "weight": 17,
-      "required": true
-    },
-    {
-      "id": "minecraft:honey_bottle",
-      "count": 1,
-      "xp_reward": 2,
+      "xp_reward": 1,
       "weight": 17,
       "required": true
     },
     {
       "id": "#minecraft:candles",
       "count": 1,
-      "xp_reward": 2,
+      "xp_reward": 1,
       "weight": 1,
       "required": true
     }
