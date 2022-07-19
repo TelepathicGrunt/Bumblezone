@@ -2,11 +2,14 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.components.EssenceComponent;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -44,6 +47,13 @@ public class EssenceOfTheBees extends Item {
             serverPlayer.awardStat(Stats.ITEM_USED.get(this));
 
             spawnParticles((ServerLevel) level, serverPlayer.position(), level.random);
+            level.playSound(
+                    null,
+                    serverPlayer.blockPosition(),
+                    BzSounds.BEE_ESSENCE_CONSUMED,
+                    SoundSource.PLAYERS,
+                    2F,
+                    (level.getRandom().nextFloat() * 0.2F) + 0.6F);
         }
         return itemStack;
     }
@@ -81,7 +91,7 @@ public class EssenceOfTheBees extends Item {
      */
     @Override
     public int getUseDuration(ItemStack itemStack) {
-        return 80;
+        return 150;
     }
 
     /**
@@ -90,6 +100,16 @@ public class EssenceOfTheBees extends Item {
     @Override
     public UseAnim getUseAnimation(ItemStack itemStack) {
         return UseAnim.DRINK;
+    }
+
+    @Override
+    public SoundEvent getDrinkingSound() {
+        return BzSounds.BEE_ESSENCE_CONSUMING;
+    }
+
+    @Override
+    public SoundEvent getEatingSound() {
+        return BzSounds.BEE_ESSENCE_CONSUMING;
     }
 
     @Override

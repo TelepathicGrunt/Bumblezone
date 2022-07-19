@@ -136,6 +136,8 @@
   "subtitles.item.the_bumblezone.crystal_cannon.fire": "Crystal Cannon fires",
   "subtitles.item.the_bumblezone.sugar_water_bottle.drink": "Gulping",
   "subtitles.item.the_bumblezone.royal_jelly_bottle.drink": "Gulping",
+  "subtitles.item.the_bumblezone.essence_of_the_bees.consumed": "Bee essence empowers",
+  "subtitles.item.the_bumblezone.essence_of_the_bees.consuming": "Bee essence resonates",
   "subtitles.block.the_bumblezone.washing_honey_residues": "Honey Residue washes",
   "subtitles.block.the_bumblezone.royal_jelly_block.slide": "Sliding down a royal jelly block",
 
