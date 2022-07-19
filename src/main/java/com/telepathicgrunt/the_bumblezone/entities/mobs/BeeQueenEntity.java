@@ -4,6 +4,8 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
+import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAlwaysLookAtPlayerGoal;
+import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAngerableMeleeAttackGoal;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.TradeEntryReducedObj;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
@@ -108,8 +110,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new AngerableMeleeAttackGoal(this));
-        this.goalSelector.addGoal(2, new AlwaysLookAtPlayerGoal(this, Player.class, 60));
+        this.goalSelector.addGoal(1, new BeeQueenAngerableMeleeAttackGoal(this));
+        this.goalSelector.addGoal(2, new BeeQueenAlwaysLookAtPlayerGoal(this, Player.class, 60));
         this.goalSelector.addGoal(3, new FloatGoal(this));
     }
 
@@ -635,120 +637,6 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         public boolean moveTo(Entity entityIn, double speedIn) {
             mob.getMoveControl().setWantedPosition(entityIn.getX(), entityIn.getY(), entityIn.getZ(), speedIn);
             return true;
-        }
-    }
-
-    public class AlwaysLookAtPlayerGoal extends Goal {
-        protected final Mob mob;
-        @Nullable
-        protected Entity lookAt;
-        protected final float lookDistance;
-        private final boolean onlyHorizontal;
-        protected final Class<? extends LivingEntity> lookAtType;
-        protected final TargetingConditions lookAtContext;
-
-        public AlwaysLookAtPlayerGoal(Mob mob, Class<? extends LivingEntity> lookAtType, float lookDistance) {
-            this(mob, lookAtType, lookDistance, false);
-        }
-
-        public AlwaysLookAtPlayerGoal(Mob mob, Class<? extends LivingEntity> lookAtType, float lookDistance, boolean onlyHorizontal) {
-            this.mob = mob;
-            this.lookAtType = lookAtType;
-            this.lookDistance = lookDistance;
-            this.onlyHorizontal = onlyHorizontal;
-            this.setFlags(EnumSet.of(Goal.Flag.LOOK));
-            if (lookAtType == Player.class) {
-                this.lookAtContext = TargetingConditions.forNonCombat().range(lookDistance).selector((livingEntity) -> EntitySelector.notRiding(mob).test(livingEntity));
-            }
-            else {
-                this.lookAtContext = TargetingConditions.forNonCombat().range(lookDistance);
-            }
-        }
-
-        public boolean canUse() {
-            if (this.mob.getTarget() != null) {
-                this.lookAt = this.mob.getTarget();
-            }
-
-            if (this.lookAtType == Player.class) {
-                this.lookAt = this.mob.level.getNearestPlayer(this.lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
-            }
-            else {
-                this.lookAt = this.mob.level.getNearestEntity(this.mob.level.getEntitiesOfClass(this.lookAtType, this.mob.getBoundingBox().inflate((double)this.lookDistance, 3.0D, (double)this.lookDistance), (p_148124_) -> true), this.lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
-            }
-
-            return this.lookAt != null;
-        }
-
-        public boolean canContinueToUse() {
-            if (!this.lookAt.isAlive()) {
-                return false;
-            }
-            else return !(this.mob.distanceToSqr(this.lookAt) > (double) (this.lookDistance * this.lookDistance));
-        }
-
-        public void start() {
-        }
-
-        public void stop() {
-            this.lookAt = null;
-        }
-
-        public void tick() {
-            if (this.lookAt != null && this.lookAt.isAlive()) {
-                double y = this.onlyHorizontal ? this.mob.getEyeY() : this.lookAt.getEyeY();
-                this.mob.getLookControl().setLookAt(this.lookAt.getX(), y, this.lookAt.getZ(), 0.05f, this.mob.getMaxHeadXRot());
-            }
-        }
-    }
-
-    public static class AngerableMeleeAttackGoal extends Goal {
-        protected final BeeQueenEntity mob;
-        private int ticksUntilNextAttack;
-
-        public AngerableMeleeAttackGoal(BeeQueenEntity mob) {
-            this.mob = mob;
-        }
-
-        public boolean canUse() {
-            return this.mob.getTarget() != null;
-        }
-
-        public boolean canContinueToUse() {
-            return mob.getTarget() != null && mob.getTarget().isAlive();
-        }
-
-        public void start() {
-            this.ticksUntilNextAttack = 0;
-        }
-
-        public void stop() {}
-
-        public void tick() {
-            LivingEntity target = this.mob.getTarget();
-            if (target != null && target.isAlive()) {
-                double distance = this.mob.distanceToSqr(target.getX(), target.getY(), target.getZ());
-                this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack - 1, 0);
-                this.checkAndPerformAttack(this.mob.getTarget(), distance);
-            }
-        }
-
-        protected void resetAttackCooldown() {
-            this.ticksUntilNextAttack = this.adjustedTickDelay(20);
-        }
-
-        protected void checkAndPerformAttack(LivingEntity target, double distance) {
-            double attackReachSqr1 = this.getAttackReachSqr(target);
-            if (distance <= attackReachSqr1 && this.ticksUntilNextAttack <= 0) {
-                this.resetAttackCooldown();
-                this.mob.swing(InteractionHand.MAIN_HAND);
-                this.mob.doHurtTarget(target);
-                this.mob.spawnAngryParticles(4);
-            }
-        }
-
-        protected double getAttackReachSqr(LivingEntity livingEntity) {
-            return this.mob.getBbWidth() * 1.2f;
         }
     }
 }
