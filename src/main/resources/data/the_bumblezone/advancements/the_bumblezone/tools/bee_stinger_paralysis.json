@@ -5,10 +5,10 @@
       "item": "the_bumblezone:bee_stinger"
     },
     "title": {
-      "translate": "advancements.the_bumblezone.bee_stinger.title"
+      "translate": "advancements.the_bumblezone.bee_stinger_paralysis.title"
     },
     "description": {
-      "translate": "advancements.the_bumblezone.bee_stinger.description"
+      "translate": "advancements.the_bumblezone.bee_stinger_paralysis.description"
     },
     "frame": "task",
     "show_toast": true,
