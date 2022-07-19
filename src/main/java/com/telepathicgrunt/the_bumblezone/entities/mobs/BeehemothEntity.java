@@ -305,6 +305,9 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 1f, 30);
                             addFriendship(1000);
                             this.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED, 90000, 3, true, true, true));
+                            for (int i = 0; i < 75; i++) {
+                                spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
+                            }
                             return InteractionResult.PASS;
                         }
                         else if(item == BzItems.ROYAL_JELLY_BOTTLE) {
@@ -312,6 +315,9 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 1f, 10);
                             addFriendship(250);
                             this.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED, 20000, 3, true, true, true));
+                            for (int i = 0; i < 30; i++) {
+                                spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
+                            }
                             return InteractionResult.PASS;
                         }
                         if(item == BzItems.BEE_BREAD) {
@@ -381,10 +387,16 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                     float tameChance;
                     if (stack.is(BzTags.ROYAL_JELLY_BUCKETS)) {
                         addFriendship(1000);
+                        for (int i = 0; i < 75; i++) {
+                            spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
+                        }
                         tameChance = 1f;
                     }
                     else if (item == BzItems.ROYAL_JELLY_BOTTLE) {
                         addFriendship(250);
+                        for (int i = 0; i < 30; i++) {
+                            spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
+                        }
                         tameChance = 1f;
                     }
                     else if (stack.is(BzTags.HONEY_BUCKETS) || item == BzItems.BEE_BREAD) {
@@ -411,10 +423,16 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                     addFriendship(1);
                     if (stack.is(BzTags.ROYAL_JELLY_BUCKETS)) {
                         addFriendship(1000);
+                        for (int i = 0; i < 75; i++) {
+                            spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
+                        }
                         return InteractionResult.PASS;
                     }
                     else if (item == BzItems.ROYAL_JELLY_BOTTLE) {
                         addFriendship(250);
+                        for (int i = 0; i < 30; i++) {
+                            spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
+                        }
                         return InteractionResult.PASS;
                     }
                     else if(item == BzItems.BEE_BREAD) {
@@ -561,6 +579,12 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
             if(getOwner() instanceof ServerPlayer) {
                 BzCriterias.QUEEN_BEEHEMOTH_TRIGGER.trigger((ServerPlayer) getOwner());
             }
+
+            if(this.level.isClientSide()) {
+                for (int i = 0; i < 75; i++) {
+                    spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
+                }
+            }
         }
         // Become untamed if bee is no longer a friend
         else if(getFriendship() < 0 && isTame()) {
@@ -575,6 +599,21 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 this.getDeltaMovement().z()
             );
         }
+    }
+
+    public static void spawnParticles(LevelAccessor world, Vec3 location, RandomSource random, double speedXZModifier, double speedYModifier, double initYSpeed) {
+        double xOffset = (random.nextFloat() * 2) - 1;
+        double yOffset = (random.nextFloat() * 2) - 1;
+        double zOffset = (random.nextFloat() * 2) - 1;
+
+        world.addParticle(
+                ParticleTypes.FIREWORK,
+                location.x() + xOffset,
+                location.y() + yOffset + 1,
+                location.z() + zOffset,
+                random.nextGaussian() * speedXZModifier,
+                (random.nextGaussian() * speedYModifier) + initYSpeed,
+                random.nextGaussian() * speedXZModifier);
     }
 
     @Override

@@ -10,6 +10,8 @@ Bee Queen!!! A massive passive Bee that wants to trade! Right click while holdin
 
 Fixed Beehemoth controls and made it easier to move around as well.
 
+Sparkles will spawn when the Beehemoth transforms into a Queen Beehemoth now.
+
 ##### Items:
 Bee Stingers added which is a common gift from the Queen Bee! Can be used as low-damage ammo for Bows and Crossbows
  to have chances of inflicting poison, weakness, slowness, or paralysis effects on non-undead mobs.
