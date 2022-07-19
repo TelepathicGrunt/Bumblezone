@@ -23,6 +23,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -357,7 +358,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (this.isAngry()) {
+        if (this.isAngry() || hand == InteractionHand.OFF_HAND) {
             return InteractionResult.FAIL;
         }
 
@@ -367,22 +368,24 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         if (stack.equals(ItemStack.EMPTY) && player instanceof ServerPlayer serverPlayer) {
             if (finalbeeQueenAdvancementDone(serverPlayer)) {
                 MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
-                long timeDiff = this.level.getGameTime() - capability.tradeResetPrimedTime;
-                if (timeDiff < 200 && timeDiff > 10) {
-                    Iterable<Advancement> advancements = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT).getChildren();
-                    for (Advancement advancement : advancements) {
-                        AdvancementProgress advancementprogress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
-                        for(String criteria : advancementprogress.getCompletedCriteria()) {
-                            serverPlayer.getAdvancements().revoke(advancement, criteria);
-                        }
-                    }
-                    capability.tradeResetPrimedTime = -1000;
-                    capability.receivedEssencePrize = false;
-                    serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.reset_advancements"), false);
+                if (!capability.receivedEssencePrize) {
+                    Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
+                    Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
+                    spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(BzItems.ESSENCE_OF_THE_BEES, 1, 1000, 1), ItemStack.EMPTY);
+                    capability.receivedEssencePrize = true;
+                    serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.mention_reset"), false);
                 }
                 else {
-                    capability.tradeResetPrimedTime = this.level.getGameTime();
-                    serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.advancements_warning"), false);
+                    long timeDiff = this.level.getGameTime() - capability.tradeResetPrimedTime;
+                    if (timeDiff < 200 && timeDiff > 10) {
+                        resetAdvancementTree(serverPlayer, BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT);
+                        capability.resetAllTrackerStats();
+                        serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.reset_advancements"), false);
+                    }
+                    else {
+                        capability.tradeResetPrimedTime = this.level.getGameTime();
+                        serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.advancements_warning"), false);
+                    }
                 }
             }
 
@@ -440,6 +443,17 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
 
         return InteractionResult.PASS;
+    }
+
+    private void resetAdvancementTree(ServerPlayer serverPlayer, ResourceLocation advancementRL) {
+        Iterable<Advancement> advancements = serverPlayer.server.getAdvancements().getAdvancement(advancementRL).getChildren();
+        for (Advancement advancement : advancements) {
+            AdvancementProgress advancementprogress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
+            for(String criteria : advancementprogress.getCompletedCriteria()) {
+                serverPlayer.getAdvancements().revoke(advancement, criteria);
+            }
+            resetAdvancementTree(serverPlayer, advancement.getId());
+        }
     }
 
     private static boolean finalbeeQueenAdvancementDone(ServerPlayer serverPlayer) {
