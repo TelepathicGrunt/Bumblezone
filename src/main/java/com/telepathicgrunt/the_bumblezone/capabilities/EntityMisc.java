@@ -47,6 +47,21 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 	public int queenBeeTrade = 0;
 	public Map<ResourceLocation, Integer> mobsKilledTracker = new Object2IntOpenHashMap<>();
 
+	public void resetAllTrackerStats() {
+		receivedEssencePrize = false;
+		tradeResetPrimedTime = -1000;
+		craftedBeehives = 0;
+		beesBred = 0;
+		flowersSpawned = 0;
+		honeyBottleDrank = 0;
+		beeStingersFired = 0;
+		beeSaved = 0;
+		pollenPuffHits = 0;
+		honeySlimeBred = 0;
+		beesFed = 0;
+		queenBeeTrade = 0;
+	}
+
 	public CompoundTag serializeNBT() {
 		CompoundTag nbt = new CompoundTag();
 		nbt.putBoolean("is_bee_essenced", this.isBeeEssenced);

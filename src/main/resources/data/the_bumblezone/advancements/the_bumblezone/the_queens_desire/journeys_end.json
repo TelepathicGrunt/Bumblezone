@@ -85,7 +85,7 @@
     "target_advancement_done_11": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
-        "target_advancement": "the_bumblezone:the_bumblezone/the_queens_desire/poison_warfare"
+        "target_advancement": "the_bumblezone:the_bumblezone/the_queens_desire/pollen_fight"
       }
     },
     "target_advancement_done_12": {

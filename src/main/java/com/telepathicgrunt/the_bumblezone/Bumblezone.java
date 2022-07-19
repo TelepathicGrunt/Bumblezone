@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone;
 
+import com.telepathicgrunt.the_bumblezone.advancements.KilledCounterTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
@@ -80,7 +82,7 @@ public class Bumblezone{
         forgeBus.addListener(EntityMisc::onEntityKilled);
         forgeBus.addListener(EntityMisc::onHoneyBottleDrank);
         forgeBus.addListener(EntityMisc::onHoneySlimeBred);
-        forgeBus.addListener(EntityMisc::onHoneySlimeBred);
+        forgeBus.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
         forgeBus.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
 
         //Registration

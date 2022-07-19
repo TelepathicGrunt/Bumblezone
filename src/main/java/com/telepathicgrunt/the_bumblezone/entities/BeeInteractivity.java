@@ -44,7 +44,9 @@ public class BeeInteractivity {
             if (itemstack.is(BzItems.BEE_STINGER.get())) {
                 beeEntity.hasStung();
                 ((BeeEntityInvoker)beeEntity).callSetHasStung(false);
-                GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, false, true);
+                if (!playerEntity.getAbilities().instabuild) {
+                    GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, false, true);
+                }
 
                 if (playerEntity instanceof ServerPlayer serverPlayer) {
                     EntityMisc.onBeesSaved(serverPlayer);
