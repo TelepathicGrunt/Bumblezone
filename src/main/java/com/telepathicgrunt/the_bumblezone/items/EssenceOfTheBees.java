@@ -2,11 +2,15 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -43,12 +47,19 @@ public class EssenceOfTheBees extends Item {
             CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, itemStack);
             serverPlayer.awardStat(Stats.ITEM_USED.get(this));
 
-            spawnParticles((ServerLevel) level, serverPlayer.position(), level.random, 0.1D);
+            spawnParticles((ServerLevel) level, serverPlayer.position(), level.random);
+            level.playSound(
+                    null,
+                    serverPlayer.blockPosition(),
+                    BzSounds.BEE_ESSENCE_CONSUMED.get(),
+                    SoundSource.PLAYERS,
+                    2F,
+                    (level.getRandom().nextFloat() * 0.2F) + 0.6F);
         }
         return itemStack;
     }
 
-    public static void spawnParticles(ServerLevel world, Vec3 location, RandomSource random, double speedYModifier) {
+    public static void spawnParticles(ServerLevel world, Vec3 location, RandomSource random) {
         world.sendParticles(
             ParticleTypes.FIREWORK,
             location.x(),
@@ -81,7 +92,7 @@ public class EssenceOfTheBees extends Item {
      */
     @Override
     public int getUseDuration(ItemStack itemStack) {
-        return 80;
+        return 150;
     }
 
     /**
@@ -90,6 +101,16 @@ public class EssenceOfTheBees extends Item {
     @Override
     public UseAnim getUseAnimation(ItemStack itemStack) {
         return UseAnim.DRINK;
+    }
+
+    @Override
+    public SoundEvent getDrinkingSound() {
+        return BzSounds.BEE_ESSENCE_CONSUMING.get();
+    }
+
+    @Override
+    public SoundEvent getEatingSound() {
+        return BzSounds.BEE_ESSENCE_CONSUMING.get();
     }
 
     @Override

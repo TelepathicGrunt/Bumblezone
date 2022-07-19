@@ -16,6 +16,8 @@ public class BzSounds {
     public static final RegistryObject<SoundEvent> BEEHEMOTH_HURT = registerSoundEvent("entity.the_bumblezone.beehemoth.hurt");
     public static final RegistryObject<SoundEvent> BEEHEMOTH_DEATH = registerSoundEvent("entity.the_bumblezone.beehemoth.death");
     public static final RegistryObject<SoundEvent> BEEHEMOTH_LOOP = registerSoundEvent("entity.the_bumblezone.beehemoth.loop");
+    public static final RegistryObject<SoundEvent> BEE_ESSENCE_CONSUMED = registerSoundEvent("item.the_bumblezone.essence_of_the_bees.consumed");
+    public static final RegistryObject<SoundEvent> BEE_ESSENCE_CONSUMING = registerSoundEvent("item.the_bumblezone.essence_of_the_bees.consuming");
     public static final RegistryObject<SoundEvent> STINGER_SPEAR_HIT = registerSoundEvent("entity.the_bumblezone.stinger_spear.hit");
     public static final RegistryObject<SoundEvent> STINGER_SPEAR_HIT_GROUND = registerSoundEvent("entity.the_bumblezone.stinger_spear.hit_ground");
     public static final RegistryObject<SoundEvent> STINGER_SPEAR_RETURN = registerSoundEvent("entity.the_bumblezone.stinger_spear.return");

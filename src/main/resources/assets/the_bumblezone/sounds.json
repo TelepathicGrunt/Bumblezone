@@ -732,5 +732,45 @@
       }
     ],
     "subtitle": "subtitles.block.the_bumblezone.royal_jelly_block.slide"
+  },
+  "item.the_bumblezone.essence_of_the_bees.consumed": {
+    "sounds": [
+      {
+        "name": "block/beacon/power1",
+        "volume": 1,
+        "pitch": 1.2
+      },
+      {
+        "name": "block/beacon/power2",
+        "volume": 1,
+        "pitch": 1.2
+      },
+      {
+        "name": "block/beacon/power3",
+        "volume": 1,
+        "pitch": 1.2
+      }
+    ],
+    "subtitle": "subtitles.item.the_bumblezone.essence_of_the_bees.consumed"
+  },
+  "item.the_bumblezone.essence_of_the_bees.consuming": {
+    "sounds": [
+      {
+        "name": "block/bell/resonate",
+        "volume": 0.9,
+        "pitch": 1.2
+      },
+      {
+        "name": "block/bell/resonate",
+        "volume": 0.9,
+        "pitch": 1.1
+      },
+      {
+        "name": "block/bell/resonate",
+        "volume": 0.9,
+        "pitch": 0.95
+      }
+    ],
+    "subtitle": "subtitles.item.the_bumblezone.essence_of_the_bees.consuming"
   }
 }
