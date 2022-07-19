@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/the_queens_desire/flooding_the_housing_market",
+  "parent": "the_bumblezone:the_bumblezone/the_queens_desire/slimy_mitosis",
   "display": {
     "icon": {
       "item": "the_bumblezone:bee_queen_spawn_egg"
@@ -23,7 +23,7 @@
   },
   "criteria": {
     "cave_spider_killed": {
-      "trigger": "the_bumblezone:entity_killed",
+      "trigger": "the_bumblezone:killed_counter",
       "conditions": {
         "target_count": 32,
         "target_entity": "minecraft:cave_spider"

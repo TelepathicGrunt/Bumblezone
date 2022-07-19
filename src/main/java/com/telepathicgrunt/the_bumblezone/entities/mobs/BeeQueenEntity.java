@@ -493,7 +493,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 (level.getRandom().nextFloat() * 0.2F) + 0.6F);
     }
 
-    private void spawnAngryParticles(int particles) {
+    public void spawnAngryParticles(int particles) {
         if(!this.level.isClientSide()) {
             ((ServerLevel)this.level).sendParticles(
                     ParticleTypes.ANGRY_VILLAGER,

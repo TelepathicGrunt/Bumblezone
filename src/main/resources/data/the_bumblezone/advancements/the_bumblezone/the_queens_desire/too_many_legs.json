@@ -23,7 +23,7 @@
   },
   "criteria": {
     "spider_killed": {
-      "trigger": "the_bumblezone:entity_killed",
+      "trigger": "the_bumblezone:killed_counter",
       "conditions": {
         "target_count": 64,
         "target_entity": "minecraft:spider"
