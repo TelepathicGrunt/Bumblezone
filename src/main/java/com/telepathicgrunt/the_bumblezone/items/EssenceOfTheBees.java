@@ -3,9 +3,12 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 public class EssenceOfTheBees extends Item {
 
@@ -32,13 +36,39 @@ public class EssenceOfTheBees extends Item {
             }
 
             setEssence(serverPlayer, true);
-            itemStack.shrink(1);
+            if (!serverPlayer.getAbilities().instabuild) {
+                itemStack.shrink(1);
+            }
 
             CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, itemStack);
             serverPlayer.awardStat(Stats.ITEM_USED.get(this));
 
+            spawnParticles((ServerLevel) level, serverPlayer.position(), level.random, 0.1D);
         }
         return itemStack;
+    }
+
+    public static void spawnParticles(ServerLevel world, Vec3 location, RandomSource random, double speedYModifier) {
+        world.sendParticles(
+            ParticleTypes.FIREWORK,
+            location.x(),
+            location.y() + 1,
+            location.z(),
+            100,
+            random.nextGaussian() * 0.1D,
+            (random.nextGaussian() * 0.1D) + 0.1,
+            random.nextGaussian() * 0.1D,
+            world.getRandom().nextFloat() * 0.4 + 0.2f);
+        world.sendParticles(
+                ParticleTypes.ENCHANT,
+                location.x(),
+                location.y() + 1,
+                location.z(),
+                400,
+                1,
+                1,
+                1,
+                world.getRandom().nextFloat() * 0.5 + 1.2f);
     }
 
     @Override

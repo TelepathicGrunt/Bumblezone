@@ -8,7 +8,9 @@ Bee Queen!!! A massive passive Bee that wants to trade! Right click while holdin
  empty hand to reset that advancement path for rewards!
  Can be found in Throne Pillar structure only.
 
-Fixed Beehemoth controls and made it more easier to move around
+Fixed Beehemoth controls and made it easier to move around as well.
+
+Sparkles will spawn when the Beehemoth transforms into a Queen Beehemoth now.
 
 ##### Items:
 Bee Stingers added which is a common gift from the Queen Bee! Can be used as low-damage ammo for Bows and Crossbows 
