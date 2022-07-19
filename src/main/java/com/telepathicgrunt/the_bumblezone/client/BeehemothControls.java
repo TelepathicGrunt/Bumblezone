@@ -6,10 +6,8 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.packets.BeehemothControlsPacket;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.settings.IKeyConflictContext;
 import net.minecraftforge.event.TickEvent;
-import org.apache.logging.log4j.Level;
 import org.lwjgl.glfw.GLFW;
 
 public class BeehemothControls {
