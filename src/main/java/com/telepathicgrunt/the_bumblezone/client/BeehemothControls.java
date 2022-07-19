@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.packets.BeehemothControlsPacket;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.client.settings.IKeyConflictContext;
 import net.minecraftforge.event.TickEvent;
 import org.lwjgl.glfw.GLFW;
@@ -29,13 +30,21 @@ public class BeehemothControls {
     static boolean prevDown = false;
 
     public static void keyInput(TickEvent.ClientTickEvent event) {
+        if (Minecraft.getInstance().player == null) {
+            return;
+        }
+
+        Entity vehicle = Minecraft.getInstance().player.getVehicle();
+        if (vehicle == null) {
+            prevUp = false;
+            prevDown = false;
+            return;
+        }
+
         boolean upKeyAction = KEY_BIND_BEEHEMOTH_UP.isDown();
         boolean downKeyAction = KEY_BIND_BEEHEMOTH_DOWN.isDown();
 
-        if (Minecraft.getInstance().player != null &&
-            Minecraft.getInstance().player.getVehicle() instanceof BeehemothEntity beehemothEntity &&
-            (prevUp != upKeyAction || prevDown != downKeyAction))
-        {
+        if (vehicle instanceof BeehemothEntity beehemothEntity && (prevUp != upKeyAction || prevDown != downKeyAction)) {
             BeehemothControlsPacket.sendToServer(
                 prevUp != upKeyAction ? (upKeyAction ? 1 : 0) : 2,
                 prevDown != downKeyAction ? (downKeyAction ? 1 : 0) : 2
