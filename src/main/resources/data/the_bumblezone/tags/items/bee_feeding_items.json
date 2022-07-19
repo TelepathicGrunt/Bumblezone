@@ -22,6 +22,10 @@
       "required": true
     },
     {
+      "id": "#forge:buckets/royal_jelly",
+      "required": true
+    },
+    {
       "id": "productivebees:honey_treat",
       "required": false
     },

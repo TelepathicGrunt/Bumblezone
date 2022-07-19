@@ -8,6 +8,8 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.settings.IKeyConflictContext;
+import net.minecraftforge.event.TickEvent;
+import org.apache.logging.log4j.Level;
 import org.lwjgl.glfw.GLFW;
 
 public class BeehemothControls {
@@ -25,17 +27,32 @@ public class BeehemothControls {
             "key.categories." + Bumblezone.MODID
     );
 
-    public static void keyInput(InputEvent.Key event) {
+    static boolean prevUp = false;
+    static boolean prevDown = false;
+
+    public static void keyInput(TickEvent.ClientTickEvent event) {
+        boolean upKeyAction = KEY_BIND_BEEHEMOTH_UP.isDown();
+        boolean downKeyAction = KEY_BIND_BEEHEMOTH_DOWN.isDown();
+
         if (Minecraft.getInstance().player != null &&
-            Minecraft.getInstance().player.getVehicle() instanceof BeehemothEntity &&
-            (KEY_BIND_BEEHEMOTH_UP.matches(event.getKey(), event.getScanCode()) ||
-             KEY_BIND_BEEHEMOTH_DOWN.matches(event.getKey(), event.getScanCode())))
+            Minecraft.getInstance().player.getVehicle() instanceof BeehemothEntity beehemothEntity &&
+            (prevUp != upKeyAction || prevDown != downKeyAction))
         {
             BeehemothControlsPacket.sendToServer(
-                KEY_BIND_BEEHEMOTH_UP.matches(event.getKey(), event.getScanCode()) ? event.getAction() : 2,
-                KEY_BIND_BEEHEMOTH_DOWN.matches(event.getKey(), event.getScanCode()) ? event.getAction() : 2
+                prevUp != upKeyAction ? (upKeyAction ? 1 : 0) : 2,
+                prevDown != downKeyAction ? (downKeyAction ? 1 : 0) : 2
             );
+
+            if (prevUp != upKeyAction) {
+                beehemothEntity.movingStraightUp = upKeyAction;
+            }
+            else {
+                beehemothEntity.movingStraightDown = downKeyAction;
+            }
         }
+
+        prevUp = upKeyAction;
+        prevDown = downKeyAction;
     }
 
     private enum BeehemothKeyContext implements IKeyConflictContext {
