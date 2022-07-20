@@ -80,7 +80,7 @@ public class FilledPorousHoneycomb extends Block {
     public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         //number of particles in this tick
         for (int i = 0; i < random.nextInt(2); ++i) {
-            this.spawnHoneyParticles(world, position, blockState);
+            this.spawnHoneyParticles(world, random, position, blockState);
         }
     }
 
@@ -106,21 +106,21 @@ public class FilledPorousHoneycomb extends Block {
      * Starts checking if the block can take the particle and if so and it passes another rng to reduce spawnrate, it then
      * takes the block's dimensions and passes into methods to spawn the actual particle
      */
-    private void spawnHoneyParticles(Level world, BlockPos position, BlockState blockState) {
-        if (blockState.getFluidState().isEmpty() && world.random.nextFloat() < 0.08F) {
+    private void spawnHoneyParticles(Level world, RandomSource random, BlockPos position, BlockState blockState) {
+        if (blockState.getFluidState().isEmpty() && random.nextFloat() < 0.08F) {
             VoxelShape currentBlockShape = blockState.getCollisionShape(world, position);
             double yEndHeight = currentBlockShape.max(Direction.Axis.Y);
             if (yEndHeight >= 1.0D && !blockState.is(BlockTags.IMPERMEABLE)) {
                 double yStartHeight = currentBlockShape.min(Direction.Axis.Y);
                 if (yStartHeight > 0.0D) {
-                    this.addHoneyParticle(world, position, currentBlockShape, position.getY() + yStartHeight - 0.05D);
+                    this.addHoneyParticle(world, random, position, currentBlockShape, position.getY() + yStartHeight - 0.05D);
                 } else {
                     BlockPos belowBlockpos = position.below();
                     BlockState belowBlockstate = world.getBlockState(belowBlockpos);
                     VoxelShape belowBlockShape = belowBlockstate.getCollisionShape(world, belowBlockpos);
                     double yEndHeight2 = belowBlockShape.max(Direction.Axis.Y);
                     if ((yEndHeight2 < 1.0D || !belowBlockstate.isSolidRender(world, belowBlockpos)) && belowBlockstate.getFluidState().isEmpty()) {
-                        this.addHoneyParticle(world, position, currentBlockShape, position.getY() - 0.05D);
+                        this.addHoneyParticle(world, random, position, currentBlockShape, position.getY() - 0.05D);
                     }
                 }
             }
@@ -133,9 +133,10 @@ public class FilledPorousHoneycomb extends Block {
      * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addHoneyParticle
      * method
      */
-    private void addHoneyParticle(Level world, BlockPos blockPos, VoxelShape blockShape, double height) {
+    private void addHoneyParticle(Level world, RandomSource random, BlockPos blockPos, VoxelShape blockShape, double height) {
         this.addHoneyParticle(
                 world,
+                random,
                 blockPos.getX() + blockShape.min(Direction.Axis.X),
                 blockPos.getX() + blockShape.max(Direction.Axis.X),
                 blockPos.getZ() + blockShape.min(Direction.Axis.Z),
@@ -147,7 +148,7 @@ public class FilledPorousHoneycomb extends Block {
     /**
      * Adds the actual honey particle into the world within the given range
      */
-    private void addHoneyParticle(Level world, double xMin, double xMax, double zMax, double zMin, double yHeight) {
-        world.addParticle(ParticleTypes.DRIPPING_HONEY, Mth.lerp(world.random.nextDouble(), xMin, xMax), yHeight, Mth.lerp(world.random.nextDouble(), zMax, zMin), 0.0D, 0.0D, 0.0D);
+    private void addHoneyParticle(Level world, RandomSource random, double xMin, double xMax, double zMax, double zMin, double yHeight) {
+        world.addParticle(ParticleTypes.DRIPPING_HONEY, Mth.lerp(random.nextDouble(), xMin, xMax), yHeight, Mth.lerp(random.nextDouble(), zMax, zMin), 0.0D, 0.0D, 0.0D);
     }
 }

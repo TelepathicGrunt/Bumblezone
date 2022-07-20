@@ -308,9 +308,9 @@ public abstract class HoneyFluid extends FlowingFluid {
                         SimpleParticleType simpleParticleType = livingEntity.isEyeInFluid(BzTags.BZ_HONEY_FLUID) ? BzParticles.HONEY_PARTICLE : BzParticles.ROYAL_JELLY_PARTICLE;
 
                         for(int i = 0; i < 8; ++i) {
-                            double d2 = livingEntity.level.random.nextDouble() - livingEntity.level.random.nextDouble();
-                            double d3 = livingEntity.level.random.nextDouble() - livingEntity.level.random.nextDouble();
-                            double d4 = livingEntity.level.random.nextDouble() - livingEntity.level.random.nextDouble();
+                            double d2 = livingEntity.getRandom().nextDouble() - livingEntity.getRandom().nextDouble();
+                            double d3 = livingEntity.getRandom().nextDouble() - livingEntity.getRandom().nextDouble();
+                            double d4 = livingEntity.getRandom().nextDouble() - livingEntity.getRandom().nextDouble();
                             livingEntity.level.addParticle(simpleParticleType, livingEntity.getX() + d2, livingEntity.getY() + d3, livingEntity.getZ() + d4, vector3d.x, vector3d.y, vector3d.z);
                         }
 

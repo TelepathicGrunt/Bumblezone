@@ -485,10 +485,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                     getY(),
                     getZ(),
                     Math.min(Math.max(1, getFriendship() / -3), 7),
-                    this.level.getRandom().nextFloat() - 0.5f,
-                    this.level.getRandom().nextFloat() * 0.4f + 0.4f,
-                    this.level.getRandom().nextFloat() - 0.5f,
-                    this.level.getRandom().nextFloat() * 0.8f + 0.4f);
+                    this.getRandom().nextFloat() - 0.5f,
+                    this.getRandom().nextFloat() * 0.4f + 0.4f,
+                    this.getRandom().nextFloat() - 0.5f,
+                    this.getRandom().nextFloat() * 0.8f + 0.4f);
         }
     }
 
@@ -503,7 +503,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
             double currentSpeed = getDeltaMovement().length();
             if(currentSpeed > 0.000001D &&
-                this.level.random.nextFloat() < 0.0085D &&
+                this.getRandom().nextFloat() < 0.0085D &&
                 passenger.getUUID().equals(getOwnerUUID()))
             {
                 addFriendship(1);
@@ -590,7 +590,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         // Become untamed if bee is no longer a friend
         else if(getFriendship() < 0 && isTame()) {
             ejectPassengers();
-            if(level.random.nextFloat() < 0.01f) spawnMadParticles();
+            if(this.getRandom().nextFloat() < 0.01f) spawnMadParticles();
         }
 
         if(isOnGround()) {

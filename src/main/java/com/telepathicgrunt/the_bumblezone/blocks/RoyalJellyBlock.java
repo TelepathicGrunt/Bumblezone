@@ -157,11 +157,11 @@ public class RoyalJellyBlock extends HalfTransparentBlock {
 
     private void maybeDoSlideEffects(Level level, Entity entity) {
         if (doesEntityDoHoneyBlockSlideEffects(entity)) {
-            if (level.random.nextInt(5) == 0) {
+            if (level.getRandom().nextInt(5) == 0) {
                 entity.playSound(BzSounds.ROYAL_JELLY_BLOCK_SLIDE, 1.0F, 1.0F);
             }
 
-            if (!level.isClientSide && level.random.nextInt(5) == 0) {
+            if (!level.isClientSide && level.getRandom().nextInt(5) == 0) {
                 showSlideParticles((ServerLevel)level, entity);
             }
         }

@@ -47,14 +47,14 @@ public class EssenceOfTheBees extends Item {
             CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, itemStack);
             serverPlayer.awardStat(Stats.ITEM_USED.get(this));
 
-            spawnParticles((ServerLevel) level, serverPlayer.position(), level.random);
+            spawnParticles((ServerLevel) level, serverPlayer.position(), serverPlayer.getRandom());
             level.playSound(
                     null,
                     serverPlayer.blockPosition(),
                     BzSounds.BEE_ESSENCE_CONSUMED,
                     SoundSource.PLAYERS,
                     2F,
-                    (level.getRandom().nextFloat() * 0.2F) + 0.6F);
+                    (serverPlayer.getRandom().nextFloat() * 0.2F) + 0.6F);
         }
         return itemStack;
     }
@@ -69,7 +69,7 @@ public class EssenceOfTheBees extends Item {
                 random.nextGaussian() * 0.1D,
                 (random.nextGaussian() * 0.1D) + 0.1,
                 random.nextGaussian() * 0.1D,
-                world.getRandom().nextFloat() * 0.4 + 0.2f);
+                random.nextFloat() * 0.4 + 0.2f);
         world.sendParticles(
                 ParticleTypes.ENCHANT,
                 location.x(),
@@ -79,7 +79,7 @@ public class EssenceOfTheBees extends Item {
                 1,
                 1,
                 1,
-                world.getRandom().nextFloat() * 0.5 + 1.2f);
+                random.nextFloat() * 0.5 + 1.2f);
     }
 
     @Override

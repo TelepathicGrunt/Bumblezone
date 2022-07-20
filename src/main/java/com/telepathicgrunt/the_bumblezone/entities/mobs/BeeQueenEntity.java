@@ -42,7 +42,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
@@ -54,10 +53,8 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -74,7 +71,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -272,7 +268,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             this.setBeeSpawnCooldown(this.random.nextInt(50) + 75);
 
             // Grab a nearby air materialposition a bit away
-            BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(this.level, this, 5, 0);
+            BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(this, 5, 0);
             if(this.level.getBlockState(spawnBlockPos).getMaterial() != Material.AIR) {
                 return;
             }
@@ -498,13 +494,13 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     reward.xpReward());
         }
 
-        level.playSound(
+        this.level.playSound(
                 null,
                 this.blockPosition(),
                 BzSounds.BEE_QUEEN_HAPPY,
                 SoundSource.NEUTRAL,
                 1.0F,
-                (level.getRandom().nextFloat() * 0.2F) + 0.6F);
+                (this.getRandom().nextFloat() * 0.2F) + 0.6F);
     }
 
     public void spawnAngryParticles(int particles) {
@@ -515,10 +511,10 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     getY() + 0.45f,
                     getZ(),
                     particles,
-                    this.level.getRandom().nextFloat() - 0.5f,
-                    this.level.getRandom().nextFloat() * 0.4f + 0.4f,
-                    this.level.getRandom().nextFloat() - 0.5f,
-                    this.level.getRandom().nextFloat() * 0.8f + 0.4f);
+                    this.getRandom().nextFloat() - 0.5f,
+                    this.getRandom().nextFloat() * 0.4f + 0.4f,
+                    this.getRandom().nextFloat() - 0.5f,
+                    this.getRandom().nextFloat() * 0.8f + 0.4f);
         }
     }
 
@@ -532,7 +528,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 0.8d,
                 0.75d,
                 0.8d,
-                this.level.getRandom().nextFloat() + 0.5d);
+                this.getRandom().nextFloat() + 0.5d);
     }
 
     @Override

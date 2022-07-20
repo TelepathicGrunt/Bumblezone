@@ -8,6 +8,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -78,13 +79,13 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
     protected boolean tryPickup(Player player) {
         if (player.position().closerThan(this.position(), 0.85f)) {
             if(this.level instanceof ServerLevel serverLevel) {
-                showParticles(serverLevel, this, 5);
+                showParticles(serverLevel, player.getRandom(), this, 5);
                 level.playSound(null,
                         player.blockPosition(),
                         BzSounds.HONEY_CRYSTAL_SHARD_SHATTER,
                         SoundSource.PLAYERS,
                         1.0F,
-                        (level.getRandom().nextFloat() * 0.2F) + 0.6F);
+                        (player.getRandom().nextFloat() * 0.2F) + 0.6F);
             }
             this.remove(RemovalReason.DISCARDED);
             return false;
@@ -93,7 +94,7 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
         return false;
     }
 
-    private static void showParticles(ServerLevel serverLevel, Entity entity, int particleNumber) {
+    private static void showParticles(ServerLevel serverLevel, RandomSource random, Entity entity, int particleNumber) {
         BlockState blockstate = BzBlocks.HONEY_CRYSTAL.defaultBlockState();
 
         serverLevel.sendParticles(
@@ -102,10 +103,10 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
                 entity.getY(),
                 entity.getZ(),
                 particleNumber,
-                serverLevel.getRandom().nextFloat() * 0.5 - 0.25f,
-                serverLevel.getRandom().nextFloat() * 0.2f + 0.2f,
-                serverLevel.getRandom().nextFloat() * 0.5 - 0.25f,
-                serverLevel.getRandom().nextFloat() * 0.4 + 0.2f);
+                random.nextFloat() * 0.5 - 0.25f,
+                random.nextFloat() * 0.2f + 0.2f,
+                random.nextFloat() * 0.5 - 0.25f,
+                random.nextFloat() * 0.4 + 0.2f);
     }
 
     @Override

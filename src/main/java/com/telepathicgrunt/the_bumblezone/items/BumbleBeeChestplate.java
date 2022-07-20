@@ -38,14 +38,14 @@ public class BumbleBeeChestplate extends BeeArmor {
     }
 
     @Override
-    public void onArmorTick(ItemStack itemstack, Level world, Player entity) {
+    public void onArmorTick(ItemStack itemstack, Level world, Player player) {
         CompoundTag tag = itemstack.getOrCreateTag();
         boolean isFlying = tag.getBoolean("isFlying");
         int flyCounter = tag.getInt("flyCounter");
         if(world.isClientSide()) {
-            if (flyCounter > 0 && !entity.isOnGround() && !entity.isInWater() && ((LivingEntityAccessor)entity).isJumping() && !entity.getAbilities().flying && !entity.isPassenger() && !entity.onClimbable()) {
+            if (flyCounter > 0 && !player.isOnGround() && !player.isInWater() && ((LivingEntityAccessor)player).isJumping() && !player.getAbilities().flying && !player.isPassenger() && !player.onClimbable()) {
                 if(!isFlying) {
-                    LivingEntityFlyingSoundInstance.playSound(entity, BzSounds.BUMBLE_BEE_CHESTPLATE_FLYING);
+                    LivingEntityFlyingSoundInstance.playSound(player, BzSounds.BUMBLE_BEE_CHESTPLATE_FLYING);
                     FriendlyByteBuf passedData = new FriendlyByteBuf(Unpooled.buffer());
                     passedData.writeByte(1);
                     ClientPlayNetworking.send(BumbleBeeChestplateFlyingPacket.PACKET_ID, passedData);
@@ -53,7 +53,7 @@ public class BumbleBeeChestplate extends BeeArmor {
                 }
             }
             else if(isFlying) {
-                LivingEntityFlyingSoundInstance.stopSound(entity, BzSounds.BUMBLE_BEE_CHESTPLATE_FLYING);
+                LivingEntityFlyingSoundInstance.stopSound(player, BzSounds.BUMBLE_BEE_CHESTPLATE_FLYING);
                 FriendlyByteBuf passedData = new FriendlyByteBuf(Unpooled.buffer());
                 passedData.writeByte(0);
                 ClientPlayNetworking.send(BumbleBeeChestplateFlyingPacket.PACKET_ID, passedData);
@@ -61,51 +61,51 @@ public class BumbleBeeChestplate extends BeeArmor {
             }
         }
 
-        boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(entity);
-        MobEffectInstance beenergized = entity.getEffect(BzEffects.BEENERGIZED);
+        boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(player);
+        MobEffectInstance beenergized = player.getEffect(BzEffects.BEENERGIZED);
         boolean isBeenergized = beenergized != null;
 
         isFlying = tag.getBoolean("isFlying");
         if(isFlying) {
             if(flyCounter > 0) {
-                Vec3 velocity = entity.getDeltaMovement();
+                Vec3 velocity = player.getDeltaMovement();
                 double additiveSpeed = velocity.y() > 0 ? velocity.y() > 0.1D ? 0.06D : 0.080D : 0.13D;
                 if(isBeenergized) {
                     additiveSpeed += (beenergized.getAmplifier() + 1) * 0.0125D;
                 }
 
                 double newYSpeed = velocity.y() + additiveSpeed;
-                entity.setDeltaMovement(
+                player.setDeltaMovement(
                         velocity.x(),
                         newYSpeed,
                         velocity.z()
                 );
 
                 if(newYSpeed > -0.3) {
-                    entity.fallDistance = 0;
+                    player.fallDistance = 0;
                 }
                 else if (newYSpeed <= -0.3) {
-                    entity.fallDistance = ((float) Math.abs(newYSpeed) / 0.3f) + 1.75f;
+                    player.fallDistance = ((float) Math.abs(newYSpeed) / 0.3f) + 1.75f;
                 }
 
                 tag.putInt("flyCounter", flyCounter - 1);
-                if(!world.isClientSide() && world.random.nextFloat() < 0.0025f) {
-                    itemstack.hurtAndBreak(1, entity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.CHEST));
+                if(!world.isClientSide() && player.getRandom().nextFloat() < 0.0025f) {
+                    itemstack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.CHEST));
                 }
 
-                if(entity instanceof ServerPlayer serverPlayer) {
+                if(player instanceof ServerPlayer serverPlayer) {
                     serverPlayer.awardStat(BzStats.BUMBLE_BEE_CHESTPLATE_FLY_TIME_RL);
                 }
             }
             else {
                 tag.putBoolean("isFlying", false);
-                if(isBeenergized && isAllBeeArmorOn && entity instanceof ServerPlayer) {
-                    BzCriterias.BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER.trigger((ServerPlayer) entity);
+                if(isBeenergized && isAllBeeArmorOn && player instanceof ServerPlayer) {
+                    BzCriterias.BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER.trigger((ServerPlayer) player);
                 }
             }
         }
 
-        if(entity.isOnGround()) {
+        if(player.isOnGround()) {
             tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5f : 1) * (isAllBeeArmorOn ? 2 : 1)));
         }
     }

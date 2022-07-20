@@ -87,7 +87,7 @@ public class NeurotoxinsEnchantment extends Enchantment {
                 applyChance = (healthModifier * level) * (missedCounter + 1);
             }
 
-            if(victim.level.random.nextFloat() < applyChance) {
+            if(livingEntity.getRandom().nextFloat() < applyChance) {
                 livingEntity.addEffect(new MobEffectInstance(
                         BzEffects.PARALYZED,
                         100 * level,

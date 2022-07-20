@@ -9,6 +9,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
@@ -84,12 +85,12 @@ public class GeneralUtils {
 
     ////////////////
 
-    public static BlockPos getRandomBlockposWithinRange(Level world, Entity entity, int maxRadius, int minRadius) {
+    public static BlockPos getRandomBlockposWithinRange(LivingEntity entity, int maxRadius, int minRadius) {
         BlockPos newBeePos;
         newBeePos = new BlockPos(
-                entity.getX() + (world.random.nextInt(maxRadius) + minRadius) * (world.random.nextBoolean() ? 1 : -1),
-                Doubles.constrainToRange(entity.getY() + (world.random.nextInt(maxRadius) + minRadius) * (world.random.nextBoolean() ? 1 : -1), 1, 254),
-                entity.getZ() + (world.random.nextInt(maxRadius) + minRadius) * (world.random.nextBoolean() ? 1 : -1));
+                entity.getX() + (entity.getRandom().nextInt(maxRadius) + minRadius) * (entity.getRandom().nextBoolean() ? 1 : -1),
+                Doubles.constrainToRange(entity.getY() + (entity.getRandom().nextInt(maxRadius) + minRadius) * (entity.getRandom().nextBoolean() ? 1 : -1), 1, 254),
+                entity.getZ() + (entity.getRandom().nextInt(maxRadius) + minRadius) * (entity.getRandom().nextBoolean() ? 1 : -1));
         return newBeePos;
     }
 

@@ -111,7 +111,7 @@ public class BeeCannon extends Item implements Vanishable {
                     mutableBeeCannon.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
                 });
 
-                level.playSound(null, player.blockPosition(), BzSounds.BEE_CANNON_FIRES, SoundSource.PLAYERS, 1.0F, (level.getRandom().nextFloat() * 0.2F) + 0.6F);
+                level.playSound(null, player.blockPosition(), BzSounds.BEE_CANNON_FIRES, SoundSource.PLAYERS, 1.0F, (player.getRandom().nextFloat() * 0.2F) + 0.6F);
                 if(numberOfBees >= 3 && player instanceof ServerPlayer serverPlayer) {
                     BzCriterias.BEE_CANNON_FULL_TRIGGER.trigger(serverPlayer);
                 }
