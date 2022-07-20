@@ -22,7 +22,6 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerS
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
-import com.telepathicgrunt.the_bumblezone.mixin.client.DimensionSpecialEffectsAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.client.RenderingRegistryAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -42,6 +41,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -60,6 +60,7 @@ public class BumblezoneClient {
         modEventBus.addListener(BumblezoneClient::registerEntityRenderers);
         modEventBus.addListener(BumblezoneClient::registerEntityModels);
         modEventBus.addListener(BumblezoneClient::registerKeyBinding);
+        modEventBus.addListener(BumblezoneClient::registerDimensionSpecialEffects);
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         forgeBus.addListener(BeehemothControls::keyInput);
     }
@@ -71,9 +72,6 @@ public class BumblezoneClient {
 
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            DimensionSpecialEffectsAccessor.thebumblezone_getBY_ResourceLocation()
-                    .put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
-
             registerRenderLayers();
             registerItemProperties();
 
@@ -188,5 +186,9 @@ public class BumblezoneClient {
         event.register(BzParticles.POLLEN.get(), PollenPuff.Factory::new);
         event.register(BzParticles.HONEY_PARTICLE.get(), HoneyParticle.Factory::new);
         event.register(BzParticles.ROYAL_JELLY_PARTICLE.get(), RoyalJellyParticle.Factory::new);
+    }
+
+    public static void registerDimensionSpecialEffects(RegisterDimensionSpecialEffectsEvent event) {
+        event.register(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
     }
 }

@@ -45,7 +45,6 @@
     "world.WorldGenRegionAccessor"
   ],
   "client": [
-    "client.DimensionSpecialEffectsAccessor",
     "client.FluidRendererMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
