@@ -462,6 +462,10 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                             double d0 = Mth.clamp(x, (double)i + (double)f, (double)i + 16.0D - (double)f);
                             double d1 = Mth.clamp(z, (double)j + (double)f, (double)j + 16.0D - (double)f);
 
+                            if (!serverLevelAccessor.getWorldBorder().isWithinBounds(d0, d1)) {
+                                continue;
+                            }
+
                             Entity entity;
                             try {
                                 entity = mobspawnsettings$spawnerdata.type.create(serverLevelAccessor.getLevel());
