@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -34,7 +35,7 @@ public class EssenceOfTheBees extends Item {
         super.finishUsingItem(itemStack, level, livingEntity);
         if (livingEntity instanceof ServerPlayer serverPlayer) {
             if (hasEssence(serverPlayer)) {
-                serverPlayer.displayClientMessage(Component.translatable("item.the_bumblezone.essence_of_the_bees.already_essenced"), false);
+                serverPlayer.displayClientMessage(Component.translatable("item.the_bumblezone.essence_of_the_bees.already_essenced").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                 return itemStack;
             }
 

@@ -7,8 +7,10 @@ import com.telepathicgrunt.the_bumblezone.packets.BeehemothControlsPacket;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.settings.IKeyConflictContext;
 import net.minecraftforge.event.TickEvent;
+import org.apache.logging.log4j.Level;
 import org.lwjgl.glfw.GLFW;
 
 public class BeehemothControls {
@@ -26,40 +28,28 @@ public class BeehemothControls {
             "key.categories." + Bumblezone.MODID
     );
 
-    static boolean prevUp = false;
-    static boolean prevDown = false;
+    public static void keyInput(InputEvent.Key event) {
+        if (Minecraft.getInstance().player != null &&
+            Minecraft.getInstance().player.getVehicle() instanceof BeehemothEntity beehemothEntity)
+        {
+            boolean upKeyAction = KEY_BIND_BEEHEMOTH_UP.matches(event.getKey(), event.getScanCode());
+            boolean downKeyAction = KEY_BIND_BEEHEMOTH_DOWN.matches(event.getKey(), event.getScanCode());
+            int keyAction = event.getAction();
 
-    public static void keyInput(TickEvent.ClientTickEvent event) {
-        if (Minecraft.getInstance().player == null) {
-            return;
-        }
+            if ((upKeyAction || downKeyAction) && keyAction != 2) {
+                BeehemothControlsPacket.sendToServer(
+                        upKeyAction ? keyAction : 2,
+                        downKeyAction ? keyAction : 2
+                );
 
-        Entity vehicle = Minecraft.getInstance().player.getVehicle();
-        if (vehicle == null) {
-            prevUp = false;
-            prevDown = false;
-            return;
-        }
-
-        boolean upKeyAction = KEY_BIND_BEEHEMOTH_UP.isDown();
-        boolean downKeyAction = KEY_BIND_BEEHEMOTH_DOWN.isDown();
-
-        if (vehicle instanceof BeehemothEntity beehemothEntity && (prevUp != upKeyAction || prevDown != downKeyAction)) {
-            BeehemothControlsPacket.sendToServer(
-                prevUp != upKeyAction ? (upKeyAction ? 1 : 0) : 2,
-                prevDown != downKeyAction ? (downKeyAction ? 1 : 0) : 2
-            );
-
-            if (prevUp != upKeyAction) {
-                beehemothEntity.movingStraightUp = upKeyAction;
-            }
-            else {
-                beehemothEntity.movingStraightDown = downKeyAction;
+                if (upKeyAction) {
+                    beehemothEntity.movingStraightUp = keyAction == 1;
+                }
+                else {
+                    beehemothEntity.movingStraightDown = keyAction == 1;
+                }
             }
         }
-
-        prevUp = upKeyAction;
-        prevDown = downKeyAction;
     }
 
     private enum BeehemothKeyContext implements IKeyConflictContext {
