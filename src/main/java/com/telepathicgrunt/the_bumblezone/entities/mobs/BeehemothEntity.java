@@ -81,6 +81,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     public float offset1, offset2, offset3, offset4, offset5, offset6;
     public boolean movingStraightUp = false;
     public boolean movingStraightDown = false;
+    private boolean wasOnGround = false;
 
     public BeehemothEntity(EntityType<? extends BeehemothEntity> type, Level world) {
         super(type, world);
@@ -599,6 +600,13 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 this.getDeltaMovement().z()
             );
         }
+        else if (wasOnGround) {
+            this.setDeltaMovement(
+                    this.getDeltaMovement().x(),
+                    this.getDeltaMovement().y() + 0.006D,
+                    this.getDeltaMovement().z()
+            );
+        }
     }
 
     public static void spawnParticles(LevelAccessor world, Vec3 location, RandomSource random, double speedXZModifier, double speedYModifier, double initYSpeed) {
@@ -680,6 +688,9 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 if(this.onGround) {
                     forwardSpeed *= 0.025f;
                     verticalSpeed -= 0.5f;
+                }
+                else if (wasOnGround) {
+                    verticalSpeed += 0.5f;
                 }
 
                 if (this.isControlledByLocalInstance()) {
