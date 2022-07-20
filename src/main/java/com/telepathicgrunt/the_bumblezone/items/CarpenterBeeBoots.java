@@ -43,7 +43,7 @@ public class CarpenterBeeBoots extends BeeArmor {
 
     @Override
     public void onArmorTick(ItemStack beeBoots, Level world, Player player) {
-        RandomSource random = world.random;
+        RandomSource random = player.getRandom();
         boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(player);
         CompoundTag tag = beeBoots.getOrCreateTag();
 
@@ -89,7 +89,7 @@ public class CarpenterBeeBoots extends BeeArmor {
                                 beeBoots);
                         boolean blockBroken = world.destroyBlock(belowBlockPos, false, player);
 
-                        if(world.random.nextFloat() < 0.045) {
+                        if(random.nextFloat() < 0.045) {
                             beeBoots.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.FEET));
                         }
 
@@ -178,7 +178,7 @@ public class CarpenterBeeBoots extends BeeArmor {
                                 }
                             }
 
-                            if(world.random.nextFloat() < 0.001) {
+                            if(random.nextFloat() < 0.001) {
                                 beeBoots.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.FEET));
                             }
                         }

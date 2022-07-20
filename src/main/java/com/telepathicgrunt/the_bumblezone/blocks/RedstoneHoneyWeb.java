@@ -220,7 +220,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
         int power = blockState.getValue(POWER);
         if(power != 0) {
             for (int i = 0; i == random.nextInt(35); ++i) {
-                this.addRedstoneParticle(world, position, blockState.getShape(world, position), power);
+                this.addRedstoneParticle(world, random, position, blockState.getShape(world, position), power);
             }
         }
     }
@@ -228,9 +228,10 @@ public class RedstoneHoneyWeb extends HoneyWeb {
     /**
      * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addRedstoneParticle method
      */
-    private void addRedstoneParticle(Level world, BlockPos blockPos, VoxelShape blockShape, int power) {
+    private void addRedstoneParticle(Level world, RandomSource random, BlockPos blockPos, VoxelShape blockShape, int power) {
         this.addRedstoneParticle(
                 world,
+                random,
                 blockPos.getX() + blockShape.min(Direction.Axis.X),
                 blockPos.getX() + blockShape.max(Direction.Axis.X),
                 blockPos.getY() + blockShape.min(Direction.Axis.Y),
@@ -243,7 +244,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
     /**
      * Adds the actual redstone particle into the world within the given range
      */
-    private void addRedstoneParticle(Level world, double xMin, double xMax, double yMin, double yMax, double zMax, double zMin, int power) {
-        world.addParticle(new DustParticleOptions(new Vector3f(COLORS[power]), 1.0F), Mth.lerp(world.random.nextDouble(), xMin, xMax), Mth.lerp(world.random.nextDouble(), yMin, yMax), Mth.lerp(world.random.nextDouble(), zMax, zMin), 0.0D, 0.0D, 0.0D);
+    private void addRedstoneParticle(Level world, RandomSource random, double xMin, double xMax, double yMin, double yMax, double zMax, double zMin, int power) {
+        world.addParticle(new DustParticleOptions(new Vector3f(COLORS[power]), 1.0F), Mth.lerp(random.nextDouble(), xMin, xMax), Mth.lerp(random.nextDouble(), yMin, yMax), Mth.lerp(random.nextDouble(), zMax, zMin), 0.0D, 0.0D, 0.0D);
     }
 }

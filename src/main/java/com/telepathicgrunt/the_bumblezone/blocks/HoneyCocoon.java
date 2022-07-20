@@ -414,8 +414,8 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     @Override
     public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         if(!blockState.getValue(WATERLOGGED)) {
-            if (world.random.nextFloat() < 0.05F) {
-                this.spawnHoneyParticles(world, position);
+            if (random.nextFloat() < 0.05F) {
+                this.spawnHoneyParticles(world, position, random);
             }
         }
     }
@@ -424,17 +424,17 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
      * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addHoneyParticle
      * method
      */
-    private void spawnHoneyParticles(Level world, BlockPos position) {
-        double x = (world.random.nextDouble() * 14) + 1;
-        double y = (world.random.nextDouble() * 6) + 5;
-        double z = (world.random.nextDouble() * 14) + 1;
+    private void spawnHoneyParticles(Level world, BlockPos position, RandomSource random) {
+        double x = (random.nextDouble() * 14) + 1;
+        double y = (random.nextDouble() * 6) + 5;
+        double z = (random.nextDouble() * 14) + 1;
 
-        if (world.random.nextBoolean()) {
-            if (world.random.nextBoolean()) x = 0.8D;
+        if (random.nextBoolean()) {
+            if (random.nextBoolean()) x = 0.8D;
             else x = 15.2;
         }
         else {
-            if (world.random.nextBoolean()) z = 0.8D;
+            if (random.nextBoolean()) z = 0.8D;
             else z = 15.2;
         }
 

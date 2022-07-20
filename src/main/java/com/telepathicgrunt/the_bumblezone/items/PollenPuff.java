@@ -9,6 +9,7 @@ import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -49,7 +50,7 @@ public class PollenPuff extends Item {
         // right clicking on pollinated bee with pollen puff with room, gets pollen puff into hand.
         // else, if done with pollen puff without room, drops pollen puff in world
         if(beeEntity.hasNectar() && itemstack.getItem().equals(BzItems.POLLEN_PUFF)) {
-            PollenPuff.spawnItemstackEntity(entity.level, beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
+            PollenPuff.spawnItemstackEntity(entity.level, playerEntity.getRandom(), beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
             playerEntity.swing(hand, true);
             beeEntity.dropOffNectar();
             return InteractionResult.SUCCESS;
@@ -63,7 +64,7 @@ public class PollenPuff extends Item {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
 
         if (!world.isClientSide()) {
-            world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), BzSounds.POLLEN_PUFF_THROW.get(), SoundSource.PLAYERS, 0.5F, 0.4F / (world.random.nextFloat() * 0.4F + 0.8F));
+            world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), BzSounds.POLLEN_PUFF_THROW.get(), SoundSource.PLAYERS, 0.5F, 0.4F / (playerEntity.getRandom().nextFloat() * 0.4F + 0.8F));
                 PollenPuffEntity pollenPuffEntity = new PollenPuffEntity(world, playerEntity);
                 pollenPuffEntity.setItem(itemstack);
                 pollenPuffEntity.shootFromRotation(playerEntity, playerEntity.getXRot(), playerEntity.getYRot(), 0.0F, 1.5F, 1.0F);
@@ -78,11 +79,11 @@ public class PollenPuff extends Item {
         return InteractionResultHolder.sidedSuccess(itemstack, world.isClientSide());
     }
 
-    public static void spawnItemstackEntity(Level world, BlockPos blockPos, ItemStack itemStack) {
+    public static void spawnItemstackEntity(Level world, RandomSource random, BlockPos blockPos, ItemStack itemStack) {
         if (!world.isClientSide() && !itemStack.isEmpty()) {
-            double x = (double)(world.random.nextFloat() * 0.5F) + 0.25D;
-            double y = (double)(world.random.nextFloat() * 0.5F) + 0.25D;
-            double z = (double)(world.random.nextFloat() * 0.5F) + 0.25D;
+            double x = (double)(random.nextFloat() * 0.5F) + 0.25D;
+            double y = (double)(random.nextFloat() * 0.5F) + 0.25D;
+            double z = (double)(random.nextFloat() * 0.5F) + 0.25D;
             ItemEntity itemEntity = new ItemEntity(world, (double)blockPos.getX() + x, (double)blockPos.getY() + y, (double)blockPos.getZ() + z, itemStack);
             itemEntity.setDefaultPickUpDelay();
             world.addFreshEntity(itemEntity);

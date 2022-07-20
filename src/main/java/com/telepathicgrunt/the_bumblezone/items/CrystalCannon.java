@@ -46,13 +46,13 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
                 for (int i = 0; i < crystalsToSpawn; i++) {
                     float offset = 0;
                     if (i == 1) {
-                        offset = (level.random.nextFloat() * 5f) + 3.5f;
+                        offset = (livingEntity.getRandom().nextFloat() * 5f) + 3.5f;
                     }
                     else if (i == 2) {
-                        offset = (level.random.nextFloat() * 5f) - 11.5f;
+                        offset = (livingEntity.getRandom().nextFloat() * 5f) - 11.5f;
                     }
                     else if (i != 0) {
-                        offset = level.random.nextFloat() * 10f - 5f;
+                        offset = livingEntity.getRandom().nextFloat() * 10f - 5f;
                     }
 
                     AbstractArrow newCrystal = BzItems.HONEY_CRYSTAL_SHARDS.get().createArrow(level, crystalCannon, livingEntity);
@@ -89,13 +89,13 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
                     shootVector.transform(quaternion1);
                     newCrystal.shoot(
                             shootVector.x(),
-                            shootVector.y() + (level.random.nextFloat() * 0.2f + 0.01f),
+                            shootVector.y() + (livingEntity.getRandom().nextFloat() * 0.2f + 0.01f),
                             shootVector.z(),
                             1.9f,
                             1);
                     level.addFreshEntity(newCrystal);
 
-                    level.playSound(null, player.blockPosition(), BzSounds.CRYSTAL_CANNON_FIRES.get(), SoundSource.PLAYERS, 1.0F, (level.getRandom().nextFloat() * 0.2F) + 0.6F);
+                    level.playSound(null, player.blockPosition(), BzSounds.CRYSTAL_CANNON_FIRES.get(), SoundSource.PLAYERS, 1.0F, (player.getRandom().nextFloat() * 0.2F) + 0.6F);
                     mutableCrystalCannon.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 
                     if(numberOfCrystals >= 3 && player instanceof ServerPlayer serverPlayer) {

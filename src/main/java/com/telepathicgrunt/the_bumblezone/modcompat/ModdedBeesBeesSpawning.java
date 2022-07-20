@@ -22,13 +22,13 @@ public class ModdedBeesBeesSpawning {
 			event.getSpawnReason() == MobSpawnType.CHUNK_GENERATION ||
 			event.getSpawnReason() == MobSpawnType.STRUCTURE))
 		{
-			Mob entity = (Mob) event.getEntity();
+			Mob entity = event.getEntity();
 			ResourceLocation worldRL = entity.level.dimension().location();
 
 			if (worldRL.equals(Bumblezone.MOD_DIMENSION_ID) && entity.getType() == EntityType.BEE) {
 				if (ModChecker.productiveBeesPresent &&
 					BzModCompatibilityConfigs.spawnProductiveBeesBeesMob.get() &&
-					entity.level.getRandom().nextFloat() < BzModCompatibilityConfigs.spawnrateOfProductiveBeesMobs.get())
+					entity.getRandom().nextFloat() < BzModCompatibilityConfigs.spawnrateOfProductiveBeesMobs.get())
 				{
 					if(ProductiveBeesCompat.PBMobSpawnEvent(event, entity.isBaby())) {
 						event.setResult(Event.Result.DENY);
@@ -37,7 +37,7 @@ public class ModdedBeesBeesSpawning {
 
 				if (ModChecker.pokecubePresent &&
 					BzModCompatibilityConfigs.spawnPokecubeBeePokemon.get() &&
-					entity.level.getRandom().nextFloat() < BzModCompatibilityConfigs.spawnrateOfPokecubeBeePokemon.get())
+					entity.getRandom().nextFloat() < BzModCompatibilityConfigs.spawnrateOfPokecubeBeePokemon.get())
 				{
 					PokecubeCompat.PCMobSpawnEvent(event, entity.isBaby());
 				}

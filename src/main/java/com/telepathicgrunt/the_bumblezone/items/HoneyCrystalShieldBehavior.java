@@ -92,7 +92,7 @@ public class HoneyCrystalShieldBehavior {
                     }
 
                     player.stopUsingItem();
-                    player.playSound(SoundEvents.SHIELD_BREAK, 0.8F, 0.8F + player.level.random.nextFloat() * 0.4F);
+                    player.playSound(SoundEvents.SHIELD_BREAK, 0.8F, 0.8F + player.getRandom().nextFloat() * 0.4F);
                 }
             }
 
