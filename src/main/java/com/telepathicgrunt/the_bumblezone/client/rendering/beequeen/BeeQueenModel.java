@@ -84,7 +84,10 @@ public class BeeQueenModel extends HierarchicalModel<BeeQueenEntity> {
     @Override
     public void setupAnim(BeeQueenEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
-        this.animate(entity.idleAnimationState, BeeQueenAnimations.BEE_QUEEN_IDLE, ageInTicks);
+        this.animate(entity.attackAnimationState, BeeQueenAnimations.BEE_QUEEN_ATTACK, ageInTicks);
+        this.animate(entity.idleAnimationState, BeeQueenAnimations.BEE_QUEEN_IDLE, ageInTicks * (entity.isAngry() ? 2 : 1));
+        this.animate(entity.itemThrownAnimationState, BeeQueenAnimations.BEE_QUEEN_ITEM_THROW, ageInTicks);
+        this.animate(entity.itemRejectAnimationState, BeeQueenAnimations.BEE_QUEEN_ITEM_REJECT, ageInTicks);
     }
 
     @Override
