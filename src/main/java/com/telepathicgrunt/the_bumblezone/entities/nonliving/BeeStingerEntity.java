@@ -26,7 +26,7 @@ public class BeeStingerEntity extends AbstractArrow {
     }
 
     public BeeStingerEntity(Level level, LivingEntity livingEntity) {
-        super(BzEntities.BEE_STINGER_ENTITY.get(), livingEntity, level);
+        super(BzEntities.BEE_STINGER_ENTITY, livingEntity, level);
         this.setBaseDamage(0.5d);
     }
 
@@ -72,7 +72,7 @@ public class BeeStingerEntity extends AbstractArrow {
             boolean isPoisoned = livingEntity.hasEffect(MobEffects.POISON);
             boolean isSlowed = livingEntity.hasEffect(MobEffects.MOVEMENT_SLOWDOWN);
             boolean isWeakened = livingEntity.hasEffect(MobEffects.WEAKNESS);
-            boolean isParalyzed = livingEntity.hasEffect(BzEffects.PARALYZED.get());
+            boolean isParalyzed = livingEntity.hasEffect(BzEffects.PARALYZED);
 
             livingEntity.addEffect(new MobEffectInstance(
                     MobEffects.POISON,
@@ -104,7 +104,7 @@ public class BeeStingerEntity extends AbstractArrow {
 
             if (isPoisoned && isSlowed && isWeakened && livingEntity.getRandom().nextFloat() < 0.25f) {
                 livingEntity.addEffect(new MobEffectInstance(
-                        BzEffects.PARALYZED.get(),
+                        BzEffects.PARALYZED,
                         100,
                         0,
                         true,
@@ -123,7 +123,7 @@ public class BeeStingerEntity extends AbstractArrow {
 
     @Override
     protected ItemStack getPickupItem() {
-        return new ItemStack(BzItems.BEE_STINGER.get());
+        return new ItemStack(BzItems.BEE_STINGER);
     }
 
     @Override
@@ -133,7 +133,7 @@ public class BeeStingerEntity extends AbstractArrow {
 
     @Override
     protected SoundEvent getDefaultHitGroundSoundEvent() {
-        return BzSounds.BEE_STINGER_HIT.get();
+        return BzSounds.BEE_STINGER_HIT;
     }
 
     @Override

@@ -76,12 +76,12 @@ public class RoyalJellyBottle extends Item {
 
     @Override
     public SoundEvent getDrinkingSound() {
-        return BzSounds.ROYAL_JELLY_DRINK.get();
+        return BzSounds.ROYAL_JELLY_DRINK;
     }
 
     @Override
     public SoundEvent getEatingSound() {
-        return BzSounds.ROYAL_JELLY_DRINK.get();
+        return BzSounds.ROYAL_JELLY_DRINK;
     }
 
     @Override
@@ -91,10 +91,10 @@ public class RoyalJellyBottle extends Item {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player playerEntity, LivingEntity entity, InteractionHand playerHand) {
-        if(!(entity instanceof Bee) && entity.getType() != BzEntities.BEEHEMOTH.get())
+        if(!(entity instanceof Bee) && entity.getType() != BzEntities.BEEHEMOTH)
             return InteractionResult.PASS;
 
-        entity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 24000, 3, true, true, true));
+        entity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED, 24000, 3, true, true, true));
         if (playerEntity instanceof ServerPlayer) {
             BzCriterias.BEENERGIZED_MAXED_TRIGGER.trigger((ServerPlayer) playerEntity);
         }
