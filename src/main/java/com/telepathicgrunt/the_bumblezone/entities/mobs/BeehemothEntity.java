@@ -380,15 +380,16 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
             else if (stack.is(BzTags.BEE_FEEDING_ITEMS)) {
                 if(getFriendship() >= 0) {
                     float tameChance;
+                    int friendshipAmount = 6;
                     if (stack.is(BzTags.ROYAL_JELLY_BUCKETS)) {
-                        addFriendship(1000);
+                        friendshipAmount = 1000;
                         tameChance = 1f;
                         for (int i = 0; i < 75; i++) {
                             spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
                         }
                     }
                     else if (item == BzItems.ROYAL_JELLY_BOTTLE.get()) {
-                        addFriendship(250);
+                        friendshipAmount = 250;
                         tameChance = 1f;
                         for (int i = 0; i < 30; i++) {
                             spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
@@ -406,7 +407,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
                     if (this.random.nextFloat() < tameChance) {
                         tame(player);
-                        setFriendship(6);
+                        setFriendship(friendshipAmount);
                         setOrderedToSit(true);
                         this.level.broadcastEntityEvent(this, (byte) 7);
                     }
