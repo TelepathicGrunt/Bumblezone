@@ -85,14 +85,14 @@
       "id": "minecraft:honey_bottle",
       "count": 1,
       "xp_reward": 2,
-      "weight": 15,
+      "weight": 10,
       "required": true
     },
     {
       "id": "the_bumblezone:bee_bread",
       "count": 1,
       "xp_reward": 2,
-      "weight": 15,
+      "weight": 10,
       "required": true
     },
     {
