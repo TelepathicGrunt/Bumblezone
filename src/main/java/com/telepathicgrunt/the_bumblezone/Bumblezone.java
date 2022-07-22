@@ -25,20 +25,17 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import dev.onyxstudios.cca.api.v3.entity.PlayerCopyCallback;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import eu.midnightdust.lib.config.MidnightConfig;
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.quiltmc.qsl.lifecycle.api.event.ServerWorldTickEvents;
+import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
+import org.quiltmc.qsl.resource.loader.api.ResourceLoaderEvents;
 
 public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
@@ -101,10 +98,9 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
         MiscComponent.onEntityKilled();
 
-        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
-        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(QueensTradeManager.QUEENS_TRADE_MANAGER);
-        ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((a, b, c) -> QueensTradeManager.QUEENS_TRADE_MANAGER.resolveQueenTrades());
-        ServerLifecycleEvents.SERVER_STARTED.register((a) -> QueensTradeManager.QUEENS_TRADE_MANAGER.resolveQueenTrades());
+        ResourceLoader.get(PackType.SERVER_DATA).registerReloader(PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
+        ResourceLoader.get(PackType.SERVER_DATA).registerReloader(QueensTradeManager.QUEENS_TRADE_MANAGER);
+        ResourceLoaderEvents.END_DATA_PACK_RELOAD.register((minecraftServer, resourceManager, throwable) -> QueensTradeManager.QUEENS_TRADE_MANAGER.resolveQueenTrades());
     }
 
     @Override

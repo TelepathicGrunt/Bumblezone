@@ -2,15 +2,13 @@ buildscript {
 	repositories {
 		maven { url "https://plugins.gradle.org/m2/" }
 	}
-	dependencies {
-		classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.2.1'
-	}
 }
 
 plugins {
 	alias(libs.plugins.quilt.loom)
 	id 'maven-publish'
 	id "net.darkhax.curseforgegradle" version "1.0.7"
+	id "com.modrinth.minotaur" version "2.+"
 }
 
 archivesBaseName = "${project.modid}_quilt"
@@ -65,7 +63,9 @@ repositories {
 		name = "ModMaven"
 		url = "https://modmaven.dev"
 	}
-	maven { url 'https://jitpack.io' }
+	maven {
+		url 'https://jitpack.io'
+	}
 }
 
 dependencies {
@@ -77,12 +77,12 @@ dependencies {
 	modImplementation libs.quilt.loader
 	modImplementation libs.quilted.fabric.api
 
-	annotationProcessor("com.github.LlamaLad7:MixinExtras:${project.mixin_extra_version}")
-	modImplementation ("com.github.LlamaLad7:MixinExtras:${project.mixin_extra_version}")
-	include ("com.github.LlamaLad7:MixinExtras:${project.mixin_extra_version}")
+	annotationProcessor"com.github.LlamaLad7:MixinExtras:${libs.versions.mixinextra.get()}"
+	modImplementation "com.github.LlamaLad7:MixinExtras:${libs.versions.mixinextra.get()}"
+	include "com.github.LlamaLad7:MixinExtras:${libs.versions.mixinextra.get()}"
 
-	modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
-	include "maven.modrinth:midnightlib:${project.midnightlib_version}"
+	modImplementation "maven.modrinth:midnightlib:${libs.versions.midnightlib.get()}"
+	include "maven.modrinth:midnightlib:${libs.versions.midnightlib.get()}"
 
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${libs.versions.cardinal.get()}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${libs.versions.cardinal.get()}"
@@ -94,27 +94,24 @@ dependencies {
 
 	modImplementation "maven.modrinth:modmenu:${libs.versions.mod.menu.get()}"
 
-	modRuntimeOnly "com.telepathicgrunt:FeatureNBTDeadlockBeGone-Quilt:${libs.versions.nbtdbg.get()}"
-
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${libs.versions.rei.get()}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${libs.versions.rei.get()}"
 	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${libs.versions.rei.get()}"
 
-	//modCompileOnlyApi "mezz.jei:jei-${jei_mc_version}-common-api:${jei_version}"
-	//modCompileOnlyApi "mezz.jei:jei-${jei_mc_version}-fabric-api:${jei_version}"
-	//modRuntimeOnly "mezz.jei:jei-${jei_mc_version}-common:${jei_version}"
-	//modRuntimeOnly "mezz.jei:jei-${jei_mc_version}-fabric:${jei_version}"
+	//modCompileOnlyApi "mezz.jei:jei-${jei_mc}-common-api:${jei}"
+	//modCompileOnlyApi "mezz.jei:jei-${jei_mc}-fabric-api:${jei}"
+	//modRuntimeOnly "mezz.jei:jei-${jei_mc}-common:${jei}"
+	//modRuntimeOnly "mezz.jei:jei-${jei_mc}-fabric:${jei}"
 
-	modRuntimeOnly "curse.maven:shutup_experimental_settings-401978:3677546"
-	modCompileOnly "curse.maven:friends_and_foes-551364:3725313"
-	modCompileOnly "curse.maven:bee_better-351600:3726160"
+	//modCompileOnly "curse.maven:friends_and_foes-551364:3725313"
+	//modCompileOnly "curse.maven:bee_better-351600:3726160"
 	//modRuntimeOnly "curse.maven:architectury-419697:3717905"
 	//modRuntimeOnly "curse.maven:bee_better-351600:3726160"
 
-	modRuntimeOnly "com.telepathicgrunt:CommandStructures-Fabric:${project.commandstructures_version}"
-	modRuntimeOnly "com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_version}"
+	modRuntimeOnly "com.telepathicgrunt:CommandStructures-Fabric:${libs.versions.commandstructures.get()}"
+	modRuntimeOnly "com.telepathicgrunt:StructureVoidToggle-Fabric:${libs.versions.structurevoidtoggle.get()}"
 
-	modCompileOnly "curse.maven:friends_and_foes-551364:3827720"
+	//modCompileOnly "curse.maven:friends_and_foes-551364:3827720"
 	//modCompileOnly "curse.maven:bee_better-351600:3726160"
 
 	//modRuntimeOnly "curse.maven:architectury-419697:3717905"
@@ -143,11 +140,13 @@ jar {
 }
 
 apply from: 'gradle/maven.gradle'
-apply from: 'gradle/modrinth.gradle'
+
+String fileContents = new File("CHANGELOG.md").getText('UTF-8')
+
 task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
 	apiToken = "$System.env.CURSEFORGEKEY"
 	int projectId = 363949
-	String changelogText = new File("CHANGELOG.md").getText('UTF-8')
+	String changelogText = fileContents
 
 	def mainFile = upload(projectId, remapJar)
 	mainFile.changelog = changelogText
@@ -155,13 +154,28 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	mainFile.releaseType = "beta"
 	mainFile.displayName = "The Bumblezone v${project.mod_version} (${libs.versions.minecraft.get()} MC Quilt)"
 	mainFile.addRequirement("midnightlib")
-	mainFile.addRequirement("fabric-api")
-	//mainFile.addRequirement("qsl")
+	mainFile.addRequirement("qsl")
+}
+
+modrinth {
+	token = System.getenv("MODRINTH")
+	versionName = "The Bumblezone"
+	versionNumber = project.version + "+quilt"
+	projectId = "eA8SXqWL"
+	uploadFile = remapJar
+	changelog = fileContents
+	versionType = "BETA"
+	gameVersions = ["1.19"]
+	loaders = ["quilt"]
+	dependencies {
+		required.project "qsl"
+		required.project "midnightlib"
+	}
 }
 
 task buildAndRelease{}
 tasks.publish.mustRunAfter tasks.build
 tasks.publishCurseForge.mustRunAfter tasks.publish
-tasks.publishModrinth.mustRunAfter tasks.publish
+tasks.modrinth.mustRunAfter tasks.publish
 tasks.publishCurseForge.dependsOn("remapJar")
-tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish, tasks.publishCurseForge, tasks.publishModrinth)
+tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish, tasks.publishCurseForge, tasks.modrinth)

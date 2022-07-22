@@ -19,7 +19,7 @@ import net.minecraft.world.level.material.Material;
 public class SugarWaterBlock extends LiquidBlock {
 
     public SugarWaterBlock(FlowingFluid baseFluid) {
-        super(baseFluid, QuiltBlockSettings.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noDrops().speedFactor(0.95F));
+        super(baseFluid, QuiltBlockSettings.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noLootTable().speedFactor(0.95F));
     }
 
     @Override

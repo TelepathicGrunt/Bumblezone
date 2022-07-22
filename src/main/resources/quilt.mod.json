@@ -22,30 +22,27 @@
     "entrypoints": {
       "init": "com.telepathicgrunt.the_bumblezone.Bumblezone",
       "client_init": "com.telepathicgrunt.the_bumblezone.client.BumblezoneClient",
+      "preLaunch": "com.llamalad7.mixinextras.MixinExtrasBootstrap::init",
       "modmenu": "com.telepathicgrunt.the_bumblezone.configs.ModMenuConfig",
       "cardinal-components-entity": "com.telepathicgrunt.the_bumblezone.Bumblezone",
-      "rei": "com.telepathicgrunt.the_bumblezone.modcompat.REICompat"
+      "rei_client": "com.telepathicgrunt.the_bumblezone.modcompat.REICompat"
     },
     "depends": [
       {
         "id": "quilt_loader",
-        "versions": ">=0.16.0-"
+        "versions": ">=0.17.0-"
       },
       {
         "id": "quilted_fabric_api",
-        "versions": ">=1.0.0-"
+        "versions": ">=2.0.0-"
       },
       {
         "id": "minecraft",
-        "versions": ">=1.18.2"
+        "versions": ">=1.19"
       },
       {
-        "id": "cloth-config2",
-        "versions": ">=6.2.57"
-      },
-      {
-        "id": "feature_nbt_deadlock_be_gone",
-        "versions": "*"
+        "id": "midnightlib",
+        "versions": ">=0.5.2"
       }
     ]
   },
@@ -54,6 +51,8 @@
   "cardinal-components": [
     "the_bumblezone:entity_component",
     "the_bumblezone:original_flying_speed",
-    "the_bumblezone:neurotoxins_missed_counter"
+    "the_bumblezone:neurotoxins_missed_counter",
+    "the_bumblezone:essence_component",
+    "the_bumblezone:misc_component"
   ]
 }

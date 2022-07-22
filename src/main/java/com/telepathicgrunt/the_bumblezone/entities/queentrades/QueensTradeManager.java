@@ -5,22 +5,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import dev.architectury.registry.registries.Registries;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.packs.resources.CloseableResourceManager;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.item.Item;
+import org.quiltmc.qsl.resource.loader.api.reloader.IdentifiableResourceReloader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +26,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class QueensTradeManager extends SimpleJsonResourceReloadListener implements IdentifiableResourceReloadListener {
+public class QueensTradeManager extends SimpleJsonResourceReloadListener implements IdentifiableResourceReloader{
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().setLenient().disableHtmlEscaping().excludeFieldsWithoutExposeAnnotation().create();
     public static final QueensTradeManager QUEENS_TRADE_MANAGER = new QueensTradeManager();
     private final ResourceLocation QUEENS_TRADE_MANAGER_ID = new ResourceLocation(Bumblezone.MODID, "queens_trade_manager");
@@ -140,7 +136,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
     }
 
     @Override
-    public ResourceLocation getFabricId() {
+    public ResourceLocation getQuiltId() {
         return QUEENS_TRADE_MANAGER_ID;
     }
 }

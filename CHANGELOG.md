@@ -1,5 +1,8 @@
 ### **(V.6.1.0 Changes) (1.19 Minecraft)**
 
+##### Major:
+Ported to Quilt!
+
 ##### Entities:
 Bee Queen!!! A massive passive Bee that wants to trade! Right click while holding items or drop items in front of the
  Queen Bee to trade. Try trading various items to see what kind of items are possible to receive based what you give!

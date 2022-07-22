@@ -138,7 +138,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     public static AttributeSupplier.Builder getAttributeBuilder() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 150.0D)
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 150.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.1)
                 .add(Attributes.ATTACK_DAMAGE, 10.0D);
     }

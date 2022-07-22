@@ -3,13 +3,13 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.Items;
+import org.quiltmc.qsl.lifecycle.api.event.ServerLifecycleEvents;
 
 import java.util.Optional;
 
@@ -17,7 +17,7 @@ public class FriendsAndFoesCompat {
 
     public static void setupCompat() {
         if(BzConfig.allowFriendsAndFoesBeekeeperTradesCompat) {
-            ServerLifecycleEvents.SERVER_STARTED.register((server) -> setupFriendsAndFoesTrades());
+            ServerLifecycleEvents.STARTING.register((server) -> setupFriendsAndFoesTrades());
         }
 
        // Keep at end so it is only set to true if no exceptions was thrown during setup
