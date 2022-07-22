@@ -68,6 +68,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Saddleable, PlayerRideable {
 
@@ -266,14 +267,6 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     @Override
-    public Entity getControllingPassenger() {
-        for (Entity p : getPassengers()) {
-            return p;
-        }
-        return null;
-    }
-
-    @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
@@ -352,7 +345,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                     }
 
                     if (item == Items.SADDLE && !isSaddled()) {
-                        return InteractionResult.CONSUME;
+                        return InteractionResult.PASS;
                     }
 
                     if(player.isShiftKeyDown()) {
@@ -646,10 +639,23 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         return ((percentDiff - 1) * 5) + 1;
     }
 
+    @Nullable
+    public LivingEntity getControllingPassenger() {
+        if (this.isSaddled()) {
+            Entity firstPassenger = this.getFirstPassenger();
+            if (firstPassenger instanceof LivingEntity livingEntity) {
+                return livingEntity;
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public void travel(Vec3 moveVector) {
         if (this.isAlive()) {
-            if (this.isVehicle() && this.getControllingPassenger() instanceof LivingEntity livingEntity) {
+            LivingEntity livingEntity = this.getControllingPassenger();
+            if (this.isVehicle() && livingEntity != null) {
                 float startRot = Mth.wrapDegrees(this.getYRot());
                 float targetRot = Mth.wrapDegrees(livingEntity.getYRot());
                 float lerpedRot = Mth.rotLerp(0.185f, startRot, targetRot);
