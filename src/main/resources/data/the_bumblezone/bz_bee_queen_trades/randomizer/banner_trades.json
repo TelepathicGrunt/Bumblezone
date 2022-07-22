@@ -1,0 +1,17 @@
+{
+  "wants": [
+    {
+      "id": "#minecraft:banners",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#minecraft:banners",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

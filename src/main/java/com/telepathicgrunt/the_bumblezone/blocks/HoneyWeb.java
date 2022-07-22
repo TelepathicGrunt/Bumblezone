@@ -52,7 +52,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-
 public class HoneyWeb extends Block {
 
     public static final BooleanProperty NORTHSOUTH = BooleanProperty.create("northsouth");
@@ -129,8 +128,9 @@ public class HoneyWeb extends Block {
 
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        if (!(entity instanceof Bee || entity instanceof BeehemothEntity)) {
-
+        if (!(entity instanceof Bee || entity instanceof BeehemothEntity) &&
+            !(entity instanceof Player player && player.isCreative()))
+        {
             ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
 
             VoxelShape shape = this.shapeByIndex[this.getAABBIndex(blockState)];
@@ -234,7 +234,7 @@ public class HoneyWeb extends Block {
                     playerEntity.getY(),
                     playerEntity.getZ(),
                     BzSounds.WASHING_RESIDUES.get(),
-                    SoundSource.NEUTRAL,
+                    SoundSource.PLAYERS,
                     1.0F,
                     1.0F);
 
@@ -247,6 +247,7 @@ public class HoneyWeb extends Block {
                     this.addParticle(
                             ParticleTypes.FALLING_WATER,
                             world,
+                            playerEntity.getRandom(),
                             position,
                             blockstate.getShape(world, position));
                 }
@@ -337,17 +338,18 @@ public class HoneyWeb extends Block {
     public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         //chance of particle in this tick
         for (int i = 0; i == random.nextInt(50); ++i) {
-            this.addParticle(ParticleTypes.DRIPPING_HONEY, world, position, blockState.getShape(world, position));
+            this.addParticle(ParticleTypes.DRIPPING_HONEY, world, random, position, blockState.getShape(world, position));
         }
     }
 
     /**
      * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addParticle method
      */
-    protected void addParticle(ParticleOptions particleType, Level world, BlockPos blockPos, VoxelShape blockShape) {
+    protected void addParticle(ParticleOptions particleType, Level world, RandomSource random, BlockPos blockPos, VoxelShape blockShape) {
         this.addParticle(
                 particleType,
                 world,
+                random,
                 blockPos.getX() + blockShape.min(Direction.Axis.X),
                 blockPos.getX() + blockShape.max(Direction.Axis.X),
                 blockPos.getY() + blockShape.min(Direction.Axis.Y),
@@ -359,7 +361,7 @@ public class HoneyWeb extends Block {
     /**
      * Adds the actual particle into the world within the given range
      */
-    private void addParticle(ParticleOptions particleType, Level world, double xMin, double xMax, double yMin, double yMax, double zMax, double zMin) {
-        world.addParticle(particleType, Mth.lerp(world.random.nextDouble(), xMin, xMax), Mth.lerp(world.random.nextDouble(), yMin, yMax), Mth.lerp(world.random.nextDouble(), zMin, zMax), 0.0D, 0.0D, 0.0D);
+    private void addParticle(ParticleOptions particleType, Level world, RandomSource random, double xMin, double xMax, double yMin, double yMax, double zMax, double zMin) {
+        world.addParticle(particleType, Mth.lerp(random.nextDouble(), xMin, xMax), Mth.lerp(random.nextDouble(), yMin, yMax), Mth.lerp(random.nextDouble(), zMin, zMax), 0.0D, 0.0D, 0.0D);
     }
 }

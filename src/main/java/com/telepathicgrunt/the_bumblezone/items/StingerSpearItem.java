@@ -14,6 +14,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
@@ -25,7 +26,6 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
@@ -99,7 +99,7 @@ public class StingerSpearItem extends TridentItem {
 
     @Override
     public boolean hurtEnemy(ItemStack itemStack, LivingEntity enemy, LivingEntity user) {
-        int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get(), itemStack);
+        int potentPoisonLevel = itemStack.getEnchantmentLevel(BzEnchantments.POTENT_POISON.get());
         if (enemy.getMobType() != MobType.UNDEAD) {
             enemy.addEffect(new MobEffectInstance(
                     MobEffects.POISON,
@@ -116,13 +116,18 @@ public class StingerSpearItem extends TridentItem {
 
         int durabilityDecrease = 1;
         if(user instanceof Player) {
-            int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), itemStack);
+            int neuroToxinLevel = itemStack.getEnchantmentLevel(BzEnchantments.NEUROTOXINS.get());
             if (neuroToxinLevel > 0) {
                 durabilityDecrease = 5;
             }
         }
 
         itemStack.hurtAndBreak(durabilityDecrease, user, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+
+        if(user instanceof ServerPlayer serverPlayer && enemy.getType() == EntityType.WITHER && enemy.isDeadOrDying()) {
+            BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.trigger(serverPlayer);
+        }
+
         return true;
     }
 

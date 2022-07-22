@@ -1,0 +1,17 @@
+{
+  "wants" : [
+    {
+      "id": "minecraft:dead_brain_coral",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:brain_coral",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

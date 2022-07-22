@@ -14,7 +14,15 @@
       "required": true
     },
     {
+      "id": "the_bumblezone:royal_jelly_bottle",
+      "required": true
+    },
+    {
       "id": "#forge:buckets/honey",
+      "required": true
+    },
+    {
+      "id": "#forge:buckets/royal_jelly",
       "required": true
     },
     {

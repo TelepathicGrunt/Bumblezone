@@ -132,6 +132,21 @@
           "type": "minecraft:loot_table",
           "name": "the_bumblezone:structures/flowers",
           "weight": 5
+        },
+        {
+          "name": "the_bumblezone:bee_stinger",
+          "type": "minecraft:item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
         }
       ]
     },

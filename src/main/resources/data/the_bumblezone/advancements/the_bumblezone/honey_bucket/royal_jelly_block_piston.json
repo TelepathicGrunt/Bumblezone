@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/honey_bucket/obtain_royal_jelly_bucket",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:royal_jelly_block"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.royal_jelly_block_piston.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.royal_jelly_block_piston.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "royal_jelly_block_next_to_piston": {
+      "trigger": "the_bumblezone:royal_jelly_block_piston",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "royal_jelly_block_next_to_piston"
+    ]
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "wants" : [
+    {
+      "id": "minecraft:quartz_block",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:quartz",
+      "count": 4,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

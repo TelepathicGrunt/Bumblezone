@@ -101,7 +101,7 @@ public class ProductiveBeesCompat {
 		}
 
 		Mob entity = (Mob) event.getEntity();
-        LevelAccessor world = event.getWorld();
+        LevelAccessor world = event.getLevel();
 
 		// randomly pick a productive bee (the nbt determines the bee)
 		ConfigurableBee productiveBeeEntity = ModEntities.CONFIGURABLE_BEE.get().create(entity.level);
@@ -112,13 +112,13 @@ public class ProductiveBeesCompat {
 				blockpos.getX() + 0.5f,
 				blockpos.getY() + 0.5f,
 				blockpos.getZ() + 0.5f,
-				world.getRandom().nextFloat() * 360.0F,
+				productiveBeeEntity.getRandom().nextFloat() * 360.0F,
 				0.0F);
 
 		productiveBeeEntity.setBaby(isChild);
 
 		CompoundTag newTag = new CompoundTag();
-		newTag.putString("type", ALL_BEES.get().get(world.getRandom().nextInt(ALL_BEES.get().size())));
+		newTag.putString("type", ALL_BEES.get().get(productiveBeeEntity.getRandom().nextInt(ALL_BEES.get().size())));
 		productiveBeeEntity.finalizeSpawn(
 				(ServerLevelAccessor)world,
 				world.getCurrentDifficultyAt(productiveBeeEntity.blockPosition()),

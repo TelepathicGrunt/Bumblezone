@@ -1,6 +1,9 @@
 package com.telepathicgrunt.the_bumblezone;
 
+import com.telepathicgrunt.the_bumblezone.advancements.KilledCounterTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
@@ -16,6 +19,10 @@ import com.telepathicgrunt.the_bumblezone.entities.EnderpearlImpact;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
+import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
+import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
+import com.telepathicgrunt.the_bumblezone.items.BeeStinger;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
@@ -24,9 +31,11 @@ import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.world.surfacerules.PollinatedSurfaceSource;
+import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -68,11 +77,21 @@ public class Bumblezone{
         forgeBus.addListener(HiddenEffect::hideEntity);
         forgeBus.addListener(NeurotoxinsEnchantment::entityHurtEvent);
         forgeBus.addListener(this::serverAboutToStart);
+        forgeBus.addListener(BeeStinger::bowUsable);
+        forgeBus.addListener(EntityMisc::resetValueOnRespawn);
+        forgeBus.addListener(EntityMisc::onItemCrafted);
+        forgeBus.addListener(EntityMisc::onBeeBreed);
+        forgeBus.addListener(EntityMisc::onEntityKilled);
+        forgeBus.addListener(EntityMisc::onHoneyBottleDrank);
+        forgeBus.addListener(EntityMisc::onHoneySlimeBred);
+        forgeBus.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
+        forgeBus.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
 
         //Registration
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(EventPriority.NORMAL, this::setup);
         modEventBus.addListener(EventPriority.LOWEST, this::modCompatSetup); //run after all mods
+        forgeBus.addListener(this::registerDatapackListener);
         modEventBus.addListener(EventPriority.NORMAL, BzEntities::registerEntityAttributes);
         BzItems.ITEMS.register(modEventBus);
         BzBlocks.BLOCKS.register(modEventBus);
@@ -132,6 +151,8 @@ public class Bumblezone{
 
     private void modCompatSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            EntityDataSerializers.registerSerializer(BeeQueenEntity.QUEEN_POSE_SERIALIZER);
+
             // Dispenser isn't synchronized. Needs to be enqueueWork to prevent crash if
             // another mod registers to it at the same exact time.
             DispenserItemSetup.setupDispenserBehaviors();
@@ -139,6 +160,11 @@ public class Bumblezone{
             // should run after most other mods just in case
             ModChecker.setupModCompat();
         });
+    }
+
+    public void registerDatapackListener(final AddReloadListenerEvent event) {
+        event.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER);
+        event.addListener(PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
     }
 
     private void serverAboutToStart(final ServerAboutToStartEvent event) {

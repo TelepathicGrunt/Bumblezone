@@ -8,6 +8,7 @@ import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.SuspendedParticle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 
 public class HoneyParticle extends SuspendedParticle {
@@ -29,7 +30,8 @@ public class HoneyParticle extends SuspendedParticle {
             this.remove();
         }
         else {
-            FluidState fluidState = this.level.getFluidState(new BlockPos(this.x, this.y, this.z));
+            BlockState blockState = this.level.getBlockState(new BlockPos(this.x, this.y, this.z));
+            FluidState fluidState = blockState.getFluidState();
             if (fluidState.is(BzTags.BZ_HONEY_FLUID)) {
                 if(fluidState.isSource()) {
                     this.move(this.xd, this.yd + 0.001D, this.zd);
@@ -37,6 +39,9 @@ public class HoneyParticle extends SuspendedParticle {
                 else {
                     this.move(this.xd, this.yd - 0.001D, this.zd);
                 }
+            }
+            else if (blockState.isAir()) {
+                this.move(this.xd, this.yd - 0.35D, this.zd);
             }
             else {
                 this.remove();

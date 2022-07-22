@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 
-import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DefaultDispenseItemBehaviorInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -50,7 +50,7 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
                 // do nothing if front is blocked off
                 if (!world.getBlockState(blockpos).getMaterial().isSolid()) {
                     Mob beeEntity = EntityType.BEE.create(world);
-                    beeEntity.moveTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, world.getRandom().nextFloat() * 360.0F, 0.0F);
+                    beeEntity.moveTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, beeEntity.getRandom().nextFloat() * 360.0F, 0.0F);
                     beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(new BlockPos(beeEntity.position())), MobSpawnType.TRIGGERED, null, null);
                     world.addFreshEntity(beeEntity);
 

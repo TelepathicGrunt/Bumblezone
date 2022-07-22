@@ -1,0 +1,16 @@
+{
+  "entries": [
+    {
+      "entity_type": "friendsandfoes:moobloom",
+      "plants_to_spawn": [
+        "friendsandfoes:buttercup"
+      ]
+    },
+    {
+      "entity_type": "friendsandfoes:glare",
+      "plants_to_spawn": [
+        "minecraft:moss_carpet"
+      ]
+    }
+  ]
+}

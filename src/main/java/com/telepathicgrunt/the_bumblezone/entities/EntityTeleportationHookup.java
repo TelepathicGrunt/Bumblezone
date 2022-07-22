@@ -36,8 +36,8 @@ public class EntityTeleportationHookup {
     // Methods that setup and call PlayerTeleportationBackend //
 
     //Living Entity ticks
-    public static void entityTick(LivingEvent.LivingUpdateEvent event) {
-        LivingEntity livingEntity = event.getEntityLiving();
+    public static void entityTick(LivingEvent.LivingTickEvent event) {
+        LivingEntity livingEntity = event.getEntity();
 
         //Makes it so player does not get killed for falling into the void
         if (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {

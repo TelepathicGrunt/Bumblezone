@@ -56,7 +56,7 @@ public class HiddenEffect extends MobEffect {
     }
 
     public static void hideEntity(LivingEvent.LivingVisibilityEvent event) {
-        MobEffectInstance hiddenEffect = event.getEntityLiving().getEffect(BzEffects.HIDDEN.get());
+        MobEffectInstance hiddenEffect = event.getEntity().getEffect(BzEffects.HIDDEN.get());
         if(hiddenEffect != null) {
             if(hiddenEffect.getAmplifier() >= 1) {
                 event.modifyVisibility(0);

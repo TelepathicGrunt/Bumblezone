@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
+import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -22,10 +23,11 @@ import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class BeeAggression {
@@ -38,9 +40,9 @@ public class BeeAggression {
      * Making the list can be expensive which is why we make it at game startup rather than every tick.
      */
     public static void setupBeeHatingList() {
-        for(EntityType<?> entityType : ForgeRegistries.ENTITIES) {
+        for(EntityType<?> entityType : ForgeRegistries.ENTITY_TYPES) {
 
-            String mobName = ForgeRegistries.ENTITIES.getKey(entityType).getPath();
+            String mobName = ForgeRegistries.ENTITY_TYPES.getKey(entityType).getPath();
 
             if(mobName.contains("bee")) {
                 SET_OF_BEE_NAMED_ENTITIES.add(entityType);
@@ -58,17 +60,23 @@ public class BeeAggression {
         Player player = event.getPlayer();
         BlockState blockState = event.getState();
 
-        if (blockState.is(BzTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED)) {
+        if (player instanceof ServerPlayer serverPlayer &&
+            EssenceOfTheBees.hasEssence(serverPlayer) &&
+            blockState.is(BzTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED))
+        {
             angerBees(player);
         }
     }
 
     //if player picks up a tagged angerable item, bees gets very mad...
     public static void pickupItemAnger(PlayerEvent.ItemPickupEvent event) {
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         ItemStack itemStack = event.getStack();
 
-        if (itemStack.is(BzTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP)) {
+        if (player instanceof ServerPlayer serverPlayer &&
+            EssenceOfTheBees.hasEssence(serverPlayer) &&
+            itemStack.is(BzTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP))
+        {
             angerBees(player);
         }
     }
@@ -236,6 +244,29 @@ public class BeeAggression {
                         BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(),
                         true));
             }
+        }
+    }
+
+    // Make Essence of the Bees players be able to take honey from hive blocks/break hive blocks without angering bees
+    public static void preventAngerOnEssencedPlayers(List<Bee> beeList, List<Player> playerList) {
+        for (int i = playerList.size() - 1; i >= 0; i--) {
+            Player player = playerList.get(i);
+            if (player instanceof ServerPlayer serverPlayer && EssenceOfTheBees.hasEssence(serverPlayer)) {
+                for (Bee bee : beeList) {
+                    if (bee.getTarget() == player) {
+                        bee.setTarget(null);
+                    }
+                }
+                playerList.remove(i);
+            }
+        }
+    }
+
+    // Make Essence of the Bees players be able to take shear hive blocks without angering bees
+    public static void preventAngerOnEssencedPlayers(Player player, List<Entity> entityList) {
+        // Don't spawn bees on client side. Server can handle that just fine. Prevents bees from briefly appearing on clientside for 1 frame.
+        if (player.level.isClientSide() || (player instanceof ServerPlayer serverPlayer && EssenceOfTheBees.hasEssence(serverPlayer))) {
+            entityList.clear();
         }
     }
 }

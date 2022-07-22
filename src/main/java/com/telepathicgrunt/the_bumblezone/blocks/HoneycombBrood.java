@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
+import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -85,6 +86,7 @@ public class HoneycombBrood extends ProperFacingBlock {
     @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState thisBlockState, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
+        RandomSource random = playerEntity.getRandom();
 
         //VANILLA COMPAT
         /*
@@ -95,7 +97,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
             //spawn angry bee if at final stage and front isn't blocked off
             int stage = thisBlockState.getValue(STAGE);
-            spawnBroodMob(world, thisBlockState, position, stage);
+            spawnBroodMob(world, random, thisBlockState, position, stage);
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
 
             if ((playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
@@ -104,12 +106,14 @@ public class HoneycombBrood extends ProperFacingBlock {
                     !playerEntity.isSpectator() &&
                     BzBeeAggressionConfigs.aggressiveBees.get())
             {
-                if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                    playerEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
-                }
-                else {
-                    //Now all bees nearby in Bumblezone will get VERY angry!!!
-                    playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
+                if (playerEntity instanceof ServerPlayer serverPlayer && !EssenceOfTheBees.hasEssence(serverPlayer)) {
+                    if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
+                        playerEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
+                    }
+                    else {
+                        //Now all bees nearby in Bumblezone will get VERY angry!!!
+                        playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
+                    }
                 }
             }
 
@@ -120,10 +124,10 @@ public class HoneycombBrood extends ProperFacingBlock {
                 // spawn bee if at final stage and front isn't blocked off
                 int stage = thisBlockState.getValue(STAGE);
                 if (stage == 3) {
-                    spawnBroodMob(world, thisBlockState, position, stage);
+                    spawnBroodMob(world, random, thisBlockState, position, stage);
                 }
                 else {
-                    int stageIncrease = world.random.nextFloat() < 0.2f ? 2 : 1;
+                    int stageIncrease = random.nextFloat() < 0.2f ? 2 : 1;
                     world.setBlockAndUpdate(position, thisBlockState.setValue(STAGE, Math.min(3, stage + stageIncrease)));
                 }
             }
@@ -135,7 +139,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                     playerEntity.getY(),
                     playerEntity.getZ(),
                     SoundEvents.BOTTLE_EMPTY,
-                    SoundSource.NEUTRAL,
+                    SoundSource.BLOCKS,
                     1.0F,
                     1.0F);
 
@@ -154,13 +158,13 @@ public class HoneycombBrood extends ProperFacingBlock {
 
                 //chance of growing the larva
                 if (itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
-                    if (world.random.nextFloat() < 0.30F)
+                    if (random.nextFloat() < 0.30F)
                         successfulGrowth = true;
                 } else {
                     successfulGrowth = true;
                 }
 
-                if (successfulGrowth && world.random.nextFloat() < 0.30F) {
+                if (successfulGrowth && random.nextFloat() < 0.30F) {
                     if(!playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
                         playerEntity.addEffect(new MobEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE.get(), (int) (BzBeeAggressionConfigs.howLongProtectionOfTheHiveLasts.get() * 0.75f), 1, false, false,  true));
                     }
@@ -171,11 +175,11 @@ public class HoneycombBrood extends ProperFacingBlock {
                     //spawn bee if at final stage and front isn't blocked off
                     int stage = thisBlockState.getValue(STAGE);
                     if (stage == 3) {
-                        spawnBroodMob(world, thisBlockState, position, stage);
+                        spawnBroodMob(world, random, thisBlockState, position, stage);
                     }
                     else {
                         int newStage = stage + 1;
-                        if (itemstack.is(BzTags.HONEY_BUCKETS)) {
+                        if (itemstack.is(BzTags.HONEY_BUCKETS) || itemstack.is(BzTags.ROYAL_JELLY_BUCKETS) ) {
                             newStage = 3;
                             if (!world.isClientSide()) {
                                 Direction facing = thisBlockState.getValue(FACING).getOpposite();
@@ -191,10 +195,10 @@ public class HoneycombBrood extends ProperFacingBlock {
                                         centerFacePos.y(),
                                         centerFacePos.z(),
                                         3,
-                                        world.getRandom().nextFloat() * 0.5 - 0.25f,
-                                        world.getRandom().nextFloat() * 0.2f + 0.2f,
-                                        world.getRandom().nextFloat() * 0.5 - 0.25f,
-                                        world.getRandom().nextFloat() * 0.4 + 0.2f);
+                                        random.nextFloat() * 0.5 - 0.25f,
+                                        random.nextFloat() * 0.2f + 0.2f,
+                                        random.nextFloat() * 0.5 - 0.25f,
+                                        random.nextFloat() * 0.4 + 0.2f);
                             }
                         }
 
@@ -213,7 +217,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                     playerEntity.getY(),
                     playerEntity.getZ(),
                     SoundEvents.BOTTLE_EMPTY,
-                    SoundSource.NEUTRAL,
+                    SoundSource.BLOCKS,
                     1.0F,
                     1.0F);
 
@@ -231,8 +235,8 @@ public class HoneycombBrood extends ProperFacingBlock {
 
     @SuppressWarnings("deprecation")
     @Override
-    public void tick(BlockState state, ServerLevel world, BlockPos position, RandomSource rand) {
-        super.tick(state, world, position, rand);
+    public void tick(BlockState state, ServerLevel world, BlockPos position, RandomSource random) {
+        super.tick(state, world, position, random);
         if (!world.hasChunksAt(position, position))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
 
@@ -243,16 +247,16 @@ public class HoneycombBrood extends ProperFacingBlock {
 
         int stage = state.getValue(STAGE);
         if (stage < 3) {
-            if (!nearbyEntities.isEmpty() || (world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ? rand.nextInt(10) == 0 : rand.nextInt(22) == 0)) {
+            if (!nearbyEntities.isEmpty() || (world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ? random.nextInt(10) == 0 : random.nextInt(22) == 0)) {
                 world.setBlock(position, state.setValue(STAGE, stage + 1), 2);
             }
         }
         else if(BzGeneralConfigs.broodBlocksBeeSpawnCapacity.get() != 0) {
             if(!nearbyEntities.isEmpty() && GeneralUtils.getEntityCountInBz() < BzGeneralConfigs.broodBlocksBeeSpawnCapacity.get() * 1.75f) {
-                spawnBroodMob(world, state, position, stage);
+                spawnBroodMob(world, random, state, position, stage);
             }
             else if(GeneralUtils.getEntityCountInBz() < BzGeneralConfigs.broodBlocksBeeSpawnCapacity.get()) {
-                spawnBroodMob(world, state, position, stage);
+                spawnBroodMob(world, random, state, position, stage);
             }
         }
     }
@@ -269,7 +273,7 @@ public class HoneycombBrood extends ProperFacingBlock {
             BlockState blockState = world.getBlockState(position);
             int stage = blockState.getValue(STAGE);
             if (stage == 3) {
-                spawnBroodMob(world, blockState, position, stage);
+                spawnBroodMob(world, playerEntity.getRandom(), blockState, position, stage);
             }
         }
 
@@ -277,7 +281,7 @@ public class HoneycombBrood extends ProperFacingBlock {
     }
 
 
-    private static void spawnBroodMob(Level world, BlockState state, BlockPos position, int stage) {
+    private static void spawnBroodMob(Level world, RandomSource random, BlockState state, BlockPos position, int stage) {
         //the front of the block
         BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos().set(position);
         blockpos.move(state.getValue(FACING).getOpposite());
@@ -287,7 +291,7 @@ public class HoneycombBrood extends ProperFacingBlock {
             beeMob.setBaby(true);
             spawnMob(world, blockpos, beeMob, beeMob);
 
-            if(world.random.nextFloat() < 0.1f) {
+            if(random.nextFloat() < 0.1f) {
                 Mob honeySlimeMob = BzEntities.HONEY_SLIME.get().create(world);
                 honeySlimeMob.setBaby(true);
                 spawnMob(world, blockpos, beeMob, honeySlimeMob);
@@ -299,7 +303,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
     private static void spawnMob(Level world, BlockPos.MutableBlockPos blockpos, Mob beeMob, Mob entity) {
         if(entity == null || world.isClientSide()) return;
-        entity.moveTo(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, world.getRandom().nextFloat() * 360.0F, 0.0F);
+        entity.moveTo(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, beeMob.getRandom().nextFloat() * 360.0F, 0.0F);
         entity.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(new BlockPos(beeMob.position())), MobSpawnType.TRIGGERED, null, null);
 
         if(ForgeHooks.canEntitySpawn(entity, world, entity.position().x(), entity.position().y(), entity.position().z(), null, MobSpawnType.SPAWNER) != -1) {
@@ -334,13 +338,14 @@ public class HoneycombBrood extends ProperFacingBlock {
     public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         //number of particles in this tick
         for (int i = 0; i < random.nextInt(2); ++i) {
-            this.spawnHoneyParticles(world, position, blockState);
+            this.spawnHoneyParticles(world, random, position, blockState);
         }
 
         int stage = blockState.getValue(STAGE);
         float soundVolume = 0.05F + stage * 0.1F;
-        if (world.random.nextInt(20) == 0)
+        if (random.nextInt(20) == 0) {
             world.playLocalSound(position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.5D, SoundEvents.BEE_LOOP, SoundSource.BLOCKS, soundVolume, 1.0F, true);
+        }
     }
 
 
@@ -348,21 +353,21 @@ public class HoneycombBrood extends ProperFacingBlock {
      * Starts checking if the block can take the particle and if so and it passes another rng to reduce spawnrate, it then
      * takes the block's dimensions and passes into methods to spawn the actual particle
      */
-    private void spawnHoneyParticles(Level world, BlockPos position, BlockState blockState) {
-        if (blockState.getFluidState().isEmpty() && world.random.nextFloat() < 0.08F) {
+    private void spawnHoneyParticles(Level world, RandomSource random, BlockPos position, BlockState blockState) {
+        if (blockState.getFluidState().isEmpty() && random.nextFloat() < 0.08F) {
             VoxelShape currentBlockShape = blockState.getCollisionShape(world, position);
             double yEndHeight = currentBlockShape.max(Direction.Axis.Y);
             if (yEndHeight >= 1.0D && !blockState.is(BlockTags.IMPERMEABLE)) {
                 double yStartHeight = currentBlockShape.min(Direction.Axis.Y);
                 if (yStartHeight > 0.0D) {
-                    this.addHoneyParticle(world, position, currentBlockShape, position.getY() + yStartHeight - 0.05D);
+                    this.addHoneyParticle(world, random, position, currentBlockShape, position.getY() + yStartHeight - 0.05D);
                 } else {
                     BlockPos belowBlockpos = position.below();
                     BlockState belowBlockstate = world.getBlockState(belowBlockpos);
                     VoxelShape belowBlockShape = belowBlockstate.getCollisionShape(world, belowBlockpos);
                     double yEndHeight2 = belowBlockShape.max(Direction.Axis.Y);
                     if ((yEndHeight2 < 1.0D || !belowBlockstate.isSolidRender(world, belowBlockpos)) && belowBlockstate.getFluidState().isEmpty()) {
-                        this.addHoneyParticle(world, position, currentBlockShape, position.getY() - 0.05D);
+                        this.addHoneyParticle(world, random, position, currentBlockShape, position.getY() - 0.05D);
                     }
                 }
             }
@@ -375,9 +380,10 @@ public class HoneycombBrood extends ProperFacingBlock {
      * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addHoneyParticle
      * method
      */
-    private void addHoneyParticle(Level world, BlockPos blockPos, VoxelShape blockShape, double height) {
+    private void addHoneyParticle(Level world, RandomSource random, BlockPos blockPos, VoxelShape blockShape, double height) {
         this.addHoneyParticle(
                 world,
+                random,
                 blockPos.getX() + blockShape.min(Direction.Axis.X),
                 blockPos.getX() + blockShape.max(Direction.Axis.X),
                 blockPos.getZ() + blockShape.min(Direction.Axis.Z),
@@ -389,7 +395,7 @@ public class HoneycombBrood extends ProperFacingBlock {
     /**
      * Adds the actual honey particle into the world within the given range
      */
-    private void addHoneyParticle(Level world, double xMin, double xMax, double zMax, double zMin, double yHeight) {
-        world.addParticle(ParticleTypes.DRIPPING_HONEY, Mth.lerp(world.random.nextDouble(), xMin, xMax), yHeight, Mth.lerp(world.random.nextDouble(), zMax, zMin), 0.0D, 0.0D, 0.0D);
+    private void addHoneyParticle(Level world, RandomSource random, double xMin, double xMax, double zMax, double zMin, double yHeight) {
+        world.addParticle(ParticleTypes.DRIPPING_HONEY, Mth.lerp(random.nextDouble(), xMin, xMax), yHeight, Mth.lerp(random.nextDouble(), zMax, zMin), 0.0D, 0.0D, 0.0D);
     }
 }

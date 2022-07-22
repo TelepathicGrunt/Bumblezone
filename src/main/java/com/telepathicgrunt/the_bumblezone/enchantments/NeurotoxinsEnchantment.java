@@ -19,7 +19,6 @@ import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
 public class NeurotoxinsEnchantment extends Enchantment {
@@ -54,7 +53,7 @@ public class NeurotoxinsEnchantment extends Enchantment {
     }
 
     public static void entityHurtEvent(LivingAttackEvent event) {
-        if(event.getEntityLiving().level.isClientSide()) {
+        if(event.getEntity().level.isClientSide()) {
             return;
         }
 
@@ -75,12 +74,12 @@ public class NeurotoxinsEnchantment extends Enchantment {
         }
 
         if(attackingItem != null && !attackingItem.isEmpty()) {
-            applyNeurotoxins(attacker, event.getEntityLiving(), attackingItem);
+            applyNeurotoxins(attacker, event.getEntity(), attackingItem);
         }
     }
 
     public static void applyNeurotoxins(Entity attacker, Entity victim, ItemStack itemStack) {
-        int level = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), itemStack);
+        int level = itemStack.getEnchantmentLevel(BzEnchantments.NEUROTOXINS.get());
 
         if(level > 0 && victim instanceof LivingEntity livingEntity && livingEntity.getMobType() != MobType.UNDEAD) {
             float applyChance = 1.0f;
@@ -92,7 +91,7 @@ public class NeurotoxinsEnchantment extends Enchantment {
                 applyChance = (healthModifier * level) * (capability.getMissedParalysis() + 1);
             }
 
-            if(victim.level.random.nextFloat() < applyChance) {
+            if(livingEntity.getRandom().nextFloat() < applyChance) {
                 livingEntity.addEffect(new MobEffectInstance(
                         BzEffects.PARALYZED.get(),
                         100 * level,

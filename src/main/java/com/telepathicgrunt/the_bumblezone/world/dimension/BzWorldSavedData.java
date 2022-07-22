@@ -63,9 +63,9 @@ public class BzWorldSavedData extends SavedData {
 		return QUEUED_ENTITIES_TO_TELEPORT.stream().anyMatch(entry -> entry.getFirst().equals(entity));
 	}
 
-	public static void worldTick(TickEvent.WorldTickEvent event){
-		if(event.phase == TickEvent.Phase.END && !event.world.isClientSide()){
-			BzWorldSavedData.tick((ServerLevel) event.world);
+	public static void worldTick(TickEvent.LevelTickEvent event){
+		if(event.phase == TickEvent.Phase.END && !event.level.isClientSide()){
+			BzWorldSavedData.tick((ServerLevel) event.level);
 		}
 	}
 

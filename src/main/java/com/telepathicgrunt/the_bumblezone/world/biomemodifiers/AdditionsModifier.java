@@ -13,7 +13,6 @@ import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo;
 import net.minecraftforge.fml.ModList;
 
-
 public record AdditionsModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeature> feature, GenerationStep.Decoration step, String modid) implements BiomeModifier {
 
     public static Codec<AdditionsModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(

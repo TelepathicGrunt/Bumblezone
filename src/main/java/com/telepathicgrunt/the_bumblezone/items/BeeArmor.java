@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.client.rendering.BeeArmorModel;
+import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -11,10 +11,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
 import java.util.function.Consumer;
-
 
 public abstract class BeeArmor extends ArmorItem {
     private final int variant;
@@ -41,13 +40,13 @@ public abstract class BeeArmor extends ArmorItem {
     }
 
     @Override
-    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-        consumer.accept(new IItemRenderProperties() {
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        consumer.accept(new IClientItemExtensions() {
             private BeeArmorModel model;
             private int variant;
 
             @Override
-            public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
+            public HumanoidModel<?> getHumanoidArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
                 if (this.model == null || (itemStack.getItem() instanceof BeeArmor beeArmor && variant != beeArmor.getVariant())) {
 
                     ModelPart layer = null;

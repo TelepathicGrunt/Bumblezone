@@ -35,7 +35,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -64,7 +63,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 
 public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -178,8 +176,8 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
                 honeyCocoonBlockEntity.removeItem(emptyBroods.get(random.nextInt(emptyBroods.size())).getSecond(), 1);
                 ItemStack consumedItem = honeyCocoonBlockEntity.removeItem(beeFeeding.get(random.nextInt(beeFeeding.size())).getSecond(), 1);
-                if(consumedItem.hasContainerItem()) {
-                    ItemStack ejectedItem = consumedItem.getContainerItem();
+                if(consumedItem.hasCraftingRemainingItem()) {
+                    ItemStack ejectedItem = consumedItem.getCraftingRemainingItem();
                     if(ejectedItem.isEmpty()) {
                         ejectedItem = ContainerCraftingRecipe.HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(consumedItem.getItem()).getDefaultInstance();
                     }
@@ -262,7 +260,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
         if (itemstack.getItem() == Items.GLASS_BOTTLE && blockstate.getValue(WATERLOGGED)) {
 
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
-                    SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
+                    SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
 
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()), false, true);
             return InteractionResult.SUCCESS;
@@ -368,7 +366,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
     @Override
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack itemStack) {
-        if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) > 0 && player instanceof ServerPlayer serverPlayer) {
+        if (itemStack.getEnchantmentLevel(Enchantments.SILK_TOUCH) > 0 && player instanceof ServerPlayer serverPlayer) {
             BzCriterias.HONEY_COCOON_SILK_TOUCH_TRIGGER.trigger(serverPlayer);
         }
 
@@ -416,8 +414,8 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     @Override
     public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         if(!blockState.getValue(WATERLOGGED)) {
-            if (world.random.nextFloat() < 0.05F) {
-                this.spawnHoneyParticles(world, position);
+            if (random.nextFloat() < 0.05F) {
+                this.spawnHoneyParticles(world, position, random);
             }
         }
     }
@@ -426,17 +424,17 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
      * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addHoneyParticle
      * method
      */
-    private void spawnHoneyParticles(Level world, BlockPos position) {
-        double x = (world.random.nextDouble() * 14) + 1;
-        double y = (world.random.nextDouble() * 6) + 5;
-        double z = (world.random.nextDouble() * 14) + 1;
+    private void spawnHoneyParticles(Level world, BlockPos position, RandomSource random) {
+        double x = (random.nextDouble() * 14) + 1;
+        double y = (random.nextDouble() * 6) + 5;
+        double z = (random.nextDouble() * 14) + 1;
 
-        if (world.random.nextBoolean()) {
-            if (world.random.nextBoolean()) x = 0.8D;
+        if (random.nextBoolean()) {
+            if (random.nextBoolean()) x = 0.8D;
             else x = 15.2;
         }
         else {
-            if (world.random.nextBoolean()) z = 0.8D;
+            if (random.nextBoolean()) z = 0.8D;
             else z = 15.2;
         }
 

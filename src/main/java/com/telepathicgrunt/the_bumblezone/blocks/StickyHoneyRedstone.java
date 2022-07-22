@@ -208,8 +208,8 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         super.animateTick(blockState, world, position, random);
         if (blockState.getValue(POWERED)) {
             for (int i = 0; i == random.nextInt(2); ++i) {
-                Direction randomDirection = Direction.values()[world.random.nextInt(Direction.values().length)];
-                this.addParticle(new DustParticleOptions(new Vector3f(255, 0, 0), 1.0F), world, position, blockState, randomDirection);
+                Direction randomDirection = Direction.values()[random.nextInt(Direction.values().length)];
+                this.addParticle(new DustParticleOptions(new Vector3f(255, 0, 0), 1.0F), random, world, position, blockState, randomDirection);
             }
         }
     }

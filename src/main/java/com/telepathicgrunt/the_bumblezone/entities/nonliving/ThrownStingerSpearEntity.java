@@ -125,10 +125,15 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
 
         if(entity instanceof LivingEntity livingEntity &&
             livingEntity.isDeadOrDying() &&
-            this.getOwner() instanceof ServerPlayer serverPlayer &&
-            !serverPlayer.blockPosition().closerThan(this.blockPosition(), 50))
+            this.getOwner() instanceof ServerPlayer serverPlayer)
         {
-            BzCriterias.STINGER_SPEAR_LONG_RANGE_KILL_TRIGGER.trigger(serverPlayer);
+            if (!serverPlayer.blockPosition().closerThan(this.blockPosition(), 50)) {
+                BzCriterias.STINGER_SPEAR_LONG_RANGE_KILL_TRIGGER.trigger(serverPlayer);
+            }
+
+            if (entity.getType() == EntityType.WITHER) {
+                BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.trigger(serverPlayer);
+            }
         }
 
         this.setDeltaMovement(this.getDeltaMovement().multiply(-0.01D, -0.1D, -0.01D));
@@ -137,7 +142,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
 
     @Override
     protected void doPostHurtEffects(LivingEntity livingEntity) {
-        int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get(), this.spearItem);
+        int potentPoisonLevel =  this.spearItem.getEnchantmentLevel(BzEnchantments.POTENT_POISON.get());
         if (livingEntity.getMobType() != MobType.UNDEAD) {
             livingEntity.addEffect(new MobEffectInstance(
                     MobEffects.POISON,
@@ -153,7 +158,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         }
 
         if(this.getOwner() instanceof Player player) {
-            int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), this.spearItem);
+            int neuroToxinLevel = this.spearItem.getEnchantmentLevel(BzEnchantments.NEUROTOXINS.get());
             if (neuroToxinLevel > 0) {
                 this.spearItem.hurtAndBreak(5, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             }

@@ -62,12 +62,12 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
     @Override
     public NonNullList<ItemStack> getRemainingItems(CraftingContainer inv) {
         NonNullList<ItemStack> remainingInv = NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
-        int containerOutput = recipeOutput.hasContainerItem() ? recipeOutput.getCount() : 0;
+        int containerOutput = recipeOutput.hasCraftingRemainingItem() ? recipeOutput.getCount() : 0;
 
         for(int i = 0; i < remainingInv.size(); ++i) {
             ItemStack craftingInput = inv.getItem(i);
-            ItemStack craftingContainer = craftingInput.getContainerItem();
-            ItemStack recipeContainer = recipeOutput.getContainerItem();
+            ItemStack craftingContainer = craftingInput.getCraftingRemainingItem();
+            ItemStack recipeContainer = recipeOutput.getCraftingRemainingItem();
             if (craftingContainer.isEmpty() && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(craftingInput.getItem())) {
                 craftingContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(craftingInput.getItem()).getDefaultInstance();
             }

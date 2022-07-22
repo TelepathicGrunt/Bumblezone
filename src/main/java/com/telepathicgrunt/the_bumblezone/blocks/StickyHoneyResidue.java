@@ -191,7 +191,9 @@ public class StickyHoneyResidue extends Block {
         voxelShape = voxelShape.move(blockPos.getX(), blockPos.getY(), blockPos.getZ());
         if (Shapes.joinIsNotEmpty(voxelShape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND)) {
             entity.makeStuckInBlock(blockState, new Vec3(0.35D, 0.2F, 0.35D));
-            if (entity instanceof LivingEntity livingEntity) {
+            if (entity instanceof LivingEntity livingEntity &&
+                !(entity instanceof Player player && player.isCreative()))
+            {
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.MOVEMENT_SLOWDOWN,
                         200,
@@ -346,7 +348,7 @@ public class StickyHoneyResidue extends Block {
                     playerEntity.getY(),
                     playerEntity.getZ(),
                     BzSounds.WASHING_RESIDUES.get(),
-                    SoundSource.NEUTRAL,
+                    SoundSource.PLAYERS,
                     1.0F,
                     1.0F);
 
@@ -408,9 +410,9 @@ public class StickyHoneyResidue extends Block {
     public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         //chance of particle in this tick
         for (int i = 0; i == random.nextInt(50); ++i) {
-            Direction randomDirection = Direction.values()[world.random.nextInt(Direction.values().length)];
+            Direction randomDirection = Direction.values()[random.nextInt(Direction.values().length)];
             if (randomDirection != Direction.DOWN) {
-                this.addParticle(ParticleTypes.DRIPPING_HONEY, world, position, blockState, randomDirection);
+                this.addParticle(ParticleTypes.DRIPPING_HONEY, random, world, position, blockState, randomDirection);
             }
         }
     }
@@ -418,13 +420,14 @@ public class StickyHoneyResidue extends Block {
     /**
      * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addParticle method
      */
-    protected void addParticle(ParticleOptions particleType, Level world, BlockPos blockPos, BlockState blockState, Direction direction) {
+    protected void addParticle(ParticleOptions particleType, RandomSource random, Level world, BlockPos blockPos, BlockState blockState, Direction direction) {
         short bitFlag = getAABBIndex(blockState);
         if(((bitFlag >> direction.ordinal()) & 1) != 0) {
             VoxelShape chosenSide = BASE_SHAPES_BY_DIRECTION_ORDINAL[direction.ordinal()];
             this.addParticle(
                     particleType,
                     world,
+                    random,
                     blockPos.getX() + chosenSide.min(Direction.Axis.X),
                     blockPos.getX() + chosenSide.max(Direction.Axis.X),
                     blockPos.getY() + chosenSide.min(Direction.Axis.Y),
@@ -437,7 +440,7 @@ public class StickyHoneyResidue extends Block {
     /**
      * Adds the actual particle into the world within the given range
      */
-    private void addParticle(ParticleOptions particleType, Level world, double xMin, double xMax, double yMin, double yMax, double zMax, double zMin) {
-        world.addParticle(particleType, Mth.lerp(world.random.nextDouble(), xMin, xMax), Mth.lerp(world.random.nextDouble(), yMin, yMax), Mth.lerp(world.random.nextDouble(), zMin, zMax), 0.0D, 0.0D, 0.0D);
+    private void addParticle(ParticleOptions particleType, Level world, RandomSource random, double xMin, double xMax, double yMin, double yMax, double zMax, double zMin) {
+        world.addParticle(particleType, Mth.lerp(random.nextDouble(), xMin, xMax), Mth.lerp(random.nextDouble(), yMin, yMax), Mth.lerp(random.nextDouble(), zMin, zMax), 0.0D, 0.0D, 0.0D);
     }
 }

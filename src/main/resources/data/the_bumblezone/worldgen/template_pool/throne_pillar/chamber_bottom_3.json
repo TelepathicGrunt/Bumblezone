@@ -1,0 +1,15 @@
+{
+  "name": "the_bumblezone:throne_pillar/chamber_bottom_3",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:throne_pillar/pillar_bottom_nw",
+        "processors": "the_bumblezone:throne_pillar_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

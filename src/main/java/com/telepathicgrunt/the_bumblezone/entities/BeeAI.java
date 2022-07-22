@@ -20,9 +20,9 @@ public class BeeAI {
             for(int attempt = 0; attempt < 11 || beeEntity.blockPosition().distManhattan(mutable) <= 5; attempt++) {
                 // pick a random place to fly to
                 mutable.set(beeEntity.blockPosition()).move(
-                        world.random.nextInt(21) - 10,
-                        world.random.nextInt(21) - 10,
-                        world.random.nextInt(21) - 10
+                        beeEntity.getRandom().nextInt(21) - 10,
+                        beeEntity.getRandom().nextInt(21) - 10,
+                        beeEntity.getRandom().nextInt(21) - 10
                 );
 
                 if(world.getBlockState(mutable).isAir()) {

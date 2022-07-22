@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.effects.MobEffectInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -23,7 +24,6 @@ import net.minecraft.world.level.Level;
 
 import java.util.Set;
 
-
 public class StinglessBeeHelmet extends BeeArmor {
     public static int HELMET_EFFECT_COUNTER_CLIENTSIDE = 0;
     public static boolean ALL_BEE_ARMOR_ON_CLIENTSIDE = false;
@@ -43,31 +43,31 @@ public class StinglessBeeHelmet extends BeeArmor {
     }
 
     @Override
-    public void onArmorTick(ItemStack beeHelmet, Level world, Player entity) {
-        boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(entity);
+    public void onArmorTick(ItemStack beeHelmet, Level world, Player player) {
+        boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(player);
 
-        MobEffectInstance nausea = entity.getEffect(MobEffects.CONFUSION);
+        MobEffectInstance nausea = player.getEffect(MobEffects.CONFUSION);
         if (nausea != null) {
             int decreaseSpeed = isAllBeeArmorOn ? 10 : 1;
             for (int i = 0; i < decreaseSpeed; i++) {
                 ((MobEffectInstanceAccessor) nausea).callTickDownDuration();
                 if(!world.isClientSide() &&
-                    world.random.nextFloat() < 0.001f &&
+                    player.getRandom().nextFloat() < 0.001f &&
                     beeHelmet.getMaxDamage() - beeHelmet.getDamageValue() > 1)
                 {
-                    beeHelmet.hurtAndBreak(1, entity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
+                    beeHelmet.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
                 }
             }
         }
 
-        MobEffectInstance poison = entity.getEffect(MobEffects.POISON);
+        MobEffectInstance poison = player.getEffect(MobEffects.POISON);
         if (poison != null && (isAllBeeArmorOn || world.getGameTime() % 3 == 0)) {
             ((MobEffectInstanceAccessor) poison).callTickDownDuration();
             if(!world.isClientSide() &&
-                world.random.nextFloat() < 0.004f &&
+                player.getRandom().nextFloat() < 0.004f &&
                 beeHelmet.getMaxDamage() - beeHelmet.getDamageValue() > 1)
             {
-                beeHelmet.hurtAndBreak(1, entity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
+                beeHelmet.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
             }
         }
 
@@ -83,11 +83,11 @@ public class StinglessBeeHelmet extends BeeArmor {
             ALL_BEE_ARMOR_ON_CLIENTSIDE = isAllBeeArmorOn;
             decrementHighlightingCounter();
 
-            if (entity.isCrouching()) {
+            if (player.isCrouching()) {
                 HELMET_EFFECT_COUNTER_CLIENTSIDE = isAllBeeArmorOn ? 200 : 6;
 
-                if(!world.isClientSide() && world.random.nextFloat() < 0.001f) {
-                    beeHelmet.hurtAndBreak(1, entity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
+                if(!world.isClientSide() && player.getRandom().nextFloat() < 0.001f) {
+                    beeHelmet.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
                 }
             }
         }
@@ -95,15 +95,15 @@ public class StinglessBeeHelmet extends BeeArmor {
         CompoundTag tag = beeHelmet.getOrCreateTag();
         boolean hasBeeRider = tag.getBoolean("hasBeeRider");
         int beeRidingTimer = tag.getInt("beeRidingTimer");
-        boolean hasWrath = entity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+        boolean hasWrath = player.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get());
         if(hasBeeRider || hasWrath) {
             if (hasWrath ||
-                entity.isUnderWater() ||
-                entity.isHurt() ||
-                entity.isCrouching() ||
+                player.isUnderWater() ||
+                player.isHurt() ||
+                player.isCrouching() ||
                 (!isAllBeeArmorOn && beeRidingTimer > 600))
             {
-                for (Entity passenger : entity.getPassengers()) {
+                for (Entity passenger : player.getPassengers()) {
                     if (passenger instanceof Bee bee) {
                         bee.stopRiding();
                         bee.setNoAi(false);
@@ -117,17 +117,17 @@ public class StinglessBeeHelmet extends BeeArmor {
             else if(!world.isClientSide()) {
                 tag.putInt("beeRidingTimer", beeRidingTimer + 1);
 
-                if(entity instanceof ServerPlayer serverPlayer) {
+                if(player instanceof ServerPlayer serverPlayer) {
                     serverPlayer.awardStat(BzStats.STINGLESS_BEE_HELMET_BEE_RIDER_RL.get());
                 }
             }
         }
 
-        super.onArmorTick(beeHelmet, world, entity);
+        super.onArmorTick(beeHelmet, world, player);
     }
 
     public static boolean shouldEntityGlow(Player player, Entity entity) {
-        if(entity instanceof Bee || entity instanceof BeehemothEntity) {
+        if(entity instanceof Bee || entity instanceof BeehemothEntity || entity instanceof BeeQueenEntity) {
             return entity.blockPosition().closerThan(player.blockPosition(), ALL_BEE_ARMOR_ON_CLIENTSIDE ? 80 : 30);
         }
         return false;

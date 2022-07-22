@@ -6,8 +6,11 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.packets.BeehemothControlsPacket;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.settings.IKeyConflictContext;
+import net.minecraftforge.event.TickEvent;
+import org.apache.logging.log4j.Level;
 import org.lwjgl.glfw.GLFW;
 
 public class BeehemothControls {
@@ -25,16 +28,27 @@ public class BeehemothControls {
             "key.categories." + Bumblezone.MODID
     );
 
-    public static void keyInput(InputEvent.KeyInputEvent event) {
+    public static void keyInput(InputEvent.Key event) {
         if (Minecraft.getInstance().player != null &&
-            Minecraft.getInstance().player.getVehicle() instanceof BeehemothEntity &&
-            (KEY_BIND_BEEHEMOTH_UP.matches(event.getKey(), event.getScanCode()) ||
-             KEY_BIND_BEEHEMOTH_DOWN.matches(event.getKey(), event.getScanCode())))
+            Minecraft.getInstance().player.getVehicle() instanceof BeehemothEntity beehemothEntity)
         {
-            BeehemothControlsPacket.sendToServer(
-                KEY_BIND_BEEHEMOTH_UP.matches(event.getKey(), event.getScanCode()) ? event.getAction() : 2,
-                KEY_BIND_BEEHEMOTH_DOWN.matches(event.getKey(), event.getScanCode()) ? event.getAction() : 2
-            );
+            boolean upKeyAction = KEY_BIND_BEEHEMOTH_UP.matches(event.getKey(), event.getScanCode());
+            boolean downKeyAction = KEY_BIND_BEEHEMOTH_DOWN.matches(event.getKey(), event.getScanCode());
+            int keyAction = event.getAction();
+
+            if ((upKeyAction || downKeyAction) && keyAction != 2) {
+                BeehemothControlsPacket.sendToServer(
+                        upKeyAction ? keyAction : 2,
+                        downKeyAction ? keyAction : 2
+                );
+
+                if (upKeyAction) {
+                    beehemothEntity.movingStraightUp = keyAction == 1;
+                }
+                else {
+                    beehemothEntity.movingStraightDown = keyAction == 1;
+                }
+            }
         }
     }
 

@@ -1,0 +1,151 @@
+{
+  "processors": [
+    {
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:cave_air"
+          },
+          "input_predicate": {
+            "block": "minecraft:air",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    },
+    {
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:honeycomb_block"
+          },
+          "input_predicate": {
+            "block": "the_bumblezone:filled_porous_honeycomb_block",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.05
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    },
+    {
+      "rules": [
+        {
+          "output_state": {
+            "Properties": {
+              "candles": "4",
+              "lit": "true",
+              "waterlogged": "false"
+            },
+            "Name": "minecraft:candle"
+          },
+          "input_predicate": {
+            "block": "minecraft:candle",
+            "probability": 0.5,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Properties": {
+              "candles": "3",
+              "lit": "true",
+              "waterlogged": "false"
+            },
+            "Name": "minecraft:candle"
+          },
+          "input_predicate": {
+            "block": "minecraft:candle",
+            "probability": 0.33,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Properties": {
+              "candles": "2",
+              "lit": "true",
+              "waterlogged": "false"
+            },
+            "Name": "minecraft:candle"
+          },
+          "input_predicate": {
+            "block": "minecraft:candle",
+            "probability": 0.5,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Properties": {
+              "candles": "1",
+              "lit": "true",
+              "waterlogged": "false"
+            },
+            "Name": "minecraft:candle"
+          },
+          "input_predicate": {
+            "block": "minecraft:candle",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    },
+    {
+      "processor_type": "the_bumblezone:random_replace_with_properties_processor",
+      "probability": 1,
+      "input_block": "minecraft:candle",
+      "output_blocks": [
+        "minecraft:candle",
+        "minecraft:red_candle",
+        "minecraft:orange_candle",
+        "minecraft:yellow_candle",
+        "minecraft:gray_candle",
+        "minecraft:light_gray_candle",
+        "minecraft:white_candle",
+        "minecraft:brown_candle",
+        "minecraft:pink_candle",
+        "minecraft:magenta_candle"
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:noise_replace_with_properties_processor",
+      "output_block": "minecraft:honeycomb_block",
+      "input_block": "the_bumblezone:filled_porous_honeycomb_block",
+      "threshold": 0.35,
+      "xz_scale": 0.08,
+      "y_scale": 0.08
+    },
+    {
+      "processor_type": "the_bumblezone:noise_replace_with_properties_processor",
+      "output_block": "the_bumblezone:porous_honeycomb_block",
+      "input_block": "the_bumblezone:filled_porous_honeycomb_block",
+      "threshold": 0.18,
+      "xz_scale": 0.2,
+      "y_scale": 0.2
+    },
+    {
+      "processor_type": "the_bumblezone:honeycomb_brood_randomize_processor"
+    }
+  ]
+}

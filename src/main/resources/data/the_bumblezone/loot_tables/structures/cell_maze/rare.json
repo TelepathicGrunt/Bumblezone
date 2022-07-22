@@ -129,6 +129,21 @@
           ]
         },
         {
+          "name": "the_bumblezone:bee_stinger",
+          "type": "minecraft:item",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
           "type": "minecraft:loot_table",
           "name": "the_bumblezone:structures/flowers",
           "weight": 5
@@ -471,6 +486,32 @@
           "name": "the_bumblezone:honeycomb_brood_block",
           "type": "minecraft:item",
           "weight": 1
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:honey_compass",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"IsThrone\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass_throne_locating",
+              "skip_existing_chunks": false,
+              "search_radius": 40
+            }
+          ]
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 19
         }
       ]
     }

@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     {
+      "id": "the_bumblezone:bee_stinger",
+      "required": true
+    },
+    {
       "id": "minecraft:flint",
       "required": true
     }

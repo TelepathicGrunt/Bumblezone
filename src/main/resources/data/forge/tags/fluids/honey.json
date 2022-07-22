@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "the_bumblezone:honey_fluid_still",
-    "the_bumblezone:honey_fluid_flowing",
+    "#the_bumblezone:honey",
+    "#the_bumblezone:royal_jelly",
     {
       "id": "inspirations:honey",
       "required": false

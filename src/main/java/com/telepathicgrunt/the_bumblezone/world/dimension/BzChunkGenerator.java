@@ -73,7 +73,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.function.Predicate;
 
-
 public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
     public static final Codec<BzChunkGenerator> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -462,6 +461,10 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                             float f = mobspawnsettings$spawnerdata.type.getWidth();
                             double d0 = Mth.clamp(x, (double)i + (double)f, (double)i + 16.0D - (double)f);
                             double d1 = Mth.clamp(z, (double)j + (double)f, (double)j + 16.0D - (double)f);
+
+                            if (!serverLevelAccessor.getWorldBorder().isWithinBounds(d0, d1)) {
+                                continue;
+                            }
 
                             Entity entity;
                             try {

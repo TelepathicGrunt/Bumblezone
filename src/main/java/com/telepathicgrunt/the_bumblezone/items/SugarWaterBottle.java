@@ -22,6 +22,7 @@ public class SugarWaterBottle extends Item {
         super(properties);
     }
 
+    @Override
     public ItemStack finishUsingItem(ItemStack itemStack, Level level, LivingEntity livingEntity) {
         super.finishUsingItem(itemStack, level, livingEntity);
         if (livingEntity instanceof ServerPlayer serverplayer) {
@@ -47,6 +48,7 @@ public class SugarWaterBottle extends Item {
     /**
      * How long it takes to use or consume an item
      */
+    @Override
     public int getUseDuration(ItemStack itemStack) {
         return 40;
     }
@@ -54,18 +56,22 @@ public class SugarWaterBottle extends Item {
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
+    @Override
     public UseAnim getUseAnimation(ItemStack itemStack) {
         return UseAnim.DRINK;
     }
 
+    @Override
     public SoundEvent getDrinkingSound() {
         return BzSounds.SUGAR_WATER_DRINK.get();
     }
 
+    @Override
     public SoundEvent getEatingSound() {
         return BzSounds.SUGAR_WATER_DRINK.get();
     }
 
+    @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         return ItemUtils.startUsingInstantly(level, player, hand);
     }

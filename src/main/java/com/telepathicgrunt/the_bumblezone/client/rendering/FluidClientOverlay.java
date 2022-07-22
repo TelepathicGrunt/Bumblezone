@@ -10,32 +10,29 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Matrix4f;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import net.minecraft.client.Camera;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.phys.Vec3;
 
 public class FluidClientOverlay {
-   private static final ResourceLocation HONEY_TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID + ":textures/misc/honey_fluid_underwater.png");
+    private static final ResourceLocation HONEY_TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID + ":textures/misc/honey_fluid_underwater.png");
+    private static final ResourceLocation ROYAL_JELLY_TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID + ":textures/misc/royal_jelly_fluid_underwater.png");
 
     public static boolean renderHoneyOverlay(LocalPlayer clientPlayerEntity, PoseStack matrixStack) {
-        if(!clientPlayerEntity.isEyeInFluidType(BzFluids.HONEY_FLUID_TYPE.get())) {
+        if(!clientPlayerEntity.isEyeInFluidType(BzFluids.HONEY_FLUID_TYPE.get()) &&
+            !clientPlayerEntity.isEyeInFluidType(BzFluids.ROYAL_JELLY_FLUID_TYPE.get()))
+        {
             return false;
         }
 
         BlockState state = clientPlayerEntity.level.getBlockState(new BlockPos(clientPlayerEntity.getEyePosition(1)));
-        if (state.is(BzFluids.HONEY_FLUID_BLOCK.get())) {
+        if (state.is(BzFluids.HONEY_FLUID_BLOCK.get()) || state.is(BzFluids.ROYAL_JELLY_FLUID_BLOCK.get())) {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.enableTexture();
-            RenderSystem.setShaderTexture(0, HONEY_TEXTURE_UNDERWATER);
+            RenderSystem.setShaderTexture(0, state.is(BzFluids.HONEY_FLUID_BLOCK.get()) ? HONEY_TEXTURE_UNDERWATER : ROYAL_JELLY_TEXTURE_UNDERWATER);
             BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
             // Scale the brightness of fog but make sure it is never darker than the dimension's min brightness.
             float brightness = (float) Math.max(
@@ -64,31 +61,5 @@ public class FluidClientOverlay {
     public static float getDimensionBrightnessAtEyes(Entity entity) {
         float lightLevelAtEyes = entity.level.getRawBrightness(new BlockPos(entity.getEyePosition(1)), 0);
         return lightLevelAtEyes / 15f;
-    }
-
-    public static FluidState getNearbyHoneyFluid(Camera camera) {
-        Entity entity = camera.getEntity();
-        Level world = entity.level;
-        FluidState fluidstate = world.getFluidState(camera.getBlockPosition());
-
-        Vec3 currentPos = camera.getPosition();
-        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-        double offsetDistanceCheck = 0.075D;
-
-        for(Direction direction : Direction.values()) {
-            double x = currentPos.x() + direction.getStepX() * offsetDistanceCheck;
-            double y = currentPos.y() + direction.getStepY() * offsetDistanceCheck;
-            double z = currentPos.z() + direction.getStepZ() * offsetDistanceCheck;
-            mutable.set(x, y, z);
-            if(!mutable.equals(camera.getBlockPosition())) {
-                FluidState neighboringFluidstate = world.getFluidState(mutable);
-                if(neighboringFluidstate.is(BzTags.BZ_HONEY_FLUID)) {
-                    fluidstate = neighboringFluidstate;
-                    break;
-                }
-            }
-        }
-
-        return fluidstate;
     }
 }

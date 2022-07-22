@@ -27,7 +27,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-
 public class CarpenterBeeBoots extends BeeArmor {
 
     public CarpenterBeeBoots(ArmorMaterial material, EquipmentSlot slot, Properties properties, int variant) {
@@ -44,7 +43,7 @@ public class CarpenterBeeBoots extends BeeArmor {
 
     @Override
     public void onArmorTick(ItemStack beeBoots, Level world, Player player) {
-        RandomSource random = world.random;
+        RandomSource random = player.getRandom();
         boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(player);
         CompoundTag tag = beeBoots.getOrCreateTag();
 
@@ -90,7 +89,7 @@ public class CarpenterBeeBoots extends BeeArmor {
                                 beeBoots);
                         boolean blockBroken = world.destroyBlock(belowBlockPos, false, player);
 
-                        if(world.random.nextFloat() < 0.045) {
+                        if(random.nextFloat() < 0.045) {
                             beeBoots.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.FEET));
                         }
 
@@ -179,7 +178,7 @@ public class CarpenterBeeBoots extends BeeArmor {
                                 }
                             }
 
-                            if(world.random.nextFloat() < 0.001) {
+                            if(random.nextFloat() < 0.001) {
                                 beeBoots.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.FEET));
                             }
                         }
@@ -195,7 +194,7 @@ public class CarpenterBeeBoots extends BeeArmor {
     }
 
     public static float getPlayerDestroySpeed(Player player, ItemStack beeBoots, float currentSpeed) {
-        int efficencyLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, beeBoots);
+        int efficencyLevel = beeBoots.getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
         if (efficencyLevel > 0) {
             currentSpeed += efficencyLevel / 4f;
         }

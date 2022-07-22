@@ -6,6 +6,7 @@
     "1": "the_bumblezone:block/honey_crystal_main",
     "particle": "the_bumblezone:block/honey_crystal_base"
   },
+  "render_type": "minecraft:translucent",
   "elements": [
     {
       "from": [5, 0, 5],

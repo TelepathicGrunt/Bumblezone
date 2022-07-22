@@ -22,7 +22,6 @@ import net.minecraft.world.phys.HitResult;
 
 import java.util.function.Supplier;
 
-
 public class BzBucketItem extends BucketItem {
     public BzBucketItem(Supplier<? extends Fluid> supplier, Properties builder) {
         super(supplier, builder);

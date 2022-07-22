@@ -38,5 +38,7 @@ public class GlassBottleUseMixin {
     private void thebumblezone_bottleFluidInteract2(Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir, List<AreaEffectCloud> list, ItemStack itemStack, HitResult hitResult, BlockPos blockPos) {
         if (GlassBottleBehavior.useBottleOnHoneyFluid(world, user, hand, blockPos))
             cir.setReturnValue(InteractionResultHolder.success(user.getItemInHand(hand)));
+        if (GlassBottleBehavior.useBottleOnRoyalJellyFluid(world, user, hand, blockPos))
+            cir.setReturnValue(InteractionResultHolder.success(user.getItemInHand(hand)));
     }
 }

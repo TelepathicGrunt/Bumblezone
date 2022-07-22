@@ -12,5 +12,4 @@ public interface MaterialInvoker {
 
     @Invoker("destroyOnPush")
     Material.Builder thebumblezone_getDestroyOnPush();
-
 }

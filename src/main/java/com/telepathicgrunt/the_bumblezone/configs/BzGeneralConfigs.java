@@ -10,6 +10,7 @@ public class BzGeneralConfigs {
     public static ForgeConfigSpec.IntValue nearbyBeesPerPlayerInBz;
     public static ForgeConfigSpec.BooleanValue dispensersDropGlassBottles;
     public static ForgeConfigSpec.IntValue broodBlocksBeeSpawnCapacity;
+    public static ForgeConfigSpec.BooleanValue keepBeeEssenceOnRespawning;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -68,6 +69,12 @@ public class BzGeneralConfigs {
                         " off automatic Brood Block bee spawning.\n")
                 .translation("the_bumblezone.config.broodblocksbeespawncapacity")
                 .defineInRange("broodBlocksBeeSpawnCapacity", 60, 0, 1000);
+
+        keepBeeEssenceOnRespawning = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether Essence of the Bees's effect should stay on the player if they die and then respawn.\n")
+                .translation("the_bumblezone.config.keepBeeEssenceOnRespawning")
+                .define("keepBeeEssenceOnRespawning", false);
 
         builder.pop();
     }
