@@ -24,7 +24,7 @@
       "conditions": {
         "items": [
           {
-            "item": "the_bumblezone:royal_jelly_bucket"
+            "items": [ "the_bumblezone:royal_jelly_bucket" ]
           }
         ]
       }

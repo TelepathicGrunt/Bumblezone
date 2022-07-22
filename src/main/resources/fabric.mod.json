@@ -22,11 +22,14 @@
     "main": [
       "com.telepathicgrunt.the_bumblezone.Bumblezone"
     ],
-    "modmenu": [
-      "com.telepathicgrunt.the_bumblezone.configs.ModMenuConfig"
-    ],
     "client": [
       "com.telepathicgrunt.the_bumblezone.client.BumblezoneClient"
+    ],
+    "preLaunch": [
+      "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
+    ],
+    "modmenu": [
+      "com.telepathicgrunt.the_bumblezone.configs.ModMenuConfig"
     ],
     "cardinal-components-entity": [
       "com.telepathicgrunt.the_bumblezone.Bumblezone"
@@ -51,7 +54,9 @@
     "cardinal-components": [
       "the_bumblezone:entity_component",
       "the_bumblezone:original_flying_speed",
-      "the_bumblezone:neurotoxins_missed_counter"
+      "the_bumblezone:neurotoxins_missed_counter",
+      "the_bumblezone:essence_component",
+      "the_bumblezone:misc_component"
     ]
   }
 }

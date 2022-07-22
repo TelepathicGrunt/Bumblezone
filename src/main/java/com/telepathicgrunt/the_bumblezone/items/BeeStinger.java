@@ -32,7 +32,7 @@ public class BeeStinger extends ArrowItem {
             for(int i = 0; i < inventory.getContainerSize(); ++i) {
                 ItemStack itemstack1 = inventory.getItem(i);
                 if (itemstack1.is(BzItems.BEE_STINGER)) {
-                    return BzItems.BEE_STINGER.getDefaultInstance();
+                    return itemstack1;
                 }
             }
         }

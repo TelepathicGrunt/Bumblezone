@@ -39,6 +39,7 @@
     "entities.PlayerEntityMixin",
     "entities.ServerPlayerMixin",
     "entities.ThrownTridentAccessor",
+    "items.BowItemMixin",
     "items.BucketItemAccessor",
     "items.EnderpearlImpactMixin",
     "items.GlassBottleUseMixin",
