@@ -6,6 +6,8 @@ Fixed Beehemoth not being saddleable and being controllable without being saddle
 ##### Items:
 Fixed Royal Jelly Bucket not placing Royal Jelly Fluid.
 
+Honey Compass now says the name of the block it is tracking when in block tracking mode.
+
 
 ### **(V.6.1.0 Changes) (1.19 Minecraft)**
 

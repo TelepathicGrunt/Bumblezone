@@ -53,7 +53,7 @@
   "item.the_bumblezone.stinger_spear": "Stinger Spear",
   "item.the_bumblezone.honey_compass": "Honey Compass",
   "item.the_bumblezone.honey_compass_structure": "Honey Compass - Structure",
-  "item.the_bumblezone.honey_compass_block": "Honey Compass - Beehive",
+  "item.the_bumblezone.honey_compass_block": "Honey Compass - %s",
   "item.the_bumblezone.honey_compass_throne_structure": "Honey Compass - Throne Pillar!",
   "item.the_bumblezone.bee_cannon": "Bee Cannon",
   "item.the_bumblezone.crystal_cannon": "Crystal Cannon",
