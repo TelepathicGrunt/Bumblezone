@@ -69,6 +69,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
 public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Saddleable, PlayerRideable {
 
@@ -111,7 +112,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     public static AttributeSupplier.Builder getAttributeBuilder() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 42.0D)
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 42.0D)
                 .add(Attributes.FLYING_SPEED, 0.6)
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
                 .add(Attributes.ATTACK_DAMAGE, 4.0D)
@@ -267,14 +269,6 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     public boolean checkSpawnObstruction(LevelReader worldReader) {
         AABB box = getBoundingBox();
         return !worldReader.containsAnyLiquid(box) && worldReader.getBlockStates(box).noneMatch(state -> state.getMaterial().blocksMotion()) && worldReader.isUnobstructed(this);
-    }
-
-    @Override
-    public Entity getControllingPassenger() {
-        for (Entity p : getPassengers()) {
-            return p;
-        }
-        return null;
     }
 
     @Override
@@ -642,10 +636,23 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         return ((percentDiff - 1) * 5) + 1;
     }
 
+    @Nullable
+    public LivingEntity getControllingPassenger() {
+        if (this.isSaddled()) {
+            Entity firstPassenger = this.getFirstPassenger();
+            if (firstPassenger instanceof LivingEntity livingEntity) {
+                return livingEntity;
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public void travel(Vec3 moveVector) {
         if (this.isAlive()) {
-            if (this.isVehicle() && this.getControllingPassenger() instanceof LivingEntity livingEntity) {
+            LivingEntity livingEntity = this.getControllingPassenger();
+            if (this.isVehicle() && livingEntity != null) {
                 float startRot = Mth.wrapDegrees(this.getYRot());
                 float targetRot = Mth.wrapDegrees(livingEntity.getYRot());
                 float lerpedRot = Mth.rotLerp(0.185f, startRot, targetRot);
