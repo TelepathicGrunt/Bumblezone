@@ -1,3 +1,9 @@
+### **(V.6.1.1 Changes) (1.19 Minecraft)**
+
+##### Entities:
+Fixed Beehemoth not being saddleable and being controllable without being saddled.
+
+
 ### **(V.6.1.0 Changes) (1.19 Minecraft)**
 
 ##### Entities:
