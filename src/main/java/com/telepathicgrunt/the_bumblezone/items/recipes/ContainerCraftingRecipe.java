@@ -3,8 +3,10 @@ package com.telepathicgrunt.the_bumblezone.items.recipes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonSyntaxException;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -13,9 +15,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
+import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
 
 import java.util.Map;
 
@@ -92,7 +96,14 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
         return remainingInv;
     }
 
-    public static class Serializer implements RecipeSerializer<ContainerCraftingRecipe> {
+    public static JsonObject itemStackFromJson(ItemStack itemStack) {
+        JsonObject json = new JsonObject();
+        json.addProperty("count", itemStack.getCount());
+        json.addProperty("item", Registry.ITEM.getKey(itemStack.getItem()).toString());
+        return json;
+    }
+
+    public static class Serializer implements RecipeSerializer<ContainerCraftingRecipe>, QuiltRecipeSerializer<ContainerCraftingRecipe> {
         @Override
         public ContainerCraftingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             String s = GsonHelper.getAsString(json, "group", "");
@@ -143,6 +154,19 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
             }
 
             buffer.writeItem(recipe.recipeOutput);
+        }
+
+        @Override
+        public JsonObject toJson(ContainerCraftingRecipe recipe) {
+            JsonObject json = new JsonObject();
+            json.addProperty("group", recipe.getGroup());
+
+            JsonArray array = new JsonArray();
+            recipe.recipeItems.stream().map(Ingredient::toJson).forEach(array::add);
+            json.add("ingredients", array);
+
+            json.add("result", ContainerCraftingRecipe.itemStackFromJson(recipe.recipeOutput));
+            return json;
         }
     }
 }

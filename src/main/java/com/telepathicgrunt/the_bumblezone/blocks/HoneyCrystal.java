@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -62,7 +62,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     private Item item;
 
     public HoneyCrystal() {
-        super(FabricBlockSettings.of(Material.GLASS, MaterialColor.COLOR_ORANGE).lightLevel(1).strength(0.3F, 0.3f).noOcclusion());
+        super(QuiltBlockSettings.of(Material.GLASS, MaterialColor.COLOR_ORANGE).lightLevel((blockState) -> 1).strength(0.3F, 0.3f).noOcclusion());
 
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.UP)

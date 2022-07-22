@@ -12,12 +12,13 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluid;
+import org.quiltmc.loader.api.QuiltLoader;
 
 public class REICompat implements REIClientPlugin {
 
     @Override
     public void registerDisplays(DisplayRegistry registry) {
-        if (FabricLoader.getInstance().isModLoaded("jei")) {
+        if (QuiltLoader.isModLoaded("jei")) {
             return;
         }
 

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "com.telepathicgrunt",
+    "id": "the_bumblezone",
+    "version": "${version}",
+    "metadata": {
+      "name": "The Bumblezone",
+      "description": "An awesome dimension full of bees that becomes REALLY angry if you take their honey! Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going above Y = 256 to below Y = 0.",
+      "contributors": {
+        "Me!": "TelepathicGrunt"
+      },
+      "license": "LGPL-3.0-or-later",
+      "icon": "assets/repurposed_structures/RepurposedStructuresLogo.png",
+      "contact": {
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-fabric",
+        "sources": "https://github.com/TelepathicGrunt/Bumblezone-Fabric",
+        "issues": "https://github.com/TelepathicGrunt/Bumblezone-Fabric/issues"
+      }
+    },
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "entrypoints": {
+      "init": "com.telepathicgrunt.the_bumblezone.Bumblezone",
+      "client_init": "com.telepathicgrunt.the_bumblezone.client.BumblezoneClient",
+      "preLaunch": "com.llamalad7.mixinextras.MixinExtrasBootstrap::init",
+      "modmenu": "com.telepathicgrunt.the_bumblezone.configs.ModMenuConfig",
+      "cardinal-components-entity": "com.telepathicgrunt.the_bumblezone.Bumblezone",
+      "rei_client": "com.telepathicgrunt.the_bumblezone.modcompat.REICompat"
+    },
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "versions": ">=0.17.0-"
+      },
+      {
+        "id": "quilted_fabric_api",
+        "versions": ">=2.0.0-"
+      },
+      {
+        "id": "minecraft",
+        "versions": ">=1.19"
+      },
+      {
+        "id": "midnightlib",
+        "versions": ">=0.5.2"
+      }
+    ]
+  },
+  "access_widener" : "the_bumblezone.accesswidener",
+  "mixin": "the_bumblezone.mixins.json",
+  "cardinal-components": [
+    "the_bumblezone:entity_component",
+    "the_bumblezone:original_flying_speed",
+    "the_bumblezone:neurotoxins_missed_counter",
+    "the_bumblezone:essence_component",
+    "the_bumblezone:misc_component"
+  ]
+}

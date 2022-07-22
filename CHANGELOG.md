@@ -11,6 +11,9 @@ Honey Compass now says the name of the block it is tracking when in block tracki
 
 ### **(V.6.1.0 Changes) (1.19 Minecraft)**
 
+##### Major:
+Ported to Quilt!
+
 ##### Entities:
 Bee Queen!!! A massive passive Bee that wants to trade! Right click while holding items or drop items in front of the
  Queen Bee to trade. Try trading various items to see what kind of items are possible to receive based what you give!
@@ -61,6 +64,8 @@ Essence of the Bees item added! An end game item to get for Bumblezone! When con
 Pollen Puff can be thrown at Mooshrooms to spawn Red Mushrooms nearby!
  Other mobs can be made to spawn flowers as well by adding new files to bz_pollen_puff_entity_flowers by datapack.
  Friends and Foes's Mooblooms and Glare is supported out of the box. Let me know what other flower mobs should be added by default!
+
+Honey Compass now says the name of the block it is tracking when in block tracking mode.
 
 ##### Blocks:
 Royal Jelly Block added! A solidified storage form of Royal jelly!

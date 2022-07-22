@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.*;
 import com.telepathicgrunt.the_bumblezone.items.materials.BeeArmorMaterial;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -19,16 +18,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SpawnEggItem;
+import org.quiltmc.qsl.item.group.api.QuiltItemGroup;
 
 
 public class BzItems {
     /**
      * creative tab to hold our block items
      */
-    public static final CreativeModeTab BUMBLEZONE_CREATIVE_TAB = FabricItemGroupBuilder.build(
-            new ResourceLocation(Bumblezone.MODID, "main_tab"),
-            () -> new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB)
-    );
+    public static final CreativeModeTab BUMBLEZONE_CREATIVE_TAB = QuiltItemGroup
+            .builder(new ResourceLocation(Bumblezone.MODID, "main_tab"))
+            .icon(() -> new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB))
+            .build();
 
     //blocks
     public static final Item POROUS_HONEYCOMB = new BlockItem(BzBlocks.POROUS_HONEYCOMB, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));

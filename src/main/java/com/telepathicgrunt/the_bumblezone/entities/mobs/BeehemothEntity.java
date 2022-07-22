@@ -112,7 +112,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     public static AttributeSupplier.Builder getAttributeBuilder() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 42.0D)
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 42.0D)
                 .add(Attributes.FLYING_SPEED, 0.6)
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
                 .add(Attributes.ATTACK_DAMAGE, 4.0D)
@@ -594,13 +595,15 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 this.getDeltaMovement().z()
             );
         }
-        else if (wasOnGround) {
+        else if (this.wasOnGround) {
             this.setDeltaMovement(
                     this.getDeltaMovement().x(),
                     this.getDeltaMovement().y() + 0.006D,
                     this.getDeltaMovement().z()
             );
         }
+
+        this.wasOnGround = isOnGround();
     }
 
     public static void spawnParticles(LevelAccessor world, Vec3 location, RandomSource random, double speedXZModifier, double speedYModifier, double initYSpeed) {

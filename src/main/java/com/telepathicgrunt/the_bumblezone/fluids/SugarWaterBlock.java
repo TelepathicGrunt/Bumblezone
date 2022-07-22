@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
@@ -19,7 +19,7 @@ import net.minecraft.world.level.material.Material;
 public class SugarWaterBlock extends LiquidBlock {
 
     public SugarWaterBlock(FlowingFluid baseFluid) {
-        super(baseFluid, FabricBlockSettings.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noLootTable().speedFactor(0.95F));
+        super(baseFluid, QuiltBlockSettings.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noLootTable().speedFactor(0.95F));
     }
 
     @Override

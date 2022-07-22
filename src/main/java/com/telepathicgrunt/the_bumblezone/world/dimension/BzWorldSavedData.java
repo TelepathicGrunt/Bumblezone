@@ -60,7 +60,7 @@ public class BzWorldSavedData extends SavedData {
 		return QUEUED_ENTITIES_TO_TELEPORT.stream().anyMatch(entry -> entry.getFirst().equals(entity));
 	}
 
-	public static void tick(ServerLevel world) {
+	public static void tick(MinecraftServer minecraftServer, ServerLevel world) {
 		if(QUEUED_ENTITIES_TO_TELEPORT.size() == 0) return;
 
 		Set<Entity> teleportedEntities = new HashSet<>();

@@ -6,7 +6,6 @@ import com.google.gson.JsonElement;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -15,12 +14,13 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import org.quiltmc.qsl.resource.loader.api.reloader.IdentifiableResourceReloader;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadListener implements IdentifiableResourceReloadListener {
+public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadListener implements IdentifiableResourceReloader {
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().setLenient().disableHtmlEscaping().excludeFieldsWithoutExposeAnnotation().create();
     public static final PollenPuffEntityPollinateManager POLLEN_PUFF_ENTITY_POLLINATE_MANAGER = new PollenPuffEntityPollinateManager();
     private final ResourceLocation POLLEN_PUFF_ENTITY_POLLINATE_MANAGER_ID = new ResourceLocation(Bumblezone.MODID, "pollen_puff_entity_pollinate_manager");
@@ -58,7 +58,7 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
     }
 
     @Override
-    public ResourceLocation getFabricId() {
+    public ResourceLocation getQuiltId() {
         return POLLEN_PUFF_ENTITY_POLLINATE_MANAGER_ID;
     }
 }

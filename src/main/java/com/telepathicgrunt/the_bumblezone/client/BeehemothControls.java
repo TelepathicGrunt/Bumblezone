@@ -6,11 +6,11 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.client.KeyMappingAccessor;
 import com.telepathicgrunt.the_bumblezone.packets.BeehemothControlsPacket;
 import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import org.lwjgl.glfw.GLFW;
+import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 
 public class BeehemothControls {
 
