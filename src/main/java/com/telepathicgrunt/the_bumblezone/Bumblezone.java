@@ -26,6 +26,7 @@ import dev.onyxstudios.cca.api.v3.entity.PlayerCopyCallback;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -99,6 +100,8 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(QueensTradeManager.QUEENS_TRADE_MANAGER);
+        ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((a, b, c) -> QueensTradeManager.QUEENS_TRADE_MANAGER.resolveQueenTrades());
+        ServerLifecycleEvents.SERVER_STARTED.register((a) -> QueensTradeManager.QUEENS_TRADE_MANAGER.resolveQueenTrades());
     }
 
     @Override

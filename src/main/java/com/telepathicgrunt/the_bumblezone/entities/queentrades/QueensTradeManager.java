@@ -5,12 +5,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import dev.architectury.registry.registries.Registries;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.packs.resources.CloseableResourceManager;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.tags.TagKey;
@@ -40,6 +44,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> loader, ResourceManager manager, ProfilerFiller profiler) {
+        tradeRaw.clear();
         loader.forEach((fileIdentifier, jsonElement) -> {
             try {
                 QueenTradesCollectionObj tradesCollection = GSON.fromJson(jsonElement, QueenTradesCollectionObj.class);
@@ -52,6 +57,13 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                 Bumblezone.LOGGER.error("Bumblezone Error: Couldn't parse bee queen trades file {}", fileIdentifier, e);
             }
         });
+    }
+
+    // KEEP THIS HERE BECAUSE ABOVE FIRES BEFORE TAGS ARE READY
+    public void resolveQueenTrades() {
+        if (tradeRaw.isEmpty()) {
+            return;
+        }
 
         ImmutableMap.Builder<Set<Item>, WeightedRandomList<TradeEntryReducedObj>> reducedTradeBuilder = ImmutableMap.builder();
         for (Map.Entry<List<TradeEntryObj>, List<TradeEntryObj>> entry : tradeRaw.entrySet()) {
