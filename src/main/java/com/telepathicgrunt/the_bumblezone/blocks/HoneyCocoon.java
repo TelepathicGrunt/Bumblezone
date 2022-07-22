@@ -66,7 +66,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-
 public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected final VoxelShape shape;
@@ -150,6 +149,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
         FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
         return blockstate.setValue(WATERLOGGED, fluidstate.getType().is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidstate.isSource());
     }
+
     @Override
     public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
         BlockState aboveState = serverLevel.getBlockState(blockPos.above());
@@ -262,7 +262,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
         if (itemstack.getItem() == Items.GLASS_BOTTLE && blockstate.getValue(WATERLOGGED)) {
 
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
-                    SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
+                    SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
 
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE), false, true);
             return InteractionResult.SUCCESS;

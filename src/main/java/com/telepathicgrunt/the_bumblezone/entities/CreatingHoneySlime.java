@@ -65,8 +65,8 @@ public class CreatingHoneySlime {
             }
 
             playerEntity.swing(hand, true);
-            if(playerEntity instanceof ServerPlayer) {
-                BzCriterias.HONEY_SLIME_CREATION_TRIGGER.trigger((ServerPlayer) playerEntity);
+            if(playerEntity instanceof ServerPlayer serverPlayer) {
+                BzCriterias.HONEY_SLIME_CREATION_TRIGGER.trigger(serverPlayer);
             }
             return InteractionResult.SUCCESS;
         }

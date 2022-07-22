@@ -4,6 +4,7 @@
     "0": "the_bumblezone:block/redstone_honey_web_10",
     "particle": "the_bumblezone:block/redstone_honey_web_10"
   },
+  "render_type": "minecraft:cutout",
   "elements": [
     {
       "from": [0, 0, 8],

@@ -1,0 +1,22 @@
+{
+  "entries": [
+    {
+      "entity_type": "earthmobsmod:moobloom",
+      "plants_to_spawn": [
+        "earthmobsmod:buttercup"
+      ]
+    },
+    {
+      "entity_type": "earthmobsmod:moolip",
+      "plants_to_spawn": [
+        "minecraft:pink_tulip"
+      ]
+    },
+    {
+      "entity_type": "earthmobsmod:cluck_shroom",
+      "plants_to_spawn": [
+        "minecraft:red_mushroom"
+      ]
+    }
+  ]
+}

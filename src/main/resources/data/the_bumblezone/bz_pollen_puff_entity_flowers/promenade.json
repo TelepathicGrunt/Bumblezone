@@ -1,0 +1,12 @@
+{
+  "entries": [
+    {
+      "entity_type": "promenade:lush_creeper",
+      "plants_to_spawn": [
+        "minecraft:azalea",
+        "minecraft:flowering_azalea",
+        "minecraft:moss_carpet"
+      ]
+    }
+  ]
+}

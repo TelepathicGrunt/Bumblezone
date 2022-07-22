@@ -1,0 +1,17 @@
+{
+  "wants": [
+    {
+      "id": "#minecraft:wool",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#minecraft:wool",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

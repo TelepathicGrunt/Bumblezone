@@ -19,14 +19,24 @@ public class BeehemothControls {
 
     public static void keyInput(int key, int scancode, int action) {
         if (Minecraft.getInstance().player != null &&
-            Minecraft.getInstance().player.getVehicle() instanceof BeehemothEntity &&
-            (KEY_BIND_BEEHEMOTH_UP.matches(key, scancode) ||
-             KEY_BIND_BEEHEMOTH_DOWN.matches(key, scancode)))
+            Minecraft.getInstance().player.getVehicle() instanceof BeehemothEntity beehemothEntity)
         {
-            FriendlyByteBuf passedData = new FriendlyByteBuf(Unpooled.buffer());
-            passedData.writeByte(KEY_BIND_BEEHEMOTH_UP.matches(key, scancode) ? action : 2);
-            passedData.writeByte(KEY_BIND_BEEHEMOTH_DOWN.matches(key, scancode) ? action : 2);
-            ClientPlayNetworking.send(BeehemothControlsPacket.PACKET_ID, passedData);
+            boolean upKeyAction = KEY_BIND_BEEHEMOTH_UP.matches(key, scancode);
+            boolean downKeyAction = KEY_BIND_BEEHEMOTH_DOWN.matches(key, scancode);
+
+            if ((upKeyAction || downKeyAction) && action != 2) {
+                FriendlyByteBuf passedData = new FriendlyByteBuf(Unpooled.buffer());
+                passedData.writeByte(KEY_BIND_BEEHEMOTH_UP.matches(key, scancode) ? action : 2);
+                passedData.writeByte(KEY_BIND_BEEHEMOTH_DOWN.matches(key, scancode) ? action : 2);
+                ClientPlayNetworking.send(BeehemothControlsPacket.PACKET_ID, passedData);
+
+                if (upKeyAction) {
+                    beehemothEntity.movingStraightUp = action == 1;
+                }
+                else {
+                    beehemothEntity.movingStraightDown = action == 1;
+                }
+            }
         }
     }
 

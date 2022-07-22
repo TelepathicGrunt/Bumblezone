@@ -14,8 +14,16 @@
       "required": true
     },
     {
-      "id": "#forge:buckets/honey",
-      "required": false
+      "id": "the_bumblezone:royal_jelly_bottle",
+      "required": true
+    },
+    {
+      "id": "#c:buckets/honey",
+      "required": true
+    },
+    {
+      "id": "#c:buckets/royal_jelly",
+      "required": true
     },
     {
       "id": "productivebees:honey_treat",

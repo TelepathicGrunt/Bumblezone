@@ -39,34 +39,34 @@ public class HoneyBeeLeggings extends BeeArmor {
     }
 
     @Override
-    public void onArmorTick(ItemStack itemstack, Level world, Player entity) {
-        RandomSource random = world.random;
+    public void onArmorTick(ItemStack itemstack, Level world, Player player) {
+        RandomSource random = player.getRandom();
         boolean isPollinated = isPollinated(itemstack);
-        boolean isSprinting = entity.isSprinting();
-        boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(entity);
+        boolean isSprinting = player.isSprinting();
+        boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(player);
 
         if(!world.isClientSide()) {
-            if(entity.isCrouching() && isPollinated) {
-                removeAndSpawnPollen(world, entity.position(), itemstack);
-                if(!world.isClientSide() && world.random.nextFloat() < 0.1f) {
-                    itemstack.hurtAndBreak(1, entity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.LEGS));
+            if(player.isCrouching() && isPollinated) {
+                removeAndSpawnPollen(world, player.position(), itemstack);
+                if(!world.isClientSide() && random.nextFloat() < 0.1f) {
+                    itemstack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.LEGS));
                 }
             }
-            else if(!entity.isCrouching() && !isPollinated && isSprinting) {
-                BlockState withinBlock = world.getBlockState(entity.blockPosition());
+            else if(!player.isCrouching() && !isPollinated && isSprinting) {
+                BlockState withinBlock = world.getBlockState(player.blockPosition());
                 if(withinBlock.is(BzBlocks.PILE_OF_POLLEN)) {
                     setPollinated(itemstack);
                     int newLevel = withinBlock.getValue(PileOfPollen.LAYERS) - 1;
                     if(newLevel == 0) {
-                        world.setBlock(entity.blockPosition(), Blocks.AIR.defaultBlockState(), 3);
+                        world.setBlock(player.blockPosition(), Blocks.AIR.defaultBlockState(), 3);
                     }
                     else {
-                        world.setBlock(entity.blockPosition(), withinBlock.setValue(PileOfPollen.LAYERS, newLevel), 3);
+                        world.setBlock(player.blockPosition(), withinBlock.setValue(PileOfPollen.LAYERS, newLevel), 3);
                     }
                 }
                 else if(random.nextFloat() < (isAllBeeArmorOn ? 0.01f : 0.005f) && withinBlock.is(BlockTags.FLOWERS)) {
                     setPollinated(itemstack);
-                    if(entity instanceof ServerPlayer serverPlayer) {
+                    if(player instanceof ServerPlayer serverPlayer) {
                         BzCriterias.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER.trigger(serverPlayer);
                         serverPlayer.awardStat(BzStats.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_RL);
                     }
@@ -74,14 +74,14 @@ public class HoneyBeeLeggings extends BeeArmor {
             }
         }
 
-        MobEffectInstance slowness = entity.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
+        MobEffectInstance slowness = player.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
         if (slowness != null && (isAllBeeArmorOn || world.getGameTime() % 2 == 0)) {
             ((MobEffectInstanceAccessor) slowness).callTickDownDuration();
             if(!world.isClientSide() &&
-                world.random.nextFloat() < 0.004f &&
+                random.nextFloat() < 0.004f &&
                 itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
             {
-                itemstack.hurtAndBreak(1, entity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.LEGS));
+                itemstack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.LEGS));
             }
         }
 
@@ -93,7 +93,7 @@ public class HoneyBeeLeggings extends BeeArmor {
                 double xOffset = (random.nextFloat() * 0.1) - 0.05;
                 double yOffset = (random.nextFloat() * 0.1) + 0.25;
                 double zOffset = (random.nextFloat() * 0.1) - 0.05;
-                Vec3 pos = entity.position();
+                Vec3 pos = player.position();
 
                 world.addParticle(
                         BzParticles.POLLEN,

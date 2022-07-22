@@ -1,0 +1,17 @@
+{
+  "wants": [
+    {
+      "id": "#c:stained_glass_panes",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#c:stained_glass_panes",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}

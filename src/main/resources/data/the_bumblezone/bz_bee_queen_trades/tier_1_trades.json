@@ -1,0 +1,137 @@
+{
+  "wants": [
+    {
+      "id": "the_bumblezone:porous_honeycomb_block",
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:beehive_beeswax",
+      "required": true
+    },
+    {
+      "id": "minecraft:honeycomb",
+      "required": true
+    },
+    {
+      "id": "minecraft:honeycomb_block",
+      "required": true
+    },
+    {
+      "id": "minecraft:sugar",
+      "required": true
+    },
+    {
+      "id": "#minecraft:logs_that_burn",
+      "required": true
+    },
+    {
+      "id": "#minecraft:leaves",
+      "required": true
+    },
+    {
+      "id": "#minecraft:wooden_buttons",
+      "required": true
+    },
+    {
+      "id": "#minecraft:wooden_doors",
+      "required": true
+    },
+    {
+      "id": "#minecraft:wooden_fences",
+      "required": true
+    },
+    {
+      "id": "#minecraft:wooden_pressure_plates",
+      "required": true
+    },
+    {
+      "id": "#minecraft:wooden_slabs",
+      "required": true
+    },
+    {
+      "id": "#minecraft:wooden_stairs",
+      "required": true
+    },
+    {
+      "id": "#minecraft:wooden_trapdoors",
+      "required": true
+    },
+    {
+      "id": "#minecraft:planks",
+      "required": true
+    },
+    {
+      "id": "#minecraft:saplings",
+      "required": true
+    },
+    {
+      "id": "minecraft:mangrove_propagule",
+      "required": true
+    },
+    {
+      "id": "minecraft:redstone",
+      "required": true
+    },
+    {
+      "id": "#c:seeds",
+      "required": false
+    },
+    {
+      "id": "#c:wax",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/honeycomb",
+      "required": false
+    },
+    {
+      "id": "#c:honeycombs",
+      "required": false
+    },
+    {
+      "id": "#resourcefulbees:resourceful_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "#resourcefulbees:resourceful_honeycomb",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "the_bumblezone:bee_stinger",
+      "count": 2,
+      "xp_reward": 1,
+      "weight": 102,
+      "required": true
+    },
+    {
+      "id": "minecraft:stick",
+      "count": 2,
+      "xp_reward": 1,
+      "weight": 68,
+      "required": true
+    },
+    {
+      "id": "minecraft:sugar",
+      "count": 1,
+      "xp_reward": 1,
+      "weight": 51,
+      "required": true
+    },
+    {
+      "id": "minecraft:poisonous_potato",
+      "count": 1,
+      "xp_reward": 1,
+      "weight": 17,
+      "required": true
+    },
+    {
+      "id": "#minecraft:candles",
+      "count": 1,
+      "xp_reward": 1,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

@@ -112,9 +112,9 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
             }
 
             if (entity instanceof LivingEntity hitEntity) {
-                if (owner instanceof LivingEntity) {
-                    EnchantmentHelper.doPostHurtEffects(hitEntity, owner);
-                    EnchantmentHelper.doPostDamageEffects((LivingEntity)owner, hitEntity);
+                if (owner instanceof LivingEntity livingEntity) {
+                    EnchantmentHelper.doPostHurtEffects(hitEntity, livingEntity);
+                    EnchantmentHelper.doPostDamageEffects(livingEntity, hitEntity);
                 }
 
                 this.doPostHurtEffects(hitEntity);
@@ -123,10 +123,15 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
 
         if(entity instanceof LivingEntity livingEntity &&
             livingEntity.isDeadOrDying() &&
-            this.getOwner() instanceof ServerPlayer serverPlayer &&
-            !serverPlayer.blockPosition().closerThan(this.blockPosition(), 50))
+            this.getOwner() instanceof ServerPlayer serverPlayer)
         {
-            BzCriterias.STINGER_SPEAR_LONG_RANGE_KILL_TRIGGER.trigger(serverPlayer);
+            if (!serverPlayer.blockPosition().closerThan(this.blockPosition(), 50)) {
+                BzCriterias.STINGER_SPEAR_LONG_RANGE_KILL_TRIGGER.trigger(serverPlayer);
+            }
+
+            if (entity.getType() == EntityType.WITHER) {
+                BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.trigger(serverPlayer);
+            }
         }
 
         this.setDeltaMovement(this.getDeltaMovement().multiply(-0.01D, -0.1D, -0.01D));

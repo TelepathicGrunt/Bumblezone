@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "the_bumblezone:item/bee_spawn_egg",
-    "layer1": "the_bumblezone:item/bee_spawn_egg_overlay"
+    "layer0": "the_bumblezone:item/beehemoth_spawn_egg",
+    "layer1": "the_bumblezone:item/beehemoth_spawn_egg_overlay"
   }
 }

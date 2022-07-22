@@ -71,9 +71,9 @@ public class WrathOfTheHiveEffect extends MobEffect {
                 // Spawn bees when high wrath effect.
                 // Must be very low as this method is fired every tick for status effects.
                 // We don't want to spawn millions of bees
-                if(!world.isClientSide() && world.random.nextFloat() <= 0.0045f) {
+                if(!world.isClientSide() && entity.getRandom().nextFloat() <= 0.0045f) {
                     // Grab a nearby air materialposition a bit away
-                    BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(world, entity, 30, 10);
+                    BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(entity, 30, 10);
                     if(world.getBlockState(spawnBlockPos).getMaterial() != Material.AIR) {
                         return;
                     }
@@ -85,7 +85,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
                             spawnBlockPos.getX() + 0.5D,
                             spawnBlockPos.getY() + 0.5D,
                             spawnBlockPos.getZ() + 0.5D,
-                            world.random.nextFloat() * 360.0F,
+                            entity.getRandom().nextFloat() * 360.0F,
                             0.0F);
 
                     bee.finalizeSpawn(
@@ -118,10 +118,10 @@ public class WrathOfTheHiveEffect extends MobEffect {
             if(poiInRange.size() != 0) {
                 for(int index = poiInRange.size() - 1; index >= 0; index--) {
                     PoiRecord poi = poiInRange.remove(index);
-                    if(world.random.nextFloat() < chanceofGrowth) {
+                    if(entity.getRandom().nextFloat() < chanceofGrowth) {
                         BlockState state = world.getBlockState(poi.getPos());
                         if(state.getBlock() instanceof HoneycombBrood) {
-                            state.tick((ServerLevel) world, poi.getPos(), world.random);
+                            state.tick((ServerLevel) world, poi.getPos(), entity.getRandom());
                         }
                     }
                 }

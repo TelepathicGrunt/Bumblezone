@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
+import com.telepathicgrunt.the_bumblezone.components.MiscComponent;
 import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.effects.ParalyzedEffect;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
@@ -12,8 +13,10 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -23,6 +26,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
+    @Shadow
+    protected ItemStack useItem;
 
     public LivingEntityMixin(EntityType<?> type, Level world) {
         super(type, world);
@@ -72,6 +77,12 @@ public abstract class LivingEntityMixin extends Entity {
         if(cir.getReturnValue() != newVisibility) {
             cir.setReturnValue(newVisibility);
         }
+    }
+
+    @Inject(method = "completeUsingItem()V",
+            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/item/ItemStack;finishUsingItem(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"))
+    private void thebumblezone_onItemUseFinish(CallbackInfo ci) {
+        MiscComponent.onHoneyBottleDrank((LivingEntity)(Object)this, useItem);
     }
 
     //-----------------------------------------------------------//

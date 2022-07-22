@@ -1,5 +1,5 @@
-﻿{
- "itemGroup.the_bumblezone.main_tab": "The Bumblezone",
+{
+ "itemGroup.the_bumblezone": "The Bumblezone",
 
  "block.the_bumblezone.porous_honeycomb_block": "Ячеистый блок сот",
  "block.the_bumblezone.filled_porous_honeycomb_block": "Заполненный ячеистый блок сот",
@@ -56,6 +56,10 @@
  "subtitles.entity.the_bumblezone.beehemoth.hurt": "Гиганской пчеле больно",
  "subtitles.entity.the_bumblezone.beehemoth.dies": "Гиганская пчела умерла",
  "subtitles.entity.the_bumblezone.beehemoth.loop": "Beehemoth buzzing",
+
+ "the_bumblezone.porous_honeycomb_block.jei_description": " Блок сот, покрытый медовыми ячейками. Можно заполнить мёдом из бутылочек или вёдер.",
+ "the_bumblezone.filled_porous_honeycomb_block.jei_description": " Блок сот, заполненный до краёв мёдом! Из него можно наполнить бутылочки мёдом. Однако это может разозлить ближайших пчёл. \n\n При добывании выпадает ячеистый блок сот и немного пчелиных сот. На добывание влияет удача, можно также использовать шёлковое касание. \n\n Выдаёт сигнал редстоуна силой 1, когда подключен к компаратору.",
+ "the_bumblezone.empty_honeycomb_brood_block.jei_description": " Блок сот с крупным отверстием и пустотой внутри.",
 
  "advancements.the_bumblezone.root.title": "The Buzzing Bumbling Bumblezone!",
  "advancements.the_bumblezone.root.description": "Enter The Bumblezone dimension by any means",
@@ -142,79 +146,24 @@
  "advancements.the_bumblezone.trigger_redstone_honey_web.title": "The Power Of Sticky!",
  "advancements.the_bumblezone.trigger_redstone_honey_web.description": "Generate Redstone power from a special web of honey",
 
- "text.autoconfig.the_bumblezone-main.title": "The Bumblezone Configs",
- "text.autoconfig.the_bumblezone-main.category.dungeons": "Dungeons",
- "text.autoconfig.the_bumblezone-main.category.bee_aggression": "Bee Aggression",
- "text.autoconfig.the_bumblezone-main.category.dimension": "Dimension",
- "text.autoconfig.the_bumblezone-main.category.block_mechanics": "Block Mechanics",
- "text.autoconfig.the_bumblezone-main.category.mod_compatibility": "Mod Compatibility",
- "text.autoconfig.the_bumblezone-main.category.general": "General",
- "text.autoconfig.the_bumblezone-main.category.client": "Client",
-
- "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.beeDungeonRarity": "Bee Dungeon Rarity",
- "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spiderInfestedBeeDungeonRarity": "Infested Bee Dungeon Rarity",
- "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spawnerRateSpiderBeeDungeon": "Spider Spawner Rate",
-
- "text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.dispensersDropGlassBottles": "Dispensers Drop Glass Bottles",
- "text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity": "Brood Blocks Bee Spawn Capacity",
-
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone": "Bumblezone Status Outside Dimension",
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.showWrathOfTheHiveParticles": "Visible Status Particles",
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.aggressiveBees": "Super Aggressive Bees",
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.aggressionTriggerRadius": "Effective Radius of Bumblezone Status",
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts": "Duration of Wrath of the Hive",
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts": "Duration of Protection of the Hive",
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.speedBoostLevel": "Speed Boost of Super Aggressive Bees",
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.absorptionBoostLevel": "Absorption Boost of Super Aggressive Bees",
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.strengthBoostLevel": "Strength Boost of Super Aggressive Bees",
-
- "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.fogBrightnessPercentage": "Fog Brightness",
- "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.forceExitToOverworld": "Exit Bumblezone To Overworld Always",
- "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.seaLevelOrHigherExitTeleporting": "Exit Bumblezone To Above Sealevel Always",
- "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.requiredBlockUnderHive": "Required Block Under Hives To Teleport",
- "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive": "Warn If Wrong Block Under Hive",
- "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.generateBeenest": "Generate Beenest When Exiting Bumblezone",
- "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.teleportationMode": "Teleportation Mode",
- "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.onlyOverworldHivesTeleports": "Only Overworld Hives Teleports",
-
- "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowPotionOfBeesCompat": "Potion of Bees Compat",
- "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat": "Splash Potion of Bees Compat",
- "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowCharmBeekeeperTradesCompat.@PrefixText": "\nAdds Bumblezone items to Charm's Beekeeper trades!",
- "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowCharmBeekeeperTradesCompat": "Charm Beekeeper Compat",
-
-
- "text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.dispensersDropGlassBottles.@PrefixText": "Should Dispensers always drop the Glass Bottle when using specific bottle items on certain The Bumblezone blocks? \nExample: Using Honey Bottle to feed Honeycomb Brood Blocks will grow the larva and drop the Glass Bottle instead of putting it back into Dispenser if this is set to true.",
- "text.autoconfig.the_bumblezone-main.option.BZBlockMechanicsConfig.broodBlocksBeeSpawnCapacity.@PrefixText": "Brood Blocks will automatically spawn bees until the number of active bees is the value below. Set this higher to allow Brood Blocks to spawn more bees in a smaller area or set it to 0 to turn off automatic Brood Block bee spawning.",
-
- "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.fogBrightnessPercentage.@PrefixText": "How bright the fog is in the Bumblezone dimension. \nThe brightness is represented as a percentage so 0 will be pitch black, 50 will be half as bright, 100 will be normal orange brightness, and 100000 will be white.",
- "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.forceExitToOverworld.@PrefixText": "Makes leaving The Bumblezone dimension always places you back at the Overworld regardless of which dimension you originally came from. Use this option if this dimension becomes locked in with another dimension so you are stuck teleporting between the two and cannot get back to the Overworld",
- "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.seaLevelOrHigherExitTeleporting.@PrefixText": "Should exiting The Bumblezone always try and place you above sealevel in the target dimension? (Will only look for beehives above sealevel as well when placing you) \nONLY FOR TELEPORTATION MODE 1 AND 3.",
- "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.requiredBlockUnderHive.@PrefixText": "If an identifier of a block is specified here, then teleporting to Bumblezone will need that block under the Bee Nest/Beehive you threw the Enderpearl at. \nBy default, no identifier is specified so any block can be under the Bee Nest/Beehive to teleport to the dimension.",
- "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.warnPlayersOfWrongBlockUnderHive.@PrefixText": "If requiredBlockUnderHive has a block specified and this config is set to true, then player will get a warning if they throw an Enderpearl at a Bee Nest/Beehive but the block under it is not the correct required block. It will also tell the player what block is needed under the Bee Nest/Beehive to teleport to the dimension.",
- "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.generateBeenest.@PrefixText": "Will a Beenest generate if no Beenest is found when leaving The Bumblezone dimension.\nONLY FOR TELEPORTATION MODE 1.",
- "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.teleportationMode.@PrefixText": "Teleportation Mode:  Which mode of teleportation should be used when leaving The Bumblezone dimension.\n\nMode 1: Coordinates will be converted to the other dimension's coordinate scale and the game will look for a Bee Nest/Beehive at the new spot to spawn players at. If none is found, players will still be placed at the spot.\n\nMode 2: Will always spawn players at the original spot in the non-BZ dimension where they threw the Enderpearl at a Beenest/Beehive.\n\nMode 3: Will use mode 1's teleportation method if Bee Nest/Beehive is near the spot when exiting the dimension. If none is found, then mode 2's teleportation method is used instead.",
- "text.autoconfig.the_bumblezone-main.option.BZDimensionConfig.onlyOverworldHivesTeleports.@PrefixText": "Makes throwing Enderpearls at Bee Nests or Hives only work in the Overworld. What this means setting this to true makes it only possible to enter The Bumblezone dimension from the Overworld",
-
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.allowWrathOfTheHiveOutsideBumblezone.@PrefixText": "Determines if Wrath of the Hive can be applied to players outside the Bumblezone dimension when they pick up Honey blocks, take honey from Filled Porous Honey blocks, or drink Honey Bottles.",
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.showWrathOfTheHiveParticles.@PrefixText": "Show the orangish particles when you get Wrath of the Hive after you angered the bees in the Bumblezone dimension.",
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.aggressiveBees.@PrefixText": "Turn on/off the ability to get Wrath of the Hive effect from certain actions. \nThe bees can see you through walls and will have speed, absorption, and strength effects applied to them. \nWill also affect the bee's aggression toward other mobs in the dimension. Note: Peaceful mode will always override the bee aggressive setting.",
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.aggressionTriggerRadius.@PrefixText": "How far away the bee can be to become angry and hunt you down if you take their honey from the Bumblezone dimension. \nWill also affect the bee's aggression range toward bears in the dimension.",
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.howLongWrathOfTheHiveLasts.@PrefixText": "How long bees will keep their effects for (speed, absorption, strength).\nNote: This is in ticks. 20 ticks = 1 second. And bee's anger will remain. \nOnly the boosts given to the bees will be gone.",
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.howLongProtectionOfTheHiveLasts.@PrefixText": "How long entities will keep Protection of the Hive effect after feeding bees or Brood Blocks. Bees will attack anyone that damages someone with the effect. \nNote: This is in ticks. 20 ticks = 1 second.",
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.speedBoostLevel.@PrefixText": "How fast bees move along the ground (Not while flying). You will see this a lot when bees are about to attack you, they tend to touch the floor and the speed boost makes them dash forward at you. Set this to higher for faster dash attacks from bees.",
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.absorptionBoostLevel.@PrefixText": "How much extra health bees get that always instantly regenerates. \nThis means you need to deal more damage than the extra health gives order to actually damage the bee's real health bar. \nFor example, Absorption 1 here makes bees get 4 extra padding of health (or 2 full hearts). Your attacks need to deal 4 1/2 or more damage to actually be able to kill the bee. This means using Bane of Arthropod 5 is needed to kill bees If you set this to like 5 or something, bees may be invicible! Game over.",
- "text.autoconfig.the_bumblezone-main.option.BZBeeAggressionConfig.strengthBoostLevel.@PrefixText": "(How strong the bees attacks become. (5 or higher will instant kill you without armor).",
-
- "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.beeDungeonRarity.@PrefixText": "How rare Bee Dungeons are. Higher numbers means it is more rare. \nPut 1000 to disable Bee Dungeons.",
- "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spiderInfestedBeeDungeonRarity.@PrefixText": "How rare Spider Infested Bee Dungeons are. Higher numbers means it is more rare. \nPut 1000 to disable Spider Infested Bee Dungeons.",
- "text.autoconfig.the_bumblezone-main.option.BZDungeonsConfig.spawnerRateSpiderBeeDungeon.@PrefixText": "How rare are Spider/Cave Spider Spawners in Spider Infested Bee Dungeons. \n0 is no spawners, 1 is maximum spawners, and default is 0.2f",
-
- "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowPotionOfBeesCompat.@PrefixText": "Allow Potion of Bees item to turn Empty Honeycomb Brood blocks back into Honeycomb Brood Blocks with a larva in it. (affects Dispenser too)",
- "text.autoconfig.the_bumblezone-main.option.BZModCompatibilityConfig.allowSplashPotionOfBeesCompat.@PrefixText": "Allow Splash Potion of Bees item to turn Empty Honeycomb Brood blocks back into Honeycomb Brood Blocks with a larva in it when the potion is thrown and splashed near the block. (affects Dispenser too)",
-
- "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.beehemothSpeed": "Beehemoth Speed",
- "text.autoconfig.the_bumblezone-main.option.BZGeneralConfig.beehemothSpeed.@PrefixText": "Base speed for the Beehemoth when being rode by a player.",
-
- "text.autoconfig.the_bumblezone-main.option.BZClientConfig.lgbtBeeRate": "LGBT+ Bee Skin Rate",
- "text.autoconfig.the_bumblezone-main.option.BZClientConfig.lgbtBeeRate.@PrefixText": "Rate for how often a bee will have an LGBT+ coat!"
+ "the_bumblezone.honeycomb_brood_block.jei_description": " Внутри блока, в гигантском отверстии, живёт личинка! Личинка будет медленно расти, проходя 4 стадии (быстрее в пчелином измерении), и когда она достигнет последней стадии, у неё появится шанс заспаунить Пчелу или Медового Слизня перед блоком! Можно ускорить рост при помощи бутылочек сахарной воды, бутылочек с мёдом или вёдер с мёдом, вручную или через раздатчик. \n\n С помощью бутылочек можно забирать мёд из этого блока, превращая его в Пустой Блок сот с личинкой. Это разозлит ближайших пчёл, потому что вы убьёте личинку! \n\n Этот блок также будет выдавать сигнал редстоуна на компаратор силой от 1 до 4 в зависимости от стадии роста личинки внутри.   Смотрите страницу мода Bumblezone для получения дополнительной информации о совместимости модов с этим блоком.",
+ "the_bumblezone.sugar_infused_cobblestone.jei_description": " Декоративный блок, образующийся при слиянии Сахарной Воды с Лавой. При добыче выпадает булыжник и сахар, если только не используется шёлковое касание. Можно выжечь сахар из блока в печи и получить немного опыта.",
+ "the_bumblezone.sugar_infused_stone.jei_description": " Декоративный блок, образующийся при слиянии Сахарной Воды с Лавой. При добыче выпадает булыжник и сахар, если только не используется шёлковое касание. Можно выжечь сахар из блока в печи и получить немного опыта.",
+ "the_bumblezone.sticky_honey_residue.jei_description": " Невероятно липкий остаток после сжигания медовых кристаллов, осколков медовых кристаллов и медовых блоков в печи. \n\nЭтот блок замедляет любого моба при соприкосновении и может быть использован для карабканья на стены. \n Добывается медленно и не даёт ничего. Чтобы быстрее избавиться от блока, используйте на нём бутылочку с водой, ведро с водой, мокрую губку, бутылочку с сахарной водой или ведро с сахарной водой, смывая его. Этот блок блок также будет немедленно уничтожен любой жидкостью или поршнем.",
+ "the_bumblezone.sticky_honey_redstone.jei_description": " Очень удобный механический редстоуновый блок, созваемый из липкого остатка мёда и редстоуна. Имеет все свойства липкого остатка мёда, но также выдаёт сигнал силой 1, когда на блок попадает существо. \n\nЗапитаны будут также и соседние блоки, и те что установлены по бокам.",
+ "the_bumblezone.beehive_beeswax.jei_description": " Декоративный блок, генерирующийся на самых высоких и низких координатах в пчелином измерении. С помощью него можно создавать Пчелиные Гнёзда.",
+ "the_bumblezone.honey_crystal.jei_description": " Невозобновляемый декоративный блок, распостранённый в пещерах и под водой в пчелином мире. Может быть расположен на любой твёрдой поверхности, в том числе сбоку и снизу. Может быть затоплен, при этом жидкость в нём превращается в сахарную воду. \n\nПри добыче без шёлкового касания даёт осколки медовых кристаллов (удача влияет на количество).",
+ "the_bumblezone.honey_crystal_shards.jei_description": " Осколок медового кристалла, может быть употреблен для утоления лёгкого голода, растоплен в печи для получения липкого засахарённого мёда либо же использован для создания и ремонта щита из медовых кристаллов.",
+ "the_bumblezone.sugar_water_bucket.jei_description": " Ведро, наполненное сахарной водой. Можно получить добавив сахар в ведро воды или заполнив пустое ведро сахарной водой. Можно использовать в раздатчике.",
+ "the_bumblezone.sugar_water_bottle.jei_description": " Бутылочка, наполненная сахарной водой. Можно получить наполнив бутылочку сахарной водой. \n\nРаспитие слегка утолит голод, однако наделит спешкой на небольшое время. \n\nМожно подкормить личинку в блоке расплода с вероятностью вырастить личинку на одну стадию. Можно также подкормить пчёл, чтобы исцелить их и одновременно получить вероятность избавиться от гнева улья.",
+ "the_bumblezone.honey_crystal_shield.jei_description": " Созданный из осколков , этот щит изначально весьма хлипок, но становится всё прочнее с каждой починкой при помощи осколков медовых кристаллов на наковальне. На максимальном уровне примерно вдвое прочнее обычного щита. \n\nОднако этот щит всегда получает сильное повреждение при блокировании взрывного и огненного урона. \n\n Щит также слегка замедляет любого врага, наносящего физический урон по щиту, и более того, может быть зачарован на прочность, проклятие несъёмности и проклятие утраты.",
+ "the_bumblezone.honey_slime_spawn_egg.jei_description": " Яйцо, призыва медовых слизней, которых можно разводить, а также использовать их для производства бутылочек с мёдом (Нажимая по ним ПКМ с пустой бутылочкой). Сие существо добавлено благодаря Bagel, создателем Buzzier bees. Особая ему благодарность!",
+ "the_bumblezone.sugar_water_still.jei_description": " Жидкость, представляющая собой воду, настоянную на сахаре. Любые существа в ней замедляются чуть сильнее, чем в обычной воде. Может быть найдена в пчелином мире, создана при помощи ведра с водой и сахара или получена путём затопления блока медовых кристаллов. \n В целом, сахарная вода имеет свойства обычной воды, так как имеет тег воды. Соответственно, она может увлажнять грядки или поддерживать жизнь кораллов. \n\n\n Эта жидкость также лечит любую прикасающуюся пчелу, если та не получает урона. Более того, с ней сахарный тростник будет расти гораздо быстрее (может быть использовано с 4 сторон). \n\n Если соприкасается с любой жидкостью с тегом лавы, превратится в Засахарившийся булыжник либо Засахарившийся камень.",
+ "the_bumblezone.beehemoth_spawn_egg.jei_description": " Яйцо, спаунящее Гигантскую пчелу! Гиганскую пчелу можно приручить с помощью предметов для кормления пчёл, таких как вёдра с мёдом или бутылочки с мёдом, а также другими медовыми лакомствами. Однако следовать они будут за вами только если вы держите ведро мёда. При кормлении вы можете приручить их, надеть седло и покататься! Чем больше вы их кормите и катаетесь, тем сильнее у вас дружба, что заставляет их двигаться быстрее! Достигнув максимальной дружбы, Гиганская пчела становится Королевской и может летать с максимальной скоростью! Однако дружба уменьшаеться, если Гиганская пчела получает урон от любого источника, и если она потеряет всякую дружбу то станет необузданной и несчастной. :(  Эта пчела была подарена моду The Bumblezone авторами Aranaira, Alexthe666 и Nooby из мода Carrier Bees.! Отдельная им благодарность!",
+ "the_bumblezone.pollen_puff.jei_description": " Мягкий комочек слипшейся пыльцы! Может выпасть из кучки пыльцы или из пчёл во время опыления, если нажать по ним ПКМ влажной губкой, бутылочкой воды или ведром воды. \n\n Его можно бросить, чтобы создать кучку пыльцы, куда бы он ни попадал. Если он попадает в неопыленную пчелу, пчела опыляется. Если попасть им в панду, она чихнет. Но если он попадает в растущий цветок, это может привести к размножению цветка! \n\n Блоки пыльцы замедляют мобов и выделяет много частиц при физическом контакте. Он также будет опылять любую неопылённую пчелу, которая влетает в кучу пыльцы или заставлять чихать панд. Его также можно измерить с помощью редстоуного компаратора.",
+ "the_bumblezone.bee_bread.jei_description": " A gross looking pellet created from a fermented blend of pollen and honey. Bees love this and will get a burst of energy that makes them faster if they are fed Bee Bread. You can eat it too for good nutrition but it may make you lightheaded for a second or two...",
+ "the_bumblezone.honey_fluid_still.jei_description": " Вкусный жидкий мёд! Он течёт очень медленно и значительно замедлит любых существ. Мобы и лодки, имеют тенденцию тонуть в жидком мёде, как если бы это была липкая ловушка! \n\n Можно собрать ведром или стеклянной бутылкой, а так же он вылечит любую раненую пчелу, которая попадёт в него. \n\n Когда эта жидкость вступает в контакт с любой другой жидкостью, имеющей свойства лавы, эта жидкость превращается либо в засахаренный булыжник или в засахаренный камень.",
+ "the_bumblezone.honey_bucket.jei_description": " Ведро с жидким мёдом.\n\n Использование на пчёлах полностью их излечит.. Если использовать на взрослой пчеле, он и соседние пчелы переходят в режим любви! при использовании на детской пчеле есть шанс вырастить из неё взрослую. Может использоваться и в раздатчиках!",
+ "the_bumblezone.honey_web.jei_description": " A super sticky web of honey! Greatly slows any mobs that gets stuck in it but can easily be cleanse with water or wet sponges. Basically it acts similar to Sticky Honey Residue except Honey Web does not need to be attached to a block.",
+ "the_bumblezone.redstone_honey_web.jei_description": " A Redstone variant of Honey Web that will output a Redstone signal when a mob is trapped in it. Redstone Honey Web cannot take in a Redstone signal from a non-Redstone Honey Web block. The rest of its behaviors is the same as Honey Web block."
 }

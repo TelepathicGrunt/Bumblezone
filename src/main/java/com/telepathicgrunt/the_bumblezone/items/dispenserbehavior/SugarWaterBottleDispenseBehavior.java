@@ -46,7 +46,7 @@ public class SugarWaterBottleDispenseBehavior extends DefaultDispenseItemBehavio
                     // do nothing if front is blocked off
                     if (!world.getBlockState(blockpos).getMaterial().isSolid()) {
                         Mob beeEntity = EntityType.BEE.create(world);
-                        beeEntity.moveTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, world.getRandom().nextFloat() * 360.0F, 0.0F);
+                        beeEntity.moveTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, beeEntity.getRandom().nextFloat() * 360.0F, 0.0F);
                         beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(new BlockPos(beeEntity.position())), MobSpawnType.TRIGGERED, null, null);
                         world.addFreshEntity(beeEntity);
                         world.setBlockAndUpdate(position, blockstate.setValue(HoneycombBrood.STAGE, 0));

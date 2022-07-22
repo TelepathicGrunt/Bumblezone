@@ -1,0 +1,16 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "the_bumblezone:item/crystal_cannon/crystal_cannon"
+    },
+    "overrides": [
+        { "predicate": { "primed": 0, "crystal_count": 0.0 }, "model": "the_bumblezone:item/crystal_cannon/crystal_cannon" },
+        { "predicate": { "primed": 0, "crystal_count": 0.1 }, "model": "the_bumblezone:item/crystal_cannon/crystal_cannon_1_crystal" },
+        { "predicate": { "primed": 0, "crystal_count": 0.2 }, "model": "the_bumblezone:item/crystal_cannon/crystal_cannon_2_crystal" },
+        { "predicate": { "primed": 0, "crystal_count": 0.3 }, "model": "the_bumblezone:item/crystal_cannon/crystal_cannon_3_crystal" },
+        { "predicate": { "primed": 1, "crystal_count": 0.0 }, "model": "the_bumblezone:item/crystal_cannon/crystal_cannon_primed" },
+        { "predicate": { "primed": 1, "crystal_count": 0.1 }, "model": "the_bumblezone:item/crystal_cannon/crystal_cannon_1_crystal_primed" },
+        { "predicate": { "primed": 1, "crystal_count": 0.2 }, "model": "the_bumblezone:item/crystal_cannon/crystal_cannon_2_crystal_primed" },
+        { "predicate": { "primed": 1, "crystal_count": 0.3 }, "model": "the_bumblezone:item/crystal_cannon/crystal_cannon_3_crystal_primed" }
+    ]
+}

@@ -56,6 +56,7 @@ repositories {
 		name = "ModMaven"
 		url = "https://modmaven.dev"
 	}
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -63,6 +64,10 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+	annotationProcessor("com.github.LlamaLad7:MixinExtras:${project.mixin_extra_version}")
+	modImplementation ("com.github.LlamaLad7:MixinExtras:${project.mixin_extra_version}")
+	include ("com.github.LlamaLad7:MixinExtras:${project.mixin_extra_version}")
 
 	modImplementation ("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}") {
 		force = true //Force the version we want rather than trusting Gradle to pick it over transitive suggestions

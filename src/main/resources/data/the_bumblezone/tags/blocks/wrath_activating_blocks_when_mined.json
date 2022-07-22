@@ -6,6 +6,10 @@
       "required": true
     },
     {
+      "id": "the_bumblezone:royal_jelly_block",
+      "required": true
+    },
+    {
       "id": "minecraft:honey_block",
       "required": true
     },

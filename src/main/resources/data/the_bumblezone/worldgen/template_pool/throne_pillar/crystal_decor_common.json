@@ -1,0 +1,84 @@
+{
+  "name": "the_bumblezone:throne_pillar/crystal_decor_common",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 3,
+      "element": {
+        "location": "the_bumblezone:throne_pillar/decor_brood_crystal",
+        "processors": "the_bumblezone:throne_pillar_decor_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "location": "the_bumblezone:throne_pillar/decor_comb_crystal",
+        "processors": "the_bumblezone:throne_pillar_decor_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:throne_pillar/decor_crystal",
+        "processors": "the_bumblezone:throne_pillar_decor_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:throne_pillar/decor_comb_web",
+        "processors": "the_bumblezone:throne_pillar_decor_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:throne_pillar/decor_honey_web",
+        "processors": "the_bumblezone:throne_pillar_decor_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:throne_pillar/decor_porous_web",
+        "processors": "the_bumblezone:throne_pillar_decor_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:throne_pillar/decor_residue",
+        "processors": "the_bumblezone:throne_pillar_decor_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:throne_pillar/decor_redstone",
+        "processors": "the_bumblezone:throne_pillar_decor_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    }
+  ]
+}

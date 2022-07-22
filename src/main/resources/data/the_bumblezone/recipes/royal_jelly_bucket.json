@@ -1,0 +1,25 @@
+{
+  "type": "the_bumblezone:container_shapeless_recipe_bz",
+  "group": "the_bumblezone",
+  "ingredients": [
+    {
+      "item": "the_bumblezone:royal_jelly_bottle"
+    },
+    {
+      "item": "the_bumblezone:royal_jelly_bottle"
+    },
+    {
+      "item": "the_bumblezone:royal_jelly_bottle"
+    },
+    {
+      "item": "the_bumblezone:royal_jelly_bottle"
+    },
+    {
+      "item": "minecraft:bucket"
+    }
+  ],
+  "result": {
+    "item": "the_bumblezone:royal_jelly_bucket",
+    "count": 4
+  }
+}

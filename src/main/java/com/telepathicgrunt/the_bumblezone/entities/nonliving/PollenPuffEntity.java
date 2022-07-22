@@ -2,6 +2,8 @@ package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
+import com.telepathicgrunt.the_bumblezone.components.MiscComponent;
+import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
@@ -17,10 +19,13 @@ import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -37,11 +42,14 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+
+import java.util.List;
 
 public class PollenPuffEntity extends ThrowableItemProjectile {
     private boolean consumed = false;
@@ -154,6 +162,21 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                     ServerPlayNetworking.send(player, UpdateFallingBlockPacket.PACKET_ID, passedData));
         }
 
+        if(entity instanceof LivingEntity && this.getOwner() instanceof ServerPlayer serverPlayer) {
+            MiscComponent.onPollenHit(serverPlayer);
+        }
+
+        if (PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.mobToFlowers.containsKey(entity.getType())) {
+            List<BlockState> plants = PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.mobToFlowers.get(entity.getType());
+            if (!plants.isEmpty()) {
+                boolean spawnedBlock = spawnPlants(entity.blockPosition(), plants);
+
+                if(this.getOwner() instanceof ServerPlayer serverPlayer && spawnedBlock && entity.getType() == EntityType.MOOSHROOM) {
+                    BzCriterias.POLLEN_PUFF_MOOSHROOM_TRIGGER.trigger(serverPlayer);
+                }
+            }
+        }
+
         ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
         if(!entity.isCrouching() && !beeLeggings.isEmpty()) {
             HoneyBeeLeggings.setPollinated(beeLeggings);
@@ -169,30 +192,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         blockstate.onProjectileHit(this.level, blockstate, blockHitResult, this);
 
         if(blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF)) {
-            boolean isTallPlant = false;
-            if(blockstate.getBlock() instanceof DoublePlantBlock) {
-                blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
-                isTallPlant = true;
-            }
-            int flowerAttempts = 2 + this.random.nextInt(3);
-            for(int i = 0; i < flowerAttempts; i++) {
-                BlockPos newPos = blockHitResult.getBlockPos().offset(
-                        this.random.nextInt(5) - 2,
-                        this.random.nextInt(3) - 1,
-                        this.random.nextInt(5) - 2);
-
-                if(this.level.isEmptyBlock(newPos) && blockstate.canSurvive(this.level, newPos)) {
-                    this.level.setBlock(newPos, blockstate, 3);
-
-                    FakeServerPlayer fakePlayer = new FakePlayerBuilder(new ResourceLocation(Bumblezone.MODID, "default_fake_player"))
-                            .create(this.level.getServer(), (ServerLevel) this.level, "placer");
-                    blockstate.getBlock().setPlacedBy(this.level, newPos, blockstate, fakePlayer, ItemStack.EMPTY);
-
-                    if(isTallPlant && this.getOwner() instanceof ServerPlayer) {
-                        BzCriterias.POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER.trigger((ServerPlayer) this.getOwner());
-                    }
-                }
-            }
+            spawnPlants(blockHitResult.getBlockPos(), List.of(blockstate));
         }
         else if(blockstate.is(Blocks.HONEY_BLOCK) ||
                 blockstate.is(Blocks.SOUL_SAND) ||
@@ -213,5 +213,50 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 consumed = true;
             }
         }
+    }
+
+    private boolean spawnPlants(BlockPos pos, List<BlockState> blockstates) {
+        if(blockstates.size() == 0) {
+            return false;
+        }
+
+        boolean spawnedPlant = false;
+        int flowerAttempts = 2 + this.random.nextInt(3);
+        for(int i = 0; i < flowerAttempts; i++) {
+            boolean isTallPlant = false;
+            BlockState blockstate = blockstates.get(random.nextInt(blockstates.size()));
+            if(blockstate.getBlock() instanceof DoublePlantBlock) {
+                blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
+                isTallPlant = true;
+            }
+
+            BlockPos newPos = pos.offset(
+                    this.random.nextInt(5) - 2,
+                    this.random.nextInt(3) - 1,
+                    this.random.nextInt(5) - 2);
+
+            if(this.level.isEmptyBlock(newPos) && blockstate.canSurvive(this.level, newPos)) {
+                if (blockstate.is(Blocks.MOSS_CARPET)) {
+                    BlockState belowState = this.level.getBlockState(newPos.below());
+                    if (Registry.BLOCK.getKey(belowState.getBlock()).getPath().contains("carpet") || belowState.is(BlockTags.UNSTABLE_BOTTOM_CENTER) || !belowState.isFaceSturdy(this.level, newPos.below(), Direction.DOWN, SupportType.FULL)) {
+                        continue;
+                    }
+                }
+
+                this.level.setBlock(newPos, blockstate, 3);
+                FakeServerPlayer fakePlayer = new FakePlayerBuilder(new ResourceLocation(Bumblezone.MODID, "default_fake_player"))
+                        .create(this.level.getServer(), (ServerLevel) this.level, "placer");
+                blockstate.getBlock().setPlacedBy(this.level, newPos, blockstate, fakePlayer, ItemStack.EMPTY);
+
+                if(this.getOwner() instanceof ServerPlayer serverPlayer && blockstate.is(BlockTags.FLOWERS)) {
+                    MiscComponent.onFlowerSpawned(serverPlayer);
+                    if(isTallPlant) {
+                        BzCriterias.POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER.trigger(serverPlayer);
+                    }
+                }
+                spawnedPlant = true;
+            }
+        }
+        return spawnedPlant;
     }
 }

@@ -1,0 +1,57 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:replace_air_processor"
+    },
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "output_state": {
+            "Name": "the_bumblezone:filled_porous_honeycomb_block"
+          },
+          "input_predicate": {
+            "block": "the_bumblezone:honey_web",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "block": "the_bumblezone:sugar_water_block",
+            "predicate_type": "minecraft:block_match"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:noise_replace_with_properties_processor",
+      "output_block": "minecraft:honeycomb_block",
+      "input_block": "the_bumblezone:filled_porous_honeycomb_block",
+      "threshold": 0.35,
+      "xz_scale": 0.08,
+      "y_scale": 0.08
+    },
+    {
+      "processor_type": "the_bumblezone:noise_replace_with_properties_processor",
+      "output_block": "the_bumblezone:structure_void",
+      "input_block": "the_bumblezone:honey_web",
+      "threshold": 0.25,
+      "xz_scale": 0.3,
+      "y_scale": 0.3
+    },
+    {
+      "processor_type": "the_bumblezone:noise_replace_with_properties_processor",
+      "output_block": "the_bumblezone:redstone_honey_web",
+      "input_block": "the_bumblezone:honey_web",
+      "threshold": 0.35,
+      "xz_scale": 0.2,
+      "y_scale": 0.1
+    },
+    {
+      "processor_type": "minecraft:block_ignore",
+      "blocks": [
+        {
+          "Name": "minecraft:structure_void"
+        }
+      ]
+    }
+  ]
+}

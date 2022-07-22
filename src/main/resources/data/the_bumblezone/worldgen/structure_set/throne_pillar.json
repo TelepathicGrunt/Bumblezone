@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "the_bumblezone:throne_pillar",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 17240798,
+    "spacing": 100,
+    "separation": 40,
+    "type": "minecraft:random_spread"
+  }
+}

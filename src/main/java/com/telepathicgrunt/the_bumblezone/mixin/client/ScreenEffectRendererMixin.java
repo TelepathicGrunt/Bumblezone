@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidClientOverlay;
-import com.telepathicgrunt.the_bumblezone.client.rendering.PileOfPollenRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.pileofpollen.PileOfPollenRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ScreenEffectRenderer;
 import net.minecraft.world.entity.player.Player;

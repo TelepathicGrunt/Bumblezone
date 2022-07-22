@@ -7,6 +7,7 @@ import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.plugin.client.BuiltinClientPlugin;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -16,6 +17,10 @@ public class REICompat implements REIClientPlugin {
 
     @Override
     public void registerDisplays(DisplayRegistry registry) {
+        if (FabricLoader.getInstance().isModLoaded("jei")) {
+            return;
+        }
+
         addInfo(BzItems.EMPTY_HONEYCOMB_BROOD);
         addInfo(BzItems.FILLED_POROUS_HONEYCOMB);
         addInfo(BzItems.HONEY_CRYSTAL);
@@ -32,7 +37,12 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzItems.BEEHIVE_BEESWAX);
         addInfo(BzItems.HONEY_SLIME_SPAWN_EGG);
         addInfo(BzItems.BEEHEMOTH_SPAWN_EGG);
+        addInfo(BzItems.BEE_QUEEN_SPAWN_EGG);
         addInfo(BzFluids.SUGAR_WATER_FLUID);
+        addInfo(BzFluids.ROYAL_JELLY_FLUID);
+        addInfo(BzItems.ROYAL_JELLY_BOTTLE);
+        addInfo(BzItems.ROYAL_JELLY_BUCKET);
+        addInfo(BzItems.ROYAL_JELLY_BLOCK);
         addInfo(BzItems.POLLEN_PUFF);
         addInfo(BzItems.BEE_BREAD);
         addInfo(BzFluids.HONEY_FLUID);
@@ -44,7 +54,9 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY);
         addInfo(BzItems.STINGER_SPEAR);
         addInfo(BzItems.HONEY_COMPASS);
+        addInfo(BzItems.BEE_STINGER);
         addInfo(BzItems.BEE_CANNON);
+        addInfo(BzItems.CRYSTAL_CANNON);
         addInfo(BzItems.HONEY_BEE_LEGGINGS_1);
         addInfo(BzItems.HONEY_BEE_LEGGINGS_2);
         addInfo(BzItems.BUMBLE_BEE_CHESTPLATE_1);
@@ -53,6 +65,9 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2);
         addInfo(BzItems.STINGLESS_BEE_HELMET_1);
         addInfo(BzItems.STINGLESS_BEE_HELMET_2);
+        addInfo(BzItems.CARPENTER_BEE_BOOTS_1);
+        addInfo(BzItems.CARPENTER_BEE_BOOTS_2);
+        addInfo(BzItems.ESSENCE_OF_THE_BEES);
     }
 
     private static void addInfo(Item item) {

@@ -1,21 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.items.BeeBread;
-import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
-import com.telepathicgrunt.the_bumblezone.items.BumbleBeeChestplate;
-import com.telepathicgrunt.the_bumblezone.items.BzBlockItem;
-import com.telepathicgrunt.the_bumblezone.items.BzHoneyCrystalBlockItem;
-import com.telepathicgrunt.the_bumblezone.items.BzMusicDiscs;
-import com.telepathicgrunt.the_bumblezone.items.BzSmartBucket;
-import com.telepathicgrunt.the_bumblezone.items.CarpenterBeeBoots;
-import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
-import com.telepathicgrunt.the_bumblezone.items.HoneyCompass;
-import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
-import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
-import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
-import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
-import com.telepathicgrunt.the_bumblezone.items.SugarWaterBottle;
+import com.telepathicgrunt.the_bumblezone.items.*;
 import com.telepathicgrunt.the_bumblezone.items.materials.BeeArmorMaterial;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.core.Registry;
@@ -24,6 +10,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -58,22 +45,28 @@ public class BzItems {
     public static final Item PILE_OF_POLLEN = new BlockItem(BzBlocks.PILE_OF_POLLEN, new Item.Properties());
     public static final Item HONEY_CRYSTAL = new BzHoneyCrystalBlockItem(BzBlocks.HONEY_CRYSTAL, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item HONEY_COCOON = new BzBlockItem(BzBlocks.HONEY_COCOON, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), false);
+    public static final Item ROYAL_JELLY_BLOCK = new BlockItem(BzBlocks.ROYAL_JELLY_BLOCK, new Item.Properties().rarity(Rarity.EPIC).tab(BUMBLEZONE_CREATIVE_TAB));
 
     //items
-    public static final Item HONEY_CRYSTAL_SHARDS = new Item(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.15F).build()));
-    public static final Item HONEY_SLIME_SPAWN_EGG = new SpawnEggItem(BzEntities.HONEY_SLIME, 0xFFCC00, 0xFCA800, (new Item.Properties()).tab(BUMBLEZONE_CREATIVE_TAB));
-    public static final Item BEEHEMOTH_SPAWN_EGG = new SpawnEggItem(BzEntities.BEEHEMOTH, 0xEDC343, 0x43241B, (new Item.Properties()).tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final HoneyCrystalShards HONEY_CRYSTAL_SHARDS = new HoneyCrystalShards(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.15F).build()));
+    public static final Item BEE_STINGER = new BeeStinger(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item SUGAR_WATER_BUCKET = new BzSmartBucket(BzFluids.SUGAR_WATER_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item SUGAR_WATER_BOTTLE = new SugarWaterBottle((new Item.Properties()).craftRemainder(Items.GLASS_BOTTLE).food((new FoodProperties.Builder()).nutrition(1).saturationMod(0.05F).effect(new MobEffectInstance(MobEffects.DIG_SPEED, 600, 0), 1.0F).build()).tab(BUMBLEZONE_CREATIVE_TAB).stacksTo(16));
+    public static final Item HONEY_BUCKET = new BucketItem(BzFluids.HONEY_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item ROYAL_JELLY_BUCKET = new BucketItem(BzFluids.ROYAL_JELLY_FLUID, new Item.Properties().rarity(Rarity.EPIC).craftRemainder(Items.BUCKET).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item ROYAL_JELLY_BOTTLE = new RoyalJellyBottle((new Item.Properties().rarity(Rarity.EPIC)).craftRemainder(Items.GLASS_BOTTLE).food((new FoodProperties.Builder()).nutrition(10).saturationMod(0.2F).effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 0), 1.0F).effect(new MobEffectInstance(BzEffects.BEENERGIZED, 1200, 1), 1.0F).build()).tab(BUMBLEZONE_CREATIVE_TAB).stacksTo(16));
+    public static final Item HONEY_SLIME_SPAWN_EGG = new SpawnEggItem(BzEntities.HONEY_SLIME, 0xFFCC00, 0xFCA800, (new Item.Properties()).tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item BEEHEMOTH_SPAWN_EGG = new SpawnEggItem(BzEntities.BEEHEMOTH, 0xEDC343, 0x43241B, (new Item.Properties()).tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item BEE_QUEEN_SPAWN_EGG = new SpawnEggItem(BzEntities.BEE_QUEEN, 0xFFFFFF, 0xFFFFFF, (new Item.Properties().rarity(Rarity.EPIC)).tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = new BzMusicDiscs(14, BzSounds.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV, (new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.RARE));
     public static final Item MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = new BzMusicDiscs(15, BzSounds.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY, (new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.RARE));
     public static final Item POLLEN_PUFF = new PollenPuff(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).stacksTo(16));
     public static final Item BEE_BREAD = new BeeBread(new Item.Properties().food((new FoodProperties.Builder()).nutrition(8).saturationMod(0.12F).alwaysEat().effect(new MobEffectInstance(BzEffects.BEENERGIZED, 6000, 0), 1.0F).effect(new MobEffectInstance(MobEffects.CONFUSION, 120, 1), 1.0F).build()).tab(BUMBLEZONE_CREATIVE_TAB));
-    public static final Item HONEY_BUCKET = new BucketItem(BzFluids.HONEY_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item HONEY_CRYSTAL_SHIELD = new HoneyCrystalShield(new Item.Properties().rarity(Rarity.UNCOMMON).tab(BzItems.BUMBLEZONE_CREATIVE_TAB));
     public static final Item STINGER_SPEAR = new StingerSpearItem(new Item.Properties().rarity(Rarity.UNCOMMON).tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item HONEY_COMPASS = new HoneyCompass(new Item.Properties().rarity(Rarity.UNCOMMON).tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item BEE_CANNON = new BeeCannon(new Item.Properties().stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item CRYSTAL_CANNON = new CrystalCannon(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB));
     public static final HoneyBeeLeggings HONEY_BEE_LEGGINGS_1 = new HoneyBeeLeggings(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.LEGS, new Item.Properties().rarity(Rarity.UNCOMMON).tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 1);
     public static final HoneyBeeLeggings HONEY_BEE_LEGGINGS_2 = new HoneyBeeLeggings(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.LEGS, new Item.Properties().rarity(Rarity.UNCOMMON).tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 2);
     public static final BumbleBeeChestplate BUMBLE_BEE_CHESTPLATE_1 = new BumbleBeeChestplate(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.CHEST, new Item.Properties().rarity(Rarity.UNCOMMON).tab(BzItems.BUMBLEZONE_CREATIVE_TAB), false, 1);
@@ -84,6 +77,7 @@ public class BzItems {
     public static final StinglessBeeHelmet STINGLESS_BEE_HELMET_2 = new StinglessBeeHelmet(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.HEAD, new Item.Properties().rarity(Rarity.UNCOMMON).tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 2);
     public static final CarpenterBeeBoots CARPENTER_BEE_BOOTS_1 = new CarpenterBeeBoots(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.FEET, new Item.Properties().rarity(Rarity.UNCOMMON).tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 1);
     public static final CarpenterBeeBoots CARPENTER_BEE_BOOTS_2 = new CarpenterBeeBoots(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.FEET, new Item.Properties().rarity(Rarity.UNCOMMON).tab(BzItems.BUMBLEZONE_CREATIVE_TAB), 2);
+    public static final Item ESSENCE_OF_THE_BEES = new EssenceOfTheBees(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB));
 
     /**
      * registers the item version of the Blocks so they now exist in the registry
@@ -104,19 +98,25 @@ public class BzItems {
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_crystal"), HONEY_CRYSTAL);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_cocoon"), HONEY_COCOON);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_crystal_shards"), HONEY_CRYSTAL_SHARDS);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_stinger"), BEE_STINGER);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "sugar_water_bucket"), SUGAR_WATER_BUCKET);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "sugar_water_bottle"), SUGAR_WATER_BOTTLE);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_bucket"), HONEY_BUCKET);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "royal_jelly_bottle"), ROYAL_JELLY_BOTTLE);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "royal_jelly_bucket"), ROYAL_JELLY_BUCKET);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "royal_jelly_block"), ROYAL_JELLY_BLOCK);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_slime_spawn_egg"), HONEY_SLIME_SPAWN_EGG);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "beehemoth_spawn_egg"), BEEHEMOTH_SPAWN_EGG);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_queen_spawn_egg"), BEE_QUEEN_SPAWN_EGG);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "music_disc_flight_of_the_bumblebee_rimsky_korsakov"), MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "music_disc_honey_bee_rat_faced_boy"), MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "pollen_puff"), POLLEN_PUFF);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_bread"), BEE_BREAD);
-        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_bucket"), HONEY_BUCKET);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_crystal_shield"), HONEY_CRYSTAL_SHIELD);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "stinger_spear"), STINGER_SPEAR);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_compass"), HONEY_COMPASS);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_cannon"), BEE_CANNON);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "crystal_cannon"), CRYSTAL_CANNON);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings_1"), HONEY_BEE_LEGGINGS_1);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings_2"), HONEY_BEE_LEGGINGS_2);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_1"), BUMBLE_BEE_CHESTPLATE_1);
@@ -127,5 +127,6 @@ public class BzItems {
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet_2"), STINGLESS_BEE_HELMET_2);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots_1"), CARPENTER_BEE_BOOTS_1);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots_2"), CARPENTER_BEE_BOOTS_2);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "essence_of_the_bees"), ESSENCE_OF_THE_BEES);
     }
 }

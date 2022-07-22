@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "the_bumblezone:sugar_infused_stone",
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:sugar_infused_cobblestone",
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:honey_crystal_shards",
+      "required": true
+    }
+  ]
+}
