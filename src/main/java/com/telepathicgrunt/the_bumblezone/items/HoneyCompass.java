@@ -14,6 +14,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -31,6 +32,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkStatus;
@@ -70,6 +72,20 @@ public class HoneyCompass extends Item implements Vanishable {
         }
 
         return super.getDescriptionId(itemStack);
+    }
+
+    public Component getName(ItemStack itemStack) {
+        if(isBlockCompass(itemStack)) {
+            String blockString = getStoredBlock(itemStack);
+            if (blockString != null) {
+                Block block = Registry.BLOCK.get(new ResourceLocation(blockString));
+                if (block != Blocks.AIR) {
+                    return Component.translatable(this.getDescriptionId(itemStack), block.getName());
+                }
+            }
+            return Component.translatable(this.getDescriptionId(itemStack), "Unknown block");
+        }
+        return Component.translatable(this.getDescriptionId(itemStack));
     }
 
     @Override
@@ -234,6 +250,16 @@ public class HoneyCompass extends Item implements Vanishable {
             return tag != null && tag.contains(TAG_TYPE) && tag.getString(TAG_TYPE).equals("block");
         }
         return false;
+    }
+
+    public static String getStoredBlock(ItemStack compassItem) {
+        if(compassItem.hasTag()) {
+            CompoundTag tag = compassItem.getTag();
+            if (tag != null && tag.contains(TARGET_BLOCK)) {
+                return tag.getString(TARGET_BLOCK);
+            }
+        }
+        return null;
     }
 
     public static boolean isStructureCompass(ItemStack compassItem) {
