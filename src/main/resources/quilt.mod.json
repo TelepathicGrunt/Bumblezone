@@ -46,7 +46,7 @@
       }
     ]
   },
-  "accessWidener" : "the_bumblezone.accesswidener",
+  "access_widener" : "the_bumblezone.accesswidener",
   "mixin": "the_bumblezone.mixins.json",
   "cardinal-components": [
     "the_bumblezone:entity_component",
