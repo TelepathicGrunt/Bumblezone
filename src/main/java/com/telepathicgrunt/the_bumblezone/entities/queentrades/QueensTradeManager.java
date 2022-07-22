@@ -40,6 +40,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> loader, ResourceManager manager, ProfilerFiller profiler) {
+        tradeRaw.clear();
         loader.forEach((fileIdentifier, jsonElement) -> {
             try {
                 QueenTradesCollectionObj tradesCollection = GSON.fromJson(jsonElement, QueenTradesCollectionObj.class);

@@ -220,12 +220,12 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
         else {
             Entity entity = source.getEntity();
-            if (entity instanceof LivingEntity livingEntity) {
-
-                if (!(livingEntity instanceof Player player && player.isCreative()) &&
-                    (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+            if (entity instanceof LivingEntity livingEntity &&
+                !livingEntity.isSpectator() &&
+                !(livingEntity instanceof Player player && player.isCreative()))
+            {
+                if ((livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
                     BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
-                    !livingEntity.isSpectator() &&
                     BzBeeAggressionConfigs.aggressiveBees.get())
                 {
                     if(livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
@@ -327,7 +327,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     private void performAngryActions() {
         int beeCooldown = this.getBeeSpawnCooldown();
-        if (beeCooldown <= 0) {
+        if (beeCooldown <= 0 && !this.isImmobile()) {
             this.setBeeSpawnCooldown(this.random.nextInt(50) + 75);
 
             // Grab a nearby air materialposition a bit away
