@@ -1,3 +1,9 @@
+### **(V.6.1.2 Changes) (1.19 Minecraft)**
+
+##### Entities:
+Made special bee spawning mechanics in Bumblezone ignore Fake players for performance.
+
+
 ### **(V.6.1.1 Changes) (1.19 Minecraft)**
 
 ##### Entities:
