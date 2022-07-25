@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.mixin.client;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
+import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.renderer.block.LiquidBlockRenderer;
 import net.minecraft.core.BlockPos;

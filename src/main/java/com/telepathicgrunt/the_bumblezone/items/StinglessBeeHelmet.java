@@ -9,7 +9,6 @@ import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetSightPacket;
 import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import net.minecraft.nbt.CompoundTag;
-import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -23,6 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 
 import java.util.Set;
 

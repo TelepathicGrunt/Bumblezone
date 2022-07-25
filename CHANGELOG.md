@@ -1,3 +1,12 @@
+### **(V.6.1.1 Changes) (1.19 Minecraft)**
+
+##### Blocks:
+Fixed Shulker Boxes able to get Honey Cocoon inside when Honey Cocoon is given to a Hopper attached to a Shulker Box.
+
+##### Lang:
+Fixed Creative Tab name not having translation.
+
+
 ### **(V.6.1.0 Changes) (1.19 Minecraft)**
 
 ##### Major:
@@ -42,12 +51,19 @@ Royal Jelly Bucket added! A bucket sloppily holding extremely rare and valuable 
  Can be used in Dispensers too!
 
 Essence of the Bees item added! An end game item to get for Bumblezone! When consumed, you get the following bonus permanently:
+
 > Can enter Cell Maze and not get Wrath of the Hive effect anymore.
+
 > Can enter Throne Pillar and not get Mining Fatigue when near Bee Queen.
+
 > Entering Honey Fluid will grant Regenerative effect.
+
 > Entering Royal Jelly Fluid will grant a short lived Beenergized effect and stronger Regenerative effect.
+
 > Beehive/Bee Nests can be mined, honey taken by bottle, or sheared for honeycombs without angering the bees. No campfire needed!
+
 > Can take honey from Filled Porous Honeycomb Blocks safely without getting Wrath of the Hive Effect.
+
 > Honey Slime will not get angry at you when you take its honey.
 
 Pollen Puff can be thrown at Mooshrooms to spawn Red Mushrooms nearby!
