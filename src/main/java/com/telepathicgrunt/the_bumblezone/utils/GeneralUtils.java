@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.primitives.Doubles;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.FrontAndTop;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -18,7 +19,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.JigsawBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.HashSet;
 import java.util.List;
@@ -213,5 +216,22 @@ public class GeneralUtils {
                 playerEntity.drop(containerItem, false);
             }
         }
+    }
+
+    //////////////////////////////////////////////
+
+    // More optimized with checking if the jigsaw blocks can connect
+    public static boolean canJigsawsAttach(StructureTemplate.StructureBlockInfo jigsaw1, StructureTemplate.StructureBlockInfo jigsaw2) {
+        FrontAndTop prop1 = jigsaw1.state.getValue(JigsawBlock.ORIENTATION);
+        FrontAndTop prop2 = jigsaw2.state.getValue(JigsawBlock.ORIENTATION);
+        String joint = jigsaw1.nbt.getString("joint");
+        if(joint.isEmpty()) {
+            joint = prop1.front().getAxis().isHorizontal() ? "aligned" : "rollable";
+        }
+
+        boolean isRollable = joint.equals("rollable");
+        return prop1.front() == prop2.front().getOpposite() &&
+                (isRollable || prop1.top() == prop2.top()) &&
+                jigsaw1.nbt.getString("target").equals(jigsaw2.nbt.getString("name"));
     }
 }

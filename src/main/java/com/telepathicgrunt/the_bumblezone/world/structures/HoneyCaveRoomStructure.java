@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
@@ -87,15 +88,16 @@ public class HoneyCaveRoomStructure extends Structure {
             return Optional.empty();
         }
 
-        return JigsawPlacement.addPieces(
+        return OptimizedJigsawManager.assembleJigsawStructure(
                 context,
                 this.startPool,
-                this.startJigsawName,
                 this.size,
+                context.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY).getKey(this),
                 centerPos,
                 false,
                 this.projectStartToHeightmap,
-                this.maxDistanceFromCenter);
+                this.maxDistanceFromCenter,
+                (structurePiecesBuilder, pieces) -> {});
     }
 
     @Override
