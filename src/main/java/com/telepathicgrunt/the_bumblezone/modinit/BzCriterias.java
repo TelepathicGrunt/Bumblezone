@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.advancements.ItemSpecificTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.KilledCounterTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.RecipeDiscoveredTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
-import net.fabricmc.fabric.api.object.builder.v1.advancement.CriterionRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.resources.ResourceLocation;
 

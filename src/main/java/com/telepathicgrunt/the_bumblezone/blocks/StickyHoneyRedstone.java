@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.math.Vector3f;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -20,6 +19,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.AABB;
+import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 
 import java.util.List;
 

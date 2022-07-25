@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 
 
 public class SugarInfusedStone extends Block {
