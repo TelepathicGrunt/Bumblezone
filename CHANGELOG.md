@@ -1,3 +1,12 @@
+### **(V.6.1.1 Changes) (1.19 Minecraft)**
+
+##### Blocks:
+Fixed Shulker Boxes able to get Honey Cocoon inside when Honey Cocoon is given to a Hopper attached to a Shulker Box.
+
+##### Lang:
+Fixed Creative Tab name not having translation.
+
+
 ### **(V.6.1.0 Changes) (1.19 Minecraft)**
 
 ##### Major:
