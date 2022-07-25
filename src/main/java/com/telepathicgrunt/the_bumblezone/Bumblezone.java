@@ -29,6 +29,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompatRegs;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
+import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.world.surfacerules.PollinatedSurfaceSource;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -86,6 +87,8 @@ public class Bumblezone{
         forgeBus.addListener(EntityMisc::onHoneySlimeBred);
         forgeBus.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
         forgeBus.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
+        forgeBus.addListener(ThreadExecutor::handleServerAboutToStartEvent);
+        forgeBus.addListener(ThreadExecutor::handleServerStoppingEvent);
 
         //Registration
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
