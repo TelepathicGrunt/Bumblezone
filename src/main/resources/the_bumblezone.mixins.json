@@ -41,6 +41,8 @@
     "items.PlayerDamageShieldInvoker",
     "world.NoiseChunkAccessor",
     "world.ServerWorldMixin",
+    "world.SinglePoolElementAccessor",
+    "world.StructurePoolAccessor",
     "world.StructureTemplateAccessor",
     "world.WorldGenRegionAccessor"
   ],
