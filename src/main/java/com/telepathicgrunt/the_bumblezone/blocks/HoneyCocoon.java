@@ -67,7 +67,7 @@ import java.util.UUID;
 public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected final VoxelShape shape;
-    private static final int waterDropDelay = 150;
+    public static final int waterDropDelay = 150;
 
     public HoneyCocoon() {
         super(Properties.of(Material.EGG, MaterialColor.COLOR_YELLOW).strength(0.3F, 0.3F).randomTicks().noOcclusion().sound(SoundType.HONEY_BLOCK));
@@ -117,10 +117,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
      */
     @SuppressWarnings("deprecation")
     @Override
-    public BlockState updateShape(BlockState blockstate, Direction facing,
-                                  BlockState facingState, LevelAccessor world,
-                                  BlockPos currentPos, BlockPos facingPos) {
-
+    public BlockState updateShape(BlockState blockstate, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
         if (blockstate.getValue(WATERLOGGED)) {
             world.scheduleTick(currentPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(world));
             world.scheduleTick(currentPos, blockstate.getBlock(), waterDropDelay);
@@ -150,10 +147,18 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
     @Override
     public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
-        BlockState aboveState = serverLevel.getBlockState(blockPos.above());
-        if(!blockState.getValue(WATERLOGGED) && aboveState.getCollisionShape(serverLevel, blockPos).isEmpty()) {
+        if(!blockState.getValue(WATERLOGGED)) {
             BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
             if(blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
+                if (!honeyCocoonBlockEntity.isUnpackedLoottable()) {
+                    return;
+                }
+
+                BlockState aboveState = serverLevel.getBlockState(blockPos.above());
+                if (!aboveState.getCollisionShape(serverLevel, blockPos).isEmpty()) {
+                    return;
+                }
+
                 List<Pair<ItemStack, Integer>> emptyBroods = new ArrayList<>();
                 List<Pair<ItemStack, Integer>> beeFeeding = new ArrayList<>();
                 for(int i = 0; i < honeyCocoonBlockEntity.getContainerSize(); i++) {
@@ -211,11 +216,18 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
     @Override
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
-        BlockState aboveState = serverLevel.getBlockState(blockPos.above());
-        if(blockState.getValue(WATERLOGGED) && aboveState.getFluidState().is(FluidTags.WATER) && aboveState.getCollisionShape(serverLevel, blockPos).isEmpty()) {
-
+        if(blockState.getValue(WATERLOGGED)) {
             BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
             if(blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
+                if (!honeyCocoonBlockEntity.isUnpackedLoottable()) {
+                    return;
+                }
+
+                BlockState aboveState = serverLevel.getBlockState(blockPos.above());
+                if (!(aboveState.getFluidState().is(FluidTags.WATER) && aboveState.getCollisionShape(serverLevel, blockPos).isEmpty())) {
+                    return;
+                }
+
                 serverLevel.scheduleTick(blockPos, blockState.getBlock(), waterDropDelay);
 
                 List<Pair<ItemStack, Integer>> itemStacks = new ArrayList<>();

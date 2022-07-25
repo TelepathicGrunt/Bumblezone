@@ -3,6 +3,13 @@
 ##### Entities:
 Made special bee spawning mechanics in Bumblezone ignore Fake players for performance.
 
+##### Structures:
+Optimized Bumblezone structure layout creation much faster than what vanilla allows.
+
+##### Blocks:
+Fixed Honey Cocoon loading loot tables by itself randomly.
+ This should prevent some lag when they first load in from worldgen.
+
 
 ### **(V.6.1.1 Changes) (1.19 Minecraft)**
 
