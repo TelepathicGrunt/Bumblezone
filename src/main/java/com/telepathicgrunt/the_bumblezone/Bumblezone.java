@@ -17,6 +17,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.packets.BeehemothControlsPacket;
 import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacket;
 import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetSightPacket;
+import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
@@ -101,6 +102,8 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         ResourceLoader.get(PackType.SERVER_DATA).registerReloader(PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
         ResourceLoader.get(PackType.SERVER_DATA).registerReloader(QueensTradeManager.QUEENS_TRADE_MANAGER);
         ResourceLoaderEvents.END_DATA_PACK_RELOAD.register((minecraftServer, resourceManager, throwable) -> QueensTradeManager.QUEENS_TRADE_MANAGER.resolveQueenTrades());
+        ServerLifecycleEvents.SERVER_STARTING.register((a) -> ThreadExecutor.handleServerAboutToStartEvent());
+        ServerLifecycleEvents.SERVER_STOPPING.register((a) -> ThreadExecutor.handleServerStoppingEvent());
     }
 
     @Override
