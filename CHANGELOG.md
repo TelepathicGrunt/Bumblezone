@@ -7,6 +7,10 @@ Optimized Bumblezone structure layout creation much faster than what vanilla all
 Fixed Honey Cocoon loading loot tables by itself randomly.
  This should prevent some lag when they first load in from worldgen.
 
+##### Items:
+Honey Compass now locates structures in an async way so server should not lag when using a Honey Compass to find Cell Maze/Throne Pillar structures.
+ Special thanks for Bright Spark's Async Locator code!
+
 
 ### **(V.6.1.1 Changes) (1.19 Minecraft)**
 
