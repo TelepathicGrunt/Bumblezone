@@ -57,6 +57,8 @@
     "world.NoiseChunkAccessor",
     "world.NoiseGeneratorSettingsInvoker",
     "world.ServerWorldMixin",
+    "world.SinglePoolElementAccessor",
+    "world.StructurePoolAccessor",
     "world.StructureTemplateAccessor",
     "world.WorldGenRegionAccessor"
   ],
