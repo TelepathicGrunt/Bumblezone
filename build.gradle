@@ -140,7 +140,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	mainFile.changelog = changelogText
 	mainFile.changelogType = "markdown"
 	mainFile.releaseType = "beta"
-	mainFile.displayName = "The Bumblezone v${project.mod_version} (${project.minecraft_version} MC)"
+	mainFile.displayName = "The Bumblezone v${project.mod_version} (${project.minecraft_version} MC Fabric)"
 	mainFile.addRequirement("midnightlib")
 	mainFile.addRequirement("fabric-api")
 }
