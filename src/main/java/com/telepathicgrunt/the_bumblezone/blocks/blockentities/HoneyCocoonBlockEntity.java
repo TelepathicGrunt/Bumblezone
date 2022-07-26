@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
+import com.telepathicgrunt.the_bumblezone.blocks.HoneyCocoon;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestMenu;
 import net.minecraft.core.BlockPos;
@@ -11,6 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -98,6 +101,23 @@ public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity imp
         }
         else {
             return super.triggerEvent(i, i1);
+        }
+    }
+
+    public boolean isUnpackedLoottable() {
+        return this.lootTable == null;
+    }
+
+    @Override
+    public void unpackLootTable(Player player) {
+        super.unpackLootTable(player);
+
+        if (this.level != null) {
+            BlockState blockState = this.level.getBlockState(this.worldPosition);
+            if (blockState.getValue(HoneyCocoon.WATERLOGGED)) {
+                this.level.scheduleTick(this.worldPosition, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickDelay(this.level));
+                this.level.scheduleTick(this.worldPosition, blockState.getBlock(), HoneyCocoon.waterDropDelay);
+            }
         }
     }
 }
