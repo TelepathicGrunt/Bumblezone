@@ -6,6 +6,11 @@ Teleporting to and from Bumblezone is now mostly async to reduce server lag/dead
 
 Reduced the jittering screen a bit when exiting Bumblezone by going below Y = 0.
 
+Fixed teleporting in/out of Bumblezone message not showing up while teleporting instead of afterwards.
+
+##### Lang:
+Converted some warnings and teleportation text to be translatable now.
+
 
 ### **(V.6.1.2 Changes) (1.19 Minecraft)**
 
