@@ -1,3 +1,12 @@
+### **(V.6.1.3 Changes) (1.19 Minecraft)**
+
+##### Dimension:
+Teleporting to and from Bumblezone is now mostly async to reduce server lag/deadlock. 
+ This is new and a bit of an experiment so please report any issues that arises from teleporting to and from Bumblezone.
+
+Reduced the jittering screen a bit when exiting Bumblezone by going below Y = 0.
+
+
 ### **(V.6.1.2 Changes) (1.19 Minecraft)**
 
 ##### Entities:

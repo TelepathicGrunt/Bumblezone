@@ -3,9 +3,11 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
+import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.core.BlockPos;
@@ -17,6 +19,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -50,6 +54,16 @@ public class EntityTeleportationHookup {
                     if (livingEntity.getY() < -4) {
                         livingEntity.moveTo(livingEntity.getX(), -4, livingEntity.getZ());
                         livingEntity.absMoveTo(livingEntity.getX(), -4, livingEntity.getZ());
+                        livingEntity.setDeltaMovement(0, 0, 0);
+                        if (!livingEntity.level.isClientSide()) {
+                            livingEntity.addEffect(new MobEffectInstance(
+                                    MobEffects.SLOW_FALLING,
+                                    12,
+                                    100,
+                                    false,
+                                    false,
+                                    true));
+                        }
                     }
                     livingEntity.fallDistance = 0;
 
