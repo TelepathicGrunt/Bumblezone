@@ -393,7 +393,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
         CompoundTag compoundtag = BlockItem.getBlockEntityData(itemStack);
         if (compoundtag != null) {
             if (compoundtag.contains("LootTable", 8)) {
-                tooltip.add(Component.translatable("???????"));
+                tooltip.add(Component.literal("???????"));
             }
 
             if (compoundtag.contains("Items", 9)) {

@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -73,6 +74,10 @@ public class BzWorldSavedData extends SavedData {
 				entry.setIsCurrentTeleporting(true);
 				ResourceKey<Level> destinationKey = entry.getDestination();
 				if (destinationKey.equals(BzDimension.BZ_WORLD_KEY)) {
+					if (entry.getEntity() instanceof ServerPlayer serverPlayer) {
+						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.teleporting_into_bz"), true);
+					}
+
 					ThreadExecutor.dimensionDestinationSearch(world.getServer(), () -> {
 								try {
 									ServerLevel bumblezoneWorld = world.getServer().getLevel(BzDimension.BZ_WORLD_KEY);
@@ -87,6 +92,10 @@ public class BzWorldSavedData extends SavedData {
 							.thenOnServerThread(entry::setDestinationPosFound);
 				}
 				else {
+					if (entry.getEntity() instanceof ServerPlayer serverPlayer) {
+						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.teleporting_out_of_bz"), true);
+					}
+
 					ThreadExecutor.dimensionDestinationSearch(world.getServer(), () -> {
 								try {
 									boolean upwardChecking = entry.getEntity().getY() > 0;
@@ -129,7 +138,7 @@ public class BzWorldSavedData extends SavedData {
 				else {
 					teleportedEntities.add(entity);
 					if (entity instanceof ServerPlayer serverPlayer) {
-						serverPlayer.displayClientMessage(Component.translatable("Failed to teleport entity. Aborting teleportation. Please retry."), false);
+						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.failed_teleporting"), false);
 						Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.ERROR, "Bumblezone: Failed to teleport entity. Aborting teleportation. Please retry. Entity: {}-{} Pos: {} Destination: {}", entity.getClass().getSimpleName(), entity.getName(), entity.position(), destinationKey);
 					}
 				}
@@ -173,8 +182,8 @@ public class BzWorldSavedData extends SavedData {
 			if(bumblezoneWorld == null) {
 				if(entity instanceof ServerPlayer playerEntity) {
 					Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: https://bugs.mojang.com/browse/MC-195468. A restart will fix this.");
-					MutableComponent message = Component.translatable("Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: §6https://bugs.mojang.com/browse/MC-195468§f. A restart will fix this.");
-					playerEntity.displayClientMessage(message, true);
+					MutableComponent message = Component.translatable("system.the_bumblezone.missing_dimension", Component.translatable("system.the_bumblezone.missing_dimension_link").withStyle(ChatFormatting.RED));
+					playerEntity.displayClientMessage(message, false);
 				}
 				teleportedEntities.add(entity);
 				return;
@@ -211,20 +220,13 @@ public class BzWorldSavedData extends SavedData {
 			Bumblezone.ENTITY_COMPONENT.get(entity).setNonBZDimension(entity.level.dimension().location());
 		}
 
-		if (entity instanceof ServerPlayer) {
-			if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
-				((ServerPlayer) entity).displayClientMessage(Component.translatable("Teleporting into the Bumblezone..."), true);
-			}
-			else {
-				((ServerPlayer) entity).displayClientMessage(Component.translatable("Teleporting out of Bumblezone..."), true);
+		if (entity instanceof ServerPlayer serverPlayer) {
+			if (serverPlayer.isSleeping()) {
+				serverPlayer.stopSleepInBed(true, true);
 			}
 
-			if (((ServerPlayer) entity).isSleeping()) {
-				((ServerPlayer) entity).stopSleepInBed(true, true);
-			}
-
-			((ServerPlayer) entity).teleportTo(destination, destinationPosition.x, destinationPosition.y, destinationPosition.z, entity.getYRot(), entity.getXRot());
-			teleportedEntity = destination.getPlayerByUUID(entity.getUUID());
+			serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
+			teleportedEntity = destination.getPlayerByUUID(serverPlayer.getUUID());
 		}
 		else {
 			Entity newEntity = entity;

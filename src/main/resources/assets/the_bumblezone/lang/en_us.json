@@ -58,6 +58,7 @@
   "item.the_bumblezone.honey_compass_structure_failed": "Honey Compass failed to find the target structure.",
   "item.the_bumblezone.honey_compass_block": "Honey Compass - %s",
   "item.the_bumblezone.honey_compass_throne_structure": "Honey Compass - Throne Pillar!",
+  "item.the_bumblezone.honey_compass_unknown_block": "Unknown Block",
   "item.the_bumblezone.bee_cannon": "Bee Cannon",
   "item.the_bumblezone.crystal_cannon": "Crystal Cannon",
   "item.the_bumblezone.stingless_bee_helmet_1": "Stingless Bee Helmet",
@@ -157,6 +158,13 @@
   "stat.the_bumblezone.stingless_bee_helmet_bee_rider": "Bz: Stingless Helmet Bee Time",
   "stat.the_bumblezone.bumble_bee_chestplate_fly_time": "Bz: Bumble Chestplate Fly Time",
   "stat.the_bumblezone.honey_bee_leggings_flower_pollen": "Bz: Honey Leg Flower Pollen",
+
+  "system.the_bumblezone.teleporting_into_bz": "Teleporting into the Bumblezone...",
+  "system.the_bumblezone.teleporting_out_of_bz": "Teleporting out of the Bumblezone...",
+  "system.the_bumblezone.missing_dimension": "Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: %s. A restart will fix this.",
+  "system.the_bumblezone.missing_dimension_link": "https://bugs.mojang.com/browse/MC-195468",
+  "system.the_bumblezone.failed_teleporting": "Failed to teleport entity. Aborting teleportation. Please retry.",
+  "system.the_bumblezone.require_hive_blocks_failed": "the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.",
 
   "advancements.the_bumblezone.root.title": "The Buzzing Bumbling Bumblezone!",
   "advancements.the_bumblezone.root.description": "Enter The Bumblezone dimension by any means",
