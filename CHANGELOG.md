@@ -1,5 +1,10 @@
 ### **(V.6.1.2 Changes) (1.19 Minecraft)** 
 
+##### Entities:
+Fixed entities spawning below y = 0 in Bumblezone somehow which was causing the teleportation code to trigger which then
+ would force the Overworld to generate its chunk which then lags the game. With this fix in place, Bumblezone worldgen is
+ literally as fast as I can possibly make it. There's no further improvement I can do as it is blazingly fast now.
+
 ##### Structures:
 Optimized Bumblezone structure layout creation much faster than what vanilla allows.
 

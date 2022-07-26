@@ -468,7 +468,9 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                     double d = Mth.clamp(x, (double)i + (double)f, (double)i + 16.0 - (double)f);
                     double e = Mth.clamp(z, (double)j + (double)f, (double)j + 16.0 - (double)f);
 
-                    if (!serverLevelAccessor.getWorldBorder().isWithinBounds(d, e)) {
+                    if (!serverLevelAccessor.getWorldBorder().isWithinBounds(d, e) ||
+                        (mutableBlockPos.getY() < serverLevelAccessor.getMinBuildHeight() || mutableBlockPos.getY() >= serverLevelAccessor.getMaxBuildHeight()))
+                    {
                         continue;
                     }
 
