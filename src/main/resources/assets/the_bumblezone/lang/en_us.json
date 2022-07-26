@@ -1,5 +1,6 @@
 {
   "itemGroup.the_bumblezone": "The Bumblezone",
+  "itemGroup.the_bumblezone.main_tab": "The Bumblezone",
 
   "the_bumblezone.container.honey_cocoon": "Honey Cocoon",
 
@@ -53,6 +54,8 @@
   "item.the_bumblezone.stinger_spear": "Stinger Spear",
   "item.the_bumblezone.honey_compass": "Honey Compass",
   "item.the_bumblezone.honey_compass_structure": "Honey Compass - Structure",
+  "item.the_bumblezone.honey_compass_structure_loading": "Honey Compass - Searching for Structure...",
+  "item.the_bumblezone.honey_compass_structure_failed": "Honey Compass failed to find the target structure.",
   "item.the_bumblezone.honey_compass_block": "Honey Compass - %s",
   "item.the_bumblezone.honey_compass_throne_structure": "Honey Compass - Throne Pillar!",
   "item.the_bumblezone.bee_cannon": "Bee Cannon",

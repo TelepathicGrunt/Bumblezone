@@ -1,21 +1,33 @@
 package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
+import com.telepathicgrunt.the_bumblezone.blocks.HoneyCocoon;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestMenu;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
@@ -107,5 +119,22 @@ public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity imp
     @Override
     protected IItemHandler createUnSidedHandler() {
         return new SidedInvWrapper(this, Direction.UP);
+    }
+
+    public boolean isUnpackedLoottable() {
+        return this.lootTable == null;
+    }
+
+    @Override
+    public void unpackLootTable(Player player) {
+        super.unpackLootTable(player);
+
+        if (this.level != null) {
+            BlockState blockState = this.level.getBlockState(this.worldPosition);
+            if (blockState.getValue(HoneyCocoon.WATERLOGGED)) {
+                this.level.scheduleTick(this.worldPosition, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(this.level));
+                this.level.scheduleTick(this.worldPosition, blockState.getBlock(), HoneyCocoon.waterDropDelay);
+            }
+        }
     }
 }

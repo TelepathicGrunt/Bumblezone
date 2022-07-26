@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
@@ -15,12 +16,15 @@ import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.heightproviders.HeightProvider;
+import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 
 public class HoneyCaveRoomStructure extends Structure {
 
@@ -87,15 +91,16 @@ public class HoneyCaveRoomStructure extends Structure {
             return Optional.empty();
         }
 
-        return JigsawPlacement.addPieces(
+        return OptimizedJigsawManager.assembleJigsawStructure(
                 context,
                 this.startPool,
-                this.startJigsawName,
                 this.size,
+                context.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY).getKey(this),
                 centerPos,
                 false,
                 this.projectStartToHeightmap,
-                this.maxDistanceFromCenter);
+                this.maxDistanceFromCenter,
+                (structurePiecesBuilder, pieces) -> {});
     }
 
     @Override

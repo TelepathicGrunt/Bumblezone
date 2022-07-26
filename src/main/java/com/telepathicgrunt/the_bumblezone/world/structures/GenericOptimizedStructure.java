@@ -7,20 +7,26 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.LevelHeightAccessor;
+import net.minecraft.world.level.NoiseColumn;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
+import net.minecraft.world.level.levelgen.RandomState;
+import net.minecraft.world.level.levelgen.WorldGenerationContext;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.heightproviders.HeightProvider;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 
 import java.util.Optional;
 
-public class PollinatedStreamStructure extends Structure {
+public class GenericOptimizedStructure extends Structure {
 
-    public static final Codec<PollinatedStreamStructure> CODEC = RecordCodecBuilder.<PollinatedStreamStructure>mapCodec(instance ->
+    public static final Codec<GenericOptimizedStructure> CODEC = RecordCodecBuilder.<GenericOptimizedStructure>mapCodec(instance ->
             instance.group(PollinatedStreamStructure.settingsCodec(instance),
                     StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter(structure -> structure.startPool),
                     ResourceLocation.CODEC.optionalFieldOf("start_jigsaw_name").forGetter(structure -> structure.startJigsawName),
@@ -28,7 +34,7 @@ public class PollinatedStreamStructure extends Structure {
                     HeightProvider.CODEC.fieldOf("start_height").forGetter(structure -> structure.startHeight),
                     Heightmap.Types.CODEC.optionalFieldOf("project_start_to_heightmap").forGetter(structure -> structure.projectStartToHeightmap),
                     Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(structure -> structure.maxDistanceFromCenter)
-            ).apply(instance, PollinatedStreamStructure::new)).codec();
+            ).apply(instance, GenericOptimizedStructure::new)).codec();
 
     private final Holder<StructureTemplatePool> startPool;
     private final Optional<ResourceLocation> startJigsawName;
@@ -37,13 +43,13 @@ public class PollinatedStreamStructure extends Structure {
     private final Optional<Heightmap.Types> projectStartToHeightmap;
     private final int maxDistanceFromCenter;
 
-    public PollinatedStreamStructure(Structure.StructureSettings config,
-                         Holder<StructureTemplatePool> startPool,
-                         Optional<ResourceLocation> startJigsawName,
-                         int size,
-                         HeightProvider startHeight,
-                         Optional<Heightmap.Types> projectStartToHeightmap,
-                         int maxDistanceFromCenter)
+    public GenericOptimizedStructure(StructureSettings config,
+                                     Holder<StructureTemplatePool> startPool,
+                                     Optional<ResourceLocation> startJigsawName,
+                                     int size,
+                                     HeightProvider startHeight,
+                                     Optional<Heightmap.Types> projectStartToHeightmap,
+                                     int maxDistanceFromCenter)
     {
         super(config);
         this.startPool = startPool;
@@ -54,11 +60,10 @@ public class PollinatedStreamStructure extends Structure {
         this.maxDistanceFromCenter = maxDistanceFromCenter;
     }
 
-    public Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
-        WorldgenRandom positionedRandom = new WorldgenRandom(new LegacyRandomSource(context.seed() + (context.chunkPos().x * (context.chunkPos().z * 17L))));
-        int x = context.chunkPos().getMinBlockX();
-        int z = context.chunkPos().getMinBlockZ();
-        BlockPos centerPos = new BlockPos(x, positionedRandom.nextInt(45) + 10, z);
+    public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
+        ChunkPos chunkpos = context.chunkPos();
+        int y = this.startHeight.sample(context.random(), new WorldGenerationContext(context.chunkGenerator(), context.heightAccessor()));
+        BlockPos centerPos = new BlockPos(chunkpos.getMinBlockX(), y, chunkpos.getMinBlockZ());
 
         return OptimizedJigsawManager.assembleJigsawStructure(
                 context,
@@ -74,6 +79,6 @@ public class PollinatedStreamStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return BzStructures.POLLINATED_STREAM.get();
+        return BzStructures.GENERIC_OPTIMIZED_STRUCTURE.get();
     }
 }

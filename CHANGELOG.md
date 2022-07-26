@@ -1,3 +1,24 @@
+### **(V.6.1.2 Changes) (1.19 Minecraft)**
+
+##### Entities:
+Fixed entities spawning below y = 0 in Bumblezone somehow which was causing the teleportation code to trigger which then
+ would force the Overworld to generate its chunk which then lags the game. With this fix in place, Bumblezone worldgen is
+ literally as fast as I can possibly make it. There's no further improvement I can do as it is blazingly fast now.
+
+Made special bee spawning mechanics in Bumblezone ignore Fake players for performance.
+
+##### Structures:
+Optimized Bumblezone structure layout creation much faster than what vanilla allows.
+
+##### Blocks:
+Fixed Honey Cocoon loading loot tables by itself randomly.
+ This should prevent some lag when they first load in from worldgen.
+
+##### Items:
+Honey Compass now locates structures in an async way so server should not lag when using a Honey Compass to find Cell Maze/Throne Pillar structures.
+ Special thanks for Bright Spark's Async Locator code!
+
+
 ### **(V.6.1.1 Changes) (1.19 Minecraft)**
 
 ##### Entities:
@@ -48,12 +69,19 @@ Royal Jelly Bucket added! A bucket sloppily holding extremely rare and valuable 
  Can be used in Dispensers too!
 
 Essence of the Bees item added! An end game item to get for Bumblezone! When consumed, you get the following bonus permanently: 
+
 > Can enter Cell Maze and not get Wrath of the Hive effect anymore.
+
 > Can enter Throne Pillar and not get Mining Fatigue when near Bee Queen.
+
 > Entering Honey Fluid will grant Regenerative effect.
+
 > Entering Royal Jelly Fluid will grant a short lived Beenergized effect and stronger Regenerative effect.
+
 > Beehive/Bee Nests can be mined, honey taken by bottle, or sheared for honeycombs without angering the bees. No campfire needed!
+
 > Can take honey from Filled Porous Honeycomb Blocks safely without getting Wrath of the Hive Effect.
+
 > Honey Slime will not get angry at you when you take its honey.
 
 Pollen Puff can be thrown at Mooshrooms to spawn Red Mushrooms nearby!

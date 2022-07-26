@@ -8,11 +8,13 @@ import com.telepathicgrunt.the_bumblezone.items.HoneyCompass;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
@@ -57,17 +59,23 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
         if (itemStack.is(BzItems.HONEY_COMPASS.get())) {
             Vec3 vec3 = lootContext.getParamOrNull(LootContextParams.ORIGIN);
             if (vec3 != null) {
-                ServerLevel serverlevel = lootContext.getLevel();
-                BlockPos blockpos = serverlevel.findNearestMapStructure(this.destination, new BlockPos(vec3), this.searchRadius, this.skipKnownStructures);
-                if (blockpos != null) {
-                    HoneyCompass.addStructureTags(lootContext.getLevel().dimension(), blockpos, itemStack.getOrCreateTag());
-                }
+                BlockPos blockPos = new BlockPos(vec3);
+                HoneyCompass.setLoadingTags(itemStack.getOrCreateTag(), true);
+                ThreadExecutor.locate(lootContext.getLevel(), BzTags.HONEY_COMPASS_LOCATING, blockPos, 100, false)
+                        .thenOnServerThread(foundPos -> setCompassData(itemStack, lootContext, foundPos));
             }
             else if (itemStack.hasTag()) {
                 itemStack.setTag(new CompoundTag());
             }
         }
         return itemStack;
+    }
+
+    private void setCompassData(ItemStack itemStack, LootContext lootContext, BlockPos blockPos) {
+        if (blockPos != null) {
+            HoneyCompass.addStructureTags(lootContext.getLevel().dimension(), blockPos, itemStack.getOrCreateTag());
+        }
+        HoneyCompass.setLoadingTags(itemStack.getOrCreateTag(), false);
     }
 
     public static class Serializer extends LootItemConditionalFunction.Serializer<HoneyCompassLocateStructure> {
