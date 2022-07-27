@@ -49,7 +49,6 @@ public class EntityTeleportationBackend {
         double coordinateScale = entity.level.dimensionType().coordinateScale() / destination.dimensionType().coordinateScale();
         BlockPos finalSpawnPos;
         BlockPos validBlockPos;
-        boolean spawnAtFixedPosition = false;
 
         if(BzDimensionConfigs.teleportationMode.get() == 1) {
             finalSpawnPos = new BlockPos(
@@ -64,7 +63,6 @@ public class EntityTeleportationBackend {
         else if(BzDimensionConfigs.teleportationMode.get() == 2) {
             EntityPositionAndDimension capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
             Vec3 playerPos = capability.getNonBZPos();
-            spawnAtFixedPosition = true;
             if(playerPos != null) {
                 validBlockPos = new BlockPos(playerPos);
             }
@@ -87,7 +85,6 @@ public class EntityTeleportationBackend {
             Vec3 pastPos = capability.getNonBZPos();
             if(validBlockPos == null && pastPos != null) {
                 validBlockPos = new BlockPos(pastPos);
-                spawnAtFixedPosition = true;
             }
         }
 
@@ -95,15 +92,6 @@ public class EntityTeleportationBackend {
         finalSpawnPos = validBlockPos;
         if(finalSpawnPos == null) {
             finalSpawnPos = new BlockPos(entity.position());
-            spawnAtFixedPosition = true;
-        }
-
-        // Make sure spacing is safe if in mode 2 or mode 3 when doing forced teleportation when valid land isn't found.
-        if (spawnAtFixedPosition) {
-            if (destination.getBlockState(finalSpawnPos.above()).isSuffocating(destination, finalSpawnPos.above())) {
-                destination.setBlock(finalSpawnPos, Blocks.AIR.defaultBlockState(), 3);
-                destination.setBlock(finalSpawnPos.above(), Blocks.AIR.defaultBlockState(), 3);
-            }
         }
 
         //use found location
@@ -141,7 +129,7 @@ public class EntityTeleportationBackend {
 
             //No solid land was found. Who digs out an entire chunk?!
             if (validBlockPos.getY() == 0) {
-                validBlockPos = null;
+                validBlockPos = blockpos;
             }
             //checks if spot is not two water blocks with air block able to be reached above
             else if (bumblezoneWorld.getBlockState(validBlockPos).getMaterial() == Material.WATER &&
@@ -153,40 +141,17 @@ public class EntityTeleportationBackend {
                     mutable.move(Direction.UP);
                 }
                 if (bumblezoneWorld.getBlockState(mutable).getMaterial() != Material.AIR) {
-                    validBlockPos = null; // No air found. Let's not place player here where they could drown
-                } else {
+                    validBlockPos = blockpos; // No air found. Let's not place player here where they could drown
+                }
+                else {
                     validBlockPos = mutable; // Set player to top of water level
                 }
             }
             //checks if spot is not a non-solid block with air block above
             else if ((!bumblezoneWorld.isEmptyBlock(validBlockPos) && bumblezoneWorld.getBlockState(validBlockPos).getMaterial() != Material.WATER) &&
                     bumblezoneWorld.getBlockState(validBlockPos.above()).getMaterial() != Material.AIR) {
-                validBlockPos = null;
-            }
-
-
-            //still no valid position, time to force a valid location ourselves
-            if (validBlockPos == null) {
-                //We are going to spawn player at exact spot of scaled coordinates by placing air at the spot with honeycomb bottom
-                //and honeycomb walls to prevent drowning
-                //This is the last resort
-                bumblezoneWorld.setBlockAndUpdate(blockpos, Blocks.AIR.defaultBlockState());
-                bumblezoneWorld.setBlockAndUpdate(blockpos.above(), Blocks.AIR.defaultBlockState());
-
-                bumblezoneWorld.setBlockAndUpdate(blockpos.below(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-                bumblezoneWorld.setBlockAndUpdate(blockpos.above().above(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-
-                bumblezoneWorld.setBlockAndUpdate(blockpos.north(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-                bumblezoneWorld.setBlockAndUpdate(blockpos.west(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-                bumblezoneWorld.setBlockAndUpdate(blockpos.east(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-                bumblezoneWorld.setBlockAndUpdate(blockpos.south(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-                bumblezoneWorld.setBlockAndUpdate(blockpos.north().above(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-                bumblezoneWorld.setBlockAndUpdate(blockpos.west().above(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-                bumblezoneWorld.setBlockAndUpdate(blockpos.east().above(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-                bumblezoneWorld.setBlockAndUpdate(blockpos.south().above(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
                 validBlockPos = blockpos;
             }
-
         }
 
         // if player throws pearl at hive and then goes to sleep, they wake up

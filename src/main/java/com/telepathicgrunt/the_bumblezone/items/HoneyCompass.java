@@ -89,7 +89,7 @@ public class HoneyCompass extends Item implements Vanishable {
                     return Component.translatable(this.getDescriptionId(itemStack), block.getName());
                 }
             }
-            return Component.translatable(this.getDescriptionId(itemStack), "Unknown block");
+            return Component.translatable(this.getDescriptionId(itemStack), Component.translatable("item.the_bumblezone.honey_compass_unknown_block"));
         }
         return Component.translatable(this.getDescriptionId(itemStack));
     }
