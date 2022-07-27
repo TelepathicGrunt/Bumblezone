@@ -5,7 +5,9 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.phys.Vec3;
 
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -13,6 +15,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 // Source: https://github.com/thebrightspark/AsyncLocator/blob/master/src/main/java/brightspark/asynclocator/AsyncLocator.java
 public class ThreadExecutor {
@@ -26,7 +29,7 @@ public class ThreadExecutor {
                 new ThreadFactory() {
                     private static final AtomicInteger poolNum = new AtomicInteger(1);
                     private final AtomicInteger threadNum = new AtomicInteger(1);
-                    private final String namePrefix = "bumblezone_honey_compass_structure_locator-" + poolNum.getAndIncrement() + "-thread-";
+                    private final String namePrefix = "bumblezone_locator_and_teleportation-" + poolNum.getAndIncrement() + "-thread-";
 
                     @Override
                     public Thread newThread(Runnable r) {
@@ -69,6 +72,16 @@ public class ThreadExecutor {
                 }
         );
         return new LocateTask<>(level.getServer(), completableFuture, future);
+    }
+
+    public static LocateTask<Optional<Vec3>> dimensionDestinationSearch(MinecraftServer minecraftServer, Supplier<Optional<Vec3>> searchFunction) {
+        CompletableFuture<Optional<Vec3>> completableFuture = new CompletableFuture<>();
+        Future<?> future = LOCATING_EXECUTOR_SERVICE.submit(
+                () ->  {
+                    completableFuture.complete(searchFunction.get());
+                }
+        );
+        return new LocateTask<>(minecraftServer, completableFuture, future);
     }
 
     private static void doLocateLevel(

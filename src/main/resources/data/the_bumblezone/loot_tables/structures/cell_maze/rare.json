@@ -496,6 +496,7 @@
           "type": "minecraft:item",
           "name": "the_bumblezone:honey_compass",
           "weight": 1,
+          "quality": 2,
           "functions": [
             {
               "function": "minecraft:set_nbt",
