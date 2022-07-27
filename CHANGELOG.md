@@ -8,6 +8,10 @@ Reduced the jittering screen a bit when exiting Bumblezone by going below Y = 0.
 
 Fixed teleporting in/out of Bumblezone message not showing up while teleporting instead of afterwards.
 
+##### Structures:
+Cell maze now has a slightly higher chance of having a Throne Pillar locating Honey Compass in the Honey Cocoon blocks.
+ The special compass will also have a higher chance of showing up if you have luck status effect/attribute.
+
 ##### Lang:
 Converted some warnings and teleportation text to be translatable now.
 
