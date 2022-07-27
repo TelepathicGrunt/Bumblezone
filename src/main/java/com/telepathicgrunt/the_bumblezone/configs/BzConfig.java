@@ -107,6 +107,12 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean keepBeeEssenceOnRespawning = false;
 
+    @Entry
+    public static int musicDiscTimeLengthFlightOfTheBumblebee = 84;
+
+    @Entry
+    public static int musicDiscTimeLengthHoneyBee = 216;
+
 
     @Comment
     public static Comment modCompatComment;
