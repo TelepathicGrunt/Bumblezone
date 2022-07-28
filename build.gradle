@@ -92,11 +92,11 @@ dependencies {
 	modImplementation "dev.cafeteria:fake-player-api:${libs.versions.fake.player.get()}"
 	include "dev.cafeteria:fake-player-api:${libs.versions.fake.player.get()}"
 
-	modImplementation "maven.modrinth:modmenu:${libs.versions.mod.menu.get()}"
+	modCompileOnly "maven.modrinth:modmenu:${libs.versions.mod.menu.get()}"
 
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${libs.versions.rei.get()}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${libs.versions.rei.get()}"
-	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${libs.versions.rei.get()}"
+	//modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${libs.versions.rei.get()}"
 
 	//modCompileOnlyApi "mezz.jei:jei-${jei_mc}-common-api:${jei}"
 	//modCompileOnlyApi "mezz.jei:jei-${jei_mc}-fabric-api:${jei}"
@@ -153,7 +153,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	mainFile.changelogType = "markdown"
 	mainFile.releaseType = "beta"
 	mainFile.displayName = "The Bumblezone v${project.mod_version} (${libs.versions.minecraft.get()} MC Quilt)"
-	mainFile.addGameVersion("1.19")
+	mainFile.addGameVersion("1.19.1")
 	mainFile.addModLoader("Quilt")
 	mainFile.addRequirement("midnightlib")
 	mainFile.addRequirement("qsl")
@@ -167,7 +167,7 @@ modrinth {
 	uploadFile = remapJar
 	changelog = fileContents
 	versionType = "BETA"
-	gameVersions = ["1.19"]
+	gameVersions = ["1.19.1"]
 	loaders = ["quilt"]
 	dependencies {
 		required.project "qsl"
