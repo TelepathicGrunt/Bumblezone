@@ -11,6 +11,8 @@ public class BzGeneralConfigs {
     public static ForgeConfigSpec.BooleanValue dispensersDropGlassBottles;
     public static ForgeConfigSpec.IntValue broodBlocksBeeSpawnCapacity;
     public static ForgeConfigSpec.BooleanValue keepBeeEssenceOnRespawning;
+    public static ForgeConfigSpec.IntValue musicDiscTimeLengthFlightOfTheBumblebee;
+    public static ForgeConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -75,6 +77,22 @@ public class BzGeneralConfigs {
                         " Whether Essence of the Bees's effect should stay on the player if they die and then respawn.\n")
                 .translation("the_bumblezone.config.keepBeeEssenceOnRespawning")
                 .define("keepBeeEssenceOnRespawning", false);
+
+
+        musicDiscTimeLengthFlightOfTheBumblebee = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long in seconds this music disc will be playing music.",
+                        " This is used for the server to know when to make Allays stop dancing when Jukebox plays this music disc.\n")
+                .translation("the_bumblezone.config.broodblocksbeespawncapacity")
+                .defineInRange("broodBlocksBeeSpawnCapacity", 84, 0 , 1000000);
+
+
+        musicDiscTimeLengthHoneyBee = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long in seconds this music disc will be playing music.",
+                        " This is used for the server to know when to make Allays stop dancing when Jukebox plays this music disc.\n")
+                .translation("the_bumblezone.config.musicdisctimelengthhoneybee")
+                .defineInRange("musicDiscTimeLengthHoneyBee", 216, 0 , 1000000);
 
         builder.pop();
     }
