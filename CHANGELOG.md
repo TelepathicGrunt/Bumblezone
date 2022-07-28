@@ -1,3 +1,10 @@
+### **(V.6.1.4 Changes) (1.19 Minecraft)**
+
+##### Mod Compat:
+Fixed crash if a mod passes null into beehivetileentity.emptyAllLivingFromHive.
+ I added a null check to my code to prevent a crash.
+
+
 ### **(V.6.1.3 Changes) (1.19 Minecraft)**
 
 ##### Dimension:
