@@ -1,9 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.capabilities;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.INBTSerializable;
+import org.apache.logging.log4j.Level;
 
 
 public class EntityPositionAndDimension implements INBTSerializable<CompoundTag> {
@@ -11,7 +13,13 @@ public class EntityPositionAndDimension implements INBTSerializable<CompoundTag>
 	private Vec3 nonBZPosition = null;
 
 	public void setNonBZDim(ResourceLocation incomingDim) {
-		nonBZDimension = incomingDim;
+		if (incomingDim.equals(Bumblezone.MOD_DIMENSION_ID)) {
+			this.nonBZDimension = net.minecraft.world.level.Level.OVERWORLD.location();
+			Bumblezone.LOGGER.log(Level.ERROR, "Error: The non-bz dimension passed in to be stored was bz dimension. Please contact mod creator to let them know of this issue.");
+		}
+		else {
+			nonBZDimension = incomingDim;
+		}
 	}
 
 	public ResourceLocation getNonBZDim() {

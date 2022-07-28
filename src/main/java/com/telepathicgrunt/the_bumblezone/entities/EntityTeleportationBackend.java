@@ -356,7 +356,7 @@ public class EntityTeleportationBackend {
             LazyOptional<EntityPositionAndDimension> lazyOptional = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
             if(lazyOptional.isPresent()) {
                 EntityPositionAndDimension capability = lazyOptional.orElseThrow(RuntimeException::new);
-                capability.setNonBZDim(event.getDimension().location());
+                capability.setNonBZDim(entity.level.dimension().location());
                 capability.setNonBZPos(entity.position());
             }
             else {

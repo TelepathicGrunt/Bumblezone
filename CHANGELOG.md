@@ -1,5 +1,9 @@
 ### **(V.6.1.4 Changes) (1.19 Minecraft)**
 
+##### Dimension:
+Fixed not storing the correct dimension the player came from when entering Bumblezone.
+ Exiting Bumblezone should put you back to the original dimension properly now.
+
 ##### Mod Compat:
 Fixed crash when Alex's Mob's bear tries to break and eat a beehive. 
  They passed null into beehivetileentity.emptyAllLivingFromHive which crashed my code.
