@@ -265,7 +265,7 @@ public class BeeAggression {
     // Make Essence of the Bees players be able to take shear hive blocks without angering bees
     public static void preventAngerOnEssencedPlayers(Player player, List<Entity> entityList) {
         // Don't spawn bees on client side. Server can handle that just fine. Prevents bees from briefly appearing on clientside for 1 frame.
-        if (player.level.isClientSide() || (player instanceof ServerPlayer serverPlayer && EssenceOfTheBees.hasEssence(serverPlayer))) {
+        if (player != null && player.level.isClientSide() || (player instanceof ServerPlayer serverPlayer && EssenceOfTheBees.hasEssence(serverPlayer))) {
             entityList.clear();
         }
     }

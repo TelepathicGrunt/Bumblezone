@@ -1,3 +1,11 @@
+### **(V.6.1.4 Changes) (1.19 Minecraft)**
+
+##### Mod Compat:
+Fixed crash when Alex's Mob's bear tries to break and eat a beehive. 
+ They passed null into beehivetileentity.emptyAllLivingFromHive which crashed my code.
+ I added a null check to my code to fix this.
+
+
 ### **(V.6.1.3 Changes) (1.19 Minecraft)**
 
 ##### Dimension:
