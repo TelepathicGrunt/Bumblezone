@@ -4,7 +4,7 @@ minecraft = "1.19.1"
 quilt_mappings = "1.19.1+build.2"
 quilt_loader = "0.17.1"
 
-quilted_fabric_api = "3.0.0-alpha.6+0.58.1-1.19.1"
+quilted_fabric_api = "4.0.0-beta.1+0.58.5-1.19.1"
 mixinextra = "0.0.11"
 midnightlib = "0.5.2"
 commandstructures = "3.0.0+1.19"

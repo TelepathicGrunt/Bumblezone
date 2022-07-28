@@ -92,11 +92,11 @@ dependencies {
 	modImplementation "dev.cafeteria:fake-player-api:${libs.versions.fake.player.get()}"
 	include "dev.cafeteria:fake-player-api:${libs.versions.fake.player.get()}"
 
-	modImplementation "maven.modrinth:modmenu:${libs.versions.mod.menu.get()}"
+	modCompileOnly "maven.modrinth:modmenu:${libs.versions.mod.menu.get()}"
 
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${libs.versions.rei.get()}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${libs.versions.rei.get()}"
-	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${libs.versions.rei.get()}"
+	//modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${libs.versions.rei.get()}"
 
 	//modCompileOnlyApi "mezz.jei:jei-${jei_mc}-common-api:${jei}"
 	//modCompileOnlyApi "mezz.jei:jei-${jei_mc}-fabric-api:${jei}"
