@@ -1,5 +1,9 @@
 ### **(V.6.1.4 Changes) (1.19 Minecraft)**
 
+##### Dimension:
+Fixed not storing the correct dimension the player came from when entering Bumblezone.
+ Exiting Bumblezone should put you back to the original dimension properly now.
+
 ##### Mod Compat:
 Fixed crash if a mod passes null into beehivetileentity.emptyAllLivingFromHive.
  I added a null check to my code to prevent a crash.

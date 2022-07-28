@@ -29,10 +29,10 @@ public class EntityComponent implements Component {
         if (nonBZDimension.equals(Bumblezone.MOD_DIMENSION_ID)) {
             this.nonBZDimensionType = net.minecraft.world.level.Level.OVERWORLD.location();
             Bumblezone.LOGGER.log(Level.ERROR, "Error: The non-bz dimension passed in to be stored was bz dimension. Please contact mod creator to let them know of this issue.");
-        } else {
+        }
+        else {
             this.nonBZDimensionType = nonBZDimension;
         }
-
     }
 
 
