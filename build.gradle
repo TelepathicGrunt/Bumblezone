@@ -133,7 +133,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     def mainFile = upload(projectId, jar)
     mainFile.changelog = changelogText
     mainFile.changelogType = "markdown"
-    mainFile.releaseType = "beta"
+    mainFile.releaseType = "release"
     mainFile.displayName = "The Bumblezone v${project.mod_version} (${project.mc_version} MC)"
 }
 
