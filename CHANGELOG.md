@@ -1,3 +1,10 @@
+### **(V.6.1.5 Changes) (1.19 Minecraft)**
+
+##### Mod Compat:
+Earth2Java's Muddy Pig will only spawn Poppy flowers when it is hit by Pollen Puff while in mud.
+ Non-muddy form of this Muddy Pig mob will not spawn flowers anymore when hit by Pollen Puff.
+
+
 ### **(V.6.1.4 Changes) (1.19 Minecraft)**
 
 ##### Items:
