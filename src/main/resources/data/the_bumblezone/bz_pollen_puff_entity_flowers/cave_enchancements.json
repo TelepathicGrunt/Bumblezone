@@ -1,10 +1,13 @@
 {
-  "entries": [
-    {
-      "entity_type": "cave_enhancements:cruncher",
-      "plants_to_spawn": [
-        "minecraft:moss_carpet"
+  "cave_enhancements:cruncher": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 1
+        }
       ]
     }
-  ]
+  }]
 }

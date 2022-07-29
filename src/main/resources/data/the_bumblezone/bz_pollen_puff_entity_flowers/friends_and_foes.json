@@ -1,16 +1,24 @@
 {
-  "entries": [
-    {
-      "entity_type": "friendsandfoes:moobloom",
-      "plants_to_spawn": [
-        "friendsandfoes:buttercup"
-      ]
-    },
-    {
-      "entity_type": "friendsandfoes:glare",
-      "plants_to_spawn": [
-        "minecraft:moss_carpet"
+  "friendsandfoes:moobloom": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "friendsandfoes:buttercup" },
+          "weight": 1
+        }
       ]
     }
-  ]
+  }],
+  "friendsandfoes:glare": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 1
+        }
+      ]
+    }
+  }]
 }

@@ -1,3 +1,11 @@
+### **(V.6.1.5 Changes) (1.19.1 Minecraft)**
+
+##### Items:
+Redid the `bz_pollen_puff_entity_flowers` json folder so now the entries can take a weighted list of plants to pick from
+ and can match the entity's nbt. This means now that Brown Mooshrooms will spawn Brown Mushrooms instead of Red Mushrooms!
+ Hitting Earth Mobs Mod's muddy pigs with Pollen Puff will now spawn a random tulip nearby!
+
+
 ### **(V.6.1.4 Changes) (1.19 Minecraft)**
 
 ##### Dimension:

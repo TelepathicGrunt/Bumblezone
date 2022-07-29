@@ -1,22 +1,61 @@
 {
-  "entries": [
-    {
-      "entity_type": "earthmobsmod:moobloom",
-      "plants_to_spawn": [
-        "earthmobsmod:buttercup"
-      ]
-    },
-    {
-      "entity_type": "earthmobsmod:moolip",
-      "plants_to_spawn": [
-        "minecraft:pink_tulip"
-      ]
-    },
-    {
-      "entity_type": "earthmobsmod:cluck_shroom",
-      "plants_to_spawn": [
-        "minecraft:red_mushroom"
+  "earthmobsmod:moobloom": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "earthmobsmod:buttercup" },
+          "weight": 1
+        }
       ]
     }
-  ]
+  }],
+  "earthmobsmod:moolip": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:pink_tulip" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "earthmobsmod:cluck_shroom": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:red_mushroom" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "minecraft:pig": [{
+    "nbt_match": {
+      "Muddy": true
+    },
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:red_tulip" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:orange_tulip" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:white_tulip" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:pink_tulip" },
+          "weight": 1
+        }
+      ]
+    }
+  }]
 }
