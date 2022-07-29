@@ -1,8 +1,15 @@
 ### **(V.6.1.6 Changes) (1.19 Minecraft)**
 
+##### Items:
+Pollen Puff's `bz_pollen_puff_entity_flowers` json entries can now take air block entries safely.
+ Air entries can be used to make spawning plants more rare when the mob is hit by Pollen Puff.
+ Many mossy mobs from other mods now have their rates of spawning Moss Carpet or Azalea now lowered as a result to balance.
+
 ##### Mod Compat:
 Earth2Java's Muddy Pig will only spawn Poppy flowers when it is hit by Pollen Puff while in mud.
  Non-muddy form of this Muddy Pig mob will not spawn flowers anymore when hit by Pollen Puff.
+
+Friends and Foe's Mauler will now sometimes spawn Moss Carpet when hit with Pollen Puff.
 
 
 ### **(V.6.1.5 Changes) (1.19 Minecraft)**
