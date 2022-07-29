@@ -13,11 +13,11 @@
         },
         {
           "data": { "Name": "minecraft:spore_blossom" },
-          "weight": 2
+          "weight": 3
         },
         {
           "data": { "Name": "minecraft:air" },
-          "weight": 5
+          "weight": 3
         }
       ]
     }
