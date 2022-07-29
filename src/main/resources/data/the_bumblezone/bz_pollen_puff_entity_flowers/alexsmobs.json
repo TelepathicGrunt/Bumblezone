@@ -1,12 +1,21 @@
 {
-  "entries": [
-    {
-      "entity_type": "alexsmobs:flutter",
-      "plants_to_spawn": [
-        "minecraft:azalea",
-        "minecraft:flowering_azalea",
-        "minecraft:spore_blossom"
+  "alexsmobs:flutter": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:azalea" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:flowering_azalea" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:spore_blossom" },
+          "weight": 2
+        }
       ]
     }
-  ]
+  }]
 }
