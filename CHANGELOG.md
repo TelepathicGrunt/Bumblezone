@@ -8,9 +8,6 @@ Pollen Puff's `bz_pollen_puff_entity_flowers` json entries can now take air bloc
 ##### Mod Compat:
 Friends and Foe's Mauler will now sometimes spawn Moss Carpet when hit with Pollen Puff.
 
-##### Misc:
-Ported to 1.19.1. Music Disc constructors changed a bit in 1.19.1 which requires me to release this fix.
-
 
 ### **(V.6.1.4 Changes) (1.19 Minecraft)**
 
