@@ -6,6 +6,10 @@
         {
           "data": { "Name": "minecraft:moss_carpet" },
           "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 2
         }
       ]
     }

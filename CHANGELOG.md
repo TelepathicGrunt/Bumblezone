@@ -5,6 +5,13 @@ Redid the `bz_pollen_puff_entity_flowers` json folder so now the entries can tak
  and can match the entity's nbt. This means now that Brown Mooshrooms will spawn Brown Mushrooms instead of Red Mushrooms!
  Hitting Earth Mobs Mod's muddy pigs with Pollen Puff will now spawn a random tulip nearby!
 
+Pollen Puff's `bz_pollen_puff_entity_flowers` json entries can now take air block entries safely.
+ Air entries can be used to make spawning plants more rare when the mob is hit by Pollen Puff.
+ Many mossy mobs from other mods now have their rates of spawning Moss Carpet or Azalea now lowered as a result to balance.
+
+##### Mod Compat:
+Friends and Foe's Mauler will now sometimes spawn Moss Carpet when hit with Pollen Puff.
+
 ##### Misc:
 Ported to 1.19.1. Music Disc constructors changed a bit in 1.19.1 which requires me to release this fix.
 
