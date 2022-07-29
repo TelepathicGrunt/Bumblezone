@@ -28,6 +28,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingEvent;
 
 import java.util.ArrayList;
@@ -92,21 +93,27 @@ public class EntityTeleportationHookup {
         if (!livingEntity.level.isClientSide()) {
             checkAndCorrectStoredDimension(livingEntity);
             MinecraftServer minecraftServer = livingEntity.getServer(); // the server itself
-            ResourceKey<Level> worldKey;
+            ResourceKey<Level> worldKey = null;
 
             if (livingEntity.getControllingPassenger() == null) {
-                EntityPositionAndDimension capability = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
-                worldKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, capability.getNonBZDim());
+                LazyOptional<EntityPositionAndDimension> capOptional = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
+                if (capOptional.isPresent()) {
+                    EntityPositionAndDimension capability = capOptional.orElseThrow(RuntimeException::new);
+                    worldKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, capability.getNonBZDim());
+                }
             }
             else {
                 if(livingEntity.getControllingPassenger() instanceof LivingEntity livingEntity2) {
                     checkAndCorrectStoredDimension(livingEntity2);
                 }
-                EntityPositionAndDimension capability = livingEntity.getControllingPassenger().getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
-                worldKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, capability.getNonBZDim());
+                LazyOptional<EntityPositionAndDimension> capOptional = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
+                if (capOptional.isPresent()) {
+                    EntityPositionAndDimension capability = capOptional.orElseThrow(RuntimeException::new);
+                    worldKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, capability.getNonBZDim());
+                }
             }
 
-            ServerLevel serverWorld = minecraftServer.getLevel(worldKey);
+            ServerLevel serverWorld = worldKey == null ? null : minecraftServer.getLevel(worldKey);
             if(serverWorld == null) {
                 serverWorld = minecraftServer.getLevel(Level.OVERWORLD);
             }
@@ -262,11 +269,14 @@ public class EntityTeleportationHookup {
     private static void checkAndCorrectStoredDimension(LivingEntity livingEntity) {
         //Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone.
         //Go to Overworld instead as default. Or go to Overworld if config is set.
-        EntityPositionAndDimension capability = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
-        if (capability.getNonBZDim().equals(Bumblezone.MOD_DIMENSION_ID) || BzDimensionConfigs.forceExitToOverworld.get()) {
-            // go to overworld by default
-            //update stored dimension
-            capability.setNonBZDim(Level.OVERWORLD.location());
+        LazyOptional<EntityPositionAndDimension> capOptional = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
+        if (capOptional.isPresent()) {
+            EntityPositionAndDimension capability = capOptional.orElseThrow(RuntimeException::new);
+            if (capability.getNonBZDim().equals(Bumblezone.MOD_DIMENSION_ID) || BzDimensionConfigs.forceExitToOverworld.get()) {
+                // go to overworld by default
+                //update stored dimension
+                capability.setNonBZDim(Level.OVERWORLD.location());
+            }
         }
     }
 }

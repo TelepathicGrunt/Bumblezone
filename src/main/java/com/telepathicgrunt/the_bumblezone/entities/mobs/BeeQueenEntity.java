@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities.mobs;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenPose;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAlwaysLookAtPlayerGoal;
@@ -71,6 +72,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -438,24 +440,27 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
         if (stack.equals(ItemStack.EMPTY) && player instanceof ServerPlayer serverPlayer) {
             if (finalbeeQueenAdvancementDone(serverPlayer)) {
-                EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-                if (!capability.receivedEssencePrize) {
-                    Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
-                    Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
-                    spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(BzItems.ESSENCE_OF_THE_BEES.get(), 1, 1000, 1), ItemStack.EMPTY);
-                    capability.receivedEssencePrize = true;
-                    serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
-                }
-                else {
-                    long timeDiff = this.level.getGameTime() - capability.tradeResetPrimedTime;
-                    if (timeDiff < 200 && timeDiff > 10) {
-                        resetAdvancementTree(serverPlayer, BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT);
-                        capability.resetAllTrackerStats();
-                        serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.reset_advancements").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                LazyOptional<EntityMisc> capOptional = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC);
+                if (capOptional.isPresent()) {
+                    EntityMisc capability = capOptional.orElseThrow(RuntimeException::new);
+                    if (!capability.receivedEssencePrize) {
+                        Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
+                        Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
+                        spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(BzItems.ESSENCE_OF_THE_BEES.get(), 1, 1000, 1), ItemStack.EMPTY);
+                        capability.receivedEssencePrize = true;
+                        serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                     }
                     else {
-                        capability.tradeResetPrimedTime = this.level.getGameTime();
-                        serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.advancements_warning").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                        long timeDiff = this.level.getGameTime() - capability.tradeResetPrimedTime;
+                        if (timeDiff < 200 && timeDiff > 10) {
+                            resetAdvancementTree(serverPlayer, BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT);
+                            capability.resetAllTrackerStats();
+                            serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.reset_advancements").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                        }
+                        else {
+                            capability.tradeResetPrimedTime = this.level.getGameTime();
+                            serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.advancements_warning").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                        }
                     }
                 }
             }
@@ -499,13 +504,16 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     EntityMisc.onQueenBeeTrade(serverPlayer);
 
                     if (finalbeeQueenAdvancementDone(serverPlayer)) {
-                        EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-                        if (!capability.receivedEssencePrize) {
-                            Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
-                            Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
-                            spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(BzItems.ESSENCE_OF_THE_BEES.get(), 1, 1000, 1), ItemStack.EMPTY);
-                            capability.receivedEssencePrize = true;
-                            serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                        LazyOptional<EntityMisc> capOptional = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC);
+                        if (capOptional.isPresent()) {
+                            EntityMisc capability = capOptional.orElseThrow(RuntimeException::new);
+                            if (!capability.receivedEssencePrize) {
+                                Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
+                                Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
+                                spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(BzItems.ESSENCE_OF_THE_BEES.get(), 1, 1000, 1), ItemStack.EMPTY);
+                                capability.receivedEssencePrize = true;
+                                serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                            }
                         }
                     }
                 }

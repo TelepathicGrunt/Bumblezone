@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.google.common.primitives.Doubles;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
@@ -61,8 +62,14 @@ public class EntityTeleportationBackend {
         }
 
         else if(BzDimensionConfigs.teleportationMode.get() == 2) {
-            EntityPositionAndDimension capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
-            Vec3 playerPos = capability.getNonBZPos();
+            Vec3 playerPos = null;
+
+            LazyOptional<EntityPositionAndDimension> capOptional = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
+            if (capOptional.isPresent()) {
+                EntityPositionAndDimension capability = capOptional.orElseThrow(RuntimeException::new);
+                playerPos = capability.getNonBZPos();
+            }
+
             if(playerPos != null) {
                 validBlockPos = new BlockPos(playerPos);
             }
@@ -81,8 +88,14 @@ public class EntityTeleportationBackend {
             //Gets valid space in other world
             validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, SEARCH_RADIUS, checkingUpward);
 
-            EntityPositionAndDimension capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
-            Vec3 pastPos = capability.getNonBZPos();
+            Vec3 pastPos = null;
+
+            LazyOptional<EntityPositionAndDimension> capOptional = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
+            if (capOptional.isPresent()) {
+                EntityPositionAndDimension capability = capOptional.orElseThrow(RuntimeException::new);
+                pastPos = capability.getNonBZPos();
+            }
+
             if(validBlockPos == null && pastPos != null) {
                 validBlockPos = new BlockPos(pastPos);
             }
