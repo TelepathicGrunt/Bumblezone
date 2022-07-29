@@ -1,3 +1,9 @@
+### **(V.6.1.7 Changes) (1.19 Minecraft)**
+
+##### Mod Compat:
+Earth2Java's Moolip now spawns Pink Daisy when hit with Pollen Puff instead of Pink Tulip.
+
+
 ### **(V.6.1.6 Changes) (1.19 Minecraft)**
 
 ##### Items:
