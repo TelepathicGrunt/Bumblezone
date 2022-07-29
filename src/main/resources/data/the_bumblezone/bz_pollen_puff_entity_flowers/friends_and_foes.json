@@ -16,11 +16,11 @@
       "entries": [
         {
           "data": { "Name": "minecraft:moss_carpet" },
-          "weight": 1
+          "weight": 2
         },
         {
           "data": { "Name": "minecraft:air" },
-          "weight": 2
+          "weight": 1
         }
       ]
     }
@@ -31,11 +31,11 @@
       "entries": [
         {
           "data": { "Name": "minecraft:moss_carpet" },
-          "weight": 1
+          "weight": 2
         },
         {
           "data": { "Name": "minecraft:air" },
-          "weight": 2
+          "weight": 1
         }
       ]
     }

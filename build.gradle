@@ -107,9 +107,9 @@ dependencies {
     compileOnly fg.deobf("dev.architectury:architectury-forge:${project.architectury_version}")
 
     // Switch to `implementation` when testing mod compat
+    //runtimeOnly fg.deobf("dev.architectury:architectury-forge:${project.architectury_version}")
+    //runtimeOnly fg.deobf("curse.maven:friends_and_foes-602059:3873779")
     //runtimeOnly fg.deobf("curse.maven:earthmobsmod-333256:3871807")
-    //compileOnly fg.deobf("curse.maven:friends_and_foes-602059:3725314")
-    //runtimeOnly fg.deobf("curse.maven:friends_and_foes-602059:3725314")
     //runtimeOnly fg.deobf("curse.maven:token_enchanter-444421:3559237")
     //runtimeOnly fg.deobf("curse.maven:silent_lib-242998:3708359")
 
