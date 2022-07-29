@@ -1,10 +1,32 @@
 {
-  "entries": [
+  "minecraft:mooshroom": [
     {
-      "entity_type": "minecraft:mooshroom",
-      "plants_to_spawn": [
-        "minecraft:red_mushroom"
-      ]
+      "nbt_match": {
+        "Type": "red"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:red_mushroom" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Type": "brown"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:brown_mushroom" },
+            "weight": 1
+          }
+        ]
+      }
     }
   ]
 }
