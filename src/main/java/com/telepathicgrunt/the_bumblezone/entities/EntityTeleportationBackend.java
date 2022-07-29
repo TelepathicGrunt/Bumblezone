@@ -332,7 +332,7 @@ public class EntityTeleportationBackend {
     public static void entityChangingDimension(ResourceLocation dimensionEntering, Entity entity) {
         //Updates the non-BZ dimension that the player is leaving
         if (dimensionEntering.equals(Bumblezone.MOD_DIMENSION_ID) && entity instanceof LivingEntity) {
-            Bumblezone.ENTITY_COMPONENT.get(entity).setNonBZDimension(dimensionEntering);
+            Bumblezone.ENTITY_COMPONENT.get(entity).setNonBZDimension(entity.level.dimension().location());
             Bumblezone.ENTITY_COMPONENT.get(entity).setNonBZPos(entity.position());
         }
     }
