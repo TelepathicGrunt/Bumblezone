@@ -15,7 +15,7 @@
       "type": "minecraft:weighted_state_provider",
       "entries": [
         {
-          "data": { "Name": "minecraft:pink_tulip" },
+          "data": { "Name": "earthtojavamobs:pink_daisy" },
           "weight": 1
         }
       ]
