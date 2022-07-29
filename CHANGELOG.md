@@ -1,4 +1,4 @@
-### **(V.6.1.5 Changes) (1.19.1 Minecraft)**
+### **(V.6.1.5 Changes) (1.19 Minecraft)**
 
 ##### Items:
 Pollen Puff's `bz_pollen_puff_entity_flowers` json entries can now take air block entries safely.
