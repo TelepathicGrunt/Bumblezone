@@ -1,7 +1,16 @@
-### **(V.6.1.6 Changes) (1.19.1 Minecraft)**
+### **(V.6.1.7 Changes) (1.19.1 Minecraft)**
 
 ##### Misc:
 Ported to 1.19.1. Music Disc constructors changed a bit in 1.19.1 which requires me to release this fix.
+
+
+### **(V.6.1.6 Changes) (1.19 Minecraft)**
+
+##### Misc:
+Added checks to shield against missing capabilities on serverPlayers that Forge was supposed to keep alive but for some
+ unknown reason, just lets the caps get nuked which kills my mod. Now null cap crashes should be gone for good.
+ I wrapped all my caps grabs with checks to make sure the cap exists as my nuclear option for Forge's instability with caps.
+ Yes this is a ~~gamer~~ modder rant.
 
 
 ### **(V.6.1.5 Changes) (1.19 Minecraft)**
