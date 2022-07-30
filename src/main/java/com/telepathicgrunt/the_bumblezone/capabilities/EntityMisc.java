@@ -22,10 +22,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map;
 
@@ -132,10 +134,11 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 			blockItem.getBlock() instanceof BeehiveBlock &&
 			rootAdvancementDone(serverPlayer))
 		{
-			EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-			int currentlyCraftedCount = capability.craftedBeehives + 1;
-			BzCriterias.BEEHIVE_CRAFTED_TRIGGER.trigger(serverPlayer, currentlyCraftedCount);
-			capability.craftedBeehives = currentlyCraftedCount;
+			serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
+				int currentlyCraftedCount = capability.craftedBeehives + 1;
+				BzCriterias.BEEHIVE_CRAFTED_TRIGGER.trigger(serverPlayer, currentlyCraftedCount);
+				capability.craftedBeehives = currentlyCraftedCount;
+			});
 		}
 	}
 
@@ -145,19 +148,21 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 			event.getCausedByPlayer() instanceof ServerPlayer serverPlayer &&
 			rootAdvancementDone(serverPlayer))
 		{
-			EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-			int currentlyBredBees = capability.beesBred + 1;
-			BzCriterias.BEE_BREEDING_TRIGGER.trigger(serverPlayer, currentlyBredBees);
-			capability.beesBred = currentlyBredBees;
+			serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
+				int currentlyBredBees = capability.beesBred + 1;
+				BzCriterias.BEE_BREEDING_TRIGGER.trigger(serverPlayer, currentlyBredBees);
+				capability.beesBred = currentlyBredBees;
+			});
 		}
 	}
 
 	public static void onFlowerSpawned(Player player) {
 		if (player instanceof ServerPlayer serverPlayer && rootAdvancementDone(serverPlayer)) {
-			EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-			int currentlySpawnedFlowers = capability.flowersSpawned + 1;
-			BzCriterias.POLLEN_PUFF_SPAWN_FLOWERS_TRIGGER.trigger(serverPlayer, currentlySpawnedFlowers);
-			capability.flowersSpawned = currentlySpawnedFlowers;
+			serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
+				int currentlySpawnedFlowers = capability.flowersSpawned + 1;
+				BzCriterias.POLLEN_PUFF_SPAWN_FLOWERS_TRIGGER.trigger(serverPlayer, currentlySpawnedFlowers);
+				capability.flowersSpawned = currentlySpawnedFlowers;
+			});
 		}
 	}
 
@@ -169,13 +174,14 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 			damageSource.getEntity() instanceof ServerPlayer serverPlayer &&
 			rootAdvancementDone(serverPlayer))
 		{
-			EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-			ResourceLocation killedEntity = Registry.ENTITY_TYPE.getKey(event.getEntity().getType());
-			int killedCount = capability.mobsKilledTracker.getOrDefault(killedEntity, 0);
-			killedCount += 1;
+			serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
+				ResourceLocation killedEntity = ForgeRegistries.ENTITY_TYPES.getKey(event.getEntity().getType());
+				int killedCount = capability.mobsKilledTracker.getOrDefault(killedEntity, 0);
+				killedCount += 1;
 
-			BzCriterias.KILLED_COUNTER_TRIGGER.trigger(serverPlayer, killedEntity, killedCount);
-			capability.mobsKilledTracker.put(killedEntity, killedCount);
+				BzCriterias.KILLED_COUNTER_TRIGGER.trigger(serverPlayer, killedEntity, killedCount);
+				capability.mobsKilledTracker.put(killedEntity, killedCount);
+			});
 		}
 	}
 
@@ -184,37 +190,41 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 			event.getItem().is(Items.HONEY_BOTTLE)
 			&& rootAdvancementDone(serverPlayer))
 		{
-			EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-			int currentlyDrankHoneyBottles = capability.honeyBottleDrank + 1;
-			BzCriterias.HONEY_BOTTLE_DRANK_TRIGGER.trigger(serverPlayer, currentlyDrankHoneyBottles);
-			capability.honeyBottleDrank = currentlyDrankHoneyBottles;
+			serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
+				int currentlyDrankHoneyBottles = capability.honeyBottleDrank + 1;
+				BzCriterias.HONEY_BOTTLE_DRANK_TRIGGER.trigger(serverPlayer, currentlyDrankHoneyBottles);
+				capability.honeyBottleDrank = currentlyDrankHoneyBottles;
+			});
 		}
 	}
 
 	public static void onBeeStingerFired(Player player) {
 		if (player instanceof ServerPlayer serverPlayer && rootAdvancementDone(serverPlayer)) {
-			EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-			int currentBeeStingersFired = capability.beeStingersFired + 1;
-			BzCriterias.BEE_STINGER_SHOOTER_TRIGGER.trigger(serverPlayer, currentBeeStingersFired);
-			capability.beeStingersFired = currentBeeStingersFired;
+			serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
+				int currentBeeStingersFired = capability.beeStingersFired + 1;
+				BzCriterias.BEE_STINGER_SHOOTER_TRIGGER.trigger(serverPlayer, currentBeeStingersFired);
+				capability.beeStingersFired = currentBeeStingersFired;
+			});
 		}
 	}
 
 	public static void onBeesSaved(Player player) {
 		if (player instanceof ServerPlayer serverPlayer && rootAdvancementDone(serverPlayer)) {
-			EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-			int currentBeesSaved = capability.beeSaved + 1;
-			BzCriterias.BEE_SAVED_BY_STINGER_TRIGGER.trigger(serverPlayer, currentBeesSaved);
-			capability.beeSaved = currentBeesSaved;
+			serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
+				int currentBeesSaved = capability.beeSaved + 1;
+				BzCriterias.BEE_SAVED_BY_STINGER_TRIGGER.trigger(serverPlayer, currentBeesSaved);
+				capability.beeSaved = currentBeesSaved;
+			});
 		}
 	}
 
 	public static void onPollenHit(Player player) {
 		if (player instanceof ServerPlayer serverPlayer && rootAdvancementDone(serverPlayer)) {
-			EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-			int currentPollenPuffHits = capability.pollenPuffHits + 1;
-			BzCriterias.POLLEN_PUFF_HIT_TRIGGER.trigger(serverPlayer, currentPollenPuffHits);
-			capability.pollenPuffHits = currentPollenPuffHits;
+			serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
+				int currentPollenPuffHits = capability.pollenPuffHits + 1;
+				BzCriterias.POLLEN_PUFF_HIT_TRIGGER.trigger(serverPlayer, currentPollenPuffHits);
+				capability.pollenPuffHits = currentPollenPuffHits;
+			});
 		}
 	}
 
@@ -224,28 +234,31 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 			event.getCausedByPlayer() instanceof ServerPlayer serverPlayer &&
 			rootAdvancementDone(serverPlayer))
 		{
-			EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-			int currentlyHoneySlimeBred = capability.honeySlimeBred + 1;
-			BzCriterias.HONEY_SLIME_BRED_TRIGGER.trigger(serverPlayer, currentlyHoneySlimeBred);
-			capability.honeySlimeBred = currentlyHoneySlimeBred;
+			serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
+				int currentlyHoneySlimeBred = capability.honeySlimeBred + 1;
+				BzCriterias.HONEY_SLIME_BRED_TRIGGER.trigger(serverPlayer, currentlyHoneySlimeBred);
+				capability.honeySlimeBred = currentlyHoneySlimeBred;
+			});
 		}
 	}
 
 	public static void onBeesFed(Player player) {
 		if (player instanceof ServerPlayer serverPlayer && rootAdvancementDone(serverPlayer)) {
-			EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-			int currentBeesFed = capability.beesFed + 1;
-			BzCriterias.BEE_FED_TRIGGER.trigger(serverPlayer, currentBeesFed);
-			capability.beesFed = currentBeesFed;
+			serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
+				int currentBeesFed = capability.beesFed + 1;
+				BzCriterias.BEE_FED_TRIGGER.trigger(serverPlayer, currentBeesFed);
+				capability.beesFed = currentBeesFed;
+			});
 		}
 	}
 
 	public static void onQueenBeeTrade(Player player) {
 		if (player instanceof ServerPlayer serverPlayer && rootAdvancementDone(serverPlayer)) {
-			EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-			int currentTrades = capability.queenBeeTrade + 1;
-			BzCriterias.BEE_QUEEN_TRADING_TRIGGER.trigger(serverPlayer, currentTrades);
-			capability.queenBeeTrade = currentTrades;
+			serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
+				int currentTrades = capability.queenBeeTrade + 1;
+				BzCriterias.BEE_QUEEN_TRADING_TRIGGER.trigger(serverPlayer, currentTrades);
+				capability.queenBeeTrade = currentTrades;
+			});
 		}
 	}
 

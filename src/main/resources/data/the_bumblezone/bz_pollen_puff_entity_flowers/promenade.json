@@ -1,12 +1,25 @@
 {
-  "entries": [
-    {
-      "entity_type": "promenade:lush_creeper",
-      "plants_to_spawn": [
-        "minecraft:azalea",
-        "minecraft:flowering_azalea",
-        "minecraft:moss_carpet"
+  "promenade:lush_creeper": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:azalea" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:flowering_azalea" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 3
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 3
+        }
       ]
     }
-  ]
+  }]
 }

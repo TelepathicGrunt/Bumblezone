@@ -23,6 +23,8 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.NotNull;
 
 public class EssenceOfTheBees extends Item {
 
@@ -120,12 +122,12 @@ public class EssenceOfTheBees extends Item {
     }
 
     public static void setEssence(ServerPlayer serverPlayer, boolean newValue) {
-        EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-        capability.isBeeEssenced = newValue;
+        serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> capability.isBeeEssenced = newValue);
     }
 
     public static boolean hasEssence(ServerPlayer serverPlayer) {
-        EntityMisc capability = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).orElseThrow(RuntimeException::new);
-        return capability.isBeeEssenced;
+        return serverPlayer.getCapability(BzCapabilities.ENTITY_MISC)
+                .map(c -> c.isBeeEssenced)
+                .orElse(false);
     }
 }

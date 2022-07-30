@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityFlyingSpeed;
 import com.telepathicgrunt.the_bumblezone.capabilities.NeurotoxinsMissCounter;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
 public class NeurotoxinsEnchantment extends Enchantment {
@@ -86,9 +88,12 @@ public class NeurotoxinsEnchantment extends Enchantment {
             NeurotoxinsMissCounter capability = null;
 
             if(attacker != null) {
-                capability = attacker.getCapability(BzCapabilities.NEUROTOXINS_MISS_COUNTER_CAPABILITY).orElseThrow(RuntimeException::new);
-                float healthModifier = Math.max(100 - livingEntity.getHealth(), 10) / 100f;
-                applyChance = (healthModifier * level) * (capability.getMissedParalysis() + 1);
+                LazyOptional<NeurotoxinsMissCounter> capOptional = attacker.getCapability(BzCapabilities.NEUROTOXINS_MISS_COUNTER_CAPABILITY);
+                if (capOptional.isPresent()) {
+                    capability = attacker.getCapability(BzCapabilities.NEUROTOXINS_MISS_COUNTER_CAPABILITY).orElseThrow(RuntimeException::new);
+                    float healthModifier = Math.max(100 - livingEntity.getHealth(), 10) / 100f;
+                    applyChance = (healthModifier * level) * (capability.getMissedParalysis() + 1);
+                }
             }
 
             if(livingEntity.getRandom().nextFloat() < applyChance) {

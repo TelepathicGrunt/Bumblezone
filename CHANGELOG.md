@@ -1,3 +1,35 @@
+### **(V.6.1.6 Changes) (1.19 Minecraft)**
+
+##### Misc:
+Added checks to shield against missing capabilities on serverPlayers that Forge was supposed to keep alive but for some
+ unknown reason, just lets the caps get nuked which kills my mod. Now null cap crashes should be gone for good.
+ I wrapped all my caps grabs with checks to make sure the cap exists as my nuclear option for Forge's instability with caps.
+ Yes this is a ~~gamer~~ modder rant.
+
+
+### **(V.6.1.5 Changes) (1.19 Minecraft)**
+
+##### Items:
+Pollen Puff's `bz_pollen_puff_entity_flowers` json entries can now take air block entries safely.
+ Air entries can be used to make spawning plants more rare when the mob is hit by Pollen Puff.
+ Many mossy mobs from other mods now have their rates of spawning Moss Carpet or Azalea now lowered as a result to balance.
+
+##### Mod Compat:
+Friends and Foe's Mauler will now sometimes spawn Moss Carpet when hit with Pollen Puff.
+
+
+### **(V.6.1.4 Changes) (1.19 Minecraft)**
+
+##### Dimension:
+Fixed not storing the correct dimension the player came from when entering Bumblezone.
+ Exiting Bumblezone should put you back to the original dimension properly now.
+
+##### Mod Compat:
+Fixed crash when Alex's Mob's bear tries to break and eat a beehive. 
+ They passed null into beehivetileentity.emptyAllLivingFromHive which crashed my code.
+ I added a null check to my code to fix this.
+
+
 ### **(V.6.1.3 Changes) (1.19 Minecraft)**
 
 ##### Dimension:

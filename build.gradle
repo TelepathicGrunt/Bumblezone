@@ -107,8 +107,9 @@ dependencies {
     compileOnly fg.deobf("dev.architectury:architectury-forge:${project.architectury_version}")
 
     // Switch to `implementation` when testing mod compat
-    //compileOnly fg.deobf("curse.maven:friends_and_foes-602059:3725314")
-    //runtimeOnly fg.deobf("curse.maven:friends_and_foes-602059:3725314")
+    //runtimeOnly fg.deobf("dev.architectury:architectury-forge:${project.architectury_version}")
+    //runtimeOnly fg.deobf("curse.maven:friends_and_foes-602059:3873779")
+    //runtimeOnly fg.deobf("curse.maven:earthmobsmod-333256:3871807")
     //runtimeOnly fg.deobf("curse.maven:token_enchanter-444421:3559237")
     //runtimeOnly fg.deobf("curse.maven:silent_lib-242998:3708359")
 
@@ -132,7 +133,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     def mainFile = upload(projectId, jar)
     mainFile.changelog = changelogText
     mainFile.changelogType = "markdown"
-    mainFile.releaseType = "beta"
+    mainFile.releaseType = "release"
     mainFile.displayName = "The Bumblezone v${project.mod_version} (${project.mc_version} MC)"
 }
 

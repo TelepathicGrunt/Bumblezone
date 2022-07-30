@@ -1,28 +1,17 @@
 {
-  "entries": [
-    {
-      "entity_type": "cave_enhancements:cruncher",
-      "plants_to_spawn": [
-        "minecraft:moss_carpet"
-      ]
-    },
-    {
-      "entity_type": "earthtojavamobs:moolip",
-      "plants_to_spawn": [
-        "earthtojavamobs:pink_daisy"
-      ]
-    },
-    {
-      "entity_type": "earthtojavamobs:muddy_pig",
-      "plants_to_spawn": [
-        "minecraft:poppy"
-      ]
-    },
-    {
-      "entity_type": "earthtojavamobs:cluckshroom",
-      "plants_to_spawn": [
-        "minecraft:red_mushroom"
+  "cave_enhancements:cruncher": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
       ]
     }
-  ]
+  }]
 }

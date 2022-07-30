@@ -1,28 +1,49 @@
 {
-  "entries": [
-    {
-      "entity_type": "earthtojavamobs:moobloom",
-      "plants_to_spawn": [
-        "earthtojavamobs:buttercup"
-      ]
-    },
-    {
-      "entity_type": "earthtojavamobs:moolip",
-      "plants_to_spawn": [
-        "minecraft:pink_tulip"
-      ]
-    },
-    {
-      "entity_type": "earthtojavamobs:muddy_pig",
-      "plants_to_spawn": [
-        "minecraft:poppy"
-      ]
-    },
-    {
-      "entity_type": "earthtojavamobs:cluckshroom",
-      "plants_to_spawn": [
-        "minecraft:red_mushroom"
+  "earthtojavamobs:moobloom": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "earthtojavamobs:buttercup" },
+          "weight": 1
+        }
       ]
     }
-  ]
+  }],
+  "earthtojavamobs:moolip": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:pink_tulip" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "earthtojavamobs:muddy_pig": [{
+    "nbt_match": {
+      "IsInMud": true
+    },
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:poppy" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "earthtojavamobs:cluckshroom": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:red_mushroom" },
+          "weight": 1
+        }
+      ]
+    }
+  }]
 }

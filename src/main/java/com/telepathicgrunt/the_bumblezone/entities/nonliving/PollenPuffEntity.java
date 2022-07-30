@@ -19,6 +19,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -37,12 +38,13 @@ import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
-import java.util.List;
+import java.util.function.BiFunction;
 
 public class PollenPuffEntity extends ThrowableItemProjectile {
     private boolean consumed = false;
@@ -156,14 +158,12 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             EntityMisc.onPollenHit(serverPlayer);
         }
 
-        if (PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.mobToFlowers.containsKey(entity.getType())) {
-            List<BlockState> plants = PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.mobToFlowers.get(entity.getType());
-            if (!plants.isEmpty()) {
-                boolean spawnedBlock = spawnPlants(entity.blockPosition(), plants);
+        WeightedStateProvider possiblePlants = PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.getPossiblePlants(entity);
+        if (possiblePlants != null) {
+            boolean spawnedBlock = spawnPlants(entity.blockPosition(), possiblePlants::getState);
 
-                if(this.getOwner() instanceof ServerPlayer serverPlayer && spawnedBlock && entity.getType() == EntityType.MOOSHROOM) {
-                    BzCriterias.POLLEN_PUFF_MOOSHROOM_TRIGGER.trigger(serverPlayer);
-                }
+            if(this.getOwner() instanceof ServerPlayer serverPlayer && spawnedBlock && entity.getType() == EntityType.MOOSHROOM) {
+                BzCriterias.POLLEN_PUFF_MOOSHROOM_TRIGGER.trigger(serverPlayer);
             }
         }
 
@@ -181,7 +181,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         blockstate.onProjectileHit(this.level, blockstate, blockHitResult, this);
 
         if(blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF)) {
-            spawnPlants(blockHitResult.getBlockPos(), List.of(blockstate));
+            spawnPlants(blockHitResult.getBlockPos(), (r, b) -> blockstate);
         }
         else if(blockstate.is(Blocks.HONEY_BLOCK) ||
                 blockstate.is(Blocks.SOUL_SAND) ||
@@ -204,25 +204,25 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         }
     }
 
-    private boolean spawnPlants(BlockPos pos, List<BlockState> blockstates) {
-        if(blockstates.size() == 0) {
-            return false;
-        }
-
+    private boolean spawnPlants(BlockPos pos, BiFunction<RandomSource, BlockPos, BlockState> blockStateGetter) {
         boolean spawnedPlant = false;
         int flowerAttempts = 2 + this.random.nextInt(3);
         for(int i = 0; i < flowerAttempts; i++) {
             boolean isTallPlant = false;
-            BlockState blockstate = blockstates.get(random.nextInt(blockstates.size()));
-            if(blockstate.getBlock() instanceof DoublePlantBlock) {
-                blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
-                isTallPlant = true;
-            }
-
             BlockPos newPos = pos.offset(
                     this.random.nextInt(5) - 2,
                     this.random.nextInt(3) - 1,
                     this.random.nextInt(5) - 2);
+
+            BlockState blockstate = blockStateGetter.apply(random, newPos);
+            if (blockstate == null || blockstate.is(Blocks.AIR)) {
+                return false;
+            }
+
+            if(blockstate.getBlock() instanceof DoublePlantBlock) {
+                blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
+                isTallPlant = true;
+            }
 
             if(this.level.isEmptyBlock(newPos) && blockstate.canSurvive(this.level, newPos)) {
                 if (blockstate.is(Blocks.MOSS_CARPET)) {

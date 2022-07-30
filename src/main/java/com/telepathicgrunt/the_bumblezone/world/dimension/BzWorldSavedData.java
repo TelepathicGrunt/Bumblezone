@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.world.dimension;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
 
 import java.util.ArrayList;
@@ -183,25 +185,26 @@ public class BzWorldSavedData extends SavedData {
 				bumblezoneWorld.setBlockAndUpdate(blockPos.south().above(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
 			}
 
-			EntityPositionAndDimension capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
-			capability.setNonBZPos(entity.position());
-			capability.setNonBZDim(entity.level.dimension().location());
+			entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).ifPresent(capability -> {
+				capability.setNonBZPos(entity.position());
+				capability.setNonBZDim(entity.level.dimension().location());
 
-			// Prevent crash due to mojang bug that makes mod's json dimensions not exist upload first creation of world on server. A restart fixes this.
-			if(bumblezoneWorld == null) {
-				if(entity instanceof ServerPlayer playerEntity) {
-					Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: https://bugs.mojang.com/browse/MC-195468. A restart will fix this.");
-					MutableComponent message = Component.translatable("system.the_bumblezone.missing_dimension", Component.translatable("system.the_bumblezone.missing_dimension_link").withStyle(ChatFormatting.RED));
-					playerEntity.displayClientMessage(message, false);
+				// Prevent crash due to mojang bug that makes mod's json dimensions not exist upload first creation of world on server. A restart fixes this.
+				if (bumblezoneWorld == null) {
+					if (entity instanceof ServerPlayer playerEntity) {
+						Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: https://bugs.mojang.com/browse/MC-195468. A restart will fix this.");
+						MutableComponent message = Component.translatable("system.the_bumblezone.missing_dimension", Component.translatable("system.the_bumblezone.missing_dimension_link").withStyle(ChatFormatting.RED));
+						playerEntity.displayClientMessage(message, false);
+					}
+					teleportedEntities.add(entity);
+					return;
 				}
-				teleportedEntities.add(entity);
-				return;
-			}
 
-			Entity baseVehicle = entity.getRootVehicle();
-			teleportEntityAndAssignToVehicle(baseVehicle, null, bumblezoneWorld, destinationPosFound, teleportedEntities);
-			((ServerLevel) entity.level).resetEmptyTime();
-			bumblezoneWorld.resetEmptyTime();
+				Entity baseVehicle = entity.getRootVehicle();
+				teleportEntityAndAssignToVehicle(baseVehicle, null, bumblezoneWorld, destinationPosFound, teleportedEntities);
+				((ServerLevel) entity.level).resetEmptyTime();
+				bumblezoneWorld.resetEmptyTime();
+			});
 		}
 	}
 
@@ -225,9 +228,10 @@ public class BzWorldSavedData extends SavedData {
 		entity.setPortalCooldown();
 
 		if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
-			EntityPositionAndDimension capability = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).orElseThrow(RuntimeException::new);
-			capability.setNonBZPos(entity.position());
-			capability.setNonBZDim(entity.level.dimension().location());
+			entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).ifPresent(capability -> {
+				capability.setNonBZPos(entity.position());
+				capability.setNonBZDim(entity.level.dimension().location());
+			});
 		}
 
 		if (entity instanceof ServerPlayer serverPlayer) {
