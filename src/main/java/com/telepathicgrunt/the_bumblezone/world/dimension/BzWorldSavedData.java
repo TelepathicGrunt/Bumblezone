@@ -185,9 +185,7 @@ public class BzWorldSavedData extends SavedData {
 				bumblezoneWorld.setBlockAndUpdate(blockPos.south().above(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
 			}
 
-			LazyOptional<EntityPositionAndDimension> capOptional = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
-			if (capOptional.isPresent()) {
-				EntityPositionAndDimension capability = capOptional.orElseThrow(RuntimeException::new);
+			entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).ifPresent(capability -> {
 				capability.setNonBZPos(entity.position());
 				capability.setNonBZDim(entity.level.dimension().location());
 
@@ -206,7 +204,7 @@ public class BzWorldSavedData extends SavedData {
 				teleportEntityAndAssignToVehicle(baseVehicle, null, bumblezoneWorld, destinationPosFound, teleportedEntities);
 				((ServerLevel) entity.level).resetEmptyTime();
 				bumblezoneWorld.resetEmptyTime();
-			}
+			});
 		}
 	}
 
@@ -230,12 +228,10 @@ public class BzWorldSavedData extends SavedData {
 		entity.setPortalCooldown();
 
 		if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
-			LazyOptional<EntityPositionAndDimension> capOptional = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
-			if (capOptional.isPresent()) {
-				EntityPositionAndDimension capability = capOptional.orElseThrow(RuntimeException::new);
+			entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).ifPresent(capability -> {
 				capability.setNonBZPos(entity.position());
 				capability.setNonBZDim(entity.level.dimension().location());
-			}
+			});
 		}
 
 		if (entity instanceof ServerPlayer serverPlayer) {

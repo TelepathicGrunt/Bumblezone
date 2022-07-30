@@ -269,14 +269,12 @@ public class EntityTeleportationHookup {
     private static void checkAndCorrectStoredDimension(LivingEntity livingEntity) {
         //Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone.
         //Go to Overworld instead as default. Or go to Overworld if config is set.
-        LazyOptional<EntityPositionAndDimension> capOptional = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
-        if (capOptional.isPresent()) {
-            EntityPositionAndDimension capability = capOptional.orElseThrow(RuntimeException::new);
+        livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).ifPresent(capability -> {
             if (capability.getNonBZDim().equals(Bumblezone.MOD_DIMENSION_ID) || BzDimensionConfigs.forceExitToOverworld.get()) {
                 // go to overworld by default
                 //update stored dimension
                 capability.setNonBZDim(Level.OVERWORLD.location());
             }
-        }
+        });
     }
 }

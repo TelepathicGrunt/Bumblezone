@@ -40,13 +40,11 @@ public class BeenergizedEffect extends MobEffect {
         super.addAttributeModifiers(entity, attributes, amplifier);
         // Have to do this way as flyingSpeed field doesnt use the attribute for bees.
         if(entity.getAttributes().hasAttribute(Attributes.FLYING_SPEED)) {
-            LazyOptional<EntityFlyingSpeed> capOptional = entity.getCapability(BzCapabilities.ORIGINAL_FLYING_SPEED_CAPABILITY);
-            if (capOptional.isPresent()) {
-                EntityFlyingSpeed capability = capOptional.orElseThrow(RuntimeException::new);
+            entity.getCapability(BzCapabilities.ORIGINAL_FLYING_SPEED_CAPABILITY).ifPresent(capability -> {
                 capability.setOriginalFlyingSpeed(entity.flyingSpeed);
                 // -0.6 because bee's base flying speed is 0.6f which is crazy high compared to 0.02f default
                 entity.flyingSpeed = ((float) (entity.getAttributeValue(Attributes.FLYING_SPEED)) - 0.6f);
-            }
+            });
         }
     }
 
@@ -57,11 +55,9 @@ public class BeenergizedEffect extends MobEffect {
     public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
         super.removeAttributeModifiers(entity, attributes, amplifier);
         if(entity.getAttributes().hasAttribute(Attributes.FLYING_SPEED)) {
-            LazyOptional<EntityFlyingSpeed> capOptional = entity.getCapability(BzCapabilities.ORIGINAL_FLYING_SPEED_CAPABILITY);
-            if (capOptional.isPresent()) {
-                EntityFlyingSpeed capability = capOptional.orElseThrow(RuntimeException::new);
+            entity.getCapability(BzCapabilities.ORIGINAL_FLYING_SPEED_CAPABILITY).ifPresent(capability -> {
                 entity.flyingSpeed = capability.getOriginalFlyingSpeed();
-            }
+            });
         }
     }
 }
