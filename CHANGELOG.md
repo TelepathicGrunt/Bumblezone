@@ -1,9 +1,9 @@
 ### **(V.6.1.6 Changes) (1.19 Minecraft)**
 
 ##### Misc:
-Added checks to shield against missing capabilities on serverPlayers that Forge was suppose to keep alive but for some
+Added checks to shield against missing capabilities on serverPlayers that Forge was supposed to keep alive but for some
  unknown reason, just lets the caps get nuked which kills my mod. Now null cap crashes should be gone for good.
- I wrapped all my caps grabs with an isPresent check as my nuclear option for Forge's instability with caps.
+ I wrapped all my caps grabs with checks to make sure the cap exists as my nuclear option for Forge's instability with caps.
  Yes this is a ~~gamer~~ modder rant.
 
 
