@@ -440,9 +440,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
         if (stack.equals(ItemStack.EMPTY) && player instanceof ServerPlayer serverPlayer) {
             if (finalbeeQueenAdvancementDone(serverPlayer)) {
-                LazyOptional<EntityMisc> capOptional = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC);
-                if (capOptional.isPresent()) {
-                    EntityMisc capability = capOptional.orElseThrow(RuntimeException::new);
+                serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
                     if (!capability.receivedEssencePrize) {
                         Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
                         Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
@@ -462,7 +460,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                             serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.advancements_warning").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                         }
                     }
-                }
+                });
             }
 
             return InteractionResult.PASS;
@@ -504,9 +502,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     EntityMisc.onQueenBeeTrade(serverPlayer);
 
                     if (finalbeeQueenAdvancementDone(serverPlayer)) {
-                        LazyOptional<EntityMisc> capOptional = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC);
-                        if (capOptional.isPresent()) {
-                            EntityMisc capability = capOptional.orElseThrow(RuntimeException::new);
+                        serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
                             if (!capability.receivedEssencePrize) {
                                 Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
                                 Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
@@ -514,7 +510,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                                 capability.receivedEssencePrize = true;
                                 serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                             }
-                        }
+                        });
                     }
                 }
 

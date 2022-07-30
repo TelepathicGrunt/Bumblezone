@@ -122,19 +122,12 @@ public class EssenceOfTheBees extends Item {
     }
 
     public static void setEssence(ServerPlayer serverPlayer, boolean newValue) {
-        LazyOptional<EntityMisc> capOptional = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC);
-        if (capOptional.isPresent()) {
-            EntityMisc capability = capOptional.orElseThrow(RuntimeException::new);
-            capability.isBeeEssenced = newValue;
-        }
+        serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> capability.isBeeEssenced = newValue);
     }
 
     public static boolean hasEssence(ServerPlayer serverPlayer) {
-        LazyOptional<EntityMisc> capOptional = serverPlayer.getCapability(BzCapabilities.ENTITY_MISC);
-        if (capOptional.isPresent()) {
-            EntityMisc capability = capOptional.orElseThrow(RuntimeException::new);
-            return capability.isBeeEssenced;
-        }
-        return false;
+        return serverPlayer.getCapability(BzCapabilities.ENTITY_MISC)
+                .map(c -> c.isBeeEssenced)
+                .orElse(false);
     }
 }

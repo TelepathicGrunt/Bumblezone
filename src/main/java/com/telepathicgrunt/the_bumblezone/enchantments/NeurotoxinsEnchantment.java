@@ -90,7 +90,7 @@ public class NeurotoxinsEnchantment extends Enchantment {
             if(attacker != null) {
                 LazyOptional<NeurotoxinsMissCounter> capOptional = attacker.getCapability(BzCapabilities.NEUROTOXINS_MISS_COUNTER_CAPABILITY);
                 if (capOptional.isPresent()) {
-                    capability = capOptional.orElseThrow(RuntimeException::new);
+                    capability = attacker.getCapability(BzCapabilities.NEUROTOXINS_MISS_COUNTER_CAPABILITY).orElseThrow(RuntimeException::new);
                     float healthModifier = Math.max(100 - livingEntity.getHealth(), 10) / 100f;
                     applyChance = (healthModifier * level) * (capability.getMissedParalysis() + 1);
                 }
