@@ -102,7 +102,7 @@
   "effect.the_bumblezone.protection_of_the_hive": "蜂群之护",
   "effect.the_bumblezone.beenergized": "蜂能",
   "effect.the_bumblezone.hidden": "隐蔽",
-  "effect.the_bumblezone.paralyzed": "麻痹",w
+  "effect.the_bumblezone.paralyzed": "麻痹",
   "effect.the_bumblezone.wrath_of_the_hive.description": "会让蜜蜂领域中周围的蜜蜂生你的气，并给予它们许多效果，让它们变得更强、更惹人厌！附近的蜜脾育幼块会开始加速生长，并且更快地产出蜜蜂。\n\n这个效果会在伤害蜜蜂、从多孔蜜脾块中取蜜、杀死蜜脾育幼块和挖掘蜂蜜块时获得。在没有蜂群之护的情况下进入巢室迷宫也会获得该效果。",
   "effect.the_bumblezone.protection_of_the_hive.description": "安抚附近所有对拥有此效果的人生气的蜜蜂。如果一个具有此效果的实体被攻击，附近的蜜蜂会对攻击者生气！防止你从任何来源获得蜂群之怒效果。击打蜜蜂或挖掘蜜脾育幼块会移除蜂群之护效果。\n\n这个效果会在喂养蜜蜂或蜜脾育幼块时获得。",
   "effect.the_bumblezone.beenergized.description": "提高大多数飞行生物的飞行速度。穿有大黄蜂胸甲的玩家能飞得更远更久。\n\n这个效果会在食用蜜蜂面包时获得。",
