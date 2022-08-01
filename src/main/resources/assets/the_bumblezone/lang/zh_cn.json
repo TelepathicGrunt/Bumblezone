@@ -164,7 +164,7 @@
   "system.the_bumblezone.missing_dimension": "请重启服务器。蜜蜂领域因为这个bug尚未创建：%s。重启即可修复。",
   "system.the_bumblezone.missing_dimension_link": "https://bugs.mojang.com/browse/MC-195468",
   "system.the_bumblezone.failed_teleporting": "无法传送实体，放弃传送中。请重试。",
-  "system.the_bumblezone.require_hive_blocks_failed": "蜂箱下方的方块缺少the_bumblezone:required_blocks_under_hive_to_teleport标签。",
+  "system.the_bumblezone.require_hive_blocks_failed": "蜂箱下方的方块缺少“the_bumblezone:required_blocks_under_hive_to_teleport”标签。",
 
   "advancements.the_bumblezone.root.title": "嗡嗡作响的蜜蜂世界！",
   "advancements.the_bumblezone.root.description": "以任何手段进入蜜蜂领域",
