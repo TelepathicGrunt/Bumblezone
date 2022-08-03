@@ -87,7 +87,7 @@
 
   "enchantment.the_bumblezone.comb_cutter": "蜜脾割具",
   "enchantment.the_bumblezone.comb_cutter.desc": "可以更快挖掘蜜脾、蜂巢、蜂箱和蜂蜡方块。双倍化蜂巢和蜂箱的产物，对Resourceful Bee的蜂巢同样有效。",
-  "enchantment.the_bumblezone.potent_poison": "剧毒",
+  "enchantment.the_bumblezone.potent_poison": "淬毒",
   "enchantment.the_bumblezone.potent_poison.desc": "让武器命中的非亡灵生物时使其中毒。更高等级会增加持续时间和中毒等级。",
   "enchantment.the_bumblezone.neurotoxins": "神经毒素",
   "enchantment.the_bumblezone.neurotoxins.desc": "让武器有概率麻痹命中的非亡灵生物，使其几秒中内无法动弹。生物生命值越高，被麻痹的概率就越低。未能麻痹目标的攻击会增加下一次攻击麻痹的概率。更高等级会增加麻痹的持续时间和概率。",
