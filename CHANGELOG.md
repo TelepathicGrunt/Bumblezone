@@ -3,6 +3,9 @@
 ##### Misc:
 Ported to 1.19.1. Music Disc constructors changed a bit in 1.19.1 which requires me to release this fix.
 
+##### Lang:
+zh_cn.json lang file updated by Litttlefish. Thank you!
+
 
 ### **(V.6.1.6 Changes) (1.19 Minecraft)**
 
