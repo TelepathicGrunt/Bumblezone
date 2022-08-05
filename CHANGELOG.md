@@ -1,10 +1,4 @@
-### **(V.6.1.7 Changes) (1.19 Minecraft)**
-
-##### Mod Compat:
-Earth2Java's Moolip now spawns Pink Daisy when hit with Pollen Puff instead of Pink Tulip.
-
-
-### **(V.6.1.6 Changes) (1.19 Minecraft)**
+### **(V.6.1.6 Changes) (1.19.1 Minecraft)**
 
 ##### Items:
 Pollen Puff's `bz_pollen_puff_entity_flowers` json entries can now take air block entries safely.
@@ -17,8 +11,13 @@ Earth2Java's Muddy Pig will only spawn Poppy flowers when it is hit by Pollen Pu
 
 Friends and Foe's Mauler will now sometimes spawn Moss Carpet when hit with Pollen Puff.
 
+Earth2Java's Moolip now spawns Pink Daisy when hit with Pollen Puff instead of Pink Tulip.
 
-### **(V.6.1.5 Changes) (1.19 Minecraft)**
+##### Lang:
+zh_cn.json lang file updated by Litttlefish. Thank you!
+
+
+### **(V.6.1.5 Changes) (1.19.1 Minecraft)**
 
 ##### Items:
 Redid the `bz_pollen_puff_entity_flowers` json folder so now the entries can take a weighted list of plants to pick from
