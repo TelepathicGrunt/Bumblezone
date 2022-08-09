@@ -78,6 +78,9 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean enableEntranceTeleportation = true;
 
+    @Entry
+    public static boolean forceBumblezoneOriginMobToOverworldCenter = true;
+
 
     @Comment
     public static Comment dungeonsComment;

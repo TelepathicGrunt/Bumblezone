@@ -1,3 +1,19 @@
+### **(V.6.1.7 Changes) (1.19 Minecraft)**
+
+##### Entities:
+Fixed Bee Queen healing superfast and thus, unkillable.
+
+##### Teleportation:
+Fixed issue where mobs that spawned in Bumblezone originally would teleport to incorrect coordinates when exiting Bumblezone.
+
+Added a new config option called forceBumblezoneOriginMobToOverworldCenter which is set to true by default now.
+ If set to true, mobs that spawned in Bumblezone originally will teleport to 0,0 world center of Overworld always at top of terrain.
+ Hopefully this is more intuitive and prevent lost Bee Queens when pushing them out of Bumblezone.
+
+##### Lang:
+Added missing en_us.json lang translation for Bee Queen entity type name.
+
+
 ### **(V.6.1.6 Changes) (1.19.1 Minecraft)**
 
 ##### Items:
