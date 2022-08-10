@@ -93,6 +93,7 @@ dependencies {
 	include "dev.cafeteria:fake-player-api:${libs.versions.fake.player.get()}"
 
 	modCompileOnly "maven.modrinth:modmenu:${libs.versions.mod.menu.get()}"
+	modRuntimeOnly "maven.modrinth:modmenu:${libs.versions.mod.menu.get()}"
 
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${libs.versions.rei.get()}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${libs.versions.rei.get()}"
@@ -141,7 +142,7 @@ jar {
 
 apply from: 'gradle/maven.gradle'
 
-String fileContents = new File("CHANGELOG.md").getText('UTF-8')
+String fileContents = new File("CHANGELOG.md")
 
 task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
 	apiToken = "$System.env.CURSEFORGEKEY"

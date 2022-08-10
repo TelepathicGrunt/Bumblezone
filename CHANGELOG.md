@@ -13,6 +13,8 @@ Added a new config option called forceBumblezoneOriginMobToOverworldCenter which
 ##### Lang:
 Added missing en_us.json lang translation for Bee Queen entity type name.
 
+Added translations for in-game Bumblezone config menu provided by Midnightlib.
+
 
 ### **(V.6.1.6 Changes) (1.19.1 Minecraft)**
 
