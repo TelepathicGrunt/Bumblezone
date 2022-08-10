@@ -9,6 +9,8 @@ Ported to 1.19.1. Music Disc constructors changed a bit in 1.19.1 which requires
 ##### Entities:
 Fixed Bee Queen healing superfast and thus, unkillable.
 
+Added more alternative Bee skins added by Shy!
+
 ##### Teleportation: 
 Fixed issue where mobs that spawned in Bumblezone originally would teleport to incorrect coordinates when exiting Bumblezone.
 
