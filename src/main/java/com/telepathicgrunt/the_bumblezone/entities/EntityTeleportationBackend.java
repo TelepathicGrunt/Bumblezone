@@ -49,7 +49,21 @@ public class EntityTeleportationBackend {
         if(player != null) entity = player;
         double coordinateScale = entity.level.dimensionType().coordinateScale() / destination.dimensionType().coordinateScale();
         BlockPos finalSpawnPos;
-        BlockPos validBlockPos;
+        LazyOptional<EntityPositionAndDimension> capOptional = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
+
+        if (BzDimensionConfigs.forceBumblezoneOriginMobToOverworldCenter.get() &&
+            capOptional.isPresent() &&
+            capOptional.orElseThrow(RuntimeException::new).getNonBZPos() == null)
+        {
+            destination.getChunk(BlockPos.ZERO);
+            int heightMapY = destination.getHeight(Heightmap.Types.MOTION_BLOCKING, 0, 0);
+            if (heightMapY > destination.getMinBuildHeight() && heightMapY < destination.getMaxBuildHeight()) {
+                return new Vec3(0, heightMapY + 0.5d, 0);
+            }
+            else {
+                return new Vec3(0, (destination.getMinBuildHeight() + destination.getMaxBuildHeight()) / 2f, 0);
+            }
+        }
 
         if(BzDimensionConfigs.teleportationMode.get() == 1) {
             finalSpawnPos = new BlockPos(
@@ -58,23 +72,22 @@ public class EntityTeleportationBackend {
                     Doubles.constrainToRange(entity.position().z() * coordinateScale, -29999936D, 29999936D));
 
             //Gets valid space in other world
-            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, SEARCH_RADIUS, checkingUpward);
+            finalSpawnPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, SEARCH_RADIUS, checkingUpward);
         }
 
         else if(BzDimensionConfigs.teleportationMode.get() == 2) {
             Vec3 playerPos = null;
 
-            LazyOptional<EntityPositionAndDimension> capOptional = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
             if (capOptional.isPresent()) {
                 EntityPositionAndDimension capability = capOptional.orElseThrow(RuntimeException::new);
                 playerPos = capability.getNonBZPos();
             }
 
             if(playerPos != null) {
-                validBlockPos = new BlockPos(playerPos);
+                finalSpawnPos = new BlockPos(playerPos);
             }
             else {
-                validBlockPos = entity.blockPosition();
+                finalSpawnPos = entity.blockPosition();
             }
         }
 
@@ -86,23 +99,28 @@ public class EntityTeleportationBackend {
                     Doubles.constrainToRange(entity.position().z() * coordinateScale, -29999936D, 29999936D));
 
             //Gets valid space in other world
-            validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, SEARCH_RADIUS, checkingUpward);
+            BlockPos validBlockPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, SEARCH_RADIUS, checkingUpward);
 
             Vec3 pastPos = null;
 
-            LazyOptional<EntityPositionAndDimension> capOptional = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
             if (capOptional.isPresent()) {
                 EntityPositionAndDimension capability = capOptional.orElseThrow(RuntimeException::new);
                 pastPos = capability.getNonBZPos();
             }
 
             if(validBlockPos == null && pastPos != null) {
-                validBlockPos = new BlockPos(pastPos);
+                finalSpawnPos = new BlockPos(pastPos);
+            }
+            else {
+                destination.getChunk(finalSpawnPos);
+                int heightMapY = destination.getHeight(Heightmap.Types.MOTION_BLOCKING, finalSpawnPos.getX(), finalSpawnPos.getZ());
+                if (heightMapY > destination.getMinBuildHeight() && heightMapY < destination.getMaxBuildHeight()) {
+                    finalSpawnPos = new BlockPos(finalSpawnPos.getX(), heightMapY, finalSpawnPos.getZ());
+                }
             }
         }
 
         // If all else fails, fallback to player pos
-        finalSpawnPos = validBlockPos;
         if(finalSpawnPos == null) {
             finalSpawnPos = new BlockPos(entity.position());
         }

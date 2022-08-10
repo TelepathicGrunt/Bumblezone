@@ -73,6 +73,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
+import org.checkerframework.common.returnsreceiver.qual.This;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -314,7 +315,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             poseTicks++;
         }
 
-        if (this.getAge() % 200 == 0) {
+        if (!this.getLevel().isClientSide() && this.getLevel().getGameTime() % 200 == 0) {
             this.heal(1);
         }
 
@@ -382,7 +383,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             setThrowCooldown(throwCooldown - 1);
         }
 
-        if (this.getAge() % 20 == 0 && throwCooldown <= 0) {
+        if (this.getLevel().getGameTime() % 20 == 0 && throwCooldown <= 0) {
             Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
             Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
             AABB scanArea = this.getBoundingBox().deflate(0.45, 0.9, 0.45).move(forwardVect.x() * 0.5d, -0.95, forwardVect.z() * 0.5d);

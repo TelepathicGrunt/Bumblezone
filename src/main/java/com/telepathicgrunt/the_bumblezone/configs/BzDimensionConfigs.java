@@ -17,6 +17,7 @@ public class BzDimensionConfigs{
     public static ForgeConfigSpec.BooleanValue seaLevelOrHigherExitTeleporting;
     public static ForgeConfigSpec.BooleanValue enableExitTeleportation;
     public static ForgeConfigSpec.BooleanValue enableEntranceTeleportation;
+    public static ForgeConfigSpec.BooleanValue forceBumblezoneOriginMobToOverworldCenter;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -73,6 +74,13 @@ public class BzDimensionConfigs{
                             " Allow Bumblezone mod to handle teleporting into the Bumblezone dimension.\n")
                     .translation("the_bumblezone.config.enableexitteleportation")
                     .define("enableExitTeleportation", true);
+
+            forceBumblezoneOriginMobToOverworldCenter = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " If this is enabled, mobs that originally spawned in Bumblezone will be teleported",
+                        " to 0, 0 center of the Overworld when exiting Bumblezone dimension.\n")
+                .translation("the_bumblezone.config.forcebumblezoneoriginmobtooverworldcenter")
+                .define("forceBumblezoneOriginMobToOverworldCenter", true);
 
             generateBeenest = builder
                 .comment(" \n-----------------------------------------------------\n",
