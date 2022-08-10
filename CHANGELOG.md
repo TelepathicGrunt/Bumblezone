@@ -1,7 +1,7 @@
-### **(V.6.1.8 Changes) (1.19.1 Minecraft)**
+### **(V.6.1.8-beta Changes) (1.19.2 Minecraft)**
 
 ##### Misc:
-Ported to 1.19.1. Music Disc constructors changed a bit in 1.19.1 which requires me to release this fix.
+Ported to 1.19.2. Music Disc constructors changed a bit in 1.19.1 which requires me to release this fix.
 
 
 ### **(V.6.1.7 Changes) (1.19 Minecraft)**
