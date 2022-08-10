@@ -1,4 +1,43 @@
-### **(V.6.1.5 Changes) (1.19 Minecraft)**
+### **(V.6.1.7 Changes) (1.19 Minecraft)**
+
+##### Entities:
+Fixed Bee Queen healing superfast and thus, unkillable.
+
+Added more alternative Bee skins added by Shy!
+
+##### Teleportation:
+Fixed issue where mobs that spawned in Bumblezone originally would teleport to incorrect coordinates when exiting Bumblezone.
+
+Added a new config option called forceBumblezoneOriginMobToOverworldCenter which is set to true by default now.
+ If set to true, mobs that spawned in Bumblezone originally will teleport to 0,0 world center of Overworld always at top of terrain.
+ Hopefully this is more intuitive and prevent lost Bee Queens when pushing them out of Bumblezone.
+
+##### Lang:
+Added missing en_us.json lang translation for Bee Queen entity type name.
+
+Added translations for in-game Bumblezone config menu provided by Midnightlib.
+
+
+### **(V.6.1.6 Changes) (1.19.1 Minecraft)**
+
+##### Items:
+Pollen Puff's `bz_pollen_puff_entity_flowers` json entries can now take air block entries safely.
+ Air entries can be used to make spawning plants more rare when the mob is hit by Pollen Puff.
+ Many mossy mobs from other mods now have their rates of spawning Moss Carpet or Azalea now lowered as a result to balance.
+
+##### Mod Compat:
+Earth2Java's Muddy Pig will only spawn Poppy flowers when it is hit by Pollen Puff while in mud.
+ Non-muddy form of this Muddy Pig mob will not spawn flowers anymore when hit by Pollen Puff.
+
+Friends and Foe's Mauler will now sometimes spawn Moss Carpet when hit with Pollen Puff.
+
+Earth2Java's Moolip now spawns Pink Daisy when hit with Pollen Puff instead of Pink Tulip.
+
+##### Lang:
+zh_cn.json lang file updated by Litttlefish. Thank you!
+
+
+### **(V.6.1.5 Changes) (1.19.1 Minecraft)**
 
 ##### Items:
 Redid the `bz_pollen_puff_entity_flowers` json folder so now the entries can take a weighted list of plants to pick from

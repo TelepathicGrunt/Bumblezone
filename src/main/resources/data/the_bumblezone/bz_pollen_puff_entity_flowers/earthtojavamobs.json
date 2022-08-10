@@ -15,13 +15,16 @@
       "type": "minecraft:weighted_state_provider",
       "entries": [
         {
-          "data": { "Name": "minecraft:pink_tulip" },
+          "data": { "Name": "earthtojavamobs:pink_daisy" },
           "weight": 1
         }
       ]
     }
   }],
   "earthtojavamobs:muddy_pig": [{
+    "nbt_match": {
+      "IsInMud": true
+    },
     "plants_to_spawn": {
       "type": "minecraft:weighted_state_provider",
       "entries": [

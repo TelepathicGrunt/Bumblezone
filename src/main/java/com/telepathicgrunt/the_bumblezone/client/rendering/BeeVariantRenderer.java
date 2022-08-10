@@ -18,7 +18,7 @@ public class BeeVariantRenderer extends BeeRenderer {
     // Credit to Quark for this code!
     // https://github.com/VazkiiMods/Quark/blob/master/src/main/java/vazkii/quark/content/client/render/variant/VariantBeeRenderer.java
 
-    private static final List<String> LGBT_VARIANTS = ImmutableList.of("transbee", "asexualbee");
+    private static final List<String> LGBT_VARIANTS = ImmutableList.of("transbee", "asexualbee", "agenderbee", "aroacebee", "aromanticbee", "bisexualbee");
     private static final String UKRAINE_VARIANT = "ukrainebee";
     public static EntityRendererProvider<? super Bee> OLD_BEE_RENDER_FACTORY = null;
     private EntityRenderer<? super Bee> OLD_BEE_RENDER = null;
@@ -60,7 +60,7 @@ public class BeeVariantRenderer extends BeeRenderer {
                 else if(nectar)
                     type = "_nectar";
 
-                String path = String.format("textures/entity/bee_variants/%s/%s%s.png", name, name, type);
+                String path = String.format("textures/entity/bee_variants/%s/bee%s.png", name, type);
                 return new ResourceLocation(Bumblezone.MODID, path);
             }
         }
