@@ -23,5 +23,6 @@ task publishModrinth (type: TaskModrinthUpload){
     changelog = fileContents
     versionType = "release"
     addGameVersion('1.19.1')
+    addGameVersion('1.19.2')
     addLoader('forge')
 }

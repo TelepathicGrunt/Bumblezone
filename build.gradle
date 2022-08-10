@@ -132,6 +132,8 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 
     def mainFile = upload(projectId, jar)
     mainFile.changelog = changelogText
+    mainFile.addGameVersion("1.19.1")
+    mainFile.addGameVersion("1.19.2")
     mainFile.changelogType = "markdown"
     mainFile.releaseType = "release"
     mainFile.displayName = "The Bumblezone v${project.mod_version} (${project.mc_version} MC)"
