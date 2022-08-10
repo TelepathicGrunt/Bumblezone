@@ -142,7 +142,7 @@ jar {
 
 apply from: 'gradle/maven.gradle'
 
-String fileContents = new File("CHANGELOG.md")
+String fileContents = new File("CHANGELOG.md").getText('UTF-8')
 
 task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
 	apiToken = "$System.env.CURSEFORGEKEY"
