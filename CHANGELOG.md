@@ -1,4 +1,10 @@
-### **(V.6.1.7 Changes) (1.19 Minecraft)**
+### **(V.6.1.8 Changes) (1.19.2 Minecraft)**
+
+##### Lang:
+zh_cn.json lang file updated by Litttlefish. Thank you!
+
+
+### **(V.6.1.7 Changes) (1.19.1 Minecraft)**
 
 ##### Entities:
 Fixed Bee Queen healing superfast and thus, unkillable.
