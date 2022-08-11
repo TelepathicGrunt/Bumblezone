@@ -1,7 +1,8 @@
-### **(V.6.1.8-beta Changes) (1.19.2 Minecraft)**
+### **(V.6.1.8 Changes) (1.19.2 Minecraft)**
 
 ##### Misc:
 Ported to 1.19.2. Music Disc constructors changed a bit in 1.19.1 which requires me to release this fix.
+ Requires Forge v43.0.8 or newer to fix a DFU dimension bug.
 
 ##### Lang:
 zh_cn.json lang file updated by Litttlefish. Thank you!
