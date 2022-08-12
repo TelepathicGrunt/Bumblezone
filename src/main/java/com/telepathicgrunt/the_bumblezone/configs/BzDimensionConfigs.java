@@ -8,6 +8,7 @@ public class BzDimensionConfigs{
 
     // dimension
     public static ForgeConfigSpec.DoubleValue fogBrightnessPercentage;
+    public static ForgeConfigSpec.BooleanValue enableDimensionFog;
     public static ForgeConfigSpec.IntValue teleportationMode;
     public static ForgeConfigSpec.BooleanValue generateBeenest;
     public static ForgeConfigSpec.BooleanValue forceExitToOverworld;
@@ -38,6 +39,12 @@ public class BzDimensionConfigs{
                        " and 100000 will be white.\n")
                 .translation("the_bumblezone.config.fogbrightnesspercentage")
                 .defineInRange("fogBrightnessPercentage", 100D, 0D, 100000D);
+
+            enableDimensionFog = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether Bumblezone dimension has thick fog or not.\n")
+                .translation("the_bumblezone.config.enabledimensionfog")
+                .define("enableDimensionFog", true);
 
         builder.pop();
 

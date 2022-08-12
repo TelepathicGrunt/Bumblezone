@@ -1,3 +1,10 @@
+### **(V.6.2.0 Changes) (1.19.2 Minecraft)**
+
+##### Config:
+Added a new config to disable the thick fog in Bumblezone. Set to enable fog by default. 
+ The config entry is in the config/the_bumblezone/dimension.toml config file.
+
+
 ### **(V.6.1.8 Changes) (1.19.2 Minecraft)**
 
 ##### Misc:

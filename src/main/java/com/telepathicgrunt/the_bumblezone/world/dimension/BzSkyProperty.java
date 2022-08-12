@@ -17,7 +17,7 @@ public class BzSkyProperty extends DimensionSpecialEffects {
 
     @Override
     public boolean isFoggyAt(int camX, int camY) {
-        return true;
+        return BzDimensionConfigs.enableDimensionFog.get();
     }
 
 
