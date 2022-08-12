@@ -15,14 +15,14 @@
       "options": {
         "type": "the_bumblezone:pollen_puff"
       },
-      "probability": 0.002
+      "probability": 0.001
     },
-    "sky_color": 16759808,
+    "sky_color": 16757248,
     "foliage_color": 7593531,
     "grass_color": 7600187,
     "fog_color": 12638463,
-    "water_color": 14402413,
-    "water_fog_color": 11700268
+    "water_color": 14397805,
+    "water_fog_color": 11695660
   },
   "carvers": {},
   "features": [
@@ -41,8 +41,11 @@
       "the_bumblezone:web_wall"
     ],
     [
-      "the_bumblezone:honey_crystals_rare",
-      "the_bumblezone:sticky_honey_residue_feature"
+      "the_bumblezone:giant_honey_crystals",
+      "the_bumblezone:honey_crystals_super_common",
+      "the_bumblezone:honey_crystals_common",
+      "the_bumblezone:sticky_honey_residue_feature",
+      "the_bumblezone:sticky_honey_residue_common"
     ],
     [],
     [

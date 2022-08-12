@@ -68,6 +68,7 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzItems.CARPENTER_BEE_BOOTS_1);
         addInfo(BzItems.CARPENTER_BEE_BOOTS_2);
         addInfo(BzItems.ESSENCE_OF_THE_BEES);
+        addInfo(BzItems.GLISTERING_HONEY_CRYSTAL);
     }
 
     private static void addInfo(Item item) {

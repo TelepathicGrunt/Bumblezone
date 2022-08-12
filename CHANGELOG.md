@@ -1,4 +1,10 @@
-### **(V.6.1.8 Changes) (1.19.2 Minecraft)**
+### **(V.6.2.0 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Added Glistering Honey Crystal block!
+ A glowing light source of crystallized honey. Found only in Crystal Canyon biome in Bumblezone.
+ Gives a high amount of Honey Crystal Shards when broken or can be smelted into a ton of Sticky Honey Residue.
+ Great for decor or lighting! Also transform neighboring water source blocks into sugar water.
 
 ##### Lang:
 zh_cn.json lang file updated by Litttlefish. Thank you!

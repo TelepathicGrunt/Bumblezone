@@ -55,6 +55,9 @@ public class BzConfig extends MidnightConfig {
     public static double fogBrightnessPercentage = 110;
 
     @Entry
+    public static boolean enableDimensionFog = true;
+
+    @Entry
     public static boolean onlyOverworldHivesTeleports = false;
 
     @Entry

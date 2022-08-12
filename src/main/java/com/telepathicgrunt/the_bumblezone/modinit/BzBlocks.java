@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.BeehiveBeeswax;
 import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.FilledPorousHoneycomb;
+import com.telepathicgrunt.the_bumblezone.blocks.GlisteringHoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCocoon;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyWeb;
@@ -40,6 +41,7 @@ public class BzBlocks {
     public static final Block SUGAR_INFUSED_STONE = new SugarInfusedStone();
     public static final Block SUGAR_INFUSED_COBBLESTONE = new SugarInfusedCobblestone();
     public static final Block HONEY_CRYSTAL = new HoneyCrystal();
+    public static final Block GLISTERING_HONEY_CRYSTAL = new GlisteringHoneyCrystal();
     public static final Block STICKY_HONEY_RESIDUE = new StickyHoneyResidue();
     public static final Block STICKY_HONEY_REDSTONE = new StickyHoneyRedstone();
     public static final Block BEEHIVE_BEESWAX = new BeehiveBeeswax();
@@ -61,6 +63,7 @@ public class BzBlocks {
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_infused_stone"), SUGAR_INFUSED_STONE);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_infused_cobblestone"), SUGAR_INFUSED_COBBLESTONE);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "honey_crystal"), HONEY_CRYSTAL);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "glistering_honey_crystal"), GLISTERING_HONEY_CRYSTAL);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "sticky_honey_residue"), STICKY_HONEY_RESIDUE);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "sticky_honey_redstone"), STICKY_HONEY_REDSTONE);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "beehive_beeswax"), BEEHIVE_BEESWAX);

@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.world.features;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.world.features.configs.HoneyCrystalFeatureConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
@@ -11,11 +12,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class HoneyCrystalFeature extends Feature<NoneFeatureConfiguration> {
+public class HoneyCrystalFeature extends Feature<HoneyCrystalFeatureConfig> {
 
-    public HoneyCrystalFeature(Codec<NoneFeatureConfiguration> configFactory) {
+    public HoneyCrystalFeature(Codec<HoneyCrystalFeatureConfig> configFactory) {
         super(configFactory);
     }
 
@@ -23,20 +23,23 @@ public class HoneyCrystalFeature extends Feature<NoneFeatureConfiguration> {
      * Place crystal block attached to a block if it is buried underground or underwater
      */
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+    public boolean place(FeaturePlaceContext<HoneyCrystalFeatureConfig> context) {
 
         BlockPos.MutableBlockPos blockpos$Mutable = new BlockPos.MutableBlockPos().set(context.origin());
         BlockState originalBlockstate = context.level().getBlockState(blockpos$Mutable);
         BlockState blockstate;
         ChunkPos currentChunkPos = new ChunkPos(blockpos$Mutable);
 
-        if (originalBlockstate.getBlock() == Blocks.CAVE_AIR || originalBlockstate.getFluidState().is(FluidTags.WATER)) {
+        if (originalBlockstate.getBlock() == Blocks.CAVE_AIR ||
+            originalBlockstate.getFluidState().is(FluidTags.WATER) ||
+            (context.config().exposed && originalBlockstate.isAir()))
+        {
 
             for (Direction face : Direction.values()) {
                 blockpos$Mutable.set(context.origin());
                 blockstate = context.level().getBlockState(blockpos$Mutable.move(face, 7));
 
-                if (blockstate.getBlock() == Blocks.AIR) {
+                if (!context.config().exposed && blockstate.getBlock() == Blocks.AIR) {
                     return false; // too close to the outside. Refuse generation
                 }
             }
