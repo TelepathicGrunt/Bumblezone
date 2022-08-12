@@ -29,6 +29,8 @@ public final class BzBiomeHeightRegistry {
                     new ResourceLocation(Bumblezone.MODID, "pollinated_pillar"), new BiomeTerrain(22.5f, 0.05f));
             Registry.register((Registry<BiomeTerrain>)registry,
                     new ResourceLocation(Bumblezone.MODID, "sugar_water_floor"), new BiomeTerrain(-3.7f, 0.75f));
+            Registry.register((Registry<BiomeTerrain>)registry,
+                    new ResourceLocation(Bumblezone.MODID, "crystal_canyon"), new BiomeTerrain(0f, 0.75f));
         });
     }
 

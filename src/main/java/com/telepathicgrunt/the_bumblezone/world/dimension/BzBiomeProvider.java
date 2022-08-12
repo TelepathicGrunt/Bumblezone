@@ -29,6 +29,7 @@ import net.minecraft.world.level.biome.Climate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.LongFunction;
 import java.util.stream.Collectors;
 
@@ -45,6 +46,7 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
     public static ResourceLocation SUGAR_WATER_FLOOR = new ResourceLocation(Bumblezone.MODID, "sugar_water_floor");
     public static ResourceLocation POLLINATED_FIELDS = new ResourceLocation(Bumblezone.MODID, "pollinated_fields");
     public static ResourceLocation POLLINATED_PILLAR = new ResourceLocation(Bumblezone.MODID, "pollinated_pillar");
+    public static ResourceLocation CRYSTAL_CANYON = new ResourceLocation(Bumblezone.MODID, "crystal_canyon");
 
     private final long seed;
     private final Layer biomeSampler;
@@ -65,7 +67,8 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
                             !rlKey.equals(HIVE_PILLAR) &&
                             !rlKey.equals(SUGAR_WATER_FLOOR) &&
                             !rlKey.equals(POLLINATED_FIELDS) &&
-                            !rlKey.equals(POLLINATED_PILLAR);
+                            !rlKey.equals(POLLINATED_PILLAR) &&
+                            !rlKey.equals(CRYSTAL_CANYON);
                 }).collect(Collectors.toList());
 
         this.seed = seed;
@@ -98,19 +101,22 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
     public static <T extends Area, C extends BigContext<T>> AreaFactory<T> build(LongFunction<C> contextFactory, long seed, Registry<Biome> biomeRegistry) {
         AreaFactory<T> layer = new BzBiomeLayer(seed, biomeRegistry).run(contextFactory.apply(200L));
         layer = new BzBiomePillarLayer(biomeRegistry).run(contextFactory.apply(1008L), layer);
-        layer = new BzBiomeScaleLayer(HIVE_PILLAR, biomeRegistry).run(contextFactory.apply(1055L), layer);
+        layer = new BzBiomeScaleLayer(Set.of(biomeRegistry.getId(biomeRegistry.get(HIVE_PILLAR))), biomeRegistry).run(contextFactory.apply(1055L), layer);
         layer = ZoomLayer.FUZZY.run(contextFactory.apply(2003L), layer);
         layer = ZoomLayer.FUZZY.run(contextFactory.apply(2523L), layer);
-        layer = new BzBiomeScaleLayer(SUGAR_WATER_FLOOR, biomeRegistry).run(contextFactory.apply(54088L), layer);
+        layer = new BzBiomeScaleLayer(Set.of(
+                biomeRegistry.getId(biomeRegistry.get(CRYSTAL_CANYON)),
+                biomeRegistry.getId(biomeRegistry.get(SUGAR_WATER_FLOOR))
+        ), biomeRegistry).run(contextFactory.apply(54088L), layer);
 
         AreaFactory<T> layerOverlay = new BzBiomeNonstandardLayer(biomeRegistry).run(contextFactory.apply(204L));
         layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2423L), layerOverlay);
         layerOverlay = new BzBiomePollinatedPillarLayer(biomeRegistry).run(contextFactory.apply(3008L), layerOverlay);
-        layerOverlay = new BzBiomeScaleLayer(POLLINATED_PILLAR, biomeRegistry).run(contextFactory.apply(4455L), layerOverlay);
+        layerOverlay = new BzBiomeScaleLayer(Set.of(biomeRegistry.getId(biomeRegistry.get(POLLINATED_PILLAR))), biomeRegistry).run(contextFactory.apply(4455L), layerOverlay);
         layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2503L), layerOverlay);
         layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2603L), layerOverlay);
         layerOverlay = new BzBiomePollinatedFieldsLayer(biomeRegistry).run(contextFactory.apply(3578L), layerOverlay);
-        layerOverlay = new BzBiomeScaleLayer(POLLINATED_FIELDS, biomeRegistry).run(contextFactory.apply(4055L), layerOverlay);
+        layerOverlay = new BzBiomeScaleLayer(Set.of(biomeRegistry.getId(biomeRegistry.get(POLLINATED_FIELDS))), biomeRegistry).run(contextFactory.apply(4055L), layerOverlay);
         layerOverlay = ZoomLayer.FUZZY.run(contextFactory.apply(2853L), layerOverlay);
         layerOverlay = ZoomLayer.FUZZY.run(contextFactory.apply(3583L), layerOverlay);
         layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(4583L), layerOverlay);

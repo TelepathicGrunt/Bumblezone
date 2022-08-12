@@ -1,11 +1,15 @@
 package com.telepathicgrunt.the_bumblezone.world.features.decorators;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
+import com.telepathicgrunt.the_bumblezone.world.features.configs.HoneyCrystalFeatureConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraft.world.level.levelgen.placement.RepeatingPlacement;
@@ -16,19 +20,16 @@ import java.util.stream.Stream;
 public class Random3DClusterPlacement extends RepeatingPlacement {
 
     private final IntProvider count;
-    public static final Codec<Random3DClusterPlacement> CODEC = IntProvider.codec(0, 100000)
-            .fieldOf("count").xmap(Random3DClusterPlacement::new, placement -> placement.count).codec();
+    private final boolean allowUnderwater;
 
-    private Random3DClusterPlacement(IntProvider intProvider) {
+    public static final Codec<Random3DClusterPlacement> CODEC = RecordCodecBuilder.create((configInstance) -> configInstance.group(
+            IntProvider.codec(0, 100000).fieldOf("count").forGetter(nbtFeatureConfig -> nbtFeatureConfig.count),
+            Codec.BOOL.fieldOf("allow_underwater").forGetter(nbtFeatureConfig -> nbtFeatureConfig.allowUnderwater)
+    ).apply(configInstance, Random3DClusterPlacement::new));
+
+    private Random3DClusterPlacement(IntProvider intProvider, boolean allowUnderwater) {
         this.count = intProvider;
-    }
-
-    public static Random3DClusterPlacement of(IntProvider intProvider) {
-        return new Random3DClusterPlacement(intProvider);
-    }
-
-    public static Random3DClusterPlacement of(int i) {
-        return of(ConstantInt.of(i));
+        this.allowUnderwater = allowUnderwater;
     }
 
     @Override
@@ -60,7 +61,8 @@ public class Random3DClusterPlacement extends RepeatingPlacement {
                                 random.nextInt(253) + 1,
                                 random.nextInt(4) + 8);
 
-                if (placementContext.getBlockState(mutableBlockPos).isAir()) {
+                BlockState state = placementContext.getBlockState(mutableBlockPos);
+                if (state.isAir() || (this.allowUnderwater && !state.getFluidState().is(FluidTags.WATER))) {
                     mutableBlockPos.set(blockPos.getX(), mutableBlockPos.getY(), blockPos.getZ());
                     break;
                 }

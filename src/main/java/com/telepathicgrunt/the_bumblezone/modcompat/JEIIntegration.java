@@ -72,6 +72,7 @@ public class JEIIntegration implements IModPlugin {
 		addInfo(registration, BzItems.CARPENTER_BEE_BOOTS_1.get());
 		addInfo(registration, BzItems.CARPENTER_BEE_BOOTS_2.get());
 		addInfo(registration, BzItems.ESSENCE_OF_THE_BEES.get());
+		addInfo(registration, BzItems.GLISTERING_HONEY_CRYSTAL.get());
     }
 
     
