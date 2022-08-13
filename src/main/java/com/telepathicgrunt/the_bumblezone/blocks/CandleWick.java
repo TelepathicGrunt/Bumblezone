@@ -59,7 +59,7 @@ public class CandleWick extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public boolean canSurvive(BlockState blockState, LevelReader levelReader, BlockPos blockPos) {
-        return levelReader.getBlockState(blockPos.below()).is(BzBlocks.SUPER_CANDLE_BASE.get());
+        return levelReader.getBlockState(blockPos.below()).getBlock() instanceof CandleBase;
     }
 
     @Override
