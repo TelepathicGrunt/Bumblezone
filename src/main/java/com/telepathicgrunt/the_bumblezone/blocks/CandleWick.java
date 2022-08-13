@@ -36,7 +36,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.function.ToIntFunction;
 
-
 public class CandleWick extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty LIT = AbstractCandleBlock.LIT;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -55,11 +54,6 @@ public class CandleWick extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return AABB;
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return Shapes.empty();
     }
 
@@ -121,7 +115,7 @@ public class CandleWick extends Block implements SimpleWaterloggedBlock {
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (state.getValue(LIT)) {
-            VoxelShape voxelShape = getShape(state, level, pos, null);
+            VoxelShape voxelShape = AABB;
             voxelShape = voxelShape.move(pos.getX(), pos.getY(), pos.getZ());
             if (Shapes.joinIsNotEmpty(voxelShape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND)) {
                 if (!entity.fireImmune()) {
