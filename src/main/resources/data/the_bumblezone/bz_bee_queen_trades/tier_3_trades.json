@@ -1,11 +1,29 @@
 {
   "wants": [
-    "minecraft:diamond",
-    "minecraft:amethyst_block",
-    "minecraft:flowering_azalea",
-    "minecraft:spore_blossom",
-    "minecraft:redstone_block",
-    "#minecraft:tall_flowers",
+    {
+      "id": "minecraft:diamond",
+      "required": true
+    },
+    {
+      "id": "minecraft:amethyst_block",
+      "required": true
+    },
+    {
+      "id": "#minecraft:tall_flowers",
+      "required": true
+    },
+    {
+      "id": "minecraft:flowering_azalea",
+      "required": true
+    },
+    {
+      "id": "minecraft:spore_blossom",
+      "required": true
+    },
+    {
+      "id": "minecraft:redstone_block",
+      "required": true
+    },
     {
       "id": "#productivebees:expansion_boxes",
       "required": false

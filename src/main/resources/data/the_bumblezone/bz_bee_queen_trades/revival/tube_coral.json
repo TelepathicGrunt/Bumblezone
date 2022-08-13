@@ -1,6 +1,9 @@
 {
   "wants" : [
-    "minecraft:dead_tube_coral"
+    {
+      "id": "minecraft:dead_tube_coral",
+      "required": true
+    }
   ],
   "possible_rewards": [
     {

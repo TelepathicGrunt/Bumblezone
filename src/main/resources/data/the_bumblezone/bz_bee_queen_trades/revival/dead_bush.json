@@ -1,6 +1,9 @@
 {
   "wants" : [
-    "minecraft:dead_bush"
+    {
+      "id": "minecraft:dead_bush",
+      "required": true
+    }
   ],
   "possible_rewards": [
     {

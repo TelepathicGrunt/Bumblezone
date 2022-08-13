@@ -1,7 +1,13 @@
 {
   "wants" : [
-    "minecraft:ice",
-    "minecraft:packed_ice"
+    {
+      "id": "minecraft:ice",
+      "required": true
+    },
+    {
+      "id": "minecraft:packed_ice",
+      "required": true
+    }
   ],
   "possible_rewards": [
     {

@@ -1,6 +1,9 @@
 {
   "wants" : [
-    "the_bumblezone:empty_honeycomb_brood_block"
+    {
+      "id": "the_bumblezone:empty_honeycomb_brood_block",
+      "required": true
+    }
   ],
   "possible_rewards": [
     {

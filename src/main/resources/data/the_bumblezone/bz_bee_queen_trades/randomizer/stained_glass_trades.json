@@ -3,10 +3,6 @@
     {
       "id": "#forge:stained_glass",
       "required": false
-    },
-    {
-      "id": "#c:stained_glass",
-      "required": false
     }
   ],
   "possible_rewards": [

@@ -1,6 +1,9 @@
 {
   "wants" : [
-    "minecraft:rotten_flesh"
+    {
+      "id": "minecraft:rotten_flesh",
+      "required": true
+    }
   ],
   "possible_rewards": [
     {

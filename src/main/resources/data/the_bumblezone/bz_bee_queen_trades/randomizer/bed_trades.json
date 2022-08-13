@@ -1,6 +1,9 @@
 {
   "wants": [
-    "#minecraft:beds"
+    {
+      "id": "#minecraft:beds",
+      "required": true
+    }
   ],
   "possible_rewards": [
     {

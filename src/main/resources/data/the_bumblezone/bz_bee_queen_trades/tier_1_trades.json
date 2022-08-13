@@ -1,23 +1,77 @@
 {
   "wants": [
-    "the_bumblezone:porous_honeycomb_block",
-    "the_bumblezone:beehive_beeswax",
-    "minecraft:honeycomb",
-    "minecraft:honeycomb_block",
-    "minecraft:sugar",
-    "#minecraft:logs_that_burn",
-    "#minecraft:leaves",
-    "#minecraft:wooden_buttons",
-    "#minecraft:wooden_doors",
-    "#minecraft:wooden_fences",
-    "#minecraft:wooden_pressure_plates",
-    "#minecraft:wooden_slabs",
-    "#minecraft:wooden_stairs",
-    "#minecraft:wooden_trapdoors",
-    "#minecraft:planks",
-    "#minecraft:saplings",
-    "minecraft:mangrove_propagule",
-    "minecraft:redstone",
+    {
+      "id": "the_bumblezone:porous_honeycomb_block",
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:beehive_beeswax",
+      "required": true
+    },
+    {
+      "id": "minecraft:honeycomb",
+      "required": true
+    },
+    {
+      "id": "minecraft:honeycomb_block",
+      "required": true
+    },
+    {
+      "id": "minecraft:sugar",
+      "required": true
+    },
+    {
+      "id": "#minecraft:logs_that_burn",
+      "required": true
+    },
+    {
+      "id": "#minecraft:leaves",
+      "required": true
+    },
+    {
+      "id": "#minecraft:wooden_buttons",
+      "required": true
+    },
+    {
+      "id": "#minecraft:wooden_doors",
+      "required": true
+    },
+    {
+      "id": "#minecraft:wooden_fences",
+      "required": true
+    },
+    {
+      "id": "#minecraft:wooden_pressure_plates",
+      "required": true
+    },
+    {
+      "id": "#minecraft:wooden_slabs",
+      "required": true
+    },
+    {
+      "id": "#minecraft:wooden_stairs",
+      "required": true
+    },
+    {
+      "id": "#minecraft:wooden_trapdoors",
+      "required": true
+    },
+    {
+      "id": "#minecraft:planks",
+      "required": true
+    },
+    {
+      "id": "#minecraft:saplings",
+      "required": true
+    },
+    {
+      "id": "minecraft:mangrove_propagule",
+      "required": true
+    },
+    {
+      "id": "minecraft:redstone",
+      "required": true
+    },
     {
       "id": "#forge:seeds",
       "required": false
@@ -32,22 +86,6 @@
     },
     {
       "id": "#forge:honeycombs",
-      "required": false
-    },
-    {
-      "id": "#c:seeds",
-      "required": false
-    },
-    {
-      "id": "#c:wax",
-      "required": false
-    },
-    {
-      "id": "#c:storage_blocks/honeycomb",
-      "required": false
-    },
-    {
-      "id": "#c:honeycombs",
       "required": false
     },
     {

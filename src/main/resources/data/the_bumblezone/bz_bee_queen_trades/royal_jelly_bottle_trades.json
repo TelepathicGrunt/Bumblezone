@@ -1,6 +1,9 @@
 {
   "wants" : [
-    "the_bumblezone:royal_jelly_bottle"
+    {
+      "id": "the_bumblezone:royal_jelly_bottle",
+      "required": true
+    }
   ],
   "possible_rewards": [
     {

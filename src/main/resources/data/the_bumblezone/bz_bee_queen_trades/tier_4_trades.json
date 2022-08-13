@@ -1,22 +1,23 @@
 {
   "wants": [
-    "minecraft:honey_block",
-    "minecraft:diamond_block",
-    "minecraft:bee_nest",
+    {
+      "id": "minecraft:honey_block",
+      "required": true
+    },
+    {
+      "id": "minecraft:diamond_block",
+      "required": true
+    },
+    {
+      "id": "minecraft:bee_nest",
+      "required": true
+    },
     {
       "id": "#forge:beehive",
       "required": false
     },
     {
       "id": "#forge:buckets/honey",
-      "required": false
-    },
-    {
-      "id": "#c:beehive",
-      "required": false
-    },
-    {
-      "id": "#c:buckets/honey",
       "required": false
     },
     {

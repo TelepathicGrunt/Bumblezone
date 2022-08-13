@@ -1,6 +1,9 @@
 {
   "wants": [
-    "#minecraft:banners"
+    {
+      "id": "#minecraft:banners",
+      "required": true
+    }
   ],
   "possible_rewards": [
     {

@@ -1,7 +1,13 @@
 {
   "wants" : [
-    "the_bumblezone:royal_jelly_bucket",
-    "the_bumblezone:royal_jelly_block"
+    {
+      "id": "the_bumblezone:royal_jelly_bucket",
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:royal_jelly_block",
+      "required": true
+    }
   ],
   "possible_rewards": [
     {

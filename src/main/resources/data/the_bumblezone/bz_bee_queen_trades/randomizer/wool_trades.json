@@ -1,6 +1,9 @@
 {
   "wants": [
-    "#minecraft:wool"
+    {
+      "id": "#minecraft:wool",
+      "required": true
+    }
   ],
   "possible_rewards": [
     {

@@ -1,7 +1,13 @@
 {
   "wants" : [
-    "minecraft:verdant_froglight",
-    "minecraft:pearlescent_froglight"
+    {
+      "id": "minecraft:verdant_froglight",
+      "required": true
+    },
+    {
+      "id": "minecraft:pearlescent_froglight",
+      "required": true
+    }
   ],
   "possible_rewards": [
     {

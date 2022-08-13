@@ -1,6 +1,9 @@
 {
   "wants" : [
-    "minecraft:dead_bubble_coral_fan"
+    {
+      "id": "minecraft:dead_bubble_coral_fan",
+      "required": true
+    }
   ],
   "possible_rewards": [
     {

@@ -1,6 +1,9 @@
 {
   "wants" : [
-    "minecraft:dead_fire_coral"
+    {
+      "id": "minecraft:dead_fire_coral",
+      "required": true
+    }
   ],
   "possible_rewards": [
     {

@@ -1,6 +1,9 @@
 {
   "wants" : [
-    "minecraft:dead_brain_coral_fan"
+    {
+      "id": "minecraft:dead_brain_coral_fan",
+      "required": true
+    }
   ],
   "possible_rewards": [
     {

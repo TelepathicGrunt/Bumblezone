@@ -3,10 +3,6 @@
     {
       "id": "#forge:dyes",
       "required": false
-    },
-    {
-      "id": "#c:dyes",
-      "required": false
     }
   ],
   "possible_rewards": [

@@ -1,6 +1,9 @@
 {
   "wants": [
-    "#minecraft:wool_carpets"
+    {
+      "id": "#minecraft:wool_carpets",
+      "required": true
+    }
   ],
   "possible_rewards": [
     {
