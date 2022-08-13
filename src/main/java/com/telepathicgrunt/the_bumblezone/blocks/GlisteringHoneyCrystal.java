@@ -4,6 +4,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -66,5 +68,27 @@ public class GlisteringHoneyCrystal extends RotatedPillarBlock {
                 world.setBlock(blockPos.relative(direction), BzFluids.SUGAR_WATER_BLOCK.defaultBlockState(), 3);
             }
         }
+    }
+
+
+    @Override
+    public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
+        if (random.nextFloat() < 0.05F) {
+            this.spawnSparkleParticles(world, position, random);
+        }
+    }
+
+    private void spawnSparkleParticles(Level world, BlockPos position, RandomSource random) {
+        double x = random.nextDouble() + (random.nextBoolean() ? -1 : 16);
+        double y = random.nextDouble() + (random.nextBoolean() ? -1 : 16);
+        double z = random.nextDouble() + (random.nextBoolean() ? -1 : 16);
+
+        world.addParticle(ParticleTypes.ELECTRIC_SPARK,
+                (x / 16) + position.getX(),
+                (y / 16) + position.getY(),
+                (z / 16) + position.getZ(),
+                0.0D,
+                0.0D,
+                0.0D);
     }
 }
