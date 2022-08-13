@@ -16,6 +16,7 @@
     "blocks.RedstoneDustCanConnectMixin",
     "blocks.ShulkerBoxBlockEntityMixin",
     "blocks.WaterEquivalenceMixin",
+    "containers.PotionBrewingAccessor",
     "containers.ResultSlotMixin",
     "containers.WorkbenchContainerMixin",
     "effects.MobEffectInstanceAccessor",

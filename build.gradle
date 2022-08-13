@@ -147,10 +147,9 @@ String fileContents = new File("CHANGELOG.md").getText('UTF-8')
 task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
 	apiToken = "$System.env.CURSEFORGEKEY"
 	int projectId = 363949
-	String changelogText = fileContents
 
 	def mainFile = upload(projectId, remapJar)
-	mainFile.changelog = changelogText
+	mainFile.changelog = fileContents
 	mainFile.changelogType = "markdown"
 	mainFile.releaseType = "release"
 	mainFile.displayName = "The Bumblezone v${project.mod_version} (${libs.versions.minecraft.get()} MC Quilt)"

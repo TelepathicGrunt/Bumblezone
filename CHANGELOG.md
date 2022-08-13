@@ -5,6 +5,8 @@ Added Glistering Honey Crystal block!
  A glowing light source of crystallized honey. Found only in Crystal Canyon biome in Bumblezone.
  Gives a high amount of Honey Crystal Shards when broken or can be smelted into a ton of Sticky Honey Residue.
  Great for decor or lighting! Also transform neighboring water source blocks into sugar water.
+ If combined with an Awkward Potion in a Brewing Stand, it will create a Potion of Luck!
+ The most common benefit of Luck status is it may improve the loot drops of certain datapack/modded loot tables.
 
 ##### Lang:
 zh_cn.json lang file updated by Litttlefish. Thank you!
