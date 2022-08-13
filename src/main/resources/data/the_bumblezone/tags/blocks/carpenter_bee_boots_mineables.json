@@ -1,45 +1,15 @@
 {
   "replace": false,
   "values": [
-    {
-      "id": "#minecraft:planks",
-      "required": true
-    },
-    {
-      "id": "#minecraft:logs",
-      "required": true
-    },
-    {
-      "id": "#minecraft:leaves",
-      "required": true
-    },
-    {
-      "id": "#minecraft:wooden_doors",
-      "required": true
-    },
-    {
-      "id": "#minecraft:wooden_fences",
-      "required": true
-    },
-    {
-      "id": "#minecraft:wooden_slabs",
-      "required": true
-    },
-    {
-      "id": "#minecraft:wooden_stairs",
-      "required": true
-    },
-    {
-      "id": "#minecraft:beehives",
-      "required": true
-    },
-    {
-      "id": "#the_bumblezone:honeycombs_that_features_can_carve",
-      "required": true
-    },
-    {
-      "id": "the_bumblezone:beehive_beeswax",
-      "required": true
-    }
+    "the_bumblezone:beehive_beeswax",
+    "#minecraft:planks",
+    "#minecraft:logs",
+    "#minecraft:leaves",
+    "#minecraft:wooden_doors",
+    "#minecraft:wooden_fences",
+    "#minecraft:wooden_slabs",
+    "#minecraft:wooden_stairs",
+    "#minecraft:beehives",
+    "#the_bumblezone:honeycombs_that_features_can_carve"
   ]
 }

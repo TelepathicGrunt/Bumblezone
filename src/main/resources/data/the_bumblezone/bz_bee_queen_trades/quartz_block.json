@@ -1,9 +1,6 @@
 {
   "wants" : [
-    {
-      "id": "minecraft:quartz_block",
-      "required": true
-    }
+    "minecraft:quartz_block"
   ],
   "possible_rewards": [
     {

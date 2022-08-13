@@ -1,29 +1,11 @@
 {
   "wants": [
-    {
-      "id": "minecraft:honey_bottle",
-      "required": true
-    },
-    {
-      "id": "the_bumblezone:filled_porous_honeycomb_block",
-      "required": true
-    },
-    {
-      "id": "the_bumblezone:bee_bread",
-      "required": true
-    },
-    {
-      "id": "#minecraft:small_flowers",
-      "required": true
-    },
-    {
-      "id": "minecraft:flowering_azalea_leaves",
-      "required": true
-    },
-    {
-      "id": "minecraft:amethyst_shard",
-      "required": true
-    },
+    "minecraft:honey_bottle",
+    "the_bumblezone:filled_porous_honeycomb_block",
+    "the_bumblezone:bee_bread",
+    "#minecraft:small_flowers",
+    "minecraft:flowering_azalea_leaves",
+    "minecraft:amethyst_shard",
     {
       "id": "#forge:honey_bottle",
       "required": false
@@ -42,6 +24,26 @@
     },
     {
       "id": "#forge:storage_blocks/wax",
+      "required": false
+    },
+    {
+      "id": "#c:honey_bottle",
+      "required": false
+    },
+    {
+      "id": "#c:crops",
+      "required": false
+    },
+    {
+      "id": "#c:chests/wooden",
+      "required": false
+    },
+    {
+      "id": "#c:barrels/wooden",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/wax",
       "required": false
     }
   ],

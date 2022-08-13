@@ -1,9 +1,6 @@
 {
   "wants": [
-    {
-      "id": "#minecraft:candles",
-      "required": true
-    }
+    "#minecraft:candles"
   ],
   "possible_rewards": [
     {

@@ -3,6 +3,10 @@
     {
       "id": "#forge:concrete",
       "required": false
+    },
+    {
+      "id": "#c:concrete",
+      "required": false
     }
   ],
   "possible_rewards": [

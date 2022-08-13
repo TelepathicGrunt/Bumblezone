@@ -1,18 +1,9 @@
 {
   "replace": false,
   "values": [
-    {
-      "id": "the_bumblezone:honeycomb_brood_block",
-      "required": true
-    },
-    {
-      "id": "the_bumblezone:royal_jelly_block",
-      "required": true
-    },
-    {
-      "id": "minecraft:honey_block",
-      "required": true
-    },
+    "the_bumblezone:honeycomb_brood_block",
+    "the_bumblezone:royal_jelly_block",
+    "minecraft:honey_block",
     {
       "id": "resourcefulbees:catnip_honey_block",
       "required": false

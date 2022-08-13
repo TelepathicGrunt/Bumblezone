@@ -1,9 +1,6 @@
 {
   "wants" : [
-    {
-      "id": "minecraft:magma_block",
-      "required": true
-    }
+    "minecraft:magma_block"
   ],
   "possible_rewards": [
     {

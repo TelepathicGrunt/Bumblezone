@@ -1,9 +1,6 @@
 {
   "wants": [
-    {
-      "id": "#minecraft:terracotta",
-      "required": true
-    }
+    "#minecraft:terracotta"
   ],
   "possible_rewards": [
     {

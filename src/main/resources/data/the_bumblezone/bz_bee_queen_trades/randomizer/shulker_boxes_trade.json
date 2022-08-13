@@ -3,6 +3,10 @@
     {
       "id": "#forge:shulker_boxes",
       "required": false
+    },
+    {
+      "id": "#c:shulker_boxes",
+      "required": false
     }
   ],
   "possible_rewards": [

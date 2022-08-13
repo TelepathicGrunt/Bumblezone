@@ -3,6 +3,10 @@
     {
       "id": "#forge:glazed_terracotta",
       "required": false
+    },
+    {
+      "id": "#c:glazed_terracotta",
+      "required": false
     }
   ],
   "possible_rewards": [

@@ -1,9 +1,6 @@
 {
   "wants" : [
-    {
-      "id": "minecraft:dead_horn_coral_block",
-      "required": true
-    }
+    "minecraft:dead_horn_coral_block"
   ],
   "possible_rewards": [
     {

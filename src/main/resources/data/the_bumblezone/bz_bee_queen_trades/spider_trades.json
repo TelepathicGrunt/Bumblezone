@@ -1,21 +1,9 @@
 {
   "wants" : [
-    {
-      "id": "minecraft:string",
-      "required": true
-    },
-    {
-      "id": "minecraft:cobweb",
-      "required": true
-    },
-    {
-      "id": "minecraft:spider_eye",
-      "required": true
-    },
-    {
-      "id": "minecraft:fermented_spider_eye",
-      "required": true
-    }
+    "minecraft:string",
+    "minecraft:cobweb",
+    "minecraft:spider_eye",
+    "minecraft:fermented_spider_eye"
   ],
   "possible_rewards": [
     {

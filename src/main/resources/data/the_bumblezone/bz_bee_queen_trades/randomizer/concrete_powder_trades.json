@@ -3,6 +3,10 @@
     {
       "id": "#forge:concrete_powder",
       "required": false
+    },
+    {
+      "id": "#c:concrete_powder",
+      "required": false
     }
   ],
   "possible_rewards": [
