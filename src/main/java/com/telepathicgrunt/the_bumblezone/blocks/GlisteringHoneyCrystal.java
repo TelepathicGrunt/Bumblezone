@@ -79,7 +79,7 @@ public class GlisteringHoneyCrystal extends RotatedPillarBlock {
 
     @Override
     public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
-        if (random.nextFloat() < 0.05F) {
+        if (random.nextFloat() < 0.09F) {
             this.spawnSparkleParticles(world, position, random);
         }
     }
