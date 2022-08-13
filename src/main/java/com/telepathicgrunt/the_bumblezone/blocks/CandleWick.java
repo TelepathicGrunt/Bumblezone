@@ -7,6 +7,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -27,6 +29,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -38,9 +41,10 @@ public class CandleWick extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty LIT = AbstractCandleBlock.LIT;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final ToIntFunction<BlockState> LIGHT_EMISSION = (blockState) -> blockState.getValue(LIT) ? 15 : 0;
+    private static final VoxelShape AABB = Block.box(7.0D, 0.0D, 7.0D, 9.0D, 6.0D, 9.0D);
 
     public CandleWick() {
-        super(Properties.of(Material.AIR, MaterialColor.COLOR_BLACK).lightLevel(CandleWick.LIGHT_EMISSION));
+        super(Properties.of(Material.AIR, MaterialColor.COLOR_BLACK).noCollission().lightLevel(CandleWick.LIGHT_EMISSION));
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
     }
 
@@ -51,6 +55,11 @@ public class CandleWick extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return AABB;
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return Shapes.empty();
     }
 
@@ -107,6 +116,25 @@ public class CandleWick extends Block implements SimpleWaterloggedBlock {
     @Override
     public FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+    }
+
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (state.getValue(LIT)) {
+            VoxelShape voxelShape = getShape(state, level, pos, null);
+            voxelShape = voxelShape.move(pos.getX(), pos.getY(), pos.getZ());
+            if (Shapes.joinIsNotEmpty(voxelShape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND)) {
+                if (!entity.fireImmune()) {
+                    entity.setRemainingFireTicks(entity.getRemainingFireTicks() + 1);
+                    if (entity.getRemainingFireTicks() == 0) {
+                        entity.setSecondsOnFire(1);
+                    }
+                }
+
+                entity.hurt(DamageSource.IN_FIRE, 0.5f);
+            }
+        }
+        super.entityInside(state, level, pos, entity);
     }
 
     public static void setLit(LevelAccessor levelAccessor, BlockState blockState, BlockPos blockPos, boolean lit) {

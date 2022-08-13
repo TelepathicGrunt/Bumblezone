@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
@@ -33,13 +32,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.function.ToIntFunction;
-
 
 public class CandleBase extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty LIT = AbstractCandleBlock.LIT;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    private static final VoxelShape ONE_AABB = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
+    private static final VoxelShape AABB = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
 
     public CandleBase() {
         super(Properties.of(Material.DECORATION, MaterialColor.SAND).noOcclusion().strength(0.1F).sound(SoundType.CANDLE).lightLevel((blockState) -> blockState.getValue(LIT) ? 15 : 0));
@@ -48,7 +45,7 @@ public class CandleBase extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return ONE_AABB;
+        return AABB;
     }
 
     @Override
@@ -95,6 +92,7 @@ public class CandleBase extends Block implements SimpleWaterloggedBlock {
             BlockState blockstate = state.setValue(WATERLOGGED, Boolean.TRUE);
             if (state.getValue(LIT)) {
                 CandleWick.extinguish(null, level.getBlockState(pos.above()), level, pos.above());
+                level.setBlock(pos, blockstate.setValue(LIT, false), 3);
             }
             else {
                 level.setBlock(pos, blockstate, 3);
