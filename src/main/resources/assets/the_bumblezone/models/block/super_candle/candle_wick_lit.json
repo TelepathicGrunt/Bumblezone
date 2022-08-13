@@ -1,0 +1,27 @@
+{
+  "credit": "Made with Blockbench",
+  "textures": {
+    "1": "the_bumblezone:block/super_candle/candle_wick_lit"
+  },
+  "render_type": "minecraft:cutout",
+  "elements": [
+    {
+      "from": [5, 0, 8],
+      "to": [11, 11, 8],
+      "rotation": {"angle": 0, "axis": "y", "origin": [8, 2, 8]},
+      "faces": {
+        "north": {"uv": [0, 5, 6, 16], "texture": "#1"},
+        "south": {"uv": [6, 5, 0, 16], "texture": "#1"}
+      }
+    },
+    {
+      "from": [8, 0, 5],
+      "to": [8, 11, 11],
+      "rotation": {"angle": 0, "axis": "x", "origin": [8, 2, 8]},
+      "faces": {
+        "east": {"uv": [0, 5, 6, 16], "texture": "#1"},
+        "west": {"uv": [6, 5, 0, 16], "texture": "#1"}
+      }
+    }
+  ]
+}

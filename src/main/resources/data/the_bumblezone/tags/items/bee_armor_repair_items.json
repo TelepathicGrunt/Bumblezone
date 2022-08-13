@@ -1,21 +1,9 @@
 {
   "replace": false,
   "values": [
-    {
-      "id": "minecraft:honeycomb",
-      "required": true
-    },
-    {
-      "id": "minecraft:leather",
-      "required": true
-    },
-    {
-      "id": "minecraft:rabbit_hide",
-      "required": true
-    },
-    {
-      "id": "#minecraft:wool",
-      "required": true
-    }
+    "minecraft:honeycomb",
+    "minecraft:leather",
+    "minecraft:rabbit_hide",
+    "#minecraft:wool"
   ]
 }
