@@ -52,4 +52,20 @@ public class BzBlocks {
     public static final RegistryObject<Block> GLISTERING_HONEY_CRYSTAL = BLOCKS.register("glistering_honey_crystal", GlisteringHoneyCrystal::new);
     public static final RegistryObject<Block> SUPER_CANDLE_BASE = BLOCKS.register("super_candle_base", CandleBase::new);
     public static final RegistryObject<Block> SUPER_CANDLE_WICK = BLOCKS.register("super_candle_wick", CandleWick::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_BASE_BLACK = BLOCKS.register("super_candle_base_black", CandleBase::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_BASE_BLUE = BLOCKS.register("super_candle_base_blue", CandleBase::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_BASE_BROWN = BLOCKS.register("super_candle_base_brown", CandleBase::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_BASE_CYAN = BLOCKS.register("super_candle_base_cyan", CandleBase::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_BASE_GRAY = BLOCKS.register("super_candle_base_gray", CandleBase::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_BASE_GREEN = BLOCKS.register("super_candle_base_green", CandleBase::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_BASE_LIGHT_BLUE = BLOCKS.register("super_candle_base_light_blue", CandleBase::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_BASE_LIGHT_GRAY = BLOCKS.register("super_candle_base_light_gray", CandleBase::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_BASE_LIME = BLOCKS.register("super_candle_base_lime", CandleBase::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_BASE_MAGENTA = BLOCKS.register("super_candle_base_magenta", CandleBase::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_BASE_ORANGE = BLOCKS.register("super_candle_base_orange", CandleBase::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_BASE_PINK = BLOCKS.register("super_candle_base_pink", CandleBase::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_BASE_PURPLE = BLOCKS.register("super_candle_base_purple", CandleBase::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_BASE_RED = BLOCKS.register("super_candle_base_red", CandleBase::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_BASE_WHITE = BLOCKS.register("super_candle_base_white", CandleBase::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_BASE_YELLOW = BLOCKS.register("super_candle_base_yellow", CandleBase::new);
 }

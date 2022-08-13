@@ -56,7 +56,22 @@ public class BzItems {
     public static final RegistryObject<Item> ROYAL_JELLY_BLOCK = ITEMS.register("royal_jelly_block", () -> new BlockItem(BzBlocks.ROYAL_JELLY_BLOCK.get(), new Item.Properties().rarity(Rarity.EPIC).tab(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> GLISTERING_HONEY_CRYSTAL = ITEMS.register("glistering_honey_crystal", () -> new BlockItem(BzBlocks.GLISTERING_HONEY_CRYSTAL.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> SUPER_CANDLE = ITEMS.register("super_candle", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
-
+    public static final RegistryObject<Item> SUPER_CANDLE_BLACK = ITEMS.register("super_candle_black", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_BLACK.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUPER_CANDLE_BLUE = ITEMS.register("super_candle_blue", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_BLUE.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUPER_CANDLE_BROWN = ITEMS.register("super_candle_brown", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_BROWN.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUPER_CANDLE_CYAN = ITEMS.register("super_candle_cyan", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_CYAN.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUPER_CANDLE_GRAY = ITEMS.register("super_candle_gray", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_GRAY.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUPER_CANDLE_GREEN = ITEMS.register("super_candle_green", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_GREEN.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUPER_CANDLE_LIGHT_BLUE = ITEMS.register("super_candle_light_blue", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_LIGHT_BLUE.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUPER_CANDLE_LIGHT_GRAY = ITEMS.register("super_candle_light_gray", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_LIGHT_GRAY.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUPER_CANDLE_LIME = ITEMS.register("super_candle_lime", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_LIME.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUPER_CANDLE_MAGENTA = ITEMS.register("super_candle_magenta", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_MAGENTA.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUPER_CANDLE_ORANGE = ITEMS.register("super_candle_orange", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_ORANGE.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUPER_CANDLE_PINK = ITEMS.register("super_candle_pink", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_PINK.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUPER_CANDLE_PURPLE = ITEMS.register("super_candle_purple", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_PURPLE.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUPER_CANDLE_RED = ITEMS.register("super_candle_red", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_RED.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUPER_CANDLE_WHITE = ITEMS.register("super_candle_white", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_WHITE.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUPER_CANDLE_YELLOW = ITEMS.register("super_candle_yellow", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_YELLOW.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
 
     //items
     public static final RegistryObject<ArrowItem> HONEY_CRYSTAL_SHARDS = ITEMS.register("honey_crystal_shards", () -> new HoneyCrystalShards(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.15F).build())));
