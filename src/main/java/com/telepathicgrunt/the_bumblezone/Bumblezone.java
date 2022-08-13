@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone;
 
-import com.telepathicgrunt.the_bumblezone.advancements.KilledCounterTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
@@ -99,8 +98,8 @@ public class Bumblezone{
         BzItems.ITEMS.register(modEventBus);
         BzBlocks.BLOCKS.register(modEventBus);
         BzFluids.FLUIDS.register(modEventBus);
-        BzItems.RECIPES.register(modEventBus);
         BzPOI.POI_TYPES.register(modEventBus);
+        BzRecipes.RECIPES.register(modEventBus);
         BzEffects.EFFECTS.register(modEventBus);
         BzMenuTypes.MENUS.register(modEventBus);
         BzStats.CUSTOM_STAT.register(modEventBus);
@@ -148,6 +147,7 @@ public class Bumblezone{
 			BzEntities.registerAdditionalEntityInformation();
             BeeAggression.setupBeeHatingList();
             BzStats.initStatEntries();
+            BzRecipes.registerBrewingStandRecipes();
 		});
         MessageHandler.init();
     }

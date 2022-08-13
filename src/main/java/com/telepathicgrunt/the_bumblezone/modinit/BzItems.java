@@ -26,7 +26,6 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class BzItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Bumblezone.MODID);
-    public static final DeferredRegister<RecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Bumblezone.MODID);
 
     /**
      * creative tab to hold our block items
@@ -38,9 +37,6 @@ public class BzItems {
             return new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB.get());
         }
     };
-
-    //Recipe
-    public static final RegistryObject<RecipeSerializer<ContainerCraftingRecipe>> CONTAINER_CRAFTING_RECIPE = RECIPES.register("container_shapeless_recipe_bz", ContainerCraftingRecipe.Serializer::new);
 
     //blocks
     public static final RegistryObject<Item> POROUS_HONEYCOMB = ITEMS.register("porous_honeycomb_block", () -> new BlockItem(BzBlocks.POROUS_HONEYCOMB.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));

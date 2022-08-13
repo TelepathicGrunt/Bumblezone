@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -51,7 +52,7 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return BzItems.CONTAINER_CRAFTING_RECIPE.get();
+        return BzRecipes.CONTAINER_CRAFTING_RECIPE.get();
     }
 
     @Override
