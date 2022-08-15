@@ -123,15 +123,15 @@ public class SuperIncenseCandleBlockEntity extends BlockEntity {
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         super.onDataPacket(net, pkt);
-        saveFieldsToTag(tag);
+        if (this.level instanceof ClientLevel) {
+            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 8);
+        }
     }
 
     @Override
     public void handleUpdateTag(CompoundTag tag) {
         super.handleUpdateTag(tag);
-        if (this.level instanceof ClientLevel) {
-            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 8);
-        }
+        saveFieldsToTag(tag);
     }
 
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, BlockEntity blockEntity) {
