@@ -15,7 +15,7 @@ public class BzRecipes {
 
     //Recipe
     public static final RegistryObject<RecipeSerializer<ContainerCraftingRecipe>> CONTAINER_CRAFTING_RECIPE = RECIPES.register("container_shapeless_recipe_bz", ContainerCraftingRecipe.Serializer::new);
-    public static final RegistryObject<RecipeSerializer<SuperIncenseCandleRecipe>> SUPER_INCENSE_CANDLE_RECIPE = RECIPES.register("super_incense_candle_recipe", SuperIncenseCandleRecipe.Serializer::new);
+    public static final RegistryObject<RecipeSerializer<SuperIncenseCandleRecipe>> INCENSE_CANDLE_RECIPE = RECIPES.register("incense_candle_recipe", SuperIncenseCandleRecipe.Serializer::new);
 
     public static void registerBrewingStandRecipes() {
         PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.GLISTERING_HONEY_CRYSTAL.get(), Potions.LUCK);

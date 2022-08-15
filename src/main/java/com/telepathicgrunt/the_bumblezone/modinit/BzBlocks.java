@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.BeehiveBeeswax;
-import com.telepathicgrunt.the_bumblezone.blocks.SuperIncenseCandleBase;
+import com.telepathicgrunt.the_bumblezone.blocks.IncenseCandleBase;
 import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleBase;
 import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleWick;
 import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
@@ -69,5 +69,5 @@ public class BzBlocks {
     public static final RegistryObject<Block> SUPER_CANDLE_BASE_RED = BLOCKS.register("super_candle_base_red", SuperCandleBase::new);
     public static final RegistryObject<Block> SUPER_CANDLE_BASE_WHITE = BLOCKS.register("super_candle_base_white", SuperCandleBase::new);
     public static final RegistryObject<Block> SUPER_CANDLE_BASE_YELLOW = BLOCKS.register("super_candle_base_yellow", SuperCandleBase::new);
-    public static final RegistryObject<Block> SUPER_INCENSE_BASE_CANDLE = BLOCKS.register("super_incense_candle_base", SuperIncenseCandleBase::new);
+    public static final RegistryObject<Block> INCENSE_BASE_CANDLE = BLOCKS.register("incense_candle_base", IncenseCandleBase::new);
 }

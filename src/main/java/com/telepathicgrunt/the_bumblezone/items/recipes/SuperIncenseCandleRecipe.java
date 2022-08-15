@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items.recipes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.telepathicgrunt.the_bumblezone.blocks.blockentities.SuperIncenseCandleBlockEntity;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.IncenseCandleBlockEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.containers.ShapedRecipeAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
@@ -14,6 +14,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -23,8 +24,10 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.IShapedRecipe;
+import net.minecraftforge.common.util.RecipeMatcher;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -54,7 +57,7 @@ public class SuperIncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<C
     }
 
     private static ItemStack getResultStack(int outputCountIn) {
-        ItemStack stack = BzItems.SUPER_INCENSE_CANDLE.get().getDefaultInstance();
+        ItemStack stack = BzItems.INCENSE_CANDLE.get().getDefaultInstance();
         stack.setCount(outputCountIn);
         return stack;
     }
@@ -66,16 +69,26 @@ public class SuperIncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<C
         AtomicInteger maxDuration = new AtomicInteger();
         AtomicInteger amplifier = new AtomicInteger();
         AtomicInteger potionEffectsFound = new AtomicInteger();
+        int splashCount = 0;
+        int lingerCount = 0;
 
         for(int j = 0; j < inv.getContainerSize(); ++j) {
-            ItemStack itemstack = inv.getItem(j);
-            if (itemstack.is(Items.POTION)) {
-                PotionUtils.getMobEffects(itemstack).forEach(me -> {
+            ItemStack itemStack = inv.getItem(j);
+            if (itemStack.is(Items.POTION) || itemStack.is(Items.SPLASH_POTION) || itemStack.is(Items.LINGERING_POTION)) {
+                PotionUtils.getMobEffects(itemStack).forEach(me -> {
                    effects.add(me.getEffect());
-                   maxDuration.addAndGet(me.getDuration());
+                   maxDuration.addAndGet(me.getEffect().isInstantenous() ? 200 : me.getDuration());
                    amplifier.addAndGet(me.getAmplifier() + 1);
                    potionEffectsFound.getAndIncrement();
                 });
+
+                if (itemStack.is(Items.SPLASH_POTION)) {
+                    splashCount++;
+                }
+
+                if (itemStack.is(Items.LINGERING_POTION)) {
+                    lingerCount++;
+                }
             }
         }
 
@@ -83,20 +96,49 @@ public class SuperIncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<C
             return getResultStack(outputCount);
         }
 
+        HashSet<MobEffect> setPicker = new HashSet<>(effects);
+        chosenEffect = setPicker.stream().toList().get(new Random().nextInt(setPicker.size()));
+        if (chosenEffect == null) {
+            return getResultStack(outputCount);
+        }
+
         amplifier.set(amplifier.get() / potionEffectsFound.get());
-        maxDuration.set((int)(maxDuration.get() / (potionEffectsFound.get() * (0.4f + (amplifier.get() * 0.12f)))));
-        chosenEffect = effects.get(new Random().nextInt(effects.size()));
+
+        float durationBaseMultiplier = ((0.4f / (0.9f * potionEffectsFound.get())) + (amplifier.get() * 0.22f));
+        float durationAdjustment = (potionEffectsFound.get() * durationBaseMultiplier);
+        maxDuration.set((int)(maxDuration.get() / durationAdjustment));
+        if (chosenEffect.isInstantenous()) {
+            long thresholdTime = IncenseCandleBlockEntity.getInstantEffectThresholdTime(amplifier.intValue());
+            int activationAmounts = (int)Math.ceil((double) maxDuration.intValue() / thresholdTime);
+            maxDuration.set((int) (activationAmounts * thresholdTime));
+        }
 
         ItemStack resultStack = getResultStack(outputCount);
+
         CompoundTag tag = resultStack.getOrCreateTag();
         CompoundTag blockEntityTag = new CompoundTag();
         tag.put("BlockEntityTag", blockEntityTag);
-        blockEntityTag.putInt(SuperIncenseCandleBlockEntity.COLOR_TAG, chosenEffect.getColor());
-        blockEntityTag.putInt(SuperIncenseCandleBlockEntity.AMPLIFIER_TAG, amplifier.intValue());
-        blockEntityTag.putInt(SuperIncenseCandleBlockEntity.MAX_DURATION_TAG, maxDuration.intValue());
-        blockEntityTag.putString(SuperIncenseCandleBlockEntity.STATUS_EFFECT_TAG, Registry.MOB_EFFECT.getKey(chosenEffect).toString());
-        blockEntityTag.putBoolean(SuperIncenseCandleBlockEntity.INFINITE_TAG, false);
+        blockEntityTag.putInt(IncenseCandleBlockEntity.COLOR_TAG, chosenEffect.getColor());
+        blockEntityTag.putInt(IncenseCandleBlockEntity.AMPLIFIER_TAG, amplifier.intValue());
+        blockEntityTag.putInt(IncenseCandleBlockEntity.MAX_DURATION_TAG, maxDuration.intValue());
+        blockEntityTag.putString(IncenseCandleBlockEntity.STATUS_EFFECT_TAG, Registry.MOB_EFFECT.getKey(chosenEffect).toString());
+        blockEntityTag.putBoolean(IncenseCandleBlockEntity.INFINITE_TAG, false);
+        blockEntityTag.putInt(IncenseCandleBlockEntity.RANGE_TAG, 3 + (splashCount * 2));
+        if (chosenEffect.isInstantenous()) {
+            blockEntityTag.putInt(IncenseCandleBlockEntity.LINGER_TIME_TAG, 1);
+        }
+        else if (chosenEffect == MobEffects.NIGHT_VISION) {
+            setLingerTime(lingerCount, blockEntityTag, IncenseCandleBlockEntity.DEFAULT_NIGHT_VISION_LINGER_TIME);
+        }
+        else {
+            setLingerTime(lingerCount, blockEntityTag, IncenseCandleBlockEntity.DEFAULT_LINGER_TIME);
+        }
+
         return resultStack;
+    }
+
+    private static void setLingerTime(int lingerCount, CompoundTag blockEntityTag, int baseLingerTime) {
+        blockEntityTag.putInt(IncenseCandleBlockEntity.LINGER_TIME_TAG, baseLingerTime + (lingerCount * baseLingerTime * 2));
     }
 
     @Override
@@ -147,6 +189,7 @@ public class SuperIncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<C
 
     private boolean matches(CraftingContainer craftingInventory, int width, int height, boolean mirrored) {
         int potionCount = 0;
+        List<ItemStack> secondaryIngredientsFound = new ArrayList<>();
         for(int column = 0; column < craftingInventory.getWidth(); ++column) {
             for(int row = 0; row < craftingInventory.getHeight(); ++row) {
                 ItemStack itemStack = craftingInventory.getItem(column + row * craftingInventory.getWidth());
@@ -163,7 +206,7 @@ public class SuperIncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<C
 
                 if (ingredient == null) {
                     if (!itemStack.isEmpty()) {
-                        if (itemStack.is(Items.POTION)) {
+                        if (itemStack.is(Items.POTION) || itemStack.is(Items.SPLASH_POTION) || itemStack.is(Items.LINGERING_POTION)) {
                             if(PotionUtils.getMobEffects(itemStack).isEmpty()) {
                                 return false;
                             }
@@ -172,8 +215,8 @@ public class SuperIncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<C
                                 return false;
                             }
                         }
-                        else if (this.shapelessRecipeItems.stream().noneMatch(i -> i.test(itemStack))) {
-                            return false;
+                        else {
+                            secondaryIngredientsFound.add(itemStack);
                         }
                     }
                 }
@@ -183,12 +226,13 @@ public class SuperIncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<C
             }
         }
 
-        return potionCount > 0;
+        int[] matches = RecipeMatcher.findMatches(secondaryIngredientsFound, this.shapelessRecipeItems);
+        return potionCount > 0 && matches != null;
     }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return BzRecipes.SUPER_INCENSE_CANDLE_RECIPE.get();
+        return BzRecipes.INCENSE_CANDLE_RECIPE.get();
     }
 
     @Override

@@ -1,16 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import com.telepathicgrunt.the_bumblezone.blocks.blockentities.SuperIncenseCandleBlockEntity;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.IncenseCandleBlockEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -44,16 +42,17 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 
-public class SuperIncenseCandleBase extends BaseEntityBlock implements SimpleWaterloggedBlock, SuperCandle {
+public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterloggedBlock, SuperCandle {
     public static final BooleanProperty LIT = AbstractCandleBlock.LIT;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape AABB = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
 
-    public SuperIncenseCandleBase() {
+    public IncenseCandleBase() {
         super(Properties.of(Material.DECORATION, MaterialColor.SAND).noOcclusion().strength(0.1F).sound(SoundType.CANDLE).lightLevel((blockState) -> blockState.getValue(LIT) ? 15 : 0));
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
     }
@@ -129,6 +128,22 @@ public class SuperIncenseCandleBase extends BaseEntityBlock implements SimpleWat
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         super.onPlace(state, level, pos, oldState, isMoving);
+        if (!level.isClientSide() && oldState.is(BzBlocks.INCENSE_BASE_CANDLE.get()) && state.is(BzBlocks.INCENSE_BASE_CANDLE.get())) {
+            if (oldState.getValue(LIT) && !state.getValue(LIT)) {
+                BlockEntity blockEntity = level.getBlockEntity(pos);
+                if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity) {
+                    incenseCandleBlockEntity.resetCurrentDuration();
+                    incenseCandleBlockEntity.resetInstantStartTime();
+                }
+            }
+            else if (!oldState.getValue(LIT) && state.getValue(LIT)) {
+                BlockEntity blockEntity = level.getBlockEntity(pos);
+                if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity) {
+                    incenseCandleBlockEntity.resetCurrentDuration();
+                    incenseCandleBlockEntity.setInstantStartTime(level.getGameTime());
+                }
+            }
+        }
     }
 
     @Override
@@ -169,9 +184,9 @@ public class SuperIncenseCandleBase extends BaseEntityBlock implements SimpleWat
         }
 
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof SuperIncenseCandleBlockEntity superIncenseCandleBlockEntity) {
-            ItemStack itemStack = BzItems.SUPER_INCENSE_CANDLE.get().getDefaultInstance();
-            superIncenseCandleBlockEntity.saveToItem(itemStack);
+        if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity) {
+            ItemStack itemStack = BzItems.INCENSE_CANDLE.get().getDefaultInstance();
+            incenseCandleBlockEntity.saveToItem(itemStack);
             ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, itemStack);
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
@@ -180,12 +195,22 @@ public class SuperIncenseCandleBase extends BaseEntityBlock implements SimpleWat
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return BzBlockEntities.SUPER_INCENSE_CANDLE.get().create(pos, state);
+        return BzBlockEntities.INCENSE_CANDLE.get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createTickerHelper(blockEntityType, BzBlockEntities.SUPER_INCENSE_CANDLE.get(), level.isClientSide ? (a, b, c, d) -> {} : SuperIncenseCandleBlockEntity::serverTick);
+        return createTickerHelper(blockEntityType, BzBlockEntities.INCENSE_CANDLE.get(), level.isClientSide ? (a, b, c, d) -> {} : IncenseCandleBlockEntity::serverTick);
+    }
+
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+        return blockState.is(BzTags.CANDLES) && blockState.getValue(LIT) ? 5 : 0;
     }
 
     public static int getItemColor(ItemStack itemStack) {
@@ -193,19 +218,19 @@ public class SuperIncenseCandleBase extends BaseEntityBlock implements SimpleWat
             CompoundTag tag = itemStack.getTag();
             if (tag != null && tag.contains("BlockEntityTag")) {
                 CompoundTag blockEntityTag = tag.getCompound("BlockEntityTag");
-                if (blockEntityTag.contains(SuperIncenseCandleBlockEntity.COLOR_TAG)) {
-                    return blockEntityTag.getInt(SuperIncenseCandleBlockEntity.COLOR_TAG);
+                if (blockEntityTag.contains(IncenseCandleBlockEntity.COLOR_TAG)) {
+                    return blockEntityTag.getInt(IncenseCandleBlockEntity.COLOR_TAG);
                 }
             }
         }
-        return 16777215;
+        return IncenseCandleBlockEntity.DEFAULT_COLOR;
     }
 
     public static int getBlockColor(BlockAndTintGetter world, BlockPos pos, int tintIndex) {
         if (world != null) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof SuperIncenseCandleBlockEntity superIncenseCandleBlockEntity) {
-                int currentColor = superIncenseCandleBlockEntity.getColor();
+            if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity) {
+                int currentColor = incenseCandleBlockEntity.getColor();
 
                 if (tintIndex == 1) {
                     // Change tint of lit top
@@ -227,22 +252,21 @@ public class SuperIncenseCandleBase extends BaseEntityBlock implements SimpleWat
     public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         if (blockState.hasProperty(LIT) && blockState.getValue(LIT)) {
             BlockEntity blockEntity = world.getBlockEntity(position);
-            if (blockEntity instanceof SuperIncenseCandleBlockEntity superIncenseCandleBlockEntity && superIncenseCandleBlockEntity.getMobEffect() != null) {
-                int color = superIncenseCandleBlockEntity.getColor();
-                double red = (double)(color >> 16 & 255) / 255.0D;
-                double green = (double)(color >> 8 & 255) / 255.0D;
-                double blue = (double)(color & 255) / 255.0D;
+            if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity && incenseCandleBlockEntity.getMobEffect() != null) {
+                int color = incenseCandleBlockEntity.getColor();
+                Vec3 colorRGB = IncenseCandleBlockEntity.convertIntegerColorToRGB(color);
 
                 //number of particles in this tick
                 for (int i = 0; i < random.nextInt(3); ++i) {
-                    this.spawnEffectParticles(world, random, position, blockState, red, green, blue);
+                    this.spawnAmbientEffectParticles(world, random, position, colorRGB.x(), colorRGB.y(), colorRGB.z());
                 }
             }
         }
         super.animateTick(blockState, world, position, random);
     }
 
-    private void spawnEffectParticles(Level world, RandomSource random, BlockPos position, BlockState blockState, double red, double green, double blue) {
+
+    private void spawnAmbientEffectParticles(Level world, RandomSource random, BlockPos position, double red, double green, double blue) {
         world.addParticle(ParticleTypes.AMBIENT_ENTITY_EFFECT,
                 position.getX() + 0.4d + (random.nextDouble() * 0.2d),
                 position.getY() + 0.7d + (random.nextDouble() * 0.2d),

@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.client;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
-import com.telepathicgrunt.the_bumblezone.client.items.SuperCandleColoring;
+import com.telepathicgrunt.the_bumblezone.client.items.IncenseCandleColoring;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuff;
 import com.telepathicgrunt.the_bumblezone.client.particles.RoyalJellyParticle;
@@ -62,8 +62,8 @@ public class BumblezoneClient {
         modEventBus.addListener(BumblezoneClient::registerEntityModels);
         modEventBus.addListener(BumblezoneClient::registerKeyBinding);
         modEventBus.addListener(BumblezoneClient::registerDimensionSpecialEffects);
-        modEventBus.addListener(SuperCandleColoring::registerBlockColors);
-        modEventBus.addListener(SuperCandleColoring::registerItemColors);
+        modEventBus.addListener(IncenseCandleColoring::registerBlockColors);
+        modEventBus.addListener(IncenseCandleColoring::registerItemColors);
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         forgeBus.addListener(BeehemothControls::keyInput);
     }

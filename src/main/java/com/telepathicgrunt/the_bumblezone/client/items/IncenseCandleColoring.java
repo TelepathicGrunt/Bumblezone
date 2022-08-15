@@ -1,16 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.client.items;
 
-import com.telepathicgrunt.the_bumblezone.blocks.SuperIncenseCandleBase;
+import com.telepathicgrunt.the_bumblezone.blocks.IncenseCandleBase;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.world.item.BlockItem;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 
-public class SuperCandleColoring {
+public class IncenseCandleColoring {
 
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
         event.register(
-            (state, reader, pos, color) -> SuperIncenseCandleBase.getBlockColor(reader, pos, color),
-            BzBlocks.SUPER_INCENSE_BASE_CANDLE.get()
+            (state, reader, pos, color) -> IncenseCandleBase.getBlockColor(reader, pos, color),
+            BzBlocks.INCENSE_BASE_CANDLE.get()
         );
     }
 
@@ -20,9 +20,9 @@ public class SuperCandleColoring {
                 ((BlockItem) stack.getItem()).getBlock().defaultBlockState(),
                 null,
                 null,
-                SuperIncenseCandleBase.getItemColor(stack)
+                IncenseCandleBase.getItemColor(stack)
             ),
-            BzBlocks.SUPER_INCENSE_BASE_CANDLE.get()
+            BzBlocks.INCENSE_BASE_CANDLE.get()
         );
     }
 }
