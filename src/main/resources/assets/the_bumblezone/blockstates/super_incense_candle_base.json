@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "the_bumblezone:block/super_candle/incense_candle_base"
+    },
+    "lit=true": {
+      "model": "the_bumblezone:block/super_candle/incense_candle_base_lit"
+    }
+  }
+}

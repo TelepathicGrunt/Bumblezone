@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "the_bumblezone",
+  "pattern": [
+    " s ",
+    " h ",
+    "dhd"
+  ],
+  "key": {
+    "h": {
+      "item": "minecraft:honeycomb"
+    },
+    "s": {
+      "item": "minecraft:string"
+    },
+    "d": {
+      "item": "minecraft:red_dye"
+    }
+  },
+  "result": {
+    "item": "the_bumblezone:super_candle_red"
+  }
+}

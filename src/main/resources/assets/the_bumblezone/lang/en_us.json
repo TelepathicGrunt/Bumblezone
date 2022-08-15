@@ -40,6 +40,7 @@
   "block.the_bumblezone.super_candle_base_red": "Red Super Candle Base",
   "block.the_bumblezone.super_candle_base_white": "White Super Candle Base",
   "block.the_bumblezone.super_candle_base_yellow": "Yellow Super Candle Base",
+  "block.the_bumblezone.super_incense_candle_base": "Super Incense Candle Base",
 
   "fluid.the_bumblezone.sugar_water_still": "Sugar Water",
   "fluid.the_bumblezone.sugar_water_flowing": "Sugar Water",
@@ -108,6 +109,7 @@
   "item.the_bumblezone.super_candle_red": "Red Super Candle",
   "item.the_bumblezone.super_candle_white": "White Super Candle",
   "item.the_bumblezone.super_candle_yellow": "Yellow Super Candle",
+  "item.the_bumblezone.super_incense_candle": "Super Incense Candle",
 
   "entity.the_bumblezone.honey_slime": "Honey Slime",
   "entity.the_bumblezone.beehemoth": "Beehemoth",

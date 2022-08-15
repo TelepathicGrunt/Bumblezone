@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.client;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
+import com.telepathicgrunt.the_bumblezone.client.items.SuperCandleColoring;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuff;
 import com.telepathicgrunt.the_bumblezone.client.particles.RoyalJellyParticle;
@@ -30,9 +31,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
-import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -42,10 +41,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Bee;
-import net.minecraft.world.level.GrassColor;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
@@ -66,6 +62,8 @@ public class BumblezoneClient {
         modEventBus.addListener(BumblezoneClient::registerEntityModels);
         modEventBus.addListener(BumblezoneClient::registerKeyBinding);
         modEventBus.addListener(BumblezoneClient::registerDimensionSpecialEffects);
+        modEventBus.addListener(SuperCandleColoring::registerBlockColors);
+        modEventBus.addListener(SuperCandleColoring::registerItemColors);
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         forgeBus.addListener(BeehemothControls::keyInput);
     }
@@ -148,6 +146,15 @@ public class BumblezoneClient {
                 (itemStack, world, livingEntity, int1) ->
                         BeeCannon.getNumberOfBees(itemStack) / 10f
         );
+
+        // Correct model based on crystals
+        ItemProperties.register(
+                BzItems.CRYSTAL_CANNON.get(),
+                new ResourceLocation("crystal_count"),
+                (itemStack, world, livingEntity, int1) ->
+                        CrystalCannon.getNumberOfCrystals(itemStack) / 10f
+        );
+
 
         // Correct model based on crystals
         ItemProperties.register(

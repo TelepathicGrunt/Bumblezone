@@ -1,0 +1,22 @@
+{
+  "type": "the_bumblezone:super_incense_candle_recipe",
+  "group": "the_bumblezone",
+  "ingredients": [
+    {
+      "item": "minecraft:potion"
+    },
+    {
+      "item": "minecraft:honeycomb"
+    },
+    {
+      "item": "minecraft:honeycomb"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:diamond"
+    }
+  ],
+  "resultCount": 1
+}

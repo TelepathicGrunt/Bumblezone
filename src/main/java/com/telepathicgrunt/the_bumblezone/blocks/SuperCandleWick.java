@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -16,8 +15,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.AbstractCandleBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -36,14 +33,14 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.function.ToIntFunction;
 
-public class CandleWick extends Block implements SimpleWaterloggedBlock {
+public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty LIT = AbstractCandleBlock.LIT;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final ToIntFunction<BlockState> LIGHT_EMISSION = (blockState) -> blockState.getValue(LIT) ? 15 : 0;
     private static final VoxelShape AABB = Block.box(7.0D, 0.0D, 7.0D, 9.0D, 6.0D, 9.0D);
 
-    public CandleWick() {
-        super(Properties.of(Material.AIR, MaterialColor.COLOR_BLACK).noCollission().lightLevel(CandleWick.LIGHT_EMISSION));
+    public SuperCandleWick() {
+        super(Properties.of(Material.AIR, MaterialColor.COLOR_BLACK).noCollission().lightLevel(SuperCandleWick.LIGHT_EMISSION));
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
     }
 
@@ -59,7 +56,7 @@ public class CandleWick extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public boolean canSurvive(BlockState blockState, LevelReader levelReader, BlockPos blockPos) {
-        return levelReader.getBlockState(blockPos.below()).getBlock() instanceof CandleBase;
+        return levelReader.getBlockState(blockPos.below()).getBlock() instanceof SuperCandle;
     }
 
     @Override
@@ -132,7 +129,7 @@ public class CandleWick extends Block implements SimpleWaterloggedBlock {
     }
 
     public static void setLit(LevelAccessor levelAccessor, BlockState blockState, BlockPos blockPos, boolean lit) {
-        if (blockState.getBlock() instanceof CandleWick && !(lit && blockState.getValue(WATERLOGGED))) {
+        if (blockState.getBlock() instanceof SuperCandleWick && !(lit && blockState.getValue(WATERLOGGED))) {
             levelAccessor.setBlock(blockPos, blockState.setValue(LIT, lit), 11);
             setBelowLit(levelAccessor, blockPos, lit);
         }
@@ -141,14 +138,14 @@ public class CandleWick extends Block implements SimpleWaterloggedBlock {
     public static void setBelowLit(LevelAccessor levelAccessor, BlockPos blockPos, boolean lit) {
         BlockPos belowPos = blockPos.below();
         BlockState candleBase = levelAccessor.getBlockState(belowPos);
-        if (candleBase.getBlock() instanceof CandleBase) {
+        if (candleBase.getBlock() instanceof SuperCandle) {
             levelAccessor.setBlock(belowPos, candleBase.setValue(LIT, lit), 11);
         }
     }
 
     public static void extinguish(Player player, BlockState blockState, LevelAccessor levelAccessor, BlockPos blockPos) {
         setLit(levelAccessor, blockState, blockPos, false);
-        if (blockState.getBlock() instanceof CandleWick) {
+        if (blockState.getBlock() instanceof SuperCandleWick) {
             levelAccessor.addParticle(ParticleTypes.SMOKE, (double)blockPos.getX() + 0.5, (double)blockPos.getY() + 0.2, (double)blockPos.getZ() + 0.5, 0.0D, 0.1F, 0.0D);
         }
 

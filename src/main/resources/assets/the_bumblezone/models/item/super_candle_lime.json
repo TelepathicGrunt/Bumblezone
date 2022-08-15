@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "the_bumblezone:item/super_candle/candle_lime"
+    "layer0": "the_bumblezone:item/super_candle/incense_candle_base"
   }
 }

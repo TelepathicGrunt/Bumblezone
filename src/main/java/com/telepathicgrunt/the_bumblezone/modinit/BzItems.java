@@ -72,6 +72,7 @@ public class BzItems {
     public static final RegistryObject<Item> SUPER_CANDLE_RED = ITEMS.register("super_candle_red", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_RED.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> SUPER_CANDLE_WHITE = ITEMS.register("super_candle_white", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_WHITE.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> SUPER_CANDLE_YELLOW = ITEMS.register("super_candle_yellow", () -> new BlockItem(BzBlocks.SUPER_CANDLE_BASE_YELLOW.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> SUPER_INCENSE_CANDLE = ITEMS.register("super_incense_candle", () -> new BlockItem(BzBlocks.SUPER_INCENSE_BASE_CANDLE.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
 
     //items
     public static final RegistryObject<ArrowItem> HONEY_CRYSTAL_SHARDS = ITEMS.register("honey_crystal_shards", () -> new HoneyCrystalShards(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.15F).build())));

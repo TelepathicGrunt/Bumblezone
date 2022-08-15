@@ -33,12 +33,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 
-public class CandleBase extends Block implements SimpleWaterloggedBlock {
+public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, SuperCandle {
     public static final BooleanProperty LIT = AbstractCandleBlock.LIT;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape AABB = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
 
-    public CandleBase() {
+    public SuperCandleBase() {
         super(Properties.of(Material.DECORATION, MaterialColor.SAND).noOcclusion().strength(0.1F).sound(SoundType.CANDLE).lightLevel((blockState) -> blockState.getValue(LIT) ? 15 : 0));
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
     }
@@ -91,7 +91,7 @@ public class CandleBase extends Block implements SimpleWaterloggedBlock {
         if (!state.getValue(WATERLOGGED) && fluidState.getType() == Fluids.WATER) {
             BlockState blockstate = state.setValue(WATERLOGGED, Boolean.TRUE);
             if (state.getValue(LIT)) {
-                CandleWick.extinguish(null, level.getBlockState(pos.above()), level, pos.above());
+                SuperCandleWick.extinguish(null, level.getBlockState(pos.above()), level, pos.above());
                 level.setBlock(pos, blockstate.setValue(LIT, false), 3);
             }
             else {
@@ -115,14 +115,14 @@ public class CandleBase extends Block implements SimpleWaterloggedBlock {
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (player.getAbilities().mayBuild) {
             if (player.getItemInHand(interactionHand).isEmpty() && blockState.getValue(LIT)) {
-                CandleWick.extinguish(player, level.getBlockState(blockPos.above()), level, blockPos.above());
+                SuperCandleWick.extinguish(player, level.getBlockState(blockPos.above()), level, blockPos.above());
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
             // Make item tag. Also needs dispenser behavior
             else if (player.getItemInHand(interactionHand).is(Items.FLINT_AND_STEEL) &&
                 !blockState.getValue(LIT))
             {
-                CandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
+                SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
         }
@@ -132,35 +132,7 @@ public class CandleBase extends Block implements SimpleWaterloggedBlock {
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
         if (!level.isClientSide && projectile.isOnFire() && canBeLit(level, state, hit.getBlockPos())) {
-            CandleWick.setLit(level, level.getBlockState(hit.getBlockPos().above()), hit.getBlockPos().above(), true);
-        }
-    }
-
-    public static boolean canBeLit(Level level, BlockState state, BlockPos pos) {
-        BlockState aboveState = level.getBlockState(pos.above());
-        return aboveState.is(BzBlocks.SUPER_CANDLE_WICK.get()) &&
-                !state.getValue(WATERLOGGED) &&
-                !state.getValue(LIT) &&
-                !aboveState.getValue(WATERLOGGED) &&
-                !aboveState.getValue(LIT);
-    }
-
-    private static void placeWickIfPossible(LevelAccessor levelAccessor, BlockPos blockPos, boolean lit) {
-        BlockPos abovePos = blockPos.above();
-        BlockState aboveState = levelAccessor.getBlockState(abovePos);
-        if (!aboveState.is(BzBlocks.SUPER_CANDLE_WICK.get()) && (aboveState.getMaterial().isReplaceable() || aboveState.isAir())) {
-            boolean wickWaterlogged = aboveState.getFluidState().is(FluidTags.WATER);
-            BlockState candleWick = BzBlocks.SUPER_CANDLE_WICK.get().defaultBlockState()
-                    .setValue(LIT, lit)
-                    .setValue(WATERLOGGED, wickWaterlogged);
-            levelAccessor.setBlock(abovePos, candleWick, 3);
-
-            if (wickWaterlogged) {
-                BlockState currentState = levelAccessor.getBlockState(blockPos);
-                if (currentState.getBlock() instanceof CandleBase) {
-                    levelAccessor.setBlock(blockPos, currentState.setValue(WATERLOGGED, true), 3);
-                }
-            }
+            SuperCandleWick.setLit(level, level.getBlockState(hit.getBlockPos().above()), hit.getBlockPos().above(), true);
         }
     }
 }
