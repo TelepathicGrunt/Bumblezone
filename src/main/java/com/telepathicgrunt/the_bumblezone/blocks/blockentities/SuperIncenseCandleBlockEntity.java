@@ -94,6 +94,10 @@ public class SuperIncenseCandleBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(CompoundTag compoundTag) {
         super.saveAdditional(compoundTag);
+        saveFieldsToTag(compoundTag);
+    }
+
+    private void saveFieldsToTag(CompoundTag compoundTag) {
         compoundTag.putInt(COLOR_TAG, this.color);
         if (this.mobEffect != null) {
             compoundTag.putString(STATUS_EFFECT_TAG, Registry.MOB_EFFECT.getKey(this.mobEffect).toString());
@@ -114,6 +118,20 @@ public class SuperIncenseCandleBlockEntity extends BlockEntity {
         }
         compoundTag.putInt(MAX_DURATION_TAG, this.maxDuration);
         BlockItem.setBlockEntityData(stack, this.getType(), compoundTag);
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        super.onDataPacket(net, pkt);
+        saveFieldsToTag(tag);
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        super.handleUpdateTag(tag);
+        if (this.level instanceof ClientLevel) {
+            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 8);
+        }
     }
 
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, BlockEntity blockEntity) {

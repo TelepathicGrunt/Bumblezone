@@ -129,13 +129,6 @@ public class SuperIncenseCandleBase extends BaseEntityBlock implements SimpleWat
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         super.onPlace(state, level, pos, oldState, isMoving);
-        level.scheduleTick(pos, state.getBlock(), 0);
-    }
-
-    @Override
-    public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
-        super.tick(blockState, serverLevel, blockPos, random);
-        serverLevel.sendBlockUpdated(blockPos, blockState, blockState, 8);
     }
 
     @Override
