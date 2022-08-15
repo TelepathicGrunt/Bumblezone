@@ -245,7 +245,7 @@ public class SuperIncenseCandleBase extends BaseEntityBlock implements SimpleWat
     private void spawnEffectParticles(Level world, RandomSource random, BlockPos position, BlockState blockState, double red, double green, double blue) {
         world.addParticle(ParticleTypes.AMBIENT_ENTITY_EFFECT,
                 position.getX() + 0.4d + (random.nextDouble() * 0.2d),
-                position.getY() + 0.4d + (random.nextDouble() * 0.2d),
+                position.getY() + 0.7d + (random.nextDouble() * 0.2d),
                 position.getZ() + 0.4d + (random.nextDouble() * 0.2d),
                 red,
                 green,

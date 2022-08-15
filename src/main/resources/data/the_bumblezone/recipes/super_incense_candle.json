@@ -1,22 +1,24 @@
 {
   "type": "the_bumblezone:super_incense_candle_recipe",
   "group": "the_bumblezone",
-  "ingredients": [
-    {
-      "item": "minecraft:potion"
-    },
-    {
+  "pattern": [
+    "s",
+    "h",
+    "h"
+  ],
+  "key": {
+    "h": {
       "item": "minecraft:honeycomb"
     },
-    {
-      "item": "minecraft:honeycomb"
-    },
-    {
+    "s": {
       "item": "minecraft:string"
-    },
+    }
+  },
+  "shapelessExtraIngredients": [
     {
-      "item": "minecraft:diamond"
+      "item": "the_bumblezone:royal_jelly_bottle"
     }
   ],
+  "maxAllowedPotions": 5,
   "resultCount": 1
 }

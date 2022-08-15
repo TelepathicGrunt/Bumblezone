@@ -4,7 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "the_bumblezone.refmap.json",
   "mixins": [
-    "containers.PotionBrewingAccessor",
+    "containers.ShapedRecipeAccessor",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
     "blocks.DefaultDispenseItemBehaviorInvoker",
@@ -15,6 +15,7 @@
     "blocks.PistonMovingBlockEntityMixin",
     "blocks.PistonStructureResolverMixin",
     "blocks.WaterEquivalenceMixin",
+    "containers.PotionBrewingAccessor",
     "containers.WorkbenchContainerMixin",
     "effects.MobEffectInstanceAccessor",
     "entities.AbstractArrowMixin",

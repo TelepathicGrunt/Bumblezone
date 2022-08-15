@@ -10,10 +10,13 @@ import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -24,6 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class SuperIncenseCandleBlockEntity extends BlockEntity {
@@ -89,6 +93,10 @@ public class SuperIncenseCandleBlockEntity extends BlockEntity {
         this.maxDuration = compoundTag.contains(MAX_DURATION_TAG) ? compoundTag.getInt(MAX_DURATION_TAG) : 12000;
         this.currentDuration = compoundTag.contains(CURRENT_DURATION_TAG) ? compoundTag.getInt(CURRENT_DURATION_TAG) : 0;
         this.infinite = compoundTag.contains(INFINITE_TAG) && compoundTag.getBoolean(INFINITE_TAG);
+
+        if (this.level instanceof ClientLevel) {
+            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 8);
+        }
     }
 
     @Override
@@ -121,17 +129,15 @@ public class SuperIncenseCandleBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
-        if (this.level instanceof ClientLevel) {
-            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 8);
-        }
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
-    public void handleUpdateTag(CompoundTag tag) {
-        super.handleUpdateTag(tag);
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = new CompoundTag();
         saveFieldsToTag(tag);
+        return tag;
     }
 
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, BlockEntity blockEntity) {
@@ -142,6 +148,10 @@ public class SuperIncenseCandleBlockEntity extends BlockEntity {
                     superIncenseCandleBlockEntity.resetCurrentDuration();
                 }
                 else if (superIncenseCandleBlockEntity.getMobEffect() != null) {
+                    if (superIncenseCandleBlockEntity.getMobEffect().isInstantenous() && level.getGameTime() % 200 != 0) {
+                        return;
+                    }
+
                     List<LivingEntity> livingEntities = level.getEntitiesOfClass(
                         LivingEntity.class,
                         AABB.ofSize(new Vec3(
@@ -157,7 +167,7 @@ public class SuperIncenseCandleBlockEntity extends BlockEntity {
                     for (LivingEntity livingEntity : livingEntities) {
                         MobEffectInstance mobEffectInstance = new MobEffectInstance(
                             superIncenseCandleBlockEntity.getMobEffect(),
-                            60,
+                            superIncenseCandleBlockEntity.getMobEffect() == MobEffects.NIGHT_VISION ? 240 : 60,
                             superIncenseCandleBlockEntity.getAmplifier(),
                             true,
                             true,
