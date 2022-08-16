@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class SuperIncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<CraftingContainer> {
+public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<CraftingContainer> {
     private final ResourceLocation id;
     private final String group;
     private final int outputCount;
@@ -44,7 +44,7 @@ public class SuperIncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<C
     private final int width;
     private final int height;
 
-    public SuperIncenseCandleRecipe(ResourceLocation id, String group, int outputCount, int maxAllowedPotions, NonNullList<Ingredient> shapedRecipeItems, NonNullList<Ingredient> shapelessRecipeItems, int width, int height) {
+    public IncenseCandleRecipe(ResourceLocation id, String group, int outputCount, int maxAllowedPotions, NonNullList<Ingredient> shapedRecipeItems, NonNullList<Ingredient> shapelessRecipeItems, int width, int height) {
         this.id = id;
         this.group = group;
         this.outputCount = outputCount;
@@ -248,7 +248,7 @@ public class SuperIncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<C
         return id;
     }
 
-    public static class Serializer implements RecipeSerializer<SuperIncenseCandleRecipe> {
+    public static class Serializer implements RecipeSerializer<IncenseCandleRecipe> {
         private static NonNullList<Ingredient> getIngredients(JsonArray jsonElements) {
             NonNullList<Ingredient> defaultedList = NonNullList.create();
 
@@ -263,7 +263,7 @@ public class SuperIncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<C
         }
 
         @Override
-        public SuperIncenseCandleRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+        public IncenseCandleRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");
 
             //shaped
@@ -282,11 +282,11 @@ public class SuperIncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<C
             int maxPotions = json.get("maxAllowedPotions").getAsInt();
             int resultCount = json.get("resultCount").getAsInt();
 
-            return new SuperIncenseCandleRecipe(recipeId, group, resultCount, maxPotions, shapedRecipeItems, shapelessRecipeItems, width, height);
+            return new IncenseCandleRecipe(recipeId, group, resultCount, maxPotions, shapedRecipeItems, shapelessRecipeItems, width, height);
         }
 
         @Override
-        public SuperIncenseCandleRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public IncenseCandleRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);
 
             int width = buffer.readVarInt();
@@ -300,11 +300,11 @@ public class SuperIncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<C
 
             int maxPotionRead = buffer.readVarInt();
             int resultCountRead = buffer.readVarInt();
-            return new SuperIncenseCandleRecipe(recipeId, group, resultCountRead, maxPotionRead, shapedRecipe, shapelessRecipe, width, height);
+            return new IncenseCandleRecipe(recipeId, group, resultCountRead, maxPotionRead, shapedRecipe, shapelessRecipe, width, height);
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf buffer, SuperIncenseCandleRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, IncenseCandleRecipe recipe) {
             buffer.writeUtf(recipe.group);
 
             buffer.writeVarInt(recipe.width);
