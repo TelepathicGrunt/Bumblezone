@@ -1,8 +1,13 @@
 {
   "variants": {
-    "lit=false": {
-      "model": "the_bumblezone:block/super_candle/candle_base_red"
-    },
+    "lit=false": [
+      {
+        "model": "the_bumblezone:block/super_candle/candle_base_red"
+      },
+      {
+        "model": "the_bumblezone:block/super_candle/candle_base_red_mirrored"
+      }
+    ],
     "lit=true": {
       "model": "the_bumblezone:block/super_candle/candle_base_lit_red"
     }

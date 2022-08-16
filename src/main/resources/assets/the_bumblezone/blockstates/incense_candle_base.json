@@ -7,10 +7,22 @@
       {
         "model": "the_bumblezone:block/super_candle/incense_candle_base",
         "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/super_candle/incense_candle_base_mirrored"
+      },
+      {
+        "model": "the_bumblezone:block/super_candle/incense_candle_base_mirrored",
+        "x": 180
       }
     ],
-    "lit=true": {
-      "model": "the_bumblezone:block/super_candle/incense_candle_base_lit"
-    }
+    "lit=true": [
+      {
+        "model": "the_bumblezone:block/super_candle/incense_candle_base_lit"
+      },
+      {
+        "model": "the_bumblezone:block/super_candle/incense_candle_base_lit_mirrored"
+      }
+    ]
   }
 }
