@@ -182,10 +182,9 @@ public class IncenseCandleBlockEntity extends BlockEntity {
             boolean isInstant = incenseCandleBlockEntity.getMobEffect() != null && incenseCandleBlockEntity.getMobEffect().isInstantenous();
             boolean instantPotionTime = isInstantEffectApplyTime(level, incenseCandleBlockEntity);
 
-            if ((isInstant && instantPotionTime) || level.getGameTime() % 10 == 0) {
-                if (blockState.hasProperty(SuperCandleBase.LIT) && blockState.getValue(SuperCandleBase.LIT)) {
+            if (blockState.hasProperty(SuperCandleBase.LIT) && blockState.getValue(SuperCandleBase.LIT)) {
+                if ((isInstant && instantPotionTime) || level.getGameTime() % 10 == 0) {
                     if (!incenseCandleBlockEntity.isInfinite() && incenseCandleBlockEntity.getCurrentDuration() >= incenseCandleBlockEntity.getMaxDuration()) {
-
                         SuperCandleWick.extinguish(null, level.getBlockState(blockPos.above()), level, blockPos.above());
                         incenseCandleBlockEntity.resetCurrentDuration();
                         incenseCandleBlockEntity.resetInstantStartTime();
@@ -225,9 +224,8 @@ public class IncenseCandleBlockEntity extends BlockEntity {
                         }
                     }
                 }
+                incenseCandleBlockEntity.increaseCurrentDuration();
             }
-
-            incenseCandleBlockEntity.increaseCurrentDuration();
         }
     }
 

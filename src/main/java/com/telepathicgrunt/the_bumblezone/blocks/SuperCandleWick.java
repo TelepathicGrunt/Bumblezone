@@ -1,14 +1,20 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -20,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -38,10 +45,12 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final ToIntFunction<BlockState> LIGHT_EMISSION = (blockState) -> blockState.getValue(LIT) ? 15 : 0;
     private static final VoxelShape AABB = Block.box(7.0D, 0.0D, 7.0D, 9.0D, 6.0D, 9.0D);
+    private final boolean isSoul;
 
-    public SuperCandleWick() {
+    public SuperCandleWick(boolean isSoul) {
         super(Properties.of(Material.AIR, MaterialColor.COLOR_BLACK).noCollission().lightLevel(SuperCandleWick.LIGHT_EMISSION));
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
+        this.isSoul = isSoul;
     }
 
     @Override
@@ -72,7 +81,9 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        setBelowLit(level, pos, false);
+        if (!state.is(BzTags.CANDLE_WICKS) || !newState.is(BzTags.CANDLE_WICKS)) {
+            setBelowLit(level, pos, false);
+        }
         super.onRemove(state, level, pos, newState, isMoving);
     }
 
@@ -111,26 +122,64 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (state.getValue(LIT)) {
+        if (state.getValue(LIT) && entity instanceof LivingEntity livingEntity) {
             VoxelShape voxelShape = AABB;
             voxelShape = voxelShape.move(pos.getX(), pos.getY(), pos.getZ());
-            if (Shapes.joinIsNotEmpty(voxelShape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND)) {
-                if (!entity.fireImmune()) {
-                    entity.setRemainingFireTicks(entity.getRemainingFireTicks() + 1);
-                    if (entity.getRemainingFireTicks() == 0) {
-                        entity.setSecondsOnFire(1);
+            if (Shapes.joinIsNotEmpty(voxelShape, Shapes.create(livingEntity.getBoundingBox()), BooleanOp.AND)) {
+                if (!livingEntity.fireImmune()) {
+                    livingEntity.setRemainingFireTicks(livingEntity.getRemainingFireTicks() + 1);
+                    if (livingEntity.getRemainingFireTicks() == 0) {
+                        livingEntity.setSecondsOnFire(1);
                     }
                 }
 
-                entity.hurt(DamageSource.IN_FIRE, 0.5f);
+                livingEntity.hurt(DamageSource.IN_FIRE, 0.5f);
             }
         }
         super.entityInside(state, level, pos, entity);
     }
 
+    // passed in position should be the spot directly below the wick
+    public static boolean isSoulBelowInRange(LevelAccessor levelAccessor, BlockPos blockPos) {
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+        mutableBlockPos.set(blockPos);
+        ChunkAccess chunkAccess = levelAccessor.getChunk(blockPos);
+        for (int i = 0; i < mutableBlockPos.getY() - chunkAccess.getMinBuildHeight(); i++) {
+            BlockState currentState = chunkAccess.getBlockState(mutableBlockPos);
+            if (currentState.is(BlockTags.SOUL_FIRE_BASE_BLOCKS)) {
+                return true;
+            }
+            else if (!currentState.is(BzTags.CANDLE_BASES)) {
+                return false;
+            }
+            mutableBlockPos.move(Direction.DOWN);
+        }
+        return false;
+    }
+
+    // passed in position should be the base candle itself
+    public static BlockPos getLitWickPositionAbove(LevelAccessor levelAccessor, BlockPos blockPos) {
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+        mutableBlockPos.set(blockPos);
+        ChunkAccess chunkAccess = levelAccessor.getChunk(blockPos);
+        for (int i = 0; i < chunkAccess.getMaxBuildHeight() - mutableBlockPos.getY(); i++) {
+            BlockState currentState = chunkAccess.getBlockState(mutableBlockPos);
+            if (currentState.is(BzTags.CANDLE_WICKS)) {
+                return mutableBlockPos.immutable();
+            }
+            else if (!currentState.is(BzTags.CANDLE_BASES)) {
+                return null;
+            }
+            mutableBlockPos.move(Direction.UP);
+        }
+        return null;
+    }
+
     public static void setLit(LevelAccessor levelAccessor, BlockState blockState, BlockPos blockPos, boolean lit) {
         if (blockState.getBlock() instanceof SuperCandleWick && !(lit && blockState.getValue(WATERLOGGED))) {
-            levelAccessor.setBlock(blockPos, blockState.setValue(LIT, lit), 11);
+            boolean isBelowSoul = isSoulBelowInRange(levelAccessor, blockPos.below());
+            Block wickBlock = (isBelowSoul && lit) ? BzBlocks.SUPER_CANDLE_WICK_SOUL.get() : BzBlocks.SUPER_CANDLE_WICK.get();
+            levelAccessor.setBlock(blockPos, wickBlock.defaultBlockState().setValue(LIT, lit), 11);
             setBelowLit(levelAccessor, blockPos, lit);
         }
     }
@@ -158,24 +207,50 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
         if (state.getValue(LIT)) {
             addParticlesAndSound(level,
                 new Vec3(
-                    pos.getX() + 0.5D + ((random.nextDouble() * 0.3D) - 0.15D),
-                    pos.getY() + 0.1D + (random.nextDouble() * 0.7D),
-                    pos.getZ() + 0.5D + ((random.nextDouble() * 0.3D) - 0.15D)),
-                random);
+                    pos.getX() + 0.5D + ((random.nextDouble() * 0.26D) - 0.13D),
+                    pos.getY() + 0.75D + (random.nextDouble() * 0.15D),
+                    pos.getZ() + 0.5D + ((random.nextDouble() * 0.26D) - 0.13D)),
+                random,
+                this.isSoul);
 
             level.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5D, pos.getY() + 0.55D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
         }
     }
 
-    private static void addParticlesAndSound(Level level, Vec3 offset, RandomSource random) {
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+        if (blockState.is(BzTags.CANDLE_WICKS) && blockState.getValue(LIT)) {
+            if (isSoul) {
+                return 3;
+            }
+            else {
+                return 5;
+            }
+        }
+        return 0;
+    }
+
+    private static void addParticlesAndSound(Level level, Vec3 offset, RandomSource random, boolean isSoul) {
         float chance = random.nextFloat();
-        if (chance < 0.75F) {
+        if (chance < 0.5F) {
             level.addParticle(ParticleTypes.SMOKE, offset.x, offset.y, offset.z, 0.0D, 0.0D, 0.0D);
             if (chance < 0.17F) {
                 level.playLocalSound(offset.x, offset.y + 0.5D, offset.z, SoundEvents.CANDLE_AMBIENT, SoundSource.BLOCKS, 1.0F + random.nextFloat(), random.nextFloat() * 0.7F + 0.3F, false);
             }
         }
 
-        level.addParticle(ParticleTypes.SMALL_FLAME, offset.x, offset.y, offset.z, 0.0D, 0.0D, 0.0D);
+        if (chance < 0.2F) {
+            if (isSoul) {
+                level.addParticle(ParticleTypes.SOUL_FIRE_FLAME, offset.x, offset.y - 0.75d, offset.z, 0.0D, 0.0D, 0.0D);
+            }
+            else {
+                level.addParticle(ParticleTypes.SMALL_FLAME, offset.x, offset.y - 0.75d, offset.z, 0.0D, 0.0D, 0.0D);
+            }
+        }
     }
 }

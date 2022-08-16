@@ -52,7 +52,8 @@ public class BzBlocks {
     public static final RegistryObject<Block> ROYAL_JELLY_BLOCK = BLOCKS.register("royal_jelly_block", RoyalJellyBlock::new);
     public static final RegistryObject<Block> GLISTERING_HONEY_CRYSTAL = BLOCKS.register("glistering_honey_crystal", GlisteringHoneyCrystal::new);
     public static final RegistryObject<Block> SUPER_CANDLE_BASE = BLOCKS.register("super_candle_base", SuperCandleBase::new);
-    public static final RegistryObject<Block> SUPER_CANDLE_WICK = BLOCKS.register("super_candle_wick", SuperCandleWick::new);
+    public static final RegistryObject<Block> SUPER_CANDLE_WICK = BLOCKS.register("super_candle_wick", () -> new SuperCandleWick(false));
+    public static final RegistryObject<Block> SUPER_CANDLE_WICK_SOUL = BLOCKS.register("super_candle_wick_soul", () -> new SuperCandleWick(true));
     public static final RegistryObject<Block> SUPER_CANDLE_BASE_BLACK = BLOCKS.register("super_candle_base_black", SuperCandleBase::new);
     public static final RegistryObject<Block> SUPER_CANDLE_BASE_BLUE = BLOCKS.register("super_candle_base_blue", SuperCandleBase::new);
     public static final RegistryObject<Block> SUPER_CANDLE_BASE_BROWN = BLOCKS.register("super_candle_base_brown", SuperCandleBase::new);

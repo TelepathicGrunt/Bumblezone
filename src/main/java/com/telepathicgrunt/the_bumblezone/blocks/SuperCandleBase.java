@@ -56,7 +56,7 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        placeWickIfPossible(level, pos, false);
+        SuperCandle.placeWickIfPossible(level, pos, false);
         super.setPlacedBy(level, pos, state, placer, stack);
     }
 
@@ -74,7 +74,7 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
 
     @Override
     public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-        placeWickIfPossible(world, pos, false);
+        SuperCandle.placeWickIfPossible(world, pos, false);
         super.neighborChanged(blockstate, world, pos, block, fromPos, notify);
     }
 
@@ -120,9 +120,7 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
             // Make item tag. Also needs dispenser behavior
-            else if (player.getItemInHand(interactionHand).is(Items.FLINT_AND_STEEL) &&
-                !blockState.getValue(LIT))
-            {
+            else if (player.getItemInHand(interactionHand).is(Items.FLINT_AND_STEEL) && !blockState.getValue(LIT)) {
                 SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
@@ -132,7 +130,7 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
 
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
-        if (!level.isClientSide && projectile.isOnFire() && canBeLit(level, state, hit.getBlockPos())) {
+        if (!level.isClientSide && projectile.isOnFire() && SuperCandle.canBeLit(level, state, hit.getBlockPos())) {
             SuperCandleWick.setLit(level, level.getBlockState(hit.getBlockPos().above()), hit.getBlockPos().above(), true);
         }
     }

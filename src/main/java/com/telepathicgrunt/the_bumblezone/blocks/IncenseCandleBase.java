@@ -74,7 +74,7 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        placeWickIfPossible(level, pos, false);
+        SuperCandle.placeWickIfPossible(level, pos, false);
         super.setPlacedBy(level, pos, state, placer, stack);
     }
 
@@ -92,7 +92,7 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
 
     @Override
     public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-        placeWickIfPossible(world, pos, false);
+        SuperCandle.placeWickIfPossible(world, pos, false);
         super.neighborChanged(blockstate, world, pos, block, fromPos, notify);
     }
 
@@ -137,11 +137,7 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
                 }
             }
             else if (!oldState.getValue(LIT) && state.getValue(LIT)) {
-                BlockEntity blockEntity = level.getBlockEntity(pos);
-                if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity) {
-                    incenseCandleBlockEntity.resetCurrentDuration();
-                    incenseCandleBlockEntity.setInstantStartTime(level.getGameTime());
-                }
+                resetTimingFields(level, pos);
             }
         }
     }
@@ -159,9 +155,7 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
             // Make item tag. Also needs dispenser behavior
-            else if (player.getItemInHand(interactionHand).is(Items.FLINT_AND_STEEL) &&
-                    !blockState.getValue(LIT))
-            {
+            else if (player.getItemInHand(interactionHand).is(Items.FLINT_AND_STEEL) && !blockState.getValue(LIT)) {
                 SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
@@ -171,7 +165,7 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
 
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
-        if (!level.isClientSide && projectile.isOnFire() && canBeLit(level, state, hit.getBlockPos())) {
+        if (projectile.isOnFire() && SuperCandle.canBeLit(level, state, hit.getBlockPos())) {
             SuperCandleWick.setLit(level, level.getBlockState(hit.getBlockPos().above()), hit.getBlockPos().above(), true);
         }
     }
@@ -211,6 +205,14 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
     @Override
     public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
         return blockState.is(BzTags.CANDLES) && blockState.getValue(LIT) ? 5 : 0;
+    }
+
+    private void resetTimingFields(Level level, BlockPos blockPos) {
+        BlockEntity blockEntity = level.getBlockEntity(blockPos);
+        if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity) {
+            incenseCandleBlockEntity.resetCurrentDuration();
+            incenseCandleBlockEntity.setInstantStartTime(Math.max(level.getGameTime() - 1L, 0L));
+        }
     }
 
     public static int getItemColor(ItemStack itemStack) {
