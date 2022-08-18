@@ -25,6 +25,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 import net.minecraftforge.common.util.RecipeMatcher;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -54,6 +55,30 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
         this.result = getResultStack(outputCount);
         this.width = width;
         this.height = height;
+    }
+
+    public IncenseCandleRecipe(ResourceLocation id, String group, ItemStack resultStack, int maxAllowedPotions, NonNullList<Ingredient> shapedRecipeItems, NonNullList<Ingredient> shapelessRecipeItems, int width, int height) {
+        this.id = id;
+        this.group = group;
+        this.outputCount = resultStack.getCount();
+        this.maxAllowedPotions = maxAllowedPotions;
+        this.shapedRecipeItems = shapedRecipeItems;
+        this.shapelessRecipeItems = shapelessRecipeItems;
+        this.result = resultStack;
+        this.width = width;
+        this.height = height;
+    }
+
+    public int getMaxAllowedPotions() {
+        return this.maxAllowedPotions;
+    }
+
+    public NonNullList<Ingredient> getShapedRecipeItems() {
+        return this.shapedRecipeItems;
+    }
+
+    public NonNullList<Ingredient> getShapelessRecipeItems() {
+        return this.shapelessRecipeItems;
     }
 
     private static ItemStack getResultStack(int outputCountIn) {
@@ -93,15 +118,21 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
         }
 
         if (effects.isEmpty()) {
-            return getResultStack(outputCount);
+            return getResultStack(this.outputCount);
         }
 
         HashSet<MobEffect> setPicker = new HashSet<>(effects);
         chosenEffect = setPicker.stream().toList().get(new Random().nextInt(setPicker.size()));
         if (chosenEffect == null) {
-            return getResultStack(outputCount);
+            return getResultStack(this.outputCount);
         }
 
+        balanceStats(chosenEffect, maxDuration, amplifier, potionEffectsFound);
+
+        return createTaggedIncenseCandle(chosenEffect, maxDuration, amplifier, splashCount, lingerCount, this.outputCount);
+    }
+
+    public static void balanceStats(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger amplifier, AtomicInteger potionEffectsFound) {
         amplifier.set(amplifier.get() / potionEffectsFound.get());
 
         float durationBaseMultiplier = ((0.4f / (0.9f * potionEffectsFound.get())) + (amplifier.get() * 0.22f));
@@ -112,7 +143,9 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
             int activationAmounts = (int)Math.ceil((double) maxDuration.intValue() / thresholdTime);
             maxDuration.set((int) (activationAmounts * thresholdTime));
         }
+    }
 
+    public static ItemStack createTaggedIncenseCandle(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger amplifier, int splashCount, int lingerCount, int outputCount) {
         ItemStack resultStack = getResultStack(outputCount);
 
         CompoundTag tag = resultStack.getOrCreateTag();
@@ -133,7 +166,6 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
         else {
             setLingerTime(lingerCount, blockEntityTag, IncenseCandleBlockEntity.DEFAULT_LINGER_TIME);
         }
-
         return resultStack;
     }
 
@@ -166,7 +198,7 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
 
     @Override
     public ItemStack getResultItem() {
-        return result;
+        return this.result;
     }
 
     @Override
@@ -238,14 +270,19 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
     @Override
     public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> ingredients = NonNullList.create();
-        ingredients.addAll(shapelessRecipeItems);
-        ingredients.addAll(shapedRecipeItems);
+        ingredients.addAll(this.shapelessRecipeItems);
+        ingredients.addAll(this.shapedRecipeItems);
         return ingredients;
     }
 
     @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     public ResourceLocation getId() {
-        return id;
+        return this.id;
     }
 
     public static class Serializer implements RecipeSerializer<IncenseCandleRecipe> {

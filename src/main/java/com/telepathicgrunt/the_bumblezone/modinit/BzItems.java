@@ -4,7 +4,6 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.items.*;
 import com.telepathicgrunt.the_bumblezone.items.materials.BeeArmorMaterial;
-import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -17,8 +16,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.RecordItem;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -72,7 +69,7 @@ public class BzItems {
     public static final RegistryObject<Item> SUPER_CANDLE_RED = ITEMS.register("super_candle_red", () -> new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_RED.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false));
     public static final RegistryObject<Item> SUPER_CANDLE_WHITE = ITEMS.register("super_candle_white", () -> new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_WHITE.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false));
     public static final RegistryObject<Item> SUPER_CANDLE_YELLOW = ITEMS.register("super_candle_yellow", () -> new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_YELLOW.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false));
-    public static final RegistryObject<Item> INCENSE_CANDLE = ITEMS.register("incense_candle", () -> new SuperIncenseCandleBlockItem(BzBlocks.INCENSE_BASE_CANDLE.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> INCENSE_CANDLE = ITEMS.register("incense_candle", () -> new IncenseCandleBlockItem(BzBlocks.INCENSE_BASE_CANDLE.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
 
     //items
     public static final RegistryObject<ArrowItem> HONEY_CRYSTAL_SHARDS = ITEMS.register("honey_crystal_shards", () -> new HoneyCrystalShards(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.15F).build())));

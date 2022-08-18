@@ -20,9 +20,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.List;
 import java.util.Optional;
 
-public class SuperIncenseCandleBlockItem extends BlockItem {
+public class IncenseCandleBlockItem extends BlockItem {
 
-    public SuperIncenseCandleBlockItem(Block block, Properties properties) {
+    public IncenseCandleBlockItem(Block block, Properties properties) {
         super(block, properties);
     }
 

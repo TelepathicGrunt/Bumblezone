@@ -43,12 +43,13 @@ import java.util.function.ToIntFunction;
 public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty LIT = AbstractCandleBlock.LIT;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    public static final ToIntFunction<BlockState> LIGHT_EMISSION = (blockState) -> blockState.getValue(LIT) ? 15 : 0;
     private static final VoxelShape AABB = Block.box(7.0D, 0.0D, 7.0D, 9.0D, 6.0D, 9.0D);
+    private static final int NORMAL_LIGHT_LEVEL = 15;
+    private static final int SOUL_LIGHT_LEVEL = 14;
     private final boolean isSoul;
 
     public SuperCandleWick(boolean isSoul) {
-        super(Properties.of(Material.AIR, MaterialColor.COLOR_BLACK).noCollission().lightLevel(SuperCandleWick.LIGHT_EMISSION));
+        super(Properties.of(Material.AIR, MaterialColor.COLOR_BLACK).noCollission().lightLevel((blockState) -> blockState.getValue(LIT) ? (isSoul ? SOUL_LIGHT_LEVEL : NORMAL_LIGHT_LEVEL) : 0));
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
         this.isSoul = isSoul;
     }

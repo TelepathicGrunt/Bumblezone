@@ -6,13 +6,13 @@
       "item": "the_bumblezone:super_candle"
     },
     {
-      "item": "minecraft:light_gray_dye"
+      "item": "minecraft:white_dye"
     },
     {
-      "item": "minecraft:light_gray_dye"
+      "item": "minecraft:white_dye"
     }
   ],
   "result": {
-    "item": "the_bumblezone:super_candle_light_gray"
+    "item": "the_bumblezone:super_candle_white"
   }
 }
