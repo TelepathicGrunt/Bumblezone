@@ -118,7 +118,6 @@ public class JEIIntegration implements IModPlugin {
 				.ifPresent(recipe -> registerExtraRecipes(recipe, registration));
     }
 
-    
     private static void addInfo(IRecipeRegistration registration, Item item) {
 	registration.addIngredientInfo(
 		new ItemStack(item),
@@ -132,26 +131,6 @@ public class JEIIntegration implements IModPlugin {
 		ForgeTypes.FLUID_STACK,
 		Component.translatable(Bumblezone.MODID + "." + ForgeRegistries.FLUIDS.getKey(fluid).getPath() + ".jei_description"));
     }
-
-	/**
-	 * If your item has subtypes that depend on NBT or capabilities, use this to
-	 * help JEI identify those subtypes correctly.
-	 */
-	@Override
-	public void registerItemSubtypes(ISubtypeRegistration registration) {
-		registration.registerSubtypeInterpreter(BzItems.INCENSE_CANDLE.get(), JEIIntegration::getIncenseCandleSubtype);
-	}
-
-	private static String getIncenseCandleSubtype(ItemStack itemStack, UidContext context) {
-		if (itemStack.hasTag()) {
-			CompoundTag blockEntityTag = itemStack.getOrCreateTag().getCompound("BlockEntityTag");
-			if (blockEntityTag.contains(IncenseCandleBlockEntity.STATUS_EFFECT_TAG)) {
-				ResourceLocation rl = new ResourceLocation(blockEntityTag.getString(IncenseCandleBlockEntity.STATUS_EFFECT_TAG));
-				return rl.toString();
-			}
-		}
-		return "N/A";
-	}
 
 	private static void registerExtraRecipes(Recipe<?> baseRecipe, IRecipeRegistration registration) {
 		if (baseRecipe instanceof IncenseCandleRecipe incenseCandleRecipe) {

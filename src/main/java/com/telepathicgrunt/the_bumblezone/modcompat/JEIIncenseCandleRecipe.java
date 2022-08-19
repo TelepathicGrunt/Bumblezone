@@ -6,6 +6,8 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.LingeringPotionItem;
+import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -19,6 +21,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class JEIIncenseCandleRecipe {
     public static ShapedRecipe getFakeShapedRecipe(IncenseCandleRecipe recipe, Potion potion, ItemStack potionItem, int currentRecipe) {
+        ItemStack potionStack = PotionUtils.setPotion(potionItem, potion);
+
         List<Ingredient> fakedShapedIngredientsMutable = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             fakedShapedIngredientsMutable.add(Ingredient.EMPTY);
@@ -44,7 +48,7 @@ public class JEIIncenseCandleRecipe {
             Ingredient ingredient = fakedShapedIngredientsMutable.get(i);
             if (ingredient.isEmpty()) {
                 if (currentShapelessIndex >= shapelessRecipeSize) {
-                    fakedShapedIngredientsMutable.set(i, Ingredient.of(potionItem));
+                    fakedShapedIngredientsMutable.set(i, Ingredient.of(potionStack));
                     break;
                 }
 
@@ -62,17 +66,16 @@ public class JEIIncenseCandleRecipe {
                 3,
                 3,
                 fakedShapedIngredients,
-                createResultStack(recipe.getResultItem().getCount(), potion, potionItem)
+                createResultStack(recipe.getResultItem().getCount(), potionStack)
         );
     }
 
-    private static ItemStack createResultStack(int count, Potion potion, ItemStack potionItem) {
+    private static ItemStack createResultStack(int count, ItemStack potionStack) {
         List<MobEffect> effects = new ArrayList<>();
         AtomicInteger maxDuration = new AtomicInteger();
         AtomicInteger amplifier = new AtomicInteger();
         AtomicInteger potionEffectsFound = new AtomicInteger();
 
-        ItemStack potionStack = PotionUtils.setCustomEffects(potionItem, potion.getEffects());
         PotionUtils.getMobEffects(potionStack).forEach(me -> {
             effects.add(me.getEffect());
             maxDuration.addAndGet(me.getEffect().isInstantenous() ? 200 : me.getDuration());
@@ -96,8 +99,8 @@ public class JEIIncenseCandleRecipe {
                 chosenEffect,
                 maxDuration,
                 amplifier,
-                0,
-                0,
+                potionStack.getItem() instanceof SplashPotionItem ? 1 : 0,
+                potionStack.getItem() instanceof LingeringPotionItem ? 1 : 0,
                 count);
     }
 }
