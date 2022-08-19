@@ -8,6 +8,9 @@ Added Glistering Honey Crystal block!
  If combined with an Awkward Potion in a Brewing Stand, it will create a Potion of Luck! 
  The most common benefit of Luck status is it may improve the loot drops of certain datapack/modded loot tables.
 
+##### Items:
+Buffed Royal Jelly Bottom so it gives move saturation, nutrition, and speed when consumed. It now also gives Jump Boost and Slow Falling as well.
+
 ##### Config:
 Added a new config to disable the thick fog in Bumblezone. Set to enable fog by default. 
  The config entry is in the config/the_bumblezone/dimension.toml config file.
