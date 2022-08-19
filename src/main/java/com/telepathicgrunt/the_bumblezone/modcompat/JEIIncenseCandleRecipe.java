@@ -20,9 +20,38 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class JEIIncenseCandleRecipe {
     public static ShapedRecipe getFakeShapedRecipe(IncenseCandleRecipe recipe, Potion potion, ItemStack potionItem, int currentRecipe) {
         List<Ingredient> fakedShapedIngredientsMutable = new ArrayList<>();
-        fakedShapedIngredientsMutable.addAll(recipe.getShapedRecipeItems());
-        fakedShapedIngredientsMutable.addAll(recipe.getShapelessRecipeItems());
-        fakedShapedIngredientsMutable.add(Ingredient.of(potionItem));
+        for (int i = 0; i < 9; i++) {
+            fakedShapedIngredientsMutable.add(Ingredient.EMPTY);
+        }
+
+        int currentShapedIndex = 0;
+        int shapedRecipeSize = recipe.getShapedRecipeItems().size();
+        for (int x = 0; x < recipe.getRecipeWidth(); x++) {
+            for (int z = 0; z < recipe.getRecipeHeight(); z++) {
+                if (currentShapedIndex >= shapedRecipeSize) {
+                    continue;
+                }
+
+                Ingredient ingredient = recipe.getShapedRecipeItems().get(currentShapedIndex);
+                fakedShapedIngredientsMutable.set(x + (z * 3), ingredient);
+                currentShapedIndex++;
+            }
+        }
+
+        int currentShapelessIndex = 0;
+        int shapelessRecipeSize = recipe.getShapelessRecipeItems().size();
+        for (int i = 0; i < 9; i++) {
+            Ingredient ingredient = fakedShapedIngredientsMutable.get(i);
+            if (ingredient.isEmpty()) {
+                if (currentShapelessIndex >= shapelessRecipeSize) {
+                    fakedShapedIngredientsMutable.set(i, Ingredient.of(potionItem));
+                    break;
+                }
+
+                fakedShapedIngredientsMutable.set(i, recipe.getShapelessRecipeItems().get(currentShapelessIndex));
+                currentShapelessIndex++;
+            }
+        }
 
         NonNullList<Ingredient> fakedShapedIngredients = NonNullList.create();
         fakedShapedIngredients.addAll(fakedShapedIngredientsMutable);
@@ -30,8 +59,8 @@ public class JEIIncenseCandleRecipe {
         return new ShapedRecipe(
                 new ResourceLocation(Bumblezone.MODID, recipe.getId().getPath() + "_" + currentRecipe),
                 Bumblezone.MODID,
-                recipe.getWidth() + 1,
-                recipe.getHeight(),
+                3,
+                3,
                 fakedShapedIngredients,
                 createResultStack(recipe.getResultItem().getCount(), potion, potionItem)
         );
