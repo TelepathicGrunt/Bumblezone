@@ -114,8 +114,7 @@ public class JEIIntegration implements IModPlugin {
 		ClientLevel level = Minecraft.getInstance().level;
 		if (level == null)
 			return;
-		RecipeManager recipeManager = level.getRecipeManager();
-		recipeManager.byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
+		level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
 				.ifPresent(recipe -> registerExtraRecipes(recipe, registration));
     }
 
@@ -157,10 +156,14 @@ public class JEIIntegration implements IModPlugin {
 	private static void registerExtraRecipes(Recipe<?> baseRecipe, IRecipeRegistration registration) {
 		if (baseRecipe instanceof IncenseCandleRecipe incenseCandleRecipe) {
 			List<CraftingRecipe> extraRecipes = new ArrayList<>();
+			int currentRecipe = 0;
 			for (Potion potion : Registry.POTION) {
-				addRecipeIfValid(extraRecipes, JEIIncenseCandleRecipe.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.POTION.getDefaultInstance()));
-				addRecipeIfValid(extraRecipes, JEIIncenseCandleRecipe.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.SPLASH_POTION.getDefaultInstance()));
-				addRecipeIfValid(extraRecipes, JEIIncenseCandleRecipe.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.LINGERING_POTION.getDefaultInstance()));
+				addRecipeIfValid(extraRecipes, JEIIncenseCandleRecipe.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.POTION.getDefaultInstance(), currentRecipe));
+				currentRecipe++;
+				addRecipeIfValid(extraRecipes, JEIIncenseCandleRecipe.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.SPLASH_POTION.getDefaultInstance(), currentRecipe));
+				currentRecipe++;
+				addRecipeIfValid(extraRecipes, JEIIncenseCandleRecipe.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.LINGERING_POTION.getDefaultInstance(), currentRecipe));
+				currentRecipe++;
 			}
 			registration.addRecipes(RecipeTypes.CRAFTING, extraRecipes);
 		}

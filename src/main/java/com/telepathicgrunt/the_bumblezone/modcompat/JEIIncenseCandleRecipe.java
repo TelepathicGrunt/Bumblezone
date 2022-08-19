@@ -1,7 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
 import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
@@ -14,10 +16,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
 
 public class JEIIncenseCandleRecipe {
-    public static ShapedRecipe getFakeShapedRecipe(IncenseCandleRecipe recipe, Potion potion, ItemStack potionItem) {
+    public static ShapedRecipe getFakeShapedRecipe(IncenseCandleRecipe recipe, Potion potion, ItemStack potionItem, int currentRecipe) {
         List<Ingredient> fakedShapedIngredientsMutable = new ArrayList<>();
         fakedShapedIngredientsMutable.addAll(recipe.getShapedRecipeItems());
         fakedShapedIngredientsMutable.addAll(recipe.getShapelessRecipeItems());
@@ -27,8 +28,8 @@ public class JEIIncenseCandleRecipe {
         fakedShapedIngredients.addAll(fakedShapedIngredientsMutable);
 
         return new ShapedRecipe(
-                recipe.getId(),
-                recipe.getGroup(),
+                new ResourceLocation(Bumblezone.MODID, recipe.getId().getPath() + "_" + currentRecipe),
+                Bumblezone.MODID,
                 recipe.getWidth() + 1,
                 recipe.getHeight(),
                 fakedShapedIngredients,
