@@ -12,6 +12,21 @@ Added Carvable Wax block!
  Right click with Shears or Swords to change the texture for it for decoration purposes!
  Can be crafted from 9 Beeswax. Or created from Smelting Beehive Beeswax.
 
+Super Candles added! A massive decorative bulky candle that gives off a ton of light! Can be dyed various colors through crafting.
+ Can be lit and waterlogged the same way as regular Minecraft Candles. Also can be lit by flaming projectile hits as well. 
+ When lit, any mob in the flame will be set on fire while taking low damage.
+ Super Candles can be stacked and if Soul Sand/Soul Soil is placed under, it gets a soul flame that scares away Piglins!
+ If a Comparator is facing the Super Candle Base, it gets a power of 5 when lit.
+ If Comparator is facing the Super Candle Wick, it will get a power of 3 when it is a soul flame and 5 when it is a normal flame.
+ Dispensers can light the Candle too.
+
+Incense Candles added! A powerful magical candle that radiates its effects to nearby entities!
+ On the surface, this candle has all the same behaviors as the regular Super Candles. Except these powerful Incense Candles 
+ can be imbued with different status effects to grant nearby entities based on what potions are used to craft the Incense Candle.
+ When the Incense Candle's power runs out, the candle will become unlit.
+ Relighting the candle will restart its status effects it gives.
+ See what kind of Incense Candles you can make based on different potion combinations!
+
 ##### Biomes:
 Added Crystal Canyon biome full of Carvable Wax and Glistering Honey Crystals!
 
@@ -21,7 +36,7 @@ Buffed Royal Jelly Bottom so it gives move saturation, nutrition, and speed when
 ##### Structures:
 Throne Pillar structure uses Glistering Honey Crystal instead of Jack o Lanterns now.
 
-Fixed Trone Pillar Honey Compass in Cell Maze structure not locating Throne Pillars.
+Fixed Throne Pillar Honey Compass in Cell Maze structure not locating Throne Pillars.
 
 ##### Config:
 Added a new config to disable the thick fog in Bumblezone. Set to enable fog by default. 

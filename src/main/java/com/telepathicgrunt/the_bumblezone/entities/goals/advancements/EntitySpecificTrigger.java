@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.advancements;
+package com.telepathicgrunt.the_bumblezone.entities.goals.advancements;
 
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;

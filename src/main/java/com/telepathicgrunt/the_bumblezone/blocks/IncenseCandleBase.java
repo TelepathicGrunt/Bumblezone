@@ -5,10 +5,13 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -16,6 +19,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -150,14 +154,30 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
     @Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (player.getAbilities().mayBuild) {
-            if (player.getItemInHand(interactionHand).isEmpty() && blockState.getValue(LIT)) {
+            ItemStack handItem = player.getItemInHand(interactionHand);
+            if (handItem.isEmpty() && blockState.getValue(LIT)) {
                 SuperCandleWick.extinguish(player, level.getBlockState(blockPos.above()), level, blockPos.above());
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
-            // Make item tag. Also needs dispenser behavior
-            else if (player.getItemInHand(interactionHand).is(Items.FLINT_AND_STEEL) && !blockState.getValue(LIT)) {
-                SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
-                return InteractionResult.sidedSuccess(level.isClientSide);
+            else if (!blockState.getValue(LIT)) {
+                if (handItem.is(BzTags.INFINITE_CANDLE_LIGHTING_ITEMS)) {
+                    SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
+                    return InteractionResult.sidedSuccess(level.isClientSide);
+                }
+                else if (handItem.is(BzTags.DAMAGABLE_CANDLE_LIGHTING_ITEMS)) {
+                    SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
+                    if (player instanceof ServerPlayer serverPlayer && !player.getAbilities().instabuild) {
+                        handItem.hurt(1, level.getRandom(), serverPlayer);
+                    }
+                    return InteractionResult.sidedSuccess(level.isClientSide);
+                }
+                else if (handItem.is(BzTags.CONSUMABLE_CANDLE_LIGHTING_ITEMS)) {
+                    SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
+                    if (!player.getAbilities().instabuild) {
+                        handItem.shrink(1);
+                    }
+                    return InteractionResult.sidedSuccess(level.isClientSide);
+                }
             }
         }
         return InteractionResult.PASS;

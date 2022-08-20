@@ -25,7 +25,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 import net.minecraftforge.common.util.RecipeMatcher;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -44,8 +43,12 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
     private final ItemStack result;
     private final int width;
     private final int height;
+    private final boolean allowNormalPotions;
+    private final boolean allowSplashPotions;
+    private final boolean allowLingeringPotions;
+    private final int maxLevelCap;
 
-    public IncenseCandleRecipe(ResourceLocation id, String group, int outputCount, int maxAllowedPotions, NonNullList<Ingredient> shapedRecipeItems, NonNullList<Ingredient> shapelessRecipeItems, int width, int height) {
+    public IncenseCandleRecipe(ResourceLocation id, String group, int outputCount, int maxAllowedPotions, NonNullList<Ingredient> shapedRecipeItems, NonNullList<Ingredient> shapelessRecipeItems, int width, int height, boolean allowNormalPotions, boolean allowSplashPotions, boolean allowLingeringPotions, int maxLevelCap) {
         this.id = id;
         this.group = group;
         this.outputCount = outputCount;
@@ -55,22 +58,30 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
         this.result = getResultStack(outputCount);
         this.width = width;
         this.height = height;
-    }
-
-    public IncenseCandleRecipe(ResourceLocation id, String group, ItemStack resultStack, int maxAllowedPotions, NonNullList<Ingredient> shapedRecipeItems, NonNullList<Ingredient> shapelessRecipeItems, int width, int height) {
-        this.id = id;
-        this.group = group;
-        this.outputCount = resultStack.getCount();
-        this.maxAllowedPotions = maxAllowedPotions;
-        this.shapedRecipeItems = shapedRecipeItems;
-        this.shapelessRecipeItems = shapelessRecipeItems;
-        this.result = resultStack;
-        this.width = width;
-        this.height = height;
+        this.allowNormalPotions = allowNormalPotions;
+        this.allowSplashPotions = allowSplashPotions;
+        this.allowLingeringPotions = allowLingeringPotions;
+        this.maxLevelCap = maxLevelCap;
     }
 
     public int getMaxAllowedPotions() {
         return this.maxAllowedPotions;
+    }
+
+    public boolean getAllowNormalPotions() {
+        return this.allowNormalPotions;
+    }
+
+    public boolean getAllowSplashPotions() {
+        return this.allowSplashPotions;
+    }
+
+    public boolean getAllowLingeringPotions() {
+        return this.allowLingeringPotions;
+    }
+
+    public int getMaxLevelCap() {
+        return this.maxLevelCap;
     }
 
     public NonNullList<Ingredient> getShapedRecipeItems() {
@@ -128,6 +139,7 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
         }
 
         balanceStats(chosenEffect, maxDuration, amplifier, potionEffectsFound);
+        amplifier.set(Math.min(amplifier.get(), this.maxLevelCap));
 
         return createTaggedIncenseCandle(chosenEffect, maxDuration, amplifier, splashCount, lingerCount, this.outputCount);
     }
@@ -231,14 +243,28 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
                 if (k >= 0 && l >= 0 && k < this.width && l < this.height) {
                     if (mirrored) {
                         ingredient = this.shapedRecipeItems.get(this.width - k - 1 + l * this.width);
-                    } else {
+                    }
+                    else {
                         ingredient = this.shapedRecipeItems.get(k + l * this.width);
                     }
                 }
 
                 if (ingredient == null) {
                     if (!itemStack.isEmpty()) {
-                        if (itemStack.is(Items.POTION) || itemStack.is(Items.SPLASH_POTION) || itemStack.is(Items.LINGERING_POTION)) {
+                        if (itemStack.is(Items.POTION) ||
+                            itemStack.is(Items.SPLASH_POTION) ||
+                            itemStack.is(Items.LINGERING_POTION)
+                        ) {
+                            if (itemStack.is(Items.POTION) && !this.allowNormalPotions) {
+                                return false;
+                            }
+                            else if (itemStack.is(Items.SPLASH_POTION) && !this.allowSplashPotions) {
+                                return false;
+                            }
+                            else if (itemStack.is(Items.LINGERING_POTION) && !this.allowLingeringPotions) {
+                                return false;
+                            }
+
                             if(PotionUtils.getMobEffects(itemStack).isEmpty()) {
                                 return false;
                             }
@@ -317,9 +343,13 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
             }
 
             int maxPotions = json.get("maxAllowedPotions").getAsInt();
+            boolean allowNormalPotionsRead = json.get("allowNormalPotions").getAsBoolean();
+            boolean allowSplashPotionsRead = json.get("allowSplashPotions").getAsBoolean();
+            boolean allowLingeringPotionsRead = json.get("allowLingeringPotions").getAsBoolean();
+            int maxLevelRead = json.get("maxLevelCap").getAsInt();
             int resultCount = json.get("resultCount").getAsInt();
 
-            return new IncenseCandleRecipe(recipeId, group, resultCount, maxPotions, shapedRecipeItems, shapelessRecipeItems, width, height);
+            return new IncenseCandleRecipe(recipeId, group, resultCount, maxPotions, shapedRecipeItems, shapelessRecipeItems, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
         }
 
         @Override
@@ -336,8 +366,12 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
             shapelessRecipe.replaceAll(ignored -> Ingredient.fromNetwork(buffer));
 
             int maxPotionRead = buffer.readVarInt();
+            boolean allowNormalPotionsRead = buffer.readBoolean();
+            boolean allowSplashPotionsRead = buffer.readBoolean();
+            boolean allowLingeringPotionsRead = buffer.readBoolean();
+            int maxLevelRead = buffer.readVarInt();
             int resultCountRead = buffer.readVarInt();
-            return new IncenseCandleRecipe(recipeId, group, resultCountRead, maxPotionRead, shapedRecipe, shapelessRecipe, width, height);
+            return new IncenseCandleRecipe(recipeId, group, resultCountRead, maxPotionRead, shapedRecipe, shapelessRecipe, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
         }
 
         @Override
@@ -356,6 +390,10 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
             }
 
             buffer.writeInt(recipe.maxAllowedPotions);
+            buffer.writeBoolean(recipe.allowNormalPotions);
+            buffer.writeBoolean(recipe.allowSplashPotions);
+            buffer.writeBoolean(recipe.allowLingeringPotions);
+            buffer.writeInt(recipe.maxLevelCap);
             buffer.writeInt(recipe.outputCount);
         }
     }

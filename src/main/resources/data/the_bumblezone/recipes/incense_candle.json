@@ -20,5 +20,9 @@
     }
   ],
   "maxAllowedPotions": 5,
+  "allowNormalPotions": true,
+  "allowSplashPotions": true,
+  "allowLingeringPotions": true,
+  "maxLevelCap": 5,
   "resultCount": 1
 }

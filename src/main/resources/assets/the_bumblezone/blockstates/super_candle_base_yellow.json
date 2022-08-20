@@ -8,8 +8,13 @@
         "model": "the_bumblezone:block/super_candle/candle_base_yellow_mirrored"
       }
     ],
-    "lit=true": {
-      "model": "the_bumblezone:block/super_candle/candle_base_lit_yellow"
-    }
+    "lit=true": [
+      {
+        "model": "the_bumblezone:block/super_candle/candle_base_lit_yellow"
+      },
+      {
+        "model": "the_bumblezone:block/super_candle/candle_base_lit_yellow_mirrored"
+      }
+    ]
   }
 }

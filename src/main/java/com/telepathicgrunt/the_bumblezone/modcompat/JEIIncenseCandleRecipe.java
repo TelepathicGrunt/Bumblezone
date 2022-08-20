@@ -66,11 +66,11 @@ public class JEIIncenseCandleRecipe {
                 3,
                 3,
                 fakedShapedIngredients,
-                createResultStack(recipe.getResultItem().getCount(), potionStack)
+                createResultStack(recipe, potionStack)
         );
     }
 
-    private static ItemStack createResultStack(int count, ItemStack potionStack) {
+    private static ItemStack createResultStack(IncenseCandleRecipe recipe, ItemStack potionStack) {
         List<MobEffect> effects = new ArrayList<>();
         AtomicInteger maxDuration = new AtomicInteger();
         AtomicInteger amplifier = new AtomicInteger();
@@ -94,6 +94,7 @@ public class JEIIncenseCandleRecipe {
         }
 
         IncenseCandleRecipe.balanceStats(chosenEffect, maxDuration, amplifier, potionEffectsFound);
+        amplifier.set(Math.min(amplifier.get(), recipe.getMaxLevelCap()));
 
         return IncenseCandleRecipe.createTaggedIncenseCandle(
                 chosenEffect,
@@ -101,6 +102,6 @@ public class JEIIncenseCandleRecipe {
                 amplifier,
                 potionStack.getItem() instanceof SplashPotionItem ? 1 : 0,
                 potionStack.getItem() instanceof LingeringPotionItem ? 1 : 0,
-                count);
+                recipe.getResultItem().getCount());
     }
 }

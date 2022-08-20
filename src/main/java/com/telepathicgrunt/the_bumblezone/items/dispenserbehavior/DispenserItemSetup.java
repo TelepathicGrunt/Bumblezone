@@ -31,9 +31,12 @@ public class DispenserItemSetup {
         EmptyBucketDispenseBehavior.DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR =
                 ((DispenserBlockInvoker) Blocks.DISPENSER).thebumblezone_invokeGetDispenseMethod(new ItemStack(Items.BUCKET));
 
+        FlintAndSteelDispenseBehavior.DEFAULT_DISPENSE_BEHAVIOR =
+                ((DispenserBlockInvoker) Blocks.DISPENSER).thebumblezone_invokeGetDispenseMethod(new ItemStack(Items.FLINT_AND_STEEL));
 
         DispenserBlock.registerBehavior(Items.GLASS_BOTTLE, new GlassBottleDispenseBehavior());
         DispenserBlock.registerBehavior(Items.HONEY_BOTTLE, new HoneyBottleDispenseBehavior());
         DispenserBlock.registerBehavior(Items.BUCKET, new EmptyBucketDispenseBehavior());
+        DispenserBlock.registerBehavior(Items.FLINT_AND_STEEL, new FlintAndSteelDispenseBehavior());
     }
 }

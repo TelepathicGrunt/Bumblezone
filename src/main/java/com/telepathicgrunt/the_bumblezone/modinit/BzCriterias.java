@@ -1,13 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.advancements.CounterTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.EntitySpecificTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.GenericTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.ItemSpecificTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.KilledCounterTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.RecipeDiscoveredTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
+import com.telepathicgrunt.the_bumblezone.entities.goals.advancements.CounterTrigger;
+import com.telepathicgrunt.the_bumblezone.entities.goals.advancements.EntitySpecificTrigger;
+import com.telepathicgrunt.the_bumblezone.entities.goals.advancements.GenericTrigger;
+import com.telepathicgrunt.the_bumblezone.entities.goals.advancements.ItemSpecificTrigger;
+import com.telepathicgrunt.the_bumblezone.entities.goals.advancements.KilledCounterTrigger;
+import com.telepathicgrunt.the_bumblezone.entities.goals.advancements.RecipeDiscoveredTrigger;
+import com.telepathicgrunt.the_bumblezone.entities.goals.advancements.TargetAdvancementDoneTrigger;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.resources.ResourceLocation;
 
