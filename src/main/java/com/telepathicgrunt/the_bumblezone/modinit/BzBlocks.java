@@ -1,25 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.blocks.BeehiveBeeswax;
-import com.telepathicgrunt.the_bumblezone.blocks.IncenseCandleBase;
-import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleBase;
-import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleWick;
-import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
-import com.telepathicgrunt.the_bumblezone.blocks.FilledPorousHoneycomb;
-import com.telepathicgrunt.the_bumblezone.blocks.GlisteringHoneyCrystal;
-import com.telepathicgrunt.the_bumblezone.blocks.HoneyCocoon;
-import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
-import com.telepathicgrunt.the_bumblezone.blocks.HoneyWeb;
-import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
-import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
-import com.telepathicgrunt.the_bumblezone.blocks.PorousHoneycomb;
-import com.telepathicgrunt.the_bumblezone.blocks.RedstoneHoneyWeb;
-import com.telepathicgrunt.the_bumblezone.blocks.RoyalJellyBlock;
-import com.telepathicgrunt.the_bumblezone.blocks.StickyHoneyRedstone;
-import com.telepathicgrunt.the_bumblezone.blocks.StickyHoneyResidue;
-import com.telepathicgrunt.the_bumblezone.blocks.SugarInfusedCobblestone;
-import com.telepathicgrunt.the_bumblezone.blocks.SugarInfusedStone;
+import com.telepathicgrunt.the_bumblezone.blocks.*;
 import com.telepathicgrunt.the_bumblezone.mixin.items.MaterialInvoker;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Material;
@@ -51,6 +33,7 @@ public class BzBlocks {
     public static final RegistryObject<Block> HONEY_COCOON = BLOCKS.register("honey_cocoon", HoneyCocoon::new);
     public static final RegistryObject<Block> ROYAL_JELLY_BLOCK = BLOCKS.register("royal_jelly_block", RoyalJellyBlock::new);
     public static final RegistryObject<Block> GLISTERING_HONEY_CRYSTAL = BLOCKS.register("glistering_honey_crystal", GlisteringHoneyCrystal::new);
+    public static final RegistryObject<Block> CARVABLE_WAX = BLOCKS.register("carvable_wax", CarvableWax::new);
     public static final RegistryObject<Block> SUPER_CANDLE_BASE = BLOCKS.register("super_candle_base", SuperCandleBase::new);
     public static final RegistryObject<Block> SUPER_CANDLE_WICK = BLOCKS.register("super_candle_wick", () -> new SuperCandleWick(false));
     public static final RegistryObject<Block> SUPER_CANDLE_WICK_SOUL = BLOCKS.register("super_candle_wick_soul", () -> new SuperCandleWick(true));

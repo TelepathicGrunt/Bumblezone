@@ -128,7 +128,6 @@ public class HoneyCompass extends Item implements Vanishable {
                     compoundTag.remove(TAG_TYPE);
                 }
             }
-
         }
     }
 
@@ -211,7 +210,7 @@ public class HoneyCompass extends Item implements Vanishable {
 
             boolean singleCompass = !player.getAbilities().instabuild && handCompass.getCount() == 1;
             if (singleCompass) {
-                this.addBlockTags(level.dimension(), blockPos, handCompass.getOrCreateTag(), targetBlock.getBlock());
+                addBlockTags(level.dimension(), blockPos, handCompass.getOrCreateTag(), targetBlock.getBlock());
             }
             else {
                 ItemStack newCompass = new ItemStack(BzItems.HONEY_COMPASS.get(), 1);
@@ -221,7 +220,7 @@ public class HoneyCompass extends Item implements Vanishable {
                     handCompass.shrink(1);
                 }
 
-                this.addBlockTags(level.dimension(), blockPos, newCompoundTag, targetBlock.getBlock());
+                addBlockTags(level.dimension(), blockPos, newCompoundTag, targetBlock.getBlock());
                 if (!player.getInventory().add(newCompass)) {
                     player.drop(newCompass, false);
                 }

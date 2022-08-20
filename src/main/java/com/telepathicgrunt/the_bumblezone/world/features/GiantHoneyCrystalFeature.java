@@ -105,10 +105,13 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
                                 currentY,
                                 origin.getZ() + z + currentZSlant);
 
-                        level.setBlock(
-                                blockpos$Mutable,
-                                BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState(),
-                                3);
+                        BlockState state = level.getBlockState(blockpos$Mutable);
+                        if (!state.canOcclude()) {
+                            level.setBlock(
+                                    blockpos$Mutable,
+                                    BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState(),
+                                    3);
+                        }
                     }
                 }
             }

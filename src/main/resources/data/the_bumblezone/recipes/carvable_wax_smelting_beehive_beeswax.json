@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "group": "the_bumblezone",
+  "ingredient": {
+    "item": "the_bumblezone:beehive_beeswax"
+  },
+  "result": "the_bumblezone:carvable_wax",
+  "experience": 0.08,
+  "cookingtime": 80
+}

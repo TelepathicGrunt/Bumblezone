@@ -8,8 +8,20 @@ Added Glistering Honey Crystal block!
  If combined with an Awkward Potion in a Brewing Stand, it will create a Potion of Luck! 
  The most common benefit of Luck status is it may improve the loot drops of certain datapack/modded loot tables.
 
+Added Carvable Wax block!
+ Right click with Shears or Swords to change the texture for it for decoration purposes!
+ Can be crafted from 9 Beeswax. Or created from Smelting Beehive Beeswax.
+
+##### Biomes:
+Added Crystal Canyon biome full of Carvable Wax and Glistering Honey Crystals!
+
 ##### Items:
 Buffed Royal Jelly Bottom so it gives move saturation, nutrition, and speed when consumed. It now also gives Jump Boost and Slow Falling as well.
+
+##### Structures:
+Throne Pillar structure uses Glistering Honey Crystal instead of Jack o Lanterns now.
+
+Fixed Trone Pillar Honey Compass in Cell Maze structure not locating Throne Pillars.
 
 ##### Config:
 Added a new config to disable the thick fog in Bumblezone. Set to enable fog by default. 

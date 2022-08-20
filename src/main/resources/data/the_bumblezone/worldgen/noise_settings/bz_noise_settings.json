@@ -236,7 +236,7 @@
                   "surface_depth_multiplier": 2,
                   "add_stone_depth": true,
                   "anchor": {
-                    "above_bottom": 40
+                    "above_bottom": 35
                   }
                 }
               },
@@ -253,7 +253,10 @@
                 "then_run": {
                   "type": "minecraft:block",
                   "result_state": {
-                    "Name": "the_bumblezone:filled_porous_honeycomb_block"
+                    "Name": "the_bumblezone:carvable_wax",
+                    "Properties": {
+                      "carving": "wavy"
+                    }
                   }
                 }
               }
@@ -263,15 +266,15 @@
               "if_true": {
                 "type": "minecraft:stone_depth",
                 "offset": 0,
-                "add_surface_depth": false,
-                "add_surface_secondary_depth": false,
-                "secondary_depth_range": 0,
+                "add_surface_depth": true,
+                "add_surface_secondary_depth": true,
+                "secondary_depth_range": 4,
                 "surface_type": "floor"
               },
               "then_run": {
                 "type": "minecraft:block",
                 "result_state": {
-                  "Name": "the_bumblezone:filled_porous_honeycomb_block"
+                  "Name": "the_bumblezone:carvable_wax"
                 }
               }
             }

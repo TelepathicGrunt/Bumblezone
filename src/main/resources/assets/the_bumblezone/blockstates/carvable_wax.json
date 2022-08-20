@@ -1,0 +1,42 @@
+{
+  "variants": {
+    "carving=uncarved": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/uncarved"
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/uncarved",
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/uncarved",
+        "x": 180
+      }
+    ],
+    "carving=chiseled": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled"
+      }
+    ],
+    "carving=bricks": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/bricks"
+      }
+    ],
+    "carving=diamond": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/diamond"
+      }
+    ],
+    "carving=wavy": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/wavy"
+      }
+    ],
+    "carving=flower": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/flower"
+      }
+    ]
+  }
+}
