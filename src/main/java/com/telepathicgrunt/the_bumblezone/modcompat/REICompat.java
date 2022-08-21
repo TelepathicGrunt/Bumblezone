@@ -30,10 +30,6 @@ public class REICompat implements REIClientPlugin {
 
     @Override
     public void registerDisplays(DisplayRegistry registry) {
-        if (QuiltLoader.isModLoaded("jei")) {
-            return;
-        }
-
         addInfo(BzItems.EMPTY_HONEYCOMB_BROOD);
         addInfo(BzItems.FILLED_POROUS_HONEYCOMB);
         addInfo(BzItems.HONEY_CRYSTAL);
@@ -102,10 +98,7 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzItems.SUPER_CANDLE_YELLOW);
         addInfo(BzItems.INCENSE_CANDLE);
 
-        ClientLevel level = Minecraft.getInstance().level;
-        if (level == null)
-            return;
-        level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
+        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry));
     }
 

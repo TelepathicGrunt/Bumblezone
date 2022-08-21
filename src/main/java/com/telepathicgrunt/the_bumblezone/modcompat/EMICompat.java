@@ -28,14 +28,7 @@ public class EMICompat implements EmiPlugin {
 
     @Override
     public void register(EmiRegistry registry) {
-        if (QuiltLoader.isModLoaded("emi")) {
-            return;
-        }
-
-        ClientLevel level = Minecraft.getInstance().level;
-        if (level == null)
-            return;
-        level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
+        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry));
     }
 
