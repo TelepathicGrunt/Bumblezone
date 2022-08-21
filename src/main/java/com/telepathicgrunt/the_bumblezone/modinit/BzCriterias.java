@@ -1,13 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.entities.goals.advancements.CounterTrigger;
-import com.telepathicgrunt.the_bumblezone.entities.goals.advancements.EntitySpecificTrigger;
-import com.telepathicgrunt.the_bumblezone.entities.goals.advancements.GenericTrigger;
-import com.telepathicgrunt.the_bumblezone.entities.goals.advancements.ItemSpecificTrigger;
-import com.telepathicgrunt.the_bumblezone.entities.goals.advancements.KilledCounterTrigger;
-import com.telepathicgrunt.the_bumblezone.entities.goals.advancements.RecipeDiscoveredTrigger;
-import com.telepathicgrunt.the_bumblezone.entities.goals.advancements.TargetAdvancementDoneTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.BlockStateSpecificTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.CounterTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.EntitySpecificTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.GenericTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.ItemSpecificTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.KilledCounterTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.RecipeDiscoveredTrigger;
+import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.resources.ResourceLocation;
 
@@ -31,6 +32,7 @@ public class BzCriterias {
     public static final GenericTrigger BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_max_flight"));
     public static final GenericTrigger CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots_mined_blocks"));
     public static final GenericTrigger CARPENTER_BEE_BOOTS_WALL_HANGING_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots_wall_hanging"));
+    public static final BlockStateSpecificTrigger CARVE_CARVABLE_WAX_TRIGGER = new BlockStateSpecificTrigger(new ResourceLocation(Bumblezone.MODID, "carve_carvable_wax"));
     public static final GenericTrigger CLEANUP_HONEY_WEB_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "cleanup_honey_web"));
     public static final GenericTrigger CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "cleanup_sticky_honey_residue"));
     public static final GenericTrigger COMB_CUTTER_EXTRA_DROPS_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "comb_cutter_extra_drops"));
@@ -52,6 +54,7 @@ public class BzCriterias {
     public static final GenericTrigger HONEY_SLIME_CREATION_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_slime_creation"));
     public static final GenericTrigger HONEY_SLIME_HARVEST_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_slime_harvest"));
     public static final KilledCounterTrigger KILLED_COUNTER_TRIGGER = new KilledCounterTrigger(new ResourceLocation(Bumblezone.MODID, "killed_counter"));
+    public static final GenericTrigger LIGHT_SOUL_INCENSE_CANDLE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "light_soul_incense_candle"));
     public static final GenericTrigger POLLEN_PUFF_FIREBALL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_fireball"));
     public static final CounterTrigger POLLEN_PUFF_HIT_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_hit"));
     public static final GenericTrigger POLLEN_PUFF_MOOSHROOM_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_mooshroom"));
@@ -59,6 +62,7 @@ public class BzCriterias {
     public static final GenericTrigger POLLEN_PUFF_PANDA_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_panda"));
     public static final GenericTrigger POLLEN_PUFF_POLLINATED_BEE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_pollinate_bee"));
     public static final GenericTrigger POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_pollinate_tall_flower"));
+    public static final GenericTrigger PROJECTILE_LIGHT_INSTANT_INCENSE_CANDLE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "projectile_light_instant_incense_candle"));
     public static final EntitySpecificTrigger PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER = new EntitySpecificTrigger(new ResourceLocation(Bumblezone.MODID, "protection_of_the_hive_defense"));
     public static final GenericTrigger QUEEN_BEEHEMOTH_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "created_queen_beehemoth"));
     public static final RecipeDiscoveredTrigger RECIPE_DISCOVERED_TRIGGER = new RecipeDiscoveredTrigger();
@@ -91,6 +95,7 @@ public class BzCriterias {
         CriteriaTriggers.register(BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER);
         CriteriaTriggers.register(CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER);
         CriteriaTriggers.register(CARPENTER_BEE_BOOTS_WALL_HANGING_TRIGGER);
+        CriteriaTriggers.register(CARVE_CARVABLE_WAX_TRIGGER);
         CriteriaTriggers.register(CLEANUP_HONEY_WEB_TRIGGER);
         CriteriaTriggers.register(CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER);
         CriteriaTriggers.register(COMB_CUTTER_EXTRA_DROPS_TRIGGER);
@@ -112,6 +117,7 @@ public class BzCriterias {
         CriteriaTriggers.register(HONEY_SLIME_CREATION_TRIGGER);
         CriteriaTriggers.register(HONEY_SLIME_HARVEST_TRIGGER);
         CriteriaTriggers.register(KILLED_COUNTER_TRIGGER);
+        CriteriaTriggers.register(LIGHT_SOUL_INCENSE_CANDLE_TRIGGER);
         CriteriaTriggers.register(POLLEN_PUFF_MOOSHROOM_TRIGGER);
         CriteriaTriggers.register(POLLEN_PUFF_FIREBALL_TRIGGER);
         CriteriaTriggers.register(POLLEN_PUFF_HIT_TRIGGER);
@@ -119,6 +125,7 @@ public class BzCriterias {
         CriteriaTriggers.register(POLLEN_PUFF_POLLINATED_BEE_TRIGGER);
         CriteriaTriggers.register(POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER);
         CriteriaTriggers.register(POLLEN_PUFF_SPAWN_FLOWERS_TRIGGER);
+        CriteriaTriggers.register(PROJECTILE_LIGHT_INSTANT_INCENSE_CANDLE_TRIGGER);
         CriteriaTriggers.register(PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER);
         CriteriaTriggers.register(BEE_QUEEN_TRADING_TRIGGER);
         CriteriaTriggers.register(QUEEN_BEEHEMOTH_TRIGGER);

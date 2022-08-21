@@ -1,21 +1,25 @@
-package com.telepathicgrunt.the_bumblezone.entities.goals.advancements;
+package com.telepathicgrunt.the_bumblezone.advancements;
 
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.BlockPredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 
-public class ItemSpecificTrigger extends SimpleCriterionTrigger<ItemSpecificTrigger.Instance> {
+public class BlockStateSpecificTrigger extends SimpleCriterionTrigger<BlockStateSpecificTrigger.Instance> {
     private final ResourceLocation id;
 
-    public ItemSpecificTrigger(ResourceLocation id) {
+    public BlockStateSpecificTrigger(ResourceLocation id) {
         this.id = id;
     }
 
@@ -26,29 +30,29 @@ public class ItemSpecificTrigger extends SimpleCriterionTrigger<ItemSpecificTrig
 
     @Override
     public Instance createInstance(JsonObject jsonObject, EntityPredicate.Composite predicate, DeserializationContext deserializationContext) {
-        return new Instance(predicate, ItemPredicate.fromJson(jsonObject.get("item")));
+        return new Instance(predicate, BlockPredicate.fromJson(jsonObject.get("block")));
     }
 
-    public void trigger(ServerPlayer serverPlayer, ItemStack itemStack) {
-        super.trigger(serverPlayer, (currentItemStack) -> currentItemStack.matches(itemStack));
+    public void trigger(ServerPlayer serverPlayer, BlockPos pos) {
+        super.trigger(serverPlayer, (instance) -> instance.matches(serverPlayer.getLevel(), pos));
     }
 
     public class Instance extends AbstractCriterionTriggerInstance {
-        private final ItemPredicate itemPredicate;
+        private final BlockPredicate blockPredicate;
 
-        public Instance(EntityPredicate.Composite predicate, ItemPredicate itemPredicate) {
+        public Instance(EntityPredicate.Composite predicate, BlockPredicate blockPredicate) {
             super(id, predicate);
-            this.itemPredicate = itemPredicate;
+            this.blockPredicate = blockPredicate;
         }
 
-        public boolean matches(ItemStack itemStack) {
-            return this.itemPredicate.matches(itemStack);
+        public boolean matches(ServerLevel level, BlockPos pos) {
+            return this.blockPredicate.matches(level, pos);
         }
 
         @Override
         public JsonObject serializeToJson(SerializationContext serializationContext) {
             JsonObject jsonobject = super.serializeToJson(serializationContext);
-            jsonobject.add("item", this.itemPredicate.serializeToJson());
+            jsonobject.add("blockstate", this.blockPredicate.serializeToJson());
             return jsonobject;
         }
     }

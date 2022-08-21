@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringRepresentable;
@@ -71,8 +72,12 @@ public class CarvableWax extends Block {
             world.setBlock(position, BzBlocks.CARVABLE_WAX.get().defaultBlockState().setValue(CARVING, blockState.getValue(CARVING).next()), 3);
             this.spawnDestroyParticles(world, playerEntity, position,blockState);
 
-            if (playerEntity instanceof ServerPlayer serverPlayer && !serverPlayer.getAbilities().instabuild) {
-                itemstack.hurt(1, playerEntity.getRandom(), serverPlayer);
+            if (playerEntity instanceof ServerPlayer serverPlayer) {
+                BzCriterias.CARVE_CARVABLE_WAX_TRIGGER.trigger(serverPlayer, position);
+
+                if (!serverPlayer.getAbilities().instabuild) {
+                    itemstack.hurt(1, playerEntity.getRandom(), serverPlayer);
+                }
             }
 
             return InteractionResult.SUCCESS;

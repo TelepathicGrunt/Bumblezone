@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.entities.goals.advancements;
+package com.telepathicgrunt.the_bumblezone.advancements;
 
 import com.google.gson.JsonObject;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;

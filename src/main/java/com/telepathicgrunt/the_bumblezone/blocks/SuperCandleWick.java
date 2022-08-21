@@ -54,6 +54,10 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
         this.isSoul = isSoul;
     }
 
+    public boolean isSoul() {
+        return isSoul;
+    }
+
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(LIT, WATERLOGGED);
@@ -176,13 +180,15 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
         return null;
     }
 
-    public static void setLit(LevelAccessor levelAccessor, BlockState blockState, BlockPos blockPos, boolean lit) {
+    public static boolean setLit(LevelAccessor levelAccessor, BlockState blockState, BlockPos blockPos, boolean lit) {
         if (blockState.getBlock() instanceof SuperCandleWick && !(lit && blockState.getValue(WATERLOGGED))) {
             boolean isBelowSoul = isSoulBelowInRange(levelAccessor, blockPos.below());
             Block wickBlock = (isBelowSoul && lit) ? BzBlocks.SUPER_CANDLE_WICK_SOUL.get() : BzBlocks.SUPER_CANDLE_WICK.get();
-            levelAccessor.setBlock(blockPos, wickBlock.defaultBlockState().setValue(LIT, lit), 11);
+            boolean litWick = levelAccessor.setBlock(blockPos, wickBlock.defaultBlockState().setValue(LIT, lit), 11) && lit;
             setBelowLit(levelAccessor, blockPos, lit);
+            return litWick;
         }
+        return false;
     }
 
     public static void setBelowLit(LevelAccessor levelAccessor, BlockPos blockPos, boolean lit) {

@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.IncenseCandleBlockEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -161,18 +162,18 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
             }
             else if (!blockState.getValue(LIT)) {
                 if (handItem.is(BzTags.INFINITE_CANDLE_LIGHTING_ITEMS)) {
-                    SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
+                    lightCandle(level, blockPos, player);
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
                 else if (handItem.is(BzTags.DAMAGABLE_CANDLE_LIGHTING_ITEMS)) {
-                    SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
+                    lightCandle(level, blockPos, player);
                     if (player instanceof ServerPlayer serverPlayer && !player.getAbilities().instabuild) {
                         handItem.hurt(1, level.getRandom(), serverPlayer);
                     }
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
                 else if (handItem.is(BzTags.CONSUMABLE_CANDLE_LIGHTING_ITEMS)) {
-                    SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
+                    lightCandle(level, blockPos, player);
                     if (!player.getAbilities().instabuild) {
                         handItem.shrink(1);
                     }
@@ -183,10 +184,32 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
         return InteractionResult.PASS;
     }
 
+    private void lightCandle(Level level, BlockPos blockPos, Player player) {
+        boolean litWick = SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
+
+        if (litWick &&
+            player instanceof ServerPlayer serverPlayer &&
+            level.getBlockState(blockPos.above()).getBlock() instanceof SuperCandleWick candleWick &&
+            candleWick.isSoul())
+        {
+            BzCriterias.LIGHT_SOUL_INCENSE_CANDLE_TRIGGER.trigger(serverPlayer);
+        }
+    }
+
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
         if (projectile.isOnFire() && SuperCandle.canBeLit(level, state, hit.getBlockPos())) {
-            SuperCandleWick.setLit(level, level.getBlockState(hit.getBlockPos().above()), hit.getBlockPos().above(), true);
+            boolean litWick = SuperCandleWick.setLit(level, level.getBlockState(hit.getBlockPos().above()), hit.getBlockPos().above(), true);
+            if (litWick && projectile.getOwner() instanceof ServerPlayer serverPlayer) {
+                BlockEntity blockEntity = level.getBlockEntity(hit.getBlockPos());
+                if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity &&
+                    incenseCandleBlockEntity.getMobEffect() != null &&
+                    incenseCandleBlockEntity.getMobEffect().isInstantenous() &&
+                    !incenseCandleBlockEntity.getMobEffect().isBeneficial())
+                {
+                    BzCriterias.PROJECTILE_LIGHT_INSTANT_INCENSE_CANDLE_TRIGGER.trigger(serverPlayer);
+                }
+            }
         }
     }
 
