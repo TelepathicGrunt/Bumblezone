@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 
 public class BzRecipes {
     public static final RecipeSerializer<ContainerCraftingRecipe> CONTAINER_CRAFTING_RECIPE = new ContainerCraftingRecipe.Serializer();
-    public static final RecipeSerializer<IncenseCandleRecipe> INCENSE_CANDLE_RECIPE = new IncenseCandleRecipe.Serializer();
+    public static final IncenseCandleRecipe.Serializer INCENSE_CANDLE_RECIPE = new IncenseCandleRecipe.Serializer();
 
     public static void registerRecipes() {
         Registry.register(Registry.RECIPE_SERIALIZER, new ResourceLocation(Bumblezone.MODID, "container_shapeless_recipe_bz"), CONTAINER_CRAFTING_RECIPE);

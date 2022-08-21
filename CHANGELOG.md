@@ -48,7 +48,7 @@ Fixed issue where ceiling of dimension could rarely generate to have holes to th
 Added a new config to disable the thick fog in Bumblezone. Set to enable fog by default.
  The config entry can be found with Mod Menu on and edited in-game through Mod Menu's mod button.
 
-Added a new config to reduce the thickness of the fog in Bumblezone. Set to 3 by default to make fog 3 time less thick.
+Added a new config to reduce the thickness of the fog in Bumblezone. Set to 4 by default to make fog 4 time less thick.
  The config entry can be found with Mod Menu on and edited in-game through Mod Menu's mod button.
 
 ##### Lang:

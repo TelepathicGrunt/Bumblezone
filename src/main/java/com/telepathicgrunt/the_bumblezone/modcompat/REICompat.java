@@ -18,6 +18,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.material.Fluid;
 import org.quiltmc.loader.api.QuiltLoader;
@@ -104,7 +105,7 @@ public class REICompat implements REIClientPlugin {
         if (level == null)
             return;
         level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
-                .ifPresent(REICompat::registerExtraRecipes);
+                .ifPresent(recipe -> registerExtraRecipes(recipe, registry));
     }
 
     private static void addInfo(Item item) {
@@ -127,7 +128,7 @@ public class REICompat implements REIClientPlugin {
                 });
     }
 
-    private static void registerExtraRecipes(Recipe<?> baseRecipe) {
+    private static void registerExtraRecipes(Recipe<?> baseRecipe, DisplayRegistry registry) {
         if (baseRecipe instanceof IncenseCandleRecipe incenseCandleRecipe) {
             List<CraftingRecipe> extraRecipes = new ArrayList<>();
             int currentRecipe = 0;
@@ -139,7 +140,7 @@ public class REICompat implements REIClientPlugin {
                 addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.LINGERING_POTION.getDefaultInstance(), currentRecipe));
                 currentRecipe++;
             }
-            BuiltinClientPlugin.getInstance().addRecipes(RecipeTypes.CRAFTING, extraRecipes);
+            registry.add(extraRecipes);
         }
     }
 

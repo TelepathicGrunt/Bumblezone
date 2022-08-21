@@ -7,6 +7,9 @@ import com.telepathicgrunt.the_bumblezone.blocks.blockentities.IncenseCandleBloc
 import com.telepathicgrunt.the_bumblezone.mixin.containers.ShapedRecipeAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
+import it.unimi.dsi.fastutil.chars.Char2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2CharOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
@@ -22,8 +25,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -32,7 +37,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class IncenseCandleRecipe implements CraftingRecipe {
+public class IncenseCandleRecipe implements CraftingRecipe, QuiltRecipeSerializer<IncenseCandleRecipe> {
     private final ResourceLocation id;
     private final String group;
     private final int outputCount;
@@ -230,7 +235,7 @@ public class IncenseCandleRecipe implements CraftingRecipe {
 
     private boolean matches(CraftingContainer craftingInventory, int width, int height, boolean mirrored) {
         int potionCount = 0;
-        StackedContents stackedContents = new StackedContents();
+        List<ItemStack> stackList = new ObjectArrayList<>();
         for(int column = 0; column < craftingInventory.getWidth(); ++column) {
             for(int row = 0; row < craftingInventory.getHeight(); ++row) {
                 ItemStack itemStack = craftingInventory.getItem(column + row * craftingInventory.getWidth());
@@ -271,7 +276,7 @@ public class IncenseCandleRecipe implements CraftingRecipe {
                             }
                         }
                         else {
-                            stackedContents.accountStack(itemStack, 1);
+                            stackList.add(itemStack);
                         }
                     }
                 }
@@ -281,7 +286,27 @@ public class IncenseCandleRecipe implements CraftingRecipe {
             }
         }
 
-        return potionCount > 0 && stackedContents.canCraft(this, null);
+        boolean shapelessMatched = shapelessIngredientMatched(stackList);
+
+        return potionCount > 0 && shapelessMatched;
+    }
+
+    public boolean shapelessIngredientMatched(List<ItemStack> stackList) {
+        List<Ingredient> copiedRequiredIngredients = new ArrayList<>(this.shapelessRecipeItems);
+        for (int i = copiedRequiredIngredients.size() - 1; i >= 0; i--) {
+            boolean foundMatch = false;
+            for (int k = stackList.size() - 1; k >= 0; k--) {
+                if (copiedRequiredIngredients.get(i).test(stackList.get(k))) {
+                    copiedRequiredIngredients.remove(i);
+                    foundMatch = true;
+                    break;
+                }
+            }
+            if (!foundMatch) {
+                return false;
+            }
+        }
+        return copiedRequiredIngredients.isEmpty();
     }
 
     @Override
@@ -305,6 +330,26 @@ public class IncenseCandleRecipe implements CraftingRecipe {
     @Override
     public ResourceLocation getId() {
         return this.id;
+    }
+
+    @Override
+    public JsonObject toJson(IncenseCandleRecipe recipe) {
+        return BzRecipes.INCENSE_CANDLE_RECIPE.toJson(recipe);
+    }
+
+    @Override
+    public IncenseCandleRecipe fromJson(ResourceLocation id, JsonObject json) {
+        return BzRecipes.INCENSE_CANDLE_RECIPE.fromJson(id, json);
+    }
+
+    @Override
+    public IncenseCandleRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
+        return BzRecipes.INCENSE_CANDLE_RECIPE.fromNetwork(id, buf);
+    }
+
+    @Override
+    public void toNetwork(FriendlyByteBuf buf, IncenseCandleRecipe recipe) {
+        BzRecipes.INCENSE_CANDLE_RECIPE.toNetwork(buf, recipe);
     }
 
     public static class Serializer implements RecipeSerializer<IncenseCandleRecipe> {
@@ -346,6 +391,64 @@ public class IncenseCandleRecipe implements CraftingRecipe {
             int resultCount = json.get("resultCount").getAsInt();
 
             return new IncenseCandleRecipe(recipeId, group, resultCount, maxPotions, shapedRecipeItems, shapelessRecipeItems, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
+        }
+
+        public JsonObject toJson(IncenseCandleRecipe recipe) {
+            JsonObject json = new JsonObject();
+
+            json.addProperty("type", Registry.RECIPE_SERIALIZER.getKey(BzRecipes.INCENSE_CANDLE_RECIPE).toString());
+            json.addProperty("group", recipe.group);
+
+            NonNullList<Ingredient> recipeIngredients = recipe.shapedRecipeItems;
+            var ingredients = new Object2CharOpenHashMap<Ingredient>();
+            var inputs = new Char2ObjectOpenHashMap<Ingredient>();
+            ingredients.defaultReturnValue(' ');
+            char currentChar = 'A';
+            for (Ingredient ingredient : recipeIngredients) {
+                if (!ingredient.isEmpty()
+                        && ingredients.putIfAbsent(ingredient, currentChar) == ingredients.defaultReturnValue()) {
+                    inputs.putIfAbsent(currentChar, ingredient);
+                    currentChar++;
+                }
+            }
+
+            var pattern = new ArrayList<String>();
+            var patternLine = new StringBuilder();
+            for (int i = 0; i < recipeIngredients.size(); i++) {
+                if (i != 0 && i % recipe.getWidth() == 0) {
+                    pattern.add(patternLine.toString());
+                    patternLine.setLength(0);
+                }
+
+                Ingredient ingredient = recipeIngredients.get(i);
+                patternLine.append(ingredients.getChar(ingredient));
+            }
+            pattern.add(patternLine.toString());
+
+            JsonArray jsonArray = new JsonArray();
+            for(String string : pattern) {
+                jsonArray.add(string);
+            }
+            json.add("pattern", jsonArray);
+
+            JsonObject jsonObject = new JsonObject();
+            for(Map.Entry<Character, Ingredient> entry : inputs.entrySet()) {
+                jsonObject.add(String.valueOf(entry.getKey()), entry.getValue().toJson());
+            }
+            json.add("key", jsonObject);
+
+            JsonArray shapelessRecipeJsonArray = new JsonArray();
+            recipe.shapelessRecipeItems.stream().map(Ingredient::toJson).forEach(shapelessRecipeJsonArray::add);
+            json.add("shapelessExtraIngredients", shapelessRecipeJsonArray);
+
+            json.addProperty("maxAllowedPotions", recipe.maxAllowedPotions);
+            json.addProperty("allowNormalPotions", recipe.allowNormalPotions);
+            json.addProperty("allowSplashPotions", recipe.allowSplashPotions);
+            json.addProperty("allowLingeringPotions", recipe.allowLingeringPotions);
+            json.addProperty("maxLevelCap", recipe.maxLevelCap);
+            json.addProperty("resultCount", recipe.result.getCount());
+
+            return json;
         }
 
         @Override
