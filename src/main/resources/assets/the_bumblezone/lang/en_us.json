@@ -147,6 +147,11 @@
   "biome.the_bumblezone.pollinated_pillar": "Pollinated Pillar",
   "biome.the_bumblezone.crystal_canyon": "Crystal Canyon",
 
+  "structure.the_bumblezone.cell_maze": "Cell Maze",
+  "structure.the_bumblezone.honey_cave_room": "Honey Cave Room",
+  "structure.the_bumblezone.pollinated_stream": "Pollinated Stream",
+  "structure.the_bumblezone.throne_pillar": "Throne Pillar",
+
   "effect.the_bumblezone.wrath_of_the_hive": "Wrath of the Hive",
   "effect.the_bumblezone.protection_of_the_hive": "Protection of the Hive",
   "effect.the_bumblezone.beenergized": "Beenergized",

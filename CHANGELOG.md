@@ -41,6 +41,9 @@ Fixed Throne Pillar Honey Compass in Cell Maze structure not locating Throne Pil
 ##### Entities:
 Bee Queen trade json files now will stack possible rewards properly if multiple files have the same want item.
 
+##### Dimensions:
+Fixed issue where ceiling of dimension could rarely generate to have holes to the outside of the dimension boundary.
+
 ##### Config:
 Added a new config to disable the thick fog in Bumblezone. Set to enable fog by default. 
  The config entry is in the config/the_bumblezone/dimension.toml config file.
