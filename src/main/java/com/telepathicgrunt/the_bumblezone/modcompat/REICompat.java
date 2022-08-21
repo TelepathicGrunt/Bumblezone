@@ -82,6 +82,7 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzItems.CARPENTER_BEE_BOOTS_2);
         addInfo(BzItems.ESSENCE_OF_THE_BEES);
         addInfo(BzItems.GLISTERING_HONEY_CRYSTAL);
+        addInfo(BzItems.CARVABLE_WAX);
         addInfo(BzItems.SUPER_CANDLE);
         addInfo(BzItems.SUPER_CANDLE_BLACK);
         addInfo(BzItems.SUPER_CANDLE_BLUE);
@@ -140,7 +141,7 @@ public class REICompat implements REIClientPlugin {
                 addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.LINGERING_POTION.getDefaultInstance(), currentRecipe));
                 currentRecipe++;
             }
-            registry.add(extraRecipes);
+            extraRecipes.forEach(registry::add);
         }
     }
 

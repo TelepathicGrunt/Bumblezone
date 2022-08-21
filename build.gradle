@@ -97,7 +97,13 @@ dependencies {
 
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${libs.versions.rei.get()}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${libs.versions.rei.get()}"
-	//modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${libs.versions.rei.get()}"
+	/*
+	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${libs.versions.rei.get()}"
+	modRuntimeOnly "curse.maven:architectury-419699:3929406"
+	modRuntimeOnly ("me.shedaniel.cloth:cloth-config-fabric:8.0.75") {
+		exclude(group: "net.fabricmc.fabric-api")
+	}
+	*/
 
 	//modCompileOnlyApi "mezz.jei:jei-${jei_mc}-common-api:${jei}"
 	//modCompileOnlyApi "mezz.jei:jei-${jei_mc}-fabric-api:${jei}"
