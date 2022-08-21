@@ -3,13 +3,16 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.LingeringPotionItem;
 import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 
@@ -20,7 +23,28 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class FakeIncenseCandleRecipeCreator {
-    public static ShapedRecipe getFakeShapedRecipe(IncenseCandleRecipe recipe, Potion potion, ItemStack potionItem, int currentRecipe) {
+
+    public static List<CraftingRecipe> constructFakeRecipes(IncenseCandleRecipe incenseCandleRecipe) {
+        List<CraftingRecipe> extraRecipes = new ArrayList<>();
+        int currentRecipe = 0;
+        for (Potion potion : Registry.POTION) {
+            addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.POTION.getDefaultInstance(), currentRecipe));
+            currentRecipe++;
+            addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.SPLASH_POTION.getDefaultInstance(), currentRecipe));
+            currentRecipe++;
+            addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.LINGERING_POTION.getDefaultInstance(), currentRecipe));
+            currentRecipe++;
+        }
+        return extraRecipes;
+    }
+
+    private static void addRecipeIfValid(List<CraftingRecipe> extraRecipes, ShapedRecipe recipe) {
+        if (!recipe.getResultItem().isEmpty()) {
+            extraRecipes.add(recipe);
+        }
+    }
+
+    private static ShapedRecipe getFakeShapedRecipe(IncenseCandleRecipe recipe, Potion potion, ItemStack potionItem, int currentRecipe) {
         ItemStack potionStack = PotionUtils.setPotion(potionItem, potion);
 
         List<Ingredient> fakedShapedIngredientsMutable = new ArrayList<>();

@@ -129,23 +129,8 @@ public class JEIIntegration implements IModPlugin {
 
 	private static void registerExtraRecipes(Recipe<?> baseRecipe, IRecipeRegistration registration) {
 		if (baseRecipe instanceof IncenseCandleRecipe incenseCandleRecipe) {
-			List<CraftingRecipe> extraRecipes = new ArrayList<>();
-			int currentRecipe = 0;
-			for (Potion potion : Registry.POTION) {
-				addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.POTION.getDefaultInstance(), currentRecipe));
-				currentRecipe++;
-				addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.SPLASH_POTION.getDefaultInstance(), currentRecipe));
-				currentRecipe++;
-				addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.LINGERING_POTION.getDefaultInstance(), currentRecipe));
-				currentRecipe++;
-			}
+			List<CraftingRecipe> extraRecipes = FakeIncenseCandleRecipeCreator.constructFakeRecipes(incenseCandleRecipe);
 			registration.addRecipes(RecipeTypes.CRAFTING, extraRecipes);
-		}
-	}
-
-	private static void addRecipeIfValid(List<CraftingRecipe> extraRecipes, ShapedRecipe recipe) {
-		if (!recipe.getResultItem().isEmpty()) {
-			extraRecipes.add(recipe);
 		}
 	}
 }
