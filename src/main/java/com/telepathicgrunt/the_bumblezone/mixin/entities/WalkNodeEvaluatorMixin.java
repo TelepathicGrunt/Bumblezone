@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.blocks;
+package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleWick;
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;

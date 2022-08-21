@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class JEIIncenseCandleRecipe {
+public class FakeIncenseCandleRecipeCreator {
     public static ShapedRecipe getFakeShapedRecipe(IncenseCandleRecipe recipe, Potion potion, ItemStack potionItem, int currentRecipe) {
         ItemStack potionStack = PotionUtils.setPotion(potionItem, potion);
 

@@ -13,7 +13,7 @@
     "blocks.PistonBaseBlockMixin",
     "blocks.PistonMovingBlockEntityMixin",
     "blocks.PistonStructureResolverMixin",
-    "blocks.WalkNodeEvaluatorMixin",
+    "entities.WalkNodeEvaluatorMixin",
     "blocks.WaterEquivalenceMixin",
     "containers.PotionBrewingAccessor",
     "containers.ShapedRecipeAccessor",
