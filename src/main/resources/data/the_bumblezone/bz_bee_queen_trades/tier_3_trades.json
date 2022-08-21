@@ -141,6 +141,13 @@
       "xp_reward": 3,
       "weight": 1,
       "required": true
+    },
+    {
+      "id": "the_bumblezone:carvable_wax",
+      "count": 4,
+      "xp_reward": 3,
+      "weight": 1,
+      "required": true
     }
   ]
 }
