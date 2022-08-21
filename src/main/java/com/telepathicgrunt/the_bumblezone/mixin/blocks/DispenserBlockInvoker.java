@@ -7,8 +7,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(DispenserBlock.class)
-public interface DispenserBlockAccessor {
+public interface DispenserBlockInvoker {
 
     @Invoker("getDispenseMethod")
-    DispenseItemBehavior thebumblezone_invokeGetBehaviorForItem(ItemStack stack);
+    DispenseItemBehavior thebumblezone_invokeGetDispenseMethod(ItemStack stack);
 }
