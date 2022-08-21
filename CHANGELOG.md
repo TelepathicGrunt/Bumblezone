@@ -31,7 +31,7 @@ Incense Candles added! A powerful magical candle that radiates its effects to ne
 Added Crystal Canyon biome full of Carvable Wax and Glistering Honey Crystals!
 
 ##### Items:
-Buffed Royal Jelly Bottom so it gives move saturation, nutrition, and speed when consumed. It now also gives Jump Boost and Slow Falling as well.
+Buffed Royal Jelly Bottle so it gives move saturation, nutrition, and speed when consumed. It now also gives Jump Boost and Slow Falling as well.
 
 ##### Structures:
 Throne Pillar structure uses Glistering Honey Crystal instead of Jack o Lanterns now.
