@@ -38,8 +38,14 @@ Throne Pillar structure uses Glistering Honey Crystal instead of Jack o Lanterns
 
 Fixed Throne Pillar Honey Compass in Cell Maze structure not locating Throne Pillars.
 
+##### Entities:
+Bee Queen trade json files now will stack possible rewards properly if multiple files have the same want item.
+
 ##### Config:
 Added a new config to disable the thick fog in Bumblezone. Set to enable fog by default. 
+ The config entry is in the config/the_bumblezone/dimension.toml config file.
+
+Added a new config to reduce the thickness of the fog in Bumblezone. Set to 3 by default to make fog 3 time less thick.
  The config entry is in the config/the_bumblezone/dimension.toml config file.
 
 

@@ -51,6 +51,7 @@
   ],
   "client": [
     "client.FluidRendererMixin",
+    "client.FogRendererMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
     "client.RenderingRegistryAccessor",

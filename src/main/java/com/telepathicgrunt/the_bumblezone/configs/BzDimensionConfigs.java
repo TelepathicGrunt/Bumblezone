@@ -8,6 +8,7 @@ public class BzDimensionConfigs{
 
     // dimension
     public static ForgeConfigSpec.DoubleValue fogBrightnessPercentage;
+    public static ForgeConfigSpec.DoubleValue fogReducer;
     public static ForgeConfigSpec.BooleanValue enableDimensionFog;
     public static ForgeConfigSpec.IntValue teleportationMode;
     public static ForgeConfigSpec.BooleanValue generateBeenest;
@@ -39,6 +40,13 @@ public class BzDimensionConfigs{
                        " and 100000 will be white.\n")
                 .translation("the_bumblezone.config.fogbrightnesspercentage")
                 .defineInRange("fogBrightnessPercentage", 100D, 0D, 100000D);
+
+            fogReducer = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How much to reduce the thickness of the fog in Bumblezone. ",
+                        " 1 is for Nether fog thickness. 10 for much farther fog.\n")
+                .translation("the_bumblezone.config.fogreducer")
+                .defineInRange("fogReducer", 4D, 0D, 100D);
 
             enableDimensionFog = builder
                 .comment(" \n-----------------------------------------------------\n",
