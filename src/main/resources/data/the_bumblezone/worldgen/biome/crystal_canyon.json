@@ -1,0 +1,123 @@
+{
+  "player_spawn_friendly": false,
+  "precipitation": "none",
+  "temperature": 1.85,
+  "downfall": 0.5,
+  "effects": {
+    "ambient_sound": "the_bumblezone:beehive_ambience",
+    "music": {
+      "sound": "the_bumblezone:biome_music",
+      "min_delay": 6000,
+      "max_delay": 12000,
+      "replace_current_music": false
+    },
+    "particle": {
+      "options": {
+        "type": "the_bumblezone:pollen_puff"
+      },
+      "probability": 0.001
+    },
+    "sky_color": 16757248,
+    "foliage_color": 7593531,
+    "grass_color": 7600187,
+    "fog_color": 12638463,
+    "water_color": 14397805,
+    "water_fog_color": 11695660
+  },
+  "carvers": {},
+  "features": [
+    [
+      "the_bumblezone:honeycomb_caves",
+      "the_bumblezone:honeycomb_holes"
+    ],
+    [],
+    [],
+    [
+      "the_bumblezone:bee_dungeon",
+      "the_bumblezone:spider_infested_bee_dungeon"
+    ],
+    [],
+    [
+      "the_bumblezone:web_wall"
+    ],
+    [
+      "the_bumblezone:giant_honey_crystals",
+      "the_bumblezone:honey_crystals_super_common",
+      "the_bumblezone:honey_crystals_common",
+      "the_bumblezone:sticky_honey_residue_feature",
+      "the_bumblezone:sticky_honey_residue_common"
+    ],
+    [],
+    [
+      "the_bumblezone:cave_sugar_waterfall",
+      "the_bumblezone:sugar_waterfall_full_range",
+      "the_bumblezone:sugar_waterfall_low"
+    ],
+    []
+  ],
+  "creature_spawn_probability": 0.13,
+  "spawners": {
+    "monster": [
+      {
+        "type": "minecraft:slime",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "minecraft:endermen",
+        "weight": 2,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "minecraft:phantom",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "minecraft:snowball",
+        "weight": 2200,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "creature": [
+      {
+        "type": "minecraft:bee",
+        "weight": 50,
+        "minCount": 4,
+        "maxCount": 8
+      },
+      {
+        "type": "the_bumblezone:honey_slime",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 3
+      },
+      {
+        "type": "the_bumblezone:beehemoth",
+        "weight": 5,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "ambient": [],
+    "axolotls": [],
+    "water_creature": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {
+    "minecraft:endermen": {
+      "energy_budget": 0.02,
+      "charge": 3.0
+    },
+    "minecraft:phantom": {
+      "energy_budget": 0.01,
+      "charge": 2.0
+    }
+  }
+}

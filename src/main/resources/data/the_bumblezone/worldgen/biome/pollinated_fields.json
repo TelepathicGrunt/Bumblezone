@@ -3,8 +3,6 @@
   "precipitation": "none",
   "temperature": 1.85,
   "downfall": 0.5,
-  "depth": -0.15,
-  "scale": 0.1,
   "effects": {
     "ambient_sound": "the_bumblezone:beehive_ambience",
     "music": {
@@ -43,6 +41,7 @@
       "the_bumblezone:web_wall"
     ],
     [
+      "the_bumblezone:giant_honey_crystals_cave",
       "the_bumblezone:honey_crystals_rare",
       "the_bumblezone:sticky_honey_residue_feature"
     ],

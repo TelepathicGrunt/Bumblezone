@@ -1,0 +1,23 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "the_bumblezone:block/super_candle/candle_wick"
+    },
+    "lit=true": [
+      {
+        "model": "the_bumblezone:block/super_candle/candle_wick_lit_1"
+      },
+      {
+        "model": "the_bumblezone:block/super_candle/candle_wick_lit_1",
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/super_candle/candle_wick_lit_2"
+      },
+      {
+        "model": "the_bumblezone:block/super_candle/candle_wick_lit_2",
+        "y": 180
+      }
+    ]
+  }
+}

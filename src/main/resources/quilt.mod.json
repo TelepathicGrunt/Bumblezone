@@ -25,7 +25,8 @@
       "preLaunch": "com.llamalad7.mixinextras.MixinExtrasBootstrap::init",
       "modmenu": "com.telepathicgrunt.the_bumblezone.configs.ModMenuConfig",
       "cardinal-components-entity": "com.telepathicgrunt.the_bumblezone.Bumblezone",
-      "rei_client": "com.telepathicgrunt.the_bumblezone.modcompat.REICompat"
+      "rei_client": "com.telepathicgrunt.the_bumblezone.modcompat.REICompat",
+      "emi": [ "com.telepathicgrunt.the_bumblezone.modcompat.EMICompat" ]
     },
     "depends": [
       {

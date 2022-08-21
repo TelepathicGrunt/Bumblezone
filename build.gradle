@@ -64,6 +64,10 @@ repositories {
 		url = "https://modmaven.dev"
 	}
 	maven {
+		name = "TerraformersMC"
+		url = "https://maven.terraformersmc.com/"
+	}
+	maven {
 		url 'https://jitpack.io'
 	}
 }
@@ -95,9 +99,17 @@ dependencies {
 	modCompileOnly "maven.modrinth:modmenu:${libs.versions.mod.menu.get()}"
 	modRuntimeOnly "maven.modrinth:modmenu:${libs.versions.mod.menu.get()}"
 
+	modCompileOnly "dev.emi:emi:${libs.versions.emi.get()}"
+
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${libs.versions.rei.get()}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${libs.versions.rei.get()}"
-	//modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${libs.versions.rei.get()}"
+	/*
+	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${libs.versions.rei.get()}"
+	modRuntimeOnly "curse.maven:architectury-419699:3929406"
+	modRuntimeOnly ("me.shedaniel.cloth:cloth-config-fabric:8.0.75") {
+		exclude(group: "net.fabricmc.fabric-api")
+	}
+	*/
 
 	//modCompileOnlyApi "mezz.jei:jei-${jei_mc}-common-api:${jei}"
 	//modCompileOnlyApi "mezz.jei:jei-${jei_mc}-fabric-api:${jei}"
@@ -147,14 +159,14 @@ String fileContents = new File("CHANGELOG.md").getText('UTF-8')
 task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
 	apiToken = "$System.env.CURSEFORGEKEY"
 	int projectId = 363949
-	String changelogText = fileContents
 
 	def mainFile = upload(projectId, remapJar)
-	mainFile.changelog = changelogText
+	mainFile.changelog = fileContents
 	mainFile.changelogType = "markdown"
 	mainFile.releaseType = "release"
 	mainFile.displayName = "The Bumblezone v${project.mod_version} (${libs.versions.minecraft.get()} MC Quilt)"
 	mainFile.addGameVersion("1.19.1")
+	mainFile.addGameVersion("1.19.2")
 	mainFile.addModLoader("Quilt")
 	mainFile.addRequirement("midnightlib")
 	mainFile.addRequirement("qsl")
@@ -169,6 +181,7 @@ modrinth {
 	changelog = fileContents
 	versionType = "RELEASE"
 	gameVersions = ["1.19.1"]
+	gameVersions = ["1.19.2"]
 	loaders = ["quilt"]
 	dependencies {
 		required.project "qsl"

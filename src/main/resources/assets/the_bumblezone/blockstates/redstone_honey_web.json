@@ -6,7 +6,7 @@
         "power": "0"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_0_ns",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_0_ns",
         "uvlock": true
       }
     },
@@ -16,7 +16,7 @@
         "power": "1"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_1_ns",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_1_ns",
         "uvlock": true
       }
     },
@@ -26,7 +26,7 @@
         "power": "2"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_2_ns",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_2_ns",
         "uvlock": true
       }
     },
@@ -36,7 +36,7 @@
         "power": "3"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_3_ns",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_3_ns",
         "uvlock": true
       }
     },
@@ -46,7 +46,7 @@
         "power": "4"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_4_ns",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_4_ns",
         "uvlock": true
       }
     },
@@ -56,7 +56,7 @@
         "power": "5"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_5_ns",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_5_ns",
         "uvlock": true
       }
     },
@@ -66,7 +66,7 @@
         "power": "6"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_6_ns",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_6_ns",
         "uvlock": true
       }
     },
@@ -76,7 +76,7 @@
         "power": "7"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_7_ns",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_7_ns",
         "uvlock": true
       }
     },
@@ -86,7 +86,7 @@
         "power": "8"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_8_ns",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_8_ns",
         "uvlock": true
       }
     },
@@ -96,7 +96,7 @@
         "power": "9"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_9_ns",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_9_ns",
         "uvlock": true
       }
     },
@@ -106,7 +106,7 @@
         "power": "10"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_10_ns",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_10_ns",
         "uvlock": true
       }
     },
@@ -116,7 +116,7 @@
         "power": "11"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_11_ns",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_11_ns",
         "uvlock": true
       }
     },
@@ -126,7 +126,7 @@
         "power": "12"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_12_ns",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_12_ns",
         "uvlock": true
       }
     },
@@ -136,7 +136,7 @@
         "power": "13"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_13_ns",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_13_ns",
         "uvlock": true
       }
     },
@@ -146,7 +146,7 @@
         "power": "14"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_14_ns",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_14_ns",
         "uvlock": true
       }
     },
@@ -156,7 +156,7 @@
         "power": "15"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_15_ns",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_15_ns",
         "uvlock": true
       }
     },
@@ -168,7 +168,7 @@
         "power": "0"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_0_ew",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_0_ew",
         "uvlock": true
       }
     },
@@ -178,7 +178,7 @@
         "power": "1"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_1_ew",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_1_ew",
         "uvlock": true
       }
     },
@@ -188,7 +188,7 @@
         "power": "2"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_2_ew",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_2_ew",
         "uvlock": true
       }
     },
@@ -198,7 +198,7 @@
         "power": "3"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_3_ew",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_3_ew",
         "uvlock": true
       }
     },
@@ -208,7 +208,7 @@
         "power": "4"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_4_ew",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_4_ew",
         "uvlock": true
       }
     },
@@ -218,7 +218,7 @@
         "power": "5"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_5_ew",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_5_ew",
         "uvlock": true
       }
     },
@@ -228,7 +228,7 @@
         "power": "6"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_6_ew",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_6_ew",
         "uvlock": true
       }
     },
@@ -238,7 +238,7 @@
         "power": "7"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_7_ew",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_7_ew",
         "uvlock": true
       }
     },
@@ -248,7 +248,7 @@
         "power": "8"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_8_ew",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_8_ew",
         "uvlock": true
       }
     },
@@ -258,7 +258,7 @@
         "power": "9"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_9_ew",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_9_ew",
         "uvlock": true
       }
     },
@@ -268,7 +268,7 @@
         "power": "10"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_10_ew",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_10_ew",
         "uvlock": true
       }
     },
@@ -278,7 +278,7 @@
         "power": "11"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_11_ew",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_11_ew",
         "uvlock": true
       }
     },
@@ -288,7 +288,7 @@
         "power": "12"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_12_ew",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_12_ew",
         "uvlock": true
       }
     },
@@ -298,7 +298,7 @@
         "power": "13"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_13_ew",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_13_ew",
         "uvlock": true
       }
     },
@@ -308,7 +308,7 @@
         "power": "14"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_14_ew",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_14_ew",
         "uvlock": true
       }
     },
@@ -318,7 +318,7 @@
         "power": "15"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_15_ew",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_15_ew",
         "uvlock": true
       }
     },
@@ -330,7 +330,7 @@
         "power": "0"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_0_ud",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_0_ud",
         "uvlock": true
       }
     },
@@ -340,7 +340,7 @@
         "power": "1"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_1_ud",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_1_ud",
         "uvlock": true
       }
     },
@@ -350,7 +350,7 @@
         "power": "2"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_2_ud",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_2_ud",
         "uvlock": true
       }
     },
@@ -360,7 +360,7 @@
         "power": "3"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_3_ud",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_3_ud",
         "uvlock": true
       }
     },
@@ -370,7 +370,7 @@
         "power": "4"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_4_ud",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_4_ud",
         "uvlock": true
       }
     },
@@ -380,7 +380,7 @@
         "power": "5"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_5_ud",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_5_ud",
         "uvlock": true
       }
     },
@@ -390,7 +390,7 @@
         "power": "6"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_6_ud",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_6_ud",
         "uvlock": true
       }
     },
@@ -400,7 +400,7 @@
         "power": "7"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_7_ud",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_7_ud",
         "uvlock": true
       }
     },
@@ -410,7 +410,7 @@
         "power": "8"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_8_ud",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_8_ud",
         "uvlock": true
       }
     },
@@ -420,7 +420,7 @@
         "power": "9"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_9_ud",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_9_ud",
         "uvlock": true
       }
     },
@@ -430,7 +430,7 @@
         "power": "10"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_10_ud",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_10_ud",
         "uvlock": true
       }
     },
@@ -440,7 +440,7 @@
         "power": "11"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_11_ud",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_11_ud",
         "uvlock": true
       }
     },
@@ -450,7 +450,7 @@
         "power": "12"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_12_ud",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_12_ud",
         "uvlock": true
       }
     },
@@ -460,7 +460,7 @@
         "power": "13"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_13_ud",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_13_ud",
         "uvlock": true
       }
     },
@@ -470,7 +470,7 @@
         "power": "14"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_14_ud",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_14_ud",
         "uvlock": true
       }
     },
@@ -480,7 +480,7 @@
         "power": "15"
       },
       "apply": {
-        "model": "the_bumblezone:block/redstone_honey_web_15_ud",
+        "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_15_ud",
         "uvlock": true
       }
     }

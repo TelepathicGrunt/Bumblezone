@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -31,7 +32,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
     public static final QueensTradeManager QUEENS_TRADE_MANAGER = new QueensTradeManager();
     private final ResourceLocation QUEENS_TRADE_MANAGER_ID = new ResourceLocation(Bumblezone.MODID, "queens_trade_manager");
 
-    public Map<Set<Item>, WeightedRandomList<TradeEntryReducedObj>> tradeReduced = new HashMap<>();
+    public Object2ObjectOpenHashMap<Item, WeightedRandomList<TradeEntryReducedObj>> tradeReduced = new Object2ObjectOpenHashMap<>();
     public Map<List<TradeEntryObj>, List<TradeEntryObj>> tradeRaw = new HashMap<>();
 
     public QueensTradeManager() {
@@ -61,10 +62,10 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
             return;
         }
 
-        ImmutableMap.Builder<Set<Item>, WeightedRandomList<TradeEntryReducedObj>> reducedTradeBuilder = ImmutableMap.builder();
+        Object2ObjectOpenHashMap<Item, WeightedRandomList<TradeEntryReducedObj>> reducedTradeMap = new Object2ObjectOpenHashMap<>();
         for (Map.Entry<List<TradeEntryObj>, List<TradeEntryObj>> entry : tradeRaw.entrySet()) {
 
-            Set<Item> wants = new ObjectOpenHashSet<>();
+            ArrayList<Item> wants = new ArrayList<>();
             List<TradeEntryReducedObj> rewards = new ArrayList<>();
             entry.getKey().forEach((value) -> {
                 Set<Item> items = null;
@@ -129,9 +130,20 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                 continue;
             }
 
-            reducedTradeBuilder.put(wants, WeightedRandomList.create(rewards));
+            for (Item item : wants) {
+                WeightedRandomList<TradeEntryReducedObj> existingRewards = reducedTradeMap.get(item);
+                if (existingRewards == null) {
+                    reducedTradeMap.put(item, WeightedRandomList.create(rewards));
+                }
+                else {
+                    List<TradeEntryReducedObj> newWants = new ArrayList<>();
+                    newWants.addAll(existingRewards.unwrap());
+                    newWants.addAll(rewards);
+                    reducedTradeMap.put(item, WeightedRandomList.create(newWants));
+                }
+            }
         }
-        tradeReduced = reducedTradeBuilder.build();
+        tradeReduced = reducedTradeMap;
         tradeRaw.clear();
     }
 

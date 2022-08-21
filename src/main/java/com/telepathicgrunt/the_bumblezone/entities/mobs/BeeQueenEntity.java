@@ -387,17 +387,13 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             List<ItemEntity> items = this.level.getEntitiesOfClass(ItemEntity.class, scanArea);
             items.stream().filter(ie -> !ie.hasPickUpDelay()).findFirst().ifPresent((itemEntity) -> {
                 boolean traded = false;
-                for (Map.Entry<Set<Item>, WeightedRandomList<TradeEntryReducedObj>> tradeEntries : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
-                    if (tradeEntries.getKey().contains(itemEntity.getItem().getItem())) {
-                        for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
-                            Optional<TradeEntryReducedObj> reward = tradeEntries.getValue().getRandom(this.random);
-                            if (reward.isPresent()) {
-                                spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem());
-                                traded = true;
-                            }
-                        }
-                        if (traded) {
-                            break;
+                Item item = itemEntity.getItem().getItem();
+                if (QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.containsKey(item)) {
+                    for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
+                        Optional<TradeEntryReducedObj> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.get(item).getRandom(this.random);
+                        if (reward.isPresent()) {
+                            spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem());
+                            traded = true;
                         }
                     }
                 }
@@ -464,23 +460,18 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
 
         boolean traded = false;
-        for (Map.Entry<Set<Item>, WeightedRandomList<TradeEntryReducedObj>> tradeEntries : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
-            if (tradeEntries.getKey().contains(item)) {
-                if (this.level.isClientSide()) {
-                    return InteractionResult.SUCCESS;
-                }
+        if (QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.containsKey(item)) {
+            if (this.level.isClientSide()) {
+                return InteractionResult.SUCCESS;
+            }
 
-                Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
-                Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
+            Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
+            Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
 
-                Optional<TradeEntryReducedObj> reward = tradeEntries.getValue().getRandom(this.random);
-                if (reward.isPresent()) {
-                    spawnReward(forwardVect, sideVect, reward.get(), stack);
-                    traded = true;
-                }
-                if (traded) {
-                    break;
-                }
+            Optional<TradeEntryReducedObj> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.get(item).getRandom(this.random);
+            if (reward.isPresent()) {
+                spawnReward(forwardVect, sideVect, reward.get(), stack);
+                traded = true;
             }
         }
 

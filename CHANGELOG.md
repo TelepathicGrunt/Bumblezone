@@ -1,4 +1,61 @@
-### **(V.6.1.7 Changes) (1.19 Minecraft)**
+### **(V.6.2.0 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Added Glistering Honey Crystal block!
+ A glowing light source of crystallized honey. Found only in Crystal Canyon biome in Bumblezone.
+ Gives a high amount of Honey Crystal Shards when broken or can be smelted into a ton of Sticky Honey Residue.
+ Great for decor or lighting! Also transform neighboring water source blocks into sugar water.
+ If combined with an Awkward Potion in a Brewing Stand, it will create a Potion of Luck!
+ The most common benefit of Luck status is it may improve the loot drops of certain datapack/modded loot tables.
+
+Added Carvable Wax block!
+ Right click with Shears or Swords to change the texture for it for decoration purposes!
+ Can be crafted from 9 Beeswax. Or created from Smelting Beehive Beeswax.
+
+Super Candles added! A massive decorative bulky candle that gives off a ton of light! Can be dyed various colors through crafting.
+ Can be lit and waterlogged the same way as regular Minecraft Candles. Also can be lit by flaming projectile hits as well.
+ When lit, any mob in the flame will be set on fire while taking low damage.
+ Super Candles can be stacked and if Soul Sand/Soul Soil is placed under, it gets a soul flame that scares away Piglins!
+ If a Comparator is facing the Super Candle Base, it gets a power of 5 when lit.
+ If Comparator is facing the Super Candle Wick, it will get a power of 3 when it is a soul flame and 5 when it is a normal flame.
+ Dispensers can light the Candle too.
+
+Incense Candles added! A powerful magical candle that radiates its effects to nearby entities!
+ On the surface, this candle has all the same behaviors as the regular Super Candles. Except these powerful Incense Candles
+ can be imbued with different status effects to grant nearby entities based on what potions are used to craft the Incense Candle.
+ When the Incense Candle's power runs out, the candle will become unlit.
+ Relighting the candle will restart its status effects it gives.
+ See what kind of Incense Candles you can make based on different potion combinations!
+
+##### Biomes:
+Added Crystal Canyon biome full of Carvable Wax and Glistering Honey Crystals!
+
+##### Items:
+Buffed Royal Jelly Bottle so it gives move saturation, nutrition, and speed when consumed. It now also gives Jump Boost and Slow Falling as well.
+
+##### Structures:
+Throne Pillar structure uses Glistering Honey Crystal instead of Jack o Lanterns now.
+
+Fixed Throne Pillar Honey Compass in Cell Maze structure not locating Throne Pillars.
+
+##### Entities:
+Bee Queen trade json files now will stack possible rewards properly if multiple files have the same want item.
+
+##### Dimensions:
+Fixed issue where ceiling of dimension could rarely generate to have holes to the outside of the dimension boundary.
+
+##### Config:
+Added a new config to disable the thick fog in Bumblezone. Set to enable fog by default.
+ The config entry can be found with Mod Menu on and edited in-game through Mod Menu's mod button.
+
+Added a new config to reduce the thickness of the fog in Bumblezone. Set to 4 by default to make fog 4 time less thick.
+ The config entry can be found with Mod Menu on and edited in-game through Mod Menu's mod button.
+
+##### Lang:
+zh_cn.json lang file updated by Litttlefish. Thank you!
+
+
+### **(V.6.1.7 Changes) (1.19.1 Minecraft)**
 
 ##### Entities:
 Fixed Bee Queen healing superfast and thus, unkillable.

@@ -96,6 +96,13 @@
       "required": true
     },
     {
+      "id": "the_bumblezone:carvable_wax",
+      "count": 2,
+      "xp_reward": 2,
+      "weight": 8,
+      "required": true
+    },
+    {
       "id": "#minecraft:candles",
       "count": 2,
       "xp_reward": 2,

@@ -108,7 +108,7 @@ public class FilledPorousHoneycomb extends Block {
      * takes the block's dimensions and passes into methods to spawn the actual particle
      */
     private void spawnHoneyParticles(Level world, RandomSource random, BlockPos position, BlockState blockState) {
-        if (blockState.getFluidState().isEmpty() && random.nextFloat() < 0.08F) {
+        if (random.nextFloat() < 0.08F) {
             VoxelShape currentBlockShape = blockState.getCollisionShape(world, position);
             double yEndHeight = currentBlockShape.max(Direction.Axis.Y);
             if (yEndHeight >= 1.0D && !blockState.is(BlockTags.IMPERMEABLE)) {

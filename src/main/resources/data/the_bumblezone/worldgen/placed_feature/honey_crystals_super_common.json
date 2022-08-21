@@ -1,0 +1,31 @@
+{
+  "feature": "the_bumblezone:honey_crystals_exposed_feature",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 25
+    },
+    {
+      "type": "minecraft:count",
+      "count": 200
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "max_inclusive": {
+          "below_top": 10
+        },
+        "min_inclusive": {
+          "above_bottom": 20
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

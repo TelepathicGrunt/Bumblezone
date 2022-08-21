@@ -27,7 +27,8 @@ public class BzBiomeLayer implements AreaTransformer0 {
     @Override
     public int applyPixel(Context noise, int x, int z) {
         double perlinNoise = perlinGen.getValue((double) x * 0.1D, (double) z * 0.0001D, false);
-//
+        double perlinNoise2 = perlinGen.getValue((double) x * 0.02D, (double) z * 0.02D, false);
+////
 //		max = Math.max(max, perlinNoise);
 //		min = Math.min(min, perlinNoise);
 //		Bumblezone.LOGGER.log(Level.INFO, "Max: " + max +", Min: "+min + ", perlin: "+perlinNoise);
@@ -36,7 +37,12 @@ public class BzBiomeLayer implements AreaTransformer0 {
             return biomeRegistry.getId(biomeRegistry.get(BzBiomeProvider.HIVE_WALL));
         }
         else {
-            return biomeRegistry.getId(biomeRegistry.get(BzBiomeProvider.SUGAR_WATER_FLOOR));
+            if (Math.abs(perlinNoise2) > 0.65D) {
+                return biomeRegistry.getId(biomeRegistry.get(BzBiomeProvider.CRYSTAL_CANYON));
+            }
+            else {
+                return biomeRegistry.getId(biomeRegistry.get(BzBiomeProvider.SUGAR_WATER_FLOOR));
+            }
         }
     }
 }
