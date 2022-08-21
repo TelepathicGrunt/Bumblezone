@@ -89,7 +89,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return BzBlockEntities.HONEY_COCOON_BE.create(blockPos, blockState);
+        return BzBlockEntities.HONEY_COCOON.create(blockPos, blockState);
     }
 
     @Override

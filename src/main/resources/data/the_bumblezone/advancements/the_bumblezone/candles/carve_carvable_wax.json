@@ -1,0 +1,109 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/root",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:carvable_wax"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.carve_carvable_wax.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.carve_carvable_wax.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 2
+  },
+  "criteria": {
+    "carve_carvable_wax_1": {
+      "trigger": "the_bumblezone:carve_carvable_wax",
+      "conditions": {
+        "block":{
+          "blocks": [ "the_bumblezone:carvable_wax" ],
+          "state": {
+            "carving": "uncarved"
+          }
+        }
+      }
+    },
+    "carve_carvable_wax_2": {
+      "trigger": "the_bumblezone:carve_carvable_wax",
+      "conditions": {
+        "block":{
+          "blocks": [ "the_bumblezone:carvable_wax" ],
+          "state": {
+            "carving": "wavy"
+          }
+        }
+      }
+    },
+    "carve_carvable_wax_3": {
+      "trigger": "the_bumblezone:carve_carvable_wax",
+      "conditions": {
+        "block":{
+          "blocks": [ "the_bumblezone:carvable_wax" ],
+          "state": {
+            "carving": "flower"
+          }
+        }
+      }
+    },
+    "carve_carvable_wax_4": {
+      "trigger": "the_bumblezone:carve_carvable_wax",
+      "conditions": {
+        "block":{
+          "blocks": [ "the_bumblezone:carvable_wax" ],
+          "state": {
+            "carving": "chiseled"
+          }
+        }
+      }
+    },
+    "carve_carvable_wax_5": {
+      "trigger": "the_bumblezone:carve_carvable_wax",
+      "conditions": {
+        "block":{
+          "blocks": [ "the_bumblezone:carvable_wax" ],
+          "state": {
+            "carving": "diamond"
+          }
+        }
+      }
+    },
+    "carve_carvable_wax_6": {
+      "trigger": "the_bumblezone:carve_carvable_wax",
+      "conditions": {
+        "block":{
+          "blocks": [ "the_bumblezone:carvable_wax" ],
+          "state": {
+            "carving": "bricks"
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "carve_carvable_wax_1"
+    ],
+    [
+      "carve_carvable_wax_2"
+    ],
+    [
+      "carve_carvable_wax_3"
+    ],
+    [
+      "carve_carvable_wax_4"
+    ],
+    [
+      "carve_carvable_wax_5"
+    ],
+    [
+      "carve_carvable_wax_6"
+    ]
+  ]
+}

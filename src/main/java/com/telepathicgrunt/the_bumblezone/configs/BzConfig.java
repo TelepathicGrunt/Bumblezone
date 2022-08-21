@@ -54,6 +54,9 @@ public class BzConfig extends MidnightConfig {
     @Entry(min=0, max=100000)
     public static double fogBrightnessPercentage = 110;
 
+    @Entry(min=0, max=100)
+    public static double fogReducer = 4;
+
     @Entry
     public static boolean enableDimensionFog = true;
 

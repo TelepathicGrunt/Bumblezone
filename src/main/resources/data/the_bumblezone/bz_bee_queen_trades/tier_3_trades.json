@@ -34,103 +34,124 @@
       "id": "the_bumblezone:bee_stinger",
       "count": 8,
       "xp_reward": 3,
-      "weight": 5,
+      "weight": 100,
       "required": true
     },
     {
       "id": "the_bumblezone:honey_crystal_shards",
       "count": 9,
       "xp_reward": 3,
-      "weight": 5,
+      "weight": 100,
       "required": true
     },
     {
       "id": "the_bumblezone:bee_bread",
       "count": 6,
       "xp_reward": 3,
-      "weight": 5,
+      "weight": 100,
       "required": true
     },
     {
       "id": "the_bumblezone:pollen_puff",
       "count": 12,
       "xp_reward": 3,
-      "weight": 4,
+      "weight": 80,
       "required": true
     },
     {
       "id": "the_bumblezone:beehive_beeswax",
       "count": 10,
       "xp_reward": 3,
-      "weight": 3,
+      "weight": 60,
       "required": true
     },
     {
       "id": "the_bumblezone:honey_crystal",
       "count": 5,
       "xp_reward": 3,
-      "weight": 3,
+      "weight": 60,
       "required": true
     },
     {
       "id": "the_bumblezone:sticky_honey_residue",
       "count": 10,
       "xp_reward": 3,
-      "weight": 2,
+      "weight": 40,
       "required": true
     },
     {
       "id": "the_bumblezone:sticky_honey_redstone",
       "count": 8,
       "xp_reward": 3,
-      "weight": 2,
+      "weight": 40,
       "required": true
     },
     {
       "id": "the_bumblezone:honey_web",
       "count": 6,
       "xp_reward": 3,
-      "weight": 2,
+      "weight": 40,
       "required": true
     },
     {
       "id": "the_bumblezone:redstone_honey_web",
       "count": 4,
       "xp_reward": 3,
-      "weight": 2,
+      "weight": 40,
       "required": true
     },
     {
       "id": "the_bumblezone:honey_compass",
       "count": 1,
       "xp_reward": 3,
-      "weight": 1,
+      "weight": 20,
       "required": true
     },
     {
       "id": "the_bumblezone:stinger_spear",
       "count": 1,
       "xp_reward": 3,
-      "weight": 1,
+      "weight": 20,
       "required": true
     },
     {
       "id": "the_bumblezone:honey_crystal_shield",
       "count": 1,
       "xp_reward": 3,
-      "weight": 1,
+      "weight": 20,
       "required": true
     },
     {
       "id": "the_bumblezone:bee_cannon",
       "count": 1,
       "xp_reward": 3,
-      "weight": 1,
+      "weight": 20,
       "required": true
     },
     {
       "id": "the_bumblezone:honey_cocoon",
       "count": 1,
+      "xp_reward": 3,
+      "weight": 20,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:glistering_honey_crystal",
+      "count": 1,
+      "xp_reward": 3,
+      "weight": 20,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:carvable_wax",
+      "count": 4,
+      "xp_reward": 3,
+      "weight": 20,
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:super_candles",
+      "count": 2,
       "xp_reward": 3,
       "weight": 1,
       "required": true

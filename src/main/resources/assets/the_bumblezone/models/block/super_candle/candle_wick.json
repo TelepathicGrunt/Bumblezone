@@ -1,0 +1,27 @@
+{
+  "credit": "Made with Blockbench",
+  "textures": {
+    "0": "the_bumblezone:block/super_candle/candle_wick",
+    "particle": "the_bumblezone:block/super_candle/candle_wick"
+  },
+  "elements": [
+    {
+      "from": [7, 0, 8],
+      "to": [9, 4, 8],
+      "rotation": {"angle": 0, "axis": "y", "origin": [8, 2, 8]},
+      "faces": {
+        "north": {"uv": [0, 12, 2, 16], "texture": "#0"},
+        "south": {"uv": [2, 12, 0, 16], "texture": "#0"}
+      }
+    },
+    {
+      "from": [8, 0, 7],
+      "to": [8, 4, 9],
+      "rotation": {"angle": 0, "axis": "x", "origin": [8, 2, 8]},
+      "faces": {
+        "east": {"uv": [0, 12, 2, 16], "texture": "#0"},
+        "west": {"uv": [2, 12, 0, 16], "texture": "#0"}
+      }
+    }
+  ]
+}
