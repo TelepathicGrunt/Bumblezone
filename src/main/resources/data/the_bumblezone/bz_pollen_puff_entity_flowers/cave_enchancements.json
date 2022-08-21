@@ -5,26 +5,12 @@
       "entries": [
         {
           "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
           "weight": 1
         }
-      ]
-    },
-    {
-      "entity_type": "earthtojavamobs:moolip",
-      "plants_to_spawn": [
-        "earthtojavamobs:pink_daisy"
-      ]
-    },
-    {
-      "entity_type": "earthtojavamobs:muddy_pig",
-      "plants_to_spawn": [
-        "minecraft:poppy"
-      ]
-    },
-    {
-      "entity_type": "earthtojavamobs:cluckshroom",
-      "plants_to_spawn": [
-        "minecraft:red_mushroom"
       ]
     }
   }]
