@@ -131,23 +131,8 @@ public class REICompat implements REIClientPlugin {
 
     private static void registerExtraRecipes(Recipe<?> baseRecipe, DisplayRegistry registry) {
         if (baseRecipe instanceof IncenseCandleRecipe incenseCandleRecipe) {
-            List<CraftingRecipe> extraRecipes = new ArrayList<>();
-            int currentRecipe = 0;
-            for (Potion potion : Registry.POTION) {
-                addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.POTION.getDefaultInstance(), currentRecipe));
-                currentRecipe++;
-                addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.SPLASH_POTION.getDefaultInstance(), currentRecipe));
-                currentRecipe++;
-                addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.LINGERING_POTION.getDefaultInstance(), currentRecipe));
-                currentRecipe++;
-            }
+            List<CraftingRecipe> extraRecipes = FakeIncenseCandleRecipeCreator.constructFakeRecipes(incenseCandleRecipe);
             extraRecipes.forEach(registry::add);
-        }
-    }
-
-    private static void addRecipeIfValid(List<CraftingRecipe> extraRecipes, ShapedRecipe recipe) {
-        if (!recipe.getResultItem().isEmpty()) {
-            extraRecipes.add(recipe);
         }
     }
 }
