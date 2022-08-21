@@ -64,6 +64,7 @@ public class BumblezoneClient {
         modEventBus.addListener(BumblezoneClient::registerDimensionSpecialEffects);
         modEventBus.addListener(IncenseCandleColoring::registerBlockColors);
         modEventBus.addListener(IncenseCandleColoring::registerItemColors);
+
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         forgeBus.addListener(BeehemothControls::keyInput);
     }
@@ -77,20 +78,23 @@ public class BumblezoneClient {
         event.enqueueWork(() -> {
             registerRenderLayers();
             registerItemProperties();
+            registerScreens();
 
             if(BzClientConfigs.enableAltBeeSkinRenderer.get()) {
                 //noinspection unchecked cast
                 BeeVariantRenderer.OLD_BEE_RENDER_FACTORY = (EntityRendererProvider<Bee>)RenderingRegistryAccessor.getEntityRenderers().get(EntityType.BEE);
                 EntityRenderers.register(EntityType.BEE, BeeVariantRenderer::new);
             }
-
-            MenuScreens.register(BzMenuTypes.STRICT_9x1.get(), StrictChestScreen::new);
-            MenuScreens.register(BzMenuTypes.STRICT_9x2.get(), StrictChestScreen::new);
-            MenuScreens.register(BzMenuTypes.STRICT_9x3.get(), StrictChestScreen::new);
-            MenuScreens.register(BzMenuTypes.STRICT_9x4.get(), StrictChestScreen::new);
-            MenuScreens.register(BzMenuTypes.STRICT_9x5.get(), StrictChestScreen::new);
-            MenuScreens.register(BzMenuTypes.STRICT_9x6.get(), StrictChestScreen::new);
         });
+    }
+
+    private static void registerScreens() {
+        MenuScreens.register(BzMenuTypes.STRICT_9x1.get(), StrictChestScreen::new);
+        MenuScreens.register(BzMenuTypes.STRICT_9x2.get(), StrictChestScreen::new);
+        MenuScreens.register(BzMenuTypes.STRICT_9x3.get(), StrictChestScreen::new);
+        MenuScreens.register(BzMenuTypes.STRICT_9x4.get(), StrictChestScreen::new);
+        MenuScreens.register(BzMenuTypes.STRICT_9x5.get(), StrictChestScreen::new);
+        MenuScreens.register(BzMenuTypes.STRICT_9x6.get(), StrictChestScreen::new);
     }
 
     private static void registerItemProperties() {
