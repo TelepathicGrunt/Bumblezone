@@ -1,3 +1,9 @@
+### **(V.6.2.1 Changes) (1.19.2 Minecraft)**
+
+##### Mod Compat:
+Improved Forge REI compatibility.
+
+
 ### **(V.6.2.0 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
