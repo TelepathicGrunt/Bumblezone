@@ -13,6 +13,8 @@ mod_menu = "4.0.6"
 fake_player = "0.5.0"
 cardinal = "5.0.1"
 rei = "9.1.530"
+architectury = "6.2.43"
+cloth_config = "8.0.75"
 emi = "0.3.4+1.19"
 
 [libraries]

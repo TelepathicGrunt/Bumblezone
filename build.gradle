@@ -107,11 +107,11 @@ dependencies {
 		exclude(group: "net.fabricmc.fabric-api")
 		exclude(group: "net.fabricmc", module: "fabric-loader")
 	}
-	modRuntimeOnly ("dev.architectury:architectury-fabric:6.2.43") {
+	modRuntimeOnly ("dev.architectury:architectury-fabric:${libs.versions.architectury.get()}") {
 		exclude(group: "net.fabricmc.fabric-api")
 		exclude(group: "net.fabricmc", module: "fabric-loader")
 	}
-	modRuntimeOnly ("me.shedaniel.cloth:cloth-config-fabric:8.0.75") {
+	modRuntimeOnly ("me.shedaniel.cloth:cloth-config-fabric:${libs.versions.cloth.config.get()}") {
 		exclude(group: "net.fabricmc.fabric-api")
 		exclude(group: "net.fabricmc", module: "fabric-loader")
 	}
