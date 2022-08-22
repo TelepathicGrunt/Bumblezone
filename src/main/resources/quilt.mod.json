@@ -26,7 +26,8 @@
       "modmenu": "com.telepathicgrunt.the_bumblezone.configs.ModMenuConfig",
       "cardinal-components-entity": "com.telepathicgrunt.the_bumblezone.Bumblezone",
       "rei_client": "com.telepathicgrunt.the_bumblezone.modcompat.REICompat",
-      "emi": [ "com.telepathicgrunt.the_bumblezone.modcompat.EMICompat" ]
+      "emi": [ "com.telepathicgrunt.the_bumblezone.modcompat.EMICompat" ],
+      "jei_mod_plugin": [ "com.telepathicgrunt.the_bumblezone.modcompat.JEIIntegration" ]
     },
     "depends": [
       {

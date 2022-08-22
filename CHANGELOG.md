@@ -1,3 +1,14 @@
+### **(V.6.2.1 Changes) (1.19.2 Minecraft)**
+
+##### Servers:
+Fixed issue where clients could not connect to server. Was handling the dynamic recipe packet writing incorrectly.
+
+##### Mod Compat:
+Added some support with Fabric JEI. (Fluids will not have extra info however at the moment due to technical issues.)
+
+Also forgot to mentioned in last changelog, EMI mod is also supported a bit with Bumblezone. Lmk if there's any issues.
+
+
 ### **(V.6.2.0 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
