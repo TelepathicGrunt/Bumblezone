@@ -389,12 +389,12 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
                 ingredient.toNetwork(buffer);
             }
 
-            buffer.writeInt(recipe.maxAllowedPotions);
+            buffer.writeVarInt(recipe.maxAllowedPotions);
             buffer.writeBoolean(recipe.allowNormalPotions);
             buffer.writeBoolean(recipe.allowSplashPotions);
             buffer.writeBoolean(recipe.allowLingeringPotions);
-            buffer.writeInt(recipe.maxLevelCap);
-            buffer.writeInt(recipe.outputCount);
+            buffer.writeVarInt(recipe.maxLevelCap);
+            buffer.writeVarInt(recipe.outputCount);
         }
     }
 }

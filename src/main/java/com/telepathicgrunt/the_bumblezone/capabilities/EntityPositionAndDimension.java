@@ -59,9 +59,12 @@ public class EntityPositionAndDimension implements INBTSerializable<CompoundTag>
 		//grabs past dimension resource location and tries to get that dimension from the registry
 		String namespace = nbtTag.getString("PreviousDimensionNamespace");
 		String path = nbtTag.getString("PreviousDimensionPath");
-		ResourceLocation storedDimension = new ResourceLocation(namespace, path);
-		if(storedDimension.toString().equals("minecraft:")) {
+		ResourceLocation storedDimension;
+		if(path.trim().isEmpty()) {
 			storedDimension = new ResourceLocation("minecraft", "overworld");
+		}
+		else {
+			storedDimension = new ResourceLocation(namespace, path);
 		}
 
 		Vec3 storedPositionNonBZ = null;

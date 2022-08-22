@@ -124,7 +124,12 @@ public class IncenseCandleBlockEntity extends BlockEntity {
     public void load(CompoundTag compoundTag) {
         super.load(compoundTag);
         this.color = compoundTag.contains(COLOR_TAG) ? compoundTag.getInt(COLOR_TAG) : DEFAULT_COLOR;
-        this.mobEffect = compoundTag.contains(STATUS_EFFECT_TAG) ? Registry.MOB_EFFECT.getOptional(new ResourceLocation(compoundTag.getString(STATUS_EFFECT_TAG))).orElse(null) : null;
+        if (compoundTag.contains(STATUS_EFFECT_TAG) && !compoundTag.getString(STATUS_EFFECT_TAG).trim().equals("")) {
+            this.mobEffect = Registry.MOB_EFFECT.getOptional(new ResourceLocation(compoundTag.getString(STATUS_EFFECT_TAG))).orElse(null);
+        }
+        else {
+            this.mobEffect = null;
+        }
         this.amplifier = compoundTag.contains(AMPLIFIER_TAG) ? compoundTag.getInt(AMPLIFIER_TAG) : 0;
         this.maxDuration = compoundTag.contains(MAX_DURATION_TAG) ? compoundTag.getInt(MAX_DURATION_TAG) : DEFAULT_MAX_DURATION;
         this.currentDuration = compoundTag.contains(CURRENT_DURATION_TAG) ? compoundTag.getInt(CURRENT_DURATION_TAG) : 0;

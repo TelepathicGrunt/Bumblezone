@@ -1,5 +1,8 @@
 ### **(V.6.2.1 Changes) (1.19.2 Minecraft)**
 
+##### Servers:
+Fixed issue where clients could not connect to server. Was handling the dynamic recipe packet writing incorrectly.
+
 ##### Mod Compat:
 Improved Forge REI compatibility.
 
