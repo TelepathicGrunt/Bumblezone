@@ -103,6 +103,7 @@ dependencies {
 
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${libs.versions.rei.get()}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${libs.versions.rei.get()}"
+	/*
 	modRuntimeOnly ("me.shedaniel:RoughlyEnoughItems-fabric:${libs.versions.rei.get()}") {
 		exclude(group: "net.fabricmc.fabric-api")
 		exclude(group: "net.fabricmc", module: "fabric-loader")
@@ -115,6 +116,7 @@ dependencies {
 		exclude(group: "net.fabricmc.fabric-api")
 		exclude(group: "net.fabricmc", module: "fabric-loader")
 	}
+	*/
 
 	//modCompileOnlyApi "mezz.jei:jei-${jei_mc}-common-api:${jei}"
 	//modCompileOnlyApi "mezz.jei:jei-${jei_mc}-fabric-api:${jei}"
