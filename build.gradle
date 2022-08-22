@@ -118,10 +118,18 @@ dependencies {
 	}
 	*/
 
-	//modCompileOnlyApi "mezz.jei:jei-${jei_mc}-common-api:${jei}"
-	//modCompileOnlyApi "mezz.jei:jei-${jei_mc}-fabric-api:${jei}"
-	//modRuntimeOnly "mezz.jei:jei-${jei_mc}-common:${jei}"
-	//modRuntimeOnly "mezz.jei:jei-${jei_mc}-fabric:${jei}"
+	modCompileOnlyApi "mezz.jei:jei-${libs.versions.jeimc.get()}-common-api:${libs.versions.jei.get()}"
+	modCompileOnlyApi "mezz.jei:jei-${libs.versions.jeimc.get()}-fabric-api:${libs.versions.jei.get()}"
+	/*
+	modRuntimeOnly ("mezz.jei:jei-${libs.versions.jeimc.get()}-common-api:${libs.versions.jei.get()}") {
+		exclude(group: "net.fabricmc.fabric-api")
+		exclude(group: "net.fabricmc", module: "fabric-loader")
+	}
+	modRuntimeOnly ("mezz.jei:jei-${libs.versions.jeimc.get()}-fabric-api:${libs.versions.jei.get()}") {
+		exclude(group: "net.fabricmc.fabric-api")
+		exclude(group: "net.fabricmc", module: "fabric-loader")
+	}
+	*/
 
 	//modCompileOnly "curse.maven:friends_and_foes-551364:3725313"
 	//modCompileOnly "curse.maven:bee_better-351600:3726160"

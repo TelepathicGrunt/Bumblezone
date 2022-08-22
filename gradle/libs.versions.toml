@@ -16,6 +16,8 @@ rei = "9.1.530"
 architectury = "6.2.43"
 cloth_config = "8.0.75"
 emi = "0.3.4+1.19"
+jei = "11.2.0.256"
+jeimc = "1.19.2"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
