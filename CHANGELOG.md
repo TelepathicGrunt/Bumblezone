@@ -1,3 +1,9 @@
+### **(V.6.2.2 Changes) (1.19.2 Minecraft)**
+
+##### Mod Compat:
+Got full support of Fabric JEI. (Fluids will now have extra info)
+
+
 ### **(V.6.2.1 Changes) (1.19.2 Minecraft)**
 
 ##### Servers:

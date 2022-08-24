@@ -118,10 +118,10 @@ public class JEIIntegration implements IModPlugin {
     }
 
     private static void addInfo(IRecipeRegistration registration, Fluid fluid) {
-//        registration.addIngredientInfo(
-//                new FluidStack(fluid, 1),
-//                FabricTypes.FLUID_STACK,
-//                Component.translatable(Bumblezone.MODID + "." + Registry.FLUID.getKey(fluid).getPath() + ".jei_description"));
+        registration.addIngredientInfo(
+                new FluidStack(fluid, 1),
+                FabricTypes.FLUID_STACK,
+                Component.translatable(Bumblezone.MODID + "." + Registry.FLUID.getKey(fluid).getPath() + ".jei_description"));
     }
 
     private static void registerExtraRecipes(Recipe<?> baseRecipe, IRecipeRegistration registration) {
@@ -131,30 +131,30 @@ public class JEIIntegration implements IModPlugin {
         }
     }
 
-//    private static class FluidStack implements IJeiFluidIngredient {
-//
-//        private final Fluid fluid;
-//        private final int count;
-//
-//        private FluidStack(Fluid fluid, int count) {
-//            this.fluid = fluid;
-//            this.count = count;
-//        }
-//
-//
-//        @Override
-//        public Fluid getFluid() {
-//            return fluid;
-//        }
-//
-//        @Override
-//        public long getAmount() {
-//            return count;
-//        }
-//
-//        @Override
-//        public Optional<CompoundTag> getTag() {
-//            return Optional.empty();
-//        }
-//    }
+    private static class FluidStack implements IJeiFluidIngredient {
+
+        private final Fluid fluid;
+        private final int count;
+
+        private FluidStack(Fluid fluid, int count) {
+            this.fluid = fluid;
+            this.count = count;
+        }
+
+
+        @Override
+        public Fluid getFluid() {
+            return fluid;
+        }
+
+        @Override
+        public long getAmount() {
+            return count;
+        }
+
+        @Override
+        public Optional<CompoundTag> getTag() {
+            return Optional.empty();
+        }
+    }
 }
