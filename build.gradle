@@ -118,14 +118,10 @@ dependencies {
 	}
 	*/
 
-	modCompileOnlyApi "mezz.jei:jei-${libs.versions.jeimc.get()}-common-api:${libs.versions.jei.get()}"
-	modCompileOnlyApi "mezz.jei:jei-${libs.versions.jeimc.get()}-fabric-api:${libs.versions.jei.get()}"
+	modCompileOnlyApi "curse.maven:jei-238222:3944625"
+	//modCompileOnlyApi "mezz.jei:jei-${libs.versions.jeimc.get()}-fabric:${libs.versions.jei.get()}"
 	/*
-	modRuntimeOnly ("mezz.jei:jei-${libs.versions.jeimc.get()}-common-api:${libs.versions.jei.get()}") {
-		exclude(group: "net.fabricmc.fabric-api")
-		exclude(group: "net.fabricmc", module: "fabric-loader")
-	}
-	modRuntimeOnly ("mezz.jei:jei-${libs.versions.jeimc.get()}-fabric-api:${libs.versions.jei.get()}") {
+	modRuntimeOnly ("mezz.jei:jei-${libs.versions.jeimc.get()}-fabric:${libs.versions.jei.get()}") {
 		exclude(group: "net.fabricmc.fabric-api")
 		exclude(group: "net.fabricmc", module: "fabric-loader")
 	}
