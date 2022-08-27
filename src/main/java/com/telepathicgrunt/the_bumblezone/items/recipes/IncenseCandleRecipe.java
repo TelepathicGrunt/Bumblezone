@@ -7,6 +7,8 @@ import com.telepathicgrunt.the_bumblezone.blocks.blockentities.IncenseCandleBloc
 import com.telepathicgrunt.the_bumblezone.mixin.containers.ShapedRecipeAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
@@ -14,6 +16,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
@@ -25,11 +28,13 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 import net.minecraftforge.common.util.RecipeMatcher;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -133,7 +138,8 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
         }
 
         HashSet<MobEffect> setPicker = new HashSet<>(effects);
-        chosenEffect = setPicker.stream().toList().get(new Random().nextInt(setPicker.size()));
+        List<MobEffect> filteredMobEffects = setPicker.stream().filter(e -> !Objects.requireNonNull(ForgeRegistries.MOB_EFFECTS.tags()).getTag(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS).contains(e)).toList();
+        chosenEffect = filteredMobEffects.get(new Random().nextInt(filteredMobEffects.size()));
         if (chosenEffect == null) {
             return getResultStack(this.outputCount);
         }
@@ -234,6 +240,7 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
     private boolean matches(CraftingContainer craftingInventory, int width, int height, boolean mirrored) {
         int potionCount = 0;
         List<ItemStack> secondaryIngredientsFound = new ArrayList<>();
+        List<MobEffectInstance> mobEffects = new ObjectArrayList<>();
         for(int column = 0; column < craftingInventory.getWidth(); ++column) {
             for(int row = 0; row < craftingInventory.getHeight(); ++row) {
                 ItemStack itemStack = craftingInventory.getItem(column + row * craftingInventory.getWidth());
@@ -265,7 +272,9 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
                                 return false;
                             }
 
-                            if(PotionUtils.getMobEffects(itemStack).isEmpty()) {
+                            List<MobEffectInstance> currentMobEffects = PotionUtils.getMobEffects(itemStack);
+                            mobEffects.addAll(currentMobEffects);
+                            if(currentMobEffects.isEmpty()) {
                                 return false;
                             }
                             potionCount++;
@@ -282,6 +291,10 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
                     return false;
                 }
             }
+        }
+
+        if (mobEffects.stream().allMatch(e -> Objects.requireNonNull(ForgeRegistries.MOB_EFFECTS.tags()).getTag(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS).contains(e.getEffect()))) {
+            return false;
         }
 
         int[] matches = RecipeMatcher.findMatches(secondaryIngredientsFound, this.shapelessRecipeItems);

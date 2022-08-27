@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -15,10 +16,12 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -28,6 +31,10 @@ public class FakeIncenseCandleRecipeCreator {
         List<CraftingRecipe> extraRecipes = new ArrayList<>();
         int currentRecipe = 0;
         for (Potion potion : Registry.POTION) {
+            if (potion.getEffects().stream().allMatch(e -> Objects.requireNonNull(ForgeRegistries.MOB_EFFECTS.tags()).getTag(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS).contains(e.getEffect()))) {
+                continue;
+            }
+
             addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.POTION.getDefaultInstance(), currentRecipe));
             currentRecipe++;
             addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.SPLASH_POTION.getDefaultInstance(), currentRecipe));
