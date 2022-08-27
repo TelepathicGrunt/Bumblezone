@@ -1,3 +1,9 @@
+### **(V.6.2.2 Changes) (1.19.2 Minecraft)**
+
+##### Items:
+Stinger Spear now can be enchanted with Smite.
+
+
 ### **(V.6.2.1 Changes) (1.19.2 Minecraft)**
 
 ##### Servers:

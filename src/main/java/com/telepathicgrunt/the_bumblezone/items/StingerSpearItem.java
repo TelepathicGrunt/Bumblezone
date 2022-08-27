@@ -140,6 +140,10 @@ public class StingerSpearItem extends TridentItem {
             return false;
         }
 
+        if (enchantment == Enchantments.SMITE) {
+            return true;
+        }
+
         return enchantment.category.canEnchant(stack.getItem());
     }
 }
