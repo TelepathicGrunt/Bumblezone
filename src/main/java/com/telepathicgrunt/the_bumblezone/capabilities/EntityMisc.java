@@ -262,7 +262,7 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 		}
 	}
 
-	private static boolean rootAdvancementDone(ServerPlayer serverPlayer) {
+	public static boolean rootAdvancementDone(ServerPlayer serverPlayer) {
 		Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT);
 		Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getAdvancements();
 		return advancement != null &&

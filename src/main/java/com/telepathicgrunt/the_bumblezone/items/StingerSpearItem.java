@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
@@ -124,7 +125,11 @@ public class StingerSpearItem extends TridentItem {
 
         itemStack.hurtAndBreak(durabilityDecrease, user, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 
-        if(user instanceof ServerPlayer serverPlayer && enemy.getType() == EntityType.WITHER && enemy.isDeadOrDying()) {
+        if(user instanceof ServerPlayer serverPlayer &&
+            enemy.getType() == EntityType.WITHER &&
+            enemy.isDeadOrDying() &&
+            EntityMisc.rootAdvancementDone(serverPlayer))
+        {
             BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.trigger(serverPlayer);
         }
 

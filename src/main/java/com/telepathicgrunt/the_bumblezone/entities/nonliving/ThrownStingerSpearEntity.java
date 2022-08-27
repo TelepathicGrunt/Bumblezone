@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
@@ -131,7 +132,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
                 BzCriterias.STINGER_SPEAR_LONG_RANGE_KILL_TRIGGER.trigger(serverPlayer);
             }
 
-            if (entity.getType() == EntityType.WITHER) {
+            if (entity.getType() == EntityType.WITHER && EntityMisc.rootAdvancementDone(serverPlayer)) {
                 BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.trigger(serverPlayer);
             }
         }
