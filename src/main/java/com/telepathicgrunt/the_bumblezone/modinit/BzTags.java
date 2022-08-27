@@ -4,8 +4,10 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
@@ -60,4 +62,6 @@ public class BzTags {
     public static final TagKey<Structure> HONEY_COMPASS_LOCATING = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "honey_compass_locating"));
     public static final TagKey<Structure> HONEY_COMPASS_THRONE_LOCATING = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "honey_compass_throne_locating"));
     public static final TagKey<Structure> BEE_QUEEN_MINING_FATIGUE = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "bee_queen_mining_fatigue"));
+
+    public static final TagKey<MobEffect> BLACKLISTED_INCENSE_CANDLE_EFFECTS = TagKey.create(Registry.MOB_EFFECT_REGISTRY, new ResourceLocation(Bumblezone.MODID, "blacklisted_incense_candle_effects"));
 }

@@ -60,7 +60,8 @@ public class EnchantmentHelperMixin {
     {
         if (CarpenterBeeBoots.canBeEnchanted(stack, enchantment) ||
             BeeCannon.canBeEnchanted(stack, enchantment) ||
-            CrystalCannon.canBeEnchanted(stack, enchantment)
+            CrystalCannon.canBeEnchanted(stack, enchantment) ||
+            StingerSpearItem.canBeEnchanted(stack, enchantment)
         ) {
             if ((!enchantment.isTreasureOnly() || treasure) && enchantment.isDiscoverable()) {
                 for(int currentLevel = enchantment.getMaxLevel(); currentLevel > enchantment.getMinLevel() - 1; --currentLevel) {
