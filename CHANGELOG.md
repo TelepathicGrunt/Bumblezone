@@ -3,6 +3,10 @@
 ##### Items:
 Stinger Spear now can be enchanted with Smite.
 
+Added Mob Effect tag called `the_bumblezone:blacklisted_incense_candle_effects` which allows you to specify what status effects
+ that Incense Candles cannot be crafted with. The datapack would have the tag at this spot in order to work.
+ `\data\the_bumblezone\tags\mob_effect\blacklisted_incense_candle_effects.json`
+
 ##### Advancements:
 Fixed Peak Inefficiency Advancement being unabled to be completed. 
 

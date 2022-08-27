@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -29,6 +30,10 @@ public class FakeIncenseCandleRecipeCreator {
         List<CraftingRecipe> extraRecipes = new ArrayList<>();
         int currentRecipe = 0;
         for (Potion potion : Registry.POTION) {
+            if (potion.getEffects().stream().allMatch(e -> Registry.MOB_EFFECT.getHolderOrThrow(Registry.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS))) {
+                continue;
+            }
+
             addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.POTION.getDefaultInstance(), currentRecipe));
             currentRecipe++;
             addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.SPLASH_POTION.getDefaultInstance(), currentRecipe));

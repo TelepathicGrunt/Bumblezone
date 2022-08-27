@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.blockentities.IncenseCandleBloc
 import com.telepathicgrunt.the_bumblezone.mixin.containers.ShapedRecipeAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.chars.Char2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2CharOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -17,15 +18,14 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -137,7 +138,8 @@ public class IncenseCandleRecipe implements CraftingRecipe, QuiltRecipeSerialize
         }
 
         HashSet<MobEffect> setPicker = new HashSet<>(effects);
-        chosenEffect = setPicker.stream().toList().get(new Random().nextInt(setPicker.size()));
+        List<MobEffect> filteredMobEffects = setPicker.stream().filter(e -> !Registry.MOB_EFFECT.getHolderOrThrow(Registry.MOB_EFFECT.getResourceKey(e).orElseThrow()).is(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS)).toList();
+        chosenEffect = filteredMobEffects.get(new Random().nextInt(filteredMobEffects.size()));
         if (chosenEffect == null) {
             return getResultStack(this.outputCount);
         }
@@ -236,6 +238,7 @@ public class IncenseCandleRecipe implements CraftingRecipe, QuiltRecipeSerialize
     private boolean matches(CraftingContainer craftingInventory, int width, int height, boolean mirrored) {
         int potionCount = 0;
         List<ItemStack> stackList = new ObjectArrayList<>();
+        List<MobEffectInstance> mobEffects = new ObjectArrayList<>();
         for(int column = 0; column < craftingInventory.getWidth(); ++column) {
             for(int row = 0; row < craftingInventory.getHeight(); ++row) {
                 ItemStack itemStack = craftingInventory.getItem(column + row * craftingInventory.getWidth());
@@ -267,7 +270,9 @@ public class IncenseCandleRecipe implements CraftingRecipe, QuiltRecipeSerialize
                                 return false;
                             }
 
-                            if(PotionUtils.getMobEffects(itemStack).isEmpty()) {
+                            List<MobEffectInstance> currentMobEffects = PotionUtils.getMobEffects(itemStack);
+                            mobEffects.addAll(currentMobEffects);
+                            if(currentMobEffects.isEmpty()) {
                                 return false;
                             }
                             potionCount++;
@@ -284,6 +289,10 @@ public class IncenseCandleRecipe implements CraftingRecipe, QuiltRecipeSerialize
                     return false;
                 }
             }
+        }
+
+        if (mobEffects.stream().allMatch(e -> Registry.MOB_EFFECT.getHolderOrThrow(Registry.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS))) {
+            return false;
         }
 
         boolean shapelessMatched = shapelessIngredientMatched(stackList);
