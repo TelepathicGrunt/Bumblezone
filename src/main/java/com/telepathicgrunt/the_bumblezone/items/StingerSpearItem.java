@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.telepathicgrunt.the_bumblezone.components.MiscComponent;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
@@ -15,6 +16,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
@@ -124,6 +126,15 @@ public class StingerSpearItem extends TridentItem {
         }
 
         itemStack.hurtAndBreak(durabilityDecrease, user, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+
+        if(user instanceof ServerPlayer serverPlayer &&
+            enemy.getType() == EntityType.WITHER &&
+            enemy.isDeadOrDying() &&
+            MiscComponent.rootAdvancementDone(serverPlayer))
+        {
+            BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.trigger(serverPlayer);
+        }
+
         return true;
     }
 
@@ -133,5 +144,9 @@ public class StingerSpearItem extends TridentItem {
     public static boolean isInvalidForStingerSpear(ItemStack stack, Enchantment enchantment) {
         return stack.getItem() == BzItems.STINGER_SPEAR &&
                 (enchantment == Enchantments.CHANNELING || enchantment == Enchantments.RIPTIDE);
+    }
+
+    public static boolean canBeEnchanted(ItemStack stack, Enchantment enchantment) {
+        return stack.getItem() == BzItems.STINGER_SPEAR && enchantment == Enchantments.SMITE;
     }
 }

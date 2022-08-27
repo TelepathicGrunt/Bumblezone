@@ -25,6 +25,9 @@ public class EnchantmentMixin {
         else if (StingerSpearItem.isInvalidForStingerSpear(stack, ((Enchantment)(Object)this))) {
             cir.setReturnValue(false);
         }
+        else if (StingerSpearItem.canBeEnchanted(stack, ((Enchantment)(Object)this))) {
+            cir.setReturnValue(true);
+        }
         else if (CarpenterBeeBoots.canBeEnchanted(stack, ((Enchantment)(Object)this))) {
             cir.setReturnValue(true);
         }
