@@ -1,3 +1,14 @@
+### **(V.6.1.7 maintenance bug-fixes. No more content updates) (1.19.2 Minecraft)**
+
+##### Items:
+Stinger Spear now can be enchanted with Smite.
+
+##### Advancements:
+Fixed Peak Inefficiency Advancement being unabled to be completed.
+
+Fixed Intimidation and Peak Inefficiency Advancements able to be triggered without The Queen's Desire quest started.
+
+
 ### **(V.6.1.6 maintenance bug-fixes. No more content updates) (1.19.2 Minecraft)**
 
 ##### Misc:
