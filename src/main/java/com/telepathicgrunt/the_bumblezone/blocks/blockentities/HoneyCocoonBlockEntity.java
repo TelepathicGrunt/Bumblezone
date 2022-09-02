@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCocoon;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestMenu;
@@ -114,7 +115,7 @@ public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity imp
 
         if (this.level != null) {
             BlockState blockState = this.level.getBlockState(this.worldPosition);
-            if (blockState.getValue(HoneyCocoon.WATERLOGGED)) {
+            if (blockState.is(BzBlocks.HONEY_COCOON) && blockState.getValue(HoneyCocoon.WATERLOGGED)) {
                 this.level.scheduleTick(this.worldPosition, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickDelay(this.level));
                 this.level.scheduleTick(this.worldPosition, blockState.getBlock(), HoneyCocoon.waterDropDelay);
             }
