@@ -16,6 +16,10 @@ Fixed honey_bucket_brood advancement triggering when feeding Honeycomb Brood Blo
 ##### Essense:
 Fixed Essence of the Bees effect not preventing wrath effect when mining Honey Blocks.
 
+##### Fluids:
+Removed the ability for pollinated bees being able to turn falling non-source block Honey Fluid into fluid source blocks.
+ The pollinated bees can still transform non-source Honey Fluid that is not falling (falling property false) into fluid source blocks.
+
 ##### Config:
 Fixed some config comments
 
