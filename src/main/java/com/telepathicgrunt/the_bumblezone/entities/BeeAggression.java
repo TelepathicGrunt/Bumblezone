@@ -72,7 +72,7 @@ public class BeeAggression {
     //if player mines an angerable tagged block, bees gets very mad...
     public static void blockBreakAnger(Player player, Block block) {
         if (player instanceof ServerPlayer serverPlayer &&
-            EssenceOfTheBees.hasEssence(serverPlayer) &&
+            !EssenceOfTheBees.hasEssence(serverPlayer) &&
             block.defaultBlockState().is(BzTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED))
         {
             angerBees(player);
@@ -82,7 +82,7 @@ public class BeeAggression {
     //if player picks up an angerable tagged item, bees gets very mad...
     public static void itemPickupAnger(Player player, Item item) {
         if (player instanceof ServerPlayer serverPlayer &&
-            EssenceOfTheBees.hasEssence(serverPlayer) &&
+            !EssenceOfTheBees.hasEssence(serverPlayer) &&
             item.getDefaultInstance().is(BzTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP))
         {
             angerBees(player);
@@ -111,6 +111,9 @@ public class BeeAggression {
                         false,
                         BzConfig.showWrathOfTheHiveParticles,
                         true));
+            }
+            else if (player instanceof ServerPlayer serverPlayer) {
+                BzCriterias.HONEY_PERMISSION_TRIGGER.trigger(serverPlayer);
             }
         }
     }
