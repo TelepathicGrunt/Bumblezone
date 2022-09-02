@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
@@ -59,7 +60,8 @@ public class FilledPorousHoneycomb extends Block {
                     !playerEntity.isSpectator() &&
                     BzBeeAggressionConfigs.aggressiveBees.get())
             {
-                if(!playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get()) &&
+                boolean hasProtection = playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
+                if(!hasProtection &&
                     playerEntity instanceof ServerPlayer serverPlayer &&
                     !EssenceOfTheBees.hasEssence(serverPlayer))
                 {
@@ -68,6 +70,10 @@ public class FilledPorousHoneycomb extends Block {
 
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
                     playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
+                }
+
+                if (hasProtection && playerEntity instanceof ServerPlayer serverPlayer) {
+                    BzCriterias.HONEY_PERMISSION_TRIGGER.trigger(serverPlayer);
                 }
             }
 

@@ -63,7 +63,7 @@ public class BeeAggression {
         BlockState blockState = event.getState();
 
         if (player instanceof ServerPlayer serverPlayer &&
-            EssenceOfTheBees.hasEssence(serverPlayer) &&
+            !EssenceOfTheBees.hasEssence(serverPlayer) &&
             blockState.is(BzTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED))
         {
             angerBees(player);
@@ -76,7 +76,7 @@ public class BeeAggression {
         ItemStack itemStack = event.getStack();
 
         if (player instanceof ServerPlayer serverPlayer &&
-            EssenceOfTheBees.hasEssence(serverPlayer) &&
+            !EssenceOfTheBees.hasEssence(serverPlayer) &&
             itemStack.is(BzTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP))
         {
             angerBees(player);
@@ -105,6 +105,9 @@ public class BeeAggression {
                         false,
                         BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(),
                         true));
+            }
+            else if (player instanceof ServerPlayer serverPlayer) {
+                BzCriterias.HONEY_PERMISSION_TRIGGER.trigger(serverPlayer);
             }
         }
     }

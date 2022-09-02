@@ -40,6 +40,7 @@ public class BzCriterias {
     public static final EntitySpecificTrigger EXTENDED_WRATH_OF_THE_HIVE_TRIGGER = new EntitySpecificTrigger(new ResourceLocation(Bumblezone.MODID, "extended_wrath_of_the_hive"));
     public static final GenericTrigger FALLING_ON_POLLEN_BLOCK_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "fall_onto_pollen_pile"));
     public static final ItemSpecificTrigger FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER = new ItemSpecificTrigger(new ResourceLocation(Bumblezone.MODID, "food_removed_wrath_of_the_hive"));
+    public static final GenericTrigger GETTING_PROTECTION_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "getting_protection"));
     public static final GenericTrigger HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings_flower_pollen"));
     public static final CounterTrigger HONEY_BOTTLE_DRANK_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bottle_drank"));
     public static final GenericTrigger HONEY_BUCKET_BEE_GROW_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bucket_bee_grow"));
@@ -50,6 +51,7 @@ public class BzCriterias {
     public static final GenericTrigger HONEY_COMPASS_USE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_compass_use"));
     public static final GenericTrigger HONEY_CRYSTAL_IN_WATER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_crystal_in_water"));
     public static final GenericTrigger HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_crystal_shield_block_ineffectively"));
+    public static final GenericTrigger HONEY_PERMISSION_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_permission"));
     public static final CounterTrigger HONEY_SLIME_BRED_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "honey_slime_bred"));
     public static final GenericTrigger HONEY_SLIME_CREATION_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_slime_creation"));
     public static final GenericTrigger HONEY_SLIME_HARVEST_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_slime_harvest"));
@@ -103,6 +105,7 @@ public class BzCriterias {
         CriteriaTriggers.register(EXTENDED_WRATH_OF_THE_HIVE_TRIGGER);
         CriteriaTriggers.register(FALLING_ON_POLLEN_BLOCK_TRIGGER);
         CriteriaTriggers.register(FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER);
+        CriteriaTriggers.register(GETTING_PROTECTION_TRIGGER);
         CriteriaTriggers.register(HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER);
         CriteriaTriggers.register(HONEY_BOTTLE_DRANK_TRIGGER);
         CriteriaTriggers.register(HONEY_BUCKET_BEE_GROW_TRIGGER);
@@ -113,6 +116,7 @@ public class BzCriterias {
         CriteriaTriggers.register(HONEY_COMPASS_USE_TRIGGER);
         CriteriaTriggers.register(HONEY_CRYSTAL_IN_WATER_TRIGGER);
         CriteriaTriggers.register(HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER);
+        CriteriaTriggers.register(HONEY_PERMISSION_TRIGGER);
         CriteriaTriggers.register(HONEY_SLIME_BRED_TRIGGER);
         CriteriaTriggers.register(HONEY_SLIME_CREATION_TRIGGER);
         CriteriaTriggers.register(HONEY_SLIME_HARVEST_TRIGGER);
