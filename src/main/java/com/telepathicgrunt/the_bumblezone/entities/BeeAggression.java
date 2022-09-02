@@ -9,6 +9,8 @@ import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -91,7 +93,11 @@ public class BeeAggression {
                 !player.isSpectator())
         {
             if(!player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
+                if (player instanceof ServerPlayer) {
+                    Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+                    player.displayClientMessage(message, true);
+                }
+
                 player.addEffect(new MobEffectInstance(
                         BzEffects.WRATH_OF_THE_HIVE.get(),
                         BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),
@@ -236,6 +242,11 @@ public class BeeAggression {
         StructureManager structureManager = ((ServerLevel)serverPlayer.level).structureManager();
         if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.WRATH_CAUSING).isValid()) {
             if (!serverPlayer.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
+                if (!serverPlayer.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
+                    Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+                    serverPlayer.displayClientMessage(message, true);
+                }
+
                 serverPlayer.addEffect(new MobEffectInstance(
                         BzEffects.WRATH_OF_THE_HIVE.get(),
                         BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),

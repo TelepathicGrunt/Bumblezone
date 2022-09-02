@@ -80,13 +80,13 @@ public class BzDimensionConfigs{
 
             enableEntranceTeleportation = builder
                     .comment(" \n-----------------------------------------------------\n",
-                            " Allow Bumblezone mod to handle teleporting out of Bumblezone dimension.\n")
+                            " Allow Bumblezone mod to handle teleporting into the Bumblezone dimension.\n")
                     .translation("the_bumblezone.config.enableentranceteleportation")
                     .define("enableEntranceTeleportation", true);
 
             enableExitTeleportation = builder
                     .comment(" \n-----------------------------------------------------\n",
-                            " Allow Bumblezone mod to handle teleporting into the Bumblezone dimension.\n")
+                            " Allow Bumblezone mod to handle teleporting out of the Bumblezone dimension.\n")
                     .translation("the_bumblezone.config.enableexitteleportation")
                     .define("enableExitTeleportation", true);
 
