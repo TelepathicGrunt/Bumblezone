@@ -1,5 +1,9 @@
 ### **(V.6.2.3 Changes) (1.19.2 Minecraft)**
 
+##### Blocks:
+Fixed internal crash when mining Honey Cocoon block which was preventing it from dropping as an item when mined.
+ Now it should drop as an item properly when mined without printing an exception to the logs.
+
 ##### Effects:
 Getting preventable Wrath of the Hive effect will display a message saying you lacked Protection of the Hive to prevent it.
 
