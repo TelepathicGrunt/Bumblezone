@@ -10,7 +10,7 @@ Getting preventable Wrath of the Hive effect will display a message saying you l
 ##### Advancements:
 Added two new advancements to help introduce Protection of the Hive effect.
 
-Fixed honey_bucket_brood advancement triggering when feeding Honeycomb Brood Blocks anything. 
+Fixed `honey_bucket_brood` advancement triggering when feeding Honeycomb Brood Blocks anything. 
  Now it should only trigger when feeding Honey Buckets/Royal Jelly Buckets to Honeycomb Brood Blocks.
 
 ##### Essense:
