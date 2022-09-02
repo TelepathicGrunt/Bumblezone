@@ -1,3 +1,26 @@
+### **(V.6.2.4 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Fixed internal crash when mining Honey Cocoon block which was preventing it from dropping as an item when mined.
+ Now it should drop as an item properly when mined without printing an exception to the logs.
+
+##### Effects:
+Getting preventable Wrath of the Hive effect will display a message saying you lacked Protection of the Hive to prevent it.
+
+##### Advancements:
+Added two new advancements to help introduce Protection of the Hive effect.
+
+Fixed honey_bucket_brood advancement triggering when feeding Honeycomb Brood Blocks anything.
+ Now it should only trigger when feeding Honey Buckets/Royal Jelly Buckets to Honeycomb Brood Blocks.
+
+##### Essense:
+Fixed Essence of the Bees effect not preventing wrath effect when mining Honey Blocks.
+
+##### Fluids:
+Removed the ability for pollinated bees being able to turn falling non-source block Honey Fluid into fluid source blocks.
+ The pollinated bees can still transform non-source Honey Fluid that is not falling (falling property false) into fluid source blocks.
+
+
 ### **(V.6.2.3 Changes) (1.19.2 Minecraft)**
 
 ##### Items:

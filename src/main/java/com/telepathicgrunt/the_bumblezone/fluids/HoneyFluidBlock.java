@@ -124,7 +124,11 @@ public class HoneyFluidBlock extends LiquidBlock {
     public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
         double verticalSpeedDeltaLimit = 0.01D;
         if (entity instanceof Bee beeEntity) {
-            if(beeEntity.hasNectar() && !state.getFluidState().isSource()) {
+            if(state.is(BzFluids.HONEY_FLUID_BLOCK) &&
+                beeEntity.hasNectar() &&
+                !state.getFluidState().isSource() &&
+                !state.getFluidState().getValue(FALLING))
+            {
                 ((BeeEntityInvoker)entity).thebumblezone_callSetHasNectar(false);
                 world.setBlock(position, BzFluids.HONEY_FLUID.defaultFluidState().createLegacyBlock(), 3);
             }

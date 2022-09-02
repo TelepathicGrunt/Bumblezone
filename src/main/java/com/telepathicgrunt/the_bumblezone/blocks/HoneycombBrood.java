@@ -164,6 +164,10 @@ public class HoneycombBrood extends ProperFacingBlock {
                 if (successfulGrowth && random.nextFloat() < 0.30F) {
                     if(!playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE)) {
                         playerEntity.addEffect(new MobEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE, (int) (BzConfig.howLongProtectionOfTheHiveLasts * 0.75f), 1, false, false,  true));
+
+                        if (playerEntity instanceof ServerPlayer serverPlayer) {
+                            BzCriterias.GETTING_PROTECTION_TRIGGER.trigger(serverPlayer);
+                        }
                     }
                 }
 
@@ -176,7 +180,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                     }
                     else {
                         int newStage = stage + 1;
-                        if (itemstack.is(BzTags.HONEY_BUCKETS) || itemstack.is(BzTags.ROYAL_JELLY_BUCKETS) ) {
+                        if (itemstack.is(BzTags.HONEY_BUCKETS) || itemstack.is(BzTags.ROYAL_JELLY_BUCKETS)) {
                             newStage = 3;
                             if (!world.isClientSide()) {
                                 Direction facing = thisBlockState.getValue(FACING).getOpposite();
@@ -197,10 +201,10 @@ public class HoneycombBrood extends ProperFacingBlock {
                                         random.nextFloat() * 0.5 - 0.25f,
                                         random.nextFloat() * 0.4 + 0.2f);
                             }
-                        }
 
-                        if(playerEntity instanceof ServerPlayer) {
-                            BzCriterias.HONEY_BUCKET_BROOD_TRIGGER.trigger((ServerPlayer) playerEntity);
+                            if(playerEntity instanceof ServerPlayer) {
+                                BzCriterias.HONEY_BUCKET_BROOD_TRIGGER.trigger((ServerPlayer) playerEntity);
+                            }
                         }
 
                         world.setBlockAndUpdate(position, thisBlockState.setValue(STAGE, newStage));

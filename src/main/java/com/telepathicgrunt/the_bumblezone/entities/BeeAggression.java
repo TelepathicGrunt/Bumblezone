@@ -9,7 +9,9 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -69,25 +71,19 @@ public class BeeAggression {
 
     //if player mines an angerable tagged block, bees gets very mad...
     public static void blockBreakAnger(Player player, Block block) {
-        if (player instanceof ServerPlayer serverPlayer &&
-            EssenceOfTheBees.hasEssence(serverPlayer) &&
-            block.defaultBlockState().is(BzTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED))
-        {
-            angerBees(player);
+        if (player instanceof ServerPlayer serverPlayer && block.defaultBlockState().is(BzTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED)) {
+            angerBees(serverPlayer);
         }
     }
 
     //if player picks up an angerable tagged item, bees gets very mad...
     public static void itemPickupAnger(Player player, Item item) {
-        if (player instanceof ServerPlayer serverPlayer &&
-            EssenceOfTheBees.hasEssence(serverPlayer) &&
-            item.getDefaultInstance().is(BzTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP))
-        {
-            angerBees(player);
+        if (player instanceof ServerPlayer serverPlayer && item.getDefaultInstance().is(BzTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP)) {
+            angerBees(serverPlayer);
         }
     }
 
-    private static void angerBees(Player player) {
+    private static void angerBees(ServerPlayer player) {
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
         if ((player.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
@@ -97,14 +93,21 @@ public class BeeAggression {
                 !player.isSpectator())
         {
             if(!player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
-                //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
-                player.addEffect(new MobEffectInstance(
-                        BzEffects.WRATH_OF_THE_HIVE,
-                        BzConfig.howLongWrathOfTheHiveLasts,
-                        2,
-                        false,
-                        BzConfig.showWrathOfTheHiveParticles,
-                        true));
+                if (!EssenceOfTheBees.hasEssence(player)) {
+                    Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+                    player.displayClientMessage(message, true);
+
+                    player.addEffect(new MobEffectInstance(
+                            BzEffects.WRATH_OF_THE_HIVE,
+                            BzConfig.howLongWrathOfTheHiveLasts,
+                            2,
+                            false,
+                            BzConfig.showWrathOfTheHiveParticles,
+                            true));
+                }
+            }
+            else {
+                BzCriterias.HONEY_PERMISSION_TRIGGER.trigger(player);
             }
         }
     }
@@ -240,6 +243,11 @@ public class BeeAggression {
         StructureManager structureManager = ((ServerLevel)serverPlayer.level).structureManager();
         if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.WRATH_CAUSING).isValid()) {
             if (!serverPlayer.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
+                if (!serverPlayer.hasEffect(BzEffects.WRATH_OF_THE_HIVE)) {
+                    Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+                    serverPlayer.displayClientMessage(message, true);
+                }
+
                 serverPlayer.addEffect(new MobEffectInstance(
                         BzEffects.WRATH_OF_THE_HIVE,
                         BzConfig.howLongWrathOfTheHiveLasts,
