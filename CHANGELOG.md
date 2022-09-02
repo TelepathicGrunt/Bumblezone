@@ -1,3 +1,9 @@
+### **(V.6.2.4 Changes) (1.19.2 Minecraft)**
+
+##### Effects:
+Getting preventable Wrath of the Hive effect will display a message saying you lacked Protection of the Hive to prevent it.
+
+
 ### **(V.6.2.3 Changes) (1.19.2 Minecraft)**
 
 ##### Items:

@@ -6,9 +6,11 @@ import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
@@ -61,6 +63,9 @@ public class FilledPorousHoneycomb extends Block {
                     playerEntity instanceof ServerPlayer serverPlayer &&
                     !EssenceOfTheBees.hasEssence(serverPlayer))
                 {
+                    Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+                    serverPlayer.displayClientMessage(message, true);
+
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
                     playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
                 }

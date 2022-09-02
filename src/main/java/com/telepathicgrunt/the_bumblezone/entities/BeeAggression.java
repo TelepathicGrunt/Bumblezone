@@ -9,7 +9,9 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -97,7 +99,11 @@ public class BeeAggression {
                 !player.isSpectator())
         {
             if(!player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
-                //Bumblezone.LOGGER.log(Level.INFO, "ANGRY BEES");
+                if (player instanceof ServerPlayer) {
+                    Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+                    player.displayClientMessage(message, true);
+                }
+
                 player.addEffect(new MobEffectInstance(
                         BzEffects.WRATH_OF_THE_HIVE,
                         BzConfig.howLongWrathOfTheHiveLasts,
@@ -240,6 +246,11 @@ public class BeeAggression {
         StructureManager structureManager = ((ServerLevel)serverPlayer.level).structureManager();
         if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.WRATH_CAUSING).isValid()) {
             if (!serverPlayer.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
+                if (!serverPlayer.hasEffect(BzEffects.WRATH_OF_THE_HIVE)) {
+                    Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+                    serverPlayer.displayClientMessage(message, true);
+                }
+
                 serverPlayer.addEffect(new MobEffectInstance(
                         BzEffects.WRATH_OF_THE_HIVE,
                         BzConfig.howLongWrathOfTheHiveLasts,
