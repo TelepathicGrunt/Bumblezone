@@ -165,6 +165,7 @@
   "system.the_bumblezone.missing_dimension_link": "https://bugs.mojang.com/browse/MC-195468",
   "system.the_bumblezone.failed_teleporting": "Failed to teleport entity. Aborting teleportation. Please retry.",
   "system.the_bumblezone.require_hive_blocks_failed": "the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.",
+  "system.the_bumblezone.no_protection": "You lacked Protection of the Hive effect...",
 
   "advancements.the_bumblezone.root.title": "The Buzzing Bumbling Bumblezone!",
   "advancements.the_bumblezone.root.description": "Enter The Bumblezone dimension by any means",
@@ -236,6 +237,10 @@
   "advancements.the_bumblezone.comb_cutter_extra_drops.description": "Collect extra drops from Beehive/Bee Nests with a Comb Cutter tool",
   "advancements.the_bumblezone.sugar_water_next_to_sugar_cane.title": "Soon... It'll All Be Sugar Canes!",
   "advancements.the_bumblezone.sugar_water_next_to_sugar_cane.description": "Place Sugar Water source block next to an existing Sugar Cane block",
+  "advancements.the_bumblezone.getting_protection.title": "Winning Favors",
+  "advancements.the_bumblezone.getting_protection.description": "Feed a Honeycomb brood Block until you get Protection of the Hive effect!",
+  "advancements.the_bumblezone.honey_permission.title": "No more Wrath! Only friendship!",
+  "advancements.the_bumblezone.honey_permission.description": "While Protection of the Hive effect is on, collect honey from Filled Porous Honeycomb Block or mine a Honey Block.",
   "advancements.the_bumblezone.consume_sugar_water_bottle.title": "Sugar Rush!!!",
   "advancements.the_bumblezone.consume_sugar_water_bottle.description": "Chug down some sweet tasting sugar water",
   "advancements.the_bumblezone.obtain_sugar_infused_stones.title": "Sugarology",

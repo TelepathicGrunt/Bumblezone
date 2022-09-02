@@ -1,3 +1,18 @@
+### **(V.6.1.8 maintenance bug-fixes. No more content updates) (1.19.2 Minecraft)**
+
+##### Effects:
+Getting preventable Wrath of the Hive effect will display a message saying you lacked Protection of the Hive to prevent it.
+
+##### Advancements:
+Added two new advancements to help introduce Protection of the Hive effect.
+
+Fixed honey_bucket_brood advancement triggering when feeding Honeycomb Brood Blocks anything.
+ Now it should only trigger when feeding Honey Buckets/Royal Jelly Buckets to Honeycomb Brood Blocks.
+
+##### Essense:
+Fixed Essence of the Bees effect not preventing wrath effect when mining Honey Blocks.
+
+
 ### **(V.6.1.7 maintenance bug-fixes. No more content updates) (1.19.2 Minecraft)**
 
 ##### Items:

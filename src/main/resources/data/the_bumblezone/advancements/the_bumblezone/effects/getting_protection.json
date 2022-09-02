@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/root",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:honeycomb_brood_block"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.getting_protection.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.getting_protection.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 2
+  },
+  "criteria": {
+    "getting_protection": {
+      "trigger": "the_bumblezone:getting_protection",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "getting_protection"
+    ]
+  ]
+}

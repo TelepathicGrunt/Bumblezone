@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/root",
+  "parent": "the_bumblezone:the_bumblezone/effects/honey_permission",
   "display": {
     "icon": {
       "item": "minecraft:bee_spawn_egg"
