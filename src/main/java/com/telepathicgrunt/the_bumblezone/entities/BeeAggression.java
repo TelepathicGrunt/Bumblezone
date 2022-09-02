@@ -62,11 +62,8 @@ public class BeeAggression {
         Player player = event.getPlayer();
         BlockState blockState = event.getState();
 
-        if (player instanceof ServerPlayer serverPlayer &&
-            !EssenceOfTheBees.hasEssence(serverPlayer) &&
-            blockState.is(BzTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED))
-        {
-            angerBees(player);
+        if (player instanceof ServerPlayer serverPlayer && blockState.is(BzTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED)) {
+            angerBees(serverPlayer);
         }
     }
 
@@ -75,15 +72,12 @@ public class BeeAggression {
         Player player = event.getEntity();
         ItemStack itemStack = event.getStack();
 
-        if (player instanceof ServerPlayer serverPlayer &&
-            !EssenceOfTheBees.hasEssence(serverPlayer) &&
-            itemStack.is(BzTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP))
-        {
-            angerBees(player);
+        if (player instanceof ServerPlayer serverPlayer && itemStack.is(BzTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP)) {
+            angerBees(serverPlayer);
         }
     }
 
-    private static void angerBees(Player player) {
+    private static void angerBees(ServerPlayer player) {
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
         if ((player.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
@@ -93,21 +87,21 @@ public class BeeAggression {
                 !player.isSpectator())
         {
             if(!player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                if (player instanceof ServerPlayer) {
+                if (!EssenceOfTheBees.hasEssence(player)) {
                     Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
                     player.displayClientMessage(message, true);
-                }
 
-                player.addEffect(new MobEffectInstance(
-                        BzEffects.WRATH_OF_THE_HIVE.get(),
-                        BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),
-                        2,
-                        false,
-                        BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(),
-                        true));
+                    player.addEffect(new MobEffectInstance(
+                            BzEffects.WRATH_OF_THE_HIVE.get(),
+                            BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),
+                            2,
+                            false,
+                            BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(),
+                            true));
+                }
             }
-            else if (player instanceof ServerPlayer serverPlayer) {
-                BzCriterias.HONEY_PERMISSION_TRIGGER.trigger(serverPlayer);
+            else {
+                BzCriterias.HONEY_PERMISSION_TRIGGER.trigger(player);
             }
         }
     }
