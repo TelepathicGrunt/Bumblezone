@@ -1,3 +1,12 @@
+### **(V.6.2.5 Changes) (1.19.2 Minecraft)**
+
+##### Items:
+Fixed recipe for Royal Jelly Bottle to Royal Jelly Buckets giving 4 of the buckets instead of 1. Stops Royal Jelly Bucket duplication.
+
+##### Mod Compat:
+Added Bumblezone item and fluid info for EMI mod. Requires EMI to be version 0.4.0 or newer if you have the EMI mod on.
+
+
 ### **(V.6.2.4 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
