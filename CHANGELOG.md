@@ -1,3 +1,9 @@
+### **(V.6.1.9 maintenance bug-fixes. No more content updates) (1.19.2 Minecraft)**
+
+##### Items:
+Fixed recipe for Royal Jelly Bottle to Royal Jelly Buckets giving 4 of the buckets instead of 1. Stops Royal Jelly Bucket duplication.
+
+
 ### **(V.6.1.8 maintenance bug-fixes. No more content updates) (1.19.2 Minecraft)**
 
 ##### Blocks:
