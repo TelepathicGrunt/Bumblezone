@@ -1,3 +1,12 @@
+### **(V.6.2.5 Changes) (1.19.2 Minecraft)**
+
+##### Items:
+Fixed recipe for Royal Jelly Bottle to Royal Jelly Buckets giving 4 of the buckets instead of 1. Stops Royal Jelly Bucket duplication.
+
+##### Mod Compat:
+Added Bumblezone item and fluid info for EMI mod. Requires EMI to be version 0.4.0 or newer if you have the EMI mod on.
+
+
 ### **(V.6.2.4 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
@@ -10,7 +19,7 @@ Getting preventable Wrath of the Hive effect will display a message saying you l
 ##### Advancements:
 Added two new advancements to help introduce Protection of the Hive effect.
 
-Fixed honey_bucket_brood advancement triggering when feeding Honeycomb Brood Blocks anything.
+Fixed `honey_bucket_brood` advancement triggering when feeding Honeycomb Brood Blocks anything.
  Now it should only trigger when feeding Honey Buckets/Royal Jelly Buckets to Honeycomb Brood Blocks.
 
 ##### Essense:
