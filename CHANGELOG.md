@@ -1,3 +1,13 @@
+### **(V.6.2.5 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Added more texture variants of Glistering Honey Crystal block.
+
+Added more texture variants of Carved Wax block.
+
+Redid the texture for diamond patterned Carved Wax Block.
+
+
 ### **(V.6.2.4 Changes) (1.19.2 Minecraft)**
 
 ##### Items:
