@@ -482,6 +482,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                                 if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(mob, serverLevelAccessor, d0, mutableBlockPos.getY(), d1, null, MobSpawnType.CHUNK_GENERATION) == -1) continue;
                                 if (mob.checkSpawnObstruction(serverLevelAccessor)) {
                                     spawngroupdata = mob.finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawngroupdata, null);
+                                    mob.moveTo(mob.getX(), mob.getY() + 1, mob.getZ());
                                     serverLevelAccessor.addFreshEntityWithPassengers(mob);
                                 }
                             }
