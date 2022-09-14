@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal",
-		"1": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_glint_1",
-		"particle": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal"
+		"0": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_1",
+		"1": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_glint_2",
+		"particle": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_1"
 	},
 	"render_type": "minecraft:translucent",
 	"elements": [
