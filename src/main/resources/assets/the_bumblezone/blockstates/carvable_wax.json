@@ -2,25 +2,45 @@
   "variants": {
     "carving=uncarved": [
       {
-        "model": "the_bumblezone:block/carvable_wax/uncarved"
+        "model": "the_bumblezone:block/carvable_wax/uncarved_1"
       },
       {
-        "model": "the_bumblezone:block/carvable_wax/uncarved",
+        "model": "the_bumblezone:block/carvable_wax/uncarved_1",
         "y": 180
       },
       {
-        "model": "the_bumblezone:block/carvable_wax/uncarved",
+        "model": "the_bumblezone:block/carvable_wax/uncarved_1",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/uncarved_2"
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/uncarved_2",
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/uncarved_2",
         "x": 180
       }
     ],
     "carving=chiseled": [
       {
-        "model": "the_bumblezone:block/carvable_wax/chiseled"
+        "model": "the_bumblezone:block/carvable_wax/chiseled_1"
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_2"
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_3"
       }
     ],
     "carving=bricks": [
       {
-        "model": "the_bumblezone:block/carvable_wax/bricks"
+        "model": "the_bumblezone:block/carvable_wax/bricks_1"
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/bricks_2"
       }
     ],
     "carving=diamond": [
