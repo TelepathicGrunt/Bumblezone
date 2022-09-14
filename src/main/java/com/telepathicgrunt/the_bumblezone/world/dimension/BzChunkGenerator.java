@@ -479,9 +479,11 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                         Bumblezone.LOGGER.warn("Failed to create mob", exception);
                         continue;
                     }
+
                     entity.moveTo(d, mutableBlockPos.getY(), e, randomSource.nextFloat() * 360.0f, 0.0f);
                     if (entity instanceof Mob mob && mob.checkSpawnObstruction(serverLevelAccessor)) {
                         spawnGroupData = mob.finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawnGroupData, null);
+                        mob.moveTo(mob.getX(), mob.getY() + 1, mob.getZ());
                         serverLevelAccessor.addFreshEntityWithPassengers(mob);
                     }
                 }

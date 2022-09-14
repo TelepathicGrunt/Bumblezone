@@ -7,6 +7,10 @@ Added more texture variants of Carved Wax block.
 
 Redid the texture for diamond patterned Carved Wax Block.
 
+##### Entities:
+Fixed entities spawning one block too low and taking 1 damage of suffication in Bumblezone on initial chunk generation.
+ Most easily seen with Honey Slime as they should not be damaged when they first spawn when chunk is created for first time.
+
 
 ### **(V.6.2.5 Changes) (1.19.2 Minecraft)**
 
