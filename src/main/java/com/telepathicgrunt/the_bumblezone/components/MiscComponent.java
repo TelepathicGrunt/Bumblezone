@@ -62,6 +62,7 @@ public class MiscComponent implements Component {
         honeySlimeBred = 0;
         beesFed = 0;
         queenBeeTrade = 0;
+        mobsKilledTracker.clear();
     }
 
     @Override
