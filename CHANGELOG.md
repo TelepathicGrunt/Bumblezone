@@ -1,3 +1,13 @@
+### **(V.6.2.7 Changes) (1.19.2 Minecraft)**
+
+##### Advancements:
+Fixed Moar Honey! advancement not triggering when obtaining Honey Bucket.
+
+Fixed Hope, Love, Dreams, and BEES!!! advancement not triggering when consuming Essence of the Bees item in survival.
+
+Fixed mob killed counter for Queen's Desire advancements not being reset when player resets the Queen's Desire advancements.
+
+
 ### **(V.6.2.6 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
