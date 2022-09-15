@@ -42,13 +42,13 @@ public class EssenceOfTheBees extends Item {
                 return itemStack;
             }
 
+            CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, itemStack);
+            serverPlayer.awardStat(Stats.ITEM_USED.get(this));
+
             setEssence(serverPlayer, true);
             if (!serverPlayer.getAbilities().instabuild) {
                 itemStack.shrink(1);
             }
-
-            CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, itemStack);
-            serverPlayer.awardStat(Stats.ITEM_USED.get(this));
 
             spawnParticles((ServerLevel) level, serverPlayer.position(), serverPlayer.getRandom());
             level.playSound(

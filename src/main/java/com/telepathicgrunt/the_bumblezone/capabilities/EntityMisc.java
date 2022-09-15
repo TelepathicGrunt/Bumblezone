@@ -62,6 +62,7 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 		honeySlimeBred = 0;
 		beesFed = 0;
 		queenBeeTrade = 0;
+		mobsKilledTracker.clear();
 	}
 
 	public CompoundTag serializeNBT() {
