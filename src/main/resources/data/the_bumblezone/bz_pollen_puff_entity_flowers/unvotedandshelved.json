@@ -1,5 +1,5 @@
 {
-  "unvotedandunshelved:glare": [{
+  "unvotedandshelved:glare": [{
     "plants_to_spawn": {
       "type": "minecraft:weighted_state_provider",
       "entries": [
