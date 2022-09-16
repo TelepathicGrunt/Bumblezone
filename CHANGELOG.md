@@ -1,3 +1,12 @@
+### **(V.6.2.8 Changes) (1.19.2 Minecraft)**
+
+##### Teleportation:
+Fixed teleportation when exiting Bumblezone. Was not properly saving past position from when entering Bumblezone.
+
+##### Compat:
+Pollen Puff will now spawn wheat on nearby Farmland/valid blocks when they hit Straw Golem Rebaled mod's golems.
+
+
 ### **(V.6.2.7 Changes) (1.19.2 Minecraft)**
 
 ##### Advancements:
