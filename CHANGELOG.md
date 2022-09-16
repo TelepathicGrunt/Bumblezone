@@ -1,5 +1,8 @@
 ### **(V.6.2.7 Changes) (1.19.2 Minecraft)**
 
+##### Teleportation:
+Fixed not teleporting to right next to existing Beehive/Bee Nest at target converted coordinates when exiting Bumblezone.
+
 ##### Compat:
 Pollen Puff will now spawn flowers when they hit Ornamental's Grass Golems that have flowers on their head.
 
