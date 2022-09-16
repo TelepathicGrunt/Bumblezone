@@ -235,7 +235,8 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 isTallPlant = true;
             }
 
-            if(this.level.isEmptyBlock(newPos) && blockstate.canSurvive(this.level, newPos)) {
+            boolean isWaterBased = blockstate.getFluidState().is(FluidTags.WATER);
+            if((isWaterBased ? this.level.getBlockState(newPos).is(Blocks.WATER) : this.level.isEmptyBlock(newPos)) && blockstate.canSurvive(this.level, newPos)) {
                 if (blockstate.is(Blocks.MOSS_CARPET)) {
                     BlockState belowState = this.level.getBlockState(newPos.below());
                     if (Registry.BLOCK.getKey(belowState.getBlock()).getPath().contains("carpet") || belowState.is(BlockTags.UNSTABLE_BOTTOM_CENTER) || !belowState.isFaceSturdy(this.level, newPos.below(), Direction.DOWN, SupportType.FULL)) {
