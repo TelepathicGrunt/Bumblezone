@@ -1,0 +1,345 @@
+{
+  "golems:golem": [
+    {
+      "nbt_match": {
+        "Material": "golems:mushroom",
+        "Texture": 0
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:brown_mushroom" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:mushroom",
+        "Texture": 1
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:red_mushroom" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:moss"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 2
+          },
+          {
+            "data": { "Name": "minecraft:spore_blossom" },
+            "weight": 3
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:leaves"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:oak_sapling" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 2
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:mangrove_roots"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:mangrove_propagule" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 2
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:hay"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:wheat" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:stem",
+        "Texture": 0
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:crimson_fungus" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 2
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:stem",
+        "Texture": 1
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:warped_fungus" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 2
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:nether_wart",
+        "Texture": 0
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:crimson_roots" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:nether_wart" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 2
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:nether_wart",
+        "Texture": 1
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:warped_roots" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:nether_sprouts" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 2
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:log",
+        "Texture": 0
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:dark_oak_sapling" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 2
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:log",
+        "Texture": 1
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:oak_sapling" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 2
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:log",
+        "Texture": 2
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:acacia_sapling" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 2
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:log",
+        "Texture": 3
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:birch_sapling" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 2
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:log",
+        "Texture": 4
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:jungle_sapling" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 2
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:log",
+        "Texture": 5
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:spruce_sapling" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 2
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:log",
+        "Texture": 6
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:mangrove_propagule" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 2
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Material": "golems:melon"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:melon_stem" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ]
+}

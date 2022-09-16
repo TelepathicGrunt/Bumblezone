@@ -8,6 +8,10 @@ Pollen Puff will now spawn flowers when they hit Ornamental's Grass Golems that 
 
 Pollen Puff will now spawn Oak Saplings or Moss Carpet when they hit JustEnoughGolems's Plant Golems.
 
+Pollen Puff will now spawn various plants when they hit certain golems from Extra Golems mod.
+
+Pollen Puff will now spawn melon stems on nearby Farmland/valid blocks when they hit Melon Golem's golems.
+
 
 ### **(V.6.2.6 Changes) (1.19.2 Minecraft)**
 
