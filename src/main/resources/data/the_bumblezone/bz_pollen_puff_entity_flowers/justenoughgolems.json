@@ -1,0 +1,21 @@
+{
+  "justenoughgolems:plant_golem": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:oak_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 2
+        }
+      ]
+    }
+  }]
+}
