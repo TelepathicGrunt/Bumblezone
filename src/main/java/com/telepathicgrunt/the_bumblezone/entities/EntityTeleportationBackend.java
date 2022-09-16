@@ -90,6 +90,7 @@ public class EntityTeleportationBackend {
                 finalSpawnPos = new BlockPos(playerPos);
             }
             else {
+                finalSpawnPos = validBlockPos == null ? finalSpawnPos : validBlockPos;
                 destination.getChunk(finalSpawnPos);
                 int heightMapY = destination.getHeight(Heightmap.Types.MOTION_BLOCKING, finalSpawnPos.getX(), finalSpawnPos.getZ());
                 if (heightMapY > destination.getMinBuildHeight() && heightMapY < destination.getMaxBuildHeight()) {

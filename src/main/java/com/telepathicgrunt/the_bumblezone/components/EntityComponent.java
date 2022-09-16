@@ -20,7 +20,6 @@ public class EntityComponent implements Component {
         return nonBZPosition;
     }
 
-
     public ResourceLocation getNonBZDimension() {
         return this.nonBZDimensionType;
     }
@@ -28,6 +27,7 @@ public class EntityComponent implements Component {
     public void setNonBZDimension(ResourceLocation nonBZDimension) {
         if (nonBZDimension.equals(Bumblezone.MOD_DIMENSION_ID)) {
             this.nonBZDimensionType = net.minecraft.world.level.Level.OVERWORLD.location();
+            this.nonBZPosition = null;
             Bumblezone.LOGGER.log(Level.ERROR, "Error: The non-bz dimension passed in to be stored was bz dimension. Please contact mod creator to let them know of this issue.");
         }
         else {
@@ -35,15 +35,32 @@ public class EntityComponent implements Component {
         }
     }
 
-
     public void readFromNbt(CompoundTag tag) {
         this.teleporting = tag.getBoolean("teleporting");
         this.nonBZDimensionType = new ResourceLocation(tag.getString("non_bz_dimensiontype_namespace"), tag.getString("non_bz_dmensiontype_path"));
+        if (tag.contains("non_bz_position_x") &&
+            tag.contains("non_bz_position_y") &&
+            tag.contains("non_bz_position_z"))
+        {
+            this.nonBZPosition = new Vec3(
+                    tag.getDouble("non_bz_position_x"),
+                    tag.getDouble("non_bz_position_y"),
+                    tag.getDouble("non_bz_position_z")
+            );
+        }
+        else {
+            this.nonBZPosition = null;
+        }
     }
 
     public void writeToNbt(CompoundTag tag) {
         tag.putBoolean("teleporting", this.teleporting);
         tag.putString("non_bz_dimensiontype_namespace", nonBZDimensionType.getNamespace());
         tag.putString("non_bz_dmensiontype_path", nonBZDimensionType.getPath());
+        if (this.nonBZPosition != null) {
+            tag.putDouble("non_bz_position_x", this.nonBZPosition.x());
+            tag.putDouble("non_bz_position_y", this.nonBZPosition.y());
+            tag.putDouble("non_bz_position_z", this.nonBZPosition.z());
+        }
     }
 }

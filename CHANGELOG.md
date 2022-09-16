@@ -1,3 +1,9 @@
+### **(V.6.1.11 maintenance bug-fixes. No more content updates) (1.19.2 Minecraft)**
+
+##### Teleportation:
+Fixed teleportation when exiting Bumblezone. Was not properly saving past position from when entering Bumblezone.
+
+
 ### **(V.6.1.10 maintenance bug-fixes. No more content updates) (1.19.2 Minecraft)**
 
 ##### Advancements:
