@@ -1,3 +1,11 @@
+### **(V.6.2.7 Changes) (1.19.2 Minecraft)**
+
+##### Compat:
+Pollen Puff will now spawn flowers when they hit Ornamental's Grass Golems that have flowers on their head.
+
+Pollen Puff will now spawn Oak Saplings or Moss Carpet when they hit JustEnoughGolems's Plant Golems.
+
+
 ### **(V.6.2.6 Changes) (1.19.2 Minecraft)**
 
 ##### Advancements:
