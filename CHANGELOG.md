@@ -1,3 +1,12 @@
+### **(V.6.1.12 maintenance bug-fixes. No more content updates) (1.19.2 Minecraft)**
+
+##### Effects:
+Creative Players now no longer get Wrath effect if they hit a mob with Protection effect.
+
+##### Compat:
+Fixed compat with Unvoted & Shelved mod. Pollen Puff will now spawn Moss Carpet blocks it hits Glare mob.
+
+
 ### **(V.6.1.11 maintenance bug-fixes. No more content updates) (1.19.2 Minecraft)**
 
 ##### Teleportation:

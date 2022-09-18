@@ -11,6 +11,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
@@ -66,9 +67,12 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
        if(entity.hurtTime > 0 && entity.getLastHurtByMob() != null) {
-           resetBeeAngry(entity.level, entity.getLastHurtByMob());
+           if (entity.getLastHurtByMob() instanceof Player player && player.isCreative()) {
+               return;
+           }
 
            if(!(entity.getLastHurtByMob() instanceof Bee)) {
+               resetBeeAngry(entity.level, entity.getLastHurtByMob());
                entity.getLastHurtByMob().addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, amplifier, true, true, true));
                if (entity instanceof ServerPlayer) {
                    BzCriterias.PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER.trigger((ServerPlayer) entity, entity.getLastHurtByMob());
