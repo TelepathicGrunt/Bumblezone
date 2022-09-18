@@ -1,5 +1,8 @@
 ### **(V.6.2.8 Changes) (1.19.2 Minecraft)**
 
+##### Effects:
+Creative Players now no longer get Wrath effect if they hit a mob with Protection effect.
+
 ##### Compat:
 Added back compat with PokeCube mod. Their Pokemon will spawn in Bumblezone scattered around!
 
