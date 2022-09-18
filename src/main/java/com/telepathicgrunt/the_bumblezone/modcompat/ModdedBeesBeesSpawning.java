@@ -40,7 +40,9 @@ public class ModdedBeesBeesSpawning {
 					entity.getRandom().nextFloat() < BzModCompatibilityConfigs.spawnrateOfPokecubeBeePokemon.get() &&
 					entity.isBaby())
 				{
-					PokecubeCompat.PCMobSpawnEvent(event, entity.isBaby());
+					if(PokecubeCompat.PCMobSpawnEvent(event, entity.isBaby())) {
+						event.setResult(Event.Result.DENY);
+					}
 				}
 			}
 		}

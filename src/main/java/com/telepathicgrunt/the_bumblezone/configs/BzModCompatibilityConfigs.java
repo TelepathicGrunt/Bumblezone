@@ -55,10 +55,10 @@ public class BzModCompatibilityConfigs {
 
 			spawnrateOfPokecubeBeePokemon = builder
 					.comment(" \n-----------------------------------------------------\n",
-							" Chance of a Bee spawning in Bumblezone or from Honeycomb Brood Blocks being replaced by Pokecube's bee pokemon.",
+							" Chance of a Bee spawning from Honeycomb Brood Blocks being replaced by Pokecube's bee pokemon.",
 							" 0 is no PC's mobs and 1 is max PC's mobs.\n")
 					.translation("the_bumblezone.config.spawnrateofpokecubebeepokemon")
-					.defineInRange("spawnrateOfPokecubeBeePokemon", 0.02D, 0D, 1D);
+					.defineInRange("spawnrateOfPokecubeBeePokemon", 0.05D, 0D, 1D);
 
 			builder.pop();
 
@@ -76,7 +76,7 @@ public class BzModCompatibilityConfigs {
 							" Chance of a Bee spawning in Bumblezone or from Honeycomb Brood Blocks being replaced by Productive Bee's mob.",
 							" 0 is no PB's mobs and 1 is max PB's mobs.\n")
 					.translation("the_bumblezone.config.spawnrateofproductivebeesmobs")
-					.defineInRange("spawnrateOfProductiveBeesMobs", 0.1D, 0D, 1D);
+					.defineInRange("spawnrateOfProductiveBeesMobs", 0.03D, 0D, 1D);
 
 			spawnProductiveBeesHoneycombVariants = builder
 					.comment(" \n-----------------------------------------------------\n",

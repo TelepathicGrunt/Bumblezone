@@ -52,27 +52,27 @@ public class PokecubeCompat {
     /**
      * Spawn Pokecube bees
      */
-    public static void PCMobSpawnEvent(LivingSpawnEvent.CheckSpawn event, boolean isChild) {
+    public static boolean PCMobSpawnEvent(LivingSpawnEvent.CheckSpawn event, boolean isChild) {
         List<PokedexEntry> pokemonListToUse = isChild ? BABY_POKECUBE_POKEMON_LIST : POKECUBE_POKEMON_LIST;
         if (pokemonListToUse.size() == 0) {
             Bumblezone.LOGGER.warn(
                     "Error! List of POKECUBE_POKEMON_LIST is empty! Cannot spawn their bees. " +
                     "Please let TelepathicGrunt (The Bumblezone dev) know about this!");
-            return;
+            return false;
         }
 
         Mob entity = event.getEntity();
         LevelAccessor world = event.getLevel();
 
         // Pokecube mobs crash if done in worldgen due to onInitialSpawn not being worldgen safe in their code.
-        if(world instanceof WorldGenRegion) return;
+        if(world instanceof WorldGenRegion) return false;
 
         // randomly pick a Pokecube mob entry
         PokedexEntry pokemonDatabase = pokemonListToUse.get(world.getRandom().nextInt(pokemonListToUse.size()));
         PokedexEntry.SpawnData spawn = pokemonDatabase.getSpawnData();
-        if(spawn == null) return;
+        if(spawn == null) return false;
         Mob pokemon = PokecubeCore.createPokemob(pokemonDatabase, entity.level);
-        if (pokemon == null) return;
+        if (pokemon == null) return false;
 
         pokemon.setHealth(pokemon.getMaxHealth());
         pokemon.setBaby(isChild);
@@ -118,6 +118,7 @@ public class PokecubeCompat {
                 null);
 
         world.addFreshEntity(pokemon);
+        return true;
     }
 
     public static void PCAddProtectionForBeeMobs(Entity entity) {
