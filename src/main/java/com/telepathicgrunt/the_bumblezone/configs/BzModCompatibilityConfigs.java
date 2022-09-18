@@ -8,8 +8,9 @@ public class BzModCompatibilityConfigs {
 	public static final ForgeConfigSpec GENERAL_SPEC;
 
 	public static ForgeConfigSpec.BooleanValue allowHoneyFluidTanksFeedingCompat;
-	
+
 	public static ForgeConfigSpec.BooleanValue spawnPokecubeBeePokemon;
+	public static ForgeConfigSpec.BooleanValue beePokemonGetsProtectionEffect;
 	public static ForgeConfigSpec.DoubleValue spawnrateOfPokecubeBeePokemon;
 
 	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesBeesMob;
@@ -52,6 +53,14 @@ public class BzModCompatibilityConfigs {
 							" Spawn Pokecube's bee-like pokemon in The Bumblezone and from Honey Brood Blocks.\n")
 					.translation("the_bumblezone.config.spawnpokecubebeepokemon")
 					.define("spawnPokecubeBeePokemon", true);
+
+			beePokemonGetsProtectionEffect = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Pokecube's bee-like pokemon that spawn in The Bumblezone will get",
+							" Protection of the Hive effect. Attacking these pokemon in bumblezone will",
+							" give you Wrath of the Hive effect and swarmed of angry bees.\n")
+					.translation("the_bumblezone.config.beePokemonGetsProtectionEffect")
+					.define("beePokemonGetsProtectionEffect", true);
 
 			spawnrateOfPokecubeBeePokemon = builder
 					.comment(" \n-----------------------------------------------------\n",
