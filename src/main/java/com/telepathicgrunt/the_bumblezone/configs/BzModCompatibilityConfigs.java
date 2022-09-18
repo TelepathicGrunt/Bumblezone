@@ -76,7 +76,7 @@ public class BzModCompatibilityConfigs {
 							" Chance of a Bee spawning in Bumblezone or from Honeycomb Brood Blocks being replaced by Productive Bee's mob.",
 							" 0 is no PB's mobs and 1 is max PB's mobs.\n")
 					.translation("the_bumblezone.config.spawnrateofproductivebeesmobs")
-					.defineInRange("spawnrateOfProductiveBeesMobs", 0.03D, 0D, 1D);
+					.defineInRange("spawnrateOfProductiveBeesMobs", 0.1D, 0D, 1D);
 
 			spawnProductiveBeesHoneycombVariants = builder
 					.comment(" \n-----------------------------------------------------\n",

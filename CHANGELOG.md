@@ -1,3 +1,11 @@
+### **(V.6.2.8 Changes) (1.19.2 Minecraft)**
+
+##### Compat:
+Added back compat with PokeCube mod. Their Pokemon will spawn in Bumblezone scattered around!
+
+Fixed compat with Unvoted & Shelved mod. Pollen Puff will now spawn Moss Carpet blocks it hits Glare mob.
+
+
 ### **(V.6.2.7 Changes) (1.19.2 Minecraft)**
 
 ##### Teleportation:

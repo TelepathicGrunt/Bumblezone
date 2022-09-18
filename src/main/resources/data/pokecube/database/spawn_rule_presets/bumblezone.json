@@ -1,0 +1,10 @@
+{
+  "rules": [
+    {
+      "values": {
+        "preset": "the_bumblezone",
+        "types": "#the_bumblezone:the_bumblezone"
+      }
+    }
+  ]
+}

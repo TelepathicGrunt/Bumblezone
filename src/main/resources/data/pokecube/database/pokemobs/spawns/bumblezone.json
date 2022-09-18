@@ -1,0 +1,16 @@
+{
+  "rules": [
+    {
+      "and_preset": "the_bumblezone",
+      "entries": [
+        {"key": "weedle","min": 4,"max": 15,"rate": 0.73},
+        {"key": "kakuna","min": 12,"max": 19,"rate": 0.35},
+        {"key": "beedrill","min": 33,"max": 36,"rate": 0.1},
+        {"key": "combee","min": 10,"max": 18,"rate": 0.95},
+        {"key": "vespiquen","min": 35,"max": 38,"rate": 0.15},
+        {"key": "cutiefly","min": 8,"max": 16,"rate": 0.73},
+        {"key": "ribombee","min": 29,"max": 32,"rate": 0.15}
+      ]
+    }
+  ]
+}
