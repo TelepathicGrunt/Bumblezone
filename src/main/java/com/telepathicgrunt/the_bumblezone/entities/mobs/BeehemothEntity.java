@@ -677,9 +677,11 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 double strafeSpeed = 0;
 
                 double flyingSpeedAttribute = getFinalFlyingSpeed();
+                double configVal = BzConfig.beehemothSpeed;
+                double configSpeedModifier = configVal - (this.getFriendship() * configVal * 0.00065d) + 0.5d;
                 if (livingEntity.zza != 0 || this.movingStraightUp || this.movingStraightDown) {
-                    currentSpeed = Math.min(
-                            BzConfig.beehemothSpeed * speedModifier * flyingSpeedAttribute,
+                    currentSpeed = configSpeedModifier * Math.min(
+                            speedModifier * flyingSpeedAttribute,
                             currentSpeed + (0.3D * flyingSpeedAttribute));
                 }
                 else {
