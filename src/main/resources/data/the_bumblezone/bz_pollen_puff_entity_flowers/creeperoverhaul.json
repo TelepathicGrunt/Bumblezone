@@ -1,0 +1,179 @@
+{
+  "creeperoverhaul:jungle_creeper": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:poppy" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:dandelion" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:grass" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "creeperoverhaul:bamboo_creeper": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:bamboo_sapling" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "creeperoverhaul:spruce_creeper": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:brown_mushroom" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "creeperoverhaul:dark_oak_creeper": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:brown_mushroom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:red_mushroom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "creeperoverhaul:bamboo_creeper": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:bamboo_sapling" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "creeperoverhaul:swamp_creeper": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:lily_pad" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "creeperoverhaul:bamboo_creeper": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:bamboo_sapling" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "creeperoverhaul:mushroom_creeper": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:red_mushroom" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "creeperoverhaul:hills_creeper": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:grass" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 2
+        }
+      ]
+    }
+  }],
+  "creeperoverhaul:badlands_creeper": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "creeperoverhaul:tiny_cactus" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "creeperoverhaul:desert_creeper": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "creeperoverhaul:tiny_cactus" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }]
+}

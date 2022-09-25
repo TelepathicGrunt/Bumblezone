@@ -3,6 +3,9 @@
 ##### Config:
 Fixed beehemothSpeed config so it applies better and value scales a bit better between newly tamed Beehemoths and Queen Beehemoths
 
+##### Pollen Puff:
+If datapacked to work with Bamboo Saplings or Vines, it will now properly place those blocks nearby when hit with Pollen Puff.
+
 
 ### **(V.6.2.9 Changes) (1.19.2 Minecraft)**
 
