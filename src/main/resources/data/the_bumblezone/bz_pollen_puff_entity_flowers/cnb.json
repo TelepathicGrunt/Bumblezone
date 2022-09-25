@@ -1,0 +1,105 @@
+{
+  "cnb:lilytad": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:lily_pad" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "cnb:minipad": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:lily_pad" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "cnb:cactem": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:cactus" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "cnb:sporeling": [
+    {
+      "nbt_match": {
+        "SporelingType": "cnb:red_nether"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:red_mushroom" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "SporelingType": "cnb:red_overworld"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:red_mushroom" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "SporelingType": "cnb:brown_nether"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:brown_mushroom" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "SporelingType": "cnb:brown_overworld"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:brown_mushroom" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ]
+}

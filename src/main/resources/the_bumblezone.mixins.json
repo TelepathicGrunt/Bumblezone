@@ -3,6 +3,7 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "blocks.VineBlockAccessor",
     "blocks.AbstractFurnaceBlockEntityMixin",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",

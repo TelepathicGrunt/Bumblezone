@@ -1,0 +1,580 @@
+{
+  "infernalexp:shroomloin": [
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:crimson"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:crimson_fungus" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:warped"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:warped_fungus" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:brown"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:brown_mushroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:red"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:red_mushroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:black_puff"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "byg:black_puff" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:blood"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "undergarden:blood_mushroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:blue_mushroom"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "shroomed:blue_mushroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:blue_glowshroom"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "byg:blue_glowshroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:bulbis_anomaly"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "byg:bulbis_anomaly" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:death_cap"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "byg:death_cap" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:embur_wart"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "byg:embur_wart" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:fairy_ring_mushroom"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "habitat:fairy_ring_mushroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:fungal_imparius"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "byg:fungal_imparius" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:glow_shroom"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "quark:glow_shroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:glowshroom"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "biomesoplenty:glowshroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:glowshroom"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "darkerdepths:glowshroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:green_mushroom"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "byg:green_mushroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:imparius_mushroom"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "byg:imparius_mushroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:indigo_mushroom"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "undergarden:indigo_mushroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:ink_mushroom"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "undergarden:ink_mushroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:lightcap"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "twist:lightcap" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:orange_mushroom"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "shroomed:orange_mushroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:poise_bush"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "endergetic:poise_bush" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:purple_mushroom"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "shroomed:purple_mushroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:purple_glowshroom"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "byg:purple_glowshroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:shulkren_fungus"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "byg:shulkren_fungus" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:soul_shroom"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "byg:soul_shroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:sythian_fungus"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "byg:sythian_fungus" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:toadstool"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "biomesoplenty:toadstool" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:veil_mushroom"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "undergarden:veil_mushroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:weeping_milkcap"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "byg:weeping_milkcap" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "ShroomloinType": "infernalexp:wood_blewit"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "byg:wood_blewit" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ]
+}
