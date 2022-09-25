@@ -3,6 +3,20 @@
 ##### Config:
 Fixed beehemothSpeed config so it applies better and value scales a bit better between newly tamed Beehemoths and Queen Beehemoths
 
+##### Pollen Puff:
+If datapacked to work with Bamboo Saplings or Vines, it will now properly place those blocks nearby when hit with Pollen Puff.
+
+##### Mod Compat:
+Blue Skies's Shrumpty and Starlit Crusher now spawns certain plants when hit with Pollen Puff.
+
+Creeper Overhaul's Jungle, Bamboo, Spruce, Dark Oak, Swamp, Mushroom, Hills, Badlands, and Desert Creepers now spawns certain plants when hit with Pollen Puff.
+
+Infernal Expansion's Shrumpty and Starlit Crusher now spawns certain plants when hit with Pollen Puff.
+
+Blue Skies's Shroomloin now spawns certain plants when hit with Pollen Puff depending on Shroomloin's type.
+
+Creatures and Beasts's Lilytad, minipad, Cactem, and Sporelings now spawns certain plants when hit with Pollen Puff.
+
 
 ### **(V.6.2.8 Changes) (1.19.2 Minecraft)**
 
