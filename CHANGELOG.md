@@ -1,3 +1,9 @@
+### **(V.6.2.9 Changes) (1.19.2 Minecraft)**
+
+##### Config:
+Fixed beehemothSpeed config so it applies better and value scales a bit better between newly tamed Beehemoths and Queen Beehemoths
+
+
 ### **(V.6.2.8 Changes) (1.19.2 Minecraft)**
 
 ##### Effects:
