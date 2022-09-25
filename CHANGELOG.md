@@ -17,6 +17,8 @@ Blue Skies's Shroomloin now spawns certain plants when hit with Pollen Puff depe
 
 Creatures and Beasts's Lilytad, minipad, Cactem, and Sporelings now spawns certain plants when hit with Pollen Puff.
 
+Twilight Forests's Minoshroom and Skeleton Druid now spawns certain plants when hit with Pollen Puff.
+
 
 ### **(V.6.2.8 Changes) (1.19.2 Minecraft)**
 
