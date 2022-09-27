@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -81,11 +82,17 @@ public class CarpenterBeeBoots extends BeeArmor {
 
                     if (finalMiningProgress >= 10) {
                         world.destroyBlockProgress(itemId, belowBlockPos, -1);
+
+                        BlockEntity blockEntity = belowBlockState.hasBlockEntity() ? world.getBlockEntity(belowBlockPos) : null;
+                        boolean result = PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(world, player, belowBlockPos, belowBlockState, blockEntity);
+                        if (!result) {
+                            PlayerBlockBreakEvents.CANCELED.invoker().onBlockBreakCanceled(world, player, belowBlockPos, belowBlockState, blockEntity);
+                            return;
+                        }
+
                         boolean blockBroken = world.destroyBlock(belowBlockPos, false, player);
 
                         if (blockBroken) {
-                            BlockEntity blockEntity = belowBlockState.hasBlockEntity() ? world.getBlockEntity(belowBlockPos) : null;
-
                             belowBlockState.getBlock().playerDestroy(
                                     world,
                                     player,
@@ -105,6 +112,8 @@ public class CarpenterBeeBoots extends BeeArmor {
                                     BzCriterias.CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER.trigger(serverPlayer);
                                 }
                             }
+
+                            PlayerBlockBreakEvents.AFTER.invoker().afterBlockBreak(world, player, belowBlockPos, belowBlockState, blockEntity);
                         }
 
                         tag.putInt("lastSentState", -1);
