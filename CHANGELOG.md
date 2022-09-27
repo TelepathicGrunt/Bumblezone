@@ -11,6 +11,8 @@ Carpenter Bees Boots now trigger the Forge Block Break event so claims mods shou
 ##### Pollen Puff:
 If datapacked to work with Bamboo Saplings or Vines, it will now properly place those blocks nearby when hit with Pollen Puff.
 
+Improved error message for Pollen Puff json files if target entity does not exist but the mod it is from is on.
+
 ##### Mod Compat:
 Blue Skies's Shrumpty now spawns Snowcap Pinhead blocks when hit with Pollen Puff sometimes.
 
@@ -23,6 +25,12 @@ Blue Skies's Shroomloin now spawns certain plants when hit with Pollen Puff depe
 Creatures and Beasts's Lilytad, minipad, Cactem, and Sporelings now spawns certain plants when hit with Pollen Puff.
 
 Twilight Forests's Minoshroom and Skeleton Druid now spawns certain plants when hit with Pollen Puff.
+
+Biome Makeover's Mushroom Trader, Blightbat, and Decayed now spawns certain plants when hit with Pollen Puff.
+
+Extended Mushrooms's Mushroom Sheep now spawns Red or Brown Mushrooms based on type when hit with Pollen Puff.
+
+Some of Pokecubes's flower/plant Pokemon now spawn flowers or plants when hit with Pollen Puff.
 
 
 ### **(V.6.2.8 Changes) (1.19.2 Minecraft)**

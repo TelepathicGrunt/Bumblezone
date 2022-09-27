@@ -1,0 +1,1128 @@
+{
+  "pokecube:tropius": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "pokecube:crop_nanab" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:lotad": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:lily_pad" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:lombre": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:lily_pad" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:ludicolo": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:lily_pad" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:roselia": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:rose_bush" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:cornflower" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:roserade": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:rose_bush" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:cornflower" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:cherubi": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "pokecube:crop_cheri" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:sweet_berry_bush" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:cherrim": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:peony" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:cherrim_sunny": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:lilac" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:bounsweet": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "pokecube:crop_cheri" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:sweet_berry_bush" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:breloom": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:brown_mushroom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:shroomish": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:brown_mushroom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:cacnea": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:cactus" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:cacturne": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:cactus" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:carnivine": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:deerling": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:dandelion" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:ferroseed": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:sweet_berry_bush" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:ferrothorn": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:sweet_berry_bush" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:flabebe": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:poppy" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:floette": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:poppy" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:florges": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:poppy" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:dandelion" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:pink_tulip" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:foongus": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:red_mushroom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:amoonguss": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:red_mushroom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:gossifleur": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:dandelion" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:oddish": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:fern" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:gloom": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:spore_blossom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:bellossom": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:poppy" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:vileplume": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:spore_blossom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:pumpkaboo": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:pumpkin_stem" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:pumpkaboo_small": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:pumpkin_stem" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:pumpkaboo_large": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:pumpkin_stem" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:pumpkaboo_super": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:pumpkin_stem" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:gourgeist": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:pumpkin_stem" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:gourgeist_small": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:pumpkin_stem" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:gourgeist_large": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:pumpkin_stem" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:gourgeist_super": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:pumpkin_stem" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:ivysaur": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:spore_blossom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:fern" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:venusaur": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:spore_blossom" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:large_fern" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:fern" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:venusaur_gigantamax": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:spore_blossom" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:large_fern" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:fern" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:venusaur_mega": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:spore_blossom" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:large_fern" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:fern" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:lilligant": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:orange_tulip" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:lilligant_hisui": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:pink_tulip" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:maractus": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:cactus" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:meganium": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:spore_blossom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:morelull": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:crimson_fungus" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:shiinotic": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:crimson_fungus" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:paras": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:red_mushroom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:parasect": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:red_mushroom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:phantump": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:dark_oak_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:trevenant": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:dark_oak_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:pineco": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:spruce_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:forretress": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:spruce_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:sceptile": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:oak_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:spruce_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:birch_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:jungle_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:acacia_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:dark_oak_sapling" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:sceptile_mega": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:oak_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:spruce_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:birch_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:jungle_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:acacia_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:dark_oak_sapling" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:serperior": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:servine": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:snivy": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:shaymin_land": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:pink_tulip" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:shaymin_sky": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:pink_tulip" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:skiploom": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:dandelion" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:sunflora": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:sunflower" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:tangela": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:tangrowth": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:torterra": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:oak_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:tsareena": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:lilac" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:victreebel": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:weepinbell": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:bellsprout": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:lurantis": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:spore_blossom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:lilac" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:peony" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "pokecube:comfey": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:white_tulip" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:red_tulip" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:pink_tulip" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:orange_tulip" },
+          "weight": 1
+        }
+      ]
+    }
+  }]
+}

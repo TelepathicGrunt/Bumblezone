@@ -1,0 +1,43 @@
+{
+  "biomemakeover:mushroom_trader": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "biomemakeover:green_glowshroom" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "biomemakeover:blightbat": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "biomemakeover:purple_glowshroom" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "biomemakeover:decayed": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }]
+}

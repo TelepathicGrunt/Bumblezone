@@ -48,7 +48,7 @@ public class BeeAggression {
 
             String mobName = ForgeRegistries.ENTITY_TYPES.getKey(entityType).getPath();
 
-            if(mobName.contains("bee")) {
+            if(mobName.contains("bee") || mobName.contains("bumble_beast")) {
                 SET_OF_BEE_NAMED_ENTITIES.add(entityType);
             }
             if(LIST_OF_BEE_HATING_NAMES.stream().anyMatch(mobName::contains)) {

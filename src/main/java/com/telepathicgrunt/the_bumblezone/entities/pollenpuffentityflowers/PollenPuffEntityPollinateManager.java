@@ -18,6 +18,8 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoader;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,8 +43,11 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
                 if (entityTypeOptional.isPresent()) {
                     return DataResult.success(entityTypeOptional.get());
                 }
-                else  {
-                    return DataResult.error("Bz Error - Unknown EntityType");
+                else if (ModList.get().isLoaded(r.getNamespace())) {
+                    return DataResult.error("Bz Error - Unknown EntityType:  " + r + "  - ");
+                }
+                else {
+                    return DataResult.error("Bz Error - Target mod not present");
                 }
             }, Registry.ENTITY_TYPE::getKey), Codec.list(EntryObject.ENTRY_CODEC));
 
@@ -59,7 +64,7 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
             try {
                 DataResult<Map<EntityType<?>, List<EntryObject>>> mapDataResult = CODEC.parse(JsonOps.INSTANCE, jsonElement);
                 mapDataResult.error().ifPresent(e -> {
-                    if (!e.message().contains("Bz Error - Unknown EntityType")) {
+                    if (!e.message().contains("Bz Error - Target mod not present")) {
                         Bumblezone.LOGGER.error("Bumblezone Error: Couldn't parse pollen puff entity to flower file {} - Error: {}", fileIdentifier, e);
                     }
                  });
@@ -77,7 +82,7 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
                 });
             }
             catch (Exception e) {
-                Bumblezone.LOGGER.error("Bumblezone Error: Couldn't parse pollen puff entity to flower file {}", fileIdentifier, e);
+                Bumblezone.LOGGER.error("Bumblezone Error: Couldn't parse pollen puff entity to flower file: {}", fileIdentifier, e);
             }
         });
     }
