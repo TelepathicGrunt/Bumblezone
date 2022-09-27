@@ -13,20 +13,5 @@
         }
       ]
     }
-  }],
-  "blue_skies:starlit_crusher": [{
-    "plants_to_spawn": {
-      "type": "minecraft:weighted_state_provider",
-      "entries": [
-        {
-          "data": { "Name": "blue_skies:starlit_sapling" },
-          "weight": 2
-        },
-        {
-          "data": { "Name": "minecraft:air" },
-          "weight": 1
-        }
-      ]
-    }
   }]
 }
