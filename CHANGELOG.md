@@ -11,6 +11,13 @@ Carpenter Bees Boots now trigger the Fabric API Block Break event so claims mods
 ##### Pollen Puff:
 If datapacked to work with Bamboo Saplings or Vines, it will now properly place those blocks nearby when hit with Pollen Puff.
 
+##### Mod Compat:
+Charm's Moobloom now spawns certain flowers based on type when hit with Pollen Puff.
+
+Moobloom's (Flowercow) mod's Mooblooms now spawns certain flowers based on type when hit with Pollen Puff.
+
+Flowers and Mooblooms mod's Moobloom now spawns certain flowers based on type when hit with Pollen Puff. The flowers on Moobloom must be fully grown first.
+
 
 ### **(V.6.2.9 Changes) (1.19.2 Minecraft)**
 

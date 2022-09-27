@@ -75,21 +75,6 @@
       ]
     }
   }],
-  "creeperoverhaul:bamboo_creeper": [{
-    "plants_to_spawn": {
-      "type": "minecraft:weighted_state_provider",
-      "entries": [
-        {
-          "data": { "Name": "minecraft:bamboo_sapling" },
-          "weight": 2
-        },
-        {
-          "data": { "Name": "minecraft:air" },
-          "weight": 1
-        }
-      ]
-    }
-  }],
   "creeperoverhaul:swamp_creeper": [{
     "plants_to_spawn": {
       "type": "minecraft:weighted_state_provider",
@@ -97,21 +82,6 @@
         {
           "data": { "Name": "minecraft:lily_pad" },
           "weight": 1
-        },
-        {
-          "data": { "Name": "minecraft:air" },
-          "weight": 1
-        }
-      ]
-    }
-  }],
-  "creeperoverhaul:bamboo_creeper": [{
-    "plants_to_spawn": {
-      "type": "minecraft:weighted_state_provider",
-      "entries": [
-        {
-          "data": { "Name": "minecraft:bamboo_sapling" },
-          "weight": 2
         },
         {
           "data": { "Name": "minecraft:air" },
