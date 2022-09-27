@@ -3,6 +3,9 @@
 ##### Config:
 Fixed beehemothSpeed config so it applies better and value scales a bit better between newly tamed Beehemoths and Queen Beehemoths
 
+##### Item:
+Carpenter Bees Boots should behave a bit better if a block mining is blocked by claims or something.
+
 ##### Pollen Puff:
 If datapacked to work with Bamboo Saplings or Vines, it will now properly place those blocks nearby when hit with Pollen Puff.
 
