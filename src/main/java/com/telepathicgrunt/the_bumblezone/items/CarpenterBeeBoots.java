@@ -79,25 +79,29 @@ public class CarpenterBeeBoots extends BeeArmor {
 
                     if (finalMiningProgress >= 10) {
                         world.destroyBlockProgress(itemId, belowBlockPos, -1);
-                        BlockEntity blockEntity = belowBlockState.hasBlockEntity() ? world.getBlockEntity(belowBlockPos) : null;
-                        belowBlockState.getBlock().playerDestroy(
-                                world,
-                                player,
-                                belowBlockPos,
-                                belowBlockState,
-                                blockEntity,
-                                beeBoots);
                         boolean blockBroken = world.destroyBlock(belowBlockPos, false, player);
 
-                        if(random.nextFloat() < 0.045) {
-                            beeBoots.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.FEET));
-                        }
+                        if (blockBroken) {
+                            BlockEntity blockEntity = belowBlockState.hasBlockEntity() ? world.getBlockEntity(belowBlockPos) : null;
 
-                        if(blockBroken && player instanceof ServerPlayer serverPlayer) {
-                            serverPlayer.awardStat(BzStats.CARPENTER_BEE_BOOTS_MINED_BLOCKS_RL.get());
+                            belowBlockState.getBlock().playerDestroy(
+                                    world,
+                                    player,
+                                    belowBlockPos,
+                                    belowBlockState,
+                                    blockEntity,
+                                    beeBoots);
 
-                            if(serverPlayer.getStats().getValue(Stats.CUSTOM.get(BzStats.CARPENTER_BEE_BOOTS_MINED_BLOCKS_RL.get(), StatFormatter.DEFAULT)) >= 200) {
-                                BzCriterias.CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER.trigger(serverPlayer);
+                            if(random.nextFloat() < 0.045) {
+                                beeBoots.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.FEET));
+                            }
+
+                            if(player instanceof ServerPlayer serverPlayer) {
+                                serverPlayer.awardStat(BzStats.CARPENTER_BEE_BOOTS_MINED_BLOCKS_RL.get());
+
+                                if(serverPlayer.getStats().getValue(Stats.CUSTOM.get(BzStats.CARPENTER_BEE_BOOTS_MINED_BLOCKS_RL.get(), StatFormatter.DEFAULT)) >= 200) {
+                                    BzCriterias.CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER.trigger(serverPlayer);
+                                }
                             }
                         }
 

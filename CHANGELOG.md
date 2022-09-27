@@ -3,11 +3,14 @@
 ##### Config:
 Fixed beehemothSpeed config so it applies better and value scales a bit better between newly tamed Beehemoths and Queen Beehemoths
 
+##### Item:
+Carpenter Bees Boots should behave a bit better if a block mining is blocked by claims or something.
+
 ##### Pollen Puff:
 If datapacked to work with Bamboo Saplings or Vines, it will now properly place those blocks nearby when hit with Pollen Puff.
 
 ##### Mod Compat:
-Blue Skies's Shrumpty and Starlit Crusher now spawns certain plants when hit with Pollen Puff.
+Blue Skies's Shrumpty now spawns Snowcap Pinhead blocks when hit with Pollen Puff sometimes.
 
 Creeper Overhaul's Jungle, Bamboo, Spruce, Dark Oak, Swamp, Mushroom, Hills, Badlands, and Desert Creepers now spawns certain plants when hit with Pollen Puff.
 
