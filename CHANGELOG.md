@@ -20,6 +20,8 @@ Moobloom's (Flowercow) mod's Mooblooms now spawns certain flowers based on type 
 
 Flowers and Mooblooms mod's Moobloom now spawns certain flowers based on type when hit with Pollen Puff. The flowers on Moobloom must be fully grown first.
 
+Biome Makeover's Mushroom Trader, Blightbat, and Decayed now spawns certain plants when hit with Pollen Puff.
+
 
 ### **(V.6.1.12 maintenance bug-fixes. No more content updates) (1.19.2 Minecraft)**
 
