@@ -1,0 +1,32 @@
+{
+  "extendedmushrooms:mushroom_sheep": [
+    {
+      "nbt_match": {
+        "Mushroom": 1
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:red_mushroom" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Mushroom": 0
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:brown_mushroom" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ]
+}

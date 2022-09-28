@@ -1,3 +1,26 @@
+### **(V.6.2.10 Changes) (1.19.2 Minecraft)**
+
+##### Config:
+Fixed beehemothSpeed config so it applies better and value scales a bit better between newly tamed Beehemoths and Queen Beehemoths
+
+##### Item:
+Carpenter Bees Boots should behave a bit better if a block mining is blocked by claims or something.
+
+Carpenter Bees Boots now trigger the Fabric API Block Break event so claims mods should be able to stop it properly now.
+
+##### Pollen Puff:
+If datapacked to work with Bamboo Saplings or Vines, it will now properly place those blocks nearby when hit with Pollen Puff.
+
+Improved error message for Pollen Puff json files if target entity does not exist but the mod it is from is on.
+
+##### Mod Compat:
+Charm's Moobloom now spawns certain flowers based on type when hit with Pollen Puff.
+
+Moobloom's (Flowercow) mod's Mooblooms now spawns certain flowers based on type when hit with Pollen Puff.
+
+Flowers and Mooblooms mod's Moobloom now spawns certain flowers based on type when hit with Pollen Puff. The flowers on Moobloom must be fully grown first.
+
+
 ### **(V.6.2.9 Changes) (1.19.2 Minecraft)**
 
 ##### Effects:

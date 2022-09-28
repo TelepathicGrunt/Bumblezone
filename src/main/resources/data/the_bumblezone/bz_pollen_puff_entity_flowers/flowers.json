@@ -1,0 +1,196 @@
+{
+  "flowers:moobloom": [
+    {
+      "nbt_match": {
+        "Age": 0,
+        "flower_age": 4,
+        "flower_type": 0
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:allium" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "flower_age": 4,
+        "flower_type": 1
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:azure_bluet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "flower_age": 4,
+        "flower_type": 2
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:blue_orchid" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "flower_age": 4,
+        "flower_type": 3
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:cornflower" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "flower_age": 4,
+        "flower_type": 4
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:dandelion" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "flower_age": 4,
+        "flower_type": 5
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:lily_of_the_valley" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "flower_age": 4,
+        "flower_type": 6
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:orange_tulip" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "flower_age": 4,
+        "flower_type": 7
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:oxeye_daisy" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "flower_age": 4,
+        "flower_type": 8
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:pink_tulip" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "flower_age": 4,
+        "flower_type": 9
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:poppy" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "flower_age": 4,
+        "flower_type": 10
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:red_tulip" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "flower_age": 4,
+        "flower_type": 11
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:white_tulip" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ]
+}

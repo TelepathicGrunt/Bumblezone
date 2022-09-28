@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.components.MiscComponent;
 import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
+import com.telepathicgrunt.the_bumblezone.mixin.blocks.VineBlockAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -42,7 +43,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.SupportType;
+import net.minecraft.world.level.block.VineBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.phys.BlockHitResult;
@@ -235,11 +238,26 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 isTallPlant = true;
             }
 
+            if(blockstate.getBlock() instanceof VineBlock vineBlock) {
+                for(Direction direction : Direction.Plane.HORIZONTAL) {
+                    BooleanProperty faceProperty = VineBlock.getPropertyForFace(direction);
+                    boolean flag = ((VineBlockAccessor)vineBlock).callCanSupportAtFace(level, newPos, direction);
+                    blockstate = blockstate.setValue(faceProperty, flag);
+                }
+            }
+
             boolean isWaterBased = blockstate.getFluidState().is(FluidTags.WATER);
             if((isWaterBased ? this.level.getBlockState(newPos).is(Blocks.WATER) : this.level.isEmptyBlock(newPos)) && blockstate.canSurvive(this.level, newPos)) {
                 if (blockstate.is(Blocks.MOSS_CARPET)) {
                     BlockState belowState = this.level.getBlockState(newPos.below());
                     if (Registry.BLOCK.getKey(belowState.getBlock()).getPath().contains("carpet") || belowState.is(BlockTags.UNSTABLE_BOTTOM_CENTER) || !belowState.isFaceSturdy(this.level, newPos.below(), Direction.DOWN, SupportType.FULL)) {
+                        continue;
+                    }
+                }
+
+                if (blockstate.is(Blocks.BAMBOO_SAPLING)) {
+                    BlockState belowState = this.level.getBlockState(newPos.below());
+                    if (belowState.is(Blocks.BAMBOO_SAPLING) || belowState.is(Blocks.BAMBOO)) {
                         continue;
                     }
                 }
