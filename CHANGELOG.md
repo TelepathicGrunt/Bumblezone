@@ -18,9 +18,7 @@ Blue Skies's Shrumpty now spawns Snowcap Pinhead blocks when hit with Pollen Puf
 
 Creeper Overhaul's Jungle, Bamboo, Spruce, Dark Oak, Swamp, Mushroom, Hills, Badlands, and Desert Creepers now spawns certain plants when hit with Pollen Puff.
 
-Infernal Expansion's Shroomloin now spawns certain plants based on type when hit with Pollen Puff.
-
-Blue Skies's Shroomloin now spawns certain plants when hit with Pollen Puff depending on Shroomloin's type.
+Infernal Expansion's Shroomloin now spawns certain plants when hit with Pollen Puff depending on Shroomloin's type.
 
 Creatures and Beasts's Lilytad, minipad, Cactem, and Sporelings now spawns certain plants when hit with Pollen Puff.
 
