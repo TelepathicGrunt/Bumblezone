@@ -5,7 +5,7 @@ Sugar Infused Stone and Sugar Infused Cobblestone no longer requires silk touch 
 
 ##### Advancements:
 Made a few advancements description have hints on how to complete them.
-Helps reduce the difficulty in figuring out how to get them.
+ Helps reduce the difficulty in figuring out how to get them.
 
 
 ### **(V.6.2.10 Changes) (1.19.2 Minecraft)**
