@@ -1,3 +1,13 @@
+### **(V.6.2.10 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Sugar Infused Stone and Sugar Infused Cobblestone no longer requires silk touch to drop itself.
+
+##### Advancements:
+Made a few advancements description have hints on how to complete them. 
+ Helps reduce the difficulty in figuring out how to get them.
+
+
 ### **(V.6.2.9 Changes) (1.19.2 Minecraft)**
 
 ##### Config:
