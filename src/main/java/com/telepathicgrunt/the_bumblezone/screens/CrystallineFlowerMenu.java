@@ -48,6 +48,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     final DataSlot searchTreasure = DataSlot.standalone();
     final DataSlot searchLevel = DataSlot.standalone();
     final DataSlot consumeXP = DataSlot.standalone();
+    //final DataSlot consumeXP = DataSlot.shared();
     private final Container inputContainer = new SimpleContainer(3) {
         /**
          * For tile entities, ensures the chunk containing the tile entity is saved to disk later - the game won't think

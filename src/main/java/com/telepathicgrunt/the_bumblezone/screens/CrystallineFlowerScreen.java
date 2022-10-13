@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -23,16 +22,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CrystallineFlowerScreen extends AbstractContainerScreen<CrystallineFlowerMenu> {
     private static final ResourceLocation CONTAINER_BACKGROUND = new ResourceLocation(Bumblezone.MODID, "textures/gui/container/crystallized_flower.png");
+    private static final Pattern SPLIT_WITH_COMBINING_CHARS = Pattern.compile("(\\p{M}+|\\P{M}\\p{M}*)"); // {M} is any kind of 'mark' http://stackoverflow.com/questions/29110887/detect-any-combining-character-in-java/29111105
 
     private static final int MENU_HEIGHT = 126;
 
@@ -47,8 +49,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private static final int ENCHANTMENT_SCROLLBAR_X_OFFSET = 164;
     private static final int ENCHANTMENT_SCROLLBAR_Y_OFFSET = 50;
     private static final int ENCHANTMENT_SCROLLBAR_Y_RANGE = 50;
-    private static final float ENCHANTMENT_SCROLLBAR_U_TEXTURE = 162.0F;
-    private static final float ENCHANTMENT_SCROLLBAR_V_TEXTURE = 233.0F;
+    private static final float ENCHANTMENT_SCROLLBAR_U_TEXTURE = 230.0F;
+    private static final float ENCHANTMENT_SCROLLBAR_V_TEXTURE = 182.0F;
 
     private static final float ENCHANTMENT_SELECTED_U_TEXTURE = 0F;
     private static final float ENCHANTMENT_SELECTED_V_TEXTURE = 197.0F;
@@ -59,8 +61,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
     private static final int XP_BAR_X_OFFSET = 11;
     private static final int XP_BAR_Y_OFFSET = 99;
-    private static final float XP_BAR_U_TEXTURE = 108.0F;
-    private static final float XP_BAR_V_TEXTURE = 238.0F;
+    private static final float XP_BAR_U_TEXTURE = 176.0F;
+    private static final float XP_BAR_V_TEXTURE = 187.0F;
 
     private static final int XP_CONSUME_1_X_OFFSET = 46;
     private static final int XP_CONSUME_1_Y_OFFSET = 14;
@@ -85,7 +87,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private static final float CONSUME_ARROW_U_OFFSET = 180.0F;
     private static final float CONSUME_ARROW_V_OFFSET = 197.0F;
 
-    private static final int BUTTON_PRESSED_TIMER_VISUAL = 20;
+    private static final int BUTTON_PRESSED_TIMER_VISUAL = 25;
 
     private float scrollOff;
     private boolean scrolling;
@@ -152,12 +154,12 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 }
             });
 
-        drawPushableButtons(poseStack, startX, startY);
+        drawPushableButtons(poseStack, startX, startY, mouseX, mouseY);
 
         renderTooltip(poseStack, mouseX, mouseY);
     }
 
-    private void drawPushableButtons(PoseStack poseStack, int startX, int startY) {
+    private void drawPushableButtons(PoseStack poseStack, int startX, int startY, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
 
@@ -166,7 +168,14 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             blit(poseStack, startX + XP_CONSUME_1_X_OFFSET, startY + XP_CONSUME_1_Y_OFFSET, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 18, 18, 18, 256, 256);
         }
         else {
-            blit(poseStack, startX + XP_CONSUME_1_X_OFFSET, startY + XP_CONSUME_1_Y_OFFSET, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET, 18, 18, 256, 256);
+            int xOffset = startX + XP_CONSUME_1_X_OFFSET;
+            int yOffset = startY + XP_CONSUME_1_Y_OFFSET;
+            if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
+                blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 36, 18, 18, 256, 256);
+            }
+            else {
+                blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET, 18, 18, 256, 256);
+            }
         }
 
         if (pressedXp2Timer > 0) {
@@ -174,7 +183,14 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             blit(poseStack, startX + XP_CONSUME_2_X_OFFSET, startY + XP_CONSUME_2_Y_OFFSET, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 18, 18, 18, 256, 256);
         }
         else {
-            blit(poseStack, startX + XP_CONSUME_2_X_OFFSET, startY + XP_CONSUME_2_Y_OFFSET, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET, 18, 18, 256, 256);
+            int xOffset = startX + XP_CONSUME_2_X_OFFSET;
+            int yOffset = startY + XP_CONSUME_2_Y_OFFSET;
+            if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
+                blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 36, 18, 18, 256, 256);
+            }
+            else {
+                blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET, 18, 18, 256, 256);
+            }
         }
 
         if (pressedXp3Timer > 0) {
@@ -182,7 +198,14 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             blit(poseStack, startX + XP_CONSUME_3_X_OFFSET, startY + XP_CONSUME_3_Y_OFFSET, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 18, 18, 18, 256, 256);
         }
         else {
-            blit(poseStack, startX + XP_CONSUME_3_X_OFFSET, startY + XP_CONSUME_3_Y_OFFSET, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET, 18, 18, 256, 256);
+            int xOffset = startX + XP_CONSUME_3_X_OFFSET;
+            int yOffset = startY + XP_CONSUME_3_Y_OFFSET;
+            if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
+                blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 36, 18, 18, 256, 256);
+            }
+            else {
+                blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET, 18, 18, 256, 256);
+            }
         }
 
         if (pressedConsumeTimer > 0) {
@@ -191,7 +214,14 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, getBlitOffset(), CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET + 18, 16, 16, 256, 256);
         }
         else if (this.menu.consumeSlot.hasItem()) {
-            blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, getBlitOffset(), CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET, 18, 18, 256, 256);
+            int xOffset = startX + CONSUME_CONFIRMATION_X_OFFSET;
+            int yOffset = startY + CONSUME_CONFIRMATION_Y_OFFSET;
+            if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
+                blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, getBlitOffset(), CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 36, 18, 18, 256, 256);
+            }
+            else {
+                blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, getBlitOffset(), CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET, 18, 18, 256, 256);
+            }
             blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, getBlitOffset(), CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET, 16, 16, 256, 256);
         }
     }
@@ -216,7 +246,24 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         boolean hasTruncated = false;
         while (font.width(translatedEnchantmentName.toString()) > maxSize) {
             int nameLength = translatedEnchantmentName.length();
-            translatedEnchantmentName.delete(nameLength - (hasTruncated ? 4 : 1), nameLength);
+            if (hasTruncated) {
+                translatedEnchantmentName.delete(nameLength - 3, nameLength);
+            }
+            nameLength = translatedEnchantmentName.length();
+
+            Matcher matcher = SPLIT_WITH_COMBINING_CHARS.matcher(translatedEnchantmentName);
+            if (matcher.find()) {
+                List<MatchResult> matchResults = matcher.results().toList();
+                MatchResult match = matchResults.get(matchResults.size() - 1);
+                String lastCharacter = match.group();
+                if (translatedEnchantmentName.toString().endsWith(lastCharacter)) {
+                    translatedEnchantmentName.delete(nameLength - lastCharacter.length(), nameLength);
+                }
+            }
+            else {
+                break;
+            }
+
             translatedEnchantmentName.append("...");
             hasTruncated = true;
         }
