@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerMenu;
+import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -16,4 +18,5 @@ public class BzMenuTypes {
     public static final RegistryObject<MenuType<StrictChestMenu>> STRICT_9x4 = MENUS.register("strict_9x4", () -> new MenuType<>(StrictChestMenu::fourRows));
     public static final RegistryObject<MenuType<StrictChestMenu>> STRICT_9x5 = MENUS.register("strict_9x5", () -> new MenuType<>(StrictChestMenu::fiveRows));
     public static final RegistryObject<MenuType<StrictChestMenu>> STRICT_9x6 = MENUS.register("strict_9x6", () -> new MenuType<>(StrictChestMenu::sixRows));
+    public static final RegistryObject<MenuType<CrystallineFlowerMenu>> CRYSTALLINE_FLOWER = MENUS.register("crystalline_flower", () -> new MenuType<>(CrystallineFlowerMenu::new));
 }

@@ -110,7 +110,7 @@ dependencies {
     compileOnly fg.deobf("dev.architectury:architectury-forge:${project.architectury_version}")
 
     compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
-    runtimeOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
+    //runtimeOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
 
     // Switch to `implementation` when testing mod compat
     //runtimeOnly fg.deobf("dev.architectury:architectury-forge:${project.architectury_version}")

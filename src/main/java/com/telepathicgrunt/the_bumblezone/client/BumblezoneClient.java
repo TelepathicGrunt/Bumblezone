@@ -29,6 +29,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -95,6 +96,7 @@ public class BumblezoneClient {
         MenuScreens.register(BzMenuTypes.STRICT_9x4.get(), StrictChestScreen::new);
         MenuScreens.register(BzMenuTypes.STRICT_9x5.get(), StrictChestScreen::new);
         MenuScreens.register(BzMenuTypes.STRICT_9x6.get(), StrictChestScreen::new);
+        MenuScreens.register(BzMenuTypes.CRYSTALLINE_FLOWER.get(), CrystallineFlowerScreen::new);
     }
 
     private static void registerItemProperties() {

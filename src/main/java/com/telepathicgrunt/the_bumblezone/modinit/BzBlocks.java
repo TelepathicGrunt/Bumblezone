@@ -54,4 +54,5 @@ public class BzBlocks {
     public static final RegistryObject<Block> SUPER_CANDLE_BASE_WHITE = BLOCKS.register("super_candle_base_white", SuperCandleBase::new);
     public static final RegistryObject<Block> SUPER_CANDLE_BASE_YELLOW = BLOCKS.register("super_candle_base_yellow", SuperCandleBase::new);
     public static final RegistryObject<Block> INCENSE_BASE_CANDLE = BLOCKS.register("incense_candle_base", IncenseCandleBase::new);
+    public static final RegistryObject<Block> CRYSTALLINE_FLOWER = BLOCKS.register("crystalline_flower", CrystallineFlower::new);
 }
