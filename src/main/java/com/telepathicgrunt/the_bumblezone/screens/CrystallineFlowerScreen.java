@@ -37,7 +37,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
     private static final int ENCHANTMENT_AREA_X_OFFSET = 76;
     private static final int ENCHANTMENT_AREA_Y_OFFSET = 52;
-    private static final int ENCHANTMENT_SECTION_WIDTH = 89;
+    private static final int ENCHANTMENT_SECTION_WIDTH = 88;
     private static final int ENCHANTMENT_SECTION_HEIGHT = 19;
 
     private static final int ENCHANTMENT_SCROLLBAR_X_OFFSET = 164;
