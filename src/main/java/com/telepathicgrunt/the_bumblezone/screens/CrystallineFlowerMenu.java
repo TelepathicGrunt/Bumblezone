@@ -161,8 +161,47 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             setupResultSlot(selectedEnchantmentIndex.get());
             return true;
         }
+        // drain xp 1
+        else if (id == -2) {
+            drainXPLevel(1);
+            return true;
+        }
+        // drain xp 2
+        else if (id == -3) {
+            drainXPLevel(2);
+            return true;
+        }
+        // drain xp 3
+        else if (id == -4) {
+            drainXPLevel(3);
+            return true;
+        }
+        // confirm consume
+        else if (id == -5) {
+            consumeItem();
+            return true;
+        }
         else {
             return false;
+        }
+    }
+
+    private void consumeItem() {
+        ItemStack consumedItem = consumeSlot.getItem();
+        // check to make sure not maximum xp without tier upgrade
+        if (true) {
+            consumeSlot.container.removeItemNoUpdate(consumeSlot.index);
+            //grant xp and tier upgrade
+        }
+    }
+
+    private void drainXPLevel(int levelToConsume) {
+        // check to make sure not maximum xp without tier upgrade
+        if (true) {
+            if (!player.getAbilities().instabuild) {
+                player.onEnchantmentPerformed(ItemStack.EMPTY, levelToConsume);
+            }
+            //grant xp and tier upgrade
         }
     }
 

@@ -5,10 +5,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.Registry;
+import net.minecraft.locale.Language;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -20,6 +22,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import org.jetbrains.annotations.NotNull;
+import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,9 +62,38 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private static final float XP_BAR_U_TEXTURE = 108.0F;
     private static final float XP_BAR_V_TEXTURE = 238.0F;
 
+    private static final int XP_CONSUME_1_X_OFFSET = 46;
+    private static final int XP_CONSUME_1_Y_OFFSET = 14;
+    private static final int XP_CONSUME_2_X_OFFSET = 46;
+    private static final int XP_CONSUME_2_Y_OFFSET = 34;
+    private static final int XP_CONSUME_3_X_OFFSET = 46;
+    private static final int XP_CONSUME_3_Y_OFFSET = 54;
+
+    private static final float XP_CONSUME_1_U_OFFSET = 108.0F;
+    private static final float XP_CONSUME_1_V_OFFSET = 197.0F;
+    private static final float XP_CONSUME_2_U_OFFSET = 126.0F;
+    private static final float XP_CONSUME_2_V_OFFSET = 197.0F;
+    private static final float XP_CONSUME_3_U_OFFSET = 144.0F;
+    private static final float XP_CONSUME_3_V_OFFSET = 197.0F;
+
+    private static final int CONSUME_CONFIRMATION_X_OFFSET = 25;
+    private static final int CONSUME_CONFIRMATION_Y_OFFSET = 62;
+    private static final float CONSUME_CONFIRMATION_U_OFFSET = 162.0F;
+    private static final float CONSUME_CONFIRMATION_V_OFFSET = 197.0F;
+    private static final int CONSUME_ARROW_X_OFFSET = 26;
+    private static final int CONSUME_ARROW_Y_OFFSET = 82;
+    private static final float CONSUME_ARROW_U_OFFSET = 180.0F;
+    private static final float CONSUME_ARROW_V_OFFSET = 197.0F;
+
+    private static final int BUTTON_PRESSED_TIMER_VISUAL = 20;
+
     private float scrollOff;
     private boolean scrolling;
     private int startIndex;
+    private int pressedXp1Timer = 0;
+    private int pressedXp2Timer = 0;
+    private int pressedXp3Timer = 0;
+    private int pressedConsumeTimer = 0;
 
     private final List<Map.Entry<ResourceKey<Enchantment>, EnchantmentInstance>> enchantmentsAvailable = new ArrayList<>();
 
@@ -119,17 +152,75 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 }
             });
 
+        drawPushableButtons(poseStack, startX, startY);
+
         renderTooltip(poseStack, mouseX, mouseY);
     }
 
+    private void drawPushableButtons(PoseStack poseStack, int startX, int startY) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
+
+        if (pressedXp1Timer > 0) {
+            pressedXp1Timer--;
+            blit(poseStack, startX + XP_CONSUME_1_X_OFFSET, startY + XP_CONSUME_1_Y_OFFSET, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 18, 18, 18, 256, 256);
+        }
+        else {
+            blit(poseStack, startX + XP_CONSUME_1_X_OFFSET, startY + XP_CONSUME_1_Y_OFFSET, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET, 18, 18, 256, 256);
+        }
+
+        if (pressedXp2Timer > 0) {
+            pressedXp2Timer--;
+            blit(poseStack, startX + XP_CONSUME_2_X_OFFSET, startY + XP_CONSUME_2_Y_OFFSET, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 18, 18, 18, 256, 256);
+        }
+        else {
+            blit(poseStack, startX + XP_CONSUME_2_X_OFFSET, startY + XP_CONSUME_2_Y_OFFSET, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET, 18, 18, 256, 256);
+        }
+
+        if (pressedXp3Timer > 0) {
+            pressedXp3Timer--;
+            blit(poseStack, startX + XP_CONSUME_3_X_OFFSET, startY + XP_CONSUME_3_Y_OFFSET, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 18, 18, 18, 256, 256);
+        }
+        else {
+            blit(poseStack, startX + XP_CONSUME_3_X_OFFSET, startY + XP_CONSUME_3_Y_OFFSET, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET, 18, 18, 256, 256);
+        }
+
+        if (pressedConsumeTimer > 0) {
+            pressedConsumeTimer--;
+            blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, getBlitOffset(), CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 18, 18, 18, 256, 256);
+            blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, getBlitOffset(), CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET + 18, 16, 16, 256, 256);
+        }
+        else if (this.menu.consumeSlot.hasItem()) {
+            blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, getBlitOffset(), CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET, 18, 18, 256, 256);
+            blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, getBlitOffset(), CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET, 16, 16, 256, 256);
+        }
+    }
+
     private void drawEnchantmentText(PoseStack poseStack, int rowStartX, int currentRowStartY, Map.Entry<ResourceKey<Enchantment>, EnchantmentInstance> enchantmentEntry, int enchantmentNameColor, int enchantmentLevelColor) {
-        MutableComponent mutableComponent = Component.translatable("""
+        String translatedEnchantmentName = getTruncatedString("""
                 enchantment.%s.%s""".formatted(
                     enchantmentEntry.getKey().location().getNamespace(),
-                    enchantmentEntry.getKey().location().getPath()));
+                    enchantmentEntry.getKey().location().getPath()),
+                88);
+
+        MutableComponent mutableComponent = Component.literal(translatedEnchantmentName);
         MutableComponent mutableComponent2 = Component.translatable("the_bumblezone.container.crystalline_flower.level", enchantmentEntry.getValue().level);
+
         font.draw(poseStack, mutableComponent, rowStartX, currentRowStartY, enchantmentNameColor);
         font.draw(poseStack, mutableComponent2, rowStartX + 5, currentRowStartY + 8, enchantmentLevelColor);
+    }
+
+    @NotNull
+    private String getTruncatedString(String stringToTruncate, int maxSize) {
+        StringBuilder translatedEnchantmentName = new StringBuilder(Language.getInstance().getOrDefault(stringToTruncate));
+        boolean hasTruncated = false;
+        while (font.width(translatedEnchantmentName.toString()) > maxSize) {
+            int nameLength = translatedEnchantmentName.length();
+            translatedEnchantmentName.delete(nameLength - (hasTruncated ? 4 : 1), nameLength);
+            translatedEnchantmentName.append("...");
+            hasTruncated = true;
+        }
+        return translatedEnchantmentName.toString();
     }
 
     private void populateAvailableEnchants() {
@@ -204,8 +295,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
         if (handleEnchantmentAreaRow(mouseX, mouseY, (Integer sectionId) -> {
             if(this.menu.clickMenuButton(this.minecraft.player, sectionId)) {
-                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
-                this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, sectionId);
+                sendButtonPressToMenu(sectionId);
                 return true;
             }
             return false;
@@ -218,11 +308,53 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
         startX = this.leftPos + ENCHANTMENT_SCROLLBAR_X_OFFSET;
         startY = this.topPos + ENCHANTMENT_SCROLLBAR_Y_OFFSET;
-        if (mouseX >= (double)startX && mouseX < (double)(startX + 6) && mouseY >= (double)startY && mouseY < (double)(startY + ENCHANTMENT_SCROLLBAR_Y_RANGE)) {
+        if (mouseX >= startX &&
+            mouseX < startX + 6 &&
+            mouseY >= startY &&
+            mouseY < startY + ENCHANTMENT_SCROLLBAR_Y_RANGE)
+        {
             this.scrolling = true;
         }
 
+        if (mouseX >= this.leftPos + XP_CONSUME_1_X_OFFSET &&
+            mouseX < this.leftPos + XP_CONSUME_1_X_OFFSET + 18 &&
+            mouseY >= this.topPos + XP_CONSUME_1_Y_OFFSET &&
+            mouseY < this.topPos + XP_CONSUME_1_Y_OFFSET + 18)
+        {
+            pressedXp1Timer = BUTTON_PRESSED_TIMER_VISUAL;
+            sendButtonPressToMenu(-2);
+        }
+        else if (mouseX >= this.leftPos + XP_CONSUME_2_X_OFFSET &&
+                mouseX < this.leftPos + XP_CONSUME_2_X_OFFSET + 18 &&
+                mouseY >= this.topPos + XP_CONSUME_2_Y_OFFSET &&
+                mouseY < this.topPos + XP_CONSUME_2_Y_OFFSET + 18)
+        {
+            pressedXp2Timer = BUTTON_PRESSED_TIMER_VISUAL;
+            sendButtonPressToMenu(-3);
+        }
+        else if (mouseX >= this.leftPos + XP_CONSUME_3_X_OFFSET &&
+                mouseX < this.leftPos + XP_CONSUME_3_X_OFFSET + 18 &&
+                mouseY >= this.topPos + XP_CONSUME_3_Y_OFFSET &&
+                mouseY < this.topPos + XP_CONSUME_3_Y_OFFSET + 18)
+        {
+            pressedXp3Timer = BUTTON_PRESSED_TIMER_VISUAL;
+            sendButtonPressToMenu(-4);
+        }
+        else if (mouseX >= this.leftPos + CONSUME_CONFIRMATION_X_OFFSET &&
+                mouseX < this.leftPos + CONSUME_CONFIRMATION_X_OFFSET + 18 &&
+                mouseY >= this.topPos + CONSUME_CONFIRMATION_Y_OFFSET &&
+                mouseY < this.topPos + CONSUME_CONFIRMATION_Y_OFFSET + 18)
+        {
+            pressedConsumeTimer = BUTTON_PRESSED_TIMER_VISUAL;
+            sendButtonPressToMenu(-5);
+        }
+
         return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    private void sendButtonPressToMenu(Integer sectionId) {
+        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
+        this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, sectionId);
     }
 
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
