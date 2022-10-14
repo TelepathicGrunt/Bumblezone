@@ -5,6 +5,7 @@
   "the_bumblezone.container.honey_cocoon": "Honey Cocoon",
   "the_bumblezone.container.crystalline_flower": "Consume and Enchant",
   "the_bumblezone.container.crystalline_flower.level": "Level: %s",
+  "the_bumblezone.container.crystalline_flower.tier_cost": "Tier cost: %s",
 
   "block.the_bumblezone.porous_honeycomb_block": "Porous Honeycomb Block",
   "block.the_bumblezone.filled_porous_honeycomb_block": "Filled Porous Honeycomb Block",

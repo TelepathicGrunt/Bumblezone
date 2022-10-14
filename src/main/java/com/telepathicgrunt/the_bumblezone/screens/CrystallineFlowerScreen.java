@@ -3,8 +3,11 @@ package com.telepathicgrunt.the_bumblezone.screens;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -13,12 +16,15 @@ import net.minecraft.locale.Language;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.StonecutterRecipe;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import org.jetbrains.annotations.NotNull;
@@ -26,11 +32,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class CrystallineFlowerScreen extends AbstractContainerScreen<CrystallineFlowerMenu> {
     private static final ResourceLocation CONTAINER_BACKGROUND = new ResourceLocation(Bumblezone.MODID, "textures/gui/container/crystallized_flower.png");
@@ -87,6 +95,15 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private static final float CONSUME_ARROW_U_OFFSET = 180.0F;
     private static final float CONSUME_ARROW_V_OFFSET = 197.0F;
 
+    private static final int TIER_X_OFFSET = 11;
+    private static final int TIER_Y_OFFSET = 15;
+    private static final float TIER_FLOWER_U_TEXTURE = 195.0F;
+    private static final float TIER_FLOWER_V_TEXTURE = 197.0F;
+    private static final float TIER_BODY_U_TEXTURE = 195.0F;
+    private static final float TIER_BODY_V_TEXTURE = 207.0F;
+    private static final float TIER_BLOCK_U_TEXTURE = 195.0F;
+    private static final float TIER_BLOCK_V_TEXTURE = 217.0F;
+
     private static final int BUTTON_PRESSED_TIMER_VISUAL = 25;
 
     private float scrollOff;
@@ -119,7 +136,6 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
         renderScroller(poseStack, startX + ENCHANTMENT_SCROLLBAR_X_OFFSET, startY + ENCHANTMENT_SCROLLBAR_Y_OFFSET);
-        renderXPBar(poseStack, startX, startY);
 
         handleEnchantmentAreaRow(mouseX, mouseY,
             (Integer sectionId) -> {
@@ -131,8 +147,14 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
 
                 int row = sectionId - this.startIndex;
-                blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, getBlitOffset(), ENCHANTMENT_HIGHLIGHTED_U_TEXTURE, ENCHANTMENT_HIGHLIGHTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
-                drawEnchantmentText(poseStack, rowStartX, rowStartY + row * 19, enchantmentsAvailable.get(sectionId), 0x402020, 0x304000);
+                if (sectionId == this.menu.selectedEnchantmentIndex.get()) {
+                    blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, getBlitOffset(), ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
+                    drawEnchantmentText(poseStack, rowStartX, rowStartY + row * ENCHANTMENT_SECTION_HEIGHT, enchantmentsAvailable.get(sectionId), 0xFFF000, 0xC0FF00);
+                }
+                else {
+                    blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, getBlitOffset(), ENCHANTMENT_HIGHLIGHTED_U_TEXTURE, ENCHANTMENT_HIGHLIGHTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
+                    drawEnchantmentText(poseStack, rowStartX, rowStartY + row * 19, enchantmentsAvailable.get(sectionId), 0x402020, 0x304000);
+                }
                 return true;
             },
             (Integer sectionId) -> {
@@ -154,16 +176,41 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 }
             });
 
-        drawPushableButtons(poseStack, startX, startY, mouseX, mouseY);
 
+        if (this.menu.selectedEnchantmentIndex.get() != -1) {
+            MutableComponent mutableComponent = Component.literal("↓" + this.menu.tierCost.get()).withStyle(ChatFormatting.BOLD);
+            Screen.drawCenteredString(poseStack, font, mutableComponent, rowStartX + 45, rowStartY - 36, 0xD03010);
+        }
+
+        drawPushableButtons(poseStack, startX, startY, mouseX, mouseY);
+        drawTierState(poseStack, startX, startY);
+        renderXPBar(poseStack, startX, startY);
         renderTooltip(poseStack, mouseX, mouseY);
+    }
+
+    private void drawTierState(PoseStack poseStack, int startX, int startY) {
+        int xOffset = startX + TIER_X_OFFSET;
+        int yOffset = startY + TIER_Y_OFFSET;
+        for (int i = 0; i < 7; i++) {
+            if (i >= this.menu.xpTier.get()) {
+                continue;
+            }
+
+            float textureU = TIER_BODY_U_TEXTURE;
+            float textureV = TIER_BODY_V_TEXTURE;
+            if (i + 1 == this.menu.xpTier.get()) {
+                textureU = TIER_FLOWER_U_TEXTURE;
+                textureV = TIER_FLOWER_V_TEXTURE;
+            }
+            blit(poseStack, xOffset, yOffset + (72 - (i * 12)), getBlitOffset(), textureU, textureV, 10, 10, 256, 256);
+        }
     }
 
     private void drawPushableButtons(PoseStack poseStack, int startX, int startY, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
 
-        if (pressedXp1Timer > 0) {
+        if (pressedXp1Timer > 0 || this.menu.xpTier.get() == 7) {
             pressedXp1Timer--;
             blit(poseStack, startX + XP_CONSUME_1_X_OFFSET, startY + XP_CONSUME_1_Y_OFFSET, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 18, 18, 18, 256, 256);
         }
@@ -178,7 +225,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             }
         }
 
-        if (pressedXp2Timer > 0) {
+        if (pressedXp2Timer > 0 || this.menu.xpTier.get() == 7) {
             pressedXp2Timer--;
             blit(poseStack, startX + XP_CONSUME_2_X_OFFSET, startY + XP_CONSUME_2_Y_OFFSET, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 18, 18, 18, 256, 256);
         }
@@ -193,7 +240,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             }
         }
 
-        if (pressedXp3Timer > 0) {
+        if (pressedXp3Timer > 0|| this.menu.xpTier.get() == 7) {
             pressedXp3Timer--;
             blit(poseStack, startX + XP_CONSUME_3_X_OFFSET, startY + XP_CONSUME_3_Y_OFFSET, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 18, 18, 18, 256, 256);
         }
@@ -211,9 +258,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         if (pressedConsumeTimer > 0) {
             pressedConsumeTimer--;
             blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, getBlitOffset(), CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 18, 18, 18, 256, 256);
-            blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, getBlitOffset(), CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET + 18, 16, 16, 256, 256);
+            blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, getBlitOffset(), CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET + 18, 15, 11, 256, 256);
         }
-        else if (this.menu.consumeSlot.hasItem()) {
+        else if (this.menu.consumeSlot.hasItem() && this.menu.xpTier.get() < 7) {
             int xOffset = startX + CONSUME_CONFIRMATION_X_OFFSET;
             int yOffset = startY + CONSUME_CONFIRMATION_Y_OFFSET;
             if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
@@ -222,7 +269,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             else {
                 blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, getBlitOffset(), CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET, 18, 18, 256, 256);
             }
-            blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, getBlitOffset(), CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET, 16, 16, 256, 256);
+            blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, getBlitOffset(), CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET, 15, 11, 256, 256);
         }
     }
 
@@ -273,7 +320,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private void populateAvailableEnchants() {
         enchantmentsAvailable.clear();
         ItemStack book = this.menu.bookSlot.getItem();
-        if (!book.isEmpty()) {
+        if (!book.isEmpty() && this.menu.xpTier.get() > 1) {
             ItemStack tempBook = book.copy();
             tempBook.setCount(1);
             CompoundTag compoundtag = book.getTag();
@@ -281,8 +328,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 tempBook.setTag(compoundtag.copy());
             }
 
-            List<EnchantmentInstance> availableEnchantments = GeneralUtils.allAllowedEnchantsWithoutMaxLimit(100, tempBook, false);
+            List<EnchantmentInstance> availableEnchantments = EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(100, tempBook, this.menu.xpTier.get() == 7);
             availableEnchantments.forEach(e -> enchantmentsAvailable.add(Map.entry(Registry.ENCHANTMENT.getResourceKey(e.enchantment).get(), e)));
+            enchantmentsAvailable.removeIf(e -> this.menu.xpTier.get() <= EnchantmentUtils.getEnchantmentTierCost(e.getValue()));
             enchantmentsAvailable.sort(
                     Map.Entry.<ResourceKey<Enchantment>, EnchantmentInstance>comparingByKey()
                     .thenComparingInt(a -> a.getValue().level));
@@ -296,11 +344,19 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         int startX = (width - imageWidth) / 2;
         int startY = (height - imageHeight) / 2;
         blit(poseStack, startX, startY, 0, 0, imageWidth, MENU_HEIGHT);
-        blit(poseStack, startX, startY + MENU_HEIGHT, 0, 126, imageWidth, 72);
+        blit(poseStack, startX, startY + MENU_HEIGHT, 0, 126, imageWidth, 71);
     }
 
     private void renderXPBar(PoseStack poseStack, int startX, int startY) {
-        blit(poseStack, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, getBlitOffset(), XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE, 54, 5, 256, 256);
+        if (this.menu.xpTier.get() == 7) {
+            blit(poseStack, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, getBlitOffset(), XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE - 5, 54, 5, 256, 256);
+        }
+        else {
+            blit(poseStack, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, getBlitOffset(), XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE, 54, 5, 256, 256);
+            if (this.menu.xpBarPercent.get() > 0) {
+                blit(poseStack, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, getBlitOffset(), XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE + 5, (int) (54 * (this.menu.xpBarPercent.get() / 100f)), 5, 256, 256);
+            }
+        }
     }
 
     private void renderScroller(PoseStack poseStack, int posX, int posY) {
@@ -337,6 +393,44 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         return targetedSectionTaskSuccess;
     }
 
+    protected void renderTooltip(PoseStack poseStack, int x, int y) {
+        super.renderTooltip(poseStack, x, y);
+        int startX = this.leftPos + ENCHANTMENT_AREA_X_OFFSET - 2;
+        int startY = this.topPos + ENCHANTMENT_AREA_Y_OFFSET - 2;
+        int selectableSections = this.startIndex + Math.min(enchantmentsAvailable.size(), 3);
+        for(int currentSection = this.startIndex; currentSection < selectableSections; ++currentSection) {
+            if (currentSection >= enchantmentsAvailable.size()) continue;
+
+            int sectionOffset = currentSection - this.startIndex;
+            double sectionMouseX = x - (double)(startX);
+            double sectionMouseY = y - (double)(startY + sectionOffset * ENCHANTMENT_SECTION_HEIGHT);
+            if (sectionMouseX >= 0.0D && sectionMouseX < ENCHANTMENT_SECTION_WIDTH && sectionMouseY >= 0.0D && sectionMouseY < ENCHANTMENT_SECTION_HEIGHT) {
+                Map.Entry<ResourceKey<Enchantment>, EnchantmentInstance> enchantment = enchantmentsAvailable.get(currentSection);
+                MutableComponent mutableComponent = Component.translatable("""
+                    enchantment.%s.%s""".formatted(
+                            enchantment.getKey().location().getNamespace(),
+                            enchantment.getKey().location().getPath()))
+                        .withStyle(ChatFormatting.GOLD);
+
+                MutableComponent mutableComponent2 = Component.translatable("the_bumblezone.container.crystalline_flower.level", enchantment.getValue().level)
+                        .withStyle(ChatFormatting.GREEN);
+
+                int tierCost = EnchantmentUtils.getEnchantmentTierCost(enchantment.getValue());
+                MutableComponent mutableComponent3 = Component.translatable("the_bumblezone.container.crystalline_flower.tier_cost", tierCost)
+                        .withStyle(ChatFormatting.RED);
+
+                this.renderTooltip(
+                        poseStack,
+                        List.of(mutableComponent, mutableComponent2, mutableComponent3),
+                        Optional.empty(),
+                        x,
+                        y,
+                        this.font);
+                return;
+            }
+        }
+    }
+
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         this.scrolling = false;
 
@@ -363,37 +457,39 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             this.scrolling = true;
         }
 
-        if (mouseX >= this.leftPos + XP_CONSUME_1_X_OFFSET &&
-            mouseX < this.leftPos + XP_CONSUME_1_X_OFFSET + 18 &&
-            mouseY >= this.topPos + XP_CONSUME_1_Y_OFFSET &&
-            mouseY < this.topPos + XP_CONSUME_1_Y_OFFSET + 18)
-        {
-            pressedXp1Timer = BUTTON_PRESSED_TIMER_VISUAL;
-            sendButtonPressToMenu(-2);
-        }
-        else if (mouseX >= this.leftPos + XP_CONSUME_2_X_OFFSET &&
-                mouseX < this.leftPos + XP_CONSUME_2_X_OFFSET + 18 &&
-                mouseY >= this.topPos + XP_CONSUME_2_Y_OFFSET &&
-                mouseY < this.topPos + XP_CONSUME_2_Y_OFFSET + 18)
-        {
-            pressedXp2Timer = BUTTON_PRESSED_TIMER_VISUAL;
-            sendButtonPressToMenu(-3);
-        }
-        else if (mouseX >= this.leftPos + XP_CONSUME_3_X_OFFSET &&
-                mouseX < this.leftPos + XP_CONSUME_3_X_OFFSET + 18 &&
-                mouseY >= this.topPos + XP_CONSUME_3_Y_OFFSET &&
-                mouseY < this.topPos + XP_CONSUME_3_Y_OFFSET + 18)
-        {
-            pressedXp3Timer = BUTTON_PRESSED_TIMER_VISUAL;
-            sendButtonPressToMenu(-4);
-        }
-        else if (mouseX >= this.leftPos + CONSUME_CONFIRMATION_X_OFFSET &&
-                mouseX < this.leftPos + CONSUME_CONFIRMATION_X_OFFSET + 18 &&
-                mouseY >= this.topPos + CONSUME_CONFIRMATION_Y_OFFSET &&
-                mouseY < this.topPos + CONSUME_CONFIRMATION_Y_OFFSET + 18)
-        {
-            pressedConsumeTimer = BUTTON_PRESSED_TIMER_VISUAL;
-            sendButtonPressToMenu(-5);
+        if (this.menu.xpTier.get() < 7) {
+            if (mouseX >= this.leftPos + XP_CONSUME_1_X_OFFSET &&
+                mouseX < this.leftPos + XP_CONSUME_1_X_OFFSET + 18 &&
+                mouseY >= this.topPos + XP_CONSUME_1_Y_OFFSET &&
+                mouseY < this.topPos + XP_CONSUME_1_Y_OFFSET + 18)
+            {
+                pressedXp1Timer = BUTTON_PRESSED_TIMER_VISUAL;
+                sendButtonPressToMenu(-2);
+            }
+            else if (mouseX >= this.leftPos + XP_CONSUME_2_X_OFFSET &&
+                    mouseX < this.leftPos + XP_CONSUME_2_X_OFFSET + 18 &&
+                    mouseY >= this.topPos + XP_CONSUME_2_Y_OFFSET &&
+                    mouseY < this.topPos + XP_CONSUME_2_Y_OFFSET + 18)
+            {
+                pressedXp2Timer = BUTTON_PRESSED_TIMER_VISUAL;
+                sendButtonPressToMenu(-3);
+            }
+            else if (mouseX >= this.leftPos + XP_CONSUME_3_X_OFFSET &&
+                    mouseX < this.leftPos + XP_CONSUME_3_X_OFFSET + 18 &&
+                    mouseY >= this.topPos + XP_CONSUME_3_Y_OFFSET &&
+                    mouseY < this.topPos + XP_CONSUME_3_Y_OFFSET + 18)
+            {
+                pressedXp3Timer = BUTTON_PRESSED_TIMER_VISUAL;
+                sendButtonPressToMenu(-4);
+            }
+            else if (mouseX >= this.leftPos + CONSUME_CONFIRMATION_X_OFFSET &&
+                    mouseX < this.leftPos + CONSUME_CONFIRMATION_X_OFFSET + 18 &&
+                    mouseY >= this.topPos + CONSUME_CONFIRMATION_Y_OFFSET &&
+                    mouseY < this.topPos + CONSUME_CONFIRMATION_Y_OFFSET + 18)
+            {
+                pressedConsumeTimer = BUTTON_PRESSED_TIMER_VISUAL;
+                sendButtonPressToMenu(-5);
+            }
         }
 
         return super.mouseClicked(mouseX, mouseY, button);
