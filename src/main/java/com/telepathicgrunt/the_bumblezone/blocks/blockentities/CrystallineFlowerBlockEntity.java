@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
+import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -8,6 +10,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -92,13 +95,16 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
 
     public void addXpAndTier(int xpChange) {
         currentXp += xpChange;
+        int tierChange = 0;
 
         while (currentXp >= getMaxXpForTier(xpTier) && !isMaxTier()) {
+            tierChange++;
             xpTier++;
             currentXp -= getMaxXpForTier(xpTier);
         }
 
         while (currentXp < 0 && !isMinTier()) {
+            tierChange--;
             xpTier--;
             currentXp += getMaxXpForTier(xpTier);
         }
@@ -114,9 +120,11 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
             currentXp = 0;
         }
         this.setChanged();
+        setPillar(tierChange);
     }
 
     public void increaseTier(int tierIncrease) {
+        int tierChange = Math.min(7 - xpTier, tierIncrease);
         if (!isMaxTier()) {
             xpTier += tierIncrease;
         }
@@ -124,13 +132,47 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
             currentXp = getMaxXpForTier(xpTier);
         }
         this.setChanged();
+        setPillar(tierChange);
     }
 
     public void decreaseTier(int tierDecrease) {
+        int tierChange = Math.min(xpTier - 1, tierDecrease);
         if (!isMinTier()) {
             xpTier -= tierDecrease;
         }
         this.setChanged();
+        setPillar(-tierChange);
+    }
+
+    public void setPillar(int tierChange) {
+        if (this.hasLevel() && tierChange != 0) {
+            int bottomHeight = CrystallineFlower.flowerHeightBelow(this.level, this.getBlockPos());
+            BlockPos operatingPos = this.getBlockPos().below(bottomHeight);
+            int topHeight = CrystallineFlower.flowerHeightAbove(this.level, operatingPos);
+
+            BlockEntity blockEntity = level.getBlockEntity(operatingPos);
+            if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
+                boolean upward = tierChange > 0;
+                for (int i = 0; i < (upward ? this.xpTier : topHeight + 1); i++) {
+                    level.setBlock(
+                            operatingPos.above(i),
+                            (upward || i < this.xpTier) ? BzBlocks.CRYSTALLINE_FLOWER.get().defaultBlockState() : Blocks.AIR.defaultBlockState(),
+                            3);
+                }
+
+                level.setBlock(
+                        operatingPos.above(upward ? this.xpTier - 1 : topHeight + tierChange),
+                        BzBlocks.CRYSTALLINE_FLOWER.get().defaultBlockState().setValue(CrystallineFlower.FLOWER, true),
+                        3);
+
+                if (bottomHeight != 0) {
+                    BlockEntity targetBlockEntity = level.getBlockEntity(this.getBlockPos().below(bottomHeight));
+                    if (targetBlockEntity instanceof CrystallineFlowerBlockEntity) {
+                        targetBlockEntity.load(crystallineFlowerBlockEntity.getUpdateTag());
+                    }
+                }
+            }
+        }
     }
 
     public boolean isMaxXP() {

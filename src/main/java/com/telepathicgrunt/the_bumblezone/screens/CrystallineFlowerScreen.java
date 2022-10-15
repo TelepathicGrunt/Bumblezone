@@ -3,28 +3,26 @@ package com.telepathicgrunt.the_bumblezone.screens;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
-import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.locale.Language;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.StonecutterRecipe;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +36,6 @@ import java.util.function.Function;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class CrystallineFlowerScreen extends AbstractContainerScreen<CrystallineFlowerMenu> {
     private static final ResourceLocation CONTAINER_BACKGROUND = new ResourceLocation(Bumblezone.MODID, "textures/gui/container/crystallized_flower.png");
@@ -114,6 +111,11 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private int pressedXp3Timer = 0;
     private int pressedConsumeTimer = 0;
 
+    private List<Boolean> cachedObstructions = new ArrayList<>();
+    private int cachedObstructionsTimer = 0;
+    private int prevXpTier = 0;
+    private boolean prevBookSlotEmpty = true;
+
     private final List<Map.Entry<ResourceKey<Enchantment>, EnchantmentInstance>> enchantmentsAvailable = new ArrayList<>();
 
     public CrystallineFlowerScreen(CrystallineFlowerMenu menu, Inventory playerInventory, Component title) {
@@ -126,7 +128,13 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         renderBackground(poseStack);
         super.render(poseStack, mouseX, mouseY, partialTick);
-        populateAvailableEnchants();
+
+        ItemStack book = this.menu.bookSlot.getItem();
+        if (book.isEmpty() != prevBookSlotEmpty || this.menu.xpTier.get() != prevXpTier) {
+            populateAvailableEnchants();
+            prevXpTier = this.menu.xpTier.get();
+            prevBookSlotEmpty = book.isEmpty();
+        }
 
         int startX = (this.width - this.imageWidth) / 2;
         int startY = (this.height - this.imageHeight) / 2;
@@ -146,14 +154,31 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
 
+                Map.Entry<ResourceKey<Enchantment>, EnchantmentInstance> enchantmentEntry = enchantmentsAvailable.get(sectionId);
+                boolean isCurse = enchantmentEntry.getValue().enchantment.isCurse();
+                boolean isTreasure = enchantmentEntry.getValue().enchantment.isTreasureOnly();
                 int row = sectionId - this.startIndex;
                 if (sectionId == this.menu.selectedEnchantmentIndex.get()) {
                     blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, getBlitOffset(), ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
-                    drawEnchantmentText(poseStack, rowStartX, rowStartY + row * ENCHANTMENT_SECTION_HEIGHT, enchantmentsAvailable.get(sectionId), 0xFFF000, 0xC0FF00);
+                    drawEnchantmentText(
+                            poseStack,
+                            rowStartX,
+                            rowStartY + row * ENCHANTMENT_SECTION_HEIGHT,
+                            enchantmentEntry,
+                            isCurse ? 0x990000 : isTreasure ? 0xFFF000 : 0xFFD000,
+                            0xC0FF00
+                    );
                 }
                 else {
                     blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, getBlitOffset(), ENCHANTMENT_HIGHLIGHTED_U_TEXTURE, ENCHANTMENT_HIGHLIGHTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
-                    drawEnchantmentText(poseStack, rowStartX, rowStartY + row * 19, enchantmentsAvailable.get(sectionId), 0x402020, 0x304000);
+                    drawEnchantmentText(
+                            poseStack,
+                            rowStartX,
+                            rowStartY + row * 19,
+                            enchantmentEntry,
+                            isCurse ? 0x800000 : isTreasure ? 0xFFFF50 : 0x402020,
+                            0x304000
+                    );
                 }
                 return true;
             },
@@ -165,14 +190,29 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
 
+                Map.Entry<ResourceKey<Enchantment>, EnchantmentInstance> enchantmentEntry = enchantmentsAvailable.get(sectionId);
+                boolean isCurse = enchantmentEntry.getValue().enchantment.isCurse();
+                boolean isTreasure = enchantmentEntry.getValue().enchantment.isTreasureOnly();
                 int row = sectionId - this.startIndex;
                 if (sectionId == this.menu.selectedEnchantmentIndex.get()) {
                     blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, getBlitOffset(), ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
-                    drawEnchantmentText(poseStack, rowStartX, rowStartY + row * ENCHANTMENT_SECTION_HEIGHT, enchantmentsAvailable.get(sectionId), 0xFFF000, 0xC0FF00);
+                    drawEnchantmentText(
+                            poseStack,
+                            rowStartX,
+                            rowStartY + row * ENCHANTMENT_SECTION_HEIGHT,
+                            enchantmentEntry,
+                            isCurse ? 0x990000 : isTreasure ? 0xFFF000 : 0xFFD000,
+                            0xC0FF00);
                 }
                 else {
                     blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, getBlitOffset(), ENCHANTMENT_UNSELECTED_U_TEXTURE, ENCHANTMENT_UNSELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
-                    drawEnchantmentText(poseStack, rowStartX, rowStartY + row * ENCHANTMENT_SECTION_HEIGHT, enchantmentsAvailable.get(sectionId), 0xD0B0F0, 0x00DD40);
+                    drawEnchantmentText(
+                            poseStack,
+                            rowStartX,
+                            rowStartY + row * ENCHANTMENT_SECTION_HEIGHT,
+                            enchantmentEntry,
+                            isCurse ? 0xFF2000 : isTreasure ? 0xFFF000 : 0xD0B0F0,
+                            0x00DD40);
                 }
             });
 
@@ -188,11 +228,28 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         renderTooltip(poseStack, mouseX, mouseY);
     }
 
+
     private void drawTierState(PoseStack poseStack, int startX, int startY) {
         int xOffset = startX + TIER_X_OFFSET;
         int yOffset = startY + TIER_Y_OFFSET;
+
+        if (cachedObstructionsTimer <= 0) {
+            cachedObstructions = CrystallineFlower.getObstructions(
+                7,
+                this.minecraft.player.getLevel(),
+                new BlockPos(
+                    this.menu.bottomBlockPosX.get(),
+                    this.menu.bottomBlockPosY.get(),
+                    this.menu.bottomBlockPosZ.get()));
+            cachedObstructionsTimer = 100;
+        }
+        cachedObstructionsTimer--;
+
         for (int i = 0; i < 7; i++) {
             if (i >= this.menu.xpTier.get()) {
+                if (i < cachedObstructions.size() && cachedObstructions.get(i)) {
+                    blit(poseStack, xOffset, yOffset + (72 - (i * 12)), getBlitOffset(), TIER_BLOCK_U_TEXTURE, TIER_BLOCK_V_TEXTURE, 10, 10, 256, 256);
+                }
                 continue;
             }
 
@@ -210,7 +267,11 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
 
-        if (pressedXp1Timer > 0 || this.menu.xpTier.get() == 7) {
+        if (pressedXp1Timer > 0 ||
+            this.menu.xpTier.get() == 7 ||
+            isPathObstructed(1) ||
+            !canPlayerBuyTier(1))
+        {
             pressedXp1Timer--;
             blit(poseStack, startX + XP_CONSUME_1_X_OFFSET, startY + XP_CONSUME_1_Y_OFFSET, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 18, 18, 18, 256, 256);
         }
@@ -225,7 +286,11 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             }
         }
 
-        if (pressedXp2Timer > 0 || this.menu.xpTier.get() == 7) {
+        if (pressedXp2Timer > 0 ||
+            this.menu.xpTier.get() == 7 ||
+            isPathObstructed(2) ||
+            !canPlayerBuyTier(2))
+        {
             pressedXp2Timer--;
             blit(poseStack, startX + XP_CONSUME_2_X_OFFSET, startY + XP_CONSUME_2_Y_OFFSET, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 18, 18, 18, 256, 256);
         }
@@ -240,7 +305,11 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             }
         }
 
-        if (pressedXp3Timer > 0|| this.menu.xpTier.get() == 7) {
+        if (pressedXp3Timer > 0 ||
+            this.menu.xpTier.get() == 7 ||
+            isPathObstructed(3) ||
+            !canPlayerBuyTier(3))
+        {
             pressedXp3Timer--;
             blit(poseStack, startX + XP_CONSUME_3_X_OFFSET, startY + XP_CONSUME_3_Y_OFFSET, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 18, 18, 18, 256, 256);
         }
@@ -274,6 +343,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     }
 
     private void drawEnchantmentText(PoseStack poseStack, int rowStartX, int currentRowStartY, Map.Entry<ResourceKey<Enchantment>, EnchantmentInstance> enchantmentEntry, int enchantmentNameColor, int enchantmentLevelColor) {
+        boolean isMaxLevel = enchantmentEntry.getValue().level == enchantmentEntry.getValue().enchantment.getMaxLevel();
+
         String translatedEnchantmentName = getTruncatedString("""
                 enchantment.%s.%s""".formatted(
                     enchantmentEntry.getKey().location().getNamespace(),
@@ -282,6 +353,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
         MutableComponent mutableComponent = Component.literal(translatedEnchantmentName);
         MutableComponent mutableComponent2 = Component.translatable("the_bumblezone.container.crystalline_flower.level", enchantmentEntry.getValue().level);
+        if (isMaxLevel) {
+            mutableComponent2.append("★");
+        }
 
         font.draw(poseStack, mutableComponent, rowStartX, currentRowStartY, enchantmentNameColor);
         font.draw(poseStack, mutableComponent2, rowStartX + 5, currentRowStartY + 8, enchantmentLevelColor);
@@ -328,7 +402,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 tempBook.setTag(compoundtag.copy());
             }
 
-            List<EnchantmentInstance> availableEnchantments = EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(100, tempBook, this.menu.xpTier.get() == 7);
+            int level = this.menu.xpTier.get() * CrystallineFlowerMenu.ENCHANT_LEVEL_PER_TIER;
+            List<EnchantmentInstance> availableEnchantments = EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempBook, this.menu.xpTier.get() == 7);
             availableEnchantments.forEach(e -> enchantmentsAvailable.add(Map.entry(Registry.ENCHANTMENT.getResourceKey(e.enchantment).get(), e)));
             enchantmentsAvailable.removeIf(e -> this.menu.xpTier.get() <= EnchantmentUtils.getEnchantmentTierCost(e.getValue()));
             enchantmentsAvailable.sort(
@@ -406,6 +481,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             double sectionMouseY = y - (double)(startY + sectionOffset * ENCHANTMENT_SECTION_HEIGHT);
             if (sectionMouseX >= 0.0D && sectionMouseX < ENCHANTMENT_SECTION_WIDTH && sectionMouseY >= 0.0D && sectionMouseY < ENCHANTMENT_SECTION_HEIGHT) {
                 Map.Entry<ResourceKey<Enchantment>, EnchantmentInstance> enchantment = enchantmentsAvailable.get(currentSection);
+                int tierCost = EnchantmentUtils.getEnchantmentTierCost(enchantment.getValue());
+                boolean isMaxLevel = enchantment.getValue().level == enchantment.getValue().enchantment.getMaxLevel();
+
                 MutableComponent mutableComponent = Component.translatable("""
                     enchantment.%s.%s""".formatted(
                             enchantment.getKey().location().getNamespace(),
@@ -415,7 +493,11 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 MutableComponent mutableComponent2 = Component.translatable("the_bumblezone.container.crystalline_flower.level", enchantment.getValue().level)
                         .withStyle(ChatFormatting.GREEN);
 
-                int tierCost = EnchantmentUtils.getEnchantmentTierCost(enchantment.getValue());
+                if (isMaxLevel) {
+                    mutableComponent2.append("★");
+                }
+
+
                 MutableComponent mutableComponent3 = Component.translatable("the_bumblezone.container.crystalline_flower.tier_cost", tierCost)
                         .withStyle(ChatFormatting.RED);
 
@@ -457,8 +539,11 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             this.scrolling = true;
         }
 
-        if (this.menu.xpTier.get() < 7) {
-            if (mouseX >= this.leftPos + XP_CONSUME_1_X_OFFSET &&
+        if (this.menu.xpTier.get() != 7)
+        {
+            if (canPlayerBuyTier(1) &&
+                !isPathObstructed(1) &&
+                mouseX >= this.leftPos + XP_CONSUME_1_X_OFFSET &&
                 mouseX < this.leftPos + XP_CONSUME_1_X_OFFSET + 18 &&
                 mouseY >= this.topPos + XP_CONSUME_1_Y_OFFSET &&
                 mouseY < this.topPos + XP_CONSUME_1_Y_OFFSET + 18)
@@ -466,7 +551,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 pressedXp1Timer = BUTTON_PRESSED_TIMER_VISUAL;
                 sendButtonPressToMenu(-2);
             }
-            else if (mouseX >= this.leftPos + XP_CONSUME_2_X_OFFSET &&
+            else if (canPlayerBuyTier(2) &&
+                    !isPathObstructed(2) &&
+                    mouseX >= this.leftPos + XP_CONSUME_2_X_OFFSET &&
                     mouseX < this.leftPos + XP_CONSUME_2_X_OFFSET + 18 &&
                     mouseY >= this.topPos + XP_CONSUME_2_Y_OFFSET &&
                     mouseY < this.topPos + XP_CONSUME_2_Y_OFFSET + 18)
@@ -474,7 +561,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 pressedXp2Timer = BUTTON_PRESSED_TIMER_VISUAL;
                 sendButtonPressToMenu(-3);
             }
-            else if (mouseX >= this.leftPos + XP_CONSUME_3_X_OFFSET &&
+            else if (canPlayerBuyTier(3) &&
+                    !isPathObstructed(3) &&
+                    mouseX >= this.leftPos + XP_CONSUME_3_X_OFFSET &&
                     mouseX < this.leftPos + XP_CONSUME_3_X_OFFSET + 18 &&
                     mouseY >= this.topPos + XP_CONSUME_3_Y_OFFSET &&
                     mouseY < this.topPos + XP_CONSUME_3_Y_OFFSET + 18)
@@ -493,6 +582,22 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         }
 
         return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    private Boolean canPlayerBuyTier(int xpTiersToCheck) {
+        return xpTiersToCheck <= this.menu.playerHasXPForTier.get();
+    }
+
+    private Boolean isPathObstructed(int xpTiersToCheck) {
+        for (int i = 0; i < xpTiersToCheck; i++) {
+            if (this.menu.xpTier.get() + i < cachedObstructions.size() &&
+                cachedObstructions.get(this.menu.xpTier.get() + i))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void sendButtonPressToMenu(Integer sectionId) {

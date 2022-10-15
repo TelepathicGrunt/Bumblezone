@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "flower=true": { "model": "the_bumblezone:block/crystalline_flower" },
+    "flower=false": { "model": "the_bumblezone:block/crystalline_flower_body" }
+  }
+}

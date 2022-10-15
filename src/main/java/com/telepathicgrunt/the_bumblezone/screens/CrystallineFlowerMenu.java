@@ -1,10 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.screens;
 
+import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
-import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
@@ -24,7 +24,6 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CrystallineFlowerMenu extends AbstractContainerMenu {
     public static final int CONSUME_SLOT = 0;
@@ -37,6 +36,8 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     private static final int BOOK_SLOT_Y = 28;
     private static final int ENCHANTED_SLOT_X = 136;
     private static final int ENCHANTED_SLOT_Y = 28;
+
+    public static final int ENCHANT_LEVEL_PER_TIER = 8;
 
     private final ContainerLevelAccess access;
     private final Player player;
@@ -51,6 +52,11 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     final DataSlot xpBarPercent = DataSlot.standalone();
     final DataSlot xpTier = DataSlot.standalone();
     final DataSlot tierCost = DataSlot.standalone();
+    final DataSlot bottomBlockPosX = DataSlot.standalone();
+    final DataSlot bottomBlockPosY = DataSlot.standalone();
+    final DataSlot bottomBlockPosZ = DataSlot.standalone();
+    final DataSlot playerHasXPForTier = DataSlot.standalone();
+    final DataSlot consumeSlotFullyObstructed = DataSlot.standalone();
     private final Container inputContainer = new SimpleContainer(3) {
         /**
          * For tile entities, ensures the chunk containing the tile entity is saved to disk later - the game won't think
@@ -75,6 +81,12 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         this.consumeSlot = addSlot(new Slot(inputContainer, CONSUME_SLOT, CONSUME_SLOT_X, CONSUME_SLOT_Y) {
             public boolean mayPlace(ItemStack itemStack) {
                 return !(itemStack.is(Items.BOOK));
+            }
+
+            public void setChanged() {
+                this.container.setChanged();
+                //consumeSlotFullyObstructed
+                // Check if consume slot cannot consume even 1 of the item without crossing tiers into an obstructed tier
             }
         });
         this.bookSlot = addSlot(new Slot(inputContainer, BOOK_SLOT, BOOK_SLOT_X, BOOK_SLOT_Y) {
@@ -126,6 +138,16 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         this.xpBarPercent.set(0);
         this.xpTier.set(0);
         this.tierCost.set(0);
+        this.playerHasXPForTier.set(0);
+        this.bottomBlockPosX.set(0);
+        this.bottomBlockPosY.set(0);
+        this.bottomBlockPosZ.set(0);
+        if (this.crystallineFlowerBlockEntity != null) {
+            this.bottomBlockPosX.set(this.crystallineFlowerBlockEntity.getBlockPos().getX());
+            this.bottomBlockPosY.set(this.crystallineFlowerBlockEntity.getBlockPos().getY());
+            this.bottomBlockPosZ.set(this.crystallineFlowerBlockEntity.getBlockPos().getZ());
+        }
+
         syncXpTier();
 
         addDataSlot(this.selectedEnchantmentIndex);
@@ -134,12 +156,36 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         addDataSlot(this.xpBarPercent);
         addDataSlot(this.xpTier);
         addDataSlot(this.tierCost);
+        addDataSlot(this.playerHasXPForTier);
+        addDataSlot(this.bottomBlockPosX);
+        addDataSlot(this.bottomBlockPosY);
+        addDataSlot(this.bottomBlockPosZ);
     }
 
     private void syncXpTier() {
         if (this.crystallineFlowerBlockEntity != null) {
-            xpBarPercent.set((int) ((this.crystallineFlowerBlockEntity.getCurrentXp() / ((float)this.crystallineFlowerBlockEntity.getMaxXpForTier(this.crystallineFlowerBlockEntity.getXpTier()))) * 100));
+            int currentXP = this.crystallineFlowerBlockEntity.getCurrentXp();
+            int maxXPForCurrentTier = this.crystallineFlowerBlockEntity.getMaxXpForTier(this.crystallineFlowerBlockEntity.getXpTier());
+            xpBarPercent.set((int) ((currentXP / ((float)maxXPForCurrentTier)) * 100));
             xpTier.set(this.crystallineFlowerBlockEntity.getXpTier());
+
+            int tierAbleToBeBought = 0;
+            int totalXPRequires = 0;
+            int playerXP = EnchantmentUtils.getPlayerXP(player);
+            for (int i = 0; i < 3; i++) {
+                if (this.crystallineFlowerBlockEntity.getXpTier() + i < 7) {
+                    totalXPRequires += this.crystallineFlowerBlockEntity.getMaxXpForTier(this.crystallineFlowerBlockEntity.getXpTier() + i);
+                    if (i == 0) {
+                        totalXPRequires -= currentXP;
+                    }
+
+                    if (totalXPRequires <= playerXP) {
+                        tierAbleToBeBought++;
+                    }
+                }
+            }
+
+            playerHasXPForTier.set(tierAbleToBeBought);
             broadcastChanges();
         }
     }
@@ -217,9 +263,26 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
     private void drainPlayerXPLevel(int desiredTierUpgrade) {
         if (crystallineFlowerBlockEntity != null && !crystallineFlowerBlockEntity.isMaxTier()) {
-            int xpRequested = crystallineFlowerBlockEntity.getXpForNextTiers(desiredTierUpgrade);
+            List<Boolean> obstructions = CrystallineFlower.getObstructions(
+                    desiredTierUpgrade,
+                    crystallineFlowerBlockEntity.getLevel(),
+                    crystallineFlowerBlockEntity.getBlockPos().above(crystallineFlowerBlockEntity.getXpTier()));
+
+            int freeTierSpot = 0;
+            for (boolean isSpotObstructed : obstructions) {
+                if (isSpotObstructed) {
+                    break;
+                }
+                else {
+                    freeTierSpot++;
+                }
+            }
+
+            int xpRequested = crystallineFlowerBlockEntity.getXpForNextTiers(freeTierSpot);
             int xpObtained = Math.min(EnchantmentUtils.getPlayerXP(player), xpRequested);
-            player.giveExperiencePoints(-xpRequested);
+            if (!player.getAbilities().instabuild) {
+                player.giveExperiencePoints(-xpRequested);
+            }
             crystallineFlowerBlockEntity.addXpAndTier(xpObtained);
             syncXpTier();
         }
@@ -334,7 +397,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                 tempBook.setTag(compoundtag.copy());
             }
 
-            int level = 100;
+            int level = xpTier.get() * ENCHANT_LEVEL_PER_TIER;
             List<EnchantmentInstance> availableEnchantments = EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempBook, xpTier.get() == 7);
             if (availableEnchantments.size() == 0 && enchantedSlot.hasItem()) {
                 enchantedSlot.container.removeItemNoUpdate(enchantedSlot.index);

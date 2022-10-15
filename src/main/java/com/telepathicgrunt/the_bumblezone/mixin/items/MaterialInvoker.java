@@ -12,4 +12,7 @@ public interface MaterialInvoker {
 
     @Invoker("destroyOnPush")
     Material.Builder thebumblezone_getDestroyOnPush();
+
+    @Invoker("notPushable")
+    Material.Builder thebumblezone_getNotPushable();
 }
