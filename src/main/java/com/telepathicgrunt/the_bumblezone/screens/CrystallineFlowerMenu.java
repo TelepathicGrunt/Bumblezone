@@ -274,17 +274,8 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             int itemCount = consumeSlot.getItem().getCount();
             int xpForStack = itemCount * xpPerCount;
 
-            int xpToMaxTierAllowed = 0;
-            for (int i = 1; i <= tiersToMax; i++) {
-                int xpToDesiredTier = crystallineFlowerBlockEntity.getXpForNextTiers(i);
-                if (i - 1 < obstructedAbove.size() && obstructedAbove.get(i - 1)) {
-                    xpToMaxTierAllowed = xpToDesiredTier - 1;
-                    break;
-                }
-                xpToMaxTierAllowed = xpToDesiredTier;
-            }
-
-            int xpGranted = Math.min(xpToMaxTierAllowed, xpForStack);
+            int xpToHighestAvailableTier = CrystallineFlower.getXpToHighestAvailableTier(crystallineFlowerBlockEntity, tiersToMax, obstructedAbove);
+            int xpGranted = Math.min(xpToHighestAvailableTier, xpForStack);
             int consumedItemCount = (int) Math.ceil(xpGranted / (float)xpPerCount);
             if (consumedItemCount == 0) {
                 return;
