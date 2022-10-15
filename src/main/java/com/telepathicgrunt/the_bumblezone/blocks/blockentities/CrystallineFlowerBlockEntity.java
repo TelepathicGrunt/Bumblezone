@@ -196,7 +196,7 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
     }
 
     public int getMaxXpForTier(int tier) {
-        return 100;
+        return 45 + (tier * tier * 5);
     }
 
     public int getXpForNextTiers(int nextTiersToCalculate) {

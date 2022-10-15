@@ -106,7 +106,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         });
         this.bookSlot = addSlot(new Slot(inputContainer, BOOK_SLOT, BOOK_SLOT_X, BOOK_SLOT_Y) {
             public boolean mayPlace(ItemStack itemStack) {
-                return itemStack.is(Items.BOOK) || itemStack.is(Items.ENCHANTED_BOOK);
+                return itemStack.is(BzTags.CAN_BE_ENCHANTED_ITEMS);
             }
         });
         this.enchantedSlot = addSlot(new Slot(inputContainer, ENCHANTED_SLOT, ENCHANTED_SLOT_X, ENCHANTED_SLOT_Y) {
@@ -392,23 +392,23 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
      * inventory and the other inventory(s).
      */
     public ItemStack quickMoveStack(Player player, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
+        ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = slots.get(index);
         if (slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
-            itemstack = itemstack1.copy();
+            itemStack = itemstack1.copy();
             if (index == enchantedSlot.index) {
                 if (!moveItemStackTo(itemstack1, 3, 39, true)) {
                     return ItemStack.EMPTY;
                 }
 
-                slot.onQuickCraft(itemstack1, itemstack);
+                slot.onQuickCraft(itemstack1, itemStack);
             }
             else if (index != consumeSlot.index && index != bookSlot.index) {
-                if (!itemstack1.is(Items.BOOK) && !itemstack1.is(Items.ENCHANTED_BOOK) && !moveItemStackTo(itemstack1, consumeSlot.index, consumeSlot.index + 1, false)) {
+                if (!itemStack.is(BzTags.CAN_BE_ENCHANTED_ITEMS) && !moveItemStackTo(itemstack1, consumeSlot.index, consumeSlot.index + 1, false)) {
                     return ItemStack.EMPTY;
                 }
-                else if ((itemstack1.is(Items.BOOK) || itemstack1.is(Items.ENCHANTED_BOOK)) && !moveItemStackTo(itemstack1, bookSlot.index, bookSlot.index + 1, false)) {
+                else if (itemStack.is(BzTags.CAN_BE_ENCHANTED_ITEMS) && !moveItemStackTo(itemstack1, bookSlot.index, bookSlot.index + 1, false)) {
                     return ItemStack.EMPTY;
                 }
                 else if (index >= 3 && index < 30 && !moveItemStackTo(itemstack1, 30, 39, false)) {
@@ -429,14 +429,14 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                 slot.setChanged();
             }
 
-            if (itemstack1.getCount() == itemstack.getCount()) {
+            if (itemstack1.getCount() == itemStack.getCount()) {
                 return ItemStack.EMPTY;
             }
 
             slot.onTake(player, itemstack1);
         }
 
-        return itemstack;
+        return itemStack;
     }
 
     private void setupResultSlot(int selectedEnchantment) {
@@ -455,18 +455,13 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             return;
         }
 
-        ItemStack book = bookSlot.getItem();
-        if (!book.isEmpty()) {
-
-            ItemStack tempBook = Items.BOOK.getDefaultInstance();
-            tempBook.setCount(1);
-            CompoundTag compoundtag = book.getTag();
-            if (compoundtag != null) {
-                tempBook.setTag(compoundtag.copy());
-            }
+        ItemStack toEnchant = bookSlot.getItem();
+        if (!toEnchant.isEmpty()) {
+            ItemStack tempCopy = toEnchant.copy();
+            tempCopy.setCount(1);
 
             int level = xpTier.get() * ENCHANT_LEVEL_PER_TIER;
-            List<EnchantmentInstance> availableEnchantments = EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempBook, xpTier.get() == 7);
+            List<EnchantmentInstance> availableEnchantments = EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempCopy, xpTier.get() == 7);
             if (availableEnchantments.size() == 0 && enchantedSlot.hasItem()) {
                 enchantedSlot.container.removeItemNoUpdate(enchantedSlot.index);
                 selectedEnchantmentIndex.set(-1);
@@ -478,19 +473,29 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                     Comparator.comparing((EnchantmentInstance a) -> Registry.ENCHANTMENT.getResourceKey(a.enchantment).get())
                     .thenComparingInt(a -> a.level));
             if (availableEnchantments.size() > selectedEnchantment) {
-                EnchantmentInstance enchantmentForBook = availableEnchantments.get(selectedEnchantment);
-                ItemStack enchantedBook = Items.ENCHANTED_BOOK.getDefaultInstance();
-                enchantedBook.setCount(1);
+                EnchantmentInstance enchantmentForItem = availableEnchantments.get(selectedEnchantment);
 
-                compoundtag = tempBook.getTag();
-                if (compoundtag != null) {
-                    enchantedBook.setTag(compoundtag.copy());
+                if (tempCopy.is(Items.BOOK)) {
+                    ItemStack enchantedBook = Items.ENCHANTED_BOOK.getDefaultInstance();
+                    enchantedBook.setCount(1);
+
+                    CompoundTag compoundtag = tempCopy.getTag();
+                    if (compoundtag != null) {
+                        enchantedBook.setTag(compoundtag.copy());
+                    }
+                    tempCopy = enchantedBook;
                 }
 
-                EnchantedBookItem.addEnchantment(enchantedBook, enchantmentForBook);
-                if (!ItemStack.matches(enchantedBook, enchantedSlot.getItem())) {
-                    enchantedSlot.set(enchantedBook);
-                    tierCost.set(EnchantmentUtils.getEnchantmentTierCost(enchantmentForBook));
+                if (tempCopy.is(Items.BOOK) || tempCopy.is(Items.ENCHANTED_BOOK)) {
+                    EnchantedBookItem.addEnchantment(tempCopy, enchantmentForItem);
+                }
+                else {
+                    tempCopy.enchant(enchantmentForItem.enchantment, enchantmentForItem.level);
+                }
+
+                if (!ItemStack.matches(tempCopy, enchantedSlot.getItem())) {
+                    enchantedSlot.set(tempCopy);
+                    tierCost.set(EnchantmentUtils.getEnchantmentTierCost(enchantmentForItem));
                 }
             }
         }

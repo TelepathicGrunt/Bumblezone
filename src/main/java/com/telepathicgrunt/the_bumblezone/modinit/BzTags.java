@@ -49,6 +49,7 @@ public class BzTags {
     public static final TagKey<Item> XP_25_WHEN_CONSUMED_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/xp_25_when_consumed"));
     public static final TagKey<Item> XP_100_WHEN_CONSUMED_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/xp_100_when_consumed"));
     public static final TagKey<Item> CANNOT_CONSUMED_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/cannot_consume"));
+    public static final TagKey<Item> CAN_BE_ENCHANTED_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/can_be_enchanted"));
 
     public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation("forge", "honey"));
     public static final TagKey<Fluid> BZ_HONEY_FLUID = TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Bumblezone.MODID, "honey"));

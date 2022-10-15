@@ -116,7 +116,7 @@ public class EnchantmentUtils {
 
 	public static List<EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(int level, ItemStack stack, boolean allowTreasure) {
 		List<EnchantmentInstance> list = Lists.newArrayList();
-		boolean flag = stack.is(Items.BOOK);
+		boolean bookFlag = stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK);
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
 		for(Enchantment enchantment : Registry.ENCHANTMENT) {
 			if (Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.tags()).getTag(BzTags.BLACKLISTED_CRYSTALLINE_FLOWER_ENCHANTMENTS).contains(enchantment)) {
@@ -128,7 +128,7 @@ public class EnchantmentUtils {
 				minLevelAllowed = Math.max(minLevelAllowed, existingEnchantments.get(enchantment) + 1);
 			}
 
-			if ((!enchantment.isTreasureOnly() || allowTreasure) && enchantment.isDiscoverable() && (enchantment.canApplyAtEnchantingTable(stack) || (flag && enchantment.isAllowedOnBooks()))) {
+			if ((!enchantment.isTreasureOnly() || allowTreasure) && enchantment.isDiscoverable() && (enchantment.canApplyAtEnchantingTable(stack) || (bookFlag && enchantment.isAllowedOnBooks()))) {
 				for(int i = enchantment.getMaxLevel(); i > minLevelAllowed - 1; --i) {
 					if (level >= enchantment.getMinCost(i)) {
 						list.add(new EnchantmentInstance(enchantment, i));
