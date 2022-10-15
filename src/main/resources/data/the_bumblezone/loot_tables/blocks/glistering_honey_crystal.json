@@ -9,7 +9,7 @@
           "type": "minecraft:alternatives",
           "children": [
             {
-              "name": "the_bumblezone:honey_crystal",
+              "name": "the_bumblezone:glistering_honey_crystal",
               "type": "minecraft:item",
               "conditions": [
                 {
