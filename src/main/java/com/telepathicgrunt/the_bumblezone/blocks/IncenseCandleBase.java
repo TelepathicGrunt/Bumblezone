@@ -166,15 +166,15 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
                 else if (handItem.is(BzTags.DAMAGABLE_CANDLE_LIGHTING_ITEMS)) {
-                    lightCandle(level, blockPos, player);
-                    if (player instanceof ServerPlayer serverPlayer && !player.getAbilities().instabuild) {
+                    boolean successfulLit = lightCandle(level, blockPos, player);
+                    if (successfulLit && player instanceof ServerPlayer serverPlayer && !player.getAbilities().instabuild) {
                         handItem.hurt(1, level.getRandom(), serverPlayer);
                     }
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
                 else if (handItem.is(BzTags.CONSUMABLE_CANDLE_LIGHTING_ITEMS)) {
-                    lightCandle(level, blockPos, player);
-                    if (!player.getAbilities().instabuild) {
+                    boolean successfulLit = lightCandle(level, blockPos, player);
+                    if (successfulLit && !player.getAbilities().instabuild) {
                         handItem.shrink(1);
                     }
                     return InteractionResult.sidedSuccess(level.isClientSide);
@@ -184,7 +184,7 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
         return InteractionResult.PASS;
     }
 
-    private void lightCandle(Level level, BlockPos blockPos, Player player) {
+    private boolean lightCandle(Level level, BlockPos blockPos, Player player) {
         boolean litWick = SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
 
         if (litWick &&
@@ -194,6 +194,8 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
         {
             BzCriterias.LIGHT_SOUL_INCENSE_CANDLE_TRIGGER.trigger(serverPlayer);
         }
+
+        return litWick;
     }
 
     @Override
