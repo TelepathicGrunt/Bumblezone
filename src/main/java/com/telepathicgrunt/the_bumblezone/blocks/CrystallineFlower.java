@@ -3,10 +3,12 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.IncenseCandleBlockEntity;
+import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,6 +19,10 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -37,6 +43,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -70,9 +77,84 @@ public class CrystallineFlower extends BaseEntityBlock {
         return RenderShape.MODEL;
     }
 
-    @Deprecated
+    @Override
     public PushReaction getPistonPushReaction(BlockState state) {
         return PushReaction.BLOCK;
+    }
+
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (entity instanceof LivingEntity && !BeeAggression.isBeelikeEntity(entity)) {
+            entity.makeStuckInBlock(state, new Vec3(0.9F, 0.8D, 0.9F));
+            if (!level.isClientSide && (entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
+                double d0 = Math.abs(entity.getX() - entity.xOld);
+                double d1 = Math.abs(entity.getZ() - entity.zOld);
+                if (d0 >= (double)0.003F || d1 >= (double)0.003F) {
+                    //TODO: custom damage source
+                    entity.hurt(DamageSource.SWEET_BERRY_BUSH, 1.0F);
+                }
+            }
+        }
+        else if (entity instanceof ItemEntity itemEntity) {
+            ItemStack stack = itemEntity.getItem();
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity && !crystallineFlowerBlockEntity.isMaxTier()) {
+                int tiersToMax = 7 - crystallineFlowerBlockEntity.getXpTier();
+                int topBlock = CrystallineFlower.flowerHeightAbove(level, crystallineFlowerBlockEntity.getBlockPos());
+                List<Boolean> obstructedAbove = CrystallineFlower.getObstructions(tiersToMax, level, crystallineFlowerBlockEntity.getBlockPos().above(topBlock + 1));
+
+                int xpPerCount = getXPPerItem(stack);
+                int itemCount = stack.getCount();
+                int xpForStack = itemCount * xpPerCount;
+
+                int xpToMaxTierAllowed = 0;
+                for (int i = 1; i <= tiersToMax; i++) {
+                    int xpToDesiredTier = crystallineFlowerBlockEntity.getXpForNextTiers(i);
+                    if (i - 1 < obstructedAbove.size() && obstructedAbove.get(i - 1)) {
+                        xpToMaxTierAllowed = xpToDesiredTier - 1;
+                        break;
+                    }
+                    xpToMaxTierAllowed = xpToDesiredTier;
+                }
+
+                int xpGranted = Math.min(xpToMaxTierAllowed, xpForStack);
+                int consumedItemCount = (int) Math.ceil(xpGranted / (float)xpPerCount);
+                if (consumedItemCount == 0) {
+                    return;
+                }
+
+                crystallineFlowerBlockEntity.addXpAndTier(xpGranted);
+                stack.shrink(consumedItemCount);
+                if (consumedItemCount >= itemCount) {
+                    itemEntity.discard();
+                }
+            }
+        }
+        else if (entity instanceof ExperienceOrb experienceOrb) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity && !crystallineFlowerBlockEntity.isMaxTier()) {
+                int tiersToMax = 7 - crystallineFlowerBlockEntity.getXpTier();
+                int topBlock = CrystallineFlower.flowerHeightAbove(level, crystallineFlowerBlockEntity.getBlockPos());
+                List<Boolean> obstructedAbove = CrystallineFlower.getObstructions(tiersToMax, level, crystallineFlowerBlockEntity.getBlockPos().above(topBlock + 1));
+
+                int xpToMaxTierAllowed = 0;
+                for (int i = 1; i <= tiersToMax; i++) {
+                    int xpToDesiredTier = crystallineFlowerBlockEntity.getXpForNextTiers(i);
+                    if (i - 1 < obstructedAbove.size() && obstructedAbove.get(i - 1)) {
+                        xpToMaxTierAllowed = xpToDesiredTier - 1;
+                        break;
+                    }
+                    xpToMaxTierAllowed = xpToDesiredTier;
+                }
+
+                int xpGranted = Math.min(xpToMaxTierAllowed, experienceOrb.value);
+                crystallineFlowerBlockEntity.addXpAndTier(xpGranted);
+                experienceOrb.value -= xpGranted;
+                if (experienceOrb.value <= 0) {
+                    experienceOrb.discard();
+                }
+            }
+        }
     }
 
     @Override
@@ -261,6 +343,23 @@ public class CrystallineFlower extends BaseEntityBlock {
         }
 
         return obstructions;
+    }
+
+    public static int getXPPerItem(ItemStack stack) {
+        if (stack.is(BzTags.XP_2_WHEN_CONSUMED_ITEMS)) {
+            return 2;
+        }
+        else if (stack.is(BzTags.XP_5_WHEN_CONSUMED_ITEMS)) {
+            return 5;
+        }
+        else if (stack.is(BzTags.XP_25_WHEN_CONSUMED_ITEMS)) {
+            return 25;
+        }
+        else if (stack.is(BzTags.XP_100_WHEN_CONSUMED_ITEMS)) {
+            return 100;
+        }
+
+        return 1;
     }
 
     @Override

@@ -124,6 +124,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                 access.execute((soundLevel, pos) -> {
                     long gameTime = soundLevel.getGameTime();
                     if (lastSoundTime != gameTime) {
+                        //TODO: custom take sound for enchanted books
                         soundLevel.playSound(null, pos, SoundEvents.UI_LOOM_TAKE_RESULT, SoundSource.BLOCKS, 1.0F, 1.0F);
                         lastSoundTime = gameTime;
                     }
@@ -269,7 +270,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             int topBlock = CrystallineFlower.flowerHeightAbove(player.level, crystallineFlowerBlockEntity.getBlockPos());
             List<Boolean> obstructedAbove = CrystallineFlower.getObstructions(tiersToMax, player.level, crystallineFlowerBlockEntity.getBlockPos().above(topBlock + 1));
 
-            int xpPerCount = getXPPerItem(consumeSlot.getItem());
+            int xpPerCount = CrystallineFlower.getXPPerItem(consumeSlot.getItem());
             int itemCount = consumeSlot.getItem().getCount();
             int xpForStack = itemCount * xpPerCount;
 
@@ -306,7 +307,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                 List<Boolean> obstructedAbove = CrystallineFlower.getObstructions(1, player.level, crystallineFlowerBlockEntity.getBlockPos().above(topBlock + 1));
 
                 if (!obstructedAbove.isEmpty() && obstructedAbove.get(0)) {
-                    int xpPerCount = getXPPerItem(consumeSlot.getItem());
+                    int xpPerCount = CrystallineFlower.getXPPerItem(consumeSlot.getItem());
                     int xpToMaxTier = crystallineFlowerBlockEntity.getXpForNextTiers(1) - 1;
                     int itemsConsumable = xpToMaxTier / xpPerCount;
                     fullyObstructed = itemsConsumable == 0;
@@ -501,22 +502,5 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
      */
     public boolean canTakeItemForPickAll(ItemStack stack, Slot slot) {
         return super.canTakeItemForPickAll(stack, slot);
-    }
-
-    public int getXPPerItem(ItemStack stack) {
-        if (stack.is(BzTags.XP_2_WHEN_CONSUMED_ITEMS)) {
-            return 2;
-        }
-        else if (stack.is(BzTags.XP_5_WHEN_CONSUMED_ITEMS)) {
-            return 5;
-        }
-        else if (stack.is(BzTags.XP_25_WHEN_CONSUMED_ITEMS)) {
-            return 25;
-        }
-        else if (stack.is(BzTags.XP_100_WHEN_CONSUMED_ITEMS)) {
-            return 100;
-        }
-
-        return 1;
     }
 }
