@@ -1,0 +1,54 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:honey_crystal_shards",
+    "the_bumblezone:bee_bread",
+    "minecraft:honey_bottle",
+    "the_bumblezone:sugar_water_bottle",
+    {
+      "id": "productivebees:honey_treat",
+      "required": false
+    },
+    {
+      "id": "productivebees:sugarbag_honeycomb",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honey_apple",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honey_bread",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:sticky_honey_wand",
+      "required": false
+    },
+    {
+      "id": "betterbeekeeping:spicy_honey_bottle",
+      "required": false
+    },
+    {
+      "id": "betterbeekeeping:warm_honey_bottle",
+      "required": false
+    },
+    {
+      "id": "betterbeekeeping:bright_honey_bottle",
+      "required": false
+    },
+    {
+      "id": "betterbeekeeping:lively_honey_bottle",
+      "required": false
+    },
+    {
+      "id": "betterbeekeeping:cool_honey_bottle",
+      "required": false
+    },
+    {
+      "id": "betterbeekeeping:strange_honey_bottle",
+      "required": false
+    }
+  ]
+  ]
+}

@@ -4,7 +4,9 @@ import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
@@ -17,10 +19,12 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.level.block.EntityBlock;
 
 import java.util.Comparator;
 import java.util.List;
@@ -80,18 +84,29 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         this.crystallineFlowerBlockEntity = crystallineFlowerBlockEntity;
         this.consumeSlot = addSlot(new Slot(inputContainer, CONSUME_SLOT, CONSUME_SLOT_X, CONSUME_SLOT_Y) {
             public boolean mayPlace(ItemStack itemStack) {
-                return !(itemStack.is(Items.BOOK));
+                if (itemStack.is(BzTags.CANNOT_CONSUMED_ITEMS)) {
+                    return false;
+                }
+                else if (!itemStack.getItem().canFitInsideContainerItems()) {
+                    return false;
+                }
+                else if (itemStack.getItem() instanceof BlockItem blockItem &&
+                        blockItem.getBlock() instanceof EntityBlock entityBlock &&
+                        entityBlock.newBlockEntity(BlockPos.ZERO, blockItem.getBlock().defaultBlockState()) instanceof Container)
+                {
+                    return false;
+                }
+                return true;
             }
 
             public void setChanged() {
                 this.container.setChanged();
-                //consumeSlotFullyObstructed
-                // Check if consume slot cannot consume even 1 of the item without crossing tiers into an obstructed tier
+                consumeSlotFullyObstructed();
             }
         });
         this.bookSlot = addSlot(new Slot(inputContainer, BOOK_SLOT, BOOK_SLOT_X, BOOK_SLOT_Y) {
             public boolean mayPlace(ItemStack itemStack) {
-                return itemStack.is(Items.BOOK);
+                return itemStack.is(Items.BOOK) || itemStack.is(Items.ENCHANTED_BOOK);
             }
         });
         this.enchantedSlot = addSlot(new Slot(inputContainer, ENCHANTED_SLOT, ENCHANTED_SLOT_X, ENCHANTED_SLOT_Y) {
@@ -139,6 +154,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         this.xpTier.set(0);
         this.tierCost.set(0);
         this.playerHasXPForTier.set(0);
+        this.consumeSlotFullyObstructed.set(0);
         this.bottomBlockPosX.set(0);
         this.bottomBlockPosY.set(0);
         this.bottomBlockPosZ.set(0);
@@ -157,6 +173,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         addDataSlot(this.xpTier);
         addDataSlot(this.tierCost);
         addDataSlot(this.playerHasXPForTier);
+        addDataSlot(this.consumeSlotFullyObstructed);
         addDataSlot(this.bottomBlockPosX);
         addDataSlot(this.bottomBlockPosY);
         addDataSlot(this.bottomBlockPosZ);
@@ -248,17 +265,67 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             crystallineFlowerBlockEntity != null &&
             !crystallineFlowerBlockEntity.isMaxTier())
         {
-            int xpPerCount = 1;
+            int tiersToMax = 7 - crystallineFlowerBlockEntity.getXpTier();
+            int topBlock = CrystallineFlower.flowerHeightAbove(player.level, crystallineFlowerBlockEntity.getBlockPos());
+            List<Boolean> obstructedAbove = CrystallineFlower.getObstructions(tiersToMax, player.level, crystallineFlowerBlockEntity.getBlockPos().above(topBlock + 1));
+
+            int xpPerCount = getXPPerItem(consumeSlot.getItem());
             int itemCount = consumeSlot.getItem().getCount();
             int xpForStack = itemCount * xpPerCount;
-            int xpToMaxTier = crystallineFlowerBlockEntity.getXpForNextTiers(7 - crystallineFlowerBlockEntity.getXpTier());
-            int xpGranted = Math.min(xpToMaxTier, xpForStack);
+
+            int xpToMaxTierAllowed = 0;
+            for (int i = 1; i <= tiersToMax; i++) {
+                int xpToDesiredTier = crystallineFlowerBlockEntity.getXpForNextTiers(i);
+                if (i - 1 < obstructedAbove.size() && obstructedAbove.get(i - 1)) {
+                    xpToMaxTierAllowed = xpToDesiredTier - 1;
+                    break;
+                }
+                xpToMaxTierAllowed = xpToDesiredTier;
+            }
+
+            int xpGranted = Math.min(xpToMaxTierAllowed, xpForStack);
             int consumedItemCount = (int) Math.ceil(xpGranted / (float)xpPerCount);
+            if (consumedItemCount == 0) {
+                return;
+            }
 
             crystallineFlowerBlockEntity.addXpAndTier(xpGranted);
             consumeSlot.remove(consumedItemCount);
+            consumeSlotFullyObstructed();
             syncXpTier();
         }
+    }
+
+    public void consumeSlotFullyObstructed() {
+        boolean fullyObstructed = false;
+        if (consumeSlot.hasItem() &&
+            crystallineFlowerBlockEntity != null)
+        {
+            if (!crystallineFlowerBlockEntity.isMaxTier()) {
+                int topBlock = CrystallineFlower.flowerHeightAbove(player.level, crystallineFlowerBlockEntity.getBlockPos());
+                List<Boolean> obstructedAbove = CrystallineFlower.getObstructions(1, player.level, crystallineFlowerBlockEntity.getBlockPos().above(topBlock + 1));
+
+                if (!obstructedAbove.isEmpty() && obstructedAbove.get(0)) {
+                    int xpPerCount = getXPPerItem(consumeSlot.getItem());
+                    int xpToMaxTier = crystallineFlowerBlockEntity.getXpForNextTiers(1) - 1;
+                    int itemsConsumable = xpToMaxTier / xpPerCount;
+                    fullyObstructed = itemsConsumable == 0;
+                }
+            }
+            else {
+                fullyObstructed = true;
+            }
+
+            if (fullyObstructed) {
+                consumeSlotFullyObstructed.set(1);
+            }
+            else {
+                consumeSlotFullyObstructed.set(0);
+            }
+
+            broadcastChanges();
+        }
+
     }
 
     private void drainPlayerXPLevel(int desiredTierUpgrade) {
@@ -337,10 +404,10 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                 slot.onQuickCraft(itemstack1, itemstack);
             }
             else if (index != consumeSlot.index && index != bookSlot.index) {
-                if (!itemstack1.is(Items.BOOK) && !moveItemStackTo(itemstack1, consumeSlot.index, consumeSlot.index + 1, false)) {
+                if (!itemstack1.is(Items.BOOK) && !itemstack1.is(Items.ENCHANTED_BOOK) && !moveItemStackTo(itemstack1, consumeSlot.index, consumeSlot.index + 1, false)) {
                     return ItemStack.EMPTY;
                 }
-                else if (itemstack1.is(Items.BOOK) && !moveItemStackTo(itemstack1, bookSlot.index, bookSlot.index + 1, false)) {
+                else if ((itemstack1.is(Items.BOOK) || itemstack1.is(Items.ENCHANTED_BOOK)) && !moveItemStackTo(itemstack1, bookSlot.index, bookSlot.index + 1, false)) {
                     return ItemStack.EMPTY;
                 }
                 else if (index >= 3 && index < 30 && !moveItemStackTo(itemstack1, 30, 39, false)) {
@@ -390,7 +457,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         ItemStack book = bookSlot.getItem();
         if (!book.isEmpty()) {
 
-            ItemStack tempBook = book.copy();
+            ItemStack tempBook = Items.BOOK.getDefaultInstance();
             tempBook.setCount(1);
             CompoundTag compoundtag = book.getTag();
             if (compoundtag != null) {
@@ -411,21 +478,18 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                     .thenComparingInt(a -> a.level));
             if (availableEnchantments.size() > selectedEnchantment) {
                 EnchantmentInstance enchantmentForBook = availableEnchantments.get(selectedEnchantment);
-                EnchantedBookItem.addEnchantment(tempBook, enchantmentForBook);
-
-                if (!player.getAbilities().instabuild) {
-                    bookSlot.remove(1);
-                }
-
                 ItemStack enchantedBook = Items.ENCHANTED_BOOK.getDefaultInstance();
                 enchantedBook.setCount(1);
+
                 compoundtag = tempBook.getTag();
                 if (compoundtag != null) {
                     enchantedBook.setTag(compoundtag.copy());
-                    if (!ItemStack.matches(enchantedBook, enchantedSlot.getItem())) {
-                        enchantedSlot.set(enchantedBook);
-                        tierCost.set(EnchantmentUtils.getEnchantmentTierCost(enchantmentForBook));
-                    }
+                }
+
+                EnchantedBookItem.addEnchantment(enchantedBook, enchantmentForBook);
+                if (!ItemStack.matches(enchantedBook, enchantedSlot.getItem())) {
+                    enchantedSlot.set(enchantedBook);
+                    tierCost.set(EnchantmentUtils.getEnchantmentTierCost(enchantmentForBook));
                 }
             }
         }
@@ -437,5 +501,22 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
      */
     public boolean canTakeItemForPickAll(ItemStack stack, Slot slot) {
         return super.canTakeItemForPickAll(stack, slot);
+    }
+
+    public int getXPPerItem(ItemStack stack) {
+        if (stack.is(BzTags.XP_2_WHEN_CONSUMED_ITEMS)) {
+            return 2;
+        }
+        else if (stack.is(BzTags.XP_5_WHEN_CONSUMED_ITEMS)) {
+            return 5;
+        }
+        else if (stack.is(BzTags.XP_25_WHEN_CONSUMED_ITEMS)) {
+            return 25;
+        }
+        else if (stack.is(BzTags.XP_100_WHEN_CONSUMED_ITEMS)) {
+            return 100;
+        }
+
+        return 1;
     }
 }

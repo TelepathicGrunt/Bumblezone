@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:honey_crystal",
+    {
+      "id": "#forge:buckets/honey",
+      "required": false
+    },
+    {
+      "id": "#c:buckets/honey",
+      "required": false
+    }
+  ]
+}

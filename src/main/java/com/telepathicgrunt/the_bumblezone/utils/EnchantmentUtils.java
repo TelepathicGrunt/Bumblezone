@@ -1,17 +1,28 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
 import com.google.common.collect.Lists;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Enchantment Utility class used by OpenMods.  Replicated here under the permissions of the MIT Licenses.
@@ -106,9 +117,19 @@ public class EnchantmentUtils {
 	public static List<EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(int level, ItemStack stack, boolean allowTreasure) {
 		List<EnchantmentInstance> list = Lists.newArrayList();
 		boolean flag = stack.is(Items.BOOK);
+		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
 		for(Enchantment enchantment : Registry.ENCHANTMENT) {
+			if (Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.tags()).getTag(BzTags.BLACKLISTED_CRYSTALLINE_FLOWER_ENCHANTMENTS).contains(enchantment)) {
+				continue;
+			}
+
+			int minLevelAllowed = enchantment.getMinLevel();
+			if (existingEnchantments.containsKey(enchantment)) {
+				minLevelAllowed = Math.max(minLevelAllowed, existingEnchantments.get(enchantment) + 1);
+			}
+
 			if ((!enchantment.isTreasureOnly() || allowTreasure) && enchantment.isDiscoverable() && (enchantment.canApplyAtEnchantingTable(stack) || (flag && enchantment.isAllowedOnBooks()))) {
-				for(int i = enchantment.getMaxLevel(); i > enchantment.getMinLevel() - 1; --i) {
+				for(int i = enchantment.getMaxLevel(); i > minLevelAllowed - 1; --i) {
 					if (level >= enchantment.getMinCost(i)) {
 						list.add(new EnchantmentInstance(enchantment, i));
 						break;
@@ -117,6 +138,24 @@ public class EnchantmentUtils {
 			}
 		}
 		return list;
+	}
+
+	public static Map<Enchantment, Integer> getEnchantmentsOnBook(ItemStack itemStack) {
+		ListTag listtag = EnchantedBookItem.getEnchantments(itemStack);
+		Map<Enchantment, Integer> existingEnchants = new Object2IntOpenHashMap<>();
+
+		for(int i = 0; i < listtag.size(); ++i) {
+			CompoundTag compoundtag = listtag.getCompound(i);
+			ResourceLocation resourcelocation1 = EnchantmentHelper.getEnchantmentId(compoundtag);
+			if (resourcelocation1 != null) {
+				existingEnchants.put(
+					Objects.requireNonNull(Registry.ENCHANTMENT.get(resourcelocation1)),
+					EnchantmentHelper.getEnchantmentLevel(compoundtag)
+				);
+			}
+		}
+
+		return existingEnchants;
 	}
 
 	public static int getEnchantmentTierCost(EnchantmentInstance enchantmentInstance) {
