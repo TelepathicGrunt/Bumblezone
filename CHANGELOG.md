@@ -8,3 +8,19 @@ Improved Glistering Honey Crystal's sparkling so it can appear anywhere on the b
 Improved Glistering Honey Crystal's sparkling to use a new animated particle texture now.
 
 Fixed unsuccessful lighting of Super Candles/Incense Candles still damaging/consuming the lighting item used by the player.
+
+Added Crystalline Flower block!
+ Right click it to open up a GUI where you can grow the plant by giving it you XP or stacks of items to consume. Grows up to 7 blocks (tiers) high.
+ Put a book or enchanted book into the enchantment side and you can select what enchantment you want to add to it! This will cost some tiers to work.
+ More and stronger enchantments are available the higher the block's tier! But you cannot add more enchantments to books that have 3 or more enchantments already.
+ You can grow the block's tiers even outside the GUI by dropping items into the block or letting experience orbs touch the block!
+ Some items grant more progress towards upgrading the tiers. 
+ You can blacklist items from consumption, blacklist what enchantments are available, or change what items can be enchanted by tags:
+ `the_bumblezone:crystalline_flower/cannot_consume` (item tag)
+ `the_bumblezone:crystalline_flower/can_be_enchanted` (item tag)
+ `the_bumblezone:crystalline_flower/xp_2_when_consumed` (item tag)
+ `the_bumblezone:crystalline_flower/xp_5_when_consumed` (item tag)
+ `the_bumblezone:crystalline_flower/xp_25_when_consumed` (item tag)
+ `the_bumblezone:crystalline_flower/xp_100_when_consumed` (item tag)
+ `the_bumblezone:blacklisted_crystalline_flower_enchantments` (enchantment tag)
+
