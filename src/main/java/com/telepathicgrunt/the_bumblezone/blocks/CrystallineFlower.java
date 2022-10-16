@@ -12,12 +12,19 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerMenu;
+import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -29,8 +36,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -473,6 +483,22 @@ public class CrystallineFlower extends BaseEntityBlock {
                         finalSearchTreasure,
                         finalCrystallineFlowerBlockEntity
                 ), CONTAINER_TITLE);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(itemStack, level, tooltip, flag);
+        CompoundTag compoundtag = BlockItem.getBlockEntityData(itemStack);
+        if (compoundtag != null) {
+            if (compoundtag.contains(CrystallineFlowerBlockEntity.TIER_TAG)) {
+                int tier = compoundtag.getInt(CrystallineFlowerBlockEntity.TIER_TAG);
+                if (tier != 0) {
+                    int xp = compoundtag.getInt(CrystallineFlowerBlockEntity.XP_TAG);
+                    tooltip.add(Component.translatable("item.the_bumblezone.crystalline_flower_info_1", tier).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.ITALIC));
+                    tooltip.add(Component.translatable("item.the_bumblezone.crystalline_flower_info_2", xp).withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
+                }
+            }
+        }
     }
 
     private void spawnSparkleParticles(Level world, Vec3 position, RandomSource random, int particleCount) {

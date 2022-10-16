@@ -129,6 +129,8 @@
   "item.the_bumblezone.incense_candle.apply_interval": "Apply Interval: %s",
   "item.the_bumblezone.incense_candle.range": "Range: %s",
   "item.the_bumblezone.incense_candle.lingering_time": "Lingering Time: %s",
+  "item.the_bumblezone.crystalline_flower_info_1": "Tier: %s",
+  "item.the_bumblezone.crystalline_flower_info_2": "XP: %s",
 
   "entity.the_bumblezone.honey_slime": "Honey Slime",
   "entity.the_bumblezone.beehemoth": "Beehemoth",
