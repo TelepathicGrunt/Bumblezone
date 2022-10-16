@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
+import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -92,7 +93,7 @@ public class GlisteringHoneyCrystal extends RotatedPillarBlock {
         double y = random.nextDouble() + (random.nextBoolean() ? min : max) * (chosenFace != 1 ? random.nextDouble() : 1);
         double z = random.nextDouble() + (random.nextBoolean() ? min : max) * (chosenFace != 2 ? random.nextDouble() : 1);
 
-        world.addParticle(ParticleTypes.ELECTRIC_SPARK,
+        world.addParticle(BzParticles.SPARKLE_PARTICLE.get(),
                 (x / 16) + position.getX(),
                 (y / 16) + position.getY(),
                 (z / 16) + position.getZ(),

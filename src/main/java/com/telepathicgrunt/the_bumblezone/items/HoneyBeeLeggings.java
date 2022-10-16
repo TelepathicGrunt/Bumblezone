@@ -95,7 +95,7 @@ public class HoneyBeeLeggings extends BeeArmor {
                 Vec3 pos = player.position();
 
                 world.addParticle(
-                        BzParticles.POLLEN.get(),
+                        BzParticles.POLLEN_PARTICLE.get(),
                         true,
                         pos.x() + xOffset,
                         pos.y() + yOffset,

@@ -9,27 +9,22 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerMenu;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
@@ -56,7 +51,10 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +62,8 @@ import java.util.List;
 
 public class CrystallineFlower extends BaseEntityBlock {
     public static final BooleanProperty FLOWER =  BooleanProperty.create("flower");
+    protected final VoxelShape shapeFlower = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D);
+    protected final VoxelShape shapeBody = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
     private static final Component CONTAINER_TITLE = Component.translatable(Bumblezone.MODID + ".container.crystalline_flower");
 
@@ -73,11 +73,15 @@ public class CrystallineFlower extends BaseEntityBlock {
     }
 
     @Override
+    public VoxelShape getShape(BlockState blockstate, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        return (blockstate.hasProperty(FLOWER) && blockstate.getValue(FLOWER)) ? shapeFlower : shapeBody;
+    }
+
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add().add(FLOWER);
     }
 
-    @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return BzBlockEntities.CRYSTALLINE_FLOWER.get().create(blockPos, blockState);
@@ -95,6 +99,11 @@ public class CrystallineFlower extends BaseEntityBlock {
 
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        VoxelShape voxelShape = getShape(state, level, pos, null).move(pos.getX(), pos.getY(), pos.getZ());
+        if (!Shapes.joinIsNotEmpty(voxelShape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND)) {
+            return;
+        }
+
         if (entity instanceof LivingEntity livingEntity && !BeeAggression.isBeelikeEntity(livingEntity)) {
             livingEntity.makeStuckInBlock(state, new Vec3(0.95F, 2, 0.95F));
             if (!level.isClientSide && (livingEntity.xOld != livingEntity.getX() || livingEntity.zOld != livingEntity.getZ())) {
@@ -150,7 +159,7 @@ public class CrystallineFlower extends BaseEntityBlock {
                 }
 
                 if (level instanceof ServerLevel serverLevel) {
-                    spawnSparkleParticles(serverLevel, itemEntity.position(), level.random, (consumedItemCount / 3) + 5);
+                    spawnConsumeParticles(serverLevel, itemEntity.position(), level.random, (consumedItemCount / 3) + 5);
                 }
             }
         }
@@ -173,7 +182,7 @@ public class CrystallineFlower extends BaseEntityBlock {
                 }
 
                 if (level instanceof ServerLevel serverLevel) {
-                    spawnSparkleParticles(serverLevel, experienceOrb.position(), level.random, 3);
+                    spawnConsumeParticles(serverLevel, experienceOrb.position(), level.random, 3);
                 }
             }
         }
@@ -501,7 +510,7 @@ public class CrystallineFlower extends BaseEntityBlock {
         }
     }
 
-    private void spawnSparkleParticles(Level world, Vec3 position, RandomSource random, int particleCount) {
+    private void spawnConsumeParticles(Level world, Vec3 position, RandomSource random, int particleCount) {
         ((ServerLevel)world).sendParticles(ParticleTypes.HAPPY_VILLAGER,
                 position.x(),
                 position.y() + 0.5d,
@@ -511,5 +520,58 @@ public class CrystallineFlower extends BaseEntityBlock {
                 random.nextDouble() / 8 + 0.2d,
                 random.nextDouble() / 8 + 0.2d,
                 0.1D);
+    }
+
+    @Override
+    public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
+        boolean flower = blockState.getValue(FLOWER);
+        if (random.nextFloat() < (flower ? 0.15f : 0.05f)) {
+            this.spawnSparkleParticles(world, position, random, flower);
+        }
+
+        if (flower) {
+            world.addParticle(
+                    BzParticles.POLLEN_PARTICLE.get(),
+                    (double)position.getX() + 0.5d,
+                    (double)position.getY() + 0.1d,
+                    (double)position.getZ() + 0.5d,
+                    random.nextGaussian() * 0.005d,
+                    random.nextGaussian() * 0.005d + 0.005d,
+                    random.nextGaussian() * 0.005d);
+        }
+    }
+
+    private void spawnSparkleParticles(Level world, BlockPos position, RandomSource random, boolean flower) {
+        int min = flower ? 1 : 3;
+        int max = flower ? 15 : 13;
+        double minRatio = min / 16d;
+        double x;
+        double y;
+        double z;
+        if (flower) {
+            int chosenFace = random.nextInt(3);
+            boolean xB = random.nextBoolean();
+            boolean yB = random.nextBoolean();
+            boolean zB = random.nextBoolean();
+            x = random.nextDouble() + (xB ? min : max) * (chosenFace != 0 ? random.nextDouble() * (1 - minRatio) : 1) + (chosenFace != 0 ? min : 0);
+            y = random.nextDouble() + (yB ? 0 : 9) * (chosenFace != 1 ? random.nextDouble() : 1);
+            z = random.nextDouble() + (zB ? min : max) * (chosenFace != 2 ? random.nextDouble() * (1 - minRatio) : 1) + (chosenFace != 2 ? min : 0);
+        }
+        else {
+            int chosenFace = random.nextInt(2);
+            boolean xB = random.nextBoolean();
+            boolean zB = random.nextBoolean();
+            x = random.nextDouble() + (xB ? min : max) * (chosenFace != 0 ? random.nextDouble() * (1 - minRatio) : 1) + (chosenFace != 0 ? min : 0);
+            y = random.nextDouble() * (flower ? 9 : 16);
+            z = random.nextDouble() + (zB ? min : max) * (chosenFace != 1 ? random.nextDouble() * (1 - minRatio) : 1) + (chosenFace != 1 ? min : 0);
+        }
+
+        world.addParticle(BzParticles.SPARKLE_PARTICLE.get(),
+                (x / 16) + position.getX(),
+                (y / 16) + position.getY(),
+                (z / 16) + position.getZ(),
+                0.0D,
+                0.0D,
+                0.0D);
     }
 }

@@ -1,7 +1,98 @@
 {
-  "parent": "minecraft:block/cube_all",
-  "render_type": "minecraft:translucent",
-  "textures": {
-    "all": "the_bumblezone:block/crystalline_flower"
-  }
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"render_type": "minecraft:cutout",
+	"textures": {
+		"particle": "the_bumblezone:block/crystalline_flower",
+		"flower": "the_bumblezone:block/crystalline_flower",
+		"base": "the_bumblezone:block/crystalline_flower_base"
+	},
+	"elements": [
+		{
+			"from": [1, 0.1, 1],
+			"to": [15, 0.1, 15],
+			"shade": false,
+			"rotation": {"angle": 0, "axis": "z", "origin": [8, 1.71932, 8]},
+			"faces": {
+				"up": {"uv": [1, 15, 15, 1], "texture": "#base"},
+				"down": {"uv": [1, 15, 15, 1], "texture": "#base"}
+			}
+		},
+		{
+			"from": [7.34205, 0.43088, 0],
+			"to": [23.34205, 0.43088, 16],
+			"shade": false,
+			"rotation": {"angle": 45, "axis": "z", "origin": [8, 1.71932, 8]},
+			"faces": {
+				"up": {"uv": [16, 16, 0, 0], "rotation": 270, "texture": "#flower"},
+				"down": {"uv": [16, 0, 0, 16], "rotation": 90, "texture": "#flower"}
+			}
+		},
+		{
+			"from": [-7.34205, 0.43088, 0],
+			"to": [8.65795, 0.43088, 16],
+			"shade": false,
+			"rotation": {"angle": -45, "axis": "z", "origin": [8, 1.71932, 8]},
+			"faces": {
+				"up": {"uv": [16, 16, 0, 0], "rotation": 90, "texture": "#flower"},
+				"down": {"uv": [16, 0, 0, 16], "rotation": 270, "texture": "#flower"}
+			}
+		},
+		{
+			"from": [0, 0.43088, 7.34205],
+			"to": [16, 0.43088, 23.34205],
+			"shade": false,
+			"rotation": {"angle": -45, "axis": "x", "origin": [8, 1.71932, 8]},
+			"faces": {
+				"up": {"uv": [16, 16, 0, 0], "texture": "#flower"},
+				"down": {"uv": [16, 0, 0, 16], "texture": "#flower"}
+			}
+		},
+		{
+			"from": [0, 0.43088, -7.34205],
+			"to": [16, 0.43088, 8.65795],
+			"shade": false,
+			"rotation": {"angle": 45, "axis": "x", "origin": [8, 1.71932, 8]},
+			"faces": {
+				"up": {"uv": [0, 0, 16, 16], "texture": "#flower"},
+				"down": {"uv": [0, 16, 16, 0], "texture": "#flower"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 2.75],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 2.75],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [10, 15, 10],
+			"translation": [0, 4, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [10, 15, 10],
+			"translation": [0, 4, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.525, 0.625]
+		},
+		"head": {
+			"translation": [0, 15.5, 0]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
 }

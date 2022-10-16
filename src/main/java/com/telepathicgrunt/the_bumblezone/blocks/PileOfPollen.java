@@ -437,7 +437,7 @@ public class PileOfPollen extends FallingBlock {
                 double zOffset = directionAxis == Direction.Axis.Z ? 0.5D + 0.5625D * (double)direction.getStepZ() : (double)random.nextFloat();
 
                 world.addParticle(
-                        BzParticles.POLLEN.get(),
+                        BzParticles.POLLEN_PARTICLE.get(),
                         (double)blockPos.getX() + xOffset,
                         (double)blockPos.getY() + yOffset,
                         (double)blockPos.getZ() + zOffset,
@@ -456,7 +456,7 @@ public class PileOfPollen extends FallingBlock {
         double zOffset = (random.nextFloat() * 0.3) - 0.15;
 
         world.addParticle(
-                BzParticles.POLLEN.get(),
+                BzParticles.POLLEN_PARTICLE.get(),
                 location.x() + xOffset,
                 location.y() + yOffset,
                 location.z() + zOffset,
@@ -473,7 +473,7 @@ public class PileOfPollen extends FallingBlock {
         double zOffset = (random.nextFloat() * 0.3) - 0.15;
 
         ((ServerLevel)world).sendParticles(
-                BzParticles.POLLEN.get(),
+                BzParticles.POLLEN_PARTICLE.get(),
                 location.x() + xOffset,
                 location.y() + yOffset,
                 location.z() + zOffset,

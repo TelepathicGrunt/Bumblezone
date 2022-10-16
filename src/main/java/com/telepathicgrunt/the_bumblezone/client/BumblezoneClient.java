@@ -4,8 +4,9 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
 import com.telepathicgrunt.the_bumblezone.client.items.IncenseCandleColoring;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
-import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuff;
+import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuffParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.RoyalJellyParticle;
+import com.telepathicgrunt.the_bumblezone.client.particles.SparkleParticle;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeeVariantRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
@@ -201,7 +202,8 @@ public class BumblezoneClient {
     }
 
     public static void onParticleSetup(RegisterParticleProvidersEvent event) {
-        event.register(BzParticles.POLLEN.get(), PollenPuff.Factory::new);
+        event.register(BzParticles.POLLEN_PARTICLE.get(), PollenPuffParticle.Factory::new);
+        event.register(BzParticles.SPARKLE_PARTICLE.get(), SparkleParticle.Factory::new);
         event.register(BzParticles.HONEY_PARTICLE.get(), HoneyParticle.Factory::new);
         event.register(BzParticles.ROYAL_JELLY_PARTICLE.get(), RoyalJellyParticle.Factory::new);
     }
