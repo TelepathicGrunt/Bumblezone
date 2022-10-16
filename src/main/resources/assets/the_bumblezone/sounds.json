@@ -772,5 +772,25 @@
       }
     ],
     "subtitle": "subtitles.item.the_bumblezone.essence_of_the_bees.consuming"
+  },
+  "block.the_bumblezone.crystalline_flower.use": {
+    "sounds": [
+      {
+        "name": "block/enchantment_table/enchant1",
+        "volume": 0.95,
+        "pitch": 1.1
+      },
+      {
+        "name": "block/enchantment_table/enchant2",
+        "volume": 0.95,
+        "pitch": 1.1
+      },
+      {
+        "name": "block/enchantment_table/enchant3",
+        "volume": 0.95,
+        "pitch": 1.1
+      }
+    ],
+    "subtitle": "subtitles.block.the_bumblezone.crystalline_flower.use"
   }
 }

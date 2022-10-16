@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
@@ -146,8 +147,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                 access.execute((soundLevel, pos) -> {
                     long gameTime = soundLevel.getGameTime();
                     if (lastSoundTime != gameTime) {
-                        //TODO: custom take sound for enchanted books
-                        soundLevel.playSound(null, pos, SoundEvents.UI_LOOM_TAKE_RESULT, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        soundLevel.playSound(null, pos, BzSounds.CRYSTALLINE_FLOWER_USE.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
                         lastSoundTime = gameTime;
                     }
 

@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -90,8 +91,7 @@ public class CrystallineFlower extends BaseEntityBlock {
                 double xDiff = Math.abs(livingEntity.getX() - livingEntity.xOld);
                 double zDiff = Math.abs(livingEntity.getZ() - livingEntity.zOld);
                 if (xDiff >= (double)0.001F || zDiff >= (double)0.001F) {
-                    //TODO: custom damage source
-                    livingEntity.hurt(DamageSource.SWEET_BERRY_BUSH, 1.5f);
+                    livingEntity.hurt(BzDamageSources.CRYSTALLINE_FLOWER, 1.5f);
 
                     if (livingEntity.isDeadOrDying() &&
                         !livingEntity.wasExperienceConsumed() &&

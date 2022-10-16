@@ -34,6 +34,7 @@ public class BzSounds {
     public static final RegistryObject<SoundEvent> ROYAL_JELLY_DRINK = registerSoundEvent("item.the_bumblezone.royal_jelly_bottle.drink");
     public static final RegistryObject<SoundEvent> ROYAL_JELLY_BLOCK_SLIDE = registerSoundEvent("block.the_bumblezone.royal_jelly_block.slide");
     public static final RegistryObject<SoundEvent> WASHING_RESIDUES = registerSoundEvent("block.the_bumblezone.washing_honey_residues");
+    public static final RegistryObject<SoundEvent> CRYSTALLINE_FLOWER_USE = registerSoundEvent("block.the_bumblezone.crystalline_flower.use");
     public static final RegistryObject<SoundEvent> HONEY_SLIME_ATTACK = registerSoundEvent("entity.the_bumblezone.honey_slime.attack");
     public static final RegistryObject<SoundEvent> HONEY_SLIME_HURT = registerSoundEvent("entity.the_bumblezone.honey_slime.hurt");
     public static final RegistryObject<SoundEvent> HONEY_SLIME_DEATH = registerSoundEvent("entity.the_bumblezone.honey_slime.death");
