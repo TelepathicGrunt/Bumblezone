@@ -4,7 +4,6 @@
     "the_bumblezone:honey_crystal_shards",
     "the_bumblezone:bee_bread",
     "minecraft:honey_bottle",
-    "the_bumblezone:sugar_water_bottle",
     {
       "id": "productivebees:honey_treat",
       "required": false

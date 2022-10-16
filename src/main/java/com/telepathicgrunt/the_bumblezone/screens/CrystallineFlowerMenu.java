@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -23,6 +24,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.EntityBlock;
 
@@ -61,6 +63,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     final DataSlot bottomBlockPosZ = DataSlot.standalone();
     final DataSlot playerHasXPForTier = DataSlot.standalone();
     final DataSlot consumeSlotFullyObstructed = DataSlot.standalone();
+    final DataSlot tooManyEnchantmentsOnInput = DataSlot.standalone();
     private final Container inputContainer = new SimpleContainer(3) {
         /**
          * For tile entities, ensures the chunk containing the tile entity is saved to disk later - the game won't think
@@ -107,6 +110,25 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         this.bookSlot = addSlot(new Slot(inputContainer, BOOK_SLOT, BOOK_SLOT_X, BOOK_SLOT_Y) {
             public boolean mayPlace(ItemStack itemStack) {
                 return itemStack.is(BzTags.CAN_BE_ENCHANTED_ITEMS);
+            }
+
+            public void setChanged() {
+                this.container.setChanged();
+                int existingEnchantments = 0;
+                ItemStack itemStack = bookSlot.getItem();
+
+                if (!itemStack.isEmpty()) {
+                    existingEnchantments = EnchantmentHelper.getEnchantments(itemStack).size();
+                }
+
+                if (existingEnchantments >= 3) {
+                    tooManyEnchantmentsOnInput.set(1);
+                }
+                else {
+                    tooManyEnchantmentsOnInput.set(0);
+                }
+
+                broadcastChanges();
             }
         });
         this.enchantedSlot = addSlot(new Slot(inputContainer, ENCHANTED_SLOT, ENCHANTED_SLOT_X, ENCHANTED_SLOT_Y) {
@@ -156,6 +178,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         this.tierCost.set(0);
         this.playerHasXPForTier.set(0);
         this.consumeSlotFullyObstructed.set(0);
+        this.tooManyEnchantmentsOnInput.set(0);
         this.bottomBlockPosX.set(0);
         this.bottomBlockPosY.set(0);
         this.bottomBlockPosZ.set(0);
@@ -175,6 +198,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         addDataSlot(this.tierCost);
         addDataSlot(this.playerHasXPForTier);
         addDataSlot(this.consumeSlotFullyObstructed);
+        addDataSlot(this.tooManyEnchantmentsOnInput);
         addDataSlot(this.bottomBlockPosX);
         addDataSlot(this.bottomBlockPosY);
         addDataSlot(this.bottomBlockPosZ);
@@ -343,6 +367,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                 player.giveExperiencePoints(-xpRequested);
             }
             crystallineFlowerBlockEntity.addXpAndTier(xpObtained);
+            consumeSlotFullyObstructed();
             syncXpTier();
         }
     }
@@ -350,6 +375,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     private void drainFlowerXPLevel(int levelToConsume) {
         if (crystallineFlowerBlockEntity != null && !crystallineFlowerBlockEntity.isMinTier()) {
             crystallineFlowerBlockEntity.decreaseTier(levelToConsume);
+            consumeSlotFullyObstructed();
             syncXpTier();
         }
         else if (xpTier.get() > 1) {
@@ -431,7 +457,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     }
 
     private void setupResultSlot(int selectedEnchantment) {
-        if (selectedEnchantmentIndex.get() == -1) {
+        if (selectedEnchantmentIndex.get() == -1 || tooManyEnchantmentsOnInput.get() == 1) {
             if (enchantedSlot.hasItem()) {
                 enchantedSlot.set(ItemStack.EMPTY);
             }

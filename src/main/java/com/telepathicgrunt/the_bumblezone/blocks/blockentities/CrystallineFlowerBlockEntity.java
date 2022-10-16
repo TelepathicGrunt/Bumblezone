@@ -51,6 +51,10 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
         return this.guid;
     }
 
+    public void setGUID(String guid) {
+        this.guid = guid;
+    }
+
     @Override
     public void load(CompoundTag compoundTag) {
         super.load(compoundTag);
@@ -98,15 +102,15 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
         int tierChange = 0;
 
         while (currentXp >= getMaxXpForTier(xpTier) && !isMaxTier()) {
+            currentXp -= getMaxXpForTier(xpTier);
             tierChange++;
             xpTier++;
-            currentXp -= getMaxXpForTier(xpTier);
         }
 
         while (currentXp < 0 && !isMinTier()) {
+            currentXp += getMaxXpForTier(xpTier);
             tierChange--;
             xpTier--;
-            currentXp += getMaxXpForTier(xpTier);
         }
 
         if (isMaxTier()) {
@@ -131,6 +135,11 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
         else {
             currentXp = getMaxXpForTier(xpTier);
         }
+
+        if (currentXp >= getMaxXpForTier(xpTier) && !isMaxTier()) {
+            currentXp = getMaxXpForTier(xpTier) - 1;
+        }
+
         this.setChanged();
         setPillar(tierChange);
     }
@@ -140,36 +149,58 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
         if (!isMinTier()) {
             xpTier -= tierDecrease;
         }
+
+        if (currentXp >= getMaxXpForTier(xpTier) && !isMaxTier()) {
+            currentXp = getMaxXpForTier(xpTier) - 1;
+        }
+
         this.setChanged();
         setPillar(-tierChange);
     }
 
     public void setPillar(int tierChange) {
-        if (this.hasLevel() && tierChange != 0) {
+        if (this.level != null && tierChange != 0) {
             int bottomHeight = CrystallineFlower.flowerHeightBelow(this.level, this.getBlockPos());
             BlockPos operatingPos = this.getBlockPos().below(bottomHeight);
             int topHeight = CrystallineFlower.flowerHeightAbove(this.level, operatingPos);
 
             BlockEntity blockEntity = level.getBlockEntity(operatingPos);
             if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
-                boolean upward = tierChange > 0;
-                for (int i = 0; i < (upward ? this.xpTier : topHeight + 1); i++) {
-                    level.setBlock(
-                            operatingPos.above(i),
-                            (upward || i < this.xpTier) ? BzBlocks.CRYSTALLINE_FLOWER.get().defaultBlockState() : Blocks.AIR.defaultBlockState(),
-                            3);
-                }
-
-                level.setBlock(
-                        operatingPos.above(upward ? this.xpTier - 1 : topHeight + tierChange),
-                        BzBlocks.CRYSTALLINE_FLOWER.get().defaultBlockState().setValue(CrystallineFlower.FLOWER, true),
-                        3);
 
                 if (bottomHeight != 0) {
                     BlockEntity targetBlockEntity = level.getBlockEntity(this.getBlockPos().below(bottomHeight));
                     if (targetBlockEntity instanceof CrystallineFlowerBlockEntity) {
                         targetBlockEntity.load(crystallineFlowerBlockEntity.getUpdateTag());
                     }
+                }
+
+                boolean upward = tierChange > 0;
+                for (int i = 0; i < (upward ? this.xpTier : topHeight + 1); i++) {
+                    boolean placePlant = upward || i < this.xpTier;
+
+                    level.setBlock(
+                            operatingPos.above(i),
+                            placePlant ? BzBlocks.CRYSTALLINE_FLOWER.get().defaultBlockState() : Blocks.AIR.defaultBlockState(),
+                            3);
+
+                    if (placePlant) {
+                        BlockEntity blockEntity2 = level.getBlockEntity(operatingPos.above(i));
+                        if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
+                            crystallineFlowerBlockEntity2.setGUID(crystallineFlowerBlockEntity.getGUID());
+                        }
+                    }
+                }
+
+                operatingPos = operatingPos.above(upward ? this.xpTier - 1 : topHeight + tierChange);
+
+                level.setBlock(
+                        operatingPos,
+                        BzBlocks.CRYSTALLINE_FLOWER.get().defaultBlockState().setValue(CrystallineFlower.FLOWER, true),
+                        3);
+
+                BlockEntity blockEntity2 = level.getBlockEntity(operatingPos);
+                if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
+                    crystallineFlowerBlockEntity2.setGUID(crystallineFlowerBlockEntity.getGUID());
                 }
             }
         }

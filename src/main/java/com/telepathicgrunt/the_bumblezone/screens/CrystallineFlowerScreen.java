@@ -217,8 +217,12 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             });
 
 
-        if (this.menu.selectedEnchantmentIndex.get() != -1) {
-            MutableComponent mutableComponent = Component.literal("↓" + this.menu.tierCost.get()).withStyle(ChatFormatting.BOLD);
+        if (this.menu.tooManyEnchantmentsOnInput.get() == 1) {
+            MutableComponent mutableComponent = Component.translatable("the_bumblezone.container.crystalline_flower.too_many_enchants").withStyle(ChatFormatting.BOLD);
+            Screen.drawCenteredString(poseStack, font, mutableComponent, rowStartX + 45, rowStartY - 36, 0xD03010);
+        }
+        else if (this.menu.selectedEnchantmentIndex.get() != -1) {
+            MutableComponent mutableComponent = Component.translatable("the_bumblezone.container.crystalline_flower.tier_cost_arrow", this.menu.tierCost.get()).withStyle(ChatFormatting.BOLD);
             Screen.drawCenteredString(poseStack, font, mutableComponent, rowStartX + 45, rowStartY - 36, 0xD03010);
         }
 
@@ -324,9 +328,11 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             }
         }
 
+        if (pressedConsumeTimer > 0) {
+            pressedConsumeTimer--;
+        }
         if (this.menu.consumeSlotFullyObstructed.get() != 1) {
             if (pressedConsumeTimer > 0) {
-                pressedConsumeTimer--;
                 blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, getBlitOffset(), CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 18, 18, 18, 256, 256);
                 blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, getBlitOffset(), CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET + 18, 15, 11, 256, 256);
             }
@@ -396,7 +402,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private void populateAvailableEnchants() {
         enchantmentsAvailable.clear();
         ItemStack book = this.menu.bookSlot.getItem();
-        if (!book.isEmpty() && this.menu.xpTier.get() > 1) {
+        if (!book.isEmpty() && this.menu.xpTier.get() > 1 && this.menu.tooManyEnchantmentsOnInput.get() != 1) {
             ItemStack tempBook = book.copy();
             tempBook.setCount(1);
             CompoundTag compoundtag = book.getTag();

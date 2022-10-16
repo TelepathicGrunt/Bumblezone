@@ -13,6 +13,8 @@ public class BzGeneralConfigs {
     public static ForgeConfigSpec.BooleanValue keepBeeEssenceOnRespawning;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthFlightOfTheBumblebee;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
+    public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeItemEntities;
+    public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeExperienceOrbEntities;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -93,6 +95,18 @@ public class BzGeneralConfigs {
                         " This is used for the server to know when to make Allays stop dancing when Jukebox plays this music disc.\n")
                 .translation("the_bumblezone.config.musicdisctimelengthhoneybee")
                 .defineInRange("musicDiscTimeLengthHoneyBee", 216, 0 , 1000000);
+
+        crystallineFlowerConsumeItemEntities = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether the Crystalline Flower block will eat any item entity that touches the block's collision box in the world\n")
+                .translation("the_bumblezone.config.crystallineflowerconsumeitementities")
+                .define("crystallineFlowerConsumeItemEntities", true);
+
+        crystallineFlowerConsumeExperienceOrbEntities = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether the Crystalline Flower block will pull in and eat any experience orb that touches it in the world\n")
+                .translation("the_bumblezone.config.crystallineflowerconsumeexperienceorbentities")
+                .define("crystallineFlowerConsumeExperienceOrbEntities", true);
 
         builder.pop();
     }

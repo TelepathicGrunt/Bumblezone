@@ -85,9 +85,9 @@ public class GlisteringHoneyCrystal extends RotatedPillarBlock {
     }
 
     private void spawnSparkleParticles(Level world, BlockPos position, RandomSource random) {
-        double x = random.nextDouble() + (random.nextBoolean() ? -1 : 16);
-        double y = random.nextDouble() + (random.nextBoolean() ? -1 : 16);
-        double z = random.nextDouble() + (random.nextBoolean() ? -1 : 16);
+        double x = random.nextDouble() + (random.nextBoolean() ? -1 : 1);
+        double y = random.nextDouble() + (random.nextBoolean() ? -1 : 1);
+        double z = random.nextDouble() + (random.nextBoolean() ? -1 : 1);
 
         world.addParticle(ParticleTypes.ELECTRIC_SPARK,
                 (x / 16) + position.getX(),

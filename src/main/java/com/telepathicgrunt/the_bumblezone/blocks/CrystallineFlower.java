@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
@@ -12,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -55,7 +57,7 @@ public class CrystallineFlower extends BaseEntityBlock {
     private static final Component CONTAINER_TITLE = Component.translatable(Bumblezone.MODID + ".container.crystalline_flower");
 
     public CrystallineFlower() {
-        super(Properties.of(BzBlocks.ORANGE_CRYSTAL_PLANT, MaterialColor.COLOR_ORANGE).noOcclusion().strength(0.4F, 0.01F).lightLevel((blockState) -> blockState.getValue(FLOWER) ? 7 : 0));
+        super(Properties.of(BzBlocks.ORANGE_CRYSTAL_PLANT, MaterialColor.COLOR_ORANGE).noCollission().noOcclusion().strength(0.4F, 0.01F).lightLevel((blockState) -> blockState.getValue(FLOWER) ? 7 : 0));
         this.registerDefaultState(this.stateDefinition.any().setValue(FLOWER, false));
     }
 
@@ -83,13 +85,13 @@ public class CrystallineFlower extends BaseEntityBlock {
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (entity instanceof LivingEntity livingEntity && !BeeAggression.isBeelikeEntity(livingEntity)) {
-            livingEntity.makeStuckInBlock(state, new Vec3(0.9F, 0.8D, 0.9F));
+            livingEntity.makeStuckInBlock(state, new Vec3(0.95F, 2, 0.95F));
             if (!level.isClientSide && (livingEntity.xOld != livingEntity.getX() || livingEntity.zOld != livingEntity.getZ())) {
                 double xDiff = Math.abs(livingEntity.getX() - livingEntity.xOld);
                 double zDiff = Math.abs(livingEntity.getZ() - livingEntity.zOld);
                 if (xDiff >= (double)0.001F || zDiff >= (double)0.001F) {
                     //TODO: custom damage source
-                    livingEntity.hurt(DamageSource.SWEET_BERRY_BUSH, 1.35F);
+                    livingEntity.hurt(DamageSource.SWEET_BERRY_BUSH, 1.5f);
 
                     if (livingEntity.isDeadOrDying() &&
                         !livingEntity.wasExperienceConsumed() &&
@@ -106,9 +108,15 @@ public class CrystallineFlower extends BaseEntityBlock {
                 }
             }
         }
-        else if (entity instanceof ItemEntity itemEntity) {
+        else if (entity instanceof ItemEntity itemEntity && BzGeneralConfigs.crystallineFlowerConsumeItemEntities.get()) {
             ItemStack stack = itemEntity.getItem();
-            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (stack.is(BzTags.CAN_BE_ENCHANTED_ITEMS)) {
+                return;
+            }
+
+            int bottomY = CrystallineFlower.flowerHeightBelow(level, pos);
+            BlockPos bottomPos = pos.below(bottomY);
+            BlockEntity blockEntity = level.getBlockEntity(bottomPos);
             if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity && !crystallineFlowerBlockEntity.isMaxTier()) {
                 int tiersToMax = 7 - crystallineFlowerBlockEntity.getXpTier();
                 int topBlock = CrystallineFlower.flowerHeightAbove(level, crystallineFlowerBlockEntity.getBlockPos());
@@ -130,10 +138,16 @@ public class CrystallineFlower extends BaseEntityBlock {
                 if (consumedItemCount >= itemCount) {
                     itemEntity.discard();
                 }
+
+                if (level instanceof ServerLevel serverLevel) {
+                    spawnSparkleParticles(serverLevel, itemEntity.position(), level.random, (consumedItemCount / 3) + 5);
+                }
             }
         }
-        else if (entity instanceof ExperienceOrb experienceOrb) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
+        else if (entity instanceof ExperienceOrb experienceOrb && BzGeneralConfigs.crystallineFlowerConsumeExperienceOrbEntities.get()) {
+            int bottomY = CrystallineFlower.flowerHeightBelow(level, pos);
+            BlockPos bottomPos = pos.below(bottomY);
+            BlockEntity blockEntity = level.getBlockEntity(bottomPos);
             if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity && !crystallineFlowerBlockEntity.isMaxTier()) {
                 int tiersToMax = 7 - crystallineFlowerBlockEntity.getXpTier();
                 int topBlock = CrystallineFlower.flowerHeightAbove(level, crystallineFlowerBlockEntity.getBlockPos());
@@ -146,6 +160,10 @@ public class CrystallineFlower extends BaseEntityBlock {
                 experienceOrb.value -= xpGranted;
                 if (experienceOrb.value <= 0) {
                     experienceOrb.discard();
+                }
+
+                if (level instanceof ServerLevel serverLevel) {
+                    spawnSparkleParticles(serverLevel, experienceOrb.position(), level.random, 3);
                 }
             }
         }
@@ -197,7 +215,7 @@ public class CrystallineFlower extends BaseEntityBlock {
             }
         }
         else {
-            playerWillDestroy(world, pos, blockstate, null);
+            destroyEntirePlant(world, pos, null, false);
         }
 
         super.neighborChanged(blockstate, world, pos, block, fromPos, notify);
@@ -220,17 +238,6 @@ public class CrystallineFlower extends BaseEntityBlock {
             boolean upward = tierChange > 0;
             BlockPos tickedPos = pos.above(flowerBlockBelow);
             BlockEntity originalFlowerBlockEntity = level.getBlockEntity(tickedPos);
-            for (int i = 1; i < Math.abs(tierChange); i++) {
-                level.setBlock(
-                        tickedPos.above((int) (Math.signum(tierChange) * i)),
-                        upward ? BzBlocks.CRYSTALLINE_FLOWER.get().defaultBlockState() : Blocks.AIR.defaultBlockState(),
-                        3);
-            }
-
-            level.setBlock(
-                    tickedPos.above(tierChange),
-                    BzBlocks.CRYSTALLINE_FLOWER.get().defaultBlockState().setValue(CrystallineFlower.FLOWER, true),
-                    3);
 
             if (flowerBlockBelow != 0) {
                 BlockEntity targetBlockEntity = level.getBlockEntity(pos.below(flowerBlockBelow));
@@ -238,24 +245,56 @@ public class CrystallineFlower extends BaseEntityBlock {
                     targetBlockEntity.load(originalFlowerBlockEntity.getUpdateTag());
                 }
             }
+
+            for (int i = 1; i < Math.abs(tierChange); i++) {
+                BlockPos currentPos = tickedPos.above((int) (Math.signum(tierChange) * i));
+
+                level.setBlock(
+                        currentPos,
+                        upward ? BzBlocks.CRYSTALLINE_FLOWER.get().defaultBlockState() : Blocks.AIR.defaultBlockState(),
+                        3);
+
+                if (upward) {
+                    BlockEntity blockEntity2 = level.getBlockEntity(currentPos);
+                    if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
+                        crystallineFlowerBlockEntity2.setGUID(crystallineFlowerBlockEntity.getGUID());
+                    }
+                }
+            }
+
+            tickedPos = tickedPos.above(tierChange);
+
+            level.setBlock(
+                    tickedPos,
+                    BzBlocks.CRYSTALLINE_FLOWER.get().defaultBlockState().setValue(CrystallineFlower.FLOWER, true),
+                    3);
+
+            BlockEntity blockEntity2 = level.getBlockEntity(tickedPos);
+            if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
+                crystallineFlowerBlockEntity2.setGUID(crystallineFlowerBlockEntity.getGUID());
+            }
         }
     }
 
     @Override
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        return Block.canSupportCenter(level, pos.below(), Direction.UP) && flowerHeightBelow(level, pos) + flowerHeightAbove(level, pos) + 1 <= 7;
+        return (Block.canSupportCenter(level, pos.below(), Direction.UP) || level.getBlockState(pos.below()).is(BzBlocks.CRYSTALLINE_FLOWER.get())) && flowerHeightBelow(level, pos) + flowerHeightAbove(level, pos) + 1 <= 7;
     }
 
     @Override
     public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        destroyEntirePlant(level, pos, player, true);
+    }
+
+    private void destroyEntirePlant(Level level, BlockPos pos, Player player, boolean dropItem) {
         int flowerBlockAbove = flowerHeightAbove(level, pos);
-        int flowerBlockBelow = flowerHeightBelow(level, pos);
         BlockPos flowerPos = pos.above(flowerBlockAbove);
-        BlockPos bottomPos = pos.below(flowerBlockBelow);
+        int flowerBlockBelow = flowerHeightBelow(level, flowerPos);
+        BlockPos bottomPos = flowerPos.below(flowerBlockBelow);
         BlockState bottomState = level.getBlockState(bottomPos);
         BlockEntity blockEntity = level.getBlockEntity(bottomPos);
 
-        for (int i = 1; i <= flowerBlockBelow + flowerBlockAbove; i++) {
+        for (int i = 1; i <= flowerBlockBelow; i++) {
             level.destroyBlock(flowerPos.below(i), false, player, 0);
         }
 
@@ -264,7 +303,7 @@ public class CrystallineFlower extends BaseEntityBlock {
 //            return;
 //        }
 
-        if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
+        if (dropItem && blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
             ItemStack itemStack = BzItems.CRYSTALLINE_FLOWER.get().getDefaultInstance();
             crystallineFlowerBlockEntity.saveToItem(itemStack);
             ItemEntity itementity = new ItemEntity(level, (double) flowerPos.getX() + 0.5D, (double) flowerPos.getY() + 0.5D, (double) flowerPos.getZ() + 0.5D, itemStack);
@@ -397,5 +436,17 @@ public class CrystallineFlower extends BaseEntityBlock {
                         finalSearchTreasure,
                         finalCrystallineFlowerBlockEntity
                 ), CONTAINER_TITLE);
+    }
+
+    private void spawnSparkleParticles(Level world, Vec3 position, RandomSource random, int particleCount) {
+        ((ServerLevel)world).sendParticles(ParticleTypes.HAPPY_VILLAGER,
+                position.x(),
+                position.y() + 0.5d,
+                position.z(),
+                particleCount,
+                random.nextDouble() / 8 + 0.2d,
+                random.nextDouble() / 8 + 0.2d,
+                random.nextDouble() / 8 + 0.2d,
+                0.1D);
     }
 }
