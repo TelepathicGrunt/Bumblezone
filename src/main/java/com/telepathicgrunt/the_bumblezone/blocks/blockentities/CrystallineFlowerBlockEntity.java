@@ -22,6 +22,7 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
     private int xpTier = 1;
     private int currentXp = 0;
     private String guid = java.util.UUID.randomUUID().toString();
+    private Boolean isBreaking = false;
 
     protected CrystallineFlowerBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
@@ -45,6 +46,14 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
 
     public void setCurrentXp(int currentXp) {
         this.currentXp = currentXp;
+    }
+
+    public boolean getIsBreaking() {
+        return this.isBreaking;
+    }
+
+    public void setIsBreaking(boolean isBreaking) {
+        this.isBreaking = isBreaking;
     }
 
     public String getGUID() {

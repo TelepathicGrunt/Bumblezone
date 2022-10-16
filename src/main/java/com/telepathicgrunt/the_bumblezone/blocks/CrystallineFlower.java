@@ -110,7 +110,7 @@ public class CrystallineFlower extends BaseEntityBlock {
         }
         else if (entity instanceof ItemEntity itemEntity && BzGeneralConfigs.crystallineFlowerConsumeItemEntities.get()) {
             ItemStack stack = itemEntity.getItem();
-            if (stack.is(BzTags.CAN_BE_ENCHANTED_ITEMS)) {
+            if (stack.is(BzTags.CAN_BE_ENCHANTED_ITEMS) || stack.is(BzTags.CANNOT_CONSUMED_ITEMS)) {
                 return;
             }
 
@@ -207,21 +207,46 @@ public class CrystallineFlower extends BaseEntityBlock {
     }
 
     @Override
-    public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-        if (canSurvive(blockstate, world, pos)) {
-            boolean flowerSpot = isFlowerSpot(world, pos);
+    public void neighborChanged(BlockState blockstate, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+        if (canSurvive(blockstate, level, pos)) {
+            boolean flowerSpot = isFlowerSpot(level, pos);
             if (flowerSpot != blockstate.getValue(FLOWER)) {
-                world.setBlock(pos, blockstate.setValue(FLOWER, flowerSpot), 3);
+                level.setBlock(pos, blockstate.setValue(FLOWER, flowerSpot), 3);
             }
         }
         else {
-            destroyEntirePlant(world, pos, null, false);
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
+                destroyEntirePlant(level, pos, null, !crystallineFlowerBlockEntity.getIsBreaking());
+            }
+            else {
+                destroyEntirePlant(level, pos, null, true);
+            }
         }
 
-        super.neighborChanged(blockstate, world, pos, block, fromPos, notify);
+        super.neighborChanged(blockstate, level, pos, block, fromPos, notify);
     }
 
-    @Deprecated
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        // Sync data to entire stack so they can update properly and do drops properly
+        int flowerBlockAbove = flowerHeightAbove(level, pos);
+        int flowerBlockBelow = flowerHeightBelow(level, pos);
+        BlockEntity operatingBE = level.getBlockEntity(pos.below(flowerBlockBelow));
+        if (operatingBE instanceof CrystallineFlowerBlockEntity) {
+            BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+            for (int i = (-flowerBlockBelow) + 1; i <= flowerBlockAbove; i++) {
+                mutableBlockPos.set(pos).move(Direction.UP, i);
+                BlockEntity blockEntity = level.getBlockEntity(mutableBlockPos);
+                if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
+                    crystallineFlowerBlockEntity2.load(operatingBE.getUpdateTag());
+                }
+            }
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
+    }
+
+    @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
@@ -278,7 +303,8 @@ public class CrystallineFlower extends BaseEntityBlock {
 
     @Override
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        return (Block.canSupportCenter(level, pos.below(), Direction.UP) || level.getBlockState(pos.below()).is(BzBlocks.CRYSTALLINE_FLOWER.get())) && flowerHeightBelow(level, pos) + flowerHeightAbove(level, pos) + 1 <= 7;
+        BlockState belowState = level.getBlockState(pos.below());
+        return (belowState.is(BzBlocks.GLISTERING_HONEY_CRYSTAL.get()) || belowState.is(BzBlocks.CRYSTALLINE_FLOWER.get())) && flowerHeightBelow(level, pos) + flowerHeightAbove(level, pos) + 1 <= 7;
     }
 
     @Override
@@ -291,17 +317,27 @@ public class CrystallineFlower extends BaseEntityBlock {
         BlockPos flowerPos = pos.above(flowerBlockAbove);
         int flowerBlockBelow = flowerHeightBelow(level, flowerPos);
         BlockPos bottomPos = flowerPos.below(flowerBlockBelow);
-        BlockState bottomState = level.getBlockState(bottomPos);
         BlockEntity blockEntity = level.getBlockEntity(bottomPos);
 
-        for (int i = 1; i <= flowerBlockBelow; i++) {
-            level.destroyBlock(flowerPos.below(i), false, player, 0);
+        // Tells entire stack of the plant that they are in destroy phase so neighbor change doesn't cuase multiple drops
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+        for (int i = 0; i <= flowerBlockBelow; i++) {
+            mutableBlockPos.set(flowerPos).move(Direction.DOWN, i);
+            BlockEntity blockEntity2 = level.getBlockEntity(mutableBlockPos);
+            if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
+                crystallineFlowerBlockEntity.setIsBreaking(true);
+            }
         }
 
-//        if (player != null && player.getAbilities().instabuild) {
-//            super.playerWillDestroy(level, flowerPos, flowerState, player);
-//            return;
-//        }
+        for (int i = 1; i <= flowerBlockBelow; i++) {
+            mutableBlockPos.set(flowerPos).move(Direction.DOWN, i);
+            level.destroyBlock(mutableBlockPos, false, player, 0);
+        }
+
+        if (player != null && player.getAbilities().instabuild) {
+            super.playerWillDestroy(level, flowerPos, level.getBlockState(flowerPos), player);
+            return;
+        }
 
         if (dropItem && blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
             ItemStack itemStack = BzItems.CRYSTALLINE_FLOWER.get().getDefaultInstance();
@@ -310,6 +346,7 @@ public class CrystallineFlower extends BaseEntityBlock {
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
         }
+
         level.destroyBlock(flowerPos, false, player, 0);
     }
 
