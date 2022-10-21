@@ -92,12 +92,12 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
                     if (!currentBlockState.isAir() && currentBlockState.getFluidState().isEmpty() &&
                         !currentBlockState.is(configBlockState.getBlock()) && previousBlockState.getBlock() == Blocks.AIR)
                     {
-                        mutable.move(Direction.DOWN);
                         BlockState belowBlockState = chunk.getBlockState(mutable);
                         if (!belowBlockState.isFaceSturdy(context.level(), mutable, Direction.UP)) {
-                           continue;
+                            previousBlockState = currentBlockState;
+                            mutable.move(Direction.DOWN);
+                            continue;
                         }
-                        mutable.move(Direction.UP);
 
                         for (int height = 1; height <= configHeight; height++) {
                             // Vary the pollen piles

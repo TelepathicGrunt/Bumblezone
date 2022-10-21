@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-	  "the_bumblezone:cell_maze",
-	  "the_bumblezone:hanging_garden"
+	  "the_bumblezone:cell_maze"
   ]
 }

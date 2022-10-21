@@ -9,7 +9,4 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface WorldGenRegionAccessor {
     @Accessor("structureManager")
     StructureManager getStructureManager();
-
-    @Accessor("writeRadiusCutoff")
-    int getWriteRadiusCutoff();
 }
