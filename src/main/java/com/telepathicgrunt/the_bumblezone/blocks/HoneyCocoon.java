@@ -188,7 +188,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                     }
 
                     if(!ejectedItem.isEmpty()) {
-                        spawnItemEntity(serverLevel, blockPos, ejectedItem, 0.2D);
+                        GeneralUtils.spawnItemEntity(serverLevel, blockPos, ejectedItem, 0, 0.2D);
                     }
                 }
 
@@ -208,7 +208,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                     }
                 }
                 if(!addedToInv) {
-                    spawnItemEntity(serverLevel, blockPos, BzItems.HONEYCOMB_BROOD.get().getDefaultInstance(), 0.2D);
+                    GeneralUtils.spawnItemEntity(serverLevel, blockPos, BzItems.HONEYCOMB_BROOD.get().getDefaultInstance(), 0, 0.2D);
                 }
             }
         }
@@ -243,22 +243,8 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                 }
 
                 ItemStack takenItem = honeyCocoonBlockEntity.removeItem(itemStacks.get(random.nextInt(itemStacks.size())).getSecond(), 1);
-                spawnItemEntity(serverLevel, blockPos, takenItem, -0.2D);
+                GeneralUtils.spawnItemEntity(serverLevel, blockPos, takenItem, 0, -0.2D);
             }
-        }
-    }
-
-    private static void spawnItemEntity(ServerLevel serverLevel, BlockPos blockPos, ItemStack itemToSpawn, double ySpeed) {
-        if(!itemToSpawn.isEmpty()) {
-            ItemEntity itemEntity = new ItemEntity(
-                    serverLevel,
-                    blockPos.getX() + 0.5D,
-                    blockPos.getY() + 1D,
-                    blockPos.getZ() + 0.5D,
-                    itemToSpawn);
-            itemEntity.setDefaultPickUpDelay();
-            itemEntity.setDeltaMovement(new Vec3(0, ySpeed, 0));
-            serverLevel.addFreshEntity(itemEntity);
         }
     }
 

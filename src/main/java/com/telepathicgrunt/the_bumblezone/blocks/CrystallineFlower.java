@@ -129,7 +129,7 @@ public class CrystallineFlower extends BaseEntityBlock {
         }
         else if (entity instanceof ItemEntity itemEntity && BzGeneralConfigs.crystallineFlowerConsumeItemEntities.get()) {
             ItemStack stack = itemEntity.getItem();
-            if (stack.is(BzTags.CAN_BE_ENCHANTED_ITEMS) || stack.is(BzTags.CANNOT_CONSUMED_ITEMS)) {
+            if (stack.is(BzTags.CAN_BE_ENCHANTED_ITEMS) || stack.is(BzTags.CANNOT_CONSUMED_ITEMS) || stack.is(BzItems.HONEY_CRYSTAL_SHARDS.get())) {
                 return;
             }
 

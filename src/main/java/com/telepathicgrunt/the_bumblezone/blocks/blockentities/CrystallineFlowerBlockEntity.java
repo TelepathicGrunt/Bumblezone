@@ -3,11 +3,14 @@ package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
@@ -183,6 +186,13 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
                     }
                 }
 
+                for (int i = 0; i < topHeight + 1; i++) {
+                    BlockEntity blockEntity2 = level.getBlockEntity(operatingPos.above(i));
+                    if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
+                        crystallineFlowerBlockEntity2.setIsBreaking(true);
+                    }
+                }
+
                 boolean upward = tierChange > 0;
                 for (int i = 0; i < (upward ? this.xpTier : topHeight + 1); i++) {
                     boolean placePlant = upward || i < this.xpTier;
@@ -196,6 +206,19 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
                         BlockEntity blockEntity2 = level.getBlockEntity(operatingPos.above(i));
                         if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
                             crystallineFlowerBlockEntity2.setGUID(crystallineFlowerBlockEntity.getGUID());
+                            crystallineFlowerBlockEntity2.setIsBreaking(false);
+                        }
+                    }
+                    else if (this.level instanceof ServerLevel serverLevel) {
+                        for (int itemsToDrop = 0; itemsToDrop < 2 + (i / 1.5); itemsToDrop++) {
+                            ItemStack stack = BzItems.HONEY_CRYSTAL_SHARDS.get().getDefaultInstance();
+                            stack.setCount(1);
+                            GeneralUtils.spawnItemEntity(
+                                    serverLevel,
+                                    operatingPos.above(i),
+                                    stack,
+                                    0.05D,
+                                    0.2D);
                         }
                     }
                 }
@@ -210,6 +233,7 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
                 BlockEntity blockEntity2 = level.getBlockEntity(operatingPos);
                 if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
                     crystallineFlowerBlockEntity2.setGUID(crystallineFlowerBlockEntity.getGUID());
+                    crystallineFlowerBlockEntity2.setIsBreaking(false);
                 }
             }
         }

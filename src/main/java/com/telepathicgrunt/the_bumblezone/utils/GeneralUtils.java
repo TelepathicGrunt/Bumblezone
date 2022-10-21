@@ -15,6 +15,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -30,6 +31,7 @@ import net.minecraft.world.level.block.JigsawBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.HashSet;
 import java.util.List;
@@ -263,4 +265,22 @@ public class GeneralUtils {
         return blockState.isAir() || blockState.getMaterial().isLiquid() || blockState.getMaterial().isReplaceable() || blockState.is(BzBlocks.HONEY_CRYSTAL.get());
     }
 
+    //////////////////////////////////////////////
+
+    public static void spawnItemEntity(ServerLevel serverLevel, BlockPos blockPos, ItemStack itemToSpawn, double randomXZSpeed, double ySpeed) {
+        if(!itemToSpawn.isEmpty()) {
+            ItemEntity itemEntity = new ItemEntity(
+                    serverLevel,
+                    blockPos.getX() + 0.5D,
+                    blockPos.getY() + 1D,
+                    blockPos.getZ() + 0.5D,
+                    itemToSpawn);
+            itemEntity.setDeltaMovement(new Vec3(
+                    serverLevel.random.nextGaussian() * randomXZSpeed,
+                    ySpeed,
+                    serverLevel.random.nextGaussian() * randomXZSpeed));
+            itemEntity.setDefaultPickUpDelay();
+            serverLevel.addFreshEntity(itemEntity);
+        }
+    }
 }
