@@ -57,6 +57,11 @@
       {
         "model": "the_bumblezone:block/carvable_wax/flower"
       }
+    ],
+    "carving=chains": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/chains"
+      }
     ]
   }
 }

@@ -4,7 +4,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 import com.mojang.datafixers.util.Pair;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.FrontAndTop;
 import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerLevel;
@@ -22,9 +24,11 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JigsawBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.HashSet;
@@ -238,4 +242,25 @@ public class GeneralUtils {
                 (isRollable || prop1.top() == prop2.top()) &&
                 jigsaw1.nbt.getString("target").equals(jigsaw2.nbt.getString("name"));
     }
+
+    //////////////////////////////////////////////
+
+    public static int getFirstLandYFromPos(LevelReader worldView, BlockPos pos) {
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+        mutable.set(pos);
+        ChunkAccess currentChunk = worldView.getChunk(mutable);
+        BlockState currentState = currentChunk.getBlockState(mutable);
+
+        while(mutable.getY() >= worldView.getMinBuildHeight() && isReplaceableByStructures(currentState)) {
+            mutable.move(Direction.DOWN);
+            currentState = currentChunk.getBlockState(mutable);
+        }
+
+        return mutable.getY();
+    }
+
+    private static boolean isReplaceableByStructures(BlockState blockState) {
+        return blockState.isAir() || blockState.getMaterial().isLiquid() || blockState.getMaterial().isReplaceable() || blockState.is(BzBlocks.HONEY_CRYSTAL.get());
+    }
+
 }

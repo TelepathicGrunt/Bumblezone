@@ -84,6 +84,17 @@
           }
         }
       }
+    },
+    "carve_carvable_wax_7": {
+      "trigger": "the_bumblezone:carve_carvable_wax",
+      "conditions": {
+        "block":{
+          "blocks": [ "the_bumblezone:carvable_wax" ],
+          "state": {
+            "carving": "chains"
+          }
+        }
+      }
     }
   },
   "requirements": [
@@ -104,6 +115,9 @@
     ],
     [
       "carve_carvable_wax_6"
+    ],
+    [
+      "carve_carvable_wax_7"
     ]
   ]
 }

@@ -64,6 +64,7 @@ public class BzTags {
     public static final TagKey<EntityType<?>> BLACKLISTED_STINGLESS_BEE_HELMET_PASSENGERS = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "blacklisted_stingless_bee_helmet_passengers"));
 
     public static final TagKey<Structure> NO_DUNGEONS = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "no_dungeons"));
+    public static final TagKey<Structure> NO_HONEYCOMB_HOLES = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "no_honeycomb_holes"));
     public static final TagKey<Structure> WRATH_CAUSING = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "wrath_causing"));
     public static final TagKey<Structure> HONEY_COMPASS_LOCATING = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "honey_compass_locating"));
     public static final TagKey<Structure> HONEY_COMPASS_THRONE_LOCATING = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "honey_compass_throne_locating"));

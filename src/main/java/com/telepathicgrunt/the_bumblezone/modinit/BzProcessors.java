@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.world.processors.FluidTickProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.HoneycombBroodRandomizeProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.HoneycombHoleProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.NoiseReplaceWithPropertiesProcessor;
+import com.telepathicgrunt.the_bumblezone.world.processors.PillarProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.PollenPilingProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.RandomReplaceWithPropertiesProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.RemoveFloatingBlocksProcessor;
@@ -35,4 +36,5 @@ public class BzProcessors {
     public static final RegistryObject<StructureProcessorType<NoiseReplaceWithPropertiesProcessor>> NOISE_REPLACE_WITH_PROPERTIES_PROCESSOR = STRUCTURE_PROCESSOR.register("noise_replace_with_properties_processor", () -> () -> NoiseReplaceWithPropertiesProcessor.CODEC);
     public static final RegistryObject<StructureProcessorType<HoneycombBroodRandomizeProcessor>> HONEYCOMB_BROOD_RANDOMIZE_PROCESSOR = STRUCTURE_PROCESSOR.register("honeycomb_brood_randomize_processor", () -> () -> HoneycombBroodRandomizeProcessor.CODEC);
     public static final RegistryObject<StructureProcessorType<RandomReplaceWithPropertiesProcessor>> RANDOM_REPLACE_WITH_PROPERTIES_PROCESSOR = STRUCTURE_PROCESSOR.register("random_replace_with_properties_processor", () -> () -> RandomReplaceWithPropertiesProcessor.CODEC);
+    public static final RegistryObject<StructureProcessorType<PillarProcessor>> PILLAR_PROCESSOR = STRUCTURE_PROCESSOR.register("pillar_processor", () -> () -> PillarProcessor.CODEC);
 }

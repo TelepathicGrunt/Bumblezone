@@ -3,16 +3,23 @@ package com.telepathicgrunt.the_bumblezone.world.features;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.mixin.world.StructureTemplateAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.world.WorldGenRegionAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.SectionPos;
 import net.minecraft.data.worldgen.ProcessorLists;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
@@ -30,9 +37,28 @@ public class HoneycombHole extends Feature<NbtFeatureConfig> {
 
     @Override
     public boolean place(FeaturePlaceContext<NbtFeatureConfig> context) {
-        ResourceLocation nbtRL = GeneralUtils.getRandomEntry(context.config().nbtResourcelocationsAndWeights, context.random());
 
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(context.origin());
+        if(context.level() instanceof WorldGenRegion worldGenRegion) {
+            SectionPos sectionPos = SectionPos.of(mutable);
+            int xChunkPosOffset = Math.abs(sectionPos.x() - worldGenRegion.getCenter().x);
+            int zChunkPosOffset = Math.abs(sectionPos.z() - worldGenRegion.getCenter().z);
+            if (xChunkPosOffset > ((WorldGenRegionAccessor)worldGenRegion).getWriteRadiusCutoff() || zChunkPosOffset > ((WorldGenRegionAccessor)worldGenRegion).getWriteRadiusCutoff()) {
+                return false;
+            }
+
+            Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY);
+            StructureManager structureManager = ((WorldGenRegionAccessor)worldGenRegion).getStructureManager();
+            for (Holder<Structure> structure : structureRegistry.getOrCreateTag(BzTags.NO_HONEYCOMB_HOLES)) {
+                if (structureManager.getStructureAt(mutable, structure.value()).isValid()) {
+                    return false;
+                }
+            }
+        }
+
+        ResourceLocation nbtRL = GeneralUtils.getRandomEntry(context.config().nbtResourcelocationsAndWeights, context.random());
         StructureTemplateManager structureManager = context.level().getLevel().getStructureManager();
+
         StructureTemplate template = structureManager.get(nbtRL).orElseThrow(() -> {
             String errorMsg = "Identifier to the specified nbt file was not found! : " + nbtRL;
             Bumblezone.LOGGER.error(errorMsg);
@@ -45,7 +71,6 @@ public class HoneycombHole extends Feature<NbtFeatureConfig> {
                 template.getSize().getY() / 2,
                 template.getSize().getZ() / 2);
 
-        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(context.origin());
 
         // offset the feature's position
         BlockPos position = context.origin().above(context.config().structureYOffset);

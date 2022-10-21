@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "the_bumblezone:hanging_garden",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 223986734,
+    "spacing": 76,
+    "separation": 32,
+    "type": "minecraft:random_spread"
+  }
+}

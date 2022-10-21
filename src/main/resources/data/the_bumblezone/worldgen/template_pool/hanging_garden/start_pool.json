@@ -1,12 +1,12 @@
 {
   "name": "the_bumblezone:hanging_garden/start_pool",
-  "fallback": "minecraft:empty",
+  "fallback": "the_bumblezone:hanging_garden/start_pool",
   "elements": [
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:hanging_garden/start_garden",
-        "processors": "minecraft:empty",
+        "location": "the_bumblezone:hanging_garden/big",
+        "processors": "the_bumblezone:hanging_garden_generic",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }

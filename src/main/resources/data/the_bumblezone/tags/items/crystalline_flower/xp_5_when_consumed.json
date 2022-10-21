@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     "the_bumblezone:honey_crystal",
-    "minecraft:enchantment_table",
+    "minecraft:enchanting_table",
     {
       "id": "#forge:buckets/honey",
       "required": false
