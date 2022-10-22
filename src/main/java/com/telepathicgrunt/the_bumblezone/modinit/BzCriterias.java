@@ -37,10 +37,12 @@ public class BzCriterias {
     public static final GenericTrigger CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "cleanup_sticky_honey_residue"));
     public static final GenericTrigger COMB_CUTTER_EXTRA_DROPS_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "comb_cutter_extra_drops"));
     public static final GenericTrigger CRYSTAL_CANNON_FULL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "crystal_cannon_full"));
+    public static final GenericTrigger ENCHANT_CRYSTALLINE_FLOWER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "enchant_crystalline_flower"));
     public static final EntitySpecificTrigger EXTENDED_WRATH_OF_THE_HIVE_TRIGGER = new EntitySpecificTrigger(new ResourceLocation(Bumblezone.MODID, "extended_wrath_of_the_hive"));
     public static final GenericTrigger FALLING_ON_POLLEN_BLOCK_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "fall_onto_pollen_pile"));
     public static final ItemSpecificTrigger FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER = new ItemSpecificTrigger(new ResourceLocation(Bumblezone.MODID, "food_removed_wrath_of_the_hive"));
     public static final GenericTrigger GETTING_PROTECTION_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "getting_protection"));
+    public static final GenericTrigger GROW_CRYSTALLINE_FLOWER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "grow_crystalline_flower"));
     public static final GenericTrigger HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings_flower_pollen"));
     public static final CounterTrigger HONEY_BOTTLE_DRANK_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bottle_drank"));
     public static final GenericTrigger HONEY_BUCKET_BEE_GROW_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bucket_bee_grow"));
@@ -103,9 +105,11 @@ public class BzCriterias {
         CriteriaTriggers.register(COMB_CUTTER_EXTRA_DROPS_TRIGGER);
         CriteriaTriggers.register(CRYSTAL_CANNON_FULL_TRIGGER);
         CriteriaTriggers.register(EXTENDED_WRATH_OF_THE_HIVE_TRIGGER);
+        CriteriaTriggers.register(ENCHANT_CRYSTALLINE_FLOWER_TRIGGER);
         CriteriaTriggers.register(FALLING_ON_POLLEN_BLOCK_TRIGGER);
         CriteriaTriggers.register(FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER);
         CriteriaTriggers.register(GETTING_PROTECTION_TRIGGER);
+        CriteriaTriggers.register(GROW_CRYSTALLINE_FLOWER_TRIGGER);
         CriteriaTriggers.register(HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER);
         CriteriaTriggers.register(HONEY_BOTTLE_DRANK_TRIGGER);
         CriteriaTriggers.register(HONEY_BUCKET_BEE_GROW_TRIGGER);
