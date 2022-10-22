@@ -3,12 +3,16 @@ package com.telepathicgrunt.the_bumblezone.screens;
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -309,6 +313,10 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             crystallineFlowerBlockEntity.addXpAndTier(xpGranted);
             consumeSlot.remove(consumedItemCount);
             consumeSlotFullyObstructed();
+
+            if(tiersToMax > 0 && crystallineFlowerBlockEntity.isMaxTier() && player instanceof ServerPlayer serverPlayer) {
+                BzCriterias.GROW_CRYSTALLINE_FLOWER_TRIGGER.trigger(serverPlayer);
+            }
             syncXpTier();
         }
     }
@@ -374,6 +382,10 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             crystallineFlowerBlockEntity.addXpAndTier(xpObtained);
             consumeSlotFullyObstructed();
             syncXpTier();
+
+            if(desiredTierUpgrade > 0 && crystallineFlowerBlockEntity.isMaxTier() && player instanceof ServerPlayer serverPlayer) {
+                BzCriterias.GROW_CRYSTALLINE_FLOWER_TRIGGER.trigger(serverPlayer);
+            }
         }
     }
 
@@ -382,6 +394,10 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             crystallineFlowerBlockEntity.decreaseTier(levelToConsume);
             consumeSlotFullyObstructed();
             syncXpTier();
+
+            if(levelToConsume >= 5 && player instanceof ServerPlayer serverPlayer) {
+                BzCriterias.ENCHANT_CRYSTALLINE_FLOWER_TRIGGER.trigger(serverPlayer);
+            }
         }
         else if (xpTier.get() > 1) {
             xpTier.set(Math.max(1, xpTier.get() - levelToConsume));

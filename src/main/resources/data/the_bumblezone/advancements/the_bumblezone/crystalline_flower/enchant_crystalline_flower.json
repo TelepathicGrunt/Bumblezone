@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/crystalline_flower/grow_crystalline_flower",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:crystalline_flower"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.enchant_crystalline_flower.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.enchant_crystalline_flower.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 20
+  },
+  "criteria": {
+    "enchant_crystalline_flower": {
+      "trigger": "the_bumblezone:enchant_crystalline_flower",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "enchant_crystalline_flower"
+    ]
+  ]
+}
