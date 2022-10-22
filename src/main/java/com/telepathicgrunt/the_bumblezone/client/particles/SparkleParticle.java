@@ -25,7 +25,6 @@ public class SparkleParticle extends SimpleAnimatedParticle {
         this.setLocationFromBoundingbox();
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static class Factory implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet sprites;
 
