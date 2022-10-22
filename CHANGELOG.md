@@ -1,3 +1,11 @@
+### **(V.6.3.3 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Added two new configs for Crystalline Flower block: crystallineFlowerConsumeExperienceUI and crystallineFlowerConsumeItemUI
+ Turning those off along with these two configs will disable flower's consuming entirely:
+ crystallineFlowerConsumeItemEntities and crystallineFlowerConsumeExperienceOrbEntities
+
+
 ### **(V.6.3.2 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:

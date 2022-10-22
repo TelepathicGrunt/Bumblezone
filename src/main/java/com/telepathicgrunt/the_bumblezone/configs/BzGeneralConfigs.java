@@ -15,6 +15,8 @@ public class BzGeneralConfigs {
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
     public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeItemEntities;
     public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeExperienceOrbEntities;
+    public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeItemUI;
+    public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeExperienceUI;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -107,6 +109,18 @@ public class BzGeneralConfigs {
                         " Whether the Crystalline Flower block will pull in and eat any experience orb that touches it in the world\n")
                 .translation("the_bumblezone.config.crystallineflowerconsumeexperienceorbentities")
                 .define("crystallineFlowerConsumeExperienceOrbEntities", true);
+
+        crystallineFlowerConsumeItemUI = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether the Crystalline Flower's GUI allows players to feed it items directly\n")
+                .translation("the_bumblezone.config.crystallineflowerconsumeitemui")
+                .define("crystallineFlowerConsumeItemUI", true);
+
+        crystallineFlowerConsumeExperienceUI = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether the Crystalline Flower's GUI allows players to feed it the player's experience\n")
+                .translation("the_bumblezone.config.crystallineflowerconsumeexperienceui")
+                .define("crystallineFlowerConsumeExperienceUI", true);
 
         builder.pop();
     }
