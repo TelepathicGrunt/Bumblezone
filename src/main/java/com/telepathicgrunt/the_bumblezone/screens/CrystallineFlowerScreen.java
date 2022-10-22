@@ -642,4 +642,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     protected int getOffscreenRows() {
         return Math.max(enchantmentsAvailable.size() - 3, 0);
     }
+
+    @Override
+    protected boolean hasClickedOutside(double mouseX, double mouseY, int left, int top, int button) {
+        return mouseX < (double)left || mouseY < (double)top || mouseX >= (double)(left + this.imageWidth) || mouseY >= (double)(top + this.imageHeight + 32);
+    }
 }
