@@ -89,6 +89,7 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzItems.SUPER_CANDLE_WHITE);
         addInfo(BzItems.SUPER_CANDLE_YELLOW);
         addInfo(BzItems.INCENSE_CANDLE);
+        addInfo(BzItems.CRYSTALLINE_FLOWER);
 
         registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry));

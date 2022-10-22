@@ -102,6 +102,7 @@ public class JEIIntegration implements IModPlugin {
         addInfo(registration, BzItems.SUPER_CANDLE_WHITE);
         addInfo(registration, BzItems.SUPER_CANDLE_YELLOW);
         addInfo(registration, BzItems.INCENSE_CANDLE);
+        addInfo(registration, BzItems.CRYSTALLINE_FLOWER);
 
         ClientLevel level = Minecraft.getInstance().level;
         if (level == null)

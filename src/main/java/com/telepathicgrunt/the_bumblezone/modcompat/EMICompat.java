@@ -93,6 +93,7 @@ public class EMICompat implements EmiPlugin {
         addInfo(registry, BzItems.SUPER_CANDLE_WHITE);
         addInfo(registry, BzItems.SUPER_CANDLE_YELLOW);
         addInfo(registry, BzItems.INCENSE_CANDLE);
+        addInfo(registry, BzItems.CRYSTALLINE_FLOWER);
 
         registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry));
