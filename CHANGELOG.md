@@ -34,3 +34,7 @@ Fixed Pigs sometimes rarely spawning instead of Enderman.
 
 Fixed Pollinated Fields and Pollinated Pillar sometimes placing the Pollen Piles on invalid blocks it cannot survive on.
 
+##### Advancements:
+Added more info for bee feeding and sugar infused stone advancements to clarify how to complete them.
+
+Added advancement for Hanging Garden and Crystalline Flower block.
