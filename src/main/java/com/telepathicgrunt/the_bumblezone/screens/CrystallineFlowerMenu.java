@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.screens;
 
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
-import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
@@ -11,9 +11,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -89,7 +87,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         this.crystallineFlowerBlockEntity = crystallineFlowerBlockEntity;
         this.consumeSlot = addSlot(new Slot(inputContainer, CONSUME_SLOT, CONSUME_SLOT_X, CONSUME_SLOT_Y) {
             public boolean mayPlace(ItemStack itemStack) {
-                if (!BzGeneralConfigs.crystallineFlowerConsumeItemUI.get()) {
+                if (!BzConfig.crystallineFlowerConsumeItemUI) {
                     return false;
                 }
                 if (itemStack.is(BzTags.CANNOT_CONSUMED_ITEMS)) {

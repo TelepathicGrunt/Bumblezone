@@ -545,5 +545,7 @@
   "the_bumblezone.midnightconfig.playWrathOfHiveEffectMusic": "Play Wrath Of Hive Effect Music",
   "the_bumblezone.midnightconfig.fogReducer": "Fog Reducer",
   "the_bumblezone.midnightconfig.crystallineFlowerConsumeItemEntities": "Crystalline Flower Item Entity Consume",
-  "the_bumblezone.midnightconfig.crystallineFlowerConsumeExperienceOrbEntities": "Crystalline Flower Exp Orb Consume"
+  "the_bumblezone.midnightconfig.crystallineFlowerConsumeExperienceOrbEntities": "Crystalline Flower Exp Orb Consume",
+  "the_bumblezone.midnightconfig.crystallineFlowerConsumeItemUI": "Crystalline Flower UI Item Consume",
+  "the_bumblezone.midnightconfig.crystallineFlowerConsumeExperienceUI": "Crystalline UI Exp Consume"
 }
