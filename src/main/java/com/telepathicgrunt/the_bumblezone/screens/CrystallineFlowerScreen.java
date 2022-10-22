@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -271,67 +272,77 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
 
-        if (pressedXp1Timer > 0 ||
-            this.menu.xpTier.get() == 7 ||
-            isPathObstructed(1) ||
-            !canPlayerBuyTier(1))
-        {
-            pressedXp1Timer--;
-            blit(poseStack, startX + XP_CONSUME_1_X_OFFSET, startY + XP_CONSUME_1_Y_OFFSET, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 18, 18, 18, 256, 256);
-        }
-        else {
-            int xOffset = startX + XP_CONSUME_1_X_OFFSET;
-            int yOffset = startY + XP_CONSUME_1_Y_OFFSET;
-            if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
-                blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 36, 18, 18, 256, 256);
+        if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI.get()) {
+            if (pressedXp1Timer > 0 ||
+                    this.menu.xpTier.get() == 7 ||
+                    isPathObstructed(1) ||
+                    !canPlayerBuyTier(1)) {
+                pressedXp1Timer--;
+                blit(poseStack, startX + XP_CONSUME_1_X_OFFSET, startY + XP_CONSUME_1_Y_OFFSET, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 18, 18, 18, 256, 256);
             }
             else {
-                blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET, 18, 18, 256, 256);
+                int xOffset = startX + XP_CONSUME_1_X_OFFSET;
+                int yOffset = startY + XP_CONSUME_1_Y_OFFSET;
+                if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
+                    blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 36, 18, 18, 256, 256);
+                }
+                else {
+                    blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET, 18, 18, 256, 256);
+                }
             }
         }
 
-        if (pressedXp2Timer > 0 ||
-            this.menu.xpTier.get() == 7 ||
-            isPathObstructed(2) ||
-            !canPlayerBuyTier(2))
-        {
-            pressedXp2Timer--;
-            blit(poseStack, startX + XP_CONSUME_2_X_OFFSET, startY + XP_CONSUME_2_Y_OFFSET, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 18, 18, 18, 256, 256);
-        }
-        else {
-            int xOffset = startX + XP_CONSUME_2_X_OFFSET;
-            int yOffset = startY + XP_CONSUME_2_Y_OFFSET;
-            if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
-                blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 36, 18, 18, 256, 256);
+        if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI.get()) {
+            if (pressedXp2Timer > 0 ||
+                    this.menu.xpTier.get() == 7 ||
+                    isPathObstructed(2) ||
+                    !canPlayerBuyTier(2)) {
+                pressedXp2Timer--;
+                blit(poseStack, startX + XP_CONSUME_2_X_OFFSET, startY + XP_CONSUME_2_Y_OFFSET, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 18, 18, 18, 256, 256);
             }
             else {
-                blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET, 18, 18, 256, 256);
+                int xOffset = startX + XP_CONSUME_2_X_OFFSET;
+                int yOffset = startY + XP_CONSUME_2_Y_OFFSET;
+                if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
+                    blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 36, 18, 18, 256, 256);
+                }
+                else {
+                    blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET, 18, 18, 256, 256);
+                }
             }
         }
 
-        if (pressedXp3Timer > 0 ||
-            this.menu.xpTier.get() == 7 ||
-            isPathObstructed(3) ||
-            !canPlayerBuyTier(3))
-        {
-            pressedXp3Timer--;
-            blit(poseStack, startX + XP_CONSUME_3_X_OFFSET, startY + XP_CONSUME_3_Y_OFFSET, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 18, 18, 18, 256, 256);
-        }
-        else {
-            int xOffset = startX + XP_CONSUME_3_X_OFFSET;
-            int yOffset = startY + XP_CONSUME_3_Y_OFFSET;
-            if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
-                blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 36, 18, 18, 256, 256);
+        if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI.get()) {
+            if (pressedXp3Timer > 0 ||
+                    this.menu.xpTier.get() == 7 ||
+                    isPathObstructed(3) ||
+                    !canPlayerBuyTier(3))
+            {
+                pressedXp3Timer--;
+                blit(poseStack, startX + XP_CONSUME_3_X_OFFSET, startY + XP_CONSUME_3_Y_OFFSET, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 18, 18, 18, 256, 256);
             }
             else {
-                blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET, 18, 18, 256, 256);
+                int xOffset = startX + XP_CONSUME_3_X_OFFSET;
+                int yOffset = startY + XP_CONSUME_3_Y_OFFSET;
+                if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
+                    blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 36, 18, 18, 256, 256);
+                }
+                else {
+                    blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET, 18, 18, 256, 256);
+                }
             }
+        }
+
+        if (!BzGeneralConfigs.crystallineFlowerConsumeExperienceUI.get()) {
+            int xOffset = startX + 26;
+            int yOffset = startY + 14;
+            blit(poseStack, xOffset, yOffset, getBlitOffset(), 176, 0, 48, 58, 256, 256);
         }
 
         if (pressedConsumeTimer > 0) {
             pressedConsumeTimer--;
         }
-        if (this.menu.consumeSlotFullyObstructed.get() != 1) {
+        if (this.menu.consumeSlotFullyObstructed.get() != 1 && BzGeneralConfigs.crystallineFlowerConsumeItemUI.get()) {
             if (pressedConsumeTimer > 0) {
                 blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, getBlitOffset(), CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 18, 18, 18, 256, 256);
                 blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, getBlitOffset(), CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET + 18, 15, 11, 256, 256);
@@ -347,6 +358,12 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 }
                 blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, getBlitOffset(), CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET, 15, 11, 256, 256);
             }
+        }
+
+        if (!BzGeneralConfigs.crystallineFlowerConsumeItemUI.get()) {
+            int xOffset = startX + 26;
+            int yOffset = startY + 78;
+            blit(poseStack, xOffset, yOffset, getBlitOffset(), 176, 59, 48, 19, 256, 256);
         }
     }
 
@@ -546,7 +563,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
         if (this.menu.xpTier.get() != 7)
         {
-            if (canPlayerBuyTier(1) &&
+            if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI.get() &&
+                canPlayerBuyTier(1) &&
                 !isPathObstructed(1) &&
                 mouseX >= this.leftPos + XP_CONSUME_1_X_OFFSET &&
                 mouseX < this.leftPos + XP_CONSUME_1_X_OFFSET + 18 &&
@@ -556,7 +574,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 pressedXp1Timer = BUTTON_PRESSED_TIMER_VISUAL;
                 sendButtonPressToMenu(-2);
             }
-            else if (canPlayerBuyTier(2) &&
+            else if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI.get() &&
+                    canPlayerBuyTier(2) &&
                     !isPathObstructed(2) &&
                     mouseX >= this.leftPos + XP_CONSUME_2_X_OFFSET &&
                     mouseX < this.leftPos + XP_CONSUME_2_X_OFFSET + 18 &&
@@ -566,7 +585,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 pressedXp2Timer = BUTTON_PRESSED_TIMER_VISUAL;
                 sendButtonPressToMenu(-3);
             }
-            else if (canPlayerBuyTier(3) &&
+            else if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI.get() &&
+                    canPlayerBuyTier(3) &&
                     !isPathObstructed(3) &&
                     mouseX >= this.leftPos + XP_CONSUME_3_X_OFFSET &&
                     mouseX < this.leftPos + XP_CONSUME_3_X_OFFSET + 18 &&
@@ -576,7 +596,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 pressedXp3Timer = BUTTON_PRESSED_TIMER_VISUAL;
                 sendButtonPressToMenu(-4);
             }
-            else if (this.menu.consumeSlotFullyObstructed.get() != 1 &&
+            else if (BzGeneralConfigs.crystallineFlowerConsumeItemUI.get() &&
+                    this.menu.consumeSlotFullyObstructed.get() != 1 &&
                     mouseX >= this.leftPos + CONSUME_CONFIRMATION_X_OFFSET &&
                     mouseX < this.leftPos + CONSUME_CONFIRMATION_X_OFFSET + 18 &&
                     mouseY >= this.topPos + CONSUME_CONFIRMATION_Y_OFFSET &&
