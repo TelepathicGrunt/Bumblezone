@@ -75,7 +75,7 @@
         "maxCount": 1
       },
       {
-        "type": "minecraft:endermen",
+        "type": "minecraft:enderman",
         "weight": 2,
         "minCount": 1,
         "maxCount": 1
@@ -83,12 +83,6 @@
       {
         "type": "minecraft:phantom",
         "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "minecraft:snowball",
-        "weight": 2200,
         "minCount": 1,
         "maxCount": 1
       }
@@ -122,14 +116,14 @@
   },
   "spawn_costs": {
     "minecraft:spider": {
-      "energy_budget": 0.05,
-      "charge": 3.5
+      "energy_budget": 0.03,
+      "charge": 4
     },
     "minecraft:cave_spider": {
-      "energy_budget": 0.04,
-      "charge": 3.5
+      "energy_budget": 0.02,
+      "charge": 4
     },
-    "minecraft:endermen": {
+    "minecraft:enderman": {
       "energy_budget": 0.02,
       "charge": 3.0
     },

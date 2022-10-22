@@ -8,22 +8,14 @@ import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.plugin.client.BuiltinClientPlugin;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.material.Fluid;
-import org.quiltmc.loader.api.QuiltLoader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class REICompat implements REIClientPlugin {
@@ -97,6 +89,7 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzItems.SUPER_CANDLE_WHITE);
         addInfo(BzItems.SUPER_CANDLE_YELLOW);
         addInfo(BzItems.INCENSE_CANDLE);
+        addInfo(BzItems.CRYSTALLINE_FLOWER);
 
         registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry));

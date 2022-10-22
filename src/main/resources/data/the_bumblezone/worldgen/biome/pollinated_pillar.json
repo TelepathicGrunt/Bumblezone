@@ -79,12 +79,6 @@
         "weight": 1,
         "minCount": 1,
         "maxCount": 1
-      },
-      {
-        "type": "minecraft:snowball",
-        "weight": 3000,
-        "minCount": 1,
-        "maxCount": 1
       }
     ],
     "creature": [
@@ -116,12 +110,12 @@
   },
   "spawn_costs": {
     "minecraft:spider": {
-      "energy_budget": 0.05,
-      "charge": 3.5
+      "energy_budget": 0.03,
+      "charge": 4
     },
     "minecraft:cave_spider": {
-      "energy_budget": 0.08,
-      "charge": 3.5
+      "energy_budget": 0.02,
+      "charge": 4
     },
     "minecraft:phantom": {
       "energy_budget": 0.01,

@@ -33,8 +33,8 @@ public class FlintAndSteelDispenseBehavior extends OptionalDispenseItemBehavior 
         }
 
         if (SuperCandle.canBeLit(level, blockstate, position)) {
-            SuperCandleWick.setLit(level, level.getBlockState(position.above()), position.above(), true);
-            this.setSuccess(true);
+            boolean successfulLit = SuperCandleWick.setLit(level, level.getBlockState(position.above()), position.above(), true);
+            this.setSuccess(successfulLit);
         }
         else {
             // If it instanceof DefaultDispenseItemBehavior, call dispenseStack directly to avoid

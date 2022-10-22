@@ -124,15 +124,15 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
                 else if (handItem.is(BzTags.DAMAGABLE_CANDLE_LIGHTING_ITEMS)) {
-                    SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
-                    if (player instanceof ServerPlayer serverPlayer && !player.getAbilities().instabuild) {
+                    boolean successfulLit = SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
+                    if (successfulLit && player instanceof ServerPlayer serverPlayer && !player.getAbilities().instabuild) {
                         handItem.hurt(1, level.getRandom(), serverPlayer);
                     }
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
                 else if (handItem.is(BzTags.CONSUMABLE_CANDLE_LIGHTING_ITEMS)) {
-                    SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
-                    if (!player.getAbilities().instabuild) {
+                    boolean successfulLit = SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
+                    if (successfulLit && !player.getAbilities().instabuild) {
                         handItem.shrink(1);
                     }
                     return InteractionResult.sidedSuccess(level.isClientSide);

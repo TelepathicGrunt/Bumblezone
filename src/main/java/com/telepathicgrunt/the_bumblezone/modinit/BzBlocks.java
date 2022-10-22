@@ -13,9 +13,15 @@ import org.quiltmc.qsl.block.extensions.api.QuiltMaterialBuilder;
 public class BzBlocks {
     public static Material ORANGE_NOT_SOLID = new QuiltMaterialBuilder(MaterialColor.TERRACOTTA_ORANGE)
             .notSolid()
-            .blocksPistons()
+            .destroyOnPush()
             .noCollider()
             .replaceable()
+            .nonSolid()
+            .build();
+    public static Material ORANGE_CRYSTAL_PLANT = new QuiltMaterialBuilder(MaterialColor.COLOR_ORANGE)
+            .notSolid()
+            .blocksPistons()
+            .noCollider()
             .nonSolid()
             .build();
 
@@ -56,6 +62,7 @@ public class BzBlocks {
     public static final Block SUPER_CANDLE_BASE_WHITE = new SuperCandleBase();
     public static final Block SUPER_CANDLE_BASE_YELLOW = new SuperCandleBase();
     public static final Block INCENSE_BASE_CANDLE = new IncenseCandleBase();
+    public static final Block CRYSTALLINE_FLOWER = new CrystallineFlower();
 
 
     /**
@@ -99,5 +106,6 @@ public class BzBlocks {
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "super_candle_base_white"), SUPER_CANDLE_BASE_WHITE);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "super_candle_base_yellow"), SUPER_CANDLE_BASE_YELLOW);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "incense_candle_base"), INCENSE_BASE_CANDLE);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "crystalline_flower"), CRYSTALLINE_FLOWER);
     }
 }

@@ -9,8 +9,8 @@ import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.particles.SimpleParticleType;
 
-public class PollenPuff extends TextureSheetParticle {
-    private PollenPuff(ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed, TextureAtlasSprite sprite) {
+public class PollenPuffParticle extends TextureSheetParticle {
+    private PollenPuffParticle(ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed, TextureAtlasSprite sprite) {
         super(clientWorld, xPos, yPos, zPos);
         this.xd += xSpeed;
         this.yd += ySpeed;
@@ -58,7 +58,7 @@ public class PollenPuff extends TextureSheetParticle {
 
         @Override
         public Particle createParticle(SimpleParticleType particleType, ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed) {
-            return new PollenPuff(clientWorld, xPos, yPos, zPos, xSpeed, ySpeed, zSpeed, sprites.get(clientWorld.random));
+            return new PollenPuffParticle(clientWorld, xPos, yPos, zPos, xSpeed, ySpeed, zSpeed, sprites.get(clientWorld.random));
         }
     }
 }

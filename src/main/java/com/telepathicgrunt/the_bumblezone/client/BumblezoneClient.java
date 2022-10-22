@@ -4,8 +4,9 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
 import com.telepathicgrunt.the_bumblezone.client.items.IncenseCandleColoring;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
-import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuff;
+import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuffParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.RoyalJellyParticle;
+import com.telepathicgrunt.the_bumblezone.client.particles.SparkleParticle;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeeVariantRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
@@ -33,6 +34,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.packets.MobEffectClientSyncPacket;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
+import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
 import net.fabricmc.api.EnvType;
@@ -97,9 +99,10 @@ public class BumblezoneClient implements ClientModInitializer {
     }
 
     private void registerParticleFactories() {
-        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.POLLEN, PollenPuff.Factory::new);
+        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.POLLEN_PARTICLE, PollenPuffParticle.Factory::new);
         ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.HONEY_PARTICLE, HoneyParticle.Factory::new);
         ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.ROYAL_JELLY_PARTICLE, RoyalJellyParticle.Factory::new);
+        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.SPARKLE_PARTICLE, SparkleParticle.Factory::new);
     }
 
     private void registerFluidRenders() {
@@ -201,6 +204,7 @@ public class BumblezoneClient implements ClientModInitializer {
         MenuScreens.register(BzMenuTypes.STRICT_9x4, StrictChestScreen::new);
         MenuScreens.register(BzMenuTypes.STRICT_9x5, StrictChestScreen::new);
         MenuScreens.register(BzMenuTypes.STRICT_9x6, StrictChestScreen::new);
+        MenuScreens.register(BzMenuTypes.CRYSTALLINE_FLOWER, CrystallineFlowerScreen::new);
     }
 
     private void registerKeybinds() {
@@ -216,6 +220,7 @@ public class BumblezoneClient implements ClientModInitializer {
         BlockRenderLayerMap.put(RenderType.cutout(), BzBlocks.SUPER_CANDLE_WICK);
         BlockRenderLayerMap.put(RenderType.cutout(), BzBlocks.SUPER_CANDLE_WICK_SOUL);
         BlockRenderLayerMap.put(RenderType.cutout(), BzBlocks.INCENSE_BASE_CANDLE);
+        BlockRenderLayerMap.put(RenderType.cutout(), BzBlocks.CRYSTALLINE_FLOWER);
         BlockRenderLayerMap.put(RenderType.translucent(), BzBlocks.HONEY_CRYSTAL);
         BlockRenderLayerMap.put(RenderType.translucent(), BzBlocks.GLISTERING_HONEY_CRYSTAL);
         BlockRenderLayerMap.put(RenderType.translucent(), BzBlocks.ROYAL_JELLY_BLOCK);

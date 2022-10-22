@@ -3,6 +3,14 @@
   "itemGroup.the_bumblezone.main_tab": "The Bumblezone",
 
   "the_bumblezone.container.honey_cocoon": "Honey Cocoon",
+  "the_bumblezone.container.crystalline_flower": "Consume and Enchant",
+  "the_bumblezone.container.crystalline_flower.level": "Level: %s",
+  "the_bumblezone.container.crystalline_flower.tier_cost": "Tier cost: %s",
+  "the_bumblezone.container.crystalline_flower.tier_cost_arrow": "↓%s",
+  "the_bumblezone.container.crystalline_flower.too_many_enchants": "Enchant Limit 3",
+
+  "death.attack.crystallineFlower": "%1$s was poked to death by a crystalline flower",
+  "death.attack.crystallineFlower.player": "%1$s was poked to death by a crystalline flower whilst trying to escape %2$s",
 
   "block.the_bumblezone.porous_honeycomb_block": "Porous Honeycomb Block",
   "block.the_bumblezone.filled_porous_honeycomb_block": "Filled Porous Honeycomb Block",
@@ -44,6 +52,7 @@
   "block.the_bumblezone.super_candle_base_yellow": "Yellow Super Candle Base",
   "block.the_bumblezone.incense_candle_base": "Incense Candle Base",
   "block.the_bumblezone.carvable_wax": "Carvable Wax",
+  "block.the_bumblezone.crystalline_flower": "Crystalline Flower",
 
   "fluid.the_bumblezone.sugar_water_still": "Sugar Water",
   "fluid.the_bumblezone.sugar_water_flowing": "Sugar Water",
@@ -120,6 +129,8 @@
   "item.the_bumblezone.incense_candle.apply_interval": "Apply Interval: %s",
   "item.the_bumblezone.incense_candle.range": "Range: %s",
   "item.the_bumblezone.incense_candle.lingering_time": "Lingering Time: %s",
+  "item.the_bumblezone.crystalline_flower_info_1": "Tier: %s",
+  "item.the_bumblezone.crystalline_flower_info_2": "XP: %s",
 
   "entity.the_bumblezone.honey_slime": "Honey Slime",
   "entity.the_bumblezone.beehemoth": "Beehemoth",
@@ -151,6 +162,7 @@
   "structure.the_bumblezone.honey_cave_room": "Honey Cave Room",
   "structure.the_bumblezone.pollinated_stream": "Pollinated Stream",
   "structure.the_bumblezone.throne_pillar": "Throne Pillar",
+  "structure.the_bumblezone.hanging_garden": "Hanging Garden",
 
   "effect.the_bumblezone.wrath_of_the_hive": "Wrath of the Hive",
   "effect.the_bumblezone.protection_of_the_hive": "Protection of the Hive",
@@ -198,6 +210,7 @@
   "subtitles.item.the_bumblezone.essence_of_the_bees.consuming": "Bee essence resonates",
   "subtitles.block.the_bumblezone.washing_honey_residues": "Honey Residue washes",
   "subtitles.block.the_bumblezone.royal_jelly_block.slide": "Sliding down a royal jelly block",
+  "subtitles.block.the_bumblezone.crystalline_flower.use": "Crystalline Flower enchanted",
 
   "key.categories.the_bumblezone": "The Bumblezone",
   "key.the_bumblezone.beehemoth_down": "Beehemoth Fly Down",
@@ -302,7 +315,7 @@
   "advancements.the_bumblezone.consume_sugar_water_bottle.title": "Sugar Rush!!!",
   "advancements.the_bumblezone.consume_sugar_water_bottle.description": "Chug down some sweet tasting sugar water",
   "advancements.the_bumblezone.obtain_sugar_infused_stones.title": "Sugarology",
-  "advancements.the_bumblezone.obtain_sugar_infused_stones.description": "Obtain strange stone blocks that are infused with sugar. Perhaps cooling lava with a sugary liquid could work...",
+  "advancements.the_bumblezone.obtain_sugar_infused_stones.description": "Obtain strange stone blocks that are infused with sugar. Perhaps cooling lava with a sugary liquid could work... Source sugary fluid blocks seems to give a different stone block than non-source sugary fluid...",
   "advancements.the_bumblezone.honey_crystal_in_water.title": "Can Sugar Water Be Automated?",
   "advancements.the_bumblezone.honey_crystal_in_water.description": "Attempt placing a Honey Crystal block into regular sugar-less water",
   "advancements.the_bumblezone.protection_of_the_hive_defense.title": "BEHOLD! My Bees!",
@@ -369,6 +382,12 @@
   "advancements.the_bumblezone.obtain_all_colored_super_candles.description": "Collect all colors of Super Candles!",
   "advancements.the_bumblezone.projectile_light_instant_incense_candle.title": "Activated my trap candle!",
   "advancements.the_bumblezone.projectile_light_instant_incense_candle.description": "Light a harmful instant effect Incense Candle with a flaming projectile",
+  "advancements.the_bumblezone.enter_garden.title": "The Gardener and the Bees",
+  "advancements.the_bumblezone.enter_garden.description": "Look up! You may find a large garden structure hanging down!",
+  "advancements.the_bumblezone.grow_crystalline_flower.title": "CONSUME CONSUME CONSUME",
+  "advancements.the_bumblezone.grow_crystalline_flower.description": "Give items and experience to a Crystalline Flower until it is fully grown! (Right click Crystalline Flower to open UI)",
+  "advancements.the_bumblezone.enchant_crystalline_flower.title": "Choosing Wisely",
+  "advancements.the_bumblezone.enchant_crystalline_flower.description": "Enchant a Book or Enchanted Book with an Enchantment that costs 5 tiers or more. (Right click Crystalline Flower to open UI)",
   "advancements.the_bumblezone.the_queens_desire.back_in_action.title": "Back in Action",
   "advancements.the_bumblezone.the_queens_desire.back_in_action.description": "Save 24 bees from certain death by putting their stingers back on",
   "advancements.the_bumblezone.the_queens_desire.fighting_the_swarm.title": "Fighting the Swarm",
@@ -378,7 +397,7 @@
   "advancements.the_bumblezone.the_queens_desire.honey_drunk.title": "Honey Drunk",
   "advancements.the_bumblezone.the_queens_desire.honey_drunk.description": "Gulp down 32 bottles of honey!",
   "advancements.the_bumblezone.the_queens_desire.hungry_hungry_bees.title": "Hungry Hungry Bees",
-  "advancements.the_bumblezone.the_queens_desire.hungry_hungry_bees.description": "Satisfy the hunger of 64 Bees by feeding them",
+  "advancements.the_bumblezone.the_queens_desire.hungry_hungry_bees.description": "Satisfy the hunger of bees by feeding them sugar water or honey-like stuff 64 times! (Can be same bee or different bees)",
   "advancements.the_bumblezone.the_queens_desire.intimidation.title": "Intimidation",
   "advancements.the_bumblezone.the_queens_desire.intimidation.description": "Show your resolve by firing Bees at Enderdragon from bee Cannon",
   "advancements.the_bumblezone.the_queens_desire.journeys_end.title": "Journey's End",
@@ -475,6 +494,7 @@
   "the_bumblezone.super_candle_yellow.jei_description": " A colored massive decorative bulky candle that gives off a ton of light!\n\n Can be lit and waterlogged the same way as regular Minecraft Candles. Also can be lit by flaming projectile hits as well. When lit, any mob in the flame will be set on fire while taking low damage.\n\n Super Candles can be stacked and if Soul Sand/Soul Soil or other soul full blocks is placed under, it gets a soul flame that scares away Piglins!\n\n If a Comparator is facing the Super Candle Base, it gets a power of 5 when lit. If Comparator is facing the Super Candle Wick, it will get a power of 3 when it is a soul flame and 5 when it is a normal flame. Dispensers can light the Candle too.",
   "the_bumblezone.incense_candle.jei_description": " A powerful magical candle that radiates its effects to nearby entities!\n\n On the surface, this candle has all the same behaviors as the regular Super Candles. Except these powerful Incense Candles can be imbued with different status effects to grant nearby entities based on what potions are used to craft the Incense Candle.\n\n When the Incense Candle's power runs out, the candle will become unlit. Relighting the candle will restart its status effects it gives. See what kind of Incense Candles you can make based on different potion combinations!",
   "the_bumblezone.carvable_wax.jei_description": " A solid block of wax that can be carved by right clicking with Shears or Swords! Also will output power to a Comparator based on what is carved.",
+  "the_bumblezone.crystalline_flower.jei_description": " An uncommon flower made of magical honey crystals! Feed it items or experience orb to grow it!\n\n You can right click it to bring up a screen to feed the flower or add enchantments to books/enchanted books! The higher the flower's tier, the more enchantments you can apply. The level of the enchantments will increase too!\n\n Max tier will grant you access to 'treasure' marked enchantments!",
 
   "the_bumblezone.midnightconfig.title": "The Bumblezone's Configs",
   "the_bumblezone.midnightconfig.beeAggressionComment": "Bee Aggression Section",
@@ -522,5 +542,7 @@
   "the_bumblezone.midnightconfig.ukraineBeeRate": "Ukraine Bee Rate",
   "the_bumblezone.midnightconfig.enableAltBeeSkinRenderer": "Enable Alt Bee Skin Renderer",
   "the_bumblezone.midnightconfig.playWrathOfHiveEffectMusic": "Play Wrath Of Hive Effect Music",
-  "the_bumblezone.midnightconfig.fogReducer": "Fog Reducer"
+  "the_bumblezone.midnightconfig.fogReducer": "Fog Reducer",
+  "the_bumblezone.midnightconfig.crystallineFlowerConsumeItemEntities": "Crystalline Flower Item Entity Consume",
+  "the_bumblezone.midnightconfig.crystallineFlowerConsumeExperienceOrbEntities": "Crystalline Flower Exp Orb Consume"
 }
