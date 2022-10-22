@@ -47,6 +47,12 @@ public class BzConfig extends MidnightConfig {
     @Entry(min=1, max=1000)
     public static int broodBlocksBeeSpawnCapacity = 80;
 
+    @Entry
+    public static boolean crystallineFlowerConsumeItemEntities = true;
+
+    @Entry
+    public static boolean crystallineFlowerConsumeExperienceOrbEntities = true;
+
 
     @Comment
     public static Comment dimensionComment;

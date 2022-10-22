@@ -1,12 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
+import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -73,17 +72,20 @@ public class GlisteringHoneyCrystal extends RotatedPillarBlock {
 
     @Override
     public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
-        if (random.nextFloat() < 0.09F) {
+        if (random.nextFloat() < 0.09f) {
             this.spawnSparkleParticles(world, position, random);
         }
     }
 
     private void spawnSparkleParticles(Level world, BlockPos position, RandomSource random) {
-        double x = random.nextDouble() + (random.nextBoolean() ? -1 : 16);
-        double y = random.nextDouble() + (random.nextBoolean() ? -1 : 16);
-        double z = random.nextDouble() + (random.nextBoolean() ? -1 : 16);
+        int chosenFace = random.nextInt(3);
+        int min = -1;
+        int max = 16;
+        double x = random.nextDouble() + (random.nextBoolean() ? min : max) * (chosenFace != 0 ? random.nextDouble() : 1);
+        double y = random.nextDouble() + (random.nextBoolean() ? min : max) * (chosenFace != 1 ? random.nextDouble() : 1);
+        double z = random.nextDouble() + (random.nextBoolean() ? min : max) * (chosenFace != 2 ? random.nextDouble() : 1);
 
-        world.addParticle(ParticleTypes.ELECTRIC_SPARK,
+        world.addParticle(BzParticles.SPARKLE_PARTICLE,
                 (x / 16) + position.getX(),
                 (y / 16) + position.getY(),
                 (z / 16) + position.getZ(),

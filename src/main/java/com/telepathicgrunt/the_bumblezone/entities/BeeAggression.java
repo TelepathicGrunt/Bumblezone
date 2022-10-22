@@ -200,6 +200,10 @@ public class BeeAggression {
         return false;
     }
 
+    public static boolean isBeelikeEntity(Entity entity) {
+        return SET_OF_BEE_NAMED_ENTITIES.contains(entity.getType());
+    }
+
     public static void playerTick(Player playerEntity) {
         //removes the wrath of the hive if it is disallowed outside dimension
         if(!playerEntity.level.isClientSide() &&

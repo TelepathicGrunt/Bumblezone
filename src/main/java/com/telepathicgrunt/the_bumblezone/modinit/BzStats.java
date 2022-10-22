@@ -13,6 +13,7 @@ public class BzStats {
     public static ResourceLocation STINGLESS_BEE_HELMET_BEE_RIDER_RL;
     public static ResourceLocation BUMBLE_BEE_CHESTPLATE_FLY_TIME_RL;
     public static ResourceLocation HONEY_BEE_LEGGINGS_FLOWER_POLLEN_RL;
+    public static ResourceLocation INTERACT_WITH_CRYSTALLINE_FLOWER_RL;
 
     private static ResourceLocation registerCustomStat(String key) {
         ResourceLocation resourcelocation = new ResourceLocation(Bumblezone.MODID, key);
@@ -27,5 +28,6 @@ public class BzStats {
         STINGLESS_BEE_HELMET_BEE_RIDER_RL = registerCustomStat("stingless_bee_helmet_bee_rider");
         BUMBLE_BEE_CHESTPLATE_FLY_TIME_RL = registerCustomStat("bumble_bee_chestplate_fly_time");
         HONEY_BEE_LEGGINGS_FLOWER_POLLEN_RL = registerCustomStat("honey_bee_leggings_flower_pollen");
+        HONEY_BEE_LEGGINGS_FLOWER_POLLEN_RL = registerCustomStat("interact_with_crystalline_flower");
     }
 }

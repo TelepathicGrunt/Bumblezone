@@ -31,7 +31,8 @@ public class CarvableWax extends Block {
         FLOWER("flower"),
         CHISELED("chiseled"),
         DIAMOND("diamond"),
-        BRICKS("bricks");
+        BRICKS("bricks"),
+        CHAINS("chains");
 
         private final String name;
         private static final Carving[] values = values();

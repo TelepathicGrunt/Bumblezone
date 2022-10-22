@@ -3,6 +3,14 @@
   "itemGroup.the_bumblezone.main_tab": "The Bumblezone",
 
   "the_bumblezone.container.honey_cocoon": "Honey Cocoon",
+  "the_bumblezone.container.crystalline_flower": "Consume and Enchant",
+  "the_bumblezone.container.crystalline_flower.level": "Level: %s",
+  "the_bumblezone.container.crystalline_flower.tier_cost": "Tier cost: %s",
+  "the_bumblezone.container.crystalline_flower.tier_cost_arrow": "↓%s",
+  "the_bumblezone.container.crystalline_flower.too_many_enchants": "Enchant Limit 3",
+
+  "death.attack.crystallineFlower": "%1$s was poked to death by a crystalline flower",
+  "death.attack.crystallineFlower.player": "%1$s was poked to death by a crystalline flower whilst trying to escape %2$s",
 
   "block.the_bumblezone.porous_honeycomb_block": "Porous Honeycomb Block",
   "block.the_bumblezone.filled_porous_honeycomb_block": "Filled Porous Honeycomb Block",
@@ -44,6 +52,7 @@
   "block.the_bumblezone.super_candle_base_yellow": "Yellow Super Candle Base",
   "block.the_bumblezone.incense_candle_base": "Incense Candle Base",
   "block.the_bumblezone.carvable_wax": "Carvable Wax",
+  "block.the_bumblezone.crystalline_flower": "Crystalline Flower",
 
   "fluid.the_bumblezone.sugar_water_still": "Sugar Water",
   "fluid.the_bumblezone.sugar_water_flowing": "Sugar Water",
@@ -120,6 +129,8 @@
   "item.the_bumblezone.incense_candle.apply_interval": "Apply Interval: %s",
   "item.the_bumblezone.incense_candle.range": "Range: %s",
   "item.the_bumblezone.incense_candle.lingering_time": "Lingering Time: %s",
+  "item.the_bumblezone.crystalline_flower_info_1": "Tier: %s",
+  "item.the_bumblezone.crystalline_flower_info_2": "XP: %s",
 
   "entity.the_bumblezone.honey_slime": "Honey Slime",
   "entity.the_bumblezone.beehemoth": "Beehemoth",
@@ -151,6 +162,7 @@
   "structure.the_bumblezone.honey_cave_room": "Honey Cave Room",
   "structure.the_bumblezone.pollinated_stream": "Pollinated Stream",
   "structure.the_bumblezone.throne_pillar": "Throne Pillar",
+  "structure.the_bumblezone.hanging_garden": "Hanging Garden",
 
   "effect.the_bumblezone.wrath_of_the_hive": "Wrath of the Hive",
   "effect.the_bumblezone.protection_of_the_hive": "Protection of the Hive",
@@ -198,6 +210,7 @@
   "subtitles.item.the_bumblezone.essence_of_the_bees.consuming": "Bee essence resonates",
   "subtitles.block.the_bumblezone.washing_honey_residues": "Honey Residue washes",
   "subtitles.block.the_bumblezone.royal_jelly_block.slide": "Sliding down a royal jelly block",
+  "subtitles.block.the_bumblezone.crystalline_flower.use": "Crystalline Flower enchanted",
 
   "key.categories.the_bumblezone": "The Bumblezone",
   "key.the_bumblezone.beehemoth_down": "Beehemoth Fly Down",
@@ -522,5 +535,7 @@
   "the_bumblezone.midnightconfig.ukraineBeeRate": "Ukraine Bee Rate",
   "the_bumblezone.midnightconfig.enableAltBeeSkinRenderer": "Enable Alt Bee Skin Renderer",
   "the_bumblezone.midnightconfig.playWrathOfHiveEffectMusic": "Play Wrath Of Hive Effect Music",
-  "the_bumblezone.midnightconfig.fogReducer": "Fog Reducer"
+  "the_bumblezone.midnightconfig.fogReducer": "Fog Reducer",
+  "the_bumblezone.midnightconfig.crystallineFlowerConsumeItemEntities": "Crystalline Flower Item Entity Consume",
+  "the_bumblezone.midnightconfig.crystallineFlowerConsumeExperienceOrbEntities": "Crystalline Flower Exp Orb Consume"
 }

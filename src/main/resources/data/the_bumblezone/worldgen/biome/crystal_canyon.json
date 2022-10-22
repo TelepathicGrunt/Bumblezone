@@ -65,7 +65,7 @@
         "maxCount": 1
       },
       {
-        "type": "minecraft:endermen",
+        "type": "minecraft:enderman",
         "weight": 2,
         "minCount": 1,
         "maxCount": 1
@@ -111,7 +111,7 @@
     "misc": []
   },
   "spawn_costs": {
-    "minecraft:endermen": {
+    "minecraft:enderman": {
       "energy_budget": 0.02,
       "charge": 3.0
     },
