@@ -3,6 +3,8 @@ package com.telepathicgrunt.the_bumblezone.utils;
 import com.google.common.collect.Lists;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -19,6 +21,7 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Enchantment Utility class used by OpenMods.  Replicated here under the permissions of the MIT Licenses.
@@ -91,7 +94,7 @@ public class EnchantmentUtils {
 		boolean bookFlag = stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK);
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
 		for(Enchantment enchantment : Registry.ENCHANTMENT) {
-			if (Registry.ENCHANTMENT.getTag(BzTags.BLACKLISTED_CRYSTALLINE_FLOWER_ENCHANTMENTS).orElseThrow().stream().allMatch(e -> e.equals(enchantment))) {
+			if (isEnchantmentBanned(enchantment)) {
 				continue;
 			}
 
@@ -110,6 +113,16 @@ public class EnchantmentUtils {
 			}
 		}
 		return list;
+	}
+
+	private static boolean isEnchantmentBanned(Enchantment enchantment) {
+		Iterable<Holder<Enchantment>> bannedEnchantments = Registry.ENCHANTMENT.getTagOrEmpty(BzTags.BLACKLISTED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
+		for (Holder<Enchantment> enchantmentHolder : bannedEnchantments) {
+			if (enchantmentHolder.value().equals(enchantment)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static Map<Enchantment, Integer> getEnchantmentsOnBook(ItemStack itemStack) {
