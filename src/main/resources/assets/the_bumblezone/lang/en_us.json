@@ -5,6 +5,8 @@
   "the_bumblezone.container.honey_cocoon": "Honey Cocoon",
   "the_bumblezone.container.crystalline_flower": "Consume and Enchant",
   "the_bumblezone.container.crystalline_flower.level": "Level: %s",
+  "the_bumblezone.container.crystalline_flower.level_star": "★",
+  "the_bumblezone.container.crystalline_flower.enchantment_name_truncated_end": "...",
   "the_bumblezone.container.crystalline_flower.tier_cost": "Tier cost: %s",
   "the_bumblezone.container.crystalline_flower.tier_cost_arrow": "↓%s",
   "the_bumblezone.container.crystalline_flower.too_many_enchants": "Enchant Limit 3",

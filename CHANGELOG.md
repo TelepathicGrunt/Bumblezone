@@ -1,3 +1,9 @@
+### **(V.6.3.2 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Fixed Crystalline Flower's enchantment text symbols not showing correct symbol.
+
+
 ### **(V.6.3.1 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
