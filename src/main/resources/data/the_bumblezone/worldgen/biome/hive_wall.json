@@ -64,13 +64,13 @@
       },
       {
         "type": "minecraft:spider",
-        "weight": 10,
+        "weight": 2,
         "minCount": 1,
         "maxCount": 1
       },
       {
         "type": "minecraft:cave_spider",
-        "weight": 3,
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
@@ -117,11 +117,11 @@
   "spawn_costs": {
     "minecraft:spider": {
       "energy_budget": 0.03,
-      "charge": 4
+      "charge": 8
     },
     "minecraft:cave_spider": {
       "energy_budget": 0.02,
-      "charge": 4
+      "charge": 8
     },
     "minecraft:enderman": {
       "energy_budget": 0.02,
