@@ -123,6 +123,10 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:better_advancements-272515:3562206")
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
 apply from: 'gradle/manifest.gradle'
 
 mixin { 
