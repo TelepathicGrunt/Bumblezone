@@ -101,7 +101,7 @@ public class CrystallineFlower extends BaseEntityBlock {
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         VoxelShape voxelShape = getShape(state, level, pos, null).move(pos.getX(), pos.getY(), pos.getZ());
-        if (!Shapes.joinIsNotEmpty(voxelShape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND)) {
+        if (!Shapes.joinIsNotEmpty(voxelShape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND) || level.isClientSide()) {
             return;
         }
 
