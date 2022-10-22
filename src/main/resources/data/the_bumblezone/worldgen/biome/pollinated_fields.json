@@ -73,12 +73,6 @@
         "weight": 1,
         "minCount": 1,
         "maxCount": 1
-      },
-      {
-        "type": "minecraft:snowball",
-        "weight": 3000,
-        "minCount": 1,
-        "maxCount": 1
       }
     ],
     "creature": [
