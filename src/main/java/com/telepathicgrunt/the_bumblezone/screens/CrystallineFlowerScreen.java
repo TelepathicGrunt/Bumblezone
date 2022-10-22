@@ -362,7 +362,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         MutableComponent mutableComponent = Component.literal(translatedEnchantmentName);
         MutableComponent mutableComponent2 = Component.translatable("the_bumblezone.container.crystalline_flower.level", enchantmentEntry.getValue().level);
         if (isMaxLevel) {
-            mutableComponent2.append("★");
+            mutableComponent2.append(Component.translatable("the_bumblezone.container.crystalline_flower.level_star"));
         }
 
         font.draw(poseStack, mutableComponent, rowStartX, currentRowStartY, enchantmentNameColor);
@@ -393,7 +393,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 break;
             }
 
-            translatedEnchantmentName.append("...");
+            translatedEnchantmentName.append(Component.translatable("the_bumblezone.container.crystalline_flower.enchantment_name_truncated_end"));
             hasTruncated = true;
         }
         return translatedEnchantmentName.toString();
@@ -500,7 +500,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                         .withStyle(ChatFormatting.GREEN);
 
                 if (isMaxLevel) {
-                    mutableComponent2.append("★");
+                    mutableComponent2.append(Component.translatable("the_bumblezone.container.crystalline_flower.level_star"));
                 }
 
 
