@@ -393,7 +393,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 break;
             }
 
-            translatedEnchantmentName.append(Component.translatable("the_bumblezone.container.crystalline_flower.enchantment_name_truncated_end"));
+            translatedEnchantmentName.append("...");
             hasTruncated = true;
         }
         return translatedEnchantmentName.toString();
