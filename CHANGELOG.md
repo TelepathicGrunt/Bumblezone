@@ -1,3 +1,15 @@
+### **(V.6.3.1 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Fixed client side blockstate visual sometimes being incorrect when mass feeding Crystalline Flower by dropping items into it
+
+##### Structures:
+Made Hanging Gardens more common
+
+##### Biomes:
+Tried to lower chance of Spider/Cave Spider spawning in relation to Enderman and Phantoms
+
+
 ### **(V.6.3.0 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
