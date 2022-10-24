@@ -1,14 +1,45 @@
 {
   "replace": false,
   "values": [
-    "veinmining:vein_mining",
-    "apotheosis:chainsaw",
-    "apotheosis:crescendo",
-    "apotheosis:scavenger",
-    "apotheosis:life_mending",
-    "apotheosis:berserkers_fury",
-    "apotheosis:knowledge",
-    "apotheosis:earths_boon",
-    "apotheosis:endless_quiver"
+    {
+      "id": "veinmining:vein_mining",
+      "required": false
+    },
+    {
+      "id": "apotheosis:chainsaw",
+      "required": false
+    },
+    {
+      "id": "apotheosis:chainsaw",
+      "required": false
+    },
+    {
+      "id": "apotheosis:crescendo",
+      "required": false
+    },
+    {
+      "id": "apotheosis:scavenger",
+      "required": false
+    },
+    {
+      "id": "apotheosis:life_mending",
+      "required": false
+    },
+    {
+      "id": "apotheosis:berserkers_fury",
+      "required": false
+    },
+    {
+      "id": "apotheosis:knowledge",
+      "required": false
+    },
+    {
+      "id": "apotheosis:earths_boon",
+      "required": false
+    },
+    {
+      "id": "apotheosis:endless_quiver",
+      "required": false
+    }
   ]
 }
