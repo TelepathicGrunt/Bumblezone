@@ -1,4 +1,14 @@
 {
   "replace": false,
-  "values": []
+  "values": [
+    "veinmining:vein_mining",
+    "apotheosis:chainsaw",
+    "apotheosis:crescendo",
+    "apotheosis:scavenger",
+    "apotheosis:life_mending",
+    "apotheosis:berserkers_fury",
+    "apotheosis:knowledge",
+    "apotheosis:earths_boon",
+    "apotheosis:endless_quiver"
+  ]
 }
