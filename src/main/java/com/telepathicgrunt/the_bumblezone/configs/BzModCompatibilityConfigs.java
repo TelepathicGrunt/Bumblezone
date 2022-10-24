@@ -24,6 +24,7 @@ public class BzModCompatibilityConfigs {
 	public static ForgeConfigSpec.ConfigValue<List<? extends String>> allowedBees;
 
 	public static ForgeConfigSpec.BooleanValue allowFriendsAndFoesBeekeeperTradesCompat;
+	public static ForgeConfigSpec.BooleanValue injectBzItemsIntoQuarkEnchantmentTooltipsCompat;
 
 	static {
 		ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -205,6 +206,16 @@ public class BzModCompatibilityConfigs {
 							" Adds Bumblezone items to Friends and Foes's Beekeeper trades!\n")
 					.translation("the_bumblezone.config.allowfriendsandfoesbeekeepertradescompat")
 					.define("allowFriendsAndFoesBeekeeperTradesCompat", true);
+
+			builder.pop();
+
+			builder.push("Quark Options");
+
+			injectBzItemsIntoQuarkEnchantmentTooltipsCompat = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Adds Bumblezone items symbols to Quark's enchantment tooltips!\n")
+					.translation("the_bumblezone.config.injectbzitemsintoquarkenchantmenttooltipscompat")
+					.define("injectBzItemsIntoQuarkEnchantmentTooltipsCompat", true);
 
 			builder.pop();
 

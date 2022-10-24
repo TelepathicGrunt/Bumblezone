@@ -1,3 +1,10 @@
+### **(V.6.3.4 Changes) (1.19.2 Minecraft)**
+
+##### Mod Compat:
+Added compat with Quark where some of Bumblezone's items will show up in Quark's enchantment tooltips.
+ Can be disabled with Bumblezone's config option called: injectBzItemsIntoQuarkEnchantmentTooltipsCompat
+
+
 ### **(V.6.3.3 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:

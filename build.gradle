@@ -112,6 +112,11 @@ dependencies {
     compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
     //runtimeOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
 
+    compileOnly fg.deobf("curse.maven:quark-243121:${quark_file_id}")
+    compileOnly fg.deobf("curse.maven:autoreglib-250363:${autoreglib_file_id}")
+    //runtimeOnly fg.deobf("curse.maven:quark-243121:${quark_file_id}")
+    //runtimeOnly fg.deobf("curse.maven:autoreglib-250363:${autoreglib_file_id}")
+
     // Switch to `implementation` when testing mod compat
     //runtimeOnly fg.deobf("dev.architectury:architectury-forge:${project.architectury_version}")
     //runtimeOnly fg.deobf("curse.maven:friends_and_foes-602059:3873779")
