@@ -1,0 +1,24 @@
+{
+  "adventurez:red_fungus": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:red_mushroom" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "adventurez:brown_fungus": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:brown_mushroom" },
+          "weight": 1
+        }
+      ]
+    }
+  }]
+}
