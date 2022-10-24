@@ -17,6 +17,7 @@ public class BzGeneralConfigs {
     public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeExperienceOrbEntities;
     public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeItemUI;
     public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeExperienceUI;
+    public static ForgeConfigSpec.IntValue crystallineFlowerEnchantingPowerAllowedPerTier;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -121,6 +122,16 @@ public class BzGeneralConfigs {
                         " Whether the Crystalline Flower's GUI allows players to feed it the player's experience\n")
                 .translation("the_bumblezone.config.crystallineflowerconsumeexperienceui")
                 .define("crystallineFlowerConsumeExperienceUI", true);
+
+
+        crystallineFlowerEnchantingPowerAllowedPerTier = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Controls how much \"enchanting power\" is used per tier to determine what enchantment shows up.",
+                        " Enchantments of higher levels or rarity requires more \"enchanting power\" before they show up in the UI.\n",
+                        " Think of this like how Enchanting Tables only shows stronger or rarer enchantments when you have more bookshelves.\n",
+                        " Except here, the flower's tier times this config value is used as the threshold to know what enchantment and level to show.\n")
+                .translation("the_bumblezone.config.crystallineflowerenchantingpowerallowedpertier")
+                .defineInRange("crystallineFlowerEnchantingPowerAllowedPerTier", 8, 0, 1000);
 
         builder.pop();
     }

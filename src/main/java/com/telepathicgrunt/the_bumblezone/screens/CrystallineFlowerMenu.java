@@ -47,8 +47,6 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     private static final int ENCHANTED_SLOT_X = 136;
     private static final int ENCHANTED_SLOT_Y = 28;
 
-    public static final int ENCHANT_LEVEL_PER_TIER = 8;
-
     private final ContainerLevelAccess access;
     private final Player player;
     public final CrystallineFlowerBlockEntity crystallineFlowerBlockEntity;
@@ -504,7 +502,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             ItemStack tempCopy = toEnchant.copy();
             tempCopy.setCount(1);
 
-            int level = xpTier.get() * ENCHANT_LEVEL_PER_TIER;
+            int level = xpTier.get() * BzGeneralConfigs.crystallineFlowerEnchantingPowerAllowedPerTier.get();
             List<EnchantmentInstance> availableEnchantments = EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempCopy, xpTier.get() == 7);
             if (availableEnchantments.size() == 0 && enchantedSlot.hasItem()) {
                 enchantedSlot.container.removeItemNoUpdate(enchantedSlot.index);

@@ -427,7 +427,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 tempBook.setTag(compoundtag.copy());
             }
 
-            int level = this.menu.xpTier.get() * CrystallineFlowerMenu.ENCHANT_LEVEL_PER_TIER;
+            int level = this.menu.xpTier.get() * BzGeneralConfigs.crystallineFlowerEnchantingPowerAllowedPerTier.get();
             List<EnchantmentInstance> availableEnchantments = EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempBook, this.menu.xpTier.get() == 7);
             availableEnchantments.forEach(e -> enchantmentsAvailable.add(Map.entry(Registry.ENCHANTMENT.getResourceKey(e.enchantment).get(), e)));
             enchantmentsAvailable.removeIf(e -> this.menu.xpTier.get() <= EnchantmentUtils.getEnchantmentTierCost(e.getValue()));
