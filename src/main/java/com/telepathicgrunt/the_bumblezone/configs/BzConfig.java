@@ -59,6 +59,9 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean crystallineFlowerConsumeItemUI = true;
 
+    @Entry
+    public static int crystallineFlowerEnchantingPowerAllowedPerTier = 8;
+
 
     @Comment
     public static Comment dimensionComment;

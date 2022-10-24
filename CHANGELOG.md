@@ -5,15 +5,21 @@ Added two new configs for Crystalline Flower block: crystallineFlowerConsumeExpe
  Turning those off along with these two configs will disable flower's consuming entirely:
  crystallineFlowerConsumeItemEntities and crystallineFlowerConsumeExperienceOrbEntities
 
+Added a third config called crystallineFlowerEnchantingPowerAllowedPerTier which sets the "enchanting power" of the flower per tier.
+ Think of this like how Enchanting Tables only shows stronger or rarer enchantments when you have more bookshelves.
+ Except here, the flower's tier times this config value is used as the threshold to know what enchantment and level to show.
+
 Crystalline Flower now blacklists Veinmining's Vein Mining enchantment from being an option in this flower's UI.
  Controlled by `the_bumblezone:blacklisted_crystalline_flower_enchantments` enchantment tag.
 
-Crystalline Flower now blacklists the following Apotheosis enchantments from being an option in this flower's UI:
- apotheosis:scavenger, apotheosis:life_mending, apotheosis:berserkers_fury, apotheosis:knowledge, apotheosis:crescendo, apotheosis:earths_boon, apotheosis:chainsaw, apotheosis:endless_quiver
- Controlled by `the_bumblezone:blacklisted_crystalline_flower_enchantments` enchantment tag.
-
 ##### Items:
-Pollen Puff has a low chance of spawning vine if it hits TakesAPillage's Clay Golem.
+Pollen Puff has a chance of spawning Red or Brown Mushroom if it hits Adventurez's red or Brown Fungus mob respectively of their type.
+
+Pollen Puff can spawn Chorus Grass if it hits Better End's End Slime mob.
+
+Pollen Puff can spawn Jungle Plant if it hits Better Nether's Jungle Skeleton.
+
+Pollen Puff can spawn Spore Blossom if it hits Bosses of Mass Destruction's Void Blossom. Why you would do this? No clue lol.
 
 Pollen Puff has a chance of spawning vine if it hits Rotten Creatures's Swampy mob.
 
