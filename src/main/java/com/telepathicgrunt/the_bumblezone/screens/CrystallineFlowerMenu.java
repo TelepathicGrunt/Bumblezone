@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.screens;
 
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
@@ -10,9 +11,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -43,8 +42,6 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     private static final int BOOK_SLOT_Y = 28;
     private static final int ENCHANTED_SLOT_X = 136;
     private static final int ENCHANTED_SLOT_Y = 28;
-
-    public static final int ENCHANT_LEVEL_PER_TIER = 8;
 
     private final ContainerLevelAccess access;
     private final Player player;
@@ -88,6 +85,9 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         this.crystallineFlowerBlockEntity = crystallineFlowerBlockEntity;
         this.consumeSlot = addSlot(new Slot(inputContainer, CONSUME_SLOT, CONSUME_SLOT_X, CONSUME_SLOT_Y) {
             public boolean mayPlace(ItemStack itemStack) {
+                if (!BzConfig.crystallineFlowerConsumeItemUI) {
+                    return false;
+                }
                 if (itemStack.is(BzTags.CANNOT_CONSUMED_ITEMS)) {
                     return false;
                 }
@@ -498,7 +498,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             ItemStack tempCopy = toEnchant.copy();
             tempCopy.setCount(1);
 
-            int level = xpTier.get() * ENCHANT_LEVEL_PER_TIER;
+            int level = xpTier.get() * BzConfig.crystallineFlowerEnchantingPowerAllowedPerTier;
             List<EnchantmentInstance> availableEnchantments = EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempCopy, xpTier.get() == 7);
             if (availableEnchantments.size() == 0 && enchantedSlot.hasItem()) {
                 enchantedSlot.container.removeItemNoUpdate(enchantedSlot.index);

@@ -1,3 +1,35 @@
+### **(V.6.3.3 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Added two new configs for Crystalline Flower block: crystallineFlowerConsumeExperienceUI and crystallineFlowerConsumeItemUI
+ Turning those off along with these two configs will disable flower's consuming entirely:
+ crystallineFlowerConsumeItemEntities and crystallineFlowerConsumeExperienceOrbEntities
+
+Added a third config called crystallineFlowerEnchantingPowerAllowedPerTier which sets the "enchanting power" of the flower per tier.
+ Think of this like how Enchanting Tables only shows stronger or rarer enchantments when you have more bookshelves.
+ Except here, the flower's tier times this config value is used as the threshold to know what enchantment and level to show.
+
+Crystalline Flower now blacklists Veinmining's Vein Mining enchantment from being an option in this flower's UI.
+ Controlled by `the_bumblezone:blacklisted_crystalline_flower_enchantments` enchantment tag.
+
+##### Items:
+Pollen Puff has a chance of spawning Red or Brown Mushroom if it hits Adventurez's red or Brown Fungus mob respectively of their type.
+
+Pollen Puff can spawn Chorus Grass if it hits Better End's End Slime mob.
+
+Pollen Puff can spawn Jungle Plant if it hits Better Nether's Jungle Skeleton.
+
+Pollen Puff can spawn Spore Blossom if it hits Bosses of Mass Destruction's Void Blossom. Why you would do this? No clue lol.
+
+Pollen Puff has a chance of spawning vine if it hits Rotten Creatures's Swampy mob.
+
+
+### **(V.6.3.2 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Fixed Crystalline Flower's enchantment text symbols not showing correct symbol.
+
+
 ### **(V.6.3.1 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:

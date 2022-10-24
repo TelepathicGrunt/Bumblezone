@@ -5,6 +5,7 @@
   "the_bumblezone.container.honey_cocoon": "Honey Cocoon",
   "the_bumblezone.container.crystalline_flower": "Consume and Enchant",
   "the_bumblezone.container.crystalline_flower.level": "Level: %s",
+  "the_bumblezone.container.crystalline_flower.level_star": "★",
   "the_bumblezone.container.crystalline_flower.tier_cost": "Tier cost: %s",
   "the_bumblezone.container.crystalline_flower.tier_cost_arrow": "↓%s",
   "the_bumblezone.container.crystalline_flower.too_many_enchants": "Enchant Limit 3",
@@ -544,5 +545,7 @@
   "the_bumblezone.midnightconfig.playWrathOfHiveEffectMusic": "Play Wrath Of Hive Effect Music",
   "the_bumblezone.midnightconfig.fogReducer": "Fog Reducer",
   "the_bumblezone.midnightconfig.crystallineFlowerConsumeItemEntities": "Crystalline Flower Item Entity Consume",
-  "the_bumblezone.midnightconfig.crystallineFlowerConsumeExperienceOrbEntities": "Crystalline Flower Exp Orb Consume"
+  "the_bumblezone.midnightconfig.crystallineFlowerConsumeExperienceOrbEntities": "Crystalline Flower Exp Orb Consume",
+  "the_bumblezone.midnightconfig.crystallineFlowerConsumeItemUI": "Crystalline Flower UI Item Consume",
+  "the_bumblezone.midnightconfig.crystallineFlowerConsumeExperienceUI": "Crystalline UI Exp Consume"
 }
