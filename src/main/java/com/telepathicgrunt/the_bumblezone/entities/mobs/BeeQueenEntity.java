@@ -100,8 +100,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(THROWCOOLDOWN, 0);
-        this.entityData.define(DATA_REMAINING_ANGER_TIME, 1);
-        this.entityData.define(BEESPAWNCOOLDOWN, 2);
+        this.entityData.define(DATA_REMAINING_ANGER_TIME, 0);
+        this.entityData.define(BEESPAWNCOOLDOWN, 0);
         this.entityData.define(QUEEN_POSE, BeeQueenPose.NONE);
     }
 
@@ -218,27 +218,30 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             return false;
         }
         else {
-            Entity entity = source.getEntity();
-            if (entity instanceof LivingEntity livingEntity &&
-                !livingEntity.isSpectator() &&
-                !(livingEntity instanceof Player player && player.isCreative()))
-            {
-                if ((livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                    BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
-                    BzConfig.aggressiveBees)
+            if (!this.isNoAi()) {
+                Entity entity = source.getEntity();
+                if (entity instanceof LivingEntity livingEntity &&
+                    !livingEntity.isSpectator() &&
+                    !(livingEntity instanceof Player player && player.isCreative()))
                 {
-                    if(livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
-                        livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                    if ((livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                        BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+                        BzConfig.aggressiveBees)
+                    {
+                        if(livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
+                            livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                        }
+                        else {
+                            //Now all bees nearby in Bumblezone will get VERY angry!!!
+                            livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 3, false, BzConfig.showWrathOfTheHiveParticles, true));
+                        }
                     }
-                    else {
-                        //Now all bees nearby in Bumblezone will get VERY angry!!!
-                        livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 3, false, BzConfig.showWrathOfTheHiveParticles, true));
+
+                        this.startPersistentAngerTimer();
+                        this.setPersistentAngerTarget(livingEntity.getUUID());
+                        this.setTarget(livingEntity);
                     }
                 }
-
-                this.startPersistentAngerTimer();
-                this.setPersistentAngerTarget(livingEntity.getUUID());
-                this.setTarget(livingEntity);
             }
 
             spawnAngryParticles(6);
@@ -270,7 +273,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
         StructureManager structureManager = ((ServerLevel)serverPlayer.level).structureManager();
         if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.BEE_QUEEN_MINING_FATIGUE).isValid() &&
-            !serverPlayer.level.getEntitiesOfClass(BeeQueenEntity.class, serverPlayer.getBoundingBox().inflate(30.0D, 30.0D, 30.0D), (e) -> true).isEmpty())
+            !serverPlayer.level.getEntitiesOfClass(BeeQueenEntity.class, serverPlayer.getBoundingBox().inflate(30.0D, 30.0D, 30.0D), (e) -> !e.isNoAi()).isEmpty())
         {
             serverPlayer.addEffect(new MobEffectInstance(
                     MobEffects.DIG_SLOWDOWN,
@@ -310,17 +313,22 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             poseTicks++;
         }
 
-        if (!this.getLevel().isClientSide() && this.getLevel().getGameTime() % 200 == 0) {
-            this.heal(1);
-        }
+        if (!this.isNoAi()) {
+            if (!this.getLevel().isClientSide() && this.getLevel().getGameTime() % 200 == 0) {
+                this.heal(1);
+            }
 
-        if (!this.level.isClientSide()) {
-            if (this.isAngry()) {
-                performAngryActions();
+            if (!this.level.isClientSide()) {
+                if (this.isAngry()) {
+                    performAngryActions();
+                }
+                else {
+                    performGroundTrades();
+                }
             }
-            else {
-                performGroundTrades();
-            }
+        }
+        else {
+            this.stopBeingAngry();
         }
     }
 
@@ -423,6 +431,10 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if (this.isNoAi()) {
+            return InteractionResult.PASS;
+        }
+
         if (this.isAngry() || hand == InteractionHand.OFF_HAND) {
             return InteractionResult.FAIL;
         }
