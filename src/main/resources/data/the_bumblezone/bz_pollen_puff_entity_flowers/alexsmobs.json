@@ -21,5 +21,16 @@
         }
       ]
     }
+  }],
+  "alexsmobs:bunfungus": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:red_mushroom" },
+          "weight": 1
+        }
+      ]
+    }
   }]
 }
