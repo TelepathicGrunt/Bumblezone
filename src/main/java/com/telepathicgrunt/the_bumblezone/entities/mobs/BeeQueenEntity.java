@@ -237,13 +237,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         }
                     }
 
-                        this.startPersistentAngerTimer();
-                        this.setPersistentAngerTarget(livingEntity.getUUID());
-                        this.setTarget(livingEntity);
-                    }
+                    this.startPersistentAngerTimer();
+                    this.setPersistentAngerTarget(livingEntity.getUUID());
+                    this.setTarget(livingEntity);
                 }
             }
-
             spawnAngryParticles(6);
             return super.hurt(source, amount);
         }
@@ -326,9 +324,6 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     performGroundTrades();
                 }
             }
-        }
-        else {
-            this.stopBeingAngry();
         }
     }
 

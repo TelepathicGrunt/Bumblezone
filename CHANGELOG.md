@@ -6,9 +6,9 @@ Fixed Bee Queen being always angry and spawning bees when set to noAi by command
 Fixed Beehemoth being able to be fed, tamed, and ridden when set to noAi by command.
 
 ##### Items:
- Pollen Puff has a chance of spawning Pumpkin Stem nearby on valid blocks if it hits a Snow Golem with Pumpkin still on.
+Pollen Puff has a chance of spawning Pumpkin Stem nearby on valid blocks if it hits a Snow Golem with Pumpkin still on.
 
- Pollen Puff has a chance of spawning Pumpkin Stem nearby on valid blocks if it hits a Morebabies's Snow Golem with Pumpkin still on.
+Pollen Puff has a chance of spawning Pumpkin Stem nearby on valid blocks if it hits a Morebabies's Snow Golem with Pumpkin still on.
 
 
 ### **(V.6.3.3 Changes) (1.19.2 Minecraft)**
