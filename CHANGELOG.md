@@ -1,5 +1,10 @@
 ### **(V.6.3.4 Changes) (1.19.2 Minecraft)**
 
+##### Entities:
+Fixed Bee Queen being always angry and spawning bees when set to noAi by command. (Also disables trading when noAi)
+
+Fixed Beehemoth being able to be fed, tamed, and ridden when set to noAi by command.
+
 ##### Mod Compat:
 Added compat with Quark where some of Bumblezone's items will show up in Quark's enchantment tooltips.
  Can be disabled with Bumblezone's config option called: injectBzItemsIntoQuarkEnchantmentTooltipsCompat

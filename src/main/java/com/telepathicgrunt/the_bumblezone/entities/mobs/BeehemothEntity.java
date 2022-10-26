@@ -220,37 +220,36 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         }
         else {
             Entity entity = source.getEntity();
+            if (!this.isNoAi()) {
+                if (entity != null && entity.getUUID().equals(getOwnerUUID())) {
+                    addFriendship((int) (-3 * amount));
+                }
+                if (BzBeeAggressionConfigs.aggressiveBees.get() &&
+                        BzBeeAggressionConfigs.beehemothTriggersWrath.get() &&
+                        entity instanceof LivingEntity livingEntity) {
+                    addFriendship((int) (-amount));
 
-            if (entity != null && entity.getUUID().equals(getOwnerUUID())) {
-                addFriendship((int) (-3 * amount));
-            }
-            if (BzBeeAggressionConfigs.aggressiveBees.get() &&
-                BzBeeAggressionConfigs.beehemothTriggersWrath.get() &&
-                entity instanceof LivingEntity livingEntity)
-            {
-                addFriendship((int) (-amount));
-
-                if (!(livingEntity instanceof Player player && player.isCreative()) &&
-                        (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
-                        !livingEntity.isSpectator() &&
-                        BzBeeAggressionConfigs.aggressiveBees.get())
-                {
-                    if(livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                        livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
-                    }
-                    else {
-                        //Now all bees nearby in Bumblezone will get VERY angry!!!
-                        livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
+                    if (!(livingEntity instanceof Player player && player.isCreative()) &&
+                            (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                                    BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                            !livingEntity.isSpectator() &&
+                            BzBeeAggressionConfigs.aggressiveBees.get()) {
+                        if (livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
+                            livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
+                        }
+                        else {
+                            //Now all bees nearby in Bumblezone will get VERY angry!!!
+                            livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
+                        }
                     }
                 }
-            }
-            else {
-                addFriendship((int) -amount);
+                else {
+                    addFriendship((int) -amount);
+                }
+                setOrderedToSit(false);
             }
 
             spawnMadParticles();
-            setOrderedToSit(false);
             return super.hurt(source, amount);
         }
     }
@@ -273,6 +272,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if (this.isNoAi()) {
+            return InteractionResult.PASS;
+        }
+
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
         ResourceLocation itemRL = ForgeRegistries.ITEMS.getKey(item);
@@ -563,7 +566,6 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         super.tick();
         stopWandering = isLeashed();
 
-
         // Become queen if friendship is maxed out.
         if(!isQueen() && getFriendship() >= 1000) {
             setQueen(true);
@@ -650,7 +652,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     @Override
     public void travel(Vec3 moveVector) {
-        if (this.isAlive()) {
+        if (this.isAlive() && !this.isNoAi()) {
             LivingEntity livingEntity = this.getControllingPassenger();
             if (this.isVehicle() && livingEntity != null) {
                 float startRot = Mth.wrapDegrees(this.getYRot());
