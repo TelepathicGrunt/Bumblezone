@@ -331,9 +331,6 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 }
             }
         }
-        else {
-            this.stopBeingAngry();
-        }
     }
 
     private void performAngryActions() {

@@ -10,15 +10,15 @@ Added compat with Quark where some of Bumblezone's items will show up in Quark's
  Can be disabled with Bumblezone's config option called: injectBzItemsIntoQuarkEnchantmentTooltipsCompat
 
 ##### Items:
- Pollen Puff has a chance of spawning Pumpkin Stem nearby on valid blocks if it hits a Snow Golem with Pumpkin still on.
+Pollen Puff has a chance of spawning Pumpkin Stem nearby on valid blocks if it hits a Snow Golem with Pumpkin still on.
 
- Pollen Puff has a chance of spawning Melon Stem nearby on valid blocks if it hits a EarthMobsMod's Melon Golem with Melon still on.
+Pollen Puff has a chance of spawning Melon Stem nearby on valid blocks if it hits a EarthMobsMod's Melon Golem with Melon still on.
 
- Pollen Puff can spawn Red Mushroom nearby if it hits Alex's Mob's Bunfungus.
+Pollen Puff can spawn Red Mushroom nearby if it hits Alex's Mob's Bunfungus.
 
- Pollen Puff has a chance of spawning Pumpkin Stem nearby on valid blocks if it hits a Morebabies's Snow Golem with Pumpkin still on.
+Pollen Puff has a chance of spawning Pumpkin Stem nearby on valid blocks if it hits a Morebabies's Snow Golem with Pumpkin still on.
 
- Pollen Puff can spawn Nether Wart nearby if it hits Stalwart Dungeon's Nether Keeper or nether Wart Cocoon.
+Pollen Puff can spawn Nether Wart nearby if it hits Stalwart Dungeon's Nether Keeper or nether Wart Cocoon.
 
 
 ### **(V.6.3.3 Changes) (1.19.2 Minecraft)**
