@@ -1,0 +1,28 @@
+{
+  "stalwart_dungeons:nether_keeper": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:nether_wart" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "stalwart_dungeons:nether_wart_cocoon": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:nether_wart" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }]
+}
