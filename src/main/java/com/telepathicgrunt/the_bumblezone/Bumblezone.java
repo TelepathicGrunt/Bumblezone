@@ -118,7 +118,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         registry.registerForPlayers(MISC_COMPONENT, p -> new MiscComponent(), RespawnCopyStrategy.ALWAYS_COPY);
 
         PlayerCopyCallback.EVENT.register((serverPlayerOriginal, serverPlayerNew, lossless) -> {
-            if (BzConfig.keepBeeEssenceOnRespawning || lossless) {
+            if (BzConfig.keepEssenceOfTheBeesOnRespawning || lossless) {
                 EssenceComponent capabilityOld = Bumblezone.ESSENCE_COMPONENT.get(serverPlayerOriginal);
                 EssenceComponent capability = Bumblezone.ESSENCE_COMPONENT.get(serverPlayerNew);
                 capability.isBeeEssenced = capabilityOld.isBeeEssenced;

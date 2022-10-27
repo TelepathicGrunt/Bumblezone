@@ -129,7 +129,7 @@ public class BzConfig extends MidnightConfig {
     public static int nearbyBeesPerPlayerInBz = 25;
 
     @Entry
-    public static boolean keepBeeEssenceOnRespawning = false;
+    public static boolean keepEssenceOfTheBeesOnRespawning = true;
 
     @Entry
     public static int musicDiscTimeLengthFlightOfTheBumblebee = 84;
