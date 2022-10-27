@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -22,7 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -119,7 +117,7 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 	}
 
 	public static void resetValueOnRespawn(PlayerEvent.Clone event) {
-		if (BzGeneralConfigs.keepBeeEssenceOnRespawning.get() && event.isWasDeath()) {
+		if (BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning.get() && event.isWasDeath()) {
 			if (event.getEntity() instanceof ServerPlayer serverPlayerNew && event.getOriginal() instanceof ServerPlayer serverPlayerOld) {
 				serverPlayerOld.reviveCaps();
 				EssenceOfTheBees.setEssence(serverPlayerNew, EssenceOfTheBees.hasEssence(serverPlayerOld));

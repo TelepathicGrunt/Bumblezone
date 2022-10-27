@@ -10,7 +10,7 @@ public class BzGeneralConfigs {
     public static ForgeConfigSpec.IntValue nearbyBeesPerPlayerInBz;
     public static ForgeConfigSpec.BooleanValue dispensersDropGlassBottles;
     public static ForgeConfigSpec.IntValue broodBlocksBeeSpawnCapacity;
-    public static ForgeConfigSpec.BooleanValue keepBeeEssenceOnRespawning;
+    public static ForgeConfigSpec.BooleanValue keepEssenceOfTheBeesOnRespawning;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthFlightOfTheBumblebee;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
     public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeItemEntities;
@@ -77,11 +77,11 @@ public class BzGeneralConfigs {
                 .translation("the_bumblezone.config.broodblocksbeespawncapacity")
                 .defineInRange("broodBlocksBeeSpawnCapacity", 60, 0, 1000);
 
-        keepBeeEssenceOnRespawning = builder
+        keepEssenceOfTheBeesOnRespawning = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " Whether Essence of the Bees's effect should stay on the player if they die and then respawn.\n")
-                .translation("the_bumblezone.config.keepBeeEssenceOnRespawning")
-                .define("keepBeeEssenceOnRespawning", false);
+                .translation("the_bumblezone.config.keepessenceofthebeesonrespawning")
+                .define("keepEssenceOfTheBeesOnRespawning", true);
 
 
         musicDiscTimeLengthFlightOfTheBumblebee = builder

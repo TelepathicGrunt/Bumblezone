@@ -3,6 +3,11 @@
 ##### Effects:
 Improved the effect icon for Protection of the Hive and Wrath of the Hive.
 
+##### Config:
+Changed the default config value for keepBeeEssenceOnRespawning from false to true and renamed it to 
+ keepEssenceOfTheBeesOnRespawning so that everyone who had ran Bumblezone before now gets this true value. 
+ Less confusion this way.
+
 
 ### **(V.6.3.4 Changes) (1.19.2 Minecraft)**
 
