@@ -1,0 +1,18 @@
+{
+  "buzzier_bees:moobloom": [
+    {
+      "nbt_match": {
+        "Age": 0
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "buzzier_bees:buttercup" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ]
+}

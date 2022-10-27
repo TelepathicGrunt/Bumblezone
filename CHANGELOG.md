@@ -8,6 +8,9 @@ Changed the default config value for keepBeeEssenceOnRespawning from false to tr
  keepEssenceOfTheBeesOnRespawning so that everyone who had ran Bumblezone before now gets this true value. 
  Less confusion this way.
 
+##### Items:
+Pollen Puff can spawn a Buttercup nearby if it hits an adult Buzzier Bees's Moobloom mob.
+
 
 ### **(V.6.3.4 Changes) (1.19.2 Minecraft)**
 
