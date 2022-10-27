@@ -1,3 +1,9 @@
+### **(V.6.3.5 Changes) (1.19.2 Minecraft)**
+
+##### Effects:
+Improved the effect icon for Protection of the Hive and Wrath of the Hive.
+
+
 ### **(V.6.3.4 Changes) (1.19.2 Minecraft)**
 
 ##### Entities:
