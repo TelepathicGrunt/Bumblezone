@@ -16,8 +16,6 @@ Changed the default config value for keepBeeEssenceOnRespawning from false to tr
  Less confusion this way.
 
 ##### Items:
-Pollen Puff can spawn a Buttercup nearby if it hits an adult Buzzier Bees's Moobloom mob.
-
 Fixed Pollen Puff able to multiply the following blocks that were tagged as minecraft:small_flowers when they don't look like a flower or for balance reasons:
  `byg:prairie_grass`
  `byg:pollen_block`
