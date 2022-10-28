@@ -260,7 +260,6 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
 
             if (posResult == 2) {
                 if (blockPos.getY() < generator.getSeaLevel()) {
-                    boolean isNextToDrySpace = shouldCloseOff(world, chunk, blockPos, mutable, false);
                     if(isNextToAir)
                         world.setBlock(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(), 3);
                     else
