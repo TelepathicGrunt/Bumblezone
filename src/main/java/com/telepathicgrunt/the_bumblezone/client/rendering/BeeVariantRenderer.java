@@ -1,8 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.natamus.realisticbees.config.ConfigHandler;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
+import com.telepathicgrunt.the_bumblezone.mixin.client.EntityRendererAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.client.MobRendererAccessor;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.BeeRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -28,6 +34,8 @@ public class BeeVariantRenderer extends BeeRenderer {
         if(OLD_BEE_RENDER_FACTORY != null) {
             OLD_BEE_RENDER = OLD_BEE_RENDER_FACTORY.create(context);
         }
+        shadowRadius = ((EntityRendererAccessor)OLD_BEE_RENDER).getShadowRadius();
+        shadowStrength = ((EntityRendererAccessor)OLD_BEE_RENDER).getShadowStrength();
     }
 
     @Override
@@ -70,5 +78,31 @@ public class BeeVariantRenderer extends BeeRenderer {
         }
 
         return super.getTextureLocation(entity);
+    }
+
+    @Override
+    protected boolean shouldShowName(Bee entity) {
+        if(OLD_BEE_RENDER != null) {
+            return ((MobRendererAccessor)OLD_BEE_RENDER).callShouldShowName(entity);
+        }
+        return super.shouldShowName(entity);
+    }
+
+    @Override
+    public boolean shouldRender(Bee livingEntity, Frustum camera, double camX, double camY, double camZ) {
+        if(OLD_BEE_RENDER != null) {
+            return OLD_BEE_RENDER.shouldRender(livingEntity, camera, camX, camY, camZ);
+        }
+        return super.shouldRender(livingEntity, camera, camX, camY, camZ);
+    }
+
+    @Override
+    public void render(Bee entity, float entityYaw, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int packedLight) {
+        if(OLD_BEE_RENDER != null) {
+            OLD_BEE_RENDER.render(entity, entityYaw, partialTicks, matrixStack, buffer, packedLight);
+        }
+        else {
+            super.render(entity, entityYaw, partialTicks, matrixStack, buffer, packedLight);
+        }
     }
 }

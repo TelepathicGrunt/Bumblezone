@@ -18,6 +18,8 @@
     "blocks.ShulkerBoxBlockEntityMixin",
     "blocks.VineBlockAccessor",
     "blocks.WaterEquivalenceMixin",
+    "client.EntityRendererAccessor",
+    "client.MobRendererAccessor",
     "containers.PotionBrewingAccessor",
     "containers.ResultSlotMixin",
     "containers.ShapedRecipeAccessor",
