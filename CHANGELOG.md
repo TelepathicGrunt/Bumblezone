@@ -1,5 +1,9 @@
 ### **(V.6.3.5 Changes) (1.19.2 Minecraft)**
 
+##### Structures:
+Hanging Gardens will now spawn most flowers from the `minecraft:small_flowers` block tag including other mod's flowers.
+ Use `the_bumblezone:blacklisted_hanging_garden_flowers` block tag to prevent certain small flower tagged blocks from spawning in Hanging Gardens.
+
 ##### Effects:
 Improved the effect icon for Protection of the Hive and Wrath of the Hive.
 
