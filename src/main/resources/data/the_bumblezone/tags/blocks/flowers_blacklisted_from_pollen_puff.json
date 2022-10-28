@@ -3,6 +3,18 @@
   "values": [
     "minecraft:wither_rose",
     {
+      "id": "flowerpatch:wither_rose_patch",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_wither_rose",
+      "required": false
+    },
+    {
+      "id": "flowerseeds:crop_witherrose",
+      "required": false
+    },
+    {
       "id": "#botania:mystical_flowers",
       "required": false
     },
@@ -24,10 +36,6 @@
     },
     {
       "id": "resourcefulbees:gold_flower",
-      "required": false
-    },
-    {
-      "id": "bushierflowers:grown_wither_rose",
       "required": false
     },
     {
