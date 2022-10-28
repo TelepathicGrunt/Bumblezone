@@ -24,6 +24,9 @@ Fixed Pollen Puff able to multiply the following blocks that were tagged as mine
  `bushierflowers:grown_wither_rose`
  `farmersdelight:wild_beetroots`
 
+Carpenter Bee Boots now only mines boot mineable blocks below you if you are more centered on the block.
+ Crouching on block's edge won't mine the block anymore so you can crouch walk to not walk off edges or ledges.
+
 ##### Mod Compat:
 Made Bumblezone's Bee Renderer more mod compat friendly with other mods that add Bee Renderers.
 
