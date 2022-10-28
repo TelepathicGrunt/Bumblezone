@@ -3,7 +3,7 @@
     {
       "processor_type": "the_bumblezone:tag_replace_processor",
       "input_block": "minecraft:poppy",
-      "output_block_tag": "minecraft:small_flowers",
+      "output_block_tag": "the_bumblezone:allowed_hanging_garden_flowers",
       "blacklisted_output_block_tag": "the_bumblezone:blacklisted_hanging_garden_flowers"
     },
     {

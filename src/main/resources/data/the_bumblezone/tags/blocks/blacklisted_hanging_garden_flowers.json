@@ -10,6 +10,14 @@
     {
       "id": "resourcefulbees:gold_flower",
       "required": false
+    },
+    {
+      "id": "bushierflowers:grown_wither_rose",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_azure_bluet",
+      "required": false
     }
   ]
 }
