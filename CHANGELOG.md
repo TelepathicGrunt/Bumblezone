@@ -6,7 +6,6 @@ Hanging Gardens will now spawn most flowers from the `minecraft:small_flowers` a
  Use `the_bumblezone:allowed_hanging_garden_flowers` to add more flowers to spawn that are not in `minecraft:small_flowers` block tag.
  The tall flower versions of these tags are `the_bumblezone:blacklisted_hanging_garden_tall_flowers` and `the_bumblezone:allowed_hanging_garden_tall_flowers`
 
-
 ##### Effects:
 Improved the effect icon for Protection of the Hive and Wrath of the Hive.
 
@@ -23,6 +22,9 @@ Fixed Pollen Puff able to multiply the following blocks that were tagged as mine
  `byg:pollen_block`
  `gaiadimension:missingno_plant`
  `bushierflowers:grown_wither_rose`
+
+##### Mod Compat:
+Fixed visual incompatibility with Realistic Bees mod. Bees should be smaller now with that mod on.
 
 
 ### **(V.6.3.4 Changes) (1.19.2 Minecraft)**
