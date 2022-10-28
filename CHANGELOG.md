@@ -20,6 +20,7 @@ Fixed Pollen Puff able to multiply the following blocks that were tagged as mine
  `byg:pollen_block`
  `gaiadimension:missingno_plant`
  `bushierflowers:grown_wither_rose`
+ `farmersdelight:wild_beetroots`
 
 ##### Mod Compat:
 Made Bumblezone's Bee Renderer more mod compat friendly with other mods that add Bee Renderers.
