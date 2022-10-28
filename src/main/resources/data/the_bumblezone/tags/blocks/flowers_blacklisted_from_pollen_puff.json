@@ -12,6 +12,34 @@
     {
       "id": "#botania:special_flowers",
       "required": false
+    },
+    {
+      "id": "byg:prairie_grass",
+      "required": false
+    },
+    {
+      "id": "byg:pollen_block",
+      "required": false
+    },
+    {
+      "id": "gaiadimension:missingno_plant",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:gold_flower",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_wither_rose",
+      "required": false
+    },
+    {
+      "id": "blue_skies:muckweed",
+      "required": false
+    },
+    {
+      "id": "blue_skies:brittlebush",
+      "required": false
     }
   ]
 }
