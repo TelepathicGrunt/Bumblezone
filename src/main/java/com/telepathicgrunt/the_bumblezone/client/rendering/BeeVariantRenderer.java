@@ -82,16 +82,27 @@ public class BeeVariantRenderer extends BeeRenderer {
 
     @Override
     protected boolean shouldShowName(Bee entity) {
-        return ((MobRendererAccessor)OLD_BEE_RENDER).callShouldShowName(entity);
+        if(OLD_BEE_RENDER != null) {
+            return ((MobRendererAccessor)OLD_BEE_RENDER).callShouldShowName(entity);
+        }
+        return super.shouldShowName(entity);
     }
 
     @Override
     public boolean shouldRender(Bee livingEntity, Frustum camera, double camX, double camY, double camZ) {
-        return OLD_BEE_RENDER.shouldRender(livingEntity, camera, camX, camY, camZ);
+        if(OLD_BEE_RENDER != null) {
+            return OLD_BEE_RENDER.shouldRender(livingEntity, camera, camX, camY, camZ);
+        }
+        return super.shouldRender(livingEntity, camera, camX, camY, camZ);
     }
 
     @Override
     public void render(Bee entity, float entityYaw, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int packedLight) {
-        OLD_BEE_RENDER.render(entity, entityYaw, partialTicks, matrixStack, buffer, packedLight);
+        if(OLD_BEE_RENDER != null) {
+            OLD_BEE_RENDER.render(entity, entityYaw, partialTicks, matrixStack, buffer, packedLight);
+        }
+        else {
+            super.render(entity, entityYaw, partialTicks, matrixStack, buffer, packedLight);
+        }
     }
 }
