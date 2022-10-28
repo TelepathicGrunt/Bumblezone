@@ -18,6 +18,106 @@
     {
       "id": "bushierflowers:grown_azure_bluet",
       "required": false
+    },
+    {
+      "id": "byg:black_rose",
+      "required": false
+    },
+    {
+      "id": "byg:tall_allium",
+      "required": false
+    },
+    {
+      "id": "byg:tall_pink_allium",
+      "required": false
+    },
+    {
+      "id": "byg:delphinium",
+      "required": false
+    },
+    {
+      "id": "byg:japanese_orchid",
+      "required": false
+    },
+    {
+      "id": "byg:prairie_grass",
+      "required": false
+    },
+    {
+      "id": "byg:pollen_block",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:wilted_lily",
+      "required": false
+    },
+    {
+      "id": "aoa3:blue_daylooms",
+      "required": false
+    },
+    {
+      "id": "aoa3:yellow_daylooms",
+      "required": false
+    },
+    {
+      "id": "aoa3:pink_daylooms",
+      "required": false
+    },
+    {
+      "id": "aoa3:red_celevians",
+      "required": false
+    },
+    {
+      "id": "aoa3:blue_celevians",
+      "required": false
+    },
+    {
+      "id": "aoa3:white_celevians",
+      "required": false
+    },
+    {
+      "id": "aoa3:purple_celevians",
+      "required": false
+    },
+    {
+      "id": "aoa3:magias",
+      "required": false
+    },
+    {
+      "id": "aoa3:arcflower",
+      "required": false
+    },
+    {
+      "id": "aoa3:dawn_bush",
+      "required": false
+    },
+    {
+      "id": "aoa3:dawn_flower",
+      "required": false
+    },
+    {
+      "id": "blue_skies:muckweed",
+      "required": false
+    },
+    {
+      "id": "blue_skies:brittlebush",
+      "required": false
+    },
+    {
+      "id": "floralis:brown_flower",
+      "required": false
+    },
+    {
+      "id": "floralis:black_flower",
+      "required": false
+    },
+    {
+      "id": "floralis:green_flower",
+      "required": false
+    },
+    {
+      "id": "floralis:lime_flower",
+      "required": false
     }
   ]
 }
