@@ -45,6 +45,10 @@
     {
       "id": "blue_skies:brittlebush",
       "required": false
+    },
+    {
+      "id": "farmersdelight:wild_beetroots",
+      "required": false
     }
   ]
 }

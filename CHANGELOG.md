@@ -26,6 +26,7 @@ Fixed Pollen Puff able to multiply the following blocks that were tagged as mine
  `blue_skies:brittlebush`
  `blue_skies:brittlebush`
  `bushierflowers:grown_wither_rose`
+ `farmersdelight:wild_beetroots`
 
 ##### Mod Compat:
 Fixed visual incompatibility with Realistic Bees mod. Bees should be smaller now with that mod on.

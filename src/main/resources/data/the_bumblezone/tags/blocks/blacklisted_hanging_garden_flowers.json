@@ -126,6 +126,10 @@
     {
       "id": "floralis:lime_flower",
       "required": false
+    },
+    {
+      "id": "farmersdelight:wild_beetroots",
+      "required": false
     }
   ]
 }
