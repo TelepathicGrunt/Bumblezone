@@ -53,7 +53,14 @@ public class CarpenterBeeBoots extends BeeArmor {
             int itemId = generateUniqueItemId(world, random, tag, tag.getInt("itemstackId"));
             int lastSentState = tag.getInt("lastSentState");
 
-            if (player.isCrouching()) {
+            double xInBlock = Math.abs(player.position().x()) % 1;
+            double zInBlock = Math.abs(player.position().z()) % 1;
+            if (player.isCrouching() &&
+                xInBlock > 0.25d &&
+                xInBlock < 0.75d &&
+                zInBlock > 0.25d &&
+                zInBlock < 0.75d)
+            {
                 BlockPos belowBlockPos = new BlockPos(player.position().add(0, -0.1d, 0));
                 BlockState belowBlockState = world.getBlockState(belowBlockPos);
 
