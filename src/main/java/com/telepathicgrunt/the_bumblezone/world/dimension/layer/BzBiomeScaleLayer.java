@@ -3,11 +3,8 @@ package com.telepathicgrunt.the_bumblezone.world.dimension.layer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.CastleTransformer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.Context;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public record BzBiomeScaleLayer(Set<Integer> biomesToExpand, Registry<Biome> biomeRegistry) implements CastleTransformer {

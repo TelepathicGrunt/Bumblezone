@@ -19,7 +19,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoader;
 
 import java.util.HashMap;
 import java.util.List;

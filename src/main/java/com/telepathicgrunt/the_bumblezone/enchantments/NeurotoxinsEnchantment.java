@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
-import com.telepathicgrunt.the_bumblezone.capabilities.EntityFlyingSpeed;
 import com.telepathicgrunt.the_bumblezone.capabilities.NeurotoxinsMissCounter;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
