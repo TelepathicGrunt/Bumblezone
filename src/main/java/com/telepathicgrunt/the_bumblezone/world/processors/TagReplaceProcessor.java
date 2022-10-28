@@ -94,6 +94,6 @@ public class TagReplaceProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return BzProcessors.TAG_REPLACE_PROCESSOR.get();
+        return BzProcessors.TAG_REPLACE_PROCESSOR;
     }
 }
