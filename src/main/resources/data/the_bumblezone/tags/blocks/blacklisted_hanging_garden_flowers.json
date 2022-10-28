@@ -20,6 +20,14 @@
       "required": false
     },
     {
+      "id": "flowerpatch:wither_rose_patch",
+      "required": false
+    },
+    {
+      "id": "flowerpatch:azure_bluet_patch",
+      "required": false
+    },
+    {
       "id": "byg:black_rose",
       "required": false
     },
