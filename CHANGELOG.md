@@ -22,9 +22,7 @@ Fixed Pollen Puff able to multiply the following blocks that were tagged as mine
  `byg:prairie_grass`
  `byg:pollen_block`
  `gaiadimension:missingno_plant`
- `resourcefulbees:gold_flower`
- `blue_skies:muckweed`
- `blue_skies:brittlebush`
+ `bushierflowers:grown_wither_rose`
 
 
 ### **(V.6.3.4 Changes) (1.19.2 Minecraft)**
