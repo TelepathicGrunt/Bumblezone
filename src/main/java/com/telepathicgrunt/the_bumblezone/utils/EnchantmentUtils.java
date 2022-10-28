@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -21,7 +20,6 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Enchantment Utility class used by OpenMods.  Replicated here under the permissions of the MIT Licenses.

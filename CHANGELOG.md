@@ -21,9 +21,6 @@ Fixed Pollen Puff able to multiply the following blocks that were tagged as mine
  `gaiadimension:missingno_plant`
  `bushierflowers:grown_wither_rose`
 
-##### Mod Compat:
-Fixed visual incompatibility with Realistic Bees mod. Bees should be smaller now with that mod on.
-
 
 ### **(V.6.3.4 Changes) (1.19.2 Minecraft)**
 

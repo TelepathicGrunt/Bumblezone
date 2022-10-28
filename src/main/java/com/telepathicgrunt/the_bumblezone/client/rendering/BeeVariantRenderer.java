@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.client.rendering;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.natamus.realisticbees.config.ConfigHandler;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.mixin.client.EntityRendererAccessor;
