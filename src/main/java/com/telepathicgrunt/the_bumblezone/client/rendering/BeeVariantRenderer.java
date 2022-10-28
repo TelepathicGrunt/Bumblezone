@@ -32,9 +32,9 @@ public class BeeVariantRenderer extends BeeRenderer {
         super(context);
         if(OLD_BEE_RENDER_FACTORY != null) {
             OLD_BEE_RENDER = OLD_BEE_RENDER_FACTORY.create(context);
+            shadowRadius = ((EntityRendererAccessor)OLD_BEE_RENDER).getShadowRadius();
+            shadowStrength = ((EntityRendererAccessor)OLD_BEE_RENDER).getShadowStrength();
         }
-        shadowRadius = ((EntityRendererAccessor)OLD_BEE_RENDER).getShadowRadius();
-        shadowStrength = ((EntityRendererAccessor)OLD_BEE_RENDER).getShadowStrength();
     }
 
     @Override
