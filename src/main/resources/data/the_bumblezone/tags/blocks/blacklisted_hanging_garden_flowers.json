@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:wither_rose",
+    "minecraft:azure_bluet",
+    {
+      "id": "gaiadimension:missingno_plant",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:gold_flower",
+      "required": false
+    }
+  ]
+}
