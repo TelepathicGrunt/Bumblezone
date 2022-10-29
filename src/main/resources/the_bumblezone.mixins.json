@@ -3,7 +3,6 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "ExperienceOrbAccessor",
     "blocks.AbstractFurnaceBlockEntityMixin",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
@@ -33,6 +32,7 @@
     "entities.BeePollinatedSpawnMixin",
     "entities.EntityMixin",
     "entities.EntityTypeMixin",
+    "entities.ExperienceOrbAccessor",
     "entities.ExperienceOrbMixin",
     "entities.FishingBobberEntityMixin",
     "entities.InventoryMixin",
@@ -70,6 +70,7 @@
   ],
   "client": [
     "client.DimensionSpecialEffectsAccessor",
+    "client.EntityRendererAccessor",
     "client.EntityRendererRegistryImplAccessor",
     "client.FluidRendererMixin",
     "client.FogRendererMixin",
@@ -77,6 +78,7 @@
     "client.KeyMappingAccessor",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
+    "client.MobRendererAccessor",
     "client.ScreenEffectRendererMixin"
   ],
   "injectors": {

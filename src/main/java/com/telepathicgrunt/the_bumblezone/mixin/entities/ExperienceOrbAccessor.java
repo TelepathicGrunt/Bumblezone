@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin;
+package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import net.minecraft.world.entity.ExperienceOrb;
 import org.spongepowered.asm.mixin.Mixin;

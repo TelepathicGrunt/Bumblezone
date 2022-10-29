@@ -22,6 +22,7 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.ai.village.poi.PoiManager;
 import net.minecraft.world.entity.ai.village.poi.PoiRecord;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -100,12 +101,12 @@ public class WrathOfTheHiveEffect extends MobEffect {
             }
         }
         //Anything lower than 2 is medium aggression
-        else {
+        else if (entity.getLevel().getGameTime() % 20 == 0) {
             mediumAggression(world, entity);
         }
 
         // makes brood blocks grow faster near wrath of the hive entities.
-        if(!world.isClientSide()) {
+        if(!world.isClientSide() && entity instanceof Player) {
             PoiManager pointofinterestmanager = ((ServerLevel)world).getPoiManager();
             List<PoiRecord> poiInRange = pointofinterestmanager.getInSquare(
                     (pointOfInterestType) -> pointOfInterestType.value() == BzPOI.BROOD_BLOCK_POI,

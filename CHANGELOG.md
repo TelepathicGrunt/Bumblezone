@@ -1,3 +1,46 @@
+### **(V.6.3.5 Changes) (1.19.2 Minecraft)**
+
+##### Structures:
+Hanging Gardens will now spawn most flowers from the `minecraft:small_flowers` and `minecraft:tall_flowers` block tag including other mod's flowers.
+ Use `the_bumblezone:blacklisted_hanging_garden_flowers` block tag to prevent certain small flower tagged blocks from spawning in Hanging Gardens.
+ Use `the_bumblezone:allowed_hanging_garden_flowers` to add more flowers to spawn that are not in `minecraft:small_flowers` block tag.
+ The tall flower versions of these tags are `the_bumblezone:blacklisted_hanging_garden_tall_flowers` and `the_bumblezone:allowed_hanging_garden_tall_flowers`
+
+ Stopped Bumblezone's caves from eating away at part of Hanging Garden or Throne Pillar.
+
+##### Effects:
+Improved the effect icon textures for Beenergized, Hidden, Protection of the Hive, and Wrath of the Hive.
+
+Wrath of the Hive's effect of growing nearby Brood blocks faster only applies if it is the player that has Wrath of the Hive.
+ Wrath of the Hive level 1 is now throttled to only anger nearby bees every 20 ticks instead of every tick (spiders/bears/arthropods will have this level of wrath)
+ Just a small change to squeeze out better performance on servers.
+
+##### Config:
+Changed the default config value for keepBeeEssenceOnRespawning from false to true and renamed it to
+ keepEssenceOfTheBeesOnRespawning so that everyone who had ran Bumblezone before now gets this true value.
+ Less confusion this way.
+
+Added defaultDimension config option for modpacks whose default dimension is not Overworld.
+ Very very few people will ever need to touch this option. Let modpack makers be the ones to touch this only.
+
+##### Blocks:
+Fixed Comparator not correctly outputting power based on Crystalline Flower's height/tier.
+
+##### Items:
+Fixed Pollen Puff able to multiply the following blocks that were tagged as minecraft:small_flowers when they don't look like a flower or for balance reasons:
+ `byg:prairie_grass`
+ `byg:pollen_block`
+ `gaiadimension:missingno_plant`
+ `bushierflowers:grown_wither_rose`
+ `farmersdelight:wild_beetroots`
+
+Carpenter Bee Boots now only mines boot mineable blocks below you if you are more centered on the block.
+ Crouching on block's edge won't mine the block anymore so you can crouch walk to not walk off edges or ledges.
+
+##### Mod Compat:
+Made Bumblezone's Bee Renderer more mod compat friendly with other mods that add Bee Renderers.
+
+
 ### **(V.6.3.4 Changes) (1.19.2 Minecraft)**
 
 ##### Entities:

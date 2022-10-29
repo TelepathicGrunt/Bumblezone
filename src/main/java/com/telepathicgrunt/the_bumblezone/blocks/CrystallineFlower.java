@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.the_bumblezone.mixin.ExperienceOrbAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.ExperienceOrbAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -298,6 +298,8 @@ public class CrystallineFlower extends BaseEntityBlock {
                         upward ? BzBlocks.CRYSTALLINE_FLOWER.defaultBlockState() : Blocks.AIR.defaultBlockState(),
                         3);
 
+                level.updateNeighborsAt(currentPos, upward ? BzBlocks.CRYSTALLINE_FLOWER : Blocks.AIR);
+
                 if (upward) {
                     BlockEntity blockEntity2 = level.getBlockEntity(currentPos);
                     if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
@@ -376,7 +378,14 @@ public class CrystallineFlower extends BaseEntityBlock {
 
     @Override
     public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
-        return flowerTotalHeight(level, pos);
+        int flowerBlockBelow = flowerHeightBelow(level, pos);
+        BlockPos bottomPos = pos.below(flowerBlockBelow);
+        BlockEntity blockEntity = level.getBlockEntity(bottomPos);
+        if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
+            return crystallineFlowerBlockEntity.getXpTier();
+        }
+
+        return 0;
     }
 
     public static boolean isFlowerSpot(Level level, BlockPos pos) {

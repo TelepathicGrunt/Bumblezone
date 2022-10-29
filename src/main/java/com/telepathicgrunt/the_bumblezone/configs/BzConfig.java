@@ -102,6 +102,9 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean forceBumblezoneOriginMobToOverworldCenter = true;
 
+    @Entry
+    public static String defaultDimension = "minecraft:overworld";
+
 
     @Comment
     public static Comment dungeonsComment;
@@ -129,7 +132,7 @@ public class BzConfig extends MidnightConfig {
     public static int nearbyBeesPerPlayerInBz = 25;
 
     @Entry
-    public static boolean keepBeeEssenceOnRespawning = false;
+    public static boolean keepEssenceOfTheBeesOnRespawning = true;
 
     @Entry
     public static int musicDiscTimeLengthFlightOfTheBumblebee = 84;
