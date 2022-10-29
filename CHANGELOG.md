@@ -16,6 +16,9 @@ Changed the default config value for keepBeeEssenceOnRespawning from false to tr
  keepEssenceOfTheBeesOnRespawning so that everyone who had ran Bumblezone before now gets this true value. 
  Less confusion this way.
 
+##### Blocks:
+Fixed Comparator not correctly outputting power based on Crystalline Flower's height/tier.
+
 ##### Items:
 Pollen Puff can spawn a Buttercup nearby if it hits an adult Buzzier Bees's Moobloom mob.
 
