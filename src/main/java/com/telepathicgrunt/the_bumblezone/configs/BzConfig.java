@@ -102,6 +102,9 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean forceBumblezoneOriginMobToOverworldCenter = true;
 
+    @Entry
+    public static String defaultDimension = "minecraft:overworld";
+
 
     @Comment
     public static Comment dungeonsComment;
