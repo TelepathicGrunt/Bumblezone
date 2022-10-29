@@ -20,6 +20,7 @@ public class BzDimensionConfigs{
     public static ForgeConfigSpec.BooleanValue enableExitTeleportation;
     public static ForgeConfigSpec.BooleanValue enableEntranceTeleportation;
     public static ForgeConfigSpec.BooleanValue forceBumblezoneOriginMobToOverworldCenter;
+    public static ForgeConfigSpec.ConfigValue<String> defaultDimension;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -108,8 +109,8 @@ public class BzDimensionConfigs{
 
             forceExitToOverworld = builder
                 .comment(" \n-----------------------------------------------------\n",
-                       " Makes leaving The Bumblezone dimension always places you back\n "
-                        +" at the Overworld regardless of which dimension you originally ",
+                       " Makes leaving The Bumblezone dimension always places you back",
+                       " at the Overworld regardless of which dimension you originally ",
                        " came from. Use this option if this dimension becomes locked in  ",
                        " with another dimension so you are stuck teleporting between the ",
                        " two and cannot get back to the Overworld.\n")
@@ -118,8 +119,8 @@ public class BzDimensionConfigs{
 
             onlyOverworldHivesTeleports = builder
                 .comment(" \n-----------------------------------------------------\n",
-                       " Makes throwing Enderpearls at Bee Nests or Hives only\n "
-                        +" work in the Overworld. What this means setting this to true makes it ",
+                       " Makes throwing Enderpearls at Bee Nests or Hives only ",
+                       " work in the Overworld. What this means setting this to true makes it ",
                        " only possible to enter The Bumblezone dimension from the Overworld")
                 .translation("the_bumblezone.config.onlyoverworldhivesteleports")
                 .define("onlyOverworldHivesTeleports", false);
@@ -129,22 +130,21 @@ public class BzDimensionConfigs{
                 .comment(" \n-----------------------------------------------------\n",
                        " Should exiting The Bumblezone always try and place you ",
                        " above sealevel in the target dimension? (Will only look ",
-                       " for beehives above sealevel as well when placing you)"
-                        +" ",
+                       " for beehives above sealevel as well when placing you)",
+                       " ",
                        " ONLY FOR TELEPORTATION MODE 1 AND 3.\n")
                 .translation("the_bumblezone.config.sealevelorhigherexitteleporting")
                 .define("seaLevelOrHigherExitTeleporting", true);
 
             warnPlayersOfWrongBlockUnderHive = builder
                 .comment(" \n-----------------------------------------------------\n",
-                       " If the block tag file required_block_under_hive.json has blocks specified\n "
-                        +" and this config is set to true, then player will get a warning if they",
+                       " If the block tag file required_block_under_hive.json has blocks specified ",
+                       " and this config is set to true, then player will get a warning if they",
                        " throw an Enderpearl at a Bee Nest/Beehive but the block under it is ",
                        " not the correct required block. It will also tell the player what ",
                        " block is needed under the Bee Nest/Beehive to teleport to the dimension.\n")
                 .translation("the_bumblezone.config.warnplayersofwrongblockunderhive")
                 .define("warnPlayersOfWrongBlockUnderHive", true);
-
 
             allowTeleportationWithModdedBeehives = builder
                 .comment(" \n-----------------------------------------------------\n",
@@ -152,6 +152,16 @@ public class BzDimensionConfigs{
                        " with modded Bee Nests and modded Beehives as well. \n")
                 .translation("the_bumblezone.config.allowteleportationwithmoddedbeehives")
                 .define("allowTeleportationWithModdedBeehives", true);
+
+            defaultDimension = builder
+                    .comment(" \n-----------------------------------------------------\n",
+                            " Changes the default dimension that teleporting exiting will take mobs to ",
+                            " if there is no previously saved dimension on the mob. ",
+                            " Use this option ONLY if your modpack's default dimension is not the Overworld. ",
+                            " This will affect forceExitToOverworld, forceBumblezoneOriginMobToOverworldCenter, and onlyOverworldHivesTeleports",
+                            " config options so that they use this new default dimension instead of overworld.\n")
+                    .translation("the_bumblezone.config.defaultdimension")
+                    .define("defaultDimension", "minecraft:overworld");
 
         builder.pop();
     }

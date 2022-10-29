@@ -16,6 +16,9 @@ Changed the default config value for keepBeeEssenceOnRespawning from false to tr
  keepEssenceOfTheBeesOnRespawning so that everyone who had ran Bumblezone before now gets this true value. 
  Less confusion this way.
 
+Added defaultDimension config option for modpacks whose default dimension is not Overworld. 
+ Very very few people will ever need to touch this option. Let modpack makers be the ones to touch this only.
+
 ##### Blocks:
 Fixed Comparator not correctly outputting power based on Crystalline Flower's height/tier.
 

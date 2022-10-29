@@ -14,6 +14,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -113,7 +114,7 @@ public class EntityTeleportationHookup {
 
             ServerLevel serverWorld = worldKey == null ? null : minecraftServer.getLevel(worldKey);
             if(serverWorld == null) {
-                serverWorld = minecraftServer.getLevel(Level.OVERWORLD);
+                serverWorld = minecraftServer.getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzDimensionConfigs.defaultDimension.get())));
             }
             BzWorldSavedData.queueEntityToTeleport(livingEntity, serverWorld.dimension());
         }
@@ -128,7 +129,7 @@ public class EntityTeleportationHookup {
         if (BzDimensionConfigs.enableEntranceTeleportation.get() &&
             !world.isClientSide() && thrower instanceof ServerPlayer playerEntity &&
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(Level.OVERWORLD)))
+            (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzDimensionConfigs.defaultDimension.get())))))
         {
             // get nearby hives
             BlockPos hivePos;
@@ -200,7 +201,7 @@ public class EntityTeleportationHookup {
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (BzDimensionConfigs.enableEntranceTeleportation.get() &&
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(Level.OVERWORLD)))
+            (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzDimensionConfigs.defaultDimension.get())))))
         {
             if(BzWorldSavedData.isEntityQueuedToTeleportAlready(pushedEntity)) return; // Skip checks if entity is teleporting already to Bz.
 
@@ -261,17 +262,15 @@ public class EntityTeleportationHookup {
 
 
     /**
-     * Looks at stored non-bz dimension and changes it to Overworld if it is
-     * BZ dimension or the config forces going to Overworld.
+     * Looks at stored non-bz dimension and changes it to default dimension if it is
+     * BZ dimension or the config forces going to default dimension.
      */
     private static void checkAndCorrectStoredDimension(LivingEntity livingEntity) {
-        //Error. This shouldn't be. We aren't leaving the bumblezone to go to the bumblezone.
-        //Go to Overworld instead as default. Or go to Overworld if config is set.
         livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).ifPresent(capability -> {
             if (capability.getNonBZDim().equals(Bumblezone.MOD_DIMENSION_ID) || BzDimensionConfigs.forceExitToOverworld.get()) {
-                // go to overworld by default
+                //Go to default dimension instead
                 //update stored dimension
-                capability.setNonBZDim(Level.OVERWORLD.location());
+                capability.setNonBZDim(new ResourceLocation(BzDimensionConfigs.defaultDimension.get()));
             }
         });
     }
