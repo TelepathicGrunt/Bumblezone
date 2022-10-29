@@ -9,7 +9,7 @@ Hanging Gardens will now spawn most flowers from the `minecraft:small_flowers` a
  Stopped Bumblezone's caves from eating away at part of Hanging Garden or Throne Pillar.
 
 ##### Effects:
-Improved the effect icon for Protection of the Hive and Wrath of the Hive.
+Improved the effect icon textures for Beenergized, Hidden, Protection of the Hive, and Wrath of the Hive.
 
 ##### Config:
 Changed the default config value for keepBeeEssenceOnRespawning from false to true and renamed it to
