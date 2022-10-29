@@ -1,3 +1,11 @@
+### **(V.6.3.6 Changes) (1.19.2 Minecraft)**
+
+##### Mod Compat:
+Pollen Puff hitting Llamarama's Bumble Llama may spawn Poppy, Dandelion, Cornflower, or Pink Tulip nearby!
+
+Enderpearls hitting top portion of Llamarama's Bumble Llama's hitbox will teleport players to Bumblezone dimension.
+
+
 ### **(V.6.3.5 Changes) (1.19.2 Minecraft)**
 
 ##### Structures:

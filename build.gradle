@@ -103,29 +103,11 @@ dependencies {
 
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${libs.versions.rei.get()}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${libs.versions.rei.get()}"
-	/*
-	modRuntimeOnly ("me.shedaniel:RoughlyEnoughItems-fabric:${libs.versions.rei.get()}") {
-		exclude(group: "net.fabricmc.fabric-api")
-		exclude(group: "net.fabricmc", module: "fabric-loader")
-	}
-	modRuntimeOnly ("dev.architectury:architectury-fabric:${libs.versions.architectury.get()}") {
-		exclude(group: "net.fabricmc.fabric-api")
-		exclude(group: "net.fabricmc", module: "fabric-loader")
-	}
-	modRuntimeOnly ("me.shedaniel.cloth:cloth-config-fabric:${libs.versions.cloth.config.get()}") {
-		exclude(group: "net.fabricmc.fabric-api")
-		exclude(group: "net.fabricmc", module: "fabric-loader")
-	}
-	*/
 
 	modCompileOnlyApi "curse.maven:jei-238222:3944625"
 	//modCompileOnlyApi "mezz.jei:jei-${libs.versions.jeimc.get()}-fabric:${libs.versions.jei.get()}"
-	/*
-	modRuntimeOnly ("mezz.jei:jei-${libs.versions.jeimc.get()}-fabric:${libs.versions.jei.get()}") {
-		exclude(group: "net.fabricmc.fabric-api")
-		exclude(group: "net.fabricmc", module: "fabric-loader")
-	}
-	*/
+
+	modCompileOnlyApi "curse.maven:llamarama-449083:3938753"
 
 	//modCompileOnly "curse.maven:friends_and_foes-551364:3725313"
 	//modCompileOnly "curse.maven:bee_better-351600:3726160"
