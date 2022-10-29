@@ -11,6 +11,10 @@ Hanging Gardens will now spawn most flowers from the `minecraft:small_flowers` a
 ##### Effects:
 Improved the effect icon textures for Beenergized, Hidden, Protection of the Hive, and Wrath of the Hive.
 
+Wrath of the Hive's effect of growing nearby Brood blocks faster only applies if it is the player that has Wrath of the Hive.
+ Wrath of the Hive level 1 is now throttled to only anger nearby bees every 20 ticks instead of every tick (spiders/bears/arthropods will have this level of wrath)
+ Just a small change to squeeze out better performance on servers.
+
 ##### Config:
 Changed the default config value for keepBeeEssenceOnRespawning from false to true and renamed it to 
  keepEssenceOfTheBeesOnRespawning so that everyone who had ran Bumblezone before now gets this true value. 
