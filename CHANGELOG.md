@@ -16,6 +16,9 @@ Changed the default config value for keepBeeEssenceOnRespawning from false to tr
  keepEssenceOfTheBeesOnRespawning so that everyone who had ran Bumblezone before now gets this true value.
  Less confusion this way.
 
+##### Blocks:
+Fixed Comparator not correctly outputting power based on Crystalline Flower's height/tier.
+
 ##### Items:
 Fixed Pollen Puff able to multiply the following blocks that were tagged as minecraft:small_flowers when they don't look like a flower or for balance reasons:
  `byg:prairie_grass`

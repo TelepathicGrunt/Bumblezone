@@ -298,6 +298,8 @@ public class CrystallineFlower extends BaseEntityBlock {
                         upward ? BzBlocks.CRYSTALLINE_FLOWER.defaultBlockState() : Blocks.AIR.defaultBlockState(),
                         3);
 
+                level.updateNeighborsAt(currentPos, upward ? BzBlocks.CRYSTALLINE_FLOWER.get() : Blocks.AIR);
+
                 if (upward) {
                     BlockEntity blockEntity2 = level.getBlockEntity(currentPos);
                     if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
@@ -376,7 +378,14 @@ public class CrystallineFlower extends BaseEntityBlock {
 
     @Override
     public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
-        return flowerTotalHeight(level, pos);
+        int flowerBlockBelow = flowerHeightBelow(level, pos);
+        BlockPos bottomPos = pos.below(flowerBlockBelow);
+        BlockEntity blockEntity = level.getBlockEntity(bottomPos);
+        if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
+            return crystallineFlowerBlockEntity.getXpTier();
+        }
+
+        return 0;
     }
 
     public static boolean isFlowerSpot(Level level, BlockPos pos) {
