@@ -202,7 +202,7 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
                             placePlant ? BzBlocks.CRYSTALLINE_FLOWER.defaultBlockState() : Blocks.AIR.defaultBlockState(),
                             3);
 
-                    level.updateNeighborsAt(operatingPos.above(i), placePlant ? BzBlocks.CRYSTALLINE_FLOWER.get() : Blocks.AIR);
+                    level.updateNeighborsAt(operatingPos.above(i), placePlant ? BzBlocks.CRYSTALLINE_FLOWER : Blocks.AIR);
 
                     if (placePlant) {
                         BlockEntity blockEntity2 = level.getBlockEntity(operatingPos.above(i));
