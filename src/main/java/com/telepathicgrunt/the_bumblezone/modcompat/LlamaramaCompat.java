@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
-import io.github.llamarama.team.common.register.ModEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
@@ -26,11 +25,11 @@ import java.util.Optional;
 
 public class LlamaramaCompat {
 
-    private static ResourceLocation BUMBLE_LLAMA_RL = new ResourceLocation("llamarama", "bumble_llama");
+    private static final ResourceLocation BUMBLE_LLAMA_RL = new ResourceLocation("llamarama", "bumble_llama");
 
     public static void setupCompat() {
        // Keep at end so it is only set to true if no exceptions was thrown during setup
-        ModChecker.strangePresent = true;
+        ModChecker.llamaramaPresent = true;
     }
 
     public static boolean runTeleportCodeIfBumbleLlamaHitHigh(HitResult hitResult, Projectile pearlEntity) {
@@ -38,14 +37,15 @@ public class LlamaramaCompat {
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (hitResult instanceof EntityHitResult entityHitResult &&
+        if (!world.isClientSide() &&
+            hitResult instanceof EntityHitResult entityHitResult &&
             Registry.ENTITY_TYPE.getKey(entityHitResult.getEntity().getType()).equals(BUMBLE_LLAMA_RL) &&
             BzConfig.enableEntranceTeleportation &&
-            !world.isClientSide() && pearlEntity.getOwner() instanceof ServerPlayer playerEntity &&
+            pearlEntity.getOwner() instanceof ServerPlayer playerEntity &&
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
             (!BzConfig.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzConfig.defaultDimension)))))
         {
-            Vec3 hitPos = entityHitResult.getLocation();
+            Vec3 hitPos = pearlEntity.position();
             AABB boundBox = entityHitResult.getEntity().getBoundingBox();
             double minYThreshold = ((boundBox.maxY - boundBox.minY) * 0.66d) + boundBox.minY;
 
