@@ -1,0 +1,29 @@
+{
+  "llamarama:bumble_llama": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:poppy" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:dandelion" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:cornflower" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:pink_tulip" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 2
+        }
+      ]
+    }
+  }]
+}

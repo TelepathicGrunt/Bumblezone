@@ -29,8 +29,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nullable;
-
 public class ThrownStingerSpearEntity extends AbstractArrow {
     private static final EntityDataAccessor<Byte> ID_LOYALTY = SynchedEntityData.defineId(ThrownStingerSpearEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> ID_FOIL = SynchedEntityData.defineId(ThrownStingerSpearEntity.class, EntityDataSerializers.BOOLEAN);
@@ -190,7 +188,6 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         return this.entityData.get(ID_FOIL);
     }
 
-    @Nullable
     protected EntityHitResult findHitEntity(Vec3 vec3, Vec3 vec31) {
         return this.dealtDamage ? null : super.findHitEntity(vec3, vec31);
     }

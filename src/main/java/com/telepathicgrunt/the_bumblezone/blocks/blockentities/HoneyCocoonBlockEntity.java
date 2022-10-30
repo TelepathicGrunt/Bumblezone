@@ -23,7 +23,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
-import javax.annotation.Nullable;
 import java.util.stream.IntStream;
 
 public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
@@ -89,7 +88,7 @@ public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity imp
     }
 
     @Override
-    public boolean canPlaceItemThroughFace(int i, ItemStack item, @Nullable Direction direction) {
+    public boolean canPlaceItemThroughFace(int i, ItemStack item, Direction direction) {
         return direction == Direction.UP && item.getItem().canFitInsideContainerItems();
     }
 

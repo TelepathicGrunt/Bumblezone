@@ -71,7 +71,6 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -655,7 +654,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     @Override
-    public void setPersistentAngerTarget(@Nullable UUID uuid) {
+    public void setPersistentAngerTarget(UUID uuid) {
         this.persistentAngerTarget = uuid;
     }
 
