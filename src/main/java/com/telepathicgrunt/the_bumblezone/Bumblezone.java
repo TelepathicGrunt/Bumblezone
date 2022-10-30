@@ -31,10 +31,17 @@ import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.world.surfacerules.PollinatedSurfaceSource;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackRepository;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -48,8 +55,11 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.loading.FileUtils;
+import net.minecraftforge.resource.PathPackResources;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.IOException;
 
 @Mod(Bumblezone.MODID)
 public class Bumblezone{
@@ -88,12 +98,13 @@ public class Bumblezone{
         forgeBus.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
         forgeBus.addListener(ThreadExecutor::handleServerAboutToStartEvent);
         forgeBus.addListener(ThreadExecutor::handleServerStoppingEvent);
+        forgeBus.addListener(EventPriority.NORMAL, this::registerDatapackListener);
 
         //Registration
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(EventPriority.NORMAL, this::setup);
         modEventBus.addListener(EventPriority.LOWEST, this::modCompatSetup); //run after all mods
-        forgeBus.addListener(this::registerDatapackListener);
+        modEventBus.addListener(EventPriority.NORMAL, this::setupBuiltInResourcePack);
         modEventBus.addListener(EventPriority.NORMAL, BzEntities::registerEntityAttributes);
         BzItems.ITEMS.register(modEventBus);
         BzBlocks.BLOCKS.register(modEventBus);
@@ -172,5 +183,24 @@ public class Bumblezone{
 
     private void serverAboutToStart(final ServerAboutToStartEvent event) {
         PollinatedSurfaceSource.RandomLayerStateRule.initNoise(event.getServer().getWorldData().worldGenSettings().seed());
+    }
+
+    private void setupBuiltInResourcePack(final AddPackFindersEvent event) {
+        try {
+            if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+                var resourcePath = ModList.get().getModFileById(MODID).getFile().findResource("resourcepacks/anti_tropophobia");
+                var pack = new PathPackResources(ModList.get().getModFileById(MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
+                var metadataSection = pack.getMetadataSection(PackMetadataSection.SERIALIZER);
+                if (metadataSection != null) {
+                    event.addRepositorySource((packConsumer, packConstructor) ->
+                            packConsumer.accept(packConstructor.create(
+                                    "builtin/the_bumblezone", Component.literal("Bumblezone - Anti Trypophobia"), false,
+                                    () -> pack, metadataSection, Pack.Position.BOTTOM, PackSource.BUILT_IN, false)));
+                }
+            }
+        }
+        catch(IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }
