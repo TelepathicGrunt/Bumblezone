@@ -27,6 +27,7 @@ import dev.onyxstudios.cca.api.v3.entity.PlayerCopyCallback;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -109,7 +110,11 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         ServerLifecycleEvents.STARTING.register((a) -> ThreadExecutor.handleServerAboutToStartEvent());
         ServerLifecycleEvents.STOPPING.register((a) -> ThreadExecutor.handleServerStoppingEvent());
 
-        ResourceLoader.registerBuiltinResourcePack(new ResourceLocation(Bumblezone.MODID, "anti_trypophobia"), mod, ResourcePackActivationType.NORMAL);
+        ResourceLoader.registerBuiltinResourcePack(
+                new ResourceLocation(MODID, "anti_tropophobia"),
+                mod,
+                ResourcePackActivationType.NORMAL,
+                Component.literal("Bumblezone - Anti Trypophobia"));
     }
 
     @Override
