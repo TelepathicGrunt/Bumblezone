@@ -1,16 +1,21 @@
 package com.telepathicgrunt.the_bumblezone.client.bakedmodel;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.Block;
@@ -18,23 +23,22 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.model.IDynamicBakedModel;
 import net.minecraftforge.client.model.data.ModelData;
+import net.minecraftforge.client.model.data.ModelDataManager;
 import net.minecraftforge.client.model.data.ModelProperty;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 public class PorousHoneycombBlockModel implements IDynamicBakedModel {
     public static final ModelProperty<List<Direction>> DIRECTION_OF_HONEY_MERGERS = new ModelProperty<>();
     protected final BakedModel mainModel;
+    private final Map<List<Direction>, BakedModel> cache = Maps.newHashMap();
 
     private PorousHoneycombBlockModel(BakedModel mainModel) {
         this.mainModel = mainModel;
-    }
-
-    @Override
-    public boolean usesBlockLight() {
-        return mainModel.usesBlockLight();
     }
 
     @Nonnull
@@ -42,22 +46,29 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
     public List<BakedQuad> getQuads(BlockState state, Direction side, RandomSource rand, ModelData extraData, RenderType renderType) {
         List<BakedQuad> quads = Lists.newArrayList();
         quads.addAll(mainModel.getQuads(state, side, rand, extraData, renderType));
-
-        if (state != null) {
+        if (state != null && extraData.has(DIRECTION_OF_HONEY_MERGERS) && extraData.get(DIRECTION_OF_HONEY_MERGERS) != null) {
             List<Direction> directionsOfHoney = extraData.get(DIRECTION_OF_HONEY_MERGERS);
 
-            // For each side of block
-            for (Direction faceDirection : Direction.values()) {
-                // Draw main face
-
-                // For sides for face to connect texture to
-                for (Direction honeyDirection : directionsOfHoney) {
-                    if (faceDirection == honeyDirection || faceDirection.getOpposite() == honeyDirection) {
-                        continue;
-                    }
-
-                    // draw connecting texture on top of previous quad?
+            // For sides for face to connect texture to
+            for (Direction honeyDirection : directionsOfHoney) {
+                if (side == honeyDirection || side.getOpposite() == honeyDirection) {
+                    continue;
                 }
+
+                TextureAtlasSprite textureAtlasSprite = Minecraft.getInstance().getModelManager()
+                        .getAtlas(TextureAtlas.LOCATION_BLOCKS)
+                        .getSprite(new ResourceLocation(Bumblezone.MODID, "textures/blocks/porous_honeycomb_block/porous_honeycomb_block_1d.png"));
+
+                // draw connecting texture on top of previous quad?
+                BakedQuad newBakedQuad = new BakedQuad(
+                        quads.get(0).getVertices(),
+                        0,
+                        side,
+                        textureAtlasSprite,
+                        true
+                    );
+
+                quads.add(newBakedQuad);
             }
         }
 
@@ -66,15 +77,22 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
 
     @Override
     public ModelData getModelData(BlockAndTintGetter level, BlockPos pos, BlockState state, ModelData modelData) {
+        ModelData currentData = modelData;
         if (state != null) {
+            if (!currentData.has(DIRECTION_OF_HONEY_MERGERS) || currentData.get(DIRECTION_OF_HONEY_MERGERS) == null) {
+                currentData = ModelData.builder()
+                        .with(DIRECTION_OF_HONEY_MERGERS, new ArrayList<>())
+                        .build();
+            }
+
             BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-            modelData.get(DIRECTION_OF_HONEY_MERGERS).clear();
+            currentData.get(DIRECTION_OF_HONEY_MERGERS).clear();
 
             for (Direction direction : Direction.values()) {
                 mutableBlockPos.set(pos).move(direction);
                 BlockState neighborState = level.getBlockState(mutableBlockPos);
                 if (neighborState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get()) || neighborState.is(BzBlocks.HONEYCOMB_BROOD.get())) {
-                    modelData.get(DIRECTION_OF_HONEY_MERGERS).add(direction);
+                    currentData.get(DIRECTION_OF_HONEY_MERGERS).add(direction);
                 }
             }
         }
@@ -82,6 +100,10 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
         return modelData;
     }
 
+    @Override
+    public boolean usesBlockLight() {
+        return mainModel.usesBlockLight();
+    }
 
     @Override
     public boolean useAmbientOcclusion () {
