@@ -46,7 +46,7 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
     public List<BakedQuad> getQuads(BlockState state, Direction side, RandomSource rand, ModelData extraData, RenderType renderType) {
         List<BakedQuad> quads = Lists.newArrayList();
         quads.addAll(mainModel.getQuads(state, side, rand, extraData, renderType));
-        if (state != null && extraData.has(DIRECTION_OF_HONEY_MERGERS) && extraData.get(DIRECTION_OF_HONEY_MERGERS) != null) {
+        if (state != null && side != null && extraData.has(DIRECTION_OF_HONEY_MERGERS) && extraData.get(DIRECTION_OF_HONEY_MERGERS) != null) {
             List<Direction> directionsOfHoney = extraData.get(DIRECTION_OF_HONEY_MERGERS);
 
             // For sides for face to connect texture to
@@ -57,7 +57,7 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
 
                 TextureAtlasSprite textureAtlasSprite = Minecraft.getInstance().getModelManager()
                         .getAtlas(TextureAtlas.LOCATION_BLOCKS)
-                        .getSprite(new ResourceLocation(Bumblezone.MODID, "textures/blocks/porous_honeycomb_block/porous_honeycomb_block_1d.png"));
+                        .getSprite(new ResourceLocation(Bumblezone.MODID, "textures/block/porous_honeycomb_block/porous_honeycomb_block_1d.png"));
 
                 // draw connecting texture on top of previous quad?
                 BakedQuad newBakedQuad = new BakedQuad(
@@ -68,7 +68,7 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
                         true
                     );
 
-                quads.add(newBakedQuad);
+                quads.set(0, newBakedQuad);
             }
         }
 
@@ -97,7 +97,7 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
             }
         }
 
-        return modelData;
+        return currentData;
     }
 
     @Override
