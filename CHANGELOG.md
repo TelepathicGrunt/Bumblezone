@@ -1,5 +1,9 @@
 ### **(V.6.3.6 Changes) (1.19.2 Minecraft)**
 
+##### Structures:
+Fixed Cell Maze not spawning. Sorry about that.
+ Was due to accidentally breaking some Cell Maze structure template pool json files by mistake...
+
 ##### Mod Compat:
 Pollen Puff hitting Llamarama's Bumble Llama may spawn Poppy, Dandelion, Cornflower, or Pink Tulip nearby!
 
