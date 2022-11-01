@@ -1,5 +1,9 @@
 ### **(V.6.3.6 Changes) (1.19.2 Minecraft)**
 
+##### Structures:
+Fixed Cell Maze not spawning. Sorry about that.
+ Was due to accidentally breaking some Cell Maze structure template pool json files by mistake...
+
 ##### Textures:
 Added a built-in resourcepack for Bumblezone that removes the trypophobic holes from some of Bumblezone's blocks and vanilla's honeycomb block!
  Activate it through the resourcepack screen when Bumblezone mod is on.
