@@ -1,5 +1,8 @@
 ### **(V.6.3.6 Changes) (1.19.2 Minecraft)**
 
+##### Misc:
+Fixed servers unable to start due to forgetting to change pollen puff particle name in biome json files.
+
 ##### Structures:
 Fixed Cell Maze not spawning. Sorry about that.
  Was due to accidentally breaking some Cell Maze structure template pool json files by mistake...
