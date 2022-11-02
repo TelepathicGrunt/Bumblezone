@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "the_bumblezone:block/pile_of_pollen"
-  }
-}
