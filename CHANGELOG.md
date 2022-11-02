@@ -12,7 +12,7 @@ Fixed Creative players taking honey from Filled Porous Honeycomb block adding Ho
  Creative players should have unlimited use when removing honey from the block to match behavior vanilla has with their blocks.
 
 ##### Textures:
-Textures changed for several Bumblezone honeycomb/brood blocks!
+Textures changed for several Bumblezone honeycomb/brood blocks! New textures mainly by CrispyTwig
  Connected Textures will be coming later to make textures connect better.
 
 
