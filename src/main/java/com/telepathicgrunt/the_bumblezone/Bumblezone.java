@@ -110,11 +110,11 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         ServerLifecycleEvents.STARTING.register((a) -> ThreadExecutor.handleServerAboutToStartEvent());
         ServerLifecycleEvents.STOPPING.register((a) -> ThreadExecutor.handleServerStoppingEvent());
 
-        ResourceLoader.registerBuiltinResourcePack(
-                new ResourceLocation(MODID, "anti_tropophobia"),
-                mod,
-                ResourcePackActivationType.NORMAL,
-                Component.literal("Bumblezone - Anti Trypophobia"));
+//        ResourceLoader.registerBuiltinResourcePack(
+//                new ResourceLocation(MODID, "anti_tropophobia"),
+//                mod,
+//                ResourcePackActivationType.NORMAL,
+//                Component.literal("Bumblezone - Anti Trypophobia"));
     }
 
     @Override
