@@ -360,7 +360,7 @@ public class IncenseCandleRecipe implements CraftingRecipe, QuiltRecipeSerialize
         BzRecipes.INCENSE_CANDLE_RECIPE.toNetwork(buf, recipe);
     }
 
-    public static class Serializer implements RecipeSerializer<IncenseCandleRecipe> {
+    public static class Serializer implements QuiltRecipeSerializer<IncenseCandleRecipe> {
         private static NonNullList<Ingredient> getIngredients(JsonArray jsonElements) {
             NonNullList<Ingredient> defaultedList = NonNullList.create();
 

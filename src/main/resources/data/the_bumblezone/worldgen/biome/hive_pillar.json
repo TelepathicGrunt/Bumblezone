@@ -13,7 +13,7 @@
     },
     "particle": {
       "options": {
-        "type": "the_bumblezone:pollen_puff"
+        "type": "the_bumblezone:pollen_puff_particle"
       },
       "probability": 0.002
     },

@@ -8,12 +8,10 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 
-import javax.annotation.Nullable;
 import java.util.EnumSet;
 
 public class BeeQueenAlwaysLookAtPlayerGoal extends Goal {
     protected final Mob mob;
-    @Nullable
     protected Entity lookAt;
     protected final float lookDistance;
     private final boolean onlyHorizontal;

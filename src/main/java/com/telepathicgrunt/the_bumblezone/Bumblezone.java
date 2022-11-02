@@ -26,6 +26,8 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import dev.onyxstudios.cca.api.v3.entity.PlayerCopyCallback;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import eu.midnightdust.lib.config.MidnightConfig;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -38,6 +40,7 @@ import org.quiltmc.qsl.lifecycle.api.event.ServerLifecycleEvents;
 import org.quiltmc.qsl.lifecycle.api.event.ServerWorldTickEvents;
 import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
 import org.quiltmc.qsl.resource.loader.api.ResourceLoaderEvents;
+import org.quiltmc.qsl.resource.loader.api.ResourcePackActivationType;
 
 public class Bumblezone implements ModInitializer, EntityComponentInitializer {
 
@@ -106,6 +109,12 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         ResourceLoaderEvents.END_DATA_PACK_RELOAD.register((minecraftServer, resourceManager, throwable) -> QueensTradeManager.QUEENS_TRADE_MANAGER.resolveQueenTrades());
         ServerLifecycleEvents.STARTING.register((a) -> ThreadExecutor.handleServerAboutToStartEvent());
         ServerLifecycleEvents.STOPPING.register((a) -> ThreadExecutor.handleServerStoppingEvent());
+
+//        ResourceLoader.registerBuiltinResourcePack(
+//                new ResourceLocation(MODID, "anti_tropophobia"),
+//                mod,
+//                ResourcePackActivationType.NORMAL,
+//                Component.literal("Bumblezone - Anti Trypophobia"));
     }
 
     @Override

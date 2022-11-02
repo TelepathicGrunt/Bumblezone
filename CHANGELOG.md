@@ -1,3 +1,26 @@
+### **(V.6.3.6 Changes) (1.19.2 Minecraft)**
+
+##### Misc:
+Fixed servers unable to start due to forgetting to change pollen puff particle name in biome json files.
+
+##### Structures:
+Fixed Cell Maze not spawning. Sorry about that.
+ Was due to accidentally breaking some Cell Maze structure template pool json files by mistake...
+
+##### Blocks:
+Fixed Creative players taking honey from Filled Porous Honeycomb block adding Honey Bottle to inventory and decrementing Glass Bottle item.
+Creative players should have unlimited use when removing honey from the block to match behavior vanilla has with their blocks.
+
+##### Mod Compat:
+Pollen Puff hitting Llamarama's Bumble Llama may spawn Poppy, Dandelion, Cornflower, or Pink Tulip nearby!
+
+Enderpearls hitting top portion of Llamarama's Bumble Llama's hitbox will teleport players to Bumblezone dimension.
+
+##### Textures:
+Textures changed for several Bumblezone honeycomb/brood blocks!
+ Connected Textures will be coming later to make textures connect better.
+
+
 ### **(V.6.3.5 Changes) (1.19.2 Minecraft)**
 
 ##### Structures:
