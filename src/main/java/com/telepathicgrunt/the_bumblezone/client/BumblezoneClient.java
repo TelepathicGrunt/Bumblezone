@@ -67,7 +67,7 @@ public class BumblezoneClient {
         modEventBus.addListener(BumblezoneClient::registerDimensionSpecialEffects);
         modEventBus.addListener(IncenseCandleColoring::registerBlockColors);
         modEventBus.addListener(IncenseCandleColoring::registerItemColors);
-        modEventBus.addListener(PorousHoneycombBlockModel::onModelBake);
+        //modEventBus.addListener(PorousHoneycombBlockModel::onModelBake);
 
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         forgeBus.addListener(BeehemothControls::keyInput);
