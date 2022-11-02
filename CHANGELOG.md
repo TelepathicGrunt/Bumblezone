@@ -12,8 +12,8 @@ Fixed Creative players taking honey from Filled Porous Honeycomb block adding Ho
  Creative players should have unlimited use when removing honey from the block to match behavior vanilla has with their blocks.
 
 ##### Textures:
-Added a built-in resourcepack for Bumblezone that removes the trypophobic holes from some of Bumblezone's blocks and vanilla's honeycomb block!
- Activate it through the resourcepack screen when Bumblezone mod is on.
+Textures changed for several Bumblezone honeycomb/brood blocks!
+ Connected Textures will be coming later to make textures connect better.
 
 
 ### **(V.6.3.5 Changes) (1.19.2 Minecraft)**
