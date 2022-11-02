@@ -17,7 +17,7 @@ Pollen Puff hitting Llamarama's Bumble Llama may spawn Poppy, Dandelion, Cornflo
 Enderpearls hitting top portion of Llamarama's Bumble Llama's hitbox will teleport players to Bumblezone dimension.
 
 ##### Textures:
-Textures changed for several Bumblezone honeycomb/brood blocks!
+Textures changed for several Bumblezone honeycomb/brood blocks. New textures mainly by CrispyTwig
  Connected Textures will be coming later to make textures connect better.
 
 
