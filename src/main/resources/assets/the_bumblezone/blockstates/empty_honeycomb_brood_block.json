@@ -1,27 +1,22 @@
 {
   "variants": {
     "facing=down": {
-      "model": "the_bumblezone:block/empty_honeycomb_brood_block",
-      "x": 270
+      "model": "the_bumblezone:block/empty_honeycomb_brood_block_down"
     },
     "facing=up": {
-      "model": "the_bumblezone:block/empty_honeycomb_brood_block",
-      "x": 90
+      "model": "the_bumblezone:block/empty_honeycomb_brood_block_up"
     },
     "facing=south": {
-      "model": "the_bumblezone:block/empty_honeycomb_brood_block"
+      "model": "the_bumblezone:block/empty_honeycomb_brood_block_south"
     },
     "facing=north": {
-      "model": "the_bumblezone:block/empty_honeycomb_brood_block",
-      "y": 180
+      "model": "the_bumblezone:block/empty_honeycomb_brood_block_north"
     },
     "facing=east": {
-      "model": "the_bumblezone:block/empty_honeycomb_brood_block",
-      "y": 270
+      "model": "the_bumblezone:block/empty_honeycomb_brood_block_east"
     },
     "facing=west": {
-      "model": "the_bumblezone:block/empty_honeycomb_brood_block",
-      "y": 90
+      "model": "the_bumblezone:block/empty_honeycomb_brood_block_west"
     }
   }
 }
