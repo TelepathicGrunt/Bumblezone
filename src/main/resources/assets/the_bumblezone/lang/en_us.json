@@ -548,5 +548,6 @@
   "the_bumblezone.midnightconfig.crystallineFlowerConsumeExperienceOrbEntities": "Crystalline Flower Exp Orb Consume",
   "the_bumblezone.midnightconfig.crystallineFlowerConsumeItemUI": "Crystalline Flower UI Item Consume",
   "the_bumblezone.midnightconfig.crystallineFlowerConsumeExperienceUI": "Crystalline UI Exp Consume",
+  "the_bumblezone.midnightconfig.crystallineFlowerEnchantingPowerAllowedPerTier": "Crystalline Enchant Power Per Tier",
   "the_bumblezone.midnightconfig.defaultDimension": "Fallback Dimension When Exiting Bz"
 }

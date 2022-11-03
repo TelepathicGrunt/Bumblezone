@@ -5,6 +5,9 @@ Crystalline Flower now blacklists the following enchantments from being an optio
  minecraft:soul_speed, minecraft:swift_sneak, supplementaries:stasis, apotheosis:infusion, ars_elemental:mirror_shield, ars_nouveau:reactive
  Some of these are specific to finding a certain structure or shouldn't be pickable at all. For balance or technical reasons.
 
+##### Lang:
+Fixed missing lang entry for a config entry.
+
 
 ### **(V.6.3.6 Changes) (1.19.2 Minecraft)**
 
