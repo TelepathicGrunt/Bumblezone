@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
 import com.google.common.collect.Lists;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.Holder;
@@ -155,6 +156,8 @@ public class EnchantmentUtils {
 		if (enchantment.isCurse()) {
 			cost -= 3;
 		}
+
+		cost += BzConfig.crystallineFlowerExtraTierCost;
 
 		return Math.max(1, Math.min(6, cost));
 	}

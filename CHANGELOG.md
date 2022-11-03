@@ -1,9 +1,19 @@
 ### **(V.6.3.7 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
+Fixed Incense Candle and Crystalline Flower getting mixed up in registration.
+
 Crystalline Flower now blacklists the following enchantments from being an option in this flower's UI:
  minecraft:soul_speed, minecraft:swift_sneak, supplementaries:stasis, apotheosis:infusion, ars_elemental:mirror_shield, ars_nouveau:reactive
  Some of these are specific to finding a certain structure or shouldn't be pickable at all. For balance or technical reasons.
+
+Crystalline Flower now has crystallineFlowerExtraTierCost config added.
+This will increase the tier cost of all enchantments available by whatever value you add.
+ Default is 0. Negative numbers will decrease the tier cost for enchantments.
+
+Crystalline Flower now has crystallineFlowerExtraXpNeededForTiers config added.
+ This will increase the exp required for increasing the flower's tier. (This includes item consuming as items are converted to exp)
+ Default is 0. Negative numbers will decrease the amount of exp needed to reach each tier.
 
 ##### Lang:
 Fixed missing lang entry for a config entry.
