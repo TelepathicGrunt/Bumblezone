@@ -544,9 +544,13 @@
   "the_bumblezone.midnightconfig.enableAltBeeSkinRenderer": "Enable Alt Bee Skin Renderer",
   "the_bumblezone.midnightconfig.playWrathOfHiveEffectMusic": "Play Wrath Of Hive Effect Music",
   "the_bumblezone.midnightconfig.fogReducer": "Fog Reducer",
-  "the_bumblezone.midnightconfig.crystallineFlowerConsumeItemEntities": "Crystalline Flower Item Entity Consume",
-  "the_bumblezone.midnightconfig.crystallineFlowerConsumeExperienceOrbEntities": "Crystalline Flower Exp Orb Consume",
-  "the_bumblezone.midnightconfig.crystallineFlowerConsumeItemUI": "Crystalline Flower UI Item Consume",
-  "the_bumblezone.midnightconfig.crystallineFlowerConsumeExperienceUI": "Crystalline UI Exp Consume",
+  "the_bumblezone.midnightconfig.crystallineFlowerComment": "Crystalline Flower Section",
+  "the_bumblezone.midnightconfig.crystallineFlowerConsumeItemEntities": "Item Entity Consuming",
+  "the_bumblezone.midnightconfig.crystallineFlowerConsumeExperienceOrbEntities": "Exp Orb Consuming",
+  "the_bumblezone.midnightconfig.crystallineFlowerConsumeItemUI": "UI Item Consuming",
+  "the_bumblezone.midnightconfig.crystallineFlowerConsumeExperienceUI": "UI Exp Consuming",
+  "the_bumblezone.midnightconfig.crystallineFlowerEnchantingPowerAllowedPerTier": "Enchanting Power Per Tier",
+  "the_bumblezone.midnightconfig.crystallineFlowerExtraTierCost": "Total Tier Cost Add/Subtract",
+  "the_bumblezone.midnightconfig.crystallineFlowerExtraXpNeededForTiers": "Extra Exp Required Per Tier",
   "the_bumblezone.midnightconfig.defaultDimension": "Fallback Dimension When Exiting Bz"
 }

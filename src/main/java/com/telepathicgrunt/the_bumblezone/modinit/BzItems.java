@@ -66,7 +66,7 @@ public class BzItems {
     public static final Item SUPER_CANDLE_WHITE = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_WHITE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
     public static final Item SUPER_CANDLE_YELLOW = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_YELLOW, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
     public static final Item INCENSE_CANDLE = new IncenseCandleBlockItem(BzBlocks.INCENSE_BASE_CANDLE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
-    public static final Item CRYSTALLINE_FLOWER = new BzBlockItem(BzBlocks.INCENSE_BASE_CANDLE, new Item.Properties().stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.UNCOMMON), true, true);
+    public static final Item CRYSTALLINE_FLOWER = new BzBlockItem(BzBlocks.CRYSTALLINE_FLOWER, new Item.Properties().stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.UNCOMMON), true, true);
 
     //items
     public static final HoneyCrystalShards HONEY_CRYSTAL_SHARDS = new HoneyCrystalShards(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.15F).build()));

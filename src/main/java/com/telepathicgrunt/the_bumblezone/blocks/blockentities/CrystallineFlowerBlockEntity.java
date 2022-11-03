@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -258,7 +259,7 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
     }
 
     public int getMaxXpForTier(int tier) {
-        return 45 + (tier * tier * 5);
+        return Math.max(1, (45 + (tier * tier * 5)) + BzConfig.crystallineFlowerExtraXpNeededForTiers);
     }
 
     public int getXpForNextTiers(int nextTiersToCalculate) {

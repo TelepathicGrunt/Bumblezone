@@ -1,3 +1,24 @@
+### **(V.6.3.7 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Fixed Incense Candle and Crystalline Flower getting mixed up in registration.
+
+Crystalline Flower now blacklists the following enchantments from being an option in this flower's UI:
+ minecraft:soul_speed, minecraft:swift_sneak, supplementaries:stasis, apotheosis:infusion, ars_elemental:mirror_shield, ars_nouveau:reactive
+ Some of these are specific to finding a certain structure or shouldn't be pickable at all. For balance or technical reasons.
+
+Crystalline Flower now has crystallineFlowerExtraTierCost config added.
+This will increase the tier cost of all enchantments available by whatever value you add.
+ Default is 0. Negative numbers will decrease the tier cost for enchantments.
+
+Crystalline Flower now has crystallineFlowerExtraXpNeededForTiers config added.
+ This will increase the exp required for increasing the flower's tier. (This includes item consuming as items are converted to exp)
+ Default is 0. Negative numbers will decrease the amount of exp needed to reach each tier.
+
+##### Lang:
+Fixed missing lang entry for a config entry.
+
+
 ### **(V.6.3.6 Changes) (1.19.2 Minecraft)**
 
 ##### Misc:
@@ -17,7 +38,7 @@ Pollen Puff hitting Llamarama's Bumble Llama may spawn Poppy, Dandelion, Cornflo
 Enderpearls hitting top portion of Llamarama's Bumble Llama's hitbox will teleport players to Bumblezone dimension.
 
 ##### Textures:
-Textures changed for several Bumblezone honeycomb/brood blocks!
+Textures changed for several Bumblezone honeycomb/brood blocks. New textures mainly by CrispyTwig
  Connected Textures will be coming later to make textures connect better.
 
 
