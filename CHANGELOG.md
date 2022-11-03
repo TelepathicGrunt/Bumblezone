@@ -1,3 +1,9 @@
+### **(V.6.3.8 Changes) (1.19.2 Minecraft)**
+
+##### Mod Compat:
+Future-proofed Pollen Puff compat with Pokecube for when they change the registry name of some pokemon.
+
+
 ### **(V.6.3.7 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
