@@ -6,7 +6,6 @@ Crystalline Flower now blacklists the following enchantments from being an optio
  Some of these are specific to finding a certain structure or shouldn't be pickable at all. For balance or technical reasons.
 
 
-
 ### **(V.6.3.6 Changes) (1.19.2 Minecraft)**
 
 ##### Misc:
