@@ -1,3 +1,12 @@
+### **(V.6.3.7 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Crystalline Flower now blacklists the following enchantments from being an option in this flower's UI:
+ minecraft:soul_speed, minecraft:swift_sneak, supplementaries:stasis, apotheosis:infusion, ars_elemental:mirror_shield, ars_nouveau:reactive
+ Some of these are specific to finding a certain structure or shouldn't be pickable at all. For balance or technical reasons.
+
+
+
 ### **(V.6.3.6 Changes) (1.19.2 Minecraft)**
 
 ##### Misc:
