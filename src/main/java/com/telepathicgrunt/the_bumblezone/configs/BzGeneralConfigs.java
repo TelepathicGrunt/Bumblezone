@@ -18,6 +18,8 @@ public class BzGeneralConfigs {
     public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeItemUI;
     public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeExperienceUI;
     public static ForgeConfigSpec.IntValue crystallineFlowerEnchantingPowerAllowedPerTier;
+    public static ForgeConfigSpec.IntValue crystallineFlowerExtraXpNeededForTiers;
+    public static ForgeConfigSpec.IntValue crystallineFlowerExtraTierCost;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -127,11 +129,27 @@ public class BzGeneralConfigs {
         crystallineFlowerEnchantingPowerAllowedPerTier = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " Controls how much \"enchanting power\" is used per tier to determine what enchantment shows up.",
-                        " Enchantments of higher levels or rarity requires more \"enchanting power\" before they show up in the UI.\n",
-                        " Think of this like how Enchanting Tables only shows stronger or rarer enchantments when you have more bookshelves.\n",
+                        " Enchantments of higher levels or rarity requires more \"enchanting power\" before they show up in the UI.",
+                        " Think of this like how Enchanting Tables only shows stronger or rarer enchantments when you have more bookshelves.",
                         " Except here, the flower's tier times this config value is used as the threshold to know what enchantment and level to show.\n")
                 .translation("the_bumblezone.config.crystallineflowerenchantingpowerallowedpertier")
                 .defineInRange("crystallineFlowerEnchantingPowerAllowedPerTier", 8, 0, 1000);
+
+
+        crystallineFlowerExtraXpNeededForTiers = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How much extra experience is required to reach the next tier for the Crystalline Flower.",
+                        " Remember, item consuming is also affected as items are converted to experience when the flower consumes it.\n")
+                .translation("the_bumblezone.config.crystallineflowerextraxpneededfortiers")
+                .defineInRange("crystallineFlowerExtraXpNeededForTiers", 0, -1000000, 1000000);
+
+
+        crystallineFlowerExtraTierCost = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Increases or decreases the tier cost of all enchantments available by whatever value you set.",
+                        " The enchantment's tier cost will be capped between 1 and 6.\n")
+                .translation("the_bumblezone.config.crystallineflowerextratiercost")
+                .defineInRange("crystallineFlowerExtraTierCost", 0, -5, 5);
 
         builder.pop();
     }
