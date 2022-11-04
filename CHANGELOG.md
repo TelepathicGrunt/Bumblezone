@@ -8,6 +8,9 @@ Adjusted textures for Sugar Infused Stone and Sugar Infused Cobblestone a bit.
 ##### Items:
 Pollen Puff thrown at What Did You Vote For's Sniffer will spawn Moss Carpet nearby.
 
+Made an item form for all Carvable Wax blockstates to make building with it easier.
+ Mining a Carvable Wax will drop the item form of its blockstate.
+
 
 ### **(V.6.3.8 Changes) (1.19.2 Minecraft)**
 

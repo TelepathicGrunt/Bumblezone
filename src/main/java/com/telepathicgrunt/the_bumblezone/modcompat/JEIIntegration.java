@@ -82,6 +82,12 @@ public class JEIIntegration implements IModPlugin {
 		addInfo(registration, BzItems.ESSENCE_OF_THE_BEES.get());
 		addInfo(registration, BzItems.GLISTERING_HONEY_CRYSTAL.get());
 		addInfo(registration, BzItems.CARVABLE_WAX.get());
+		addInfo(registration, BzItems.CARVABLE_WAX_WAVY.get());
+		addInfo(registration, BzItems.CARVABLE_WAX_FLOWER.get());
+		addInfo(registration, BzItems.CARVABLE_WAX_CHISELED.get());
+		addInfo(registration, BzItems.CARVABLE_WAX_DIAMOND.get());
+		addInfo(registration, BzItems.CARVABLE_WAX_BRICKS.get());
+		addInfo(registration, BzItems.CARVABLE_WAX_CHAINS.get());
 		addInfo(registration, BzItems.SUPER_CANDLE.get());
 		addInfo(registration, BzItems.SUPER_CANDLE_BLACK.get());
 		addInfo(registration, BzItems.SUPER_CANDLE_BLUE.get());

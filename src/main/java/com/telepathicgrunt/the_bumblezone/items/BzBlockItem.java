@@ -1,11 +1,26 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+
+import javax.annotation.Nullable;
 
 public class BzBlockItem extends BlockItem {
     private final boolean fitInContainers;
     private final boolean useBlockName;
+    private final BlockState blockState;
+
+    public BzBlockItem(BlockState blockState, Properties properties) {
+        super(blockState.getBlock(), properties);
+        this.blockState = blockState;
+        this.fitInContainers = true;
+        this.useBlockName = true;
+    }
 
     public BzBlockItem(Block block, Properties properties) {
         this(block, properties, true, true);
@@ -15,6 +30,7 @@ public class BzBlockItem extends BlockItem {
         super(block, properties);
         this.fitInContainers = fitInContainers;
         this.useBlockName = useBlockName;
+        this.blockState = null;
     }
 
     @Override
@@ -25,5 +41,18 @@ public class BzBlockItem extends BlockItem {
     @Override
     public String getDescriptionId() {
         return this.useBlockName ? this.getBlock().getDescriptionId() : this.getOrCreateDescriptionId();
+    }
+
+    @Override
+    protected BlockState getPlacementState(BlockPlaceContext context) {
+        BlockState blockstate = this.blockState == null ? this.getBlock().getStateForPlacement(context) : this.blockState;
+        return blockstate != null && this.canPlace(context, blockstate) ? blockstate : null;
+    }
+
+    @Override
+    public void fillItemCategory(CreativeModeTab category, NonNullList<ItemStack> items) {
+        if (this.allowedIn(category)) {
+            items.add(new ItemStack(this));
+        }
     }
 }

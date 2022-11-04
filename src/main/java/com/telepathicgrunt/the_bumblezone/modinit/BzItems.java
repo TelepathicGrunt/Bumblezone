@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.blocks.CarvableWax;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.items.*;
 import com.telepathicgrunt.the_bumblezone.items.materials.BeeArmorMaterial;
@@ -52,7 +53,13 @@ public class BzItems {
     public static final RegistryObject<Item> HONEY_COCOON = ITEMS.register("honey_cocoon", () -> new BzBlockItem(BzBlocks.HONEY_COCOON.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), false, true));
     public static final RegistryObject<Item> ROYAL_JELLY_BLOCK = ITEMS.register("royal_jelly_block", () -> new BlockItem(BzBlocks.ROYAL_JELLY_BLOCK.get(), new Item.Properties().rarity(Rarity.EPIC).tab(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> GLISTERING_HONEY_CRYSTAL = ITEMS.register("glistering_honey_crystal", () -> new BlockItem(BzBlocks.GLISTERING_HONEY_CRYSTAL.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
-    public static final RegistryObject<Item> CARVABLE_WAX = ITEMS.register("carvable_wax", () -> new BlockItem(BzBlocks.CARVABLE_WAX.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> CARVABLE_WAX = ITEMS.register("carvable_wax", () -> new BzBlockItem(BzBlocks.CARVABLE_WAX.get().defaultBlockState().setValue(CarvableWax.CARVING, CarvableWax.Carving.UNCARVED), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> CARVABLE_WAX_WAVY = ITEMS.register("carvable_wax_wavy", () -> new BzBlockItem(BzBlocks.CARVABLE_WAX.get().defaultBlockState().setValue(CarvableWax.CARVING, CarvableWax.Carving.WAVY), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> CARVABLE_WAX_FLOWER = ITEMS.register("carvable_wax_flower", () -> new BzBlockItem(BzBlocks.CARVABLE_WAX.get().defaultBlockState().setValue(CarvableWax.CARVING, CarvableWax.Carving.FLOWER), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> CARVABLE_WAX_CHISELED = ITEMS.register("carvable_wax_chiseled", () -> new BzBlockItem(BzBlocks.CARVABLE_WAX.get().defaultBlockState().setValue(CarvableWax.CARVING, CarvableWax.Carving.CHISELED), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> CARVABLE_WAX_DIAMOND = ITEMS.register("carvable_wax_diamond", () -> new BzBlockItem(BzBlocks.CARVABLE_WAX.get().defaultBlockState().setValue(CarvableWax.CARVING, CarvableWax.Carving.DIAMOND), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> CARVABLE_WAX_BRICKS = ITEMS.register("carvable_wax_bricks", () -> new BzBlockItem(BzBlocks.CARVABLE_WAX.get().defaultBlockState().setValue(CarvableWax.CARVING, CarvableWax.Carving.BRICKS), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
+    public static final RegistryObject<Item> CARVABLE_WAX_CHAINS = ITEMS.register("carvable_wax_chains", () -> new BzBlockItem(BzBlocks.CARVABLE_WAX.get().defaultBlockState().setValue(CarvableWax.CARVING, CarvableWax.Carving.CHAINS), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
     public static final RegistryObject<Item> SUPER_CANDLE = ITEMS.register("super_candle", () -> new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false));
     public static final RegistryObject<Item> SUPER_CANDLE_BLACK = ITEMS.register("super_candle_black", () -> new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_BLACK.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false));
     public static final RegistryObject<Item> SUPER_CANDLE_BLUE = ITEMS.register("super_candle_blue", () -> new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_BLUE.get(), new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false));
