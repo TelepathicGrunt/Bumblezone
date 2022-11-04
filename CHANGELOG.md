@@ -4,6 +4,13 @@
 Fixed opening Crystalline Flower's UI not incrementing the stat for interacting with it.
  (Was logging an exception to the log file)
 
+##### Items:
+Pollen Puff thrown at Mobscarecrow's Default Scarecrow mob will spawn pumpkin stems nearby on valid blocks/farmland
+
+Pollen Puff thrown at Mobvote2022's Sniffer will spawn Moss Carpet nearby.
+
+Pollen Puff thrown at Probably Chests's Lush Mimic Chests may rarely spawn Azalea or Flowering Azalea nearby.
+
 
 ### **(V.6.3.8 Changes) (1.19.2 Minecraft)**
 
