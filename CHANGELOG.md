@@ -4,6 +4,8 @@
 Fixed opening Crystalline Flower's UI not incrementing the stat for interacting with it.
  (Was logging an exception to the log file)
 
+Adjusted textures for Sugar Infused Stone and Sugar Infused Cobblestone a bit.
+
 ##### Items:
 Pollen Puff thrown at Mobscarecrow's Default Scarecrow mob will spawn pumpkin stems nearby on valid blocks/farmland
 
