@@ -12,16 +12,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class LevelMixin {
 
     @Shadow
-    public float oRainLevel;
+    protected float oRainLevel;
 
     @Shadow
-    public float rainLevel;
+    protected float rainLevel;
 
     @Shadow
-    public float oThunderLevel;
+    protected float oThunderLevel;
 
     @Shadow
-    public float thunderLevel;
+    protected float thunderLevel;
 
 
     // Fix Bumblezone dimension fog getting screwed by rain/thunder effects in Overworld.
