@@ -1,5 +1,12 @@
 ### **(V.6.3.8 Changes) (1.19.2 Minecraft)**
 
+##### Mod Compat:
+Future-proofed Pollen Puff compat with Pokecube for when they change the registry name of some pokemon.
+
+Pollen Puff hitting Resourceful Bees's Crimson, Warped, Red, and Brown Bees will spawn those respective mushrooms nearby.
+
+Bee Queen will not trade for a ton more of Resourceful Bees's items!
+
 ##### Textures:
 Added an internal Anti-Trypophobia resourcepack to this mod.
  You can enable it by going into the resourcepack screen and move the resourcepack to the top of the right side to activate it.
