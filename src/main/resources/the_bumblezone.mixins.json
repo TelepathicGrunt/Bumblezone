@@ -60,6 +60,7 @@
     "items.PlayerDamagedMixin",
     "items.PlayerDamageShieldInvoker",
     "items.SimpleCookingSerializerMixin",
+    "world.LevelMixin",
     "world.NoiseChunkAccessor",
     "world.NoiseGeneratorSettingsInvoker",
     "world.ServerWorldMixin",
