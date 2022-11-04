@@ -43,6 +43,22 @@
     {
       "id": "#forge:storage_blocks/wax",
       "required": false
+    },
+    {
+      "id": "#resourcefulbees:t1_nests",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:t2_apiary",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:honey_glass",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:honey_glass_player",
+      "required": false
     }
   ],
   "possible_rewards": [
