@@ -3,6 +3,12 @@
 ##### Mod Compat:
 Future-proofed Pollen Puff compat with Pokecube for when they change the registry name of some pokemon.
 
+##### Textures:
+Added an internal Anti-Trypophobia resourcepack to this mod.
+ You can enable it by going into the resourcepack screen and move the resourcepack to the top of the right side to activate it.
+ Mostly just tries to make vanilla's Honeycomb Block and some of Bumblezone's hole-based blocks have lower contrast and look more flatter to help.
+ This is not the desired look for Bumblezone but as a good last resort if you're feeling uncomfortable with the default textures.
+
 
 ### **(V.6.3.7 Changes) (1.19.2 Minecraft)**
 

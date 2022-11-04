@@ -104,7 +104,7 @@ public class Bumblezone{
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(EventPriority.NORMAL, this::setup);
         modEventBus.addListener(EventPriority.LOWEST, this::modCompatSetup); //run after all mods
-        //modEventBus.addListener(EventPriority.NORMAL, this::setupBuiltInResourcePack);
+        modEventBus.addListener(EventPriority.NORMAL, this::setupBuiltInResourcePack);
         modEventBus.addListener(EventPriority.NORMAL, BzEntities::registerEntityAttributes);
         BzItems.ITEMS.register(modEventBus);
         BzBlocks.BLOCKS.register(modEventBus);
