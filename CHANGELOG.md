@@ -3,6 +3,9 @@
 ##### Blocks:
 Added missing en_us translation for Crystalline Flower UI opening stat.
 
+##### Items:
+Pollen Puff thrown at What Did You Vote For's Sniffer will spawn Moss Carpet nearby.
+
 
 ### **(V.6.3.8 Changes) (1.19.2 Minecraft)**
 
