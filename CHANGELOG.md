@@ -11,6 +11,9 @@ Added some methods in BumblezoneAPI class for other mods to have easier compat w
 
 Enderpearls hitting top hitbox portion of players wearing Productive Bees's Bee Nest Helmets will teleport players to Bumblezone dimension.
 
+##### Dimension:
+Fixed Bumblezone dimension fog/skybox being darker when it is raining/thundering in Overworld.
+
 ##### Textures:
 Added an internal Anti-Trypophobia resourcepack to this mod.
  You can enable it by going into the resourcepack screen and move the resourcepack to the top of the right side to activate it.

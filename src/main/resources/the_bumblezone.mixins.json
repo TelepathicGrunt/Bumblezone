@@ -45,6 +45,7 @@
     "items.MaterialInvoker",
     "items.PlayerDamagedMixin",
     "items.PlayerDamageShieldInvoker",
+    "world.LevelMixin",
     "world.NoiseChunkAccessor",
     "world.ServerWorldMixin",
     "world.SinglePoolElementAccessor",
