@@ -40,8 +40,8 @@ public class EssenceOfTheBees extends Item {
                 return itemStack;
             }
 
-            serverPlayer.awardStat(Stats.ITEM_USED.get(this));
             CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, itemStack);
+            serverPlayer.awardStat(Stats.ITEM_USED.get(this));
 
             setEssence(serverPlayer, true);
             if (!serverPlayer.getAbilities().instabuild) {

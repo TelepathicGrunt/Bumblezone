@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.items.*;
 import com.telepathicgrunt.the_bumblezone.items.materials.BeeArmorMaterial;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -10,7 +11,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -25,10 +25,8 @@ public class BzItems {
     /**
      * creative tab to hold our block items
      */
-    public static final CreativeModeTab BUMBLEZONE_CREATIVE_TAB = FabricItemGroupBuilder.build(
-            new ResourceLocation(Bumblezone.MODID, "main_tab"),
-            () -> new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB)
-    );
+    public static final CreativeModeTab BUMBLEZONE_CREATIVE_TAB = FabricItemGroupBuilder
+            .build(new ResourceLocation(Bumblezone.MODID, "main_tab"), () -> new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB));
 
     //blocks
     public static final Item POROUS_HONEYCOMB = new BlockItem(BzBlocks.POROUS_HONEYCOMB, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
@@ -44,8 +42,29 @@ public class BzItems {
     public static final Item REDSTONE_HONEY_WEB = new BlockItem(BzBlocks.REDSTONE_HONEY_WEB, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item PILE_OF_POLLEN = new BlockItem(BzBlocks.PILE_OF_POLLEN, new Item.Properties());
     public static final Item HONEY_CRYSTAL = new BzHoneyCrystalBlockItem(BzBlocks.HONEY_CRYSTAL, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
-    public static final Item HONEY_COCOON = new BzBlockItem(BzBlocks.HONEY_COCOON, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), false);
+    public static final Item HONEY_COCOON = new BzBlockItem(BzBlocks.HONEY_COCOON, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), false, true);
     public static final Item ROYAL_JELLY_BLOCK = new BlockItem(BzBlocks.ROYAL_JELLY_BLOCK, new Item.Properties().rarity(Rarity.EPIC).tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item GLISTERING_HONEY_CRYSTAL = new BzHoneyCrystalBlockItem(BzBlocks.GLISTERING_HONEY_CRYSTAL, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item CARVABLE_WAX = new BlockItem(BzBlocks.CARVABLE_WAX, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item SUPER_CANDLE = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item SUPER_CANDLE_BLACK = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_BLACK, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item SUPER_CANDLE_BLUE = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_BLUE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item SUPER_CANDLE_BROWN = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_BROWN, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item SUPER_CANDLE_CYAN = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_CYAN, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item SUPER_CANDLE_GRAY = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_GRAY, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item SUPER_CANDLE_GREEN = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_GREEN, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item SUPER_CANDLE_LIGHT_BLUE = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_LIGHT_BLUE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item SUPER_CANDLE_LIGHT_GRAY = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_LIGHT_GRAY, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item SUPER_CANDLE_LIME = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_LIME, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item SUPER_CANDLE_MAGENTA = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_MAGENTA, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item SUPER_CANDLE_ORANGE = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_ORANGE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item SUPER_CANDLE_PINK = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_PINK, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item SUPER_CANDLE_PURPLE = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_PURPLE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item SUPER_CANDLE_RED = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_RED, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item SUPER_CANDLE_WHITE = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_WHITE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item SUPER_CANDLE_YELLOW = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_YELLOW, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
+    public static final Item INCENSE_CANDLE = new IncenseCandleBlockItem(BzBlocks.INCENSE_BASE_CANDLE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item CRYSTALLINE_FLOWER = new BzBlockItem(BzBlocks.CRYSTALLINE_FLOWER, new Item.Properties().stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.UNCOMMON), true, true);
 
     //items
     public static final HoneyCrystalShards HONEY_CRYSTAL_SHARDS = new HoneyCrystalShards(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.15F).build()));
@@ -58,8 +77,8 @@ public class BzItems {
     public static final Item HONEY_SLIME_SPAWN_EGG = new SpawnEggItem(BzEntities.HONEY_SLIME, 0xFFCC00, 0xFCA800, (new Item.Properties()).tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item BEEHEMOTH_SPAWN_EGG = new SpawnEggItem(BzEntities.BEEHEMOTH, 0xEDC343, 0x43241B, (new Item.Properties()).tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item BEE_QUEEN_SPAWN_EGG = new SpawnEggItem(BzEntities.BEE_QUEEN, 0xFFFFFF, 0xFFFFFF, (new Item.Properties().rarity(Rarity.EPIC)).tab(BUMBLEZONE_CREATIVE_TAB));
-    public static final Item MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = new BzMusicDiscs(14, BzSounds.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV, (new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.RARE), 84);
-    public static final Item MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = new BzMusicDiscs(15, BzSounds.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY, (new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.RARE), 216);
+    public static final Item MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = new BzMusicDiscs(14, BzSounds.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV, (new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.RARE), BzConfig.musicDiscTimeLengthFlightOfTheBumblebee);
+    public static final Item MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = new BzMusicDiscs(15, BzSounds.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY, (new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.RARE), BzConfig.musicDiscTimeLengthHoneyBee);
     public static final Item POLLEN_PUFF = new PollenPuff(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).stacksTo(16));
     public static final Item BEE_BREAD = new BeeBread(new Item.Properties().food((new FoodProperties.Builder()).nutrition(8).saturationMod(0.12F).alwaysEat().effect(new MobEffectInstance(BzEffects.BEENERGIZED, 6000, 0), 1.0F).effect(new MobEffectInstance(MobEffects.CONFUSION, 120, 1), 1.0F).build()).tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item HONEY_CRYSTAL_SHIELD = new HoneyCrystalShield(new Item.Properties().rarity(Rarity.UNCOMMON).tab(BzItems.BUMBLEZONE_CREATIVE_TAB));
@@ -105,6 +124,27 @@ public class BzItems {
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "royal_jelly_bottle"), ROYAL_JELLY_BOTTLE);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "royal_jelly_bucket"), ROYAL_JELLY_BUCKET);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "royal_jelly_block"), ROYAL_JELLY_BLOCK);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "glistering_honey_crystal"), GLISTERING_HONEY_CRYSTAL);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "carvable_wax"), CARVABLE_WAX);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle"), SUPER_CANDLE);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_black"), SUPER_CANDLE_BLACK);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_blue"), SUPER_CANDLE_BLUE);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_brown"), SUPER_CANDLE_BROWN);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_cyan"), SUPER_CANDLE_CYAN);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_gray"), SUPER_CANDLE_GRAY);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_green"), SUPER_CANDLE_GREEN);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_light_blue"), SUPER_CANDLE_LIGHT_BLUE);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_light_gray"), SUPER_CANDLE_LIGHT_GRAY);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_lime"), SUPER_CANDLE_LIME);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_magenta"), SUPER_CANDLE_MAGENTA);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_orange"), SUPER_CANDLE_ORANGE);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_pink"), SUPER_CANDLE_PINK);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_purple"), SUPER_CANDLE_PURPLE);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_red"), SUPER_CANDLE_RED);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_white"), SUPER_CANDLE_WHITE);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_yellow"), SUPER_CANDLE_YELLOW);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "incense_candle"), INCENSE_CANDLE);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "crystalline_flower"), CRYSTALLINE_FLOWER);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_slime_spawn_egg"), HONEY_SLIME_SPAWN_EGG);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "beehemoth_spawn_egg"), BEEHEMOTH_SPAWN_EGG);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_queen_spawn_egg"), BEE_QUEEN_SPAWN_EGG);

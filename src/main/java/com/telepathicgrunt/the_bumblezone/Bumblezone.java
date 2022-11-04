@@ -30,11 +30,12 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -75,6 +76,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzMenuTypes.registerMenu();
         BzParticles.registerParticles();
         BzStats.registerStats();
+        BzRecipes.registerBrewingStandRecipes();
 
         BzPredicates.registerPredicates();
         BzLootFunctionTypes.registerContainerLootFunctions();
@@ -105,6 +107,12 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         ServerLifecycleEvents.SERVER_STARTED.register((a) -> QueensTradeManager.QUEENS_TRADE_MANAGER.resolveQueenTrades());
         ServerLifecycleEvents.SERVER_STARTING.register((a) -> ThreadExecutor.handleServerAboutToStartEvent());
         ServerLifecycleEvents.SERVER_STOPPING.register((a) -> ThreadExecutor.handleServerStoppingEvent());
+
+        ResourceManagerHelper.registerBuiltinResourcePack(
+                new ResourceLocation(MODID, "anti_tropophobia"),
+                FabricLoader.getInstance().getModContainer(MODID).get(),
+                "Bumblezone - Anti Trypophobia",
+                ResourcePackActivationType.NORMAL);
     }
 
     @Override
@@ -117,7 +125,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         registry.registerForPlayers(MISC_COMPONENT, p -> new MiscComponent(), RespawnCopyStrategy.ALWAYS_COPY);
 
         PlayerCopyCallback.EVENT.register((serverPlayerOriginal, serverPlayerNew, lossless) -> {
-            if (BzConfig.keepBeeEssenceOnRespawning || lossless) {
+            if (BzConfig.keepEssenceOfTheBeesOnRespawning || lossless) {
                 EssenceComponent capabilityOld = Bumblezone.ESSENCE_COMPONENT.get(serverPlayerOriginal);
                 EssenceComponent capability = Bumblezone.ESSENCE_COMPONENT.get(serverPlayerNew);
                 capability.isBeeEssenced = capabilityOld.isBeeEssenced;

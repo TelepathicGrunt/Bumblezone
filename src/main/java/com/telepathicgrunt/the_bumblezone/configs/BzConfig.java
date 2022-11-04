@@ -47,12 +47,42 @@ public class BzConfig extends MidnightConfig {
     @Entry(min=1, max=1000)
     public static int broodBlocksBeeSpawnCapacity = 80;
 
+    @Comment
+    public static Comment crystallineFlowerComment;
+
+    @Entry
+    public static boolean crystallineFlowerConsumeItemEntities = true;
+
+    @Entry
+    public static boolean crystallineFlowerConsumeExperienceOrbEntities = true;
+
+    @Entry
+    public static boolean crystallineFlowerConsumeExperienceUI = true;
+
+    @Entry
+    public static boolean crystallineFlowerConsumeItemUI = true;
+
+    @Entry
+    public static int crystallineFlowerEnchantingPowerAllowedPerTier = 8;
+
+    @Entry
+    public static int crystallineFlowerExtraTierCost = 0;
+
+    @Entry
+    public static int crystallineFlowerExtraXpNeededForTiers = 0;
+
 
     @Comment
     public static Comment dimensionComment;
 
     @Entry(min=0, max=100000)
     public static double fogBrightnessPercentage = 110;
+
+    @Entry(min=0, max=100)
+    public static double fogReducer = 4;
+
+    @Entry
+    public static boolean enableDimensionFog = true;
 
     @Entry
     public static boolean onlyOverworldHivesTeleports = false;
@@ -81,6 +111,9 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean forceBumblezoneOriginMobToOverworldCenter = true;
 
+    @Entry
+    public static String defaultDimension = "minecraft:overworld";
+
 
     @Comment
     public static Comment dungeonsComment;
@@ -108,7 +141,13 @@ public class BzConfig extends MidnightConfig {
     public static int nearbyBeesPerPlayerInBz = 25;
 
     @Entry
-    public static boolean keepBeeEssenceOnRespawning = false;
+    public static boolean keepEssenceOfTheBeesOnRespawning = true;
+
+    @Entry
+    public static int musicDiscTimeLengthFlightOfTheBumblebee = 84;
+
+    @Entry
+    public static int musicDiscTimeLengthHoneyBee = 216;
 
 
     @Comment

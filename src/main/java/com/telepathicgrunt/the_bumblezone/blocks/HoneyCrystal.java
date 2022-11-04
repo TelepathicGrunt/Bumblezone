@@ -62,7 +62,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     private Item item;
 
     public HoneyCrystal() {
-        super(FabricBlockSettings.of(Material.GLASS, MaterialColor.COLOR_ORANGE).lightLevel(1).strength(0.3F, 0.3f).noOcclusion());
+        super(FabricBlockSettings.of(Material.GLASS, MaterialColor.COLOR_ORANGE).lightLevel((blockState) -> 1).strength(0.3F, 0.3f).noOcclusion());
 
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.UP)

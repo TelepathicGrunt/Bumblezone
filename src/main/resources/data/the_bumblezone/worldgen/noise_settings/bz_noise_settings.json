@@ -221,6 +221,71 @@
         "if_true": {
           "type": "minecraft:biome",
           "biome_is": [
+            "the_bumblezone:crystal_canyon"
+          ]
+        },
+        "then_run": {
+          "type": "minecraft:sequence",
+          "sequence": [
+            {
+              "type": "minecraft:condition",
+              "if_true": {
+                "type": "minecraft:not",
+                "invert": {
+                  "type": "minecraft:y_above",
+                  "surface_depth_multiplier": 0,
+                  "add_stone_depth": true,
+                  "anchor": {
+                    "above_bottom": 41
+                  }
+                }
+              },
+              "then_run": {
+                "type": "minecraft:condition",
+                "if_true": {
+                  "type": "minecraft:stone_depth",
+                  "offset": 0,
+                  "add_surface_depth": true,
+                  "add_surface_secondary_depth": false,
+                  "secondary_depth_range": 4,
+                  "surface_type": "floor"
+                },
+                "then_run": {
+                  "type": "minecraft:block",
+                  "result_state": {
+                    "Name": "the_bumblezone:carvable_wax",
+                    "Properties": {
+                      "carving": "wavy"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "minecraft:condition",
+              "if_true": {
+                "type": "minecraft:stone_depth",
+                "offset": 0,
+                "add_surface_depth": true,
+                "add_surface_secondary_depth": true,
+                "secondary_depth_range": 4,
+                "surface_type": "floor"
+              },
+              "then_run": {
+                "type": "minecraft:block",
+                "result_state": {
+                  "Name": "the_bumblezone:carvable_wax"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "type": "minecraft:condition",
+        "if_true": {
+          "type": "minecraft:biome",
+          "biome_is": [
             "the_bumblezone:pollinated_fields",
             "the_bumblezone:pollinated_pillar"
           ]

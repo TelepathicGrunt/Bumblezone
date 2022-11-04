@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.world.dimension;
 
-import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;

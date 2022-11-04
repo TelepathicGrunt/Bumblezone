@@ -34,7 +34,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
-import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -51,7 +50,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.NeutralMob;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -72,11 +70,9 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 public class BeeQueenEntity extends Animal implements NeutralMob {
@@ -103,8 +99,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(THROWCOOLDOWN, 0);
-        this.entityData.define(DATA_REMAINING_ANGER_TIME, 1);
-        this.entityData.define(BEESPAWNCOOLDOWN, 2);
+        this.entityData.define(DATA_REMAINING_ANGER_TIME, 0);
+        this.entityData.define(BEESPAWNCOOLDOWN, 0);
         this.entityData.define(QUEEN_POSE, BeeQueenPose.NONE);
     }
 
@@ -138,7 +134,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     public static AttributeSupplier.Builder getAttributeBuilder() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 150.0D)
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 150.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.1)
                 .add(Attributes.ATTACK_DAMAGE, 10.0D);
     }
@@ -220,29 +217,30 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             return false;
         }
         else {
-            Entity entity = source.getEntity();
-            if (entity instanceof LivingEntity livingEntity &&
-                !livingEntity.isSpectator() &&
-                !(livingEntity instanceof Player player && player.isCreative()))
-            {
-                if ((livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                    BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
-                    BzConfig.aggressiveBees)
+            if (!this.isNoAi()) {
+                Entity entity = source.getEntity();
+                if (entity instanceof LivingEntity livingEntity &&
+                    !livingEntity.isSpectator() &&
+                    !(livingEntity instanceof Player player && player.isCreative()))
                 {
-                    if(livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
-                        livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                    if ((livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                        BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+                        BzConfig.aggressiveBees)
+                    {
+                        if(livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
+                            livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                        }
+                        else {
+                            //Now all bees nearby in Bumblezone will get VERY angry!!!
+                            livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 3, false, BzConfig.showWrathOfTheHiveParticles, true));
+                        }
                     }
-                    else {
-                        //Now all bees nearby in Bumblezone will get VERY angry!!!
-                        livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 3, false, BzConfig.showWrathOfTheHiveParticles, true));
-                    }
+
+                    this.startPersistentAngerTimer();
+                    this.setPersistentAngerTarget(livingEntity.getUUID());
+                    this.setTarget(livingEntity);
                 }
-
-                this.startPersistentAngerTimer();
-                this.setPersistentAngerTarget(livingEntity.getUUID());
-                this.setTarget(livingEntity);
             }
-
             spawnAngryParticles(6);
             return super.hurt(source, amount);
         }
@@ -272,7 +270,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
         StructureManager structureManager = ((ServerLevel)serverPlayer.level).structureManager();
         if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.BEE_QUEEN_MINING_FATIGUE).isValid() &&
-            !serverPlayer.level.getEntitiesOfClass(BeeQueenEntity.class, serverPlayer.getBoundingBox().inflate(30.0D, 30.0D, 30.0D), (e) -> true).isEmpty())
+            !serverPlayer.level.getEntitiesOfClass(BeeQueenEntity.class, serverPlayer.getBoundingBox().inflate(30.0D, 30.0D, 30.0D), (e) -> !e.isNoAi()).isEmpty())
         {
             serverPlayer.addEffect(new MobEffectInstance(
                     MobEffects.DIG_SLOWDOWN,
@@ -312,16 +310,18 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             poseTicks++;
         }
 
-        if (this.getLevel().getGameTime() % 200 == 0) {
-            this.heal(1);
-        }
-
-        if (!this.level.isClientSide()) {
-            if (this.isAngry()) {
-                performAngryActions();
+        if (!this.isNoAi()) {
+            if (!this.getLevel().isClientSide() && this.getLevel().getGameTime() % 200 == 0) {
+                this.heal(1);
             }
-            else {
-                performGroundTrades();
+
+            if (!this.level.isClientSide()) {
+                if (this.isAngry()) {
+                    performAngryActions();
+                }
+                else {
+                    performGroundTrades();
+                }
             }
         }
     }
@@ -380,24 +380,20 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             setThrowCooldown(throwCooldown - 1);
         }
 
-        if (this.getAge() % 20 == 0 && throwCooldown <= 0) {
+        if (this.getLevel().getGameTime() % 20 == 0 && throwCooldown <= 0) {
             Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
             Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
             AABB scanArea = this.getBoundingBox().deflate(0.45, 0.9, 0.45).move(forwardVect.x() * 0.5d, -0.95, forwardVect.z() * 0.5d);
             List<ItemEntity> items = this.level.getEntitiesOfClass(ItemEntity.class, scanArea);
             items.stream().filter(ie -> !ie.hasPickUpDelay()).findFirst().ifPresent((itemEntity) -> {
                 boolean traded = false;
-                for (Map.Entry<Set<Item>, WeightedRandomList<TradeEntryReducedObj>> tradeEntries : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
-                    if (tradeEntries.getKey().contains(itemEntity.getItem().getItem())) {
-                        for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
-                            Optional<TradeEntryReducedObj> reward = tradeEntries.getValue().getRandom(this.random);
-                            if (reward.isPresent()) {
-                                spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem());
-                                traded = true;
-                            }
-                        }
-                        if (traded) {
-                            break;
+                Item item = itemEntity.getItem().getItem();
+                if (QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.containsKey(item)) {
+                    for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
+                        Optional<TradeEntryReducedObj> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.get(item).getRandom(this.random);
+                        if (reward.isPresent()) {
+                            spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem());
+                            traded = true;
                         }
                     }
                 }
@@ -429,6 +425,10 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if (this.isNoAi()) {
+            return InteractionResult.PASS;
+        }
+
         if (this.isAngry() || hand == InteractionHand.OFF_HAND) {
             return InteractionResult.FAIL;
         }
@@ -464,23 +464,18 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
 
         boolean traded = false;
-        for (Map.Entry<Set<Item>, WeightedRandomList<TradeEntryReducedObj>> tradeEntries : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
-            if (tradeEntries.getKey().contains(item)) {
-                if (this.level.isClientSide()) {
-                    return InteractionResult.SUCCESS;
-                }
+        if (QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.containsKey(item)) {
+            if (this.level.isClientSide()) {
+                return InteractionResult.SUCCESS;
+            }
 
-                Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
-                Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
+            Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
+            Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
 
-                Optional<TradeEntryReducedObj> reward = tradeEntries.getValue().getRandom(this.random);
-                if (reward.isPresent()) {
-                    spawnReward(forwardVect, sideVect, reward.get(), stack);
-                    traded = true;
-                }
-                if (traded) {
-                    break;
-                }
+            Optional<TradeEntryReducedObj> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.get(item).getRandom(this.random);
+            if (reward.isPresent()) {
+                spawnReward(forwardVect, sideVect, reward.get(), stack);
+                traded = true;
             }
         }
 
@@ -656,7 +651,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     @Override
-    public void setPersistentAngerTarget(@Nullable UUID uuid) {
+    public void setPersistentAngerTarget(UUID uuid) {
         this.persistentAngerTarget = uuid;
     }
 

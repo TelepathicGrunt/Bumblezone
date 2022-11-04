@@ -43,6 +43,22 @@
     {
       "id": "#c:storage_blocks/wax",
       "required": false
+    },
+    {
+      "id": "#resourcefulbees:t1_nests",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:t2_apiary",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:honey_glass",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:honey_glass_player",
+      "required": false
     }
   ],
   "possible_rewards": [
@@ -93,6 +109,13 @@
       "count": 1,
       "xp_reward": 2,
       "weight": 10,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:carvable_wax",
+      "count": 2,
+      "xp_reward": 2,
+      "weight": 8,
       "required": true
     },
     {

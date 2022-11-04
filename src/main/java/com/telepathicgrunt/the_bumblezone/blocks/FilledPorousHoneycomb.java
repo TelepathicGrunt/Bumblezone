@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,7 +36,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class FilledPorousHoneycomb extends Block {
 
     public FilledPorousHoneycomb() {
-        super(Properties.of(Material.CLAY, MaterialColor.COLOR_ORANGE).strength(0.5F, 0.5F).sound(SoundType.CORAL_BLOCK).speedFactor(0.8F));
+        super(FabricBlockSettings.of(Material.CLAY, MaterialColor.COLOR_ORANGE).strength(0.5F, 0.5F).sound(SoundType.CORAL_BLOCK).speedFactor(0.8F));
     }
 
     /**
@@ -51,8 +52,10 @@ public class FilledPorousHoneycomb extends Block {
          */
         if (itemstack.getItem() == Items.GLASS_BOTTLE) {
             world.setBlock(position, BzBlocks.POROUS_HONEYCOMB.defaultBlockState(), 3); // removed honey from this block
-            GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
-
+            if (!playerEntity.isCreative()) {
+                GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
+            }
+            
             if ((playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
                     BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
                     !playerEntity.isCreative() &&
@@ -118,7 +121,7 @@ public class FilledPorousHoneycomb extends Block {
      * takes the block's dimensions and passes into methods to spawn the actual particle
      */
     private void spawnHoneyParticles(Level world, RandomSource random, BlockPos position, BlockState blockState) {
-        if (blockState.getFluidState().isEmpty() && random.nextFloat() < 0.08F) {
+        if (random.nextFloat() < 0.08F) {
             VoxelShape currentBlockShape = blockState.getCollisionShape(world, position);
             double yEndHeight = currentBlockShape.max(Direction.Axis.Y);
             if (yEndHeight >= 1.0D && !blockState.is(BlockTags.IMPERMEABLE)) {

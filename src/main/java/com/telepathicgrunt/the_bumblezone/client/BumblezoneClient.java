@@ -2,11 +2,14 @@ package com.telepathicgrunt.the_bumblezone.client;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
+import com.telepathicgrunt.the_bumblezone.client.items.IncenseCandleColoring;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
-import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuff;
+import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuffParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.RoyalJellyParticle;
-import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
+import com.telepathicgrunt.the_bumblezone.client.particles.SparkleParticle;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeeVariantRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.FluidRender;
+import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenModel;
@@ -31,6 +34,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.packets.MobEffectClientSyncPacket;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
+import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
 import net.fabricmc.api.ClientModInitializer;
@@ -38,25 +42,17 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
-import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.impl.client.particle.ParticleFactoryRegistryImpl;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Bee;
-import net.minecraft.world.level.BlockAndTintGetter;
-import net.minecraft.world.level.material.FluidState;
 
 @Environment(EnvType.CLIENT)
 public class BumblezoneClient implements ClientModInitializer {
@@ -69,43 +65,24 @@ public class BumblezoneClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ClientSpriteRegistryCallback.event(TextureAtlas.LOCATION_BLOCKS).register((atlasTexture, registry) -> {
-            registry.register(SUGAR_WATER_FLUID_STILL);
-            registry.register(SUGAR_WATER_FLUID_FLOWING);
-        });
-        ClientSpriteRegistryCallback.event(TextureAtlas.LOCATION_BLOCKS).register((atlasTexture, registry) -> {
-            registry.register(HONEY_FLUID_STILL);
-            registry.register(HONEY_FLUID_FLOWING);
-        });
-        ClientSpriteRegistryCallback.event(TextureAtlas.LOCATION_BLOCKS).register((atlasTexture, registry) -> {
-            registry.register(ROYAL_JELLY_FLUID_STILL);
-            registry.register(ROYAL_JELLY_FLOWING);
-        });
+        DimensionSpecialEffectsAccessor.thebumblezone_getBY_IDENTIFIER().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
 
-        FluidRenderHandlerRegistry.INSTANCE.register(BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID_FLOWING,
-            new SimpleFluidRenderHandler(SUGAR_WATER_FLUID_STILL, SUGAR_WATER_FLUID_FLOWING) {
-                @Override
-                public int getFluidColor(BlockAndTintGetter view, BlockPos pos, FluidState state) {
-                    return view != null && pos != null ? BiomeColors.getAverageWaterColor(view, pos) : -1;
-                }
-            });
-        FluidRenderHandlerRegistry.INSTANCE.register(BzFluids.HONEY_FLUID, BzFluids.HONEY_FLUID_FLOWING,
-            new SimpleFluidRenderHandler(
-                HONEY_FLUID_STILL,
-                HONEY_FLUID_FLOWING
-            ));
-        FluidRenderHandlerRegistry.INSTANCE.register(BzFluids.ROYAL_JELLY_FLUID, BzFluids.ROYAL_JELLY_FLUID_FLOWING,
-            new SimpleFluidRenderHandler(
-                ROYAL_JELLY_FLUID_STILL,
-                ROYAL_JELLY_FLOWING
-            ));
-
+        IncenseCandleColoring.registerBlockColors();
+        IncenseCandleColoring.registerItemColors();
+        registerFluidRenders();
         registerRenderLayers();
+        registerParticleFactories();
+        registerEntityRenders();
+        registerModelLayers();
+        registerItemPredicates();
+        registerArmorRenderers();
+        registerScreens();
+        registerKeybinds();
+        UpdateFallingBlockPacket.registerPacket();
+        MobEffectClientSyncPacket.registerPacket();
+    }
 
-        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.POLLEN, PollenPuff.Factory::new);
-        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.HONEY_PARTICLE, HoneyParticle.Factory::new);
-        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.ROYAL_JELLY_PARTICLE, RoyalJellyParticle.Factory::new);
-
+    private void registerEntityRenders() {
         EntityRendererRegistry.register(BzEntities.POLLEN_PUFF_ENTITY, ThrownItemRenderer::new);
         EntityRendererRegistry.register(BzEntities.HONEY_SLIME, HoneySlimeRendering::new);
         EntityRendererRegistry.register(BzEntities.BEEHEMOTH, BeehemothRenderer::new);
@@ -118,7 +95,22 @@ public class BumblezoneClient implements ClientModInitializer {
             BeeVariantRenderer.OLD_BEE_RENDER_FACTORY = (EntityRendererProvider<Bee>)EntityRendererRegistryImplAccessor.getMap().get(EntityType.BEE);
             EntityRendererRegistry.register(EntityType.BEE, BeeVariantRenderer::new);
         }
+    }
 
+    private void registerParticleFactories() {
+        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.POLLEN_PARTICLE, PollenPuffParticle.Factory::new);
+        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.HONEY_PARTICLE, HoneyParticle.Factory::new);
+        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.ROYAL_JELLY_PARTICLE, RoyalJellyParticle.Factory::new);
+        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.SPARKLE_PARTICLE, SparkleParticle.Factory::new);
+    }
+
+    private void registerFluidRenders() {
+        FluidRender.setupFluidRendering(BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID_FLOWING, SUGAR_WATER_FLUID_STILL, SUGAR_WATER_FLUID_FLOWING, true);
+        FluidRender.setupFluidRendering(BzFluids.HONEY_FLUID, BzFluids.HONEY_FLUID_FLOWING, HONEY_FLUID_STILL, HONEY_FLUID_FLOWING, false);
+        FluidRender.setupFluidRendering(BzFluids.ROYAL_JELLY_FLUID, BzFluids.ROYAL_JELLY_FLUID_FLOWING, ROYAL_JELLY_FLUID_STILL, ROYAL_JELLY_FLOWING, false);
+    }
+
+    private void registerModelLayers() {
         EntityModelLayerRegistry.registerModelLayer(BeehemothModel.LAYER_LOCATION, BeehemothModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(BeeQueenModel.LAYER_LOCATION, BeeQueenModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(StingerSpearModel.LAYER_LOCATION, StingerSpearModel::createLayer);
@@ -126,8 +118,9 @@ public class BumblezoneClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(HoneyCrystalShardModel.LAYER_LOCATION, HoneyCrystalShardModel::createLayer);
         EntityModelLayerRegistry.registerModelLayer(BeeArmorModel.VARIANT_1_LAYER_LOCATION, BeeArmorModel::createVariant1);
         EntityModelLayerRegistry.registerModelLayer(BeeArmorModel.VARIANT_2_LAYER_LOCATION, BeeArmorModel::createVariant2);
-        DimensionSpecialEffectsAccessor.thebumblezone_getBY_IDENTIFIER().put(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
+    }
 
+    private void registerItemPredicates() {
         // Allows shield to use the blocking json file for offset
         ItemProperties.register(
                 BzItems.HONEY_CRYSTAL_SHIELD,
@@ -188,10 +181,9 @@ public class BumblezoneClient implements ClientModInitializer {
                 (itemStack, world, livingEntity, int1) ->
                         CrystalCannon.getNumberOfCrystals(itemStack) / 10f
         );
+    }
 
-        UpdateFallingBlockPacket.registerPacket();
-        MobEffectClientSyncPacket.registerPacket();
-
+    private void registerArmorRenderers() {
         BzItems.STINGLESS_BEE_HELMET_1.registerRenderer().run();
         BzItems.STINGLESS_BEE_HELMET_2.registerRenderer().run();
         BzItems.BUMBLE_BEE_CHESTPLATE_1.registerRenderer().run();
@@ -202,30 +194,43 @@ public class BumblezoneClient implements ClientModInitializer {
         BzItems.HONEY_BEE_LEGGINGS_2.registerRenderer().run();
         BzItems.CARPENTER_BEE_BOOTS_1.registerRenderer().run();
         BzItems.CARPENTER_BEE_BOOTS_2.registerRenderer().run();
+    }
 
+    private void registerScreens() {
         MenuScreens.register(BzMenuTypes.STRICT_9x1, StrictChestScreen::new);
         MenuScreens.register(BzMenuTypes.STRICT_9x2, StrictChestScreen::new);
         MenuScreens.register(BzMenuTypes.STRICT_9x3, StrictChestScreen::new);
         MenuScreens.register(BzMenuTypes.STRICT_9x4, StrictChestScreen::new);
         MenuScreens.register(BzMenuTypes.STRICT_9x5, StrictChestScreen::new);
         MenuScreens.register(BzMenuTypes.STRICT_9x6, StrictChestScreen::new);
+        MenuScreens.register(BzMenuTypes.CRYSTALLINE_FLOWER, CrystallineFlowerScreen::new);
+    }
 
+    private void registerKeybinds() {
         KeyBindingHelper.registerKeyBinding(BeehemothControls.KEY_BIND_BEEHEMOTH_UP);
         KeyBindingHelper.registerKeyBinding(BeehemothControls.KEY_BIND_BEEHEMOTH_DOWN);
     }
-    
+
     public static void registerRenderLayers() {
         BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STICKY_HONEY_REDSTONE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STICKY_HONEY_RESIDUE, RenderType.cutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.HONEY_WEB, RenderType.translucent());
-        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.REDSTONE_HONEY_WEB, RenderType.translucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.HONEY_WEB, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.REDSTONE_HONEY_WEB, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.SUPER_CANDLE_WICK, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.SUPER_CANDLE_WICK_SOUL, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.INCENSE_BASE_CANDLE, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.CRYSTALLINE_FLOWER, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.HONEY_CRYSTAL, RenderType.translucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.GLISTERING_HONEY_CRYSTAL, RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.ROYAL_JELLY_BLOCK, RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putBlock(BzFluids.SUGAR_WATER_BLOCK, RenderType.translucent());
+        BlockRenderLayerMap.INSTANCE.putFluid(BzFluids.SUGAR_WATER_FLUID, RenderType.translucent());
+        BlockRenderLayerMap.INSTANCE.putFluid(BzFluids.SUGAR_WATER_FLUID_FLOWING, RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putBlock(BzFluids.HONEY_FLUID_BLOCK, RenderType.translucent());
+        BlockRenderLayerMap.INSTANCE.putFluid(BzFluids.HONEY_FLUID, RenderType.translucent());
+        BlockRenderLayerMap.INSTANCE.putFluid(BzFluids.HONEY_FLUID_FLOWING, RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putBlock(BzFluids.ROYAL_JELLY_FLUID_BLOCK, RenderType.translucent());
-        BlockRenderLayerMap.INSTANCE.putFluids(RenderType.translucent(), BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID_FLOWING);
-        BlockRenderLayerMap.INSTANCE.putFluids(RenderType.translucent(), BzFluids.HONEY_FLUID, BzFluids.HONEY_FLUID_FLOWING);
-        BlockRenderLayerMap.INSTANCE.putFluids(RenderType.translucent(), BzFluids.ROYAL_JELLY_FLUID, BzFluids.ROYAL_JELLY_FLUID_FLOWING);
+        BlockRenderLayerMap.INSTANCE.putFluid(BzFluids.ROYAL_JELLY_FLUID, RenderType.translucent());
+        BlockRenderLayerMap.INSTANCE.putFluid(BzFluids.ROYAL_JELLY_FLUID_FLOWING, RenderType.translucent());
     }
 }

@@ -1,0 +1,34 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/honey_crystal/obtain_glistering_honey_crystal_block",
+  "display": {
+    "icon": {
+      "item": "minecraft:potion"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.brew_glistering_honey_crystal_block.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.brew_glistering_honey_crystal_block.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "brew_glistering_honey_crystal_block": {
+      "trigger": "minecraft:brewed_potion",
+      "conditions": {
+        "potion": "minecraft:luck"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "brew_glistering_honey_crystal_block"
+    ]
+  ]
+}

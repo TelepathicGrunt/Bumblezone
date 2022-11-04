@@ -1,0 +1,17 @@
+{
+  "feature": "the_bumblezone:sticky_honey_residue_feature",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 50
+    },
+    {
+      "count": 1,
+      "allow_underwater": false,
+      "type": "the_bumblezone:random_3d_cluster_placement"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

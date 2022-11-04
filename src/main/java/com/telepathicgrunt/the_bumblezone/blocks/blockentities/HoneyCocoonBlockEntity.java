@@ -31,7 +31,7 @@ public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity imp
     }
 
     public HoneyCocoonBlockEntity(BlockPos blockPos, BlockState blockState) {
-        this(BzBlockEntities.HONEY_COCOON_BE, blockPos, blockState);
+        this(BzBlockEntities.HONEY_COCOON, blockPos, blockState);
     }
 
     @Override

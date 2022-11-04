@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
@@ -13,6 +14,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 
@@ -97,5 +100,26 @@ public class BumblezoneAPI {
      */
     public static boolean playerHasBeeEssence(ServerPlayer serverPlayer) {
         return EssenceOfTheBees.hasEssence(serverPlayer);
+    }
+
+    /**
+     * Trigger Bumblezone's advancement for getting more combs from a hive by shearing with a tool that has Comb Cutter enchantment.
+     */
+    public static void triggerCombCutterExtraDropAdvancement(ServerPlayer serverPlayer) {
+        BzCriterias.COMB_CUTTER_EXTRA_DROPS_TRIGGER.trigger(serverPlayer);
+    }
+
+    /**
+     * Returns what level Comb Cutter enchantment the passed in itemstack has.
+     */
+    public static int getCombCutterLevelForItem(ItemStack toolUsed) {
+        return EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.COMB_CUTTER, toolUsed);
+    }
+
+    /**
+     * Returns what level Comb Cutter enchantment the currently used itemstack has for the passed in player.
+     */
+    public static int getCombCutterLevelForItem(ServerPlayer serverPlayer) {
+        return EnchantmentHelper.getEnchantmentLevel(BzEnchantments.COMB_CUTTER, serverPlayer);
     }
 }

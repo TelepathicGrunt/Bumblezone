@@ -3,7 +3,9 @@ package com.telepathicgrunt.the_bumblezone.utils;
 import com.google.common.collect.ImmutableList;
 import com.google.common.primitives.Doubles;
 import com.mojang.datafixers.util.Pair;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.FrontAndTop;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -12,16 +14,19 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JigsawBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.HashSet;
 import java.util.List;
@@ -233,5 +238,44 @@ public class GeneralUtils {
         return prop1.front() == prop2.front().getOpposite() &&
                 (isRollable || prop1.top() == prop2.top()) &&
                 jigsaw1.nbt.getString("target").equals(jigsaw2.nbt.getString("name"));
+    }
+
+    //////////////////////////////////////////////
+
+    public static int getFirstLandYFromPos(LevelReader worldView, BlockPos pos) {
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+        mutable.set(pos);
+        ChunkAccess currentChunk = worldView.getChunk(mutable);
+        BlockState currentState = currentChunk.getBlockState(mutable);
+
+        while(mutable.getY() >= worldView.getMinBuildHeight() && isReplaceableByStructures(currentState)) {
+            mutable.move(Direction.DOWN);
+            currentState = currentChunk.getBlockState(mutable);
+        }
+
+        return mutable.getY();
+    }
+
+    private static boolean isReplaceableByStructures(BlockState blockState) {
+        return blockState.isAir() || blockState.getMaterial().isLiquid() || blockState.getMaterial().isReplaceable() || blockState.is(BzBlocks.HONEY_CRYSTAL);
+    }
+
+    //////////////////////////////////////////////
+
+    public static void spawnItemEntity(ServerLevel serverLevel, BlockPos blockPos, ItemStack itemToSpawn, double randomXZSpeed, double ySpeed) {
+        if(!itemToSpawn.isEmpty()) {
+            ItemEntity itemEntity = new ItemEntity(
+                    serverLevel,
+                    blockPos.getX() + 0.5D,
+                    blockPos.getY() + 1D,
+                    blockPos.getZ() + 0.5D,
+                    itemToSpawn);
+            itemEntity.setDeltaMovement(new Vec3(
+                    serverLevel.random.nextGaussian() * randomXZSpeed,
+                    ySpeed,
+                    serverLevel.random.nextGaussian() * randomXZSpeed));
+            itemEntity.setDefaultPickUpDelay();
+            serverLevel.addFreshEntity(itemEntity);
+        }
     }
 }

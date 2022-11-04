@@ -1,0 +1,24 @@
+{
+  "name": "the_bumblezone:hanging_garden/connector",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:hanging_garden/big",
+        "processors": "the_bumblezone:hanging_garden_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:hanging_garden/small",
+        "processors": "the_bumblezone:hanging_garden_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

@@ -28,7 +28,6 @@ import net.minecraft.world.phys.Vec3;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class EntityTeleportationBackend {
@@ -240,14 +239,14 @@ public class EntityTeleportationBackend {
             int xzDiff = Math.abs(mutableTemp1.getX() - mutableTemp2.getX()) + Math.abs(mutableTemp1.getZ() - mutableTemp2.getZ());
 
             // Reverse direction if checking upward
-            if(checkingUpward) {
+            if (checkingUpward) {
                 heightDiff *= -1;
                 xzDiff *= -1;
             }
 
             // Creates a cone of block entities to check where we start from the tip and work our way to the base of the cone.
             return heightDiff - xzDiff;
-        }).collect(Collectors.toList());
+        }).toList();
 
         for(BlockEntity blockEntity : sortedBlockEntities) {
             //try to find a valid spot next to it

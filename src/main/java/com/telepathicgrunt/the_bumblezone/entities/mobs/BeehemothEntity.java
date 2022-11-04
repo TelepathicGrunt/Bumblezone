@@ -112,7 +112,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     public static AttributeSupplier.Builder getAttributeBuilder() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 42.0D)
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 42.0D)
                 .add(Attributes.FLYING_SPEED, 0.6)
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
                 .add(Attributes.ATTACK_DAMAGE, 4.0D)
@@ -219,34 +220,35 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         }
         else {
             Entity entity = source.getEntity();
+            if (!this.isNoAi()) {
+                if (entity != null && entity.getUUID().equals(getOwnerUUID())) {
+                    addFriendship((int) (-3 * amount));
+                }
+                if (BzConfig.beehemothTriggersWrath && entity instanceof LivingEntity livingEntity) {
+                    addFriendship((int) (-amount));
 
-            if (entity != null && entity.getUUID().equals(getOwnerUUID())) {
-                addFriendship((int) (-3 * amount));
-            }
-            if (BzConfig.beehemothTriggersWrath && entity instanceof LivingEntity livingEntity) {
-                addFriendship((int) (-amount));
-
-                if (!(livingEntity instanceof Player player && player.isCreative()) &&
-                        (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                        BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
-                        !livingEntity.isSpectator() &&
-                        BzConfig.aggressiveBees)
-                {
-                    if(livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
-                        livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE);
-                    }
-                    else {
-                        //Now all bees nearby in Bumblezone will get VERY angry!!!
-                        livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
+                    if (!(livingEntity instanceof Player player && player.isCreative()) &&
+                            (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                            BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
+                            !livingEntity.isSpectator() &&
+                            BzConfig.aggressiveBees)
+                    {
+                        if(livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
+                            livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE);
+                        }
+                        else {
+                            //Now all bees nearby in Bumblezone will get VERY angry!!!
+                            livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE, BzConfig.howLongWrathOfTheHiveLasts, 2, false, BzConfig.showWrathOfTheHiveParticles, true));
+                        }
                     }
                 }
-            }
-            else {
-                addFriendship((int) -amount);
+                else {
+                    addFriendship((int) -amount);
+                }
+                setOrderedToSit(false);
             }
 
             spawnMadParticles();
-            setOrderedToSit(false);
             return super.hurt(source, amount);
         }
     }
@@ -268,6 +270,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if (this.isNoAi()) {
+            return InteractionResult.PASS;
+        }
+
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
         ResourceLocation itemRL = Registry.ITEM.getKey(item);
@@ -594,13 +600,15 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 this.getDeltaMovement().z()
             );
         }
-        else if (wasOnGround) {
+        else if (this.wasOnGround) {
             this.setDeltaMovement(
                     this.getDeltaMovement().x(),
                     this.getDeltaMovement().y() + 0.006D,
                     this.getDeltaMovement().z()
             );
         }
+
+        this.wasOnGround = isOnGround();
     }
 
     public static void spawnParticles(LevelAccessor world, Vec3 location, RandomSource random, double speedXZModifier, double speedYModifier, double initYSpeed) {
@@ -653,7 +661,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     @Override
     public void travel(Vec3 moveVector) {
-        if (this.isAlive()) {
+        if (this.isAlive() && !this.isNoAi()) {
             LivingEntity livingEntity = this.getControllingPassenger();
             if (this.isVehicle() && livingEntity != null) {
                 float startRot = Mth.wrapDegrees(this.getYRot());

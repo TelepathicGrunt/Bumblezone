@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

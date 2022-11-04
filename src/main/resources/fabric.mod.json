@@ -36,6 +36,12 @@
     ],
     "rei_client": [
       "com.telepathicgrunt.the_bumblezone.modcompat.REICompat"
+    ],
+    "emi": [
+      "com.telepathicgrunt.the_bumblezone.modcompat.EMICompat"
+    ],
+    "jei_mod_plugin": [
+      "com.telepathicgrunt.the_bumblezone.modcompat.JEIIntegration"
     ]
   },
   "mixins": [
@@ -45,9 +51,9 @@
   "accessWidener" : "the_bumblezone.accesswidener",
 
   "depends": {
-    "fabricloader": ">=0.13.3",
-    "minecraft": ">=1.19.1",
-    "fabric": ">=0.47.8",
+    "fabricloader": ">=0.14.0",
+    "minecraft": ">=1.19.2",
+    "fabric": ">=0.62.0",
     "midnightlib": ">=0.5.2"
   },
   "custom": {

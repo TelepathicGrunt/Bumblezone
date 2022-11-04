@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -92,6 +93,13 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
         return remainingInv;
     }
 
+    public static JsonObject itemStackFromJson(ItemStack itemStack) {
+        JsonObject json = new JsonObject();
+        json.addProperty("count", itemStack.getCount());
+        json.addProperty("item", Registry.ITEM.getKey(itemStack.getItem()).toString());
+        return json;
+    }
+
     public static class Serializer implements RecipeSerializer<ContainerCraftingRecipe> {
         @Override
         public ContainerCraftingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
@@ -143,6 +151,18 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
             }
 
             buffer.writeItem(recipe.recipeOutput);
+        }
+
+        public JsonObject toJson(ContainerCraftingRecipe recipe) {
+            JsonObject json = new JsonObject();
+            json.addProperty("group", recipe.getGroup());
+
+            JsonArray array = new JsonArray();
+            recipe.recipeItems.stream().map(Ingredient::toJson).forEach(array::add);
+            json.add("ingredients", array);
+
+            json.add("result", ContainerCraftingRecipe.itemStackFromJson(recipe.recipeOutput));
+            return json;
         }
     }
 }

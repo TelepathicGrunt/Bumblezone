@@ -56,7 +56,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -89,7 +88,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return BzBlockEntities.HONEY_COCOON_BE.create(blockPos, blockState);
+        return BzBlockEntities.HONEY_COCOON.create(blockPos, blockState);
     }
 
     @Override
@@ -190,7 +189,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                     }
 
                     if(ejectedItem != null) {
-                        spawnItemEntity(serverLevel, blockPos, ejectedItem.getDefaultInstance(), 0.2D);
+                        GeneralUtils.spawnItemEntity(serverLevel, blockPos, ejectedItem.getDefaultInstance(), 0, 0.2D);
                     }
                 }
 
@@ -210,7 +209,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                     }
                 }
                 if(!addedToInv) {
-                    spawnItemEntity(serverLevel, blockPos, BzItems.HONEYCOMB_BROOD.getDefaultInstance(), 0.2D);
+                    GeneralUtils.spawnItemEntity(serverLevel, blockPos, BzItems.HONEYCOMB_BROOD.getDefaultInstance(), 0, 0.2D);
                 }
             }
         }
@@ -245,22 +244,8 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                 }
 
                 ItemStack takenItem = honeyCocoonBlockEntity.removeItem(itemStacks.get(random.nextInt(itemStacks.size())).getSecond(), 1);
-                spawnItemEntity(serverLevel, blockPos, takenItem, -0.2D);
+                GeneralUtils.spawnItemEntity(serverLevel, blockPos, takenItem, 0, -0.2D);
             }
-        }
-    }
-
-    private static void spawnItemEntity(ServerLevel serverLevel, BlockPos blockPos, ItemStack itemToSpawn, double ySpeed) {
-        if(!itemToSpawn.isEmpty()) {
-            ItemEntity itemEntity = new ItemEntity(
-                    serverLevel,
-                    blockPos.getX() + 0.5D,
-                    blockPos.getY() + 1D,
-                    blockPos.getZ() + 0.5D,
-                    itemToSpawn);
-            itemEntity.setDefaultPickUpDelay();
-            itemEntity.setDeltaMovement(new Vec3(0, ySpeed, 0));
-            serverLevel.addFreshEntity(itemEntity);
         }
     }
 

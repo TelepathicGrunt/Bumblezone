@@ -5,7 +5,7 @@
         "northsouth": "true"
       },
       "apply": {
-        "model": "the_bumblezone:block/honey_web_ns",
+        "model": "the_bumblezone:block/honey_web/honey_web_ns",
         "uvlock": true
       }
     },
@@ -14,7 +14,7 @@
         "eastwest": "true"
       },
       "apply": {
-        "model": "the_bumblezone:block/honey_web_ew",
+        "model": "the_bumblezone:block/honey_web/honey_web_ew",
         "uvlock": true
       }
     },
@@ -23,7 +23,7 @@
         "updown": "true"
       },
       "apply": {
-        "model": "the_bumblezone:block/honey_web_ud",
+        "model": "the_bumblezone:block/honey_web/honey_web_ud",
         "uvlock": true
       }
     }

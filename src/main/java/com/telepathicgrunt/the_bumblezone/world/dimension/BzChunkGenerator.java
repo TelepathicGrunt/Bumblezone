@@ -24,10 +24,8 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
-import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
-import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
@@ -481,9 +479,11 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                         Bumblezone.LOGGER.warn("Failed to create mob", exception);
                         continue;
                     }
+
                     entity.moveTo(d, mutableBlockPos.getY(), e, randomSource.nextFloat() * 360.0f, 0.0f);
                     if (entity instanceof Mob mob && mob.checkSpawnObstruction(serverLevelAccessor)) {
                         spawnGroupData = mob.finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawnGroupData, null);
+                        mob.moveTo(mob.getX(), mob.getY() + 1, mob.getZ());
                         serverLevelAccessor.addFreshEntityWithPassengers(mob);
                     }
                 }

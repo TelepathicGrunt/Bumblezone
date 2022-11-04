@@ -229,7 +229,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                     this.random.nextInt(5) - 2);
 
             BlockState blockstate = blockStateGetter.apply(random, newPos);
-            if (blockstate == null) {
+            if (blockstate == null || blockstate.is(Blocks.AIR)) {
                 return false;
             }
 

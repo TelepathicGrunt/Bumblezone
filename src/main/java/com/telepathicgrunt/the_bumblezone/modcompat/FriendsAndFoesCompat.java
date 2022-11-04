@@ -17,7 +17,7 @@ public class FriendsAndFoesCompat {
 
     public static void setupCompat() {
         if(BzConfig.allowFriendsAndFoesBeekeeperTradesCompat) {
-            ServerLifecycleEvents.SERVER_STARTED.register((server) -> setupFriendsAndFoesTrades());
+            ServerLifecycleEvents.SERVER_STARTING.register((server) -> setupFriendsAndFoesTrades());
         }
 
        // Keep at end so it is only set to true if no exceptions was thrown during setup

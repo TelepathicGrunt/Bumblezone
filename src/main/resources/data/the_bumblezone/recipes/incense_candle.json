@@ -1,0 +1,28 @@
+{
+  "type": "the_bumblezone:incense_candle_recipe",
+  "group": "the_bumblezone",
+  "pattern": [
+    "s",
+    "h",
+    "h"
+  ],
+  "key": {
+    "h": {
+      "item": "the_bumblezone:carvable_wax"
+    },
+    "s": {
+      "item": "minecraft:string"
+    }
+  },
+  "shapelessExtraIngredients": [
+    {
+      "item": "the_bumblezone:royal_jelly_bottle"
+    }
+  ],
+  "maxAllowedPotions": 5,
+  "allowNormalPotions": true,
+  "allowSplashPotions": true,
+  "allowLingeringPotions": true,
+  "maxLevelCap": 5,
+  "resultCount": 1
+}

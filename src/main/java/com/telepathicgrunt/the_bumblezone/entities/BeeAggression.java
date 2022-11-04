@@ -36,7 +36,7 @@ import java.util.Set;
 public class BeeAggression {
 
     public static void setupEvents() {
-        ServerLifecycleEvents.SERVER_STARTING.register((MinecraftServer minecraftServer) ->
+        ServerLifecycleEvents.SERVER_STARTED.register((MinecraftServer minecraftServer) ->
                 BeeAggression.setupBeeHatingList());
 
         PlayerBlockBreakEvents.AFTER.register((world, playerEntity, blockPos, blockState, blockEntity) ->
@@ -198,6 +198,10 @@ public class BeeAggression {
         }
 
         return false;
+    }
+
+    public static boolean isBeelikeEntity(Entity entity) {
+        return SET_OF_BEE_NAMED_ENTITIES.contains(entity.getType());
     }
 
     public static void playerTick(Player playerEntity) {

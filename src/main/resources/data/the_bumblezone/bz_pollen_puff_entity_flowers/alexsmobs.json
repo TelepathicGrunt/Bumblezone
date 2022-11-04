@@ -13,7 +13,22 @@
         },
         {
           "data": { "Name": "minecraft:spore_blossom" },
-          "weight": 2
+          "weight": 3
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 3
+        }
+      ]
+    }
+  }],
+  "alexsmobs:bunfungus": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:red_mushroom" },
+          "weight": 1
         }
       ]
     }

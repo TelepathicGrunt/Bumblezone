@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 
-import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -23,17 +23,20 @@ public class DispenserItemSetup {
         //grab the original bottle behaviors and set it as a fallback for our custom behavior
         //this is so we don't override another mod's Dispenser behavior that they set to the bottles.
         HoneyBottleDispenseBehavior.DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR =
-                ((DispenserBlockAccessor) Blocks.DISPENSER).thebumblezone_invokeGetBehaviorForItem(new ItemStack(Items.HONEY_BOTTLE));
+                ((DispenserBlockInvoker) Blocks.DISPENSER).thebumblezone_invokeGetDispenseMethod(new ItemStack(Items.HONEY_BOTTLE));
 
         GlassBottleDispenseBehavior.DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR =
-                ((DispenserBlockAccessor) Blocks.DISPENSER).thebumblezone_invokeGetBehaviorForItem(new ItemStack(Items.GLASS_BOTTLE));
+                ((DispenserBlockInvoker) Blocks.DISPENSER).thebumblezone_invokeGetDispenseMethod(new ItemStack(Items.GLASS_BOTTLE));
 
         EmptyBucketDispenseBehavior.DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR =
-                ((DispenserBlockAccessor) Blocks.DISPENSER).thebumblezone_invokeGetBehaviorForItem(new ItemStack(Items.BUCKET));
+                ((DispenserBlockInvoker) Blocks.DISPENSER).thebumblezone_invokeGetDispenseMethod(new ItemStack(Items.BUCKET));
 
+        FlintAndSteelDispenseBehavior.DEFAULT_DISPENSE_BEHAVIOR =
+                ((DispenserBlockInvoker) Blocks.DISPENSER).thebumblezone_invokeGetDispenseMethod(new ItemStack(Items.FLINT_AND_STEEL));
 
         DispenserBlock.registerBehavior(Items.GLASS_BOTTLE, new GlassBottleDispenseBehavior());
         DispenserBlock.registerBehavior(Items.HONEY_BOTTLE, new HoneyBottleDispenseBehavior());
         DispenserBlock.registerBehavior(Items.BUCKET, new EmptyBucketDispenseBehavior());
+        DispenserBlock.registerBehavior(Items.FLINT_AND_STEEL, new FlintAndSteelDispenseBehavior());
     }
 }

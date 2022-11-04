@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.components;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -9,7 +10,7 @@ import org.apache.logging.log4j.Level;
 
 public class EntityComponent implements Component {
     private boolean teleporting = false;
-    private ResourceLocation nonBZDimensionType = net.minecraft.world.level.Level.OVERWORLD.location();
+    private ResourceLocation nonBZDimensionType = new ResourceLocation(BzConfig.defaultDimension);
     public Vec3 nonBZPosition = null;
 
     public void setNonBZPos(Vec3 incomingPos) {
@@ -26,7 +27,7 @@ public class EntityComponent implements Component {
 
     public void setNonBZDimension(ResourceLocation nonBZDimension) {
         if (nonBZDimension.equals(Bumblezone.MOD_DIMENSION_ID)) {
-            this.nonBZDimensionType = net.minecraft.world.level.Level.OVERWORLD.location();
+            this.nonBZDimensionType = new ResourceLocation(BzConfig.defaultDimension);
             this.nonBZPosition = null;
             Bumblezone.LOGGER.log(Level.ERROR, "Error: The non-bz dimension passed in to be stored was bz dimension. Please contact mod creator to let them know of this issue.");
         }
@@ -39,8 +40,8 @@ public class EntityComponent implements Component {
         this.teleporting = tag.getBoolean("teleporting");
         this.nonBZDimensionType = new ResourceLocation(tag.getString("non_bz_dimensiontype_namespace"), tag.getString("non_bz_dmensiontype_path"));
         if (tag.contains("non_bz_position_x") &&
-            tag.contains("non_bz_position_y") &&
-            tag.contains("non_bz_position_z"))
+                tag.contains("non_bz_position_y") &&
+                tag.contains("non_bz_position_z"))
         {
             this.nonBZPosition = new Vec3(
                     tag.getDouble("non_bz_position_x"),

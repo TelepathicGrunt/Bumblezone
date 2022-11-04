@@ -1,12 +1,12 @@
 {
   "variants": {
-    "layers=1": { "model": "the_bumblezone:block/pile_of_pollen_height2" },
-    "layers=2": { "model": "the_bumblezone:block/pile_of_pollen_height4" },
-    "layers=3": { "model": "the_bumblezone:block/pile_of_pollen_height6" },
-    "layers=4": { "model": "the_bumblezone:block/pile_of_pollen_height8" },
-    "layers=5": { "model": "the_bumblezone:block/pile_of_pollen_height10" },
-    "layers=6": { "model": "the_bumblezone:block/pile_of_pollen_height12" },
-    "layers=7": { "model": "the_bumblezone:block/pile_of_pollen_height14" },
-    "layers=8": { "model": "the_bumblezone:block/pile_of_pollen" }
+    "layers=1": { "model": "the_bumblezone:block/pile_of_pollen/pile_of_pollen_height2" },
+    "layers=2": { "model": "the_bumblezone:block/pile_of_pollen/pile_of_pollen_height4" },
+    "layers=3": { "model": "the_bumblezone:block/pile_of_pollen/pile_of_pollen_height6" },
+    "layers=4": { "model": "the_bumblezone:block/pile_of_pollen/pile_of_pollen_height8" },
+    "layers=5": { "model": "the_bumblezone:block/pile_of_pollen/pile_of_pollen_height10" },
+    "layers=6": { "model": "the_bumblezone:block/pile_of_pollen/pile_of_pollen_height12" },
+    "layers=7": { "model": "the_bumblezone:block/pile_of_pollen/pile_of_pollen_height14" },
+    "layers=8": { "model": "the_bumblezone:block/pile_of_pollen/pile_of_pollen" }
   }
 }
