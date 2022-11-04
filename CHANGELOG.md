@@ -17,6 +17,8 @@ Pollen Puff thrown at Probably Chests's Lush Mimic Chests may rarely spawn Azale
 
 Made an item form for all Carvable Wax blockstates to make building with it easier.
  Mining a Carvable Wax will drop the item form of its blockstate.
+ 
+Adjusted the stone textures of Bee Cannon and Crystal Cannon to match the texture change for Sugar Infused Stone/Sugar Infused Cobblestone.
 
 
 ### **(V.6.3.8 Changes) (1.19.2 Minecraft)**
