@@ -75,6 +75,12 @@ public class EMICompat implements EmiPlugin {
         addInfo(registry, BzItems.ESSENCE_OF_THE_BEES);
         addInfo(registry, BzItems.GLISTERING_HONEY_CRYSTAL);
         addInfo(registry, BzItems.CARVABLE_WAX);
+        addInfo(registry, BzItems.CARVABLE_WAX_WAVY);
+        addInfo(registry, BzItems.CARVABLE_WAX_FLOWER);
+        addInfo(registry, BzItems.CARVABLE_WAX_CHISELED);
+        addInfo(registry, BzItems.CARVABLE_WAX_DIAMOND);
+        addInfo(registry, BzItems.CARVABLE_WAX_BRICKS);
+        addInfo(registry, BzItems.CARVABLE_WAX_CHAINS);
         addInfo(registry, BzItems.SUPER_CANDLE);
         addInfo(registry, BzItems.SUPER_CANDLE_BLACK);
         addInfo(registry, BzItems.SUPER_CANDLE_BLUE);

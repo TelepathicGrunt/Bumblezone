@@ -5,8 +5,91 @@
       "rolls": 1,
       "entries": [
         {
-          "name": "the_bumblezone:carvable_wax",
-          "type": "minecraft:item"
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "name": "the_bumblezone:carvable_wax_wavy",
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "the_bumblezone:carvable_wax",
+                  "properties": {
+                    "carving": "wavy"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "the_bumblezone:carvable_wax_flower",
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "the_bumblezone:carvable_wax",
+                  "properties": {
+                    "carving": "flower"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "the_bumblezone:carvable_wax_chiseled",
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "the_bumblezone:carvable_wax",
+                  "properties": {
+                    "carving": "chiseled"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "the_bumblezone:carvable_wax_diamond",
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "the_bumblezone:carvable_wax",
+                  "properties": {
+                    "carving": "diamond"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "the_bumblezone:carvable_wax_bricks",
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "the_bumblezone:carvable_wax",
+                  "properties": {
+                    "carving": "bricks"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "the_bumblezone:carvable_wax_chains",
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "the_bumblezone:carvable_wax",
+                  "properties": {
+                    "carving": "chains"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "the_bumblezone:carvable_wax",
+              "type": "minecraft:item"
+            }
+          ]
         }
       ],
       "conditions": [

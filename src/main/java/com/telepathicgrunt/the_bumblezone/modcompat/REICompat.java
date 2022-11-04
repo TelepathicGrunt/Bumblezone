@@ -71,6 +71,12 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzItems.ESSENCE_OF_THE_BEES);
         addInfo(BzItems.GLISTERING_HONEY_CRYSTAL);
         addInfo(BzItems.CARVABLE_WAX);
+        addInfo(BzItems.CARVABLE_WAX_WAVY);
+        addInfo(BzItems.CARVABLE_WAX_FLOWER);
+        addInfo(BzItems.CARVABLE_WAX_CHISELED);
+        addInfo(BzItems.CARVABLE_WAX_DIAMOND);
+        addInfo(BzItems.CARVABLE_WAX_BRICKS);
+        addInfo(BzItems.CARVABLE_WAX_CHAINS);
         addInfo(BzItems.SUPER_CANDLE);
         addInfo(BzItems.SUPER_CANDLE_BLACK);
         addInfo(BzItems.SUPER_CANDLE_BLUE);
