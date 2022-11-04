@@ -1,3 +1,10 @@
+### **(V.6.3.9 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Fixed opening Crystalline Flower's UI not incrementing the stat for interacting with it.
+ (Was logging an exception to the log file)
+
+
 ### **(V.6.3.8 Changes) (1.19.2 Minecraft)**
 
 ##### Mod Compat:
