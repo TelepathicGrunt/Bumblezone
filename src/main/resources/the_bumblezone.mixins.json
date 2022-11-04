@@ -36,6 +36,7 @@
     "entities.ServerPlayerMixin",
     "entities.ThrownTridentAccessor",
     "entities.WalkNodeEvaluatorMixin",
+    "items.EnderpearlImpactMixin",
     "items.GlassBottleUseMixin",
     "items.HoneyShieldCooldownMixin",
     "items.HoneyShieldDamageMixin",

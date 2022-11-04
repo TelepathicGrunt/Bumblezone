@@ -9,6 +9,8 @@ Bee Queen will not trade for a ton more of Resourceful Bees's items!
 
 Added some methods in BumblezoneAPI class for other mods to have easier compat with Comb Cutter enchantment's beehive/bee nest drops.
 
+Enderpearls hitting top hitbox portion of players wearing Productive Bees's Bee Nest Helmets will teleport players to Bumblezone dimension.
+
 ##### Textures:
 Added an internal Anti-Trypophobia resourcepack to this mod.
  You can enable it by going into the resourcepack screen and move the resourcepack to the top of the right side to activate it.
