@@ -1,12 +1,6 @@
 ### **(V.6.3.8 Changes) (1.19.2 Minecraft)**
 
 ##### Mod Compat:
-Future-proofed Pollen Puff compat with Pokecube for when they change the registry name of some pokemon.
-
-Pollen Puff hitting Resourceful Bees's Crimson, Warped, Red, and Brown Bees will spawn those respective mushrooms nearby.
-
-Bee Queen will not trade for a ton more of Resourceful Bees's items!
-
 Added some methods in BumblezoneAPI class for other mods to have easier compat with Comb Cutter enchantment's beehive/bee nest drops.
 
 ##### Dimension:
