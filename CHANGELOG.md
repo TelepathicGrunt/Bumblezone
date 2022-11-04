@@ -6,6 +6,8 @@ Fixed opening Crystalline Flower's UI not incrementing the stat for interacting 
 
 Adjusted textures for Sugar Infused Stone and Sugar Infused Cobblestone a bit.
 
+Fixed Honeycomb Brood Block and Empty Honeycomb Brood Block facing the wrong way when in item form in inventory/creative menu.
+
 ##### Items:
 Pollen Puff thrown at Mobscarecrow's Default Scarecrow mob will spawn pumpkin stems nearby on valid blocks/farmland
 
