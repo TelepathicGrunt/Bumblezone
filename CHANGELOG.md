@@ -5,7 +5,7 @@ Future-proofed Pollen Puff compat with Pokecube for when they change the registr
 
 Pollen Puff hitting Resourceful Bees's Crimson, Warped, Red, and Brown Bees will spawn those respective mushrooms nearby.
 
-Bee Queen will not trade for a ton more of Resourceful Bees's items!
+Bee Queen will now trade for a ton more of Resourceful Bees's items!
 
 Added some methods in BumblezoneAPI class for other mods to have easier compat with Comb Cutter enchantment's beehive/bee nest drops.
 
