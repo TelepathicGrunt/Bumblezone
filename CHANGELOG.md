@@ -5,6 +5,8 @@ Added missing en_us translation for Crystalline Flower UI opening stat.
 
 Adjusted textures for Sugar Infused Stone and Sugar Infused Cobblestone a bit.
 
+Fixed Honeycomb Brood Block and Empty Honeycomb Brood Block facing the wrong way when in item form in inventory/creative menu.
+
 ##### Items:
 Pollen Puff thrown at What Did You Vote For's Sniffer will spawn Moss Carpet nearby.
 
