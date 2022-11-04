@@ -21,6 +21,22 @@
       "required": false
     },
     {
+      "id": "#resourcefulbees:resourceful_honey_block",
+      "required": false
+    },
+    {
+      "id": "#resourcefulbees:t3_nests",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:t4_apiary",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:breeder",
+      "required": false
+    },
+    {
       "id": "#productivebees:advanced_beehives",
       "required": false
     },

@@ -95,6 +95,66 @@
     {
       "id": "#resourcefulbees:resourceful_honeycomb",
       "required": false
+    },
+    {
+      "id": "#resourcefulbees:t0_nests",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:t1_apiary",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_planks",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_planks",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_stairs",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_slab",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_fence",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_fence_gate",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_button",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_pressure_plate",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_door",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_trapdoor",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_sign",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:trimmed_waxed_planks",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_machine_block",
+      "required": false
     }
   ],
   "possible_rewards": [
