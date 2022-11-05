@@ -7,6 +7,8 @@ Adjusted textures for Sugar Infused Stone and Sugar Infused Cobblestone a bit.
 
 Fixed Honeycomb Brood Block and Empty Honeycomb Brood Block facing the wrong way when in item form in inventory/creative menu.
 
+Honeycomb Brood Block now has many more animation variations so the block is not always in sync with other blocks of itself in the world.
+
 ##### Items:
 Pollen Puff thrown at What Did You Vote For's Sniffer will spawn Moss Carpet nearby.
 
