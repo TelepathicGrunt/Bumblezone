@@ -35,6 +35,10 @@ public class LlamaramaCompat {
     public static boolean runTeleportCodeIfBumbleLlamaHitHigh(HitResult hitResult, Projectile pearlEntity) {
         Level world = pearlEntity.level; // world we threw in
 
+        if (!BzConfig.allowEnderpearledLlamaramaBumbleLlamaTeleporation) {
+            return false;
+        }
+
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (!world.isClientSide() &&

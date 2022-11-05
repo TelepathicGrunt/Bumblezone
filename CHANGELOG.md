@@ -18,6 +18,11 @@ Pollen Puff thrown at Probably Chests's Lush Mimic Chests may rarely spawn Azale
 Made an item form for all Carvable Wax blockstates to make building with it easier.
  Mining a Carvable Wax will drop the item form of its blockstate.
 
+##### Mod Compat:
+Added config to allow turning off teleportation to Bumblezone if thrown Enderpearl hits top of the hitbox of Llamarama's Bumble Llama.
+
+Removed unused config entry for Productive Bees as that mod is not on Fabric/Quilt.
+
 
 ### **(V.6.3.8 Changes) (1.19.2 Minecraft)**
 
