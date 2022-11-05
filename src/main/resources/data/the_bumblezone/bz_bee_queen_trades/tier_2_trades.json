@@ -107,6 +107,10 @@
     {
       "id": "adorn:nether_wart_coffee",
       "required": false
+    },
+    {
+      "id": "expandeddelight:peanut_honey_soup",
+      "required": false
     }
   ],
   "possible_rewards": [

@@ -63,6 +63,10 @@
     {
       "id": "delightful:ender_nectar",
       "required": false
+    },
+    {
+      "id": "expandeddelight:peanut_butter_honey_sandwich",
+      "required": false
     }
   ],
   "possible_rewards": [
