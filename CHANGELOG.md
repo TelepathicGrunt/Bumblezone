@@ -34,9 +34,8 @@ Bee Queen will trade now for the following modded items now. `the_bumblezone:bz_
  Expanded Delight's Peanut Butter Honey Sandwich and Peanut Honey Soup
 
 Bees can be right-clicked fed with these following modded items now. `the_bumblezone:bee_feeding_items` item tag:
- Delightful's Honey Glazed Walnut
  Farmersdelight's Honey Cookie and Honey Glazed Ham
- Buzzier Bees's Honey Apple, Honey Bread, and Honey Porkchop
+ Expanded Delight's Peanut Butter Honey Sandwich and Peanut Honey Soup
 
 
 ### **(V.6.3.8 Changes) (1.19.2 Minecraft)**
