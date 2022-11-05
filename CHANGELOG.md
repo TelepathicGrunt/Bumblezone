@@ -20,9 +20,13 @@ Added config to allow turning off teleportation to Bumblezone if thrown Enderpea
 
 Enderpearls hitting top hitbox portion of Dreamland Biome's Bumble Beast will teleport players to Bumblezone dimension.
 
-Bee Queen will trade now for Dreamland Biome's Bumble Block (tier 3 trade)
-
-Bee Queen will trade now for a lot more of Buzzier Bees items!
+Bee Queen will trade now for:
+ Dreamland Biome's Bumble Block
+ Lots of Buzzier Bees items
+ Delightful's Honey Glazed Walnut and Ender Nectar
+ Farmersdelight's Honey Cookie and Honey Glazed Ham
+ Adorn's Honeycomb Crate and beverages
+ Skinned Lanterns's bee and honey lanterns (regular and soul)
 
 
 ### **(V.6.3.8 Changes) (1.19.2 Minecraft)**

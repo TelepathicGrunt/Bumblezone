@@ -47,6 +47,14 @@
     {
       "id": "buzzier_bees:honey_lamp",
       "required": false
+    },
+    {
+      "id": "skinnedlanterns:honey_lantern_block",
+      "required": false
+    },
+    {
+      "id": "skinnedlanterns:honey_soul_lantern_block",
+      "required": false
     }
   ],
   "possible_rewards": [

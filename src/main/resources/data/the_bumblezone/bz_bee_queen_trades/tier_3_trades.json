@@ -51,6 +51,18 @@
     {
       "id": "buzzier_bees:crystallized_honey_block",
       "required": false
+    },
+    {
+      "id": "farmersdelight:honey_glazed_ham",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:honey_glazed_ham_block",
+      "required": false
+    },
+    {
+      "id": "delightful:ender_nectar",
+      "required": false
     }
   ],
   "possible_rewards": [
