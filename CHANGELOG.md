@@ -27,6 +27,7 @@ Bee Queen will trade now for:
  Farmersdelight's Honey Cookie and Honey Glazed Ham
  Adorn's Honeycomb Crate and beverages
  Skinned Lanterns's bee and honey lanterns (regular and soul)
+ Expanded Delight's Peanut Butter Honey Sandwich and Peanut Honey Soup
 
 
 ### **(V.6.3.8 Changes) (1.19.2 Minecraft)**
