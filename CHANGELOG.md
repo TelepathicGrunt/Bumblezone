@@ -15,6 +15,9 @@ Made an item form for all Carvable Wax blockstates to make building with it easi
  
 Adjusted the stone textures of Bee Cannon and Crystal Cannon to match the texture change for Sugar Infused Stone/Sugar Infused Cobblestone.
 
+##### Mod Compat:
+Added config to allow turning off teleportation to Bumblezone if thrown Enderpearl hits top of the hitbox of a mob wearing Productive Bees's Bee Nest helmet.
+
 
 ### **(V.6.3.8 Changes) (1.19.2 Minecraft)**
 

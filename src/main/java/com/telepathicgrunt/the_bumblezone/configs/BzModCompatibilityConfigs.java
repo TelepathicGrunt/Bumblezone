@@ -17,6 +17,7 @@ public class BzModCompatibilityConfigs {
 	public static ForgeConfigSpec.DoubleValue spawnrateOfProductiveBeesMobs;
 	public static ForgeConfigSpec.BooleanValue allowHoneyTreatCompat;
 	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesHoneycombVariants;
+	public static ForgeConfigSpec.BooleanValue allowEnderpearledBeeNestHelmetTeleporation;
 	public static ForgeConfigSpec.DoubleValue oreHoneycombSpawnRateBeeDungeon;
 	public static ForgeConfigSpec.DoubleValue oreHoneycombSpawnRateSpiderBeeDungeon;
 	public static ForgeConfigSpec.ConfigValue<List<? extends String>> allowedCombsForDungeons;
@@ -97,6 +98,13 @@ public class BzModCompatibilityConfigs {
 							" NOTE: Will require a restart of the world to take effect. \n")
 					.translation("the_bumblezone.config.spawnproductivebeeshoneycombvariants")
 					.define("spawnProductiveBeesHoneycombVariants", true);
+
+			spawnProductiveBeesHoneycombVariants = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Whether thrown enderpearls hitting the top portion of the hitbox of mobs wearing",
+							" Productive Bees's Bee Nest Helmets will teleport the thrower to Bumblezone dimension. \n")
+					.translation("the_bumblezone.config.allowenderpearledbeenesthelmetteleporation")
+					.define("allowEnderpearledBeeNestHelmetTeleporation", true);
 
 			allowedCombsForDungeons = builder
 					.comment(" \n-----------------------------------------------------\n",

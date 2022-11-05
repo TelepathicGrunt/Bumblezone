@@ -207,6 +207,10 @@ public class ProductiveBeesCompat {
 	public static boolean runTeleportCodeIfBeeHelmentHitHigh(HitResult hitResult, Projectile pearlEntity) {
 		Level world = pearlEntity.level; // world we threw in
 
+		if (!BzModCompatibilityConfigs.allowEnderpearledBeeNestHelmetTeleporation.get()) {
+			return false;
+		}
+
 		// Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
 		// If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
 		if (!world.isClientSide() &&
