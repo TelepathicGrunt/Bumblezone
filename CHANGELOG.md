@@ -25,6 +25,8 @@ Added config to allow turning off teleportation to Bumblezone if thrown Enderpea
 
 Removed unused config entry for Productive Bees as that mod is not on Fabric/Quilt.
 
+Bee Queen will trade now for a lot more of Buzzier Bees items!
+
 
 ### **(V.6.3.8 Changes) (1.19.2 Minecraft)**
 

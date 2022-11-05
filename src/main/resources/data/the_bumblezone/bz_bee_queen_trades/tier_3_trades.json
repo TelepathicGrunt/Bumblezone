@@ -43,6 +43,14 @@
     {
       "id": "resourcefulbees:oreo_cookie",
       "required": false
+    },
+    {
+      "id": "dreamland:bumble_block",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:crystallized_honey_block",
+      "required": false
     }
   ],
   "possible_rewards": [
