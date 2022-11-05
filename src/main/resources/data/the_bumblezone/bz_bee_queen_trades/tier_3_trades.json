@@ -43,6 +43,10 @@
     {
       "id": "resourcefulbees:oreo_cookie",
       "required": false
+    },
+    {
+      "id": "dreamland:bumble_block",
+      "required": false
     }
   ],
   "possible_rewards": [

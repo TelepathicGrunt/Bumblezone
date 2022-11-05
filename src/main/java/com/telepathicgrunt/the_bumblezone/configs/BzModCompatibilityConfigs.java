@@ -27,6 +27,8 @@ public class BzModCompatibilityConfigs {
 	public static ForgeConfigSpec.BooleanValue allowFriendsAndFoesBeekeeperTradesCompat;
 	public static ForgeConfigSpec.BooleanValue injectBzItemsIntoQuarkEnchantmentTooltipsCompat;
 
+	public static ForgeConfigSpec.BooleanValue allowEnderpearledBumbleBeastTeleporation;
+
 	static {
 		ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
 		setupConfig(configBuilder);
@@ -99,9 +101,9 @@ public class BzModCompatibilityConfigs {
 					.translation("the_bumblezone.config.spawnproductivebeeshoneycombvariants")
 					.define("spawnProductiveBeesHoneycombVariants", true);
 
-			spawnProductiveBeesHoneycombVariants = builder
+			allowEnderpearledBeeNestHelmetTeleporation = builder
 					.comment(" \n-----------------------------------------------------\n",
-							" Whether thrown enderpearls hitting the top portion of the hitbox of mobs wearing",
+							" Whether thrown Enderpearls hitting the top hitbox portion of mobs wearing",
 							" Productive Bees's Bee Nest Helmets will teleport the thrower to Bumblezone dimension. \n")
 					.translation("the_bumblezone.config.allowenderpearledbeenesthelmetteleporation")
 					.define("allowEnderpearledBeeNestHelmetTeleporation", true);
@@ -224,6 +226,17 @@ public class BzModCompatibilityConfigs {
 							" Adds Bumblezone items symbols to Quark's enchantment tooltips!\n")
 					.translation("the_bumblezone.config.injectbzitemsintoquarkenchantmenttooltipscompat")
 					.define("injectBzItemsIntoQuarkEnchantmentTooltipsCompat", true);
+
+			builder.pop();
+
+			builder.push("Dreamland Biomes Options");
+
+			allowEnderpearledBumbleBeastTeleporation = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Whether thrown Enderpearls hitting the top portion of Dreamland biome's Bumble Beast hitbox",
+							" will teleport the thrower to Bumblezone dimension. \n")
+					.translation("the_bumblezone.config.allowenderpearledbumblebeastteleporation")
+					.define("allowEnderpearledBumbleBeastTeleporation", true);
 
 			builder.pop();
 

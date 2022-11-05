@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.items;
 
+import com.telepathicgrunt.the_bumblezone.modcompat.DreamlandBiomesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
 import net.minecraft.world.entity.projectile.ThrownEnderpearl;
@@ -20,6 +21,11 @@ public class EnderpearlImpactMixin {
     private void thebumblezone_onPearlHit(HitResult hitResult, CallbackInfo ci) {
         if (ModChecker.productiveBeesPresent) {
             if (ProductiveBeesCompat.runTeleportCodeIfBeeHelmentHitHigh(hitResult, ((ThrownEnderpearl) (Object) this))) {
+                ci.cancel();
+            }
+        }
+        if (ModChecker.dreamlandBiomesPresent) {
+            if (DreamlandBiomesCompat.runTeleportCodeIfBumbleBeastHitHigh(hitResult, ((ThrownEnderpearl) (Object) this))) {
                 ci.cancel();
             }
         }
