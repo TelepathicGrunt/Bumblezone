@@ -1,76 +1,484 @@
 {
   "variants": {
-    "facing=down,age=0": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_down"
-    },
-    "facing=down,age=1": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_down"
-    },
-    "facing=down,age=2": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_down"
-    },
-    "facing=down,age=3": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_down"
-    },
-    "facing=up,age=0": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_up"
-    },
-    "facing=up,age=1": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_up"
-    },
-    "facing=up,age=2": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_up"
-    },
-    "facing=up,age=3": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_up"
-    },
-    "facing=south,age=0": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_south"
-    },
-    "facing=south,age=1": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_south"
-    },
-    "facing=south,age=2": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_south"
-    },
-    "facing=south,age=3": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_south"
-    },
-    "facing=north,age=0": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_north"
-    },
-    "facing=north,age=1": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_north"
-    },
-    "facing=north,age=2": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_north"
-    },
-    "facing=north,age=3": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_north"
-    },
-    "facing=east,age=0": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_east"
-    },
-    "facing=east,age=1": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_east"
-    },
-    "facing=east,age=2": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_east"
-    },
-    "facing=east,age=3": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_east"
-    },
-    "facing=west,age=0": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_west"
-    },
-    "facing=west,age=1": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_west"
-    },
-    "facing=west,age=2": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_west"
-    },
-    "facing=west,age=3": {
-      "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_west"
-    }
+    "facing=up,age=0": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_up_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_up_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_up_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_up_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_up_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_up_6"
+      }
+    ],
+    "facing=up,age=1": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_up_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_up_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_up_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_up_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_up_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_up_6"
+      }
+    ],
+    "facing=up,age=2": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_up_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_up_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_up_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_up_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_up_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_up_6"
+      }
+    ],
+    "facing=up,age=3": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_up_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_up_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_up_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_up_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_up_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_up_6"
+      }
+    ],
+    "facing=down,age=0": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_down_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_down_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_down_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_down_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_down_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_down_6"
+      }
+    ],
+    "facing=down,age=1": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_down_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_down_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_down_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_down_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_down_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_down_6"
+      }
+    ],
+    "facing=down,age=2": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_down_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_down_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_down_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_down_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_down_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_down_6"
+      }
+    ],
+    "facing=down,age=3": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_down_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_down_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_down_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_down_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_down_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_down_6"
+      }
+    ],
+    "facing=north,age=0": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_north_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_north_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_north_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_north_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_north_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_north_6"
+      }
+    ],
+    "facing=north,age=1": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_north_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_north_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_north_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_north_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_north_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_north_6"
+      }
+    ],
+    "facing=north,age=2": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_north_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_north_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_north_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_north_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_north_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_north_6"
+      }
+    ],
+    "facing=north,age=3": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_north_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_north_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_north_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_north_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_north_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_north_6"
+      }
+    ],
+    "facing=south,age=0": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_south_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_south_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_south_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_south_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_south_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_south_6"
+      }
+    ],
+    "facing=south,age=1": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_south_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_south_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_south_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_south_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_south_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_south_6"
+      }
+    ],
+    "facing=south,age=2": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_south_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_south_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_south_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_south_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_south_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_south_6"
+      }
+    ],
+    "facing=south,age=3": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_south_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_south_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_south_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_south_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_south_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_south_6"
+      }
+    ],
+    "facing=east,age=0": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_east_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_east_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_east_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_east_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_east_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_east_6"
+      }
+    ],
+    "facing=east,age=1": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_east_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_east_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_east_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_east_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_east_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_east_6"
+      }
+    ],
+    "facing=east,age=2": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_east_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_east_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_east_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_east_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_east_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_east_6"
+      }
+    ],
+    "facing=east,age=3": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_east_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_east_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_east_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_east_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_east_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_east_6"
+      }
+    ],
+    "facing=west,age=0": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_west_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_west_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_west_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_west_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_west_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_1_honeycomb_brood_block_west_6"
+      }
+    ],
+    "facing=west,age=1": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_west_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_west_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_west_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_west_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_west_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_west_6"
+      }
+    ],
+    "facing=west,age=2": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_west_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_west_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_west_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_west_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_west_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_3_honeycomb_brood_block_west_6"
+      }
+    ],
+    "facing=west,age=3": [
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_west_1"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_west_2"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_west_3"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_west_4"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_west_5"
+      },
+      {
+        "model": "the_bumblezone:block/honeycomb_brood_block/stage_4_honeycomb_brood_block_west_6"
+      }
+    ]
   }
 }
