@@ -24,13 +24,18 @@ Enderpearls hitting top hitbox portion of Dreamland Biome's Bumble Beast will te
 
 Buzzer Bees's Bee Bottle now when right-clicked on Empty Honeycomb Brood Block will turn it into a regular Honeycomb Brood Block with a larva.
 
-Bee Queen will trade now for:
+Bee Queen will trade now for the following modded items now. `the_bumblezone:bz_bee_queen_trades/` tag folder:
  Dreamland Biome's Bumble Block
  Lots of Buzzier Bees items
  Delightful's Honey Glazed Walnut and Ender Nectar
  Farmersdelight's Honey Cookie and Honey Glazed Ham
  Adorn's Honeycomb Crate and beverages
  Skinned Lanterns's bee and honey lanterns (regular and soul)
+
+Bees can be right-clicked fed with these following modded items now. `the_bumblezone:bee_feeding_items` item tag:
+ Delightful's Honey Glazed Walnut
+ Farmersdelight's Honey Cookie and Honey Glazed Ham
+ Buzzier Bees's Honey Apple, Honey Bread, and Honey Porkchop
 
 
 ### **(V.6.3.8 Changes) (1.19.2 Minecraft)**

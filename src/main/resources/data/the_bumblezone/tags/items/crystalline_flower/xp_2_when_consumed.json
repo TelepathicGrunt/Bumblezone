@@ -21,7 +21,7 @@
       "required": false
     },
     {
-      "id": "buzzier_bees:sticky_honey_wand",
+      "id": "buzzier_bees:honey_porkchop",
       "required": false
     },
     {
@@ -46,6 +46,30 @@
     },
     {
       "id": "betterbeekeeping:strange_honey_bottle",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:honey_cookie",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:honey_glazed_ham",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:honey_glazed_ham_block",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:peanut_honey_soup",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:peanut_butter_honey_sandwich",
+      "required": false
+    },
+    {
+      "id": "delightful:honey_glazed_walnut",
       "required": false
     }
   ]
