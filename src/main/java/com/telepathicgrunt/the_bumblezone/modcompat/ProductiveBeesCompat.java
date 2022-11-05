@@ -1,12 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
+import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehive;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehiveAbstract;
 import cy.jdkdigital.productivebees.common.block.ConfigurableCombBlock;
@@ -19,13 +14,9 @@ import cy.jdkdigital.productivebees.init.ModEntities;
 import cy.jdkdigital.productivebees.setup.BeeReloadListener;
 import cy.jdkdigital.productivebees.state.properties.VerticalHive;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -41,16 +32,13 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 
 import java.awt.*;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class ProductiveBeesCompat {
 
@@ -211,56 +199,17 @@ public class ProductiveBeesCompat {
 			return false;
 		}
 
-		// Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
-		// If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-		if (!world.isClientSide() &&
-				hitResult instanceof EntityHitResult entityHitResult &&
-				hasBeeNestHelmet(entityHitResult.getEntity()) &&
-				BzDimensionConfigs.enableEntranceTeleportation.get() &&
-				pearlEntity.getOwner() instanceof ServerPlayer playerEntity &&
-				!world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-				(!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzDimensionConfigs.defaultDimension.get())))))
-		{
-			Vec3 hitPos = pearlEntity.position();
-			AABB boundBox = entityHitResult.getEntity().getBoundingBox();
-			double minYThreshold = ((boundBox.maxY - boundBox.minY) * 0.66d) + boundBox.minY;
-
-			if (hitPos.y() < minYThreshold) {
-				return false;
-			}
-
-			BlockPos hivePos = entityHitResult.getEntity().blockPosition();
-
-			//checks if block under hive is correct if config needs one
-			boolean validBelowBlock = false;
-			Optional<HolderSet.Named<Block>> blockTag = Registry.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
-			if (blockTag.isPresent() && blockTag.get().size() != 0) {
-				if (world.getBlockState(hivePos.below()).is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
-					validBelowBlock = true;
+		return EntityTeleportationHookup.attemptEntityBasedTeleportation(
+				hitResult,
+				pearlEntity,
+				world,
+				(entityHitResult) -> hasBeeNestHelmet(entityHitResult.getEntity()),
+				(entityHitResult, hitPos) -> {
+					AABB boundBox = entityHitResult.getEntity().getBoundingBox();
+					double minYThreshold = ((boundBox.maxY - boundBox.minY) * 0.66d) + boundBox.minY;
+					return hitPos.y() < minYThreshold;
 				}
-				else if (BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive.get()) {
-					//failed. Block below isn't the required block
-					Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
-					net.minecraft.network.chat.Component message = Component.translatable("system.the_bumblezone.require_hive_blocks_failed");
-					playerEntity.displayClientMessage(message, true);
-					return false;
-				}
-			}
-			else {
-				validBelowBlock = true;
-			}
-
-
-			//if the pearl hit a beehive, begin the teleportation.
-			if (validBelowBlock) {
-				BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(playerEntity);
-				BzWorldSavedData.queueEntityToTeleport(playerEntity, BzDimension.BZ_WORLD_KEY);
-				pearlEntity.discard();
-				return true;
-			}
-		}
-
-		return false;
+		);
 	}
 
 	public static boolean hasBeeNestHelmet(Entity entity) {
