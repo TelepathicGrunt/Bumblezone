@@ -59,6 +59,18 @@
     {
       "id": "resourcefulbees:honey_glass_player",
       "required": false
+    },
+    {
+      "id": "buzzier_bees:honey_apple",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honey_bread",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honey_porkchop",
+      "required": false
     }
   ],
   "possible_rewards": [

@@ -22,6 +22,8 @@ Enderpearls hitting top hitbox portion of Dreamland Biome's Bumble Beast will te
 
 Bee Queen will trade now for Dreamland Biome's Bumble Block (tier 3 trade)
 
+Bee Queen will trade now for a lot more of Buzzier Bees items!
+
 
 ### **(V.6.3.8 Changes) (1.19.2 Minecraft)**
 

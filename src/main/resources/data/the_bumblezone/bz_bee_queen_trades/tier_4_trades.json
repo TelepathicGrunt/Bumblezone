@@ -43,6 +43,10 @@
     {
       "id": "#productivebees:solitary_overworld_nests",
       "required": false
+    },
+    {
+      "id": "buzzier_bees:honey_lamp",
+      "required": false
     }
   ],
   "possible_rewards": [
