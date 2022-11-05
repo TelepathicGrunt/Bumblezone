@@ -20,6 +20,8 @@ Added config to allow turning off teleportation to Bumblezone if thrown Enderpea
 
 Enderpearls hitting top hitbox portion of Dreamland Biome's Bumble Beast will teleport players to Bumblezone dimension.
 
+Buzzer Bees's Bee Bottle now when right-clicked on Empty Honeycomb Brood Block will turn it into a regular Honeycomb Brood Block with a larva.
+
 Bee Queen will trade now for:
  Dreamland Biome's Bumble Block
  Lots of Buzzier Bees items

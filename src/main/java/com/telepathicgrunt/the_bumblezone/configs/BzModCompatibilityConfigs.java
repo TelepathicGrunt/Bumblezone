@@ -29,6 +29,8 @@ public class BzModCompatibilityConfigs {
 
 	public static ForgeConfigSpec.BooleanValue allowEnderpearledBumbleBeastTeleporation;
 
+	public static ForgeConfigSpec.BooleanValue allowBeeBottleRevivingEmptyBroodBlock;
+
 	static {
 		ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
 		setupConfig(configBuilder);
@@ -237,6 +239,17 @@ public class BzModCompatibilityConfigs {
 							" will teleport the thrower to Bumblezone dimension. \n")
 					.translation("the_bumblezone.config.allowenderpearledbumblebeastteleporation")
 					.define("allowEnderpearledBumbleBeastTeleporation", true);
+
+			builder.pop();
+
+			builder.push("Buzzier Bees Options");
+
+			allowBeeBottleRevivingEmptyBroodBlock = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Allow Bee Bottle to turn Empty Honeycomb Brood blocks into ",
+							" a regular Honeycomb Brood Block with a larva inside! \n")
+					.translation("the_bumblezone.config.allowbeebottlerevivingemptybroodblock")
+					.define("allowBeeBottleRevivingEmptyBroodBlock", true);
 
 			builder.pop();
 

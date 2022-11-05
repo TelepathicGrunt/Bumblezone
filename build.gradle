@@ -96,14 +96,14 @@ repositories {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
+    minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     runtimeOnly fg.deobf("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_version}")
     runtimeOnly fg.deobf("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_version}")
-    compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
+    compileOnly fg.deobf("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
 
-    implementation fg.deobf("mezz.jei:jei-${jei_mc_version}-forge:${jei_version}")
+    implementation fg.deobf("mezz.jei:jei-${project.jei_mc_version}-forge:${project.jei_version}")
     //runtimeOnly fg.deobf("curse.maven:jeed-532286:${jeed_version}")
     compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${project.rei_version}")
     compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${project.rei_version}")
@@ -112,10 +112,13 @@ dependencies {
     compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
     //runtimeOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
 
-    compileOnly fg.deobf("curse.maven:quark-243121:${quark_file_id}")
-    compileOnly fg.deobf("curse.maven:autoreglib-250363:${autoreglib_file_id}")
-    //runtimeOnly fg.deobf("curse.maven:quark-243121:${quark_file_id}")
-    //runtimeOnly fg.deobf("curse.maven:autoreglib-250363:${autoreglib_file_id}")
+    //runtimeOnly fg.deobf("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
+    //runtimeOnly fg.deobf("curse.maven:blueprint-382216:${project.blueprint_file_id}")
+
+    compileOnly fg.deobf("curse.maven:quark-243121:${project.quark_file_id}")
+    compileOnly fg.deobf("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
+    //runtimeOnly fg.deobf("curse.maven:quark-243121:${project.quark_file_id}")
+    //runtimeOnly fg.deobf("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
 
     //runtimeOnly fg.deobf("curse.maven:realistic_bees-410743:4021715")
     //runtimeOnly fg.deobf("curse.maven:collective-342584:4035506")
