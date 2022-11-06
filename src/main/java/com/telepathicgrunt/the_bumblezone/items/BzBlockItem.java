@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.blocks.CarvableWax;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -45,8 +47,11 @@ public class BzBlockItem extends BlockItem {
 
     @Override
     protected BlockState getPlacementState(BlockPlaceContext context) {
-        BlockState blockstate = this.blockState == null ? this.getBlock().getStateForPlacement(context) : this.blockState;
-        return blockstate != null && this.canPlace(context, blockstate) ? blockstate : null;
+        BlockState placingState = this.blockState == null ? this.getBlock().getStateForPlacement(context) : this.blockState;
+        if (placingState != null && placingState.is(BzBlocks.CARVABLE_WAX.get())) {
+            placingState = CarvableWax.getFacingStateForPlacement(placingState, context);
+        }
+        return placingState != null && this.canPlace(context, placingState) ? placingState : null;
     }
 
     @Override
