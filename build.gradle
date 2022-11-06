@@ -152,6 +152,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	mainFile.displayName = "The Bumblezone v${project.mod_version} (${project.minecraft_version} MC Fabric)"
 	mainFile.addRequirement("midnightlib")
 	mainFile.addRequirement("fabric-api")
+	mainFile.addOptional("continuity")
 }
 
 task buildAndRelease{}
