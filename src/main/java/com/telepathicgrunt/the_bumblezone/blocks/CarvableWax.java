@@ -71,11 +71,11 @@ public class CarvableWax extends ProperFacingBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getClickedFace().getOpposite());
+        return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
     }
 
     public static BlockState getFacingStateForPlacement(BlockState carvableWaxBlockState, BlockPlaceContext context) {
-        return carvableWaxBlockState.setValue(FACING, context.getHorizontalDirection().getOpposite());
+        return carvableWaxBlockState.setValue(FACING, context.getNearestLookingDirection().getOpposite());
     }
 
     @Override
