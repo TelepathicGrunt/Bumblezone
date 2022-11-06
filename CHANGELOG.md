@@ -11,6 +11,8 @@ Honeycomb Brood Block now has many more animation variations so the block is not
 
 Carvable Wax block now has a facing property. Some of the patterns will face different directions based on how you place it!
 
+Glistering Honey Crystal now uses a facing property instead of axis property. Allows for more directions when placing for easier builds!
+
 ##### Items:
 Pollen Puff thrown at What Did You Vote For's Sniffer will spawn Moss Carpet nearby.
 

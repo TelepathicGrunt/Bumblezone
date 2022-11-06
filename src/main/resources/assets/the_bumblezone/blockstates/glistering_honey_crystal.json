@@ -1,88 +1,6 @@
 {
   "variants": {
-    "axis=x": [
-      {
-        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_1",
-        "x": 90,
-        "y": 90
-      },
-      {
-        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_2",
-        "x": 90,
-        "y": 90
-      },
-      {
-        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_3",
-        "x": 90,
-        "y": 90
-      },
-      {
-        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_4",
-        "x": 90,
-        "y": 90
-      },
-      {
-        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_5",
-        "x": 90,
-        "y": 90
-      },
-      {
-        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_6",
-        "x": 90,
-        "y": 90
-      },
-      {
-        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_7",
-        "x": 90,
-        "y": 90
-      },
-      {
-        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_8",
-        "x": 90,
-        "y": 90
-      },
-      {
-        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_9",
-        "x": 90,
-        "y": 90
-      },
-      {
-        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_10",
-        "x": 90,
-        "y": 90
-      },
-      {
-        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_11",
-        "x": 90,
-        "y": 90
-      },
-      {
-        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_12",
-        "x": 90,
-        "y": 90
-      },
-      {
-        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_13",
-        "x": 90,
-        "y": 90
-      },
-      {
-        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_14",
-        "x": 90,
-        "y": 90
-      },
-      {
-        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_15",
-        "x": 90,
-        "y": 90
-      },
-      {
-        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_16",
-        "x": 90,
-        "y": 90
-      }
-    ],
-    "axis=y": [
+    "facing=up": [
       {
         "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_1"
       },
@@ -132,7 +50,237 @@
         "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_16"
       }
     ],
-    "axis=z": [
+    "facing=down": [
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_1",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_2",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_3",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_4",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_5",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_6",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_7",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_8",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_9",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_10",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_11",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_12",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_13",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_14",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_15",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_16",
+        "x": 180
+      }
+    ],
+    "facing=east": [
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_1",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_2",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_3",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_4",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_5",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_6",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_7",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_8",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_9",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_10",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_11",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_12",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_13",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_14",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_15",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_16",
+        "x": 90,
+        "y": 90
+      }
+    ],
+    "facing=west": [
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_1",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_2",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_3",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_4",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_5",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_6",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_7",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_8",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_9",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_10",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_11",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_12",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_13",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_14",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_15",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_16",
+        "x": 90,
+        "y": 270
+      }
+    ],
+    "facing=north": [
       {
         "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_1",
         "x": 90
@@ -196,6 +344,88 @@
       {
         "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_16",
         "x": 90
+      }
+    ],
+    "facing=south": [
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_1",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_2",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_3",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_4",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_5",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_6",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_7",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_8",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_9",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_10",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_11",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_12",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_13",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_14",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_15",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_16",
+        "x": 90,
+        "y": 180
       }
     ]
   }
