@@ -48,7 +48,7 @@ public class BzBlockItem extends BlockItem {
     @Override
     protected BlockState getPlacementState(BlockPlaceContext context) {
         BlockState placingState = this.blockState == null ? this.getBlock().getStateForPlacement(context) : this.blockState;
-        if (placingState != null && placingState.is(BzBlocks.CARVABLE_WAX.get())) {
+        if (placingState != null && placingState.is(BzBlocks.CARVABLE_WAX)) {
             placingState = CarvableWax.getFacingStateForPlacement(placingState, context);
         }
         return placingState != null && this.canPlace(context, placingState) ? placingState : null;
