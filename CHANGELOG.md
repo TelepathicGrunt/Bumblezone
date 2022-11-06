@@ -10,6 +10,8 @@ Fixed Honeycomb Brood Block and Empty Honeycomb Brood Block facing the wrong way
 
 Honeycomb Brood Block now has many more animation variations so the block is not always in sync with other blocks of itself in the world.
 
+Carvable Wax block now has a facing property. Some of the patterns will face different directions based on how you place it!
+
 ##### Items:
 Pollen Puff thrown at Mobscarecrow's Default Scarecrow mob will spawn pumpkin stems nearby on valid blocks/farmland
 
