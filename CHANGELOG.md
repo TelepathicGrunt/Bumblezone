@@ -32,6 +32,7 @@ Bee Queen will trade now for the following modded items now. `the_bumblezone:bz_
  Adorn's Honeycomb Crate and beverages
  Skinned Lanterns's bee and honey lanterns (regular and soul)
  Create's Honeyed Apple
+ Apotheosis's Beeshelf
 
 Bees can be right-clicked fed with these following modded items now. `the_bumblezone:bee_feeding_items` item tag:
  Delightful's Honey Glazed Walnut
