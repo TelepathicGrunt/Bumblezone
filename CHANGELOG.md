@@ -24,6 +24,8 @@ Enderpearls hitting top hitbox portion of Dreamland Biome's Bumble Beast will te
 
 Buzzer Bees's Bee Bottle now when right-clicked on Empty Honeycomb Brood Block will turn it into a regular Honeycomb Brood Block with a larva.
 
+Buzzier Bees's Crystallized Honey and Honeycomb Tiles blocks will spawn throughout Bumblezone.
+
 Bee Queen will trade now for the following modded items now. `the_bumblezone:bz_bee_queen_trades/` tag folder:
  Dreamland Biome's Bumble Block
  Lots of Buzzier Bees items

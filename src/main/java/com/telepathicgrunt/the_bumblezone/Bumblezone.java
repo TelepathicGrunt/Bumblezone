@@ -23,6 +23,7 @@ import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.Polle
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.items.BeeStinger;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
+import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompatRegs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompatRegs;
@@ -135,6 +136,11 @@ public class Bumblezone{
         if (ModList.get().isLoaded("productivebees")) {
             ProductiveBeesCompatRegs.CONFIGURED_FEATURES.register(modEventBus);
             ProductiveBeesCompatRegs.PLACED_FEATURES.register(modEventBus);
+        }
+
+        if (ModList.get().isLoaded("buzzier_bees")) {
+            BuzzierBeesCompatRegs.CONFIGURED_FEATURES.register(modEventBus);
+            BuzzierBeesCompatRegs.PLACED_FEATURES.register(modEventBus);
         }
 
         BzCapabilities.setupCapabilities();

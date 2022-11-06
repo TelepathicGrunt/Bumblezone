@@ -112,6 +112,7 @@ dependencies {
     compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
     //runtimeOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
 
+    compileOnly fg.deobf("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
     //runtimeOnly fg.deobf("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
     //runtimeOnly fg.deobf("curse.maven:blueprint-382216:${project.blueprint_file_id}")
 
