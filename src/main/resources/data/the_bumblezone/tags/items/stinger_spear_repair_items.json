@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "the_bumblezone:bee_stinger",
+    "#the_bumblezone:stingers",
     "minecraft:flint"
   ]
 }
