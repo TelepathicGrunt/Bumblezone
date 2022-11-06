@@ -16,8 +16,6 @@ Glistering Honey Crystal now uses a facing property instead of axis property. Al
 ##### Items:
 Pollen Puff thrown at What Did You Vote For's Sniffer will spawn Moss Carpet nearby.
 
-Pollen Puff thrown at Woof's Lush variant Wolf will spawn Moss Carpet nearby.
-
 Made an item form for all Carvable Wax blockstates to make building with it easier.
  Mining a Carvable Wax will drop the item form of its blockstate.
  
