@@ -104,7 +104,7 @@ dependencies {
 	modCompileOnlyApi "curse.maven:jei-238222:3944625"
 	//modCompileOnlyApi "mezz.jei:jei-${libs.versions.jeimc.get()}-fabric:${libs.versions.jei.get()}"
 
-	modRuntimeOnly "com.github.PepperCode1:Continuity:1.19~dev"
+	//modRuntimeOnly "com.github.PepperCode1:Continuity:1.19~dev"
 
 	//modCompileOnly "curse.maven:llamarama-449083:3938753"
 	//modRuntimeOnly "curse.maven:llamarama-449083:3938753"

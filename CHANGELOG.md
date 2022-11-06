@@ -1,5 +1,9 @@
 ### **(V.6.3.9 Changes) (1.19.2 Minecraft)**
 
+##### Textures:
+Add Continuity on to have Connected Textures for Porous Honeycomb Block and Empty Honeycomb Brood Block when either are 
+ touching Filled Porous Honeycomb Block or Honeycomb Brood Block! Now is a required dependency due to how good this looks lol.
+
 ##### Blocks:
 Fixed opening Crystalline Flower's UI not incrementing the stat for interacting with it.
  (Was logging an exception to the log file)
