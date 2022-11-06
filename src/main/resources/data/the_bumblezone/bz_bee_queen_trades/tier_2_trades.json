@@ -73,6 +73,10 @@
       "required": false
     },
     {
+      "id": "buzzier_bees:crystallized_honey_block",
+      "required": false
+    },
+    {
       "id": "delightful:honey_glazed_walnut",
       "required": false
     },
