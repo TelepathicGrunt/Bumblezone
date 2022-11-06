@@ -17,6 +17,10 @@ Made an item form for all Carvable Wax blockstates to make building with it easi
  
 Adjusted the stone textures of Bee Cannon and Crystal Cannon to match the texture change for Sugar Infused Stone/Sugar Infused Cobblestone.
 
+##### Enchantments:
+Nerfed Neurotoxins enchantment so its missed counter does not increment if player hits entity while entity is already paralyzed.
+ Helps prevent paralysis locking bosses.
+
 ##### Mod Compat:
 Added config to allow turning off teleportation to Bumblezone if thrown Enderpearl hits top of the hitbox of a mob wearing Productive Bees's Bee Nest helmet.
 
