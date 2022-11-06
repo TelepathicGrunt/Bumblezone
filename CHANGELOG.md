@@ -26,6 +26,10 @@ Adjusted the stone textures of Bee Cannon and Crystal Cannon to match the textur
 Nerfed Neurotoxins enchantment so its missed counter does not increment if player hits entity while entity is already paralyzed.
  Helps prevent paralysis locking bosses.
 
+Made Neurotoxin require more bookshelves before showing up in Enchanting Table
+
+Made Potent Poison enchantment require 1 more bookshelf before showing up in Enchanting Table
+
 ##### Mod Compat:
 Added config to allow turning off teleportation to Bumblezone if thrown Enderpearl hits top of the hitbox of Llamarama's Bumble Llama.
 

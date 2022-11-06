@@ -29,7 +29,7 @@ public class NeurotoxinsEnchantment extends Enchantment {
 
     @Override
     public int getMinCost(int level) {
-        return 10 * level;
+        return 14 * level;
     }
 
     @Override
