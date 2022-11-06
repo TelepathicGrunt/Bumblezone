@@ -24,6 +24,8 @@ Nerfed Neurotoxins enchantment so its missed counter does not increment if playe
 ##### Mod Compat:
 Added config to allow turning off teleportation to Bumblezone if thrown Enderpearl hits top of the hitbox of a mob wearing Productive Bees's Bee Nest helmet.
 
+Quark's enchantment tooltip on enchanted books can now show Bumblezone's armor. (Especially helpful as boots can get mining enchantments)
+
 Enderpearls hitting top hitbox portion of Dreamland Biome's Bumble Beast will teleport players to Bumblezone dimension.
 
 Buzzer Bees's Bee Bottle now when right-clicked on Empty Honeycomb Brood Block will turn it into a regular Honeycomb Brood Block with a larva.
