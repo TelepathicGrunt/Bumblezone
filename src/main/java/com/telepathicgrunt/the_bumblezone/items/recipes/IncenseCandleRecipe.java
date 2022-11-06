@@ -461,7 +461,7 @@ public class IncenseCandleRecipe implements CraftingRecipe, QuiltRecipeSerialize
 
         @Override
         public IncenseCandleRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-            String group = buffer.readUtf(32767);
+            String group = buffer.readUtf();
 
             int width = buffer.readVarInt();
             int height = buffer.readVarInt();
@@ -496,12 +496,12 @@ public class IncenseCandleRecipe implements CraftingRecipe, QuiltRecipeSerialize
                 ingredient.toNetwork(buffer);
             }
 
-            buffer.writeInt(recipe.maxAllowedPotions);
+            buffer.writeVarInt(recipe.maxAllowedPotions);
             buffer.writeBoolean(recipe.allowNormalPotions);
             buffer.writeBoolean(recipe.allowSplashPotions);
             buffer.writeBoolean(recipe.allowLingeringPotions);
-            buffer.writeInt(recipe.maxLevelCap);
-            buffer.writeInt(recipe.outputCount);
+            buffer.writeVarInt(recipe.maxLevelCap);
+            buffer.writeVarInt(recipe.outputCount);
         }
     }
 }
