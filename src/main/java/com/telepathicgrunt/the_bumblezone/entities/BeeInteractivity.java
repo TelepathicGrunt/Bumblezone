@@ -63,7 +63,7 @@ public class BeeInteractivity {
         ItemStack itemstackOriginal = itemstack.copy();
 
         // Special cased items so the ActionResultType continues and make the item's behavior not lost.
-        if (itemstackOriginal.getItem() == BzItems.BEE_BREAD || (BzConfig.allowProductiveBeesHoneyTreatCompat && itemRL.equals(PRODUCTIVE_BEES_HONEY_TREAT))) {
+        if (itemstackOriginal.getItem() == BzItems.BEE_BREAD) {
             removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
 
             if(removedWrath && playerEntity instanceof ServerPlayer) {

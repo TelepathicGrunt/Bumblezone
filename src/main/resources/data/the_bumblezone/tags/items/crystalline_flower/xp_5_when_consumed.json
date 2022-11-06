@@ -3,12 +3,29 @@
   "values": [
     "the_bumblezone:honey_crystal",
     "minecraft:enchanting_table",
+    "minecraft:honey_block",
     {
       "id": "#forge:buckets/honey",
       "required": false
     },
     {
       "id": "#c:buckets/honey",
+      "required": false
+    },
+    {
+      "id": "#resourcefulbees:resourceful_honey_block",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honey_lamp",
+      "required": false
+    },
+    {
+      "id": "skinnedlanterns:honey_lantern_block",
+      "required": false
+    },
+    {
+      "id": "skinnedlanterns:honey_soul_lantern_block",
       "required": false
     }
   ]

@@ -157,7 +157,7 @@ public class BzConfig extends MidnightConfig {
     public static boolean allowFriendsAndFoesBeekeeperTradesCompat = true;
 
     @Entry
-    public static boolean allowProductiveBeesHoneyTreatCompat = true;
+    public static boolean allowEnderpearledLlamaramaBumbleLlamaTeleporation = true;
 
 
     @Comment

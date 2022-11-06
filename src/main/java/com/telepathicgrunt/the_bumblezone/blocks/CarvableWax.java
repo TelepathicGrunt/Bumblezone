@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -22,7 +24,7 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 
-public class CarvableWax extends Block {
+public class CarvableWax extends ProperFacingBlock {
     public static final EnumProperty<Carving> CARVING = EnumProperty.create("carving", Carving.class);
 
     public enum Carving implements StringRepresentable {
@@ -57,11 +59,22 @@ public class CarvableWax extends Block {
     public CarvableWax() {
         super(Properties.of(Material.WOOD, MaterialColor.COLOR_ORANGE).strength(0.28F, 0.28F).sound(SoundType.WOOD));
         this.registerDefaultState(this.stateDefinition.any().setValue(CARVING, Carving.UNCARVED));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add().add(CARVING);
+        builder.add().add(FACING);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
+    }
+
+    public static BlockState getFacingStateForPlacement(BlockState carvableWaxBlockState, BlockPlaceContext context) {
+        return carvableWaxBlockState.setValue(FACING, context.getNearestLookingDirection().getOpposite());
     }
 
     @Override

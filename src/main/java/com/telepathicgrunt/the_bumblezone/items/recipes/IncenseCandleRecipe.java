@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class IncenseCandleRecipe implements CraftingRecipe {
+public class IncenseCandleRecipe implements CraftingRecipe, RecipeSerializer<IncenseCandleRecipe> {
     private final ResourceLocation id;
     private final String group;
     private final int outputCount;
@@ -115,10 +115,10 @@ public class IncenseCandleRecipe implements CraftingRecipe {
             ItemStack itemStack = inv.getItem(j);
             if (itemStack.is(Items.POTION) || itemStack.is(Items.SPLASH_POTION) || itemStack.is(Items.LINGERING_POTION)) {
                 PotionUtils.getMobEffects(itemStack).forEach(me -> {
-                   effects.add(me.getEffect());
-                   maxDuration.addAndGet(me.getEffect().isInstantenous() ? 200 : me.getDuration());
-                   amplifier.addAndGet(me.getAmplifier() + 1);
-                   potionEffectsFound.getAndIncrement();
+                    effects.add(me.getEffect());
+                    maxDuration.addAndGet(me.getEffect().isInstantenous() ? 200 : me.getDuration());
+                    amplifier.addAndGet(me.getAmplifier() + 1);
+                    potionEffectsFound.getAndIncrement();
                 });
 
                 if (itemStack.is(Items.SPLASH_POTION)) {
@@ -255,8 +255,8 @@ public class IncenseCandleRecipe implements CraftingRecipe {
                 if (ingredient == null) {
                     if (!itemStack.isEmpty()) {
                         if (itemStack.is(Items.POTION) ||
-                            itemStack.is(Items.SPLASH_POTION) ||
-                            itemStack.is(Items.LINGERING_POTION)
+                                itemStack.is(Items.SPLASH_POTION) ||
+                                itemStack.is(Items.LINGERING_POTION)
                         ) {
                             if (itemStack.is(Items.POTION) && !this.allowNormalPotions) {
                                 return false;
@@ -343,14 +343,17 @@ public class IncenseCandleRecipe implements CraftingRecipe {
         return BzRecipes.INCENSE_CANDLE_RECIPE.toJson(recipe);
     }
 
+    @Override
     public IncenseCandleRecipe fromJson(ResourceLocation id, JsonObject json) {
         return BzRecipes.INCENSE_CANDLE_RECIPE.fromJson(id, json);
     }
 
+    @Override
     public IncenseCandleRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
         return BzRecipes.INCENSE_CANDLE_RECIPE.fromNetwork(id, buf);
     }
 
+    @Override
     public void toNetwork(FriendlyByteBuf buf, IncenseCandleRecipe recipe) {
         BzRecipes.INCENSE_CANDLE_RECIPE.toNetwork(buf, recipe);
     }
@@ -454,8 +457,9 @@ public class IncenseCandleRecipe implements CraftingRecipe {
             return json;
         }
 
+        @Override
         public IncenseCandleRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-            String group = buffer.readUtf(32767);
+            String group = buffer.readUtf();
 
             int width = buffer.readVarInt();
             int height = buffer.readVarInt();
@@ -475,6 +479,7 @@ public class IncenseCandleRecipe implements CraftingRecipe {
             return new IncenseCandleRecipe(recipeId, group, resultCountRead, maxPotionRead, shapedRecipe, shapelessRecipe, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
         }
 
+        @Override
         public void toNetwork(FriendlyByteBuf buffer, IncenseCandleRecipe recipe) {
             buffer.writeUtf(recipe.group);
 
@@ -489,12 +494,12 @@ public class IncenseCandleRecipe implements CraftingRecipe {
                 ingredient.toNetwork(buffer);
             }
 
-            buffer.writeInt(recipe.maxAllowedPotions);
+            buffer.writeVarInt(recipe.maxAllowedPotions);
             buffer.writeBoolean(recipe.allowNormalPotions);
             buffer.writeBoolean(recipe.allowSplashPotions);
             buffer.writeBoolean(recipe.allowLingeringPotions);
-            buffer.writeInt(recipe.maxLevelCap);
-            buffer.writeInt(recipe.outputCount);
+            buffer.writeVarInt(recipe.maxLevelCap);
+            buffer.writeVarInt(recipe.outputCount);
         }
     }
 }

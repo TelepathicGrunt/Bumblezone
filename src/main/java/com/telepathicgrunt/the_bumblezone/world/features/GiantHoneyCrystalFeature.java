@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.the_bumblezone.blocks.GlisteringHoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -107,9 +108,13 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
 
                         BlockState state = level.getBlockState(blockpos$Mutable);
                         if (!state.canOcclude()) {
+                            BlockState newState = BzBlocks.GLISTERING_HONEY_CRYSTAL.defaultBlockState();
+                            if (random.nextFloat() < 0.5f) {
+                                newState = newState.setValue(GlisteringHoneyCrystal.FACING, Direction.getRandom(random));
+                            }
                             level.setBlock(
                                     blockpos$Mutable,
-                                    BzBlocks.GLISTERING_HONEY_CRYSTAL.defaultBlockState(),
+                                    newState,
                                     3);
                         }
                     }

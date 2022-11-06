@@ -155,6 +155,54 @@
     {
       "id": "resourcefulbees:waxed_machine_block",
       "required": false
+    },
+    {
+      "id": "buzzier_bees:honeycomb_bricks",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honeycomb_brick_stairs",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honeycomb_brick_slab",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:chiseled_honeycomb_bricks",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honeycomb_bricks",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honeycomb_brick_wall",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honeycomb_tiles",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honeycomb_tile_stairs",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honeycomb_tile_slab",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honeycomb_tile_wall",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honeycomb_door",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honeycomb_trapdoor",
+      "required": false
     }
   ],
   "possible_rewards": [
