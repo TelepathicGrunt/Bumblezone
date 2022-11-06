@@ -55,6 +55,10 @@
     {
       "id": "skinnedlanterns:honey_soul_lantern_block",
       "required": false
+    },
+    {
+      "id": "apotheosis:beeshelf",
+      "required": false
     }
   ],
   "possible_rewards": [
