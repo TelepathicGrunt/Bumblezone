@@ -148,7 +148,7 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
 
         PartDefinition cube_r3 = armorBody.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(36, 82).addBox(-1.0F, 6.5F, -9.25F, 2.0F, 5.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 1.0908F, 0.0F, 0.0F));
 
-        PartDefinition left_wing = armorBody.addOrReplaceChild("left_wing", CubeListBuilder.create(), PartPose.offset(-1.5623F, 3.1027F, 2.1854F));
+        PartDefinition left_wing = armorBody.addOrReplaceChild("left_wing", CubeListBuilder.create(), PartPose.offset(-1.82F, 3.1027F, 2.1854F));
 
         PartDefinition LeftWing_r1 = left_wing.addOrReplaceChild("LeftWing_r1", CubeListBuilder.create().texOffs(0, 89).addBox(-0.25F, -2.75F, 3.5F, 0.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(1, 87).addBox(-0.25F, -0.75F, 4.5F, 0.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
