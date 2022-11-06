@@ -31,11 +31,13 @@ Bee Queen will trade now for the following modded items now. `the_bumblezone:bz_
  Farmersdelight's Honey Cookie and Honey Glazed Ham
  Adorn's Honeycomb Crate and beverages
  Skinned Lanterns's bee and honey lanterns (regular and soul)
+ Create's Honeyed Apple
 
 Bees can be right-clicked fed with these following modded items now. `the_bumblezone:bee_feeding_items` item tag:
  Delightful's Honey Glazed Walnut
  Farmersdelight's Honey Cookie and Honey Glazed Ham
  Buzzier Bees's Honey Apple, Honey Bread, and Honey Porkchop
+ Create's Honeyed Apple
 
 
 ### **(V.6.3.8 Changes) (1.19.2 Minecraft)**

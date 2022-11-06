@@ -111,6 +111,10 @@
     {
       "id": "expandeddelight:peanut_honey_soup",
       "required": false
+    },
+    {
+      "id": "create:honeyed_apple",
+      "required": false
     }
   ],
   "possible_rewards": [

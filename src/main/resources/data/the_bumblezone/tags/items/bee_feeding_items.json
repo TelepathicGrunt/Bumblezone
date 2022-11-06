@@ -42,30 +42,6 @@
       "required": false
     },
     {
-      "id": "betterbeekeeping:spicy_honey_bottle",
-      "required": false
-    },
-    {
-      "id": "betterbeekeeping:warm_honey_bottle",
-      "required": false
-    },
-    {
-      "id": "betterbeekeeping:bright_honey_bottle",
-      "required": false
-    },
-    {
-      "id": "betterbeekeeping:lively_honey_bottle",
-      "required": false
-    },
-    {
-      "id": "betterbeekeeping:cool_honey_bottle",
-      "required": false
-    },
-    {
-      "id": "betterbeekeeping:strange_honey_bottle",
-      "required": false
-    },
-    {
       "id": "farmersdelight:honey_cookie",
       "required": false
     },
@@ -87,6 +63,10 @@
     },
     {
       "id": "delightful:honey_glazed_walnut",
+      "required": false
+    },
+    {
+      "id": "create:honeyed_apple",
       "required": false
     }
   ]
