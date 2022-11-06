@@ -23,6 +23,8 @@ Adjusted the stone textures of Bee Cannon and Crystal Cannon to match the textur
 
 Adjusted the texture slightly for one variant of Stingless Bee Helmet and Bumble Bee Chestplate.
 
+Carpenter Bees boots now can mine through Carvable Wax block when crouched on top in center of block.
+
 ##### Enchantments:
 Nerfed Neurotoxins enchantment so its missed counter does not increment if player hits entity while entity is already paralyzed.
  Helps prevent paralysis locking bosses.
