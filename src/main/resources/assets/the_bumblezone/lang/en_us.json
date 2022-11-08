@@ -239,6 +239,7 @@
   "system.the_bumblezone.failed_teleporting": "Failed to teleport entity. Aborting teleportation. Please retry.",
   "system.the_bumblezone.require_hive_blocks_failed": "Bumblezone teleport failed. Hive needs a required block below it.",
   "system.the_bumblezone.no_protection": "You lacked Protection of the Hive effect...",
+  "system.the_bumblezone.lost_bee_essence": "Bee Essence lost upon respawning...",
 
   "advancements.the_bumblezone.root.title": "The Buzzing Bumbling Bumblezone!",
   "advancements.the_bumblezone.root.description": "Enter The Bumblezone dimension by any means",

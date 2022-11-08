@@ -6,11 +6,13 @@ import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -117,11 +119,15 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 	}
 
 	public static void resetValueOnRespawn(PlayerEvent.Clone event) {
-		if (BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning.get() && event.isWasDeath()) {
-			if (event.getEntity() instanceof ServerPlayer serverPlayerNew && event.getOriginal() instanceof ServerPlayer serverPlayerOld) {
+		if (event.getEntity() instanceof ServerPlayer serverPlayerNew && event.getOriginal() instanceof ServerPlayer serverPlayerOld) {
+			if (BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning.get() && event.isWasDeath()) {
 				serverPlayerOld.reviveCaps();
 				EssenceOfTheBees.setEssence(serverPlayerNew, EssenceOfTheBees.hasEssence(serverPlayerOld));
 				serverPlayerOld.invalidateCaps();
+			}
+			else {
+				Component message = Component.translatable("system.the_bumblezone.lost_bee_essence").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+				serverPlayerNew.displayClientMessage(message, true);
 			}
 		}
 	}

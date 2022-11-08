@@ -25,6 +25,8 @@ Adjusted the texture slightly for one variant of Stingless Bee Helmet and Bumble
 
 Carpenter Bees boots now can mine through Carvable Wax block when crouched on top in center of block.
 
+Bee Essence effect will now show message to player if lost on respawning if keepEssenceOfTheBeesOnRespawning config is set to false.
+
 Pollen Puff thrown at What Did You Vote For's Sniffer will spawn Moss Carpet nearby.
 
 ##### Enchantments:
