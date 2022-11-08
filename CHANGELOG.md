@@ -14,21 +14,13 @@ Fixed Honeycomb Brood Block and Empty Honeycomb Brood Block facing the wrong way
 
 Honeycomb Brood Block now has many more animation variations so the block is not always in sync with other blocks of itself in the world.
 
-Carvable Wax block now has a facing property. Some of the patterns will face different directions based on how you place it!
+Carvable Wax block now has a facing property. Some patterns will face different directions based on how you place it!
 
 Glistering Honey Crystal now uses a facing property instead of axis property. Allows for more directions when placing for easier builds!
 
 Added sound for lighting Super/Incense Candles.
 
 ##### Items:
-Pollen Puff thrown at Mobscarecrow's Default Scarecrow mob will spawn pumpkin stems nearby on valid blocks/farmland
-
-Pollen Puff thrown at Mobvote2022's Sniffer will spawn Moss Carpet nearby.
-
-Pollen Puff thrown at Probably Chests's Lush Mimic Chests may rarely spawn Azalea or Flowering Azalea nearby.
-
-Pollen Puff thrown at Woof's Lush variant Wolf will spawn Moss Carpet nearby.
-
 Made an item form for all Carvable Wax blockstates to make building with it easier.
  Mining a Carvable Wax will drop the item form of its blockstate.
  
@@ -37,6 +29,14 @@ Adjusted the stone textures of Bee Cannon and Crystal Cannon to match the textur
 Adjusted the texture slightly for one variant of Stingless Bee Helmet and Bumble Bee Chestplate.
 
 Carpenter Bees boots now can mine through Carvable Wax block when crouched on top in center of block.
+
+Pollen Puff thrown at Mobscarecrow's Default Scarecrow mob will spawn pumpkin stems nearby on valid blocks/farmland
+
+Pollen Puff thrown at Mobvote2022's Sniffer will spawn Moss Carpet nearby.
+
+Pollen Puff thrown at Probably Chests's Lush Mimic Chests may rarely spawn Azalea or Flowering Azalea nearby.
+
+Pollen Puff thrown at Woof's Lush variant Wolf will spawn Moss Carpet nearby.
 
 ##### Enchantments:
 Nerfed Neurotoxins enchantment so its missed counter does not increment if player hits entity while entity is already paralyzed.
