@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -181,6 +182,9 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
             boolean isBelowSoul = isSoulBelowInRange(levelAccessor, blockPos.below());
             Block wickBlock = (isBelowSoul && lit) ? BzBlocks.SUPER_CANDLE_WICK_SOUL.get() : BzBlocks.SUPER_CANDLE_WICK.get();
             boolean litWick = levelAccessor.setBlock(blockPos, wickBlock.defaultBlockState().setValue(LIT, lit), 11) && lit;
+            if (lit) {
+                levelAccessor.playSound(null, blockPos, BzSounds.SUPER_CANDLE_WICK_LIT.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            }
             setBelowLit(levelAccessor, blockPos, lit);
             return litWick;
         }

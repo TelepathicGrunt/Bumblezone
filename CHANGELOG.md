@@ -13,6 +13,8 @@ Carvable Wax block now has a facing property. Some of the patterns will face dif
 
 Glistering Honey Crystal now uses a facing property instead of axis property. Allows for more directions when placing for easier builds!
 
+Added sound for lighting Super/Incense Candles.
+
 ##### Items:
 Pollen Puff thrown at What Did You Vote For's Sniffer will spawn Moss Carpet nearby.
 

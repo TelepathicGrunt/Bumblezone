@@ -62,7 +62,8 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
         boolean flag = fluidstate.getType() == Fluids.WATER;
-        return super.getStateForPlacement(context).setValue(WATERLOGGED, flag);
+        BlockState newState = super.getStateForPlacement(context);
+        return newState == null ? null : newState.setValue(WATERLOGGED, flag);
     }
 
     @Override

@@ -792,5 +792,10 @@
       }
     ],
     "subtitle": "subtitles.block.the_bumblezone.crystalline_flower.use"
+  },
+  "block.the_bumblezone.super_candle_wick.lit": {
+    "sounds": [
+      "fire/ignite"
+    ]
   }
 }
