@@ -92,6 +92,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzSurfaceRules.registerSurfaceRules();
         BzStructures.registerStructures();
         BzDimension.registerDimensionParts();
+        BzCommands.registerCommand();
 
         WanderingTrades.addWanderingTrades();
         DispenserItemSetup.setupDispenserBehaviors();
@@ -100,7 +101,6 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         ModChecker.setupModCompat();
         ServerWorldTickEvents.END.register(BzWorldSavedData::tick);
 
-        CommandRegistrationCallback.EVENT.register((dispatcher, integrated, dedicated) -> NoneOpCommands.createCommand(dispatcher));
         EntityDataSerializers.registerSerializer(BeeQueenEntity.QUEEN_POSE_SERIALIZER);
         BeehemothControlsPacket.registerPacket();
         BumbleBeeChestplateFlyingPacket.registerPacket();
