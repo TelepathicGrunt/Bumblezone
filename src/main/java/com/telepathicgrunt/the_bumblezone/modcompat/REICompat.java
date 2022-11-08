@@ -53,6 +53,8 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzItems.HONEY_COCOON);
         addInfo(BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV);
         addInfo(BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY);
+        addInfo(BzItems.MUSIC_DISC_LA_BEE_DA_LOCA);
+        addInfo(BzItems.MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES);
         addInfo(BzItems.STINGER_SPEAR);
         addInfo(BzItems.HONEY_COMPASS);
         addInfo(BzItems.BEE_STINGER);

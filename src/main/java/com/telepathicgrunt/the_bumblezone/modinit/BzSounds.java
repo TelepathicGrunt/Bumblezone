@@ -14,6 +14,8 @@ public class BzSounds {
     public final static SoundEvent BEE_ESSENCE_CONSUMING = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.essence_of_the_bees.consuming"));
     public final static SoundEvent MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "music_disc.honey_bee_rat_faced_boy"));
     public final static SoundEvent MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "music_disc.flight_of_the_bumblebee_rimsky_korsakov"));
+    public final static SoundEvent MUSIC_DISC_LA_BEE_DA_LOCA = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "music_disc.la_bee_da_loca"));
+    public final static SoundEvent MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "music_disc.bee_laxing_with_the_hom_bees"));
     public static final SoundEvent STINGER_SPEAR_HIT = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.stinger_spear.hit"));
     public static final SoundEvent STINGER_SPEAR_HIT_GROUND = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.stinger_spear.hit_ground"));
     public static final SoundEvent STINGER_SPEAR_RETURN = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.stinger_spear.return"));
@@ -57,6 +59,8 @@ public class BzSounds {
         Registry.register(Registry.SOUND_EVENT, BUMBLE_BEE_CHESTPLATE_FLYING.getLocation(), BUMBLE_BEE_CHESTPLATE_FLYING);
         Registry.register(Registry.SOUND_EVENT, MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY.getLocation(), MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY);
         Registry.register(Registry.SOUND_EVENT, MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV.getLocation(), MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV);
+        Registry.register(Registry.SOUND_EVENT, MUSIC_DISC_LA_BEE_DA_LOCA.getLocation(), MUSIC_DISC_LA_BEE_DA_LOCA);
+        Registry.register(Registry.SOUND_EVENT, MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES.getLocation(), MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES);
         Registry.register(Registry.SOUND_EVENT, STINGER_SPEAR_HIT.getLocation(), STINGER_SPEAR_HIT);
         Registry.register(Registry.SOUND_EVENT, STINGER_SPEAR_HIT_GROUND.getLocation(), STINGER_SPEAR_HIT_GROUND);
         Registry.register(Registry.SOUND_EVENT, STINGER_SPEAR_RETURN.getLocation(), STINGER_SPEAR_RETURN);
