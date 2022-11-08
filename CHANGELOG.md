@@ -30,6 +30,10 @@ Adjusted the texture slightly for one variant of Stingless Bee Helmet and Bumble
 
 Carpenter Bees boots now can mine through Carvable Wax block when crouched on top in center of block.
 
+Bee Essence effect will now show message to player if lost on respawning if keepEssenceOfTheBeesOnRespawning config is set to false.
+
+Added command `\bumblezone is_bee_essenced` command to let any player check if they have Bee Essence still active. Does not need op status to use.
+
 Pollen Puff thrown at Mobscarecrow's Default Scarecrow mob will spawn pumpkin stems nearby on valid blocks/farmland
 
 Pollen Puff thrown at Mobvote2022's Sniffer will spawn Moss Carpet nearby.
