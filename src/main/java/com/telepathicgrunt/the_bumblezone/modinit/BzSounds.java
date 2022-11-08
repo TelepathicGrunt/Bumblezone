@@ -24,6 +24,7 @@ public class BzSounds {
     public static final SoundEvent BUMBLE_BEE_CHESTPLATE_FLYING = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "item.the_bumblezone.bumble_bee_chestplate.fly"));
     public static final SoundEvent WASHING_RESIDUES = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "block.the_bumblezone.washing_honey_residues"));
     public static final SoundEvent CRYSTALLINE_FLOWER_USE = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "block.the_bumblezone.crystalline_flower.use"));
+    public static final SoundEvent SUPER_CANDLE_WICK_LIT = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "block.the_bumblezone.super_candle_wick.lit"));
     public static final SoundEvent HONEY_SLIME_ATTACK = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.honey_slime.attack"));
     public static final SoundEvent HONEY_SLIME_HURT = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.honey_slime.hurt"));
     public static final SoundEvent HONEY_SLIME_DEATH = new SoundEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.honey_slime.death"));
@@ -65,6 +66,7 @@ public class BzSounds {
         Registry.register(Registry.SOUND_EVENT, HONEY_CRYSTAL_SHARD_SHATTER.getLocation(), HONEY_CRYSTAL_SHARD_SHATTER);
         Registry.register(Registry.SOUND_EVENT, WASHING_RESIDUES.getLocation(), WASHING_RESIDUES);
         Registry.register(Registry.SOUND_EVENT, CRYSTALLINE_FLOWER_USE.getLocation(), CRYSTALLINE_FLOWER_USE);
+        Registry.register(Registry.SOUND_EVENT, SUPER_CANDLE_WICK_LIT.getLocation(), SUPER_CANDLE_WICK_LIT);
         Registry.register(Registry.SOUND_EVENT, HONEY_SLIME_ATTACK.getLocation(), HONEY_SLIME_ATTACK);
         Registry.register(Registry.SOUND_EVENT, HONEY_SLIME_HURT.getLocation(), HONEY_SLIME_HURT);
         Registry.register(Registry.SOUND_EVENT, HONEY_SLIME_DEATH.getLocation(), HONEY_SLIME_DEATH);
