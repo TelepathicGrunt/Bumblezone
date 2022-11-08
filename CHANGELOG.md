@@ -44,6 +44,10 @@ Made Neurotoxin require more bookshelves before showing up in Enchanting Table
 
 Made Potent Poison enchantment require 1 more bookshelf before showing up in Enchanting Table
 
+##### Teleportation:
+Fixed display message for when teleporting to Bumblezone fails due to not having a certain required block below the hive.
+ This is controlled by the_bumblezone:required_blocks_under_hive_to_teleport block tag which is empty by default to not need a required block for teleporting.
+
 ##### Mod Compat:
 Added config to allow turning off teleportation to Bumblezone if thrown Enderpearl hits top of the hitbox of Llamarama's Bumble Llama.
 

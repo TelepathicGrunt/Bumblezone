@@ -147,7 +147,7 @@ public class EntityTeleportationHookup {
                 else if(BzConfig.warnPlayersOfWrongBlockUnderHive)
                 {
                     //failed. Block below isn't the required block
-                    Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
+                    Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: The attempt to teleport to Bumblezone failed due to not having a block from the following block tag below the hive: the_bumblezone:required_blocks_under_hive_to_teleport");
                     Component message = Component.translatable("system.the_bumblezone.require_hive_blocks_failed");
                     playerEntity.displayClientMessage(message, true);
                     return false;
@@ -230,7 +230,7 @@ public class EntityTeleportationHookup {
                     if(!validBelowBlock && BzConfig.warnPlayersOfWrongBlockUnderHive) {
                         if(pushedEntity instanceof Player playerEntity) {
                             //failed. Block below isn't the required block
-                            Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
+                            Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: The attempt to teleport to Bumblezone failed due to not having a block from the following block tag below the hive: the_bumblezone:required_blocks_under_hive_to_teleport");
                             Component message = Component.translatable("system.the_bumblezone.require_hive_blocks_failed");
                             playerEntity.displayClientMessage(message, true);
                         }
@@ -303,7 +303,7 @@ public class EntityTeleportationHookup {
                 }
                 else if (BzConfig.warnPlayersOfWrongBlockUnderHive) {
                     //failed. Block below isn't the required block
-                    Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.");
+                    Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: The attempt to teleport to Bumblezone failed due to not having a block from the following block tag below the hive: the_bumblezone:required_blocks_under_hive_to_teleport");
                     Component message = Component.translatable("system.the_bumblezone.require_hive_blocks_failed");
                     playerEntity.displayClientMessage(message, true);
                     return false;

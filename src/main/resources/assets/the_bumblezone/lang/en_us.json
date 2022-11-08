@@ -230,10 +230,10 @@
 
   "system.the_bumblezone.teleporting_into_bz": "Teleporting into the Bumblezone...",
   "system.the_bumblezone.teleporting_out_of_bz": "Teleporting out of the Bumblezone...",
-  "system.the_bumblezone.missing_dimension": "Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: %s. A restart will fix this.",
+  "system.the_bumblezone.missing_dimension": "Please restart the server. The Bumblezone dimension hasn't been made. Possibly due to this bug?: %s",
   "system.the_bumblezone.missing_dimension_link": "https://bugs.mojang.com/browse/MC-195468",
   "system.the_bumblezone.failed_teleporting": "Failed to teleport entity. Aborting teleportation. Please retry.",
-  "system.the_bumblezone.require_hive_blocks_failed": "the_bumblezone:required_blocks_under_hive_to_teleport tag does not have the block below the hive.",
+  "system.the_bumblezone.require_hive_blocks_failed": "Bumblezone teleport failed. Hive needs a required block below it.",
   "system.the_bumblezone.no_protection": "You lacked Protection of the Hive effect...",
 
   "advancements.the_bumblezone.root.title": "The Buzzing Bumbling Bumblezone!",
