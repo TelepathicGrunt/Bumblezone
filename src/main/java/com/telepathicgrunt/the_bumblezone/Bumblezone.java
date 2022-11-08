@@ -100,6 +100,7 @@ public class Bumblezone{
         forgeBus.addListener(ThreadExecutor::handleServerAboutToStartEvent);
         forgeBus.addListener(ThreadExecutor::handleServerStoppingEvent);
         forgeBus.addListener(EventPriority.NORMAL, this::registerDatapackListener);
+        forgeBus.addListener(BzCommands::registerCommand);
 
         //Registration
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
