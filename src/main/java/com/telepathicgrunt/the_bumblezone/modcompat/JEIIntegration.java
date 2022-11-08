@@ -64,6 +64,8 @@ public class JEIIntegration implements IModPlugin {
 		addInfo(registration, BzItems.HONEY_COCOON.get());
 		addInfo(registration, BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV.get());
 		addInfo(registration, BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY.get());
+		addInfo(registration, BzItems.MUSIC_DISC_LA_BEE_DA_LOCA.get());
+		addInfo(registration, BzItems.MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES.get());
 		addInfo(registration, BzItems.STINGER_SPEAR.get());
 		addInfo(registration, BzItems.HONEY_COMPASS.get());
 		addInfo(registration, BzItems.BEE_STINGER.get());
