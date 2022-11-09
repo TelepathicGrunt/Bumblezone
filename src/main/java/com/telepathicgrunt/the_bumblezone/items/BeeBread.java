@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
@@ -35,6 +36,10 @@ public class BeeBread extends Item {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
         if (!playerEntity.isCreative()) {
             itemstack.shrink(1);
+        }
+
+        if (playerEntity instanceof ServerPlayer serverPlayer) {
+            EntityMisc.onBeesFed(playerEntity);
         }
 
         playerEntity.swing(playerHand, true);

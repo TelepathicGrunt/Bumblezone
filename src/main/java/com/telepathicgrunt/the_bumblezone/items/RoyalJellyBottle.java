@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
@@ -97,6 +98,8 @@ public class RoyalJellyBottle extends Item {
         entity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 24000, 3, true, true, true));
         if (playerEntity instanceof ServerPlayer) {
             BzCriterias.BEENERGIZED_MAXED_TRIGGER.trigger((ServerPlayer) playerEntity);
+
+            EntityMisc.onBeesFed(playerEntity);
         }
 
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
