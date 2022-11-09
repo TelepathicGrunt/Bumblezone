@@ -43,8 +43,8 @@ Pollen Puff thrown at Probably Chests's Lush Mimic Chests may rarely spawn Azale
 Pollen Puff thrown at Woof's Lush variant Wolf will spawn Moss Carpet nearby.
 
 ##### Advancements:
-Added `\bumblezone queen_desire_xxxxxxxx` commands. These commands lets you see your progress towards many Queen Desire Advancements!
- See autocomplete for all options. Entity killed counter does not have a command at this time.
+Added `\bumblezone queen_desire_xxxxxxxx` commands. These commands let you see your progress towards many Queen Desire Advancements!
+ See the suggestion autocomplete for all options. Killed counter data requires an entity argument afterwards.
 
 Fixed Bee Bread and Royal Jelly Bottle being fed to bees not counting towards the Queen's Desire advancement about feeding bees.
 
