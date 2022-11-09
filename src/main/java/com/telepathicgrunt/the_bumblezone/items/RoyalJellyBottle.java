@@ -98,8 +98,6 @@ public class RoyalJellyBottle extends Item {
         entity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 24000, 3, true, true, true));
         if (playerEntity instanceof ServerPlayer) {
             BzCriterias.BEENERGIZED_MAXED_TRIGGER.trigger((ServerPlayer) playerEntity);
-
-            EntityMisc.onBeesFed(playerEntity);
         }
 
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
@@ -107,6 +105,7 @@ public class RoyalJellyBottle extends Item {
             itemstack.shrink(1);
         }
 
+        EntityMisc.onBeesFed(playerEntity);
         playerEntity.swing(playerHand, true);
         return InteractionResult.SUCCESS;
     }

@@ -38,10 +38,7 @@ public class BeeBread extends Item {
             itemstack.shrink(1);
         }
 
-        if (playerEntity instanceof ServerPlayer serverPlayer) {
-            EntityMisc.onBeesFed(playerEntity);
-        }
-
+        EntityMisc.onBeesFed(playerEntity);
         playerEntity.swing(playerHand, true);
         return InteractionResult.SUCCESS;
     }
