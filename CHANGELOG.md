@@ -1,8 +1,13 @@
 ### **(V.6.4.0 Changes) (1.19.2 Minecraft)**
 
+##### Music:
+Added two new songs by LudoCrypt!
+ They will play randomly in Bumblezone but they also have Music Disc forms obtainable from Wandering traders!
+
 ##### Textures:
 Add Continuity on to have Connected Textures for Porous Honeycomb Block and Empty Honeycomb Brood Block when either are 
  touching Filled Porous Honeycomb Block or Honeycomb Brood Block! Now is a required dependency due to how good this looks lol.
+ Special thanks to CrispyTwig for setting up the CTM resource files!
 
 ##### Blocks:
 Fixed opening Crystalline Flower's UI not incrementing the stat for interacting with it.
@@ -59,10 +64,6 @@ Made Potent Poison enchantment require 1 more bookshelf before showing up in Enc
 ##### Teleportation:
 Fixed display message for when teleporting to Bumblezone fails due to not having a certain required block below the hive.
  This is controlled by the_bumblezone:required_blocks_under_hive_to_teleport block tag which is empty by default to not need a required block for teleporting.
-
-##### Music:
-Added two new songs by LudoCrypt!
- They will play randomly in Bumblezone but they also have Music Disc forms obtainable from Wandering traders!
 
 ##### Mod Compat:
 Added config to allow turning off teleportation to Bumblezone if thrown Enderpearl hits top of the hitbox of Llamarama's Bumble Llama.
