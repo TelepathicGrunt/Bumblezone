@@ -22,6 +22,8 @@ Glistering Honey Crystal now uses a facing property instead of axis property. Al
 
 Added sound for lighting Super/Incense Candles.
 
+Reduced duplicate entries in Bumblezone's Super Candle block and item tags.
+
 ##### Items:
 Made an item form for all Carvable Wax blockstates to make building with it easier.
  Mining a Carvable Wax will drop the item form of its blockstate.
