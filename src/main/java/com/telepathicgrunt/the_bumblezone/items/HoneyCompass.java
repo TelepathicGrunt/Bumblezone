@@ -245,11 +245,21 @@ public class HoneyCompass extends Item implements Vanishable {
     @Override
     public void appendHoverText(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
         if (isThroneStructureCompass(itemStack)) {
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_throne_description"));
             components.forEach(component -> {
                 if (component instanceof MutableComponent mutableComponent) {
                     mutableComponent.withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD);
                 }
             });
+        }
+        else if (isBlockCompass(itemStack)) {
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description"));
+        }
+        else if (isStructureCompass(itemStack)) {
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_structure_description"));
+        }
+        else {
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_description"));
         }
     }
 

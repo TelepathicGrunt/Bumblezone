@@ -35,6 +35,8 @@ Adjusted the texture slightly for one variant of Stingless Bee Helmet and Bumble
 
 Carpenter Bees boots now can mine through Carvable Wax block when crouched on top in center of block.
 
+Added tooltip descriptions to Honey Compass to make it more clear on how to use it.
+
 Bee Essence effect will now show message to player if lost on respawning if keepEssenceOfTheBeesOnRespawning config is set to false.
 
 Added command `\bumblezone is_bee_essenced` command to let any player check if they have Bee Essence still active. Does not need op status to use.
