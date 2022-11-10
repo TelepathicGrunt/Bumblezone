@@ -1,23 +1,7 @@
 {
   "replace": false,
   "values": [
-    "the_bumblezone:super_candle",
-    "the_bumblezone:super_candle_black",
-    "the_bumblezone:super_candle_blue",
-    "the_bumblezone:super_candle_brown",
-    "the_bumblezone:super_candle_cyan",
-    "the_bumblezone:super_candle_gray",
-    "the_bumblezone:super_candle_green",
-    "the_bumblezone:super_candle_light_blue",
-    "the_bumblezone:super_candle_light_gray",
-    "the_bumblezone:super_candle_lime",
-    "the_bumblezone:super_candle_magenta",
-    "the_bumblezone:super_candle_orange",
-    "the_bumblezone:super_candle_pink",
-    "the_bumblezone:super_candle_purple",
-    "the_bumblezone:super_candle_red",
-    "the_bumblezone:super_candle_white",
-    "the_bumblezone:super_candle_yellow",
-    "the_bumblezone:incense_candle"
+    "the_bumblezone:incense_candle",
+    "#the_bumblezone:super_candles"
   ]
 }
