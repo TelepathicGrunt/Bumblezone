@@ -55,6 +55,9 @@ Made Potent Poison enchantment require 1 more bookshelf before showing up in Enc
 Fixed display message for when teleporting to Bumblezone fails due to not having a certain required block below the hive.
  This is controlled by the_bumblezone:required_blocks_under_hive_to_teleport block tag which is empty by default to not need a required block for teleporting.
 
+##### Structures:
+Made Pollinated Streams structure now spawn above ground with pillar support! Looks cooler and much, much easier to find!
+
 ##### Mod Compat:
 Added config to allow turning off teleportation to Bumblezone if thrown Enderpearl hits top of the hitbox of a mob wearing Productive Bees's Bee Nest helmet.
 
