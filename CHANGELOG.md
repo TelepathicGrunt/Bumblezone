@@ -3,6 +3,9 @@
 ##### Music:
 Added two new songs by LudoCrypt!
  They will play randomly in Bumblezone but they also have Music Disc forms obtainable from Wandering traders!
+ The songs can be obtained from Bandcamp here from LudoCrypt:
+ https://ludocrypt.bandcamp.com/track/bee-laxing-with-the-hom-bees
+ https://ludocrypt.bandcamp.com/track/la-bee-da-loca
 
 ##### Textures:
 Add Continuity on to have Connected Textures for Porous Honeycomb Block and Empty Honeycomb Brood Block when either are 
