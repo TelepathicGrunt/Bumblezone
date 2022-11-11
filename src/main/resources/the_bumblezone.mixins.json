@@ -49,7 +49,9 @@
     "world.ServerWorldMixin",
     "world.SinglePoolElementAccessor",
     "world.StructurePoolAccessor",
+    "world.StructureProcessorAccessor",
     "world.StructureTemplateAccessor",
+    "world.StructureTemplateMixin",
     "world.WorldGenRegionAccessor"
   ],
   "client": [

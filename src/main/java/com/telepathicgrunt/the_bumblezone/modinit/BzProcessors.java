@@ -16,6 +16,7 @@ import com.telepathicgrunt.the_bumblezone.world.processors.ReplaceNotAirProcesso
 import com.telepathicgrunt.the_bumblezone.world.processors.SpawnerRandomizingProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.SpiderInfestedBeeDungeonProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.TagReplaceProcessor;
+import com.telepathicgrunt.the_bumblezone.world.processors.WaterloggingFixProcessor;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -39,4 +40,5 @@ public class BzProcessors {
     public static final RegistryObject<StructureProcessorType<RandomReplaceWithPropertiesProcessor>> RANDOM_REPLACE_WITH_PROPERTIES_PROCESSOR = STRUCTURE_PROCESSOR.register("random_replace_with_properties_processor", () -> () -> RandomReplaceWithPropertiesProcessor.CODEC);
     public static final RegistryObject<StructureProcessorType<PillarProcessor>> PILLAR_PROCESSOR = STRUCTURE_PROCESSOR.register("pillar_processor", () -> () -> PillarProcessor.CODEC);
     public static final RegistryObject<StructureProcessorType<TagReplaceProcessor>> TAG_REPLACE_PROCESSOR = STRUCTURE_PROCESSOR.register("tag_replace_processor", () -> () -> TagReplaceProcessor.CODEC);
+    public static final RegistryObject<StructureProcessorType<WaterloggingFixProcessor>> WATERLOGGING_FIX_PROCESSOR = STRUCTURE_PROCESSOR.register("waterlogging_fix_processor", () -> () -> WaterloggingFixProcessor.CODEC);
 }
