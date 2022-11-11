@@ -22,6 +22,9 @@ Fixed Honeycomb Brood Block and Empty Honeycomb Brood Block facing the wrong way
 
 Honeycomb Brood Block now has many more animation variations so the block is not always in sync with other blocks of itself in the world.
 
+Fixed Honeycomb Brood Block spawning an adult bee instead of a baby one when triggered to spawn a bee by Dispenser using
+ Glass Bottle, Honey Bottle, Sugar Water Bottle, or Honey Bucket on the stage 4 Honeycomb Brood Block.
+
 Carvable Wax block now has a facing property. Some patterns will face different directions based on how you place it!
 
 Glistering Honey Crystal now uses a facing property instead of axis property. Allows for more directions when placing for easier builds!

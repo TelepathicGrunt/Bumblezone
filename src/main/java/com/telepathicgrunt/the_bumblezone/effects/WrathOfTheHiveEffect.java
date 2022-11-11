@@ -77,7 +77,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
                 // Spawn bees when high wrath effect.
                 // Must be very low as this method is fired every tick for status effects.
                 // We don't want to spawn millions of bees
-                if(!world.isClientSide() && entity.getRandom().nextFloat() <= 0.0045f) {
+                if(world instanceof ServerLevel serverLevel && entity.getRandom().nextFloat() <= 0.0045f) {
                     // Grab a nearby air materialposition a bit away
                     BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(entity, 30, 10);
                     if(world.getBlockState(spawnBlockPos).getMaterial() != Material.AIR) {
@@ -86,6 +86,14 @@ public class WrathOfTheHiveEffect extends MobEffect {
 
                     Bee bee = EntityType.BEE.create(world);
                     if(bee == null) return;
+
+                    bee.finalizeSpawn(
+                            serverLevel,
+                            serverLevel.getCurrentDifficultyAt(spawnBlockPos),
+                            MobSpawnType.TRIGGERED,
+                            null,
+                            null
+                    );
 
                     bee.absMoveTo(
                             spawnBlockPos.getX() + 0.5D,
