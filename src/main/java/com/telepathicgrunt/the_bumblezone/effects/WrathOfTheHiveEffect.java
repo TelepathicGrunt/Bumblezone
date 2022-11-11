@@ -65,6 +65,11 @@ public class WrathOfTheHiveEffect extends MobEffect {
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         Level world = entity.level;
 
+        if (entity.isDeadOrDying()) {
+            calmTheBees(world, entity);
+            return;
+        }
+
         //Maximum aggression
         if (amplifier >= 2) {
             unBEElievablyHighAggression(world, entity);
