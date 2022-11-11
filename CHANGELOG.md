@@ -9,7 +9,7 @@ Added two new songs by LudoCrypt!
 
 ##### Textures:
 Add Continuity on to have Connected Textures for Porous Honeycomb Block and Empty Honeycomb Brood Block when either are 
- touching Filled Porous Honeycomb Block or Honeycomb Brood Block! Now is a required dependency due to how good this looks lol.
+ touching Filled Porous Honeycomb Block or Honeycomb Brood Block! Now is a recommended optional dependency due to how good this looks lol.
  Special thanks to CrispyTwig for setting up the CTM resource files!
 
 ##### Blocks:
