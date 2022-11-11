@@ -53,6 +53,10 @@ Added `\bumblezone queen_desire_xxxxxxxx` commands. These commands let you see y
 
 Fixed Bee Bread and Royal Jelly Bottle being fed to bees not counting towards the Queen's Desire advancement about feeding bees.
 
+Moved Essence of the Bee consuming advancement to be at the end of the Queen's Desire advancement tree.
+ Resetting the Queen's Desire advancement line by Bee Queen when fully completed will not reset the
+ Essence of the Bee consuming advancement to show you had previously beaten this advancement line before.
+
 ##### Enchantments:
 Nerfed Neurotoxins enchantment so its missed counter does not increment if player hits entity while entity is already paralyzed.
  Helps prevent paralysis locking bosses.
