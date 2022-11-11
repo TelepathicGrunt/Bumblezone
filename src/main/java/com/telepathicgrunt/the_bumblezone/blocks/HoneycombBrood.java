@@ -223,10 +223,10 @@ public class HoneycombBrood extends ProperFacingBlock {
             }
         }
         else if(BzConfig.broodBlocksBeeSpawnCapacity != 0) {
-            if(!nearbyEntities.isEmpty() && GeneralUtils.getEntityCountInBz() < BzConfig.broodBlocksBeeSpawnCapacity * 1.75f) {
+            if(!nearbyEntities.isEmpty() && GeneralUtils.getNearbyActiveEntitiesInDimension(world, position) < BzConfig.broodBlocksBeeSpawnCapacity * 1.75f) {
                 spawnBroodMob(world, random, state, position, stage);
             }
-            else if(GeneralUtils.getEntityCountInBz() < BzConfig.broodBlocksBeeSpawnCapacity) {
+            else if(GeneralUtils.getNearbyActiveEntitiesInDimension(world, position) < BzConfig.broodBlocksBeeSpawnCapacity) {
                 spawnBroodMob(world, random, state, position, stage);
             }
         }
