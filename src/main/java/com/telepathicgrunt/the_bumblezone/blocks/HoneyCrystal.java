@@ -207,6 +207,14 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     }
 
     /**
+     * Return this blockitem for creative middle click (pick block)
+     */
+    @Override
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+        return BzItems.HONEY_CRYSTAL.getDefaultInstance();
+    }
+
+    /**
      * This block is translucent and can let some light through
      */
     @Override
