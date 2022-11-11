@@ -1,0 +1,76 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 20,
+          "min_inclusive": 16
+        }
+      },
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:red_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:carvable_wax",
+            "Properties": {
+              "carving": "bricks"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 8,
+          "min_inclusive": 4
+        }
+      },
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:orange_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:carvable_wax",
+            "Properties": {
+              "carving": "bricks"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 2,
+          "min_inclusive": 1
+        }
+      },
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:yellow_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:carvable_wax",
+            "Properties": {
+              "carving": "bricks"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -21,12 +21,18 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JigsawBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.RandomState;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -273,6 +279,37 @@ public class GeneralUtils {
 
     private static boolean isReplaceableByStructures(BlockState blockState) {
         return blockState.isAir() || blockState.getMaterial().isLiquid() || blockState.getMaterial().isReplaceable() || blockState.is(BzBlocks.HONEY_CRYSTAL.get());
+    }
+
+    //////////////////////////////////////////////
+
+    public static BlockPos getLowestLand(ChunkGenerator chunkGenerator, RandomState randomState, BoundingBox boundingBox, LevelHeightAccessor heightLimitView, boolean canBeOnLiquid, boolean canBeInLiquid) {
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(boundingBox.getCenter().getX(), chunkGenerator.getMinY(), boundingBox.getCenter().getZ());
+        NoiseColumn blockView = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView, randomState);
+        BlockState currentBlockstate = blockView.getBlock(mutable.getY());
+        BlockState pastBlockstate = currentBlockstate;
+        while (mutable.getY() <= getMaxTerrainLimit(chunkGenerator)) {
+            if(canBeInLiquid && !currentBlockstate.getFluidState().isEmpty())
+            {
+                mutable.move(Direction.UP);
+                return mutable;
+            }
+            else if((canBeOnLiquid || !pastBlockstate.getFluidState().isEmpty()) && currentBlockstate.isAir())
+            {
+                mutable.move(Direction.UP);
+                return mutable;
+            }
+
+            mutable.move(Direction.UP);
+            pastBlockstate = currentBlockstate;
+            currentBlockstate = blockView.getBlock(mutable.getY());
+        }
+
+        return mutable;
+    }
+
+    public static int getMaxTerrainLimit(ChunkGenerator chunkGenerator) {
+        return chunkGenerator.getMinY() + chunkGenerator.getGenDepth();
     }
 
     //////////////////////////////////////////////
