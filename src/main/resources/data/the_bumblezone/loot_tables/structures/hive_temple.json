@@ -325,7 +325,7 @@
             },
             {
               "function": "minecraft:set_nbt",
-              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_mystery_structure_description\"}"
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_mystery_structure_description\"}"
             },
             {
               "function": "minecraft:set_nbt",
