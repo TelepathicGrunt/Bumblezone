@@ -436,7 +436,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
 
-        if (stack.equals(ItemStack.EMPTY) && player instanceof ServerPlayer serverPlayer) {
+        if (stack.isEmpty() && player instanceof ServerPlayer serverPlayer) {
             if (finalbeeQueenAdvancementDone(serverPlayer)) {
                 MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
                 if (!capability.receivedEssencePrize) {
@@ -512,9 +512,15 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         return InteractionResult.PASS;
     }
 
+
+    private static final ResourceLocation ESSENCE_ADVANCEMENT_RL = new ResourceLocation(Bumblezone.MODID, "the_bumblezone/the_queens_desire/essence_infusion");
     private void resetAdvancementTree(ServerPlayer serverPlayer, ResourceLocation advancementRL) {
         Iterable<Advancement> advancements = serverPlayer.server.getAdvancements().getAdvancement(advancementRL).getChildren();
         for (Advancement advancement : advancements) {
+            if (advancement.getId().equals(ESSENCE_ADVANCEMENT_RL)) {
+                continue;
+            }
+
             AdvancementProgress advancementprogress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
             for(String criteria : advancementprogress.getCompletedCriteria()) {
                 serverPlayer.getAdvancements().revoke(advancement, criteria);
