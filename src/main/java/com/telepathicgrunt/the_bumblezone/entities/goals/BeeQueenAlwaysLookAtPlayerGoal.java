@@ -45,7 +45,7 @@ public class BeeQueenAlwaysLookAtPlayerGoal extends Goal {
             this.lookAt = this.mob.level.getNearestPlayer(this.lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
         }
         else {
-            this.lookAt = this.mob.level.getNearestEntity(this.mob.level.getEntitiesOfClass(this.lookAtType, this.mob.getBoundingBox().inflate((double)this.lookDistance, 3.0D, (double)this.lookDistance), (p_148124_) -> true), this.lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
+            this.lookAt = this.mob.level.getNearestEntity(this.mob.level.getEntitiesOfClass(this.lookAtType, this.mob.getBoundingBox().inflate(this.lookDistance, 3.0D, this.lookDistance), (livingEntity) -> true), this.lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
         }
 
         return this.lookAt != null;
@@ -68,7 +68,7 @@ public class BeeQueenAlwaysLookAtPlayerGoal extends Goal {
     public void tick() {
         if (this.lookAt != null && this.lookAt.isAlive()) {
             double y = this.onlyHorizontal ? this.mob.getEyeY() : this.lookAt.getEyeY();
-            this.mob.getLookControl().setLookAt(this.lookAt.getX(), y, this.lookAt.getZ(), 0.05f, this.mob.getMaxHeadXRot());
+            this.mob.getLookControl().setLookAt(this.lookAt.getX(), y, this.lookAt.getZ(), 0.05f, 0.05f);
         }
     }
 }
