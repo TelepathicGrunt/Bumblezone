@@ -75,6 +75,9 @@ Fixed display message for when teleporting to Bumblezone fails due to not having
 ##### Structures:
 Made Pollinated Streams structure now spawn above ground with pillar support! Looks cooler and much, much easier to find!
 
+##### Effects:
+Entities with Wrath of the Hive dying will remove the Wrath boosts from nearby bees that were targeting the Wrath afflicted mob.
+
 ##### Mod Compat:
 Added config to allow turning off teleportation to Bumblezone if thrown Enderpearl hits top of the hitbox of Llamarama's Bumble Llama.
 
