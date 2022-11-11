@@ -87,7 +87,12 @@ Fixed display message for when teleporting to Bumblezone fails due to not having
  This is controlled by the_bumblezone:required_blocks_under_hive_to_teleport block tag which is empty by default to not need a required block for teleporting.
 
 ##### Structures:
+Added Hive Temple structure! A small Beeswax structure that has some persistent Honey Slimes and a small bit of loot.
+ If you're lucky, you may find a Honey Compass in it that points to a Hanging Garden structure!
+
 Made Pollinated Streams structure now spawn above ground with pillar support! Looks cooler and much, much easier to find!
+
+Honey Cave Room structure is a bit more common now.
 
 ##### Effects:
 Entities with Wrath of the Hive dying will remove the Wrath boosts from nearby bees that were targeting the Wrath afflicted mob.

@@ -99,6 +99,8 @@
   "item.the_bumblezone.honey_compass_structure_description": "Right click a Beehive/Bee Nest to switch to block position mode! Compass will point to block's position.",
   "item.the_bumblezone.honey_compass_block_description": "Right click the air in Bumblezone to switch to locating a Cell Maze structure! Or right click a different Beehive/Bee Nest block to lock to its position!",
   "item.the_bumblezone.honey_compass_throne_description": "Follow this compass! The Queen awaits!",
+  "item.the_bumblezone.honey_compass_mystery_structure": "Honey Compass - Mystery Structure",
+  "item.the_bumblezone.honey_compass_mystery_structure_description": "Where does this leads to?",
   "item.the_bumblezone.bee_cannon": "Bee Cannon",
   "item.the_bumblezone.crystal_cannon": "Crystal Cannon",
   "item.the_bumblezone.stingless_bee_helmet_1": "Stingless Bee Helmet",

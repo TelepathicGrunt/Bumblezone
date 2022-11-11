@@ -105,7 +105,7 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
                 return TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(s));
             }
             else {
-                return BzTags.HONEY_COMPASS_LOCATING;
+                return BzTags.HONEY_COMPASS_DEFAULT_LOCATING;
             }
         }
     }

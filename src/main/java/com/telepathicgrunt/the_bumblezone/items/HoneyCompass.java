@@ -147,7 +147,7 @@ public class HoneyCompass extends Item implements Vanishable {
 
         if (!level.isClientSide() && !isThroneStructureCompass(itemStack) && !isStructureCompass(itemStack)) {
             setLoadingTags(itemStack.getOrCreateTag(), true);
-            ThreadExecutor.locate((ServerLevel) level, BzTags.HONEY_COMPASS_LOCATING, playerPos, 100, false)
+            ThreadExecutor.locate((ServerLevel) level, BzTags.HONEY_COMPASS_DEFAULT_LOCATING, playerPos, 100, false)
                     .thenOnServerThread(foundPos -> setCompassData((ServerLevel) level, (ServerPlayer) player, interactionHand, itemStack, foundPos));
             return InteractionResultHolder.success(itemStack);
         }

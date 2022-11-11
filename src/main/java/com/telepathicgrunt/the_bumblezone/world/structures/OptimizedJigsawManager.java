@@ -12,6 +12,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.QuartPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.Vec3i;
 import net.minecraft.data.worldgen.Pools;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.pools.EmptyPoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawJunction;
@@ -101,9 +103,22 @@ public class OptimizedJigsawManager {
         BoundingBox pieceBoundingBox = startPiece.getBoundingBox();
         int pieceCenterX = (pieceBoundingBox.maxX() + pieceBoundingBox.minX()) / 2;
         int pieceCenterZ = (pieceBoundingBox.maxZ() + pieceBoundingBox.minZ()) / 2;
-        int pieceCenterY = heightmapType
-                .map(types -> startPos.getY() + context.chunkGenerator().getFirstFreeHeight(pieceCenterX, pieceCenterZ, types, context.heightAccessor(), context.randomState()))
-                .orElseGet(startPos::getY);
+        int pieceCenterY = startPos.getY();
+
+        if (heightmapType.isPresent()) {
+            pieceCenterY += GeneralUtils.getLowestLand(
+                context.chunkGenerator(),
+                context.randomState(),
+                pieceBoundingBox,
+                context.heightAccessor(),
+                true,
+                heightmapType.get() == Heightmap.Types.OCEAN_FLOOR_WG
+            ).getY();
+
+            if (pieceCenterY >= GeneralUtils.getMaxTerrainLimit(context.chunkGenerator()) - pieceBoundingBox.maxY()) {
+                return Optional.empty();
+            }
+        }
 
         int yAdjustment = pieceBoundingBox.minY() + startPiece.getGroundLevelDelta();
         startPiece.move(0, pieceCenterY - yAdjustment, 0);
@@ -111,6 +126,7 @@ public class OptimizedJigsawManager {
             return Optional.empty();
         }
 
+        int finalPieceCenterY = pieceCenterY;
         return Optional.of(new Structure.GenerationStub(new BlockPos(pieceCenterX, pieceCenterY, pieceCenterZ), (structurePiecesBuilder) -> {
             List<PoolElementStructurePiece> components = new ArrayList<>();
             components.add(startPiece);
@@ -118,10 +134,10 @@ public class OptimizedJigsawManager {
             components.add(startPiece); // Add start piece to list of pieces
 
             if (size > 0) {
-                AABB axisAlignedBB = new AABB(pieceCenterX - maxDistanceFromCenter, pieceCenterY - (maxDistanceFromCenter + 40), pieceCenterZ - maxDistanceFromCenter, pieceCenterX + maxDistanceFromCenter + 1, pieceCenterY + (maxDistanceFromCenter + 120), pieceCenterZ + maxDistanceFromCenter + 1);
+                AABB axisAlignedBB = new AABB(pieceCenterX - maxDistanceFromCenter, finalPieceCenterY - (maxDistanceFromCenter + 40), pieceCenterZ - maxDistanceFromCenter, pieceCenterX + maxDistanceFromCenter + 1, finalPieceCenterY + (maxDistanceFromCenter + 120), pieceCenterZ + maxDistanceFromCenter + 1);
                 BoxOctree boxOctree = new BoxOctree(axisAlignedBB); // The maximum boundary of the entire structure
                 boxOctree.addBox(AABB.of(pieceBoundingBox));
-                Entry startPieceEntry = new Entry(startPiece, new MutableObject<>(boxOctree), pieceCenterY + 80, 0);
+                Entry startPieceEntry = new Entry(startPiece, new MutableObject<>(boxOctree), finalPieceCenterY + 80, 0);
 
                 Assembler assembler = new Assembler(jigsawPoolRegistry, size, context, components, random);
                 assembler.availablePieces.addLast(startPieceEntry);
@@ -138,6 +154,19 @@ public class OptimizedJigsawManager {
             // Do not generate if out of bounds
             if(structurePiecesBuilder.getBoundingBox().maxY() > context.heightAccessor().getMaxBuildHeight()) {
                 structurePiecesBuilder.clear();
+                return;
+            }
+
+            if(components.isEmpty()) {
+                return;
+            }
+
+            Vec3i structureCenter = components.get(0).getBoundingBox().getCenter();
+            int xOffset = startPos.getX() - structureCenter.getX();
+            int zOffset = startPos.getZ() - structureCenter.getZ();
+
+            for(StructurePiece structurePiece : components) {
+                structurePiece.move(xOffset, 0, zOffset);
             }
         }));
     }
