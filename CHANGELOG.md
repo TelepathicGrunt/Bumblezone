@@ -43,6 +43,13 @@ Carpenter Bees boots now can mine through Carvable Wax block when crouched on to
 
 Added tooltip descriptions to Honey Compass to make it more clear on how to use it.
 
+Honey Compass now has a CustomName and CustomDescription nbt that takes a translation key to give it unique names or descriptions.
+ Also now has a Locked nbt if you wish to spawn compasses that cannot be change to locate something else.
+ These tags are used for the Honey Compass that locates a "mystery" structure.
+
+Honey Compasses now only have the enchanted glint look if it is locating a Throne Pillar structure or is "locked" and cannot be made to locate anything else.
+ Basically enchanted looking Honey Compass will not have the ability to right-click for saving Beehives/Bee Nests positions or locating Cell Maze.
+
 Bee Essence effect will now show message to player if lost on respawning if keepEssenceOfTheBeesOnRespawning config is set to false.
 
 Added command `\bumblezone is_bee_essenced` command to let any player check if they have Bee Essence still active. Does not need op status to use.
