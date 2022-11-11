@@ -57,6 +57,9 @@ Moved Essence of the Bee consuming advancement to be at the end of the Queen's D
  Resetting the Queen's Desire advancement line by Bee Queen when fully completed will not reset the
  Essence of the Bee consuming advancement to show you had previously beaten this advancement line before.
 
+##### Entities:
+Fixed right clicking Bee Queen with empty hand sometimes not resetting the Queen's Desire advancement line when all of those advancements are done.
+
 ##### Enchantments:
 Nerfed Neurotoxins enchantment so its missed counter does not increment if player hits entity while entity is already paralyzed.
  Helps prevent paralysis locking bosses.
