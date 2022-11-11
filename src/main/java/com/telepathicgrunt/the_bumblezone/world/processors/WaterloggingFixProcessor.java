@@ -39,6 +39,6 @@ public class WaterloggingFixProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return BzProcessors.WATERLOGGING_FIX_PROCESSOR.get();
+        return BzProcessors.WATERLOGGING_FIX_PROCESSOR;
     }
 }

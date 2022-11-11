@@ -23,7 +23,7 @@ public class StructureTemplateMixin {
                                                               RandomSource random, int flag, CallbackInfoReturnable<Boolean> cir) {
 
         if(structurePlaceSettings.getProcessors().stream().anyMatch(processor ->
-                ((StructureProcessorAccessor)processor).callGetType() == BzProcessors.WATERLOGGING_FIX_PROCESSOR.get())) {
+                ((StructureProcessorAccessor)processor).callGetType() == BzProcessors.WATERLOGGING_FIX_PROCESSOR)) {
             structurePlaceSettings.setKeepLiquids(false);
         }
     }
