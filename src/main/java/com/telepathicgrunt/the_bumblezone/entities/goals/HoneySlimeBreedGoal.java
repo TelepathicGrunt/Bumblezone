@@ -8,11 +8,13 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ForgeHooks;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -121,12 +123,13 @@ public class HoneySlimeBreedGoal extends Goal {
             this.field_75391_e.resetLove();
             childEntity.setAge(-24000);
             childEntity.moveTo(this.slime.getX(), this.slime.getY(), this.slime.getZ(), 0.0F, 0.0F);
-            this.world.addFreshEntity(childEntity);
-            this.world.broadcastEntityEvent(this.slime, (byte)18);
-            if (this.world.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
-                this.world.addFreshEntity(new ExperienceOrb(this.world, this.slime.getX(), this.slime.getY(), this.slime.getZ(), this.slime.getRandom().nextInt(7) + 1));
+            if (ForgeHooks.canEntitySpawn(childEntity, world, childEntity.position().x(), childEntity.position().y(), childEntity.position().z(), null, MobSpawnType.BREEDING) != -1) {
+                this.world.addFreshEntity(childEntity);
+                this.world.broadcastEntityEvent(this.slime, (byte) 18);
+                if (this.world.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
+                    this.world.addFreshEntity(new ExperienceOrb(this.world, this.slime.getX(), this.slime.getY(), this.slime.getZ(), this.slime.getRandom().nextInt(7) + 1));
+                }
             }
-
         }
     }
 }

@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeHooks;
 
 
 public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavior {
@@ -40,6 +41,7 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
         }
         else if (blockstate.is(BzBlocks.HONEYCOMB_BROOD.get()) && stack.is(BzTags.BEE_FEEDING_ITEMS)) {
             // spawn bee if at final stage and front isn't blocked off
+            boolean deniedBeeSpawn = false;
             int stage = blockstate.getValue(HoneycombBrood.STAGE);
             if (stage == 3) {
                 // the front of the block
@@ -51,8 +53,14 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
                     Mob beeEntity = EntityType.BEE.create(world);
                     beeEntity.moveTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, beeEntity.getRandom().nextFloat() * 360.0F, 0.0F);
                     beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(new BlockPos(beeEntity.position())), MobSpawnType.TRIGGERED, null, null);
-                    world.addFreshEntity(beeEntity);
-                    world.setBlockAndUpdate(position, blockstate.setValue(HoneycombBrood.STAGE, 0));
+                    beeEntity.setBaby(true);
+                    if (ForgeHooks.canEntitySpawn(beeEntity, world, beeEntity.position().x(), beeEntity.position().y(), beeEntity.position().z(), null, MobSpawnType.DISPENSER) != -1) {
+                        world.addFreshEntity(beeEntity);
+                        world.setBlockAndUpdate(position, blockstate.setValue(HoneycombBrood.STAGE, 0));
+                    }
+                    else {
+                        deniedBeeSpawn = true;
+                    }
                 }
             }
             else {
@@ -76,16 +84,18 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
                 world.setBlockAndUpdate(position, blockstate.setValue(HoneycombBrood.STAGE, 3));
             }
 
-            stack.shrink(1);
-            if (!stack.isEmpty())
-                addBucketToDispenser(source);
-            else
-                stack = new ItemStack(Items.BUCKET);
+            if (!deniedBeeSpawn) {
+                stack.shrink(1);
+                if (!stack.isEmpty())
+                    addBucketToDispenser(source);
+                else
+                    stack = new ItemStack(Items.BUCKET);
+            }
 
             return stack;
         }
         else {
-            return this.DROP_ITEM_BEHAVIOR.dispense(source, stack);
+            return DROP_ITEM_BEHAVIOR.dispense(source, stack);
         }
     }
 
