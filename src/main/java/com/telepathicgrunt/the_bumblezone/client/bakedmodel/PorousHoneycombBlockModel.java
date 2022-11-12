@@ -112,6 +112,70 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
         }
     }
 
+    private void checkAdjacent(BlockAndTintGetter level, BlockPos.MutableBlockPos mutable, BlockPos origin, Map<Direction, Set<CORNERS>> map) {
+        for (Direction d : Direction.Plane.HORIZONTAL) {
+            if (needsConnection(level, mutable.setWithOffset(origin, d))) {
+                final Set<CORNERS> ccw = map.get(d.getCounterClockWise());
+                final Set<CORNERS> cw = map.get(d.getClockWise());
+                final Set<CORNERS> up = map.get(Direction.UP);
+                final Set<CORNERS> down = map.get(Direction.DOWN);
+                if (d == Direction.EAST) {
+                    ccw.add(CORNERS.TOP_LEFT);
+                    ccw.add(CORNERS.BOTTOM_LEFT);
+                    cw.add(CORNERS.TOP_LEFT);
+                    cw.add(CORNERS.BOTTOM_LEFT);
+                    up.add(CORNERS.TOP_LEFT);
+                    up.add(CORNERS.BOTTOM_LEFT);
+                    down.add(CORNERS.TOP_LEFT);
+                    down.add(CORNERS.BOTTOM_LEFT);
+                }
+                else if (d == Direction.WEST) {
+                    cw.add(CORNERS.TOP_RIGHT);
+                    cw.add(CORNERS.BOTTOM_RIGHT);
+                    ccw.add(CORNERS.TOP_RIGHT);
+                    ccw.add(CORNERS.BOTTOM_RIGHT);
+                    down.add(CORNERS.TOP_RIGHT);
+                    down.add(CORNERS.BOTTOM_RIGHT);
+                    up.add(CORNERS.TOP_RIGHT);
+                    up.add(CORNERS.BOTTOM_RIGHT);
+                }
+                else if (d == Direction.SOUTH) {
+                    cw.add(CORNERS.BOTTOM_LEFT);
+                    cw.add(CORNERS.TOP_LEFT);
+                    ccw.add(CORNERS.BOTTOM_LEFT);
+                    ccw.add(CORNERS.TOP_LEFT);
+                    down.add(CORNERS.TOP_RIGHT);
+                    down.add(CORNERS.TOP_LEFT);
+                    up.add(CORNERS.TOP_RIGHT);
+                    up.add(CORNERS.TOP_LEFT);
+                }
+                else if (d == Direction.NORTH) {
+                    cw.add(CORNERS.BOTTOM_RIGHT);
+                    cw.add(CORNERS.TOP_RIGHT);
+                    ccw.add(CORNERS.BOTTOM_RIGHT);
+                    ccw.add(CORNERS.TOP_RIGHT);
+                    down.add(CORNERS.BOTTOM_RIGHT);
+                    down.add(CORNERS.BOTTOM_LEFT);
+                    up.add(CORNERS.BOTTOM_RIGHT);
+                    up.add(CORNERS.BOTTOM_LEFT);
+                }
+            }
+        }
+        if (needsConnection(level, mutable.setWithOffset(origin, 0, 1, 0))) {
+            for (Direction d : Direction.Plane.HORIZONTAL) {
+                map.get(d).add(CORNERS.TOP_LEFT);
+                map.get(d).add(CORNERS.TOP_RIGHT);
+            }
+        }
+        if (needsConnection(level, mutable.setWithOffset(origin, 0, -1, 0))) {
+            for (Direction d : Direction.Plane.HORIZONTAL) {
+                map.get(d).add(CORNERS.BOTTOM_LEFT);
+                map.get(d).add(CORNERS.BOTTOM_RIGHT);
+            }
+        }
+
+    }
+
     public PorousHoneycombBlockModel(ResourceLocation modelLocation, ResourceLocation botLeft, ResourceLocation botRight, ResourceLocation topLeft, ResourceLocation topRight, ResourceLocation particle, ResourceLocation base) {
         this.particle = particle;
         this.modelLocation = modelLocation;
@@ -236,6 +300,7 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
                     check.put(currentData, check);
                 }
             }
+            checkAdjacent(level, cursor, pos, currentData);
         }
         return modelData.derive().with(DIRECTION_OF_HONEY_MERGERS, ImmutableMap.copyOf(currentData)).build();
     }
