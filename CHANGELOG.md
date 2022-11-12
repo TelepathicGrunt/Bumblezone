@@ -29,6 +29,9 @@ Added sound for lighting Super/Incense Candles.
 
 Reduced duplicate entries in Bumblezone's Super Candle block and item tags.
 
+Fixed Super Candles/Incense Candles not being waterlogged when placed in non-vanilla water tagged fluids. Fixed other watterlogging bug with them.
+ Example, source Sugar Water was not waterlogging the Super Candles/Incense Candles when placed in it (Will be waterlogged with vanilla water when done so)
+
 Creative pick block (middle click) on Honey Crystal block now gives the proper Honey Crystale item instead of Honey Crystale Shards.
 
 ##### Items:
