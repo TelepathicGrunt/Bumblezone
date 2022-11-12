@@ -26,6 +26,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.mixin.client.RenderingRegistryAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -67,10 +68,12 @@ public class BumblezoneClient {
         modEventBus.addListener(BumblezoneClient::registerDimensionSpecialEffects);
         modEventBus.addListener(IncenseCandleColoring::registerBlockColors);
         modEventBus.addListener(IncenseCandleColoring::registerItemColors);
-        //modEventBus.addListener(PorousHoneycombBlockModel::onModelBake);
+        modEventBus.addListener(PorousHoneycombBlockModel::registerModelLoaders);
+        modEventBus.addListener(PorousHoneycombBlockModel::onBakingCompleted);
 
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         forgeBus.addListener(BeehemothControls::keyInput);
+
     }
 
     public static void registerKeyBinding(RegisterKeyMappingsEvent event) {
@@ -181,6 +184,7 @@ public class BumblezoneClient {
         ItemBlockRenderTypes.setRenderLayer(BzFluids.HONEY_FLUID_FLOWING.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.ROYAL_JELLY_FLUID.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.ROYAL_JELLY_FLUID_FLOWING.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(BzBlocks.POROUS_HONEYCOMB.get(), RenderType.cutout());
     }
 
     public static void registerEntityModels(EntityRenderersEvent.RegisterLayerDefinitions event) {
