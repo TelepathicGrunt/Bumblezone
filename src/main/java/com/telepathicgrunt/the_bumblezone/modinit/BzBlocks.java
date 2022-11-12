@@ -11,6 +11,13 @@ import org.quiltmc.qsl.block.extensions.api.QuiltMaterialBuilder;
 
 
 public class BzBlocks {
+    public static Material RED_NOT_SOLID = new QuiltMaterialBuilder(MaterialColor.TERRACOTTA_RED)
+            .notSolid()
+            .destroyOnPush()
+            .noCollider()
+            .replaceable()
+            .nonSolid()
+            .build();
     public static Material ORANGE_NOT_SOLID = new QuiltMaterialBuilder(MaterialColor.TERRACOTTA_ORANGE)
             .notSolid()
             .destroyOnPush()
@@ -18,7 +25,14 @@ public class BzBlocks {
             .replaceable()
             .nonSolid()
             .build();
-    public static Material ORANGE_CRYSTAL_PLANT = new QuiltMaterialBuilder(MaterialColor.COLOR_ORANGE)
+    public static Material YELLOW_NOT_SOLID = new QuiltMaterialBuilder(MaterialColor.COLOR_YELLOW)
+            .notSolid()
+            .destroyOnPush()
+            .noCollider()
+            .replaceable()
+            .nonSolid()
+            .build();
+    public static Material YELLOW_CRYSTAL_PLANT = new QuiltMaterialBuilder(MaterialColor.TERRACOTTA_YELLOW)
             .notSolid()
             .blocksPistons()
             .noCollider()

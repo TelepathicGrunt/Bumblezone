@@ -57,6 +57,7 @@
     "items.HoneyShieldItemstackGetMaximumDamageMixin",
     "items.HoneyShieldItemstackSetDamageMixin",
     "items.HoneyShieldPreferredSlotMixin",
+    "items.MapItemMixin",
     "items.PlayerDamagedMixin",
     "items.PlayerDamageShieldInvoker",
     "items.SimpleCookingSerializerMixin",
