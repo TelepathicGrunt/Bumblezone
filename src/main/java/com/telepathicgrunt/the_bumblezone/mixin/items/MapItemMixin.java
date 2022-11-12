@@ -13,7 +13,8 @@ import org.spongepowered.asm.mixin.injection.Slice;
 @Mixin(MapItem.class)
 public class MapItemMixin {
     @ModifyExpressionValue(method = "update(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/dimension/DimensionType;hasCeiling()Z", ordinal = 1))
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/dimension/DimensionType;hasCeiling()Z", ordinal = 1),
+            require = 0)
     private boolean thebumblezone_filledMapForDimension1(boolean ceiling, Level level) {
         if (level.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
             return false;
@@ -22,13 +23,12 @@ public class MapItemMixin {
     }
 
     @ModifyVariable(method = "update(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;)V",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/level/chunk/LevelChunk;getHeight(Lnet/minecraft/world/level/levelgen/Heightmap$Types;II)I", ordinal = 0),
-            slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/chunk/LevelChunk;getPos()Lnet/minecraft/world/level/ChunkPos;", ordinal = 0),
-                            to = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getMinBuildHeight()I", ordinal = 0)),
-            ordinal = 6)
+            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/level/Level;getMinBuildHeight()I", shift = At.Shift.BEFORE, ordinal = 0),
+            ordinal = 17,
+            require = 0)
     private int thebumblezone_filledMapForDimension2(int scanHeight, Level level) {
-        if (level.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
-            return scanHeight - 50;
+        if (level.dimension().equals(BzDimension.BZ_WORLD_KEY) && scanHeight >= 250) {
+            return 110;
         }
         return scanHeight;
     }

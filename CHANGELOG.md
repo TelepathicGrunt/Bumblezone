@@ -32,6 +32,9 @@ Reduced duplicate entries in Bumblezone's Super Candle block and item tags.
 Creative pick block (middle click) on Honey Crystal block now gives the proper Honey Crystale item instead of Honey Crystale Shards.
 
 ##### Items:
+Vanilla's Filled Maps now works in Bumblezone dimension properly!
+ Many Bumblezone block's map colors were changed to look correct on maps.
+
 Made an item form for all Carvable Wax blockstates to make building with it easier.
  Mining a Carvable Wax will drop the item form of its blockstate.
  
