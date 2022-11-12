@@ -1,42 +1,68 @@
 package com.telepathicgrunt.the_bumblezone.client.bakedmodel;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.BlockElement;
+import net.minecraft.client.renderer.block.model.BlockElementFace;
+import net.minecraft.client.renderer.block.model.BlockFaceUV;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.block.model.FaceBakery;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.resources.model.SimpleBakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockAndTintGetter;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.NamedRenderTypeManager;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.model.IDynamicBakedModel;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.Set;
 
 public class PorousHoneycombBlockModel implements IDynamicBakedModel {
-    public static final ModelProperty<Map<Direction, HashSet<CORNERS>>> DIRECTION_OF_HONEY_MERGERS = new ModelProperty<>();
-    protected final BakedModel mainModel;
-    private final Map<List<CORNERS>, BakedModel> cache = Maps.newHashMap();
+    public static final ModelProperty<Map<Direction, Set<CORNERS>>> DIRECTION_OF_HONEY_MERGERS = new ModelProperty<>();
+    public static final List<PorousHoneycombBlockModel> INSTANCES = new ArrayList<>();
+    public static final Direction[] DIRECTIONS = Direction.values();
+    public static final Direction.AxisDirection[] AXIS_DIRECTIONS = Direction.AxisDirection.values();
+
+    public static final ModelResourceLocation BACKING_DIRT_MODEL = new ModelResourceLocation("minecraft", "dirt", "inventory");
+
+    @SuppressWarnings("deprecation")
+    public static final ResourceLocation BLOCK_ATLAS = TextureAtlas.LOCATION_BLOCKS;
+    private final ResourceLocation modelLocation;
+    private final ResourceLocation topLeft;
+    private final ResourceLocation topRight;
+    private final ResourceLocation botLeft;
+    private final ResourceLocation botRight;
+    private final ResourceLocation particle;
+    private final ResourceLocation base;
+    private TextureAtlasSprite particleTex;
+    private Map<Direction, BakedModel[]> cache;
+    private BakedModel mainModel;
+
     private enum CORNERS {
         TOP_LEFT,
         TOP_RIGHT,
@@ -44,192 +70,225 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
         BOTTOM_RIGHT
     }
 
-    private PorousHoneycombBlockModel(BakedModel mainModel) {
-        this.mainModel = mainModel;
+    private enum CHECKS {
+        TLX(Direction.Axis.X, CORNERS.TOP_LEFT, 0, 1, 1),
+        TLY(Direction.Axis.Y, CORNERS.TOP_LEFT, 1, 0, 1),
+        TLZ(Direction.Axis.Z, CORNERS.TOP_LEFT, 1, 1, 0),
+        TRX(Direction.Axis.X, CORNERS.TOP_RIGHT, 0, 1, -1),
+        TRY(Direction.Axis.Y, CORNERS.TOP_RIGHT, -1, 0, 1),
+        TRZ(Direction.Axis.Z, CORNERS.TOP_RIGHT, -1, 1, 0),
+        BLX(Direction.Axis.X, CORNERS.BOTTOM_LEFT, 0, -1, 1),
+        BLY(Direction.Axis.Y, CORNERS.BOTTOM_LEFT, 1, 0, -1),
+        BLZ(Direction.Axis.Z, CORNERS.BOTTOM_LEFT, 1, -1, 0),
+        BRX(Direction.Axis.X, CORNERS.BOTTOM_RIGHT, 0, -1, -1),
+        BRY(Direction.Axis.Y, CORNERS.BOTTOM_RIGHT, -1, 0, -1),
+        BRZ(Direction.Axis.Z, CORNERS.BOTTOM_RIGHT, -1, -1, 0);
+
+        public static final CHECKS[] VALUES = values();
+
+        private final Direction.Axis axis;
+        private final CORNERS corner;
+        private final int dx;
+        private final int dy;
+        private final int dz;
+
+        CHECKS(Direction.Axis axis, CORNERS corner, int dx, int dy, int dz) {
+            this.axis = axis;
+            this.corner = corner;
+            this.dx = dx;
+            this.dy = dy;
+            this.dz = dz;
+        }
+
+        void set(BlockPos.MutableBlockPos mutable, BlockPos origin) {
+            mutable.setWithOffset(origin, dx, dy, dz);
+        }
+
+        void put(Map<Direction, Set<CORNERS>> map, CHECKS check) {
+            for (Direction.AxisDirection axisDir : AXIS_DIRECTIONS) {
+                final Direction d = Direction.fromAxisAndDirection(axis, axisDir);
+                map.get(d).add(check.corner);
+            }
+        }
+    }
+
+    public PorousHoneycombBlockModel(ResourceLocation modelLocation, ResourceLocation botLeft, ResourceLocation botRight, ResourceLocation topLeft, ResourceLocation topRight, ResourceLocation particle, ResourceLocation base) {
+        this.particle = particle;
+        this.modelLocation = modelLocation;
+        this.botLeft = botLeft;
+        this.botRight = botRight;
+        this.topLeft = topLeft;
+        this.topRight = topRight;
+        this.base = base;
+        INSTANCES.add(this);
+    }
+
+    public void init()
+    {
+        this.cache = buildCache(modelLocation, particle, new ResourceLocation[] {topLeft, topRight, botLeft, botRight});
+        this.mainModel = buildBlock(base, modelLocation);
+        this.particleTex = getTexture(particle);
+    }
+
+    private static Map<Direction, BakedModel[]> buildCache(ResourceLocation modelLocation, ResourceLocation particle, ResourceLocation[] cornerLocations) {
+        final Map<Direction, BakedModel[]> map = new EnumMap<>(Direction.class);
+        for (Direction d : DIRECTIONS) map.put(d, new BakedModel[4]);
+        for (CORNERS corner : CORNERS.values()) {
+            put(map, Direction.WEST, corner, bakedModel(new Vector3f(-0.1f, 0f, 0f), new Vector3f(-0.1f, 16f, 16f), Direction.WEST, flipLR(corner), modelLocation, particle, cornerLocations));
+            put(map, Direction.EAST, corner, bakedModel(new Vector3f(16.1f, 0f, 0f), new Vector3f(16.1f, 16f, 16f), Direction.EAST, corner, modelLocation, particle, cornerLocations));
+            put(map, Direction.NORTH, corner, bakedModel(new Vector3f(0f, 0f, -0.1f), new Vector3f(16f, 16f, -0.1f), Direction.NORTH, corner, modelLocation, particle, cornerLocations));
+            put(map, Direction.SOUTH, corner, bakedModel(new Vector3f(0f, 0f, 16.1f), new Vector3f(16f, 16f, 16.1f), Direction.SOUTH, flipLR(corner), modelLocation, particle, cornerLocations));
+            put(map, Direction.DOWN, corner, bakedModel(new Vector3f(0f, -0.1f, 0f), new Vector3f(16f, -0.1f, 16f), Direction.DOWN, flipLR(corner), modelLocation, particle, cornerLocations));
+            put(map, Direction.UP, corner, bakedModel(new Vector3f(0f, 16.1f, 0f), new Vector3f(16f, 16.1f, 16f), Direction.UP, flipLR(flipUD(corner)), modelLocation, particle, cornerLocations));
+        }
+        return map;
+    }
+
+    private static CORNERS flipLR(CORNERS corner) {
+        return switch (corner) {
+            case TOP_LEFT -> CORNERS.TOP_RIGHT;
+            case TOP_RIGHT -> CORNERS.TOP_LEFT;
+            case BOTTOM_LEFT -> CORNERS.BOTTOM_RIGHT;
+            case BOTTOM_RIGHT -> CORNERS.BOTTOM_LEFT;
+        };
+    }
+
+    private static CORNERS flipUD(CORNERS corner) {
+        return switch (corner) {
+            case TOP_LEFT -> CORNERS.BOTTOM_LEFT;
+            case TOP_RIGHT -> CORNERS.BOTTOM_RIGHT;
+            case BOTTOM_LEFT -> CORNERS.TOP_LEFT;
+            case BOTTOM_RIGHT -> CORNERS.TOP_RIGHT;
+        };
+    }
+
+    private static void put(Map<Direction, BakedModel[]> map, Direction d, CORNERS corner, BakedModel model) {
+        map.get(d)[corner.ordinal()] = model;
+    }
+
+    private static BakedModel buildBlock(ResourceLocation textureLocation, ResourceLocation modelLocation) {
+        final BlockModel dummy = new BlockModel(null, new ArrayList<>(), new HashMap<>(), false, BlockModel.GuiLight.FRONT, ItemTransforms.NO_TRANSFORMS, new ArrayList<>());
+        final TextureAtlasSprite tex = getTexture(textureLocation);
+        final Map<Direction, BlockElementFace> mapFacesIn = Maps.newEnumMap(Direction.class);
+        for (Direction d : DIRECTIONS) {
+            mapFacesIn.put(d, new BlockElementFace(null, -1, "", new BlockFaceUV(new float[] {0f, 0f, 16f, 16f}, 0)));
+        }
+        final BlockElement part = new BlockElement(new Vector3f(0f, 0f, 0f), new Vector3f(16f, 16f, 16f), mapFacesIn, null, true);
+        final SimpleBakedModel.Builder builder = new SimpleBakedModel.Builder(dummy, ItemOverrides.EMPTY, false).particle(tex);
+
+        for (Map.Entry<Direction, BlockElementFace> e : part.faces.entrySet()) {
+            Direction d = e.getKey();
+            builder.addCulledFace(d, makeBakedQuad(part, e.getValue(), tex, d, BlockModelRotation.X0_Y0, modelLocation));
+        }
+        return builder.build(NamedRenderTypeManager.get(new ResourceLocation("solid")));
+    }
+
+    private static BakedModel bakedModel(Vector3f from, Vector3f to, Direction direction, CORNERS corner, ResourceLocation modelLocation, ResourceLocation particleLocation, ResourceLocation[] textures) {
+        final BlockElement element = blockElement(from, to, direction);
+        final BlockModel dummy = new BlockModel(null, new ArrayList<>(), new HashMap<>(), false, BlockModel.GuiLight.FRONT, ItemTransforms.NO_TRANSFORMS, new ArrayList<>());
+        final SimpleBakedModel.Builder builder = new SimpleBakedModel.Builder(dummy, ItemOverrides.EMPTY, false).particle(getTexture(particleLocation));
+        builder.addCulledFace(direction, makeBakedQuad(element, element.faces.get(direction), getTexture(textures[corner.ordinal()]), direction, BlockModelRotation.X0_Y0, modelLocation));
+        return builder.build(NamedRenderTypeManager.get(new ResourceLocation("cutout")));
+    }
+
+    private static TextureAtlasSprite getTexture(ResourceLocation id) {
+        return Minecraft.getInstance().getTextureAtlas(BLOCK_ATLAS).apply(id);
+    }
+
+    private static BakedQuad makeBakedQuad(BlockElement BlockElement, BlockElementFace partFace, TextureAtlasSprite atlasSprite, Direction dir, BlockModelRotation modelRotation, ResourceLocation modelResLoc) {
+        return new FaceBakery().bakeQuad(BlockElement.from, BlockElement.to, partFace, atlasSprite, dir, modelRotation, BlockElement.rotation, true, modelResLoc);
+    }
+
+    private static BlockElement blockElement(Vector3f from, Vector3f to, Direction direction) {
+        final Map<Direction, BlockElementFace> mapFacesIn = new EnumMap<>(Direction.class);
+        mapFacesIn.put(direction, new BlockElementFace(null, -1, "", new BlockFaceUV(new float[] {0f, 0f, 16f, 16f}, 0)));
+        return new BlockElement(from, to, mapFacesIn, null, true);
     }
 
     @Nonnull
     @Override
     public List<BakedQuad> getQuads(BlockState state, Direction side, RandomSource rand, ModelData extraData, RenderType renderType) {
-        List<BakedQuad> quads = Lists.newArrayList();
-        quads.addAll(mainModel.getQuads(state, side, rand, extraData, renderType));
+        final List<BakedQuad> quads = new ArrayList<>(mainModel.getQuads(state, side, rand, extraData, renderType));
 
-        if (quads.size() > 0 &&
-            side != null &&
-            state != null &&
-            extraData.has(DIRECTION_OF_HONEY_MERGERS) &&
-            extraData.get(DIRECTION_OF_HONEY_MERGERS) != null)
+        if (quads.size() > 0 && side != null && extraData.has(DIRECTION_OF_HONEY_MERGERS))
         {
-            Map<Direction, HashSet<CORNERS>> directionsOfHoney = extraData.get(DIRECTION_OF_HONEY_MERGERS);
-
-            // For sides for face to connect texture to
-            for (CORNERS corners : directionsOfHoney.get(side)) {
-
-                TextureAtlasSprite textureAtlasSprite = Minecraft.getInstance().getModelManager()
-                        .getAtlas(TextureAtlas.LOCATION_BLOCKS)
-                        .getSprite(new ResourceLocation(Bumblezone.MODID, "textures/block/porous_honeycomb_block_corner_overlays/"+corners.name().toLowerCase(Locale.ROOT)+".png"));
-
-                // draw connecting texture on top of previous quad?
-                BakedQuad newBakedQuad = new BakedQuad(
-                        quads.get(0).getVertices(),
-                        0,
-                        side,
-                        textureAtlasSprite,
-                        true
-                    );
-
-                quads.add(newBakedQuad);
+            final Map<Direction, Set<CORNERS>> directionsOfHoney = extraData.get(DIRECTION_OF_HONEY_MERGERS);
+            if (directionsOfHoney != null) {
+                for (CORNERS corners : directionsOfHoney.get(side)) {
+                    quads.addAll(cache.get(side)[corners.ordinal()].getQuads(state, side, rand, extraData, renderType));
+                }
             }
         }
-
         return quads;
     }
 
     @Override
     public ModelData getModelData(BlockAndTintGetter level, BlockPos pos, BlockState state, ModelData modelData) {
-        ModelData currentData = modelData;
+        final Map<Direction, Set<CORNERS>> currentData = new EnumMap<>(Direction.class);
         if (state != null) {
-            if (!currentData.has(DIRECTION_OF_HONEY_MERGERS) || currentData.get(DIRECTION_OF_HONEY_MERGERS) == null) {
-                currentData = ModelData.builder()
-                        .with(DIRECTION_OF_HONEY_MERGERS, new HashMap<>())
-                        .build();
+            for (Direction direction : DIRECTIONS) {
+                currentData.put(direction, new HashSet<>());
             }
-
-            BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-            for (Direction direction : Direction.values()) {
-                currentData.get(DIRECTION_OF_HONEY_MERGERS).put(direction, new HashSet<>());
-            }
-
-            for (int x = -1; x <= 1; x++) {
-                for (int y = -1; y <= 1; y++) {
-                    for (int z = -1; z <= 1; z++) {
-                        int absSum = Math.abs(x) + Math.abs(y) + Math.abs(z);
-                        if (absSum == 3 || absSum == 0) {
-                            continue;
-                        }
-
-                        mutableBlockPos.set(pos).move(x, y, z);
-                        BlockState neighborState = level.getBlockState(mutableBlockPos);
-                        if (neighborState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get()) || neighborState.is(BzBlocks.HONEYCOMB_BROOD.get())) {
-                            for (Direction direction : Direction.values()) {
-                                if (Math.abs(direction.getStepX()) == Math.abs(x) &&
-                                    Math.abs(direction.getStepY()) == Math.abs(y) &&
-                                    Math.abs(direction.getStepZ()) == Math.abs(z))
-                                {
-                                    continue;
-                                }
-
-                                if (x == -1 && z == -1) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.BOTTOM_LEFT);
-                                }
-                                else if (x == -1 && z == 0) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.BOTTOM_LEFT);
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.TOP_LEFT);
-                                }
-                                else if (x == -1 && z == 1) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.TOP_LEFT);
-                                }
-                                else if (x == 1 && z == -1) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.BOTTOM_RIGHT);
-                                }
-                                else if (x == 1 && z == 0) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.BOTTOM_RIGHT);
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.TOP_RIGHT);
-                                }
-                                else if (x == 1 && z == 1) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.TOP_RIGHT);
-                                }
-                                else if (x == -1 && y == -1) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.BOTTOM_LEFT);
-                                }
-                                else if (x == -1 && y == 0) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.BOTTOM_LEFT);
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.TOP_LEFT);
-                                }
-                                else if (x == -1 && y == 1) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.TOP_LEFT);
-                                }
-                                else if (x == 1 && y == -1) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.BOTTOM_RIGHT);
-                                }
-                                else if (x == 1 && y == 0) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.BOTTOM_RIGHT);
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.TOP_RIGHT);
-                                }
-                                else if (x == 1 && y == 1) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.TOP_RIGHT);
-                                }
-                                else if (y == -1 && z == -1) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.BOTTOM_LEFT);
-                                }
-                                else if (y == -1 && z == 0) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.BOTTOM_LEFT);
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.TOP_LEFT);
-                                }
-                                else if (y == -1 && z == 1) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.TOP_LEFT);
-                                }
-                                else if (y == 1 && z == -1) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.BOTTOM_RIGHT);
-                                }
-                                else if (y == 1 && z == 0) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.BOTTOM_RIGHT);
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.TOP_RIGHT);
-                                }
-                                else if (y == 1 && z == 1) {
-                                    currentData.get(DIRECTION_OF_HONEY_MERGERS).get(direction).add(CORNERS.TOP_RIGHT);
-                                }
-                            }
-                        }
-                    }
+            final BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
+            for (CHECKS check : CHECKS.VALUES) {
+                check.set(cursor, pos);
+                if (needsConnection(level, cursor)) {
+                    check.put(currentData, check);
                 }
             }
         }
+        return modelData.derive().with(DIRECTION_OF_HONEY_MERGERS, ImmutableMap.copyOf(currentData)).build();
+    }
 
-        return currentData;
+
+    private boolean needsConnection(BlockAndTintGetter level, BlockPos pos){
+        BlockState neighborState = level.getBlockState(pos);
+        return neighborState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get()) || neighborState.is(BzBlocks.HONEYCOMB_BROOD.get());
     }
 
     @Override
     public boolean usesBlockLight() {
-        return mainModel.usesBlockLight();
+        return true;
     }
 
     @Override
     public boolean useAmbientOcclusion () {
-        return mainModel.useAmbientOcclusion();
+        return true;
     }
 
     @Override
     public boolean isGui3d () {
-        return mainModel.isGui3d();
+        return false;
     }
 
     @Override
     public boolean isCustomRenderer () {
-        return mainModel.isCustomRenderer();
+        return false;
     }
 
     @Override
     public TextureAtlasSprite getParticleIcon () {
-        return mainModel.getParticleIcon();
+        return particleTex;
     }
 
     @Override
     public ItemOverrides getOverrides () {
-        return mainModel.getOverrides();
+        return ItemOverrides.EMPTY;
     }
 
-    public static void onModelBake(ModelEvent.BakingCompleted event) {
-        override(event, BzBlocks.POROUS_HONEYCOMB.get(), PorousHoneycombBlockModel::new);
+    @Override
+    public BakedModel applyTransform(ItemTransforms.TransformType transformType, PoseStack poseStack, boolean applyLeftHandTransform)
+    {
+        Minecraft.getInstance().getModelManager().getModel(BACKING_DIRT_MODEL).applyTransform(transformType, poseStack, applyLeftHandTransform);
+        return this;
     }
 
-    private static void override(ModelEvent.BakingCompleted event, Block block, Function<BakedModel, PorousHoneycombBlockModel> f) {
-        for (BlockState state : block.getStateDefinition().getPossibleStates()) {
-            ModelResourceLocation loc = BlockModelShaper.stateToModelLocation(state);
-            BakedModel model = event.getModels().get(loc);
-            if (model != null) {
-                event.getModels().put(loc, f.apply(model));
-            }
-        }
+    public static void registerModelLoaders(ModelEvent.RegisterGeometryLoaders event) {
+        event.register("porous_honeycomb", new PorousHoneycombLoader());
     }
+
+    public static void onBakingCompleted(ModelEvent.BakingCompleted event) {
+        INSTANCES.forEach(PorousHoneycombBlockModel::init);
+    }
+
 }
