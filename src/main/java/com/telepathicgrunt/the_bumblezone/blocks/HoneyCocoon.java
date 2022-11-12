@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.datafixers.util.Pair;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
@@ -130,7 +131,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     @Override
     public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         if (blockstate.getValue(WATERLOGGED)) {
-            world.scheduleTick(pos, blockstate.getFluidState().getType(), blockstate.getFluidState().getType().getTickDelay(world));
+            world.scheduleTick(pos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(world));
             world.scheduleTick(pos, blockstate.getBlock(), waterDropDelay);
         }
         super.neighborChanged(blockstate, world, pos, block, fromPos, notify);
