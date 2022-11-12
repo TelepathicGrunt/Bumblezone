@@ -131,7 +131,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     @Override
     public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         if (blockstate.getValue(WATERLOGGED)) {
-            world.scheduleTick(pos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(world));
+            world.scheduleTick(pos, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickDelay(world));
             world.scheduleTick(pos, blockstate.getBlock(), waterDropDelay);
         }
         super.neighborChanged(blockstate, world, pos, block, fromPos, notify);
