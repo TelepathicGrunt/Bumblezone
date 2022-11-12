@@ -1,6 +1,11 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "loader": "the_bumblezone:porous_honeycomb",
   "textures": {
-    "all": "the_bumblezone:block/porous_honeycomb_block"
+    "base": "the_bumblezone:block/porous_honeycomb_block",
+    "particle": "the_bumblezone:block/porous_honeycomb_block",
+    "bottom_left": "the_bumblezone:block/porous_honeycomb_block_corner_overlays/bottom_left",
+    "bottom_right": "the_bumblezone:block/porous_honeycomb_block_corner_overlays/bottom_right",
+    "top_left": "the_bumblezone:block/porous_honeycomb_block_corner_overlays/top_left",
+    "top_right": "the_bumblezone:block/porous_honeycomb_block_corner_overlays/top_right"
   }
 }
