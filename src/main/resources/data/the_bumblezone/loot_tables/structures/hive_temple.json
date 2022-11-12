@@ -344,6 +344,22 @@
           "weight": 4
         }
       ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:map",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "the_bumblezone:prefill_map",
+              "scale": 2
+            }
+          ]
+        }
+      ]
     }
   ]
 }
