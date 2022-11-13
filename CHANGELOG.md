@@ -1,5 +1,11 @@
 ### **(V.6.4.0 Changes) (1.19.2 Minecraft)**
 
+##### Effects:
+Wrath of the Hive and Protection of the Hive will no longer affect nearby Bees that have their AI turned off.
+
+
+### **(V.6.4.0 Changes) (1.19.2 Minecraft)**
+
 ##### Music:
 Added two new songs by LudoCrypt!
  They will play randomly in Bumblezone but they also have Music Disc forms obtainable from Wandering traders!
