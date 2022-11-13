@@ -8,14 +8,14 @@ import com.google.common.collect.Multisets;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import com.telepathicgrunt.the_bumblezone.items.HoneyCompass;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
+import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MapItem;
@@ -62,11 +62,11 @@ public class PrefillMap extends LootItemConditionalFunction {
             Vec3 vec3 = lootContext.getParamOrNull(LootContextParams.ORIGIN);
             if (vec3 != null) {
                 BlockPos blockPos = new BlockPos(vec3);
-                HoneyCompass.setLoadingTags(itemStack.getOrCreateTag(), true);
                 ItemStack newFilledMap = MapItem.create(lootContext.getLevel(), blockPos.getX(), blockPos.getZ(), (byte) scaleLevel, true, true);
-                MapItemSavedData data = MapItem.getSavedData(newFilledMap, lootContext.getLevel());
+                Integer mapId = MapItem.getMapId(newFilledMap);
+                MapItemSavedData data = MapItem.getSavedData(mapId, lootContext.getLevel());
                 if (data != null) {
-                    update(lootContext.getLevel(), blockPos, data);
+                    ThreadExecutor.mapFilling(lootContext.getLevel(), blockPos, data);
                     newFilledMap.setTag(newFilledMap.getOrCreateTag().merge(itemStack.getOrCreateTag()));
                     return newFilledMap;
                 }
@@ -91,125 +91,127 @@ public class PrefillMap extends LootItemConditionalFunction {
         }
     }
 
-    public void update(Level level, BlockPos mapPos, MapItemSavedData data) {
-//        if (level.dimension() == data.dimension) {
-//            int zoom = 1 << data.scale;
-//            int xStart = data.x;
-//            int zStart = data.z;
-//            int xEnd = (int) (xStart + Math.pow(8, zoom));
-//            int zEnd = (int) (zStart + Math.pow(8, zoom));
-//            int j1 = 600 / zoom;
-//
-//            for(int scanX = xStart; scanX < xEnd; ++scanX) {
-//                double d0 = 0.0D;
-//                for(int scanZ = zStart; scanZ < zEnd; ++scanZ) {
-//                    if (scanX >= 0 && scanZ >= -1 && scanX < 128 && scanZ < 128) {
-//                        int i2 = scanX - l;
-//                        int j2 = scanZ - i1;
-//                        int k2 = (xStart / zoom + scanX - 64) * zoom;
-//                        int l2 = (zStart / zoom + scanZ - 64) * zoom;
-//                        Multiset<MaterialColor> multiset = LinkedHashMultiset.create();
-//                        LevelChunk levelchunk = level.getChunkAt(new BlockPos(k2, 0, l2));
-//                        if (!levelchunk.isEmpty()) {
-//                            ChunkPos chunkpos = levelchunk.getPos();
-//                            int i3 = k2 & 15;
-//                            int j3 = l2 & 15;
-//                            int k3 = 0;
-//                            double d1 = 0.0D;
-//                            if (level.dimensionType().hasCeiling() && !level.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
-//                                int l3 = k2 + l2 * 231871;
-//                                l3 = l3 * l3 * 31287121 + l3 * 11;
-//                                if ((l3 >> 20 & 1) == 0) {
-//                                    multiset.add(Blocks.DIRT.defaultBlockState().getMapColor(level, BlockPos.ZERO), 10);
-//                                }
-//                                else {
-//                                    multiset.add(Blocks.STONE.defaultBlockState().getMapColor(level, BlockPos.ZERO), 100);
-//                                }
-//
-//                                d1 = 100.0D;
-//                            }
-//                            else {
-//                                BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-//                                BlockPos.MutableBlockPos mutableBlockPos1 = new BlockPos.MutableBlockPos();
-//
-//                                for(int i4 = 0; i4 < zoom; ++i4) {
-//                                    for(int j4 = 0; j4 < zoom; ++j4) {
-//                                        int scanY = levelchunk.getHeight(Heightmap.Types.WORLD_SURFACE, i4 + i3, j4 + j3) + 1;
-//                                        if (scanY >= 255 && level.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
-//                                            scanY = 110;
-//                                        }
-//                                        BlockState blockstate;
-//                                        if (scanY <= level.getMinBuildHeight() + 1) {
-//                                            blockstate = Blocks.BEDROCK.defaultBlockState();
-//                                        }
-//                                        else {
-//                                            do {
-//                                                --scanY;
-//                                                mutableBlockPos.set(chunkpos.getMinBlockX() + i4 + i3, scanY, chunkpos.getMinBlockZ() + j4 + j3);
-//                                                blockstate = levelchunk.getBlockState(mutableBlockPos);
-//                                            } while(blockstate.getMapColor(level, mutableBlockPos) == MaterialColor.NONE && scanY > level.getMinBuildHeight());
-//
-//                                            if (scanY > level.getMinBuildHeight() && !blockstate.getFluidState().isEmpty()) {
-//                                                int secondScanY = scanY - 1;
-//                                                mutableBlockPos1.set(mutableBlockPos);
-//
-//                                                BlockState blockstate1;
-//                                                do {
-//                                                    mutableBlockPos1.setY(secondScanY--);
-//                                                    blockstate1 = levelchunk.getBlockState(mutableBlockPos1);
-//                                                    ++k3;
-//                                                } while(secondScanY > level.getMinBuildHeight() && !blockstate1.getFluidState().isEmpty());
-//
-//                                                blockstate = this.getCorrectStateForFluidBlock(level, blockstate, mutableBlockPos);
-//                                            }
-//                                        }
-//
-//                                        data.checkBanners(level, chunkpos.getMinBlockX() + i4 + i3, chunkpos.getMinBlockZ() + j4 + j3);
-//                                        d1 += (double)scanY / (double)(zoom * zoom);
-//                                        multiset.add(blockstate.getMapColor(level, mutableBlockPos));
-//                                    }
-//                                }
-//                            }
-//
-//                            k3 /= zoom * zoom;
-//                            MaterialColor materialcolor = Iterables.getFirst(Multisets.copyHighestCountFirst(multiset), MaterialColor.NONE);
-//                            MaterialColor.Brightness materialcolor$brightness;
-//                            if (materialcolor == MaterialColor.WATER) {
-//                                double d2 = (double)k3 * 0.1D + (double)(scanX + scanZ & 1) * 0.2D;
-//                                if (d2 < 0.5D) {
-//                                    materialcolor$brightness = MaterialColor.Brightness.HIGH;
-//                                }
-//                                else if (d2 > 0.9D) {
-//                                    materialcolor$brightness = MaterialColor.Brightness.LOW;
-//                                }
-//                                else {
-//                                    materialcolor$brightness = MaterialColor.Brightness.NORMAL;
-//                                }
-//                            } else {
-//                                double slopeState = (d1 - d0) * 4.0D / (double)(zoom + 4) + ((double)(scanX + scanZ & 1) - 0.5D) * 0.4D;
-//                                if (slopeState > 0.6D) {
-//                                    materialcolor$brightness = MaterialColor.Brightness.HIGH;
-//                                }
-//                                else if (slopeState < -0.6D) {
-//                                    materialcolor$brightness = MaterialColor.Brightness.LOW;
-//                                }
-//                                else {
-//                                    materialcolor$brightness = MaterialColor.Brightness.NORMAL;
-//                                }
-//                            }
-//
-//                            d0 = d1;
-//                            if (scanZ >= 0 && (scanX + scanZ & 1) != 0) {
-//                                data.updateColor(scanX, scanZ, materialcolor.getPackedId(materialcolor$brightness));
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+    public static void update(Level level, BlockPos blockPos, MapItemSavedData data) {
+        if (level.dimension() == data.dimension) {
+            boolean bumblezoneDim = level.dimension().equals(BzDimension.BZ_WORLD_KEY);
+            boolean ceilingDim = level.dimensionType().hasCeiling();
+            int scale = 1 << data.scale;
+            int xStart = data.x;
+            int zStart = data.z;
+            int intervalSpacing = 2;
+            int radiusToSkip = ceilingDim ? 64 : 128;
+
+            for(int scanX = 0; scanX < 128; scanX += intervalSpacing) {
+                double d0 = 0.0D;
+                for(int scanZ = 0; scanZ < 128; scanZ += intervalSpacing) {
+                    int blockPosX = (xStart / scale + scanX - 64) * scale;
+                    int blockPosZ = (zStart / scale + scanZ - 64) * scale;
+
+                    int xDiff = Math.abs(blockPos.getX() - blockPosX);
+                    int zDiff = Math.abs(blockPos.getZ() - blockPosZ);
+                    if ((xDiff * xDiff) + (zDiff * zDiff) < radiusToSkip * radiusToSkip) {
+                        continue;
+                    }
+                    if (((scanX % 18) > 9 || (scanZ % 18) > 9)) {
+                        continue;
+                    }
+                    if (((scanX % 9) == 0 || (scanX % 9) == 8) && ((scanZ % 9) == 0 || (scanZ % 9) == 8)) {
+                        continue;
+                    }
+
+                    BlockPos currentPos = new BlockPos(blockPosX, 0, blockPosZ);
+                    Multiset<MaterialColor> multiset = LinkedHashMultiset.create();
+                    LevelChunk levelchunk = level.getChunkAt(currentPos);
+                    if (!levelchunk.isEmpty()) {
+                        ChunkPos chunkpos = levelchunk.getPos();
+                        int k3 = 0;
+                        double d1 = 0.0D;
+                        if (ceilingDim && !bumblezoneDim) {
+                            int l3 = blockPosX + blockPosZ * 231871;
+                            l3 = l3 * l3 * 31287121 + l3 * 11;
+                            if ((l3 >> 20 & 1) == 0) {
+                                multiset.add(Blocks.DIRT.defaultBlockState().getMapColor(level, BlockPos.ZERO), 10);
+                            }
+                            else {
+                                multiset.add(Blocks.STONE.defaultBlockState().getMapColor(level, BlockPos.ZERO), 100);
+                            }
+
+                            d1 = 100.0D;
+                        }
+                        else {
+                            BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+                            BlockPos.MutableBlockPos mutableBlockPos1 = new BlockPos.MutableBlockPos();
+                            int scanY = levelchunk.getHeight(Heightmap.Types.WORLD_SURFACE, blockPosX, blockPosZ) + 1;
+                            if (scanY >= 255 && bumblezoneDim) {
+                                scanY = 110;
+                            }
+                            BlockState blockstate;
+                            if (scanY <= level.getMinBuildHeight() + 1) {
+                                blockstate = Blocks.BEDROCK.defaultBlockState();
+                            }
+                            else {
+                                do {
+                                    --scanY;
+                                    mutableBlockPos.set(chunkpos.getMinBlockX() + blockPosX, scanY, chunkpos.getMinBlockZ() + blockPosZ);
+                                    blockstate = levelchunk.getBlockState(mutableBlockPos);
+                                } while(blockstate.getMapColor(level, mutableBlockPos) == MaterialColor.NONE && scanY > level.getMinBuildHeight());
+
+                                if (scanY > level.getMinBuildHeight() && !blockstate.getFluidState().isEmpty()) {
+                                    int secondScanY = scanY - 1;
+                                    mutableBlockPos1.set(mutableBlockPos);
+
+                                    BlockState blockstate1;
+                                    do {
+                                        mutableBlockPos1.setY(secondScanY--);
+                                        blockstate1 = levelchunk.getBlockState(mutableBlockPos1);
+                                        ++k3;
+                                    } while(secondScanY > level.getMinBuildHeight() && !blockstate1.getFluidState().isEmpty());
+
+                                    blockstate = getCorrectStateForFluidBlock(level, blockstate, mutableBlockPos);
+                                }
+                            }
+
+                            d1 += (double)scanY / (double)(scale * scale);
+                            multiset.add(blockstate.getMapColor(level, mutableBlockPos));
+                        }
+
+                        k3 /= scale * scale;
+                        MaterialColor materialcolor = Iterables.getFirst(Multisets.copyHighestCountFirst(multiset), MaterialColor.NONE);
+                        MaterialColor.Brightness materialcolor$brightness;
+                        if (materialcolor == MaterialColor.WATER) {
+                            double d2 = (double)k3 * 0.1D;
+                            if (d2 < 0.5D) {
+                                materialcolor$brightness = MaterialColor.Brightness.HIGH;
+                            }
+                            else if (d2 > 0.9D) {
+                                materialcolor$brightness = MaterialColor.Brightness.LOW;
+                            }
+                            else {
+                                materialcolor$brightness = MaterialColor.Brightness.NORMAL;
+                            }
+                        }
+                        else {
+                            double slopeState = (d1 - d0) * 4.0D / (double)(scale + 4) - 0.2D;
+                            if (slopeState > 0.6D) {
+                                materialcolor$brightness = MaterialColor.Brightness.HIGH;
+                            }
+                            else if (slopeState < -0.6D) {
+                                materialcolor$brightness = MaterialColor.Brightness.LOW;
+                            }
+                            else {
+                                materialcolor$brightness = MaterialColor.Brightness.NORMAL;
+                            }
+                        }
+
+                        d0 = d1;
+                        data.updateColor(scanX, scanZ, materialcolor.getPackedId(materialcolor$brightness));
+                    }
+                }
+            }
+        }
     }
 
-    private BlockState getCorrectStateForFluidBlock(Level level, BlockState state, BlockPos pos) {
+    private static BlockState getCorrectStateForFluidBlock(Level level, BlockState state, BlockPos pos) {
         FluidState fluidstate = state.getFluidState();
         return !fluidstate.isEmpty() && !state.isFaceSturdy(level, pos, Direction.UP) ? fluidstate.createLegacyBlock() : state;
     }

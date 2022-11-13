@@ -340,15 +340,6 @@
           ]
         },
         {
-          "type": "minecraft:empty",
-          "weight": 4
-        }
-      ]
-    },
-    {
-      "rolls": 1,
-      "entries": [
-        {
           "type": "minecraft:item",
           "name": "minecraft:map",
           "weight": 1,
@@ -358,6 +349,10 @@
               "scale": 2
             }
           ]
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 3
         }
       ]
     }
