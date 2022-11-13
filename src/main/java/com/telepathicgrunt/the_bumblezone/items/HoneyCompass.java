@@ -117,13 +117,21 @@ public class HoneyCompass extends Item implements Vanishable {
             });
         }
         else if (isBlockCompass(itemStack)) {
-            components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description"));
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description1"));
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description2"));
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description3"));
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description4"));
         }
         else if (isStructureCompass(itemStack)) {
-            components.add(Component.translatable("item.the_bumblezone.honey_compass_structure_description"));
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_structure_description1"));
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_structure_description2"));
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_structure_description3"));
         }
         else {
-            components.add(Component.translatable("item.the_bumblezone.honey_compass_description"));
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_description1"));
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_description2"));
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_description3"));
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_description4"));
         }
     }
 

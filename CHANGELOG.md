@@ -6,6 +6,9 @@ Nerfed Crystalline Flower so that it requires 2090xp to reach max tier (About th
  Was complained about being too low for the ability to pick enchantments. Now it requires about 2.7 time more xp.
  You can still increase or reduce this xp cost in the config file for Bumblezone.
 
+##### Items:
+Fixed Honey Compass tooltip not wrapping properly.
+
 ##### Effects:
 Wrath of the Hive and Protection of the Hive will no longer affect nearby Bees that have their AI turned off.
 
