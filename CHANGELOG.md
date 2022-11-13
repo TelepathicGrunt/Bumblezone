@@ -1,4 +1,4 @@
-### **(V.6.4.0 Changes) (1.19.2 Minecraft)**
+### **(V.6.4.1 Changes) (1.19.2 Minecraft)**
 
 ##### Effects:
 Wrath of the Hive and Protection of the Hive will no longer affect nearby Bees that have their AI turned off.
