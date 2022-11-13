@@ -48,7 +48,7 @@ public class PrefillMap extends LootItemConditionalFunction {
 
     @Override
     public LootItemFunctionType getType() {
-        return BzLootFunctionTypes.PREFILL_MAP.get();
+        return BzLootFunctionTypes.PREFILL_MAP;
     }
 
     @Override
