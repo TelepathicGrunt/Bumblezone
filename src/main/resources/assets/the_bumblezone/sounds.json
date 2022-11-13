@@ -52,6 +52,22 @@
       }
     ]
   },
+  "music_disc.la_bee_da_loca": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:la_bee_da_loca",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.bee_laxing_with_the_hom_bees": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:bee_laxing_with_the_hom_bees",
+        "stream": true
+      }
+    ]
+  },
   "entity.the_bumblezone.beehemoth.hurt": {
     "sounds": [
       {
