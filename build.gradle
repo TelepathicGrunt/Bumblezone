@@ -78,7 +78,7 @@ dependencies {
 	}
 
 	modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
-	include "maven.modrinth:midnightlib:${project.midnightlib_version}"
+	modRuntimeOnly "maven.modrinth:midnightlib:${project.midnightlib_version}"
 
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_version}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_version}"
