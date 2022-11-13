@@ -83,7 +83,7 @@ dependencies {
 	include "com.github.LlamaLad7:MixinExtras:${libs.versions.mixinextra.get()}"
 
 	modImplementation "maven.modrinth:midnightlib:${libs.versions.midnightlib.get()}"
-	include "maven.modrinth:midnightlib:${libs.versions.midnightlib.get()}"
+	modRuntimeOnly "maven.modrinth:midnightlib:${libs.versions.midnightlib.get()}"
 
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${libs.versions.cardinal.get()}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${libs.versions.cardinal.get()}"
