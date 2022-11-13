@@ -42,31 +42,35 @@
       "required": false
     },
     {
-      "id": "buzzier_bees:sticky_honey_wand",
+      "id": "buzzier_bees:honey_porkchop",
       "required": false
     },
     {
-      "id": "betterbeekeeping:spicy_honey_bottle",
+      "id": "farmersdelight:honey_cookie",
       "required": false
     },
     {
-      "id": "betterbeekeeping:warm_honey_bottle",
+      "id": "farmersdelight:honey_glazed_ham",
       "required": false
     },
     {
-      "id": "betterbeekeeping:bright_honey_bottle",
+      "id": "farmersdelight:honey_glazed_ham_block",
       "required": false
     },
     {
-      "id": "betterbeekeeping:lively_honey_bottle",
+      "id": "expandeddelight:peanut_honey_soup",
       "required": false
     },
     {
-      "id": "betterbeekeeping:cool_honey_bottle",
+      "id": "expandeddelight:peanut_butter_honey_sandwich",
       "required": false
     },
     {
-      "id": "betterbeekeeping:strange_honey_bottle",
+      "id": "delightful:honey_glazed_walnut",
+      "required": false
+    },
+    {
+      "id": "create:honeyed_apple",
       "required": false
     }
   ]

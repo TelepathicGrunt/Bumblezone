@@ -1,0 +1,48 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "side": "the_bumblezone:block/honeycomb_brood_block/honeycomb_brood_block_side",
+    "front": "the_bumblezone:block/honeycomb_brood_block/stage_2_honeycomb_brood_block_1",
+    "particle": "the_bumblezone:block/filled_porous_honeycomb_block"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#side",
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#side",
+          "cullface": "up"
+        },
+        "north": {
+          "texture": "#side",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#side",
+          "cullface": "south"
+        },
+        "west": {
+          "texture": "#side",
+          "cullface": "west"
+        },
+        "east": {
+          "texture": "#front",
+          "cullface": "east"
+        }
+      }
+    }
+  ]
+}

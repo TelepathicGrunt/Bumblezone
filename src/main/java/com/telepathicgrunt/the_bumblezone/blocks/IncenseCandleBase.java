@@ -11,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -38,6 +39,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
@@ -82,7 +84,7 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
-        boolean flag = fluidstate.getType() == Fluids.WATER;
+        boolean flag = fluidstate.is(FluidTags.WATER) && fluidstate.isSource();
         return super.getStateForPlacement(context).setValue(WATERLOGGED, flag);
     }
 
@@ -107,8 +109,13 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
     }
 
     @Override
+    public boolean canPlaceLiquid(BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
+        return !blockState.getValue(WATERLOGGED) && fluid.is(FluidTags.WATER) && fluid.defaultFluidState().isSource();
+    }
+
+    @Override
     public boolean placeLiquid(LevelAccessor level, BlockPos pos, BlockState state, FluidState fluidState) {
-        if (!state.getValue(WATERLOGGED) && fluidState.getType() == Fluids.WATER) {
+        if (!state.getValue(WATERLOGGED) && fluidState.is(FluidTags.WATER) && fluidState.isSource()) {
             BlockState blockstate = state.setValue(WATERLOGGED, Boolean.TRUE);
             if (state.getValue(LIT)) {
                 SuperCandleWick.extinguish(null, level.getBlockState(pos.above()), level, pos.above());
@@ -118,7 +125,7 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
                 level.setBlock(pos, blockstate, 3);
             }
 
-            level.scheduleTick(pos, fluidState.getType(), fluidState.getType().getTickDelay(level));
+            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
             return true;
         }
         else {

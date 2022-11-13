@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:honeycomb_block",
+    "the_bumblezone:filled_porous_honeycomb_block"
+  ]
+}

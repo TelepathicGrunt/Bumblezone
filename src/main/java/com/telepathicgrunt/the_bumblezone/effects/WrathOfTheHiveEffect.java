@@ -64,15 +64,22 @@ public class WrathOfTheHiveEffect extends MobEffect {
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         Level world = entity.level;
 
+        if (entity.isDeadOrDying()) {
+            calmTheBees(world, entity);
+            return;
+        }
+
         //Maximum aggression
         if (amplifier >= 2) {
             unBEElievablyHighAggression(world, entity);
 
-            if(GeneralUtils.getEntityCountInBz() < BzConfig.broodBlocksBeeSpawnCapacity * 3.0f) {
+            if(world instanceof ServerLevel serverLevel &&
+                GeneralUtils.getNearbyActiveEntitiesInDimension(serverLevel, entity.blockPosition()) < BzConfig.broodBlocksBeeSpawnCapacity * 3.0f) 
+            {
                 // Spawn bees when high wrath effect.
                 // Must be very low as this method is fired every tick for status effects.
                 // We don't want to spawn millions of bees
-                if(!world.isClientSide() && entity.getRandom().nextFloat() <= 0.0045f) {
+                if(entity.getRandom().nextFloat() <= 0.0045f) {
                     // Grab a nearby air materialposition a bit away
                     BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(entity, 30, 10);
                     if(world.getBlockState(spawnBlockPos).getMaterial() != Material.AIR) {
@@ -81,6 +88,14 @@ public class WrathOfTheHiveEffect extends MobEffect {
 
                     Bee bee = EntityType.BEE.create(world);
                     if(bee == null) return;
+
+                    bee.finalizeSpawn(
+                            serverLevel,
+                            serverLevel.getCurrentDifficultyAt(spawnBlockPos),
+                            MobSpawnType.TRIGGERED,
+                            null,
+                            null
+                    );
 
                     bee.absMoveTo(
                             spawnBlockPos.getX() + 0.5D,

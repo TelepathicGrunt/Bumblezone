@@ -46,8 +46,11 @@ public class HoneyCompass extends Item implements Vanishable {
     public static final String TAG_TARGET_DIMENSION = "TargetDimension";
     public static final String TAG_TYPE = "CompassType";
     public static final String TAG_LOADING = "IsLoading";
-    public static final String TARGET_BLOCK = "TargetBlock";
-    public static final String IS_THRONE_TYPE = "IsThrone";
+    public static final String TAG_TARGET_BLOCK = "TargetBlock";
+    public static final String TAG_IS_THRONE_TYPE = "IsThrone";
+    public static final String TAG_CUSTOM_NAME_TYPE = "CustomName";
+    public static final String TAG_CUSTOM_DESCRIPTION_TYPE = "CustomDescription";
+    public static final String TAG_LOCKED = "Locked";
 
     public HoneyCompass(Item.Properties properties) {
         super(properties);
@@ -55,17 +58,21 @@ public class HoneyCompass extends Item implements Vanishable {
 
     @Override
     public boolean isFoil(ItemStack itemStack) {
-        return isStructureCompass(itemStack) || super.isFoil(itemStack);
+        return getBooleanTag(itemStack.getTag(), TAG_IS_THRONE_TYPE) || getBooleanTag(itemStack.getTag(), TAG_LOCKED) || super.isFoil(itemStack);
     }
 
     @Override
     public String getDescriptionId(ItemStack itemStack) {
-        if (isLoadingCompass(itemStack)) {
+        if (getBooleanTag(itemStack.getTag(), TAG_LOADING)) {
             return "item.the_bumblezone.honey_compass_structure_loading";
         }
 
+        if (hasTagSafe(itemStack.getTag(), TAG_CUSTOM_NAME_TYPE)) {
+            return itemStack.getTag().getString(TAG_CUSTOM_NAME_TYPE);
+        }
+
         if(isStructureCompass(itemStack)) {
-            if(isThroneStructureCompass(itemStack)) {
+            if(getBooleanTag(itemStack.getTag(), TAG_IS_THRONE_TYPE)) {
                 return "item.the_bumblezone.honey_compass_throne_structure";
             }
             else {
@@ -95,11 +102,37 @@ public class HoneyCompass extends Item implements Vanishable {
     }
 
     @Override
+    public void appendHoverText(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
+        if (hasTagSafe(itemStack.getTag(), TAG_CUSTOM_DESCRIPTION_TYPE)) {
+            components.add(Component.translatable(itemStack.getTag().getString(TAG_CUSTOM_DESCRIPTION_TYPE)));
+            return;
+        }
+
+        if (getBooleanTag(itemStack.getTag(), TAG_IS_THRONE_TYPE)) {
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_throne_description"));
+            components.forEach(component -> {
+                if (component instanceof MutableComponent mutableComponent) {
+                    mutableComponent.withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD);
+                }
+            });
+        }
+        else if (isBlockCompass(itemStack)) {
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description"));
+        }
+        else if (isStructureCompass(itemStack)) {
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_structure_description"));
+        }
+        else {
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_description"));
+        }
+    }
+
+    @Override
     public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean bl) {
         if (!level.isClientSide) {
-            if (!isThroneStructureCompass(itemStack) && isBlockCompass(itemStack)) {
+            if (!getBooleanTag(itemStack.getTag(), TAG_IS_THRONE_TYPE) && isBlockCompass(itemStack)) {
                 CompoundTag compoundTag = itemStack.getOrCreateTag();
-                if (compoundTag.contains(TAG_TARGET_POS) && compoundTag.contains(TARGET_BLOCK) && compoundTag.contains(TAG_TARGET_DIMENSION)) {
+                if (compoundTag.contains(TAG_TARGET_POS) && compoundTag.contains(TAG_TARGET_BLOCK) && compoundTag.contains(TAG_TARGET_DIMENSION)) {
 
                     Optional<ResourceKey<Level>> optional = Level.RESOURCE_KEY_CODEC.parse(NbtOps.INSTANCE, compoundTag.get(HoneyCompass.TAG_TARGET_DIMENSION)).result();
                     if (optional.isPresent() && optional.equals(level.dimension())) {
@@ -107,16 +140,16 @@ public class HoneyCompass extends Item implements Vanishable {
                         if (!level.isInWorldBounds(blockPos)) {
                             compoundTag.remove(TAG_TARGET_POS);
                             compoundTag.remove(TAG_TARGET_DIMENSION);
-                            compoundTag.remove(TARGET_BLOCK);
+                            compoundTag.remove(TAG_TARGET_BLOCK);
                             compoundTag.remove(TAG_TYPE);
                             return;
                         }
 
                         ChunkAccess chunk = level.getChunk(blockPos.getX() >> 4, blockPos.getZ() >> 4, ChunkStatus.FULL, false);
-                        if(chunk != null && !(Registry.BLOCK.getKey(chunk.getBlockState(blockPos).getBlock()).toString().equals(compoundTag.getString(TARGET_BLOCK)))) {
+                        if(chunk != null && !(Registry.BLOCK.getKey(chunk.getBlockState(blockPos).getBlock()).toString().equals(compoundTag.getString(TAG_TARGET_BLOCK)))) {
                             compoundTag.remove(TAG_TARGET_POS);
                             compoundTag.remove(TAG_TARGET_DIMENSION);
-                            compoundTag.remove(TARGET_BLOCK);
+                            compoundTag.remove(TAG_TARGET_BLOCK);
                             compoundTag.remove(TAG_TYPE);
                         }
                     }
@@ -124,7 +157,7 @@ public class HoneyCompass extends Item implements Vanishable {
                 else {
                     compoundTag.remove(TAG_TARGET_POS);
                     compoundTag.remove(TAG_TARGET_DIMENSION);
-                    compoundTag.remove(TARGET_BLOCK);
+                    compoundTag.remove(TAG_TARGET_BLOCK);
                     compoundTag.remove(TAG_TYPE);
                 }
             }
@@ -136,7 +169,7 @@ public class HoneyCompass extends Item implements Vanishable {
         ItemStack itemStack = player.getItemInHand(interactionHand);
         BlockPos playerPos = player.blockPosition();
 
-        if (itemStack.hasTag() && getLoadingTags(itemStack.getOrCreateTag())) {
+        if (itemStack.hasTag() && getBooleanTag(itemStack.getOrCreateTag(), TAG_LOADING)) {
             if (ThreadExecutor.isRunningASearch()) {
                 return InteractionResultHolder.fail(itemStack);
             }
@@ -145,9 +178,13 @@ public class HoneyCompass extends Item implements Vanishable {
             }
         }
 
-        if (!level.isClientSide() && !isThroneStructureCompass(itemStack) && !isStructureCompass(itemStack)) {
+        if (getBooleanTag(itemStack.getTag(), TAG_LOCKED) || getBooleanTag(itemStack.getTag(), TAG_IS_THRONE_TYPE)) {
+            return super.use(level, player, interactionHand);
+        }
+
+        if (!level.isClientSide() && !isStructureCompass(itemStack)) {
             setLoadingTags(itemStack.getOrCreateTag(), true);
-            ThreadExecutor.locate((ServerLevel) level, BzTags.HONEY_COMPASS_LOCATING, playerPos, 100, false)
+            ThreadExecutor.locate((ServerLevel) level, BzTags.HONEY_COMPASS_DEFAULT_LOCATING, playerPos, 100, false)
                     .thenOnServerThread(foundPos -> setCompassData((ServerLevel) level, (ServerPlayer) player, interactionHand, itemStack, foundPos));
             return InteractionResultHolder.success(itemStack);
         }
@@ -193,7 +230,7 @@ public class HoneyCompass extends Item implements Vanishable {
         ItemStack handCompass = useOnContext.getItemInHand();
         BlockState targetBlock = level.getBlockState(blockPos);
 
-        if (handCompass.hasTag() && getLoadingTags(handCompass.getOrCreateTag())) {
+        if (handCompass.hasTag() && getBooleanTag(handCompass.getOrCreateTag(), TAG_LOADING)) {
             if (ThreadExecutor.isRunningASearch()) {
                 return InteractionResult.FAIL;
             }
@@ -202,7 +239,11 @@ public class HoneyCompass extends Item implements Vanishable {
             }
         }
 
-        if (!isThroneStructureCompass(handCompass) && player != null && isValidBeeHive(targetBlock)) {
+        if (getBooleanTag(handCompass.getTag(), TAG_LOCKED) || getBooleanTag(handCompass.getTag(), TAG_IS_THRONE_TYPE)) {
+            return super.useOn(useOnContext);
+        }
+
+        if (player != null && isValidBeeHive(targetBlock)) {
             level.playSound(null, blockPos, BzSounds.HONEY_COMPASS_BLOCK_LOCK, SoundSource.PLAYERS, 1.0F, 1.0F);
             if(player instanceof ServerPlayer serverPlayer) {
                 BzCriterias.HONEY_COMPASS_USE_TRIGGER.trigger(serverPlayer);
@@ -242,44 +283,37 @@ public class HoneyCompass extends Item implements Vanishable {
         return false;
     }
 
-    @Override
-    public void appendHoverText(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
-        if (isThroneStructureCompass(itemStack)) {
-            components.forEach(component -> {
-                if (component instanceof MutableComponent mutableComponent) {
-                    mutableComponent.withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD);
-                }
-            });
+    public static boolean getBooleanTag(CompoundTag compoundTag, String tagName) {
+        if (compoundTag == null || !compoundTag.contains(tagName)) {
+            return false;
         }
+        return compoundTag.getBoolean(tagName);
+    }
+
+    public static boolean hasTagSafe(CompoundTag compoundTag, String tagName) {
+        return compoundTag != null && compoundTag.contains(tagName);
     }
 
     public static void setLoadingTags(CompoundTag compoundTag, boolean isLoading) {
         compoundTag.putBoolean(TAG_LOADING, isLoading);
     }
 
-    public static boolean getLoadingTags(CompoundTag compoundTag) {
-        if (!compoundTag.contains(TAG_LOADING)) {
-            return false;
-        }
-        return compoundTag.getBoolean(TAG_LOADING);
-    }
-
     public static void addStructureTags(ResourceKey<Level> resourceKey, BlockPos blockPos, CompoundTag compoundTag) {
         compoundTag.put(TAG_TARGET_POS, NbtUtils.writeBlockPos(blockPos));
         Level.RESOURCE_KEY_CODEC.encodeStart(NbtOps.INSTANCE, resourceKey).resultOrPartial(Bumblezone.LOGGER::error).ifPresent(tag -> compoundTag.put(TAG_TARGET_DIMENSION, tag));
         compoundTag.putString(TAG_TYPE, "structure");
-        compoundTag.remove(TARGET_BLOCK);
+        compoundTag.remove(TAG_TARGET_BLOCK);
     }
 
     public static void addBlockTags(ResourceKey<Level> resourceKey, BlockPos blockPos, CompoundTag compoundTag, Block block) {
         compoundTag.put(TAG_TARGET_POS, NbtUtils.writeBlockPos(blockPos));
         Level.RESOURCE_KEY_CODEC.encodeStart(NbtOps.INSTANCE, resourceKey).resultOrPartial(Bumblezone.LOGGER::error).ifPresent(tag -> compoundTag.put(TAG_TARGET_DIMENSION, tag));
         compoundTag.putString(TAG_TYPE, "block");
-        compoundTag.putString(TARGET_BLOCK, Registry.BLOCK.getKey(block).toString());
+        compoundTag.putString(TAG_TARGET_BLOCK, Registry.BLOCK.getKey(block).toString());
     }
 
     public static void addThroneTags(CompoundTag compoundTag) {
-        compoundTag.putBoolean(IS_THRONE_TYPE, true);
+        compoundTag.putBoolean(TAG_IS_THRONE_TYPE, true);
     }
 
     public static boolean isBlockCompass(ItemStack compassItem) {
@@ -293,8 +327,8 @@ public class HoneyCompass extends Item implements Vanishable {
     public static String getStoredBlock(ItemStack compassItem) {
         if(compassItem.hasTag()) {
             CompoundTag tag = compassItem.getTag();
-            if (tag != null && tag.contains(TARGET_BLOCK)) {
-                return tag.getString(TARGET_BLOCK);
+            if (tag != null && tag.contains(TAG_TARGET_BLOCK)) {
+                return tag.getString(TAG_TARGET_BLOCK);
             }
         }
         return null;
@@ -304,22 +338,6 @@ public class HoneyCompass extends Item implements Vanishable {
         if(compassItem.hasTag()) {
             CompoundTag tag = compassItem.getTag();
             return tag != null && tag.contains(TAG_TYPE) && tag.getString(TAG_TYPE).equals("structure");
-        }
-        return false;
-    }
-
-    public static boolean isThroneStructureCompass(ItemStack compassItem) {
-        if(compassItem.hasTag()) {
-            CompoundTag tag = compassItem.getTag();
-            return tag != null && tag.contains(IS_THRONE_TYPE) && tag.getBoolean(IS_THRONE_TYPE);
-        }
-        return false;
-    }
-
-    public static boolean isLoadingCompass(ItemStack compassItem) {
-        if(compassItem.hasTag()) {
-            CompoundTag tag = compassItem.getTag();
-            return tag != null && tag.contains(TAG_LOADING) && tag.getBoolean(TAG_LOADING);
         }
         return false;
     }

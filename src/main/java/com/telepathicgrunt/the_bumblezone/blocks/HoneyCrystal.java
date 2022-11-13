@@ -62,7 +62,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     private Item item;
 
     public HoneyCrystal() {
-        super(QuiltBlockSettings.of(Material.GLASS, MaterialColor.COLOR_ORANGE).lightLevel((blockState) -> 1).strength(0.3F, 0.3f).noOcclusion());
+        super(QuiltBlockSettings.of(Material.GLASS, MaterialColor.TERRACOTTA_YELLOW).lightLevel((blockState) -> 1).strength(0.3F, 0.3f).noOcclusion());
 
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.UP)
@@ -204,6 +204,14 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
         }
 
         return this.item;
+    }
+
+    /**
+     * Return this blockitem for creative middle click (pick block)
+     */
+    @Override
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+        return BzItems.HONEY_CRYSTAL.getDefaultInstance();
     }
 
     /**

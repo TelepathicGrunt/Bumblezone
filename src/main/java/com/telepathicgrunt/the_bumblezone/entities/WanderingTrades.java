@@ -30,6 +30,26 @@ public class WanderingTrades {
                 10,
                 0.5F
         ));
+
+        addRareTrade(2, new GeneralUtils.BasicItemTrade(
+                Items.EMERALD,
+                BzItems.MUSIC_DISC_LA_BEE_DA_LOCA,
+                20,
+                1,
+                1,
+                10,
+                0.5F
+        ));
+
+        addRareTrade(2, new GeneralUtils.BasicItemTrade(
+                Items.EMERALD,
+                BzItems.MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES,
+                20,
+                1,
+                1,
+                10,
+                0.5F
+        ));
     }
 
     public static void addRareTrade(int tier, VillagerTrades.ItemListing trade) {

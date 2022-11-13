@@ -49,6 +49,7 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior {
                     Mob beeEntity = EntityType.BEE.create(world);
                     beeEntity.moveTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, beeEntity.getRandom().nextFloat() * 360.0F, 0.0F);
                     beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(new BlockPos(beeEntity.position())), MobSpawnType.TRIGGERED, null, null);
+                    beeEntity.setBaby(true);
                     world.addFreshEntity(beeEntity);
                 }
 

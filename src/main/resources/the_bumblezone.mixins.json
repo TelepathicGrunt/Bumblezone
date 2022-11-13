@@ -57,6 +57,7 @@
     "items.HoneyShieldItemstackGetMaximumDamageMixin",
     "items.HoneyShieldItemstackSetDamageMixin",
     "items.HoneyShieldPreferredSlotMixin",
+    "items.MapItemMixin",
     "items.PlayerDamagedMixin",
     "items.PlayerDamageShieldInvoker",
     "items.SimpleCookingSerializerMixin",
@@ -66,7 +67,9 @@
     "world.ServerWorldMixin",
     "world.SinglePoolElementAccessor",
     "world.StructurePoolAccessor",
+    "world.StructureProcessorAccessor",
     "world.StructureTemplateAccessor",
+    "world.StructureTemplateMixin",
     "world.WorldGenRegionAccessor"
   ],
   "client": [

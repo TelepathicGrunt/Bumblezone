@@ -50,9 +50,6 @@ repositories {
 			includeGroup 'dev.cafeteria'
 		}
 	}
-	repositories {
-		maven { url "https://maven.shedaniel.me" }
-	}
 	maven {
 		// location of the maven that hosts JEI files
 		name = "Progwml6 maven"
@@ -107,7 +104,7 @@ dependencies {
 	modCompileOnlyApi "curse.maven:jei-238222:3944625"
 	//modCompileOnlyApi "mezz.jei:jei-${libs.versions.jeimc.get()}-fabric:${libs.versions.jei.get()}"
 
-	//modRuntimeOnly "curse.maven:continuity-531351:3927270"
+	//modRuntimeOnly "com.github.PepperCode1:Continuity:1.19~dev"
 
 	//modCompileOnly "curse.maven:llamarama-449083:3938753"
 	//modRuntimeOnly "curse.maven:llamarama-449083:3938753"
@@ -150,7 +147,7 @@ jar {
 
 apply from: 'gradle/maven.gradle'
 
-String fileContents = new File("CHANGELOG.md").getText('UTF-8')
+String fileContents = file("CHANGELOG.md").getText('UTF-8')
 
 task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
 	apiToken = "$System.env.CURSEFORGEKEY"
@@ -166,6 +163,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	mainFile.addModLoader("Quilt")
 	mainFile.addRequirement("midnightlib")
 	mainFile.addRequirement("qsl")
+	mainFile.addOptional("continuity")
 }
 
 modrinth {
@@ -182,6 +180,7 @@ modrinth {
 	dependencies {
 		required.project "qsl"
 		required.project "midnightlib"
+		optional.project "continuity"
 	}
 }
 

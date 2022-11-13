@@ -1,0 +1,20 @@
+{
+  "minecraft:wolf": [{
+    "nbt_match": {
+      "variant": "woof:lush"
+    },
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }]
+}

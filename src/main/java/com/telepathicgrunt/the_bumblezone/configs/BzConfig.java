@@ -149,6 +149,12 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static int musicDiscTimeLengthHoneyBee = 216;
 
+    @Entry
+    public static int musicDiscTimeLengthLaBeeDaLoca = 176;
+
+    @Entry
+    public static int musicDiscTimeLengthBeeLaxingWithTheHomBees = 300;
+
 
     @Comment
     public static Comment modCompatComment;
@@ -157,7 +163,7 @@ public class BzConfig extends MidnightConfig {
     public static boolean allowFriendsAndFoesBeekeeperTradesCompat = true;
 
     @Entry
-    public static boolean allowProductiveBeesHoneyTreatCompat = true;
+    public static boolean allowEnderpearledLlamaramaBumbleLlamaTeleporation = true;
 
 
     @Comment

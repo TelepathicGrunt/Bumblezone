@@ -42,7 +42,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
     });
 
     public RedstoneHoneyWeb() {
-        super(Properties.of(Material.WEB, MaterialColor.COLOR_ORANGE).noCollission().requiresCorrectToolForDrops().strength(4.0F).lightLevel(blockState -> (blockState.getValue(POWER) + 9) / 10));
+        super(Properties.of(Material.WEB, MaterialColor.TERRACOTTA_RED).noCollission().requiresCorrectToolForDrops().strength(4.0F).lightLevel(blockState -> (blockState.getValue(POWER) + 9) / 10));
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(NORTHSOUTH, false)
                 .setValue(EASTWEST, false)

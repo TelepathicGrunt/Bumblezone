@@ -17,7 +17,7 @@ public class PotentPoisonEnchantment extends Enchantment {
 
     @Override
     public int getMinCost(int level) {
-        return 6 + level * 5;
+        return 8 + level * 5;
     }
 
     @Override

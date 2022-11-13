@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone;
 
+import com.telepathicgrunt.the_bumblezone.commands.NoneOpCommands;
 import com.telepathicgrunt.the_bumblezone.components.EntityComponent;
 import com.telepathicgrunt.the_bumblezone.components.EssenceComponent;
 import com.telepathicgrunt.the_bumblezone.components.FlyingSpeedComponent;
@@ -27,6 +28,7 @@ import dev.onyxstudios.cca.api.v3.entity.PlayerCopyCallback;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceLocation;
@@ -36,6 +38,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
+import org.quiltmc.qsl.command.api.CommandRegistrationCallback;
 import org.quiltmc.qsl.lifecycle.api.event.ServerLifecycleEvents;
 import org.quiltmc.qsl.lifecycle.api.event.ServerWorldTickEvents;
 import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
@@ -89,6 +92,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzSurfaceRules.registerSurfaceRules();
         BzStructures.registerStructures();
         BzDimension.registerDimensionParts();
+        BzCommands.registerCommand();
 
         WanderingTrades.addWanderingTrades();
         DispenserItemSetup.setupDispenserBehaviors();
@@ -135,6 +139,9 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
             else {
                 EssenceComponent capability = Bumblezone.ESSENCE_COMPONENT.get(serverPlayerNew);
                 capability.isBeeEssenced = false;
+
+                Component message = Component.translatable("system.the_bumblezone.lost_bee_essence").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+                serverPlayerNew.displayClientMessage(message, true);
             }
         });
     }
