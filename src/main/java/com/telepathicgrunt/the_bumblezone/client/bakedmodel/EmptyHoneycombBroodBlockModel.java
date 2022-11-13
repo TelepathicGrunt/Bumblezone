@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
+import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
@@ -42,9 +43,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class PorousHoneycombBlockModel implements IDynamicBakedModel {
+public class EmptyHoneycombBroodBlockModel implements IDynamicBakedModel {
     public static final ModelProperty<Map<Direction, Set<CORNERS>>> DIRECTION_OF_HONEY_MERGERS = new ModelProperty<>();
-    public static final List<PorousHoneycombBlockModel> INSTANCES = new ArrayList<>();
+    public static final List<EmptyHoneycombBroodBlockModel> INSTANCES = new ArrayList<>();
     public static final Direction[] DIRECTIONS = Direction.values();
     public static final Direction.AxisDirection[] AXIS_DIRECTIONS = Direction.AxisDirection.values();
 
@@ -58,10 +59,11 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
     private final ResourceLocation botLeft;
     private final ResourceLocation botRight;
     private final ResourceLocation particle;
-    private final ResourceLocation base;
+    private final ResourceLocation side;
+    private final ResourceLocation front;
     private TextureAtlasSprite particleTex;
     private Map<Direction, BakedModel[]> cache;
-    private BakedModel mainModel;
+    private BakedModel[] mainModels;
 
     private enum CORNERS {
         TOP_LEFT,
@@ -176,21 +178,22 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
 
     }
 
-    public PorousHoneycombBlockModel(ResourceLocation modelLocation, ResourceLocation botLeft, ResourceLocation botRight, ResourceLocation topLeft, ResourceLocation topRight, ResourceLocation particle, ResourceLocation base) {
+    public EmptyHoneycombBroodBlockModel(ResourceLocation modelLocation, ResourceLocation botLeft, ResourceLocation botRight, ResourceLocation topLeft, ResourceLocation topRight, ResourceLocation particle, ResourceLocation side, ResourceLocation front) {
         this.particle = particle;
         this.modelLocation = modelLocation;
         this.botLeft = botLeft;
         this.botRight = botRight;
         this.topLeft = topLeft;
         this.topRight = topRight;
-        this.base = base;
+        this.side = side;
+        this.front = front;
         INSTANCES.add(this);
     }
 
     public void init()
     {
         this.cache = buildCache(modelLocation, particle, new ResourceLocation[] {topLeft, topRight, botLeft, botRight});
-        this.mainModel = buildBlock(base, modelLocation);
+        this.mainModels = buildBlocks(side, front, modelLocation);
         this.particleTex = getTexture(particle);
     }
 
@@ -230,21 +233,31 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
         map.get(d)[corner.ordinal()] = model;
     }
 
-    private static BakedModel buildBlock(ResourceLocation textureLocation, ResourceLocation modelLocation) {
-        final BlockModel dummy = new BlockModel(null, new ArrayList<>(), new HashMap<>(), false, BlockModel.GuiLight.FRONT, ItemTransforms.NO_TRANSFORMS, new ArrayList<>());
-        final TextureAtlasSprite tex = getTexture(textureLocation);
-        final Map<Direction, BlockElementFace> mapFacesIn = Maps.newEnumMap(Direction.class);
-        for (Direction d : DIRECTIONS) {
-            mapFacesIn.put(d, new BlockElementFace(null, -1, "", new BlockFaceUV(new float[] {0f, 0f, 16f, 16f}, 0)));
-        }
-        final BlockElement part = new BlockElement(new Vector3f(0f, 0f, 0f), new Vector3f(16f, 16f, 16f), mapFacesIn, null, true);
-        final SimpleBakedModel.Builder builder = new SimpleBakedModel.Builder(dummy, ItemOverrides.EMPTY, false).particle(tex);
+    private static BakedModel[] buildBlocks(ResourceLocation textureLocation, ResourceLocation textureFrontLocation, ResourceLocation modelLocation) {
+        BakedModel[] models = new BakedModel[6];
+        for (Direction facing : DIRECTIONS) {
+            final BlockModel dummy = new BlockModel(null, new ArrayList<>(), new HashMap<>(), false, BlockModel.GuiLight.FRONT, ItemTransforms.NO_TRANSFORMS, new ArrayList<>());
+            final TextureAtlasSprite tex = getTexture(textureLocation);
+            final TextureAtlasSprite tex2 = getTexture(textureFrontLocation);
+            final Map<Direction, BlockElementFace> mapFacesIn = Maps.newEnumMap(Direction.class);
+            for (Direction d : DIRECTIONS) {
+                mapFacesIn.put(d, new BlockElementFace(null, -1, "", new BlockFaceUV(new float[] {0f, 0f, 16f, 16f}, 0)));
+            }
+            final BlockElement part = new BlockElement(new Vector3f(0f, 0f, 0f), new Vector3f(16f, 16f, 16f), mapFacesIn, null, true);
+            final SimpleBakedModel.Builder builder = new SimpleBakedModel.Builder(dummy, ItemOverrides.EMPTY, false).particle(tex);
 
-        for (Map.Entry<Direction, BlockElementFace> e : part.faces.entrySet()) {
-            Direction d = e.getKey();
-            builder.addCulledFace(d, makeBakedQuad(part, e.getValue(), tex, d, BlockModelRotation.X0_Y0, modelLocation));
+            for (Map.Entry<Direction, BlockElementFace> e : part.faces.entrySet()) {
+                Direction d = e.getKey();
+                if (d == facing.getOpposite()) {
+                    builder.addCulledFace(d, makeBakedQuad(part, e.getValue(), tex2, d, BlockModelRotation.X0_Y0, modelLocation));
+                }
+                else {
+                    builder.addCulledFace(d, makeBakedQuad(part, e.getValue(), tex, d, BlockModelRotation.X0_Y0, modelLocation));
+                }
+            }
+            models[facing.ordinal()] = builder.build(NamedRenderTypeManager.get(new ResourceLocation("solid")));
         }
-        return builder.build(NamedRenderTypeManager.get(new ResourceLocation("solid")));
+        return models;
     }
 
     private static BakedModel bakedModel(Vector3f from, Vector3f to, Direction direction, CORNERS corner, ResourceLocation modelLocation, ResourceLocation particleLocation, ResourceLocation[] textures) {
@@ -272,7 +285,11 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
     @Nonnull
     @Override
     public List<BakedQuad> getQuads(BlockState state, Direction side, RandomSource rand, ModelData extraData, RenderType renderType) {
-        final List<BakedQuad> quads = new ArrayList<>(mainModel.getQuads(state, side, rand, extraData, renderType));
+        int facingIndex = 0;
+        if (state != null && state.hasProperty(EmptyHoneycombBrood.FACING)) {
+            facingIndex = state.getValue(EmptyHoneycombBrood.FACING).ordinal();
+        }
+        final List<BakedQuad> quads = new ArrayList<>(mainModels[facingIndex].getQuads(state, side, rand, extraData, renderType));
 
         if (quads.size() > 0 && side != null && extraData.has(DIRECTION_OF_HONEY_MERGERS))
         {
@@ -349,11 +366,11 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
     }
 
     public static void registerModelLoaders(ModelEvent.RegisterGeometryLoaders event) {
-        event.register("porous_honeycomb", new PorousHoneycombLoader());
+        event.register("empty_honeycomb_brood", new EmptyHoneycombBroodLoader());
     }
 
     public static void onBakingCompleted(ModelEvent.BakingCompleted event) {
-        INSTANCES.forEach(PorousHoneycombBlockModel::init);
+        INSTANCES.forEach(EmptyHoneycombBroodBlockModel::init);
     }
 
 }

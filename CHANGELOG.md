@@ -8,6 +8,8 @@ Added two new songs by LudoCrypt!
  https://ludocrypt.bandcamp.com/track/la-bee-da-loca
 
 ##### Blocks:
+Connected Textures added for Porous Honeycomb Block and Empty Honeycomb Brood Block! Special thanks to EERussianguy!
+
 Added missing en_us translation for Crystalline Flower UI opening stat.
 
 Adjusted textures for Sugar Infused Stone and Sugar Infused Cobblestone a bit.
