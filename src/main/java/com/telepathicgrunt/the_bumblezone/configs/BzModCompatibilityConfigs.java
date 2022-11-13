@@ -30,6 +30,8 @@ public class BzModCompatibilityConfigs {
 	public static ForgeConfigSpec.BooleanValue allowEnderpearledBumbleBeastTeleporation;
 
 	public static ForgeConfigSpec.BooleanValue allowBeeBottleRevivingEmptyBroodBlock;
+	public static ForgeConfigSpec.BooleanValue spawnCrystallizedHoneyInDimension;
+	public static ForgeConfigSpec.BooleanValue spawnHoneyTilesInDimension;
 
 	static {
 		ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -250,6 +252,20 @@ public class BzModCompatibilityConfigs {
 							" a regular Honeycomb Brood Block with a larva inside! \n")
 					.translation("the_bumblezone.config.allowbeebottlerevivingemptybroodblock")
 					.define("allowBeeBottleRevivingEmptyBroodBlock", true);
+
+			spawnCrystallizedHoneyInDimension = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Allow Buzzier Bees's Crystallized honey block to spawn in patches on surfaces in Bumblezone Dimension. ",
+							" Requires a game restart to take effect (close game and re-open) \n")
+					.translation("the_bumblezone.config.spawncrystallizedhoneyindimension")
+					.define("spawnCrystallizedHoneyInDimension", true);
+
+			spawnHoneyTilesInDimension = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Allow Buzzier Bees's Honey Tile block to spawn mainly in caves inside Bumblezone Dimension. ",
+							" Requires a game restart to take effect (close game and re-open) \n")
+					.translation("the_bumblezone.config.spawnhoneytilesindimension")
+					.define("spawnHoneyTilesInDimension", true);
 
 			builder.pop();
 
