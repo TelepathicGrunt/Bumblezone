@@ -41,7 +41,7 @@ public interface SuperCandle {
 
         BlockState wickState = chunkAccess.getBlockState(wickPosition);
         boolean isBelowSoul = SuperCandleWick.isSoulBelowInRange(levelAccessor, blockPos.below());
-        boolean wickWaterlogged = wickState.getFluidState().is(FluidTags.WATER);
+        boolean wickWaterlogged = wickState.getFluidState().is(FluidTags.WATER) && wickState.getFluidState().isSource();
 
         if ((wickState.is(BzBlocks.SUPER_CANDLE_WICK.get()) && isBelowSoul) ||
             (wickState.is(BzBlocks.SUPER_CANDLE_WICK_SOUL.get()) && !isBelowSoul) ||

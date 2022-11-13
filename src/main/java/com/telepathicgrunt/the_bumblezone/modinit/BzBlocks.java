@@ -13,10 +13,34 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class BzBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Bumblezone.MODID);
+
+    public static Material RED_NOT_SOLID = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.TERRACOTTA_RED))
+            .thebumblezone_getNotSolidBlocking())
+            .thebumblezone_getDestroyOnPush()
+            .noCollider()
+            .replaceable()
+            .nonSolid()
+            .build();
     public static Material ORANGE_NOT_SOLID = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.COLOR_ORANGE))
-            .thebumblezone_getNotSolidBlocking()).thebumblezone_getDestroyOnPush().noCollider().replaceable().nonSolid().build();
-    public static Material ORANGE_CRYSTAL_PLANT = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.COLOR_ORANGE))
-            .thebumblezone_getNotSolidBlocking()).thebumblezone_getNotPushable().noCollider().nonSolid().build();
+            .thebumblezone_getNotSolidBlocking())
+            .thebumblezone_getDestroyOnPush()
+            .noCollider()
+            .replaceable()
+            .nonSolid()
+            .build();
+    public static Material YELLOW_NOT_SOLID = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.COLOR_YELLOW))
+            .thebumblezone_getNotSolidBlocking())
+            .thebumblezone_getDestroyOnPush()
+            .noCollider()
+            .replaceable()
+            .nonSolid()
+            .build();
+    public static Material YELLOW_CRYSTAL_PLANT = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.TERRACOTTA_YELLOW))
+            .thebumblezone_getNotSolidBlocking())
+            .thebumblezone_getNotPushable()
+            .noCollider()
+            .nonSolid()
+            .build();
 
     //Blocks
     public static final RegistryObject<Block> POROUS_HONEYCOMB = BLOCKS.register("porous_honeycomb_block", PorousHoneycomb::new);

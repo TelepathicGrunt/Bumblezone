@@ -18,5 +18,9 @@ public class QuarkCompat {
         EnchantedBookTooltips.getTestItems().add(BzItems.STINGER_SPEAR.get().getDefaultInstance());
         EnchantedBookTooltips.getTestItems().add(BzItems.CRYSTAL_CANNON.get().getDefaultInstance());
         EnchantedBookTooltips.getTestItems().add(BzItems.HONEY_CRYSTAL_SHIELD.get().getDefaultInstance());
+        EnchantedBookTooltips.getTestItems().add(BzItems.STINGLESS_BEE_HELMET_2.get().getDefaultInstance());
+        EnchantedBookTooltips.getTestItems().add(BzItems.BUMBLE_BEE_CHESTPLATE_2.get().getDefaultInstance());
+        EnchantedBookTooltips.getTestItems().add(BzItems.HONEY_BEE_LEGGINGS_2.get().getDefaultInstance());
+        EnchantedBookTooltips.getTestItems().add(BzItems.CARPENTER_BEE_BOOTS_2.get().getDefaultInstance());
     }
 }

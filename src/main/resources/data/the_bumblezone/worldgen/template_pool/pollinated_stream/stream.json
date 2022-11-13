@@ -39,7 +39,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 4,
       "element": {
         "location": "the_bumblezone:pollinated_stream/stream_3way",
         "processors": "the_bumblezone:pollinated_stream_processors",
@@ -48,7 +48,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:pollinated_stream/stream_3way_offset1",
         "processors": "the_bumblezone:pollinated_stream_processors",
@@ -57,7 +57,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:pollinated_stream/stream_3way_offset2",
         "processors": "the_bumblezone:pollinated_stream_processors",
@@ -66,7 +66,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 3,
       "element": {
         "location": "the_bumblezone:pollinated_stream/stream_4way",
         "processors": "the_bumblezone:pollinated_stream_processors",
@@ -111,7 +111,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 3,
       "element": {
         "location": "the_bumblezone:pollinated_stream/cave_spider_den",
         "processors": "the_bumblezone:pollinated_stream_processors",

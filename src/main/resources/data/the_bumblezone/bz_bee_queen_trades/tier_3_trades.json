@@ -43,6 +43,26 @@
     {
       "id": "resourcefulbees:oreo_cookie",
       "required": false
+    },
+    {
+      "id": "dreamland:bumble_block",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:honey_glazed_ham",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:honey_glazed_ham_block",
+      "required": false
+    },
+    {
+      "id": "delightful:ender_nectar",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:peanut_butter_honey_sandwich",
+      "required": false
     }
   ],
   "possible_rewards": [

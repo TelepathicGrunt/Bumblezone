@@ -20,7 +20,7 @@ import java.util.Optional;
 public class GenericOptimizedStructure extends Structure {
 
     public static final Codec<GenericOptimizedStructure> CODEC = RecordCodecBuilder.<GenericOptimizedStructure>mapCodec(instance ->
-            instance.group(PollinatedStreamStructure.settingsCodec(instance),
+            instance.group(GenericOptimizedStructure.settingsCodec(instance),
                     StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter(structure -> structure.startPool),
                     ResourceLocation.CODEC.optionalFieldOf("start_jigsaw_name").forGetter(structure -> structure.startJigsawName),
                     Codec.intRange(0, 30).fieldOf("size").forGetter(structure -> structure.size),

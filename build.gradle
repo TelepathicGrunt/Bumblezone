@@ -1,3 +1,6 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
+
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
@@ -18,6 +21,8 @@ buildscript {
 }
 
 plugins {
+    id 'maven-publish'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id "net.darkhax.curseforgegradle" version "1.0.7"
 }
 
@@ -33,32 +38,42 @@ archivesBaseName = "${modid}_forge"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
+sourceSets {
+    api {}
+}
+
+configurations {
+    apiImplementation.extendsFrom(minecraft)
+
+    library
+    implementation.extendsFrom(library)
+}
+
 minecraft {
     mappings channel: 'sugarcane', version: "${sugarcane_version}-${mc_version}"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
-        client {
+        all {
             workingDirectory project.file('run')
             arg "-mixin.config=" + project.getProperty('modid') + ".mixins.json"
-            mods { the_bumblezone { source sourceSets.main } }
+            mods {
+                the_bumblezone {
+                    source sourceSets.api
+                    source sourceSets.main
+                }
+            }
+            lazyToken('minecraft_classpath') {
+                configurations.library.copyRecursive().resolve().collect { it.absolutePath }.join(File.pathSeparator)
+            }
         }
-
-        server {
-            workingDirectory project.file('run')
-            arg "-mixin.config=" + project.getProperty('modid') + ".mixins.json"
-            mods { the_bumblezone { source sourceSets.main } }
-        }
-
+        client {}
+        server {}
         data {
-            workingDirectory project.file('run')
             args '--mod', "the_bumblezone", '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-            arg "-mixin.config=" + project.getProperty('modid') + ".mixins.json"
-            mods { the_bumblezone { source sourceSets.main } }
         }
     }
 }
-
 
 repositories {
     maven {
@@ -93,17 +108,23 @@ repositories {
     maven {
         url "https://maven.shedaniel.me"
     }
+    maven {
+        url "https://jitpack.io"
+    }
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
+
+    library "com.github.LlamaLad7:MixinExtras:0.1.1-rc.4"
+    annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1-rc.4")
+    annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
 
     runtimeOnly fg.deobf("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_version}")
     runtimeOnly fg.deobf("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_version}")
-    compileOnly fg.deobf("curse.maven:productive_bees-377897:${productivebees_file_id}")
+    compileOnly fg.deobf("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
 
-    implementation fg.deobf("mezz.jei:jei-${jei_mc_version}-forge:${jei_version}")
+    implementation fg.deobf("mezz.jei:jei-${project.jei_mc_version}-forge:${project.jei_version}")
     //runtimeOnly fg.deobf("curse.maven:jeed-532286:${jeed_version}")
     compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${project.rei_version}")
     compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${project.rei_version}")
@@ -112,10 +133,14 @@ dependencies {
     compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
     //runtimeOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
 
-    compileOnly fg.deobf("curse.maven:quark-243121:${quark_file_id}")
-    compileOnly fg.deobf("curse.maven:autoreglib-250363:${autoreglib_file_id}")
-    //runtimeOnly fg.deobf("curse.maven:quark-243121:${quark_file_id}")
-    //runtimeOnly fg.deobf("curse.maven:autoreglib-250363:${autoreglib_file_id}")
+    compileOnly fg.deobf("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
+    //runtimeOnly fg.deobf("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
+    //runtimeOnly fg.deobf("curse.maven:blueprint-382216:${project.blueprint_file_id}")
+
+    compileOnly fg.deobf("curse.maven:quark-243121:${project.quark_file_id}")
+    compileOnly fg.deobf("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
+    //runtimeOnly fg.deobf("curse.maven:quark-243121:${project.quark_file_id}")
+    //runtimeOnly fg.deobf("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
 
     //runtimeOnly fg.deobf("curse.maven:realistic_bees-410743:4021715")
     //runtimeOnly fg.deobf("curse.maven:collective-342584:4035506")
@@ -131,14 +156,46 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:better_advancements-272515:3562206")
 }
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+Map<?, ?> makeAttributes() {
+    return [
+            "Specification-Title": "${modid}",
+            "Specification-Vendor": "TelepathicGrunt",
+            "Specification-Version": "1", // We are version 1 of ourselves
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${mod_version}+${mc_version}",
+            "Implementation-Vendor" :"TelepathicGrunt",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            "MixinConfigs": "${modid}.mixins.json"
+    ]
 }
 
-apply from: 'gradle/manifest.gradle'
+tasks.create('relocateShadowJar', ConfigureShadowRelocation) {
+    target(tasks.shadowJar)
+    prefix("com.telepathicgrunt.bumblezone.shade")
+}
+
+tasks.named('shadowJar', ShadowJar).configure {
+    archiveClassifier.set('')
+    configurations = [project.configurations.library]
+    dependsOn('relocateShadowJar')
+    manifest.attributes(makeAttributes())
+    from sourceSets.api.output
+    from 'LICENSE'
+    exclude 'META-INF/services/javax.*'
+}
 
 mixin { 
     add sourceSets.main, "${modid}.refmap.json"
+}
+
+jar.finalizedBy('reobfJar')
+reobf {
+    shadowJar {}
+}
+shadowJar.finalizedBy('reobfShadowJar')
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
 
 apply from: 'gradle/maven.gradle'

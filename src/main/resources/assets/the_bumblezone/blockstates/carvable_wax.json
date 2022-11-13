@@ -24,7 +24,7 @@
         "x": 180
       }
     ],
-    "carving=chiseled": [
+    "carving=chiseled,facing=up": [
       {
         "model": "the_bumblezone:block/carvable_wax/chiseled_1"
       },
@@ -35,7 +35,86 @@
         "model": "the_bumblezone:block/carvable_wax/chiseled_3"
       }
     ],
-    "carving=bricks": [
+    "carving=chiseled,facing=down": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_1",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_2",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_3",
+        "x": 180
+      }
+    ],
+    "carving=chiseled,facing=east": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_1",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_2",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_3",
+        "x": 90,
+        "y": 90
+      }
+    ],
+    "carving=chiseled,facing=west": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_1",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_2",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_3",
+        "x": 90,
+        "y": 270
+      }
+    ],
+    "carving=chiseled,facing=north": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_1",
+        "x": 90
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_2",
+        "x": 90
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_3",
+        "x": 90
+      }
+    ],
+    "carving=chiseled,facing=south": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_1",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_2",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/chiseled_3",
+        "x": 90,
+        "y": 180
+      }
+    ],
+    "carving=bricks,facing=up": [
       {
         "model": "the_bumblezone:block/carvable_wax/bricks_1"
       },
@@ -43,14 +122,103 @@
         "model": "the_bumblezone:block/carvable_wax/bricks_2"
       }
     ],
+    "carving=bricks,facing=down": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/bricks_1",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/bricks_2",
+        "x": 180
+      }
+    ],
+    "carving=bricks,facing=north": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/bricks_1",
+        "x": 90
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/bricks_2",
+        "x": 90
+      }
+    ],
+    "carving=bricks,facing=south": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/bricks_1",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/bricks_2",
+        "x": 90,
+        "y": 180
+      }
+    ],
+    "carving=bricks,facing=east": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/bricks_1",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/bricks_2",
+        "x": 90,
+        "y": 90
+      }
+    ],
+    "carving=bricks,facing=west": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/bricks_1",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/bricks_2",
+        "x": 90,
+        "y": 270
+      }
+    ],
     "carving=diamond": [
       {
         "model": "the_bumblezone:block/carvable_wax/diamond"
       }
     ],
-    "carving=wavy": [
+    "carving=wavy,facing=up": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/wavy",
+        "x": 180
+      }
+    ],
+    "carving=wavy,facing=down": [
       {
         "model": "the_bumblezone:block/carvable_wax/wavy"
+      }
+    ],
+    "carving=wavy,facing=north": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/wavy",
+        "x": 90
+      }
+    ],
+    "carving=wavy,facing=south": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/wavy",
+        "x": 90,
+        "y": 180
+      }
+    ],
+    "carving=wavy,facing=east": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/wavy",
+        "x": 90,
+        "y": 90
+      }
+    ],
+    "carving=wavy,facing=west": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/wavy",
+        "x": 90,
+        "y": 270
       }
     ],
     "carving=flower": [
@@ -58,9 +226,42 @@
         "model": "the_bumblezone:block/carvable_wax/flower"
       }
     ],
-    "carving=chains": [
+    "carving=chains,facing=up": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/chains",
+        "x": 180
+      }
+    ],
+    "carving=chains,facing=down": [
       {
         "model": "the_bumblezone:block/carvable_wax/chains"
+      }
+    ],
+    "carving=chains,facing=north": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/chains",
+        "x": 90
+      }
+    ],
+    "carving=chains,facing=south": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/chains",
+        "x": 90,
+        "y": 180
+      }
+    ],
+    "carving=chains,facing=east": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/chains",
+        "x": 90,
+        "y": 90
+      }
+    ],
+    "carving=chains,facing=west": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/chains",
+        "x": 90,
+        "y": 270
       }
     ]
   }

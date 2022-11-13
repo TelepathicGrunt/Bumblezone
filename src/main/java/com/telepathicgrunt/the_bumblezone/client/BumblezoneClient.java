@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.client;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.bakedmodel.EmptyHoneycombBroodBlockModel;
 import com.telepathicgrunt.the_bumblezone.client.bakedmodel.PorousHoneycombBlockModel;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
 import com.telepathicgrunt.the_bumblezone.client.items.IncenseCandleColoring;
@@ -70,6 +71,8 @@ public class BumblezoneClient {
         modEventBus.addListener(IncenseCandleColoring::registerItemColors);
         modEventBus.addListener(PorousHoneycombBlockModel::registerModelLoaders);
         modEventBus.addListener(PorousHoneycombBlockModel::onBakingCompleted);
+        modEventBus.addListener(EmptyHoneycombBroodBlockModel::registerModelLoaders);
+        modEventBus.addListener(EmptyHoneycombBroodBlockModel::onBakingCompleted);
 
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         forgeBus.addListener(BeehemothControls::keyInput);
@@ -185,6 +188,7 @@ public class BumblezoneClient {
         ItemBlockRenderTypes.setRenderLayer(BzFluids.ROYAL_JELLY_FLUID.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.ROYAL_JELLY_FLUID_FLOWING.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzBlocks.POROUS_HONEYCOMB.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BzBlocks.EMPTY_HONEYCOMB_BROOD.get(), RenderType.cutout());
     }
 
     public static void registerEntityModels(EntityRenderersEvent.RegisterLayerDefinitions event) {

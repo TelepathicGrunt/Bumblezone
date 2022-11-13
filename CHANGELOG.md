@@ -1,212 +1,128 @@
-### **(V.6.3.8 Changes) (1.19.2 Minecraft)**
+### **(V.6.4.0 Changes) (1.19.2 Minecraft)**
 
-##### Mod Compat:
-Future-proofed Pollen Puff compat with Pokecube for when they change the registry name of some pokemon.
-
-Pollen Puff hitting Resourceful Bees's Crimson, Warped, Red, and Brown Bees will spawn those respective mushrooms nearby.
-
-Bee Queen will now trade for a ton more of Resourceful Bees's items!
-
-Added some methods in BumblezoneAPI class for other mods to have easier compat with Comb Cutter enchantment's beehive/bee nest drops.
-
-Enderpearls hitting top hitbox portion of players wearing Productive Bees's Bee Nest Helmets will teleport players to Bumblezone dimension.
-
-##### Dimension:
-Fixed Bumblezone dimension fog/skybox being darker when it is raining/thundering in Overworld.
-
-##### Textures:
-Added an internal Anti-Trypophobia resourcepack to this mod.
- You can enable it by going into the resourcepack screen and move the resourcepack to the top of the right side to activate it.
- Mostly just tries to make vanilla's Honeycomb Block and some of Bumblezone's hole-based blocks have lower contrast and look more flatter to help.
- This is not the desired look for Bumblezone but as a good last resort if you're feeling uncomfortable with the default textures.
-
-
-### **(V.6.3.7 Changes) (1.19.2 Minecraft)**
+##### Music:
+Added two new songs by LudoCrypt!
+ They will play randomly in Bumblezone but they also have Music Disc forms obtainable from Wandering traders!
+ The songs can be obtained from Bandcamp here from LudoCrypt:
+ https://ludocrypt.bandcamp.com/track/bee-laxing-with-the-hom-bees
+ https://ludocrypt.bandcamp.com/track/la-bee-da-loca
 
 ##### Blocks:
-Crystalline Flower now blacklists the following enchantments from being an option in this flower's UI:
- minecraft:soul_speed, minecraft:swift_sneak, supplementaries:stasis, apotheosis:infusion, ars_elemental:mirror_shield, ars_nouveau:reactive
- Some of these are specific to finding a certain structure or shouldn't be pickable at all. For balance or technical reasons.
+Connected Textures added for Porous Honeycomb Block and Empty Honeycomb Brood Block! Special thanks to EERussianguy!
 
-Crystalline Flower now has crystallineFlowerExtraTierCost config added.
- This will increase the tier cost of all enchantments available by whatever value you add.
- Default is 0. Negative numbers will decrease the tier cost for enchantments.
+Added missing en_us translation for Crystalline Flower UI opening stat.
 
-Crystalline Flower now has crystallineFlowerExtraXpNeededForTiers config added.
- This will increase the exp required for increasing the flower's tier. (This includes item consuming as items are converted to exp)
- Default is 0. Negative numbers will decrease the amount of exp needed to reach each tier.
+Adjusted textures for Sugar Infused Stone and Sugar Infused Cobblestone a bit.
 
+Fixed Honeycomb Brood Block and Empty Honeycomb Brood Block facing the wrong way when in item form in inventory/creative menu.
 
-### **(V.6.3.6 Changes) (1.19.2 Minecraft)**
+Honeycomb Brood Block now has many more animation variations so the block is not always in sync with other blocks of itself in the world.
 
-##### Misc:
-Fixed servers unable to start due to forgetting to change pollen puff particle name in biome json files.
+Fixed Honeycomb Brood Block spawning an adult bee instead of a baby one when triggered to spawn a bee by Dispenser using 
+ Glass Bottle, Honey Bottle, Sugar Water Bottle, or Honey Bucket on the stage 4 Honeycomb Brood Block.
 
-##### Structures:
-Fixed Cell Maze not spawning. Sorry about that.
- Was due to accidentally breaking some Cell Maze structure template pool json files by mistake...
+Fixed Honeycomb Brood Block not spawning bees properly outside Bumblezone and should more consistently spawn bees in Bumblezone when there's fewer mobs around.
 
-##### Blocks:
-Fixed Creative players taking honey from Filled Porous Honeycomb block adding Honey Bottle to inventory and decrementing Glass Bottle item.
- Creative players should have unlimited use when removing honey from the block to match behavior vanilla has with their blocks.
+Carvable Wax block now has a facing property. Some patterns will face different directions based on how you place it!
 
-##### Textures:
-Textures changed for several Bumblezone honeycomb/brood blocks! New textures mainly by CrispyTwig
- Connected Textures will be coming later to make textures connect better.
+Glistering Honey Crystal now uses a facing property instead of axis property. Allows for more directions when placing for easier builds!
 
+Added sound for lighting Super/Incense Candles.
 
-### **(V.6.3.5 Changes) (1.19.2 Minecraft)**
+Reduced duplicate entries in Bumblezone's Super Candle block and item tags.
 
-##### Structures:
-Hanging Gardens will now spawn most flowers from the `minecraft:small_flowers` and `minecraft:tall_flowers` block tag including other mod's flowers.
- Use `the_bumblezone:blacklisted_hanging_garden_flowers` block tag to prevent certain small flower tagged blocks from spawning in Hanging Gardens.
- Use `the_bumblezone:allowed_hanging_garden_flowers` to add more flowers to spawn that are not in `minecraft:small_flowers` block tag.
- The tall flower versions of these tags are `the_bumblezone:blacklisted_hanging_garden_tall_flowers` and `the_bumblezone:allowed_hanging_garden_tall_flowers`
+Fixed Super Candles/Incense Candles not being waterlogged when placed in non-vanilla water tagged fluids. Fixed other watterlogging bug with them.
+ Example, source Sugar Water was not waterlogging the Super Candles/Incense Candles when placed in it (Will be waterlogged with vanilla water when done so)
 
- Stopped Bumblezone's caves from eating away at part of Hanging Garden or Throne Pillar.
-
-##### Effects:
-Improved the effect icon textures for Beenergized, Hidden, Protection of the Hive, and Wrath of the Hive.
-
-Wrath of the Hive's effect of growing nearby Brood blocks faster only applies if it is the player that has Wrath of the Hive.
- Wrath of the Hive level 1 is now throttled to only anger nearby bees every 20 ticks instead of every tick (spiders/bears/arthropods will have this level of wrath)
- Just a small change to squeeze out better performance on servers.
-
-##### Config:
-Changed the default config value for keepBeeEssenceOnRespawning from false to true and renamed it to 
- keepEssenceOfTheBeesOnRespawning so that everyone who had ran Bumblezone before now gets this true value. 
- Less confusion this way.
-
-Added defaultDimension config option for modpacks whose default dimension is not Overworld. 
- Very very few people will ever need to touch this option. Let modpack makers be the ones to touch this only.
-
-##### Blocks:
-Fixed Comparator not correctly outputting power based on Crystalline Flower's height/tier.
+Creative pick block (middle click) on Honey Crystal block now gives the proper Honey Crystale item instead of Honey Crystale Shards.
 
 ##### Items:
-Pollen Puff can spawn a Buttercup nearby if it hits an adult Buzzier Bees's Moobloom mob.
+Vanilla's Filled Maps now works in Bumblezone dimension properly!
+ Many Bumblezone block's map colors were changed to look correct on maps.
 
-Fixed Pollen Puff able to multiply the following blocks that were tagged as minecraft:small_flowers when they don't look like a flower or for balance reasons:
- `byg:prairie_grass`
- `byg:pollen_block`
- `gaiadimension:missingno_plant`
- `resourcefulbees:gold_flower`
- `blue_skies:muckweed`
- `blue_skies:brittlebush`
- `blue_skies:brittlebush`
- `bushierflowers:grown_wither_rose`
- `farmersdelight:wild_beetroots`
+Made an item form for all Carvable Wax blockstates to make building with it easier.
+ Mining a Carvable Wax will drop the item form of its blockstate.
+ 
+Adjusted the stone textures of Bee Cannon and Crystal Cannon to match the texture change for Sugar Infused Stone/Sugar Infused Cobblestone.
 
-Carpenter Bee Boots now only mines boot mineable blocks below you if you are more centered on the block.
- Crouching on block's edge won't mine the block anymore so you can crouch walk to not walk off edges or ledges.
+Adjusted the texture slightly for one variant of Stingless Bee Helmet and Bumble Bee Chestplate.
 
-##### Mod Compat:
-Fixed visual incompatibility with Realistic Bees mod. Bees should be smaller now with that mod on.
+Carpenter Bees boots now can mine through Carvable Wax block when crouched on top in center of block.
 
+Added tooltip descriptions to Honey Compass to make it more clear on how to use it.
 
-### **(V.6.3.4 Changes) (1.19.2 Minecraft)**
+Honey Compass now has a CustomName and CustomDescription nbt that takes a translation key to give it unique names or descriptions.
+ Also now has a Locked nbt if you wish to spawn compasses that cannot be change to locate something else.
+ These tags are used for the Honey Compass that locates a "mystery" structure.
 
-##### Entities:
-Fixed Bee Queen being always angry and spawning bees when set to noAi by command. (Also disables trading when noAi)
+Honey Compasses now only have the enchanted glint look if it is locating a Throne Pillar structure or is "locked" and cannot be made to locate anything else.
+ Basically enchanted looking Honey Compass will not have the ability to right-click for saving Beehives/Bee Nests positions or locating Cell Maze.
 
-Fixed Beehemoth being able to be fed, tamed, and ridden when set to noAi by command.
+Bee Essence effect will now show message to player if lost on respawning if keepEssenceOfTheBeesOnRespawning config is set to false.
 
-##### Mod Compat:
-Added compat with Quark where some of Bumblezone's items will show up in Quark's enchantment tooltips.
- Can be disabled with Bumblezone's config option called: injectBzItemsIntoQuarkEnchantmentTooltipsCompat
+Added command `\bumblezone is_bee_essenced` command to let any player check if they have Bee Essence still active. Does not need op status to use.
 
-##### Items:
-Pollen Puff has a chance of spawning Pumpkin Stem nearby on valid blocks if it hits a Snow Golem with Pumpkin still on.
-
-Pollen Puff has a chance of spawning Melon Stem nearby on valid blocks if it hits a EarthMobsMod's Melon Golem with Melon still on.
-
-Pollen Puff can spawn Red Mushroom nearby if it hits Alex's Mob's Bunfungus.
-
-Pollen Puff has a chance of spawning Pumpkin Stem nearby on valid blocks if it hits a Morebabies's Snow Golem with Pumpkin still on.
-
-Pollen Puff can spawn Nether Wart nearby if it hits Stalwart Dungeon's Nether Keeper or nether Wart Cocoon.
-
-
-### **(V.6.3.3 Changes) (1.19.2 Minecraft)**
-
-##### Blocks:
-Added two new configs for Crystalline Flower block: crystallineFlowerConsumeExperienceUI and crystallineFlowerConsumeItemUI
- Turning those off along with these two configs will disable flower's consuming entirely:
- crystallineFlowerConsumeItemEntities and crystallineFlowerConsumeExperienceOrbEntities
-
-Added a third config called crystallineFlowerEnchantingPowerAllowedPerTier which sets the "enchanting power" of the flower per tier.
- Think of this like how Enchanting Tables only shows stronger or rarer enchantments when you have more bookshelves.
- Except here, the flower's tier times this config value is used as the threshold to know what enchantment and level to show.
-
-Crystalline Flower now blacklists Veinmining's Vein Mining enchantment from being an option in this flower's UI.
- Controlled by `the_bumblezone:blacklisted_crystalline_flower_enchantments` enchantment tag.
-
-Crystalline Flower now blacklists the following Apotheosis enchantments from being an option in this flower's UI:
- apotheosis:scavenger, apotheosis:life_mending, apotheosis:berserkers_fury, apotheosis:knowledge, apotheosis:crescendo, apotheosis:earths_boon, apotheosis:chainsaw, apotheosis:endless_quiver
- Controlled by `the_bumblezone:blacklisted_crystalline_flower_enchantments` enchantment tag.
-
-
-##### Items:
-Pollen Puff has a low chance of spawning vine if it hits TakesAPillage's Clay Golem.
-
-Pollen Puff has a chance of spawning vine if it hits Rotten Creatures's Swampy mob.
-
-
-### **(V.6.3.2 Changes) (1.19.2 Minecraft)**
-
-##### Blocks:
-Fixed Crystalline Flower's enchantment text symbols not showing correct symbol.
-
-
-### **(V.6.3.1 Changes) (1.19.2 Minecraft)**
-
-##### Blocks:
-Fixed client side blockstate visual sometimes being incorrect when mass feeding Crystalline Flower by dropping items into it
-
-##### Structures:
-Made Hanging Gardens more common
-
-##### Biomes:
-Tried to lower chance of Spider/Cave Spider spawning in relation to Enderman and Phantoms
-
-
-### **(V.6.3.0 Changes) (1.19.2 Minecraft)**
-
-##### Blocks:
-Fixed Glistering Honey Crystal not dropping itself when mined with Silk Touch.
-
-Improved Glistering Honey Crystal's sparkling so it can appear anywhere on the block instead of just the corners.
-
-Improved Glistering Honey Crystal's sparkling to use a new animated particle texture now.
-
-Fixed unsuccessful lighting of Super Candles/Incense Candles still damaging/consuming the lighting item used by the player.
-
-Added Crystalline Flower block!
- Spawns in the new Hanging Garden structure!
- Right click it to open up a GUI where you can grow the plant by giving it you XP or stacks of items to consume. Grows up to 7 blocks (tiers) high.
- Put a book or enchanted book into the enchantment side and you can select what enchantment you want to add to it! This will cost some tiers to work.
- More and stronger enchantments are available the higher the block's tier! But you cannot add more enchantments to books that have 3 or more enchantments already.
- You can grow the block's tiers even outside the GUI by dropping items into the block or letting experience orbs touch the block!
- Some items grant more progress towards upgrading the tiers. And when using tiers to enchant, some Honey Crystal Shards will drop!
- You can blacklist items from consumption, blacklist what enchantments are available, or change what items can be enchanted by tags:
- `the_bumblezone:crystalline_flower/cannot_consume` (item tag)
- `the_bumblezone:crystalline_flower/can_be_enchanted` (item tag)
- `the_bumblezone:crystalline_flower/xp_2_when_consumed` (item tag)
- `the_bumblezone:crystalline_flower/xp_5_when_consumed` (item tag)
- `the_bumblezone:crystalline_flower/xp_25_when_consumed` (item tag)
- `the_bumblezone:crystalline_flower/xp_100_when_consumed` (item tag)
- `the_bumblezone:blacklisted_crystalline_flower_enchantments` (enchantment tag)
-
-##### Structures:
-Added Hanging Gardens structure that you can find Crystalline Flower in!
- Be sure to look up! Can be found in Sugar Water Floor or Pollinated Fields biomes. 
-
-##### Biomes:
-Fixed Pigs sometimes rarely spawning instead of Enderman.
-
-Fixed Pollinated Fields and Pollinated Pillar sometimes placing the Pollen Piles on invalid blocks it cannot survive on.
+Pollen Puff thrown at What Did You Vote For's Sniffer will spawn Moss Carpet nearby.
 
 ##### Advancements:
-Added more info for bee feeding and sugar infused stone advancements to clarify how to complete them.
+Added `\bumblezone queen_desire_xxxxxxxx` commands. These commands let you see your progress towards many Queen Desire Advancements! 
+ See the suggestion autocomplete for all options. Killed counter data requires an entity argument afterwards.
 
-Added advancement for Hanging Garden and Crystalline Flower block.
+Fixed Bee Bread and Royal Jelly Bottle being fed to bees not counting towards the Queen's Desire advancement about feeding bees.
+
+Moved Essence of the Bee consuming advancement to be at the end of the Queen's Desire advancement tree.
+ Resetting the Queen's Desire advancement line by Bee Queen when fully completed will not reset the
+ Essence of the Bee consuming advancement to show you had previously beaten this advancement line before.
+
+##### Entities:
+Fixed right clicking Bee Queen with empty hand sometimes not resetting the Queen's Desire advancement line when all of those advancements are done.
+
+##### Enchantments:
+Nerfed Neurotoxins enchantment so its missed counter does not increment if player hits entity while entity is already paralyzed.
+ Helps prevent paralysis locking bosses.
+
+Made Neurotoxin require more bookshelves before showing up in Enchanting Table
+
+Made Potent Poison enchantment require 1 more bookshelf before showing up in Enchanting Table
+
+##### Teleportation:
+Fixed display message for when teleporting to Bumblezone fails due to not having a certain required block below the hive.
+ This is controlled by the_bumblezone:required_blocks_under_hive_to_teleport block tag which is empty by default to not need a required block for teleporting.
+
+##### Structures:
+Added Hive Temple structure! A small Beeswax structure that has some persistent Honey Slimes and a small bit of loot.
+ If you're lucky, you may find a Honey Compass in it that points to a Hanging Garden structure!
+
+Made Pollinated Streams structure now spawn above ground with pillar support! Looks cooler and much, much easier to find!
+
+Honey Cave Room structure is a bit more common now.
+
+##### Effects:
+Entities with Wrath of the Hive dying will remove the Wrath boosts from nearby bees that were targeting the Wrath afflicted mob.
+
+##### Mod Compat:
+Added config to allow turning off teleportation to Bumblezone if thrown Enderpearl hits top of the hitbox of a mob wearing Productive Bees's Bee Nest helmet.
+
+Quark's enchantment tooltip on enchanted books can now show Bumblezone's armor. (Especially helpful as boots can get mining enchantments)
+
+Enderpearls hitting top hitbox portion of Dreamland Biome's Bumble Beast will teleport players to Bumblezone dimension.
+
+Buzzer Bees's Bee Bottle now when right-clicked on Empty Honeycomb Brood Block will turn it into a regular Honeycomb Brood Block with a larva.
+
+Buzzier Bees's Crystallized Honey and Honeycomb Tiles blocks will spawn throughout Bumblezone.
+
+Bee Queen will trade now for the following modded items now. `the_bumblezone:bz_bee_queen_trades/` tag folder:
+ Dreamland Biome's Bumble Block
+ Lots of Buzzier Bees items
+ Delightful's Honey Glazed Walnut and Ender Nectar
+ Farmersdelight's Honey Cookie and Honey Glazed Ham
+ Adorn's Honeycomb Crate and beverages
+ Skinned Lanterns's bee and honey lanterns (regular and soul)
+ Create's Honeyed Apple
+ Apotheosis's Beeshelf
+
+Bees can be right-clicked fed with these following modded items now. `the_bumblezone:bee_feeding_items` item tag:
+ Delightful's Honey Glazed Walnut
+ Farmersdelight's Honey Cookie and Honey Glazed Ham
+ Buzzier Bees's Honey Apple, Honey Bread, and Honey Porkchop
+ Create's Honeyed Apple

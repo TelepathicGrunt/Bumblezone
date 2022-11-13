@@ -1,0 +1,18 @@
+{
+  "structures": [
+    {
+      "structure": "the_bumblezone:hive_temple",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 578754875,
+    "spacing": 47,
+    "separation": 26,
+    "exclusion_zone": {
+      "other_set": "the_bumblezone:cell_maze",
+      "chunk_count": 5
+    },
+    "type": "minecraft:random_spread"
+  }
+}

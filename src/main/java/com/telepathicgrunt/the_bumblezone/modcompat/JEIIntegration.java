@@ -64,6 +64,8 @@ public class JEIIntegration implements IModPlugin {
 		addInfo(registration, BzItems.HONEY_COCOON.get());
 		addInfo(registration, BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV.get());
 		addInfo(registration, BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY.get());
+		addInfo(registration, BzItems.MUSIC_DISC_LA_BEE_DA_LOCA.get());
+		addInfo(registration, BzItems.MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES.get());
 		addInfo(registration, BzItems.STINGER_SPEAR.get());
 		addInfo(registration, BzItems.HONEY_COMPASS.get());
 		addInfo(registration, BzItems.BEE_STINGER.get());
@@ -82,6 +84,12 @@ public class JEIIntegration implements IModPlugin {
 		addInfo(registration, BzItems.ESSENCE_OF_THE_BEES.get());
 		addInfo(registration, BzItems.GLISTERING_HONEY_CRYSTAL.get());
 		addInfo(registration, BzItems.CARVABLE_WAX.get());
+		addInfo(registration, BzItems.CARVABLE_WAX_WAVY.get());
+		addInfo(registration, BzItems.CARVABLE_WAX_FLOWER.get());
+		addInfo(registration, BzItems.CARVABLE_WAX_CHISELED.get());
+		addInfo(registration, BzItems.CARVABLE_WAX_DIAMOND.get());
+		addInfo(registration, BzItems.CARVABLE_WAX_BRICKS.get());
+		addInfo(registration, BzItems.CARVABLE_WAX_CHAINS.get());
 		addInfo(registration, BzItems.SUPER_CANDLE.get());
 		addInfo(registration, BzItems.SUPER_CANDLE_BLACK.get());
 		addInfo(registration, BzItems.SUPER_CANDLE_BLUE.get());

@@ -10,6 +10,8 @@ import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 public class ModChecker {
 
 	public static boolean productiveBeesPresent = false;
+	public static boolean dreamlandBiomesPresent = false;
+	public static boolean buzzierBeesPresent = false;
 	public static boolean pokecubePresent = false;
 	public static boolean friendsAndFoesPresent = false;
 	public static boolean quarkPresent = false;
@@ -39,6 +41,12 @@ public class ModChecker {
 
 			modid = "quark";
 			loadupModCompat(modid, () -> QuarkCompat.setupCompat());
+
+			modid = "dreamland";
+			loadupModCompat(modid, () -> DreamlandBiomesCompat.setupDreamlandBiomes());
+
+			modid = "buzzier_bees";
+			loadupModCompat(modid, () -> BuzzierBeesCompat.setupBuzzierBees());
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

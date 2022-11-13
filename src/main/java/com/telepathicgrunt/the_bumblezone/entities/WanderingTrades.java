@@ -28,5 +28,25 @@ public class WanderingTrades {
                 10,
                 0.5F
         ));
+
+        event.getRareTrades().add(new GeneralUtils.BasicItemTrade(
+                Items.EMERALD,
+                BzItems.MUSIC_DISC_LA_BEE_DA_LOCA.get(),
+                20,
+                1,
+                1,
+                10,
+                0.5F
+        ));
+
+        event.getRareTrades().add(new GeneralUtils.BasicItemTrade(
+                Items.EMERALD,
+                BzItems.MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES.get(),
+                20,
+                1,
+                1,
+                10,
+                0.5F
+        ));
     }
 }

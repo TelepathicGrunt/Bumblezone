@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraftforge.common.ForgeHooks;
 
 
 public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
@@ -41,6 +42,7 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
 
         if (blockstate.getBlock() == BzBlocks.HONEYCOMB_BROOD.get()) {
             // spawn bee if at final stage and front isn't blocked off
+            boolean deniedBeeSpawn = false;
             int stage = blockstate.getValue(HoneycombBrood.STAGE);
             if (stage == 3) {
                 // the front of the block
@@ -52,20 +54,27 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
                     Mob beeEntity = EntityType.BEE.create(world);
                     beeEntity.moveTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, beeEntity.getRandom().nextFloat() * 360.0F, 0.0F);
                     beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(new BlockPos(beeEntity.position())), MobSpawnType.TRIGGERED, null, null);
-                    world.addFreshEntity(beeEntity);
-
+                    beeEntity.setBaby(true);
+                    if (ForgeHooks.canEntitySpawn(beeEntity, world, beeEntity.position().x(), beeEntity.position().y(), beeEntity.position().z(), null, MobSpawnType.DISPENSER) != -1) {
+                        world.addFreshEntity(beeEntity);
+                    }
+                    else {
+                        deniedBeeSpawn = true;
+                    }
                 }
             }
 
-            // kill the brood block
-            world.setBlockAndUpdate(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().defaultBlockState()
-                    .setValue(BlockStateProperties.FACING, blockstate.getValue(BlockStateProperties.FACING)));
-            stack.shrink(1);
+            if (!deniedBeeSpawn) {
+                // kill the brood block
+                world.setBlockAndUpdate(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().defaultBlockState()
+                        .setValue(BlockStateProperties.FACING, blockstate.getValue(BlockStateProperties.FACING)));
+                stack.shrink(1);
 
-            if (!stack.isEmpty())
-                addHoneyBottleToDispenser(source, Items.HONEY_BOTTLE);
-            else
-                stack = new ItemStack(Items.HONEY_BOTTLE);
+                if (!stack.isEmpty())
+                    addHoneyBottleToDispenser(source, Items.HONEY_BOTTLE);
+                else
+                    stack = new ItemStack(Items.HONEY_BOTTLE);
+            }
         }
         // remove honey
         else if (blockstate.getBlock() == BzBlocks.FILLED_POROUS_HONEYCOMB.get()) {

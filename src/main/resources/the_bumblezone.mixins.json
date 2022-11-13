@@ -1,6 +1,7 @@
 {
   "required": true,
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
+  "plugin": "com.telepathicgrunt.the_bumblezone.mixin.MixinPlugin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "the_bumblezone.refmap.json",
   "mixins": [
@@ -36,12 +37,12 @@
     "entities.ServerPlayerMixin",
     "entities.ThrownTridentAccessor",
     "entities.WalkNodeEvaluatorMixin",
-    "items.EnderpearlImpactMixin",
     "items.GlassBottleUseMixin",
     "items.HoneyShieldCooldownMixin",
     "items.HoneyShieldDamageMixin",
     "items.HoneyShieldDisableMixin",
     "items.HoneyShieldPreferredSlotMixin",
+    "items.MapItemMixin",
     "items.MaterialInvoker",
     "items.PlayerDamagedMixin",
     "items.PlayerDamageShieldInvoker",
@@ -50,7 +51,9 @@
     "world.ServerWorldMixin",
     "world.SinglePoolElementAccessor",
     "world.StructurePoolAccessor",
+    "world.StructureProcessorAccessor",
     "world.StructureTemplateAccessor",
+    "world.StructureTemplateMixin",
     "world.WorldGenRegionAccessor"
   ],
   "client": [

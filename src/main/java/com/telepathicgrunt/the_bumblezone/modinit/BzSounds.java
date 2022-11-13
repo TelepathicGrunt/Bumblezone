@@ -13,6 +13,8 @@ public class BzSounds {
     public static final RegistryObject<SoundEvent> ANGERED_BEES = registerSoundEvent("angered_bees");
     public static final RegistryObject<SoundEvent> MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = registerSoundEvent("music_disc.honey_bee_rat_faced_boy");
     public static final RegistryObject<SoundEvent> MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = registerSoundEvent("music_disc.flight_of_the_bumblebee_rimsky_korsakov");
+    public static final RegistryObject<SoundEvent> MUSIC_DISC_LA_BEE_DA_LOCA = registerSoundEvent("music_disc.la_bee_da_loca");
+    public static final RegistryObject<SoundEvent> MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES = registerSoundEvent("music_disc.bee_laxing_with_the_hom_bees");
     public static final RegistryObject<SoundEvent> BEEHEMOTH_HURT = registerSoundEvent("entity.the_bumblezone.beehemoth.hurt");
     public static final RegistryObject<SoundEvent> BEEHEMOTH_DEATH = registerSoundEvent("entity.the_bumblezone.beehemoth.death");
     public static final RegistryObject<SoundEvent> BEEHEMOTH_LOOP = registerSoundEvent("entity.the_bumblezone.beehemoth.loop");
@@ -35,6 +37,7 @@ public class BzSounds {
     public static final RegistryObject<SoundEvent> ROYAL_JELLY_BLOCK_SLIDE = registerSoundEvent("block.the_bumblezone.royal_jelly_block.slide");
     public static final RegistryObject<SoundEvent> WASHING_RESIDUES = registerSoundEvent("block.the_bumblezone.washing_honey_residues");
     public static final RegistryObject<SoundEvent> CRYSTALLINE_FLOWER_USE = registerSoundEvent("block.the_bumblezone.crystalline_flower.use");
+    public static final RegistryObject<SoundEvent> SUPER_CANDLE_WICK_LIT = registerSoundEvent("block.the_bumblezone.super_candle_wick.lit");
     public static final RegistryObject<SoundEvent> HONEY_SLIME_ATTACK = registerSoundEvent("entity.the_bumblezone.honey_slime.attack");
     public static final RegistryObject<SoundEvent> HONEY_SLIME_HURT = registerSoundEvent("entity.the_bumblezone.honey_slime.hurt");
     public static final RegistryObject<SoundEvent> HONEY_SLIME_DEATH = registerSoundEvent("entity.the_bumblezone.honey_slime.death");

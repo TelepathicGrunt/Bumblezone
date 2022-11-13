@@ -198,12 +198,12 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
         final Map<Direction, BakedModel[]> map = new EnumMap<>(Direction.class);
         for (Direction d : DIRECTIONS) map.put(d, new BakedModel[4]);
         for (CORNERS corner : CORNERS.values()) {
-            put(map, Direction.WEST, corner, bakedModel(new Vector3f(-0.1f, 0f, 0f), new Vector3f(-0.1f, 16f, 16f), Direction.WEST, flipLR(corner), modelLocation, particle, cornerLocations));
-            put(map, Direction.EAST, corner, bakedModel(new Vector3f(16.1f, 0f, 0f), new Vector3f(16.1f, 16f, 16f), Direction.EAST, corner, modelLocation, particle, cornerLocations));
-            put(map, Direction.NORTH, corner, bakedModel(new Vector3f(0f, 0f, -0.1f), new Vector3f(16f, 16f, -0.1f), Direction.NORTH, corner, modelLocation, particle, cornerLocations));
-            put(map, Direction.SOUTH, corner, bakedModel(new Vector3f(0f, 0f, 16.1f), new Vector3f(16f, 16f, 16.1f), Direction.SOUTH, flipLR(corner), modelLocation, particle, cornerLocations));
-            put(map, Direction.DOWN, corner, bakedModel(new Vector3f(0f, -0.1f, 0f), new Vector3f(16f, -0.1f, 16f), Direction.DOWN, flipLR(corner), modelLocation, particle, cornerLocations));
-            put(map, Direction.UP, corner, bakedModel(new Vector3f(0f, 16.1f, 0f), new Vector3f(16f, 16.1f, 16f), Direction.UP, flipLR(flipUD(corner)), modelLocation, particle, cornerLocations));
+            put(map, Direction.WEST, corner, bakedModel(new Vector3f(-0.01f, 0f, 0f), new Vector3f(-0.01f, 16f, 16f), Direction.WEST, flipLR(corner), modelLocation, particle, cornerLocations));
+            put(map, Direction.EAST, corner, bakedModel(new Vector3f(16.01f, 0f, 0f), new Vector3f(16.01f, 16f, 16f), Direction.EAST, corner, modelLocation, particle, cornerLocations));
+            put(map, Direction.NORTH, corner, bakedModel(new Vector3f(0f, 0f, -0.01f), new Vector3f(16f, 16f, -0.01f), Direction.NORTH, corner, modelLocation, particle, cornerLocations));
+            put(map, Direction.SOUTH, corner, bakedModel(new Vector3f(0f, 0f, 16.01f), new Vector3f(16f, 16f, 16.01f), Direction.SOUTH, flipLR(corner), modelLocation, particle, cornerLocations));
+            put(map, Direction.DOWN, corner, bakedModel(new Vector3f(0f, -0.01f, 0f), new Vector3f(16f, -0.01f, 16f), Direction.DOWN, flipLR(corner), modelLocation, particle, cornerLocations));
+            put(map, Direction.UP, corner, bakedModel(new Vector3f(0f, 16.01f, 0f), new Vector3f(16f, 16.01f, 16f), Direction.UP, flipLR(flipUD(corner)), modelLocation, particle, cornerLocations));
         }
         return map;
     }

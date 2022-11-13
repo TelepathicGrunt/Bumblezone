@@ -40,6 +40,28 @@
           "type": "minecraft:wandering_trader"
         }
       }
+    },
+    "obtain_music_disc_la_bee_da_loca": {
+      "trigger": "minecraft:villager_trade",
+      "conditions": {
+        "item": {
+          "items": ["the_bumblezone:music_disc_la_bee_da_loca"]
+        },
+        "villager": {
+          "type": "minecraft:wandering_trader"
+        }
+      }
+    },
+    "obtain_music_disc_bee_laxing_with_the_hom_bees": {
+      "trigger": "minecraft:villager_trade",
+      "conditions": {
+        "item": {
+          "items": ["the_bumblezone:music_disc_bee_laxing_with_the_hom_bees"]
+        },
+        "villager": {
+          "type": "minecraft:wandering_trader"
+        }
+      }
     }
   },
   "requirements": [
@@ -48,6 +70,12 @@
     ],
     [
       "obtain_music_disc_flight_of_the_bumblebee_rimsky_korsakov"
+    ],
+    [
+      "obtain_music_disc_la_bee_da_loca"
+    ],
+    [
+      "obtain_music_disc_bee_laxing_with_the_hom_bees"
     ]
   ]
 }

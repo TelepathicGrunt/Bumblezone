@@ -3,6 +3,10 @@
     {
       "id": "the_bumblezone:empty_honeycomb_brood_block",
       "required": true
+    },
+    {
+      "id": "buzzier_bees:bee_bottle",
+      "required": false
     }
   ],
   "possible_rewards": [

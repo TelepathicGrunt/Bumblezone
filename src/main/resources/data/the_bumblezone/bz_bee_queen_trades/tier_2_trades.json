@@ -59,6 +59,66 @@
     {
       "id": "resourcefulbees:honey_glass_player",
       "required": false
+    },
+    {
+      "id": "buzzier_bees:honey_apple",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honey_bread",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honey_porkchop",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:crystallized_honey_block",
+      "required": false
+    },
+    {
+      "id": "delightful:honey_glazed_walnut",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:honey_cookie",
+      "required": false
+    },
+    {
+      "id": "adorn:honeycomb_crate",
+      "required": false
+    },
+    {
+      "id": "skinnedlanterns:bee_lantern_block",
+      "required": false
+    },
+    {
+      "id": "skinnedlanterns:bee_soul_lantern_block",
+      "required": false
+    },
+    {
+      "id": "adorn:hot_chocolate",
+      "required": false
+    },
+    {
+      "id": "adorn:sweet_berry_juice",
+      "required": false
+    },
+    {
+      "id": "adorn:glow_berry_juice",
+      "required": false
+    },
+    {
+      "id": "adorn:nether_wart_coffee",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:peanut_honey_soup",
+      "required": false
+    },
+    {
+      "id": "create:honeyed_apple",
+      "required": false
     }
   ],
   "possible_rewards": [

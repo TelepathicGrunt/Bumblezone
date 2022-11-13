@@ -43,6 +43,22 @@
     {
       "id": "#productivebees:solitary_overworld_nests",
       "required": false
+    },
+    {
+      "id": "buzzier_bees:honey_lamp",
+      "required": false
+    },
+    {
+      "id": "skinnedlanterns:honey_lantern_block",
+      "required": false
+    },
+    {
+      "id": "skinnedlanterns:honey_soul_lantern_block",
+      "required": false
+    },
+    {
+      "id": "apotheosis:beeshelf",
+      "required": false
     }
   ],
   "possible_rewards": [

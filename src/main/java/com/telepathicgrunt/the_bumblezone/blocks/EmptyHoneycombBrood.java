@@ -1,7 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
+import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -13,6 +19,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
@@ -43,7 +50,7 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public InteractionResult use(BlockState thisBlockState, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult HitResult) {
+    public InteractionResult use(BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult HitResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
         /*
@@ -74,6 +81,20 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
         }
         */
 
-        return super.use(thisBlockState, world, position, playerEntity, playerHand, HitResult);
+        if (ModChecker.buzzierBeesPresent &&
+            BzModCompatibilityConfigs.allowBeeBottleRevivingEmptyBroodBlock.get() &&
+            BuzzierBeesCompat.bottledBeeInteract(itemstack, playerEntity, playerHand) == InteractionResult.SUCCESS)
+        {
+            playerEntity.swing(playerHand);
+            level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+            level.setBlock(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+                    .setValue(HoneycombBrood.STAGE, 0)
+                    .setValue(BlockStateProperties.FACING, blockState.getValue(BlockStateProperties.FACING)),
+                    3);
+
+            return InteractionResult.SUCCESS;
+        }
+
+        return super.use(blockState, level, position, playerEntity, playerHand, HitResult);
     }
 }
