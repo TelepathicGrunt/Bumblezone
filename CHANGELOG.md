@@ -1,5 +1,11 @@
 ### **(V.6.4.1 Changes) (1.19.2 Minecraft)**
 
+##### Blocks:
+Nerfed Crystalline Flower so that it requires 2090xp to reach max tier (About the same as player going from xp level 0 to 35)
+ Previously, the flower required xp roughly about the same as a player going from 0 to 23 xp levels.
+ Was complained about being too low for the ability to pick enchantments.
+ You can still increase or reduce this xp cost in the config file for Bumblezone.
+
 ##### Effects:
 Wrath of the Hive and Protection of the Hive will no longer affect nearby Bees that have their AI turned off.
 
