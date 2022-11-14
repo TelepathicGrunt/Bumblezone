@@ -192,7 +192,7 @@ public class ProductiveBeesCompat {
 		}
 	}
 
-	public static boolean runTeleportCodeIfBeeHelmentHitHigh(HitResult hitResult, Projectile pearlEntity) {
+	public static boolean runTeleportCodeIfBeeHelmetHitHigh(HitResult hitResult, Projectile pearlEntity) {
 		Level world = pearlEntity.level; // world we threw in
 
 		if (!BzModCompatibilityConfigs.allowEnderpearledBeeNestHelmetTeleporation.get()) {
