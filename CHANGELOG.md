@@ -19,6 +19,9 @@ Blacklisted several MC Dungeons Weapons enchantments from being selectable in Cr
  Burst Bowstring, Dynamo, Shadow Barb, Shadow Shot, and Shared Pain.
 
 MC Dungeons Weapons's Bee Stinger item can be used to craft Stinger Spear and repair it now too!
+
+Throwing Enderpearl at a mob or armor stand wearing MC Dungeons Weapons's Bee Nest/Beehive helmet or chestplate will
+ teleport the thrower into Bumblezone dimension!
  
 
 ### **(V.6.4.0 Changes) (1.19.2 Minecraft)**
