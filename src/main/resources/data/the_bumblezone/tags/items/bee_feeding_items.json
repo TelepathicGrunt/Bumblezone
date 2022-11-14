@@ -1,30 +1,12 @@
 {
   "replace": false,
   "values": [
-    {
-      "id": "the_bumblezone:bee_bread",
-      "required": true
-    },
-    {
-      "id": "minecraft:honey_bottle",
-      "required": true
-    },
-    {
-      "id": "the_bumblezone:sugar_water_bottle",
-      "required": true
-    },
-    {
-      "id": "the_bumblezone:royal_jelly_bottle",
-      "required": true
-    },
-    {
-      "id": "#c:buckets/honey",
-      "required": true
-    },
-    {
-      "id": "#c:buckets/royal_jelly",
-      "required": true
-    },
+    "the_bumblezone:bee_bread",
+    "minecraft:honey_bottle",
+    "the_bumblezone:sugar_water_bottle",
+    "the_bumblezone:royal_jelly_bottle",
+    "#c:buckets/honey",
+    "#c:buckets/royal_jelly",
     {
       "id": "productivebees:honey_treat",
       "required": false

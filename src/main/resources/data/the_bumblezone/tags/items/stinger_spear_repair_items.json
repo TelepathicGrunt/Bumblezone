@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     "#the_bumblezone:stingers",
-    "minecraft:flint"
+    "minecraft:flint",
+    {
+      "id": "mcdw:item_bee_stinger",
+      "required": false
+    }
   ]
 }

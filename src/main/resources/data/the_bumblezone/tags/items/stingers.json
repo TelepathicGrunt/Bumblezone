@@ -1,6 +1,10 @@
 {
   "replace": false,
   "values": [
-    "the_bumblezone:bee_stinger"
+    "the_bumblezone:bee_stinger",
+    {
+      "id": "mcdw:item_bee_stinger",
+      "required": false
+    }
   ]
 }

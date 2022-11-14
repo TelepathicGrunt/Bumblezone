@@ -12,6 +12,14 @@ Fixed Honey Compass tooltip not wrapping properly.
 ##### Effects:
 Wrath of the Hive and Protection of the Hive will no longer affect nearby Bees that have their AI turned off.
 
+##### Mod Compat:
+Blacklisted several MC Dungeons Weapons enchantments from being selectable in Crystalline Flower for balancing the game. 
+ Controlled by the enchantment tag: `the_bumblezone:blacklisted_crystalline_flower_enchantments`
+ The newly blacklisted enchantments from MCDW are Void Strike, Void Shot, Radiance, Radiance Shot, Guarding Strike,
+ Burst Bowstring, Dynamo, Shadow Barb, Shadow Shot, and Shared Pain.
+
+MC Dungeons Weapons's Bee Stinger item can be used to craft Stinger Spear and repair it now too!
+ 
 
 ### **(V.6.4.0 Changes) (1.19.2 Minecraft)**
 
