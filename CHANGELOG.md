@@ -20,7 +20,7 @@ Blacklisted several MC Dungeons Weapons enchantments from being selectable in Cr
 
 MC Dungeons Weapons's Bee Stinger item can be used to craft Stinger Spear and repair it now too!
 
-Throwing Enderpearl at a mob or armor stand wearing MC Dungeons Weapons's Bee Nest/Beehive helmet or chestplate will
+Throwing Enderpearl at a mob or armor stand wearing MC Dungeons Armors's Bee Nest/Beehive helmet or chestplate will
  teleport the thrower into Bumblezone dimension!
  
 
