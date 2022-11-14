@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone;
 
-import com.telepathicgrunt.the_bumblezone.commands.NoneOpCommands;
 import com.telepathicgrunt.the_bumblezone.components.EntityComponent;
 import com.telepathicgrunt.the_bumblezone.components.EssenceComponent;
 import com.telepathicgrunt.the_bumblezone.components.FlyingSpeedComponent;
@@ -27,7 +26,6 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import dev.onyxstudios.cca.api.v3.entity.PlayerCopyCallback;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import eu.midnightdust.lib.config.MidnightConfig;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -38,7 +36,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
-import org.quiltmc.qsl.command.api.CommandRegistrationCallback;
 import org.quiltmc.qsl.lifecycle.api.event.ServerLifecycleEvents;
 import org.quiltmc.qsl.lifecycle.api.event.ServerWorldTickEvents;
 import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
