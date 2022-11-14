@@ -23,6 +23,8 @@ If entity hit is wearing armor tagged `the_bumblezone:enderpearl_teleporting/tar
  
 If entity hit is holding item tagged `the_bumblezone:enderpearl_teleporting/target_held_item`, will teleport thrower into Bumblezone.
 
+Fixed overlay issues with REI's tooltip while on Crystalline Flower's screen
+
 
 ### **(V.6.4.1 Changes) (1.19.2 Minecraft)**
 
