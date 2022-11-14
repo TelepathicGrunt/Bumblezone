@@ -64,6 +64,10 @@ public class WrathOfTheHiveEffect extends MobEffect {
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         Level world = entity.level;
 
+        if (entity instanceof Mob mob && mob.isNoAi()) {
+            return;
+        }
+
         if (entity.isDeadOrDying()) {
             calmTheBees(world, entity);
             return;
@@ -186,6 +190,10 @@ public class WrathOfTheHiveEffect extends MobEffect {
         sightMode.range(BzConfig.aggressionTriggerRadius);
         List<? extends Mob> beeList = world.getNearbyEntities(entityToFind, sightMode, livingEntity, livingEntity.getBoundingBox().inflate(BzConfig.aggressionTriggerRadius));
         for (Mob bee : beeList) {
+            if (bee.isNoAi()) {
+                continue;
+            }
+
             if(bee instanceof NeutralMob) {
                 ((NeutralMob)bee).setRemainingPersistentAngerTime(20);
                 ((NeutralMob)bee).setPersistentAngerTarget(livingEntity.getUUID());
@@ -216,6 +224,10 @@ public class WrathOfTheHiveEffect extends MobEffect {
         SEE_THROUGH_WALLS.range(BzConfig.aggressionTriggerRadius*0.5D);
         List<Bee> beeList = world.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().inflate(BzConfig.aggressionTriggerRadius*0.5D));
         for (Bee bee : beeList) {
+            if (bee.isNoAi()) {
+                continue;
+            }
+            
             if(bee.getTarget() == livingEntity) {
                 bee.setTarget(null);
                 bee.setAggressive(false);
@@ -230,6 +242,11 @@ public class WrathOfTheHiveEffect extends MobEffect {
     // Don't remove wrath effect from mobs that bees are to always be angry at (bears, non-bee insects)
     @Override
     public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
+        if (entity instanceof Mob mob && mob.isNoAi()) {
+            super.removeAttributeModifiers(entity, attributes, amplifier);
+            return;
+        }
+
         if(BeeAggression.doesBeesHateEntity(entity)) {
             //refresh the bee anger timer
             entity.addEffect(new MobEffectInstance(

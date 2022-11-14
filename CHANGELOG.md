@@ -1,3 +1,29 @@
+### **(V.6.4.1 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Nerfed Crystalline Flower so that it requires 1453xp to reach max tier (About the same as player going from xp level 0 to 30)
+ Previously, the flower required xp roughly about the same as a player going from 0 to 23 xp levels.
+ Was complained about being too low for the ability to pick enchantments. Now it requires about double more xp.
+ You can still increase or reduce this xp cost in the config file for Bumblezone.
+
+##### Items:
+Fixed Honey Compass tooltip not wrapping properly.
+
+##### Effects:
+Wrath of the Hive and Protection of the Hive will no longer affect nearby Bees that have their AI turned off.
+
+##### Mod Compat:
+Blacklisted several MC Dungeons Weapons enchantments from being selectable in Crystalline Flower for balancing the game. 
+ Controlled by the enchantment tag: `the_bumblezone:blacklisted_crystalline_flower_enchantments`
+ The newly blacklisted enchantments from MCDW are Void Strike, Void Shot, Radiance, Radiance Shot, Guarding Strike,
+ Burst Bowstring, Dynamo, Shadow Barb, Shadow Shot, and Shared Pain.
+
+MC Dungeons Weapons's Bee Stinger item can be used to craft Stinger Spear and repair it now too!
+
+Throwing Enderpearl at a mob or armor stand wearing MC Dungeons Armors's Bee Nest/Beehive helmet or chestplate will
+ teleport the thrower into Bumblezone dimension!
+ 
+
 ### **(V.6.4.0 Changes) (1.19.2 Minecraft)**
 
 ##### Music:
@@ -38,7 +64,7 @@ Reduced duplicate entries in Bumblezone's Super Candle block and item tags.
 Fixed Super Candles/Incense Candles not being waterlogged when placed in non-vanilla water tagged fluids. Fixed other watterlogging bug with them.
  Example, source Sugar Water was not waterlogging the Super Candles/Incense Candles when placed in it (Will be waterlogged with vanilla water when done so)
 
-Creative pick block (middle click) on Honey Crystal block now gives the proper Honey Crystale item instead of Honey Crystale Shards.
+Creative pick block (middle click) on Honey Crystal block now gives the proper Honey Crystal item instead of Honey Crystal Shards.
 
 ##### Items:
 Vanilla's Filled Maps now works in Bumblezone dimension properly!
