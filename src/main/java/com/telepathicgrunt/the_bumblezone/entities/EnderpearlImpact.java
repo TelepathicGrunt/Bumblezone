@@ -1,8 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
-import com.telepathicgrunt.the_bumblezone.modcompat.DreamlandBiomesCompat;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
 import net.minecraft.world.entity.projectile.ThrownEnderpearl;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -19,17 +16,8 @@ public class EnderpearlImpact {
 
         if (event.getHitResult() != null && event.getHitResult() instanceof EntityHitResult entityHitResult) {
             ThrownEnderpearl thrownEnderpearl = event.getPearlEntity();
-            if (ModChecker.productiveBeesPresent) {
-                if (ProductiveBeesCompat.runTeleportCodeIfBeeHelmetHitHigh(entityHitResult, thrownEnderpearl)) {
-                    event.setResult(Event.Result.DENY);
-                    return;
-                }
-            }
-            if (ModChecker.dreamlandBiomesPresent) {
-                if (DreamlandBiomesCompat.runTeleportCodeIfBumbleBeastHitHigh(entityHitResult, thrownEnderpearl)) {
-                    event.setResult(Event.Result.DENY);
-                    return;
-                }
+            if (EntityTeleportationHookup.runEntityHitCheck(entityHitResult, thrownEnderpearl)) {
+                event.setResult(Event.Result.DENY);
             }
         }
     }

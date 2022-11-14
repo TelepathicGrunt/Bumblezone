@@ -17,7 +17,6 @@ public class BzModCompatibilityConfigs {
 	public static ForgeConfigSpec.DoubleValue spawnrateOfProductiveBeesMobs;
 	public static ForgeConfigSpec.BooleanValue allowHoneyTreatCompat;
 	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesHoneycombVariants;
-	public static ForgeConfigSpec.BooleanValue allowEnderpearledBeeNestHelmetTeleporation;
 	public static ForgeConfigSpec.DoubleValue oreHoneycombSpawnRateBeeDungeon;
 	public static ForgeConfigSpec.DoubleValue oreHoneycombSpawnRateSpiderBeeDungeon;
 	public static ForgeConfigSpec.ConfigValue<List<? extends String>> allowedCombsForDungeons;
@@ -26,8 +25,6 @@ public class BzModCompatibilityConfigs {
 
 	public static ForgeConfigSpec.BooleanValue allowFriendsAndFoesBeekeeperTradesCompat;
 	public static ForgeConfigSpec.BooleanValue injectBzItemsIntoQuarkEnchantmentTooltipsCompat;
-
-	public static ForgeConfigSpec.BooleanValue allowEnderpearledBumbleBeastTeleporation;
 
 	public static ForgeConfigSpec.BooleanValue allowBeeBottleRevivingEmptyBroodBlock;
 	public static ForgeConfigSpec.BooleanValue spawnCrystallizedHoneyInDimension;
@@ -104,13 +101,6 @@ public class BzModCompatibilityConfigs {
 							" NOTE: Will require a restart of the world to take effect. \n")
 					.translation("the_bumblezone.config.spawnproductivebeeshoneycombvariants")
 					.define("spawnProductiveBeesHoneycombVariants", true);
-
-			allowEnderpearledBeeNestHelmetTeleporation = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Whether thrown Enderpearls hitting the top hitbox portion of mobs wearing",
-							" Productive Bees's Bee Nest Helmets will teleport the thrower to Bumblezone dimension. \n")
-					.translation("the_bumblezone.config.allowenderpearledbeenesthelmetteleporation")
-					.define("allowEnderpearledBeeNestHelmetTeleporation", true);
 
 			allowedCombsForDungeons = builder
 					.comment(" \n-----------------------------------------------------\n",
@@ -230,17 +220,6 @@ public class BzModCompatibilityConfigs {
 							" Adds Bumblezone items symbols to Quark's enchantment tooltips!\n")
 					.translation("the_bumblezone.config.injectbzitemsintoquarkenchantmenttooltipscompat")
 					.define("injectBzItemsIntoQuarkEnchantmentTooltipsCompat", true);
-
-			builder.pop();
-
-			builder.push("Dreamland Biomes Options");
-
-			allowEnderpearledBumbleBeastTeleporation = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Whether thrown Enderpearls hitting the top portion of Dreamland biome's Bumble Beast hitbox",
-							" will teleport the thrower to Bumblezone dimension. \n")
-					.translation("the_bumblezone.config.allowenderpearledbumblebeastteleporation")
-					.define("allowEnderpearledBumbleBeastTeleporation", true);
 
 			builder.pop();
 

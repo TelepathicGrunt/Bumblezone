@@ -13,6 +13,21 @@ If entity hit is wearing armor tagged `the_bumblezone:enderpearl_teleporting/tar
 If entity hit is holding item tagged `the_bumblezone:enderpearl_teleporting/target_held_item`, will teleport thrower into Bumblezone.
 
 
+### **(V.6.4.2 Changes) (1.19.2 Minecraft)**
+
+##### Mod Compat:
+Cleaned up how Enderpearl teleporting works when hitting Productive Bees's Bee Nest Diamond Helmet or hits Dreamland Biome's Bumble Beast.
+ The following tags were added to handle the new way of doing compat and lets players add addition entities or items to hit to enter Bumblezone!
+
+If entity hit is tagged `the_bumblezone:enderpearl_teleporting/target_entity`, will teleport thrower into Bumblezone.
+ If the entity is 1.8 blocks or bigger, pearl must hit top half of hitbox.
+
+If entity hit is wearing armor tagged `the_bumblezone:enderpearl_teleporting/target_armor`, will teleport thrower into Bumblezone.
+ (Helmet requires top 33% of hitbox. Chestplate require top 40%. Leggings require below 60%. Boots require below 33%)
+
+If entity hit is holding item tagged `the_bumblezone:enderpearl_teleporting/target_held_item`, will teleport thrower into Bumblezone.
+
+
 ### **(V.6.4.1 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
