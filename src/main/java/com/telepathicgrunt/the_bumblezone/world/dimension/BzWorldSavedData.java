@@ -161,7 +161,7 @@ public class BzWorldSavedData extends SavedData {
 			ServerLevel bumblezoneWorld = minecraftServer.getLevel(BzDimension.BZ_WORLD_KEY);
 			BlockPos blockPos = new BlockPos(destinationPosFound);
 
-			if (bumblezoneWorld.getBlockState(blockPos.above()).isSuffocating(bumblezoneWorld, blockPos.above())) {
+			if (bumblezoneWorld != null && bumblezoneWorld.getBlockState(blockPos.above()).isSuffocating(bumblezoneWorld, blockPos.above())) {
 				//We are going to spawn player at exact spot of scaled coordinates by placing air at the spot with honeycomb bottom
 				//and honeycomb walls to prevent drowning
 				//This is the last resort
@@ -236,6 +236,7 @@ public class BzWorldSavedData extends SavedData {
 				serverPlayer.stopSleepInBed(true, true);
 			}
 
+			serverPlayer.moveTo(destinationPosition.x, destinationPosition.y, destinationPosition.z);
 			serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
 			teleportedEntity = destination.getPlayerByUUID(serverPlayer.getUUID());
 		}

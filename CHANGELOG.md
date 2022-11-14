@@ -1,5 +1,10 @@
 ### **(V.6.4.2 Changes) (1.19.2 Minecraft)**
 
+##### Teleportation:
+Finally found a solution to make sure player teleports straight to destination spot in Bumblezone instead of briefly in 
+ the ground while the game catches up to the teleport code. Needed to call serverPlayer.moveTo before serverPlayer.teleportTo
+ since serverPlayer.teleportTo changes dimension and then has a lag for updating the position. Odd vanilla bug... 
+
 ##### Mod Compat:
 Cleaned up how Enderpearl teleporting works when hitting Llamarama Bumble Llama or hits MC Dungeons Armors's Bee Nest/Beehive armors.
  The following tags were added to handle the new way of doing compat and lets players add addition entities or items to hit to enter Bumblezone!
