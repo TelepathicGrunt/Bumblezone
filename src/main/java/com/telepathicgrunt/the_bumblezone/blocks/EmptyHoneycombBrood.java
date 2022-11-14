@@ -81,18 +81,17 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
         }
         */
 
-        if (ModChecker.buzzierBeesPresent &&
-            BzModCompatibilityConfigs.allowBeeBottleRevivingEmptyBroodBlock.get() &&
-            BuzzierBeesCompat.bottledBeeInteract(itemstack, playerEntity, playerHand) == InteractionResult.SUCCESS)
-        {
-            playerEntity.swing(playerHand);
-            level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
-            level.setBlock(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
-                    .setValue(HoneycombBrood.STAGE, 0)
-                    .setValue(BlockStateProperties.FACING, blockState.getValue(BlockStateProperties.FACING)),
-                    3);
+        if (ModChecker.buzzierBeesPresent && BzModCompatibilityConfigs.allowBeeBottleRevivingEmptyBroodBlock.get()) {
+            if (BuzzierBeesCompat.bottledBeeInteract(itemstack, playerEntity, playerHand) == InteractionResult.SUCCESS) {
+                playerEntity.swing(playerHand);
+                level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+                level.setBlock(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+                                .setValue(HoneycombBrood.STAGE, 0)
+                                .setValue(BlockStateProperties.FACING, blockState.getValue(BlockStateProperties.FACING)),
+                        3);
 
-            return InteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
+            }
         }
 
         return super.use(blockState, level, position, playerEntity, playerHand, HitResult);

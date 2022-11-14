@@ -2,8 +2,10 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.teamabnormals.buzzier_bees.core.registry.BBBlocks;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.world.features.decorators.ConditionBasedPlacement;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
@@ -23,6 +25,7 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.RarityFilter;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -58,6 +61,7 @@ public class BuzzierBeesCompatRegs {
     public static final RegistryObject<PlacedFeature> CRYSTALIZED_HONEY_PF = PLACED_FEATURES.register("buzzier_bees_crystallized_honey_pf", () ->
         new PlacedFeature(Holder.direct(CRYSTALIZED_HONEY_CF.get()),
             List.of(
+                ConditionBasedPlacement.of(Lazy.of(() -> BzModCompatibilityConfigs.spawnCrystallizedHoneyInDimension.get())),
                 CountPlacement.of(30),
                 InSquarePlacement.spread(),
                 HeightRangePlacement.uniform(
@@ -75,6 +79,7 @@ public class BuzzierBeesCompatRegs {
     public static final RegistryObject<PlacedFeature> HONEYCOMB_TILES_PF = PLACED_FEATURES.register("buzzier_bees_honeycomb_tiles_pf", () ->
         new PlacedFeature(Holder.direct(HONEYCOMB_TILES_CF.get()),
             List.of(
+                ConditionBasedPlacement.of(Lazy.of(() -> BzModCompatibilityConfigs.spawnHoneyTilesInDimension.get())),
                 CountPlacement.of(45),
                 InSquarePlacement.spread(),
                 HeightRangePlacement.uniform(

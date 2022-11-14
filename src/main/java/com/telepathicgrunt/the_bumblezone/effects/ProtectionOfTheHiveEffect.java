@@ -51,7 +51,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
         List<Bee> beeList = entity.level.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius.get()*0.5D));
 
         for (Bee bee : beeList) {
-            if(bee.getTarget() == entity) {
+            if(bee.getTarget() == entity && !bee.isNoAi()) {
                 bee.setTarget(null);
                 bee.setPersistentAngerTarget(null);
                 bee.setRemainingPersistentAngerTime(0);
@@ -97,6 +97,10 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
         }
 
         for (Bee bee : beeList) {
+            if (bee.isNoAi()) {
+                continue;
+            }
+
             bee.setTarget(entity);
             bee.setPersistentAngerTarget(uuid);
             if(entity == null) {

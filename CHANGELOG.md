@@ -1,3 +1,21 @@
+### **(V.6.4.1 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Nerfed Crystalline Flower so that it requires 1453xp to reach max tier (About the same as player going from xp level 0 to 30)
+ Previously, the flower required xp roughly about the same as a player going from 0 to 23 xp levels.
+ Was complained about being too low for the ability to pick enchantments. Now it requires about double more xp.
+ You can still increase or reduce this xp cost in the config file for Bumblezone.
+
+##### Items:
+Fixed Honey Compass tooltip not wrapping properly.
+
+##### Effects:
+Wrath of the Hive and Protection of the Hive will no longer affect nearby Bees that have their AI turned off.
+
+##### Mod Compat:
+Added configs to make it easier to turn off spawning Buzzier Bees's blocks in Bumblezone.
+
+
 ### **(V.6.4.0 Changes) (1.19.2 Minecraft)**
 
 ##### Music:
@@ -34,7 +52,7 @@ Reduced duplicate entries in Bumblezone's Super Candle block and item tags.
 Fixed Super Candles/Incense Candles not being waterlogged when placed in non-vanilla water tagged fluids. Fixed other watterlogging bug with them.
  Example, source Sugar Water was not waterlogging the Super Candles/Incense Candles when placed in it (Will be waterlogged with vanilla water when done so)
 
-Creative pick block (middle click) on Honey Crystal block now gives the proper Honey Crystale item instead of Honey Crystale Shards.
+Creative pick block (middle click) on Honey Crystal block now gives the proper Honey Crystal item instead of Honey Crystal Shards.
 
 ##### Items:
 Vanilla's Filled Maps now works in Bumblezone dimension properly!

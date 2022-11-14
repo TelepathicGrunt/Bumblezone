@@ -20,7 +20,7 @@ public class EnderpearlImpact {
         if (event.getHitResult() != null && event.getHitResult() instanceof EntityHitResult entityHitResult) {
             ThrownEnderpearl thrownEnderpearl = event.getPearlEntity();
             if (ModChecker.productiveBeesPresent) {
-                if (ProductiveBeesCompat.runTeleportCodeIfBeeHelmentHitHigh(entityHitResult, thrownEnderpearl)) {
+                if (ProductiveBeesCompat.runTeleportCodeIfBeeHelmetHitHigh(entityHitResult, thrownEnderpearl)) {
                     event.setResult(Event.Result.DENY);
                     return;
                 }
