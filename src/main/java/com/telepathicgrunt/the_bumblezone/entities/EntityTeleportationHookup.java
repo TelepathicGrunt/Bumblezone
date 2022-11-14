@@ -188,13 +188,26 @@ public class EntityTeleportationHookup {
             boolean passedCheck = false;
 
             // Entity type check
-            if (hitEntity.getType().is(BzTags.ENDERPEARL_TARGET_ENTITY)) {
+            if (hitEntity.getType().is(BzTags.ENDERPEARL_TARGET_ENTITY_HIT_ANYWHERE) ||
+                hitEntity.getType().is(BzTags.ENDERPEARL_TARGET_ENTITY_HIT_HIGH) ||
+                hitEntity.getType().is(BzTags.ENDERPEARL_TARGET_ENTITY_HIT_LOW))
+            {
                 Vec3 hitPos = pearlEntity.position();
                 AABB boundBox = entityHitResult.getEntity().getBoundingBox();
                 double relativeHitY = hitPos.y() - boundBox.minY;
                 double entityBoundHeight = boundBox.maxY - boundBox.minY;
-                double minYThreshold = entityBoundHeight > 1.8d ? entityBoundHeight / 2 : 0;
-                if (relativeHitY < minYThreshold) {
+
+                double minYThreshold = Integer.MIN_VALUE;
+                double maxYThreshold = Integer.MAX_VALUE;
+
+                if (hitEntity.getType().is(BzTags.ENDERPEARL_TARGET_ENTITY_HIT_HIGH)) {
+                    minYThreshold = entityBoundHeight / 2;
+                }
+                if (hitEntity.getType().is(BzTags.ENDERPEARL_TARGET_ENTITY_HIT_HIGH)) {
+                    maxYThreshold = entityBoundHeight / 2;
+                }
+
+                if (minYThreshold != maxYThreshold && (relativeHitY > maxYThreshold || relativeHitY < minYThreshold)) {
                     return false;
                 }
 
@@ -228,10 +241,10 @@ public class EntityTeleportationHookup {
 
                     if (stack.getItem() instanceof ArmorItem armorItem) {
                         switch (armorItem.getSlot()) {
-                            case HEAD -> minYThreshold = entityBoundHeight * 0.66d;
+                            case HEAD -> minYThreshold = entityBoundHeight * 0.6d;
                             case CHEST -> minYThreshold = entityBoundHeight * 0.4d;
                             case LEGS -> maxYThreshold = entityBoundHeight * 0.6d;
-                            case FEET -> maxYThreshold = entityBoundHeight * 0.33d;
+                            case FEET -> maxYThreshold = entityBoundHeight * 0.4d;
                         }
                     }
 
