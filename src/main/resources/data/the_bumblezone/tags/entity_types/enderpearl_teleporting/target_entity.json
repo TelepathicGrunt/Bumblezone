@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "llamarama:bumble_llama",
+      "required": false
+    },
+    {
+      "id": "dreamland:bumble_beast",
+      "required": false
+    }
+  ]
+}
