@@ -1,0 +1,49 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "blue_skies:firefly",
+      "required": false
+    },
+    {
+      "id": "naturalist:caterpillar",
+      "required": false
+    },
+    {
+      "id": "naturalist:butterfly",
+      "required": false
+    },
+    {
+      "id": "naturalist:snail",
+      "required": false
+    },
+    {
+      "id": "twilightforest:helmet_crab",
+      "required": false
+    },
+    {
+      "id": "biomemakeover:helmet_crab",
+      "required": false
+    },
+    {
+      "id": "biomemakeover:moth",
+      "required": false
+    },
+    {
+      "id": "biomemakeover:dragonfly",
+      "required": false
+    },
+    {
+      "id": "wonderouswilds:firefly",
+      "required": false
+    },
+    {
+      "id": "evilcraft:werewolf",
+      "required": false
+    },
+    {
+      "id": "quark:crab",
+      "required": false
+    }
+  ]
+}

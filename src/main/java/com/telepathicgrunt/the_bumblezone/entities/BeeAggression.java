@@ -189,6 +189,14 @@ public class BeeAggression {
             BzConfig.aggressiveBees &&
             entity instanceof Mob mobEntity)
         {
+            if (mobEntity.getType().is(BzTags.FORCED_BEE_CALM_AT)) {
+                return false;
+            }
+
+            if (mobEntity.getType().is(BzTags.FORCED_BEE_ANGRY_AT)) {
+                return true;
+            }
+
             //must be a bear or insect animal with no wrath of the hive effect on
             if(SET_OF_BEE_HATED_NAMED_ENTITIES.contains(entity.getType()) ||
                 (!SET_OF_BEE_NAMED_ENTITIES.contains(entity.getType()) && mobEntity.getMobType() == MobType.ARTHROPOD))
