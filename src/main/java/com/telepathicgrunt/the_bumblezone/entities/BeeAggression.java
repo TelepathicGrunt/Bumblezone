@@ -187,7 +187,8 @@ public class BeeAggression {
             !entity.level.isClientSide() &&
             entity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
             BzConfig.aggressiveBees &&
-            entity instanceof Mob mobEntity)
+            entity instanceof Mob mobEntity &&
+            !mobEntity.isNoAi())
         {
             if (mobEntity.getType().is(BzTags.FORCED_BEE_CALM_AT)) {
                 return false;
