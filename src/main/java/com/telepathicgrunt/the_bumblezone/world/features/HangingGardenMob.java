@@ -30,8 +30,8 @@ public class HangingGardenMob extends Feature<NoneFeatureConfiguration> {
         EntityType<?> entityToSpawn = context.random().nextFloat() < 0.3f ? EntityType.BEE : null;
         if (entityToSpawn == null) {
             List<EntityType<?>> spawnableExtraEntities = new ArrayList<>();
-            Iterable<Holder<EntityType<?>>> holderIterable = Registry.ENTITY_TYPE.getTagOrEmpty(BzTags.ENDERPEARL_TARGET_ENTITY_HIT_ANYWHERE);
-            holderIterable.forEach(h -> spawnableExtraEntities.add(h.get()));
+            Iterable<Holder<EntityType<?>>> holderIterable = Registry.ENTITY_TYPE.getTagOrEmpty(BzTags.HANGING_GARDENS_INITIAL_SPAWN_ENTITIES);
+            holderIterable.forEach(h -> spawnableExtraEntities.add(h.value()));
             if (!spawnableExtraEntities.isEmpty()) {
                 entityToSpawn = spawnableExtraEntities.get(context.random().nextInt(spawnableExtraEntities.size()));
             }
