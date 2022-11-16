@@ -16,6 +16,9 @@ Added two new tags to control whether the specifically tagged entity will get Wr
 Hanging Garden will now spawn some extra bug mobs from other mods! Such as butterflies, snails, fireflies, or other small cute bug.
  This controlled by a new entity tag called: `the_bumblezone:hanging_gardens_initial_spawn_entities`
 
+##### Block:
+Fixed mobs pathfinding into lit Super Candles/Incense Candles and getting burned up.
+ Now the wick cannot be pathfind through when lit.
 
 ##### Mod Compat:
 Cleaned up how Enderpearl teleporting works when hitting Llamarama Bumble Llama or hits MC Dungeons Armors's Bee Nest/Beehive armors.
