@@ -104,6 +104,10 @@
     {
       "id": "lovely_snails:snail",
       "required": false
+    },
+    {
+      "id": "whisperwoods:moth",
+      "required": false
     }
   ]
 }
