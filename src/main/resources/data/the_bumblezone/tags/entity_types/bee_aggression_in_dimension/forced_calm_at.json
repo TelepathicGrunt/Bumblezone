@@ -54,6 +54,10 @@
       "required": false
     },
     {
+      "id": "alexsmobs:mantis_shrimp",
+      "required": false
+    },
+    {
       "id": "alexsmobs:banana_slug",
       "required": false
     },
@@ -87,6 +91,22 @@
     },
     {
       "id": "wildlife:ladybug",
+      "required": false
+    },
+    {
+      "id": "betterend:silk_moth",
+      "required": false
+    },
+    {
+      "id": "betternether:firefly",
+      "required": false
+    },
+    {
+      "id": "lovely_snails:snail",
+      "required": false
+    },
+    {
+      "id": "whisperwoods:moth",
       "required": false
     }
   ]
