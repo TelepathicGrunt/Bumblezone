@@ -16,6 +16,50 @@
     {
       "id": "blue_skies:venom_spider",
       "required": false
+    },
+    {
+      "id": "biomemakeover:dragonfly",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:warped_mosco",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:cockroach",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:dropbear",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:sea_bear",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:tarantula_hawk",
+      "required": false
+    },
+    {
+      "id": "wildlife:staghorn_beetle",
+      "required": false
+    },
+    {
+      "id": "wildlife:rhino_beetle",
+      "required": false
+    },
+    {
+      "id": "wildlife:june_beetle",
+      "required": false
+    },
+    {
+      "id": "wildlife:stinkbug",
+      "required": false
+    },
+    {
+      "id": "wildlife:dragonfly",
+      "required": false
     }
   ]
 }

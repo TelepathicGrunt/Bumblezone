@@ -1,0 +1,20 @@
+{
+  "name": "the_bumblezone:hanging_garden/mob",
+  "fallback": "the_bumblezone:hanging_garden/mob",
+  "elements": [
+    {
+      "weight": 2,
+      "element": {
+        "feature": "the_bumblezone:hanging_garden_mob",
+        "projection": "rigid",
+        "element_type": "minecraft:feature_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    }
+  ]
+}
