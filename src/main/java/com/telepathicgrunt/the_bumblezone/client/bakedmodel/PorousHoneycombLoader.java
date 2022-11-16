@@ -1,9 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.client.bakedmodel;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Set;
-import java.util.function.Function;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
@@ -20,6 +16,11 @@ import net.minecraft.util.GsonHelper;
 import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
 import net.minecraftforge.client.model.geometry.IGeometryLoader;
 import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Set;
+import java.util.function.Function;
 
 public class PorousHoneycombLoader implements IGeometryLoader<PorousHoneycombLoader.PorousHoneycombModel>
 {

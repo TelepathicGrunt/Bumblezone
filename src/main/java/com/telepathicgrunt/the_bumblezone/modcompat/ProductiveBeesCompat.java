@@ -1,14 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehive;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehiveAbstract;
 import cy.jdkdigital.productivebees.common.block.ConfigurableCombBlock;
 import cy.jdkdigital.productivebees.common.block.ExpansionBox;
 import cy.jdkdigital.productivebees.common.block.entity.CombBlockBlockEntity;
 import cy.jdkdigital.productivebees.common.entity.bee.ConfigurableBee;
-import cy.jdkdigital.productivebees.common.item.BeeNestHelmet;
 import cy.jdkdigital.productivebees.init.ModBlocks;
 import cy.jdkdigital.productivebees.init.ModEntities;
 import cy.jdkdigital.productivebees.setup.BeeReloadListener;
@@ -19,11 +17,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -31,8 +25,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 
@@ -190,34 +182,5 @@ public class ProductiveBeesCompat {
 			newTag.putString("type", BEE_DUNGEON_HONEYCOMBS.get().get(random.nextInt(BEE_DUNGEON_HONEYCOMBS.get().size())));
 			return new StructureTemplate.StructureBlockInfo(worldPos, ModBlocks.CONFIGURABLE_COMB.get().defaultBlockState(), newTag);
 		}
-	}
-
-	public static boolean runTeleportCodeIfBeeHelmetHitHigh(HitResult hitResult, Projectile pearlEntity) {
-		Level world = pearlEntity.level; // world we threw in
-
-		if (!BzModCompatibilityConfigs.allowEnderpearledBeeNestHelmetTeleporation.get()) {
-			return false;
-		}
-
-		return EntityTeleportationHookup.attemptEntityBasedTeleportation(
-				hitResult,
-				pearlEntity,
-				world,
-				(entityHitResult) -> hasBeeNestHelmet(entityHitResult.getEntity()),
-				(entityHitResult, hitPos) -> {
-					AABB boundBox = entityHitResult.getEntity().getBoundingBox();
-					double minYThreshold = ((boundBox.maxY - boundBox.minY) * 0.66d) + boundBox.minY;
-					return hitPos.y() < minYThreshold;
-				}
-		);
-	}
-
-	public static boolean hasBeeNestHelmet(Entity entity) {
-		for(ItemStack armor : entity.getArmorSlots()) {
-			if(armor.getItem() instanceof BeeNestHelmet) {
-				return true;
-			}
-		}
-		return false;
 	}
 }

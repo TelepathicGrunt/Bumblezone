@@ -10,8 +10,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
-
 public class BzBlockItem extends BlockItem {
     private final boolean fitInContainers;
     private final boolean useBlockName;

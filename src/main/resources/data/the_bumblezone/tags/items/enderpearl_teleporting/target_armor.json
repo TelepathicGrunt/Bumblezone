@@ -1,0 +1,73 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "productivebees:bee_nest_diamond_helmet",
+      "required": false
+    },
+    {
+      "id": "mcda:beehive_armor_helmet",
+      "required": false
+    },
+    {
+      "id": "mcda:beehive_armor_chestplate",
+      "required": false
+    },
+    {
+      "id": "mcda:beehive_armor_leggings",
+      "required": false
+    },
+    {
+      "id": "mcda:beehive_armor_boots",
+      "required": false
+    },
+    {
+      "id": "mcda:beenest_armor_helmet",
+      "required": false
+    },
+    {
+      "id": "mcda:beenest_armor_chestplate",
+      "required": false
+    },
+    {
+      "id": "mcda:beenest_armor_leggings",
+      "required": false
+    },
+    {
+      "id": "mcda:beenest_armor_boots",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beenest_helmet",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beenest_chestplate",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beenest_leggings",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beenest_boots",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beehive_helmet",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beehive_chestplate",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beehive_leggings",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beehive_boots",
+      "required": false
+    }
+  ]
+}

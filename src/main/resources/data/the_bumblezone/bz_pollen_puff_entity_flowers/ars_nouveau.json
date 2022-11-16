@@ -1,0 +1,62 @@
+{
+  "ars_nouveau:blazing_weald_walker": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "ars_nouveau:red_archwood_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 3
+        }
+      ]
+    }
+  }],
+  "ars_nouveau:florishing_weald_walker": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "ars_nouveau:green_archwood_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 3
+        }
+      ]
+    }
+  }],
+  "ars_nouveau:cascading_weald_walker": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "ars_nouveau:blue_archwood_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 3
+        }
+      ]
+    }
+  }],
+  "ars_nouveau:vexing_weald_walker": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "ars_nouveau:purple_archwood_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 3
+        }
+      ]
+    }
+  }]
+}
