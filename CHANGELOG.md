@@ -1,3 +1,48 @@
+### **(V.6.4.2 Changes) (1.19.2 Minecraft)**
+
+##### Teleportation:
+Finally found a solution to make sure player teleports straight to destination spot in Bumblezone instead of briefly in
+ the ground while the game catches up to the teleport code. Needed to call serverPlayer.moveTo before serverPlayer.teleportTo
+ since serverPlayer.teleportTo changes dimension and then has a lag for updating the position. Odd vanilla bug...
+
+##### Bee Aggression:
+Added two new tags to control whether the specifically tagged entity will get Wrath of the Hive automatically or not in 
+ Bumblezone dimension. The calming tag will take presence over the angry tag. But both tags will override the default
+ built-in behavior for that mob on if it automatically gets wrath or not in the dimension. Tags are:
+ `the_bumblezone:bee_aggression_in_dimension/always_angry_at`
+ `the_bumblezone:bee_aggression_in_dimension/forced_calm_at`
+
+##### Structures:
+Hanging Garden will now spawn some extra bug mobs from other mods! Such as butterflies, snails, fireflies, or other small cute bug.
+ This controlled by a new entity tag called: `the_bumblezone:hanging_gardens_initial_spawn_entities`
+
+##### Block:
+Fixed mobs pathfinding into lit Super Candles/Incense Candles and getting burned up.
+ Now the wick cannot be pathfind through when lit.
+
+Fixed mobs unable to jump over Honey Crystal Block. Now they should pathfind around the block properly.
+
+##### Mod Compat:
+Cleaned up how Enderpearl teleporting works when hitting Llamarama Bumble Llama or hits MC Dungeons Armors's Bee Nest/Beehive armors.
+ The following tags were added to handle the new way of doing compat and lets players add addition entities or items to hit to enter Bumblezone!
+
+If entity hit is tagged `the_bumblezone:enderpearl_teleporting/target_entity_hit_anywhere`,
+ will teleport thrower into Bumblezone.
+
+If entity hit is tagged `the_bumblezone:enderpearl_teleporting/target_entity_hit_high`,
+ top half of hitbox must be hit to teleport thrower into Bumblezone.
+
+If entity hit is tagged `the_bumblezone:enderpearl_teleporting/target_entity_hit_low`,
+ bottom half of hitbox must be hit to teleport thrower into Bumblezone.
+
+If entity hit is wearing armor tagged `the_bumblezone:enderpearl_teleporting/target_armor`, will teleport thrower into Bumblezone.
+ (Helmet requires top 40% of hitbox. Chestplate require top 60%. Leggings require below 60%. Boots require below 40%)
+ 
+If entity hit is holding item tagged `the_bumblezone:enderpearl_teleporting/target_held_item`, will teleport thrower into Bumblezone.
+
+Fixed overlay issues with REI's tooltip while on Crystalline Flower's screen
+
+
 ### **(V.6.4.1 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:

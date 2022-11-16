@@ -1,0 +1,81 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "deeperdarker:sculk_centipede",
+      "required": false
+    },
+    {
+      "id": "twilightforest:fire_beetle",
+      "required": false
+    },
+    {
+      "id": "twilightforest:pinch_beetle",
+      "required": false
+    },
+    {
+      "id": "blue_skies:infested_swarmer",
+      "required": false
+    },
+    {
+      "id": "blue_skies:venom_spider",
+      "required": false
+    },
+    {
+      "id": "blue_skies:polargeist",
+      "required": false
+    },
+    {
+      "id": "biomemakeover:dragonfly",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:warped_mosco",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:cockroach",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:dropbear",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:sea_bear",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:tarantula_hawk",
+      "required": false
+    },
+    {
+      "id": "wildlife:staghorn_beetle",
+      "required": false
+    },
+    {
+      "id": "wildlife:rhino_beetle",
+      "required": false
+    },
+    {
+      "id": "wildlife:june_beetle",
+      "required": false
+    },
+    {
+      "id": "wildlife:stinkbug",
+      "required": false
+    },
+    {
+      "id": "wildlife:dragonfly",
+      "required": false
+    },
+    {
+      "id": "betterend:dragonfly",
+      "required": false
+    },
+    {
+      "id": "unusualend:ender_blob",
+      "required": false
+    }
+  ]
+}

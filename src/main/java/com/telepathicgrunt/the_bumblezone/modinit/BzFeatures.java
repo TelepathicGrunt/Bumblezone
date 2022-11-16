@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.world.features.BeeDungeon;
 import com.telepathicgrunt.the_bumblezone.world.features.CaveSugarWaterfall;
 import com.telepathicgrunt.the_bumblezone.world.features.GiantHoneyCrystalFeature;
+import com.telepathicgrunt.the_bumblezone.world.features.HangingGardenMob;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneyCrystalFeature;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneycombCaves;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneycombHole;
@@ -34,6 +35,7 @@ public class BzFeatures {
     public static Feature<NbtFeatureConfig> SPIDER_INFESTED_BEE_DUNGEON = new SpiderInfestedBeeDungeon(NbtFeatureConfig.CODEC);
     public static Feature<BiomeBasedLayerConfig> LAYERED_BLOCK_SURFACE = new LayeredBlockSurface(BiomeBasedLayerConfig.CODEC);
     public static Feature<NoneFeatureConfiguration> WEB_WALL = new WebWall(NoneFeatureConfiguration.CODEC);
+    public static Feature<NoneFeatureConfiguration> HANGING_GARDEN_MOB = new HangingGardenMob(NoneFeatureConfiguration.CODEC);
 
     public static void registerFeatures() {
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "honeycomb_holes"), HONEYCOMB_HOLE);
@@ -48,5 +50,6 @@ public class BzFeatures {
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "spider_infested_bee_dungeon"), SPIDER_INFESTED_BEE_DUNGEON);
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "layered_block_surface"), LAYERED_BLOCK_SURFACE);
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "web_wall"), WEB_WALL);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "hanging_garden_mob"), HANGING_GARDEN_MOB);
     }
 }
