@@ -18,14 +18,6 @@
       "required": false
     },
     {
-      "id": "twilightforest:helmet_crab",
-      "required": false
-    },
-    {
-      "id": "biomemakeover:helmet_crab",
-      "required": false
-    },
-    {
       "id": "biomemakeover:moth",
       "required": false
     },
@@ -34,23 +26,11 @@
       "required": false
     },
     {
-      "id": "evilcraft:werewolf",
-      "required": false
-    },
-    {
-      "id": "quark:crab",
-      "required": false
-    },
-    {
       "id": "autumnity:snail",
       "required": false
     },
     {
-      "id": "alexsmobs:lobster",
-      "required": false
-    },
-    {
-      "id": "alexsmobs:endergrade",
+      "id": "alexsmobs:flutter",
       "required": false
     },
     {

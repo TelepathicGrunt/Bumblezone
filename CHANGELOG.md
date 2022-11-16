@@ -12,6 +12,11 @@ Added two new tags to control whether the specifically tagged entity will get Wr
  `the_bumblezone:bee_aggression_in_dimension/always_angry_at`
  `the_bumblezone:bee_aggression_in_dimension/forced_calm_at`
 
+##### Structures:
+Hanging Garden will now spawn some extra bug mobs from other mods! Such as butterflies, snails, fireflies, or other small cute bug.
+ This controlled by a new entity tag called: `the_bumblezone:hanging_gardens_initial_spawn_entities`
+
+
 ##### Mod Compat:
 Cleaned up how Enderpearl teleporting works when hitting Llamarama Bumble Llama or hits MC Dungeons Armors's Bee Nest/Beehive armors.
  The following tags were added to handle the new way of doing compat and lets players add addition entities or items to hit to enter Bumblezone!
