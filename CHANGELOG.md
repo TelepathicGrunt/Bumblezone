@@ -20,6 +20,8 @@ Hanging Garden will now spawn some extra bug mobs from other mods! Such as butte
 Fixed mobs pathfinding into lit Super Candles/Incense Candles and getting burned up.
  Now the wick cannot be pathfind through when lit.
 
+Fixed mobs unable to jump over Honey Crystal Block. Now they should pathfind around the block properly.
+
 ##### Mod Compat:
 Cleaned up how Enderpearl teleporting works when hitting Llamarama Bumble Llama or hits MC Dungeons Armors's Bee Nest/Beehive armors.
  The following tags were added to handle the new way of doing compat and lets players add addition entities or items to hit to enter Bumblezone!
