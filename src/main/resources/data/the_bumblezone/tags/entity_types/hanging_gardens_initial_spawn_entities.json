@@ -68,6 +68,10 @@
     {
       "id": "wildlife:ladybug",
       "required": false
+    },
+    {
+      "id": "lovely_snails:snail",
+      "required": false
     }
   ]
 }
