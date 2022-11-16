@@ -33,6 +33,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -266,5 +267,10 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
                 level.addParticle(ParticleTypes.SMALL_FLAME, offset.x, offset.y - 0.75d, offset.z, 0.0D, 0.0D, 0.0D);
             }
         }
+    }
+
+    @Override
+    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
+        return !(state.hasProperty(LIT) && state.getValue(LIT));
     }
 }
