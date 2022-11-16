@@ -10,11 +10,19 @@
       "required": false
     },
     {
+      "id": "twilightforest:pinch_beetle",
+      "required": false
+    },
+    {
       "id": "blue_skies:infested_swarmer",
       "required": false
     },
     {
       "id": "blue_skies:venom_spider",
+      "required": false
+    },
+    {
+      "id": "blue_skies:polargeist",
       "required": false
     },
     {
@@ -59,6 +67,14 @@
     },
     {
       "id": "wildlife:dragonfly",
+      "required": false
+    },
+    {
+      "id": "betterend:dragonfly",
+      "required": false
+    },
+    {
+      "id": "unusualend:ender_blob",
       "required": false
     }
   ]
