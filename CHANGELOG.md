@@ -42,8 +42,6 @@ If entity hit is holding item tagged `the_bumblezone:enderpearl_teleporting/targ
 
 Fixed overlay issues with REI's tooltip while on Crystalline Flower's screen
 
-Ars Nouveau's Weald Walkers now spawn their respective sapling nearby when hit with Pollen Puff!
-
 
 ### **(V.6.4.1 Changes) (1.19.2 Minecraft)**
 
