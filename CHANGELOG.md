@@ -23,7 +23,7 @@ Fixed mobs pathfinding into lit Super Candles/Incense Candles and getting burned
 Fixed mobs unable to jump over Honey Crystal Block. Now they should pathfind around the block properly.
 
 ##### Mod Compat:
-Cleaned up how Enderpearl teleporting works when hitting Llamarama Bumble Llama or hits MC Dungeons Armors's Bee Nest/Beehive armors.
+Cleaned up how Enderpearl teleporting works when hitting Dreamland Biome's Bumble Beast or hits Productive Bees's Diamond Bee Nest Helmet.
  The following tags were added to handle the new way of doing compat and lets players add addition entities or items to hit to enter Bumblezone!
 
 If entity hit is tagged `the_bumblezone:enderpearl_teleporting/target_entity_hit_anywhere`,
