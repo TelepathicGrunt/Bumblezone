@@ -316,7 +316,7 @@
         {
           "type": "minecraft:item",
           "name": "the_bumblezone:honey_compass",
-          "weight": 1,
+          "weight": 2,
           "quality": 3,
           "functions": [
             {
@@ -352,7 +352,7 @@
         },
         {
           "type": "minecraft:empty",
-          "weight": 3
+          "weight": 4
         }
       ]
     }
