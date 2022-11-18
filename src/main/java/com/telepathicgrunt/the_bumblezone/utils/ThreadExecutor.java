@@ -1,10 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
+import com.telepathicgrunt.the_bumblezone.items.functions.PrefillMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
@@ -96,6 +98,19 @@ public class ThreadExecutor {
         completableFuture.complete(foundPos);
         runningSearches.getAndDecrement();
     }
+
+    public static void mapFilling(
+            ServerLevel level,
+            BlockPos pos,
+            MapItemSavedData data)
+    {
+        CompletableFuture<Object> completableFuture = new CompletableFuture<>();
+        Future<?> future = LOCATING_EXECUTOR_SERVICE.submit(
+                () -> PrefillMap.update(level, pos, data)
+        );
+        new LocateTask<>(level.getServer(), completableFuture, future);
+    }
+
 
     public record LocateTask<T>(MinecraftServer server, CompletableFuture<T> completableFuture, Future<?> taskFuture) {
         /**

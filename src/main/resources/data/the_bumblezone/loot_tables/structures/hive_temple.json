@@ -1,0 +1,360 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": {
+        "min": 1.0,
+        "max": 4.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "name": "the_bumblezone:bee_stinger",
+          "type": "minecraft:item",
+          "weight": 20,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 4.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "the_bumblezone:bee_bread",
+          "type": "minecraft:item",
+          "weight": 18,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 6.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "the_bumblezone:carvable_wax",
+          "type": "minecraft:item",
+          "weight": 15,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 6.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "the_bumblezone:pollen_puff",
+          "type": "minecraft:item",
+          "weight": 15,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 3.0,
+                "max": 6.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "the_bumblezone:honeycomb_brood_block",
+          "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "the_bumblezone:structures/flowers",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "rolls": {
+        "min": 1.0,
+        "max": 2.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "name": "minecraft:honey_bottle",
+          "type": "minecraft:item",
+          "weight": 9,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 3.0,
+                "max": 6.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:honey_block",
+          "type": "minecraft:item",
+          "weight": 6,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_boots",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_leggings",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_chestplate",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_helmet",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_boots",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_leggings",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_chestplate",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_helmet",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 0,
+      "bonus_rolls": 1,
+      "entries": [
+        {
+          "name": "the_bumblezone:stinger_spear",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_boots",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_leggings",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_chestplate",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_helmet",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 10
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "name": "the_bumblezone:honeycomb_brood_block",
+          "type": "minecraft:item",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:honey_compass",
+          "weight": 2,
+          "quality": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_mystery_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_mystery_structure_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Locked\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass_from_hive_temple",
+              "skip_existing_chunks": false,
+              "search_radius": 40
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:map",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "the_bumblezone:prefill_map",
+              "scale": 2
+            }
+          ]
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 4
+        }
+      ]
+    }
+  ]
+}

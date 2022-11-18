@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -8,6 +9,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -26,10 +28,12 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -98,8 +102,13 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
     }
 
     @Override
+    public boolean canPlaceLiquid(BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
+        return !blockState.getValue(WATERLOGGED) && fluid.is(FluidTags.WATER) && fluid.defaultFluidState().isSource();
+    }
+
+    @Override
     public boolean placeLiquid(LevelAccessor level, BlockPos pos, BlockState state, FluidState fluidState) {
-        if (!state.getValue(WATERLOGGED) && fluidState.getType() == Fluids.WATER) {
+        if (!state.getValue(WATERLOGGED) && fluidState.is(FluidTags.WATER) && fluidState.isSource()) {
             BlockState blockstate = state.setValue(WATERLOGGED, Boolean.TRUE);
             if (state.getValue(LIT)) {
                 extinguish(null, blockstate, level, pos);
@@ -108,7 +117,7 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
                 level.setBlock(pos, blockstate, 3);
             }
 
-            level.scheduleTick(pos, fluidState.getType(), fluidState.getType().getTickDelay(level));
+            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
             return true;
         }
         else {
@@ -181,6 +190,9 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
             boolean isBelowSoul = isSoulBelowInRange(levelAccessor, blockPos.below());
             Block wickBlock = (isBelowSoul && lit) ? BzBlocks.SUPER_CANDLE_WICK_SOUL : BzBlocks.SUPER_CANDLE_WICK;
             boolean litWick = levelAccessor.setBlock(blockPos, wickBlock.defaultBlockState().setValue(LIT, lit), 11) && lit;
+            if (lit) {
+                levelAccessor.playSound(null, blockPos, BzSounds.SUPER_CANDLE_WICK_LIT, SoundSource.BLOCKS, 1.0F, 1.0F);
+            }
             setBelowLit(levelAccessor, blockPos, lit);
             return litWick;
         }
@@ -255,5 +267,10 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
                 level.addParticle(ParticleTypes.SMALL_FLAME, offset.x, offset.y - 0.75d, offset.z, 0.0D, 0.0D, 0.0D);
             }
         }
+    }
+
+    @Override
+    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
+        return !(state.hasProperty(LIT) && state.getValue(LIT));
     }
 }

@@ -36,7 +36,7 @@ import java.util.Set;
 public class BeeAggression {
 
     public static void setupEvents() {
-        ServerLifecycleEvents.SERVER_STARTED.register((MinecraftServer minecraftServer) ->
+        ServerLifecycleEvents.SERVER_STARTING.register((MinecraftServer minecraftServer) ->
                 BeeAggression.setupBeeHatingList());
 
         PlayerBlockBreakEvents.AFTER.register((world, playerEntity, blockPos, blockState, blockEntity) ->
@@ -187,8 +187,17 @@ public class BeeAggression {
             !entity.level.isClientSide() &&
             entity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
             BzConfig.aggressiveBees &&
-            entity instanceof Mob mobEntity)
+            entity instanceof Mob mobEntity &&
+            !mobEntity.isNoAi())
         {
+            if (mobEntity.getType().is(BzTags.FORCED_BEE_CALM_AT)) {
+                return false;
+            }
+
+            if (mobEntity.getType().is(BzTags.FORCED_BEE_ANGRY_AT)) {
+                return true;
+            }
+
             //must be a bear or insect animal with no wrath of the hive effect on
             if(SET_OF_BEE_HATED_NAMED_ENTITIES.contains(entity.getType()) ||
                 (!SET_OF_BEE_NAMED_ENTITIES.contains(entity.getType()) && mobEntity.getMobType() == MobType.ARTHROPOD))

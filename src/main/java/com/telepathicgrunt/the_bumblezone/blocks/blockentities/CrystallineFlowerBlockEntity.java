@@ -72,7 +72,7 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
     public void load(CompoundTag compoundTag) {
         super.load(compoundTag);
         this.xpTier = compoundTag.getInt(TIER_TAG);
-        this.currentXp = compoundTag.getInt(XP_TAG);
+        this.currentXp = Math.min(compoundTag.getInt(XP_TAG), getMaxXpForTier(this.xpTier));
         this.guid = compoundTag.getString(GUID_TAG);
         if (this.guid.isEmpty()) {
             this.guid = java.util.UUID.randomUUID().toString();
@@ -259,7 +259,7 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
     }
 
     public int getMaxXpForTier(int tier) {
-        return Math.max(1, (45 + (tier * tier * 5)) + BzConfig.crystallineFlowerExtraXpNeededForTiers);
+        return Math.max(1, (45 + (tier * tier * 13)) + BzConfig.crystallineFlowerExtraXpNeededForTiers);
     }
 
     public int getXpForNextTiers(int nextTiersToCalculate) {

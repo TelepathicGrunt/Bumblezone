@@ -36,6 +36,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -62,7 +63,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     private Item item;
 
     public HoneyCrystal() {
-        super(FabricBlockSettings.of(Material.GLASS, MaterialColor.COLOR_ORANGE).lightLevel((blockState) -> 1).strength(0.3F, 0.3f).noOcclusion());
+        super(FabricBlockSettings.of(Material.GLASS, MaterialColor.TERRACOTTA_YELLOW).lightLevel((blockState) -> 1).strength(0.3F, 0.3f).noOcclusion());
 
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.UP)
@@ -207,6 +208,14 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     }
 
     /**
+     * Return this blockitem for creative middle click (pick block)
+     */
+    @Override
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+        return BzItems.HONEY_CRYSTAL.getDefaultInstance();
+    }
+
+    /**
      * This block is translucent and can let some light through
      */
     @Override
@@ -242,5 +251,10 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
         else {
             return ItemStack.EMPTY;
         }
+    }
+
+    @Override
+    public boolean isPathfindable(BlockState state, BlockGetter world, BlockPos pos, PathComputationType type) {
+        return false;
     }
 }

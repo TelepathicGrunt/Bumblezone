@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_mirrored_all",
+  "textures": {
+    "all": "the_bumblezone:block/sugar_infused_stone"
+  }
+}

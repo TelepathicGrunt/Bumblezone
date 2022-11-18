@@ -11,6 +11,13 @@ import net.minecraft.world.level.material.MaterialColor;
 
 
 public class BzBlocks {
+    public static Material RED_NOT_SOLID = new FabricMaterialBuilder(MaterialColor.TERRACOTTA_RED)
+            .notSolid()
+            .destroyOnPush()
+            .noCollider()
+            .replaceable()
+            .nonSolid()
+            .build();
     public static Material ORANGE_NOT_SOLID = new FabricMaterialBuilder(MaterialColor.TERRACOTTA_ORANGE)
             .notSolid()
             .destroyOnPush()
@@ -18,7 +25,14 @@ public class BzBlocks {
             .replaceable()
             .nonSolid()
             .build();
-    public static Material ORANGE_CRYSTAL_PLANT = new FabricMaterialBuilder(MaterialColor.COLOR_ORANGE)
+    public static Material YELLOW_NOT_SOLID = new FabricMaterialBuilder(MaterialColor.COLOR_YELLOW)
+            .notSolid()
+            .destroyOnPush()
+            .noCollider()
+            .replaceable()
+            .nonSolid()
+            .build();
+    public static Material YELLOW_CRYSTAL_PLANT = new FabricMaterialBuilder(MaterialColor.TERRACOTTA_YELLOW)
             .notSolid()
             .blocksPistons()
             .noCollider()

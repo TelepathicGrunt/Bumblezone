@@ -14,7 +14,6 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -223,10 +222,10 @@ public class HoneycombBrood extends ProperFacingBlock {
             }
         }
         else if(BzConfig.broodBlocksBeeSpawnCapacity != 0) {
-            if(!nearbyEntities.isEmpty() && GeneralUtils.getEntityCountInBz() < BzConfig.broodBlocksBeeSpawnCapacity * 1.75f) {
+            if(!nearbyEntities.isEmpty() && GeneralUtils.getNearbyActiveEntitiesInDimension(world, position) < BzConfig.broodBlocksBeeSpawnCapacity * 1.75f) {
                 spawnBroodMob(world, random, state, position, stage);
             }
-            else if(GeneralUtils.getEntityCountInBz() < BzConfig.broodBlocksBeeSpawnCapacity) {
+            else if(GeneralUtils.getNearbyActiveEntitiesInDimension(world, position) < BzConfig.broodBlocksBeeSpawnCapacity) {
                 spawnBroodMob(world, random, state, position, stage);
             }
         }

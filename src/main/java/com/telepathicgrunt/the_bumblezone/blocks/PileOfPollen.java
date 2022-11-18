@@ -67,7 +67,7 @@ public class PileOfPollen extends FallingBlock {
     private Item item;
 
     public PileOfPollen() {
-        super(BlockBehaviour.Properties.of(BzBlocks.ORANGE_NOT_SOLID)
+        super(BlockBehaviour.Properties.of(BzBlocks.YELLOW_NOT_SOLID)
                 .isViewBlocking((blockState, world, blockPos) -> true)
                 .noOcclusion()
                 .strength(0.1F)

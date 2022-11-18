@@ -37,7 +37,7 @@ public class BzBiomeLayer implements AreaTransformer0 {
             return biomeRegistry.getId(biomeRegistry.get(BzBiomeProvider.HIVE_WALL));
         }
         else {
-            if (Math.abs(perlinNoise2) > 0.62D) {
+            if (Math.abs(perlinNoise2) > 0.55D) {
                 return biomeRegistry.getId(biomeRegistry.get(BzBiomeProvider.CRYSTAL_CANYON));
             }
             else {

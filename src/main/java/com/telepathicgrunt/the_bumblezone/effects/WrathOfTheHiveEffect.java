@@ -64,15 +64,26 @@ public class WrathOfTheHiveEffect extends MobEffect {
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         Level world = entity.level;
 
+        if (entity instanceof Mob mob && mob.isNoAi()) {
+            return;
+        }
+
+        if (entity.isDeadOrDying()) {
+            calmTheBees(world, entity);
+            return;
+        }
+
         //Maximum aggression
         if (amplifier >= 2) {
             unBEElievablyHighAggression(world, entity);
 
-            if(GeneralUtils.getEntityCountInBz() < BzConfig.broodBlocksBeeSpawnCapacity * 3.0f) {
+            if(world instanceof ServerLevel serverLevel &&
+                GeneralUtils.getNearbyActiveEntitiesInDimension(serverLevel, entity.blockPosition()) < BzConfig.broodBlocksBeeSpawnCapacity * 3.0f) 
+            {
                 // Spawn bees when high wrath effect.
                 // Must be very low as this method is fired every tick for status effects.
                 // We don't want to spawn millions of bees
-                if(!world.isClientSide() && entity.getRandom().nextFloat() <= 0.0045f) {
+                if(entity.getRandom().nextFloat() <= 0.0045f) {
                     // Grab a nearby air materialposition a bit away
                     BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(entity, 30, 10);
                     if(world.getBlockState(spawnBlockPos).getMaterial() != Material.AIR) {
@@ -81,6 +92,14 @@ public class WrathOfTheHiveEffect extends MobEffect {
 
                     Bee bee = EntityType.BEE.create(world);
                     if(bee == null) return;
+
+                    bee.finalizeSpawn(
+                            serverLevel,
+                            serverLevel.getCurrentDifficultyAt(spawnBlockPos),
+                            MobSpawnType.TRIGGERED,
+                            null,
+                            null
+                    );
 
                     bee.absMoveTo(
                             spawnBlockPos.getX() + 0.5D,
@@ -171,6 +190,10 @@ public class WrathOfTheHiveEffect extends MobEffect {
         sightMode.range(BzConfig.aggressionTriggerRadius);
         List<? extends Mob> beeList = world.getNearbyEntities(entityToFind, sightMode, livingEntity, livingEntity.getBoundingBox().inflate(BzConfig.aggressionTriggerRadius));
         for (Mob bee : beeList) {
+            if (bee.isNoAi()) {
+                continue;
+            }
+
             if(bee instanceof NeutralMob) {
                 ((NeutralMob)bee).setRemainingPersistentAngerTime(20);
                 ((NeutralMob)bee).setPersistentAngerTarget(livingEntity.getUUID());
@@ -201,6 +224,10 @@ public class WrathOfTheHiveEffect extends MobEffect {
         SEE_THROUGH_WALLS.range(BzConfig.aggressionTriggerRadius*0.5D);
         List<Bee> beeList = world.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().inflate(BzConfig.aggressionTriggerRadius*0.5D));
         for (Bee bee : beeList) {
+            if (bee.isNoAi()) {
+                continue;
+            }
+            
             if(bee.getTarget() == livingEntity) {
                 bee.setTarget(null);
                 bee.setAggressive(false);
@@ -215,6 +242,11 @@ public class WrathOfTheHiveEffect extends MobEffect {
     // Don't remove wrath effect from mobs that bees are to always be angry at (bears, non-bee insects)
     @Override
     public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
+        if (entity instanceof Mob mob && mob.isNoAi()) {
+            super.removeAttributeModifiers(entity, attributes, amplifier);
+            return;
+        }
+
         if(BeeAggression.doesBeesHateEntity(entity)) {
             //refresh the bee anger timer
             entity.addEffect(new MobEffectInstance(

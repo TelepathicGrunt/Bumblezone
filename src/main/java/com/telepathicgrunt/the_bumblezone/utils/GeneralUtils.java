@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.utils;
 import com.google.common.collect.ImmutableList;
 import com.google.common.primitives.Doubles;
 import com.mojang.datafixers.util.Pair;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,7 +12,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -20,12 +20,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JigsawBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.RandomState;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.HashSet;
@@ -44,8 +50,10 @@ public class GeneralUtils {
         BEE_SET.clear();
         int counter = 0;
         for (Entity entity : world.getAllEntities()) {
-            counter++;
-            if(entity.getType() == EntityType.BEE) {
+            if (entity.isAlive() && entity instanceof LivingEntity) {
+                counter++;
+            }
+            if(entity instanceof Bee) {
                 BEE_SET.add((Bee)entity);
             }
         }
@@ -58,8 +66,19 @@ public class GeneralUtils {
                         || bee.isVehicle());
     }
 
-    public static int getEntityCountInBz() {
-        return ACTIVE_ENTITIES;
+    public static int getNearbyActiveEntitiesInDimension(ServerLevel level, BlockPos position) {
+        if (level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+            return ACTIVE_ENTITIES;
+        }
+        else {
+            return level.getEntitiesOfClass(
+                    Bee.class,
+                    new AABB(
+                            position.offset(-16, -16,-16),
+                            position.offset(16, 16,16)
+                    )
+            ).size();
+        }
     }
 
     public static void adjustEntityCountInBz(int adjust) {
@@ -258,6 +277,37 @@ public class GeneralUtils {
 
     private static boolean isReplaceableByStructures(BlockState blockState) {
         return blockState.isAir() || blockState.getMaterial().isLiquid() || blockState.getMaterial().isReplaceable() || blockState.is(BzBlocks.HONEY_CRYSTAL);
+    }
+
+    //////////////////////////////////////////////
+
+    public static BlockPos getLowestLand(ChunkGenerator chunkGenerator, RandomState randomState, BoundingBox boundingBox, LevelHeightAccessor heightLimitView, boolean canBeOnLiquid, boolean canBeInLiquid) {
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(boundingBox.getCenter().getX(), chunkGenerator.getMinY(), boundingBox.getCenter().getZ());
+        NoiseColumn blockView = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView, randomState);
+        BlockState currentBlockstate = blockView.getBlock(mutable.getY());
+        BlockState pastBlockstate = currentBlockstate;
+        while (mutable.getY() <= getMaxTerrainLimit(chunkGenerator)) {
+            if(canBeInLiquid && !currentBlockstate.getFluidState().isEmpty())
+            {
+                mutable.move(Direction.UP);
+                return mutable;
+            }
+            else if((canBeOnLiquid || !pastBlockstate.getFluidState().isEmpty()) && currentBlockstate.isAir())
+            {
+                mutable.move(Direction.UP);
+                return mutable;
+            }
+
+            mutable.move(Direction.UP);
+            pastBlockstate = currentBlockstate;
+            currentBlockstate = blockView.getBlock(mutable.getY());
+        }
+
+        return mutable;
+    }
+
+    public static int getMaxTerrainLimit(ChunkGenerator chunkGenerator) {
+        return chunkGenerator.getMinY() + chunkGenerator.getGenDepth();
     }
 
     //////////////////////////////////////////////

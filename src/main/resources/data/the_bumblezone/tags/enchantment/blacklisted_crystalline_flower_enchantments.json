@@ -60,6 +60,46 @@
     {
       "id": "apotheosis:endless_quiver",
       "required": false
+    },
+    {
+      "id": "mcdw:void_strike",
+      "required": false
+    },
+    {
+      "id": "mcdw:void_shot",
+      "required": false
+    },
+    {
+      "id": "mcdw:radiance",
+      "required": false
+    },
+    {
+      "id": "mcdw:radiance_shot",
+      "required": false
+    },
+    {
+      "id": "mcdw:guarding_strike",
+      "required": false
+    },
+    {
+      "id": "mcdw:burst_bowstring",
+      "required": false
+    },
+    {
+      "id": "mcdw:dynamo",
+      "required": false
+    },
+    {
+      "id": "mcdw:shadow_barb",
+      "required": false
+    },
+    {
+      "id": "mcdw:shadow_shot",
+      "required": false
+    },
+    {
+      "id": "mcdw:shared_pain",
+      "required": false
     }
   ]
 }

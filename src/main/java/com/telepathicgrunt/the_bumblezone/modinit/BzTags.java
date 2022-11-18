@@ -28,6 +28,7 @@ public class BzTags {
     public static final TagKey<Block> CANDLES = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Bumblezone.MODID, "candles"));
     public static final TagKey<Block> CANDLE_WICKS = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Bumblezone.MODID, "candle_wicks"));
     public static final TagKey<Block> CANDLE_BASES = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Bumblezone.MODID, "candle_bases"));
+    public static final TagKey<Block> CAVE_EDGE_BLOCKS_FOR_MODDED_COMPATS = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Bumblezone.MODID, "cave_edge_blocks_for_modded_compats"));
 
     public static final TagKey<Item> TURN_SLIME_TO_HONEY_SLIME = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "turn_slime_to_honey_slime"));
     public static final TagKey<Item> HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "honey_crystal_shield_repair_items"));
@@ -50,6 +51,8 @@ public class BzTags {
     public static final TagKey<Item> XP_100_WHEN_CONSUMED_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/xp_100_when_consumed"));
     public static final TagKey<Item> CANNOT_CONSUMED_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/cannot_consume"));
     public static final TagKey<Item> CAN_BE_ENCHANTED_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/can_be_enchanted"));
+    public static final TagKey<Item> ENDERPEARL_TARGET_ARMOR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "enderpearl_teleporting/target_armor"));
+    public static final TagKey<Item> ENDERPEARL_TARGET_HELD_ITEM = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "enderpearl_teleporting/target_held_item"));
 
     public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation("c", "honey"));
     public static final TagKey<Fluid> BZ_HONEY_FLUID = TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Bumblezone.MODID, "honey"));
@@ -62,11 +65,17 @@ public class BzTags {
     public static final TagKey<EntityType<?>> POLLEN_PUFF_CAN_POLLINATE = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollen_puff_can_pollinate"));
     public static final TagKey<EntityType<?>> BLACKLISTED_BEE_CANNON_BEES = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "blacklisted_bee_cannon_bees"));
     public static final TagKey<EntityType<?>> BLACKLISTED_STINGLESS_BEE_HELMET_PASSENGERS = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "blacklisted_stingless_bee_helmet_passengers"));
+    public static final TagKey<EntityType<?>> ENDERPEARL_TARGET_ENTITY_HIT_ANYWHERE = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "enderpearl_teleporting/target_entity_hit_anywhere"));
+    public static final TagKey<EntityType<?>> ENDERPEARL_TARGET_ENTITY_HIT_HIGH = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "enderpearl_teleporting/target_entity_hit_high"));
+    public static final TagKey<EntityType<?>> ENDERPEARL_TARGET_ENTITY_HIT_LOW = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "enderpearl_teleporting/target_entity_hit_low"));
+    public static final TagKey<EntityType<?>> FORCED_BEE_ANGRY_AT = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "bee_aggression_in_dimension/always_angry_at"));
+    public static final TagKey<EntityType<?>> FORCED_BEE_CALM_AT = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "bee_aggression_in_dimension/forced_calm_at"));
+    public static final TagKey<EntityType<?>> HANGING_GARDENS_INITIAL_SPAWN_ENTITIES = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "hanging_gardens_initial_spawn_entities"));
 
     public static final TagKey<Structure> NO_DUNGEONS = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "no_dungeons"));
     public static final TagKey<Structure> NO_CAVES = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "no_caves"));
     public static final TagKey<Structure> WRATH_CAUSING = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "wrath_causing"));
-    public static final TagKey<Structure> HONEY_COMPASS_LOCATING = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "honey_compass_locating"));
+    public static final TagKey<Structure> HONEY_COMPASS_DEFAULT_LOCATING = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "honey_compass_default_locating"));
     public static final TagKey<Structure> HONEY_COMPASS_THRONE_LOCATING = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "honey_compass_throne_locating"));
     public static final TagKey<Structure> BEE_QUEEN_MINING_FATIGUE = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "bee_queen_mining_fatigue"));
 

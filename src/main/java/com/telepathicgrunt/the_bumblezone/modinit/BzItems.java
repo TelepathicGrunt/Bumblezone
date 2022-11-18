@@ -27,7 +27,8 @@ public class BzItems {
      * creative tab to hold our block items
      */
     public static final CreativeModeTab BUMBLEZONE_CREATIVE_TAB = FabricItemGroupBuilder
-            .build(new ResourceLocation(Bumblezone.MODID, "main_tab"), () -> new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB));
+            .build(new ResourceLocation(Bumblezone.MODID, "main_tab"),
+                    () -> new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB));
 
     //blocks
     public static final Item POROUS_HONEYCOMB = new BlockItem(BzBlocks.POROUS_HONEYCOMB, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
@@ -86,6 +87,8 @@ public class BzItems {
     public static final Item BEE_QUEEN_SPAWN_EGG = new SpawnEggItem(BzEntities.BEE_QUEEN, 0xFFFFFF, 0xFFFFFF, (new Item.Properties().rarity(Rarity.EPIC)).tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = new BzMusicDiscs(14, BzSounds.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV, (new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.RARE), BzConfig.musicDiscTimeLengthFlightOfTheBumblebee);
     public static final Item MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = new BzMusicDiscs(15, BzSounds.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY, (new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.RARE), BzConfig.musicDiscTimeLengthHoneyBee);
+    public static final Item MUSIC_DISC_LA_BEE_DA_LOCA = new BzMusicDiscs(13, BzSounds.MUSIC_DISC_LA_BEE_DA_LOCA, (new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.RARE), BzConfig.musicDiscTimeLengthLaBeeDaLoca);
+    public static final Item MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES = new BzMusicDiscs(12, BzSounds.MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES, (new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(1).tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.RARE), BzConfig.musicDiscTimeLengthBeeLaxingWithTheHomBees);
     public static final Item POLLEN_PUFF = new PollenPuff(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).stacksTo(16));
     public static final Item BEE_BREAD = new BeeBread(new Item.Properties().food((new FoodProperties.Builder()).nutrition(8).saturationMod(0.12F).alwaysEat().effect(new MobEffectInstance(BzEffects.BEENERGIZED, 6000, 0), 1.0F).effect(new MobEffectInstance(MobEffects.CONFUSION, 120, 1), 1.0F).build()).tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item HONEY_CRYSTAL_SHIELD = new HoneyCrystalShield(new Item.Properties().rarity(Rarity.UNCOMMON).tab(BzItems.BUMBLEZONE_CREATIVE_TAB));
@@ -163,6 +166,8 @@ public class BzItems {
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_queen_spawn_egg"), BEE_QUEEN_SPAWN_EGG);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "music_disc_flight_of_the_bumblebee_rimsky_korsakov"), MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "music_disc_honey_bee_rat_faced_boy"), MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "music_disc_la_bee_da_loca"), MUSIC_DISC_LA_BEE_DA_LOCA);
+        Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "music_disc_bee_laxing_with_the_hom_bees"), MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "pollen_puff"), POLLEN_PUFF);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_bread"), BEE_BREAD);
         Registry.register(Registry.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_crystal_shield"), HONEY_CRYSTAL_SHIELD);

@@ -11,6 +11,8 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
@@ -22,6 +24,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PillarProcessor extends StructureProcessor {
@@ -37,7 +40,7 @@ public class PillarProcessor extends StructureProcessor {
                     .forGetter((processor) -> processor.pillarTriggerAndReplacementBlocks),
             ResourceLocation.CODEC.optionalFieldOf("pillar_processor_list", EMPTY_RL).forGetter(processor -> processor.processorList),
             Direction.CODEC.optionalFieldOf("direction", Direction.DOWN).forGetter(processor -> processor.direction),
-            Codec.INT.optionalFieldOf("pillar_length", 1000).forGetter(config -> config.pillarLength),
+            IntProvider.codec(0, 1000).optionalFieldOf("pillar_length").forGetter(config -> config.pillarLength),
             Codec.BOOL.optionalFieldOf("forced_placement", false).forGetter(config -> config.forcePlacement))
     .apply(instance, instance.stable(PillarProcessor::new)));
 
@@ -45,14 +48,14 @@ public class PillarProcessor extends StructureProcessor {
     public final Map<BlockState, BlockState> pillarTriggerAndReplacementBlocks;
     public final ResourceLocation processorList;
     public final Direction direction;
-    public final int pillarLength;
+    public final Optional<IntProvider> pillarLength;
     public final boolean forcePlacement;
 
     private PillarProcessor(Registry<StructureProcessorList> processorListRegistry,
                             Map<BlockState, BlockState> pillarTriggerAndReplacementBlocks,
                             ResourceLocation processorList,
                             Direction direction,
-                            int pillarLength,
+                            Optional<IntProvider> pillarLength,
                             boolean forcePlacement)
     {
         this.processorListRegistry = processorListRegistry;
@@ -69,6 +72,8 @@ public class PillarProcessor extends StructureProcessor {
         BlockState blockState = structureBlockInfoWorld.state;
         if (pillarTriggerAndReplacementBlocks.containsKey(blockState)) {
             BlockPos worldPos = structureBlockInfoWorld.pos;
+            RandomSource random = RandomSource.create();
+            random.setSeed(worldPos.asLong());
 
             BlockState replacementState = pillarTriggerAndReplacementBlocks.get(blockState);
             BlockPos.MutableBlockPos currentPos = new BlockPos.MutableBlockPos().set(worldPos);
@@ -81,10 +86,11 @@ public class PillarProcessor extends StructureProcessor {
                 return replacementState == null || replacementState.is(Blocks.STRUCTURE_VOID) ? null : new StructureTemplate.StructureBlockInfo(worldPos, replacementState, null);
             }
 
+            int pillarHeight = pillarLength.map(intProvider -> intProvider.sample(random)).orElse(1000);
             int terrainY = Integer.MIN_VALUE;
             if(direction == Direction.DOWN && !forcePlacement) {
                 terrainY = GeneralUtils.getFirstLandYFromPos(levelReader, worldPos);
-                if(terrainY <= levelReader.getMinBuildHeight() && pillarLength + 2 >= worldPos.getY() - levelReader.getMinBuildHeight()) {
+                if(terrainY <= levelReader.getMinBuildHeight() && pillarHeight + 2 >= worldPos.getY() - levelReader.getMinBuildHeight()) {
                     // Replaces the data block itself
                     return (replacementState == null || replacementState.is(Blocks.STRUCTURE_VOID)) ?
                             null : new StructureTemplate.StructureBlockInfo(worldPos, replacementState, null);
@@ -96,7 +102,7 @@ public class PillarProcessor extends StructureProcessor {
             while((forcePlacement || !currentBlock.canOcclude()) &&
                 (forcePlacement || currentPos.getY() >= terrainY) &&
                 !levelReader.isOutsideBuildHeight(currentPos.getY()) &&
-                currentPos.closerThan(worldPos, pillarLength)
+                currentPos.closerThan(worldPos, pillarHeight)
             ) {
                 StructureTemplate.StructureBlockInfo newPillarState1 = new StructureTemplate.StructureBlockInfo(currentPos.subtract(worldPos).offset(templateOffset), replacementState, null);
                 StructureTemplate.StructureBlockInfo newPillarState2 = new StructureTemplate.StructureBlockInfo(currentPos.immutable(), replacementState, null);

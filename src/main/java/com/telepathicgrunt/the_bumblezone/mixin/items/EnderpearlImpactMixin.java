@@ -1,8 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.items;
 
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
-import com.telepathicgrunt.the_bumblezone.modcompat.LlamaramaCompat;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import net.minecraft.world.entity.projectile.ThrownEnderpearl;
 import net.minecraft.world.phys.HitResult;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,11 +18,6 @@ public class EnderpearlImpactMixin {
     private void thebumblezone_onPearlHit(HitResult hitResult, CallbackInfo ci) {
         if(EntityTeleportationHookup.runEnderpearlImpact(hitResult, ((ThrownEnderpearl) (Object) this))) {
             ci.cancel();
-        }
-        if (ModChecker.llamaramaPresent) {
-            if (LlamaramaCompat.runTeleportCodeIfBumbleLlamaHitHigh(hitResult, ((ThrownEnderpearl) (Object) this))) {
-                ci.cancel();
-            }
         }
     }
 }

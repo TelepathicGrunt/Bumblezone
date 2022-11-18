@@ -32,6 +32,8 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -86,6 +88,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BzSurfaceRules.registerSurfaceRules();
         BzStructures.registerStructures();
         BzDimension.registerDimensionParts();
+        BzCommands.registerCommand();
 
         WanderingTrades.addWanderingTrades();
         DispenserItemSetup.setupDispenserBehaviors();
@@ -133,6 +136,9 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
             else {
                 EssenceComponent capability = Bumblezone.ESSENCE_COMPONENT.get(serverPlayerNew);
                 capability.isBeeEssenced = false;
+
+                Component message = Component.translatable("system.the_bumblezone.lost_bee_essence").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+                serverPlayerNew.displayClientMessage(message, true);
             }
         });
     }

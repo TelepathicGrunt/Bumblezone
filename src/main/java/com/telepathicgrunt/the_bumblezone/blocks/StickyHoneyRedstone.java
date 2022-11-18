@@ -27,7 +27,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
     public StickyHoneyRedstone() {
-        super(FabricBlockSettings.of(BzBlocks.ORANGE_NOT_SOLID, MaterialColor.TERRACOTTA_ORANGE).lightLevel(blockState -> blockState.getValue(POWERED) ? 1 : 0).noCollission().strength(6.0f, 0.0f).noOcclusion());
+        super(FabricBlockSettings.of(BzBlocks.RED_NOT_SOLID, MaterialColor.TERRACOTTA_RED).lightLevel(blockState -> blockState.getValue(POWERED) ? 1 : 0).noCollission().strength(6.0f, 0.0f).noOcclusion());
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(UP, false)
                 .setValue(NORTH, false)

@@ -16,6 +16,7 @@ import com.telepathicgrunt.the_bumblezone.world.processors.ReplaceNotAirProcesso
 import com.telepathicgrunt.the_bumblezone.world.processors.SpawnerRandomizingProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.SpiderInfestedBeeDungeonProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.TagReplaceProcessor;
+import com.telepathicgrunt.the_bumblezone.world.processors.WaterloggingFixProcessor;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
@@ -37,7 +38,7 @@ public class BzProcessors {
     public static final StructureProcessorType<RandomReplaceWithPropertiesProcessor> RANDOM_REPLACE_WITH_PROPERTIES_PROCESSOR = () -> RandomReplaceWithPropertiesProcessor.CODEC;
     public static final StructureProcessorType<PillarProcessor> PILLAR_PROCESSOR = () -> PillarProcessor.CODEC;
     public static final StructureProcessorType<TagReplaceProcessor> TAG_REPLACE_PROCESSOR = () -> TagReplaceProcessor.CODEC;
-
+    public static final StructureProcessorType<WaterloggingFixProcessor> WATERLOGGING_FIX_PROCESSOR = () -> WaterloggingFixProcessor.CODEC;
 
     public static void registerProcessors() {
         Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "bee_dungeon_processor"), BEE_DUNGEON_PROCESSOR);
@@ -55,5 +56,6 @@ public class BzProcessors {
         Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "random_replace_with_properties_processor"), RANDOM_REPLACE_WITH_PROPERTIES_PROCESSOR);
         Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "pillar_processor"), PILLAR_PROCESSOR);
         Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "tag_replace_processor"), TAG_REPLACE_PROCESSOR);
+        Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(Bumblezone.MODID, "waterlogging_fix_processor"), WATERLOGGING_FIX_PROCESSOR);
     }
 }
