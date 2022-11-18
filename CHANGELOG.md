@@ -1,7 +1,8 @@
 ### **(V.6.4.3 Changes) (1.19.2 Minecraft)**
 
-##### Items:
-Reduce chance of maps in Hive Temple loot.
+##### Structures:
+Reduce chance of maps in Hive Temple loot a little bit.
+ Increased number of threads spawned by Bumblezone so multiple Hive Temple maps and Honey Compasses can search at once from 1 to 3.
 
 
 ### **(V.6.4.2 Changes) (1.19.2 Minecraft)**
