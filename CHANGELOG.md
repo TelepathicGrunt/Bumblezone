@@ -3,7 +3,9 @@
 ##### Misc:
 Fixed bug with vanilla Bees that make them not threadsafe when created as part of worldgen threaded chunk creation.
  Very niche rare crash to even get to happen but good for me to still patch just in case it does cause issues for people rarely.
- Could be cause of some crashes on AoF6.
+ Could be cause of some crashes on AoF6 which is why this update is released to rule out a vanilla bee issue and harden Bumblezone against the crash.
+
+Cleaned up some more mixins to make them more stackable with other people's mixins
 
 ##### Fluids:
 Significantly fixed rendering issues with Honey Fluid and Royal Jelly Fluid.
