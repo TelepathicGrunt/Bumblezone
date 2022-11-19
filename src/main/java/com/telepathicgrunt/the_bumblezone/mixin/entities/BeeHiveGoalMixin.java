@@ -14,8 +14,8 @@ import org.spongepowered.asm.mixin.injection.At;
 public class BeeHiveGoalMixin {
 
     @Final
-    @Shadow(aliases = "field_20380")
-    private Bee field_20380;
+    @Shadow(aliases = "field_20371")
+    private Bee field_20371;
 
     /**
      * @author TelepathicGrunt
@@ -24,6 +24,6 @@ public class BeeHiveGoalMixin {
     @ModifyReceiver(method = "<init>(Lnet/minecraft/world/entity/animal/Bee;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/util/RandomSource;nextInt(I)I"))
     private RandomSource thebumblezone_fixGoalRandomSourceUsage1(RandomSource randomSource, int range) {
-        return field_20380.getRandom();
+        return field_20371.getRandom();
     }
 }
