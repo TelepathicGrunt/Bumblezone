@@ -1,6 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.WaterFluid;
 import org.spongepowered.asm.mixin.Mixin;
@@ -11,11 +14,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(WaterFluid.class)
 public class WaterEquivalenceMixin {
 
-    @Inject(method = "isSame",
-            at = @At(value = "TAIL"),
-            cancellable = true)
-    private void thebumblezone_isEquivalentToSugarWater(Fluid fluid, CallbackInfoReturnable<Boolean> cir) {
-        if(fluid == BzFluids.SUGAR_WATER_FLUID.get() || fluid == BzFluids.SUGAR_WATER_FLUID_FLOWING.get())
-            cir.setReturnValue(true);
+    @ModifyReturnValue(method = "isSame",
+            at = @At(value = "RETURN"))
+    private boolean thebumblezone_isEquivalentToSugarWater(boolean isSame, Fluid fluid) {
+        if(!isSame && fluid.defaultFluidState().is(BzTags.VISUAL_WATER_FLUID)) {
+            return true;
+        }
+        return isSame;
     }
 }

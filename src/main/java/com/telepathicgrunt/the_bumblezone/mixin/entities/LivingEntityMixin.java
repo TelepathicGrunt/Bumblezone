@@ -1,10 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.telepathicgrunt.the_bumblezone.effects.ParalyzedEffect;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.tags.TagKey;
@@ -29,12 +31,13 @@ public abstract class LivingEntityMixin extends Entity {
         super(type, world);
     }
 
-    @Inject(method = "isImmobile()Z",
-            at = @At(value = "HEAD"), cancellable = true)
-    private void thebumblezone_isParalyzedCheck(CallbackInfoReturnable<Boolean> cir) {
-        if(ParalyzedEffect.isParalyzed((LivingEntity)(Object)this)) {
-            cir.setReturnValue(true);
+    @ModifyReturnValue(method = "isImmobile()Z",
+            at = @At(value = "RETURN"))
+    private boolean thebumblezone_isParalyzedCheck(boolean isImmobile) {
+        if(!isImmobile && ParalyzedEffect.isParalyzed((LivingEntity)(Object)this)) {
+            return true;
         }
+        return isImmobile;
     }
 
     //-----------------------------------------------------------//

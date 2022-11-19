@@ -1,13 +1,17 @@
 package com.telepathicgrunt.the_bumblezone.mixin.client;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.BeeVariantRenderer;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.renderer.block.LiquidBlockRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
@@ -59,12 +63,13 @@ public class FluidRendererMixin {
 
     //////////////////////////////////////////
 
-    // make honey fluid not cull faces
-    @Inject(method = "shouldRenderFace(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/material/FluidState;)Z",
-            at = @At(value = "HEAD"), cancellable = true)
-    private static void thebumblezone_honeyLikeFluidCulling(BlockAndTintGetter world, BlockPos blockPos, FluidState fluidState, BlockState blockState, Direction direction, FluidState fluidState2, CallbackInfoReturnable<Boolean> cir) {
+    // make honey fluid and royal jelly have proper face culling
+    @ModifyReturnValue(method = "shouldRenderFace(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/material/FluidState;)Z",
+            at = @At(value = "RETURN"))
+    private static boolean thebumblezone_honeyLikeFluidCulling(boolean cullFace, BlockAndTintGetter world, BlockPos blockPos, FluidState fluidState, BlockState blockState, Direction direction, FluidState fluidState2) {
         if(fluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
-            cir.setReturnValue(HoneyFluid.shouldRenderSide(world, blockPos, direction, fluidState));
+            return HoneyFluid.shouldRenderSide(world, blockPos, direction, fluidState);
         }
+        return cullFace;
     }
 }

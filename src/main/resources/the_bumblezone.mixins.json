@@ -37,7 +37,6 @@
     "entities.ServerPlayerMixin",
     "entities.ThrownTridentAccessor",
     "items.GlassBottleUseMixin",
-    "items.HoneyShieldLivingEntityMixin",
     "items.HoneyShieldMobMixin",
     "items.HoneyShieldPlayerMixin",
     "items.MapItemMixin",

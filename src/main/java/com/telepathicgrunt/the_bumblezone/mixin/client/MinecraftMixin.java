@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.client;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.telepathicgrunt.the_bumblezone.effects.ParalyzedEffect;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -16,12 +18,13 @@ public class MinecraftMixin {
     @Shadow
     public LocalPlayer player;
 
-    @Inject(method = "shouldEntityAppearGlowing(Lnet/minecraft/world/entity/Entity;)Z",
-            at = @At(value = "HEAD"), cancellable = true)
-    private void thebumblezone_glowNearbyBeesForPlayer(Entity entity, CallbackInfoReturnable<Boolean> cir) {
-        if (StinglessBeeHelmet.HELMET_EFFECT_COUNTER_CLIENTSIDE > 0 && player != null && StinglessBeeHelmet.shouldEntityGlow(player, entity)) {
+    @ModifyReturnValue(method = "shouldEntityAppearGlowing(Lnet/minecraft/world/entity/Entity;)Z",
+            at = @At(value = "RETURN"))
+    private boolean thebumblezone_glowNearbyBeesForPlayer(boolean isGlowing, Entity entity) {
+        if (!isGlowing && StinglessBeeHelmet.HELMET_EFFECT_COUNTER_CLIENTSIDE > 0 && player != null && StinglessBeeHelmet.shouldEntityGlow(player, entity)) {
             StinglessBeeHelmet.BEE_HIGHLIGHTED_COUNTER_CLIENTSIDE.add(entity);
-            cir.setReturnValue(true);
+            return true;
         }
+        return isGlowing;
     }
 }

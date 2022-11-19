@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
 import com.llamalad7.mixinextras.injector.ModifyReceiver;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
@@ -43,12 +44,12 @@ public class PistonMovingBlockEntityMixin {
     }
 
     // makes entities stick to royal jelly block
-    @Inject(method = "isStickyForEntities()Z",
-            at = @At(value = "HEAD"),
-            cancellable = true)
-    private void thebumblezone_royalJellyBlockMoveEntities(CallbackInfoReturnable<Boolean> cir) {
-        if(this.movedState.is(BzBlocks.ROYAL_JELLY_BLOCK.get())) {
-            cir.setReturnValue(true);
+    @ModifyReturnValue(method = "isStickyForEntities()Z",
+            at = @At(value = "RETURN"))
+    private boolean thebumblezone_royalJellyBlockMoveEntities(boolean isSticky) {
+        if(!isSticky && this.movedState.is(BzBlocks.ROYAL_JELLY_BLOCK.get())) {
+            return true;
         }
+        return isSticky;
     }
 }
