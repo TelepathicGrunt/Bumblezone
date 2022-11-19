@@ -2,15 +2,11 @@ package com.telepathicgrunt.the_bumblezone.mixin.client;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeeVariantRenderer;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.renderer.entity.BeeRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.Bee;
-import net.minecraft.world.level.material.Fluid;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BeeRenderer.class)
 public class BeeRendererMixin {

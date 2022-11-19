@@ -1,9 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.items;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShieldBehavior;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
