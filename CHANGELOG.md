@@ -4,6 +4,10 @@
 Fixed bug with vanilla Bees that make them not threadsafe when created as part of worldgen threaded chunk creation.
  Very niche rare crash to even get to happen but good for me to still patch just in case it does cause issues for people rarely.
 
+##### Fluids:
+Significantly fixed rendering issues with Honey Fluid and Royal Jelly Fluid.
+ Also fixed particles from fluid spawning way out of the fluid at times.
+
 
 ### **(V.6.4.3 Changes) (1.19.2 Minecraft)**
 
