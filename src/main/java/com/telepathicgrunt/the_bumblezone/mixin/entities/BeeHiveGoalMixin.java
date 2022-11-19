@@ -1,8 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.llamalad7.mixinextras.injector.ModifyReceiver;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.animal.Bee;
 import org.spongepowered.asm.mixin.Final;

@@ -4,6 +4,8 @@
 Significantly fixed rendering issues with Honey Fluid and Royal Jelly Fluid.
  Also fixed particles from fluid spawning way out of the fluid at times.
 
+Fixed issue where Sugar Water fluid cannot damage blazes nor allow fish to swim and other behaviors that Forge's Fluid API is currently having issues with.
+
 ##### Misc:
 Fixed bug with vanilla Bees that make them not threadsafe when created as part of worldgen threaded chunk creation.
  Very niche rare crash to even get to happen but good for me to still patch just in case it does cause issues for people rarely.
