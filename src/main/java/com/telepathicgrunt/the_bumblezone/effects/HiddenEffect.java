@@ -62,7 +62,7 @@ public class HiddenEffect extends MobEffect {
                     return 0;
                 }
                 else {
-                    return 0.5;
+                    return 0.1;
                 }
             }
         }

@@ -20,21 +20,19 @@ public class ScreenEffectRendererMixin {
             at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/ScreenEffectRenderer;getViewBlockingState(Lnet/minecraft/world/entity/player/Player;)Lnet/minecraft/world/level/block/state/BlockState;"),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
-    private static void thebumblezone_blockOverlay(Minecraft minecraftClient, PoseStack matrixStack, CallbackInfo ci, Player playerEntity, BlockState blockState) {
-        if (FluidClientOverlay.sugarWaterFluidOverlay(playerEntity, matrixStack))
+    private static void thebumblezone_pollonBlockOverlay(Minecraft minecraftClient, PoseStack matrixStack, CallbackInfo ci, Player playerEntity, BlockState blockState) {
+        if (PileOfPollenRenderer.pileOfPollenOverlay(playerEntity, matrixStack, blockState)) {
             ci.cancel();
-        else if (PileOfPollenRenderer.pileOfPollenOverlay(playerEntity, matrixStack, blockState))
-            ci.cancel();
+        }
     }
 
     // make honey fluid have overlay
     @Inject(method = "renderScreenEffect(Lnet/minecraft/client/Minecraft;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;isEyeInFluid(Lnet/minecraft/tags/TagKey;)Z"),
             locals = LocalCapture.CAPTURE_FAILSOFT,
-            cancellable = true)
+            require = 0)
     private static void thebumblezone_renderHoneyOverlay(Minecraft minecraft, PoseStack matrixStack, CallbackInfo ci) {
-        if(FluidClientOverlay.renderHoneyOverlay(minecraft.player, matrixStack)) {
-            ci.cancel();
-        }
+        FluidClientOverlay.sugarWaterFluidOverlay(minecraft.player, matrixStack);
+        FluidClientOverlay.renderHoneyOverlay(minecraft.player, matrixStack);
     }
 }

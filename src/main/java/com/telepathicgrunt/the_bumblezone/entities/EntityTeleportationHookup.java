@@ -314,6 +314,10 @@ public class EntityTeleportationHookup {
     }
 
     public static void runPistonPushed(Direction direction, LivingEntity pushedEntity) {
+        if (pushedEntity.level.isClientSide()) {
+            return;
+        }
+
         ServerLevel world = (ServerLevel) pushedEntity.level;
 
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.

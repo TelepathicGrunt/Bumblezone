@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.items;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
@@ -26,13 +27,17 @@ public class SimpleCookingSerializerMixin<T extends AbstractCookingRecipe> {
     @Shadow @Final
     private SimpleCookingSerializer.CookieBaker<T> factory;
 
+    /**
+     * Ports the Forge change to Fabric/Fabric where smelting recipes has result field be an object and that sets the result itemstack with correct count.
+     * @author TelepathicGrunt
+     */
     @Inject(method = "fromJson(Lnet/minecraft/resources/ResourceLocation;Lcom/google/gson/JsonObject;)Lnet/minecraft/world/item/crafting/AbstractCookingRecipe;",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/util/GsonHelper;getAsString(Lcom/google/gson/JsonObject;Ljava/lang/String;)Ljava/lang/String;"),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
     private void thebumblezone_checkForCountSize(ResourceLocation identifier, JsonObject jsonObject, CallbackInfoReturnable<T> cir, String string, JsonElement jsonElement, Ingredient ingredient) {
         if (!jsonObject.has("result")) {
-            throw new com.google.gson.JsonSyntaxException("Missing result, expected to find a string or object");
+            throw new JsonSyntaxException("Missing result, expected to find a string or object");
         }
         ItemStack itemstack;
         if (jsonObject.get("result").isJsonObject()) {

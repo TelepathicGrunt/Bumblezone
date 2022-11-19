@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 
 import java.util.EnumSet;
@@ -13,7 +12,7 @@ public class HoneySlimeFacingRevengeGoal extends HurtByTargetGoal {
     public HoneySlimeFacingRevengeGoal(HoneySlimeEntity slimeIn) {
         super(slimeIn);
         this.slime = slimeIn;
-        this.setFlags(EnumSet.of(Goal.Flag.LOOK));
+        this.setFlags(EnumSet.of(Flag.LOOK));
     }
     public boolean canContinueToUse() {
         return slime.getTarget() != null && super.canContinueToUse();

@@ -33,7 +33,7 @@ public class HoneySlimeBreedGoal extends Goal {
         this.slime = p_i47306_1_;
         this.world = p_i47306_1_.level;
         this.mateClass = p_i47306_4_;
-        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+        this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
     /**

@@ -137,7 +137,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
 
         // pollinates the bee
         if(entity instanceof Bee && entity.getType().is(BzTags.POLLEN_PUFF_CAN_POLLINATE)) {
-            ((BeeEntityInvoker)entity).thebumblezone_callSetHasNectar(true);
+            ((BeeEntityInvoker)entity).callSetHasNectar(true);
             ((Bee)entity).resetTicksWithoutNectarSinceExitingHive();
 
             if(this.getOwner() instanceof ServerPlayer) {
@@ -158,7 +158,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         else if(entity instanceof FallingBlockEntity fallingBlockEntity && fallingBlockEntity.getBlockState().is(BzBlocks.PILE_OF_POLLEN)) {
             BlockState fallingState = fallingBlockEntity.getBlockState();
             int newLayer = Math.min(8, fallingState.getValue(PileOfPollen.LAYERS) + 1);
-            ((FallingBlockEntityAccessor)fallingBlockEntity).thebumblezone_setBlock(fallingState.setValue(PileOfPollen.LAYERS, newLayer));
+            ((FallingBlockEntityAccessor)fallingBlockEntity).setBlock(fallingState.setValue(PileOfPollen.LAYERS, newLayer));
 
             FriendlyByteBuf passedData = new FriendlyByteBuf(Unpooled.buffer());
             passedData.writeInt(fallingBlockEntity.getId());

@@ -25,7 +25,7 @@ public class HoneySlimeTemptGoal extends Goal {
     public HoneySlimeTemptGoal(HoneySlimeEntity creatureIn, double speedIn, Ingredient temptItemsIn) {
         this.slime = creatureIn;
         this.temptItem = temptItemsIn;
-        this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE, Goal.Flag.LOOK));
+        this.setFlags(EnumSet.of(Flag.JUMP, Flag.MOVE, Flag.LOOK));
     }
 
     /**

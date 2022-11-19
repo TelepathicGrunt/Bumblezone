@@ -15,7 +15,6 @@ import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 
-
 public class SugarWaterBlock extends LiquidBlock {
 
     public SugarWaterBlock(FlowingFluid baseFluid) {

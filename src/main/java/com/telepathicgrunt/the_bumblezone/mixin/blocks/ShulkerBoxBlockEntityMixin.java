@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ShulkerBoxBlockEntity.class)
 public class ShulkerBoxBlockEntityMixin {
 
-    // makes Comb Cutter increase drops from BeehiveBlocks.
     @Inject(method = "canPlaceItemThroughFace(ILnet/minecraft/world/item/ItemStack;Lnet/minecraft/core/Direction;)Z",
             at = @At(value = "HEAD"), cancellable = true)
     private void thebumblezone_preventHoneyCocoonInShulker(int slot,

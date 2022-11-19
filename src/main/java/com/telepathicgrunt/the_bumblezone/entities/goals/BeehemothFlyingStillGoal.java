@@ -12,7 +12,7 @@ public class BeehemothFlyingStillGoal extends Goal {
 
     public BeehemothFlyingStillGoal(TamableAnimal tamableAnimal) {
         this.mob = tamableAnimal;
-        this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
+        this.setFlags(EnumSet.of(Flag.JUMP, Flag.MOVE));
     }
 
     public boolean canContinueToUse() {

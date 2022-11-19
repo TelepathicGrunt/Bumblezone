@@ -14,7 +14,7 @@ public class HoneySlimeFaceRandomGoal extends Goal {
 
     public HoneySlimeFaceRandomGoal(HoneySlimeEntity slimeIn) {
         this.slime = slimeIn;
-        this.setFlags(EnumSet.of(Goal.Flag.LOOK));
+        this.setFlags(EnumSet.of(Flag.LOOK));
     }
 
     /**

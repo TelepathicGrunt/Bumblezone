@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.phys.Vec3;
 
 public class PollenPuff extends Item {
-    public PollenPuff(Item.Properties properties) {
+    public PollenPuff(Properties properties) {
         super(properties);
 
         DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {

@@ -153,7 +153,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     @Override
-    protected Entity.MovementEmission getMovementEmission() {
+    protected MovementEmission getMovementEmission() {
         return MovementEmission.NONE;
     }
 
@@ -754,9 +754,9 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 this.mob.setSpeed(f1);
                 this.mob.setZza(this.strafeForwards);
                 this.mob.setXxa(this.strafeRight);
-                this.operation = MoveControl.Operation.WAIT;
+                this.operation = Operation.WAIT;
             }
-            if (this.operation == MoveControl.Operation.MOVE_TO) {
+            if (this.operation == Operation.MOVE_TO) {
                 Vec3 vec3 = new Vec3(
                         this.wantedX - beehemothEntity.getX(),
                         this.wantedY - beehemothEntity.getY(),
@@ -765,7 +765,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 double length = vec3.length();
 
                 if (length < beehemothEntity.getBoundingBox().getSize()) {
-                    this.operation = MoveControl.Operation.WAIT;
+                    this.operation = Operation.WAIT;
                     beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().scale(0.5D));
                 }
                 else {

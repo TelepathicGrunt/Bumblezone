@@ -16,7 +16,7 @@ public class RedstoneDustCanConnectMixin {
     @Inject(method = "shouldConnectTo(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;)Z",
             at = @At(value = "TAIL"),
             cancellable = true)
-    private static void thebumblezone_canConnectVisually(BlockState state, Direction dir, CallbackInfoReturnable<Boolean> cir) {
+    private static void thebumblezone_redstoneConnectVisuallyToStickyHoneyRedstone(BlockState state, Direction dir, CallbackInfoReturnable<Boolean> cir) {
         if (state.getBlock() == BzBlocks.STICKY_HONEY_REDSTONE) {
             boolean canConnect = false;
 
@@ -33,5 +33,4 @@ public class RedstoneDustCanConnectMixin {
                 cir.setReturnValue(true);
         }
     }
-
 }

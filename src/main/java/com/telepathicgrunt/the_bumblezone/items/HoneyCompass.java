@@ -20,6 +20,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -37,6 +38,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraft.world.level.levelgen.structure.Structure;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,13 +48,15 @@ public class HoneyCompass extends Item implements Vanishable {
     public static final String TAG_TARGET_DIMENSION = "TargetDimension";
     public static final String TAG_TYPE = "CompassType";
     public static final String TAG_LOADING = "IsLoading";
+    public static final String TAG_FAILED = "IsFailed";
+    public static final String TAG_STRUCTURE_TAG = "TargetStructureTag";
     public static final String TAG_TARGET_BLOCK = "TargetBlock";
     public static final String TAG_IS_THRONE_TYPE = "IsThrone";
     public static final String TAG_CUSTOM_NAME_TYPE = "CustomName";
     public static final String TAG_CUSTOM_DESCRIPTION_TYPE = "CustomDescription";
     public static final String TAG_LOCKED = "Locked";
 
-    public HoneyCompass(Item.Properties properties) {
+    public HoneyCompass(Properties properties) {
         super(properties);
     }
 
@@ -65,6 +69,10 @@ public class HoneyCompass extends Item implements Vanishable {
     public String getDescriptionId(ItemStack itemStack) {
         if (getBooleanTag(itemStack.getTag(), TAG_LOADING)) {
             return "item.the_bumblezone.honey_compass_structure_loading";
+        }
+
+        if (getBooleanTag(itemStack.getTag(), TAG_FAILED)) {
+            return "item.the_bumblezone.honey_compass_structure_failed";
         }
 
         if (hasTagSafe(itemStack.getTag(), TAG_CUSTOM_NAME_TYPE)) {
@@ -103,6 +111,11 @@ public class HoneyCompass extends Item implements Vanishable {
 
     @Override
     public void appendHoverText(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
+        if (getBooleanTag(itemStack.getTag(), TAG_FAILED)) {
+            components.add(Component.translatable("item.the_bumblezone.honey_compass_structure_failed_description"));
+            return;
+        }
+
         if (hasTagSafe(itemStack.getTag(), TAG_CUSTOM_DESCRIPTION_TYPE)) {
             components.add(Component.translatable(itemStack.getTag().getString(TAG_CUSTOM_DESCRIPTION_TYPE)));
             return;
@@ -138,6 +151,19 @@ public class HoneyCompass extends Item implements Vanishable {
     @Override
     public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean bl) {
         if (!level.isClientSide) {
+            if (!getBooleanTag(itemStack.getTag(), TAG_FAILED) &&
+                !getBooleanTag(itemStack.getTag(), TAG_LOADING) &&
+                hasTagSafe(itemStack.getTag(), TAG_STRUCTURE_TAG) &&
+                !hasTagSafe(itemStack.getTag(), TAG_TARGET_POS))
+            {
+                itemStack.getOrCreateTag().putBoolean(TAG_FAILED, true);
+            }
+
+            if (getBooleanTag(itemStack.getTag(), TAG_LOADING) && !ThreadExecutor.isRunningASearch() && !ThreadExecutor.hasQueuedSearch()) {
+                itemStack.getOrCreateTag().putBoolean(TAG_LOADING, false);
+                itemStack.getOrCreateTag().putBoolean(TAG_FAILED, true);
+            }
+
             if (!getBooleanTag(itemStack.getTag(), TAG_IS_THRONE_TYPE) && isBlockCompass(itemStack)) {
                 CompoundTag compoundTag = itemStack.getOrCreateTag();
                 if (compoundTag.contains(TAG_TARGET_POS) && compoundTag.contains(TAG_TARGET_BLOCK) && compoundTag.contains(TAG_TARGET_DIMENSION)) {
@@ -177,12 +203,23 @@ public class HoneyCompass extends Item implements Vanishable {
         ItemStack itemStack = player.getItemInHand(interactionHand);
         BlockPos playerPos = player.blockPosition();
 
+        if (getBooleanTag(itemStack.getTag(), TAG_FAILED) && hasTagSafe(itemStack.getTag(), TAG_STRUCTURE_TAG)) {
+            if (!level.isClientSide()) {
+                TagKey<Structure> structureTagKey = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(itemStack.getOrCreateTag().getString(TAG_STRUCTURE_TAG)));
+                itemStack.getOrCreateTag().putBoolean(TAG_LOADING, true);
+                itemStack.getOrCreateTag().putBoolean(TAG_FAILED, false);
+                ThreadExecutor.locate((ServerLevel) level, structureTagKey, playerPos, 100, false)
+                        .thenOnServerThread(foundPos -> setCompassData((ServerLevel) level, (ServerPlayer) player, interactionHand, itemStack, foundPos));
+            }
+            return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
+        }
+
         if (itemStack.hasTag() && getBooleanTag(itemStack.getOrCreateTag(), TAG_LOADING)) {
-            if (ThreadExecutor.isRunningASearch()) {
+            if (ThreadExecutor.isRunningASearch() || ThreadExecutor.hasQueuedSearch()) {
                 return InteractionResultHolder.fail(itemStack);
             }
             else {
-                setLoadingTags(itemStack.getOrCreateTag(), false);
+                itemStack.getOrCreateTag().putBoolean(TAG_LOADING, false);
             }
         }
 
@@ -191,7 +228,7 @@ public class HoneyCompass extends Item implements Vanishable {
         }
 
         if (!level.isClientSide() && !isStructureCompass(itemStack)) {
-            setLoadingTags(itemStack.getOrCreateTag(), true);
+            itemStack.getOrCreateTag().putBoolean(TAG_LOADING, true);
             ThreadExecutor.locate((ServerLevel) level, BzTags.HONEY_COMPASS_DEFAULT_LOCATING, playerPos, 100, false)
                     .thenOnServerThread(foundPos -> setCompassData((ServerLevel) level, (ServerPlayer) player, interactionHand, itemStack, foundPos));
             return InteractionResultHolder.success(itemStack);
@@ -201,7 +238,7 @@ public class HoneyCompass extends Item implements Vanishable {
     }
 
     private void setCompassData(ServerLevel serverLevel, ServerPlayer serverPlayer, InteractionHand interactionHand, ItemStack itemStack, BlockPos structurePos) {
-        setLoadingTags(itemStack.getOrCreateTag(), false);
+        itemStack.getOrCreateTag().putBoolean(TAG_LOADING, false);
         serverLevel.playSound(null, serverPlayer.blockPosition(), BzSounds.HONEY_COMPASS_STRUCTURE_LOCK, SoundSource.PLAYERS, 1.0F, 1.0F);
 
         if (structurePos == null) {
@@ -239,11 +276,11 @@ public class HoneyCompass extends Item implements Vanishable {
         BlockState targetBlock = level.getBlockState(blockPos);
 
         if (handCompass.hasTag() && getBooleanTag(handCompass.getOrCreateTag(), TAG_LOADING)) {
-            if (ThreadExecutor.isRunningASearch()) {
+            if (ThreadExecutor.isRunningASearch() || ThreadExecutor.hasQueuedSearch()) {
                 return InteractionResult.FAIL;
             }
             else {
-                setLoadingTags(handCompass.getOrCreateTag(), false);
+                handCompass.getOrCreateTag().putBoolean(TAG_LOADING, false);
             }
         }
 
@@ -302,8 +339,8 @@ public class HoneyCompass extends Item implements Vanishable {
         return compoundTag != null && compoundTag.contains(tagName);
     }
 
-    public static void setLoadingTags(CompoundTag compoundTag, boolean isLoading) {
-        compoundTag.putBoolean(TAG_LOADING, isLoading);
+    public static void setStructureTags(CompoundTag compoundTag, TagKey<Structure> structureTagKey) {
+        compoundTag.putString(TAG_STRUCTURE_TAG, structureTagKey.location().toString());
     }
 
     public static void addStructureTags(ResourceKey<Level> resourceKey, BlockPos blockPos, CompoundTag compoundTag) {
@@ -311,6 +348,9 @@ public class HoneyCompass extends Item implements Vanishable {
         Level.RESOURCE_KEY_CODEC.encodeStart(NbtOps.INSTANCE, resourceKey).resultOrPartial(Bumblezone.LOGGER::error).ifPresent(tag -> compoundTag.put(TAG_TARGET_DIMENSION, tag));
         compoundTag.putString(TAG_TYPE, "structure");
         compoundTag.remove(TAG_TARGET_BLOCK);
+        compoundTag.remove(HoneyCompass.TAG_LOADING);
+        compoundTag.remove(HoneyCompass.TAG_FAILED);
+        compoundTag.remove(HoneyCompass.TAG_STRUCTURE_TAG);
     }
 
     public static void addBlockTags(ResourceKey<Level> resourceKey, BlockPos blockPos, CompoundTag compoundTag, Block block) {

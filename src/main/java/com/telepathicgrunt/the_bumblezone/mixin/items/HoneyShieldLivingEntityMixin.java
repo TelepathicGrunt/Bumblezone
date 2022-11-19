@@ -10,12 +10,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
-public class HoneyShieldPreferredSlotMixin {
+public class HoneyShieldLivingEntityMixin {
 
     @Inject(method = "getEquipmentSlotForItem",
             at = @At(value = "HEAD"),
             cancellable = true)
-    private static void thebumblezone_isHoneyCrystalShield(ItemStack stack, CallbackInfoReturnable<EquipmentSlot> cir) {
+    private static void thebumblezone_correctSlotForHoneyCrystalShield(ItemStack stack, CallbackInfoReturnable<EquipmentSlot> cir) {
         if(stack.getItem() == BzItems.HONEY_CRYSTAL_SHIELD) {
             cir.setReturnValue(EquipmentSlot.OFFHAND);
         }

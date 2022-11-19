@@ -27,7 +27,7 @@ public class CombCutterEnchantment extends Enchantment {
     private static final GeneralUtils.Lazy<Set<Block>> LESSER_TARGET_BLOCKS = new GeneralUtils.Lazy<>();
 
     public CombCutterEnchantment() {
-        super(Enchantment.Rarity.RARE, EnchantmentCategory.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(Rarity.RARE, EnchantmentCategory.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
     public Set<Block> getTargetBlocks() {

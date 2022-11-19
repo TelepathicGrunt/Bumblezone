@@ -25,7 +25,6 @@ import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.mixin.client.DimensionSpecialEffectsAccessor;
-import com.telepathicgrunt.the_bumblezone.mixin.client.EntityRendererRegistryImplAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -90,11 +89,6 @@ public class BumblezoneClient implements ClientModInitializer {
         EntityRendererRegistry.register(BzEntities.THROWN_STINGER_SPEAR_ENTITY, StingerSpearRenderer::new);
         EntityRendererRegistry.register(BzEntities.BEE_STINGER_ENTITY, BeeStingerRenderer::new);
         EntityRendererRegistry.register(BzEntities.HONEY_CRYSTAL_SHARD, HoneyCrystalShardRenderer::new);
-
-        if(BzConfig.enableAltBeeSkinRenderer) {
-            BeeVariantRenderer.OLD_BEE_RENDER_FACTORY = (EntityRendererProvider<Bee>)EntityRendererRegistryImplAccessor.getMap().get(EntityType.BEE);
-            EntityRendererRegistry.register(EntityType.BEE, BeeVariantRenderer::new);
-        }
     }
 
     private void registerParticleFactories() {

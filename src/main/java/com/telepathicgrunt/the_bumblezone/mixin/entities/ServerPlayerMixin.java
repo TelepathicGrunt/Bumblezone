@@ -29,7 +29,7 @@ public abstract class ServerPlayerMixin {
     // Handles storing of past non-bumblezone dimension the entity is leaving
     @Inject(method = "changeDimension(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/entity/Entity;",
             at = @At(value = "HEAD"))
-    private void thebumblezone_onDimensionChange(ServerLevel destination, CallbackInfoReturnable<Entity> cir) {
+    private void thebumblezone_onDimensionChange1(ServerLevel destination, CallbackInfoReturnable<Entity> cir) {
         EntityTeleportationBackend.entityChangingDimension(destination.dimension().location(), ((Entity)(Object)this));
     }
 

@@ -16,7 +16,6 @@ import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -35,7 +34,7 @@ public class HoneyFluidBlock extends LiquidBlock {
     public static final BooleanProperty ABOVE_FLUID = BooleanProperty.create("above_support");
 
     public HoneyFluidBlock(FlowingFluid fluid) {
-        super(fluid, BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noLootTable().speedFactor(0.15F));
+        super(fluid, Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noLootTable().speedFactor(0.15F));
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(LEVEL, 0)
                 .setValue(BOTTOM_LEVEL, 0)
@@ -129,7 +128,7 @@ public class HoneyFluidBlock extends LiquidBlock {
                 !state.getFluidState().isSource() &&
                 !state.getFluidState().getValue(FALLING))
             {
-                ((BeeEntityInvoker)entity).thebumblezone_callSetHasNectar(false);
+                ((BeeEntityInvoker)entity).callSetHasNectar(false);
                 world.setBlock(position, BzFluids.HONEY_FLUID.defaultFluidState().createLegacyBlock(), 3);
             }
 

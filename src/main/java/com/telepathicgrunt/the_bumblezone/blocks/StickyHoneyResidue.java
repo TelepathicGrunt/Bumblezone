@@ -331,7 +331,7 @@ public class StickyHoneyResidue extends Block {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
         if ((itemstack.getItem() instanceof BucketItem bucketItem &&
-                ((BucketItemAccessor) bucketItem).thebumblezone_getFluid().is(FluidTags.WATER)) ||
+                ((BucketItemAccessor) bucketItem).getFluid().is(FluidTags.WATER)) ||
                 (itemstack.hasTag() && itemstack.getOrCreateTag().getString("Potion").contains("water")) ||
                 itemstack.getItem() == Items.WET_SPONGE ||
                 itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE) {

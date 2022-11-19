@@ -38,7 +38,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -67,7 +66,7 @@ public class PileOfPollen extends FallingBlock {
     private Item item;
 
     public PileOfPollen() {
-        super(BlockBehaviour.Properties.of(BzBlocks.YELLOW_NOT_SOLID)
+        super(Properties.of(BzBlocks.YELLOW_NOT_SOLID)
                 .isViewBlocking((blockState, world, blockPos) -> true)
                 .noOcclusion()
                 .strength(0.1F)
@@ -232,7 +231,7 @@ public class PileOfPollen extends FallingBlock {
 
                 // Prevents the FallingBlock's checkInsideBlocks from triggering this
                 // method again for the pollen block we just set above our collision block.
-                ((FallingBlockEntityAccessor) entity).thebumblezone_setBlock(Blocks.AIR.defaultBlockState());
+                ((FallingBlockEntityAccessor) entity).setBlock(Blocks.AIR.defaultBlockState());
             }
             else {
                 world.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
@@ -328,7 +327,7 @@ public class PileOfPollen extends FallingBlock {
 
             // reduce pile of pollen to pollinate bee
             if(entity instanceof Bee && !((Bee)entity).hasNectar() && entity.getType().is(BzTags.POLLEN_PUFF_CAN_POLLINATE)) {
-                ((BeeEntityInvoker)entity).thebumblezone_callSetHasNectar(true);
+                ((BeeEntityInvoker)entity).callSetHasNectar(true);
                 ((Bee)entity).resetTicksWithoutNectarSinceExitingHive();
                 if(layerValueMinusOne == 0) {
                     world.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);

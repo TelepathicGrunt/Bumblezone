@@ -146,14 +146,14 @@ public class BeeInteractivity {
                 if((itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water")) ||
                     item == Items.WET_SPONGE ||
                     item == BzItems.SUGAR_WATER_BOTTLE ||
-                    (item instanceof BucketItem && ((BucketItemAccessor) item).thebumblezone_getFluid().is(FluidTags.WATER))) {
+                    (item instanceof BucketItem && ((BucketItemAccessor) item).getFluid().is(FluidTags.WATER))) {
 
                     if(world.isClientSide())
                         return InteractionResult.SUCCESS;
 
                     PollenPuff.spawnItemstackEntity(world, beeEntity.getRandom(), beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF, 1));
                     playerEntity.swing(hand, true);
-                    ((BeeEntityInvoker)beeEntity).thebumblezone_callSetHasNectar(false);
+                    ((BeeEntityInvoker)beeEntity).callSetHasNectar(false);
 
                     if(playerEntity instanceof ServerPlayer) {
                         BzCriterias.BEE_DROP_POLLEN_PUFF_TRIGGER.trigger((ServerPlayer) playerEntity, itemstack);

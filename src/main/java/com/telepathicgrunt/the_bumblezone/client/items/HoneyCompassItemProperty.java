@@ -26,8 +26,8 @@ public class HoneyCompassItemProperty {
 
     public static ClampedItemPropertyFunction getClampedItemPropertyFunction() {
         return new ClampedItemPropertyFunction() {
-            private final HoneyCompassItemProperty.CompassWobble wobble = new HoneyCompassItemProperty.CompassWobble();
-            private final HoneyCompassItemProperty.CompassWobble wobbleRandom = new HoneyCompassItemProperty.CompassWobble();
+            private final CompassWobble wobble = new CompassWobble();
+            private final CompassWobble wobbleRandom = new CompassWobble();
 
             @Override
             public float unclampedCall(ItemStack itemStack, @Nullable ClientLevel clientLevel, @Nullable LivingEntity livingEntity, int i) {

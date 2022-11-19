@@ -11,7 +11,7 @@ public class HoneySlimeHopGoal extends Goal {
 
     public HoneySlimeHopGoal(HoneySlimeEntity slimeIn) {
         this.slime = slimeIn;
-        this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
+        this.setFlags(EnumSet.of(Flag.JUMP, Flag.MOVE));
     }
 
     /**

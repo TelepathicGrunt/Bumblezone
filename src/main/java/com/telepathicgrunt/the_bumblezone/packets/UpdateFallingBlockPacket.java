@@ -27,7 +27,7 @@ public class UpdateFallingBlockPacket {
 
                     Entity entity = Minecraft.getInstance().level.getEntity(fallingBlockId);
                     if(entity instanceof FallingBlockEntity fallingBlockEntity && fallingBlockEntity.getBlockState().is(BzBlocks.PILE_OF_POLLEN)) {
-                        ((FallingBlockEntityAccessor)fallingBlockEntity).thebumblezone_setBlock(BzBlocks.PILE_OF_POLLEN.defaultBlockState().setValue(PileOfPollen.LAYERS, (int)layer));
+                        ((FallingBlockEntityAccessor)fallingBlockEntity).setBlock(BzBlocks.PILE_OF_POLLEN.defaultBlockState().setValue(PileOfPollen.LAYERS, (int)layer));
                     }
                 });
             });

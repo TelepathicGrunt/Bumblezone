@@ -32,17 +32,17 @@ public class HoneySlimeMoveHelperController extends MoveControl {
 
     public void setSpeed(double speedIn) {
         this.speedModifier = speedIn;
-        this.operation = MoveControl.Operation.MOVE_TO;
+        this.operation = Operation.MOVE_TO;
     }
 
     public void tick() {
         this.mob.setYRot(this.rotlerp(this.mob.getYRot(), this.targetYaw, 90.0F));
         this.mob.yHeadRot = this.mob.getYRot();
         this.mob.yBodyRot = this.mob.getYRot();
-        if (this.operation != MoveControl.Operation.MOVE_TO) {
+        if (this.operation != Operation.MOVE_TO) {
             this.mob.setZza(0.0F);
         } else {
-            this.operation = MoveControl.Operation.WAIT;
+            this.operation = Operation.WAIT;
             if (this.mob.isOnGround()) {
                 this.mob.setSpeed((float) (this.speedModifier * this.mob.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue()));
                 if (this.jumpDelay-- <= 0) {

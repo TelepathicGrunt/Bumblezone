@@ -16,7 +16,7 @@ public class BeehemothRandomFlyGoal extends Goal {
 
     public BeehemothRandomFlyGoal(BeehemothEntity beehemothEntity) {
         this.beehemothEntity = beehemothEntity;
-        this.setFlags(EnumSet.of(Goal.Flag.MOVE));
+        this.setFlags(EnumSet.of(Flag.MOVE));
     }
 
     public boolean canUse() {

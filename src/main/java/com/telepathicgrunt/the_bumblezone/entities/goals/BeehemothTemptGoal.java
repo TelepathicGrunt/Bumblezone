@@ -23,7 +23,7 @@ public class BeehemothTemptGoal extends Goal {
         this.mob = pathfinderMob;
         this.speedModifier = speedModifier;
         this.items = ingredient;
-        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+        this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
         this.targetingConditions = TEMP_TARGETING.copy().selector(entity -> this.mob.getOwner() == entity).selector(this::shouldFollow);
     }
 
