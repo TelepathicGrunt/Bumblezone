@@ -8,6 +8,8 @@ Fixed bug with vanilla Bees that make them not threadsafe when created as part o
 Significantly fixed rendering issues with Honey Fluid and Royal Jelly Fluid.
  Also fixed particles from fluid spawning way out of the fluid at times.
 
+Fixed Honey Fluid not falling when in midair.
+
 
 ### **(V.6.4.3 Changes) (1.19.2 Minecraft)**
 
