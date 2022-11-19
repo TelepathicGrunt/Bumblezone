@@ -35,7 +35,7 @@ public class FogRendererMixin {
 
     // make honey fluid have orange fog
     @Inject(method = "setupColor(Lnet/minecraft/client/Camera;FLnet/minecraft/client/multiplayer/ClientLevel;IF)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel$ClientLevelData;getClearColorScale()F"))
+            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/multiplayer/ClientLevel$ClientLevelData;getClearColorScale()F"))
     private static void thebumblezone_setupHoneyFogColor(Camera camera, float j, ClientLevel clientWorld, int l, float i1, CallbackInfo ci) {
         FluidState fluidstate = FluidClientOverlay.getNearbyHoneyFluid(camera);
         if(fluidstate.is(BzTags.BZ_HONEY_FLUID)) {
@@ -51,6 +51,19 @@ public class FogRendererMixin {
             fogBlue = 0.0F;
             biomeChangedTime = -1L;
         }
+        else if(fluidstate.is(BzTags.ROYAL_JELLY_FLUID)) {
+            // Scale the brightness of fog but make sure it is never darker than the dimension's min brightness.
+            BlockPos blockpos = new BlockPos(camera.getEntity().getX(), camera.getEntity().getEyeY(), camera.getEntity().getZ());
+            float brightnessAtEyes = LightTexture.getBrightness(camera.getEntity().level.dimensionType(), camera.getEntity().level.getMaxLocalRawBrightness(blockpos));
+            float brightness = (float) Math.max(
+                    Math.pow(FluidClientOverlay.getDimensionBrightnessAtEyes(camera.getEntity()), 2D),
+                    brightnessAtEyes
+            );
+            fogBlue = 0.6F * brightness;
+            fogRed = 0.3F * brightness;
+            fogGreen = 0.0F;
+            biomeChangedTime = -1L;
+        }
     }
 
     @Inject(method = "setupFog(Lnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/FogRenderer$FogMode;FZF)V", at = @At(value = "TAIL"))
@@ -63,7 +76,7 @@ public class FogRendererMixin {
             ordinal = 0,
             argsOnly = true,
             require = 0)
-    private static float thebumblezone_changeFluidHeight(float original, Camera cam, FogRenderer.FogMode mode, float farPlaneDistance2, boolean thickFog, float p__) {
+    private static float thebumblezone_reduceFogThickness(float original, Camera cam, FogRenderer.FogMode mode, float farPlaneDistance2, boolean thickFog, float p__) {
         if (mode == FogRenderer.FogMode.FOG_TERRAIN && thickFog && Minecraft.getInstance().player.getLevel().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             return (float) (original * BzConfig.fogReducer);
         }

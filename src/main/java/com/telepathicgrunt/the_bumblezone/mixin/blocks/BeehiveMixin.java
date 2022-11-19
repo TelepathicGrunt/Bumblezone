@@ -34,7 +34,7 @@ public class BeehiveMixin {
             at = @At(value = "INVOKE", target = "Ljava/util/List;size()I", ordinal = 0, remap = false),
             locals = LocalCapture.CAPTURE_FAILHARD,
             cancellable = true)
-    private void thebumblezone_essenceBeehive2(Level level, BlockPos blockPos, CallbackInfo ci, List<Bee> beeList, List<Player> playerList) {
+    private void thebumblezone_essenceBeehivePreventAnger2(Level level, BlockPos blockPos, CallbackInfo ci, List<Bee> beeList, List<Player> playerList) {
         BeeAggression.preventAngerOnEssencedPlayers(beeList, playerList);
         if (playerList.isEmpty()) {
             ci.cancel(); // Prevent crash if no players are around

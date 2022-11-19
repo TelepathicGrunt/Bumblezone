@@ -167,10 +167,10 @@ public class BzConfig extends MidnightConfig {
     public static Comment clientComment;
 
     @Entry(min=0, max=1)
-    public static double lgbtBeeRate = 0.015;
+    public static double lgbtBeeRate = 0.013;
 
     @Entry(min=0, max=1)
-    public static double ukraineBeeRate = 0.01;
+    public static double ukraineBeeRate = 0.004;
 
     @Entry
     public static boolean enableAltBeeSkinRenderer = true;

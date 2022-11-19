@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface BeeEntityInvoker {
 
     @Invoker("setHasNectar")
-    void thebumblezone_callSetHasNectar(boolean value);
+    void callSetHasNectar(boolean value);
 
     @Invoker("setHasStung")
     void callSetHasStung(boolean value);

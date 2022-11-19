@@ -149,13 +149,13 @@ public abstract class RoyalJellyFluid extends FlowingFluid {
 
                     if(!justFilledBottom) {
                         this.spreadDown(world, belowBlockPos, belowBlockState, Direction.DOWN, belowFluidState);
-                        if (((FlowingFluidAccessor)this).thebumblezone_callSourceNeighborCount(world, blockPos) >= 3) {
-                            ((FlowingFluidAccessor)this).thebumblezone_callSpreadToSides(world, blockPos, fluidState, blockState);
+                        if (((FlowingFluidAccessor)this).callSourceNeighborCount(world, blockPos) >= 3) {
+                            ((FlowingFluidAccessor)this).callSpreadToSides(world, blockPos, fluidState, blockState);
                         }
                     }
                 }
                 else if (fluidState.isSource() || !belowBlockState.getFluidState().getType().isSame(this)) {
-                    ((FlowingFluidAccessor)this).thebumblezone_callSpreadToSides(world, blockPos, fluidState, blockState);
+                    ((FlowingFluidAccessor)this).callSpreadToSides(world, blockPos, fluidState, blockState);
                 }
             }
         }
@@ -172,12 +172,12 @@ public abstract class RoyalJellyFluid extends FlowingFluid {
                 FluidState belowFluidState = this.getNewLiquid(world, belowBlockPos, belowBlockState);
                 if (!belowBlockState.getFluidState().is(BzTags.ROYAL_JELLY_FLUID) && this.canSpreadTo(world, blockPos, blockState, Direction.DOWN, belowBlockPos, belowBlockState, world.getFluidState(belowBlockPos), belowFluidState.getType())) {
                     this.spreadDown(world, belowBlockPos, belowBlockState, Direction.DOWN, belowFluidState);
-                    if (((FlowingFluidAccessor)this).thebumblezone_callSourceNeighborCount(world, blockPos) >= 3) {
-                        ((FlowingFluidAccessor)this).thebumblezone_callSpreadToSides(world, blockPos, fluidState, blockState);
+                    if (((FlowingFluidAccessor)this).callSourceNeighborCount(world, blockPos) >= 3) {
+                        ((FlowingFluidAccessor)this).callSpreadToSides(world, blockPos, fluidState, blockState);
                     }
                 }
                 else if (fluidState.isSource() || !belowBlockState.getFluidState().getType().isSame(this)) {
-                    ((FlowingFluidAccessor)this).thebumblezone_callSpreadToSides(world, blockPos, fluidState, blockState);
+                    ((FlowingFluidAccessor)this).callSpreadToSides(world, blockPos, fluidState, blockState);
                 }
             }
         }
@@ -202,19 +202,19 @@ public abstract class RoyalJellyFluid extends FlowingFluid {
         BlockPos aboveBlockPos = blockPos.above();
         BlockState aboveBlockState = worldReader.getBlockState(aboveBlockPos);
         BlockState belowBlockState = worldReader.getBlockState(blockPos.below());
-        boolean canPassThroughBelow = ((FlowingFluidAccessor)this).thebumblezone_callCanPassThroughWall(Direction.DOWN, worldReader, blockPos, blockState, blockPos.below(), belowBlockState);
+        boolean canPassThroughBelow = ((FlowingFluidAccessor)this).callCanPassThroughWall(Direction.DOWN, worldReader, blockPos, blockState, blockPos.below(), belowBlockState);
 
         for(Direction direction : Direction.Plane.HORIZONTAL) {
             BlockPos sideBlockPos = blockPos.relative(direction);
             BlockState sideBlockState = worldReader.getBlockState(sideBlockPos);
             FluidState sideFluidState = sideBlockState.getFluidState();
-            if (sideFluidState.getType().isSame(this) && ((FlowingFluidAccessor)this).thebumblezone_callCanPassThroughWall(direction, worldReader, blockPos, blockState, sideBlockPos, sideBlockState)) {
+            if (sideFluidState.getType().isSame(this) && ((FlowingFluidAccessor)this).callCanPassThroughWall(direction, worldReader, blockPos, blockState, sideBlockPos, sideBlockState)) {
                 if (sideFluidState.isSource()) {
                     ++neighboringFluidSource;
                 }
 
                 highestNeighboringFluidLevel = Math.max(highestNeighboringFluidLevel, sideFluidState.getAmount());
-                if(sideFluidState.is(BzTags.BOTTOM_LAYER_FLUIDS) && !(canPassThroughBelow && !sideFluidState.isSource() && sideBlockState.getValue(FALLING) && aboveBlockState.getFluidState().is(BzTags.BZ_HONEY_FLUID))) {
+                if(sideFluidState.is(BzTags.SPECIAL_HONEY_LIKE) && !(canPassThroughBelow && !sideFluidState.isSource() && sideBlockState.getValue(FALLING) && aboveBlockState.getFluidState().is(BzTags.SPECIAL_HONEY_LIKE))) {
                     lowestNeighboringFluidLevel = Math.min(lowestNeighboringFluidLevel, sideFluidState.isSource() ? 0 : sideFluidState.getValue(BOTTOM_LEVEL));
                 }
             }
@@ -230,8 +230,8 @@ public abstract class RoyalJellyFluid extends FlowingFluid {
             dropOffValue = 0;
         }
 
-        if (aboveFluidIsThisFluid && ((FlowingFluidAccessor)this).thebumblezone_callCanPassThroughWall(Direction.UP, worldReader, blockPos, blockState, aboveBlockPos, aboveBlockState)) {
-            if(!aboveFluidState.isSource() && aboveFluidState.is(BzTags.BOTTOM_LAYER_FLUIDS) && aboveFluidState.getValue(BOTTOM_LEVEL) != 0) {
+        if (aboveFluidIsThisFluid && ((FlowingFluidAccessor)this).callCanPassThroughWall(Direction.UP, worldReader, blockPos, blockState, aboveBlockPos, aboveBlockState)) {
+            if(!aboveFluidState.isSource() && aboveFluidState.is(BzTags.SPECIAL_HONEY_LIKE) && aboveFluidState.getValue(BOTTOM_LEVEL) != 0) {
                 newFluidLevel = highestNeighboringFluidLevel - dropOffValue;
             }
         }
@@ -255,7 +255,7 @@ public abstract class RoyalJellyFluid extends FlowingFluid {
         boolean aboveFluidIsThisFluid =
                     !aboveFluidState.isEmpty() &&
                     aboveFluidState.getType().isSame(this) &&
-                    (aboveFluidState.isSource() || !aboveFluidState.is(BzTags.BOTTOM_LAYER_FLUIDS) || aboveFluidState.getValue(BOTTOM_LEVEL) == 0);
+                    (aboveFluidState.isSource() || !aboveFluidState.is(BzTags.SPECIAL_HONEY_LIKE) || aboveFluidState.getValue(BOTTOM_LEVEL) == 0);
 
         return fluidState.getValue(ABOVE_FLUID) || aboveFluidIsThisFluid ? 1.0f : fluidState.getOwnHeight();
     }

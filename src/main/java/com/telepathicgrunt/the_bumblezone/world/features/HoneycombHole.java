@@ -61,7 +61,7 @@ public class HoneycombHole extends Feature<NbtFeatureConfig> {
         structurePlacementData.clearProcessors();
         Optional<StructureProcessorList> postProcessor = context.level().getLevel().getServer().registryAccess().registryOrThrow(Registry.PROCESSOR_LIST_REGISTRY).getOptional(context.config().postProcessor);
         postProcessor.orElse(ProcessorLists.EMPTY.value()).list().forEach(structurePlacementData::addProcessor); // add all post processors
-        List<StructureTemplate.StructureBlockInfo> list = structurePlacementData.getRandomPalette(((StructureTemplateAccessor)template).thebumblezone_getBlocks(), mutable).blocks();
+        List<StructureTemplate.StructureBlockInfo> list = structurePlacementData.getRandomPalette(((StructureTemplateAccessor)template).getBlocks(), mutable).blocks();
         StructureTemplate.processBlockInfos(context.level(), mutable, mutable, structurePlacementData, list);
 
         return true;

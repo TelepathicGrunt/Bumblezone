@@ -1,9 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.mixin.items;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.levelgen.Heightmap;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -20,11 +24,11 @@ public class MapItemMixin {
         return ceiling;
     }
 
-    @ModifyVariable(method = "update(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;)V",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/level/Level;getMinBuildHeight()I", shift = At.Shift.BEFORE, ordinal = 0),
-            ordinal = 17,
+    @WrapOperation(method = "update(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;)V",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/chunk/LevelChunk;getHeight(Lnet/minecraft/world/level/levelgen/Heightmap$Types;II)I", ordinal = 0),
             require = 0)
-    private int thebumblezone_filledMapForDimension2(int scanHeight, Level level) {
+    private int thebumblezone_filledMapForDimension2(LevelChunk levelChunk, Heightmap.Types type, int x, int z, Operation<Integer> operation, Level level) {
+        int scanHeight = operation.call(levelChunk, type, x, z);
         if (level.dimension().equals(BzDimension.BZ_WORLD_KEY) && scanHeight >= 250) {
             return 110;
         }

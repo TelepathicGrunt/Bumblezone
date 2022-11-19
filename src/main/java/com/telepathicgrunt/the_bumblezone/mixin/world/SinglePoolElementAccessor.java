@@ -10,5 +10,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(SinglePoolElement.class)
 public interface SinglePoolElementAccessor {
     @Accessor("template")
-    Either<ResourceLocation, StructureTemplate> bumblezone_getTemplate();
+    Either<ResourceLocation, StructureTemplate> getTemplate();
 }

@@ -14,7 +14,7 @@ public class AbstractFurnaceBlockEntityMixin {
 
     @ModifyArgs(method = "burn(Lnet/minecraft/world/item/crafting/Recipe;Lnet/minecraft/core/NonNullList;I)Z",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;grow(I)V", ordinal = 0))
-    private static void thebumblezone_fillWithStackCount(Args args, Recipe<?> recipe, NonNullList<ItemStack> slots, int count) {
+    private static void thebumblezone_smeltWithRecipeResultCount(Args args, Recipe<?> recipe, NonNullList<ItemStack> slots, int count) {
         args.set(0, recipe.getResultItem().getCount());
     }
 }

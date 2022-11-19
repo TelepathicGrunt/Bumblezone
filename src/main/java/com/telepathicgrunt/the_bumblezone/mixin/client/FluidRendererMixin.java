@@ -23,7 +23,7 @@ public class FluidRendererMixin {
             at = @At(value = "STORE", ordinal = 1),
             ordinal = 13)
     private float thebumblezone_changeFluidHeight(float fluidBottomHeight, BlockAndTintGetter blockDisplayReader, BlockPos blockPos, VertexConsumer vertexBuilder, BlockState blockState, FluidState fluidState) {
-        if(fluidState.is(BzTags.BOTTOM_LAYER_FLUIDS)) {
+        if(fluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
             return fluidState.isSource() ? 0f : fluidState.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8f;
         }
         return fluidBottomHeight;
@@ -34,7 +34,7 @@ public class FluidRendererMixin {
                     ordinal = 1, shift = At.Shift.BEFORE),
             ordinal = 2)
     private boolean thebumblezone_cullBottom(boolean showBottom, BlockAndTintGetter blockDisplayReader, BlockPos blockPos, VertexConsumer vertexBuilder, BlockState blockState, FluidState fluidState) {
-        if(fluidState.is(BzTags.BOTTOM_LAYER_FLUIDS) && !fluidState.isSource()) {
+        if(fluidState.is(BzTags.SPECIAL_HONEY_LIKE) && !fluidState.isSource()) {
             return showBottom || fluidState.getValue(HoneyFluidBlock.BOTTOM_LEVEL) != 0;
         }
         return showBottom;
@@ -48,7 +48,7 @@ public class FluidRendererMixin {
     @Inject(method = "shouldRenderFace(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/material/FluidState;)Z",
             at = @At(value = "HEAD"), cancellable = true)
     private static void thebumblezone_honeyFluidCulling(BlockAndTintGetter world, BlockPos blockPos, FluidState fluidState, BlockState blockState, Direction direction, FluidState fluidState2, CallbackInfoReturnable<Boolean> cir) {
-        if(fluidState.is(BzTags.BOTTOM_LAYER_FLUIDS)) {
+        if(fluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
             if(HoneyFluid.shouldNotCullSide(world, blockPos, direction, fluidState)) {
                 cir.setReturnValue(true);
             }
