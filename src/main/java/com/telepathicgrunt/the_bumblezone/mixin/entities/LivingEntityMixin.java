@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.telepathicgrunt.the_bumblezone.components.MiscComponent;
@@ -35,12 +36,13 @@ public abstract class LivingEntityMixin extends Entity {
         super(type, world);
     }
 
-    @Inject(method = "isImmobile()Z",
-            at = @At(value = "HEAD"), cancellable = true)
-    private void thebumblezone_isParalyzedCheck(CallbackInfoReturnable<Boolean> cir) {
-        if(ParalyzedEffect.isParalyzed((LivingEntity)(Object)this)) {
-            cir.setReturnValue(true);
+    @ModifyReturnValue(method = "isImmobile()Z",
+            at = @At(value = "RETURN"))
+    private boolean thebumblezone_isParalyzedCheck(boolean isImmobile) {
+        if(!isImmobile && ParalyzedEffect.isParalyzed((LivingEntity)(Object)this)) {
+            return true;
         }
+        return isImmobile;
     }
 
     @Inject(method = "hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
@@ -72,13 +74,14 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     //hides entities with hidden effect
-    @Inject(method = "getVisibilityPercent(Lnet/minecraft/world/entity/Entity;)D",
-            at = @At(value = "RETURN"), cancellable = true)
-    private void thebumblezone_hideEntityWithHiddenEffect(Entity entity, CallbackInfoReturnable<Double> cir) {
-        double newVisibility = HiddenEffect.hideEntity(entity, cir.getReturnValue());
-        if(cir.getReturnValue() != newVisibility) {
-            cir.setReturnValue(newVisibility);
+    @ModifyReturnValue(method = "getVisibilityPercent(Lnet/minecraft/world/entity/Entity;)D",
+            at = @At(value = "RETURN"))
+    private double thebumblezone_hideEntityWithHiddenEffect(double currentVisibility, Entity entity) {
+        double newVisibility = HiddenEffect.hideEntity(entity, currentVisibility);
+        if(currentVisibility != newVisibility) {
+            return newVisibility;
         }
+        return currentVisibility;
     }
 
     @Inject(method = "completeUsingItem()V",
