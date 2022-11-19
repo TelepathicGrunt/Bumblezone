@@ -3,12 +3,11 @@
 ##### Fluids:
 Fixed Royal Jelly Fluid missing visual overlays and player physics when inside fluid.
 
+Fixed being able to "jump" while on ground inside Royal Jelly Fluid and Sugar Water Fluid.
+
 ##### Structures:
 Reduce chance of maps in Hive Temple loot a little bit.
  Increased number of threads spawned by Bumblezone so multiple Hive Temple maps and Honey Compasses can search at once from 1 to 3.
-
-##### Fluids:
-Fixed being able to "jump" while on ground inside Royal Jelly Fluid and Sugar Water Fluid.
 
 ##### Misc:
 Fixed LGBT+ and Ukraine Bee Skin configs fighting each other on applying. And changed the default config values for them.
