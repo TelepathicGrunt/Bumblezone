@@ -26,34 +26,30 @@ import java.util.List;
 public class EnchantmentHelperMixin {
 
     //most compat way to make enchantment table not apply our enchantment
-    @Inject(method = "getAvailableEnchantmentResults(ILnet/minecraft/world/item/ItemStack;Z)Ljava/util/List;",
-            at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"),
-            locals = LocalCapture.CAPTURE_FAILSOFT)
-    private static void thebumblezone_applyEnchantmentsCorrectly(int power,
-                                                                 ItemStack stack,
-                                                                 boolean treasureAllowed,
-                                                                 CallbackInfoReturnable<List<EnchantmentInstance>> cir,
-                                                                 List<EnchantmentInstance> list,
-                                                                 Item item,
-                                                                 boolean treasure,
-                                                                 Iterator<Enchantment> var6,
-                                                                 Enchantment enchantment)
+    @WrapOperation(method = "getAvailableEnchantmentResults(ILnet/minecraft/world/item/ItemStack;Z)Ljava/util/List;",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;isDiscoverable()Z"))
+    private static boolean thebumblezone_preventApplyingCertainEnchantmentsOnCertainItems(Enchantment enchantment,
+                                                                 Operation<Boolean> originalDiscoverability,
+                                                                 int power,
+                                                                 ItemStack stack)
     {
         if(enchantment == BzEnchantments.COMB_CUTTER && !BzEnchantments.COMB_CUTTER.canEnchant(stack)) {
-            list.remove(list.size() - 1);
+            return false;
         }
         else if(enchantment == BzEnchantments.NEUROTOXINS && !BzEnchantments.NEUROTOXINS.canEnchant(stack)) {
-            list.remove(list.size() - 1);
+            return false;
         }
         else if(enchantment == BzEnchantments.POTENT_POISON && !BzEnchantments.POTENT_POISON.canEnchant(stack)) {
-            list.remove(list.size() - 1);
+            return false;
         }
         else if(HoneyCrystalShield.isInvalidForHoneyCrystalShield(stack, enchantment)) {
-            list.remove(list.size() - 1);
+            return false;
         }
         else if(StingerSpearItem.isInvalidForStingerSpear(stack, enchantment)) {
-            list.remove(list.size() - 1);
+            return false;
         }
+
+        return originalDiscoverability.call();
     }
 
     // Apply enchantments that normally would not be able to be applied
