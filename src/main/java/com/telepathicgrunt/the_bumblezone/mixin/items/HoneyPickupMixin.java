@@ -17,7 +17,7 @@ public class HoneyPickupMixin {
     @Inject(method = "playerTouch",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;take(Lnet/minecraft/world/entity/Entity;I)V"),
             locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void thebumblezone_onItemPickup(Player player, CallbackInfo ci, ItemStack itemStack, Item item, int i) {
+    private void thebumblezone_maybeAngerBeesOnItemPickup(Player player, CallbackInfo ci, ItemStack itemStack, Item item, int i) {
         BeeAggression.itemPickupAnger(player, item);
     }
 }

@@ -15,10 +15,10 @@ public class PlayerAdvancementsMixin {
     @Shadow
     private ServerPlayer player;
 
-    @Inject(method = "award",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/AdvancementRewards;grant(Lnet/minecraft/server/level/ServerPlayer;)V",
-                    shift = At.Shift.AFTER))
+    @Inject(method = "award", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/AdvancementRewards;grant(Lnet/minecraft/server/level/ServerPlayer;)V"))
     private void award(Advancement advancement, String string, CallbackInfoReturnable<Boolean> cir) {
-        TargetAdvancementDoneTrigger.OnAdvancementGiven(player, advancement);
+        if (player != null) {
+            TargetAdvancementDoneTrigger.OnAdvancementGiven(player, advancement);
+        }
     }
 }

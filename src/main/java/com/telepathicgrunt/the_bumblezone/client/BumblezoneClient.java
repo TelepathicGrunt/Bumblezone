@@ -7,7 +7,6 @@ import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuffParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.RoyalJellyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.SparkleParticle;
-import com.telepathicgrunt.the_bumblezone.client.rendering.BeeVariantRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
@@ -21,11 +20,9 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.honeycrystalshard.Hon
 import com.telepathicgrunt.the_bumblezone.client.rendering.honeyslime.HoneySlimeRendering;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearRenderer;
-import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.mixin.client.DimensionSpecialEffectsAccessor;
-import com.telepathicgrunt.the_bumblezone.mixin.client.EntityRendererRegistryImplAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -45,12 +42,9 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.impl.client.particle.ParticleFactoryRegistryImpl;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Bee;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 import org.quiltmc.qsl.block.extensions.api.client.BlockRenderLayerMap;
@@ -92,10 +86,6 @@ public class BumblezoneClient implements ClientModInitializer {
         EntityRendererRegistry.register(BzEntities.BEE_STINGER_ENTITY, BeeStingerRenderer::new);
         EntityRendererRegistry.register(BzEntities.HONEY_CRYSTAL_SHARD, HoneyCrystalShardRenderer::new);
 
-        if(BzConfig.enableAltBeeSkinRenderer) {
-            BeeVariantRenderer.OLD_BEE_RENDER_FACTORY = (EntityRendererProvider<Bee>)EntityRendererRegistryImplAccessor.getMap().get(EntityType.BEE);
-            EntityRendererRegistry.register(EntityType.BEE, BeeVariantRenderer::new);
-        }
     }
 
     private void registerParticleFactories() {

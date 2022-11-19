@@ -18,5 +18,4 @@ public class WaterEquivalenceMixin {
         if(fluid == BzFluids.SUGAR_WATER_FLUID || fluid == BzFluids.SUGAR_WATER_FLUID_FLOWING)
             cir.setReturnValue(true);
     }
-
 }

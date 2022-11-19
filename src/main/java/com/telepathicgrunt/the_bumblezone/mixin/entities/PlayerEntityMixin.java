@@ -38,11 +38,10 @@ public abstract class PlayerEntityMixin extends Entity {
             at = @At(value = "RETURN"), cancellable = true)
     private void thebumblezone_honeyUnderwater(CallbackInfoReturnable<Boolean> cir) {
         if(!cir.getReturnValue()) {
-            this.wasUnderwater = this.isEyeInFluid(BzTags.BZ_HONEY_FLUID);
+            this.wasUnderwater = this.isEyeInFluid(BzTags.SPECIAL_HONEY_LIKE);
             if(this.wasUnderwater) cir.setReturnValue(true);
         }
     }
-
 
     @Inject(method = "getProjectile(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;",
             at = @At(value = "HEAD"),

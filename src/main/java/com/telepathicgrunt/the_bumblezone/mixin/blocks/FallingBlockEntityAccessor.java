@@ -9,5 +9,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface FallingBlockEntityAccessor {
 
     @Accessor("blockState")
-    void thebumblezone_setBlock(BlockState value);
+    void setBlock(BlockState value);
 }

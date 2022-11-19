@@ -28,6 +28,7 @@ import net.minecraft.world.phys.Vec3;
 public class FluidClientOverlay {
     private static final ResourceLocation TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID, "textures/misc/sugar_water_underwater.png");
     private static final ResourceLocation HONEY_TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID + ":textures/misc/honey_fluid_underwater.png");
+    private static final ResourceLocation ROYAL_JELLY_FLUID_UNDERWATER = new ResourceLocation(Bumblezone.MODID + ":textures/misc/royal_jelly_fluid_underwater.png");
 
     public static boolean sugarWaterFluidOverlay(Player player, PoseStack matrixStack) {
         if(!(player instanceof LocalPlayer clientPlayerEntity)) return false;
@@ -60,7 +61,7 @@ public class FluidClientOverlay {
     }
 
     public static boolean renderHoneyOverlay(LocalPlayer clientPlayerEntity, PoseStack matrixStack) {
-        if(!clientPlayerEntity.isEyeInFluid(BzTags.BZ_HONEY_FLUID)) {
+        if(!clientPlayerEntity.isEyeInFluid(BzTags.SPECIAL_HONEY_LIKE)) {
             return false;
         }
 
@@ -90,13 +91,38 @@ public class FluidClientOverlay {
             RenderSystem.disableBlend();
             return true;
         }
+        else if (state.is(BzFluids.ROYAL_JELLY_FLUID_BLOCK)) {
+            RenderSystem.setShader(GameRenderer::getPositionTexShader);
+            RenderSystem.enableTexture();
+            RenderSystem.setShaderTexture(0, ROYAL_JELLY_FLUID_UNDERWATER);
+            BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
+            // Scale the brightness of fog but make sure it is never darker than the dimension's min brightness.
+            float brightness = (float) Math.max(
+                    Math.pow(FluidClientOverlay.getDimensionBrightnessAtEyes(clientPlayerEntity), 2D),
+                    clientPlayerEntity.level.dimensionType().ambientLight()
+            );
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+            RenderSystem.setShaderColor(brightness, brightness, brightness, 0.95F);
+            float modifiedYaw = -clientPlayerEntity.getYRot() / (64.0F * 8F);
+            float modifiedPitch = clientPlayerEntity.getXRot() / (64.0F * 8F);
+            Matrix4f matrix4f = matrixStack.last().pose();
+            bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+            bufferBuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).uv(1.0F + modifiedYaw, 1.0F + modifiedPitch).endVertex();
+            bufferBuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).uv(0.0F + modifiedYaw, 2.0F + modifiedPitch).endVertex();
+            bufferBuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).uv(1.0F + modifiedYaw, 1.0F + modifiedPitch).endVertex();
+            bufferBuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).uv(2.0F + modifiedYaw, 0.0F + modifiedPitch).endVertex();
+            BufferUploader.drawWithShader(bufferBuilder.end());
+            RenderSystem.disableBlend();
+            return true;
+        }
 
         return false;
     }
 
     public static void renderHoneyFog(Camera camera) {
         FluidState fluidstate = getNearbyHoneyFluid(camera);
-        if(fluidstate.is(BzTags.BZ_HONEY_FLUID)) {
+        if(fluidstate.is(BzTags.SPECIAL_HONEY_LIKE)) {
             RenderSystem.setShaderFogStart(0.35f);
             RenderSystem.setShaderFogEnd(4);
         }
@@ -123,7 +149,7 @@ public class FluidClientOverlay {
             mutable.set(x, y, z);
             if(!mutable.equals(camera.getBlockPosition())) {
                 FluidState neighboringFluidstate = world.getFluidState(mutable);
-                if(neighboringFluidstate.is(BzTags.BZ_HONEY_FLUID)) {
+                if(neighboringFluidstate.is(BzTags.SPECIAL_HONEY_LIKE)) {
                     fluidstate = neighboringFluidstate;
                 }
             }
