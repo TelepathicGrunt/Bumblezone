@@ -62,7 +62,7 @@ public class HiddenEffect extends MobEffect {
                 event.modifyVisibility(0);
             }
             else {
-                event.modifyVisibility(0.5);
+                event.modifyVisibility(0.1);
             }
         }
     }

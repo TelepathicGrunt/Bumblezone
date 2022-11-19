@@ -17,7 +17,7 @@ public class FogRendererMixin {
             ordinal = 0,
             argsOnly = true,
             require = 0)
-    private static float thebumblezone_changeFluidHeight(float original, Camera cam, FogRenderer.FogMode mode, float farPlaneDistance2, boolean thickFog, float p__) {
+    private static float thebumblezone_reduceFogThickness(float original, Camera cam, FogRenderer.FogMode mode, float farPlaneDistance2, boolean thickFog, float p__) {
         if (mode == FogRenderer.FogMode.FOG_TERRAIN && thickFog && Minecraft.getInstance().player.getLevel().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             return (float) (original * BzDimensionConfigs.fogReducer.get());
         }

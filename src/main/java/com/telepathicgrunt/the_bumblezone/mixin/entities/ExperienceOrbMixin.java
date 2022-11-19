@@ -31,10 +31,10 @@ public abstract class ExperienceOrbMixin extends Entity {
     }
 
     @Unique
-    private BlockPos trackedCrystalFlower = null;
+    private BlockPos thebumblezone_trackedCrystalFlower = null;
 
     @Unique
-    private int trackedCrystalFlowerCooldown = 0;
+    private int thebumblezone_trackedCrystalFlowerCooldown = 0;
 
     @Inject(method = "tick()V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ExperienceOrb;move(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V"),
@@ -46,8 +46,8 @@ public abstract class ExperienceOrbMixin extends Entity {
 
         double distanceThreshold = 8;
 
-        trackedCrystalFlowerCooldown--;
-        if (this.trackedCrystalFlower == null && trackedCrystalFlowerCooldown <= 0) {
+        thebumblezone_trackedCrystalFlowerCooldown--;
+        if (this.thebumblezone_trackedCrystalFlower == null && thebumblezone_trackedCrystalFlowerCooldown <= 0) {
             BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
             Set<LevelChunk> chunksInRange = new HashSet<>();
             for (int x = (int) -distanceThreshold; x <= distanceThreshold; x += distanceThreshold) {
@@ -64,20 +64,20 @@ public abstract class ExperienceOrbMixin extends Entity {
                     .filter(be -> be instanceof CrystallineFlowerBlockEntity)
                     .min((a, b) -> a.getBlockPos().distManhattan(this.blockPosition()) - b.getBlockPos().distManhattan(this.blockPosition()));
 
-            closestCrystalFlower.ifPresent(blockEntity -> this.trackedCrystalFlower = blockEntity.getBlockPos());
-            trackedCrystalFlowerCooldown = 60;
+            closestCrystalFlower.ifPresent(blockEntity -> this.thebumblezone_trackedCrystalFlower = blockEntity.getBlockPos());
+            thebumblezone_trackedCrystalFlowerCooldown = 60;
         }
 
-        if (this.trackedCrystalFlower != null) {
-            Vec3 centerBlockPosition = Vec3.atCenterOf(this.trackedCrystalFlower);
+        if (this.thebumblezone_trackedCrystalFlower != null) {
+            Vec3 centerBlockPosition = Vec3.atCenterOf(this.thebumblezone_trackedCrystalFlower);
             Vec3 vec3 = new Vec3(centerBlockPosition.x() - this.getX(), centerBlockPosition.y() - this.getY(), centerBlockPosition.z() - this.getZ());
             double sqrDistance = vec3.lengthSqr();
             if (sqrDistance >= distanceThreshold * distanceThreshold) {
-                this.trackedCrystalFlower = null;
+                this.thebumblezone_trackedCrystalFlower = null;
                 return;
             }
 
-            BlockState state = this.level.getBlockState(this.trackedCrystalFlower);
+            BlockState state = this.level.getBlockState(this.thebumblezone_trackedCrystalFlower);
             if(state.getBlock() instanceof CrystallineFlower) {
                 double speedFactor = 1.0D - Math.sqrt(sqrDistance) / distanceThreshold;
                 this.setDeltaMovement(this.getDeltaMovement().add(vec3.normalize().scale(speedFactor * speedFactor * 0.1D)));

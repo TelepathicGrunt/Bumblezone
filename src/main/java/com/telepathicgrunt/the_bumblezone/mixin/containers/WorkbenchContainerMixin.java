@@ -13,6 +13,7 @@ import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -22,14 +23,13 @@ import java.util.Optional;
 public class WorkbenchContainerMixin {
 
     // makes RecipeDiscoveredTrigger work.
-    @Inject(method = "slotChangedCraftingGrid(Lnet/minecraft/world/inventory/AbstractContainerMenu;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/inventory/CraftingContainer;Lnet/minecraft/world/inventory/ResultContainer;)V",
+    @ModifyVariable(method = "slotChangedCraftingGrid(Lnet/minecraft/world/inventory/AbstractContainerMenu;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/inventory/CraftingContainer;Lnet/minecraft/world/inventory/ResultContainer;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/ResultContainer;setRecipeUsed(Lnet/minecraft/world/level/Level;Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/item/crafting/Recipe;)Z"),
-            locals = LocalCapture.CAPTURE_FAILSOFT, require = 0)
-    private static void thebumblezone_recipeDiscoveredTrigger1(AbstractContainerMenu abstractContainerMenu, Level level, Player player,
-                                                               CraftingContainer craftingContainer, ResultContainer resultContainer,
-                                                               CallbackInfo ci, ServerPlayer serverPlayer, ItemStack itemStack,
-                                                               Optional<CraftingRecipe> optional, CraftingRecipe craftingRecipe)
-    {
-        BzCriterias.RECIPE_DISCOVERED_TRIGGER.trigger(serverPlayer, craftingRecipe.getId());
+            require = 0)
+    private static CraftingRecipe thebumblezone_recipeDiscoveredTrigger(CraftingRecipe recipe, AbstractContainerMenu handler, Level world, Player player) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            BzCriterias.RECIPE_DISCOVERED_TRIGGER.trigger(serverPlayer, recipe.getId());
+        }
+        return recipe;
     }
 }

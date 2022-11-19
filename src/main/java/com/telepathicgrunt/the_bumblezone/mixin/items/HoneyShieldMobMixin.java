@@ -12,12 +12,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Mob.class)
-public class HoneyShieldCooldownMixin {
+public class HoneyShieldMobMixin {
 
     @Inject(method = "maybeDisableShield",
             at = @At(value = "HEAD"),
             cancellable = true)
-    private void thebumblezone_isHoneyCrystalShield(Player playerEntity, ItemStack itemStack, ItemStack itemStack2, CallbackInfo ci) {
+    private void thebumblezone_axeDisablesHoneyCrystalShield(Player playerEntity, ItemStack itemStack, ItemStack itemStack2, CallbackInfo ci) {
         if(!itemStack.isEmpty() && !itemStack2.isEmpty() && itemStack2.getItem() == BzItems.HONEY_CRYSTAL_SHIELD.get() && itemStack.getItem() instanceof AxeItem) {
             HoneyCrystalShieldBehavior.setShieldCooldown(playerEntity, ((Mob)(Object)this));
             ci.cancel();

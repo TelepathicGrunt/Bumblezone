@@ -46,7 +46,7 @@ public record UpdateFallingBlockPacket(int fallingBlockId, short layer) {
 
                 Entity entity = Minecraft.getInstance().level.getEntity(pkt.fallingBlockId);
                 if (entity instanceof FallingBlockEntity fallingBlockEntity && fallingBlockEntity.getBlockState().is(BzBlocks.PILE_OF_POLLEN.get())) {
-                    ((FallingBlockEntityAccessor) fallingBlockEntity).bumblezone_setBlockState(BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int) pkt.layer));
+                    ((FallingBlockEntityAccessor) fallingBlockEntity).setBlockState(BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int) pkt.layer));
                 }
             });
             ctx.get().setPacketHandled(true);

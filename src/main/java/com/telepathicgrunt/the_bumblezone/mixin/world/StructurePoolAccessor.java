@@ -11,5 +11,5 @@ import java.util.List;
 @Mixin(StructureTemplatePool.class)
 public interface StructurePoolAccessor {
     @Accessor("rawTemplates")
-    List<Pair<StructurePoolElement, Integer>> bumblezone_getRawTemplates();
+    List<Pair<StructurePoolElement, Integer>> getRawTemplates();
 }

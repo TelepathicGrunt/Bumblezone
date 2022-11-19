@@ -10,22 +10,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(Entity.class)
-public abstract class EntityMixin {
-
-    @Shadow
-    public abstract BlockPos blockPosition();
-
-    @Shadow
-    public abstract double getX();
-
-    @Shadow
-    public abstract double getZ();
-
-    @Shadow
-    public Level level;
+public class EntityMixin {
 
     @ModifyVariable(method = "positionRider(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity$MoveFunction;)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;getX()D"))
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;getX()D"),
+            require = 0)
     private double thebumblezone_beeRidingOffset(double yOffset, Entity entity) {
         return StinglessBeeHelmet.beeRidingOffset(yOffset, ((Entity)(Object)this), entity);
     }

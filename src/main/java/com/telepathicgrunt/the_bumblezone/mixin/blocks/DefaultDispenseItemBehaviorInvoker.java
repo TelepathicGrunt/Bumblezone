@@ -10,6 +10,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface DefaultDispenseItemBehaviorInvoker {
 
     @Invoker("execute")
-    ItemStack thebumblezone_invokeDispenseSilently(BlockSource pointer, ItemStack stack);
+    ItemStack invokeExecute(BlockSource pointer, ItemStack stack);
 }
 

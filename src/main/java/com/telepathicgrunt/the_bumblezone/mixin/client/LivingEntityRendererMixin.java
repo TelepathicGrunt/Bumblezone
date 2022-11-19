@@ -12,7 +12,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class LivingEntityRendererMixin<T extends LivingEntity> {
 
     @Inject(method = "isShaking(Lnet/minecraft/world/entity/LivingEntity;)Z",
-            at = @At(value = "HEAD"), cancellable = true)
+            at = @At(value = "HEAD"),
+            cancellable = true,
+            require = 0)
     private void thebumblezone_shakeForParalysis(T entity, CallbackInfoReturnable<Boolean> cir) {
         if (ParalyzedEffect.isParalyzedClient(entity)) {
             cir.setReturnValue(true);

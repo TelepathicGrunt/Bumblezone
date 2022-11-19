@@ -18,6 +18,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.animal.Bee;
@@ -26,6 +27,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -108,55 +111,62 @@ public class BeeAggression {
         }
     }
 
+    public static void onLivingEntityHurt(LivingHurtEvent event) {
+        LivingEntity livingEntity = event.getEntity();
+        if (livingEntity != null &&
+            !livingEntity.level.isClientSide()  &&
+            livingEntity instanceof Bee &&
+            event.getSource() != null &&
+            event.getSource().getEntity() != null)
+        {
+            beeHitAndAngered(livingEntity, event.getSource().getEntity());
+        }
+    }
+
     //Bees hit by a mob or player will inflict Wrath of the Hive onto the attacker.
     public static void beeHitAndAngered(Entity entity, Entity attackerEntity) {
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that if it is a player, that they aren't in creative or spectator
-        if (!entity.level.isClientSide() &&
-                entity instanceof Bee &&
-                attackerEntity != null)
+        if(attackerEntity instanceof Player player &&
+                !((Player)attackerEntity).isCreative() &&
+                !attackerEntity.isSpectator())
         {
-            if(attackerEntity instanceof Player player &&
-                    !((Player)attackerEntity).isCreative() &&
-                    !attackerEntity.isSpectator())
-            {
-                if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                    player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
-                    WrathOfTheHiveEffect.calmTheBees(player.level, player); // prevent bees from be naturally angry
-                }
-                else if((entity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
-                        BzBeeAggressionConfigs.aggressiveBees.get())
-                {
-                    if(player instanceof ServerPlayer && player.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
-                        BzCriterias.EXTENDED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayer) player, attackerEntity);
-                    }
-
-                    player.addEffect(new MobEffectInstance(
-                            BzEffects.WRATH_OF_THE_HIVE.get(),
-                            BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),
-                            2,
-                            false,
-                            BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(),
-                            true));
-                }
+            if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
+                player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
+                WrathOfTheHiveEffect.calmTheBees(player.level, player); // prevent bees from be naturally angry
             }
-            else if(attackerEntity instanceof Mob mob) {
-                if(mob.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                    mob.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
-                    WrathOfTheHiveEffect.calmTheBees(mob.level, mob); // prevent bees from be naturally angry
+            else if((entity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                    BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                    BzBeeAggressionConfigs.aggressiveBees.get())
+            {
+                if(player instanceof ServerPlayer && player.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
+                    BzCriterias.EXTENDED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayer) player, attackerEntity);
                 }
-                else if((entity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
-                        BzBeeAggressionConfigs.aggressiveBees.get())
-                {
-                    mob.addEffect(new MobEffectInstance(
-                            BzEffects.WRATH_OF_THE_HIVE.get(),
-                            BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),
-                            2,
-                            false,
-                            true));
-                }
+
+                player.addEffect(new MobEffectInstance(
+                        BzEffects.WRATH_OF_THE_HIVE.get(),
+                        BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),
+                        2,
+                        false,
+                        BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(),
+                        true));
+            }
+        }
+        else if(attackerEntity instanceof Mob mob) {
+            if(mob.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
+                mob.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
+                WrathOfTheHiveEffect.calmTheBees(mob.level, mob); // prevent bees from be naturally angry
+            }
+            else if((entity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                    BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                    BzBeeAggressionConfigs.aggressiveBees.get())
+            {
+                mob.addEffect(new MobEffectInstance(
+                        BzEffects.WRATH_OF_THE_HIVE.get(),
+                        BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(),
+                        2,
+                        false,
+                        true));
             }
         }
     }

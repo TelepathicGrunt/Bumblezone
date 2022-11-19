@@ -26,11 +26,12 @@ import java.util.function.Supplier;
 public class ThreadExecutor {
     private static ExecutorService LOCATING_EXECUTOR_SERVICE = null;
     private static final AtomicInteger runningSearches = new AtomicInteger(0);
+    private static final AtomicInteger queuedSearches = new AtomicInteger(0);
 
     private static void setupExecutorService() {
         shutdownExecutorService();
         LOCATING_EXECUTOR_SERVICE = Executors.newFixedThreadPool(
-                1,
+                3,
                 new ThreadFactory() {
                     private static final AtomicInteger poolNum = new AtomicInteger(1);
                     private final AtomicInteger threadNum = new AtomicInteger(1);
@@ -62,6 +63,10 @@ public class ThreadExecutor {
         return runningSearches.get() > 0;
     }
 
+    public static boolean hasQueuedSearch() {
+        return queuedSearches.get() > 0;
+    }
+
     public static LocateTask<BlockPos> locate(
             ServerLevel level,
             TagKey<Structure> structureTag,
@@ -69,10 +74,12 @@ public class ThreadExecutor {
             int searchRadius,
             boolean skipKnownStructures)
     {
+        queuedSearches.getAndIncrement();
         CompletableFuture<BlockPos> completableFuture = new CompletableFuture<>();
         Future<?> future = LOCATING_EXECUTOR_SERVICE.submit(
                 () ->  {
                     runningSearches.getAndIncrement();
+                    queuedSearches.getAndDecrement();
                     doLocateLevel(completableFuture, level, structureTag, pos, searchRadius, skipKnownStructures);
                 }
         );

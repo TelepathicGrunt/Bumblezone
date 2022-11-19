@@ -58,7 +58,8 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
             Vec3 vec3 = lootContext.getParamOrNull(LootContextParams.ORIGIN);
             if (vec3 != null) {
                 BlockPos blockPos = new BlockPos(vec3);
-                HoneyCompass.setLoadingTags(itemStack.getOrCreateTag(), true);
+                itemStack.getOrCreateTag().putBoolean(HoneyCompass.TAG_LOADING, true);
+                HoneyCompass.setStructureTags(itemStack.getOrCreateTag(), destination);
                 ThreadExecutor.locate(lootContext.getLevel(), destination, blockPos, 100, false)
                         .thenOnServerThread(foundPos -> setCompassData(itemStack, lootContext, foundPos));
             }
@@ -73,7 +74,6 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
         if (blockPos != null) {
             HoneyCompass.addStructureTags(lootContext.getLevel().dimension(), blockPos, itemStack.getOrCreateTag());
         }
-        HoneyCompass.setLoadingTags(itemStack.getOrCreateTag(), false);
     }
 
     public static class Serializer extends LootItemConditionalFunction.Serializer<HoneyCompassLocateStructure> {

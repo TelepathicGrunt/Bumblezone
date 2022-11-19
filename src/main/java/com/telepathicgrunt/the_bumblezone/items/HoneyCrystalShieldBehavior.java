@@ -32,14 +32,14 @@ public class HoneyCrystalShieldBehavior {
                 if (source.isExplosion() && player.isBlocking()) {
                     // damage our shield greatly and 1 damage hit player to show shield weakness
                     player.hurt(DamageSource.GENERIC, 1);
-                    ((PlayerDamageShieldInvoker) player).thebumblezone_callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 3, 18));
+                    ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 3, 18));
                 }
                 else if (source.isFire()) {
                     if(source.isProjectile()){
-                        ((PlayerDamageShieldInvoker) player).thebumblezone_callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 6, 3));
+                        ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 6, 3));
                     }
                     else{
-                        ((PlayerDamageShieldInvoker) player).thebumblezone_callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 100, 3));
+                        ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 100, 3));
                         return false; //continue the damaging
                     }
                 }
