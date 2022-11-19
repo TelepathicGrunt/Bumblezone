@@ -131,7 +131,7 @@ public class HoneyFluidBlock extends LiquidBlock {
                 !state.getFluidState().isSource() &&
                 !state.getFluidState().getValue(FALLING))
             {
-                ((BeeEntityInvoker)entity).thebumblezone_callSetHasNectar(false);
+                ((BeeEntityInvoker)entity).callSetHasNectar(false);
                 world.setBlock(position, BzFluids.HONEY_FLUID.get().defaultFluidState().createLegacyBlock(), 3);
             }
 

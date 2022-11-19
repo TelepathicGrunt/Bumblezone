@@ -10,5 +10,5 @@ import java.util.List;
 public interface StructureTemplateAccessor {
 
     @Accessor("palettes")
-    List<StructureTemplate.Palette> thebumblezone_getBlocks();
+    List<StructureTemplate.Palette> getBlocks();
 }

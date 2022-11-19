@@ -15,11 +15,11 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface FlowingFluidAccessor {
 
     @Invoker("spreadToSides")
-    void thebumblezone_callSpreadToSides(LevelAccessor p_207937_1_, BlockPos p_207937_2_, FluidState p_207937_3_, BlockState p_207937_4_);
+    void callSpreadToSides(LevelAccessor levelAccessor, BlockPos pos, FluidState fluidState, BlockState blockState);
 
     @Invoker("sourceNeighborCount")
-    int thebumblezone_callSourceNeighborCount(LevelReader p_207936_1_, BlockPos p_207936_2_);
+    int callSourceNeighborCount(LevelReader levelReader, BlockPos pos);
 
     @Invoker("canPassThroughWall")
-    boolean thebumblezone_callCanPassThroughWall(Direction p_212751_1_, BlockGetter p_212751_2_, BlockPos p_212751_3_, BlockState p_212751_4_, BlockPos p_212751_5_, BlockState p_212751_6_);
+    boolean callCanPassThroughWall(Direction direction, BlockGetter blockGetter, BlockPos pos, BlockState blockState, BlockPos pos1, BlockState blockState1);
 }

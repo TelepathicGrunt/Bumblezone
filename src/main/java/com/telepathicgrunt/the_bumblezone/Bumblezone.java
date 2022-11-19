@@ -11,9 +11,11 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
+import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.EnderpearlImpact;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
@@ -75,6 +77,9 @@ public class Bumblezone{
         //Events
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         forgeBus.addListener(BeeAggression::pickupItemAnger);
+        forgeBus.addListener(BeeAggression::onLivingEntityHurt);
+        forgeBus.addListener(BeeInteractivity::onEntityInteractEvent);
+        forgeBus.addListener(WrathOfTheHiveEffect::onLivingEntityDeath);
         forgeBus.addListener(EventPriority.LOWEST, BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
         forgeBus.addListener(WanderingTrades::addWanderingTrades);
         forgeBus.addListener(CombCutterEnchantment::attemptFasterMining);

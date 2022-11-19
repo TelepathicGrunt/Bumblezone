@@ -15,29 +15,29 @@ public class BzBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Bumblezone.MODID);
 
     public static Material RED_NOT_SOLID = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.TERRACOTTA_RED))
-            .thebumblezone_getNotSolidBlocking())
-            .thebumblezone_getDestroyOnPush()
+            .getNotSolidBlocking())
+            .getDestroyOnPush()
             .noCollider()
             .replaceable()
             .nonSolid()
             .build();
     public static Material ORANGE_NOT_SOLID = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.COLOR_ORANGE))
-            .thebumblezone_getNotSolidBlocking())
-            .thebumblezone_getDestroyOnPush()
+            .getNotSolidBlocking())
+            .getDestroyOnPush()
             .noCollider()
             .replaceable()
             .nonSolid()
             .build();
     public static Material YELLOW_NOT_SOLID = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.COLOR_YELLOW))
-            .thebumblezone_getNotSolidBlocking())
-            .thebumblezone_getDestroyOnPush()
+            .getNotSolidBlocking())
+            .getDestroyOnPush()
             .noCollider()
             .replaceable()
             .nonSolid()
             .build();
     public static Material YELLOW_CRYSTAL_PLANT = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.TERRACOTTA_YELLOW))
-            .thebumblezone_getNotSolidBlocking())
-            .thebumblezone_getNotPushable()
+            .getNotSolidBlocking())
+            .getNotPushable()
             .noCollider()
             .nonSolid()
             .build();

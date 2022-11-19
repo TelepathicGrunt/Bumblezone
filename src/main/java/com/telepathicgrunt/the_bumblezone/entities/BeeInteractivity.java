@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
+import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -23,17 +24,52 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 public class BeeInteractivity {
 
     private static final ResourceLocation PRODUCTIVE_BEES_HONEY_TREAT = new ResourceLocation("productivebees", "honey_treat");
+
+    public static void onEntityInteractEvent(PlayerInteractEvent.EntityInteract event) {
+        Entity entity = event.getTarget();
+        Player player = event.getEntity();
+        InteractionHand hand = event.getHand();
+        if (player == null || entity == null || event.isCanceled()) {
+            return;
+        }
+
+        if(entity instanceof Bee beeEntity) {
+            if(BeeInteractivity.beeFeeding(entity.level, player, hand, beeEntity) == InteractionResult.SUCCESS) {
+                event.setCancellationResult(InteractionResult.SUCCESS);
+                event.setCanceled(true);
+            }
+            else if(StinglessBeeHelmet.addBeePassenger(entity.level, player, hand, beeEntity) == InteractionResult.SUCCESS) {
+                event.setCancellationResult(InteractionResult.SUCCESS);
+                event.setCanceled(true);
+            }
+            else if(BeeInteractivity.beeUnpollinating(entity.level, player, hand, beeEntity) == InteractionResult.SUCCESS) {
+                event.setCancellationResult(InteractionResult.SUCCESS);
+                event.setCanceled(true);
+            }
+        }
+        else if (entity instanceof Slime slimeEntity) {
+            if(CreatingHoneySlime.createHoneySlime(entity.level, player, hand, slimeEntity) == InteractionResult.SUCCESS) {
+                event.setCancellationResult(InteractionResult.SUCCESS);
+                event.setCanceled(true);
+            }
+        }
+    }
+
 
     // heal bees with sugar water bottle or honey bottle
     public static InteractionResult beeFeeding(Level world, Player playerEntity, InteractionHand hand, Entity target) {
@@ -159,7 +195,7 @@ public class BeeInteractivity {
 
                     PollenPuff.spawnItemstackEntity(world, beeEntity.getRandom(), beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
                     playerEntity.swing(hand, true);
-                    ((BeeEntityInvoker)beeEntity).thebumblezone_callSetHasNectar(false);
+                    ((BeeEntityInvoker)beeEntity).callSetHasNectar(false);
 
                     if(playerEntity instanceof ServerPlayer) {
                         BzCriterias.BEE_DROP_POLLEN_PUFF_TRIGGER.trigger((ServerPlayer) playerEntity, itemstack);

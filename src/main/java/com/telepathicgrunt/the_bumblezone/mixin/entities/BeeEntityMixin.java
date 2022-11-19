@@ -26,11 +26,10 @@ public abstract class BeeEntityMixin extends Entity {
      * @reason make bees not drown in honey fluid
      */
     @Inject(method = "customServerAiStep()V",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/entity/animal/Bee;isInWaterOrBubble()Z", shift = At.Shift.AFTER))
+            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/entity/animal/Bee;isInWaterOrBubble()Z", shift = At.Shift.AFTER),
+            require = 0)
     private void thebumblezone_honeyFluidNotDrown(CallbackInfo ci) {
-        if(this.underWaterTicks >= 10 &&
-            (this.forgeFluidTypeHeight.getOrDefault(BzTags.BZ_HONEY_FLUID, 0) > 0 ||
-            this.forgeFluidTypeHeight.getOrDefault(BzTags.ROYAL_JELLY_FLUID, 0) > 0))
+        if(this.underWaterTicks >= 10 && this.forgeFluidTypeHeight.getOrDefault(BzTags.SPECIAL_HONEY_LIKE, 0) > 0)
         {
             this.underWaterTicks = 9;
         }

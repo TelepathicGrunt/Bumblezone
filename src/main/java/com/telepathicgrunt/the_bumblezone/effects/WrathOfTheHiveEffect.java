@@ -28,6 +28,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -263,6 +264,13 @@ public class WrathOfTheHiveEffect extends MobEffect {
         else{
             // remove the effect like normal
             super.removeAttributeModifiers(entity, attributes, amplifier);
+        }
+    }
+
+    public static void onLivingEntityDeath(LivingDeathEvent event) {
+        LivingEntity livingEntity = event.getEntity();
+        if (livingEntity != null) {
+            WrathOfTheHiveEffect.calmTheBees(livingEntity.level, livingEntity);
         }
     }
 }

@@ -21,13 +21,13 @@ public class BzClientConfigs {
                 .comment(" \n-----------------------------------------------------\n",
                         " Rate for how often a bee will have an LGBT+ pajama!\n")
                 .translation("the_bumblezone.config.lgbtbeerate")
-                .defineInRange("lgbt+ bee rates", 0.015D, 0D, 1D);
+                .defineInRange("lgbt+ bee rates", 0.013D, 0D, 1D);
 
         ukraineBeeRate = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " Rate for how often a bee will have an Ukraine pajama!\n")
                 .translation("the_bumblezone.config.ukrainebeerate")
-                .defineInRange("ukraine bee rates", 0.01D, 0D, 1D);
+                .defineInRange("ukraine bee rates", 0.004D, 0D, 1D);
 
         enableAltBeeSkinRenderer = builder
                 .comment(" \n-----------------------------------------------------\n",
