@@ -5,6 +5,10 @@ Fixed bug with vanilla Bees that make them not threadsafe when created as part o
  Very niche rare crash to even get to happen but good for me to still patch just in case it does cause issues for people rarely.
  Could be cause of some crashes on AoF6.
 
+##### Fluids:
+Significantly fixed rendering issues with Honey Fluid and Royal Jelly Fluid.
+ Also fixed particles from fluid spawning way out of the fluid at times.
+
 
 ### **(V.6.4.1) (1.19.2 Minecraft)**
 

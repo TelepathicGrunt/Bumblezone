@@ -50,10 +50,12 @@ public abstract class RoyalJellyFluid extends FlowingFluid {
 
     @Override
     public void animateTick(Level worldIn, BlockPos pos, FluidState state, RandomSource random) {
+        float fluidHeightPercent = Math.min(1, (state.isSource() ? 8 : state.getValue(LEVEL)) / 7f);
+        float fluidBottomOffset = Math.min(1, (state.isSource() ? 0 : state.getValue(BOTTOM_LEVEL)) / 7f);
         if (random.nextInt(82) == 0) {
             worldIn.addParticle(BzParticles.ROYAL_JELLY_PARTICLE,
                     pos.getX() + random.nextFloat(),
-                    pos.getY() + random.nextFloat(),
+                    pos.getY() + fluidBottomOffset + (random.nextFloat() * (fluidHeightPercent - fluidBottomOffset)),
                     pos.getZ() + random.nextFloat(),
                     0.0D,
                     0.0D,
