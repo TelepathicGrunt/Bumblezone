@@ -49,7 +49,7 @@ public class EnchantmentHelperMixin {
             return false;
         }
 
-        return originalDiscoverability.call();
+        return originalDiscoverability.call(enchantment);
     }
 
     // Apply enchantments that normally would not be able to be applied
