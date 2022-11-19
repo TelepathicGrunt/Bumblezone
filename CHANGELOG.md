@@ -1,3 +1,10 @@
+### **(V.6.4.4 Changes) (1.19.2 Minecraft)**
+
+##### Misc:
+Fixed bug with vanilla Bees that make them not threadsafe when created as part of worldgen threaded chunk creation.
+ Very niche rare crash to even get to happen but good for me to still patch just in case it does cause issues for people rarely.
+
+
 ### **(V.6.4.3 Changes) (1.19.2 Minecraft)**
 
 ##### Fluids:
