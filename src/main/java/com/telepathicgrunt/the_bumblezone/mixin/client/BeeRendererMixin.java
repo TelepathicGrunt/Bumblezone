@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.client;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.telepathicgrunt.the_bumblezone.client.rendering.BeeVariantRenderer;
 import net.minecraft.client.renderer.entity.BeeRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -12,12 +13,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(BeeRenderer.class)
 public class BeeRendererMixin {
 
-    @Inject(method = "getTextureLocation(Lnet/minecraft/world/entity/animal/Bee;)Lnet/minecraft/resources/ResourceLocation;",
-            at = @At(value = "HEAD"), cancellable = true, require = 0)
-    private void thebumblezone_alternativeBeeSkins(Bee bee, CallbackInfoReturnable<ResourceLocation> cir) {
+    @ModifyReturnValue(method = "getTextureLocation(Lnet/minecraft/world/entity/animal/Bee;)Lnet/minecraft/resources/ResourceLocation;",
+            at = @At(value = "RETURN"))
+    private ResourceLocation thebumblezone_alternativeBeeSkins(ResourceLocation currentSkin, Bee bee) {
         ResourceLocation newSkin = BeeVariantRenderer.getTextureLocation(bee);
         if (newSkin != null) {
-            cir.setReturnValue(newSkin);
+            return newSkin;
         }
+        return currentSkin;
     }
 }
