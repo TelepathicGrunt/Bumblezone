@@ -13,6 +13,17 @@ Significantly fixed rendering issues with Honey Fluid and Royal Jelly Fluid.
 
 Fixed Honey Fluid not falling when in midair.
 
+##### Items:
+Fixed Pollen Puff sometimes placing blocks at invalid locations like Biome Makeover's Moth Blossom flower in midair.
+
+##### Mod Compat:
+Bosses of Mass Destruction's Void Lily, Twilight Forests's Thorn Rose, Sria's Flowers's small flowers,
+and Biome Makeover's Black Thistle and Foxglove can spawn in Hanging Garden structure now.
+
+Farmer's Delight's Wild Tomatoes plant cannot spawn in Hanging Gardens structure now.
+
+Biome Makeover's Black Thistle and Foxglove can be multiplied by Pollen Puff now.
+
 
 ### **(V.6.4.1) (1.19.2 Minecraft)**
 
