@@ -20,6 +20,9 @@ Changed my mind and now Biome Makeover's Black Thistle and Blue Skies's Lucentro
 Pokecube's Purple Wisteria Vines and Extended Mushroom's Infected Flower will no longer spawn in Hanging Gardens 
  (Infected Flower will not be able to be reproduced with Pollen Puff either anymore)
 
+Pokecube's bear themed Pokemon will now get Wrath of the Hive when in Bumblezone and attacked by bees!
+ Careful on what Pokemon you choose in that dimension!
+
 Alchemist's Garden's Shroom mobs will spawn their respective mushrooms when hit with Pollen Puff.
 
 
