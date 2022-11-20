@@ -49,6 +49,10 @@
     {
       "id": "farmersdelight:wild_beetroots",
       "required": false
+    },
+    {
+      "id": "extendedmushrooms:infested_flower",
+      "required": false
     }
   ]
 }

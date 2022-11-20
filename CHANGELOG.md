@@ -15,6 +15,13 @@ Fixed broken Pollen Puff entry for Ars Nouveau's Flourishing Weald Walker causin
 
 Pollen Puff pollination json files will now safely skip invalid entries and parse the rest of the json file if a typo is done on a mob name.
 
+Changed my mind and now Biome Makeover's Black Thistle and Blue Skies's Lucentroot flowers no longer spawn in Hanging Garden structure now.
+
+Pokecube's Purple Wisteria Vines and Extended Mushroom's Infected Flower will no longer spawn in Hanging Gardens 
+ (Infected Flower will not be able to be reproduced with Pollen Puff either anymore)
+
+Alchemist's Garden's Shroom mobs will spawn their respective mushrooms when hit with Pollen Puff.
+
 
 ### **(V.6.4.4 Changes) (1.19.2 Minecraft)**
 

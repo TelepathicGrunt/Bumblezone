@@ -1,0 +1,46 @@
+{
+  "alchemists_garden:shroom": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:red_mushroom" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "alchemists_garden:red_shroom_minion": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:red_mushroom" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "alchemists_garden:brown_shroom": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:brown_mushroom" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "alchemists_garden:brown_shroom_minion": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:brown_mushroom" },
+          "weight": 1
+        }
+      ]
+    }
+  }]
+}
