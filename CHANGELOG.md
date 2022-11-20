@@ -13,7 +13,7 @@ Pollen Puff pollination json files will now safely skip invalid entries and pars
 
 Changed my mind and now Biome Makeover's Black Thistle and Blue Skies's Lucentroot flowers no longer spawn in Hanging Garden structure now.
 
-Pokecube's Purple Wisteria Vines and Extended Mushroom's Infected Flower will no longer spawn in Hanging Gardens 
+Pokecube's Purple Wisteria Vines or Polluting Blossom and Extended Mushroom's Infected Flower will no longer spawn in Hanging Gardens 
  (Infected Flower will not be able to be reproduced with Pollen Puff either anymore)
 
 Pokecube's bear themed Pokemon will now get Wrath of the Hive when in Bumblezone and attacked by bees!
