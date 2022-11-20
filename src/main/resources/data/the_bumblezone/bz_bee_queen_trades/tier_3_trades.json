@@ -63,6 +63,10 @@
     {
       "id": "expandeddelight:peanut_butter_honey_sandwich",
       "required": false
+    },
+    {
+      "id": "createaddition:honey_cake",
+      "required": false
     }
   ],
   "possible_rewards": [

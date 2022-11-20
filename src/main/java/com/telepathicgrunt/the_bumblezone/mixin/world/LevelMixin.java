@@ -23,30 +23,25 @@ public class LevelMixin {
     @Shadow
     public float thunderLevel;
 
-
     // Fix Bumblezone dimension fog getting screwed by rain/thunder effects in Overworld.
     @Inject(method = "setRainLevel(F)V",
-            at = @At(value = "HEAD"),
-            cancellable = true,
+            at = @At(value = "TAIL"),
             require = 0)
     private void thebumblezone_noRainInDimension(float strength, CallbackInfo ci) {
         if (((Level)(Object)this).dimension().equals(BzDimension.BZ_WORLD_KEY)) {
             oRainLevel = 0;
             rainLevel = 0;
-            ci.cancel();
         }
     }
 
     // Fix Bumblezone dimension fog getting screwed by rain/thunder effects in Overworld.
     @Inject(method = "setThunderLevel(F)V",
-            at = @At(value = "HEAD"),
-            cancellable = true,
+            at = @At(value = "TAIL"),
             require = 0)
     private void thebumblezone_noThunderInDimension(float strength, CallbackInfo ci) {
         if (((Level)(Object)this).dimension().equals(BzDimension.BZ_WORLD_KEY)) {
             oThunderLevel = 0;
             thunderLevel = 0;
-            ci.cancel();
         }
     }
 }

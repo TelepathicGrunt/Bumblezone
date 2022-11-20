@@ -1,3 +1,31 @@
+### **(V.6.4.4 Changes) (1.19.2 Minecraft)**
+
+##### Fluids:
+Significantly fixed rendering issues with Honey Fluid and Royal Jelly Fluid.
+ Also fixed particles from fluid spawning way out of the fluid at times.
+
+Fixed issue where Sugar Water fluid cannot damage blazes nor allow fish to swim and other behaviors that Forge's Fluid API is currently having issues with.
+
+##### Misc:
+Fixed bug with vanilla Bees that make them not threadsafe when created as part of worldgen threaded chunk creation.
+ Very niche rare crash to even get to happen but good for me to still patch just in case it does cause issues for people rarely.
+
+Cleaned up some more mixins to make them more stackable with other people's mixins
+
+##### Items:
+Fixed Pollen Puff sometimes placing blocks at invalid locations like Biome Makeover's Moth Blossom flower in midair.
+
+##### Mod Compat:
+Bosses of Mass Destruction's Void Lily, Twilight Forests's Thorn Rose, 
+ and Biome Makeover's Black Thistle and Foxglove can spawn in Hanging Garden structure now.
+
+Farmer's Delight's Wild Tomatoes plant cannot spawn in Hanging Gardens structure now.
+
+Biome Makeover's Black Thistle and Foxglove can be multiplied by Pollen Puff now.
+
+Create Addition's Honey Cake can be fed to bees now and traded with Bee Queen
+
+
 ### **(V.6.4.3 Changes) (1.19.2 Minecraft)**
 
 ##### Structures:
