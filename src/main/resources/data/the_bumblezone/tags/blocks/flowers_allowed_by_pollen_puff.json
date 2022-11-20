@@ -1,6 +1,38 @@
 {
   "replace": false,
   "values": [
-    "#flowers"
+    "#flowers",
+    {
+      "id": "srias_flowers:blue_poppy",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:hydrangea",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:crocus",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:snowdrops",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:orange_daisy",
+      "required": false
+    },
+    {
+      "id": "biomemakeover:black_thistle",
+      "required": false
+    },
+    {
+      "id": "biomemakeover:foxglove",
+      "required": false
+    },
+    {
+      "id": "ecologics:azalea_flower",
+      "required": false
+    }
   ]
 }

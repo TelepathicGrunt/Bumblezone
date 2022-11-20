@@ -29,6 +29,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -40,6 +41,7 @@ import net.minecraft.world.entity.projectile.Fireball;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -53,6 +55,7 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStatePr
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.function.BiFunction;
 
@@ -233,16 +236,35 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 return false;
             }
 
+            FakeServerPlayer player = new FakePlayerBuilder(new ResourceLocation(Bumblezone.MODID, "default_fake_player"))
+                    .create(this.level.getServer(), (ServerLevel) this.level, "placer");
             if(blockstate.getBlock() instanceof DoublePlantBlock) {
                 blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
                 isTallPlant = true;
             }
-
-            if(blockstate.getBlock() instanceof VineBlock vineBlock) {
+            else if(blockstate.getBlock() instanceof VineBlock vineBlock) {
                 for(Direction direction : Direction.Plane.HORIZONTAL) {
                     BooleanProperty faceProperty = VineBlock.getPropertyForFace(direction);
                     boolean flag = ((VineBlockAccessor)vineBlock).callCanSupportAtFace(level, newPos, direction);
                     blockstate = blockstate.setValue(faceProperty, flag);
+                }
+            }
+            else {
+                try {
+                    BlockPlaceContext blockPlaceContext = new BlockPlaceContext(
+                            player,
+                            InteractionHand.MAIN_HAND,
+                            ItemStack.EMPTY,
+                            new BlockHitResult(Vec3.atCenterOf(newPos.above()), Direction.UP, newPos, false)
+                    );
+                    blockstate = blockstate.getBlock().getStateForPlacement(blockPlaceContext);
+                }
+                catch (Exception e) {
+                    Bumblezone.LOGGER.error("Pollen Puff: Unable to call getStateForPlacement for the following block: {} - Will use original default blockstate instead.", blockstate);
+                }
+
+                if (blockstate == null || blockstate.is(Blocks.AIR)) {
+                    return false;
                 }
             }
 
@@ -263,9 +285,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 }
 
                 this.level.setBlock(newPos, blockstate, 3);
-                FakeServerPlayer fakePlayer = new FakePlayerBuilder(new ResourceLocation(Bumblezone.MODID, "default_fake_player"))
-                        .create(this.level.getServer(), (ServerLevel) this.level, "placer");
-                blockstate.getBlock().setPlacedBy(this.level, newPos, blockstate, fakePlayer, ItemStack.EMPTY);
+                blockstate.getBlock().setPlacedBy(this.level, newPos, blockstate, player, ItemStack.EMPTY);
 
                 if(this.getOwner() instanceof ServerPlayer serverPlayer && blockstate.is(BlockTags.FLOWERS)) {
                     MiscComponent.onFlowerSpawned(serverPlayer);

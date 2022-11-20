@@ -1,6 +1,38 @@
 {
   "replace": false,
   "values": [
-    "#minecraft:small_flowers"
+    "#minecraft:small_flowers",
+    {
+      "id": "srias_flowers:blue_poppy",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:hydrangea",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:crocus",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:snowdrops",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:orange_daisy",
+      "required": false
+    },
+    {
+      "id": "ecologics:azalea_flower",
+      "required": false
+    },
+    {
+      "id": "bosses_of_mass_destruction:void_lily",
+      "required": false
+    },
+    {
+      "id": "twilightforest:thorn_rose",
+      "required": false
+    }
   ]
 }
