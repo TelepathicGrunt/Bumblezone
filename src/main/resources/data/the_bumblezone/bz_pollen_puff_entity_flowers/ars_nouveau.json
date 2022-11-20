@@ -9,12 +9,12 @@
         },
         {
           "data": { "Name": "minecraft:air" },
-          "weight": 3
+          "weight": 1
         }
       ]
     }
   }],
-  "ars_nouveau:florishing_weald_walker": [{
+  "ars_nouveau:flourishing_weald_walker": [{
     "plants_to_spawn": {
       "type": "minecraft:weighted_state_provider",
       "entries": [
@@ -24,7 +24,7 @@
         },
         {
           "data": { "Name": "minecraft:air" },
-          "weight": 3
+          "weight": 1
         }
       ]
     }
@@ -39,7 +39,7 @@
         },
         {
           "data": { "Name": "minecraft:air" },
-          "weight": 3
+          "weight": 1
         }
       ]
     }

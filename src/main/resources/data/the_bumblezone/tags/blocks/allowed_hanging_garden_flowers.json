@@ -33,6 +33,10 @@
     {
       "id": "twilightforest:thorn_rose",
       "required": false
+    },
+    {
+      "id": "twigs:azalea_flowers",
+      "required": false
     }
   ]
 }

@@ -18,6 +18,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
+import net.minecraftforge.common.LenientUnboundedMapCodec;
 import net.minecraftforge.fml.ModList;
 
 import java.util.HashMap;
@@ -37,15 +38,14 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
     }
 
     public static final Codec<Map<EntityType<?>, List<EntryObject>>> CODEC =
-            Codec.unboundedMap(ResourceLocation.CODEC.comapFlatMap(r -> {
+            new LenientUnboundedMapCodec<>(ResourceLocation.CODEC.comapFlatMap(r -> {
                 Optional<EntityType<?>> entityTypeOptional = Registry.ENTITY_TYPE.getOptional(r);
                 if (entityTypeOptional.isPresent()) {
                     return DataResult.success(entityTypeOptional.get());
-                }
-                else if (ModList.get().isLoaded(r.getNamespace())) {
+                } else if (ModList.get().isLoaded(r.getNamespace())) {
+                    Bumblezone.LOGGER.error("Bz Pollination File Reading Error - Unknown EntityType:  " + r);
                     return DataResult.error("Bz Error - Unknown EntityType:  " + r + "  - ");
-                }
-                else {
+                } else {
                     return DataResult.error("Bz Error - Target mod not present");
                 }
             }, Registry.ENTITY_TYPE::getKey), Codec.list(EntryObject.ENTRY_CODEC));
@@ -67,7 +67,7 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
                         Bumblezone.LOGGER.error("Bumblezone Error: Couldn't parse pollen puff entity to flower file {} - Error: {}", fileIdentifier, e);
                     }
                  });
-                Map<EntityType<?>, List<EntryObject>> newMap = mapDataResult.result().orElse(new HashMap<>());
+                Map<EntityType<?>, List<EntryObject>> newMap = mapDataResult.resultOrPartial((s) -> {}).orElse(new HashMap<>());
 
                 newMap.forEach((e, v) -> {
                     // Combine existing entries
