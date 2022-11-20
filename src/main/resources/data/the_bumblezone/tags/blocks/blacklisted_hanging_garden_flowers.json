@@ -112,6 +112,10 @@
       "required": false
     },
     {
+      "id": "blue_skies:lucentroot",
+      "required": false
+    },
+    {
       "id": "floralis:brown_flower",
       "required": false
     },
@@ -133,6 +137,18 @@
     },
     {
       "id": "farmersdelight:wild_tomatoes",
+      "required": false
+    },
+    {
+      "id": "extendedmushrooms:infested_flower",
+      "required": false
+    },
+    {
+      "id": "pokecube_legends:purple_wisteria_vines_plant",
+      "required": false
+    },
+    {
+      "id": "pokecube_legends:purple_wisteria_vines",
       "required": false
     }
   ]
