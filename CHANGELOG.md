@@ -12,6 +12,19 @@ Fixed bug with vanilla Bees that make them not threadsafe when created as part o
 
 Cleaned up some more mixins to make them more stackable with other people's mixins
 
+##### Items:
+Fixed Pollen Puff sometimes placing blocks at invalid locations like Biome Makeover's Moth Blossom flower in midair.
+
+##### Mod Compat:
+Bosses of Mass Destruction's Void Lily, Twilight Forests's Thorn Rose, 
+ and Biome Makeover's Black Thistle and Foxglove can spawn in Hanging Garden structure now.
+
+Farmer's Delight's Wild Tomatoes plant cannot spawn in Hanging Gardens structure now.
+
+Biome Makeover's Black Thistle and Foxglove can be multiplied by Pollen Puff now.
+
+Create Addition's Honey Cake can be fed to bees now and traded with Bee Queen
+
 
 ### **(V.6.4.3 Changes) (1.19.2 Minecraft)**
 
