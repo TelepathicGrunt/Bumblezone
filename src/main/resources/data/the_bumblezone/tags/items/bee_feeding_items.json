@@ -68,6 +68,10 @@
     {
       "id": "create:honeyed_apple",
       "required": false
+    },
+    {
+      "id": "createaddition:honey_cake",
+      "required": false
     }
   ]
 }
