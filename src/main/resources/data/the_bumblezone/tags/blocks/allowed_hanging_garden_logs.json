@@ -2,7 +2,6 @@
   "replace": false,
   "values": [
     "minecraft:birch_log",
-    "minecraft:oak_log",
     {
       "id": "ecologics:flowering_azalea_log",
       "required": false

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "the_bumblezone:glistering_honey_crystal",
     "the_bumblezone:honey_crystal",
     "minecraft:enchanting_table",
     "minecraft:honey_block",

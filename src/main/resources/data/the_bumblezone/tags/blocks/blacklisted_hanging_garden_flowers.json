@@ -150,6 +150,10 @@
     {
       "id": "pokecube_legends:purple_wisteria_vines",
       "required": false
+    },
+    {
+      "id": "pokecube_legends:polluting_blossom",
+      "required": false
     }
   ]
 }

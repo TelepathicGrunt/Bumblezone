@@ -119,6 +119,10 @@
     {
       "id": "create:honeyed_apple",
       "required": false
+    },
+    {
+      "id": "extendedmushrooms:honey_fungus_cap",
+      "required": false
     }
   ],
   "possible_rewards": [
