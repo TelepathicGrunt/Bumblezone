@@ -26,8 +26,9 @@ public class GlassBottleUseMixin {
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
     private void thebumblezone_bottleFluidInteractSugarWater(Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir, List<AreaEffectCloud> list, ItemStack itemStack, HitResult hitResult, BlockPos blockPos) {
-        if (GlassBottleBehavior.useBottleOnSugarWater(world, user, hand, blockPos))
+        if (GlassBottleBehavior.useBottleOnSugarWater(world, user, hand, blockPos)) {
             cir.setReturnValue(InteractionResultHolder.success(user.getItemInHand(hand)));
+        }
     }
 
     //using glass bottle to get honey could anger bees
@@ -36,7 +37,8 @@ public class GlassBottleUseMixin {
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
     private void thebumblezone_bottleFluidInteractHoneyLikeFluid(Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir, List<AreaEffectCloud> list, ItemStack itemStack, HitResult hitResult, BlockPos blockPos) {
-        if (GlassBottleBehavior.useBottleOnBzHoneyLikeFluid(world, user, hand, blockPos))
+        if (GlassBottleBehavior.useBottleOnBzHoneyLikeFluid(world, user, hand, blockPos)) {
             cir.setReturnValue(InteractionResultHolder.success(user.getItemInHand(hand)));
+        }
     }
 }

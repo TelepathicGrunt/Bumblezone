@@ -130,6 +130,10 @@
     {
       "id": "farmersdelight:wild_beetroots",
       "required": false
+    },
+    {
+      "id": "farmersdelight:wild_tomatoes",
+      "required": false
     }
   ]
 }

@@ -1,31 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.piston.PistonMovingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
-
-import java.util.Iterator;
-import java.util.List;
 
 @Mixin(PistonMovingBlockEntity.class)
 public class PistonMovingBlockEntityMixin {
@@ -42,12 +27,12 @@ public class PistonMovingBlockEntityMixin {
     }
 
     // makes entities stick to royal jelly block
-    @Inject(method = "isStickyForEntities()Z",
-            at = @At(value = "HEAD"),
-            cancellable = true)
-    private void thebumblezone_royalJellyBlockMoveEntities(CallbackInfoReturnable<Boolean> cir) {
-        if(this.movedState.is(BzBlocks.ROYAL_JELLY_BLOCK)) {
-            cir.setReturnValue(true);
+    @ModifyReturnValue(method = "isStickyForEntities()Z",
+            at = @At(value = "RETURN"))
+    private boolean thebumblezone_royalJellyBlockMoveEntities(boolean isSticky) {
+        if(!isSticky && this.movedState.is(BzBlocks.ROYAL_JELLY_BLOCK)) {
+            return true;
         }
+        return isSticky;
     }
 }

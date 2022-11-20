@@ -57,10 +57,12 @@ public abstract class HoneyFluid extends FlowingFluid {
 
     @Override
     public void animateTick(Level worldIn, BlockPos pos, FluidState state, RandomSource random) {
+        float fluidHeightPercent = Math.min(1, (state.isSource() ? 8 : state.getValue(LEVEL)) / 7f);
+        float fluidBottomOffset = Math.min(1, (state.isSource() ? 0 : state.getValue(BOTTOM_LEVEL)) / 7f);
         if (random.nextInt(82) == 0) {
             worldIn.addParticle(BzParticles.HONEY_PARTICLE,
                     pos.getX() + random.nextFloat(),
-                    pos.getY() + random.nextFloat(),
+                    pos.getY() + fluidBottomOffset + (random.nextFloat() * (fluidHeightPercent - fluidBottomOffset)),
                     pos.getZ() + random.nextFloat(),
                     0.0D,
                     0.0D,
@@ -199,9 +201,9 @@ public abstract class HoneyFluid extends FlowingFluid {
 
     @Override
     protected FluidState getNewLiquid(LevelReader worldReader, BlockPos blockPos, BlockState blockState) {
-        boolean isBzFluidBlock = blockState.hasProperty(BOTTOM_LEVEL) && blockState.hasProperty(LEVEL);
+        boolean isBzFluidBlock = blockState.hasProperty(BOTTOM_LEVEL) && blockState.hasProperty(LiquidBlock.LEVEL);
         int lowestNeighboringFluidLevel = isBzFluidBlock ? blockState.getValue(BOTTOM_LEVEL) : HoneyFluidBlock.maxBottomLayer;
-        int currentFluidLevel = isBzFluidBlock ? blockState.getValue(LEVEL) : 0;
+        int currentFluidLevel = isBzFluidBlock ? blockState.getValue(LiquidBlock.LEVEL) : 0;
         int highestNeighboringFluidLevel = currentFluidLevel;
         int neighboringFluidSource = 0;
         boolean hasAboveFluid = isBzFluidBlock ? blockState.getValue(ABOVE_FLUID) : false;
@@ -267,27 +269,29 @@ public abstract class HoneyFluid extends FlowingFluid {
         return fluidState.getValue(ABOVE_FLUID) || aboveFluidIsThisFluid ? 1.0f : fluidState.getOwnHeight();
     }
 
-    public static boolean shouldNotCullSide(BlockGetter world, BlockPos blockPos, Direction direction, FluidState currentFluidState) {
+    public static boolean shouldRenderSide(BlockGetter world, BlockPos blockPos, Direction direction, FluidState currentFluidState) {
         if(direction == Direction.UP) {
             FluidState aboveFluidState = world.getBlockState(blockPos.above()).getFluidState();
-            return aboveFluidState.is(BzTags.SPECIAL_HONEY_LIKE) && !aboveFluidState.isSource() &&
-                    (aboveFluidState.getValue(BOTTOM_LEVEL) != 0 || currentFluidState.getAmount() != 8);
+            if (aboveFluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
+                return (!aboveFluidState.isSource() && aboveFluidState.getValue(BOTTOM_LEVEL) != 0) || currentFluidState.getAmount() != 8;
+            }
         }
         else if(direction == Direction.DOWN) {
             FluidState belowFluidState = world.getBlockState(blockPos.below()).getFluidState();
-            return belowFluidState.is(BzTags.SPECIAL_HONEY_LIKE) && !currentFluidState.isSource() &&
-                    (belowFluidState.getAmount() != 8 || currentFluidState.getValue(BOTTOM_LEVEL) != 0);
+            if (belowFluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
+                return !currentFluidState.isSource() && (belowFluidState.getAmount() != 8 || currentFluidState.getValue(BOTTOM_LEVEL) != 0);
+            }
         }
         else {
             FluidState sideFluidState = world.getBlockState(blockPos.relative(direction)).getFluidState();
             if(sideFluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
-                int bottomLayerCurrent = currentFluidState.isSource() ? 8 : currentFluidState.getValue(BOTTOM_LEVEL);
-                int bottomLayerSide = sideFluidState.isSource() ? 8 : sideFluidState.getValue(BOTTOM_LEVEL);
+                int bottomLayerCurrent = currentFluidState.isSource() ? 0 : currentFluidState.getValue(BOTTOM_LEVEL);
+                int bottomLayerSide = sideFluidState.isSource() ? 0 : sideFluidState.getValue(BOTTOM_LEVEL);
                 return bottomLayerCurrent < bottomLayerSide;
             }
         }
 
-        return false;
+        return true;
     }
 
     public static void breathing(LivingEntity livingEntity) {

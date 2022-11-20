@@ -1,14 +1,39 @@
+### **(V.6.4.4 Changes) (1.19.2 Minecraft)**
+
+##### Fluids:
+Significantly fixed rendering issues with Honey Fluid and Royal Jelly Fluid.
+ Also fixed particles from fluid spawning way out of the fluid at times.
+
+Fixed Honey Fluid not falling when in midair.
+
+##### Misc:
+Fixed bug with vanilla Bees that make them not threadsafe when created as part of worldgen threaded chunk creation.
+ Very niche rare crash to even get to happen but good for me to still patch just in case it does cause issues for people rarely.
+
+Cleaned up some more mixins to make them more stackable with other people's mixins
+
+##### Items:
+Fixed Pollen Puff sometimes placing blocks at invalid locations like Biome Makeover's Moth Blossom flower in midair.
+
+##### Mod Compat:
+Bosses of Mass Destruction's Void Lily, Twilight Forests's Thorn Rose, Sria's Flowers's small flowers,
+ and Biome Makeover's Black Thistle and Foxglove can spawn in Hanging Garden structure now.
+
+Farmer's Delight's Wild Tomatoes plant cannot spawn in Hanging Gardens structure now.
+
+Biome Makeover's Black Thistle and Foxglove can be multiplied by Pollen Puff now.
+
+
 ### **(V.6.4.3 Changes) (1.19.2 Minecraft)**
 
 ##### Fluids:
 Fixed Royal Jelly Fluid missing visual overlays and player physics when inside fluid.
 
+Fixed being able to "jump" while on ground inside Royal Jelly Fluid and Sugar Water Fluid.
+
 ##### Structures:
 Reduce chance of maps in Hive Temple loot a little bit.
  Increased number of threads spawned by Bumblezone so multiple Hive Temple maps and Honey Compasses can search at once from 1 to 3.
-
-##### Fluids:
-Fixed being able to "jump" while on ground inside Royal Jelly Fluid and Sugar Water Fluid.
 
 ##### Misc:
 Fixed LGBT+ and Ukraine Bee Skin configs fighting each other on applying. And changed the default config values for them.
