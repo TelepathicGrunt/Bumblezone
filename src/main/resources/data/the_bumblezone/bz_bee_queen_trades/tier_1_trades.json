@@ -89,6 +89,10 @@
       "required": false
     },
     {
+      "id": "#forge:fence_gates/wooden",
+      "required": false
+    },
+    {
       "id": "#resourcefulbees:resourceful_honeycomb_block",
       "required": false
     },
@@ -201,7 +205,11 @@
       "required": false
     },
     {
-      "id": "buzzier_bees:honeycomb_trapdoor",
+      "id": "extendedmushrooms:honey_fungus_cap_carpet",
+      "required": false
+    },
+    {
+      "id": "extendedmushrooms:honey_fungus",
       "required": false
     }
   ],
