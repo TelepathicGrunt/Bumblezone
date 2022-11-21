@@ -3,10 +3,6 @@
   "values": [
     "#minecraft:tall_flowers",
     {
-      "id": "biomemakeover:black_thistle",
-      "required": false
-    },
-    {
       "id": "biomemakeover:foxglove",
       "required": false
     }

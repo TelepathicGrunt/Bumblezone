@@ -113,7 +113,8 @@ public class BeeAggression {
 
     public static void onLivingEntityHurt(LivingHurtEvent event) {
         LivingEntity livingEntity = event.getEntity();
-        if (livingEntity != null &&
+        if (event.getAmount() > 0 &&
+            livingEntity != null &&
             !livingEntity.level.isClientSide()  &&
             livingEntity instanceof Bee &&
             event.getSource() != null &&

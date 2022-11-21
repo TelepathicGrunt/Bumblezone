@@ -175,8 +175,6 @@ public class BumblezoneClient {
         ItemBlockRenderTypes.setRenderLayer(BzFluids.HONEY_FLUID_FLOWING.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.ROYAL_JELLY_FLUID.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BzFluids.ROYAL_JELLY_FLUID_FLOWING.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BzBlocks.POROUS_HONEYCOMB.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BzBlocks.EMPTY_HONEYCOMB_BROOD.get(), RenderType.cutout());
     }
 
     public static void registerEntityModels(EntityRenderersEvent.RegisterLayerDefinitions event) {

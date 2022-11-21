@@ -76,6 +76,78 @@
     {
       "id": "unusualend:ender_blob",
       "required": false
+    },
+    {
+      "id": "pokecube:beartic",
+      "required": false
+    },
+    {
+      "id": "pokecube:cubchoo",
+      "required": false
+    },
+    {
+      "id": "pokecube:bewear",
+      "required": false
+    },
+    {
+      "id": "pokecube:stufful",
+      "required": false
+    },
+    {
+      "id": "pokecube:urshifu-single-strike",
+      "required": false
+    },
+    {
+      "id": "pokecube:urshifu-rapid-strike",
+      "required": false
+    },
+    {
+      "id": "pokecube:urshifu-single-strike-gmax",
+      "required": false
+    },
+    {
+      "id": "pokecube:urshifu-rapid-strike-gmax",
+      "required": false
+    },
+    {
+      "id": "pokecube:kubfu",
+      "required": false
+    },
+    {
+      "id": "pokecube:beartic",
+      "required": false
+    },
+    {
+      "id": "pokecube:munchlax",
+      "required": false
+    },
+    {
+      "id": "pokecube:snorlax",
+      "required": false
+    },
+    {
+      "id": "pokecube:snorlax-gmax",
+      "required": false
+    },
+    {
+      "id": "pokecube:pancham",
+      "required": false
+    },
+    {
+      "id": "pokecube:pangoro",
+      "required": false
+    },
+    {
+      "id": "pokecube:ursaring",
+      "required": false
+    },
+    {
+      "id": "pokecube:teddiursa",
+      "required": false
+    },
+    {
+      "id": "pokecube:pangoro",
+      "required": false
     }
   ]
 }

@@ -77,7 +77,7 @@ public class Bumblezone{
         //Events
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         forgeBus.addListener(BeeAggression::pickupItemAnger);
-        forgeBus.addListener(BeeAggression::onLivingEntityHurt);
+        forgeBus.addListener(EventPriority.LOWEST, BeeAggression::onLivingEntityHurt);
         forgeBus.addListener(BeeInteractivity::onEntityInteractEvent);
         forgeBus.addListener(WrathOfTheHiveEffect::onLivingEntityDeath);
         forgeBus.addListener(EventPriority.LOWEST, BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
@@ -96,14 +96,14 @@ public class Bumblezone{
         forgeBus.addListener(EntityMisc::resetValueOnRespawn);
         forgeBus.addListener(EntityMisc::onItemCrafted);
         forgeBus.addListener(EntityMisc::onBeeBreed);
-        forgeBus.addListener(EntityMisc::onEntityKilled);
+        forgeBus.addListener(EventPriority.LOWEST, EntityMisc::onEntityKilled);
         forgeBus.addListener(EntityMisc::onHoneyBottleDrank);
         forgeBus.addListener(EntityMisc::onHoneySlimeBred);
         forgeBus.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
         forgeBus.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
         forgeBus.addListener(ThreadExecutor::handleServerAboutToStartEvent);
         forgeBus.addListener(ThreadExecutor::handleServerStoppingEvent);
-        forgeBus.addListener(EventPriority.NORMAL, this::registerDatapackListener);
+        forgeBus.addListener(this::registerDatapackListener);
         forgeBus.addListener(BzCommands::registerCommand);
 
         //Registration

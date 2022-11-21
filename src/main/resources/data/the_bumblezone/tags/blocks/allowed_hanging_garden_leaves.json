@@ -1,0 +1,103 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:birch_leaves",
+    "minecraft:flowering_azalea_leaves",
+    {
+      "id": "byg:flowering_orchard_leaves",
+      "required": false
+    },
+    {
+      "id": "byg:skyris_leaves",
+      "required": false
+    },
+    {
+      "id": "terrestria:sakura_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:lavender_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:pink_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:yellow_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:orange_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:red_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "colorful-azaleas:red_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "colorful-azaleas:orange_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "colorful-azaleas:yellow_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "colorful-azaleas:pink_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "colorful-azaleas:purple_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "colorful-azaleas:white_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:flowering_jacaranda_leaves",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:budding_jacaranda_leaves",
+      "required": false
+    },
+    {
+      "id": "fruittrees:redlove_leaves",
+      "required": false
+    },
+    {
+      "id": "fruittrees:cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "fruittrees:apple_leaves",
+      "required": false
+    },
+    {
+      "id": "cherryblossomgrotto:cherry_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:pink_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:white_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:flowering_oak_leaves",
+      "required": false
+    },
+    {
+      "id": "blossom:flowering_oak_leaves",
+      "required": false
+    }
+  ]
+}
