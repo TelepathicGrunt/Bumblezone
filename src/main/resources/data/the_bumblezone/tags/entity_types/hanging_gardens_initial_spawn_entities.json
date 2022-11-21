@@ -76,6 +76,34 @@
     {
       "id": "whisperwoods:moth",
       "required": false
+    },
+    {
+      "id": "natural_decoration:white_butterfly",
+      "required": false
+    },
+    {
+      "id": "natural_decoration:yellow_butterfly",
+      "required": false
+    },
+    {
+      "id": "natural_decoration:morpho_butterfly",
+      "required": false
+    },
+    {
+      "id": "natural_decoration:morpho_butterfly",
+      "required": false
+    },
+    {
+      "id": "natural_decoration:snailone",
+      "required": false
+    },
+    {
+      "id": "natural_decoration:snailtwo",
+      "required": false
+    },
+    {
+      "id": "natural_decoration:snailthree",
+      "required": false
     }
   ]
 }

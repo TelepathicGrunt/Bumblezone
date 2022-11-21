@@ -2,7 +2,8 @@
 
 ##### Structures:
 Hanging Garden structure will now be able to randomly spawn flowering leaves or logs from other mods!
- This includes some leaves/logs from BYG, Quark, Ecologics, Terrestria, Colorful Azaleas, and Aurora's Decorations!
+ This includes some leaves/logs from Oh The Biomes You'll Go, Biomes O Plenty, Quark, Ecologics, Terrestria, 
+ Fruit Trees, Cherry Blossom Grotto, Colorful Azaleas, Blossom, and Aurora's Decorations!
  The new block tags that control this are:
  `the_bumblezone:allowed_hanging_garden_leaves`
  `the_bumblezone:allowed_hanging_garden_logs`
@@ -14,6 +15,7 @@ Pollen Puff pollination json files will now safely skip invalid entries and pars
 
 ##### Mod Compat:
 Changed my mind and now Biome Makeover's Black Thistle and Blue Skies's Lucentroot flowers no longer spawn in Hanging Garden structure now.
+ Also blacklisted several flowers from Natural Decor Mod and Natural Expansion mod due to not looking good in structure. 
 
 
 ### **(V.6.4.2 Changes) (1.19.2 Minecraft)**

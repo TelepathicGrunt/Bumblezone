@@ -66,6 +66,38 @@
     {
       "id": "aurorasdeco:budding_jacaranda_leaves",
       "required": false
+    },
+    {
+      "id": "fruittrees:redlove_leaves",
+      "required": false
+    },
+    {
+      "id": "fruittrees:cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "fruittrees:apple_leaves",
+      "required": false
+    },
+    {
+      "id": "cherryblossomgrotto:cherry_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:pink_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:white_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:flowering_oak_leaves",
+      "required": false
+    },
+    {
+      "id": "blossom:flowering_oak_leaves",
+      "required": false
     }
   ]
 }
