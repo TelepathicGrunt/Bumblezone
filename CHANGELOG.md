@@ -1,5 +1,23 @@
 ### **(V.6.4.2 Changes) (1.19.2 Minecraft)**
 
+##### Structures:
+Hanging Garden structure will now be able to randomly spawn flowering leaves or logs from other mods!
+ This includes some leaves/logs from BYG, Quark, Ecologics, Terrestria, Colorful Azaleas, and Aurora's Decorations!
+ The new block tags that control this are:
+ `the_bumblezone:allowed_hanging_garden_leaves`
+ `the_bumblezone:allowed_hanging_garden_logs`
+ `the_bumblezone:blacklisted_hanging_garden_leaves`
+ `the_bumblezone:blacklisted_hanging_garden_logs`
+
+##### Items:
+Pollen Puff pollination json files will now safely skip invalid entries and parse the rest of the json file if a typo is done on a mob name.
+
+##### Mod Compat:
+Changed my mind and now Biome Makeover's Black Thistle and Blue Skies's Lucentroot flowers no longer spawn in Hanging Garden structure now.
+
+
+### **(V.6.4.2 Changes) (1.19.2 Minecraft)**
+
 ##### Misc:
 Fixed bug with vanilla Bees that make them not threadsafe when created as part of worldgen threaded chunk creation.
  Very niche rare crash to even get to happen but good for me to still patch just in case it does cause issues for people rarely.
