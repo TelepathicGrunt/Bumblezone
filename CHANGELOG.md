@@ -1,6 +1,6 @@
 ### **(V.6.4.5 Changes) (1.19.2 Minecraft)**
 
-##### Mod Compat:
+##### Structures:
 Hanging Garden structure will now be able to randomly spawn flowering leaves or logs from other mods!
  This includes some leaves/logs from BYG, Quark, Ecologics, Terrestria, Colorful Azaleas, and Aurora's Decorations!
  The new block tags that control this are:
@@ -9,17 +9,11 @@ Hanging Garden structure will now be able to randomly spawn flowering leaves or 
  `the_bumblezone:blacklisted_hanging_garden_leaves`
  `the_bumblezone:blacklisted_hanging_garden_logs`
 
+##### Items:
 Pollen Puff pollination json files will now safely skip invalid entries and parse the rest of the json file if a typo is done on a mob name.
 
+##### Mod Compat:
 Changed my mind and now Biome Makeover's Black Thistle and Blue Skies's Lucentroot flowers no longer spawn in Hanging Garden structure now.
-
-Pokecube's Purple Wisteria Vines or Polluting Blossom and Extended Mushroom's Infected Flower will no longer spawn in Hanging Gardens 
- (Infected Flower will not be able to be reproduced with Pollen Puff either anymore)
-
-Pokecube's bear themed Pokemon will now get Wrath of the Hive when in Bumblezone and attacked by bees!
- Careful on what Pokemon you choose in that dimension!
-
-Alchemist's Garden's Shroom mobs will spawn their respective mushrooms when hit with Pollen Puff.
 
 
 ### **(V.6.4.4 Changes) (1.19.2 Minecraft)**
