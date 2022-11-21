@@ -25,6 +25,9 @@ Pokecube's bear themed Pokemon will now get Wrath of the Hive when in Bumblezone
 
 Alchemist's Garden's Shroom mobs will spawn their respective mushrooms when hit with Pollen Puff.
 
+Fixed incompatibility with Forgery mod's Weaponized Enderpearl settings. You can now still teleport into Bumblezone with Enderpearl.
+ Had to switch from an Enderpearl specific event to a general projectile impact event as Forgery will skip firing the Forge Enderpearl teleport event entirely.
+
 
 ### **(V.6.4.4 Changes) (1.19.2 Minecraft)**
 
