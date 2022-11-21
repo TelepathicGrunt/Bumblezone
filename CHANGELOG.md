@@ -1,6 +1,6 @@
 ### **(V.6.4.5 Changes) (1.19.2 Minecraft)**
 
-##### Mod Compat:
+##### Structures:
 Hanging Garden structure will now be able to randomly spawn flowering leaves or logs from other mods!
  This includes some leaves/logs from BYG, Quark, Ecologics, Terrestria, Colorful Azaleas, and Aurora's Decorations!
  The new block tags that control this are:
@@ -9,11 +9,13 @@ Hanging Garden structure will now be able to randomly spawn flowering leaves or 
  `the_bumblezone:blacklisted_hanging_garden_leaves`
  `the_bumblezone:blacklisted_hanging_garden_logs`
 
+##### Items:
+Pollen Puff pollination json files will now safely skip invalid entries and parse the rest of the json file if a typo is done on a mob name.
+
+##### Mod Compat:
 Pollen Puff hitting Ars Elemental's Flashing Weald Walker will spawn Flashing Archwood Sapling nearby
 
 Fixed broken Pollen Puff entry for Ars Nouveau's Flourishing Weald Walker causing all walkers to not spawn their saplings when hit with the puff.
-
-Pollen Puff pollination json files will now safely skip invalid entries and parse the rest of the json file if a typo is done on a mob name.
 
 Changed my mind and now Biome Makeover's Black Thistle and Blue Skies's Lucentroot flowers no longer spawn in Hanging Garden structure now.
 
