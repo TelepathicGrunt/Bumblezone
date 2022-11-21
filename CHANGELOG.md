@@ -2,7 +2,8 @@
 
 ##### Structures:
 Hanging Garden structure will now be able to randomly spawn flowering leaves or logs from other mods!
- This includes some leaves/logs from BYG, Quark, Ecologics, Terrestria, Colorful Azaleas, and Aurora's Decorations!
+ This includes some leaves/logs from Oh The Biomes You'll Go, Biomes O Plenty, Quark, Ecologics, Terrestria, 
+ Fruit Trees, Cherry Blossom Grotto, Colorful Azaleas, Blossom, and Aurora's Decorations!
  The new block tags that control this are:
  `the_bumblezone:allowed_hanging_garden_leaves`
  `the_bumblezone:allowed_hanging_garden_logs`
@@ -17,7 +18,13 @@ Pollen Puff hitting Ars Elemental's Flashing Weald Walker will spawn Flashing Ar
 
 Fixed broken Pollen Puff entry for Ars Nouveau's Flourishing Weald Walker causing all walkers to not spawn their saplings when hit with the puff.
 
+Natural Decoration's snail and butterflies will spawn in Hanging Gardens now.
+
 Changed my mind and now Biome Makeover's Black Thistle and Blue Skies's Lucentroot flowers no longer spawn in Hanging Garden structure now.
+ Also blacklisted several flowers from Natural Decor Mod and Natural Expansion mod due to not looking good in structure. 
+
+Broglis Plants's Nightshade, Oaks Nature's flowers, Biomes O Plenty's cherry/flowering oak sapling,
+ Cherry Blossom Grotto's cherry sapling, Fruit Trees's cherry and redlove sapling will spawn in Hanging Garden.
 
 Pokecube's Purple Wisteria Vines or Polluting Blossom and Extended Mushroom's Infected Flower will no longer spawn in Hanging Gardens 
  (Infected Flower will not be able to be reproduced with Pollen Puff either anymore)
