@@ -1,4 +1,4 @@
-### **(V.6.4.2 Changes) (1.19.2 Minecraft)**
+### **(V.6.4.3 Changes) (1.19.2 Minecraft)**
 
 ##### Structures:
 Hanging Garden structure will now be able to randomly spawn flowering leaves or logs from other mods!
