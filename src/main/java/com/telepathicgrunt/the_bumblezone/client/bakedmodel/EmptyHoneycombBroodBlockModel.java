@@ -47,6 +47,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class EmptyHoneycombBroodBlockModel implements IDynamicBakedModel {
+
+    private static final ChunkRenderTypeSet CUTOUT_CHUNK_RENDER_TYPE = ChunkRenderTypeSet.of(RenderType.cutout());
     public static final ModelProperty<Map<Direction, Set<CORNERS>>> DIRECTION_OF_HONEY_MERGERS = new ModelProperty<>();
     public static final List<EmptyHoneycombBroodBlockModel> INSTANCES = new ArrayList<>();
     public static final Direction[] DIRECTIONS = Direction.values();
@@ -353,7 +355,7 @@ public class EmptyHoneycombBroodBlockModel implements IDynamicBakedModel {
 
     @Override
     public ChunkRenderTypeSet getRenderTypes(BlockState state, RandomSource rand, ModelData data) {
-        return ChunkRenderTypeSet.of(RenderType.cutout());
+        return CUTOUT_CHUNK_RENDER_TYPE;
     }
 
     @Override
